@@ -1377,8 +1377,12 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(base64BlockId)}: {base64BlockId}\n" +
                     $"{nameof(sourceUri)}: {sourceUri}\n" +
                     $"{nameof(conditions)}: {conditions}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlockBlobClient)}.{nameof(StageBlockFromUri)}");
+
                 try
                 {
+                    scope.Start();
                     ResponseWithHeaders<BlockBlobStageBlockFromURLHeaders> response;
 
                     if (async)
@@ -1428,11 +1432,13 @@ namespace Azure.Storage.Blobs.Specialized
                 catch (Exception ex)
                 {
                     ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     ClientConfiguration.Pipeline.LogMethodExit(nameof(BlockBlobClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -1768,8 +1774,12 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(base64BlockIds)}: {base64BlockIds}\n" +
                     $"{nameof(blobHttpHeaders)}: {blobHttpHeaders}\n" +
                     $"{nameof(conditions)}: {conditions}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlockBlobClient)}.{nameof(CommitBlockList)}");
+
                 try
                 {
+                    scope.Start();
                     BlockLookupList blocks = new BlockLookupList() { Latest = base64BlockIds.ToList() };
 
                     ResponseWithHeaders<BlockBlobCommitBlockListHeaders> response;
@@ -1831,11 +1841,13 @@ namespace Azure.Storage.Blobs.Specialized
                 catch (Exception ex)
                 {
                     ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     ClientConfiguration.Pipeline.LogMethodExit(nameof(BlockBlobClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -2001,8 +2013,12 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(blockListTypes)}: {blockListTypes}\n" +
                     $"{nameof(snapshot)}: {snapshot}\n" +
                     $"{nameof(conditions)}: {conditions}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlockBlobClient)}.{nameof(GetBlockList)}");
+
                 try
                 {
+                    scope.Start();
                     ResponseWithHeaders<BlockList, BlockBlobGetBlockListHeaders> response;
 
                     if (async)
@@ -2032,11 +2048,13 @@ namespace Azure.Storage.Blobs.Specialized
                 catch (Exception ex)
                 {
                     ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     ClientConfiguration.Pipeline.LogMethodExit(nameof(BlockBlobClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -2588,8 +2606,12 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(options.HttpHeaders)}: {options?.HttpHeaders}\n" +
                     $"{nameof(options.DestinationConditions)}: {options?.DestinationConditions}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlockBlobClient)}.{nameof(SyncUploadFromUri)}");
+
                 try
                 {
+                    scope.Start();
                     ResponseWithHeaders<BlockBlobPutBlobFromUrlHeaders> response;
 
                     if (async)
@@ -2667,11 +2689,13 @@ namespace Azure.Storage.Blobs.Specialized
                 catch (Exception ex)
                 {
                     ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     ClientConfiguration.Pipeline.LogMethodExit(nameof(BlockBlobClient));
+                    scope.Dispose();
                 }
             }
         }

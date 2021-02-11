@@ -541,30 +541,76 @@ namespace Azure.Storage.Blobs
         #endregion
 
         #region ToBlockInfo
-        // TODO
         internal static BlockInfo ToBlockInfo(this ResponseWithHeaders<BlockBlobStageBlockHeaders> response)
         {
-            return null;
+            if (response == null)
+            {
+                return null;
+            }
+
+            return new BlockInfo
+            {
+                ContentHash = response.Headers.ContentMD5,
+                ContentCrc64 = response.Headers.XMsContentCrc64,
+                EncryptionKeySha256 = response.Headers.EncryptionKeySha256,
+                EncryptionScope = response.Headers.EncryptionScope
+            };
         }
 
-        // TODO
         internal static BlockInfo ToBlockInfo(this ResponseWithHeaders<BlockBlobStageBlockFromURLHeaders> response)
         {
-            return null;
+            if (response == null)
+            {
+                return null;
+            }
+
+            return new BlockInfo
+            {
+                ContentHash = response.Headers.ContentMD5,
+                ContentCrc64 = response.Headers.XMsContentCrc64,
+                EncryptionKeySha256 = response.Headers.EncryptionKeySha256,
+                EncryptionScope = response.Headers.EncryptionScope
+            };
         }
         #endregion
 
         #region ToBlobContentInfo
-        // TODO
         internal static BlobContentInfo ToBlobContentInfo(this ResponseWithHeaders<BlockBlobCommitBlockListHeaders> response)
         {
-            return null;
+            if (response == null)
+            {
+                return null;
+            }
+
+            return new BlobContentInfo
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                ContentHash = response.Headers.ContentMD5,
+                VersionId = response.Headers.VersionId,
+                EncryptionKeySha256 = response.Headers.EncryptionKeySha256,
+                EncryptionScope = response.Headers.EncryptionScope,
+                // TODO BlobSequenceNumber - I don't think it applies to Block Blobs.
+            };
         }
 
-        // TODO
         internal static BlobContentInfo ToBlobContentInfo(this ResponseWithHeaders<BlockBlobPutBlobFromUrlHeaders> response)
         {
-            return null;
+            if (response == null)
+            {
+                return null;
+            }
+
+            return new BlobContentInfo
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                ContentHash = response.Headers.ContentMD5,
+                VersionId = response.Headers.VersionId,
+                EncryptionKeySha256 = response.Headers.EncryptionKeySha256,
+                EncryptionScope = response.Headers.EncryptionScope,
+                // BlobSequenceNumber is not returned for Block Blobs.
+            };
         }
 
         internal static BlobContentInfo ToBlobContentInfo(this ResponseWithHeaders<BlockBlobUploadHeaders> response)
@@ -588,10 +634,22 @@ namespace Azure.Storage.Blobs
         #endregion
 
         #region ToBlockList
-        // TODO
         internal static BlockList ToBlockList(this ResponseWithHeaders<BlockList, BlockBlobGetBlockListHeaders> response)
         {
-            return null;
+            if (response == null)
+            {
+                return null;
+            }
+
+            return new BlockList
+            {
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ContentType = response.Headers.ContentType,
+                BlobContentLength = response.Headers.BlobContentLength.GetValueOrDefault(),
+                CommittedBlocks = response.Value.CommittedBlocks,
+                UncommittedBlocks = response.Value.UncommittedBlocks
+            };
         }
         #endregion
 
