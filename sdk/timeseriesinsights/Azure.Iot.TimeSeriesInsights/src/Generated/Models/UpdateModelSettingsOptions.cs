@@ -5,13 +5,13 @@
 
 #nullable disable
 
-namespace Azure.Iot.TimeSeriesInsights.Models
+namespace Azure.Iot.TimeSeriesInsights.Customized
 {
     /// <summary> Request to update model settings. One of &quot;name&quot; or &quot;defaultTypeId&quot; must be set. </summary>
-    public partial class UpdateModelSettingsRequest
+    public partial class UpdateModelSettingsOptions
     {
-        /// <summary> Initializes a new instance of UpdateModelSettingsRequest. </summary>
-        public UpdateModelSettingsRequest()
+        /// <summary> Initializes a new instance of UpdateModelSettingsOptions. </summary>
+        public UpdateModelSettingsOptions()
         {
         }
 

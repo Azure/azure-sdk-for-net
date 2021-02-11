@@ -1,10 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Iot.TimeSeriesInsights.Customized;
 using Azure.Iot.TimeSeriesInsights.Models;
 
 namespace Azure.Iot.TimeSeriesInsights
@@ -84,6 +86,98 @@ namespace Azure.Iot.TimeSeriesInsights
             _queryRestClient = new QueryRestClient(_clientDiagnostics, _httpPipeline, environmentFqdn, versionString);
             _timeSeriesHierarchiesRestClient = new TimeSeriesHierarchiesRestClient(_clientDiagnostics, _httpPipeline, environmentFqdn, versionString);
             _timeSeriesTypesRestClient = new TimeSeriesTypesRestClient(_clientDiagnostics, _httpPipeline, environmentFqdn, versionString);
+        }
+
+        /// <summary>
+        /// Gets model settings asynchronously.
+        /// </summary>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The Model Settings which includes model display name, Time Series ID properties and default type ID with the http response <see cref="Response{T}"/>.</returns>
+        public virtual async Task<Response<TimeSeriesModelSettings>> GetModelSettingsAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetModelSettings)}");
+            scope.Start();
+            try
+            {
+                Response<ModelSettingsResponse> modelSettings = await _modelSettingsRestClient.GetAsync(null, cancellationToken).ConfigureAwait(false);
+                TimeSeriesModelSettings timeSeriesModelSettings = modelSettings.Value.ModelSettings;
+                return Response.FromValue(timeSeriesModelSettings, modelSettings.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets model settings synchronously.
+        /// </summary>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The Model Settings which includes model display name, Time Series ID properties and default type ID with the http response <see cref="Response{T}"/>.</returns>
+        public virtual Response<TimeSeriesModelSettings> GetModelSettings(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetModelSettings)}");
+            scope.Start();
+            try
+            {
+                Response<ModelSettingsResponse> modelSettings = _modelSettingsRestClient.Get(null, cancellationToken);
+                TimeSeriesModelSettings timeSeriesModelSettings = modelSettings.Value.ModelSettings;
+                return Response.FromValue(timeSeriesModelSettings, modelSettings.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates model settings, either the model name or default type ID asynchronously.
+        /// </summary>
+        /// <param name="options">Model settings update request body.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The updated Model Settings with the http response <see cref="Response{T}"/>.</returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual async Task<Response<TimeSeriesModelSettings>> UpdateModelSettingsAsync(UpdateModelSettingsOptions options, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(UpdateModelSettings)}");
+            scope.Start();
+            try
+            {
+                Response<ModelSettingsResponse> modelSettings = await _modelSettingsRestClient.UpdateAsync(options, null, cancellationToken).ConfigureAwait(false);
+                TimeSeriesModelSettings timeSeriesModelSettings = modelSettings.Value.ModelSettings;
+                return Response.FromValue(timeSeriesModelSettings, modelSettings.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates model settings, either the model name or default type ID synchronously.
+        /// </summary>
+        /// <param name="options">Model settings update request body.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The updated Model Settings with the http response <see cref="Response{T}"/>.</returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual Response<TimeSeriesModelSettings> UpdateModelSettings(UpdateModelSettingsOptions options, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(UpdateModelSettings)}");
+            scope.Start();
+            try
+            {
+                Response<ModelSettingsResponse> modelSettings = _modelSettingsRestClient.Update(options, null, cancellationToken);
+                TimeSeriesModelSettings timeSeriesModelSettings = modelSettings.Value.ModelSettings;
+                return Response.FromValue(timeSeriesModelSettings, modelSettings.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>

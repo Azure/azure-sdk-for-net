@@ -3,6 +3,8 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Iot.TimeSeriesInsights.Customized;
+using Azure.Iot.TimeSeriesInsights.Models;
 using static Azure.Iot.TimeSeriesInsights.Samples.SampleLogger;
 
 namespace Azure.Iot.TimeSeriesInsights.Samples
@@ -26,12 +28,28 @@ namespace Azure.Iot.TimeSeriesInsights.Samples
             try
             {
                 #region Snippet:TimeSeriesInsightsGetModelSettings
-                
+
                 // Get the model settings for the time series insights environment
-                Response<Models.ModelSettingsResponse> response = await client.GetAsync().ConfigureAwait(false);
-                Console.WriteLine($"Retrieved model {response.Value.ModelSettings.Name}.");
-                
+                Response<TimeSeriesModelSettings> currentSettings = await client.GetModelSettingsAsync().ConfigureAwait(false);
+                Console.WriteLine($"Retrieved model with default type id {currentSettings.Value.DefaultTypeId} " +
+                    $"model name {currentSettings.Value.Name}.");
+
+                foreach (TimeSeriesIdProperty tsiId in currentSettings.Value.TimeSeriesIdProperties)
+                {
+                    Console.WriteLine($"Time series Id name: '{tsiId.Name}', Type: '{tsiId.Type}'.");
+                }
+
                 #endregion Snippet:TimeSeriesInsightsGetModelSettings
+
+                #region Snippet:TimeSeriesInsightsUpdateModelSettings
+
+                UpdateModelSettingsOptions options = new UpdateModelSettingsOptions();
+                options.Name = "sampleModel";
+                Response<TimeSeriesModelSettings> updatedSettings = await client.UpdateModelSettingsAsync(options).ConfigureAwait(false);
+                Console.WriteLine($"Updated model name to {updatedSettings.Value.Name} ");
+
+                #endregion Snippet:TimeSeriesInsightsUpdateModelSettings
+
             }
             catch (Exception ex)
             {
