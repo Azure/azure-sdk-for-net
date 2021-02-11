@@ -35,17 +35,17 @@ foreach (CloudEvent cloudEvent in cloudEvents)
     {
         case "Contoso.Items.ItemReceived":
             // By default, GetData uses JsonObjectSerializer to deserialize the payload
-            ContosoItemReceivedEventData itemReceived = cloudEvent.GetData<ContosoItemReceivedEventData>();
+            ContosoItemReceivedEventData itemReceived = cloudEvent.Data.ToObjectFromJson<ContosoItemReceivedEventData>();
             Console.WriteLine(itemReceived.ItemSku);
             break;
         case "MyApp.Models.CustomEventType":
             // One can also specify a custom ObjectSerializer as needed to deserialize the payload correctly
-            TestPayload testPayload = cloudEvent.GetData().ToObject<TestPayload>(myCustomSerializer);
+            TestPayload testPayload = cloudEvent.Data.ToObject<TestPayload>(myCustomSerializer);
             Console.WriteLine(testPayload.Name);
             break;
         case SystemEventNames.StorageBlobDeleted:
             // Example for deserializing system events using GetData<T>
-            StorageBlobDeletedEventData blobDeleted = cloudEvent.GetData<StorageBlobDeletedEventData>();
+            StorageBlobDeletedEventData blobDeleted = cloudEvent.Data.ToObjectFromJson<StorageBlobDeletedEventData>();
             Console.WriteLine(blobDeleted.BlobType);
             break;
     }
@@ -74,8 +74,8 @@ foreach (EventGridEvent egEvent in egEvents)
             // Handle any other system event type
             default:
                 Console.WriteLine(egEvent.EventType);
-                // we can get the raw Json for the event using GetData()
-                Console.WriteLine(egEvent.GetData().ToString());
+                // we can get the raw Json for the event using Data
+                Console.WriteLine(egEvent.EventData.ToString());
                 break;
         }
     }
@@ -90,7 +90,7 @@ foreach (EventGridEvent egEvent in egEvents)
             // Handle any other custom event type
             default:
                 Console.Write(egEvent.EventType);
-                Console.WriteLine(egEvent.GetData().ToString());
+                Console.WriteLine(egEvent.EventData.ToString());
                 break;
         }
     }

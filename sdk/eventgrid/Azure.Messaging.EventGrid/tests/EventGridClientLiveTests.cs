@@ -2,18 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.Serialization;
-using Azure.Core.TestFramework;
-using Azure.Messaging.EventGrid;
-using Azure.Messaging.EventGrid.Models;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventGrid.Tests
@@ -284,7 +278,6 @@ namespace Azure.Messaging.EventGrid.Tests
                     Time = Recording.Now
                 };
                 cloudEvent.ExtensionAttributes.Add("testattribute1", "test");
-                cloudEvent.ExtensionAttributes.Add("testattribute2", new TestPayload("name", i));
                 eventsList.Add(cloudEvent);
             }
 

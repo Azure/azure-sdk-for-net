@@ -2,13 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
-using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.Core.Serialization;
+using Azure.Messaging;
 
 namespace Azure
 {
@@ -17,6 +15,8 @@ namespace Azure
     /// </summary>
     public static class AzureCoreExtensions
     {
+        private static readonly JsonObjectSerializer s_serializer = new JsonObjectSerializer();
+
         /// <summary>
         /// Converts the <see cref="BinaryData"/> to the specified type using
         /// the provided <see cref="ObjectSerializer"/>.
@@ -44,5 +44,16 @@ namespace Azure
         ///<returns>The data converted to the specified type.</returns>
         public static async ValueTask<T?> ToObjectAsync<T>(this BinaryData data, ObjectSerializer serializer, CancellationToken cancellationToken = default) =>
             (T?)await serializer.DeserializeAsync(data.ToStream(), typeof(T), cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Given a single JSON-encoded event, parses the event envelope and returns a CloudEvent.
+        /// </summary>
+        /// <param name="binaryData"> Specifies the instance of <see cref="BinaryData"/>. </param>
+        /// <returns> A <see cref="CloudEvent"/>. </returns>
+        public static CloudEvent? ToCloudEvent(this BinaryData binaryData)
+        {
+            Argument.AssertNotNull(binaryData, nameof(BinaryData));
+            return (CloudEvent?)s_serializer.Deserialize(binaryData.ToStream(), typeof(CloudEvent), CancellationToken.None);
+        }
     }
 }

@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Azure.Messaging.EventGrid.Tests
 {
-    internal class TestPayload
+    public class TestPayload
     {
         public TestPayload(string name, int age)
         {
@@ -22,7 +22,7 @@ namespace Azure.Messaging.EventGrid.Tests
     }
 
 #pragma warning disable SA1402 // File may only contain a single type
-    internal class DerivedTestPayload: TestPayload
+    public class DerivedTestPayload: TestPayload
 #pragma warning restore SA1402 // File may only contain a single type
     {
         public int? DerivedProperty { get; set; }

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Threading;
@@ -33,7 +32,7 @@ namespace Azure.Messaging.EventGrid
 
             DataSerializationType = dataSerializationType ?? data?.GetType() ?? null;
             Subject = subject;
-            Data = data;
+            JsonSerializable = data;
             EventType = eventType;
             DataVersion = dataVersion;
         }
@@ -76,10 +75,34 @@ namespace Azure.Messaging.EventGrid
         public string DataVersion { get; set; }
 
         /// <summary>Gets or sets the event data specific to the event type.</summary>
-        internal object Data { get; set; }
+        internal object JsonSerializable
+        {
+            get
+            {
+                return _jsonSerializable;
+            }
+            set
+            {
+                _jsonSerializable = value;
+                EventData = new BinaryData(_jsonSerializable, type: DataSerializationType);
+            }
+        }
+        private object _jsonSerializable;
 
         /// <summary>Gets or sets the serialized event data specific to the event type.</summary>
-        internal JsonElement SerializedData { get; set; }
+        internal JsonElement SerializedData
+        {
+            get
+            {
+                return _serializedData;
+            }
+            set
+            {
+                _serializedData = value;
+                EventData = BinaryData.FromStream(SerializePayloadToStream(_serializedData));
+            }
+        }
+        private JsonElement _serializedData;
 
         private static readonly JsonObjectSerializer s_jsonSerializer = new JsonObjectSerializer();
 
@@ -135,16 +158,16 @@ namespace Azure.Messaging.EventGrid
         /// <exception cref="InvalidOperationException"> Event was not created from EventGridEvent.Parse() method. </exception>
         /// <exception cref="InvalidCastException"> Event payload cannot be cast to the specified event type. </exception>
         /// <returns> Deserialized payload of the event, cast to the specified type. </returns>
-        public T GetData<T>(CancellationToken cancellationToken = default) =>
+        internal T GetData<T>(CancellationToken cancellationToken = default) =>
             GetDataInternal<T>(s_jsonSerializer, false, cancellationToken).EnsureCompleted();
 
         private async Task<T> GetDataInternal<T>(ObjectSerializer serializer, bool async, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(serializer, nameof(serializer));
 
-            if (Data != null)
+            if (JsonSerializable != null)
             {
-                return (T)Data;
+                return (T)JsonSerializable;
             }
             else if (SystemEventExtensions.SystemEventDeserializers.TryGetValue(EventType, out Func<JsonElement, object> systemDeserializationFunction))
             {
@@ -167,28 +190,10 @@ namespace Azure.Messaging.EventGrid
         }
 
         /// <summary>
-        /// Deserializes the event payload into a system event type or
-        /// returns the payload of the event wrapped as <see cref="BinaryData"/>. Using BinaryData,
+        /// Gets the event payload as <see cref="BinaryData"/>. Using BinaryData,
         /// one can deserialize the payload into rich data, or access the raw JSON data using <see cref="BinaryData.ToString()"/>.
         /// </summary>
-        /// <returns>
-        /// Deserialized payload of the event.
-        /// Returns <see cref="BinaryData"/> for unknown event types.
-        /// </returns>
-        public BinaryData GetData() =>
-            GetDataInternal();
-
-        private BinaryData GetDataInternal()
-        {
-            if (Data != null)
-            {
-                return new BinaryData(Data, type: DataSerializationType);
-            }
-            else
-            {
-                return BinaryData.FromStream(SerializePayloadToStream(SerializedData));
-            }
-        }
+        public BinaryData EventData { get; internal set; }
 
         private static MemoryStream SerializePayloadToStream(JsonElement payload, CancellationToken cancellationToken = default)
         {

@@ -17,6 +17,7 @@ namespace Azure
     }
     public static partial class AzureCoreExtensions
     {
+        public static Azure.Messaging.CloudEvent? ToCloudEvent(this System.BinaryData binaryData) { throw null; }
         public static System.Threading.Tasks.ValueTask<T?> ToObjectAsync<T>(this System.BinaryData data, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static T? ToObject<T>(this System.BinaryData data, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -567,5 +568,31 @@ namespace Azure.Core.Serialization
         public virtual System.BinaryData Serialize(object? value, System.Type? inputType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public abstract System.Threading.Tasks.ValueTask SerializeAsync(System.IO.Stream stream, object? value, System.Type inputType, System.Threading.CancellationToken cancellationToken);
         public virtual System.Threading.Tasks.ValueTask<System.BinaryData> SerializeAsync(object? value, System.Type? inputType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
+namespace Azure.Messaging
+{
+    [System.Text.Json.Serialization.JsonConverterAttribute(typeof(Azure.Messaging.CloudEventConverter))]
+    public partial class CloudEvent
+    {
+        public CloudEvent(string source, string type, object jsonSerializable, System.Type dataSerializationType = null) { }
+        public CloudEvent(string source, string type, System.ReadOnlyMemory<byte> data, string dataContentType) { }
+        public string DataContentType { get { throw null; } set { } }
+        public string DataSchema { get { throw null; } set { } }
+        public System.BinaryData EventData { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, object> ExtensionAttributes { get { throw null; } }
+        public string Id { get { throw null; } set { } }
+        public string Source { get { throw null; } set { } }
+        public string Subject { get { throw null; } set { } }
+        public System.DateTimeOffset? Time { get { throw null; } set { } }
+        public string Type { get { throw null; } set { } }
+        public static Azure.Messaging.CloudEvent[] Parse(string requestContent) { throw null; }
+    }
+    public partial class CloudEventConverter : System.Text.Json.Serialization.JsonConverter<Azure.Messaging.CloudEvent>
+    {
+        public CloudEventConverter() { }
+        public Azure.Core.Serialization.ObjectSerializer DataSerializer { get { throw null; } set { } }
+        public override Azure.Messaging.CloudEvent Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options) { throw null; }
+        public override void Write(System.Text.Json.Utf8JsonWriter writer, Azure.Messaging.CloudEvent value, System.Text.Json.JsonSerializerOptions options) { }
     }
 }

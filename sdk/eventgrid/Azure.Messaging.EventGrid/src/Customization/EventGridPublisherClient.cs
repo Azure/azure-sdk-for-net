@@ -5,14 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Globalization;
 using System.IO;
-using System.Security.Cryptography;
-using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Web;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.Serialization;
@@ -89,15 +85,7 @@ namespace Azure.Messaging.EventGrid
             try
             {
                 using HttpMessage message = _pipeline.CreateMessage();
-                Request request = message.Request;
-                request.Method = RequestMethod.Post;
-                var uri = new RawRequestUriBuilder();
-                uri.AppendRaw("https://", false);
-                uri.AppendRaw(_hostName, false);
-                uri.AppendPath("/api/events", false);
-                uri.AppendQuery("api-version", _apiVersion, true);
-                request.Uri = uri;
-                request.Headers.Add("Content-Type", "application/cloudevents-batch+json; charset=utf-8");
+                Request request = CreateCloudEventRequest(message);
                 RequestContent content = RequestContent.Create(cloudEvents);
                 request.Content = content;
                 if (async)
@@ -121,6 +109,20 @@ namespace Azure.Messaging.EventGrid
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        private Request CreateCloudEventRequest(HttpMessage message)
+        {
+            Request request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_hostName, false);
+            uri.AppendPath("/api/events", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/cloudevents-batch+json; charset=utf-8");
+            return request;
         }
 
         /// <summary>
@@ -173,7 +175,7 @@ namespace Azure.Messaging.EventGrid
                     // Individual events cannot be null
                     Argument.AssertNotNull(egEvent, nameof(egEvent));
 
-                    JsonDocument data = SerializeObjectToJsonDocument(egEvent.Data, egEvent.DataSerializationType, cancellationToken);
+                    JsonDocument data = SerializeObjectToJsonDocument(egEvent.JsonSerializable, egEvent.DataSerializationType, cancellationToken);
 
                     EventGridEventInternal newEGEvent = new EventGridEventInternal(
                         egEvent.Id,
@@ -246,65 +248,60 @@ namespace Azure.Messaging.EventGrid
                     currentActivity.TryGetTraceState(out traceState);
                 }
 
-                List<CloudEventInternal> eventsWithSerializedPayloads = new List<CloudEventInternal>();
                 foreach (CloudEvent cloudEvent in events)
                 {
                     // Individual events cannot be null
                     Argument.AssertNotNull(cloudEvent, nameof(cloudEvent));
 
-                    CloudEventInternal newCloudEvent = new CloudEventInternal(
-                        cloudEvent.Id,
-                        cloudEvent.Source,
-                        cloudEvent.Type,
-                        "1.0")
-                    {
-                        Time = cloudEvent.Time,
-                        DataBase64 = cloudEvent.DataBase64,
-                        Datacontenttype = cloudEvent.DataContentType,
-                        Dataschema = cloudEvent.DataSchema,
-                        Subject = cloudEvent.Subject
-                    };
-
-                    foreach (KeyValuePair<string, object> kvp in cloudEvent.ExtensionAttributes)
-                    {
-                        newCloudEvent.Add(kvp.Key, new CustomModelSerializer(kvp.Value, _dataSerializer, cancellationToken));
-                    }
-
                     if (activityId != null &&
                         !cloudEvent.ExtensionAttributes.ContainsKey(TraceParentHeaderName) &&
                         !cloudEvent.ExtensionAttributes.ContainsKey(TraceStateHeaderName))
                     {
-                        newCloudEvent.Add(TraceParentHeaderName, activityId);
+                        cloudEvent.ExtensionAttributes.Add(TraceParentHeaderName, activityId);
                         if (traceState != null)
                         {
-                            newCloudEvent.Add(TraceStateHeaderName, traceState);
+                            cloudEvent.ExtensionAttributes.Add(TraceStateHeaderName, traceState);
                         }
                     }
-
-                    // The 'Data' property is optional for CloudEvents
-                    // Additionally, if the type of data is binary, 'Data' will not be populated (data will be stored in 'DataBase64' instead)
-                    if (cloudEvent.Data != null)
-                    {
-                        JsonDocument data = SerializeObjectToJsonDocument(cloudEvent.Data, cloudEvent.DataSerializationType, cancellationToken);
-                        newCloudEvent.Data = data.RootElement;
-                    }
-                    eventsWithSerializedPayloads.Add(newCloudEvent);
                 }
+                var serializer = new JsonObjectSerializer(new JsonSerializerOptions
+                {
+                    Converters =
+                        {
+                            new CloudEventConverter { DataSerializer = _dataSerializer }
+                        }
+                });
+                using HttpMessage message = _pipeline.CreateMessage();
+                Request request = CreateCloudEventRequest(message);
+
+                BinaryData data;
                 if (async)
                 {
-                    // Publish asynchronously if called via an async path
-                    return await _serviceRestClient.PublishCloudEventEventsAsync(
-                        _hostName,
-                        eventsWithSerializedPayloads,
-                        cancellationToken).ConfigureAwait(false);
+                    data = await serializer.SerializeAsync(events, typeof(List<CloudEvent>), cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    return _serviceRestClient.PublishCloudEventEvents(
-                        _hostName,
-                        eventsWithSerializedPayloads,
-                        cancellationToken);
+                    data = serializer.Serialize(events, typeof(List<CloudEvent>), cancellationToken);
                 }
+
+                RequestContent content = RequestContent.Create(data.ToMemory());
+                request.Content = content;
+
+                if (async)
+                {
+                    await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    _pipeline.Send(message, cancellationToken);
+                }
+                return message.Response.Status switch
+                {
+                    200 => message.Response,
+                    _ => async ?
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false) :
+                        throw _clientDiagnostics.CreateRequestFailedException(message.Response)
+                };
             }
             catch (Exception e)
             {

@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
-using Azure.Messaging.EventGrid.Models;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventGrid.Tests
@@ -72,7 +71,7 @@ namespace Azure.Messaging.EventGrid.Tests
             foreach (CloudEvent cloudEvent in cloudEvents)
             {
                 cloudEnum.MoveNext();
-                Dictionary<string, object> cloudEventAttr = cloudEnum.Current.ExtensionAttributes;
+                IDictionary<string, object> cloudEventAttr = cloudEnum.Current.ExtensionAttributes;
                 if (cloudEventAttr.ContainsKey(TraceParentHeaderName) &&
                     cloudEventAttr.ContainsKey(TraceStateHeaderName))
                 {
@@ -129,11 +128,7 @@ namespace Azure.Messaging.EventGrid.Tests
                     },
                     typeof(TestPayload));
 
-            // since the data has not yet been serialized (CloudEvent not constructed from Parse method), GetData returns the passed in instance.
-            Assert.AreEqual(5, cloudEvent.GetData<DerivedTestPayload>().DerivedProperty);
-
-            // GetData returns as BinaryData so it will always serialize first even if cloudEvent was not constructed by calling Parse.
-            Assert.IsNull(cloudEvent.GetData().ToObjectFromJson<DerivedTestPayload>().DerivedProperty);
+            Assert.IsNull(cloudEvent.Data.ToObjectFromJson<DerivedTestPayload>().DerivedProperty);
 
             List<CloudEvent> eventsList = new List<CloudEvent>()
             {
@@ -143,8 +138,7 @@ namespace Azure.Messaging.EventGrid.Tests
             await client.SendEventsAsync(eventsList);
 
             cloudEvent = DeserializeRequest(mockTransport.SingleRequest).First();
-            Assert.IsNull(cloudEvent.GetData<DerivedTestPayload>().DerivedProperty);
-            Assert.IsNull(cloudEvent.GetData().ToObjectFromJson<DerivedTestPayload>().DerivedProperty);
+            Assert.IsNull(cloudEvent.Data.ToObjectFromJson<DerivedTestPayload>().DerivedProperty);
         }
 
         [Test]
@@ -170,8 +164,7 @@ namespace Azure.Messaging.EventGrid.Tests
                         DerivedProperty = 5
                     });
 
-            Assert.AreEqual(5, cloudEvent.GetData<DerivedTestPayload>().DerivedProperty);
-            Assert.AreEqual(5, cloudEvent.GetData().ToObjectFromJson<DerivedTestPayload>().DerivedProperty);
+            Assert.AreEqual(5, cloudEvent.Data.ToObjectFromJson<DerivedTestPayload>().DerivedProperty);
 
             List<CloudEvent> eventsList = new List<CloudEvent>()
             {
@@ -181,31 +174,17 @@ namespace Azure.Messaging.EventGrid.Tests
             await client.SendEventsAsync(eventsList);
 
             cloudEvent = DeserializeRequest(mockTransport.SingleRequest).First();
-            Assert.AreEqual(5, cloudEvent.GetData<DerivedTestPayload>().DerivedProperty);
-            Assert.AreEqual(5, cloudEvent.GetData().ToObjectFromJson<DerivedTestPayload>().DerivedProperty);
+            Assert.AreEqual(5, cloudEvent.Data.ToObjectFromJson<DerivedTestPayload>().DerivedProperty);
         }
 
         private static List<CloudEvent> DeserializeRequest(Request request)
         {
-            var content = request.Content as Utf8JsonRequestContent;
             var stream = new MemoryStream();
-            content.WriteTo(stream, CancellationToken.None);
+            request.Content.WriteTo(stream, CancellationToken.None);
             stream.Position = 0;
-            JsonDocument requestDocument = JsonDocument.Parse(stream);
-            var cloudEvents = new List<CloudEvent>();
-            // Parse JsonElement into separate events, deserialize event envelope properties
-            if (requestDocument.RootElement.ValueKind == JsonValueKind.Object)
-            {
-                cloudEvents.Add(new CloudEvent(CloudEventInternal.DeserializeCloudEventInternal(requestDocument.RootElement)));
-            }
-            else if (requestDocument.RootElement.ValueKind == JsonValueKind.Array)
-            {
-                foreach (JsonElement property in requestDocument.RootElement.EnumerateArray())
-                {
-                    cloudEvents.Add(new CloudEvent(CloudEventInternal.DeserializeCloudEventInternal(property)));
-                }
-            }
-            return cloudEvents;
+            using var reader = new StreamReader(stream);
+            CloudEvent[] cloudEvents = CloudEvent.Parse(reader.ReadToEnd());
+            return cloudEvents.ToList();
         }
     }
 }
