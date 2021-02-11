@@ -653,16 +653,6 @@ namespace Azure.Storage.Blobs
         }
         #endregion
 
-        #region ToBlobDownloadInfo
-        // TODO
-#pragma warning disable CA1801 // Review unused parameters
-        internal static BlobDownloadInfo ToBlobDownloadInfo(ResponseWithHeaders<Stream, BlobQueryHeaders> response, Stream stream)
-#pragma warning restore CA1801 // Review unused parameters
-        {
-            return null;
-        }
-        #endregion
-
         #region ToBlobSnapshotInfo
         internal static BlobSnapshotInfo ToBlobSnapshotInfo(this ResponseWithHeaders<BlobCreateSnapshotHeaders> response)
         {
@@ -847,6 +837,50 @@ namespace Azure.Storage.Blobs
                         : null,
                     ObjectReplicationDestinationPolicyId = response.Headers.ObjectReplicationPolicyId,
                     LastAccessed = response.Headers.LastAccessed.GetValueOrDefault()
+                }
+            };
+        }
+
+        internal static BlobDownloadInfo ToBlobDownloadInfo(ResponseWithHeaders<Stream, BlobQueryHeaders> response, Stream stream)
+        {
+            if (response == null)
+            {
+                return null;
+            }
+
+            return new BlobDownloadInfo
+            {
+                BlobType = response.Headers.BlobType.GetValueOrDefault(),
+                ContentLength = response.Headers.ContentLength.GetValueOrDefault(),
+                Content = stream,
+                ContentType = response.Headers.ContentType,
+                ContentHash = response.Headers.ContentMD5,
+                Details = new BlobDownloadDetails
+                {
+                    LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                    Metadata = response.Headers.Metadata,
+                    ContentRange = response.Headers.ContentRange,
+                    ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                    ContentEncoding = response.Headers.ContentEncoding,
+                    CacheControl = response.Headers.CacheControl,
+                    ContentDisposition = response.Headers.ContentDisposition,
+                    ContentLanguage = response.Headers.ContentLanguage,
+                    BlobSequenceNumber = response.Headers.BlobSequenceNumber.GetValueOrDefault(),
+                    CopyCompletedOn = response.Headers.CopyCompletionTime.GetValueOrDefault(),
+                    CopyStatusDescription = response.Headers.CopyStatusDescription,
+                    CopyId = response.Headers.CopyId,
+                    CopyProgress = response.Headers.CopyProgress,
+                    CopySource = response.Headers.CopySource == null ? null : new Uri(response.Headers.CopySource),
+                    CopyStatus = response.Headers.CopyStatus.GetValueOrDefault(),
+                    // TODO double check this
+                    LeaseDuration = response.Headers.LeaseDuration ?? LeaseDurationType.Infinite,
+                    LeaseState = response.Headers.LeaseState.GetValueOrDefault(),
+                    AcceptRanges = response.Headers.AcceptRanges,
+                    BlobCommittedBlockCount = response.Headers.BlobCommittedBlockCount.GetValueOrDefault(),
+                    IsServerEncrypted = response.Headers.IsServerEncrypted.GetValueOrDefault(),
+                    EncryptionKeySha256 = response.Headers.EncryptionKeySha256,
+                    EncryptionScope = response.Headers.EncryptionScope,
+                    BlobContentHash = response.Headers.BlobContentMD5
                 }
             };
         }

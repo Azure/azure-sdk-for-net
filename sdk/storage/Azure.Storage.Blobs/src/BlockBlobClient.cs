@@ -2171,8 +2171,12 @@ namespace Azure.Storage.Blobs.Specialized
             {
                 ClientConfiguration.Pipeline.LogMethodEnter(nameof(BlockBlobClient), message: $"{nameof(Uri)}: {Uri}");
 
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlockBlobClient)}.{nameof(Query)}");
+
                 try
                 {
+                    scope.Start();
+
                     QueryRequest queryRequest = new QueryRequest()
                     {
                         QueryType = Constants.QuickQuery.SqlQueryType,
@@ -2222,11 +2226,13 @@ namespace Azure.Storage.Blobs.Specialized
                 catch (Exception ex)
                 {
                     ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     ClientConfiguration.Pipeline.LogMethodExit(nameof(BlockBlobClient));
+                    scope.Dispose();
                 }
             }
         }
