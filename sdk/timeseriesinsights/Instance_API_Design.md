@@ -6,16 +6,13 @@ Time Series Model instances are virtual representations of the time series thems
 ### GET /timeseries/instances
 
 ```csharp
-public virtual Pageable<TimeSeriesInstance> GetInstances(CancellationToken cancellationToken = default);
+public virtual Pageable<TimeSeriesInstance> GetTimeSeriesInstances(CancellationToken cancellationToken = default);
 ```
 
 ### POST /timeseries/instances/suggest
 
 ```csharp
-public virtual Response<InstancesSearchStringSuggestion[]> GetSearchSuggestions(InstancesSuggestRequest instancesSuggestRequest, CancellationToken cancellationToken = default);
-
-// Thoughts on renaming InstancesSuggestRequest to GetSearchSuggestionsOptions
-// Thoughts on renaming InstancesSearchStringSuggestion to InstanceSuggestion
+public virtual Response<SearchSuggestion[]> GetSearchSuggestions(string searchString, int? maxNumberOfSuggestions, CancellationToken cancellationToken = default);
 ```
 
 ### POST /timeseries/instances/$batch
@@ -33,23 +30,23 @@ public virtual Response<InstanceOrError[]> GetInstances(string[] timeSeriesNames
 ```
 
 ```csharp
-public virtual Response<InstanceOrError[]> CreateOrReplaceInstances(TimeSeriesInstance[] timeSeriesInstances, CancellationToken cancellationToken = default);
+public virtual Response<InstanceOrError[]> CreateOrReplaceTimeSeriesInstances(TimeSeriesInstance[] timeSeriesInstances, CancellationToken cancellationToken = default);
 ```
 
 ```csharp
-public virtual Response<InstanceOrError[]> ReplaceInstances(TimeSeriesInstance[] timeSeriesInstances, CancellationToken cancellationToken = default);
+public virtual Response<InstanceOrError[]> ReplaceTimeSeriesInstances(TimeSeriesInstance[] timeSeriesInstances, CancellationToken cancellationToken = default);
 
 // thoughts on only having CreateOrReplaceInstances? It's safer to have both. 
 ```
 
 ```csharp
-public virtual Response<TsiErrorBody[]> DeleteInstances(TimeSeriesId[] timeSeriesIds, CancellationToken cancellationToken = default);
+public virtual Response<TsiErrorBody[]> DeleteTimeSeriesInstances(TimeSeriesId[] timeSeriesIds, CancellationToken cancellationToken = default);
 
 // Thoughts on renaming TsiErrorBody to DeleteInstanceOperationResponse
 ```
 
 ```csharp
-public virtual Response<TsiErrorBody[]> DeleteInstances(string[] timeSeriesNames, CancellationToken cancellationToken = default);
+public virtual Response<TsiErrorBody[]> DeleteTimeSeriesInstances(string[] timeSeriesNames, CancellationToken cancellationToken = default);
 
 // Thoughts on naming the APIs DeleteInstancesByIds and DeleteInstancesByNames
 ```
