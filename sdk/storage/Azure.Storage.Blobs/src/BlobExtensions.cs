@@ -936,7 +936,7 @@ namespace Azure.Storage.Blobs
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
                 LeaseStatus = response.Headers.LeaseStatus,
                 LeaseState = response.Headers.LeaseState,
-                LeaseDuration = response.Headers.LeaseDuration,
+                LeaseDuration = response.Headers.LeaseDuration ?? LeaseDurationType.Infinite,
                 PublicAccess = response.Headers.BlobPublicAccess,
                 HasImmutabilityPolicy = response.Headers.HasImmutabilityPolicy,
                 HasLegalHold = response.Headers.HasLegalHold,
