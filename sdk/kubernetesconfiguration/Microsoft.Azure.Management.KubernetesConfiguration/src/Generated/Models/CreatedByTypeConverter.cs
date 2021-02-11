@@ -15,22 +15,22 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
     using System.Reflection;
 
     /// <summary>
-    /// Defines values for EnableHelmOperator.
+    /// Defines values for CreatedByType.
     /// </summary>
-    public sealed class EnableHelmOperatorConverter : JsonConverter
+    public sealed class CreatedByTypeConverter : JsonConverter
     {
 
         /// <summary>
-        /// Returns if objectType can be converted to EnableHelmOperator by the
+        /// Returns if objectType can be converted to CreatedByType by the
         /// converter.
         /// </summary>
         public override bool CanConvert(System.Type objectType)
         {
-            return typeof(EnableHelmOperator).GetTypeInfo().IsAssignableFrom(objectType.GetTypeInfo());
+            return typeof(CreatedByType).GetTypeInfo().IsAssignableFrom(objectType.GetTypeInfo());
         }
 
         /// <summary>
-        /// Overrides ReadJson and converts token to EnableHelmOperator.
+        /// Overrides ReadJson and converts token to CreatedByType.
         /// </summary>
         public override object ReadJson(JsonReader reader, System.Type objectType, object existingValue, JsonSerializer serializer)
         {
@@ -38,11 +38,11 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
             {
                 return null;
             }
-            return (EnableHelmOperator)serializer.Deserialize<string>(reader);
+            return (CreatedByType)serializer.Deserialize<string>(reader);
         }
 
         /// <summary>
-        /// Overriding WriteJson for EnableHelmOperator for serialization.
+        /// Overriding WriteJson for CreatedByType for serialization.
         /// </summary>
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {

@@ -15,22 +15,22 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
     using System.Reflection;
 
     /// <summary>
-    /// Defines values for OperatorScope.
+    /// Defines values for ProvisioningStateType.
     /// </summary>
-    public sealed class OperatorScopeConverter : JsonConverter
+    public sealed class ProvisioningStateTypeConverter : JsonConverter
     {
 
         /// <summary>
-        /// Returns if objectType can be converted to OperatorScope by the
-        /// converter.
+        /// Returns if objectType can be converted to ProvisioningStateType by
+        /// the converter.
         /// </summary>
         public override bool CanConvert(System.Type objectType)
         {
-            return typeof(OperatorScope).GetTypeInfo().IsAssignableFrom(objectType.GetTypeInfo());
+            return typeof(ProvisioningStateType).GetTypeInfo().IsAssignableFrom(objectType.GetTypeInfo());
         }
 
         /// <summary>
-        /// Overrides ReadJson and converts token to OperatorScope.
+        /// Overrides ReadJson and converts token to ProvisioningStateType.
         /// </summary>
         public override object ReadJson(JsonReader reader, System.Type objectType, object existingValue, JsonSerializer serializer)
         {
@@ -38,11 +38,11 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
             {
                 return null;
             }
-            return (OperatorScope)serializer.Deserialize<string>(reader);
+            return (ProvisioningStateType)serializer.Deserialize<string>(reader);
         }
 
         /// <summary>
-        /// Overriding WriteJson for OperatorScope for serialization.
+        /// Overriding WriteJson for ProvisioningStateType for serialization.
         /// </summary>
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {

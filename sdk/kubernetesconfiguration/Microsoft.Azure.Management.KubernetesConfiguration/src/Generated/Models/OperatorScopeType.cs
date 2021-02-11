@@ -13,38 +13,32 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
     using Newtonsoft.Json;
 
     /// <summary>
-    /// Defines values for ProvisioningState.
+    /// Defines values for OperatorScopeType.
     /// </summary>
     /// <summary>
     /// Determine base value for a given allowed value if exists, else return
     /// the value itself
     /// </summary>
-    [JsonConverter(typeof(ProvisioningStateConverter))]
-    public struct ProvisioningState : System.IEquatable<ProvisioningState>
+    [JsonConverter(typeof(OperatorScopeTypeConverter))]
+    public struct OperatorScopeType : System.IEquatable<OperatorScopeType>
     {
-        private ProvisioningState(string underlyingValue)
+        private OperatorScopeType(string underlyingValue)
         {
             UnderlyingValue=underlyingValue;
         }
 
-        public static readonly ProvisioningState Accepted = "Accepted";
+        public static readonly OperatorScopeType Cluster = "cluster";
 
-        public static readonly ProvisioningState Deleting = "Deleting";
-
-        public static readonly ProvisioningState Running = "Running";
-
-        public static readonly ProvisioningState Succeeded = "Succeeded";
-
-        public static readonly ProvisioningState Failed = "Failed";
+        public static readonly OperatorScopeType Namespace = "namespace";
 
 
         /// <summary>
-        /// Underlying value of enum ProvisioningState
+        /// Underlying value of enum OperatorScopeType
         /// </summary>
         private readonly string UnderlyingValue;
 
         /// <summary>
-        /// Returns string representation for ProvisioningState
+        /// Returns string representation for OperatorScopeType
         /// </summary>
         public override string ToString()
         {
@@ -52,55 +46,55 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
         }
 
         /// <summary>
-        /// Compares enums of type ProvisioningState
+        /// Compares enums of type OperatorScopeType
         /// </summary>
-        public bool Equals(ProvisioningState e)
+        public bool Equals(OperatorScopeType e)
         {
             return UnderlyingValue.Equals(e.UnderlyingValue);
         }
 
         /// <summary>
-        /// Implicit operator to convert string to ProvisioningState
+        /// Implicit operator to convert string to OperatorScopeType
         /// </summary>
-        public static implicit operator ProvisioningState(string value)
+        public static implicit operator OperatorScopeType(string value)
         {
-            return new ProvisioningState(value);
+            return new OperatorScopeType(value);
         }
 
         /// <summary>
-        /// Implicit operator to convert ProvisioningState to string
+        /// Implicit operator to convert OperatorScopeType to string
         /// </summary>
-        public static implicit operator string(ProvisioningState e)
+        public static implicit operator string(OperatorScopeType e)
         {
             return e.UnderlyingValue;
         }
 
         /// <summary>
-        /// Overriding == operator for enum ProvisioningState
+        /// Overriding == operator for enum OperatorScopeType
         /// </summary>
-        public static bool operator == (ProvisioningState e1, ProvisioningState e2)
+        public static bool operator == (OperatorScopeType e1, OperatorScopeType e2)
         {
             return e2.Equals(e1);
         }
 
         /// <summary>
-        /// Overriding != operator for enum ProvisioningState
+        /// Overriding != operator for enum OperatorScopeType
         /// </summary>
-        public static bool operator != (ProvisioningState e1, ProvisioningState e2)
+        public static bool operator != (OperatorScopeType e1, OperatorScopeType e2)
         {
             return !e2.Equals(e1);
         }
 
         /// <summary>
-        /// Overrides Equals operator for ProvisioningState
+        /// Overrides Equals operator for OperatorScopeType
         /// </summary>
         public override bool Equals(object obj)
         {
-            return obj is ProvisioningState && Equals((ProvisioningState)obj);
+            return obj is OperatorScopeType && Equals((OperatorScopeType)obj);
         }
 
         /// <summary>
-        /// Returns for hashCode ProvisioningState
+        /// Returns for hashCode OperatorScopeType
         /// </summary>
         public override int GetHashCode()
         {

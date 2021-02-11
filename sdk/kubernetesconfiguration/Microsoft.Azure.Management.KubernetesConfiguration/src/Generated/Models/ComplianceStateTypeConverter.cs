@@ -15,22 +15,22 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
     using System.Reflection;
 
     /// <summary>
-    /// Defines values for ComplianceState.
+    /// Defines values for ComplianceStateType.
     /// </summary>
-    public sealed class ComplianceStateConverter : JsonConverter
+    public sealed class ComplianceStateTypeConverter : JsonConverter
     {
 
         /// <summary>
-        /// Returns if objectType can be converted to ComplianceState by the
-        /// converter.
+        /// Returns if objectType can be converted to ComplianceStateType by
+        /// the converter.
         /// </summary>
         public override bool CanConvert(System.Type objectType)
         {
-            return typeof(ComplianceState).GetTypeInfo().IsAssignableFrom(objectType.GetTypeInfo());
+            return typeof(ComplianceStateType).GetTypeInfo().IsAssignableFrom(objectType.GetTypeInfo());
         }
 
         /// <summary>
-        /// Overrides ReadJson and converts token to ComplianceState.
+        /// Overrides ReadJson and converts token to ComplianceStateType.
         /// </summary>
         public override object ReadJson(JsonReader reader, System.Type objectType, object existingValue, JsonSerializer serializer)
         {
@@ -38,11 +38,11 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
             {
                 return null;
             }
-            return (ComplianceState)serializer.Deserialize<string>(reader);
+            return (ComplianceStateType)serializer.Deserialize<string>(reader);
         }
 
         /// <summary>
-        /// Overriding WriteJson for ComplianceState for serialization.
+        /// Overriding WriteJson for ComplianceStateType for serialization.
         /// </summary>
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {

@@ -13,32 +13,38 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
     using Newtonsoft.Json;
 
     /// <summary>
-    /// Defines values for OperatorScope.
+    /// Defines values for ComplianceStateType.
     /// </summary>
     /// <summary>
     /// Determine base value for a given allowed value if exists, else return
     /// the value itself
     /// </summary>
-    [JsonConverter(typeof(OperatorScopeConverter))]
-    public struct OperatorScope : System.IEquatable<OperatorScope>
+    [JsonConverter(typeof(ComplianceStateTypeConverter))]
+    public struct ComplianceStateType : System.IEquatable<ComplianceStateType>
     {
-        private OperatorScope(string underlyingValue)
+        private ComplianceStateType(string underlyingValue)
         {
             UnderlyingValue=underlyingValue;
         }
 
-        public static readonly OperatorScope Cluster = "cluster";
+        public static readonly ComplianceStateType Pending = "Pending";
 
-        public static readonly OperatorScope Namespace = "namespace";
+        public static readonly ComplianceStateType Compliant = "Compliant";
+
+        public static readonly ComplianceStateType Noncompliant = "Noncompliant";
+
+        public static readonly ComplianceStateType Installed = "Installed";
+
+        public static readonly ComplianceStateType Failed = "Failed";
 
 
         /// <summary>
-        /// Underlying value of enum OperatorScope
+        /// Underlying value of enum ComplianceStateType
         /// </summary>
         private readonly string UnderlyingValue;
 
         /// <summary>
-        /// Returns string representation for OperatorScope
+        /// Returns string representation for ComplianceStateType
         /// </summary>
         public override string ToString()
         {
@@ -46,55 +52,55 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
         }
 
         /// <summary>
-        /// Compares enums of type OperatorScope
+        /// Compares enums of type ComplianceStateType
         /// </summary>
-        public bool Equals(OperatorScope e)
+        public bool Equals(ComplianceStateType e)
         {
             return UnderlyingValue.Equals(e.UnderlyingValue);
         }
 
         /// <summary>
-        /// Implicit operator to convert string to OperatorScope
+        /// Implicit operator to convert string to ComplianceStateType
         /// </summary>
-        public static implicit operator OperatorScope(string value)
+        public static implicit operator ComplianceStateType(string value)
         {
-            return new OperatorScope(value);
+            return new ComplianceStateType(value);
         }
 
         /// <summary>
-        /// Implicit operator to convert OperatorScope to string
+        /// Implicit operator to convert ComplianceStateType to string
         /// </summary>
-        public static implicit operator string(OperatorScope e)
+        public static implicit operator string(ComplianceStateType e)
         {
             return e.UnderlyingValue;
         }
 
         /// <summary>
-        /// Overriding == operator for enum OperatorScope
+        /// Overriding == operator for enum ComplianceStateType
         /// </summary>
-        public static bool operator == (OperatorScope e1, OperatorScope e2)
+        public static bool operator == (ComplianceStateType e1, ComplianceStateType e2)
         {
             return e2.Equals(e1);
         }
 
         /// <summary>
-        /// Overriding != operator for enum OperatorScope
+        /// Overriding != operator for enum ComplianceStateType
         /// </summary>
-        public static bool operator != (OperatorScope e1, OperatorScope e2)
+        public static bool operator != (ComplianceStateType e1, ComplianceStateType e2)
         {
             return !e2.Equals(e1);
         }
 
         /// <summary>
-        /// Overrides Equals operator for OperatorScope
+        /// Overrides Equals operator for ComplianceStateType
         /// </summary>
         public override bool Equals(object obj)
         {
-            return obj is OperatorScope && Equals((OperatorScope)obj);
+            return obj is ComplianceStateType && Equals((ComplianceStateType)obj);
         }
 
         /// <summary>
-        /// Returns for hashCode OperatorScope
+        /// Returns for hashCode ComplianceStateType
         /// </summary>
         public override int GetHashCode()
         {

@@ -4,6 +4,7 @@
 namespace KubernetesConfiguration.Tests.ScenarioTests
 {
     using System.Linq;
+    using System.Collections.Generic;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Xunit;
     using Microsoft.Azure.Management.KubernetesConfiguration.Models;
@@ -30,7 +31,14 @@ namespace KubernetesConfiguration.Tests.ScenarioTests
                 operatorInstanceName: "netsdktestconfig01a-opin",
                 operatorParams: "--git-readonly",
                 operatorScope: "namespace",
-                enableHelmOperator: "true"
+                enableHelmOperator: true,
+                helmOperatorProperties: new HelmOperatorProperties(
+                    chartVersion: "1.2.0",
+                    chartValues: "--set helm.versions=v3"
+                ),
+                configurationProtectedSettings: new Dictionary<string, string>(){
+                    {"dummyArg", "dummyParam"}
+                }
                 );
 
             using (var context = MockContext.Start(this.GetType()))

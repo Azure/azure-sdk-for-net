@@ -15,22 +15,22 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
     using System.Reflection;
 
     /// <summary>
-    /// Defines values for MessageLevel.
+    /// Defines values for OperatorScopeType.
     /// </summary>
-    public sealed class MessageLevelConverter : JsonConverter
+    public sealed class OperatorScopeTypeConverter : JsonConverter
     {
 
         /// <summary>
-        /// Returns if objectType can be converted to MessageLevel by the
+        /// Returns if objectType can be converted to OperatorScopeType by the
         /// converter.
         /// </summary>
         public override bool CanConvert(System.Type objectType)
         {
-            return typeof(MessageLevel).GetTypeInfo().IsAssignableFrom(objectType.GetTypeInfo());
+            return typeof(OperatorScopeType).GetTypeInfo().IsAssignableFrom(objectType.GetTypeInfo());
         }
 
         /// <summary>
-        /// Overrides ReadJson and converts token to MessageLevel.
+        /// Overrides ReadJson and converts token to OperatorScopeType.
         /// </summary>
         public override object ReadJson(JsonReader reader, System.Type objectType, object existingValue, JsonSerializer serializer)
         {
@@ -38,11 +38,11 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
             {
                 return null;
             }
-            return (MessageLevel)serializer.Deserialize<string>(reader);
+            return (OperatorScopeType)serializer.Deserialize<string>(reader);
         }
 
         /// <summary>
-        /// Overriding WriteJson for MessageLevel for serialization.
+        /// Overriding WriteJson for OperatorScopeType for serialization.
         /// </summary>
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {

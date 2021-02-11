@@ -15,22 +15,22 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
     using System.Reflection;
 
     /// <summary>
-    /// Defines values for ProvisioningState.
+    /// Defines values for MessageLevelType.
     /// </summary>
-    public sealed class ProvisioningStateConverter : JsonConverter
+    public sealed class MessageLevelTypeConverter : JsonConverter
     {
 
         /// <summary>
-        /// Returns if objectType can be converted to ProvisioningState by the
+        /// Returns if objectType can be converted to MessageLevelType by the
         /// converter.
         /// </summary>
         public override bool CanConvert(System.Type objectType)
         {
-            return typeof(ProvisioningState).GetTypeInfo().IsAssignableFrom(objectType.GetTypeInfo());
+            return typeof(MessageLevelType).GetTypeInfo().IsAssignableFrom(objectType.GetTypeInfo());
         }
 
         /// <summary>
-        /// Overrides ReadJson and converts token to ProvisioningState.
+        /// Overrides ReadJson and converts token to MessageLevelType.
         /// </summary>
         public override object ReadJson(JsonReader reader, System.Type objectType, object existingValue, JsonSerializer serializer)
         {
@@ -38,11 +38,11 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
             {
                 return null;
             }
-            return (ProvisioningState)serializer.Deserialize<string>(reader);
+            return (MessageLevelType)serializer.Deserialize<string>(reader);
         }
 
         /// <summary>
-        /// Overriding WriteJson for ProvisioningState for serialization.
+        /// Overriding WriteJson for MessageLevelType for serialization.
         /// </summary>
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {

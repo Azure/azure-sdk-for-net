@@ -13,32 +13,36 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
     using Newtonsoft.Json;
 
     /// <summary>
-    /// Defines values for EnableHelmOperator.
+    /// Defines values for CreatedByType.
     /// </summary>
     /// <summary>
     /// Determine base value for a given allowed value if exists, else return
     /// the value itself
     /// </summary>
-    [JsonConverter(typeof(EnableHelmOperatorConverter))]
-    public struct EnableHelmOperator : System.IEquatable<EnableHelmOperator>
+    [JsonConverter(typeof(CreatedByTypeConverter))]
+    public struct CreatedByType : System.IEquatable<CreatedByType>
     {
-        private EnableHelmOperator(string underlyingValue)
+        private CreatedByType(string underlyingValue)
         {
             UnderlyingValue=underlyingValue;
         }
 
-        public static readonly EnableHelmOperator True = "true";
+        public static readonly CreatedByType User = "User";
 
-        public static readonly EnableHelmOperator False = "false";
+        public static readonly CreatedByType Application = "Application";
+
+        public static readonly CreatedByType ManagedIdentity = "ManagedIdentity";
+
+        public static readonly CreatedByType Key = "Key";
 
 
         /// <summary>
-        /// Underlying value of enum EnableHelmOperator
+        /// Underlying value of enum CreatedByType
         /// </summary>
         private readonly string UnderlyingValue;
 
         /// <summary>
-        /// Returns string representation for EnableHelmOperator
+        /// Returns string representation for CreatedByType
         /// </summary>
         public override string ToString()
         {
@@ -46,55 +50,55 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
         }
 
         /// <summary>
-        /// Compares enums of type EnableHelmOperator
+        /// Compares enums of type CreatedByType
         /// </summary>
-        public bool Equals(EnableHelmOperator e)
+        public bool Equals(CreatedByType e)
         {
             return UnderlyingValue.Equals(e.UnderlyingValue);
         }
 
         /// <summary>
-        /// Implicit operator to convert string to EnableHelmOperator
+        /// Implicit operator to convert string to CreatedByType
         /// </summary>
-        public static implicit operator EnableHelmOperator(string value)
+        public static implicit operator CreatedByType(string value)
         {
-            return new EnableHelmOperator(value);
+            return new CreatedByType(value);
         }
 
         /// <summary>
-        /// Implicit operator to convert EnableHelmOperator to string
+        /// Implicit operator to convert CreatedByType to string
         /// </summary>
-        public static implicit operator string(EnableHelmOperator e)
+        public static implicit operator string(CreatedByType e)
         {
             return e.UnderlyingValue;
         }
 
         /// <summary>
-        /// Overriding == operator for enum EnableHelmOperator
+        /// Overriding == operator for enum CreatedByType
         /// </summary>
-        public static bool operator == (EnableHelmOperator e1, EnableHelmOperator e2)
+        public static bool operator == (CreatedByType e1, CreatedByType e2)
         {
             return e2.Equals(e1);
         }
 
         /// <summary>
-        /// Overriding != operator for enum EnableHelmOperator
+        /// Overriding != operator for enum CreatedByType
         /// </summary>
-        public static bool operator != (EnableHelmOperator e1, EnableHelmOperator e2)
+        public static bool operator != (CreatedByType e1, CreatedByType e2)
         {
             return !e2.Equals(e1);
         }
 
         /// <summary>
-        /// Overrides Equals operator for EnableHelmOperator
+        /// Overrides Equals operator for CreatedByType
         /// </summary>
         public override bool Equals(object obj)
         {
-            return obj is EnableHelmOperator && Equals((EnableHelmOperator)obj);
+            return obj is CreatedByType && Equals((CreatedByType)obj);
         }
 
         /// <summary>
-        /// Returns for hashCode EnableHelmOperator
+        /// Returns for hashCode CreatedByType
         /// </summary>
         public override int GetHashCode()
         {
