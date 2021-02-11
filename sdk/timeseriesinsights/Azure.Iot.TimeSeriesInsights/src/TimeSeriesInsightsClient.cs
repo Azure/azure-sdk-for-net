@@ -89,10 +89,23 @@ namespace Azure.Iot.TimeSeriesInsights
         }
 
         /// <summary>
+        /// Creates a new instance of the <see cref="TimeSeriesInsightsClient"/> class, provided for unit testing purposes only.
+        /// </summary>
+        protected TimeSeriesInsightsClient()
+        {
+        }
+
+        /// <summary>
+        /// Gets the scope for authentication/authorization policy.
+        /// </summary>
+        /// <returns>List of scopes for the specified endpoint.</returns>
+        internal static string[] GetAuthorizationScopes() => s_tsiDefaultScopes;
+
+        /// <summary>
         /// Gets model settings asynchronously.
         /// </summary>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The Model Settings which includes model display name, Time Series ID properties and default type ID with the http response <see cref="Response{T}"/>.</returns>
+        /// <returns>The model settings which includes model display name, Time Series Id properties and default type Id with the http response <see cref="Response{T}"/>.</returns>
         public virtual async Task<Response<TimeSeriesModelSettings>> GetModelSettingsAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetModelSettings)}");
@@ -114,7 +127,7 @@ namespace Azure.Iot.TimeSeriesInsights
         /// Gets model settings synchronously.
         /// </summary>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The Model Settings which includes model display name, Time Series ID properties and default type ID with the http response <see cref="Response{T}"/>.</returns>
+        /// <returns>The model settings which includes model display name, Time Series Id properties and default type Id with the http response <see cref="Response{T}"/>.</returns>
         public virtual Response<TimeSeriesModelSettings> GetModelSettings(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetModelSettings)}");
@@ -133,11 +146,11 @@ namespace Azure.Iot.TimeSeriesInsights
         }
 
         /// <summary>
-        /// Updates model settings, either the model name or default type ID asynchronously.
+        /// Updates model settings, either the model name or default type Id asynchronously.
         /// </summary>
         /// <param name="options">Model settings update request body.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The updated Model Settings with the http response <see cref="Response{T}"/>.</returns>
+        /// <returns>The updated model settings with the http response <see cref="Response{T}"/>.</returns>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public virtual async Task<Response<TimeSeriesModelSettings>> UpdateModelSettingsAsync(UpdateModelSettingsOptions options, CancellationToken cancellationToken = default)
         {
@@ -157,11 +170,11 @@ namespace Azure.Iot.TimeSeriesInsights
         }
 
         /// <summary>
-        /// Updates model settings, either the model name or default type ID synchronously.
+        /// Updates model settings, either the model name or default type Id synchronously.
         /// </summary>
         /// <param name="options">Model settings update request body.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The updated Model Settings with the http response <see cref="Response{T}"/>.</returns>
+        /// <returns>The updated model settings with the http response <see cref="Response{T}"/>.</returns>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public virtual Response<TimeSeriesModelSettings> UpdateModelSettings(UpdateModelSettingsOptions options, CancellationToken cancellationToken = default)
         {
@@ -179,49 +192,5 @@ namespace Azure.Iot.TimeSeriesInsights
                 throw;
             }
         }
-
-        /// <summary>
-        /// Creates a new instance of the <see cref="TimeSeriesInsightsClient"/> class, provided for unit testing purposes only.
-        /// </summary>
-        protected TimeSeriesInsightsClient()
-        {
-        }
-
-        /// <summary>
-        /// Returns the model settings which includes model display name, Time Series ID properties and default type ID. Every Gen2 environment has a model that is automatically created.
-        /// </summary>
-        /// <param name="clientSessionId"> Optional client session ID. Service records this value. Allows the service to trace a group of related operations across services, and allows the customer to contact support regarding a particular group of requests. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns>The deserialized application/json model settings digital twin and the http response <see cref="Response{ModelSettingsResponse}"/>.</returns>
-        /// <example>
-        /// This sample demonstrates getting and deserializing a model settings.
-        ///
-        /// <code snippet="Snippet:TimeSeriesInsightsGetModelSettings">
-        /// // Get the model settings for the time series insights environment
-        /// Response&lt;Models.ModelSettingsResponse&gt; response = await client.GetAsync().ConfigureAwait(false);
-        /// Console.WriteLine($&quot;Retrieved model {response.Value.ModelSettings.Name}.&quot;);
-        /// </code>
-        /// </example>
-        public virtual Task<Response<ModelSettingsResponse>> GetAsync(string clientSessionId = null, CancellationToken cancellationToken = default)
-        {
-            return _modelSettingsRestClient.GetAsync(clientSessionId, cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns the model settings which includes model display name, Time Series ID properties and default type ID. Every Gen2 environment has a model that is automatically created.
-        /// </summary>
-        /// <param name="clientSessionId"> Optional client session ID. Service records this value. Allows the service to trace a group of related operations across services, and allows the customer to contact support regarding a particular group of requests. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns>The deserialized application/json model settings digital twin and the http response <see cref="Response{ModelSettingsResponse}"/>.</returns>
-        public virtual Response<ModelSettingsResponse> Get(string clientSessionId = null, CancellationToken cancellationToken = default)
-        {
-            return _modelSettingsRestClient.Get(clientSessionId, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the scope for authentication/authorization policy.
-        /// </summary>
-        /// <returns>List of scopes for the specified endpoint.</returns>
-        internal static string[] GetAuthorizationScopes() => s_tsiDefaultScopes;
     }
 }

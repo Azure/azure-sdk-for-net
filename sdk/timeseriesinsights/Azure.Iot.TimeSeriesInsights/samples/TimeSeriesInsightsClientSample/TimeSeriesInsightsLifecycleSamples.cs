@@ -30,7 +30,7 @@ namespace Azure.Iot.TimeSeriesInsights.Samples
                 #region Snippet:TimeSeriesInsightsGetModelSettings
 
                 // Get the model settings for the time series insights environment
-                Response<TimeSeriesModelSettings> currentSettings = await client.GetModelSettingsAsync().ConfigureAwait(false);
+                Response<TimeSeriesModelSettings> currentSettings = await client.GetModelSettingsAsync();
                 Console.WriteLine($"Retrieved model with default type id {currentSettings.Value.DefaultTypeId} " +
                     $"model name {currentSettings.Value.Name}.");
 
@@ -43,9 +43,11 @@ namespace Azure.Iot.TimeSeriesInsights.Samples
 
                 #region Snippet:TimeSeriesInsightsUpdateModelSettings
 
-                UpdateModelSettingsOptions options = new UpdateModelSettingsOptions();
-                options.Name = "sampleModel";
-                Response<TimeSeriesModelSettings> updatedSettings = await client.UpdateModelSettingsAsync(options).ConfigureAwait(false);
+                var options = new UpdateModelSettingsOptions
+                {
+                    Name = "sampleModel"
+                };
+                Response<TimeSeriesModelSettings> updatedSettings = await client.UpdateModelSettingsAsync(options);
                 Console.WriteLine($"Updated model name to {updatedSettings.Value.Name} ");
 
                 #endregion Snippet:TimeSeriesInsightsUpdateModelSettings
