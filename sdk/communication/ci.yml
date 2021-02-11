@@ -26,8 +26,6 @@ extends:
     ServiceDirectory: communication
     ArtifactName: packages
     Artifacts:
-    - name: Azure.Communication.Administration
-      safeName: AzureCommunicationAdministration
     - name: Azure.Communication.Chat
       safeName: AzureCommunicationChat
     - name: Azure.Communication.Common
