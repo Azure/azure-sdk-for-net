@@ -18,7 +18,7 @@ namespace Azure.Identity
     /// <item><term>AZURE_TENANT_ID</term><description>The Azure Active Directory tenant(directory) ID.</description></item>
     /// <item><term>AZURE_CLIENT_ID</term><description>The client(application) ID of an App Registration in the tenant.</description></item>
     /// <item><term>AZURE_CLIENT_SECRET</term><description>A client secret that was generated for the App Registration.</description></item>
-    /// <item><term>AZURE_CLIENT_CERTIFICATE_LOCATION</term><description>A path to the certificate that was generate for the App Registration.</description></item>
+    /// <item><term>AZURE_CLIENT_CERTIFICATE_PATH</term><description>A path to certificate and private key pair in PEM or PFX format, which can authenticate the App Registration.</description></item>
     /// <item><term>AZURE_USERNAME</term><description>The username, also known as upn, of an Azure Active Directory user account.</description></item>
     /// <item><term>AZURE_PASSWORD</term><description>The password of the Azure Active Directory user account. Note this does not support accounts with MFA enabled.</description></item>
     /// </list>
@@ -28,7 +28,7 @@ namespace Azure.Identity
     /// </summary>
     public class EnvironmentCredential : TokenCredential
     {
-        private const string UnavailbleErrorMessage = "EnvironmentCredential authentication unavailable. Environment variables are not fully configured.";
+        private const string UnavailableErrorMessage = "EnvironmentCredential authentication unavailable. Environment variables are not fully configured.";
         private readonly CredentialPipeline _pipeline;
 
         internal TokenCredential Credential { get; }
@@ -52,7 +52,6 @@ namespace Azure.Identity
         {
         }
 
-
         internal EnvironmentCredential(CredentialPipeline pipeline)
         {
             _pipeline = pipeline;
@@ -64,22 +63,21 @@ namespace Azure.Identity
             string username = EnvironmentVariables.Username;
             string password = EnvironmentVariables.Password;
 
-            if (tenantId != null && clientId != null)
+            if (!string.IsNullOrEmpty(tenantId) && !string.IsNullOrEmpty(clientId))
             {
-                if (clientSecret != null)
+                if (!string.IsNullOrEmpty(clientSecret))
                 {
                     Credential = new ClientSecretCredential(tenantId, clientId, clientSecret, null, _pipeline, null);
                 }
-                else if (username != null && password != null)
+                else if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
                 {
                     Credential = new UsernamePasswordCredential(username, password, tenantId, clientId, null, _pipeline, null);
                 }
-                else if (clientCertificatePath != null)
+                else if (!string.IsNullOrEmpty(clientCertificatePath))
                 {
                     Credential = new ClientCertificateCredential(tenantId, clientId, clientCertificatePath, null, _pipeline, null);
                 }
             }
-
         }
 
         internal EnvironmentCredential(CredentialPipeline pipeline, TokenCredential credential)
@@ -91,7 +89,7 @@ namespace Azure.Identity
         /// <summary>
         /// Obtains a token from the Azure Active Directory service, using the specified client details specified in the environment variables
         /// AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_CLIENT_SECRET or AZURE_USERNAME and AZURE_PASSWORD to authenticate.
-        /// This method is called by Azure SDK clients. It isn't intended for use in application code.
+        /// This method is called automatically by Azure SDK client libraries. You may call this method directly, but you must also handle token caching and token refreshing.
         /// </summary>
         /// <remarks>
         /// If the environment variables AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_CLIENT_SECRET are not specified, the default <see cref="AccessToken"/>
@@ -107,7 +105,7 @@ namespace Azure.Identity
         /// <summary>
         /// Obtains a token from the Azure Active Directory service, using the specified client details specified in the environment variables
         /// AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_CLIENT_SECRET or AZURE_USERNAME and AZURE_PASSWORD to authenticate.
-        /// This method is called by Azure SDK clients. It isn't intended for use in application code.
+        /// This method is called automatically by Azure SDK client libraries. You may call this method directly, but you must also handle token caching and token refreshing.
         /// </summary>
         /// <remarks>
         /// If the environment variables AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_CLIENT_SECRET are not specifeid, the default <see cref="AccessToken"/>
@@ -126,7 +124,7 @@ namespace Azure.Identity
 
             if (Credential is null)
             {
-                throw scope.FailWrapAndThrow(new CredentialUnavailableException(UnavailbleErrorMessage));
+                throw scope.FailWrapAndThrow(new CredentialUnavailableException(UnavailableErrorMessage));
             }
 
             try

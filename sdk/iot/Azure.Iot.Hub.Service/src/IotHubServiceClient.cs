@@ -22,24 +22,25 @@ namespace Azure.Iot.Hub.Service
         private readonly StatisticsRestClient _statisticsRestClient;
         private readonly ConfigurationRestClient _configurationRestClient;
         private readonly JobsRestClient _jobsRestClient;
+        private readonly BulkRegistryRestClient _bulkRegistryRestClient;
 
         /// <summary>
-        /// place holder for Devices.
+        /// Client to perform actions on a device.
         /// </summary>
         public virtual DevicesClient Devices { get; private set; }
 
         /// <summary>
-        /// place holder for Modules.
+        /// Client to perform actions on a module.
         /// </summary>
         public virtual ModulesClient Modules { get; private set; }
 
         /// <summary>
-        /// place holder for Statistics.
+        /// Client to get statistics.
         /// </summary>
         public virtual StatisticsClient Statistics { get; private set; }
 
         /// <summary>
-        /// place holder for Configurations.
+        /// Client for automatic device management.
         /// </summary>
         public virtual ConfigurationsClient Configurations { get; private set; }
 
@@ -54,10 +55,13 @@ namespace Azure.Iot.Hub.Service
         public virtual FilesClient Files { get; private set; }
 
         /// <summary>
-        /// place holder for Jobs
+        /// Client to start jobs.
         /// </summary>
         public virtual JobsClient Jobs { get; private set; }
 
+        /// <summary>
+        /// Client to perform queries on twins.
+        /// </summary>
         public virtual QueryClient Query { get; private set; }
 
         /// <summary>
@@ -145,14 +149,15 @@ namespace Azure.Iot.Hub.Service
             _statisticsRestClient = new StatisticsRestClient(_clientDiagnostics, _httpPipeline, credential.Endpoint, options.GetVersionString());
             _configurationRestClient = new ConfigurationRestClient(_clientDiagnostics, _httpPipeline, credential.Endpoint, options.GetVersionString());
             _jobsRestClient = new JobsRestClient(_clientDiagnostics, _httpPipeline, credential.Endpoint, options.GetVersionString());
+            _bulkRegistryRestClient = new BulkRegistryRestClient(_clientDiagnostics, _httpPipeline, credential.Endpoint, options.GetVersionString());
 
             // Note that the devices and modules subclient take a reference to the Query convenience layer client. This
             // is because they each expose a helper function that uses the query client for listing twins. By passing in
             // the convenience layer query client rather than the protocol layer query client, we minimize rewriting the
             // same pagination logic that now exists only in the query convenience layer client.
             Query = new QueryClient(_queryRestClient);
-            Devices = new DevicesClient(_devicesRestClient, Query);
-            Modules = new ModulesClient(_devicesRestClient, _modulesRestClient, Query);
+            Devices = new DevicesClient(_devicesRestClient, Query, _bulkRegistryRestClient);
+            Modules = new ModulesClient(_devicesRestClient, _modulesRestClient, Query, _bulkRegistryRestClient);
             Statistics = new StatisticsClient(_statisticsRestClient);
             Configurations = new ConfigurationsClient(_configurationRestClient);
 

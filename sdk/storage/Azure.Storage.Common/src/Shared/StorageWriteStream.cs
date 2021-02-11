@@ -16,6 +16,8 @@ namespace Azure.Storage.Shared
         protected long _bufferSize;
         protected readonly IProgress<long> _progressHandler;
         protected readonly PooledMemoryStream _buffer;
+        private bool _disposed;
+        private bool _shouldDisposeBuffer;
 
         protected StorageWriteStream(
             long position,
@@ -31,10 +33,19 @@ namespace Azure.Storage.Shared
                 _progressHandler = new AggregatingProgressIncrementer(progressHandler);
             }
 
-            _buffer = buffer ?? new PooledMemoryStream(
+            if (buffer != null)
+            {
+                _buffer = buffer;
+                _shouldDisposeBuffer = false;
+            }
+            else
+            {
+                _buffer = new PooledMemoryStream(
                 arrayPool: ArrayPool<byte>.Shared,
                 absolutePosition: 0,
                 maxArraySize: (int)Math.Min(Constants.MB, bufferSize));
+                _shouldDisposeBuffer = true;
+            }
         }
 
         public override bool CanRead => false;
@@ -130,7 +141,6 @@ namespace Azure.Storage.Shared
                     {
                         await AppendInternal(async, cancellationToken).ConfigureAwait(false);
                     }
-
                 }
             }
         }
@@ -195,6 +205,27 @@ namespace Azure.Storage.Shared
             {
                 throw new ArgumentOutOfRangeException($"{nameof(offset)} + {nameof(count)} cannot exceed {nameof(buffer)} length.");
             }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                Flush();
+                if (_shouldDisposeBuffer)
+                {
+                    _buffer.Dispose();
+                }
+            }
+
+            _disposed = true;
+
+            base.Dispose(disposing);
         }
     }
 }

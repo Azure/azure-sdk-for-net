@@ -71,6 +71,11 @@ namespace Azure.Graph.Rbac.Models
                 }
                 if (property.NameEquals("allowedMemberTypes"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -91,6 +96,11 @@ namespace Azure.Graph.Rbac.Models
                 }
                 if (property.NameEquals("isEnabled"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     isEnabled = property.Value.GetBoolean();
                     continue;
                 }

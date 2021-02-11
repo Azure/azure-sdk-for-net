@@ -20,6 +20,11 @@ namespace Azure.Graph.Rbac.Models
             {
                 if (property.NameEquals("odata.error"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("code"))
@@ -29,6 +34,11 @@ namespace Azure.Graph.Rbac.Models
                         }
                         if (property0.NameEquals("message"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
                                 if (property1.NameEquals("value"))

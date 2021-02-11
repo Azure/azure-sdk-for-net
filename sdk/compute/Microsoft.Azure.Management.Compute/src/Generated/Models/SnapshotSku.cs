@@ -15,7 +15,9 @@ namespace Microsoft.Azure.Management.Compute.Models
 
     /// <summary>
     /// The snapshots sku name. Can be Standard_LRS, Premium_LRS, or
-    /// Standard_ZRS.
+    /// Standard_ZRS. This is an optional parameter for incremental snapshot
+    /// and the default behavior is the SKU will be set to the same sku as the
+    /// previous snapshot
     /// </summary>
     public partial class SnapshotSku
     {

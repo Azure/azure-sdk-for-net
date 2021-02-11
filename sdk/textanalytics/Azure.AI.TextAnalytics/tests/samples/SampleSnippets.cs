@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.AI.TextAnalytics.Tests;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using NUnit.Framework;
@@ -22,8 +23,7 @@ namespace Azure.AI.TextAnalytics.Samples
             #region Snippet:CreateTextAnalyticsClient
             //@@ string endpoint = "<endpoint>";
             //@@ string apiKey = "<apiKey>";
-            var credential = new AzureKeyCredential(apiKey);
-            var client = new TextAnalyticsClient(new Uri(endpoint), credential);
+            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
             #endregion
         }
 

@@ -35,12 +35,14 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="trainingDocuments"> List of the documents used to train the model and any errors reported in each document. </param>
         /// <param name="fields"> List of fields used to train the model and the train operation error reported by each. </param>
         /// <param name="averageModelAccuracy"> Average accuracy. </param>
+        /// <param name="modelId"> Model identifier. </param>
         /// <param name="errors"> Errors returned during the training operation. </param>
-        internal TrainResult(IReadOnlyList<TrainingDocumentInfo> trainingDocuments, IReadOnlyList<CustomFormModelField> fields, float? averageModelAccuracy, IReadOnlyList<FormRecognizerError> errors)
+        internal TrainResult(IReadOnlyList<TrainingDocumentInfo> trainingDocuments, IReadOnlyList<CustomFormModelField> fields, float? averageModelAccuracy, string modelId, IReadOnlyList<FormRecognizerError> errors)
         {
             TrainingDocuments = trainingDocuments;
             Fields = fields;
             AverageModelAccuracy = averageModelAccuracy;
+            ModelId = modelId;
             Errors = errors;
         }
 

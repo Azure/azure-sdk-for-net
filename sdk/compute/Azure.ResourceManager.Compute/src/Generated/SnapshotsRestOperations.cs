@@ -58,6 +58,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(snapshotName, true);
             uri.AppendQuery("api-version", "2019-11-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(snapshot);
@@ -146,6 +147,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(snapshotName, true);
             uri.AppendQuery("api-version", "2019-11-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(snapshot);
@@ -234,6 +236,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(snapshotName, true);
             uri.AppendQuery("api-version", "2019-11-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -391,6 +394,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/providers/Microsoft.Compute/snapshots", false);
             uri.AppendQuery("api-version", "2019-11-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -460,6 +464,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/providers/Microsoft.Compute/snapshots", false);
             uri.AppendQuery("api-version", "2019-11-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -519,6 +524,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/beginGetAccess", false);
             uri.AppendQuery("api-version", "2019-11-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(grantAccessData);
@@ -676,6 +682,7 @@ namespace Azure.ResourceManager.Compute
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -752,6 +759,7 @@ namespace Azure.ResourceManager.Compute
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

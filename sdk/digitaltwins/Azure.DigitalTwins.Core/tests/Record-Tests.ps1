@@ -9,7 +9,7 @@ $oldConfig = Get-Content -Path $PSScriptRoot/config/$fileName
 
 $newConfig = @"
 {
-    "TestMode":  "Record"	
+    "TestMode":  "Record"
 }
 "@
 
@@ -27,11 +27,9 @@ else
     dotnet test --filter FullyQualifiedName~$TestName
 }
 
-dotnet msbuild /t:UpdateSessionRecords
-
 $newConfig = @"
 {
-    "TestMode":  "Playback"	
+    "TestMode":  "Playback"
 }
 "@
 

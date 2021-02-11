@@ -16,17 +16,20 @@ namespace Azure.DigitalTwins.Core
         /// <summary> Initializes a new instance of RelationshipCollection. </summary>
         internal RelationshipCollection()
         {
-            Value = new ChangeTrackingList<string>();
+            Value = new ChangeTrackingList<object>();
         }
 
         /// <summary> Initializes a new instance of RelationshipCollection. </summary>
         /// <param name="value"> The relationship objects. </param>
         /// <param name="nextLink"> A URI to retrieve the next page of objects. </param>
-        internal RelationshipCollection(IReadOnlyList<string> value, string nextLink)
+        internal RelationshipCollection(IReadOnlyList<object> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
+
+        /// <summary> The relationship objects. </summary>
+        public IReadOnlyList<object> Value { get; }
         /// <summary> A URI to retrieve the next page of objects. </summary>
         public string NextLink { get; }
     }

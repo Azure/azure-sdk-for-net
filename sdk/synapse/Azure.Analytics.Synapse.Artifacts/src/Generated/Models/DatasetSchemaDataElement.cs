@@ -12,13 +12,8 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Columns that define the physical type schema of the dataset. </summary>
-    internal partial class DatasetSchemaDataElement : IReadOnlyDictionary<string, object>
+    public partial class DatasetSchemaDataElement : IReadOnlyDictionary<string, object>
     {
-        /// <summary> Initializes a new instance of DatasetSchemaDataElement. </summary>
-        internal DatasetSchemaDataElement()
-        {
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
-        }
 
         /// <summary> Name of the schema column. Type: string (or Expression with resultType string). </summary>
         public object Name { get; }
@@ -37,7 +32,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public IEnumerable<string> Keys => AdditionalProperties.Keys;
         /// <inheritdoc />
         public IEnumerable<object> Values => AdditionalProperties.Values;
-        /// <inheritdoc />
+        /// <inheritdoc cref="IReadOnlyCollection{T}.Count"/>
         int IReadOnlyCollection<KeyValuePair<string, object>>.Count => AdditionalProperties.Count;
         /// <inheritdoc />
         public object this[string key]

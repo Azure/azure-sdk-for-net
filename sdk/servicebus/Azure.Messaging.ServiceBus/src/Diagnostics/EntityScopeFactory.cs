@@ -60,30 +60,15 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
 
         public DiagnosticScope CreateScope(
             string activityName,
-            string kindAttribute = default,
-            string lockToken = default,
-            string sessionId = default,
-            int? requestedMessageCount = default)
+            string kindAttribute)
         {
             DiagnosticScope scope = _scopeFactory.CreateScope(activityName);
-            scope.AddAttribute(DiagnosticProperty.KindAttribute, kindAttribute ?? DiagnosticProperty.ClientKind);
+            scope.AddAttribute(DiagnosticProperty.KindAttribute, kindAttribute);
             scope.AddAttribute(
                 DiagnosticProperty.ServiceContextAttribute,
                 DiagnosticProperty.ServiceBusServiceContext);
             scope.AddAttribute(DiagnosticProperty.EntityAttribute, _entityPath);
             scope.AddAttribute(DiagnosticProperty.EndpointAttribute, _fullyQualifiedNamespace);
-            if (lockToken != null)
-            {
-                scope.AddAttribute(DiagnosticProperty.LockTokensAttribute, lockToken);
-            }
-            if (sessionId != null)
-            {
-                scope.AddAttribute(DiagnosticProperty.SessionIdAttribute, sessionId);
-            }
-            if (requestedMessageCount != null)
-            {
-                scope.AddAttribute(DiagnosticProperty.RequestedMessageCountAttribute, requestedMessageCount);
-            }
             return scope;
         }
     }

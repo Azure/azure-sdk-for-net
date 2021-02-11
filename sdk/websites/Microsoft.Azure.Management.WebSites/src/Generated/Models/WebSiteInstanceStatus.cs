@@ -40,15 +40,18 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="statusUrl">Link to the GetStatusApi in Kudu</param>
         /// <param name="detectorUrl">Link to the Diagnose and Solve
         /// Portal</param>
-        /// <param name="consoleUrl">Link to the Diagnose and Solve
-        /// Portal</param>
-        public WebSiteInstanceStatus(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), SiteRuntimeState? state = default(SiteRuntimeState?), string statusUrl = default(string), string detectorUrl = default(string), string consoleUrl = default(string), IDictionary<string, ContainerInfo> containers = default(IDictionary<string, ContainerInfo>))
+        /// <param name="consoleUrl">Link to the console to web app
+        /// instance</param>
+        /// <param name="healthCheckUrl">Link to the console to web app
+        /// instance</param>
+        public WebSiteInstanceStatus(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), SiteRuntimeState? state = default(SiteRuntimeState?), string statusUrl = default(string), string detectorUrl = default(string), string consoleUrl = default(string), string healthCheckUrl = default(string), IDictionary<string, ContainerInfo> containers = default(IDictionary<string, ContainerInfo>))
             : base(id, name, kind, type)
         {
             State = state;
             StatusUrl = statusUrl;
             DetectorUrl = detectorUrl;
             ConsoleUrl = consoleUrl;
+            HealthCheckUrl = healthCheckUrl;
             Containers = containers;
             CustomInit();
         }
@@ -77,10 +80,16 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public string DetectorUrl { get; set; }
 
         /// <summary>
-        /// Gets or sets link to the Diagnose and Solve Portal
+        /// Gets or sets link to the console to web app instance
         /// </summary>
         [JsonProperty(PropertyName = "properties.consoleUrl")]
         public string ConsoleUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets link to the console to web app instance
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.healthCheckUrl")]
+        public string HealthCheckUrl { get; set; }
 
         /// <summary>
         /// </summary>

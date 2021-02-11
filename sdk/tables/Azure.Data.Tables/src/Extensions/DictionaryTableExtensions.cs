@@ -25,13 +25,16 @@ namespace Azure.Data.Tables
         /// </summary>
         internal static Dictionary<string, object> ToOdataAnnotatedDictionary(this IDictionary<string, object> tableEntityProperties)
         {
-            // Remove the ETag property, as it does not need to be serialized
-            tableEntityProperties.Remove(TableConstants.PropertyNames.ETag);
-
             var annotatedDictionary = new Dictionary<string, object>(tableEntityProperties.Keys.Count * 2);
 
             foreach (var item in tableEntityProperties)
             {
+                // Remove the ETag property, as it does not need to be serialized
+                if (item.Key == TableConstants.PropertyNames.ETag)
+                {
+                    continue;
+                }
+
                 annotatedDictionary[item.Key] = item.Value;
 
                 switch (item.Value)
@@ -56,6 +59,8 @@ namespace Azure.Data.Tables
                     case DateTime _:
                         annotatedDictionary[item.Key.ToOdataTypeString()] = TableConstants.Odata.EdmDateTime;
                         break;
+                    case Enum enumValue:
+                        throw new NotSupportedException("Enum values are only supported for custom model types implementing ITableEntity.");
                 }
             }
 
@@ -102,7 +107,7 @@ namespace Azure.Data.Tables
                 entity[annotation] = typeAnnotationsWithKeys[annotation].typeAnnotation switch
                 {
                     TableConstants.Odata.EdmBinary => Convert.FromBase64String(entity[annotation] as string),
-                    TableConstants.Odata.EdmDateTime => DateTime.Parse(entity[annotation] as string, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind),
+                    TableConstants.Odata.EdmDateTime => DateTimeOffset.Parse(entity[annotation] as string, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind),
                     TableConstants.Odata.EdmGuid => Guid.Parse(entity[annotation] as string),
                     TableConstants.Odata.EdmInt64 => long.Parse(entity[annotation] as string, CultureInfo.InvariantCulture),
                     _ => throw new NotSupportedException("Not supported type " + typeAnnotationsWithKeys[annotation])
@@ -110,6 +115,23 @@ namespace Azure.Data.Tables
 
                 // Remove the type annotation property from the dictionary.
                 entity.Remove(typeAnnotationsWithKeys[annotation].annotationKey);
+            }
+
+            // The Timestamp property is not annotated, since it is a known system property
+            // so we must cast it without a type annotation
+            if (entity.TryGetValue(TableConstants.PropertyNames.TimeStamp, out var value) && value is string)
+            {
+                entity[TableConstants.PropertyNames.TimeStamp] = DateTimeOffset.Parse(entity[TableConstants.PropertyNames.TimeStamp] as string, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind);
+            }
+
+            // Remove odata metadata.
+            entity.Remove(TableConstants.PropertyNames.OdataMetadata);
+
+            // Set odata.etag as the proper ETag property
+            if (entity.TryGetValue(TableConstants.PropertyNames.EtagOdata, out var etag))
+            {
+                entity[TableConstants.PropertyNames.ETag] = etag;
+                entity.Remove(TableConstants.PropertyNames.EtagOdata);
             }
         }
 
@@ -170,7 +192,14 @@ namespace Azure.Data.Tables
                     }
                     else
                     {
-                        property.SetValue(result, propertyValue);
+                        if (property.PropertyType.IsEnum)
+                        {
+                            typeActions[typeof(Enum)](property, propertyValue, result);
+                        }
+                        else
+                        {
+                            property.SetValue(result, propertyValue);
+                        }
                     }
                 }
             }
@@ -201,6 +230,7 @@ namespace Azure.Data.Tables
             {typeof(string), (property, propertyValue, result) =>  property.SetValue(result, propertyValue as string)},
             {typeof(int), (property, propertyValue, result) =>  property.SetValue(result, (int)propertyValue)},
             {typeof(int?), (property, propertyValue, result) =>  property.SetValue(result, (int?)propertyValue)},
+            {typeof(Enum), (property, propertyValue, result) =>  property.SetValue(result, Enum.Parse(property.PropertyType, propertyValue as string ))},
         };
     }
 }

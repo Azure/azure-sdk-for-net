@@ -30,7 +30,6 @@ namespace Azure.Identity
         /// </summary>
         protected ManagedIdentityCredential()
         {
-
         }
 
         /// <summary>
@@ -47,20 +46,19 @@ namespace Azure.Identity
         }
 
         internal ManagedIdentityCredential(string clientId, CredentialPipeline pipeline)
-            : this(pipeline, new ManagedIdentityClient(pipeline, clientId))
+            : this(new ManagedIdentityClient(pipeline, clientId))
         {
         }
 
-        internal ManagedIdentityCredential(CredentialPipeline pipeline, ManagedIdentityClient client)
+        internal ManagedIdentityCredential(ManagedIdentityClient client)
         {
-
-            _pipeline = pipeline;
+            _pipeline = client.Pipeline;
 
             _client = client;
         }
 
         /// <summary>
-        /// Obtains an <see cref="AccessToken"/> from the Managed Identity service if available. This method is called by Azure SDK clients. It isn't intended for use in application code.
+        /// Obtains an <see cref="AccessToken"/> from the Managed Identity service if available. This method is called automatically by Azure SDK client libraries. You may call this method directly, but you must also handle token caching and token refreshing.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -71,7 +69,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Obtains an <see cref="AccessToken"/> from the Managed Identity service if available. This method is called by Azure SDK clients. It isn't intended for use in application code.
+        /// Obtains an <see cref="AccessToken"/> from the Managed Identity service if available. This method is called automatically by Azure SDK client libraries. You may call this method directly, but you must also handle token caching and token refreshing.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -87,8 +85,7 @@ namespace Azure.Identity
 
             try
             {
-                AccessToken result = async ? await _client.AuthenticateAsync(requestContext.Scopes, cancellationToken).ConfigureAwait(false) : _client.Authenticate(requestContext.Scopes, cancellationToken);
-
+                AccessToken result = await _client.AuthenticateAsync(async, requestContext, cancellationToken).ConfigureAwait(false);
                 return scope.Succeeded(result);
             }
             catch (Exception e)

@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
@@ -27,7 +25,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 ServiceBusSender sender = client.CreateSender(queueName);
 
                 // create a message that we can send
-                ServiceBusMessage message = new ServiceBusMessage(Encoding.UTF8.GetBytes("Hello world!"));
+                ServiceBusMessage message = new ServiceBusMessage("Hello world!");
 
                 // send the message
                 await sender.SendMessageAsync(message);
@@ -41,7 +39,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 // complete the message, thereby deleting it from the service
                 await receiver.CompleteMessageAsync(receivedMessage);
                 #endregion
-                Assert.IsNull(await GetNoRetryClient().CreateReceiver(queueName).ReceiveMessageAsync());
+                Assert.IsNull(await CreateNoRetryClient().CreateReceiver(queueName).ReceiveMessageAsync());
             }
         }
 
@@ -59,7 +57,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 ServiceBusSender sender = client.CreateSender(queueName);
 
                 // create a message that we can send
-                ServiceBusMessage message = new ServiceBusMessage(Encoding.UTF8.GetBytes("Hello world!"));
+                ServiceBusMessage message = new ServiceBusMessage("Hello world!");
 
                 // send the message
                 await sender.SendMessageAsync(message);
@@ -73,7 +71,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 // abandon the message, thereby releasing the lock and allowing it to be received again by this or other receivers
                 await receiver.AbandonMessageAsync(receivedMessage);
                 #endregion
-                Assert.IsNotNull(GetNoRetryClient().CreateReceiver(queueName).ReceiveMessageAsync());
+                Assert.IsNotNull(CreateNoRetryClient().CreateReceiver(queueName).ReceiveMessageAsync());
             }
         }
 
@@ -91,7 +89,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 ServiceBusSender sender = client.CreateSender(queueName);
 
                 // create a message that we can send
-                ServiceBusMessage message = new ServiceBusMessage(Encoding.UTF8.GetBytes("Hello world!"));
+                ServiceBusMessage message = new ServiceBusMessage("Hello world!");
 
                 // send the message
                 await sender.SendMessageAsync(message);
@@ -128,7 +126,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 ServiceBusSender sender = client.CreateSender(queueName);
 
                 // create a message that we can send
-                ServiceBusMessage message = new ServiceBusMessage(Encoding.UTF8.GetBytes("Hello world!"));
+                ServiceBusMessage message = new ServiceBusMessage("Hello world!");
 
                 // send the message
                 await sender.SendMessageAsync(message);
@@ -139,11 +137,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 #region Snippet:ServiceBusDeadLetterMessage
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
 
-                // deadletter the message, thereby preventing the message from being received again without receiving from the dead letter queue.
+                // dead-letter the message, thereby preventing the message from being received again without receiving from the dead letter queue.
                 await receiver.DeadLetterMessageAsync(receivedMessage);
 
                 // receive the dead lettered message with receiver scoped to the dead letter queue.
-                ServiceBusReceiver dlqReceiver = client.CreateDeadLetterReceiver(queueName);
+                ServiceBusReceiver dlqReceiver = client.CreateReceiver(queueName, new ServiceBusReceiverOptions
+                {
+                    SubQueue = SubQueue.DeadLetter
+                });
                 ServiceBusReceivedMessage dlqMessage = await dlqReceiver.ReceiveMessageAsync();
                 #endregion
                 Assert.IsNotNull(dlqMessage);

@@ -7,12 +7,11 @@
 		<PackageId>Microsoft.Azure.Management.Synapse</PackageId>
 		<Description>Azure Synapse Management SDK Library</Description>
 		<AssemblyName>Microsoft.Azure.Management.Synapse</AssemblyName>
-		<Version>1.0.0-preview.2</Version>
+		<Version>1.0.0</Version>
 		<PackageTags>Microsoft Azure Synapse Management;Synapse;Synapse Management</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
- - Support SQL DW Gen3
- - Support long running operation in integration runtime
+			- General available release
       ]]>
 		</PackageReleaseNotes>
     

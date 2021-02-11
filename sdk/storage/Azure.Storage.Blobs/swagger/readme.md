@@ -4,7 +4,7 @@
 ## Configuration
 ``` yaml
 # Generate blob storage
-input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/storage-dataplane-preview/specification/storage/data-plane/Microsoft.BlobStorage/preview/2019-12-12/blob.json
+input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/storage-dataplane-preview/specification/storage/data-plane/Microsoft.BlobStorage/preview/2020-06-12/blob.json
 output-folder: ../src/Generated
 clear-output-folder: false
 
@@ -1396,6 +1396,22 @@ directive:
     }
 ```
 
+### Batch returns a 202
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{containerName}?restype=container&comp=batch"].post.responses
+  transform: >
+    const response = $["202"];
+    if (response) {
+        delete $["202"];
+        $["202"] = response;
+        $["202"]["x-az-public"] = false;
+        $["202"]["x-az-response-name"] = "BlobBatchResult";
+        $["202"]["x-az-response-schema-name"] = "Content";
+    }
+```
+
 ### Hide PageList/PageRange/ClearRange
 ``` yaml
 directive:
@@ -1632,6 +1648,26 @@ directive:
     };
 ```
 
+### Make ArrowField internal
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    $.ArrowField["x-az-public"] = false;
+    $.ArrowField["x-ms-client-name"] = "ArrowFieldInternal";
+```
+
+### Make ArrowConfiguration internal
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    $.ArrowConfiguration["x-az-public"] = false;
+    $.ArrowConfiguration["x-ms-client-name"] = "ArrowTextConfigurationInternal";
+```
+
 ### Treat the API version as a parameter instead of a constant
 ``` yaml
 directive:
@@ -1648,6 +1684,54 @@ directive:
   where: $.definitions.BlobItemInternal
   transform: >
     $.properties.ObjectReplicationMetadata.xml = { "name":  "OrMetadata" };
+```
+
+### Rename BlockBlobPutBlobFromUrlResult
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{containerName}/{blob}?BlockBlob&fromUrl"]
+  transform: >
+    $.put.responses["201"]["x-az-response-name"] = "BlobContentInfo";
+    $.put.responses["201"].headers["x-ms-request-server-encrypted"] = {
+      "x-ms-client-name": "IsServerEncrypted",
+      "type": "boolean",
+      "x-az-demote-header": true,
+      "description": "The value of this header is set to true if the contents of the request are successfully encrypted using the specified algorithm, and false otherwise."
+    };
+    $.put.responses["304"] = {
+        "description": "The condition specified using HTTP conditional header(s) is not met.",
+        "x-az-response-name": "ConditionNotMetError",
+        "x-az-create-exception": true,
+        "x-az-public": false,
+        "headers": { "x-ms-error-code": { "x-ms-client-name": "ErrorCode", "type": "string" } } };
+```
+
+### Hide BlobDeleteType
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters.BlobDeleteType
+  transform: >
+    $["x-az-public"] = false;
+```
+
+### Hide BlobRetentionPolicy.AllowPermanentDelete
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.RetentionPolicy
+  transform: >
+    delete $.properties.AllowPermanentDelete;
+```
+
+### Hide ContainerSubmitBatchResult
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{containerName}?restype=container&comp=batch"]
+  transform: >
+    $.post.responses["202"]["x-az-public"] = false;
 ```
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fstorage%2FAzure.Storage.Blobs%2Fswagger%2Freadme.png)

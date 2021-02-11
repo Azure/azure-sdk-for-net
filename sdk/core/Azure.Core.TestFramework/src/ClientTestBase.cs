@@ -38,7 +38,7 @@ namespace Azure.Core.TestFramework
 
         protected TClient InstrumentClient<TClient>(TClient client, IEnumerable<IInterceptor> preInterceptors) where TClient : class => (TClient)InstrumentClient(typeof(TClient), client, preInterceptors);
 
-        internal object InstrumentClient(Type clientType, object client, IEnumerable<IInterceptor> preInterceptors)
+        protected internal virtual object InstrumentClient(Type clientType, object client, IEnumerable<IInterceptor> preInterceptors)
         {
             if (client is IProxyTargetAccessor)
             {
@@ -58,7 +58,6 @@ namespace Azure.Core.TestFramework
 
                             break;
                         }
-
 
                         if (methodInfo.Name.EndsWith("Client") &&
                             methodInfo.Name.StartsWith("Get") &&

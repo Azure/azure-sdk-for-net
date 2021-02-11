@@ -5,6 +5,7 @@ using System;
 using System.Globalization;
 using System.Linq;
 using System.Security.Authentication;
+using System.Xml.Serialization;
 using Azure.Core.Pipeline;
 
 namespace Azure.Storage
@@ -46,11 +47,42 @@ namespace Azure.Storage
         public static InvalidOperationException TokenCredentialsRequireHttps()
             => new InvalidOperationException("Use of token credentials requires HTTPS");
 
+        public static ArgumentException SasCredentialRequiresUriWithoutSas<TUriBuilder>(Uri uri)
+            => new ArgumentException(
+                $"You cannot use {nameof(AzureSasCredential)} when the resource URI also contains a Shared Access Signature: {uri}\n" +
+                $"You can remove the shared access signature by creating a {typeof(TUriBuilder).Name}, setting {typeof(TUriBuilder).Name}.Sas to null," +
+                $" and calling {typeof(TUriBuilder).Name}.ToUri.");
+
         public static InvalidOperationException SasMissingData(string paramName)
             => new InvalidOperationException($"SAS is missing required parameter: {paramName}");
 
         public static InvalidOperationException SasDataNotAllowed(string paramName, string paramNameNotAllowed)
             => new InvalidOperationException($"SAS cannot have the {paramNameNotAllowed} parameter when the {paramName} parameter is present");
+
+        public static InvalidOperationException SasDataInConjunction(string paramName, string paramName2)
+            => new InvalidOperationException($"SAS cannot have the following parameters specified in conjunction: {paramName}, {paramName2}");
+
+        public static InvalidOperationException SasNamesNotMatching(string builderParam, string builderName, string clientParam)
+            => new InvalidOperationException($"SAS Uri cannot be generated. {builderName}.{builderParam} does not match {clientParam} in the Client. " +
+                    $"{builderName}.{builderParam} must either be left empty or match the {clientParam} in the Client");
+
+        public static InvalidOperationException SasNamesNotMatching(string builderParam, string builderName)
+            => new InvalidOperationException($"SAS Uri cannot be generated. {builderName}.{builderParam} does not match snapshot value in the URI in the Client. " +
+                    $"{builderName}.{builderParam} must either be left empty or match the snapshot value in the URI in the Client");
+
+        public static InvalidOperationException SasServiceNotMatching(string builderParam, string builderName, string expectedService)
+            => new InvalidOperationException($"SAS Uri cannot be generated. {builderName}.{builderParam} does specify {expectedService}. " +
+                    $"{builderName}.{builderParam} must either specify {expectedService} or specify all Services are accessible in the value.");
+
+        public static InvalidOperationException SasClientMissingData(string paramName)
+            => new InvalidOperationException($"SAS Uri cannot be generated. {paramName} in the client has not been set");
+
+        public static InvalidOperationException SasBuilderEmptyParam(string builderName, string paramName, string sasType)
+            => new InvalidOperationException($"SAS Uri cannot be generated. {builderName}.{paramName} cannot be set to create a {sasType} SAS.");
+
+        public static InvalidOperationException SasIncorrectResourceType(string builderName, string builderParam, string value, string clientName)
+            => new InvalidOperationException($"SAS Uri cannot be generated. Expected {builderName}.{builderParam} to be set to {value} to generate" +
+                $"the respective SAS for the client, {clientName}");
 
         public static ArgumentException InvalidPermission(char s)
             => new ArgumentException($"Invalid permission: '{s}'");

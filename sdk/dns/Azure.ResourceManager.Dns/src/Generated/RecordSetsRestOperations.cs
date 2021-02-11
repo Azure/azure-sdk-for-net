@@ -73,6 +73,7 @@ namespace Azure.ResourceManager.Dns
             {
                 request.Headers.Add("If-Match", ifMatch);
             }
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
@@ -195,6 +196,7 @@ namespace Azure.ResourceManager.Dns
             {
                 request.Headers.Add("If-None-Match", ifNoneMatch);
             }
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
@@ -317,6 +319,7 @@ namespace Azure.ResourceManager.Dns
             {
                 request.Headers.Add("If-Match", ifMatch);
             }
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -409,6 +412,7 @@ namespace Azure.ResourceManager.Dns
             uri.AppendPath(relativeRecordSetName, false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -513,6 +517,7 @@ namespace Azure.ResourceManager.Dns
             }
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -610,6 +615,7 @@ namespace Azure.ResourceManager.Dns
             }
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -705,6 +711,7 @@ namespace Azure.ResourceManager.Dns
             }
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -785,6 +792,7 @@ namespace Azure.ResourceManager.Dns
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -877,6 +885,7 @@ namespace Azure.ResourceManager.Dns
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -967,6 +976,7 @@ namespace Azure.ResourceManager.Dns
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

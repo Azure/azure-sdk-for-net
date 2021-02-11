@@ -1,7 +1,7 @@
 # Setting, getting, updating, and deleting certificates
 
 This sample demonstrates how to set, get, update, and delete a certificate.
-To get started, you'll need a URI to an Azure Key Vault. See the [README](../README.md) for links and instructions.
+To get started, you'll need a URI to an Azure Key Vault. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Certificates/README.md) for links and instructions.
 
 ## Creating a CertificateClient
 
@@ -11,7 +11,7 @@ You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number
 In the sample below, you can set `keyVaultUrl` based on an environment variable, configuration setting, or any way that works for your application.
 
 ```C# Snippet:CertificatesSample1CertificateClient
-var client = new CertificateClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
+CertificateClient client = new CertificateClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
 ```
 
 ## Creating a certificate
@@ -36,7 +36,8 @@ while (!certOp.HasCompleted)
 We can now get the created certificate along with its policy from the Azure Key Vault.
 
 ```C# Snippet:CertificatesSample1GetCertificateWithPolicy
-KeyVaultCertificateWithPolicy certificate = client.GetCertificate(certName);
+Response<KeyVaultCertificateWithPolicy> certificateResponse = client.GetCertificate(certName);
+KeyVaultCertificateWithPolicy certificate = certificateResponse.Value;
 
 Debug.WriteLine($"Certificate was returned with name {certificate.Name} which expires {certificate.Properties.ExpiresOn}");
 ```
@@ -49,8 +50,8 @@ We find that the certificate has been compromised and we want to disable it so a
 CertificateProperties certificateProperties = certificate.Properties;
 certificateProperties.Enabled = false;
 
-KeyVaultCertificate updatedCert = client.UpdateCertificateProperties(certificateProperties);
-Debug.WriteLine($"Certificate enabled set to '{updatedCert.Properties.Enabled}'");
+Response<KeyVaultCertificate> updatedCertResponse = client.UpdateCertificateProperties(certificateProperties);
+Debug.WriteLine($"Certificate enabled set to '{updatedCertResponse.Value.Properties.Enabled}'");
 ```
 
 ## Creating a certificate with a new version
@@ -89,7 +90,7 @@ while (!operation.HasCompleted)
 
 To see the full example source, see:
 
-* [Synchronous Sample1_HelloWorld.cs](../tests/samples/Sample1_HelloWorld.cs)
-* [ASynchronous Sample1_HelloWorldAsync.cs](../tests/samples/Sample1_HelloWorldAsync.cs)
+* [Synchronous Sample1_HelloWorld.cs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Certificates/tests/samples/Sample1_HelloWorld.cs)
+* [ASynchronous Sample1_HelloWorldAsync.cs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Certificates/tests/samples/Sample1_HelloWorldAsync.cs)
 
-[DefaultAzureCredential]: ../../../identity/Azure.Identity/README.md
+[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md

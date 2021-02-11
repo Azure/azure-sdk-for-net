@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    internal static class CapabilityStatusExtensions
+    internal static partial class CapabilityStatusExtensions
     {
         public static string ToSerialString(this CapabilityStatus value) => value switch
         {

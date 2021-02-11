@@ -1,13 +1,89 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using Azure.Security.KeyVault.Keys.Cryptography;
+using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Keys.Tests
 {
     internal static class KeyUtilities
     {
+        public static JsonWebKey CreateKey(SignatureAlgorithm algorithm, bool includePrivateParameters = false, IEnumerable<KeyOperation> keyOps = null)
+        {
+            switch (algorithm.ToString())
+            {
+                case SignatureAlgorithm.PS256Value:
+                case SignatureAlgorithm.PS384Value:
+                case SignatureAlgorithm.PS512Value:
+                case SignatureAlgorithm.RS256Value:
+                case SignatureAlgorithm.RS384Value:
+                case SignatureAlgorithm.RS512Value:
+                    return CreateRsaKey(includePrivateParameters, keyOps);
+
+                case SignatureAlgorithm.ES256Value:
+                case SignatureAlgorithm.ES256KValue:
+                case SignatureAlgorithm.ES384Value:
+                case SignatureAlgorithm.ES512Value:
+#if NET461
+                    throw new IgnoreException("Creating JsonWebKey with ECDsa is not supported on net461.");
+#else
+                    KeyCurveName curveName = algorithm.GetEcKeyCurveName();
+                    ECCurve curve = ECCurve.CreateFromOid(curveName.Oid);
+
+                    using (ECDsa ecdsa = ECDsa.Create())
+                    {
+                        try
+                        {
+                            ecdsa.GenerateKey(curve);
+                            return new JsonWebKey(ecdsa, includePrivateParameters, keyOps);
+                        }
+                        catch (NotSupportedException)
+                        {
+                            throw new IgnoreException($"This platform does not support OID {curveName.Oid}");
+                        }
+                    }
+#endif
+
+                default:
+                    throw new ArgumentException("Invalid Algorithm", nameof(algorithm));
+            }
+        }
+
+        public static JsonWebKey CreateKey(KeyWrapAlgorithm algorithm, bool includePrivateParameters = false, IEnumerable<KeyOperation> keyOps = null)
+        {
+            switch (algorithm.ToString())
+            {
+                case KeyWrapAlgorithm.A128KWValue:
+                case KeyWrapAlgorithm.A192KWValue:
+                case KeyWrapAlgorithm.A256KWValue:
+                    return CreateAesKey(algorithm.GetAesKeyWrapAlgorithm().KeySizeInBytes, keyOps);
+
+                case KeyWrapAlgorithm.Rsa15Value:
+                case KeyWrapAlgorithm.RsaOaepValue:
+                case KeyWrapAlgorithm.RsaOaep256Value:
+                    return CreateRsaKey(includePrivateParameters, keyOps);
+
+                default:
+                    throw new ArgumentException("Invalid Algorithm", nameof(algorithm));
+            }
+        }
+
+        public static JsonWebKey CreateAesKey(int sizeInBytes, IEnumerable<KeyOperation> keyOps = null)
+        {
+            byte[] k = new byte[] { 0xA4, 0x16, 0x55, 0x00, 0xB3, 0xDC, 0xB4, 0x38, 0x2E, 0xD9, 0xE5, 0x5D, 0x56, 0xB0, 0x60, 0x35,
+                         0x09, 0x59, 0xDB, 0xE7, 0x08, 0x20, 0xDF, 0x26, 0x4F, 0x42, 0x43, 0x30, 0x43, 0x4C, 0x0F, 0x6F }
+                .Take(sizeInBytes);
+
+            return new JsonWebKey(keyOps ?? new[] { KeyOperation.WrapKey, KeyOperation.UnwrapKey })
+            {
+                KeyType = KeyType.Oct,
+                K = k,
+            };
+        }
+
         public static JsonWebKey CreateRsaKey(bool includePrivateParameters = false, IEnumerable<KeyOperation> keyOps = null)
         {
             using RSA rsa = RSA.Create();

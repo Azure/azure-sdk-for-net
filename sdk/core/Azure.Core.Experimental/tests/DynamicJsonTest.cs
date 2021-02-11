@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using NUnit.Framework;
 
@@ -10,6 +10,14 @@ namespace Azure.Core.Tests
 {
     public class DynamicJsonTest
     {
+        [Test]
+        public void DefaultConstructorMakesEmptyObject()
+        {
+            var dynamicJson = new DynamicJson();
+
+            Assert.AreEqual(0, dynamicJson.EnumerateObject().Count());
+        }
+
         [Test]
         public void CanCreateFromJson()
         {
@@ -158,7 +166,6 @@ namespace Azure.Core.Tests
             Assert.AreEqual(-34028234663852885981170418348451692544000d, (double)dynamicJson);
             Assert.AreEqual(-34028234663852885981170418348451692544000d, (double)json);
         }
-
 
         [Test]
         public void IntOverflowThrows()

@@ -34,9 +34,14 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         public double ConfidenceScore { get; }
 
-        /// <summary> Start position for the entity match text. </summary>
-        private int Offset { get; }
-        /// <summary> Length for the entity match text. </summary>
-        private int Length { get; }
-}
+        /// <summary>
+        /// Gets the starting position for the matching text in the document.
+        /// </summary>
+        public int Offset { get; }
+
+        /// <summary>
+        /// Gets the length of the matching text in the sentence.
+        /// </summary>
+        public int Length { get; }
+    }
 }

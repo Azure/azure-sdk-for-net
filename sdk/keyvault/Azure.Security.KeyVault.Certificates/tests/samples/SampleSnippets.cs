@@ -1,9 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core.Pipeline;
 using Azure.Identity;
 using NUnit.Framework;
 using System;
+using System.IO;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Security.KeyVault.Tests;
@@ -141,8 +144,8 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             // You only need to wait for completion if you want to purge or recover the certificate.
             await operation.WaitForCompletionAsync();
 
-            DeletedCertificate secret = operation.Value;
-            await client.PurgeDeletedCertificateAsync(secret.Name);
+            DeletedCertificate certificate = operation.Value;
+            await client.PurgeDeletedCertificateAsync(certificate.Name);
             #endregion
         }
 
@@ -161,9 +164,126 @@ namespace Azure.Security.KeyVault.Certificates.Samples
                 operation.UpdateStatus();
             }
 
-            DeletedCertificate secret = operation.Value;
-            client.PurgeDeletedCertificate(secret.Name);
+            DeletedCertificate certificate = operation.Value;
+            client.PurgeDeletedCertificate(certificate.Name);
             #endregion
+        }
+
+        [Ignore("Used only for the migration guide")]
+        private async Task MigrationGuide()
+        {
+            #region Snippet:Azure_Security_KeyVault_Certificates_Snippets_MigrationGuide_Create
+            CertificateClient client = new CertificateClient(
+                new Uri("https://myvault.vault.azure.net"),
+                new DefaultAzureCredential());
+            #endregion Snippet:Azure_Security_KeyVault_Certificates_Snippets_MigrationGuide_Create
+
+            #region Snippet:Azure_Security_KeyVault_Certificates_Snippets_MigrationGuide_CreateWithOptions
+            using (HttpClient httpClient = new HttpClient())
+            {
+                CertificateClientOptions options = new CertificateClientOptions
+                {
+                    Transport = new HttpClientTransport(httpClient)
+                };
+
+                //@@CertificateClient client = new CertificateClient(
+                /*@@*/ CertificateClient _ = new CertificateClient(
+                    new Uri("https://myvault.vault.azure.net"),
+                    new DefaultAzureCredential(),
+                    options);
+            }
+            #endregion Snippet:Azure_Security_KeyVault_Certificates_Snippets_MigrationGuide_CreateWithOptions
+
+            #region Snippet:Azure_Security_KeyVault_Certificates_Snippets_MigrationGuide_CreateCustomPolicy
+            CertificatePolicy policy = new CertificatePolicy("issuer-name", "CN=customdomain.com")
+            {
+                ContentType = CertificateContentType.Pkcs12,
+                KeyType = CertificateKeyType.Rsa,
+                ReuseKey = true,
+                KeyUsage =
+                {
+                    CertificateKeyUsage.CrlSign,
+                    CertificateKeyUsage.DataEncipherment,
+                    CertificateKeyUsage.DigitalSignature,
+                    CertificateKeyUsage.KeyEncipherment,
+                    CertificateKeyUsage.KeyAgreement,
+                    CertificateKeyUsage.KeyCertSign
+                },
+                ValidityInMonths = 12,
+                LifetimeActions =
+                {
+                    new LifetimeAction(CertificatePolicyAction.AutoRenew)
+                    {
+                        DaysBeforeExpiry = 90,
+                    }
+                }
+            };
+            #endregion Snippet:Azure_Security_KeyVault_Certificates_Snippets_MigrationGuide_CreateSelfSignedPolicy
+
+            #region Snippet:Azure_Security_KeyVault_Certificates_Snippets_MigrationGuide_CreateSelfSignedPolicy
+            //@@CertificatePolicy policy = CertificatePolicy.Default;
+            /*@@*/ policy = CertificatePolicy.Default;
+            #endregion Snippet:Azure_Security_KeyVault_Certificates_Snippets_MigrationGuide_CreateSelfSignedPolicy
+            {
+                #region Snippet:Azure_Security_KeyVault_Certificates_Snippets_MigrationGuide_CreateCertificate
+                // Start certificate creation.
+                // Depending on the policy and your business process, this could even take days for manual signing.
+                CertificateOperation createOperation = await client.StartCreateCertificateAsync("certificate-name", policy);
+                KeyVaultCertificateWithPolicy certificate = await createOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(20), CancellationToken.None);
+
+                // If you need to restart the application you can recreate the operation and continue awaiting.
+                createOperation = new CertificateOperation(client, "certificate-name");
+                certificate = await createOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(20), CancellationToken.None);
+                #endregion Snippet:Azure_Security_KeyVault_Certificates_Snippets_MigrationGuide_CreateCertificate
+            }
+
+            {
+                #region Snippet:Azure_Security_KeyVault_Certificates_Snippets_MigrationGuide_ImportCertificate
+                byte[] cer = File.ReadAllBytes("certificate.pfx");
+                ImportCertificateOptions importCertificateOptions = new ImportCertificateOptions("certificate-name", cer)
+                {
+                    Policy = policy
+                };
+
+                KeyVaultCertificateWithPolicy certificate = await client.ImportCertificateAsync(importCertificateOptions);
+                #endregion Snippet:Azure_Security_KeyVault_Certificates_Snippets_MigrationGuide_ImportCertificate
+            }
+
+            {
+                #region Snippet:Azure_Security_KeyVault_Certificates_Snippets_MigrationGuide_ListCertificates
+                // List all certificates asynchronously.
+                await foreach (CertificateProperties item in client.GetPropertiesOfCertificatesAsync())
+                {
+                    KeyVaultCertificateWithPolicy certificate = await client.GetCertificateAsync(item.Name);
+                }
+
+                // List all certificates synchronously.
+                foreach (CertificateProperties item in client.GetPropertiesOfCertificates())
+                {
+                    KeyVaultCertificateWithPolicy certificate = client.GetCertificate(item.Name);
+                }
+                #endregion Snippet:Azure_Security_KeyVault_Certificates_Snippets_MigrationGuide_ListCertificates
+            }
+
+            {
+                #region Snippet:Azure_Security_KeyVault_Certificates_Snippets_MigrationGuide_DeleteCertificate
+                // Delete the certificate.
+                DeleteCertificateOperation deleteOperation = await client.StartDeleteCertificateAsync("certificate-name");
+
+                // Purge or recover the deleted certificate if soft delete is enabled.
+                if (deleteOperation.Value.RecoveryId != null)
+                {
+                    // Deleting a certificate does not happen immediately. Wait for the certificate to be deleted.
+                    DeletedCertificate deletedCertificate = await deleteOperation.WaitForCompletionAsync();
+
+                    // Purge the deleted certificate.
+                    await client.PurgeDeletedCertificateAsync(deletedCertificate.Name);
+
+                    // You can also recover the deleted certificate using StartRecoverDeletedCertificateAsync,
+                    // which returns RecoverDeletedCertificateOperation you can await like DeleteCertificateOperation above.
+                }
+                #endregion Snippet:Azure_Security_KeyVault_Certificates_Snippets_MigrationGuide_DeleteCertificate
+            }
         }
     }
 }

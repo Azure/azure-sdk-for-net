@@ -63,15 +63,15 @@ namespace Azure.Identity
             {
                 GetUserSettings(out var tenant, out var environmentName);
 
-                var cloudInstance = GetAzureCloudInstance(environmentName);
-                var storedCredentials = _vscAdapter.GetCredentials(CredentialsSection, environmentName);
-
-                if (!IsRefreshTokenString(storedCredentials))
+                if (string.Equals(tenant, Constants.AdfsTenantId, StringComparison.Ordinal))
                 {
-                    throw new CredentialUnavailableException("Need to re-authenticate user in VSCode Azure Account.");
+                    throw new CredentialUnavailableException("VisualStudioCodeCredential authentication unavailable. ADFS tenant / authorities are not supported.");
                 }
 
-                var result = await _client.AcquireTokenByRefreshToken(requestContext.Scopes, storedCredentials, cloudInstance, tenant, async, cancellationToken).ConfigureAwait(false);
+                var cloudInstance = GetAzureCloudInstance(environmentName);
+                string storedCredentials = GetStoredCredentials(environmentName);
+
+                var result = await _client.AcquireTokenByRefreshToken(requestContext.Scopes, requestContext.Claims, storedCredentials, cloudInstance, tenant, async, cancellationToken).ConfigureAwait(false);
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
             }
             catch (MsalUiRequiredException e)
@@ -81,6 +81,24 @@ namespace Azure.Identity
             catch (Exception e)
             {
                 throw scope.FailWrapAndThrow(e);
+            }
+        }
+
+        private string GetStoredCredentials(string environmentName)
+        {
+            try
+            {
+                var storedCredentials = _vscAdapter.GetCredentials(CredentialsSection, environmentName);
+                if (!IsRefreshTokenString(storedCredentials))
+                {
+                    throw new CredentialUnavailableException("Need to re-authenticate user in VSCode Azure Account.");
+                }
+
+                return storedCredentials;
+            }
+            catch (Exception ex) when (!(ex is OperationCanceledException || ex is CredentialUnavailableException))
+            {
+                throw new CredentialUnavailableException("Stored credentials not found. Need to authenticate user in VSCode Azure Account.", ex);
             }
         }
 
@@ -102,7 +120,7 @@ namespace Azure.Identity
         {
             var path = _vscAdapter.GetUserSettingsPath();
             tenant = _tenantId;
-            environmentName = "Azure";
+            environmentName = "AzureCloud";
 
             try
             {
@@ -146,7 +164,7 @@ namespace Azure.Identity
         private static AzureCloudInstance GetAzureCloudInstance(string name) =>
             name switch
             {
-                "Azure" => AzureCloudInstance.AzurePublic,
+                "AzureCloud" => AzureCloudInstance.AzurePublic,
                 "AzureChina" => AzureCloudInstance.AzureChina,
                 "AzureGermanCloud" => AzureCloudInstance.AzureGermany,
                 "AzureUSGovernment" => AzureCloudInstance.AzureUsGovernment,

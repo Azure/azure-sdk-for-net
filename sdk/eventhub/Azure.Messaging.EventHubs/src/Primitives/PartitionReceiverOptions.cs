@@ -27,6 +27,9 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <summary>The prefetch count to use for the partition receiver.</summary>
         private int _prefetchCount = 300;
 
+        /// <summary>The prefetch size limit to use for the partition receiver.</summary>
+        private long? _prefetchSizeInBytes;
+
         /// <summary>
         ///   The options used for configuring the connection to the Event Hubs service.
         /// </summary>
@@ -103,8 +106,8 @@ namespace Azure.Messaging.EventHubs.Primitives
 
         /// <summary>
         ///   The number of events that will be eagerly requested from the Event Hubs service and queued locally without regard to
-        ///   whether a read operation is currently active, intended to help maximize throughput by allowing the partition receiver
-        ///   to read from a local cache rather than waiting on a service request.
+        ///   whether a read operation is currently active, intended to help maximize throughput by allowing events to be read from
+        ///   from a local cache rather than waiting on a service request.
         /// </summary>
         ///
         /// <value>
@@ -121,6 +124,39 @@ namespace Azure.Messaging.EventHubs.Primitives
             {
                 Argument.AssertAtLeast(value, 0, nameof(PrefetchCount));
                 _prefetchCount = value;
+            }
+        }
+
+        /// <summary>
+        ///   The desired number of bytes to attempt to eagerly request from the Event Hubs service and queued locally without regard to
+        ///   whether a read operation is currently active, intended to help maximize throughput by allowing events to be read from
+        ///   from a local cache rather than waiting on a service request.
+        /// </summary>
+        ///
+        /// <value>
+        ///   <para>When set to <c>null</c>, the option is considered disabled; otherwise, it will be considered enabled and take
+        ///   precedence over any value specified for the <see cref="PrefetchCount" />The <see cref="PrefetchSizeInBytes" /> is an
+        ///   advanced control that developers can use to help tune performance in some scenarios; it is recommended to prefer using
+        ///   the <see cref="PrefetchCount" /> over this option where possible for more accurate control and more predictable throughput.</para>
+        ///
+        ///   <para>This size should be considered a statement of intent rather than a guaranteed limit; the local cache may be larger or
+        ///   smaller than the number of bytes specified, and will always contain at least one event when the <see cref="PrefetchSizeInBytes" />
+        ///   is specified.  A heuristic is used to predict the average event size to use for size calculations, which should be expected to fluctuate
+        ///   as traffic passes through the system.  Consequently, the resulting resource use will fluctuate as well.</para>
+        /// </value>
+        ///
+        public long? PrefetchSizeInBytes
+        {
+            get => _prefetchSizeInBytes;
+
+            set
+            {
+                if (value.HasValue)
+                {
+                    Argument.AssertAtLeast(value.Value, 0, nameof(PrefetchSizeInBytes));
+                }
+
+                _prefetchSizeInBytes = value;
             }
         }
 
@@ -181,8 +217,9 @@ namespace Azure.Messaging.EventHubs.Primitives
                 _connectionOptions = ConnectionOptions.Clone(),
                 _retryOptions = RetryOptions.Clone(),
                 _defaultMaximumReceiveWaitTime = DefaultMaximumReceiveWaitTime,
-                OwnerLevel = OwnerLevel,
                 _prefetchCount = PrefetchCount,
+                _prefetchSizeInBytes = PrefetchSizeInBytes,
+                OwnerLevel = OwnerLevel,
                 TrackLastEnqueuedEventProperties = TrackLastEnqueuedEventProperties
             };
     }

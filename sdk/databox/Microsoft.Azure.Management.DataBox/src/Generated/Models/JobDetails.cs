@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
     /// <summary>
     /// Job details.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("JobDetails")]
     public partial class JobDetails
     {
         /// <summary>
@@ -34,40 +35,43 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// </summary>
         /// <param name="contactDetails">Contact details for notification and
         /// shipping.</param>
+        /// <param name="jobStages">List of stages that run in the job.</param>
         /// <param name="shippingAddress">Shipping address of the
         /// customer.</param>
-        /// <param name="destinationAccountDetails">Destination account
-        /// details.</param>
-        /// <param name="expectedDataSizeInTerabytes">The expected size of the
-        /// data, which needs to be transferred in this job, in
-        /// terabytes.</param>
-        /// <param name="jobStages">List of stages that run in the job.</param>
         /// <param name="deliveryPackage">Delivery package shipping
         /// details.</param>
         /// <param name="returnPackage">Return package shipping
         /// details.</param>
-        /// <param name="errorDetails">Error details for failure. This is
-        /// optional.</param>
+        /// <param name="dataImportDetails">Details of the data to be imported
+        /// into azure.</param>
+        /// <param name="dataExportDetails">Details of the data to be exported
+        /// from azure.</param>
         /// <param name="preferences">Preferences for the order.</param>
         /// <param name="copyLogDetails">List of copy log details.</param>
         /// <param name="reverseShipmentLabelSasKey">Shared access key to
         /// download the return shipment label</param>
         /// <param name="chainOfCustodySasKey">Shared access key to download
         /// the chain of custody logs</param>
-        public JobDetails(ContactDetails contactDetails, ShippingAddress shippingAddress, IList<DestinationAccountDetails> destinationAccountDetails, int? expectedDataSizeInTerabytes = default(int?), IList<JobStages> jobStages = default(IList<JobStages>), PackageShippingDetails deliveryPackage = default(PackageShippingDetails), PackageShippingDetails returnPackage = default(PackageShippingDetails), IList<JobErrorDetails> errorDetails = default(IList<JobErrorDetails>), Preferences preferences = default(Preferences), IList<CopyLogDetails> copyLogDetails = default(IList<CopyLogDetails>), string reverseShipmentLabelSasKey = default(string), string chainOfCustodySasKey = default(string))
+        /// <param name="keyEncryptionKey">Details about which key encryption
+        /// type is being used.</param>
+        /// <param name="expectedDataSizeInTerabytes">The expected size of the
+        /// data, which needs to be transferred in this job, in
+        /// terabytes.</param>
+        public JobDetails(ContactDetails contactDetails, IList<JobStages> jobStages = default(IList<JobStages>), ShippingAddress shippingAddress = default(ShippingAddress), PackageShippingDetails deliveryPackage = default(PackageShippingDetails), PackageShippingDetails returnPackage = default(PackageShippingDetails), IList<DataImportDetails> dataImportDetails = default(IList<DataImportDetails>), IList<DataExportDetails> dataExportDetails = default(IList<DataExportDetails>), Preferences preferences = default(Preferences), IList<CopyLogDetails> copyLogDetails = default(IList<CopyLogDetails>), string reverseShipmentLabelSasKey = default(string), string chainOfCustodySasKey = default(string), KeyEncryptionKey keyEncryptionKey = default(KeyEncryptionKey), int? expectedDataSizeInTerabytes = default(int?))
         {
-            ExpectedDataSizeInTerabytes = expectedDataSizeInTerabytes;
             JobStages = jobStages;
             ContactDetails = contactDetails;
             ShippingAddress = shippingAddress;
             DeliveryPackage = deliveryPackage;
             ReturnPackage = returnPackage;
-            DestinationAccountDetails = destinationAccountDetails;
-            ErrorDetails = errorDetails;
+            DataImportDetails = dataImportDetails;
+            DataExportDetails = dataExportDetails;
             Preferences = preferences;
             CopyLogDetails = copyLogDetails;
             ReverseShipmentLabelSasKey = reverseShipmentLabelSasKey;
             ChainOfCustodySasKey = chainOfCustodySasKey;
+            KeyEncryptionKey = keyEncryptionKey;
+            ExpectedDataSizeInTerabytes = expectedDataSizeInTerabytes;
             CustomInit();
         }
 
@@ -75,13 +79,6 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets the expected size of the data, which needs to be
-        /// transferred in this job, in terabytes.
-        /// </summary>
-        [JsonProperty(PropertyName = "expectedDataSizeInTerabytes")]
-        public int? ExpectedDataSizeInTerabytes { get; set; }
 
         /// <summary>
         /// Gets list of stages that run in the job.
@@ -114,16 +111,16 @@ namespace Microsoft.Azure.Management.DataBox.Models
         public PackageShippingDetails ReturnPackage { get; private set; }
 
         /// <summary>
-        /// Gets or sets destination account details.
+        /// Gets or sets details of the data to be imported into azure.
         /// </summary>
-        [JsonProperty(PropertyName = "destinationAccountDetails")]
-        public IList<DestinationAccountDetails> DestinationAccountDetails { get; set; }
+        [JsonProperty(PropertyName = "dataImportDetails")]
+        public IList<DataImportDetails> DataImportDetails { get; set; }
 
         /// <summary>
-        /// Gets error details for failure. This is optional.
+        /// Gets or sets details of the data to be exported from azure.
         /// </summary>
-        [JsonProperty(PropertyName = "errorDetails")]
-        public IList<JobErrorDetails> ErrorDetails { get; private set; }
+        [JsonProperty(PropertyName = "dataExportDetails")]
+        public IList<DataExportDetails> DataExportDetails { get; set; }
 
         /// <summary>
         /// Gets or sets preferences for the order.
@@ -150,6 +147,19 @@ namespace Microsoft.Azure.Management.DataBox.Models
         public string ChainOfCustodySasKey { get; private set; }
 
         /// <summary>
+        /// Gets or sets details about which key encryption type is being used.
+        /// </summary>
+        [JsonProperty(PropertyName = "keyEncryptionKey")]
+        public KeyEncryptionKey KeyEncryptionKey { get; set; }
+
+        /// <summary>
+        /// Gets or sets the expected size of the data, which needs to be
+        /// transferred in this job, in terabytes.
+        /// </summary>
+        [JsonProperty(PropertyName = "expectedDataSizeInTerabytes")]
+        public int? ExpectedDataSizeInTerabytes { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -161,14 +171,6 @@ namespace Microsoft.Azure.Management.DataBox.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ContactDetails");
             }
-            if (ShippingAddress == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ShippingAddress");
-            }
-            if (DestinationAccountDetails == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "DestinationAccountDetails");
-            }
             if (ContactDetails != null)
             {
                 ContactDetails.Validate();
@@ -177,9 +179,33 @@ namespace Microsoft.Azure.Management.DataBox.Models
             {
                 ShippingAddress.Validate();
             }
+            if (DataImportDetails != null)
+            {
+                foreach (var element in DataImportDetails)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+            if (DataExportDetails != null)
+            {
+                foreach (var element1 in DataExportDetails)
+                {
+                    if (element1 != null)
+                    {
+                        element1.Validate();
+                    }
+                }
+            }
             if (Preferences != null)
             {
                 Preferences.Validate();
+            }
+            if (KeyEncryptionKey != null)
+            {
+                KeyEncryptionKey.Validate();
             }
         }
     }

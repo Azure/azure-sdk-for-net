@@ -78,6 +78,7 @@ namespace Azure.ResourceManager.Storage
                 uri.AppendQuery("$include", include.Value.ToString(), true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -168,6 +169,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath(containerName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(blobContainer);
@@ -278,6 +280,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath(containerName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(blobContainer);
@@ -386,6 +389,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath(containerName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -567,6 +571,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath("/setLegalHold", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(legalHold);
@@ -676,6 +681,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath("/clearLegalHold", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(legalHold);
@@ -790,9 +796,10 @@ namespace Azure.ResourceManager.Storage
             {
                 request.Headers.Add("If-Match", ifMatch);
             }
-            request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             if (parameters != null)
             {
+                request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
                 content.JsonWriter.WriteObjectValue(parameters);
                 request.Content = content;
@@ -901,6 +908,7 @@ namespace Azure.ResourceManager.Storage
             {
                 request.Headers.Add("If-Match", ifMatch);
             }
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1000,6 +1008,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("If-Match", ifMatch);
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1106,6 +1115,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("If-Match", ifMatch);
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1212,9 +1222,10 @@ namespace Azure.ResourceManager.Storage
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("If-Match", ifMatch);
-            request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             if (parameters != null)
             {
+                request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
                 content.JsonWriter.WriteObjectValue(parameters);
                 request.Content = content;
@@ -1326,9 +1337,10 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath("/lease", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             if (parameters != null)
             {
+                request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
                 content.JsonWriter.WriteObjectValue(parameters);
                 request.Content = content;
@@ -1421,6 +1433,7 @@ namespace Azure.ResourceManager.Storage
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

@@ -611,6 +611,152 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
+            /// Gets information about all network interfaces in a role instance in a cloud
+            /// service.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='cloudServiceName'>
+            /// The name of the cloud service.
+            /// </param>
+            /// <param name='roleInstanceName'>
+            /// The name of role instance.
+            /// </param>
+            public static IPage<NetworkInterface> ListCloudServiceRoleInstanceNetworkInterfaces(this INetworkInterfacesOperations operations, string resourceGroupName, string cloudServiceName, string roleInstanceName)
+            {
+                return operations.ListCloudServiceRoleInstanceNetworkInterfacesAsync(resourceGroupName, cloudServiceName, roleInstanceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets information about all network interfaces in a role instance in a cloud
+            /// service.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='cloudServiceName'>
+            /// The name of the cloud service.
+            /// </param>
+            /// <param name='roleInstanceName'>
+            /// The name of role instance.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<NetworkInterface>> ListCloudServiceRoleInstanceNetworkInterfacesAsync(this INetworkInterfacesOperations operations, string resourceGroupName, string cloudServiceName, string roleInstanceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListCloudServiceRoleInstanceNetworkInterfacesWithHttpMessagesAsync(resourceGroupName, cloudServiceName, roleInstanceName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets all network interfaces in a cloud service.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='cloudServiceName'>
+            /// The name of the cloud service.
+            /// </param>
+            public static IPage<NetworkInterface> ListCloudServiceNetworkInterfaces(this INetworkInterfacesOperations operations, string resourceGroupName, string cloudServiceName)
+            {
+                return operations.ListCloudServiceNetworkInterfacesAsync(resourceGroupName, cloudServiceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets all network interfaces in a cloud service.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='cloudServiceName'>
+            /// The name of the cloud service.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<NetworkInterface>> ListCloudServiceNetworkInterfacesAsync(this INetworkInterfacesOperations operations, string resourceGroupName, string cloudServiceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListCloudServiceNetworkInterfacesWithHttpMessagesAsync(resourceGroupName, cloudServiceName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get the specified network interface in a cloud service.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='cloudServiceName'>
+            /// The name of the cloud service.
+            /// </param>
+            /// <param name='roleInstanceName'>
+            /// The name of role instance.
+            /// </param>
+            /// <param name='networkInterfaceName'>
+            /// The name of the network interface.
+            /// </param>
+            /// <param name='expand'>
+            /// Expands referenced resources.
+            /// </param>
+            public static NetworkInterface GetCloudServiceNetworkInterface(this INetworkInterfacesOperations operations, string resourceGroupName, string cloudServiceName, string roleInstanceName, string networkInterfaceName, string expand = default(string))
+            {
+                return operations.GetCloudServiceNetworkInterfaceAsync(resourceGroupName, cloudServiceName, roleInstanceName, networkInterfaceName, expand).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get the specified network interface in a cloud service.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='cloudServiceName'>
+            /// The name of the cloud service.
+            /// </param>
+            /// <param name='roleInstanceName'>
+            /// The name of role instance.
+            /// </param>
+            /// <param name='networkInterfaceName'>
+            /// The name of the network interface.
+            /// </param>
+            /// <param name='expand'>
+            /// Expands referenced resources.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<NetworkInterface> GetCloudServiceNetworkInterfaceAsync(this INetworkInterfacesOperations operations, string resourceGroupName, string cloudServiceName, string roleInstanceName, string networkInterfaceName, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetCloudServiceNetworkInterfaceWithHttpMessagesAsync(resourceGroupName, cloudServiceName, roleInstanceName, networkInterfaceName, expand, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Deletes the specified network interface.
             /// </summary>
             /// <param name='operations'>
@@ -942,6 +1088,76 @@ namespace Microsoft.Azure.Management.Network
             public static async Task<IPage<NetworkInterfaceIPConfiguration>> ListVirtualMachineScaleSetIpConfigurationsNextAsync(this INetworkInterfacesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListVirtualMachineScaleSetIpConfigurationsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets information about all network interfaces in a role instance in a cloud
+            /// service.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<NetworkInterface> ListCloudServiceRoleInstanceNetworkInterfacesNext(this INetworkInterfacesOperations operations, string nextPageLink)
+            {
+                return operations.ListCloudServiceRoleInstanceNetworkInterfacesNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets information about all network interfaces in a role instance in a cloud
+            /// service.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<NetworkInterface>> ListCloudServiceRoleInstanceNetworkInterfacesNextAsync(this INetworkInterfacesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListCloudServiceRoleInstanceNetworkInterfacesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets all network interfaces in a cloud service.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<NetworkInterface> ListCloudServiceNetworkInterfacesNext(this INetworkInterfacesOperations operations, string nextPageLink)
+            {
+                return operations.ListCloudServiceNetworkInterfacesNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets all network interfaces in a cloud service.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<NetworkInterface>> ListCloudServiceNetworkInterfacesNextAsync(this INetworkInterfacesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListCloudServiceNetworkInterfacesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

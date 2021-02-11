@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<CachingTypes> caching = default;
             Optional<int> diskSizeGB = default;
             Optional<StorageAccountTypes> storageAccountType = default;
-            Optional<SubResource> diskEncryptionSet = default;
+            Optional<DiskEncryptionSetParameters> diskEncryptionSet = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lun"))
@@ -74,11 +74,21 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("snapshot"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     snapshot = SubResource.DeserializeSubResource(property.Value);
                     continue;
                 }
                 if (property.NameEquals("managedDisk"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     managedDisk = SubResource.DeserializeSubResource(property.Value);
                     continue;
                 }
@@ -89,22 +99,42 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("caching"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     caching = property.Value.GetString().ToCachingTypes();
                     continue;
                 }
                 if (property.NameEquals("diskSizeGB"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     diskSizeGB = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("storageAccountType"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     storageAccountType = new StorageAccountTypes(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("diskEncryptionSet"))
                 {
-                    diskEncryptionSet = SubResource.DeserializeSubResource(property.Value);
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    diskEncryptionSet = DiskEncryptionSetParameters.DeserializeDiskEncryptionSetParameters(property.Value);
                     continue;
                 }
             }

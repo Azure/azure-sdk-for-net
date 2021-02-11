@@ -48,6 +48,28 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Creates a set of events with random data and a small body size.
+        /// </summary>
+        ///
+        /// <param name="numberOfEvents">The number of events to create.</param>
+        ///
+        /// <returns>The requested set of events.</returns>
+        ///
+        public static IEnumerable<EventData> CreateSmallEvents(int numberOfEvents)
+        {
+            const int minimumBodySize = 5;
+            const int maximumBodySize = 25;
+
+            for (var index = 0; index < numberOfEvents; ++index)
+            {
+                var buffer = new byte[RandomNumberGenerator.Value.Next(minimumBodySize, maximumBodySize)];
+                RandomNumberGenerator.Value.NextBytes(buffer);
+
+                yield return CreateEventFromBody(buffer);
+            }
+        }
+
+        /// <summary>
         ///   Creates and configures an <see cref="EventData" /> instance using the
         ///   provided <paramref name="eventBody" /> as the embedded data.
         /// </summary>
@@ -111,7 +133,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
                 else
                 {
-                   queuedEvents.Dequeue();
+                    queuedEvents.Dequeue();
                 }
             }
 

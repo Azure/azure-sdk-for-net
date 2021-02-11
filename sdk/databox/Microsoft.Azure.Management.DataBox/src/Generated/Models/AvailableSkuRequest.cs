@@ -32,6 +32,8 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// <summary>
         /// Initializes a new instance of the AvailableSkuRequest class.
         /// </summary>
+        /// <param name="transferType">Type of the transfer. Possible values
+        /// include: 'ImportToAzure', 'ExportFromAzure'</param>
         /// <param name="country">ISO country code. Country for hardware
         /// shipment. For codes check:
         /// https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements</param>
@@ -40,25 +42,26 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01</param>
         /// <param name="skuNames">Sku Names to filter for available
         /// skus</param>
-        public AvailableSkuRequest(string country, string location, IList<SkuName?> skuNames = default(IList<SkuName?>))
+        public AvailableSkuRequest(TransferType transferType, string country, string location, IList<SkuName?> skuNames = default(IList<SkuName?>))
         {
+            TransferType = transferType;
             Country = country;
             Location = location;
             SkuNames = skuNames;
             CustomInit();
-        }
-        /// <summary>
-        /// Static constructor for AvailableSkuRequest class.
-        /// </summary>
-        static AvailableSkuRequest()
-        {
-            TransferType = "ImportToAzure";
         }
 
         /// <summary>
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets type of the transfer. Possible values include:
+        /// 'ImportToAzure', 'ExportFromAzure'
+        /// </summary>
+        [JsonProperty(PropertyName = "transferType")]
+        public TransferType TransferType { get; set; }
 
         /// <summary>
         /// Gets or sets ISO country code. Country for hardware shipment. For
@@ -80,12 +83,6 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// </summary>
         [JsonProperty(PropertyName = "skuNames")]
         public IList<SkuName?> SkuNames { get; set; }
-
-        /// <summary>
-        /// Type of the transfer.
-        /// </summary>
-        [JsonProperty(PropertyName = "transferType")]
-        public static string TransferType { get; private set; }
 
         /// <summary>
         /// Validate the object.

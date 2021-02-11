@@ -174,6 +174,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("tags"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -184,6 +189,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("authorizationKey"))
@@ -198,11 +208,21 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("virtualNetworkGateway2"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             virtualNetworkGateway2 = VirtualNetworkConnectionGatewayReference.DeserializeVirtualNetworkConnectionGatewayReference(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("localNetworkGateway2"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             localNetworkGateway2 = VirtualNetworkConnectionGatewayReference.DeserializeVirtualNetworkConnectionGatewayReference(property0.Value);
                             continue;
                         }
@@ -213,11 +233,21 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("connectionProtocol"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             connectionProtocol = new VirtualNetworkGatewayConnectionProtocol(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("routingWeight"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             routingWeight = property0.Value.GetInt32();
                             continue;
                         }
@@ -228,11 +258,21 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("connectionStatus"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             connectionStatus = new VirtualNetworkGatewayConnectionStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("tunnelConnectionStatus"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<TunnelConnectionHealth> array = new List<TunnelConnectionHealth>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -243,31 +283,61 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("egressBytesTransferred"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             egressBytesTransferred = property0.Value.GetInt64();
                             continue;
                         }
                         if (property0.NameEquals("ingressBytesTransferred"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             ingressBytesTransferred = property0.Value.GetInt64();
                             continue;
                         }
                         if (property0.NameEquals("peer"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             peer = SubResource.DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("enableBgp"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             enableBgp = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("usePolicyBasedTrafficSelectors"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             usePolicyBasedTrafficSelectors = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("ipsecPolicies"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<IpsecPolicy> array = new List<IpsecPolicy>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -278,6 +348,11 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("trafficSelectorPolicies"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<TrafficSelectorPolicy> array = new List<TrafficSelectorPolicy>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -293,11 +368,21 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("provisioningState"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("expressRouteGatewayBypass"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             expressRouteGatewayBypass = property0.Value.GetBoolean();
                             continue;
                         }

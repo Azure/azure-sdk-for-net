@@ -12,29 +12,25 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Identity" />
+    <PackageReference Include="Microsoft.Azure.Amqp" />
+    <PackageReference Include="Microsoft.Azure.Management.EventHub" />
+    <PackageReference Include="Microsoft.Azure.Management.ResourceManager" />
+    <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
-    <PackageReference Include="System.Net.WebSockets.Client" />
-    <PackageReference Include="System.ValueTuple" />
+    <PackageReference Include="Moq" />
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
-    <PackageReference Include="Moq" />
     <PackageReference Include="Polly" />
-    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
+    <PackageReference Include="System.Net.WebSockets.Client" />
     <PackageReference Include="System.Threading.Tasks.Extensions" />
-    <PackageReference Include="Microsoft.Azure.Amqp" />
-    <PackageReference Include="Microsoft.Azure.Management.ResourceManager" />
-    <PackageReference Include="Microsoft.Azure.Management.EventHub" />
-    <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" />
+    <PackageReference Include="System.ValueTuple" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\src\Azure.Messaging.EventHubs.csproj" />
-    <ProjectReference Include="..\samples\Azure.Messaging.EventHubs.Samples.csproj" />
   </ItemGroup>
 
   <!-- Import Event Hubs shared source -->
   <Import Project="$(MSBuildThisFileDirectory)..\..\Azure.Messaging.EventHubs.Shared\src\Azure.Messaging.EventHubs.Shared.Testing.projitems" Label="Testing" />
-  
 </Project>

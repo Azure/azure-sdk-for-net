@@ -23,15 +23,6 @@ namespace Azure.Core.TestFramework
             get { return base.Content; }
             set
             {
-                if (value != null && value.TryComputeLength(out long length))
-                {
-                    _headers["Content-Length"] = new List<string> { length.ToString() };
-
-                }
-                else
-                {
-                    _headers.Remove("Content-Length");
-                }
                 base.Content = value;
             }
         }

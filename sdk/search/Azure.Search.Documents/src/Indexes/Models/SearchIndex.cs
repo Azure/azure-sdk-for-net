@@ -10,6 +10,9 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class SearchIndex
     {
+        // Force the constructor to set the field;
+        // otherwise, when getting only names, the setter will throw.
+        [CodeGenMember("fields")]
         private IList<SearchField> _fields;
 
         [CodeGenMember("etag")]
@@ -75,7 +78,6 @@ namespace Azure.Search.Documents.Indexes.Models
         /// </summary>
         public IList<CharFilter> CharFilters { get; }
 
-#if EXPERIMENTAL_FIELDBUILDER
         /// <summary>
         /// Gets or sets the fields in the index.
         /// Use <see cref="FieldBuilder"/> to define fields based on a model class,
@@ -126,44 +128,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// };
         /// </code>
         /// </example>
-#else
-        /// <summary>
-        /// Gets or sets the fields in the index.
-        /// Use <see cref="SimpleField"/>, <see cref="SearchableField"/>, and <see cref="ComplexField"/> to manually define fields.
-        /// Index fields have many constraints that are not validated with <see cref="SearchField"/> until the index is created on the server.
-        /// </summary>
-        /// <example>
-        /// You can create fields manually using helper classes:
-        /// <code snippet="Snippet:Azure_Search_Tests_Samples_Readme_CreateManualIndex_New_SearchIndex">
-        /// SearchIndex index = new SearchIndex(&quot;hotels&quot;)
-        /// {
-        ///     Fields =
-        ///     {
-        ///         new SimpleField(&quot;hotelId&quot;, SearchFieldDataType.String) { IsKey = true, IsFilterable = true, IsSortable = true },
-        ///         new SearchableField(&quot;hotelName&quot;) { IsFilterable = true, IsSortable = true },
-        ///         new SearchableField(&quot;description&quot;) { AnalyzerName = LexicalAnalyzerName.EnLucene },
-        ///         new SearchableField(&quot;tags&quot;, collection: true) { IsFilterable = true, IsFacetable = true },
-        ///         new ComplexField(&quot;address&quot;)
-        ///         {
-        ///             Fields =
-        ///             {
-        ///                 new SearchableField(&quot;streetAddress&quot;),
-        ///                 new SearchableField(&quot;city&quot;) { IsFilterable = true, IsSortable = true, IsFacetable = true },
-        ///                 new SearchableField(&quot;stateProvince&quot;) { IsFilterable = true, IsSortable = true, IsFacetable = true },
-        ///                 new SearchableField(&quot;country&quot;) { IsFilterable = true, IsSortable = true, IsFacetable = true },
-        ///                 new SearchableField(&quot;postalCode&quot;) { IsFilterable = true, IsSortable = true, IsFacetable = true }
-        ///             }
-        ///         }
-        ///     },
-        ///     Suggesters =
-        ///     {
-        ///         // Suggest query terms from the hotelName field.
-        ///         new SearchSuggester(&quot;sg&quot;, &quot;hotelName&quot;)
-        ///     }
-        /// };
-        /// </code>
-        /// </example>
-#endif
+#pragma warning disable CA2227 // Collection properties should be readonly
         public IList<SearchField> Fields
         {
             get => _fields;
@@ -172,6 +137,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 _fields = value ?? throw new ArgumentNullException(nameof(value), $"{nameof(Fields)} cannot be null. To clear values, call {nameof(Fields.Clear)}.");
             }
         }
+#pragma warning restore CA2227 // Collection properties should be readonly
 
         /// <summary>
         /// Gets the scoring profiles for the index.

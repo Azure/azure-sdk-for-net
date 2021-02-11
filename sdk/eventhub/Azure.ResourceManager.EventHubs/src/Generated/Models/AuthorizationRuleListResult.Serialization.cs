@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<AuthorizationRule> array = new List<AuthorizationRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

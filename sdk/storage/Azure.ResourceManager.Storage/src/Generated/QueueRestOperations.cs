@@ -67,6 +67,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath(queueName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(queue);
@@ -175,6 +176,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath(queueName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(queue);
@@ -283,6 +285,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath(queueName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -377,6 +380,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath(queueName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -468,6 +472,7 @@ namespace Azure.ResourceManager.Storage
                 uri.AppendQuery("$filter", filter, true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -548,6 +553,7 @@ namespace Azure.ResourceManager.Storage
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

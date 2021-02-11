@@ -17,6 +17,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
     /// <summary>
     /// Request body to get the availability for scheduling orders.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("ScheduleAvailabilityRequest")]
     public partial class ScheduleAvailabilityRequest
     {
         /// <summary>
@@ -32,12 +33,15 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// Initializes a new instance of the ScheduleAvailabilityRequest
         /// class.
         /// </summary>
-        /// <param name="storageLocation">Location for data transfer.
-        /// For locations check:
+        /// <param name="storageLocation">Location for data transfer. For
+        /// locations check:
         /// https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01</param>
-        public ScheduleAvailabilityRequest(string storageLocation)
+        /// <param name="country">Country in which storage location should be
+        /// supported.</param>
+        public ScheduleAvailabilityRequest(string storageLocation, string country = default(string))
         {
             StorageLocation = storageLocation;
+            Country = country;
             CustomInit();
         }
 
@@ -47,12 +51,17 @@ namespace Microsoft.Azure.Management.DataBox.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets location for data transfer.
-        /// For locations check:
+        /// Gets or sets location for data transfer. For locations check:
         /// https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01
         /// </summary>
         [JsonProperty(PropertyName = "storageLocation")]
         public string StorageLocation { get; set; }
+
+        /// <summary>
+        /// Gets or sets country in which storage location should be supported.
+        /// </summary>
+        [JsonProperty(PropertyName = "country")]
+        public string Country { get; set; }
 
         /// <summary>
         /// Validate the object.

@@ -9,33 +9,33 @@ using System;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal static class InnerErrorCodeValueExtensions
+    internal static partial class InnerErrorCodeValueExtensions
     {
         public static string ToSerialString(this InnerErrorCodeValue value) => value switch
         {
-            InnerErrorCodeValue.InvalidParameterValue => "invalidParameterValue",
-            InnerErrorCodeValue.InvalidRequestBodyFormat => "invalidRequestBodyFormat",
-            InnerErrorCodeValue.EmptyRequest => "emptyRequest",
-            InnerErrorCodeValue.MissingInputRecords => "missingInputRecords",
-            InnerErrorCodeValue.InvalidDocument => "invalidDocument",
-            InnerErrorCodeValue.ModelVersionIncorrect => "modelVersionIncorrect",
-            InnerErrorCodeValue.InvalidDocumentBatch => "invalidDocumentBatch",
-            InnerErrorCodeValue.UnsupportedLanguageCode => "unsupportedLanguageCode",
-            InnerErrorCodeValue.InvalidCountryHint => "invalidCountryHint",
+            InnerErrorCodeValue.InvalidParameterValue => "InvalidParameterValue",
+            InnerErrorCodeValue.InvalidRequestBodyFormat => "InvalidRequestBodyFormat",
+            InnerErrorCodeValue.EmptyRequest => "EmptyRequest",
+            InnerErrorCodeValue.MissingInputRecords => "MissingInputRecords",
+            InnerErrorCodeValue.InvalidDocument => "InvalidDocument",
+            InnerErrorCodeValue.ModelVersionIncorrect => "ModelVersionIncorrect",
+            InnerErrorCodeValue.InvalidDocumentBatch => "InvalidDocumentBatch",
+            InnerErrorCodeValue.UnsupportedLanguageCode => "UnsupportedLanguageCode",
+            InnerErrorCodeValue.InvalidCountryHint => "InvalidCountryHint",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown InnerErrorCodeValue value.")
         };
 
         public static InnerErrorCodeValue ToInnerErrorCodeValue(this string value)
         {
-            if (string.Equals(value, "invalidParameterValue", StringComparison.InvariantCultureIgnoreCase)) return InnerErrorCodeValue.InvalidParameterValue;
-            if (string.Equals(value, "invalidRequestBodyFormat", StringComparison.InvariantCultureIgnoreCase)) return InnerErrorCodeValue.InvalidRequestBodyFormat;
-            if (string.Equals(value, "emptyRequest", StringComparison.InvariantCultureIgnoreCase)) return InnerErrorCodeValue.EmptyRequest;
-            if (string.Equals(value, "missingInputRecords", StringComparison.InvariantCultureIgnoreCase)) return InnerErrorCodeValue.MissingInputRecords;
-            if (string.Equals(value, "invalidDocument", StringComparison.InvariantCultureIgnoreCase)) return InnerErrorCodeValue.InvalidDocument;
-            if (string.Equals(value, "modelVersionIncorrect", StringComparison.InvariantCultureIgnoreCase)) return InnerErrorCodeValue.ModelVersionIncorrect;
-            if (string.Equals(value, "invalidDocumentBatch", StringComparison.InvariantCultureIgnoreCase)) return InnerErrorCodeValue.InvalidDocumentBatch;
-            if (string.Equals(value, "unsupportedLanguageCode", StringComparison.InvariantCultureIgnoreCase)) return InnerErrorCodeValue.UnsupportedLanguageCode;
-            if (string.Equals(value, "invalidCountryHint", StringComparison.InvariantCultureIgnoreCase)) return InnerErrorCodeValue.InvalidCountryHint;
+            if (string.Equals(value, "InvalidParameterValue", StringComparison.InvariantCultureIgnoreCase)) return InnerErrorCodeValue.InvalidParameterValue;
+            if (string.Equals(value, "InvalidRequestBodyFormat", StringComparison.InvariantCultureIgnoreCase)) return InnerErrorCodeValue.InvalidRequestBodyFormat;
+            if (string.Equals(value, "EmptyRequest", StringComparison.InvariantCultureIgnoreCase)) return InnerErrorCodeValue.EmptyRequest;
+            if (string.Equals(value, "MissingInputRecords", StringComparison.InvariantCultureIgnoreCase)) return InnerErrorCodeValue.MissingInputRecords;
+            if (string.Equals(value, "InvalidDocument", StringComparison.InvariantCultureIgnoreCase)) return InnerErrorCodeValue.InvalidDocument;
+            if (string.Equals(value, "ModelVersionIncorrect", StringComparison.InvariantCultureIgnoreCase)) return InnerErrorCodeValue.ModelVersionIncorrect;
+            if (string.Equals(value, "InvalidDocumentBatch", StringComparison.InvariantCultureIgnoreCase)) return InnerErrorCodeValue.InvalidDocumentBatch;
+            if (string.Equals(value, "UnsupportedLanguageCode", StringComparison.InvariantCultureIgnoreCase)) return InnerErrorCodeValue.UnsupportedLanguageCode;
+            if (string.Equals(value, "InvalidCountryHint", StringComparison.InvariantCultureIgnoreCase)) return InnerErrorCodeValue.InvalidCountryHint;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown InnerErrorCodeValue value.");
         }
     }

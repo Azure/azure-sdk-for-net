@@ -31,8 +31,8 @@ namespace Azure.Core
         private readonly Stream _inner;
         private readonly byte[] _buffer;
         private readonly ArrayPool<byte> _bytePool;
-        private int _bufferOffset = 0;
-        private int _bufferCount = 0;
+        private int _bufferOffset;
+        private int _bufferCount;
         private bool _disposed;
 
         /// <summary>
@@ -172,6 +172,8 @@ namespace Azure.Core
         /// <inheritdoc/>
         protected override void Dispose(bool disposing)
         {
+            base.Dispose(disposing);
+
             if (!_disposed)
             {
                 _disposed = true;
@@ -354,18 +356,18 @@ namespace Azure.Core
             CheckDisposed();
             using (var builder = new MemoryStream(200))
             {
-                bool foundCR = false, foundCRLF = false;
+                bool foundCR = false, foundCRLF = false, foundLF = false;
 
-                while (!foundCRLF && EnsureBuffered())
+                while (!(foundCRLF || foundLF) && EnsureBuffered())
                 {
                     if (builder.Length > lengthLimit)
                     {
                         throw new InvalidDataException($"Line length limit {lengthLimit} exceeded.");
                     }
-                    ProcessLineChar(builder, ref foundCR, ref foundCRLF);
+                    ProcessLineChar(builder, ref foundCR, ref foundCRLF, ref foundLF);
                 }
 
-                return DecodeLine(builder, foundCRLF);
+                return DecodeLine(builder, foundCRLF, foundLF);
             }
         }
 
@@ -382,40 +384,46 @@ namespace Azure.Core
             CheckDisposed();
             using (var builder = new MemoryStream(200))
             {
-                bool foundCR = false, foundCRLF = false;
+                bool foundCR = false, foundCRLF = false, foundLF = false;
 
-                while (!foundCRLF && await EnsureBufferedAsync(cancellationToken).ConfigureAwait(false))
+                while (!(foundCRLF || foundLF) && await EnsureBufferedAsync(cancellationToken).ConfigureAwait(false))
                 {
                     if (builder.Length > lengthLimit)
                     {
                         throw new InvalidDataException($"Line length limit {lengthLimit} exceeded.");
                     }
 
-                    ProcessLineChar(builder, ref foundCR, ref foundCRLF);
+                    ProcessLineChar(builder, ref foundCR, ref foundCRLF, ref foundLF);
                 }
 
-                return DecodeLine(builder, foundCRLF);
+                return DecodeLine(builder, foundCRLF, foundLF);
             }
         }
 
-        private void ProcessLineChar(MemoryStream builder, ref bool foundCR, ref bool foundCRLF)
+        private void ProcessLineChar(MemoryStream builder, ref bool foundCR, ref bool foundCRLF, ref bool foundLF)
         {
             var b = _buffer[_bufferOffset];
             builder.WriteByte(b);
             _bufferOffset++;
             _bufferCount--;
-            if (b == LF && foundCR)
+            if (b == LF)
             {
-                foundCRLF = true;
+                foundLF = true;
+                foundCRLF = foundCR && foundLF;
                 return;
             }
             foundCR = b == CR;
         }
 
-        private string DecodeLine(MemoryStream builder, bool foundCRLF)
+        private string DecodeLine(MemoryStream builder, bool foundCRLF, bool foundLF)
         {
-            // Drop the final CRLF, if any
-            var length = foundCRLF ? builder.Length - 2 : builder.Length;
+            // Drop the final CRLF or LF, if any
+            var length = foundCRLF switch
+            {
+                true => builder.Length - 2,
+                false when foundLF => builder.Length - 1,
+                false => builder.Length,
+            };
             return Encoding.UTF8.GetString(builder.ToArray(), 0, (int)length);
         }
 

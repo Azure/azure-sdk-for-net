@@ -120,26 +120,51 @@ namespace Azure.Iot.Hub.Service.Models
                 }
                 if (property.NameEquals("startTimeUtc"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     startTimeUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("endTimeUtc"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     endTimeUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     type = new JobPropertiesType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("status"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     status = new JobPropertiesStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("progress"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     progress = property.Value.GetInt32();
                     continue;
                 }
@@ -165,11 +190,21 @@ namespace Azure.Iot.Hub.Service.Models
                 }
                 if (property.NameEquals("excludeKeysInExport"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     excludeKeysInExport = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("storageAuthenticationType"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     storageAuthenticationType = new JobPropertiesStorageAuthenticationType(property.Value.GetString());
                     continue;
                 }
@@ -180,6 +215,11 @@ namespace Azure.Iot.Hub.Service.Models
                 }
                 if (property.NameEquals("includeConfigurations"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     includeConfigurations = property.Value.GetBoolean();
                     continue;
                 }

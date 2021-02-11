@@ -124,6 +124,11 @@ namespace Microsoft.Azure.Management.Network
         public virtual IAzureFirewallFqdnTagsOperations AzureFirewallFqdnTags { get; private set; }
 
         /// <summary>
+        /// Gets the IWebCategoriesOperations.
+        /// </summary>
+        public virtual IWebCategoriesOperations WebCategories { get; private set; }
+
+        /// <summary>
         /// Gets the IBastionHostsOperations.
         /// </summary>
         public virtual IBastionHostsOperations BastionHosts { get; private set; }
@@ -327,6 +332,11 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the IVirtualApplianceSkusOperations.
         /// </summary>
         public virtual IVirtualApplianceSkusOperations VirtualApplianceSkus { get; private set; }
+
+        /// <summary>
+        /// Gets the IInboundSecurityRuleOperations.
+        /// </summary>
+        public virtual IInboundSecurityRuleOperations InboundSecurityRule { get; private set; }
 
         /// <summary>
         /// Gets the INetworkWatchersOperations.
@@ -542,6 +552,11 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the IVpnLinkConnectionsOperations.
         /// </summary>
         public virtual IVpnLinkConnectionsOperations VpnLinkConnections { get; private set; }
+
+        /// <summary>
+        /// Gets the INatRulesOperations.
+        /// </summary>
+        public virtual INatRulesOperations NatRules { get; private set; }
 
         /// <summary>
         /// Gets the IP2sVpnGatewaysOperations.
@@ -843,6 +858,7 @@ namespace Microsoft.Azure.Management.Network
             AvailableServiceAliases = new AvailableServiceAliasesOperations(this);
             AzureFirewalls = new AzureFirewallsOperations(this);
             AzureFirewallFqdnTags = new AzureFirewallFqdnTagsOperations(this);
+            WebCategories = new WebCategoriesOperations(this);
             BastionHosts = new BastionHostsOperations(this);
             CustomIPPrefixes = new CustomIPPrefixesOperations(this);
             DdosCustomPolicies = new DdosCustomPoliciesOperations(this);
@@ -884,6 +900,7 @@ namespace Microsoft.Azure.Management.Network
             NetworkVirtualAppliances = new NetworkVirtualAppliancesOperations(this);
             VirtualApplianceSites = new VirtualApplianceSitesOperations(this);
             VirtualApplianceSkus = new VirtualApplianceSkusOperations(this);
+            InboundSecurityRule = new InboundSecurityRuleOperations(this);
             NetworkWatchers = new NetworkWatchersOperations(this);
             PacketCaptures = new PacketCapturesOperations(this);
             ConnectionMonitors = new ConnectionMonitorsOperations(this);
@@ -927,6 +944,7 @@ namespace Microsoft.Azure.Management.Network
             VpnConnections = new VpnConnectionsOperations(this);
             VpnSiteLinkConnections = new VpnSiteLinkConnectionsOperations(this);
             VpnLinkConnections = new VpnLinkConnectionsOperations(this);
+            NatRules = new NatRulesOperations(this);
             P2sVpnGateways = new P2sVpnGatewaysOperations(this);
             VpnServerConfigurationsAssociatedWithVirtualWan = new VpnServerConfigurationsAssociatedWithVirtualWanOperations(this);
             VirtualHubRouteTableV2s = new VirtualHubRouteTableV2sOperations(this);
@@ -1078,7 +1096,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "bslRequest");
             }
-            string apiVersion = "2020-06-01";
+            string apiVersion = "2020-08-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1308,7 +1326,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "sessionIds");
             }
-            string apiVersion = "2020-06-01";
+            string apiVersion = "2020-08-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1511,7 +1529,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
             }
-            string apiVersion = "2020-06-01";
+            string apiVersion = "2020-08-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1709,7 +1727,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "virtualWANName");
             }
-            string apiVersion = "2020-06-01";
+            string apiVersion = "2020-08-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1939,7 +1957,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "bslRequest");
             }
-            string apiVersion = "2020-06-01";
+            string apiVersion = "2020-08-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2145,7 +2163,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "bslRequest");
             }
-            string apiVersion = "2020-06-01";
+            string apiVersion = "2020-08-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2328,7 +2346,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
             }
-            string apiVersion = "2020-06-01";
+            string apiVersion = "2020-08-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2533,7 +2551,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "vpnClientParams");
             }
-            string apiVersion = "2020-06-01";
+            string apiVersion = "2020-08-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

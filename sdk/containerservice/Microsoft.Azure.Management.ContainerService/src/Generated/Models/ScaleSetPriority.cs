@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.ContainerService.Models
     /// </summary>
     public static class ScaleSetPriority
     {
-        public const string Low = "Low";
+        public const string Spot = "Spot";
         public const string Regular = "Regular";
     }
 }

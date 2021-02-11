@@ -151,13 +151,16 @@
     <value>The connection string could not be parsed; either it was malformed or contains no well-known tokens.</value>
   </data>
   <data name="MissingConnectionInformation" xml:space="preserve">
-    <value>The connection string used for an Event Hub client must specify the Event Hubs namespace host, and a Shared Access Key  (both the name and value) to be valid. The path to an Event Hub must be included in the connection string or specified separately.</value>
+    <value>The connection string used for an Event Hub client must specify the Event Hubs namespace host, and either a Shared Access Key (both the name and value) or Shared Access Signature to be valid. The path to an Event Hub must be included in the connection string or specified separately.</value>
   </data>
   <data name="OnlyOneEventHubNameMayBeSpecified" xml:space="preserve">
     <value>The path to an Event Hub may be specified as part of the connection string or as a separate value, but not both.  Please verify that your connection string does not have the `EntityPath` token if you are passing an explicit Event Hub name.</value>
   </data>
   <data name="UnknownConnectionType" xml:space="preserve">
     <value>The specified connection type, "{0}", is not recognized as valid in this context.</value>
+  </data>
+  <data name="InvalidEndpointAddress" xml:space="preserve">
+    <value>The endpoint address could not be parsed; it was either malformed or not using the `sb://` scheme.</value>
   </data>
   <data name="InvalidSharedAccessSignature" xml:space="preserve">
     <value>The shared access signature could not be parsed; it was either malformed or incorrectly encoded.</value>
@@ -172,7 +175,7 @@
     <value>The requested transport type, '{0}' is not supported.</value>
   </data>
   <data name="CannotSendWithPartitionIdAndPartitionKey" xml:space="preserve">
-    <value>A producer created for a specific partition cannot send events using a partition key. This producer is associated with partition '{0}'.</value>
+    <value>An event cannot be published using both a partition key and a partition identifier.  This operation specified partition key `{0}` and partition id `{1}`.</value>
   </data>
   <data name="UnsupportedCredential" xml:space="preserve">
     <value>The credential is not a known and supported credential type. Please use a JWT credential or shared key credential.</value>
@@ -231,9 +234,6 @@
   <data name="ClientNeededForThisInformation" xml:space="preserve">
     <value>The Event Hub client responsible for this information is not available.</value>
   </data>
-  <data name="BlobsResourceDoesNotExist" xml:space="preserve">
-    <value>The Azure Storage Blobs container or blob used by the Event Processor Client does not exist.</value>
-  </data>
   <data name="CannotCreateCheckpointForEmptyEvent" xml:space="preserve">
     <value>A checkpoint cannot be created or updated using an empty event.</value>
   </data>
@@ -287,5 +287,14 @@
   </data>
   <data name="AggregateEventProcessingExceptionMessage" xml:space="preserve">
     <value>One or more exceptions occured during event processing.  Please see the inner exceptions for more detail.</value>
+  </data>
+  <data name="OnlyOneSharedAccessAuthorizationMayBeSpecified" xml:space="preserve">
+    <value>The authorization for a connection string may specify a shared key or pre-computed shared access signature, but not both.  Please verify that your connection string does not have the `SharedAccessSignature` token if you are passing the `SharedKeyName` and `SharedKey`.</value>
+  </data>
+  <data name="CannotPublishToGateway" xml:space="preserve">
+    <value>The producer was configured to use features that require publishing to a specific partition.  Publishing with automatic routing or using a partition key is not supported by this producer.</value>
+  </data>
+  <data name="IdempotentAlreadyPublished" xml:space="preserve">
+    <value>These events have already been successfully published.  When idempotent publishing is enabled, events that were acknowledged by the Event Hubs service may not be published again.</value>
   </data>
 </root>

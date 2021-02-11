@@ -1,6 +1,81 @@
 # Release History
 
-## 7.0.0-preview.7 (Unreleased)
+## 7.2.0-beta.1 (Unreleased)
+
+
+## 7.1.0 (2021-02-09)
+
+### Acknowledgments
+Thank you to our developer community members who helped to make the Service Bus client library better with their contributions to this release:
+
+- Aaron Dandy _([GitHub](https://github.com/aarondandy))_
+
+### Added
+- Added virtual keyword to all client properties to enable mocking scenarios.
+- Added `ServiceBusModelFactory.ServiceBusMessageBatch` to allow mocking a `ServiceBusMessageBatch`.
+
+### Key Bug Fixes
+- Fixed an issue with the `ServiceBusProcessor` where closing and disposing or disposing multiple times resulted in an exception.  (A community contribution, courtesy of _[aarondandy](https://github.com/aarondandy)_)
+- Fixed issue with batch size calculation when using `ServiceBusMessageBatch`.
+
+## 7.0.1 (2021-01-12)
+
+### Fixed
+- Fixed race condition that could occur when using the same `ServiceBusSessionReceiverOptions` instance 
+for several receivers.
+- Increased the authorization refresh buffer to make it less likely that authorization will expire.
+
+
+## 7.0.0 (2020-11-23)
+### Breaking Changes
+- Renamed GetRawMessage method to GetRawAmqpMessage.
+- Removed LinkCloseMode.
+- Rename ReceiveMode type to ServiceBusReceiveMode.
+- Remove ServiceBusFailureReason of Unauthorized in favor of using UnauthorizedAccessException.
+
+## 7.0.0-preview.9 (2020-11-04)
+
+### Added
+- Added dependency on Azure.Core.Amqp library.
+- Added dependency on System.Memory.Data library.
+
+### Breaking Changes
+- Removed `AmqpMessage` property in favor of a `GetRawMessage` method on `ServiceBusMessage` and `ServiceBusReceivedMessage`.
+- Renamed `Properties` to `ApplicationProperties` in `CorrelationRuleFilter`.
+- Removed `ServiceBusSenderOptions`.
+- Removed `TransactionEntityPath` from `ServiceBusSender`.
+
+## 7.0.0-preview.8 (2020-10-06)
+
+### Added
+- Added `AcceptSessionAsync` that accepts a specific session based on session ID.
+
+### Breaking Changes
+- Renamed `ViaQueueOrTopicName` to `TransactionQueueOrTopicName`.
+- Renamed `ViaPartitionKey` to `TransactionPartitionKey`.
+- Renamed `ViaEntityPath` to `TransactionEntityPath`.
+- Renamed `Proxy` to `WebProxy`.
+- Made `MaxReceiveWaitTime` in `ServiceBusProcessorOptions` and `ServiceBusSessionProcessorOptions` internal.
+- Renamed `CreateSessionReceiverAsync` to `AcceptNextSessionAsync`.
+- Removed `SessionId` from `ServiceBusClientOptions` in favor of `AcceptSessionAsync`.
+
+## 7.0.0-preview.7 (2020-09-10)
+
+### Added
+- Added AmqpMessage property on `ServiceBusMessage` and `ServiceBusReceivedMessage` that gives full access to underlying AMQP details.
+- Added explicit Close methods on `ServiceBusReceiver`, `ServiceBusSessionReceiver`, `ServiceBusSender`, `ServiceBusProcessor`, and `ServiceBusSessionProcessor`.
+
+### Breaking Changes
+- Renamed `ServiceBusManagementClient` to `ServiceBusAdministrationClient`.
+- Renamed `ServiceBusManagementClientOptions` to `ServiceBusAdministrationClientOptions`.
+- Renamed `IsDisposed` to `IsClosed` on `ServiceBusSender`, `ServiceBusReceiver`, and `ServiceBusSessionReceiver`.
+- Made `ServiceBusProcessor` and `ServiceBusSessionProcessor` implement `IAsyncDisposable`
+- Removed public constructors for `QueueProperties` and `RuleProperties`.
+- Added `version` parameter to `ServiceBusAdministrationClientOptions` constructor.
+- Removed `CreateDeadLetterReceiver` methods in favor of new `SubQueue` property on `ServiceBusReceiverOptions`.
+- Made `EntityNameFormatter` internal.
+- Made settlement methods on `ProcessMessageEventArgs` and `ProcessSessionMessageEventArgs` virtual for mocking.
+- Made all Create methods on `ServiceBusClient` virtual for mocking.
 
 ## 7.0.0-preview.6 (2020-08-18)
 

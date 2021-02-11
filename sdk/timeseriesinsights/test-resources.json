@@ -1,0 +1,199 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "iotHubName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of the source IoT hub."
+      },
+      "defaultValue": "[resourceGroup().name]"
+    },
+    "testApplicationOid": {
+      "type": "string",
+      "metadata": {
+        "description": "The client OID to grant access to test resources."
+      }
+    },
+    "region": {
+      "type": "string",
+      "metadata": {
+        "description": "The region of the resource. By default, this is the same as the resource group."
+      },
+      "defaultValue": "[resourceGroup().location]"
+    },
+    "environmentName": {
+      "type": "string",
+      "maxLength": 90,
+      "metadata": {
+        "description": "Name of the environment. The name cannot include: '<', '>', '%', '&', ':', '\\', '?', '/' and any control characters. All other characters are allowed."
+      },
+      "defaultValue": "[concat(resourceGroup().name, '-TSI')]"
+    },
+    "consumerGroupName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of the consumer group that the Time Series Insights service will use to read the data from the event hub. NOTE: To avoid resource contention, this consumer group must be dedicated to the Time Series Insights service and not shared with other readers."
+      },
+      "defaultValue": "[concat(parameters('environmentName'), 'CG')]"
+    },
+    "environmentTimeSeriesIdProperties": {
+      "type": "array",
+      "maxLength": 3,
+      "metadata": {
+        "description": "Time Series ID acts as a partition key for your data and as a primary key for your time series model. It is important that you specify the appropriate Time Series Property ID during environment creation, since you cannot change it later. Note that the Property ID is case sensitive. You can use 1-3 keys: one is required, but up to three can be used to create a composite."
+      },
+      "defaultValue": [
+        {
+          "name": "timeseriesinsights.id",
+          "type": "string"
+        },
+        {
+          "name": "id",
+          "type": "string"
+        }
+      ]
+    },
+    "eventSourceName": {
+      "type": "string",
+      "maxLength": 90,
+      "metadata": {
+        "description": "Name of the event source child resource. The name cannot include: '<', '>', '%', '&', ':', '\\', '?', '/' and any control characters. All other characters are allowed."
+      },
+      "defaultValue": "[concat(parameters('environmentName'), 'EventSourceName')]"
+    },
+    "resourceGroup": {
+      "type": "string",
+      "metadata": {
+        "description": "If you have an existing IotHub provide the name here. Defaults to the same resource group as the TSI environnment."
+      },
+      "defaultValue": "[resourceGroup().name]"
+    },
+    "eventSourceTimestampPropertyName": {
+      "type": "string",
+      "maxLength": 90,
+      "metadata": {
+        "description": "The event property that will be used as the event source's timestamp. If a value is not specified for timestampPropertyName, or if null or empty-string is specified, the event creation time will be used."
+      },
+      "defaultValue": "[concat(parameters('eventSourceName'), 'TimestampPropertyName')]"
+    },
+    "eventSourceKeyName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of the shared access key that the Time Series Insights service will use to connect to the event hub."
+      },
+      "defaultValue": "service"
+    }
+  },
+  "functions": [],
+  "variables": {
+    "rbacOwnerRoleDefinitionId": "[format('/subscriptions/{0}/providers/Microsoft.Authorization/roleDefinitions/8e3af657-a8ff-443c-a75c-2fe8c4bcb635', subscription().subscriptionId)]",
+    "storageAccountName": "[concat('tsi', uniqueString(resourceGroup().id))]",
+    "eventSourceResourceId": "[resourceId(parameters('resourceGroup'), 'Microsoft.Devices/IotHubs', parameters('iotHubName'))]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Authorization/roleAssignments",
+      "apiVersion": "2018-09-01-preview",
+      "name": "[guid(resourceGroup().id)]",
+      "properties": {
+        "roleDefinitionId": "[variables('rbacOwnerRoleDefinitionId')]",
+        "principalId": "[parameters('testApplicationOid')]"
+      }
+    },
+    {
+      "type": "Microsoft.Devices/IotHubs",
+      "apiVersion": "2020-03-01",
+      "name": "[parameters('iotHubName')]",
+      "location": "[parameters('region')]",
+      "properties": {},
+      "sku": {
+        "name": "S1",
+        "capacity": 1
+      }
+    },
+    {
+      "type": "Microsoft.Devices/IotHubs/eventHubEndpoints/ConsumerGroups",
+      "apiVersion": "2020-03-01",
+      "name": "[concat(parameters('iotHubName'), '/events/', parameters('consumerGroupName'))]",
+      "properties": {
+        "mode": "Complete"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Devices/IotHubs', parameters('iotHubName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.TimeSeriesInsights/environments",
+      "apiVersion": "2018-08-15-preview",
+      "name": "[parameters('environmentName')]",
+      "location": "[parameters('region')]",
+      "kind": "LongTerm",
+      "properties": {
+        "storageConfiguration": {
+          "accountName": "[variables('storageAccountName')]",
+          "managementKey": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2019-06-01').keys[0].value]"
+        },
+        "timeSeriesIdProperties": "[parameters('environmentTimeSeriesIdProperties')]",
+        "warmStoreConfiguration": {
+          "dataRetention": "P7D"
+        }
+      },
+      "sku": {
+        "name": "L1",
+        "capacity": 1
+      }
+    },
+    {
+      "type": "Microsoft.TimeSeriesInsights/environments/eventSources",
+      "apiVersion": "2018-08-15-preview",
+      "name": "[concat(parameters('environmentName'), '/', parameters('eventSourceName'))]",
+      "location": "[parameters('region')]",
+      "kind": "Microsoft.IoTHub",
+      "properties": {
+        "eventSourceResourceId": "[variables('eventSourceResourceId')]",
+        "iotHubName": "[parameters('iotHubName')]",
+        "consumerGroupName": "[parameters('consumerGroupName')]",
+        "keyName": "[parameters('eventSourceKeyName')]",
+        "sharedAccessKey": "[listkeys(resourceId('Microsoft.Devices/IoTHubs/IotHubKeys', parameters('iotHubName'), parameters('eventSourceKeyName')), '2020-03-01').primaryKey]",
+        "timestampPropertyName": "[parameters('eventSourceTimestampPropertyName')]"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Devices/IotHubs/eventHubEndpoints/ConsumerGroups', split(concat(parameters('iotHubName'), '/events/', parameters('consumerGroupName')), '/')[0], split(concat(parameters('iotHubName'), '/events/', parameters('consumerGroupName')), '/')[1], split(concat(parameters('iotHubName'), '/events/', parameters('consumerGroupName')), '/')[2])]",
+        "[resourceId('Microsoft.TimeSeriesInsights/environments', parameters('environmentName'))]",
+        "[resourceId('Microsoft.Devices/IotHubs', parameters('iotHubName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.TimeSeriesInsights/environments/accessPolicies",
+      "apiVersion": "2018-08-15-preview",
+      "name": "[concat(parameters('environmentName'), '/', 'contributorAccessPolicy0')]",
+      "properties": {
+        "principalObjectId": "[parameters('testApplicationOid')]",
+        "roles": [
+          "Contributor"
+        ]
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.TimeSeriesInsights/environments', parameters('environmentName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "apiVersion": "2018-11-01",
+      "name": "[variables('storageAccountName')]",
+      "location": "[parameters('region')]",
+      "sku": {
+        "name": "Standard_LRS"
+      },
+      "kind": "StorageV2",
+      "properties": {}
+    }
+  ],
+  "outputs": {
+    "TIMESERIESINSIGHTS_URL": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.TimeSeriesInsights/environments', parameters('environmentName'))).dataAccessFqdn]"
+    }
+  }
+}

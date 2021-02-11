@@ -87,7 +87,7 @@
           "Microsoft.Azure.Management.DataFactory.DataFactoryManagementClient/0.8.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"sdktestingfactory9776\",\r\n  \"id\": \"/subscriptions/c39dce18-cead-4065-8fb1-3af7683a5038/resourceGroups/sdktestingadfrg4712/providers/Microsoft.DataFactory/factories/sdktestingfactory9776\",\r\n  \"type\": \"Microsoft.DataFactory/factories\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"createTime\": \"2018-06-22T03:42:16.6466913Z\",\r\n    \"version\": \"2018-06-01\",\r\n    \"defaults\": {}\r\n  },\r\n  \"eTag\": \"\\\"0000cd05-0000-0000-0000-5b2c70180000\\\"\",\r\n  \"location\": \"West US\",\r\n  \"tags\": {}\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"sdktestingfactory9776\",\r\n  \"id\": \"/subscriptions/c39dce18-cead-4065-8fb1-3af7683a5038/resourceGroups/sdktestingadfrg4712/providers/Microsoft.DataFactory/factories/sdktestingfactory9776\",\r\n  \"type\": \"Microsoft.DataFactory/factories\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"createTime\": \"2018-06-22T03:42:16.6466913Z\",\r\n    \"version\": \"2018-06-01\",\r\n    \"defaults\": {},\r\n \"publicNetworkAccess\": \"true\",\r\n    \"encryption\":{\"keyName\":\"dummyName\",\"vaultBaseUrl\":\"dummyurl\",\"keyVersion\":null,\"identity\":null} },\r\n  \"eTag\": \"\\\"0000cd05-0000-0000-0000-5b2c70180000\\\"\",\r\n  \"location\": \"West US\",\r\n  \"tags\": {}\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"

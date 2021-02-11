@@ -75,9 +75,10 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         /// <returns>The token to use for management operations against the Event Hubs Live test namespace.</returns>
         ///
-        public async Task<string> AquireManagementTokenAsync()
+        public async Task<string> AcquireManagementTokenAsync()
         {
-            ManagementToken token = s_managementToken;
+            var token = s_managementToken;
+            var authority = new Uri(new Uri(EventHubsTestEnvironment.Instance.AuthorityHostUrl), EventHubsTestEnvironment.Instance.TenantId).ToString();
 
             // If there was no current token, or it is within the buffer for expiration, request a new token.
             // There is a benign race condition here, where there may be multiple requests in-flight for a new token.  Since
@@ -86,8 +87,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             if ((token == null) || (token.ExpiresOn <= DateTimeOffset.UtcNow.Add(CredentialRefreshBuffer)))
             {
+                var context = new AuthenticationContext(authority);
                 var credential = new ClientCredential(EventHubsTestEnvironment.Instance.ClientId, EventHubsTestEnvironment.Instance.ClientSecret);
-                var context = new AuthenticationContext($"{ EventHubsTestEnvironment.Instance.AuthorityHostUrl }{ EventHubsTestEnvironment.Instance.TenantId }");
                 var result = await context.AcquireTokenAsync(EventHubsTestEnvironment.Instance.ServiceManagementUrl, credential).ConfigureAwait(false);
 
                 if ((string.IsNullOrEmpty(result?.AccessToken)))

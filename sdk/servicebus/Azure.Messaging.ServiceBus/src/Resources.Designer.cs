@@ -286,6 +286,15 @@ namespace Azure.Messaging.ServiceBus {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The endpoint address could not be parsed; it was either malformed or not using the `sb://` scheme..
+        /// </summary>
+        internal static string InvalidEndpointAddress {
+            get {
+                return ResourceManager.GetString("InvalidEndpointAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The value &apos;{0}&apos; is not a well-formed Service Bus fully qualified namespace..
         /// </summary>
         internal static string InvalidFullyQualifiedNamespace {
@@ -376,7 +385,7 @@ namespace Azure.Messaging.ServiceBus {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The connection string used for an Service Bus entity client must specify the Service Bus namespace host, and a Shared Access Signature (both the name and value) to be valid. The path to an Service Bus entity must be included in the connection string or specified separately..
+        ///   Looks up a localized string similar to The connection string used for an Service Bus client must specify the Service Bus namespace host and either a Shared Access Key (both the name and value) OR a Shared Access Signature to be valid..
         /// </summary>
         internal static string MissingConnectionInformation {
             get {
@@ -394,11 +403,20 @@ namespace Azure.Messaging.ServiceBus {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The path to an Service Bus entity may be specified as part of the connection string or as a separate value, but not both..
+        ///   Looks up a localized string similar to The queue or topic name provided does not match the EntityPath in the connection string passed to the ServiceBusClient constructor..
         /// </summary>
         internal static string OnlyOneEntityNameMayBeSpecified {
             get {
                 return ResourceManager.GetString("OnlyOneEntityNameMayBeSpecified", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The authorization for a connection string may specifiy a shared key or precomputed shared access signature, but not both.  Please verify that your connection string does not have the `SharedAccessSignature` token if you are passing the `SharedKeyName` and `SharedKey`..
+        /// </summary>
+        internal static string OnlyOneSharedAccessAuthorizationMayBeSpecified {
+            get {
+                return ResourceManager.GetString("OnlyOneSharedAccessAuthorizationMayBeSpecified", resourceCulture);
             }
         }
         
@@ -489,15 +507,6 @@ namespace Azure.Messaging.ServiceBus {
         internal static string SessionLockExpiredOnMessageSession {
             get {
                 return ResourceManager.GetString("SessionLockExpiredOnMessageSession", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The operation is not supported for peeked message. Only received message can be settled..
-        /// </summary>
-        internal static string SettlementOperationNotSupported {
-            get {
-                return ResourceManager.GetString("SettlementOperationNotSupported", resourceCulture);
             }
         }
         

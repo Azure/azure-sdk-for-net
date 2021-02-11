@@ -42,16 +42,31 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (property.NameEquals("disablePasswordAuthentication"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     disablePasswordAuthentication = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("ssh"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     ssh = SshConfiguration.DeserializeSshConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("provisionVMAgent"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     provisionVMAgent = property.Value.GetBoolean();
                     continue;
                 }

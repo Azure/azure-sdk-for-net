@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -82,16 +81,6 @@ namespace Azure.Iot.Hub.Service.Models
                 writer.WritePropertyName("deviceScope");
                 writer.WriteStringValue(DeviceScope);
             }
-            if (Optional.IsCollectionDefined(ParentScopes))
-            {
-                writer.WritePropertyName("parentScopes");
-                writer.WriteStartArray();
-                foreach (var item in ParentScopes)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
             writer.WriteEndObject();
         }
 
@@ -110,7 +99,6 @@ namespace Azure.Iot.Hub.Service.Models
             Optional<AuthenticationMechanism> authentication = default;
             Optional<DeviceCapabilities> capabilities = default;
             Optional<string> deviceScope = default;
-            Optional<IList<string>> parentScopes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deviceId"))
@@ -130,11 +118,21 @@ namespace Azure.Iot.Hub.Service.Models
                 }
                 if (property.NameEquals("connectionState"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     connectionState = new DeviceConnectionState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("status"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     status = new DeviceStatus(property.Value.GetString());
                     continue;
                 }
@@ -145,31 +143,61 @@ namespace Azure.Iot.Hub.Service.Models
                 }
                 if (property.NameEquals("connectionStateUpdatedTime"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     connectionStateUpdatedTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("statusUpdatedTime"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     statusUpdatedTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("lastActivityTime"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     lastActivityTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("cloudToDeviceMessageCount"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     cloudToDeviceMessageCount = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("authentication"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     authentication = AuthenticationMechanism.DeserializeAuthenticationMechanism(property.Value);
                     continue;
                 }
                 if (property.NameEquals("capabilities"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     capabilities = DeviceCapabilities.DeserializeDeviceCapabilities(property.Value);
                     continue;
                 }
@@ -178,18 +206,8 @@ namespace Azure.Iot.Hub.Service.Models
                     deviceScope = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("parentScopes"))
-                {
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    parentScopes = array;
-                    continue;
-                }
             }
-            return new DeviceIdentity(deviceId.Value, generationId.Value, etag.Value, Optional.ToNullable(connectionState), Optional.ToNullable(status), statusReason.Value, Optional.ToNullable(connectionStateUpdatedTime), Optional.ToNullable(statusUpdatedTime), Optional.ToNullable(lastActivityTime), Optional.ToNullable(cloudToDeviceMessageCount), authentication.Value, capabilities.Value, deviceScope.Value, Optional.ToList(parentScopes));
+            return new DeviceIdentity(deviceId.Value, generationId.Value, etag.Value, Optional.ToNullable(connectionState), Optional.ToNullable(status), statusReason.Value, Optional.ToNullable(connectionStateUpdatedTime), Optional.ToNullable(statusUpdatedTime), Optional.ToNullable(lastActivityTime), Optional.ToNullable(cloudToDeviceMessageCount), authentication.Value, capabilities.Value, deviceScope.Value);
         }
     }
 }

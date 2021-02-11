@@ -87,8 +87,21 @@ namespace Azure.Storage.Sas
         /// <summary>
         /// The name of the path being made accessible, or
         /// <see cref="String.Empty"/> for a file system SAS.
+        /// Beginning in version 2020-02-10, setting
+        /// <see cref="IsDirectory"/> to true means we will accept the
+        /// Path as a directory for a directory SAS. If not set, this
+        /// value is assumed to be a File Path for a File Path SAS.
         /// </summary>
         public string Path { get; set; }
+
+        /// <summary>
+        /// Beginning in version 2020-02-10, this value defines whether or
+        /// not the <see cref="Path"/> is a directory. If this value is
+        /// set to true, the Path is a Directory for a Directory SAS.
+        /// If set to false or default, the Path is a File Path for a
+        /// File Path SAS.
+        /// </summary>
+        public bool? IsDirectory { get; set; }
 
         /// <summary>
         /// Specifies which resources are accessible via the shared access
@@ -105,6 +118,11 @@ namespace Azure.Storage.Sas
         /// is a blob snapshot.  This grants access to the content and
         /// metadata of the specific snapshot, but not the corresponding root
         /// blob.
+        ///
+        /// Beginning in version 2020-02-10, specify "d" if the shared resource
+        /// is a DataLake directory. This grants access to the paths in the
+        /// directory and to list the paths in the directory. When "d" is
+        /// specified, the sdd query parameter is also required.
         /// </summary>
         public string Resource { get; set; }
 
@@ -133,6 +151,103 @@ namespace Azure.Storage.Sas
         /// Override the value returned for Cache-Type response header.
         /// </summary>
         public string ContentType { get; set; }
+
+        /// <summary>
+        /// Optional. Beginning in version 2020-02-10, this value will be used for
+        /// the AAD Object ID of a user authorized by the owner of the
+        /// User Delegation Key to perform the action granted by the SAS.
+        /// The Azure Storage service will ensure that the owner of the
+        /// user delegation key has the required permissions before granting access.
+        /// No additional permission check for the user specified in this value will be performed.
+        /// This cannot be used in conjuction with <see cref="AgentObjectId"/>.
+        /// This is only used with generating User Delegation SAS.
+        /// </summary>
+        public string PreauthorizedAgentObjectId { get; set; }
+
+        /// <summary>
+        /// Optional. Beginning in version 2020-02-10, this value will be used for
+        /// the AAD Object ID of a user authorized by the owner of the
+        /// User Delegation Key to perform the action granted by the SAS.
+        /// The Azure Storage service will ensure that the owner of the
+        /// user delegation key has the required permissions before granting access.
+        /// the Azure Storage Service will perform an additional POSIX ACL check to
+        /// determine if the user is authorized to perform the requested operation.
+        /// This cannot be used in conjuction with <see cref="PreauthorizedAgentObjectId"/>.
+        /// This is only used with generating User Delegation SAS.
+        /// </summary>
+        public string AgentObjectId { get; set; }
+
+        /// <summary>
+        /// Optional. Beginning in version 2020-02-10, this value will be used for
+        /// to correlate the storage audit logs with the audit logs used by the
+        /// principal generating and distributing SAS. This is only used for
+        /// User Delegation SAS.
+        /// </summary>
+        public string CorrelationId { get; set; }
+
+        /// <summary>
+        /// Optional. Required when <see cref="Resource"/> is set to d to indicate the
+        /// depth of the directory specified in the canonicalizedresource field of the
+        /// string-to-sign to indicate the depth of the directory specified in the
+        /// canonicalizedresource field of the string-to-sign. This is only used for
+        /// User Delegation SAS.
+        /// </summary>
+        private int? _directoryDepth;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeSasBuilder"/>
+        /// class.
+        /// </summary>
+        /// <remarks>
+        /// This constructor has been deprecated. Please consider using
+        /// <see cref="DataLakeSasBuilder(DataLakeSasPermissions, DateTimeOffset)"/>
+        /// to create a Service SAS. This change does not have any impact on how
+        /// your application generates or makes use of SAS tokens.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public DataLakeSasBuilder()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeSasBuilder"/>
+        /// class to create a Blob Service Sas.
+        /// </summary>
+        /// <param name="permissions">
+        /// The time at which the shared access signature becomes invalid.
+        /// This field must be omitted if it has been specified in an
+        /// associated stored access policy.
+        /// </param>
+        /// <param name="expiresOn">
+        /// The time at which the shared access signature becomes invalid.
+        /// This field must be omitted if it has been specified in an
+        /// associated stored access policy.
+        /// </param>
+        public DataLakeSasBuilder(DataLakeSasPermissions permissions, DateTimeOffset expiresOn)
+        {
+            ExpiresOn = expiresOn;
+            SetPermissions(permissions);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeSasBuilder"/>
+        /// class to create a Blob Service Sas.
+        /// </summary>
+        /// <param name="permissions">
+        /// The time at which the shared access signature becomes invalid.
+        /// This field must be omitted if it has been specified in an
+        /// associated stored access policy.
+        /// </param>
+        /// <param name="expiresOn">
+        /// The time at which the shared access signature becomes invalid.
+        /// This field must be omitted if it has been specified in an
+        /// associated stored access policy.
+        /// </param>
+        public DataLakeSasBuilder(DataLakeFileSystemSasPermissions permissions, DateTimeOffset expiresOn)
+        {
+            ExpiresOn = expiresOn;
+            SetPermissions(permissions);
+        }
 
         /// <summary>
         /// Sets the permissions for a file SAS.
@@ -206,11 +321,11 @@ namespace Azure.Storage.Sas
             Constants.Sas.Permissions.Create,
             Constants.Sas.Permissions.Write,
             Constants.Sas.Permissions.Delete,
-            Constants.Sas.Permissions.DeleteBlobVersion,
             Constants.Sas.Permissions.List,
-            Constants.Sas.Permissions.Tag,
-            Constants.Sas.Permissions.Update,
-            Constants.Sas.Permissions.Process
+            Constants.Sas.Permissions.Move,
+            Constants.Sas.Permissions.Execute,
+            Constants.Sas.Permissions.ManageOwnership,
+            Constants.Sas.Permissions.ManageAccessControl,
         };
 
         /// <summary>
@@ -270,7 +385,8 @@ namespace Azure.Storage.Sas
                 contentDisposition: ContentDisposition,
                 contentEncoding: ContentEncoding,
                 contentLanguage: ContentLanguage,
-                contentType: ContentType);
+                contentType: ContentType,
+                directoryDepth: _directoryDepth);
             return p;
         }
 
@@ -310,6 +426,9 @@ namespace Azure.Storage.Sas
                 signedExpiry,
                 userDelegationKey.SignedService,
                 userDelegationKey.SignedVersion,
+                PreauthorizedAgentObjectId,
+                AgentObjectId,
+                CorrelationId,
                 IPRange.ToString(),
                 SasExtensions.ToProtocolString(Protocol),
                 Version,
@@ -345,7 +464,11 @@ namespace Azure.Storage.Sas
                 contentDisposition: ContentDisposition,
                 contentEncoding: ContentEncoding,
                 contentLanguage: ContentLanguage,
-                contentType: ContentType);
+                contentType: ContentType,
+                authorizedAadObjectId: PreauthorizedAgentObjectId,
+                unauthorizedAadObjectId: AgentObjectId,
+                correlationId: CorrelationId,
+                directoryDepth: _directoryDepth);
             return p;
         }
 
@@ -404,15 +527,35 @@ namespace Azure.Storage.Sas
             {
                 Resource = Constants.Sas.Resource.Container;
             }
-
             // Path
             else
             {
-                Resource = Constants.Sas.Resource.Blob;
+                if (IsDirectory != true)
+                {
+                    Resource = Constants.Sas.Resource.Blob;
+                }
+                else
+                {
+                    Resource = Constants.Sas.Resource.Directory;
+                    if (!Path.Equals("/", StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        _directoryDepth = Path.Trim('/').Split('/').Length;
+                    }
+                    else
+                    {
+                        _directoryDepth = 0;
+                    }
+                }
             }
+
             if (string.IsNullOrEmpty(Version))
             {
                 Version = SasQueryParameters.DefaultSasVersion;
+            }
+
+            if (!string.IsNullOrEmpty(PreauthorizedAgentObjectId) && !string.IsNullOrEmpty(AgentObjectId))
+            {
+                throw Errors.SasDataInConjunction(nameof(PreauthorizedAgentObjectId), nameof(AgentObjectId));
             }
         }
 
@@ -425,7 +568,7 @@ namespace Azure.Storage.Sas
             base.ToString();
 
         /// <summary>
-        /// Check if two BlobSasBuilder instances are equal.
+        /// Check if two DataLakeSasBuilder instances are equal.
         /// </summary>
         /// <param name="obj">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
@@ -434,9 +577,9 @@ namespace Azure.Storage.Sas
             => base.Equals(obj);
 
         /// <summary>
-        /// Get a hash code for the BlobSasBuilder.
+        /// Get a hash code for the DataLakeSasBuilder.
         /// </summary>
-        /// <returns>Hash code for the BlobSasBuilder.</returns>
+        /// <returns>Hash code for the DataLakeSasBuilder.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => base.GetHashCode();
     }

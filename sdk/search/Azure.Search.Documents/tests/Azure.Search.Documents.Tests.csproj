@@ -18,40 +18,29 @@
   <!-- Add Test References -->
   <ItemGroup Condition="'$(IsTestProject)' == 'true' and '$(IsClientLibrary)' == 'true'">
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
-    <PackageReference Include="nunit" />
+    <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Moq" />
     <PackageReference Include="BenchmarkDotNet" />
-    <PackageReference Include="System.Memory" />
-    <PackageReference Include="System.Text.Json" />
     <ProjectReference Include="$(AzureCoreTestFramework)" />
   </ItemGroup>
 
   <!-- References required for test resource creation -->
   <ItemGroup>
     <PackageReference Include="Azure.Storage.Blobs" />
-    <PackageReference Include="Azure.Identity" />
-
-    <!-- TODO: Remove this when https://github.com/Azure/azure-sdk-for-net/issues/10592 is resolved. -->	
-    <PackageReference Condition="'$(UseAzureCoreExperimentalSpatial)' != 'true'" Include="Microsoft.Spatial" />
+    <PackageReference Include="Azure.Security.KeyVault.Keys" />
+    <PackageReference Include="Microsoft.Spatial" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Update="Samples\Sample01_HelloWorld.Data.cs" DependentUpon="Sample01_HelloWorld.cs" />
   </ItemGroup>
 
-  <!-- Conditionally compile FieldBuilder and related source -->
-  <ItemGroup Condition="'$(UseFieldBuilder)' == 'true'">
-    <Compile Remove="Samples\FieldBuilder\**" />
-  </ItemGroup>
-  <ItemGroup Condition="'$(UseFieldBuilder)' != 'true'">
-    <Compile Remove="SearchableFieldAttributeTests.cs" />
-    <Compile Remove="SimpleFieldAttributeTests.cs" />
-    <Compile Remove="Samples\Sample2_FieldBuilder.cs" />
-  </ItemGroup>
-
   <!-- Pull in Shared Source from Azure.Core -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
+
+  <!-- Pull in Microsoft.Azure.Core.Spatial -->
+  <Import Project="..\..\..\core\Microsoft.Azure.Core.Spatial\src\Microsoft.Azure.Core.Spatial.props" />
 </Project>

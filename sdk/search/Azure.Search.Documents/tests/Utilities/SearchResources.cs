@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Search.Documents.Indexes;
+using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.Models;
 using Azure.Storage.Blobs;
 using NUnit.Framework;
@@ -54,9 +55,13 @@ namespace Azure.Search.Documents.Tests
         public string StorageAccountKey => TestFixture.TestEnvironment.SearchStorageKey;
 
         /// <summary>
+        /// The storage endpoint suffix.
+        /// </summary>
+        public string StorageEndpointSuffix => TestFixture.TestEnvironment.StorageEndpointSuffix ?? "core.windows.net";
+        /// <summary>
         /// The storage account connection string.
         /// </summary>
-        public string StorageAccountConnectionString => $"DefaultEndpointsProtocol=https;AccountName={StorageAccountName};AccountKey={StorageAccountKey};EndpointSuffix=core.windows.net";
+        public string StorageAccountConnectionString => $"DefaultEndpointsProtocol=https;AccountName={StorageAccountName};AccountKey={StorageAccountKey};EndpointSuffix={StorageEndpointSuffix}";
 
         /// <summary>
         /// The Cognitive Services key.
@@ -92,9 +97,14 @@ namespace Azure.Search.Documents.Tests
         private string _indexName = null;
 
         /// <summary>
+        /// The search endpoint suffix.
+        /// </summary>
+        public string SearchEndpointSuffix => TestFixture.TestEnvironment.SearchEndpointSuffix;
+
+        /// <summary>
         /// The URI of the Search service.
         /// </summary>
-        public Uri Endpoint => new Uri($"https://{SearchServiceName}.search.windows.net");
+        public Uri Endpoint => new Uri($"https://{SearchServiceName}.{SearchEndpointSuffix}");
 
         /// <summary>
         /// The Primary or Admin API key to authenticate requests to the
@@ -150,6 +160,26 @@ namespace Azure.Search.Documents.Tests
                 // We created no index, but others tests might. We'll check when cleaning up.
                 RequiresCleanup = fixture.Recording.Mode != RecordedTestMode.Playback,
             };
+        }
+
+        /// <summary>
+        /// Create a new Search Service resource with an empty index for a
+        /// given model type.
+        /// </summary>
+        /// <param name="fixture">
+        /// The TestFixture with context about our current test run,
+        /// recordings, instrumentation, etc.
+        /// </param>
+        /// <returns>A new TestResources context.</returns>
+        public static async Task<SearchResources> CreateWithEmptyIndexAsync<T>(SearchTestBase fixture)
+        {
+            var resources = new SearchResources(fixture);
+            await resources.CreateSearchServiceAndIndexAsync(name =>
+                new SearchIndex(name)
+                {
+                    Fields = new FieldBuilder().Build(typeof(T))
+                });
+            return resources;
         }
 
         /// <summary>
@@ -348,9 +378,15 @@ namespace Azure.Search.Documents.Tests
         /// <summary>
         /// Create a new Search Service and empty Hotels Index.
         /// </summary>
+        /// <param name="getIndex">
+        /// Function to get an index definition using the provided name.
+        /// </param>
         /// <returns>This TestResources context.</returns>
-        private async Task<SearchResources> CreateSearchServiceAndIndexAsync()
+        private async Task<SearchResources> CreateSearchServiceAndIndexAsync(
+            Func<string, SearchIndex> getIndex = null)
         {
+            getIndex ??= GetHotelIndex;
+
             // Create the index
             if (TestFixture.Mode != RecordedTestMode.Playback)
             {
@@ -358,7 +394,7 @@ namespace Azure.Search.Documents.Tests
                 IndexName = Random.GetName(8);
 
                 SearchIndexClient client = new SearchIndexClient(Endpoint, new AzureKeyCredential(PrimaryApiKey));
-                await client.CreateIndexAsync(GetHotelIndex(IndexName));
+                await client.CreateIndexAsync(getIndex(IndexName));
 
                 RequiresCleanup = true;
 

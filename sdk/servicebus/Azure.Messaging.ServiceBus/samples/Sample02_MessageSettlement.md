@@ -1,6 +1,6 @@
 # Settling Messages
 
-This sample demonstrates how to [settle](https://docs.microsoft.com/en-us/azure/service-bus-messaging/message-transfers-locks-settlement#settling-receive-operations) received messages. Message settlement can only be used when using a receiver in [PeekLock](https://docs.microsoft.com/en-us/azure/service-bus-messaging/message-transfers-locks-settlement#peeklock) mode, which is the default behavior.
+This sample demonstrates how to [settle](https://docs.microsoft.com/azure/service-bus-messaging/message-transfers-locks-settlement#settling-receive-operations) received messages. Message settlement can only be used when using a receiver in [PeekLock](https://docs.microsoft.com/azure/service-bus-messaging/message-transfers-locks-settlement#peeklock) mode, which is the default behavior.
 
 ## Completing a message
 
@@ -14,7 +14,7 @@ await using var client = new ServiceBusClient(connectionString);
 ServiceBusSender sender = client.CreateSender(queueName);
 
 // create a message that we can send
-ServiceBusMessage message = new ServiceBusMessage(Encoding.UTF8.GetBytes("Hello world!"));
+ServiceBusMessage message = new ServiceBusMessage("Hello world!");
 
 // send the message
 await sender.SendMessageAsync(message);
@@ -57,11 +57,14 @@ ServiceBusReceivedMessage deferredMessage = await receiver.ReceiveDeferredMessag
 ```C# Snippet:ServiceBusDeadLetterMessage
 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
 
-// deadletter the message, thereby preventing the message from being received again without receiving from the dead letter queue.
+// dead-letter the message, thereby preventing the message from being received again without receiving from the dead letter queue.
 await receiver.DeadLetterMessageAsync(receivedMessage);
 
 // receive the dead lettered message with receiver scoped to the dead letter queue.
-ServiceBusReceiver dlqReceiver = client.CreateDeadLetterReceiver(queueName);
+ServiceBusReceiver dlqReceiver = client.CreateReceiver(queueName, new ServiceBusReceiverOptions
+{
+    SubQueue = SubQueue.DeadLetter
+});
 ServiceBusReceivedMessage dlqMessage = await dlqReceiver.ReceiveMessageAsync();
 ```
 
@@ -69,4 +72,4 @@ ServiceBusReceivedMessage dlqMessage = await dlqReceiver.ReceiveMessageAsync();
 
 To see the full example source, see:
 
-* [Sample02_MessageSettlement.cs](../tests/Samples/Sample02_MessageSettlement.cs)
+* [Sample02_MessageSettlement.cs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/tests/Samples/Sample02_MessageSettlement.cs)

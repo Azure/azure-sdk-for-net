@@ -31,6 +31,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("actionsRequired"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     actionsRequired = new PrivateLinkServiceConnectionStateActionsRequire(property.Value.GetString());
                     continue;
                 }

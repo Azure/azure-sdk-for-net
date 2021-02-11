@@ -684,7 +684,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='jobGetTaskCountsOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static TaskCounts GetTaskCounts(this IJobOperations operations, string jobId, JobGetTaskCountsOptions jobGetTaskCountsOptions = default(JobGetTaskCountsOptions))
+            public static TaskCountsResult GetTaskCounts(this IJobOperations operations, string jobId, JobGetTaskCountsOptions jobGetTaskCountsOptions = default(JobGetTaskCountsOptions))
             {
                 return operations.GetTaskCountsAsync(jobId, jobGetTaskCountsOptions).GetAwaiter().GetResult();
             }
@@ -709,7 +709,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<TaskCounts> GetTaskCountsAsync(this IJobOperations operations, string jobId, JobGetTaskCountsOptions jobGetTaskCountsOptions = default(JobGetTaskCountsOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<TaskCountsResult> GetTaskCountsAsync(this IJobOperations operations, string jobId, JobGetTaskCountsOptions jobGetTaskCountsOptions = default(JobGetTaskCountsOptions), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetTaskCountsWithHttpMessagesAsync(jobId, jobGetTaskCountsOptions, null, cancellationToken).ConfigureAwait(false))
                 {

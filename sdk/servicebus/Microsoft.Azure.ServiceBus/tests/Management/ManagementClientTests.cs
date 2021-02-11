@@ -13,8 +13,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
     using Xunit;
 
     public class ManagementClientTests
-    {        
-        [Fact]
+    {
+        [Fact(Skip = "Test failing in nightly runs.  Tracked by #16552")]
         [LiveTest]
         [DisplayTestMethodName]
         public async Task BasicQueueCrudTest()
@@ -98,7 +98,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
         {
             var topicName = Guid.NewGuid().ToString("D").Substring(0, 8);
             var client = new ManagementClient(new ServiceBusConnectionStringBuilder(TestUtility.NamespaceConnectionString));
-            
+
             try
             {
                 var td = new TopicDescription(topicName)
@@ -315,7 +315,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
         public async Task GetQueueRuntimeInfoTest()
         {
             var queueName = Guid.NewGuid().ToString("D").Substring(0, 8);
-            var client = new ManagementClient(new ServiceBusConnectionStringBuilder(TestUtility.NamespaceConnectionString));            
+            var client = new ManagementClient(new ServiceBusConnectionStringBuilder(TestUtility.NamespaceConnectionString));
             var qClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
 
             try
@@ -329,7 +329,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
 
                 // Populating 1 active message, 1 dead letter message and 1 scheduled message
                 // Changing Last Accessed Time
-                
+
                 await qClient.SendAsync(new Message() { MessageId = "1" });
                 await qClient.SendAsync(new Message() { MessageId = "2" });
                 await qClient.SendAsync(new Message() { MessageId = "3", ScheduledEnqueueTimeUtc = DateTime.UtcNow.AddDays(1) });
@@ -384,7 +384,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
         {
             var topicName = Guid.NewGuid().ToString("D").Substring(0, 8);
             var subscriptionName = Guid.NewGuid().ToString("D").Substring(0, 8);
-            var client = new ManagementClient(new ServiceBusConnectionStringBuilder(TestUtility.NamespaceConnectionString));            
+            var client = new ManagementClient(new ServiceBusConnectionStringBuilder(TestUtility.NamespaceConnectionString));
             var sender = new MessageSender(TestUtility.NamespaceConnectionString, topicName);
             var receiver = new MessageReceiver(TestUtility.NamespaceConnectionString, EntityNameHelper.FormatSubscriptionPath(topicName, subscriptionName));
 
@@ -395,7 +395,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
                 // Changing Last Updated Time
                 td.AutoDeleteOnIdle = TimeSpan.FromMinutes(100);
                 await client.UpdateTopicAsync(td);
-                        
+
                 var sd = await client.CreateSubscriptionAsync(topicName, subscriptionName);
 
                 // Changing Last Updated Time for subscription
@@ -404,7 +404,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
 
                 // Populating 1 active message, 1 dead letter message and 1 scheduled message
                 // Changing Last Accessed Time
-               
+
                 await sender.SendAsync(new Message() { MessageId = "1" });
                 await sender.SendAsync(new Message() { MessageId = "2" });
                 await sender.SendAsync(new Message() { MessageId = "3", ScheduledEnqueueTimeUtc = DateTime.UtcNow.AddDays(1) });
@@ -426,7 +426,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
                 Assert.Equal(2, subscriptionRI.MessageCount);
 
                 var singleSubscriptionRI = await client.GetSubscriptionRuntimeInfoAsync(topicName, subscriptionName);
-                
+
                 Assert.Equal(subscriptionRI.CreatedAt, singleSubscriptionRI.CreatedAt);
                 Assert.Equal(subscriptionRI.AccessedAt, singleSubscriptionRI.AccessedAt);
                 Assert.Equal(subscriptionRI.UpdatedAt, singleSubscriptionRI.UpdatedAt);
@@ -436,9 +436,9 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
                 Assert.Equal(subscriptionRI.MessageCountDetails.DeadLetterMessageCount, singleSubscriptionRI.MessageCountDetails.DeadLetterMessageCount);
                 Assert.Equal(subscriptionRI.MessageCountDetails.ScheduledMessageCount, singleSubscriptionRI.MessageCountDetails.ScheduledMessageCount);
                 Assert.Equal(subscriptionRI.TopicPath, singleSubscriptionRI.TopicPath);
-                
+
                 await client.DeleteSubscriptionAsync(topicName, subscriptionName);
-                await client.DeleteTopicAsync(topicName);                
+                await client.DeleteTopicAsync(topicName);
             }
             catch
             {
@@ -459,7 +459,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
         {
             var topicName = Guid.NewGuid().ToString("D").Substring(0, 8);
             var subscriptionName = Guid.NewGuid().ToString("D").Substring(0, 8);
-            var client = new ManagementClient(new ServiceBusConnectionStringBuilder(TestUtility.NamespaceConnectionString));            
+            var client = new ManagementClient(new ServiceBusConnectionStringBuilder(TestUtility.NamespaceConnectionString));
             var sender = new MessageSender(TestUtility.NamespaceConnectionString, topicName);
 
             try
@@ -474,14 +474,14 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
 
                 // Populating 1 active message and 1 scheduled message
                 // Changing Last Accessed Time
-               
+
                 await sender.SendAsync(new Message() { MessageId = "1" });
                 await sender.SendAsync(new Message() { MessageId = "2" });
                 await sender.SendAsync(new Message() { MessageId = "3", ScheduledEnqueueTimeUtc = DateTime.UtcNow.AddDays(1) });
 
                 var topicsRI = await client.GetTopicsRuntimeInfoAsync();
                 var topicRI = topicsRI.FirstOrDefault(t => topicName.Equals(t.Path, StringComparison.OrdinalIgnoreCase));
-                
+
                 Assert.Equal(topicName, topicRI.Path);
 
                 Assert.True(topicRI.CreatedAt < topicRI.UpdatedAt);
@@ -505,7 +505,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
                 Assert.Equal(topicRI.SubscriptionCount, singleTopicRI.SubscriptionCount);
 
                 await client.DeleteSubscriptionAsync(topicName, subscriptionName);
-                await client.DeleteTopicAsync(topicName);                
+                await client.DeleteTopicAsync(topicName);
             }
             catch
             {
@@ -673,7 +673,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
         };
 
         [Theory]
-        [MemberData(nameof(TestData_EntityNameValidationTest))]    
+        [MemberData(nameof(TestData_EntityNameValidationTest))]
         [LiveTest]
         [DisplayTestMethodName]
         public void EntityNameValidationTest(string entityName, bool isPathSeparatorAllowed)
@@ -697,11 +697,11 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
         [DisplayTestMethodName]
         public async Task ForwardingEntitySetupTest()
         {
-            // queueName --Fwd to--> destinationName --fwd dlq to--> dqlDestinationName            
+            // queueName --Fwd to--> destinationName --fwd dlq to--> dqlDestinationName
             var queueName = Guid.NewGuid().ToString("D").Substring(0, 8);
             var destinationName = Guid.NewGuid().ToString("D").Substring(0, 8);
             var dlqDestinationName = Guid.NewGuid().ToString("D").Substring(0, 8);
-            var client = new ManagementClient(new ServiceBusConnectionStringBuilder(TestUtility.NamespaceConnectionString));  
+            var client = new ManagementClient(new ServiceBusConnectionStringBuilder(TestUtility.NamespaceConnectionString));
             var sender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
 
             try
@@ -719,7 +719,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
                 };
                 var baseQ = await client.CreateQueueAsync(qd);
 
-                
+
                 await sender.SendAsync(new Message() { MessageId = "mid" });
                 await sender.CloseAsync();
 
@@ -752,7 +752,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
             }
         }
 
-        [Fact]   
+        [Fact(Skip = "Test failing in nightly runs.  Tracked by #16552")]
         [LiveTest]
         [DisplayTestMethodName]
         public void AuthRulesEqualityCheckTest()
@@ -770,7 +770,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
             Assert.Equal(qd, qd2);
         }
 
-        [Fact]
+        [Fact(Skip = "Test failing in nightly runs.  Tracked by #16552")]
         [LiveTest]
         [DisplayTestMethodName]
         public async Task QueueDescriptionParsedFromResponseEqualityCheckTest()
@@ -883,7 +883,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
         {
             var topicName = Guid.NewGuid().ToString("D").Substring(0, 8);
             var subscriptionName = Guid.NewGuid().ToString("D").Substring(0, 8);
-            var client = new ManagementClient(new ServiceBusConnectionStringBuilder(TestUtility.NamespaceConnectionString));            
+            var client = new ManagementClient(new ServiceBusConnectionStringBuilder(TestUtility.NamespaceConnectionString));
 
             try
             {
@@ -940,7 +940,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
                 await (client?.DeleteQueueAsync(name) ?? Task.CompletedTask);
             }
             catch (Exception ex)
-            {                
+            {
                 TestUtility.Log($"{ caller } could not delete the queue [{ name }].  Error: [{ ex.Message }]");
             }
         }

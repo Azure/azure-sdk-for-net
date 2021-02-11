@@ -31,7 +31,6 @@ namespace Azure.Identity
 
         internal AuthenticationRecord()
         {
-
         }
 
         internal AuthenticationRecord(AuthenticationResult authResult, string clientId)
@@ -45,10 +44,9 @@ namespace Azure.Identity
 
         internal AuthenticationRecord(string username, string authority, string homeAccountId, string tenantId, string clientId)
         {
-
             Username = username;
             Authority = authority;
-            AccountId = new AccountId(homeAccountId);
+            AccountId = BuildAccountIdFromString(homeAccountId);
             TenantId = tenantId;
             ClientId = clientId;
         }
@@ -104,7 +102,6 @@ namespace Azure.Identity
             await SerializeAsync(stream, true, cancellationToken).ConfigureAwait(false);
         }
 
-
         /// <summary>
         /// Deserializes the <see cref="AuthenticationRecord"/> from the specified <see cref="Stream"/>.
         /// </summary>
@@ -133,7 +130,6 @@ namespace Azure.Identity
         {
             using (var json = new Utf8JsonWriter(stream))
             {
-
                 json.WriteStartObject();
 
                 json.WriteString(s_usernamePropertyNameBytes, Username);
@@ -176,7 +172,7 @@ namespace Azure.Identity
                         authProfile.Authority = prop.Value.GetString();
                         break;
                     case HomeAccountIdPropertyName:
-                        authProfile.AccountId = new AccountId(prop.Value.GetString());
+                        authProfile.AccountId = BuildAccountIdFromString(prop.Value.GetString());
                         break;
                     case TenantIdPropertyName:
                         authProfile.TenantId = prop.Value.GetString();
@@ -188,6 +184,23 @@ namespace Azure.Identity
             }
 
             return authProfile;
+        }
+
+        private static AccountId BuildAccountIdFromString(string homeAccountId)
+        {
+            //For the Microsoft identity platform (formerly named Azure AD v2.0), the identifier is the concatenation of
+            // Microsoft.Identity.Client.AccountId.ObjectId and Microsoft.Identity.Client.AccountId.TenantId separated by a dot.
+            var homeAccountSegments = homeAccountId.Split('.');
+            AccountId accountId;
+            if (homeAccountSegments.Length == 2)
+            {
+                accountId = new AccountId(homeAccountId, homeAccountSegments[0], homeAccountSegments[1]);
+            }
+            else
+            {
+                accountId = new AccountId(homeAccountId);
+            }
+            return accountId;
         }
     }
 }

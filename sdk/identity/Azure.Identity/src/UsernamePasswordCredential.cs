@@ -27,13 +27,11 @@ namespace Azure.Identity
         private readonly SecureString _password;
         private AuthenticationRecord _record;
 
-
         /// <summary>
         /// Protected constructor for mocking
         /// </summary>
         protected UsernamePasswordCredential()
         {
-
         }
 
         /// <summary>
@@ -47,7 +45,6 @@ namespace Azure.Identity
         public UsernamePasswordCredential(string username, string password, string tenantId, string clientId)
             : this(username, password, tenantId, clientId, (TokenCredentialOptions)null)
         {
-
         }
 
         /// <summary>
@@ -86,7 +83,7 @@ namespace Azure.Identity
 
             _clientId = clientId ?? throw new ArgumentNullException(nameof(clientId));
 
-            if (tenantId == null) throw new ArgumentNullException(nameof(tenantId));
+            Validations.ValidateTenantId(tenantId, nameof(tenantId));
 
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
 
@@ -143,7 +140,7 @@ namespace Azure.Identity
 
         /// <summary>
         /// Obtains a token for a user account, authenticating them using the given username and password.  Note: This will fail with
-        /// an <see cref="AuthenticationFailedException"/> if the specified user account has MFA enabled. This method is called by Azure SDK clients. It isn't intended for use in application code.
+        /// an <see cref="AuthenticationFailedException"/> if the specified user account has MFA enabled. This method is called automatically by Azure SDK client libraries. You may call this method directly, but you must also handle token caching and token refreshing.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -155,7 +152,7 @@ namespace Azure.Identity
 
         /// <summary>
         /// Obtains a token for a user account, authenticating them using the given username and password.  Note: This will fail with
-        /// an <see cref="AuthenticationFailedException"/> if the specified user account has MFA enabled. This method is called by Azure SDK clients. It isn't intended for use in application code.
+        /// an <see cref="AuthenticationFailedException"/> if the specified user account has MFA enabled. This method is called automatically by Azure SDK client libraries. You may call this method directly, but you must also handle token caching and token refreshing.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -188,7 +185,7 @@ namespace Azure.Identity
             try
             {
                 AuthenticationResult result = await _client
-                    .AcquireTokenByUsernamePasswordAsync(requestContext.Scopes, _username, _password, async, cancellationToken)
+                    .AcquireTokenByUsernamePasswordAsync(requestContext.Scopes, requestContext.Claims, _username, _password, async, cancellationToken)
                     .ConfigureAwait(false);
 
                 _record = new AuthenticationRecord(result, _clientId);

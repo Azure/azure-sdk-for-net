@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.DataBox.Models
 {
+    using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -36,7 +37,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// response.</param>
         /// <param name="status">Sku availability validation status. Possible
         /// values include: 'Valid', 'Invalid', 'Skipped'</param>
-        public SkuAvailabilityValidationResponseProperties(Error error = default(Error), ValidationStatus? status = default(ValidationStatus?))
+        public SkuAvailabilityValidationResponseProperties(CloudError error = default(CloudError), ValidationStatus? status = default(ValidationStatus?))
             : base(error)
         {
             Status = status;

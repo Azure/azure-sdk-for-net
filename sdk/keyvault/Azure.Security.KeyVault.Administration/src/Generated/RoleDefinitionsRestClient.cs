@@ -39,6 +39,293 @@ namespace Azure.Security.KeyVault.Administration
             _pipeline = pipeline;
         }
 
+        internal HttpMessage CreateDeleteRequest(string vaultBaseUrl, string scope, string roleDefinitionName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Authorization/roleDefinitions/", false);
+            uri.AppendPath(roleDefinitionName, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Deletes a custom role definition. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="scope"> The scope of the role definition to delete. Managed HSM only supports &apos;/&apos;. </param>
+        /// <param name="roleDefinitionName"> The name (GUID) of the role definition to delete. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/>, <paramref name="scope"/>, or <paramref name="roleDefinitionName"/> is null. </exception>
+        public async Task<Response<KeyVaultRoleDefinition>> DeleteAsync(string vaultBaseUrl, string scope, string roleDefinitionName, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
+            if (roleDefinitionName == null)
+            {
+                throw new ArgumentNullException(nameof(roleDefinitionName));
+            }
+
+            using var message = CreateDeleteRequest(vaultBaseUrl, scope, roleDefinitionName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        KeyVaultRoleDefinition value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = KeyVaultRoleDefinition.DeserializeKeyVaultRoleDefinition(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Deletes a custom role definition. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="scope"> The scope of the role definition to delete. Managed HSM only supports &apos;/&apos;. </param>
+        /// <param name="roleDefinitionName"> The name (GUID) of the role definition to delete. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/>, <paramref name="scope"/>, or <paramref name="roleDefinitionName"/> is null. </exception>
+        public Response<KeyVaultRoleDefinition> Delete(string vaultBaseUrl, string scope, string roleDefinitionName, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
+            if (roleDefinitionName == null)
+            {
+                throw new ArgumentNullException(nameof(roleDefinitionName));
+            }
+
+            using var message = CreateDeleteRequest(vaultBaseUrl, scope, roleDefinitionName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        KeyVaultRoleDefinition value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = KeyVaultRoleDefinition.DeserializeKeyVaultRoleDefinition(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateCreateOrUpdateRequest(string vaultBaseUrl, string scope, string roleDefinitionName, RoleDefinitionCreateParameters parameters)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Authorization/roleDefinitions/", false);
+            uri.AppendPath(roleDefinitionName, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(parameters);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Creates or updates a custom role definition. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="scope"> The scope of the role definition to create or update. Managed HSM only supports &apos;/&apos;. </param>
+        /// <param name="roleDefinitionName"> The name of the role definition to create or update. It can be any valid GUID. </param>
+        /// <param name="parameters"> Parameters for the role definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/>, <paramref name="scope"/>, <paramref name="roleDefinitionName"/>, or <paramref name="parameters"/> is null. </exception>
+        public async Task<Response<KeyVaultRoleDefinition>> CreateOrUpdateAsync(string vaultBaseUrl, string scope, string roleDefinitionName, RoleDefinitionCreateParameters parameters, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
+            if (roleDefinitionName == null)
+            {
+                throw new ArgumentNullException(nameof(roleDefinitionName));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var message = CreateCreateOrUpdateRequest(vaultBaseUrl, scope, roleDefinitionName, parameters);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 201:
+                    {
+                        KeyVaultRoleDefinition value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = KeyVaultRoleDefinition.DeserializeKeyVaultRoleDefinition(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Creates or updates a custom role definition. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="scope"> The scope of the role definition to create or update. Managed HSM only supports &apos;/&apos;. </param>
+        /// <param name="roleDefinitionName"> The name of the role definition to create or update. It can be any valid GUID. </param>
+        /// <param name="parameters"> Parameters for the role definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/>, <paramref name="scope"/>, <paramref name="roleDefinitionName"/>, or <paramref name="parameters"/> is null. </exception>
+        public Response<KeyVaultRoleDefinition> CreateOrUpdate(string vaultBaseUrl, string scope, string roleDefinitionName, RoleDefinitionCreateParameters parameters, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
+            if (roleDefinitionName == null)
+            {
+                throw new ArgumentNullException(nameof(roleDefinitionName));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var message = CreateCreateOrUpdateRequest(vaultBaseUrl, scope, roleDefinitionName, parameters);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 201:
+                    {
+                        KeyVaultRoleDefinition value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = KeyVaultRoleDefinition.DeserializeKeyVaultRoleDefinition(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetRequest(string vaultBaseUrl, string scope, string roleDefinitionName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Authorization/roleDefinitions/", false);
+            uri.AppendPath(roleDefinitionName, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Get the specified role definition. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="scope"> The scope of the role definition to get. Managed HSM only supports &apos;/&apos;. </param>
+        /// <param name="roleDefinitionName"> The name of the role definition to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/>, <paramref name="scope"/>, or <paramref name="roleDefinitionName"/> is null. </exception>
+        public async Task<Response<KeyVaultRoleDefinition>> GetAsync(string vaultBaseUrl, string scope, string roleDefinitionName, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
+            if (roleDefinitionName == null)
+            {
+                throw new ArgumentNullException(nameof(roleDefinitionName));
+            }
+
+            using var message = CreateGetRequest(vaultBaseUrl, scope, roleDefinitionName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        KeyVaultRoleDefinition value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = KeyVaultRoleDefinition.DeserializeKeyVaultRoleDefinition(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Get the specified role definition. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="scope"> The scope of the role definition to get. Managed HSM only supports &apos;/&apos;. </param>
+        /// <param name="roleDefinitionName"> The name of the role definition to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/>, <paramref name="scope"/>, or <paramref name="roleDefinitionName"/> is null. </exception>
+        public Response<KeyVaultRoleDefinition> Get(string vaultBaseUrl, string scope, string roleDefinitionName, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
+            if (roleDefinitionName == null)
+            {
+                throw new ArgumentNullException(nameof(roleDefinitionName));
+            }
+
+            using var message = CreateGetRequest(vaultBaseUrl, scope, roleDefinitionName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        KeyVaultRoleDefinition value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = KeyVaultRoleDefinition.DeserializeKeyVaultRoleDefinition(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
         internal HttpMessage CreateListRequest(string vaultBaseUrl, string scope, string filter)
         {
             var message = _pipeline.CreateMessage();
@@ -55,6 +342,7 @@ namespace Azure.Security.KeyVault.Administration
             }
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -133,6 +421,7 @@ namespace Azure.Security.KeyVault.Administration
             uri.AppendRaw(vaultBaseUrl, false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

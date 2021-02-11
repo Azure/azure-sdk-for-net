@@ -315,7 +315,6 @@ namespace Policy.Tests
             }
             catch (Exception ex)
             {
-
                 Assert.NotNull(ex);
             }
             listResult = await PolicyAssignmentsOperations.ListAsync().ToEnumerableAsync();
@@ -338,7 +337,6 @@ namespace Policy.Tests
             }
             catch (Exception ex)
             {
-
                 Assert.NotNull(ex);
             }
             listResult = await PolicyAssignmentsOperations.ListAsync().ToEnumerableAsync();
@@ -385,7 +383,8 @@ namespace Policy.Tests
             // clean up everything
             await PolicyAssignmentsOperations.DeleteAsync("/" + assignmentScope, assignment.Name);
             await PolicyDefinitionsOperations.DeleteAsync(policyDefinition.Name);
-            await WaitForCompletionAsync(await ResourceGroupsOperations.StartDeleteAsync(resourceGroupName));
+            // No need to manual delete
+            //await WaitForCompletionAsync(await ResourceGroupsOperations.StartDeleteAsync(resourceGroupName));
         }
 
         [Test]
@@ -429,7 +428,8 @@ namespace Policy.Tests
             // clean up everything
             await PolicyAssignmentsOperations.DeleteAsync(assignmentScope, assignment.Name);
             await PolicyDefinitionsOperations.DeleteAsync(policyDefinition.Name);
-            await WaitForCompletionAsync(await ResourceGroupsOperations.StartDeleteAsync(resourceGroupName));
+            // No need to manual delete
+            //await WaitForCompletionAsync(await ResourceGroupsOperations.StartDeleteAsync(resourceGroupName));
         }
 
         //No Track2 ManagementGroup
@@ -647,7 +647,6 @@ namespace Policy.Tests
             }
             catch (Exception ex)
             {
-
                 Assert.NotNull(ex);
                 Assert.IsTrue(ex.Message.ToString().Contains("InvalidRequestContent"));
             }
@@ -666,7 +665,6 @@ namespace Policy.Tests
             }
             catch (Exception ex)
             {
-
                 Assert.NotNull(ex);
                 Assert.IsTrue(ex.Message.ToString().Contains("PolicyDefinitionNotFound"));
             }
@@ -686,7 +684,6 @@ namespace Policy.Tests
 
             catch (Exception ex)
             {
-
                 Assert.NotNull(ex);
                 Assert.IsTrue(ex.Message.ToString().Contains("InvalidPolicySku"));
             }
@@ -713,7 +710,6 @@ namespace Policy.Tests
 
             catch (Exception ex)
             {
-
                 Assert.NotNull(ex);
                 Assert.IsTrue(ex.Message.ToString().Contains("InvalidRequestContent"));
             }
@@ -729,7 +725,6 @@ namespace Policy.Tests
 
             catch (Exception ex)
             {
-
                 Assert.NotNull(ex);
                 Assert.IsTrue(ex.Message.ToString().Contains("InvalidPolicyDefinitionMode"));
             }
@@ -745,7 +740,6 @@ namespace Policy.Tests
 
             catch (Exception ex)
             {
-
                 Assert.NotNull(ex);
                 Assert.IsTrue(ex.Message.ToString().Contains("UnusedPolicyParameters"));
             }
@@ -760,7 +754,6 @@ namespace Policy.Tests
 
             catch (Exception ex)
             {
-
                 Assert.NotNull(ex);
                 StringAssert.Contains("InvalidPolicyParameters", ex.Message);
             }
@@ -791,7 +784,6 @@ namespace Policy.Tests
 
             catch (Exception ex)
             {
-
                 Assert.NotNull(ex);
                 Assert.IsTrue(ex.Message.ToString().Contains("policyDefinitions"));
             }
@@ -813,7 +805,6 @@ namespace Policy.Tests
 
             catch (Exception ex)
             {
-
                 Assert.NotNull(ex);
                 Assert.IsTrue(ex.Message.ToString().Contains("PolicyDefinitionNotFound"));
             }
@@ -837,7 +828,6 @@ namespace Policy.Tests
 
             catch (Exception ex)
             {
-
                 Assert.NotNull(ex);
                 StringAssert.Contains("UnusedPolicyParameters", ex.Message);
                 Assert.IsTrue(ex.Message.ToString().Contains(""));
@@ -866,7 +856,6 @@ namespace Policy.Tests
 
             catch (Exception ex)
             {
-
                 Assert.NotNull(ex);
                 Assert.IsTrue(ex.Message.ToString().Contains("UndefinedPolicyParameter"));
             }

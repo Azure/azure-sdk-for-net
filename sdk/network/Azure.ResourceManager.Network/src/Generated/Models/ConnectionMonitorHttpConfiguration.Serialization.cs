@@ -71,11 +71,21 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("port"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     port = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("method"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     method = new HttpConfigurationMethod(property.Value.GetString());
                     continue;
                 }
@@ -86,6 +96,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("requestHeaders"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<HttpHeader> array = new List<HttpHeader>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -96,6 +111,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("validStatusCodeRanges"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -106,6 +126,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("preferHTTPS"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     preferHTTPS = property.Value.GetBoolean();
                     continue;
                 }

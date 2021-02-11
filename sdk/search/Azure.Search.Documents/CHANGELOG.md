@@ -1,10 +1,57 @@
 # Release History
 
-## 11.2.0-preview.1 (Unreleased)
+## 11.3.0-beta.1 (Unreleased)
+
+
+## 11.2.0 (2021-02-10)
+
+### Added
+
+- Added setters for `MaxLength` and `MinLength` in `LengthTokenFilter`.
+- Added a public constructor for `SearchIndexingBufferedSender<T>`.
+- Added `IndexActionEventArgs<T>` to track indexing actions.
+- Added `IndexActionCompletedEventArgs<T>` to track the completion of an indexing action.
+- Added `IndexActionFailedEventArgs<T>` to track the failure of an indexing action.
+- All changes from the 11.2.0-beta.2 and 11.2.0-beta.1 releases listed below.
+
+### Breaking Changes
+
+- Renamed `SearchIndexingBufferedSenderOptions<T>.MaxRetries` to `SearchIndexingBufferedSenderOptions<T>.MaxRetriesPerIndexAction`.
+- Renamed `SearchIndexingBufferedSenderOptions<T>.MaxRetryDelay` to `SearchIndexingBufferedSenderOptions<T>.MaxThrottlingDelay`.
+- Renamed `SearchIndexingBufferedSenderOptions<T>.RetryDelay` to `SearchIndexingBufferedSenderOptions<T>.ThrottlingDelay`.
+- Removed the helper method `SearchClient.CreateIndexingBufferedSender<T>()`. Instead, callers are expected to use the public constructor of `SearchIndexingBufferedSender<T>`.
+
+## 11.2.0-beta.2 (2020-11-10)
+
+### Added
+
+- Added `EncryptionKey` to `SearchIndexer`, `SearchIndexerDataSourceConnection`, and `SearchIndexerSkillset`.
+- Added configuration options to tune the performance of `SearchIndexingBufferedSender<T>`.
+
+### Fixed
+
+- Fixed issue calling `SearchIndexClient.GetIndexNames` that threw an exception ([#15590](https://github.com/Azure/azure-sdk-for-net/issues/15590))
+- Fixed issue where `ScoringProfile.FunctionAggregation` did not correctly handle null values ([#16570](https://github.com/Azure/azure-sdk-for-net/issues/16570))
+- Fixed overly permissive date parsing on facets ([#16412](https://github.com/Azure/azure-sdk-for-net/issues/16412))
+
+## 11.2.0-beta.1 (2020-10-09)
+
+### Added
+
+- Add `SearchIndexingBufferedSender<T>` to make indexing lots of documents fast and easy.
+- Add support to `FieldBuilder` to define search fields for `Microsoft.Spatial` types without an explicit assembly dependency.
+- Add support to `SearchFilter` to encode geometric types from `Microsoft.Spatial` without an explicit assembly dependency.
+- Add `IndexingParameters.IndexingParametersConfiguration` property to define well-known properties supported by Azure Cognitive Search.
+
+### Fixed
+
+- Support deserializing null values during deserialization of skills ([#15108](https://github.com/Azure/azure-sdk-for-net/issues/15108))
+- Fixed issues preventing mocking clients or initializing all models.
 
 ## 11.1.1 (2020-08-18)
 
 ### Fixed
+
 - Bug in TaskExtensions.EnsureCompleted method that causes it to unconditionally throw an exception in the environments with synchronization context
 
 ## 11.1.0 (2020-08-11)

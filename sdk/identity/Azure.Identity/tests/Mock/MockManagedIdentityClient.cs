@@ -13,84 +13,25 @@ namespace Azure.Identity.Tests.Mock
         public MockManagedIdentityClient()
             : this(null)
         {
-
         }
 
         public MockManagedIdentityClient(CredentialPipeline pipeline)
             : this(pipeline, null)
         {
-
         }
 
         public MockManagedIdentityClient(CredentialPipeline pipeline, string clientId)
             : base(pipeline, clientId)
         {
-
         }
-        public Func<MsiType> MsiTypeFactory { get; set; }
+        public Func<ManagedIdentitySource> ManagedIdentitySourceFactory { get; set; }
 
         public Func<AccessToken> TokenFactory { get; set; }
 
-        public Func<CancellationToken, bool> ImdsAvailableFunc { get; set; }
+        public override ValueTask<AccessToken> AuthenticateAsync(bool async, TokenRequestContext context, CancellationToken cancellationToken)
+              => TokenFactory != null ? new ValueTask<AccessToken>(TokenFactory()) : base.AuthenticateAsync(async, context, cancellationToken);
 
-        public override AccessToken Authenticate(string[] scopes, CancellationToken cancellationToken)
-        {
-            if (TokenFactory != null)
-            {
-                return TokenFactory();
-            }
-
-            return base.Authenticate(scopes, cancellationToken);
-        }
-
-        public override Task<AccessToken> AuthenticateAsync(string[] scopes, CancellationToken cancellationToken)
-        {
-            if (TokenFactory != null)
-            {
-                return Task.FromResult(TokenFactory());
-            }
-
-            return base.AuthenticateAsync(scopes, cancellationToken);
-        }
-
-        protected override MsiType GetMsiType(CancellationToken cancellationToken)
-        {
-            if (MsiTypeFactory != null)
-            {
-                return MsiTypeFactory();
-            }
-
-            return base.GetMsiType(cancellationToken);
-        }
-
-        protected override Task<MsiType> GetMsiTypeAsync(CancellationToken cancellationToken)
-        {
-            if (MsiTypeFactory != null)
-            {
-                return Task.FromResult(MsiTypeFactory());
-            }
-
-            return base.GetMsiTypeAsync(cancellationToken);
-        }
-
-        protected override bool ImdsAvailable(CancellationToken cancellationToken)
-        {
-            if (ImdsAvailableFunc != null)
-            {
-                return ImdsAvailableFunc(cancellationToken);
-            }
-
-            return base.ImdsAvailable(cancellationToken);
-        }
-
-        protected override Task<bool> ImdsAvailableAsync(CancellationToken cancellationToken)
-        {
-            if (ImdsAvailableFunc != null)
-            {
-                return Task.FromResult(ImdsAvailableFunc(cancellationToken));
-            }
-
-            return base.ImdsAvailableAsync(cancellationToken);
-        }
+        private protected override ValueTask<ManagedIdentitySource> GetManagedIdentitySourceAsync(bool async, CancellationToken cancellationToken)
+            => ManagedIdentitySourceFactory != null ? new ValueTask<ManagedIdentitySource>(ManagedIdentitySourceFactory()) : base.GetManagedIdentitySourceAsync(async, cancellationToken);
     }
 }

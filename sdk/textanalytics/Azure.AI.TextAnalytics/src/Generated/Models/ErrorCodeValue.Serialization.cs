@@ -9,23 +9,25 @@ using System;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal static class ErrorCodeValueExtensions
+    internal static partial class ErrorCodeValueExtensions
     {
         public static string ToSerialString(this ErrorCodeValue value) => value switch
         {
-            ErrorCodeValue.InvalidRequest => "invalidRequest",
-            ErrorCodeValue.InvalidArgument => "invalidArgument",
-            ErrorCodeValue.InternalServerError => "internalServerError",
-            ErrorCodeValue.ServiceUnavailable => "serviceUnavailable",
+            ErrorCodeValue.InvalidRequest => "InvalidRequest",
+            ErrorCodeValue.InvalidArgument => "InvalidArgument",
+            ErrorCodeValue.InternalServerError => "InternalServerError",
+            ErrorCodeValue.ServiceUnavailable => "ServiceUnavailable",
+            ErrorCodeValue.NotFound => "NotFound",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ErrorCodeValue value.")
         };
 
         public static ErrorCodeValue ToErrorCodeValue(this string value)
         {
-            if (string.Equals(value, "invalidRequest", StringComparison.InvariantCultureIgnoreCase)) return ErrorCodeValue.InvalidRequest;
-            if (string.Equals(value, "invalidArgument", StringComparison.InvariantCultureIgnoreCase)) return ErrorCodeValue.InvalidArgument;
-            if (string.Equals(value, "internalServerError", StringComparison.InvariantCultureIgnoreCase)) return ErrorCodeValue.InternalServerError;
-            if (string.Equals(value, "serviceUnavailable", StringComparison.InvariantCultureIgnoreCase)) return ErrorCodeValue.ServiceUnavailable;
+            if (string.Equals(value, "InvalidRequest", StringComparison.InvariantCultureIgnoreCase)) return ErrorCodeValue.InvalidRequest;
+            if (string.Equals(value, "InvalidArgument", StringComparison.InvariantCultureIgnoreCase)) return ErrorCodeValue.InvalidArgument;
+            if (string.Equals(value, "InternalServerError", StringComparison.InvariantCultureIgnoreCase)) return ErrorCodeValue.InternalServerError;
+            if (string.Equals(value, "ServiceUnavailable", StringComparison.InvariantCultureIgnoreCase)) return ErrorCodeValue.ServiceUnavailable;
+            if (string.Equals(value, "NotFound", StringComparison.InvariantCultureIgnoreCase)) return ErrorCodeValue.NotFound;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ErrorCodeValue value.");
         }
     }

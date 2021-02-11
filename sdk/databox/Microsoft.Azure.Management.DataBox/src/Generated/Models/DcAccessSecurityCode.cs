@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
     using System.Linq;
 
     /// <summary>
-    /// Dc Access Security code for device.
+    /// Dc access security code
     /// </summary>
     public partial class DcAccessSecurityCode
     {
@@ -29,14 +29,14 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// <summary>
         /// Initializes a new instance of the DcAccessSecurityCode class.
         /// </summary>
-        /// <param name="forwardDcAccessCode">Dc Access Code for dispatching
-        /// from DC.</param>
-        /// <param name="reverseDcAccessCode">Dc Access code for dropping off
-        /// at DC.</param>
-        public DcAccessSecurityCode(string forwardDcAccessCode = default(string), string reverseDcAccessCode = default(string))
+        /// <param name="reverseDcAccessCode">Reverse Dc access security
+        /// code.</param>
+        /// <param name="forwardDcAccessCode">Forward Dc access security
+        /// code.</param>
+        public DcAccessSecurityCode(string reverseDcAccessCode = default(string), string forwardDcAccessCode = default(string))
         {
-            ForwardDcAccessCode = forwardDcAccessCode;
             ReverseDcAccessCode = reverseDcAccessCode;
+            ForwardDcAccessCode = forwardDcAccessCode;
             CustomInit();
         }
 
@@ -46,16 +46,16 @@ namespace Microsoft.Azure.Management.DataBox.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets dc Access Code for dispatching from DC.
-        /// </summary>
-        [JsonProperty(PropertyName = "forwardDcAccessCode")]
-        public string ForwardDcAccessCode { get; set; }
-
-        /// <summary>
-        /// Gets or sets dc Access code for dropping off at DC.
+        /// Gets or sets reverse Dc access security code.
         /// </summary>
         [JsonProperty(PropertyName = "reverseDcAccessCode")]
         public string ReverseDcAccessCode { get; set; }
+
+        /// <summary>
+        /// Gets or sets forward Dc access security code.
+        /// </summary>
+        [JsonProperty(PropertyName = "forwardDcAccessCode")]
+        public string ForwardDcAccessCode { get; set; }
 
     }
 }

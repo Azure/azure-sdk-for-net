@@ -58,6 +58,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(gatewayName, true);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -140,6 +141,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(gatewayName, true);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(p2SVpnGatewayParameters);
@@ -228,6 +230,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(gatewayName, true);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(p2SVpnGatewayParameters);
@@ -324,6 +327,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(gatewayName, true);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -399,6 +403,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/providers/Microsoft.Network/p2svpnGateways", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -468,6 +473,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/providers/Microsoft.Network/p2svpnGateways", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -527,6 +533,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/generatevpnprofile", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
@@ -616,6 +623,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/getP2sVpnConnectionHealth", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -691,6 +699,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/getP2sVpnConnectionHealthDetailed", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request0.Uri = uri;
+            request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(request);
@@ -780,6 +789,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/disconnectP2sVpnConnections", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request0.Uri = uri;
+            request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(request);
@@ -862,6 +872,7 @@ namespace Azure.ResourceManager.Network
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -938,6 +949,7 @@ namespace Azure.ResourceManager.Network
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

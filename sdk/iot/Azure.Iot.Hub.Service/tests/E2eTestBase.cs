@@ -39,7 +39,7 @@ namespace Azure.Iot.Hub.Service.Tests
             return InstrumentClient(
                 new IotHubServiceClient(
                     TestEnvironment.IotHubConnectionString,
-                    Recording.InstrumentClientOptions(new IotHubServiceClientOptions())));
+                    InstrumentClientOptions(new IotHubServiceClientOptions())));
         }
 
         /* Need to use this for playback tests to run, do not use a new instance of random */

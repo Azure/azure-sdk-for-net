@@ -42,18 +42,18 @@ namespace Microsoft.Azure.Management.DataBox.Models
         [EnumMember(Value = "Delivered")]
         Delivered,
         /// <summary>
-        /// Device has been picked up from user and in transit to azure
+        /// Device has been picked up from user and in transit to Azure
         /// datacenter.
         /// </summary>
         [EnumMember(Value = "PickedUp")]
         PickedUp,
         /// <summary>
-        /// Device has been received at azure datacenter from the user.
+        /// Device has been received at Azure datacenter from the user.
         /// </summary>
         [EnumMember(Value = "AtAzureDC")]
         AtAzureDC,
         /// <summary>
-        /// Data copy from the device at azure datacenter.
+        /// Data copy from the device at Azure datacenter.
         /// </summary>
         [EnumMember(Value = "DataCopy")]
         DataCopy,
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
         [EnumMember(Value = "Failed_IssueReportedAtCustomer")]
         FailedIssueReportedAtCustomer,
         /// <summary>
-        /// Order has failed due to issue detected at azure datacenter.
+        /// Order has failed due to issue detected at Azure datacenter.
         /// </summary>
         [EnumMember(Value = "Failed_IssueDetectedAtAzureDC")]
         FailedIssueDetectedAtAzureDC,

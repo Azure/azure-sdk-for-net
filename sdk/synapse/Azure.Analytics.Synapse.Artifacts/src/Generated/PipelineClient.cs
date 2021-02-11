@@ -76,6 +76,50 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
+        /// <summary> Creates a run of a pipeline. </summary>
+        /// <param name="pipelineName"> The pipeline name. </param>
+        /// <param name="referencePipelineRunId"> The pipeline run identifier. If run ID is specified the parameters of the specified run will be used to create a new run. </param>
+        /// <param name="isRecovery"> Recovery mode flag. If recovery mode is set to true, the specified referenced pipeline run and the new run will be grouped under the same groupId. </param>
+        /// <param name="startActivityName"> In recovery mode, the rerun will start from this activity. If not specified, all activities will run. </param>
+        /// <param name="parameters"> Parameters of the pipeline run. These parameters will be used only if the runId is not specified. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<CreateRunResponse>> CreatePipelineRunAsync(string pipelineName, string referencePipelineRunId = null, bool? isRecovery = null, string startActivityName = null, IDictionary<string, object> parameters = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("PipelineClient.CreatePipelineRun");
+            scope.Start();
+            try
+            {
+                return await RestClient.CreatePipelineRunAsync(pipelineName, referencePipelineRunId, isRecovery, startActivityName, parameters, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Creates a run of a pipeline. </summary>
+        /// <param name="pipelineName"> The pipeline name. </param>
+        /// <param name="referencePipelineRunId"> The pipeline run identifier. If run ID is specified the parameters of the specified run will be used to create a new run. </param>
+        /// <param name="isRecovery"> Recovery mode flag. If recovery mode is set to true, the specified referenced pipeline run and the new run will be grouped under the same groupId. </param>
+        /// <param name="startActivityName"> In recovery mode, the rerun will start from this activity. If not specified, all activities will run. </param>
+        /// <param name="parameters"> Parameters of the pipeline run. These parameters will be used only if the runId is not specified. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<CreateRunResponse> CreatePipelineRun(string pipelineName, string referencePipelineRunId = null, bool? isRecovery = null, string startActivityName = null, IDictionary<string, object> parameters = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("PipelineClient.CreatePipelineRun");
+            scope.Start();
+            try
+            {
+                return RestClient.CreatePipelineRun(pipelineName, referencePipelineRunId, isRecovery, startActivityName, parameters, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> Lists pipelines. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<PipelineResource> GetPipelinesByWorkspaceAsync(CancellationToken cancellationToken = default)
@@ -262,27 +306,28 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
-        /// <summary> Creates a run of a pipeline. </summary>
+        /// <summary> Renames a pipeline. </summary>
         /// <param name="pipelineName"> The pipeline name. </param>
-        /// <param name="referencePipelineRunId"> The pipeline run identifier. If run ID is specified the parameters of the specified run will be used to create a new run. </param>
-        /// <param name="isRecovery"> Recovery mode flag. If recovery mode is set to true, the specified referenced pipeline run and the new run will be grouped under the same groupId. </param>
-        /// <param name="startActivityName"> In recovery mode, the rerun will start from this activity. If not specified, all activities will run. </param>
-        /// <param name="parameters"> Parameters of the pipeline run. These parameters will be used only if the runId is not specified. </param>
+        /// <param name="request"> proposed new name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/> is null. </exception>
-        public virtual async Task<PipelineCreatePipelineRunOperation> StartCreatePipelineRunAsync(string pipelineName, string referencePipelineRunId = null, bool? isRecovery = null, string startActivityName = null, IDictionary<string, object> parameters = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/> or <paramref name="request"/> is null. </exception>
+        public virtual async Task<PipelineRenamePipelineOperation> StartRenamePipelineAsync(string pipelineName, ArtifactRenameRequest request, CancellationToken cancellationToken = default)
         {
             if (pipelineName == null)
             {
                 throw new ArgumentNullException(nameof(pipelineName));
             }
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
 
-            using var scope = _clientDiagnostics.CreateScope("PipelineClient.StartCreatePipelineRun");
+            using var scope = _clientDiagnostics.CreateScope("PipelineClient.StartRenamePipeline");
             scope.Start();
             try
             {
-                var originalResponse = await RestClient.CreatePipelineRunAsync(pipelineName, referencePipelineRunId, isRecovery, startActivityName, parameters, cancellationToken).ConfigureAwait(false);
-                return new PipelineCreatePipelineRunOperation(_clientDiagnostics, _pipeline, RestClient.CreateCreatePipelineRunRequest(pipelineName, referencePipelineRunId, isRecovery, startActivityName, parameters).Request, originalResponse);
+                var originalResponse = await RestClient.RenamePipelineAsync(pipelineName, request, cancellationToken).ConfigureAwait(false);
+                return new PipelineRenamePipelineOperation(_clientDiagnostics, _pipeline, RestClient.CreateRenamePipelineRequest(pipelineName, request).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -291,27 +336,28 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
-        /// <summary> Creates a run of a pipeline. </summary>
+        /// <summary> Renames a pipeline. </summary>
         /// <param name="pipelineName"> The pipeline name. </param>
-        /// <param name="referencePipelineRunId"> The pipeline run identifier. If run ID is specified the parameters of the specified run will be used to create a new run. </param>
-        /// <param name="isRecovery"> Recovery mode flag. If recovery mode is set to true, the specified referenced pipeline run and the new run will be grouped under the same groupId. </param>
-        /// <param name="startActivityName"> In recovery mode, the rerun will start from this activity. If not specified, all activities will run. </param>
-        /// <param name="parameters"> Parameters of the pipeline run. These parameters will be used only if the runId is not specified. </param>
+        /// <param name="request"> proposed new name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/> is null. </exception>
-        public virtual PipelineCreatePipelineRunOperation StartCreatePipelineRun(string pipelineName, string referencePipelineRunId = null, bool? isRecovery = null, string startActivityName = null, IDictionary<string, object> parameters = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/> or <paramref name="request"/> is null. </exception>
+        public virtual PipelineRenamePipelineOperation StartRenamePipeline(string pipelineName, ArtifactRenameRequest request, CancellationToken cancellationToken = default)
         {
             if (pipelineName == null)
             {
                 throw new ArgumentNullException(nameof(pipelineName));
             }
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
 
-            using var scope = _clientDiagnostics.CreateScope("PipelineClient.StartCreatePipelineRun");
+            using var scope = _clientDiagnostics.CreateScope("PipelineClient.StartRenamePipeline");
             scope.Start();
             try
             {
-                var originalResponse = RestClient.CreatePipelineRun(pipelineName, referencePipelineRunId, isRecovery, startActivityName, parameters, cancellationToken);
-                return new PipelineCreatePipelineRunOperation(_clientDiagnostics, _pipeline, RestClient.CreateCreatePipelineRunRequest(pipelineName, referencePipelineRunId, isRecovery, startActivityName, parameters).Request, originalResponse);
+                var originalResponse = RestClient.RenamePipeline(pipelineName, request, cancellationToken);
+                return new PipelineRenamePipelineOperation(_clientDiagnostics, _pipeline, RestClient.CreateRenamePipelineRequest(pipelineName, request).Request, originalResponse);
             }
             catch (Exception e)
             {

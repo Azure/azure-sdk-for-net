@@ -40,12 +40,24 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// flag to enable statistics of Bing Search.</param>
         /// <param name="storageAccountConnectionString">(Personalization Only)
         /// The storage account connection string.</param>
-        public CognitiveServicesAccountApiProperties(string qnaRuntimeEndpoint = default(string), bool? statisticsEnabled = default(bool?), string eventHubConnectionString = default(string), string storageAccountConnectionString = default(string))
+        /// <param name="aadClientId">(Metrics Advisor Only) The Azure AD
+        /// Client Id (Application Id).</param>
+        /// <param name="aadTenantId">(Metrics Advisor Only) The Azure AD
+        /// Tenant Id.</param>
+        /// <param name="superUser">(Metrics Advisor Only) The super user of
+        /// Metrics Advisor.</param>
+        /// <param name="websiteName">(Metrics Advisor Only) The website name
+        /// of Metrics Advisor.</param>
+        public CognitiveServicesAccountApiProperties(string qnaRuntimeEndpoint = default(string), bool? statisticsEnabled = default(bool?), string eventHubConnectionString = default(string), string storageAccountConnectionString = default(string), string aadClientId = default(string), string aadTenantId = default(string), string superUser = default(string), string websiteName = default(string))
         {
             QnaRuntimeEndpoint = qnaRuntimeEndpoint;
             StatisticsEnabled = statisticsEnabled;
             EventHubConnectionString = eventHubConnectionString;
             StorageAccountConnectionString = storageAccountConnectionString;
+            AadClientId = aadClientId;
+            AadTenantId = aadTenantId;
+            SuperUser = superUser;
+            WebsiteName = websiteName;
             CustomInit();
         }
 
@@ -82,6 +94,33 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         public string StorageAccountConnectionString { get; set; }
 
         /// <summary>
+        /// Gets or sets (Metrics Advisor Only) The Azure AD Client Id
+        /// (Application Id).
+        /// </summary>
+        [JsonProperty(PropertyName = "aadClientId")]
+        public string AadClientId { get; set; }
+
+        /// <summary>
+        /// Gets or sets (Metrics Advisor Only) The Azure AD Tenant Id.
+        /// </summary>
+        [JsonProperty(PropertyName = "aadTenantId")]
+        public string AadTenantId { get; set; }
+
+        /// <summary>
+        /// Gets or sets (Metrics Advisor Only) The super user of Metrics
+        /// Advisor.
+        /// </summary>
+        [JsonProperty(PropertyName = "superUser")]
+        public string SuperUser { get; set; }
+
+        /// <summary>
+        /// Gets or sets (Metrics Advisor Only) The website name of Metrics
+        /// Advisor.
+        /// </summary>
+        [JsonProperty(PropertyName = "websiteName")]
+        public string WebsiteName { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -109,6 +148,34 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
                 if (!System.Text.RegularExpressions.Regex.IsMatch(StorageAccountConnectionString, "^(( *)DefaultEndpointsProtocol=(http|https)( *);( *))?AccountName=(.*)AccountKey=(.*)EndpointSuffix=(.*)$"))
                 {
                     throw new ValidationException(ValidationRules.Pattern, "StorageAccountConnectionString", "^(( *)DefaultEndpointsProtocol=(http|https)( *);( *))?AccountName=(.*)AccountKey=(.*)EndpointSuffix=(.*)$");
+                }
+            }
+            if (AadClientId != null)
+            {
+                if (AadClientId.Length > 500)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "AadClientId", 500);
+                }
+            }
+            if (AadTenantId != null)
+            {
+                if (AadTenantId.Length > 500)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "AadTenantId", 500);
+                }
+            }
+            if (SuperUser != null)
+            {
+                if (SuperUser.Length > 500)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "SuperUser", 500);
+                }
+            }
+            if (WebsiteName != null)
+            {
+                if (WebsiteName.Length > 500)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "WebsiteName", 500);
                 }
             }
         }

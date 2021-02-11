@@ -9,7 +9,7 @@ namespace Azure.Identity
 {
     internal static class AbstractAcquireTokenParameterBuilderExtensions
     {
-        public static async Task<AuthenticationResult> ExecuteAsync<T>(this AbstractAcquireTokenParameterBuilder<T> builder, bool async, CancellationToken cancellationToken)
+        public static async ValueTask<AuthenticationResult> ExecuteAsync<T>(this AbstractAcquireTokenParameterBuilder<T> builder, bool async, CancellationToken cancellationToken)
             where T : AbstractAcquireTokenParameterBuilder<T>
         {
             Microsoft.Identity.Client.AuthenticationResult result = async

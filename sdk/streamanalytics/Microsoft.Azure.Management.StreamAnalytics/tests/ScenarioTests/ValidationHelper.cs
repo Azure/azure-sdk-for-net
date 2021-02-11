@@ -996,15 +996,15 @@ namespace StreamAnalytics.Tests
                 Assert.NotNull(expected);
                 Assert.NotNull(actual);
 
-                if (actual is AzureMachineLearningWebServiceFunctionBinding)
+                if (actual is AzureMachineLearningStudioFunctionBinding)
                 {
-                    Assert.IsType<AzureMachineLearningWebServiceFunctionBinding>(expected);
-                    Assert.IsType<AzureMachineLearningWebServiceFunctionBinding>(actual);
+                    Assert.IsType<AzureMachineLearningStudioFunctionBinding>(expected);
+                    Assert.IsType<AzureMachineLearningStudioFunctionBinding>(actual);
 
-                    var expectedAzureMachineLearningWebServiceFunctionBinding = expected as AzureMachineLearningWebServiceFunctionBinding;
-                    var actualAzureMachineLearningWebServiceFunctionBinding = actual as AzureMachineLearningWebServiceFunctionBinding;
+                    var expectedAzureMachineLearningStudioFunctionBinding = expected as AzureMachineLearningStudioFunctionBinding;
+                    var actualAzureMachineLearningStudioFunctionBinding = actual as AzureMachineLearningStudioFunctionBinding;
 
-                    ValidateAzureMachineLearningWebServiceFunctionBinding(expectedAzureMachineLearningWebServiceFunctionBinding, actualAzureMachineLearningWebServiceFunctionBinding, validateReadOnlyProperties);
+                    ValidateAzureMachineLearningStudioFunctionBinding(expectedAzureMachineLearningStudioFunctionBinding, actualAzureMachineLearningStudioFunctionBinding, validateReadOnlyProperties);
                 }
                 else if (actual is JavaScriptFunctionBinding)
                 {
@@ -1018,7 +1018,7 @@ namespace StreamAnalytics.Tests
                 }
                 else
                 {
-                    throw new Exception("FunctionBinding could not be cast to either AzureMachineLearningWebServiceFunctionBinding or JavaScriptFunctionBinding");
+                    throw new Exception("FunctionBinding could not be cast to either AzureMachineLearningStudioFunctionBinding or JavaScriptFunctionBinding");
                 }
             }
             else
@@ -1028,7 +1028,7 @@ namespace StreamAnalytics.Tests
             }
         }
 
-        private static void ValidateAzureMachineLearningWebServiceFunctionBinding(AzureMachineLearningWebServiceFunctionBinding expected, AzureMachineLearningWebServiceFunctionBinding actual, bool validateReadOnlyProperties)
+        private static void ValidateAzureMachineLearningStudioFunctionBinding(AzureMachineLearningStudioFunctionBinding expected, AzureMachineLearningStudioFunctionBinding actual, bool validateReadOnlyProperties)
         {
             if (actual != null)
             {
@@ -1037,8 +1037,8 @@ namespace StreamAnalytics.Tests
 
                 Assert.Equal(expected.Endpoint, actual.Endpoint);
                 Assert.Equal(expected.ApiKey, actual.ApiKey);
-                ValidateAzureMachineLearningWebServiceInputs(expected.Inputs, actual.Inputs, validateReadOnlyProperties);
-                ValidateAzureMachineLearningWebServiceOutputColumnList(expected.Outputs, actual.Outputs, validateReadOnlyProperties);
+                ValidateAzureMachineLearningStudioInputs(expected.Inputs, actual.Inputs, validateReadOnlyProperties);
+                ValidateAzureMachineLearningStudioOutputColumnList(expected.Outputs, actual.Outputs, validateReadOnlyProperties);
                 Assert.Equal(expected.BatchSize, actual.BatchSize);
             }
             else
@@ -1048,7 +1048,7 @@ namespace StreamAnalytics.Tests
             }
         }
 
-        private static void ValidateAzureMachineLearningWebServiceInputs(AzureMachineLearningWebServiceInputs expected, AzureMachineLearningWebServiceInputs actual, bool validateReadOnlyProperties)
+        private static void ValidateAzureMachineLearningStudioInputs(AzureMachineLearningStudioInputs expected, AzureMachineLearningStudioInputs actual, bool validateReadOnlyProperties)
         {
             if (actual != null)
             {
@@ -1056,7 +1056,7 @@ namespace StreamAnalytics.Tests
                 Assert.NotNull(actual);
 
                 Assert.Equal(expected.Name, actual.Name);
-                ValidateAzureMachineLearningWebServiceInputColumnList(expected.ColumnNames, actual.ColumnNames, validateReadOnlyProperties);
+                ValidateAzureMachineLearningStudioInputColumnList(expected.ColumnNames, actual.ColumnNames, validateReadOnlyProperties);
             }
             else
             {
@@ -1065,7 +1065,7 @@ namespace StreamAnalytics.Tests
             }
         }
 
-        private static void ValidateAzureMachineLearningWebServiceInputColumnList(IList<AzureMachineLearningWebServiceInputColumn> expected, IList<AzureMachineLearningWebServiceInputColumn> actual, bool validateReadOnlyProperties)
+        private static void ValidateAzureMachineLearningStudioInputColumnList(IList<AzureMachineLearningStudioInputColumn> expected, IList<AzureMachineLearningStudioInputColumn> actual, bool validateReadOnlyProperties)
         {
             if (actual != null)
             {
@@ -1073,19 +1073,19 @@ namespace StreamAnalytics.Tests
                 Assert.NotNull(actual);
 
                 Assert.Equal(expected.Count, actual.Count);
-                foreach (var actualAzureMachineLearningWebServiceInputColumn in actual)
+                foreach (var actualAzureMachineLearningStudioInputColumn in actual)
                 {
-                    Assert.NotNull(actualAzureMachineLearningWebServiceInputColumn);
+                    Assert.NotNull(actualAzureMachineLearningStudioInputColumn);
                     var numFromExpectedList = expected.Count(
-                        expectedAzureMachineLearningWebServiceInputColumn =>
-                        string.Equals(expectedAzureMachineLearningWebServiceInputColumn.Name, actualAzureMachineLearningWebServiceInputColumn.Name) &&
-                        string.Equals(expectedAzureMachineLearningWebServiceInputColumn.DataType, actualAzureMachineLearningWebServiceInputColumn.DataType) &&
-                        expectedAzureMachineLearningWebServiceInputColumn.MapTo == actualAzureMachineLearningWebServiceInputColumn.MapTo);
+                        expectedAzureMachineLearningStudioInputColumn =>
+                        string.Equals(expectedAzureMachineLearningStudioInputColumn.Name, actualAzureMachineLearningStudioInputColumn.Name) &&
+                        string.Equals(expectedAzureMachineLearningStudioInputColumn.DataType, actualAzureMachineLearningStudioInputColumn.DataType) &&
+                        expectedAzureMachineLearningStudioInputColumn.MapTo == actualAzureMachineLearningStudioInputColumn.MapTo);
                     var numFromActualList = actual.Count(
-                        azureMachineLearningWebServiceInputColumn =>
-                        string.Equals(azureMachineLearningWebServiceInputColumn.Name, actualAzureMachineLearningWebServiceInputColumn.Name) &&
-                        string.Equals(azureMachineLearningWebServiceInputColumn.DataType, actualAzureMachineLearningWebServiceInputColumn.DataType) &&
-                        azureMachineLearningWebServiceInputColumn.MapTo == actualAzureMachineLearningWebServiceInputColumn.MapTo);
+                        AzureMachineLearningStudioInputColumn =>
+                        string.Equals(AzureMachineLearningStudioInputColumn.Name, actualAzureMachineLearningStudioInputColumn.Name) &&
+                        string.Equals(AzureMachineLearningStudioInputColumn.DataType, actualAzureMachineLearningStudioInputColumn.DataType) &&
+                        AzureMachineLearningStudioInputColumn.MapTo == actualAzureMachineLearningStudioInputColumn.MapTo);
                     Assert.True(numFromExpectedList > 0);
                     Assert.Equal(numFromExpectedList, numFromActualList);
                 }
@@ -1097,7 +1097,7 @@ namespace StreamAnalytics.Tests
             }
         }
 
-        private static void ValidateAzureMachineLearningWebServiceOutputColumnList(IList<AzureMachineLearningWebServiceOutputColumn> expected, IList<AzureMachineLearningWebServiceOutputColumn> actual, bool validateReadOnlyProperties)
+        private static void ValidateAzureMachineLearningStudioOutputColumnList(IList<AzureMachineLearningStudioOutputColumn> expected, IList<AzureMachineLearningStudioOutputColumn> actual, bool validateReadOnlyProperties)
         {
             if (actual != null)
             {
@@ -1105,17 +1105,17 @@ namespace StreamAnalytics.Tests
                 Assert.NotNull(actual);
 
                 Assert.Equal(expected.Count, actual.Count);
-                foreach (var actualAzureMachineLearningWebServiceOutputColumn in actual)
+                foreach (var actualAzureMachineLearningStudioOutputColumn in actual)
                 {
-                    Assert.NotNull(actualAzureMachineLearningWebServiceOutputColumn);
+                    Assert.NotNull(actualAzureMachineLearningStudioOutputColumn);
                     var numFromExpectedList = expected.Count(
-                        expectedAzureMachineLearningWebServiceOutputColumn =>
-                        string.Equals(expectedAzureMachineLearningWebServiceOutputColumn.Name, actualAzureMachineLearningWebServiceOutputColumn.Name) &&
-                        string.Equals(expectedAzureMachineLearningWebServiceOutputColumn.DataType, actualAzureMachineLearningWebServiceOutputColumn.DataType));
+                        expectedAzureMachineLearningStudioOutputColumn =>
+                        string.Equals(expectedAzureMachineLearningStudioOutputColumn.Name, actualAzureMachineLearningStudioOutputColumn.Name) &&
+                        string.Equals(expectedAzureMachineLearningStudioOutputColumn.DataType, actualAzureMachineLearningStudioOutputColumn.DataType));
                     var numFromActualList = actual.Count(
-                        azureMachineLearningWebServiceOutputColumn =>
-                        string.Equals(azureMachineLearningWebServiceOutputColumn.Name, actualAzureMachineLearningWebServiceOutputColumn.Name) &&
-                        string.Equals(azureMachineLearningWebServiceOutputColumn.DataType, actualAzureMachineLearningWebServiceOutputColumn.DataType));
+                        AzureMachineLearningStudioOutputColumn =>
+                        string.Equals(AzureMachineLearningStudioOutputColumn.Name, actualAzureMachineLearningStudioOutputColumn.Name) &&
+                        string.Equals(AzureMachineLearningStudioOutputColumn.DataType, actualAzureMachineLearningStudioOutputColumn.DataType));
                     Assert.True(numFromExpectedList > 0);
                     Assert.Equal(numFromExpectedList, numFromActualList);
                 }

@@ -261,7 +261,6 @@ namespace ResourceGroups.Tests
 
             var result = await client.Resources.ListByResourceGroupAsync("foo", "$filter=resourceType eq 'Sites'").ToEnumerableAsync();
 
-
             // Validate headers
             var request = mockTransport.Requests[0];
             Assert.AreEqual(HttpMethod.Get.Method, request.Method.Method);
@@ -588,7 +587,6 @@ namespace ResourceGroups.Tests
                 Assert.NotNull(ex);
             }
         }
-
 
         [Test]
         public async Task ResourceExistsValidateNoContentMessage()

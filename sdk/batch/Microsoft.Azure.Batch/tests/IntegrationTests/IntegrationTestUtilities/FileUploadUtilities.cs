@@ -1,10 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using Azure.Storage;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
+using Azure.Storage.Sas;
 using Microsoft.Azure.Batch;
 using Microsoft.Azure.Batch.FileStaging;
-using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Blob;
+using Microsoft.Azure.Batch.Integration.Tests.IntegrationTestUtilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -71,15 +74,15 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
         /// <param name="blobEndpoint">A string specifying the primary Blob service endpoint.</param>
         public StagingStorageAccount(string storageAccount, string storageAccountKey, string blobEndpoint)
         {
-            this.StorageAccount = storageAccount;
-            this.StorageAccountKey = storageAccountKey;
+            StorageAccount = storageAccount;
+            StorageAccountKey = storageAccountKey;
 
-            if (string.IsNullOrWhiteSpace(this.StorageAccount))
+            if (string.IsNullOrWhiteSpace(StorageAccount))
             {
                 throw new ArgumentOutOfRangeException("storageAccount");
             }
 
-            if (string.IsNullOrWhiteSpace(this.StorageAccountKey))
+            if (string.IsNullOrWhiteSpace(StorageAccountKey))
             {
                 throw new ArgumentOutOfRangeException("storageAccountKey");
             }
@@ -90,7 +93,7 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
             }
 
             // Constructed here to give immediate validation/failure experience.
-            this.BlobUri = new Uri(blobEndpoint);
+            BlobUri = new Uri(blobEndpoint);
         }
     }
 
@@ -144,19 +147,19 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
         }
 
         /// <summary>
-        /// Specifies that a local file should be staged to blob storage.  
+        /// Specifies that a local file should be staged to blob storage.
         /// The specified account will be charged for storage costs.
         /// </summary>
         /// <param name="localFileToStage">The name of the local file.</param>
         /// <param name="storageCredentials">The storage credentials to be used when creating the default container.</param>
-        /// <param name="nodeFileName">Optional name to be given to the file on the compute node.  If this parameter is null or missing 
+        /// <param name="nodeFileName">Optional name to be given to the file on the compute node.  If this parameter is null or missing
         /// the name on the compute node will be set to the value of localFileToStage stripped of all path information.</param>
         public FileToStage(string localFileToStage, StagingStorageAccount storageCredentials, string nodeFileName = null)
         {
-            this.LocalFileToStage = localFileToStage;
-            this.StagingStorageAccount = storageCredentials;
+            LocalFileToStage = localFileToStage;
+            StagingStorageAccount = storageCredentials;
 
-            if (string.IsNullOrWhiteSpace(this.LocalFileToStage))
+            if (string.IsNullOrWhiteSpace(LocalFileToStage))
             {
                 throw new ArgumentOutOfRangeException("localFileToStage");
             }
@@ -164,11 +167,11 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
             // map null to base name of local file
             if (string.IsNullOrWhiteSpace(nodeFileName))
             {
-                this.NodeFileName = Path.GetFileName(this.LocalFileToStage);
+                NodeFileName = Path.GetFileName(LocalFileToStage);
             }
             else
             {
-                this.NodeFileName = nodeFileName;
+                NodeFileName = nodeFileName;
             }
         }
 
@@ -205,9 +208,9 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
         /// </summary>
         public void Validate()
         {
-            if (!File.Exists(this.LocalFileToStage))
+            if (!File.Exists(LocalFileToStage))
             {
-                throw new FileNotFoundException($"The following local file cannot be staged because it cannot be found: {this.LocalFileToStage}");
+                throw new FileNotFoundException($"The following local file cannot be staged because it cannot be found: {LocalFileToStage}");
             }
         }
 
@@ -230,7 +233,7 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
 
             if (index != -1)
             {
-                //SAS                
+                //SAS
                 string containerAbsoluteUrl = container.Substring(0, index);
                 return containerAbsoluteUrl + "/" + blob + container.Substring(index);
             }
@@ -241,71 +244,58 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
         }
 
         /// <summary>
-        /// create a container if doesn't exist, setting permission with policy, and return assosciated SAS signature
+        /// Create a container if doesn't exist, setting permission with policy, and return assosciated SAS signature
         /// </summary>
-        /// <param name="account">storage account</param>
-        /// <param name="key">storage key</param>
-        /// <param name="container">container to be created</param>
-        /// <param name="policy">name for the policy</param>
-        /// <param name="start">start time of the policy</param>
-        /// <param name="end">expire time of the policy</param>
-        /// <param name="permissions">permission on the name</param>
-        /// <param name="blobUri">blob URI</param>
-        /// <returns>the SAS for the container, in full URI format.</returns>
-        private static async Task<string> CreateContainerWithPolicySASIfNotExistAsync(string account, string key, Uri blobUri, string container, string policy, DateTime start, DateTime end, SharedAccessBlobPermissions permissions)
+        /// <param name="account">Storage account</param>
+        /// <param name="Key">Storage account key</param>
+        /// <param name="blobUri">Blob endpoint URI</param>
+        /// <param name="containerName">Name of the container to be created</param>
+        /// <param name="policy">Name for the policy</param>
+        /// <param name="start">Start time of the policy</param>
+        /// <param name="end">Expire time of the policy</param>
+        /// <param name="permissions">Blob access permissions</param>
+        /// <returns>the SAS for the container, in full URI format.</returns>.
+        private static async Task<string> CreateContainerWithPolicySASIfNotExistAsync(string account, string key, Uri blobUri, string containerName, string policy, DateTime start, DateTime end, string permissions)
         {
             // 1. form the credentail and initial client
-            CloudStorageAccount storageaccount = new CloudStorageAccount(new Microsoft.WindowsAzure.Storage.Auth.StorageCredentials(account, key),
-                                                                         blobEndpoint: blobUri,
-                                                                         queueEndpoint: null,
-                                                                         tableEndpoint: null,
-                                                                         fileEndpoint: null);
-
-            CloudBlobClient client = storageaccount.CreateCloudBlobClient();
-
+            StagingStorageAccount stagingCredentials = new StagingStorageAccount(account, key, blobUri.ToString());
+            StorageSharedKeyCredential shardKeyCredentials = new StorageSharedKeyCredential(account, key);
+            BlobContainerClient containerClient = BlobUtilities.GetBlobContainerClient(containerName, stagingCredentials);
             // 2. create container if it doesn't exist
-            CloudBlobContainer storagecontainer = client.GetContainerReference(container);
-            await storagecontainer.CreateIfNotExistsAsync();
+            containerClient.CreateIfNotExists();
 
             // 3. validate policy, create/overwrite if doesn't match
-            bool policyFound = false;
-
-            SharedAccessBlobPolicy accesspolicy = new SharedAccessBlobPolicy()
+            BlobSignedIdentifier identifier = new BlobSignedIdentifier
             {
-                SharedAccessExpiryTime = end,
-                SharedAccessStartTime = start,
-                Permissions = permissions
+                Id = policy,
+                AccessPolicy = new BlobAccessPolicy
+                {
+                    Permissions = permissions,
+                    StartsOn = start,
+                    ExpiresOn = end,
+
+                },
             };
 
-            BlobContainerPermissions blobPermissions = await storagecontainer.GetPermissionsAsync();
+            var accessPolicy = (await containerClient.GetAccessPolicyAsync()).Value;
+            bool policyFound = accessPolicy.SignedIdentifiers.Any(i => i == identifier);
 
-            if (blobPermissions.SharedAccessPolicies.ContainsKey(policy))
+            if (policyFound == false)
             {
-                SharedAccessBlobPolicy containerpolicy = blobPermissions.SharedAccessPolicies[policy];
-                if (!(permissions == (containerpolicy.Permissions & permissions) && start <= containerpolicy.SharedAccessStartTime && end >= containerpolicy.SharedAccessExpiryTime))
-                {
-                    blobPermissions.SharedAccessPolicies[policy] = accesspolicy;
-                }
-                else
-                {
-                    policyFound = true;
-                }
-            }
-            else
-            {
-                blobPermissions.SharedAccessPolicies.Add(policy, accesspolicy);
+                await containerClient.SetAccessPolicyAsync(PublicAccessType.BlobContainer, permissions: new List<BlobSignedIdentifier> { identifier });
             }
 
-            if (!policyFound)
+            BlobSasBuilder sasBuilder = new BlobSasBuilder
             {
-                await storagecontainer.SetPermissionsAsync(blobPermissions);
-            }
+                BlobContainerName = containerName,
+                StartsOn = start,
+                ExpiresOn = end,
+            };
 
-            // 4. genereate SAS and return
-            string container_sas = storagecontainer.GetSharedAccessSignature(new SharedAccessBlobPolicy(), policy);
-            string container_url = storagecontainer.Uri.AbsoluteUri + container_sas;
-
-            return container_url;
+            sasBuilder.SetPermissions(permissions);
+            BlobUriBuilder builder = new BlobUriBuilder(containerClient.Uri) { Sas = sasBuilder.ToSasQueryParameters(shardKeyCredentials) };
+            string fullSas = builder.ToString();
+            return fullSas;
         }
 
         private static async Task CreateDefaultBlobContainerAndSASIfNeededReturnAsync(List<IFileStagingProvider> filesToStage, SequentialFileStagingArtifact seqArtifact)
@@ -333,7 +323,7 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
                                                             policyName,
                                                             startTime,
                                                             expiredAtTime,
-                                                            SharedAccessBlobPermissions.Read);
+                                                            "r");
 
                     return;  // done
                 }
@@ -348,13 +338,11 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
         /// <returns>Null means there was not even one.</returns>
         private static FileToStage FindAtLeastOne(List<IFileStagingProvider> filesToStage)
         {
-            if ((null != filesToStage) && (filesToStage.Count > 0))
+            if (null != filesToStage && filesToStage.Count > 0)
             {
                 foreach (IFileStagingProvider curProvider in filesToStage)
                 {
-                    FileToStage thisIsReal = curProvider as FileToStage;
-
-                    if (null != thisIsReal)
+                    if (curProvider is FileToStage thisIsReal)
                     {
                         return thisIsReal;
                     }
@@ -367,7 +355,7 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
         /// <summary>
         /// Starts an asynchronous call to stage the given files.
         /// </summary>
-        private static async System.Threading.Tasks.Task StageFilesInternalAsync(List<IFileStagingProvider> filesToStage, IFileStagingArtifact fileStagingArtifact)
+        private static async Task StageFilesInternalAsync(List<IFileStagingProvider> filesToStage, IFileStagingArtifact fileStagingArtifact)
         {
             if (null == filesToStage)
             {
@@ -394,33 +382,31 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
             }
 
             // create a Run task to create the blob containers if needed
-            System.Threading.Tasks.Task createContainerTask = System.Threading.Tasks.Task.Run(async () => { await CreateDefaultBlobContainerAndSASIfNeededReturnAsync(filesToStage, seqArtifact); });
+            Task createContainerTask = Task.Run(async () => { await CreateDefaultBlobContainerAndSASIfNeededReturnAsync(filesToStage, seqArtifact); });
 
             // wait for container to be created
             await createContainerTask.ConfigureAwait(continueOnCapturedContext: false);
 
             // begin staging the files
-            System.Threading.Tasks.Task stageTask = StageFilesAsync(filesToStage, seqArtifact);
+            Task stageTask = StageFilesAsync(filesToStage, seqArtifact);
 
             // wait for files to be staged
             await stageTask.ConfigureAwait(continueOnCapturedContext: false);
         }
 
         /// <summary>
-        /// Stages all files in the queue 
+        /// Stages all files in the queue
         /// </summary>
-        private async static System.Threading.Tasks.Task StageFilesAsync(List<IFileStagingProvider> filesToStage, SequentialFileStagingArtifact seqArtifacts)
+        private async static Task StageFilesAsync(List<IFileStagingProvider> filesToStage, SequentialFileStagingArtifact seqArtifacts)
         {
             foreach (IFileStagingProvider currentFile in filesToStage)
             {
                 // for "retry" and/or "double calls" we ignore files that have already been staged
                 if (null == currentFile.StagedFiles)
                 {
-                    FileToStage fts = currentFile as FileToStage;
-
-                    if (null != fts)
+                    if (currentFile is FileToStage fts)
                     {
-                        System.Threading.Tasks.Task stageTask = StageOneFileAsync(fts, seqArtifacts);
+                        Task stageTask = StageOneFileAsync(fts, seqArtifacts);
 
                         await stageTask.ConfigureAwait(continueOnCapturedContext: false);
                     }
@@ -431,7 +417,7 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
         /// <summary>
         /// Stage a single file.
         /// </summary>
-        private async static System.Threading.Tasks.Task StageOneFileAsync(FileToStage stageThisFile, SequentialFileStagingArtifact seqArtifacts)
+        private async static Task StageOneFileAsync(FileToStage stageThisFile, SequentialFileStagingArtifact seqArtifacts)
         {
             StagingStorageAccount storecreds = stageThisFile.StagingStorageAccount;
             string containerName = seqArtifacts.BlobContainerCreated;
@@ -439,49 +425,20 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
             // TODO: this flattens all files to the top of the compute node/task relative file directory. solve the hiearchy problem (virt dirs?)
             string blobName = Path.GetFileName(stageThisFile.LocalFileToStage);
 
-            // Create the storage account with the connection string.
-            CloudStorageAccount storageAccount = new CloudStorageAccount(
-                                                        new Microsoft.WindowsAzure.Storage.Auth.StorageCredentials(storecreds.StorageAccount, storecreds.StorageAccountKey),
-                                                        blobEndpoint: storecreds.BlobUri,
-                                                        queueEndpoint: null,
-                                                        tableEndpoint: null,
-                                                        fileEndpoint: null);
+            BlobContainerClient blobContainerClient = BlobUtilities.GetBlobContainerClient(containerName, storecreds);
+            BlobClient blobClient = blobContainerClient.GetBlobClient(blobName);
 
-            CloudBlobClient client = storageAccount.CreateCloudBlobClient();
-            CloudBlobContainer container = client.GetContainerReference(containerName);
-            ICloudBlob blob = container.GetBlockBlobReference(blobName);
-            bool doesBlobExist;
-
-            try
-            {
-                // fetch attributes so we can compare file lengths
-                System.Threading.Tasks.Task fetchTask = blob.FetchAttributesAsync();
-
-                await fetchTask.ConfigureAwait(continueOnCapturedContext: false);
-
-                doesBlobExist = true;
-            }
-            catch (StorageException scex)
-            {
-                // check to see if blob does not exist
-                if ((int)System.Net.HttpStatusCode.NotFound == scex.RequestInformation.HttpStatusCode)
-                {
-                    doesBlobExist = false;
-                }
-                else
-                {
-                    throw;  // unknown exception, throw to caller
-                }
-            }
-
+            bool doesBlobExist = await blobClient.ExistsAsync().ConfigureAwait(false);
             bool mustUploadBlob = true;  // we do not re-upload blobs if they have already been uploaded
 
             if (doesBlobExist) // if the blob exists, compare
             {
                 FileInfo fi = new FileInfo(stageThisFile.LocalFileToStage);
 
+                var properties = await blobClient.GetPropertiesAsync().ConfigureAwait(false);
+                var length = properties.Value.ContentLength;
                 // since we don't have a hash of the contents... we check length
-                if (blob.Properties.Length == fi.Length)
+                if (length == fi.Length)
                 {
                     mustUploadBlob = false;
                 }
@@ -489,10 +446,7 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
 
             if (mustUploadBlob)
             {
-                // upload the file
-                System.Threading.Tasks.Task uploadTask = blob.UploadFromFileAsync(stageThisFile.LocalFileToStage);
-
-                await uploadTask.ConfigureAwait(continueOnCapturedContext: false);
+                await blobClient.UploadAsync(stageThisFile.LocalFileToStage).ConfigureAwait(false);
             }
 
             // get the SAS for the blob
@@ -512,16 +466,16 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
     public sealed class SequentialFileStagingArtifact : IFileStagingArtifact
     {
         /// <summary>
-        /// The name of any blob container created.  
-        /// 
-        /// A blob container is created if there is at least one file 
+        /// The name of any blob container created.
+        ///
+        /// A blob container is created if there is at least one file
         /// to be uploaded that does not have an explicit container specified.
         /// </summary>
         public string BlobContainerCreated { get; internal set; }
 
         /// <summary>
         /// Optionally set by caller.  Optionally used by implementation. A name fragment that can be used when constructing default names.
-        /// 
+        ///
         /// Can only be set once.
         /// </summary>
         public string NamingFragment { get; set; }
@@ -543,7 +497,7 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
             if (!string.IsNullOrWhiteSpace(namingFragment))
             {
                 newNameBuilder.Append(namingFragment);
-                newNameBuilder.Append("-");
+                newNameBuilder.Append('-');
             }
 
             string newName = newNameBuilder.ToString();
@@ -552,7 +506,7 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
         }
 
         // lock used to ensure only one name is created at a time.
-        private static object _lockForContainerNaming = new object();
+        private static readonly object _lockForContainerNaming = new object();
 
         internal static string ConstructDefaultName(string namingFragment)
         {

@@ -39,7 +39,6 @@ namespace Azure.Core.Tests
                 var options = new TestClientOptions();
 
                 Assert.IsInstanceOf<HttpClientTransport>(options.Transport);
-
             }
             finally
             {
@@ -59,7 +58,6 @@ namespace Azure.Core.Tests
                 var options = new TestClientOptions();
 
                 Assert.IsInstanceOf<HttpClientTransport>(options.Transport);
-
             }
             finally
             {

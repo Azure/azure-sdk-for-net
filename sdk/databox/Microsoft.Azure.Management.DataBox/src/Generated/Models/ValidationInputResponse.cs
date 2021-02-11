@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.DataBox.Models
 {
+    using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -17,6 +18,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
     /// Minimum properties that should be present in each individual validation
     /// response.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("ValidationInputResponse")]
     public partial class ValidationInputResponse
     {
         /// <summary>
@@ -32,7 +34,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// </summary>
         /// <param name="error">Error code and message of validation
         /// response.</param>
-        public ValidationInputResponse(Error error = default(Error))
+        public ValidationInputResponse(CloudError error = default(CloudError))
         {
             Error = error;
             CustomInit();
@@ -47,7 +49,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// Gets error code and message of validation response.
         /// </summary>
         [JsonProperty(PropertyName = "error")]
-        public Error Error { get; private set; }
+        public CloudError Error { get; private set; }
 
     }
 }

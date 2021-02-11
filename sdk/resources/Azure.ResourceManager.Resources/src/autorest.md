@@ -1,9 +1,11 @@
 # Generated code configuration
 
-Run `dotnet msbuild /t:GenerateCode` to generate code.
+Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 azure-arm: true
+title: ResourceManagementClient
+library-name: ResourcesManagementClient
 input-file:
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/f9d1625a69e739f362dd16e32f8f9e8fa01abd37/specification/resources/resource-manager/Microsoft.Resources/stable/2019-10-01/resources.json
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/f9d1625a69e739f362dd16e32f8f9e8fa01abd37/specification/resources/resource-manager/Microsoft.Resources/stable/2019-11-01/subscriptions.json
@@ -25,3 +27,15 @@ directive:
     where: $.paths
     transform: delete $["/providers/Microsoft.Resources/operations"]
 ```
+
+## Swagger workarounds
+
+### Add nullable annotations
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.DeploymentOperationProperties
+  transform: >
+    $.properties.statusMessage["x-nullable"] = true;
+````

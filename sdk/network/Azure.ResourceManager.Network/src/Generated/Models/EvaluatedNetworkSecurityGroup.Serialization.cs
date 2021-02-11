@@ -33,11 +33,21 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("matchedRule"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     matchedRule = MatchedRule.DeserializeMatchedRule(property.Value);
                     continue;
                 }
                 if (property.NameEquals("rulesEvaluationResult"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<NetworkSecurityRulesEvaluationResult> array = new List<NetworkSecurityRulesEvaluationResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

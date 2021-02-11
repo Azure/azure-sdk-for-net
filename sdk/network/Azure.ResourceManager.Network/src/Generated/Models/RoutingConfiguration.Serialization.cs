@@ -42,16 +42,31 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("associatedRouteTable"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     associatedRouteTable = SubResource.DeserializeSubResource(property.Value);
                     continue;
                 }
                 if (property.NameEquals("propagatedRouteTables"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     propagatedRouteTables = PropagatedRouteTable.DeserializePropagatedRouteTable(property.Value);
                     continue;
                 }
                 if (property.NameEquals("vnetRoutes"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     vnetRoutes = VnetRoute.DeserializeVnetRoute(property.Value);
                     continue;
                 }

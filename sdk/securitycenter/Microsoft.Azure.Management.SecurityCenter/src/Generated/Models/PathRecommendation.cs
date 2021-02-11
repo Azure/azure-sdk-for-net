@@ -31,13 +31,14 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <summary>
         /// Initializes a new instance of the PathRecommendation class.
         /// </summary>
-        /// <param name="path">The full path to whitelist</param>
+        /// <param name="path">The full path of the file, or an identifier of
+        /// the application</param>
         /// <param name="action">Possible values include: 'Recommended', 'Add',
         /// 'Remove'</param>
         /// <param name="type">Possible values include: 'File', 'FileHash',
         /// 'PublisherSignature', 'ProductSignature', 'BinarySignature',
         /// 'VersionAndAboveSignature'</param>
-        /// <param name="common">Whether the path is commonly run on the
+        /// <param name="common">Whether the application is commonly run on the
         /// machine</param>
         /// <param name="fileType">Possible values include: 'Exe', 'Dll',
         /// 'Msi', 'Script', 'Executable', 'Unknown'</param>
@@ -64,7 +65,8 @@ namespace Microsoft.Azure.Management.Security.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the full path to whitelist
+        /// Gets or sets the full path of the file, or an identifier of the
+        /// application
         /// </summary>
         [JsonProperty(PropertyName = "path")]
         public string Path { get; set; }
@@ -90,7 +92,7 @@ namespace Microsoft.Azure.Management.Security.Models
         public PublisherInfo PublisherInfo { get; set; }
 
         /// <summary>
-        /// Gets or sets whether the path is commonly run on the machine
+        /// Gets or sets whether the application is commonly run on the machine
         /// </summary>
         [JsonProperty(PropertyName = "common")]
         public bool? Common { get; set; }

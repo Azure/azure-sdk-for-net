@@ -39,12 +39,12 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// </summary>
         /// <param name="location">The geo-location where the resource
         /// lives</param>
-        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. Ex-
-        /// Microsoft.Compute/virtualMachines or
-        /// Microsoft.Storage/storageAccounts.</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="tags">Resource tags.</param>
         /// <param name="provisioningState">The state of the Big Data
         /// pool.</param>
@@ -52,34 +52,54 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// <param name="creationDate">The time when the Big Data pool was
         /// created.</param>
         /// <param name="autoPause">Auto-pausing properties</param>
+        /// <param name="isComputeIsolationEnabled">Whether compute isolation
+        /// is required or not.</param>
+        /// <param name="sessionLevelPackagesEnabled">Whether session level
+        /// packages enabled.</param>
+        /// <param name="cacheSize">The cache size</param>
+        /// <param name="dynamicExecutorAllocation">Dynamic Executor
+        /// Allocation</param>
         /// <param name="sparkEventsFolder">The Spark events folder</param>
         /// <param name="nodeCount">The number of nodes in the Big Data
         /// pool.</param>
         /// <param name="libraryRequirements">Library version
         /// requirements</param>
+        /// <param name="customLibraries">List of custom libraries/packages
+        /// associated with the spark pool.</param>
+        /// <param name="sparkConfigProperties">Spark configuration file to
+        /// specify additional properties</param>
         /// <param name="sparkVersion">The Apache Spark version.</param>
         /// <param name="defaultSparkLogFolder">The default folder where Spark
         /// logs will be written.</param>
         /// <param name="nodeSize">The level of compute power that each node in
         /// the Big Data pool has. Possible values include: 'None', 'Small',
-        /// 'Medium', 'Large'</param>
+        /// 'Medium', 'Large', 'XLarge', 'XXLarge', 'XXXLarge'</param>
         /// <param name="nodeSizeFamily">The kind of nodes that the Big Data
         /// pool provides. Possible values include: 'None',
         /// 'MemoryOptimized'</param>
-        public BigDataPoolResourceInfo(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), AutoScaleProperties autoScale = default(AutoScaleProperties), System.DateTime? creationDate = default(System.DateTime?), AutoPauseProperties autoPause = default(AutoPauseProperties), string sparkEventsFolder = default(string), int? nodeCount = default(int?), LibraryRequirements libraryRequirements = default(LibraryRequirements), string sparkVersion = default(string), string defaultSparkLogFolder = default(string), string nodeSize = default(string), string nodeSizeFamily = default(string))
+        /// <param name="lastSucceededTimestamp">The time when the Big Data
+        /// pool was updated successfully.</param>
+        public BigDataPoolResourceInfo(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), AutoScaleProperties autoScale = default(AutoScaleProperties), System.DateTime? creationDate = default(System.DateTime?), AutoPauseProperties autoPause = default(AutoPauseProperties), bool? isComputeIsolationEnabled = default(bool?), bool? sessionLevelPackagesEnabled = default(bool?), int? cacheSize = default(int?), DynamicExecutorAllocation dynamicExecutorAllocation = default(DynamicExecutorAllocation), string sparkEventsFolder = default(string), int? nodeCount = default(int?), LibraryRequirements libraryRequirements = default(LibraryRequirements), IList<LibraryInfo> customLibraries = default(IList<LibraryInfo>), LibraryRequirements sparkConfigProperties = default(LibraryRequirements), string sparkVersion = default(string), string defaultSparkLogFolder = default(string), string nodeSize = default(string), string nodeSizeFamily = default(string), System.DateTime? lastSucceededTimestamp = default(System.DateTime?))
             : base(location, id, name, type, tags)
         {
             ProvisioningState = provisioningState;
             AutoScale = autoScale;
             CreationDate = creationDate;
             AutoPause = autoPause;
+            IsComputeIsolationEnabled = isComputeIsolationEnabled;
+            SessionLevelPackagesEnabled = sessionLevelPackagesEnabled;
+            CacheSize = cacheSize;
+            DynamicExecutorAllocation = dynamicExecutorAllocation;
             SparkEventsFolder = sparkEventsFolder;
             NodeCount = nodeCount;
             LibraryRequirements = libraryRequirements;
+            CustomLibraries = customLibraries;
+            SparkConfigProperties = sparkConfigProperties;
             SparkVersion = sparkVersion;
             DefaultSparkLogFolder = defaultSparkLogFolder;
             NodeSize = nodeSize;
             NodeSizeFamily = nodeSizeFamily;
+            LastSucceededTimestamp = lastSucceededTimestamp;
             CustomInit();
         }
 
@@ -113,6 +133,30 @@ namespace Microsoft.Azure.Management.Synapse.Models
         public AutoPauseProperties AutoPause { get; set; }
 
         /// <summary>
+        /// Gets or sets whether compute isolation is required or not.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.isComputeIsolationEnabled")]
+        public bool? IsComputeIsolationEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether session level packages enabled.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.sessionLevelPackagesEnabled")]
+        public bool? SessionLevelPackagesEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets the cache size
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.cacheSize")]
+        public int? CacheSize { get; set; }
+
+        /// <summary>
+        /// Gets or sets dynamic Executor Allocation
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.dynamicExecutorAllocation")]
+        public DynamicExecutorAllocation DynamicExecutorAllocation { get; set; }
+
+        /// <summary>
         /// Gets or sets the Spark events folder
         /// </summary>
         [JsonProperty(PropertyName = "properties.sparkEventsFolder")]
@@ -131,6 +175,20 @@ namespace Microsoft.Azure.Management.Synapse.Models
         public LibraryRequirements LibraryRequirements { get; set; }
 
         /// <summary>
+        /// Gets or sets list of custom libraries/packages associated with the
+        /// spark pool.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.customLibraries")]
+        public IList<LibraryInfo> CustomLibraries { get; set; }
+
+        /// <summary>
+        /// Gets or sets spark configuration file to specify additional
+        /// properties
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.sparkConfigProperties")]
+        public LibraryRequirements SparkConfigProperties { get; set; }
+
+        /// <summary>
         /// Gets or sets the Apache Spark version.
         /// </summary>
         [JsonProperty(PropertyName = "properties.sparkVersion")]
@@ -145,7 +203,7 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// <summary>
         /// Gets or sets the level of compute power that each node in the Big
         /// Data pool has. Possible values include: 'None', 'Small', 'Medium',
-        /// 'Large'
+        /// 'Large', 'XLarge', 'XXLarge', 'XXXLarge'
         /// </summary>
         [JsonProperty(PropertyName = "properties.nodeSize")]
         public string NodeSize { get; set; }
@@ -156,6 +214,12 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.nodeSizeFamily")]
         public string NodeSizeFamily { get; set; }
+
+        /// <summary>
+        /// Gets the time when the Big Data pool was updated successfully.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.lastSucceededTimestamp")]
+        public System.DateTime? LastSucceededTimestamp { get; private set; }
 
         /// <summary>
         /// Validate the object.

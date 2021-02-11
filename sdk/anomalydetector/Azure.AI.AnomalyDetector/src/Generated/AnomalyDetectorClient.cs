@@ -38,13 +38,13 @@ namespace Azure.AI.AnomalyDetector
         /// <summary> This operation generates a model using an entire series, each point is detected with the same model. With this method, points before and after a certain point are used to determine whether it is an anomaly. The entire detection can give user an overall status of the time series. </summary>
         /// <param name="body"> Time series points and period if needed. Advanced model parameters can also be set in the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<EntireDetectResponse>> EntireDetectAsync(Request body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EntireDetectResponse>> DetectEntireSeriesAsync(DetectRequest body, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AnomalyDetectorClient.EntireDetect");
+            using var scope = _clientDiagnostics.CreateScope("AnomalyDetectorClient.DetectEntireSeries");
             scope.Start();
             try
             {
-                return await RestClient.EntireDetectAsync(body, cancellationToken).ConfigureAwait(false);
+                return await RestClient.DetectEntireSeriesAsync(body, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -56,13 +56,13 @@ namespace Azure.AI.AnomalyDetector
         /// <summary> This operation generates a model using an entire series, each point is detected with the same model. With this method, points before and after a certain point are used to determine whether it is an anomaly. The entire detection can give user an overall status of the time series. </summary>
         /// <param name="body"> Time series points and period if needed. Advanced model parameters can also be set in the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<EntireDetectResponse> EntireDetect(Request body, CancellationToken cancellationToken = default)
+        public virtual Response<EntireDetectResponse> DetectEntireSeries(DetectRequest body, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AnomalyDetectorClient.EntireDetect");
+            using var scope = _clientDiagnostics.CreateScope("AnomalyDetectorClient.DetectEntireSeries");
             scope.Start();
             try
             {
-                return RestClient.EntireDetect(body, cancellationToken);
+                return RestClient.DetectEntireSeries(body, cancellationToken);
             }
             catch (Exception e)
             {
@@ -74,13 +74,13 @@ namespace Azure.AI.AnomalyDetector
         /// <summary> This operation generates a model using points before the latest one. With this method, only historical points are used to determine whether the target point is an anomaly. The latest point detecting operation matches the scenario of real-time monitoring of business metrics. </summary>
         /// <param name="body"> Time series points and period if needed. Advanced model parameters can also be set in the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<LastDetectResponse>> LastDetectAsync(Request body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LastDetectResponse>> DetectLastPointAsync(DetectRequest body, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AnomalyDetectorClient.LastDetect");
+            using var scope = _clientDiagnostics.CreateScope("AnomalyDetectorClient.DetectLastPoint");
             scope.Start();
             try
             {
-                return await RestClient.LastDetectAsync(body, cancellationToken).ConfigureAwait(false);
+                return await RestClient.DetectLastPointAsync(body, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -92,13 +92,13 @@ namespace Azure.AI.AnomalyDetector
         /// <summary> This operation generates a model using points before the latest one. With this method, only historical points are used to determine whether the target point is an anomaly. The latest point detecting operation matches the scenario of real-time monitoring of business metrics. </summary>
         /// <param name="body"> Time series points and period if needed. Advanced model parameters can also be set in the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<LastDetectResponse> LastDetect(Request body, CancellationToken cancellationToken = default)
+        public virtual Response<LastDetectResponse> DetectLastPoint(DetectRequest body, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AnomalyDetectorClient.LastDetect");
+            using var scope = _clientDiagnostics.CreateScope("AnomalyDetectorClient.DetectLastPoint");
             scope.Start();
             try
             {
-                return RestClient.LastDetect(body, cancellationToken);
+                return RestClient.DetectLastPoint(body, cancellationToken);
             }
             catch (Exception e)
             {
@@ -110,13 +110,13 @@ namespace Azure.AI.AnomalyDetector
         /// <summary> Evaluate change point score of every series point. </summary>
         /// <param name="body"> Time series points and granularity is needed. Advanced model parameters can also be set in the request if needed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ChangePointDetectResponse>> ChangePointDetectAsync(ChangePointDetectRequest body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ChangePointDetectResponse>> DetectChangePointAsync(ChangePointDetectRequest body, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AnomalyDetectorClient.ChangePointDetect");
+            using var scope = _clientDiagnostics.CreateScope("AnomalyDetectorClient.DetectChangePoint");
             scope.Start();
             try
             {
-                return await RestClient.ChangePointDetectAsync(body, cancellationToken).ConfigureAwait(false);
+                return await RestClient.DetectChangePointAsync(body, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -128,13 +128,13 @@ namespace Azure.AI.AnomalyDetector
         /// <summary> Evaluate change point score of every series point. </summary>
         /// <param name="body"> Time series points and granularity is needed. Advanced model parameters can also be set in the request if needed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ChangePointDetectResponse> ChangePointDetect(ChangePointDetectRequest body, CancellationToken cancellationToken = default)
+        public virtual Response<ChangePointDetectResponse> DetectChangePoint(ChangePointDetectRequest body, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AnomalyDetectorClient.ChangePointDetect");
+            using var scope = _clientDiagnostics.CreateScope("AnomalyDetectorClient.DetectChangePoint");
             scope.Start();
             try
             {
-                return RestClient.ChangePointDetect(body, cancellationToken);
+                return RestClient.DetectChangePoint(body, cancellationToken);
             }
             catch (Exception e)
             {

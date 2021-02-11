@@ -27,11 +27,21 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("available"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     available = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("reason"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     reason = property.Value.GetString().ToCheckNameAvailabilityReason();
                     continue;
                 }

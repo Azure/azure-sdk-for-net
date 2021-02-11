@@ -112,7 +112,8 @@ namespace Azure.Core
         /// <param name="request">The request.</param>
         public void ApplyToRequest(Request request)
         {
-            request.Headers.Add(HttpHeader.Names.ContentType, $"multipart/{_subtype}; boundary={_boundary}");
+            request.Headers.SetValue(HttpHeader.Names.ContentType, $"multipart/{_subtype}; boundary={_boundary}");
+            request.Content = this;
         }
 
         /// <summary>

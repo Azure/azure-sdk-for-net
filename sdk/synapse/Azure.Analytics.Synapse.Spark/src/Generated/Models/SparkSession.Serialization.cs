@@ -37,6 +37,11 @@ namespace Azure.Analytics.Synapse.Spark.Models
             {
                 if (property.NameEquals("livyInfo"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     livyInfo = SparkSessionState.DeserializeSparkSessionState(property.Value);
                     continue;
                 }
@@ -72,26 +77,51 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 }
                 if (property.NameEquals("jobType"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     jobType = new SparkJobType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("result"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     result = new SparkSessionResultType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("schedulerInfo"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     schedulerInfo = SparkScheduler.DeserializeSparkScheduler(property.Value);
                     continue;
                 }
                 if (property.NameEquals("pluginInfo"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     pluginInfo = SparkServicePlugin.DeserializeSparkServicePlugin(property.Value);
                     continue;
                 }
                 if (property.NameEquals("errorInfo"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<SparkServiceError> array = new List<SparkServiceError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -102,6 +132,11 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 }
                 if (property.NameEquals("tags"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -117,11 +152,21 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 }
                 if (property.NameEquals("appId"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        appId = null;
+                        continue;
+                    }
                     appId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("appInfo"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        appInfo = null;
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -137,6 +182,11 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 }
                 if (property.NameEquals("log"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        log = null;
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

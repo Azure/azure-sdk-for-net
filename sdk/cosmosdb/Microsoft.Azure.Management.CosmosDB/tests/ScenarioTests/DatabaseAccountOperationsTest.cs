@@ -14,6 +14,8 @@ namespace CosmosDB.Tests.ScenarioTests
 {
     public class DatabaseAccountOperationsTests
     {
+        const string location = "EAST US 2";
+
         [Fact]
         public void DatabaseAccountCRUDTests()
         {
@@ -62,6 +64,18 @@ namespace CosmosDB.Tests.ScenarioTests
                     {
                         "/subscriptions/subId/resourcegroups/rgName/providers/Microsoft.Synapse/workspaces/workspaceName"
                     }
+                };
+
+                DatabaseAccountCreateUpdateParameters databaseAccountCreateUpdateParameters = new DatabaseAccountCreateUpdateParameters
+                {
+                    Location = location,
+                    Tags = new Dictionary<string, string>
+                    {
+                        {"key1","value1"},
+                        {"key2","value2"}
+                    },
+                    Kind = "MongoDB",
+                    Properties = databaseAccountCreateUpdateProperties
                 };
 
                 DatabaseAccountGetResults databaseAccount = cosmosDBManagementClient.DatabaseAccounts.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseAccountCreateUpdateParameters).GetAwaiter().GetResult().Body;

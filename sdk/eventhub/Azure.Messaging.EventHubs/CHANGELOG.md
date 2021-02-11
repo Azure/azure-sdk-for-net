@@ -1,7 +1,117 @@
 # Release History
 
-## 5.2.0-preview.3 (Unreleased)
+## 5.4.0-beta.1 (Unreleased)
 
+
+## 5.3.0 (2021-02-09)
+
+### Changes
+
+#### New Features
+
+- Connection strings can now be parsed into their key/value pairs using the `EventHubsConnectionStringProperties` class.
+
+- The body of an event has been moved to the `EventData.EventBody` property and makes use of the new `BinaryData` type.  To preserve backwards compatibility, the existing `EventData.Body` property has been preserved with the current semantics.
+
+- It is now possible to specify a custom endpoint to use for establishing the connection to the Event Hubs service in the `EventHubConnectionOptions` used by each of the clients.
+
+- Errors occurring in the Event Hubs service or active transport are now preserved in full and propagated as an inner exception; this will provide deeper context for diagnosing and troubleshooting exceptions.
+
+- The `EventHubsModelFactory` has been introduced to provide a single point for creation of Event Hubs model types to assist with mocking and testing.
+
+- Documentation used for auto-completion via Intellisense and other tools has been enhanced in many areas, addressing gaps and commonly asked questions.
+
+#### Key Bug Fixes
+
+- Upgraded the `Microsoft.Azure.Amqp` library to resolve crashes occurring in .NET 5.
+
+- The `EventHubsException.ToString` result will now properly follow the format of other .NET exception output.
+
+- Signaling the cancellation token will no longer cause the `SendAsync` method of the `EventHubProducerClient` to ignore the result of the service operation if publishing has already completed.
+
+- The calculation for authorization token expiration has been fixed, resulting in fewer token refreshes and network requests.
+
+## 5.3.0-beta.4 (2020-11-10)
+
+### Changes
+
+#### New Features
+
+- Connection strings can now be parsed into their key/value pairs using the `EventHubsConnectionStringProperties` class.
+
+- The body of an event has been moved to the `EventData.EventBody` property and makes use of the new `BinaryData` type.  To preserve backwards compatibility, the existing `EventData.Body` property has been preserved with the current semantics.
+
+- Documentation used for auto-completion via Intellisense and other tools has been enhanced in many areas, addressing gaps and commonly asked questions.
+
+#### Key Bug Fixes
+
+- The `EventHubsException.ToString` result will now properly follow the format of other .NET exception output.
+
+- Signaling the cancellation token will no longer cause the `SendAsync` method of the `EventHubProducerClient` to ignore the result of the service operation if publishing has already completed.
+
+- The calculation for authorization token expiration has been fixed, resulting in fewer token refreshes and network requests.
+
+## 5.3.0-beta.3 (2020-09-30)
+
+### Changes
+
+#### Key Bug Fixes
+
+- An issue with package publishing which blocked referencing and use has been fixed.
+
+## 5.3.0-beta.2 (2020-09-28)
+
+### Changes
+
+#### New Features
+
+- The `EventData` representation has been extended with the ability to treat the `Body` as `BinaryData`.  `BinaryData` supports a variety of data transformations and allows the ability to provide serialization logic when sending or receiving events.  Any type that derives from `ObjectSerializer`, such as `JsonObjectSerializer` can be used, with Schema Registry support available via the `SchemaRegistryAvroObjectSerializer`.
+
+- `EventData` has been integrated with the new Schema Registry service, via use of the `ObjectSerializer` with `BinaryData`.
+
+- When publishing events to Event Hubs, timeouts or other transient failures may introduce ambiguity into the understanding of whether a batch of events was received by the service.  To assist in this scenario, the option to publish events idempotently across all retries of a publish operation has been added to the `EventHubProducerClient`. 
+
+**Note:** The idempotent publishing feature is new to the Event Hubs service, and Azure Schema Registry is a new hosted schema repository service provided by Azure Event Hubs.  Both offerings may not yet be available in all regions or Azure clouds.
+
+## 5.3.0-beta.1 (2020-09-15)
+
+### Changes
+
+#### New Features
+
+- Introduction of an option for the various event consumers allowing the prefetch cache to be filled based on a size-based heuristic rather than a count of events.  This feature is considered a special case, helpful in scenarios where the size of events being read is not able to be known or predicted upfront and limiting resource use is valued over consistent and predictable performance.
+
+## 5.2.0 (2020-09-08)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
+
+- Daniel Marbach _([GitHub](https://github.com/danielmarbach))_
+
+### Changes
+
+#### Key Bug Fixes
+
+- The underlying AMQP library has been enhanced for more efficient resource usage; this will result in a noticeable reduction in memory use in common consuming scenarios.  (A community contribution, courtesy of _[danielmarbach](https://github.com/danielmarbach))_
+
+- All clients will now perform an eager validation of connection strings upon creation.  Previously, validation was performed just before a service operation in some scenarios which made debugging difficult.
+
+- An additional level of resilience was added to some corner case scenarios where establishing an AMQP link failed with what may be a transient issue.
+
+- Fixed an issue where failure to create an AMQP link would lead to an AMQP session not being explicitly closed, causing connections to the Event Hubs service to remain open until a garbage collection pass was performed.
+
+#### New Features
+
+- The `EventProcessor<TPartition>` now supports a configurable strategy for load balancing, allowing control over whether it claims ownership of partitions in a balanced manner _(default)_ or more aggressively.  The strategy may be set in the `EventProcessorOptions` when creating the processor.  More details about strategies can be found in the associated [documentation](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.processor.loadbalancingstrategy?view=azure-dotnet).
+
+- The `EventHubConsumerClient` pipeline for reading events from a single partition was reworked to improve efficiency and make use of the new configuration options for `PrefetchCount` and `CacheEventCount`.
+
+- The `ReadEventOptions` used with the `EventHubConsumerClient` now support setting a `PrefetchCount` and `CacheEventCount` for performance tuning.  More details about each can be found in the associated [documentation](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.consumer.readeventoptions?view=azure-dotnet).
+
+- Logging for the core send and receive operations against the Event Hubs service can now be correlated by an `OperationId` in the logs and detail the number of retries attempted for the operation.
+
+- Connection strings for each of the clients now supports a `SharedAccessSignature` token, allowing a pre-generated SAS to be used for authorization.
 
 ## 5.2.0-preview.3 (2020-08-18)
 
@@ -58,7 +168,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 - A cleanup sweep was performed to tune small areas to be more efficient and perform fewer allocations.
 
-## 5.1.0
+## 5.1.0 
 
 ### Acknowledgments
 
@@ -87,7 +197,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 - Minor enhancements to reduce allocations and improve efficiency
 
-## 5.1.0-preview.1
+## 5.1.0-preview.1 
 
 ### Acknowledgments
 
@@ -126,7 +236,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 - For special cases, the live tests may be instructed to use existing Azure resources instead of dynamically creating dedicated resources for the run.  (A community contribution, courtesy of [albertodenatale](https://github.com/albertodenatale))
 
-## 5.0.1
+## 5.0.1 
 
 ### Acknowledgements
 
@@ -150,7 +260,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 - The hierarchy of custom exceptions has been flattened, with only the `EventHubsException` remaining.  The well-known failure scenarios that had previously been represented as stand-alone types are now exposed by a new `Reason` property to allow for applying exception filtering and other logic where inspecting the text of an exception message wouldn't be ideal. 
 
-## 5.0.0-preview.6
+## 5.0.0-preview.6 
 
 ### Acknowledgements
 
@@ -195,9 +305,9 @@ _(A community contribution, courtesy of [albertodenatale](https://github.com/alb
 
 - A large portion of the public API surface, including members and parameters, have had adjustments to their naming in order to improve discoverability, provide better context to developers, and better conform to the [Azure SDK Design Guidelines for .NET](https://azure.github.io/azure-sdk/dotnet_introduction.html).
 
-- The `EventProcessorClient` has been moved into its own [package](./../Azure.Messaging.EventHubs.Processor) and evolved into an opinionated implementation on top of Azure Storage Blobs.  This is intended to offer a more streamlined developer experience for the majority of scenarios and allow developers to more easily take advantage of the processor.
+- The `EventProcessorClient` has been moved into its own [package](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs.Processor) and evolved into an opinionated implementation on top of Azure Storage Blobs.  This is intended to offer a more streamlined developer experience for the majority of scenarios and allow developers to more easily take advantage of the processor.
 
-- A collection of internal supporting types were moved into a new [shared library](./../Azure.Messaging.EventHubs.Shared) to allow them to be shared as source between the Event Hubs client libraries.  The tests assoociated with these types were also moved to the shared library for locality with the source being tested.
+- A collection of internal supporting types were moved into a new [shared library](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs.Shared) to allow them to be shared as source between the Event Hubs client libraries.  The tests assoociated with these types were also moved to the shared library for locality with the source being tested.
 
 ## 5.0.0-preview.5 
 
@@ -234,7 +344,7 @@ Thank you to our developer community members who helped to make the Azure SDKs b
 
 - The information about the last event enqueued to an Event Hub partition is now presented on-demand as an immutable object, if the tracking option was enabled.  This ensures that the properties are stable and consistent when being read, rather than being subject to in-place updates each time a new event is received.
 
-## 5.0.0-preview.4
+## 5.0.0-preview.4 
 
 ### Changes
 
@@ -252,7 +362,7 @@ Thank you to our developer community members who helped to make the Azure SDKs b
 
 - Improved stability and performance with refactorings around hot paths and areas of technical debt.
 
-## 5.0.0-preview.3
+## 5.0.0-preview.3 
 
 ### Changes
 
@@ -278,7 +388,7 @@ Thank you to our developer community members who helped to make the Azure SDKs b
 
 - Some public types were scoped in a way that made them difficult to mock for library consumers.  These have been re-scoped to `protected internal` for better testability.  `EventData` and metadata types were the significant instances.
 
-## 5.0.0-preview.2
+## 5.0.0-preview.2 
 
 ### Changes
 
@@ -321,7 +431,7 @@ Thank you to our developer community members who helped to make the Azure SDKs b
 - An option for fixed retry has been added to accompany the exponential retry that was in place previously.
 Operation timeouts have been moved from the associated client options and incorporated into the retry options and retry policies.
 
-## 5.0.0-preview.1
+## 5.0.0-preview.1 
 
 Version 5.0.0-preview.1 is a preview of our efforts in creating a client library that is developer-friendly, idiomatic to the .NET ecosystem, and as consistent across different languages and platforms as possible.  The principles that guide our efforts can be found in the [Azure SDK Design Guidelines for .NET](https://azure.github.io/azure-sdk/dotnet_introduction.html).
 

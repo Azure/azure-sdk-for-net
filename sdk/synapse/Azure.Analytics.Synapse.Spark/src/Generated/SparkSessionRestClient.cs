@@ -78,6 +78,7 @@ namespace Azure.Analytics.Synapse.Spark
                 uri.AppendQuery("detailed", detailed.Value, true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -152,6 +153,7 @@ namespace Azure.Analytics.Synapse.Spark
                 uri.AppendQuery("detailed", detailed.Value, true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(sparkSessionOptions);
@@ -233,6 +235,7 @@ namespace Azure.Analytics.Synapse.Spark
                 uri.AppendQuery("detailed", detailed.Value, true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -394,6 +397,7 @@ namespace Azure.Analytics.Synapse.Spark
             uri.AppendPath(sessionId, true);
             uri.AppendPath("/statements", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -454,6 +458,7 @@ namespace Azure.Analytics.Synapse.Spark
             uri.AppendPath(sessionId, true);
             uri.AppendPath("/statements", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(sparkStatementOptions);
@@ -533,6 +538,7 @@ namespace Azure.Analytics.Synapse.Spark
             uri.AppendPath("/statements/", false);
             uri.AppendPath(statementId, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -597,6 +603,7 @@ namespace Azure.Analytics.Synapse.Spark
             uri.AppendPath(statementId, true);
             uri.AppendPath("/cancel", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

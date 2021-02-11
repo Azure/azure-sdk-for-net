@@ -78,7 +78,14 @@ namespace Azure.Security.KeyVault.Keys
         {
         }
 
-        internal JsonWebKey(IEnumerable<KeyOperation> keyOps)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="JsonWebKey"/> class with the given key operations.
+        /// </summary>
+        /// <param name="keyOps">
+        /// A list of supported <see cref="KeyOperation"/> values.
+        /// If null, no operations will be permitted and subsequent cryptography operations may fail.
+        /// </param>
+        public JsonWebKey(IEnumerable<KeyOperation> keyOps)
         {
             _keyOps = keyOps is null ? new List<KeyOperation>() : new List<KeyOperation>(keyOps);
             KeyOps = new ReadOnlyCollection<KeyOperation>(_keyOps);
@@ -238,7 +245,7 @@ namespace Azure.Security.KeyVault.Keys
         #endregion
 
         /// <summary>
-        /// Gets the HSM token used with "Bring Your Own Key".
+        /// Gets the protected key used with "Bring Your Own Key".
         /// </summary>
         public byte[] T { get; set; }
 
@@ -261,15 +268,15 @@ namespace Azure.Security.KeyVault.Keys
         }
 
         /// <summary>
-        /// Converts this <see cref="JsonWebKey"/> of type <see cref="KeyType.Oct"/> to an <see cref="Aes"/> object.
+        /// Converts this <see cref="JsonWebKey"/> of type <see cref="KeyType.Oct"/> or <see cref="KeyType.OctHsm"/> to an <see cref="Aes"/> object.
         /// </summary>
         /// <returns>An <see cref="Aes"/> object.</returns>
         /// <exception cref="InvalidOperationException">This key is not of type <see cref="KeyType.Oct"/> or <see cref="K"/> is null.</exception>
         public Aes ToAes()
         {
-            if (KeyType != KeyType.Oct)
+            if (KeyType != KeyType.Oct && KeyType != KeyType.OctHsm)
             {
-                throw new InvalidOperationException($"key is not an {nameof(KeyType.Oct)} key");
+                throw new InvalidOperationException($"key is not an {nameof(KeyType.Oct)} or {nameof(KeyType.OctHsm)} type");
             }
 
             if (K is null)

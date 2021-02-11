@@ -41,7 +41,6 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// collection in the Azure Cosmos DB service.</param>
         /// <param name="conflictResolutionPolicy">The conflict resolution
         /// policy for the container.</param>
-        /// <param name="analyticalStorageTtl">Analytical TTL.</param>
         /// <param name="_rid">A system generated property. A unique
         /// identifier.</param>
         /// <param name="_ts">A system generated property that denotes the last
@@ -56,7 +55,6 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
             DefaultTtl = defaultTtl;
             UniqueKeyPolicy = uniqueKeyPolicy;
             ConflictResolutionPolicy = conflictResolutionPolicy;
-            AnalyticalStorageTtl = analyticalStorageTtl;
             this._rid = _rid;
             this._ts = _ts;
             this._etag = _etag;
@@ -108,12 +106,6 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// </summary>
         [JsonProperty(PropertyName = "conflictResolutionPolicy")]
         public ConflictResolutionPolicy ConflictResolutionPolicy { get; set; }
-
-        /// <summary>
-        /// Gets or sets analytical TTL.
-        /// </summary>
-        [JsonProperty(PropertyName = "analyticalStorageTtl")]
-        public long? AnalyticalStorageTtl { get; set; }
 
         /// <summary>
         /// Gets a system generated property. A unique identifier.

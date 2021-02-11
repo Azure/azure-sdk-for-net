@@ -10,57 +10,14 @@
 
 namespace Microsoft.Azure.Management.HybridCompute.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for StatusLevelTypes.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum StatusLevelTypes
+    public static class StatusLevelTypes
     {
-        [EnumMember(Value = "Info")]
-        Info,
-        [EnumMember(Value = "Warning")]
-        Warning,
-        [EnumMember(Value = "Error")]
-        Error
-    }
-    internal static class StatusLevelTypesEnumExtension
-    {
-        internal static string ToSerializedValue(this StatusLevelTypes? value)
-        {
-            return value == null ? null : ((StatusLevelTypes)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this StatusLevelTypes value)
-        {
-            switch( value )
-            {
-                case StatusLevelTypes.Info:
-                    return "Info";
-                case StatusLevelTypes.Warning:
-                    return "Warning";
-                case StatusLevelTypes.Error:
-                    return "Error";
-            }
-            return null;
-        }
-
-        internal static StatusLevelTypes? ParseStatusLevelTypes(this string value)
-        {
-            switch( value )
-            {
-                case "Info":
-                    return StatusLevelTypes.Info;
-                case "Warning":
-                    return StatusLevelTypes.Warning;
-                case "Error":
-                    return StatusLevelTypes.Error;
-            }
-            return null;
-        }
+        public const string Info = "Info";
+        public const string Warning = "Warning";
+        public const string Error = "Error";
     }
 }

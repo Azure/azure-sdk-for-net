@@ -2,13 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Net.Http;
 using System.Threading.Tasks;
-using Azure.Core.Pipeline;
 using Azure.DigitalTwins.Samples;
 using Azure.Identity;
 using CommandLine;
-using CommandLine.Text;
 
 namespace Azure.DigitalTwins.Core.Samples
 {
@@ -19,8 +16,7 @@ namespace Azure.DigitalTwins.Core.Samples
         /// </summary>
         public static async Task Main(string[] args)
         {
-            // Parse and validate paramters
-
+            // Parse and validate parameters
             Options options = null;
             ParserResult<Options> result = Parser.Default.ParseArguments<Options>(args)
                 .WithParsed(parsedOptions =>
@@ -34,10 +30,10 @@ namespace Azure.DigitalTwins.Core.Samples
 
             // Instantiate the client
             DigitalTwinsClient dtClient = GetDigitalTwinsClient(
-                    options.TenantId,
-                    options.ClientId,
-                    options.ClientSecret,
-                    options.AdtEndpoint);
+                options.TenantId,
+                options.ClientId,
+                options.ClientSecret,
+                options.AdtEndpoint);
 
             // Run the samples
 

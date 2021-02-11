@@ -44,7 +44,15 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// any.</param>
         /// <param name="imageProcessingSettings">Gets or sets image
         /// preprocessing settings.</param>
-        public ProjectSettings(System.Guid domainId = default(System.Guid), string classificationType = default(string), IList<string> targetExportPlatforms = default(IList<string>), bool? useNegativeSet = default(bool?), string detectionParameters = default(string), ImageProcessingSettings imageProcessingSettings = default(ImageProcessingSettings))
+        /// <param name="exportModelContainerUri">The uri to the Azure Storage
+        /// container that will be used to store exported models.</param>
+        /// <param name="notificationQueueUri">The uri to the Azure Storage
+        /// queue that will be used to send project-related notifications. See
+        /// &lt;a
+        /// href="https://go.microsoft.com/fwlink/?linkid=2144149"&gt;Storage
+        /// notifications&lt;/a&gt; documentation for setup and message
+        /// format.</param>
+        public ProjectSettings(System.Guid domainId = default(System.Guid), string classificationType = default(string), IList<string> targetExportPlatforms = default(IList<string>), bool? useNegativeSet = default(bool?), string detectionParameters = default(string), ImageProcessingSettings imageProcessingSettings = default(ImageProcessingSettings), string exportModelContainerUri = default(string), string notificationQueueUri = default(string))
         {
             DomainId = domainId;
             ClassificationType = classificationType;
@@ -52,6 +60,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
             UseNegativeSet = useNegativeSet;
             DetectionParameters = detectionParameters;
             ImageProcessingSettings = imageProcessingSettings;
+            ExportModelContainerUri = exportModelContainerUri;
+            NotificationQueueUri = notificationQueueUri;
             CustomInit();
         }
 
@@ -97,6 +107,23 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// </summary>
         [JsonProperty(PropertyName = "imageProcessingSettings")]
         public ImageProcessingSettings ImageProcessingSettings { get; set; }
+
+        /// <summary>
+        /// Gets the uri to the Azure Storage container that will be used to
+        /// store exported models.
+        /// </summary>
+        [JsonProperty(PropertyName = "exportModelContainerUri")]
+        public string ExportModelContainerUri { get; private set; }
+
+        /// <summary>
+        /// Gets the uri to the Azure Storage queue that will be used to send
+        /// project-related notifications. See &amp;lt;a
+        /// href="https://go.microsoft.com/fwlink/?linkid=2144149"&amp;gt;Storage
+        /// notifications&amp;lt;/a&amp;gt; documentation for setup and message
+        /// format.
+        /// </summary>
+        [JsonProperty(PropertyName = "notificationQueueUri")]
+        public string NotificationQueueUri { get; private set; }
 
     }
 }

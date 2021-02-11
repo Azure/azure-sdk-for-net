@@ -26,14 +26,14 @@
         /// </summary>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
-        /// <returns>A <see cref="System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> that represents the asynchronous operation.</returns>
         /// <remarks>
         /// <para>If the <see cref="CloudJob"/> already exists on the Batch service, its properties are replaced by the properties of this <see cref="CloudJob"/>.</para>
         /// <para>The commit operation runs asynchronously.</para>
         /// </remarks>
-        public async System.Threading.Tasks.Task CommitAsync(
+        public async Task CommitAsync(
             IEnumerable<BatchClientBehavior> additionalBehaviors = null, 
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             // first forbid actions during commit
             this.propertyContainer.IsReadOnly = true;
@@ -42,14 +42,14 @@
             BehaviorManager behaveMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
 
             // hold the tpl task for the server call
-            System.Threading.Tasks.Task asyncTask;
+            Task asyncTask;
 
             if (BindingState.Unbound == this.propertyContainer.BindingState) // unbound commit
             {
                 // take all property changes and create a job
                 Models.JobAddParameter protoJob = this.GetTransportObject();
 
-                asyncTask = this.parentBatchClient.ProtocolLayer.AddJob(protoJob, behaveMgr, cancellationToken);
+                asyncTask = parentBatchClient.ProtocolLayer.AddJob(protoJob, behaveMgr, cancellationToken);
             }
             else
             {
@@ -90,7 +90,7 @@
         /// </summary>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
-        /// <returns>A <see cref="System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> that represents the asynchronous operation.</returns>
         /// <remarks>
         /// <para>
         /// Updates an existing <see cref="CloudJob"/> on the Batch service by replacing its properties with the properties of this <see cref="CloudJob"/> which have been changed.
@@ -104,9 +104,9 @@
         /// </remarks>
         public async Task CommitChangesAsync(
             IEnumerable<BatchClientBehavior> additionalBehaviors = null,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
-            UtilitiesInternal.ThrowOnUnbound(this.propertyContainer.BindingState);
+            UtilitiesInternal.ThrowOnUnbound(propertyContainer.BindingState);
 
             // first forbid actions during patch
             this.propertyContainer.IsReadOnly = true;
@@ -165,7 +165,7 @@
         /// For more information see <see cref="IFileStagingArtifact"/>.</param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
-        /// <returns>A <see cref="System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> that represents the asynchronous operation.</returns>
         /// <remarks>
         /// <para>
         /// Each call to this method incurs a request to the Batch service. Therefore, using this method to add
@@ -177,18 +177,18 @@
         /// </para>
         /// <para>The add task operation runs asynchronously.</para>
         /// </remarks>
-        public async System.Threading.Tasks.Task AddTaskAsync(
+        public async Task AddTaskAsync(
             CloudTask taskToAdd,
             ConcurrentDictionary<Type, IFileStagingArtifact> allFileStagingArtifacts = null,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
-            UtilitiesInternal.ThrowOnUnbound(this.propertyContainer.BindingState);
+            UtilitiesInternal.ThrowOnUnbound(propertyContainer.BindingState);
 
             // craft the behavior manager for this call
             BehaviorManager behaveMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
 
-            System.Threading.Tasks.Task asyncTask = this.parentBatchClient.JobOperations.AddTaskAsyncImpl(this.Id, taskToAdd, behaveMgr, cancellationToken, allFileStagingArtifacts);
+            Task asyncTask = this.parentBatchClient.JobOperations.AddTaskAsyncImpl(this.Id, taskToAdd, behaveMgr, cancellationToken, allFileStagingArtifacts);
 
             await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
         }
@@ -240,7 +240,7 @@
         /// Unlike single-task adds, you cannot use this parameter to customize the file staging process.
         /// For more information about the format of each entry, see <see cref="IFileStagingArtifact"/>.</param>
         /// <param name="timeout">The amount of time after which the operation times out.</param>
-        /// <returns>A <see cref="System.Threading.Tasks.Task"/> object that represents the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> object that represents the asynchronous operation.</returns>
         /// <remarks>
         /// <para>The add task operation runs asynchronously.</para>
         /// <para>This method is not atomic; that is, it is possible for the method to start adding tasks and
@@ -349,11 +349,11 @@
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
         /// <returns>A <see cref="CloudTask"/> containing information about the specified Azure Batch task.</returns>
         /// <remarks>The get task operation runs asynchronously.</remarks>
-        public async System.Threading.Tasks.Task<CloudTask> GetTaskAsync(
+        public async Task<CloudTask> GetTaskAsync(
             string taskId, 
             DetailLevel detailLevel = null,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             // throw if if this object is unbound
             UtilitiesInternal.ThrowOnUnbound(this.propertyContainer.BindingState);
@@ -391,18 +391,18 @@
         /// </summary>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
-        /// <returns>A <see cref="System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> that represents the asynchronous operation.</returns>
         /// <remarks>The enable operation runs asynchronously.</remarks>
-        public System.Threading.Tasks.Task EnableAsync(IEnumerable<BatchClientBehavior> additionalBehaviors = null, CancellationToken cancellationToken = default(CancellationToken))
+        public Task EnableAsync(IEnumerable<BatchClientBehavior> additionalBehaviors = null, CancellationToken cancellationToken = default)
         {
             // throw if if this object is unbound
             UtilitiesInternal.ThrowOnUnbound(this.propertyContainer.BindingState);
             
             // craft the behavior manager for this call
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
 
             // start call
-            System.Threading.Tasks.Task asyncTask = this.parentBatchClient.ProtocolLayer.EnableJob(this.Id, bhMgr, cancellationToken);
+            Task asyncTask = parentBatchClient.ProtocolLayer.EnableJob(Id, bhMgr, cancellationToken);
 
             return asyncTask;
         }
@@ -424,21 +424,21 @@
         /// <param name="disableJobOption">Specifies what to do with active tasks associated with the job.</param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
-        /// <returns>A <see cref="System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> that represents the asynchronous operation.</returns>
         /// <remarks>The disable operation runs asynchronously.</remarks>
-        public System.Threading.Tasks.Task DisableAsync(
+        public Task DisableAsync(
             Common.DisableJobOption disableJobOption, 
             IEnumerable<BatchClientBehavior> additionalBehaviors = null, 
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             // throw if if this object is unbound
-            UtilitiesInternal.ThrowOnUnbound(this.propertyContainer.BindingState);
+            UtilitiesInternal.ThrowOnUnbound(propertyContainer.BindingState);
 
             // craft the behavior manager for this call
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
 
             // start call
-            System.Threading.Tasks.Task asyncTask = this.parentBatchClient.ProtocolLayer.DisableJob(this.Id, disableJobOption, bhMgr, cancellationToken);
+            Task asyncTask = this.parentBatchClient.ProtocolLayer.DisableJob(Id, disableJobOption, bhMgr, cancellationToken);
 
             return asyncTask;
         }
@@ -452,7 +452,7 @@
         public void Disable(Common.DisableJobOption disableJobOption, IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
             Task asyncTask = DisableAsync(disableJobOption, additionalBehaviors);
-            asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+            asyncTask.WaitAndUnaggregateException(CustomBehaviors, additionalBehaviors);
         }
 
         /// <summary>
@@ -461,21 +461,21 @@
         /// <param name="terminateReason">The text you want to appear as the job's <see cref="JobExecutionInformation.TerminateReason"/>.</param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
-        /// <returns>A <see cref="System.Threading.Tasks.Task"/> object that represents the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> object that represents the asynchronous operation.</returns>
         /// <remarks>The terminate operation runs asynchronously.</remarks>
-        public System.Threading.Tasks.Task TerminateAsync(
+        public Task TerminateAsync(
             string terminateReason = null, 
             IEnumerable<BatchClientBehavior> additionalBehaviors = null, 
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             // throw if if this object is unbound
-            UtilitiesInternal.ThrowOnUnbound(this.propertyContainer.BindingState);
+            UtilitiesInternal.ThrowOnUnbound(propertyContainer.BindingState);
 
             // craft the behavior manager for this call
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
 
             // start call
-            System.Threading.Tasks.Task asyncTask = this.parentBatchClient.ProtocolLayer.TerminateJob(this.Id, terminateReason, bhMgr, cancellationToken);
+            Task asyncTask = this.parentBatchClient.ProtocolLayer.TerminateJob(Id, terminateReason, bhMgr, cancellationToken);
 
             return asyncTask;
         }
@@ -489,7 +489,7 @@
         public void Terminate(string terminateReason = null, IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
             Task asyncTask = TerminateAsync(terminateReason, additionalBehaviors);
-            asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+            asyncTask.WaitAndUnaggregateException(CustomBehaviors, additionalBehaviors);
         }
 
         /// <summary>
@@ -497,22 +497,22 @@
         /// </summary>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
-        /// <returns>A <see cref="System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> that represents the asynchronous operation.</returns>
         /// <remarks>
         /// <para>The delete operation requests that the job be deleted.  The request puts the job in the <see cref="Common.JobState.Deleting"/> state.
         /// The Batch service will stop any running tasks and perform the actual job deletion without any further client action.</para>
         /// <para>The delete operation runs asynchronously.</para>
         /// </remarks>
-        public System.Threading.Tasks.Task DeleteAsync(IEnumerable<BatchClientBehavior> additionalBehaviors = null, CancellationToken cancellationToken = default(CancellationToken))
+        public Task DeleteAsync(IEnumerable<BatchClientBehavior> additionalBehaviors = null, CancellationToken cancellationToken = default)
         {
             // throw if if this object is unbound
-            UtilitiesInternal.ThrowOnUnbound(this.propertyContainer.BindingState);
+            UtilitiesInternal.ThrowOnUnbound(propertyContainer.BindingState);
 
             // craft the behavior manager for this call
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
 
             // start call
-            System.Threading.Tasks.Task asyncTask = this.parentBatchClient.ProtocolLayer.DeleteJob(this.Id, bhMgr, cancellationToken);
+            Task asyncTask = parentBatchClient.ProtocolLayer.DeleteJob(Id, bhMgr, cancellationToken);
 
             return asyncTask;
         }
@@ -529,7 +529,7 @@
         public void Delete(IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
             Task asyncTask = DeleteAsync(additionalBehaviors);
-            asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+            asyncTask.WaitAndUnaggregateException(CustomBehaviors, additionalBehaviors);
         }
 
         /// <summary>
@@ -539,17 +539,17 @@
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous refresh operation.</returns>
-        public async System.Threading.Tasks.Task RefreshAsync(
+        public async Task RefreshAsync(
             DetailLevel detailLevel = null, 
             IEnumerable<BatchClientBehavior> additionalBehaviors = null,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             // create the behavior managaer
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors, detailLevel);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors, detailLevel);
 
             // start operation
-            System.Threading.Tasks.Task<AzureOperationResponse<Models.CloudJob, Models.JobGetHeaders>> asyncTask =
-                this.parentBatchClient.ProtocolLayer.GetJob(this.Id, bhMgr, cancellationToken);
+            Task<AzureOperationResponse<Models.CloudJob, Models.JobGetHeaders>> asyncTask =
+                this.parentBatchClient.ProtocolLayer.GetJob(Id, bhMgr, cancellationToken);
 
             AzureOperationResponse<Models.CloudJob, Models.JobGetHeaders> response = await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
 
@@ -570,7 +570,7 @@
         public void Refresh(DetailLevel detailLevel = null, IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
             Task asyncTask = RefreshAsync(detailLevel, additionalBehaviors);
-            asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+            asyncTask.WaitAndUnaggregateException(CustomBehaviors, additionalBehaviors);
         }
 
         /// <summary>
@@ -580,13 +580,13 @@
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
         /// <remarks>The get job task counts operation runs asynchronously.</remarks>
         /// <returns>A <see cref="TaskCounts"/> object containing the task counts for the job.</returns>
-        public async Task<TaskCounts> GetTaskCountsAsync(
+        public async Task<TaskCountsResult> GetTaskCountsAsync(
             IEnumerable<BatchClientBehavior> additionalBehaviors = null,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             // set up behavior manager
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors, detailLevel: null);
-            TaskCounts counts = await this.parentBatchClient.JobOperations.GetJobTaskCountsAsyncImpl(this.Id, bhMgr, cancellationToken).ConfigureAwait(continueOnCapturedContext: false);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors, detailLevel: null);
+            TaskCountsResult counts = await parentBatchClient.JobOperations.GetJobTaskCountsAsyncImpl(Id, bhMgr, cancellationToken).ConfigureAwait(continueOnCapturedContext: false);
 
             return counts;
         }
@@ -597,9 +597,9 @@
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <returns>A <see cref="TaskCounts"/> object containing the task counts for the job</returns>
         /// <remarks>This is a blocking operation. For a non-blocking equivalent, see <see cref="GetTaskCountsAsync"/>.</remarks>
-        public TaskCounts GetTaskCounts(IEnumerable<BatchClientBehavior> additionalBehaviors = null)
+        public TaskCountsResult GetTaskCounts(IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
-            TaskCounts result = GetTaskCountsAsync(additionalBehaviors).WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+            TaskCountsResult result = GetTaskCountsAsync(additionalBehaviors).WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
             return result;
         }
 

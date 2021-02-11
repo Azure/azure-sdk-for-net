@@ -10,13 +10,15 @@
 
 namespace Microsoft.Azure.Management.Synapse.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// An ARM Resource SKU.
+    /// Sku
     /// </summary>
+    /// <remarks>
+    /// SQL pool SKU
+    /// </remarks>
     public partial class Sku
     {
         /// <summary>
@@ -30,14 +32,16 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// <summary>
         /// Initializes a new instance of the Sku class.
         /// </summary>
-        /// <param name="name">The name of the SKU, typically, a letter +
-        /// Number code, e.g. P3.</param>
-        /// <param name="tier">The tier or edition of the particular SKU, e.g.
-        /// Basic, Premium.</param>
-        public Sku(string name, string tier = default(string))
+        /// <param name="tier">The service tier</param>
+        /// <param name="name">The SKU name</param>
+        /// <param name="capacity">If the SKU supports scale out/in then the
+        /// capacity integer should be included. If scale out/in is not
+        /// possible for the resource this may be omitted.</param>
+        public Sku(string tier = default(string), string name = default(string), int? capacity = default(int?))
         {
-            Name = name;
             Tier = tier;
+            Name = name;
+            Capacity = capacity;
             CustomInit();
         }
 
@@ -47,31 +51,24 @@ namespace Microsoft.Azure.Management.Synapse.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the name of the SKU, typically, a letter + Number
-        /// code, e.g. P3.
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Gets or sets the tier or edition of the particular SKU, e.g. Basic,
-        /// Premium.
+        /// Gets or sets the service tier
         /// </summary>
         [JsonProperty(PropertyName = "tier")]
         public string Tier { get; set; }
 
         /// <summary>
-        /// Validate the object.
+        /// Gets or sets the SKU name
         /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
-            }
-        }
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets if the SKU supports scale out/in then the capacity
+        /// integer should be included. If scale out/in is not possible for the
+        /// resource this may be omitted.
+        /// </summary>
+        [JsonProperty(PropertyName = "capacity")]
+        public int? Capacity { get; set; }
+
     }
 }

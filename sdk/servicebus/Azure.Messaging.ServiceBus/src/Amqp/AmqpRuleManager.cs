@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Amqp.Framing;
 using Azure.Messaging.ServiceBus.Core;
-using Azure.Messaging.ServiceBus.Management;
+using Azure.Messaging.ServiceBus.Administration;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Encoding;
 
@@ -43,7 +43,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <summary>
         /// Indicates whether or not this instance has been closed.
         /// </summary>
-        private bool _closed = false;
+        private bool _closed;
 
         /// <summary>
         /// Indicates whether or not this rule manager has been closed.
@@ -305,7 +305,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
 
             _managementLink?.Dispose();
-
         }
     }
 }

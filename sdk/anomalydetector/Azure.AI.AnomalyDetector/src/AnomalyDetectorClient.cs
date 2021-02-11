@@ -10,7 +10,6 @@ namespace Azure.AI.AnomalyDetector
     /// <summary>
     /// <see cref="AnomalyDetectorClient"/> is use to connect to the Azure Cognitive Anomaly Detector Service.
     /// </summary>
-    [CodeGenClient("ServiceClient")]
     public partial class AnomalyDetectorClient
     {
         /// <summary>

@@ -53,7 +53,6 @@ namespace Azure.AI.FormRecognizer.Models
             {
                 IReadOnlyList<FormElement> fieldElements = ConvertTextReferences(fieldValue.Elements, readResults);
 
-                // TODO: FormEnum<T> ?
                 FieldBoundingBox boundingBox = new FieldBoundingBox(fieldValue.BoundingBox);
 
                 ValueData = new FieldData(boundingBox, fieldValue.Page.Value, fieldValue.Text, fieldElements);
@@ -116,12 +115,10 @@ namespace Azure.AI.FormRecognizer.Models
 
         private static Regex _wordRegex = new Regex(@"/readResults/(?<pageIndex>\d*)/lines/(?<lineIndex>\d*)/words/(?<wordIndex>\d*)$", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
         private static Regex _lineRegex = new Regex(@"/readResults/(?<pageIndex>\d*)/lines/(?<lineIndex>\d*)$", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
+        private static Regex _selectionMarkRegex = new Regex(@"/readResults/(?<pageIndex>\d*)/selectionMarks/(?<selectionMarkIndex>\d*)$", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
 
         private static FormElement ResolveTextReference(IReadOnlyList<ReadResult> readResults, string reference)
         {
-            // TODO: Add additional validations here.
-            // https://github.com/Azure/azure-sdk-for-net/issues/10363
-
             // Example: the following should result in PageIndex = 3, LineIndex = 7, WordIndex = 12
             // "#/analyzeResult/readResults/3/lines/7/words/12" from DocumentResult
             // "#/readResults/3/lines/7/words/12" from PageResult
@@ -145,6 +142,16 @@ namespace Azure.AI.FormRecognizer.Models
                 int lineIndex = int.Parse(lineMatch.Groups["lineIndex"].Value, CultureInfo.InvariantCulture);
 
                 return new FormLine(readResults[pageIndex].Lines[lineIndex], pageIndex + 1);
+            }
+
+            // Selection Mark Reference
+            var selectionMarkMatch = _selectionMarkRegex.Match(reference);
+            if (selectionMarkMatch.Success && selectionMarkMatch.Groups.Count == 3)
+            {
+                int pageIndex = int.Parse(selectionMarkMatch.Groups["pageIndex"].Value, CultureInfo.InvariantCulture);
+                int selectionMark = int.Parse(selectionMarkMatch.Groups["selectionMarkIndex"].Value, CultureInfo.InvariantCulture);
+
+                return new FormSelectionMark(readResults[pageIndex].SelectionMarks[selectionMark], pageIndex + 1);
             }
 
             throw new InvalidOperationException($"Failed to parse element reference: {reference}");

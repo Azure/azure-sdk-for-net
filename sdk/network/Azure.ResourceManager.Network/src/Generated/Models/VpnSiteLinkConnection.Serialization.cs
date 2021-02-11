@@ -131,40 +131,80 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("vpnSiteLink"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             vpnSiteLink = DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("routingWeight"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             routingWeight = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("connectionStatus"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             connectionStatus = new VpnConnectionStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("vpnConnectionProtocolType"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             vpnConnectionProtocolType = new VirtualNetworkGatewayConnectionProtocol(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("ingressBytesTransferred"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             ingressBytesTransferred = property0.Value.GetInt64();
                             continue;
                         }
                         if (property0.NameEquals("egressBytesTransferred"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             egressBytesTransferred = property0.Value.GetInt64();
                             continue;
                         }
                         if (property0.NameEquals("connectionBandwidth"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             connectionBandwidth = property0.Value.GetInt32();
                             continue;
                         }
@@ -175,16 +215,31 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("enableBgp"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             enableBgp = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("usePolicyBasedTrafficSelectors"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             usePolicyBasedTrafficSelectors = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("ipsecPolicies"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<IpsecPolicy> array = new List<IpsecPolicy>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -195,16 +250,31 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("enableRateLimiting"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             enableRateLimiting = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("useLocalAzureIpAddress"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             useLocalAzureIpAddress = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }

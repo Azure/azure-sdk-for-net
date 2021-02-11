@@ -12,7 +12,6 @@ namespace Azure.Messaging.EventGrid
     /// </summary>
     public class EventGridPublisherClientOptions : ClientOptions
     {
-
         /// <summary>
         /// The latest service version supported by this client library.
         /// </summary>
@@ -40,7 +39,7 @@ namespace Azure.Messaging.EventGrid
         /// <summary>
         /// Used to serialize the payloads of given events to UTF-8 encoded JSON.
         /// </summary>
-        public ObjectSerializer DataSerializer { get; set; }
+        public ObjectSerializer Serializer { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EventGridPublisherClientOptions"/>

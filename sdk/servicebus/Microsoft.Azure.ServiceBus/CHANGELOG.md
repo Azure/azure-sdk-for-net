@@ -1,6 +1,23 @@
 # Release History
-## 4.1.4 (2020-08-05)
-- Setting sessionId to be same as partition key and adding validation
+## 5.2.0-beta.1 (Unreleased)
+
+
+## 5.1.0-beta.1 (Unreleased)
+
+## 5.1.1 (2021-01-12)
+- Update dependency of Microsoft.Azure.Amqp to version 2.4.9
+
+## 5.1.0 (2020-11-20)
+- Bugfix - Fixing a bug in management client that is sending atom xml elements out of order [PR 16488](https://github.com/Azure/azure-sdk-for-net/pull/16488)
+- Bugfix - Convert "Invalid operation while connection is closing" to retriable ServiceBusException [PR 17023](https://github.com/Azure/azure-sdk-for-net/pull/17023)
+
+## 5.0.0 (2020-09-11)
+### Breaking Changes
+- Setting sessionId to be same as partition key and adding validation [PR 13961](https://github.com/Azure/azure-sdk-for-net/pull/13961)
+
+### Improvements
+- Enable a way to Unregister Message Handler and Session Handler [PR 14021](https://github.com/Azure/azure-sdk-for-net/pull/14021)
+- Documentation: Add `SendAsync` warning for partition entities when batching is enabled [PR 14021](https://github.com/Azure/azure-sdk-for-net/pull/11028)
 
 ## 4.1.3 (2020-04-17)
 - Add `GetQueuesRuntimeInfoAsync`, `GetTopicsRuntimeInfoAsync` and `GetSubscriptionsRuntimeInfoAsync` to `ManagementClient` to allow retrieval of batched entity runtime information. [PR 10261](https://github.com/Azure/azure-sdk-for-net/pull/10261)

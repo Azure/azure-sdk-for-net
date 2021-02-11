@@ -67,8 +67,9 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// direct communication between nodes.</param>
         /// <param name="networkConfiguration">The network configuration for
         /// the pool.</param>
-        /// <param name="maxTasksPerNode">The maximum number of tasks that can
-        /// run concurrently on a single compute node in the pool.</param>
+        /// <param name="taskSlotsPerNode">The number of task slots that can be
+        /// used to run concurrent tasks on a single compute node in the
+        /// pool.</param>
         /// <param name="taskSchedulingPolicy">How tasks are distributed across
         /// compute nodes in a pool.</param>
         /// <param name="userAccounts">The list of user accounts to be created
@@ -88,7 +89,9 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// current or last completed resize operation.</param>
         /// <param name="mountConfiguration">A list of file systems to mount on
         /// each node in the pool.</param>
-        public Pool(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), string displayName = default(string), System.DateTime? lastModified = default(System.DateTime?), System.DateTime? creationTime = default(System.DateTime?), PoolProvisioningState? provisioningState = default(PoolProvisioningState?), System.DateTime? provisioningStateTransitionTime = default(System.DateTime?), AllocationState? allocationState = default(AllocationState?), System.DateTime? allocationStateTransitionTime = default(System.DateTime?), string vmSize = default(string), DeploymentConfiguration deploymentConfiguration = default(DeploymentConfiguration), int? currentDedicatedNodes = default(int?), int? currentLowPriorityNodes = default(int?), ScaleSettings scaleSettings = default(ScaleSettings), AutoScaleRun autoScaleRun = default(AutoScaleRun), InterNodeCommunicationState? interNodeCommunication = default(InterNodeCommunicationState?), NetworkConfiguration networkConfiguration = default(NetworkConfiguration), int? maxTasksPerNode = default(int?), TaskSchedulingPolicy taskSchedulingPolicy = default(TaskSchedulingPolicy), IList<UserAccount> userAccounts = default(IList<UserAccount>), IList<MetadataItem> metadata = default(IList<MetadataItem>), StartTask startTask = default(StartTask), IList<CertificateReference> certificates = default(IList<CertificateReference>), IList<ApplicationPackageReference> applicationPackages = default(IList<ApplicationPackageReference>), IList<string> applicationLicenses = default(IList<string>), ResizeOperationStatus resizeOperationStatus = default(ResizeOperationStatus), IList<MountConfiguration> mountConfiguration = default(IList<MountConfiguration>))
+        /// <param name="identity">The type of identity used for the Batch
+        /// Pool.</param>
+        public Pool(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), string displayName = default(string), System.DateTime? lastModified = default(System.DateTime?), System.DateTime? creationTime = default(System.DateTime?), PoolProvisioningState? provisioningState = default(PoolProvisioningState?), System.DateTime? provisioningStateTransitionTime = default(System.DateTime?), AllocationState? allocationState = default(AllocationState?), System.DateTime? allocationStateTransitionTime = default(System.DateTime?), string vmSize = default(string), DeploymentConfiguration deploymentConfiguration = default(DeploymentConfiguration), int? currentDedicatedNodes = default(int?), int? currentLowPriorityNodes = default(int?), ScaleSettings scaleSettings = default(ScaleSettings), AutoScaleRun autoScaleRun = default(AutoScaleRun), InterNodeCommunicationState? interNodeCommunication = default(InterNodeCommunicationState?), NetworkConfiguration networkConfiguration = default(NetworkConfiguration), int? taskSlotsPerNode = default(int?), TaskSchedulingPolicy taskSchedulingPolicy = default(TaskSchedulingPolicy), IList<UserAccount> userAccounts = default(IList<UserAccount>), IList<MetadataItem> metadata = default(IList<MetadataItem>), StartTask startTask = default(StartTask), IList<CertificateReference> certificates = default(IList<CertificateReference>), IList<ApplicationPackageReference> applicationPackages = default(IList<ApplicationPackageReference>), IList<string> applicationLicenses = default(IList<string>), ResizeOperationStatus resizeOperationStatus = default(ResizeOperationStatus), IList<MountConfiguration> mountConfiguration = default(IList<MountConfiguration>), BatchPoolIdentity identity = default(BatchPoolIdentity))
             : base(id, name, type, etag)
         {
             DisplayName = displayName;
@@ -106,7 +109,7 @@ namespace Microsoft.Azure.Management.Batch.Models
             AutoScaleRun = autoScaleRun;
             InterNodeCommunication = interNodeCommunication;
             NetworkConfiguration = networkConfiguration;
-            MaxTasksPerNode = maxTasksPerNode;
+            TaskSlotsPerNode = taskSlotsPerNode;
             TaskSchedulingPolicy = taskSchedulingPolicy;
             UserAccounts = userAccounts;
             Metadata = metadata;
@@ -116,6 +119,7 @@ namespace Microsoft.Azure.Management.Batch.Models
             ApplicationLicenses = applicationLicenses;
             ResizeOperationStatus = resizeOperationStatus;
             MountConfiguration = mountConfiguration;
+            Identity = identity;
             CustomInit();
         }
 
@@ -269,15 +273,15 @@ namespace Microsoft.Azure.Management.Batch.Models
         public NetworkConfiguration NetworkConfiguration { get; set; }
 
         /// <summary>
-        /// Gets or sets the maximum number of tasks that can run concurrently
-        /// on a single compute node in the pool.
+        /// Gets or sets the number of task slots that can be used to run
+        /// concurrent tasks on a single compute node in the pool.
         /// </summary>
         /// <remarks>
         /// The default value is 1. The maximum value is the smaller of 4 times
         /// the number of cores of the vmSize of the pool or 256.
         /// </remarks>
-        [JsonProperty(PropertyName = "properties.maxTasksPerNode")]
-        public int? MaxTasksPerNode { get; set; }
+        [JsonProperty(PropertyName = "properties.taskSlotsPerNode")]
+        public int? TaskSlotsPerNode { get; set; }
 
         /// <summary>
         /// Gets or sets how tasks are distributed across compute nodes in a
@@ -379,6 +383,15 @@ namespace Microsoft.Azure.Management.Batch.Models
         public IList<MountConfiguration> MountConfiguration { get; set; }
 
         /// <summary>
+        /// Gets or sets the type of identity used for the Batch Pool.
+        /// </summary>
+        /// <remarks>
+        /// The type of identity used for the Batch Pool.
+        /// </remarks>
+        [JsonProperty(PropertyName = "identity")]
+        public BatchPoolIdentity Identity { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -459,6 +472,10 @@ namespace Microsoft.Azure.Management.Batch.Models
                         element4.Validate();
                     }
                 }
+            }
+            if (Identity != null)
+            {
+                Identity.Validate();
             }
         }
     }

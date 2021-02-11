@@ -2,12 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using Azure.Core.Pipeline;
-using Azure.Core.TestFramework;
 using Azure.Data.Tables;
-using Azure.Data.Tables.Sas;
-using Moq;
 using NUnit.Framework;
 
 namespace Azure.Tables.Tests
@@ -20,6 +15,7 @@ namespace Azure.Tables.Tests
             { "binary", new byte[] { 1, 2 }},
             { "boolean", true },
             { "datetime", new DateTime() },
+            { "datetimeoffset", new DateTimeOffset() },
             { "double", (double)2.0 },
             { "guid", new Guid() },
             { "int32", int.MaxValue },
@@ -38,6 +34,7 @@ namespace Azure.Tables.Tests
             Assert.That(fullEntity.GetBinary("binary"), Is.InstanceOf(typeof(byte[])));
             Assert.That(fullEntity.GetBoolean("boolean"), Is.InstanceOf(typeof(bool?)));
             Assert.That(fullEntity.GetDateTime("datetime"), Is.InstanceOf(typeof(DateTime?)));
+            Assert.That(fullEntity.GetDateTimeOffset("datetimeoffset"), Is.InstanceOf(typeof(DateTimeOffset?)));
             Assert.That(fullEntity.GetDouble("double"), Is.InstanceOf(typeof(double?)));
             Assert.That(fullEntity.GetGuid("guid"), Is.InstanceOf(typeof(Guid)));
             Assert.That(fullEntity.GetInt32("int32"), Is.InstanceOf(typeof(int?)));
@@ -70,6 +67,7 @@ namespace Azure.Tables.Tests
             Assert.That(fullEntity.GetBinary(nonexistentKey), Is.Null);
             Assert.That(fullEntity.GetBoolean(nonexistentKey), Is.Null);
             Assert.That(fullEntity.GetDateTime(nonexistentKey), Is.Null);
+            Assert.That(fullEntity.GetDateTimeOffset(nonexistentKey), Is.Null);
             Assert.That(fullEntity.GetDouble(nonexistentKey), Is.Null);
             Assert.That(fullEntity.GetGuid(nonexistentKey), Is.Null);
             Assert.That(fullEntity.GetInt32(nonexistentKey), Is.Null);
@@ -86,6 +84,7 @@ namespace Azure.Tables.Tests
             Assert.That(emptyEntity.GetBinary(nulledPropertyKey), Is.Null);
             Assert.That(emptyEntity.GetBoolean(nulledPropertyKey), Is.Null);
             Assert.That(emptyEntity.GetDateTime(nulledPropertyKey), Is.Null);
+            Assert.That(emptyEntity.GetDateTimeOffset(nulledPropertyKey), Is.Null);
             Assert.That(emptyEntity.GetDouble(nulledPropertyKey), Is.Null);
             Assert.That(emptyEntity.GetGuid(nulledPropertyKey), Is.Null);
             Assert.That(emptyEntity.GetInt32(nulledPropertyKey), Is.Null);
@@ -99,16 +98,28 @@ namespace Azure.Tables.Tests
         [Test]
         public void ValidateDictionaryEntityGetPropertiesWithIndexer()
         {
+            Assert.That(fullEntity["binary"], Is.Not.Null);
             Assert.That(fullEntity["binary"], Is.InstanceOf(typeof(byte[])));
+            Assert.That(fullEntity["boolean"], Is.Not.Null);
             Assert.That(fullEntity["boolean"], Is.InstanceOf(typeof(bool?)));
+            Assert.That(fullEntity["datetime"], Is.Not.Null);
             Assert.That(fullEntity["datetime"], Is.InstanceOf(typeof(DateTime?)));
+            Assert.That(fullEntity["datetimeoffset"], Is.Not.Null);
+            Assert.That(fullEntity["datetimeoffset"], Is.InstanceOf(typeof(DateTimeOffset?)));
+            Assert.That(fullEntity["double"], Is.Not.Null);
+            Assert.That(fullEntity["double"], Is.Not.Null);
             Assert.That(fullEntity["double"], Is.InstanceOf(typeof(double?)));
+            Assert.That(fullEntity["guid"], Is.Not.Null);
             Assert.That(fullEntity["guid"], Is.InstanceOf(typeof(Guid)));
+            Assert.That(fullEntity["int32"], Is.Not.Null);
             Assert.That(fullEntity["int32"], Is.InstanceOf(typeof(int?)));
+            Assert.That(fullEntity["int64"], Is.Not.Null);
             Assert.That(fullEntity["int64"], Is.InstanceOf(typeof(long?)));
+            Assert.That(fullEntity["string"], Is.Not.Null);
             Assert.That(fullEntity["string"], Is.InstanceOf(typeof(string)));
 
             // Timestamp property returned as object casted as DateTimeOffset?
+            Assert.That(fullEntity.Timestamp, Is.Not.Null);
             Assert.That(fullEntity.Timestamp, Is.InstanceOf(typeof(DateTimeOffset?)));
         }
 
@@ -141,17 +152,6 @@ namespace Azure.Tables.Tests
         }
 
         /// <summary>
-        /// Validates setting values to a different type throws InvalidOperationException.
-        /// </summary>
-        [Test]
-        public void DictionaryEntitySetWrongTypeThrows()
-        {
-            var entity = new TableEntity("partition", "row") { { "exampleBool", true } };
-
-            Assert.That(() => entity["exampleBool"] = "A random string", Throws.InstanceOf<InvalidOperationException>(), "Setting an existing property to a value with mismatched types should throw an exception.");
-        }
-
-        /// <summary>
         /// Validates setting required and additional properties involving null.
         /// </summary>
         [Test]
@@ -173,6 +173,75 @@ namespace Azure.Tables.Tests
             // Test setting existing null value to a non-null value.
             entity[stringKey] = stringValue;
             Assert.That(entity[stringKey], Is.EqualTo(stringValue));
+        }
+
+        [Test]
+        public void TypeCoercionForNumericTypes()
+        {
+            var entity = new TableEntity("partition", "row");
+
+            // Initialize a property to an int value
+            entity["Foo"] = 0;
+            Assert.That(entity["Foo"] is int);
+            Assert.That(entity["Foo"], Is.EqualTo(0));
+
+            // Try to change the value to a double
+            entity["Foo"] = 1.1;
+            Assert.That(entity["Foo"] is double);
+            Assert.That(entity["Foo"], Is.EqualTo(1.1));
+
+            // Change to a double compatible int
+            entity["Foo"] = 0;
+            Assert.That(entity["Foo"] is double);
+            Assert.That(entity["Foo"], Is.EqualTo(0));
+
+            // Change to a double compatible int
+            entity["Foo"] = 1;
+            Assert.That(entity["Foo"] is double);
+            Assert.That(entity["Foo"], Is.EqualTo(1));
+
+            // Initialize a property to an int value
+            entity["Foo2"] = 0;
+            Assert.That(entity["Foo2"] is int);
+            Assert.That(entity["Foo2"], Is.EqualTo(0));
+
+            // Change to a long
+            entity["Foo2"] = 5L;
+            Assert.That(entity["Foo2"] is long);
+            Assert.That(entity["Foo2"], Is.EqualTo(5L));
+
+            // Change to a long compatible int
+            entity["Foo2"] = 0;
+            Assert.That(entity["Foo2"] is long);
+            Assert.That(entity["Foo2"], Is.EqualTo(0));
+
+            // Initialize a property to an int value
+            entity["Foo3"] = 0;
+            Assert.That(entity["Foo3"] is int);
+            Assert.That(entity["Foo3"], Is.EqualTo(0));
+
+            // Validate invalid conversions
+            entity["Foo3"] = "fail";
+            Assert.That(entity["Foo3"], Is.EqualTo("fail"));
+            Assert.That(entity["Foo3"] is string);
+
+            entity["Foo3"] = new byte[] { 0x02 };
+            Assert.That(entity["Foo3"], Is.EqualTo(new byte[] { 0x02 }));
+            Assert.That(entity["Foo3"] is byte[]);
+
+            entity["Foo3"] = false;
+            Assert.That(entity["Foo3"], Is.EqualTo(false));
+            Assert.That(entity["Foo3"] is bool);
+
+            var guid = Guid.NewGuid();
+            entity["Foo3"] = guid;
+            Assert.That(entity["Foo3"], Is.EqualTo(guid));
+            Assert.That(entity["Foo3"] is Guid);
+
+            var now = DateTime.Now;
+            entity["Foo3"] = now;
+            Assert.That(entity["Foo3"], Is.EqualTo(now));
+            Assert.That(entity["Foo3"] is DateTime);
         }
     }
 }

@@ -24,12 +24,12 @@ namespace Azure.Messaging.EventGrid.Models
             if (Optional.IsDefined(Data))
             {
                 writer.WritePropertyName("data");
-                Data.Value.WriteTo(writer);
+                Data.WriteTo(writer);
             }
             if (Optional.IsDefined(DataBase64))
             {
                 writer.WritePropertyName("data_base64");
-                writer.WriteBase64StringValue(DataBase64);
+                writer.WriteBase64StringValue(DataBase64, "D");
             }
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
@@ -96,7 +96,12 @@ namespace Azure.Messaging.EventGrid.Models
                 }
                 if (property.NameEquals("data_base64"))
                 {
-                    dataBase64 = property.Value.GetBytesFromBase64();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    dataBase64 = property.Value.GetBytesFromBase64("D");
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -106,6 +111,11 @@ namespace Azure.Messaging.EventGrid.Models
                 }
                 if (property.NameEquals("time"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     time = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
@@ -132,7 +142,7 @@ namespace Azure.Messaging.EventGrid.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new CloudEventInternal(id, source, Optional.ToNullable(data), dataBase64.Value, type, Optional.ToNullable(time), specversion, dataschema.Value, datacontenttype.Value, subject.Value, additionalProperties);
+            return new CloudEventInternal(id, source, data, dataBase64.Value, type, Optional.ToNullable(time), specversion, dataschema.Value, datacontenttype.Value, subject.Value, additionalProperties);
         }
     }
 }

@@ -67,7 +67,7 @@
           {
             "name": "If-Match",
             "in": "header",
-            "description": "The string representing a weak ETag for configuration, as per RFC7232. This should not be set when creating a configuration, but may be set when updating a configuration.",
+            "description": "The string representing a weak ETag for the configuration, as per RFC7232. This should not be set when creating a configuration, but may be set when updating a configuration.",
             "required": false,
             "type": "string"
           },
@@ -108,7 +108,7 @@
           {
             "name": "If-Match",
             "in": "header",
-            "description": "The string representing a weak ETag for configuration, as per RFC7232. The delete operation is performed only if this ETag matches the value maintained by the server, indicating that the configuration has not been modified since it was last retrieved. To force an unconditional delete, set If-Match to the wildcard character (*).",
+            "description": "The string representing a weak ETag for the configuration, as per RFC7232. The delete operation is performed only if this ETag matches the value maintained by the server, indicating that the configuration has not been modified since it was last retrieved. To force an unconditional delete, set If-Match to the wildcard character (*).",
             "required": false,
             "type": "string"
           },
@@ -271,8 +271,8 @@
         }
       },
       "post": {
-        "description": "Creates, updates, or deletes the identities of multiple devices from the IoT Hub identity registry. A device identity can be specified only once in the list. Different operations (create, update, delete) on different devices are allowed. A maximum of 100 devices can be specified per invocation. For large scale operations, use the import feature using blob storage(https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities).",
-        "operationId": "Devices_BulkRegistryOperations",
+        "description": "Creates, updates, or deletes the identities of multiple devices from the IoT Hub identity registry. A device identity can be specified only once in the list. Different operations (create, update, delete) on different devices are allowed. A maximum of 100 devices can be specified per invocation. For large scale operations, use the import feature using blob storage (https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities).",
+        "operationId": "BulkRegistry_UpdateRegistry",
         "consumes": [
           "application/json"
         ],
@@ -376,7 +376,7 @@
     "/devices/{id}": {
       "get": {
         "description": "Gets a device from the identity registry of the IoT Hub.",
-        "operationId": "Devices_GetDevice",
+        "operationId": "Devices_GetIdentity",
         "consumes": [],
         "produces": [
           "application/json"
@@ -431,7 +431,7 @@
           {
             "name": "If-Match",
             "in": "header",
-            "description": "The string representing a weak ETag for the device identity, as per RFC7232. Should not be set when creating a device, but may be set when updating a device.",
+            "description": "The string representing a weak ETag for the device identity, as per RFC7232. This should not be set when creating a device, but may be set when updating a device.",
             "required": false,
             "type": "string"
           },
@@ -643,7 +643,7 @@
     "/devices/{id}/commands": {
       "delete": {
         "description": "Deletes all the pending commands for a device in the IoT Hub.",
-        "operationId": "Messages_PurgeCloudToDeviceMessageQueue",
+        "operationId": "CloudToDeviceMessages_PurgeCloudToDeviceMessageQueue",
         "consumes": [],
         "produces": [
           "application/json"
@@ -666,57 +666,6 @@
             "schema": {
               "$ref": "#/definitions/PurgeMessageQueueResult"
             }
-          }
-        }
-      }
-    },
-    "/faultInjection": {
-      "get": {
-        "description": "Gets the FaultInjection entity.",
-        "operationId": "FaultInjection_Get",
-        "consumes": [],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/parameters/api-version"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK.",
-            "schema": {
-              "$ref": "#/definitions/FaultInjectionProperties"
-            }
-          }
-        }
-      },
-      "put": {
-        "description": "Creates or updates the FaultInjection entity.",
-        "operationId": "FaultInjection_Set",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "value",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/FaultInjectionProperties"
-            }
-          },
-          {
-            "$ref": "#/parameters/api-version"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK."
           }
         }
       }
@@ -1038,7 +987,7 @@
     },
     "/messages/serviceBound/feedback/{lockToken}/abandon": {
       "post": {
-        "description": "Abandons a cloud-to-device feedback message. An abandoned message is deleted from the feedback queue of the service. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging for more information.",
+        "description": "Abandons the lock on a cloud-to-device feedback message. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging for more information.",
         "operationId": "CloudToDeviceMessages_AbandonFeedbackNotification",
         "consumes": [],
         "produces": [
@@ -1048,7 +997,7 @@
           {
             "name": "lockToken",
             "in": "path",
-            "description": "The lock token obtained when the cloud-to-device message is received. This is used to resolve race conditions when abandoning a feedback message.",
+            "description": "The lock token obtained when the cloud-to-device message is received.",
             "required": true,
             "type": "string"
           },
@@ -1304,7 +1253,7 @@
           {
             "name": "If-Match",
             "in": "header",
-            "description": "The string representing a weak ETag for the module, as per RFC7232. Should not be set when creating module, but may be set when updating a module.",
+            "description": "The string representing a weak ETag for the module, as per RFC7232. This should not be set when creating a module, but may be set when updating a module.",
             "required": false,
             "type": "string"
           },
@@ -1693,13 +1642,6 @@
         "deviceScope": {
           "description": "The scope of the device. Auto generated and immutable for edge devices and modifiable in leaf devices to create child/parent relationship.",
           "type": "string"
-        },
-        "parentScopes": {
-          "description": "The scopes of the upper level edge devices if applicable. Only available for edge devices.",
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
         }
       }
     },
@@ -1828,13 +1770,6 @@
         "deviceScope": {
           "description": "The scope of the device.",
           "type": "string"
-        },
-        "parentScopes": {
-          "description": "The scopes of the upper level edge devices if applicable. Only available for edge devices.",
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
         }
       }
     },
@@ -2248,13 +2183,6 @@
         "deviceScope": {
           "description": "The scope of the device.",
           "type": "string"
-        },
-        "parentScopes": {
-          "description": "The scopes of the upper level edge devices if applicable. Only available for edge devices.",
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
         }
       }
     },
@@ -2367,9 +2295,11 @@
           "type": "string"
         },
         "includeConfigurations": {
+          "description": "Defaults to false. If true, then configurations are included in the data export/import.",
           "type": "boolean"
         },
         "configurationsBlobName": {
+          "description": "Defaults to configurations.txt. Specifies the name of the blob to use when exporting/importing configurations.",
           "type": "string"
         }
       }
@@ -2380,6 +2310,7 @@
       "properties": {
         "totalMessagesPurged": {
           "format": "int32",
+		  "description": "The total number of messages purged.",
           "type": "integer"
         },
         "deviceId": {
@@ -2389,42 +2320,6 @@
         "moduleId": {
           "description": "The unique identifier of the module.",
           "type": "string"
-        }
-      }
-    },
-    "FaultInjectionProperties": {
-      "type": "object",
-      "properties": {
-        "IotHubName": {
-          "description": "The name of the Iot Hub.",
-          "type": "string"
-        },
-        "connection": {
-          "$ref": "#/definitions/FaultInjectionConnectionProperties",
-          "description": "The properties for the connection."
-        },
-        "lastUpdatedTimeUtc": {
-          "format": "date-time",
-          "description": "The date and time the object was last updated.",
-          "type": "string"
-        }
-      }
-    },
-    "FaultInjectionConnectionProperties": {
-      "type": "object",
-      "properties": {
-        "action": {
-          "description": "The action to perform.",
-          "enum": [
-            "None",
-            "CloseAll",
-            "Periodic"
-          ],
-          "type": "string"
-        },
-        "blockDurationInMinutes": {
-          "format": "int32",
-          "type": "integer"
         }
       }
     },
@@ -2492,10 +2387,12 @@
         },
         "responseTimeoutInSeconds": {
           "format": "int32",
+		  "description": "The time (in seconds) that the service waits for the method invocation to return a response. The default is 30 seconds, minimum is 5 seconds, and maximum is 300 seconds.",
           "type": "integer"
         },
         "connectTimeoutInSeconds": {
           "format": "int32",
+		  "description": "The time (in seconds) that the service waits for the device to come online. The default is 0 seconds (which means the device must already be online) and the maximum is 300 seconds.",
           "type": "integer"
         }
       }
@@ -2696,7 +2593,8 @@
           "type": "integer"
         },
         "authentication": {
-          "$ref": "#/definitions/AuthenticationMechanism"
+          "$ref": "#/definitions/AuthenticationMechanism",
+          "description": "The authentication mechanism used by the module when connecting to the service and edge hub."
         }
       }
     },

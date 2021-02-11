@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-
 namespace Azure.Identity
 {
     /// <summary>
@@ -64,6 +63,11 @@ namespace Azure.Identity
 
             try
             {
+                if (string.Equals(_tenantId, Constants.AdfsTenantId, StringComparison.Ordinal))
+                {
+                    throw new CredentialUnavailableException("VisualStudioCredential authentication unavailable. ADFS tenant/authorities are not supported.");
+                }
+
                 var tokenProviderPath = GetTokenProviderPath();
                 var tokenProviders = GetTokenProviders(tokenProviderPath);
 
@@ -102,7 +106,7 @@ namespace Azure.Identity
                 string output = string.Empty;
                 try
                 {
-                    var processRunner = new ProcessRunner(_processService.Create(processStartInfo), TimeSpan.FromSeconds(30), cancellationToken);
+                    using var processRunner = new ProcessRunner(_processService.Create(processStartInfo), TimeSpan.FromSeconds(30), cancellationToken);
                     output = async
                         ? await processRunner.RunAsync().ConfigureAwait(false)
                         : processRunner.Run();
@@ -120,9 +124,9 @@ namespace Azure.Identity
                 {
                     exceptions.Add(new CredentialUnavailableException($"Process \"{processStartInfo.FileName}\" has non-json output: {output}.", exception));
                 }
-                catch (Exception exception)
+                catch (Exception exception) when (!(exception is OperationCanceledException))
                 {
-                    exceptions.Add(exception);
+                    exceptions.Add(new CredentialUnavailableException($"Process \"{processStartInfo.FileName}\" has failed with unexpected error: {exception.Message}.", exception));
                 }
             }
 
@@ -187,24 +191,35 @@ namespace Azure.Identity
         {
             var content = GetTokenProviderContent(tokenProviderPath);
 
-            using JsonDocument document = JsonDocument.Parse(content);
-
-            JsonElement providersElement = document.RootElement.GetProperty("TokenProviders");
-
-            var providers = new VisualStudioTokenProvider[providersElement.GetArrayLength()];
-            for (int i = 0; i < providers.Length; i++)
+            try
             {
-                JsonElement providerElement = providersElement[i];
+                using JsonDocument document = JsonDocument.Parse(content);
 
-                var path = providerElement.GetProperty("Path").GetString();
-                var preference = providerElement.GetProperty("Preference").GetInt32();
-                var arguments = GetStringArrayPropertyValue(providerElement, "Arguments");
+                JsonElement providersElement = document.RootElement.GetProperty("TokenProviders");
 
-                providers[i] = new VisualStudioTokenProvider(path, arguments, preference);
+                var providers = new VisualStudioTokenProvider[providersElement.GetArrayLength()];
+                for (int i = 0; i < providers.Length; i++)
+                {
+                    JsonElement providerElement = providersElement[i];
+
+                    var path = providerElement.GetProperty("Path").GetString();
+                    var preference = providerElement.GetProperty("Preference").GetInt32();
+                    var arguments = GetStringArrayPropertyValue(providerElement, "Arguments");
+
+                    providers[i] = new VisualStudioTokenProvider(path, arguments, preference);
+                }
+
+                Array.Sort(providers);
+                return providers;
             }
-
-            Array.Sort(providers);
-            return providers;
+            catch (JsonException exception)
+            {
+                throw new CredentialUnavailableException($"File found at \"{tokenProviderPath}\" isn't a valid JSON file", exception);
+            }
+            catch (Exception exception)
+            {
+                throw new CredentialUnavailableException($"JSON file found at \"{tokenProviderPath}\" has invalid schema.", exception);
+            }
         }
 
         private string GetTokenProviderContent(string tokenProviderPath)

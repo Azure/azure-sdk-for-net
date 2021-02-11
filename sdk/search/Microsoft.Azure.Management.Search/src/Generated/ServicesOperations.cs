@@ -51,8 +51,8 @@ namespace Microsoft.Azure.Management.Search
         public SearchManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Creates or updates a Search service in the given resource group. If the
-        /// Search service already exists, all properties will be updated with the
+        /// Creates or updates a search service in the given resource group. If the
+        /// search service already exists, all properties will be updated with the
         /// given values.
         /// <see href="https://aka.ms/search-manage" />
         /// </summary>
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.Search
         /// the service name after the service is created.
         /// </param>
         /// <param name='service'>
-        /// The definition of the Search service to create or update.
+        /// The definition of the search service to create or update.
         /// </param>
         /// <param name='searchManagementRequestOptions'>
         /// Additional parameters for the operation
@@ -89,7 +89,7 @@ namespace Microsoft.Azure.Management.Search
         }
 
         /// <summary>
-        /// Updates an existing Search service in the given resource group.
+        /// Updates an existing search service in the given resource group.
         /// <see href="https://aka.ms/search-manage" />
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -100,7 +100,7 @@ namespace Microsoft.Azure.Management.Search
         /// The name of the Azure Cognitive Search service to update.
         /// </param>
         /// <param name='service'>
-        /// The definition of the Search service to update.
+        /// The definition of the search service to update.
         /// </param>
         /// <param name='searchManagementRequestOptions'>
         /// Additional parameters for the operation
@@ -126,7 +126,7 @@ namespace Microsoft.Azure.Management.Search
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<SearchService>> UpdateWithHttpMessagesAsync(string resourceGroupName, string searchServiceName, SearchService service, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SearchService>> UpdateWithHttpMessagesAsync(string resourceGroupName, string searchServiceName, SearchServiceUpdate service, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -318,7 +318,7 @@ namespace Microsoft.Azure.Management.Search
         }
 
         /// <summary>
-        /// Gets the Search service with the given name in the given resource group.
+        /// Gets the search service with the given name in the given resource group.
         /// <see href="https://aka.ms/search-manage" />
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -534,7 +534,7 @@ namespace Microsoft.Azure.Management.Search
         }
 
         /// <summary>
-        /// Deletes a Search service in the given resource group, along with its
+        /// Deletes a search service in the given resource group, along with its
         /// associated resources.
         /// <see href="https://aka.ms/search-manage" />
         /// </summary>
@@ -730,7 +730,7 @@ namespace Microsoft.Azure.Management.Search
         }
 
         /// <summary>
-        /// Gets a list of all Search services in the given resource group.
+        /// Gets a list of all search services in the given resource group.
         /// <see href="https://aka.ms/search-manage" />
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -936,7 +936,7 @@ namespace Microsoft.Azure.Management.Search
         }
 
         /// <summary>
-        /// Gets a list of all Search services in the given subscription.
+        /// Gets a list of all search services in the given subscription.
         /// <see href="https://aka.ms/search-manage" />
         /// </summary>
         /// <param name='searchManagementRequestOptions'>
@@ -1132,13 +1132,13 @@ namespace Microsoft.Azure.Management.Search
         }
 
         /// <summary>
-        /// Checks whether or not the given Search service name is available for use.
+        /// Checks whether or not the given search service name is available for use.
         /// Search service names must be globally unique since they are part of the
         /// service URI (https://&lt;name&gt;.search.windows.net).
         /// <see href="https://aka.ms/search-manage" />
         /// </summary>
         /// <param name='name'>
-        /// The Search service name to validate. Search service names must only contain
+        /// The search service name to validate. Search service names must only contain
         /// lowercase letters, digits or dashes, cannot use dash as the first two or
         /// last one characters, cannot contain consecutive dashes, and must be between
         /// 2 and 60 characters in length.
@@ -1352,8 +1352,8 @@ namespace Microsoft.Azure.Management.Search
         }
 
         /// <summary>
-        /// Creates or updates a Search service in the given resource group. If the
-        /// Search service already exists, all properties will be updated with the
+        /// Creates or updates a search service in the given resource group. If the
+        /// search service already exists, all properties will be updated with the
         /// given values.
         /// <see href="https://aka.ms/search-manage" />
         /// </summary>
@@ -1371,7 +1371,7 @@ namespace Microsoft.Azure.Management.Search
         /// the service name after the service is created.
         /// </param>
         /// <param name='service'>
-        /// The definition of the Search service to create or update.
+        /// The definition of the search service to create or update.
         /// </param>
         /// <param name='searchManagementRequestOptions'>
         /// Additional parameters for the operation
@@ -1611,7 +1611,7 @@ namespace Microsoft.Azure.Management.Search
         }
 
         /// <summary>
-        /// Gets a list of all Search services in the given resource group.
+        /// Gets a list of all search services in the given resource group.
         /// <see href="https://aka.ms/search-manage" />
         /// </summary>
         /// <param name='nextPageLink'>
@@ -1802,7 +1802,7 @@ namespace Microsoft.Azure.Management.Search
         }
 
         /// <summary>
-        /// Gets a list of all Search services in the given subscription.
+        /// Gets a list of all search services in the given subscription.
         /// <see href="https://aka.ms/search-manage" />
         /// </summary>
         /// <param name='nextPageLink'>

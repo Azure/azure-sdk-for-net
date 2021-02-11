@@ -14,6 +14,7 @@ namespace Azure.Storage.Blobs.Specialized
     public partial class BlobBatchClient
     {
         protected BlobBatchClient() { }
+        public BlobBatchClient(Azure.Storage.Blobs.BlobContainerClient client) { }
         public BlobBatchClient(Azure.Storage.Blobs.BlobServiceClient client) { }
         public virtual System.Uri Uri { get { throw null; } }
         public virtual Azure.Storage.Blobs.Specialized.BlobBatch CreateBatch() { throw null; }
@@ -26,6 +27,7 @@ namespace Azure.Storage.Blobs.Specialized
     }
     public static partial class SpecializedBlobExtensions
     {
+        public static Azure.Storage.Blobs.Specialized.BlobBatchClient GetBlobBatchClient(this Azure.Storage.Blobs.BlobContainerClient client) { throw null; }
         public static Azure.Storage.Blobs.Specialized.BlobBatchClient GetBlobBatchClient(this Azure.Storage.Blobs.BlobServiceClient client) { throw null; }
     }
 }

@@ -57,6 +57,7 @@ namespace Azure.Iot.Hub.Service
             uri.AppendPath(mid, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -141,6 +142,7 @@ namespace Azure.Iot.Hub.Service
             {
                 request.Headers.Add("If-Match", ifMatch);
             }
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(deviceTwinInfo);
@@ -241,6 +243,7 @@ namespace Azure.Iot.Hub.Service
             {
                 request.Headers.Add("If-Match", ifMatch);
             }
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(deviceTwinInfo);
@@ -336,6 +339,7 @@ namespace Azure.Iot.Hub.Service
             uri.AppendPath("/modules", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -416,6 +420,7 @@ namespace Azure.Iot.Hub.Service
             uri.AppendPath(mid, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -500,6 +505,7 @@ namespace Azure.Iot.Hub.Service
             {
                 request.Headers.Add("If-Match", ifMatch);
             }
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(module);
@@ -511,7 +517,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="id"> The unique identifier of the device. </param>
         /// <param name="mid"> The unique identifier of the module. </param>
         /// <param name="module"> The module identity. </param>
-        /// <param name="ifMatch"> The string representing a weak ETag for the module, as per RFC7232. Should not be set when creating module, but may be set when updating a module. </param>
+        /// <param name="ifMatch"> The string representing a weak ETag for the module, as per RFC7232. This should not be set when creating a module, but may be set when updating a module. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="mid"/>, or <paramref name="module"/> is null. </exception>
         public async Task<Response<ModuleIdentity>> CreateOrUpdateIdentityAsync(string id, string mid, ModuleIdentity module, string ifMatch = null, CancellationToken cancellationToken = default)
@@ -550,7 +556,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="id"> The unique identifier of the device. </param>
         /// <param name="mid"> The unique identifier of the module. </param>
         /// <param name="module"> The module identity. </param>
-        /// <param name="ifMatch"> The string representing a weak ETag for the module, as per RFC7232. Should not be set when creating module, but may be set when updating a module. </param>
+        /// <param name="ifMatch"> The string representing a weak ETag for the module, as per RFC7232. This should not be set when creating a module, but may be set when updating a module. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="mid"/>, or <paramref name="module"/> is null. </exception>
         public Response<ModuleIdentity> CreateOrUpdateIdentity(string id, string mid, ModuleIdentity module, string ifMatch = null, CancellationToken cancellationToken = default)
@@ -675,6 +681,7 @@ namespace Azure.Iot.Hub.Service
             uri.AppendPath("/methods", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(directMethodRequest);

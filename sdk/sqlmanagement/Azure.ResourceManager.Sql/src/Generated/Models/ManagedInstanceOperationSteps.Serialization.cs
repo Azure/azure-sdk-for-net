@@ -27,11 +27,21 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("currentStep"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     currentStep = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("stepsList"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<UpsertManagedServerOperationStep> array = new List<UpsertManagedServerOperationStep>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

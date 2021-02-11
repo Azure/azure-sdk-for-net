@@ -25,6 +25,13 @@ namespace Azure.Storage.Sas
         /// with this shared access signature, and the service version to use
         /// when handling requests made with this shared access signature.
         /// </summary>
+        /// <remarks>
+        /// This property has been deprecated and we will always use the latest
+        /// storage SAS version of the Storage service supported. This change
+        /// does not have any impact on how your application generates or makes
+        /// use of SAS tokens.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public string Version { get; set; }
 
         /// <summary>
@@ -151,6 +158,80 @@ namespace Azure.Storage.Sas
         public string ContentType { get; set; }
 
         /// <summary>
+        /// Optional. Beginning in version 2020-02-10, this value will be used for
+        /// the AAD Object ID of a user authorized by the owner of the
+        /// User Delegation Key to perform the action granted by the SAS.
+        /// The Azure Storage service will ensure that the owner of the
+        /// user delegation key has the required permissions before granting access.
+        /// No additional permission check for the user specified in this value will be performed.
+        /// This is only used with generating User Delegation SAS.
+        /// </summary>
+        public string PreauthorizedAgentObjectId { get; set; }
+
+        /// <summary>
+        /// Optional. Beginning in version 2020-02-10, this value will be used for
+        /// to correlate the storage audit logs with the audit logs used by the
+        /// principal generating and distributing SAS. This is only used for
+        /// User Delegation SAS.
+        /// </summary>
+        public string CorrelationId { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobSasBuilder"/>
+        /// class.
+        /// </summary>
+        /// <remarks>
+        /// This constructor has been deprecated. Please consider using
+        /// <see cref="BlobSasBuilder(BlobSasPermissions, DateTimeOffset)"/>
+        /// to create a Service SAS. This change does not have any impact on how
+        /// your application generates or makes use of SAS tokens.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public BlobSasBuilder()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobSasBuilder"/>
+        /// class to create a Blob Service Sas.
+        /// </summary>
+        /// <param name="permissions">
+        /// The time at which the shared access signature becomes invalid.
+        /// This field must be omitted if it has been specified in an
+        /// associated stored access policy.
+        /// </param>
+        /// <param name="expiresOn">
+        /// The time at which the shared access signature becomes invalid.
+        /// This field must be omitted if it has been specified in an
+        /// associated stored access policy.
+        /// </param>
+        public BlobSasBuilder(BlobSasPermissions permissions, DateTimeOffset expiresOn)
+        {
+            ExpiresOn = expiresOn;
+            SetPermissions(permissions);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobSasBuilder"/>
+        /// class to create a Blob Container Service Sas.
+        /// </summary>
+        /// <param name="permissions">
+        /// The time at which the shared access signature becomes invalid.
+        /// This field must be omitted if it has been specified in an
+        /// associated stored access policy.
+        /// </param>
+        /// <param name="expiresOn">
+        /// The time at which the shared access signature becomes invalid.
+        /// This field must be omitted if it has been specified in an
+        /// associated stored access policy.
+        /// </param>
+        public BlobSasBuilder(BlobContainerSasPermissions permissions, DateTimeOffset expiresOn)
+        {
+            ExpiresOn = expiresOn;
+            SetPermissions(permissions);
+        }
+
+        /// <summary>
         /// Sets the permissions for a blob SAS.
         /// </summary>
         /// <param name="permissions">
@@ -222,7 +303,7 @@ namespace Azure.Storage.Sas
             {
                 rawPermissions = SasExtensions.ValidateAndSanitizeRawPermissions(
                     permissions: rawPermissions,
-                    validPermissionsInOrder: s_validPermissionsInOrder);
+                    validPermissionsInOrder: Constants.Sas.ValidPermissionsInOrder);
             }
 
             SetPermissions(rawPermissions);
@@ -236,21 +317,6 @@ namespace Azure.Storage.Sas
         {
             Permissions = rawPermissions;
         }
-
-        private static readonly List<char> s_validPermissionsInOrder = new List<char>
-        {
-            Constants.Sas.Permissions.Read,
-            Constants.Sas.Permissions.Add,
-            Constants.Sas.Permissions.Create,
-            Constants.Sas.Permissions.Write,
-            Constants.Sas.Permissions.Delete,
-            Constants.Sas.Permissions.DeleteBlobVersion,
-            Constants.Sas.Permissions.List,
-            Constants.Sas.Permissions.Tag,
-            Constants.Sas.Permissions.Update,
-            Constants.Sas.Permissions.Process,
-            Constants.Sas.Permissions.FilterByTags,
-        };
 
         /// <summary>
         /// Use an account's <see cref="StorageSharedKeyCredential"/> to sign this
@@ -349,6 +415,9 @@ namespace Azure.Storage.Sas
                 signedExpiry,
                 userDelegationKey.SignedService,
                 userDelegationKey.SignedVersion,
+                PreauthorizedAgentObjectId,
+                null, // AgentObjectId - enabled only in HNS accounts
+                CorrelationId,
                 IPRange.ToString(),
                 SasExtensions.ToProtocolString(Protocol),
                 Version,
@@ -384,7 +453,9 @@ namespace Azure.Storage.Sas
                 contentDisposition: ContentDisposition,
                 contentEncoding: ContentEncoding,
                 contentLanguage: ContentLanguage,
-                contentType: ContentType);
+                contentType: ContentType,
+                authorizedAadObjectId: PreauthorizedAgentObjectId,
+                correlationId: CorrelationId);
             return p;
         }
 
@@ -461,10 +532,7 @@ namespace Azure.Storage.Sas
                     Resource = Constants.Sas.Resource.BlobVersion;
                 }
             }
-            if (string.IsNullOrEmpty(Version))
-            {
-                Version = SasQueryParameters.DefaultSasVersion;
-            }
+            Version = SasQueryParameters.DefaultSasVersion;
         }
 
         /// <summary>

@@ -17,7 +17,6 @@ namespace Azure.Iot.Hub.Service.Models
         public ExportImportDevice()
         {
             Tags = new ChangeTrackingDictionary<string, object>();
-            ParentScopes = new ChangeTrackingList<string>();
         }
 
         /// <summary> The unique identifier of the device. </summary>
@@ -44,7 +43,5 @@ namespace Azure.Iot.Hub.Service.Models
         public DeviceCapabilities Capabilities { get; set; }
         /// <summary> The scope of the device. </summary>
         public string DeviceScope { get; set; }
-        /// <summary> The scopes of the upper level edge devices if applicable. Only available for edge devices. </summary>
-        public IList<string> ParentScopes { get; }
     }
 }

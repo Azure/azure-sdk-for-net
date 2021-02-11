@@ -25,7 +25,7 @@ namespace Azure.AI.AnomalyDetector.Tests
         protected AnomalyDetectorClient CreateAnomalyDetectorClient(bool useTokenCredential = false, string apiKey = default, bool skipInstrumenting = false)
         {
             var endpoint = new Uri(TestEnvironment.Endpoint);
-            var options = Recording.InstrumentClientOptions(new AnomalyDetectorClientOptions());
+            var options = InstrumentClientOptions(new AnomalyDetectorClientOptions());
             AnomalyDetectorClient client;
 
             if (useTokenCredential)

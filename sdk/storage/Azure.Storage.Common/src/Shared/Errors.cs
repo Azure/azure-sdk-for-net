@@ -3,10 +3,10 @@
 
 using System;
 using System.Globalization;
+using System.IO;
 
 namespace Azure.Storage
 {
-
     /// <summary>
     /// Create exceptions for common error cases.
     /// </summary>
@@ -45,5 +45,13 @@ namespace Azure.Storage
 
         public static ArgumentException InsufficientStorageTransferOptions(long streamLength, long statedMaxBlockSize, long necessaryMinBlockSize)
             => new ArgumentException($"Cannot upload {streamLength} bytes with a maximum transfer size of {statedMaxBlockSize} bytes per block. Please increase the StorageTransferOptions.MaximumTransferSize to at least {necessaryMinBlockSize}.");
+
+        internal static void VerifyStreamPosition(Stream stream, string streamName)
+        {
+            if (stream != null && stream.CanSeek && stream.Length > 0 && stream.Position >= stream.Length)
+            {
+                throw new ArgumentException($"{streamName}.{nameof(stream.Position)} must be less than {streamName}.{nameof(stream.Length)}. Please set {streamName}.{nameof(stream.Position)} to the start of the data to upload.");
+            }
+        }
     }
 }

@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.Avs
         /// List clusters in a private cloud
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='privateCloudName'>
         /// Name of the private cloud
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Avs
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ApiErrorException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Avs
         /// Get a cluster by name in a private cloud
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='privateCloudName'>
         /// Name of the private cloud
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.Avs
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ApiErrorException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.Avs
         /// Create or update a cluster in a private cloud
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='privateCloudName'>
         /// The name of the private cloud.
@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Management.Avs
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ApiErrorException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -111,7 +111,7 @@ namespace Microsoft.Azure.Management.Avs
         /// Update a cluster in a private cloud
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='privateCloudName'>
         /// Name of the private cloud
@@ -119,8 +119,8 @@ namespace Microsoft.Azure.Management.Avs
         /// <param name='clusterName'>
         /// Name of the cluster in the private cloud
         /// </param>
-        /// <param name='cluster'>
-        /// A cluster in a private cloud
+        /// <param name='clusterUpdate'>
+        /// The cluster properties to be updated
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -128,7 +128,7 @@ namespace Microsoft.Azure.Management.Avs
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ApiErrorException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -137,12 +137,12 @@ namespace Microsoft.Azure.Management.Avs
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Cluster>> UpdateWithHttpMessagesAsync(string resourceGroupName, string privateCloudName, string clusterName, Cluster cluster, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Cluster>> UpdateWithHttpMessagesAsync(string resourceGroupName, string privateCloudName, string clusterName, ClusterUpdate clusterUpdate, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete a cluster in a private cloud
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='privateCloudName'>
         /// Name of the private cloud
@@ -156,7 +156,7 @@ namespace Microsoft.Azure.Management.Avs
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ApiErrorException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
@@ -167,7 +167,7 @@ namespace Microsoft.Azure.Management.Avs
         /// Create or update a cluster in a private cloud
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='privateCloudName'>
         /// The name of the private cloud.
@@ -184,7 +184,7 @@ namespace Microsoft.Azure.Management.Avs
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ApiErrorException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -198,7 +198,7 @@ namespace Microsoft.Azure.Management.Avs
         /// Update a cluster in a private cloud
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='privateCloudName'>
         /// Name of the private cloud
@@ -206,8 +206,8 @@ namespace Microsoft.Azure.Management.Avs
         /// <param name='clusterName'>
         /// Name of the cluster in the private cloud
         /// </param>
-        /// <param name='cluster'>
-        /// A cluster in a private cloud
+        /// <param name='clusterUpdate'>
+        /// The cluster properties to be updated
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -215,7 +215,7 @@ namespace Microsoft.Azure.Management.Avs
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ApiErrorException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -224,12 +224,12 @@ namespace Microsoft.Azure.Management.Avs
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Cluster>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string privateCloudName, string clusterName, Cluster cluster, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Cluster>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string privateCloudName, string clusterName, ClusterUpdate clusterUpdate, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete a cluster in a private cloud
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='privateCloudName'>
         /// Name of the private cloud
@@ -243,7 +243,7 @@ namespace Microsoft.Azure.Management.Avs
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ApiErrorException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
@@ -262,7 +262,7 @@ namespace Microsoft.Azure.Management.Avs
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ApiErrorException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">

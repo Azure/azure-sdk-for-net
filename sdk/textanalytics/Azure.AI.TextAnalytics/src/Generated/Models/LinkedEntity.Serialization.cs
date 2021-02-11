@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -19,8 +20,9 @@ namespace Azure.AI.TextAnalytics
             IEnumerable<LinkedEntityMatch> matches = default;
             string language = default;
             Optional<string> id = default;
-            string url = default;
+            Uri url = default;
             string dataSource = default;
+            Optional<string> bingId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -50,7 +52,7 @@ namespace Azure.AI.TextAnalytics
                 }
                 if (property.NameEquals("url"))
                 {
-                    url = property.Value.GetString();
+                    url = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dataSource"))
@@ -58,8 +60,13 @@ namespace Azure.AI.TextAnalytics
                     dataSource = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("bingId"))
+                {
+                    bingId = property.Value.GetString();
+                    continue;
+                }
             }
-            return new LinkedEntity(name, matches, language, id.Value, url, dataSource);
+            return new LinkedEntity(name, matches, language, id.Value, url, dataSource, bingId.Value);
         }
     }
 }

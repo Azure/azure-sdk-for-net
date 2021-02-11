@@ -8,18 +8,11 @@ namespace Azure.Core.TestFramework
 {
     [NonParallelizable]
     [LiveOnly]
-    public abstract class SamplesBase<TEnvironment> where TEnvironment : TestEnvironment, new()
+    public abstract class SamplesBase<TEnvironment>: LiveTestBase<TEnvironment> where TEnvironment : TestEnvironment, new()
     {
         private string _previousClientId;
         private string _previousClientSecret;
         private string _previousClientTenantId;
-
-        protected SamplesBase()
-        {
-            TestEnvironment = new TEnvironment();
-        }
-
-        public TEnvironment TestEnvironment { get; }
 
         // Initialize the environment so new DefaultAzureCredential() works
         [OneTimeSetUp]

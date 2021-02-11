@@ -172,6 +172,11 @@ namespace Microsoft.Azure.Management.Compute
         public virtual IVirtualMachineRunCommandsOperations VirtualMachineRunCommands { get; private set; }
 
         /// <summary>
+        /// Gets the IVirtualMachineScaleSetVMRunCommandsOperations.
+        /// </summary>
+        public virtual IVirtualMachineScaleSetVMRunCommandsOperations VirtualMachineScaleSetVMRunCommands { get; private set; }
+
+        /// <summary>
         /// Gets the IResourceSkusOperations.
         /// </summary>
         public virtual IResourceSkusOperations ResourceSkus { get; private set; }
@@ -195,6 +200,11 @@ namespace Microsoft.Azure.Management.Compute
         /// Gets the IDiskAccessesOperations.
         /// </summary>
         public virtual IDiskAccessesOperations DiskAccesses { get; private set; }
+
+        /// <summary>
+        /// Gets the IDiskRestorePointOperations.
+        /// </summary>
+        public virtual IDiskRestorePointOperations DiskRestorePoint { get; private set; }
 
         /// <summary>
         /// Gets the IGalleriesOperations.
@@ -225,6 +235,26 @@ namespace Microsoft.Azure.Management.Compute
         /// Gets the IContainerServicesOperations.
         /// </summary>
         public virtual IContainerServicesOperations ContainerServices { get; private set; }
+
+        /// <summary>
+        /// Gets the ICloudServiceRoleInstancesOperations.
+        /// </summary>
+        public virtual ICloudServiceRoleInstancesOperations CloudServiceRoleInstances { get; private set; }
+
+        /// <summary>
+        /// Gets the ICloudServiceRolesOperations.
+        /// </summary>
+        public virtual ICloudServiceRolesOperations CloudServiceRoles { get; private set; }
+
+        /// <summary>
+        /// Gets the ICloudServicesOperations.
+        /// </summary>
+        public virtual ICloudServicesOperations CloudServices { get; private set; }
+
+        /// <summary>
+        /// Gets the ICloudServicesUpdateDomainOperations.
+        /// </summary>
+        public virtual ICloudServicesUpdateDomainOperations CloudServicesUpdateDomain { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the ComputeManagementClient class.
@@ -487,17 +517,23 @@ namespace Microsoft.Azure.Management.Compute
             VirtualMachineScaleSetVMs = new VirtualMachineScaleSetVMsOperations(this);
             LogAnalytics = new LogAnalyticsOperations(this);
             VirtualMachineRunCommands = new VirtualMachineRunCommandsOperations(this);
+            VirtualMachineScaleSetVMRunCommands = new VirtualMachineScaleSetVMRunCommandsOperations(this);
             ResourceSkus = new ResourceSkusOperations(this);
             Disks = new DisksOperations(this);
             Snapshots = new SnapshotsOperations(this);
             DiskEncryptionSets = new DiskEncryptionSetsOperations(this);
             DiskAccesses = new DiskAccessesOperations(this);
+            DiskRestorePoint = new DiskRestorePointOperations(this);
             Galleries = new GalleriesOperations(this);
             GalleryImages = new GalleryImagesOperations(this);
             GalleryImageVersions = new GalleryImageVersionsOperations(this);
             GalleryApplications = new GalleryApplicationsOperations(this);
             GalleryApplicationVersions = new GalleryApplicationVersionsOperations(this);
             ContainerServices = new ContainerServicesOperations(this);
+            CloudServiceRoleInstances = new CloudServiceRoleInstancesOperations(this);
+            CloudServiceRoles = new CloudServiceRolesOperations(this);
+            CloudServices = new CloudServicesOperations(this);
+            CloudServicesUpdateDomain = new CloudServicesUpdateDomainOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

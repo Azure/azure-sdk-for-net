@@ -330,10 +330,9 @@ namespace Azure.Search.Documents.Tests.Samples
                     Parameters = new IndexingParameters
                     {
                         // Tell the indexer to parse each blob as a separate JSON document.
-                        // See https://docs.microsoft.com/azure/search/search-howto-index-json-blobs for details.
-                        Configuration =
+                        IndexingParametersConfiguration = new IndexingParametersConfiguration
                         {
-                            ["parsingMode"] = "json"
+                            ParsingMode = BlobIndexerParsingMode.Json
                         }
                     },
                     SkillsetName = skillsetName
@@ -348,15 +347,7 @@ namespace Azure.Search.Documents.Tests.Samples
                 cleanUpTasks.Push(() => indexerClient.DeleteIndexerAsync(indexerName));
 
                 // Wait till the indexer is done.
-                try
-                {
-                    await WaitForIndexingAsync(indexerClient, indexerName);
-                }
-                catch (TaskCanceledException)
-                {
-                    // TODO: Remove this when we figure out a more correlative way of checking status.
-                    Assert.Inconclusive("Timed out while waiting for the indexer to complete");
-                }
+                await WaitForIndexingAsync(indexerClient, indexerName);
 
                 #region Snippet:Azure_Search_Tests_Samples_CreateIndexerAsync_Query
                 // Get a SearchClient from the SearchIndexClient to share its pipeline.
@@ -365,8 +356,7 @@ namespace Azure.Search.Documents.Tests.Samples
 
                 // Query for hotels with an ocean view.
                 SearchResults<Hotel> results = await searchClient.SearchAsync<Hotel>("ocean view");
-                /*@@*/
-                bool found = false;
+                /*@@*/ bool found = false;
                 await foreach (SearchResult<Hotel> result in results.GetResultsAsync())
                 {
                     Hotel hotel = result.Document;

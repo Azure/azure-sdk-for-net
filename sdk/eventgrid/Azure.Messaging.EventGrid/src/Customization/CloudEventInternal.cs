@@ -12,6 +12,6 @@ namespace Azure.Messaging.EventGrid.Models
     [CodeGenModel("CloudEvent")]
     internal partial class CloudEventInternal
     {
-        public JsonElement? Data { get; set; }
+        public JsonElement Data { get; set; }
     }
 }

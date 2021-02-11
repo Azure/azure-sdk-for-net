@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Search.Models
     /// Describes a supported private link resource for the Azure Cognitive
     /// Search service.
     /// </summary>
-    public partial class PrivateLinkResource
+    public partial class PrivateLinkResource : Resource
     {
         /// <summary>
         /// Initializes a new instance of the PrivateLinkResource class.
@@ -30,17 +30,18 @@ namespace Microsoft.Azure.Management.Search.Models
         /// <summary>
         /// Initializes a new instance of the PrivateLinkResource class.
         /// </summary>
-        /// <param name="id">The ID of the private link resource.</param>
-        /// <param name="name">The name of the private link resource.</param>
-        /// <param name="type">The resource type.</param>
+        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. Ex-
+        /// Microsoft.Compute/virtualMachines or
+        /// Microsoft.Storage/storageAccounts.</param>
         /// <param name="properties">Describes the properties of a supported
         /// private link resource for the Azure Cognitive Search
         /// service.</param>
         public PrivateLinkResource(string id = default(string), string name = default(string), string type = default(string), PrivateLinkResourceProperties properties = default(PrivateLinkResourceProperties))
+            : base(id, name, type)
         {
-            Id = id;
-            Name = name;
-            Type = type;
             Properties = properties;
             CustomInit();
         }
@@ -49,24 +50,6 @@ namespace Microsoft.Azure.Management.Search.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets the ID of the private link resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; private set; }
-
-        /// <summary>
-        /// Gets the name of the private link resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; private set; }
-
-        /// <summary>
-        /// Gets the resource type.
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; private set; }
 
         /// <summary>
         /// Gets describes the properties of a supported private link resource

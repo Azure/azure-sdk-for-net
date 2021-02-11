@@ -3,87 +3,77 @@
 
 using System;
 using System.Collections.Concurrent;
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using Azure.Security.KeyVault.Administration.Models;
-using Azure.Security.KeyVault.Keys;
-using Azure.Security.KeyVault.Tests;
 using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Administration.Tests
 {
-    public class AccessControlTestBase : RecordedTestBase<KeyVaultTestEnvironment>
+    public abstract class AccessControlTestBase : AdministrationTestBase
     {
-        public KeyVaultAccessControlClient Client { get; set; }
-        public KeyClient KeyClient { get; set; }
+        private readonly ConcurrentQueue<(string Name, KeyVaultRoleScope? Scope)> _roleAssignmentsToDelete = new ConcurrentQueue<(string Name, KeyVaultRoleScope? Scope)>();
+        private readonly ConcurrentQueue<(string Name, KeyVaultRoleScope? Scope)> _roleDefinitionsToDelete = new ConcurrentQueue<(string Name, KeyVaultRoleScope? Scope)>();
 
-        public Uri VaultUri { get; set; }
+        public KeyVaultAccessControlClient Client { get; private set; }
 
 #pragma warning disable IDE1006 // Naming Styles
         internal KeyVaultAccessControlClient client;
 #pragma warning restore IDE1006 // Naming Styles
 
-        internal const string RoleName = "Azure Key Vault Managed HSM Crypto User";
+        internal const string RoleName = "Managed HSM Crypto User";
         internal readonly Guid _roleAssignmentId = new Guid("e7ae2aff-eb17-4c9d-84f0-d12f7f468f16");
         internal string _roleDefinitionId;
         internal string _objectId;
 
-        private readonly ConcurrentQueue<(string Name, string Scope)> _roleAssignmentsToDelete = new ConcurrentQueue<(string Name, string Scope)>();
-
-        public AccessControlTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
-        { }
-
-        public AccessControlTestBase(bool isAsync) : base(isAsync)
+        public AccessControlTestBase(bool isAsync, RecordedTestMode? mode)
+            : base(isAsync, mode)
         { }
 
         internal KeyVaultAccessControlClient GetClient(TestRecording recording = null)
         {
-            recording ??= Recording;
-
             return InstrumentClient
                 (new KeyVaultAccessControlClient(
-                    new Uri(TestEnvironment.KeyVaultUrl),
+                    Uri,
                     TestEnvironment.Credential,
-                    recording.InstrumentClientOptions(new KeyVaultAccessControlClientOptions())));
+                    InstrumentClientOptions(new KeyVaultAdministrationClientOptions
+                    {
+                        Diagnostics =
+                        {
+                            LoggedHeaderNames =
+                            {
+                                "x-ms-request-id",
+                            },
+                        },
+                    })));
         }
 
-        internal KeyClient GetKeyClient(TestRecording recording = null)
-        {
-            recording ??= Recording;
-
-            return InstrumentClient
-                (new KeyClient(
-                    new Uri(TestEnvironment.KeyVaultUrl),
-                    TestEnvironment.Credential,
-                    recording.InstrumentClientOptions(new KeyClientOptions())));
-        }
-
-        [SetUp]
-        public void ClearChallengeCacheforRecord()
+        protected override void Start()
         {
             Client = GetClient();
-            KeyClient = GetKeyClient();
 
-            // in record mode we reset the challenge cache before each test so that the challenge call
-            // is always made.  This allows tests to be replayed independently and in any order
-            if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
-            {
-                ChallengeBasedAuthenticationPolicy.AuthenticationChallenge.ClearCache();
-            }
+            base.Start();
         }
 
         [TearDown]
-        public async Task Cleanup()
+        public override async Task Cleanup()
         {
             // Start deleting resources as soon as possible.
             while (_roleAssignmentsToDelete.TryDequeue(out var assignment))
             {
                 await DeleteRoleAssignment(assignment);
             }
+
+            while (_roleAssignmentsToDelete.TryDequeue(out var definition))
+            {
+                await DeleteRoleDefinition(definition);
+            }
+
+            await base.Cleanup();
         }
 
-        protected async Task DeleteRoleAssignment((string Name, string Scope) assignment)
+        protected async Task DeleteRoleAssignment((string Name, KeyVaultRoleScope? Scope) assignment)
         {
             if (Mode == RecordedTestMode.Playback)
             {
@@ -94,7 +84,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             {
                 using (Recording.DisableRecording())
                 {
-                    await Client.DeleteRoleAssignmentAsync(assignment.Scope, assignment.Name).ConfigureAwait(false);
+                    await Client.DeleteRoleAssignmentAsync(assignment.Scope.Value, assignment.Name).ConfigureAwait(false);
                 }
             }
             catch (RequestFailedException ex) when (ex.Status == 404)
@@ -102,9 +92,32 @@ namespace Azure.Security.KeyVault.Administration.Tests
             }
         }
 
-        protected void RegisterForCleanup(RoleAssignment assignment)
+        protected async Task DeleteRoleDefinition((string Name, KeyVaultRoleScope? Scope) assignment)
+        {
+            if (Mode == RecordedTestMode.Playback)
+            {
+                return;
+            }
+
+            try
+            {
+                using (Recording.DisableRecording())
+                {
+                    await Client.DeleteRoleDefinitionAsync(new Guid(assignment.Name), assignment.Scope.Value).ConfigureAwait(false);
+                }
+            }
+            catch (RequestFailedException ex) when (ex.Status == 404)
+            {
+            }
+        }
+        protected void RegisterForCleanup(KeyVaultRoleAssignment assignment)
         {
             _roleAssignmentsToDelete.Enqueue((assignment.Name, assignment.Properties.Scope));
+        }
+
+        protected void RegisterForCleanup(KeyVaultRoleDefinition definition)
+        {
+            _roleDefinitionsToDelete.Enqueue((definition.Name, definition.AssignableScopes.First()));
         }
     }
 }

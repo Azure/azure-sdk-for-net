@@ -4,15 +4,13 @@
 using System;
 using System.Linq;
 using System.Text.Json.Serialization;
+#if EXPERIMENTAL_SPATIAL
+using Azure.Core.GeoJson;
+#endif
+using Azure.Core.Serialization;
 using Azure.Search.Documents.Models;
 using Azure.Search.Documents.Indexes.Models;
-#if EXPERIMENTAL_SPATIAL
-using Azure.Core.Spatial;
-#else
-using System.Text.Json;
-using System.Collections.Generic;
 using Microsoft.Spatial;
-#endif
 
 #pragma warning disable SA1402 // File may only contain a single type
 
@@ -326,10 +324,10 @@ namespace Azure.Search.Documents.Tests
 
 #if EXPERIMENTAL_SPATIAL
         [JsonPropertyName("location")]
-        public PointGeometry Location { get; set; }
+        public GeoPoint Location { get; set; }
 #else
         [JsonPropertyName("location")]
-        [JsonConverter(typeof(GeographyPointConverter))]
+        [JsonConverter(typeof(MicrosoftSpatialGeoJsonConverter))]
         public GeographyPoint Location { get; set; }
 #endif
 
@@ -394,99 +392,13 @@ namespace Azure.Search.Documents.Tests
 #if EXPERIMENTAL_SPATIAL
                 ["location"] = Location,
 #else
-                ["location"] = GeographyPointConverter.AsDocument(Location),
+                ["location"] = Location.AsDocument(),
 #endif
                 ["address"] = Address?.AsDocument(),
                 // With no elements to infer the type during deserialization, we must assume object[].
                 ["rooms"] = Rooms?.Select(r => r.AsDocument())?.ToArray() ?? new object[0]
             };
     }
-
-#if !EXPERIMENTAL_SPATIAL
-    /// <summary>
-    /// Convert GeographyPoints to System.Text.Json or SearchDocument
-    /// representations.
-    /// </summary>
-    internal class GeographyPointConverter : JsonConverter<GeographyPoint>
-    {
-        public override GeographyPoint Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-        {
-            if (reader.TokenType == JsonTokenType.StartObject)
-            {
-                string type = null;
-                double? longitude = null;
-                double? latitude = null;
-
-                while (reader.Read() && reader.TokenType == JsonTokenType.PropertyName)
-                {
-                    string propertyName = reader.GetString();
-                    if (reader.Read())
-                    {
-                        switch (propertyName)
-                        {
-                            case "type":
-                                type = reader.GetString();
-                                break;
-                            case "coordinates":
-                                if (reader.TokenType == JsonTokenType.StartArray &&
-                                    reader.Read() &&
-                                    reader.TokenType == JsonTokenType.Number)
-                                {
-                                    longitude = reader.GetDouble();
-                                    if (reader.Read() && reader.TokenType == JsonTokenType.Number)
-                                    {
-                                        latitude = reader.GetDouble();
-                                        while (reader.Read() && reader.TokenType != JsonTokenType.EndArray)
-                                        {
-                                            // Skip optional altitude
-                                        }
-                                    }
-                                }
-                                break;
-                            default:
-                                reader.Skip();
-                                break;
-                        }
-                    }
-                }
-
-                if (type == "Point" && longitude != null && latitude != null)
-                {
-                    return GeographyPoint.Create(latitude.Value, longitude.Value);
-                }
-            }
-
-            throw new JsonException();
-        }
-
-        public override void Write(Utf8JsonWriter writer, GeographyPoint value, JsonSerializerOptions options)
-        {
-            writer.WriteStartObject();
-            writer.WriteString("type", "Point");
-            writer.WritePropertyName("coordinates");
-            writer.WriteStartArray();
-            writer.WriteNumberValue(value.Longitude);
-            writer.WriteNumberValue(value.Latitude);
-            writer.WriteEndArray();
-            writer.WriteEndObject();
-        }
-
-        public static SearchDocument AsDocument(GeographyPoint value)
-        {
-            if (value == null) { return null; }
-            List<double> coords = new List<double> { value.Longitude, value.Latitude };
-            if (value.Z != null)
-            {
-                coords.Add(value.Z.Value);
-            }
-            return new SearchDocument()
-            {
-                ["type"] = "Point",
-                ["coordinates"] = coords.ToArray()
-            };
-        }
-    }
-#endif
 
     // Same structure as Hotel, but without attributes that change to camelCase
     internal class UncasedHotel
@@ -503,9 +415,9 @@ namespace Azure.Search.Documents.Tests
         public DateTimeOffset? LastRenovationDate { get; set; }
         public int? Rating { get; set; }
 #if EXPERIMENTAL_SPATIAL
-        public PointGeometry Location { get; set; }
+        public GeoPoint Location { get; set; }
 #else
-        [JsonConverter(typeof(GeographyPointConverter))]
+        [JsonConverter(typeof(MicrosoftSpatialGeoJsonConverter))]
         public GeographyPoint Location { get; set; } = null;
 #endif
         public HotelAddress Address { get; set; }

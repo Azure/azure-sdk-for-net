@@ -22,33 +22,42 @@ namespace Azure.Security.KeyVault
 
         public string Version { get; set; }
 
-        public static KeyVaultIdentifier Parse(string collection, Uri id)
-        {
-            KeyVaultIdentifier identifier = Parse(id);
-
-            if (!string.Equals(identifier.Collection, collection + "/", StringComparison.OrdinalIgnoreCase))
-                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Invalid ObjectIdentifier: {0}. segment [1] should be '{1}/', found '{2}'", id, collection, identifier.Collection));
-
-            return identifier;
-        }
-
         public static KeyVaultIdentifier Parse(Uri id)
         {
-            // We expect an identifier with either 3 or 4 segments: host + collection + name [+ version]
-            if (id.Segments.Length != 3 && id.Segments.Length != 4)
-                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Invalid ObjectIdentifier: {0}. Bad number of segments: {1}", id, id.Segments.Length));
-
-            KeyVaultIdentifier identifier = new KeyVaultIdentifier
+            if (TryParse(id ?? throw new ArgumentNullException(nameof(id)), out KeyVaultIdentifier identifier))
             {
+                return identifier;
+            }
 
+            throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Invalid ObjectIdentifier: {0}. Bad number of segments: {1}", id, id.Segments.Length));
+        }
+
+        public static bool TryParse(Uri id, out KeyVaultIdentifier identifier)
+        {
+            if (id is null)
+            {
+                identifier = default;
+                return false;
+            }
+
+            // We expect an identifier with either 3 or 4 segments: host + collection + name [+ version]
+            string[] segments = id.Segments;
+            if (segments.Length != 3 && segments.Length != 4)
+            {
+                identifier = default;
+                return false;
+            }
+
+            identifier = new KeyVaultIdentifier
+            {
                 Id = id,
                 VaultUri = new Uri($"{id.Scheme}://{id.Authority}"),
-                Collection = id.Segments[1].Trim('/'),
-                Name = id.Segments[2].Trim('/'),
-                Version = (id.Segments.Length == 4) ? id.Segments[3].TrimEnd('/') : null
+                Collection = segments[1].Trim('/'),
+                Name = segments[2].Trim('/'),
+                Version = (segments.Length == 4) ? segments[3].TrimEnd('/') : null
             };
 
-            return identifier;
+            return true;
         }
     }
 }

@@ -26,6 +26,11 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 }
                 if (property.NameEquals("statements"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<SparkStatement> array = new List<SparkStatement>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

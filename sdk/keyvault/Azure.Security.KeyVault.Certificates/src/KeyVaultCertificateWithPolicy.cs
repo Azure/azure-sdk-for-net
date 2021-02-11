@@ -36,5 +36,4 @@ namespace Azure.Security.KeyVault.Certificates
             }
         }
     }
-
 }

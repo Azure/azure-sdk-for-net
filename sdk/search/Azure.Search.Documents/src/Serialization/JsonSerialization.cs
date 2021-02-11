@@ -4,17 +4,16 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
-#if EXPERIMENTAL_SERIALIZER
 using Azure.Core.Serialization;
-#endif
 #if EXPERIMENTAL_SPATIAL
-using Azure.Core.Spatial;
+using Azure.Core.GeoJson;
 #endif
 using Azure.Search.Documents.Models;
 
@@ -25,6 +24,36 @@ namespace Azure.Search.Documents
     /// </summary>
     internal static class JsonSerialization
     {
+        /// <summary>
+        /// We serialize dates with the roundtrip format.
+        /// </summary>
+        private const string DateTimeOutputFormat = "o";
+
+        /// <summary>
+        /// We parse dates using variations of the roundtrip format with
+        /// different sub-second precision.
+        /// </summary>
+        private const string DateTimeInputFormatPrefix = "yyyy'-'MM'-'dd'T'HH':'mm':'ss";
+        private static readonly string[] s_dateTimeInputFormats = new[]
+        {
+            DateTimeInputFormatPrefix + "zzz",
+            DateTimeInputFormatPrefix + "K",
+            DateTimeInputFormatPrefix + "'.'fzzz",
+            DateTimeInputFormatPrefix + "'.'fK",
+            DateTimeInputFormatPrefix + "'.'ffzzz",
+            DateTimeInputFormatPrefix + "'.'ffK",
+            DateTimeInputFormatPrefix + "'.'fffzzz",
+            DateTimeInputFormatPrefix + "'.'fffK",
+            DateTimeInputFormatPrefix + "'.'ffffzzz",
+            DateTimeInputFormatPrefix + "'.'ffffK",
+            DateTimeInputFormatPrefix + "'.'fffffzzz",
+            DateTimeInputFormatPrefix + "'.'fffffK",
+            DateTimeInputFormatPrefix + "'.'ffffffzzz",
+            DateTimeInputFormatPrefix + "'.'ffffffK",
+            DateTimeInputFormatPrefix + "'.'fffffffzzz",
+            DateTimeInputFormatPrefix + "'.'fffffffK"
+        };
+
         /// <summary>
         /// Default JsonSerializerOptions to use.
         /// </summary>
@@ -44,7 +73,7 @@ namespace Azure.Search.Documents
             options.Converters.Add(SearchDateTimeConverter.Shared);
             options.Converters.Add(SearchDocumentConverter.Shared);
 #if EXPERIMENTAL_SPATIAL
-            options.Converters.Add(new GeometryJsonConverter());
+            options.Converters.Add(new GeoJsonConverter());
 #endif
             return options;
         }
@@ -99,7 +128,7 @@ namespace Azure.Search.Documents
         /// <param name="formatProvider">Format Provider.</param>
         /// <returns>OData string.</returns>
         public static string Date(DateTimeOffset value, IFormatProvider formatProvider) =>
-            value.ToString("o", formatProvider);
+            value.ToString(DateTimeOutputFormat, formatProvider);
 
         /// <summary>
         /// Get a stream representation of a JsonElement.  This is an
@@ -131,7 +160,12 @@ namespace Azure.Search.Documents
                         Constants.InfValue => double.PositiveInfinity,
                         Constants.NegativeInfValue => double.NegativeInfinity,
                         string text =>
-                            DateTimeOffset.TryParse(text, out DateTimeOffset date) ?
+                            DateTimeOffset.TryParseExact(
+                                    text,
+                                    s_dateTimeInputFormats,
+                                    CultureInfo.InvariantCulture,
+                                    DateTimeStyles.RoundtripKind,
+                                    out DateTimeOffset date) ?
                                 (object)date :
                                 (object)text
                     };
@@ -164,8 +198,8 @@ namespace Azure.Search.Documents
                         double longitude = coords[0];
                         double latitude = coords[1];
                         double? altitude = coords.Length == 3 ? (double?)coords[2] : null;
-                        // TODO: Should we also pull in other PointGeometry properties?
-                        return new PointGeometry(new GeometryPosition(longitude, latitude, altitude));
+                        // TODO: Should we also pull in other PointGeography properties?
+                        return new GeoPoint(new GeoPosition(longitude, latitude, altitude));
                     }
 #endif
                     return dictionary;
@@ -256,8 +290,8 @@ namespace Azure.Search.Documents
                         Utf8JsonReader clone = reader;
                         try
                         {
-                            GeometryJsonConverter converter = new GeometryJsonConverter();
-                            PointGeometry point = converter.Read(ref clone, typeof(PointGeometry), options) as PointGeometry;
+                            GeoJsonConverter converter = new GeoJsonConverter();
+                            GeoPoint point = converter.Read(ref clone, typeof(GeoPoint), options) as GeoPoint;
                             if (point != null)
                             {
                                 reader = clone;
@@ -349,9 +383,7 @@ namespace Azure.Search.Documents
         /// <returns>A deserialized object.</returns>
         public static async Task<T> DeserializeAsync<T>(
             this Stream json,
-#if EXPERIMENTAL_SERIALIZER
             ObjectSerializer serializer,
-#endif
             bool async,
             CancellationToken cancellationToken)
         #pragma warning restore CS1572
@@ -360,14 +392,12 @@ namespace Azure.Search.Documents
             {
                 return default;
             }
-#if EXPERIMENTAL_SERIALIZER
             else if (serializer != null)
             {
                 return async ?
                     (T)await serializer.DeserializeAsync(json, typeof(T), cancellationToken).ConfigureAwait(false) :
                     (T)serializer.Deserialize(json, typeof(T), cancellationToken);
             }
-#endif
             else if (async)
             {
                 return await JsonSerializer.DeserializeAsync<T>(

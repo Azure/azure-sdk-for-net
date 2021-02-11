@@ -10,8 +10,8 @@ namespace Azure.AI.TextAnalytics
     /// <summary>
     /// Overall predicted sentiment and confidence scores for the document.
     /// It also includes per-sentence sentiment prediction.
-    /// For more information regarding text sentiment, see
-    /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/how-tos/text-analytics-how-to-sentiment-analysis"/>.
+    /// <para>For more information regarding text sentiment, see
+    /// <a href="https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/how-tos/text-analytics-how-to-sentiment-analysis"/>.</para>
     /// </summary>
     public class DocumentSentiment
     {
@@ -43,8 +43,8 @@ namespace Azure.AI.TextAnalytics
         public SentimentConfidenceScores ConfidenceScores { get; }
 
         /// <summary>
-        /// Gets the predicted sentiment for each sentence in the corresponding
-        /// document.
+        /// Gets the predicted sentiment and other analysis like Opinion mining
+        /// for each sentence in the corresponding document.
         /// </summary>
         public IReadOnlyCollection<SentenceSentiment> Sentences { get; }
 
@@ -58,7 +58,7 @@ namespace Azure.AI.TextAnalytics
             var sentences = new List<SentenceSentiment>();
             foreach (var sentence in internalSentences)
             {
-                sentences.Add(new SentenceSentiment(sentence));
+                sentences.Add(new SentenceSentiment(sentence, internalSentences));
             }
             return sentences;
         }

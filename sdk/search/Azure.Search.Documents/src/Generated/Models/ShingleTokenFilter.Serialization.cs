@@ -66,21 +66,41 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (property.NameEquals("maxShingleSize"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     maxShingleSize = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("minShingleSize"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     minShingleSize = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("outputUnigrams"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     outputUnigrams = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("outputUnigramsIfNoShingles"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     outputUnigramsIfNoShingles = property.Value.GetBoolean();
                     continue;
                 }

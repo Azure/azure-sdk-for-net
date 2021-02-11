@@ -6,7 +6,7 @@ using Azure.AI.FormRecognizer.Models;
 namespace Azure.AI.FormRecognizer.Training
 {
     /// <summary>
-    /// Contains general information about a Cognitive Services Account, such as the number
+    /// Contains general information about the Form Recognizer resource, such as the number
     /// of models and account limits.
     /// </summary>
     public class AccountProperties
@@ -21,7 +21,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// Initializes a new instance of the <see cref="AccountProperties"/> class.
         /// </summary>
         /// <param name="customModelCount">The current count of trained custom models.</param>
-        /// <param name="customModelLimit">The maximum number of models that can be trained for this subscription.</param>
+        /// <param name="customModelLimit">The maximum number of models that can be trained for this account.</param>
         internal AccountProperties(int customModelCount, int customModelLimit)
         {
             CustomModelCount = customModelCount;
@@ -29,12 +29,12 @@ namespace Azure.AI.FormRecognizer.Training
         }
 
         /// <summary>
-        /// The current count of trained custom models.
+        /// The current count of trained custom models in this account.
         /// </summary>
         public int CustomModelCount { get; }
 
         /// <summary>
-        /// The maximum number of models that can be trained for this subscription.
+        /// The maximum number of models that can be trained for this account.
         /// </summary>
         public int CustomModelLimit { get; }
     }

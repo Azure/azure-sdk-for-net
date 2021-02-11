@@ -64,6 +64,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Task.</param>
         /// <param name="constraints">The execution constraints that apply to
         /// this Task.</param>
+        /// <param name="requiredSlots">The number of scheduling slots that the
+        /// Task required to run.</param>
         /// <param name="userIdentity">The user identity under which the Task
         /// runs.</param>
         /// <param name="multiInstanceSettings">An object that indicates that
@@ -77,7 +79,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="authenticationTokenSettings">The settings for an
         /// authentication token that the Task can use to perform Batch service
         /// operations.</param>
-        public TaskAddParameter(string id, string commandLine, string displayName = default(string), TaskContainerSettings containerSettings = default(TaskContainerSettings), ExitConditions exitConditions = default(ExitConditions), IList<ResourceFile> resourceFiles = default(IList<ResourceFile>), IList<OutputFile> outputFiles = default(IList<OutputFile>), IList<EnvironmentSetting> environmentSettings = default(IList<EnvironmentSetting>), AffinityInformation affinityInfo = default(AffinityInformation), TaskConstraints constraints = default(TaskConstraints), UserIdentity userIdentity = default(UserIdentity), MultiInstanceSettings multiInstanceSettings = default(MultiInstanceSettings), TaskDependencies dependsOn = default(TaskDependencies), IList<ApplicationPackageReference> applicationPackageReferences = default(IList<ApplicationPackageReference>), AuthenticationTokenSettings authenticationTokenSettings = default(AuthenticationTokenSettings))
+        public TaskAddParameter(string id, string commandLine, string displayName = default(string), TaskContainerSettings containerSettings = default(TaskContainerSettings), ExitConditions exitConditions = default(ExitConditions), IList<ResourceFile> resourceFiles = default(IList<ResourceFile>), IList<OutputFile> outputFiles = default(IList<OutputFile>), IList<EnvironmentSetting> environmentSettings = default(IList<EnvironmentSetting>), AffinityInformation affinityInfo = default(AffinityInformation), TaskConstraints constraints = default(TaskConstraints), int? requiredSlots = default(int?), UserIdentity userIdentity = default(UserIdentity), MultiInstanceSettings multiInstanceSettings = default(MultiInstanceSettings), TaskDependencies dependsOn = default(TaskDependencies), IList<ApplicationPackageReference> applicationPackageReferences = default(IList<ApplicationPackageReference>), AuthenticationTokenSettings authenticationTokenSettings = default(AuthenticationTokenSettings))
         {
             Id = id;
             DisplayName = displayName;
@@ -89,6 +91,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             EnvironmentSettings = environmentSettings;
             AffinityInfo = affinityInfo;
             Constraints = constraints;
+            RequiredSlots = requiredSlots;
             UserIdentity = userIdentity;
             MultiInstanceSettings = multiInstanceSettings;
             DependsOn = dependsOn;
@@ -223,6 +226,18 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </remarks>
         [JsonProperty(PropertyName = "constraints")]
         public TaskConstraints Constraints { get; set; }
+
+        /// <summary>
+        /// Gets or sets the number of scheduling slots that the Task required
+        /// to run.
+        /// </summary>
+        /// <remarks>
+        /// The default is 1. A Task can only be scheduled to run on a compute
+        /// node if the node has enough free scheduling slots available. For
+        /// multi-instance Tasks, this must be 1.
+        /// </remarks>
+        [JsonProperty(PropertyName = "requiredSlots")]
+        public int? RequiredSlots { get; set; }
 
         /// <summary>
         /// Gets or sets the user identity under which the Task runs.

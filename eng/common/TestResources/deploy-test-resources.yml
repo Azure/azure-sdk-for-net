@@ -1,11 +1,11 @@
 parameters:
   ServiceDirectory: not-set
   ArmTemplateParameters: '@{}'
-  DeleteAfterHours: 24
+  DeleteAfterHours: 8
   Location: ''
   SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
 
-# SubscriptionConfiguration will be splat into the parameters of the test
+# SubscriptionConfiguration will be splatted into the parameters of the test
 # resources script. It should be JSON in the form:
 # {
 #   "SubscriptionId": "<subscription id>",
@@ -15,26 +15,44 @@ parameters:
 #   "ProvisionerApplicationId": "<provisioner app id>",
 #   "ProvisionerApplicationSecret": "<provisioner app secret>",
 #   "Environment": "AzureCloud | AzureGov | AzureChina | <other environment>"
+#   "EnvironmentVariables": {
+#       "SERVICE_MANAGEMENT_URL": "<service management url>",
+#       "STORAGE_ENDPOINT_SUFFIX": "<storage endpoint suffix>",
+#       "RESOURCE_MANAGER_URL": "<resource manager url>",
+#       "SEARCH_ENDPOINT_SUFFIX": "<search endpoint suffix>",
+#       "COSMOS_TABLES_ENDPOINT_SUFFIX": "<cosmos tables endpoint suffix>"
+#   },
+#   "ArmTemplateParameters": {
+#       "keyVaultDomainSuffix": "<keyVaultDomainSuffix>",
+#       "storageEndpointSuffix": "<storageEndpointSuffix>",
+#       "endpointSuffix": "<endpointSuffix>",
+#       "azureAuthorityHost": "<azureAuthorityHost>",
+#       "keyVaultEndpointSuffix": "<keyVaultEndpointSuffix>"
+#   }
 # }
 
+
 steps:
-  # New-TestResources command requires Az module
-  - pwsh: Install-Module -Name Az -Scope CurrentUser -AllowClobber -Force -Verbose
-    displayName: Install Azure PowerShell module
+  - template: /eng/common/TestResources/setup-az-modules.yml
 
   - pwsh: |
-      $subscriptionConfiguration = @"
-        ${{ parameters.SubscriptionConfiguration }}
-      "@ | ConvertFrom-Json -AsHashtable;
+      eng/common/TestResources/Import-AzModules.ps1
 
+      $subscriptionConfiguration = @'
+        ${{ parameters.SubscriptionConfiguration }}
+      '@ | ConvertFrom-Json -AsHashtable;
+
+      # The subscriptionConfiguration may have ArmTemplateParameters defined, so
+      # pass those in via the ArmTemplateParameters flag, and handle any
+      # additional parameters from the pipelines via AdditionalParameters
       eng/common/TestResources/New-TestResources.ps1 `
         -BaseName 'Generated' `
-        -ServiceDirectory ${{ parameters.ServiceDirectory }} `
+        -ServiceDirectory '${{ parameters.ServiceDirectory }}' `
         -Location '${{ parameters.Location }}' `
-        -DeleteAfterHours ${{ parameters.DeleteAfterHours }} `
-        -AdditionalParameters ${{ parameters.ArmTemplateParameters }} `
+        -DeleteAfterHours '${{ parameters.DeleteAfterHours }}' `
         @subscriptionConfiguration `
+        -AdditionalParameters ${{ parameters.ArmTemplateParameters }} `
         -CI `
         -Force `
-        -Verbose
+        -Verbose | Out-Null
     displayName: Deploy test resources

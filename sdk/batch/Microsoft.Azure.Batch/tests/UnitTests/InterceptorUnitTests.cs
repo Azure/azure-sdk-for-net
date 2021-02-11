@@ -57,49 +57,45 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public async Task TestRequestWhichDoesntSupportFilter()
         {
-            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
-            {
-                BatchClientBehavior behavior = new Protocol.RequestInterceptor(request =>
-                    {
-                        PoolGetBatchRequest poolGetRequest = request as PoolGetBatchRequest;
-                        poolGetRequest.ServiceRequestFunc = t =>
-                            {
-                                return Task.FromResult(new AzureOperationResponse<CloudPool, PoolGetHeaders>() { Body = new CloudPool() });
-                            };
-                    });
-                const string dummyPoolId = "dummy";
-                DetailLevel detailLevel = new ODATADetailLevel(filterClause: "foo");
-                ArgumentException e = await Assert.ThrowsAsync<ArgumentException>(async () => await client.PoolOperations.GetPoolAsync(dummyPoolId, detailLevel, new [] { behavior }));
-                Assert.Contains("Type Microsoft.Azure.Batch.Protocol.BatchRequests.PoolGetBatchRequest does not support a filter clause.", e.Message);
-                Assert.Equal("detailLevel", e.ParamName);
-            }
+            using BatchClient client = ClientUnitTestCommon.CreateDummyClient();
+            BatchClientBehavior behavior = new Protocol.RequestInterceptor(request =>
+                {
+                    PoolGetBatchRequest poolGetRequest = request as PoolGetBatchRequest;
+                    poolGetRequest.ServiceRequestFunc = t =>
+                        {
+                            return Task.FromResult(new AzureOperationResponse<CloudPool, PoolGetHeaders>() { Body = new CloudPool() });
+                        };
+                });
+            const string dummyPoolId = "dummy";
+            DetailLevel detailLevel = new ODATADetailLevel(filterClause: "foo");
+            ArgumentException e = await Assert.ThrowsAsync<ArgumentException>(async () => await client.PoolOperations.GetPoolAsync(dummyPoolId, detailLevel, new[] { behavior }));
+            Assert.Contains("Type Microsoft.Azure.Batch.Protocol.BatchRequests.PoolGetBatchRequest does not support a filter clause.", e.Message);
+            Assert.Equal("detailLevel", e.ParamName);
         }
 
         [Fact]
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public async Task TestRequestWhichDoesSupportSelect()
         {
-            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
+            using BatchClient client = ClientUnitTestCommon.CreateDummyClient();
+            ODATADetailLevel detailLevel = new ODATADetailLevel(selectClause: "foo");
+            bool wasHit = false;
+            BatchClientBehavior behavior = new Protocol.RequestInterceptor(request =>
             {
-                ODATADetailLevel detailLevel = new ODATADetailLevel(selectClause: "foo");
-                bool wasHit = false;
-                BatchClientBehavior behavior = new Protocol.RequestInterceptor(request =>
+                PoolGetBatchRequest poolGetRequest = request as PoolGetBatchRequest;
+
+                poolGetRequest.ServiceRequestFunc = t =>
                 {
-                    PoolGetBatchRequest poolGetRequest = request as PoolGetBatchRequest;
-
-                    poolGetRequest.ServiceRequestFunc = t =>
-                    {
-                        Assert.Equal(detailLevel.SelectClause, poolGetRequest.Options.Select);
-                        wasHit = true; //Ensure the interceptor was hit
+                    Assert.Equal(detailLevel.SelectClause, poolGetRequest.Options.Select);
+                    wasHit = true; //Ensure the interceptor was hit
                         return Task.FromResult(new AzureOperationResponse<CloudPool, PoolGetHeaders>() { Body = new CloudPool() });
-                    };
-                });
-                const string dummyPoolId = "dummy";
-                
-                await client.PoolOperations.GetPoolAsync(dummyPoolId, detailLevel, new[] {behavior});
+                };
+            });
+            const string dummyPoolId = "dummy";
 
-                Assert.True(wasHit);
-            }
+            await client.PoolOperations.GetPoolAsync(dummyPoolId, detailLevel, new[] { behavior });
+
+            Assert.True(wasHit);
         } 
 
         #region Private helpers
@@ -112,13 +108,11 @@
                 ? TimeSpan.FromSeconds(serverTimeoutInSeconds.Value)
                 : TimeSpan.FromSeconds(DefaultServerTimeoutInSeconds);
 
-            using (BatchClient batchCli = ClientUnitTestCommon.CreateDummyClient())
-            {
-                batchCli.CustomBehaviors.Add(new BatchRequestTimeout(serverTimeout, clientTimeout));
-                batchCli.CustomBehaviors.Add(new Protocol.RequestInterceptor((req) => ConfirmTimeoutWasSetInterceptor(req, expectedClientTimeout, expectedServerTimeoutInSeconds)));
+            using BatchClient batchCli = ClientUnitTestCommon.CreateDummyClient();
+            batchCli.CustomBehaviors.Add(new BatchRequestTimeout(serverTimeout, clientTimeout));
+            batchCli.CustomBehaviors.Add(new Protocol.RequestInterceptor((req) => ConfirmTimeoutWasSetInterceptor(req, expectedClientTimeout, expectedServerTimeoutInSeconds)));
 
-                await batchCli.PoolOperations.GetPoolAsync("Foo");
-            }
+            await batchCli.PoolOperations.GetPoolAsync("Foo");
         }
 
         private static void ConfirmTimeoutWasSetInterceptor(Protocol.IBatchRequest request, TimeSpan expectedClientTimeout, int expectedServerTimoutInSeconds)

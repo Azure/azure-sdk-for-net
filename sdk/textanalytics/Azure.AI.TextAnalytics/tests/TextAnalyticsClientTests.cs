@@ -58,6 +58,17 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
+        public void RecognizePiiEntitiesArgumentValidation()
+        {
+            var documents = new List<string>();
+            Assert.ThrowsAsync<ArgumentException>(() => Client.RecognizePiiEntitiesAsync(""));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizePiiEntitiesAsync((string)null));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizePiiEntitiesBatchAsync((List<string>)null));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.RecognizePiiEntitiesBatchAsync(documents));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizePiiEntitiesBatchAsync(null, new RecognizePiiEntitiesOptions()));
+        }
+
+        [Test]
         public void AnalyzeSentimentArgumentValidation()
         {
             var documents = new List<string>();

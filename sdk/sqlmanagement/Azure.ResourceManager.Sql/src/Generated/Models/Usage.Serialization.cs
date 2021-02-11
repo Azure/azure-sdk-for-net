@@ -30,6 +30,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("name"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     name = Name.DeserializeName(property.Value);
                     continue;
                 }
@@ -45,16 +50,31 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("currentValue"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     currentValue = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("limit"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     limit = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("requestedLimit"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     requestedLimit = property.Value.GetInt32();
                     continue;
                 }

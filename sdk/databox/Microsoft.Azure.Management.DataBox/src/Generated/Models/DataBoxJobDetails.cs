@@ -34,32 +34,41 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// </summary>
         /// <param name="contactDetails">Contact details for notification and
         /// shipping.</param>
+        /// <param name="jobStages">List of stages that run in the job.</param>
         /// <param name="shippingAddress">Shipping address of the
         /// customer.</param>
-        /// <param name="destinationAccountDetails">Destination account
-        /// details.</param>
-        /// <param name="expectedDataSizeInTerabytes">The expected size of the
-        /// data, which needs to be transferred in this job, in
-        /// terabytes.</param>
-        /// <param name="jobStages">List of stages that run in the job.</param>
         /// <param name="deliveryPackage">Delivery package shipping
         /// details.</param>
         /// <param name="returnPackage">Return package shipping
         /// details.</param>
-        /// <param name="errorDetails">Error details for failure. This is
-        /// optional.</param>
+        /// <param name="dataImportDetails">Details of the data to be imported
+        /// into azure.</param>
+        /// <param name="dataExportDetails">Details of the data to be exported
+        /// from azure.</param>
         /// <param name="preferences">Preferences for the order.</param>
         /// <param name="copyLogDetails">List of copy log details.</param>
         /// <param name="reverseShipmentLabelSasKey">Shared access key to
         /// download the return shipment label</param>
         /// <param name="chainOfCustodySasKey">Shared access key to download
         /// the chain of custody logs</param>
+        /// <param name="keyEncryptionKey">Details about which key encryption
+        /// type is being used.</param>
+        /// <param name="expectedDataSizeInTerabytes">The expected size of the
+        /// data, which needs to be transferred in this job, in
+        /// terabytes.</param>
         /// <param name="copyProgress">Copy progress per storage
         /// account.</param>
         /// <param name="devicePassword">Set Device password for unlocking
-        /// Databox</param>
-        public DataBoxJobDetails(ContactDetails contactDetails, ShippingAddress shippingAddress, IList<DestinationAccountDetails> destinationAccountDetails, int? expectedDataSizeInTerabytes = default(int?), IList<JobStages> jobStages = default(IList<JobStages>), PackageShippingDetails deliveryPackage = default(PackageShippingDetails), PackageShippingDetails returnPackage = default(PackageShippingDetails), IList<JobErrorDetails> errorDetails = default(IList<JobErrorDetails>), Preferences preferences = default(Preferences), IList<CopyLogDetails> copyLogDetails = default(IList<CopyLogDetails>), string reverseShipmentLabelSasKey = default(string), string chainOfCustodySasKey = default(string), IList<CopyProgress> copyProgress = default(IList<CopyProgress>), string devicePassword = default(string))
-            : base(contactDetails, shippingAddress, destinationAccountDetails, expectedDataSizeInTerabytes, jobStages, deliveryPackage, returnPackage, errorDetails, preferences, copyLogDetails, reverseShipmentLabelSasKey, chainOfCustodySasKey)
+        /// Databox. Should not be passed for TransferType:ExportFromAzure
+        /// jobs. If this is not passed, the service will generate password
+        /// itself. This will not be returned in Get Call. Password
+        /// Requirements :  Password must be minimum of 12 and maximum of 64
+        /// characters. Password must have at least one uppercase alphabet, one
+        /// number and one special character. Password cannot have the
+        /// following characters : IilLoO0 Password can have only alphabets,
+        /// numbers and these characters : @#\-$%^!+=;:_()]+</param>
+        public DataBoxJobDetails(ContactDetails contactDetails, IList<JobStages> jobStages = default(IList<JobStages>), ShippingAddress shippingAddress = default(ShippingAddress), PackageShippingDetails deliveryPackage = default(PackageShippingDetails), PackageShippingDetails returnPackage = default(PackageShippingDetails), IList<DataImportDetails> dataImportDetails = default(IList<DataImportDetails>), IList<DataExportDetails> dataExportDetails = default(IList<DataExportDetails>), Preferences preferences = default(Preferences), IList<CopyLogDetails> copyLogDetails = default(IList<CopyLogDetails>), string reverseShipmentLabelSasKey = default(string), string chainOfCustodySasKey = default(string), KeyEncryptionKey keyEncryptionKey = default(KeyEncryptionKey), int? expectedDataSizeInTerabytes = default(int?), IList<CopyProgress> copyProgress = default(IList<CopyProgress>), string devicePassword = default(string))
+            : base(contactDetails, jobStages, shippingAddress, deliveryPackage, returnPackage, dataImportDetails, dataExportDetails, preferences, copyLogDetails, reverseShipmentLabelSasKey, chainOfCustodySasKey, keyEncryptionKey, expectedDataSizeInTerabytes)
         {
             CopyProgress = copyProgress;
             DevicePassword = devicePassword;
@@ -78,7 +87,15 @@ namespace Microsoft.Azure.Management.DataBox.Models
         public IList<CopyProgress> CopyProgress { get; private set; }
 
         /// <summary>
-        /// Gets or sets set Device password for unlocking Databox
+        /// Gets or sets set Device password for unlocking Databox. Should not
+        /// be passed for TransferType:ExportFromAzure jobs. If this is not
+        /// passed, the service will generate password itself. This will not be
+        /// returned in Get Call. Password Requirements :  Password must be
+        /// minimum of 12 and maximum of 64 characters. Password must have at
+        /// least one uppercase alphabet, one number and one special character.
+        /// Password cannot have the following characters : IilLoO0 Password
+        /// can have only alphabets, numbers and these characters :
+        /// @#\-$%^!+=;:_()]+
         /// </summary>
         [JsonProperty(PropertyName = "devicePassword")]
         public string DevicePassword { get; set; }

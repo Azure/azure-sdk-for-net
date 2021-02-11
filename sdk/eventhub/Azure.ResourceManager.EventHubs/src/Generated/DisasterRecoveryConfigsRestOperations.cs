@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendPath("/authorizationRules", false);
             uri.AppendQuery("api-version", "2017-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -157,6 +158,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendPath(authorizationRuleName, true);
             uri.AppendQuery("api-version", "2017-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -264,6 +266,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendPath("/listKeys", false);
             uri.AppendQuery("api-version", "2017-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -367,6 +370,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendPath("/disasterRecoveryConfigs/checkNameAvailability", false);
             uri.AppendQuery("api-version", "2017-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
@@ -464,6 +468,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendPath("/disasterRecoveryConfigs", false);
             uri.AppendQuery("api-version", "2017-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -548,6 +553,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendPath(@alias, true);
             uri.AppendQuery("api-version", "2017-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
@@ -660,6 +666,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendPath(@alias, true);
             uri.AppendQuery("api-version", "2017-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -744,6 +751,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendPath(@alias, true);
             uri.AppendQuery("api-version", "2017-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -839,6 +847,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendPath("/breakPairing", false);
             uri.AppendQuery("api-version", "2017-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -924,6 +933,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendPath("/failover", false);
             uri.AppendQuery("api-version", "2017-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1000,6 +1010,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1096,6 +1107,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

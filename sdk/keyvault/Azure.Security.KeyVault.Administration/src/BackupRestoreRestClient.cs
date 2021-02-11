@@ -8,7 +8,7 @@ using Azure.Core;
 namespace Azure.Security.KeyVault.Administration
 {
     ///<inheritdoc/>
-    [CodeGenModel("ServiceRestClient")]
+    [CodeGenModel("AzureSecurityKeyVaultAdministrationRestClient")]
     internal partial class BackupRestoreRestClient
     { }
 }

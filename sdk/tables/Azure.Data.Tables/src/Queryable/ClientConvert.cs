@@ -9,7 +9,6 @@ namespace Azure.Data.Tables.Queryable
     {
         private static readonly Type[] s_knownTypes = CreateKnownPrimitives();
 
-
         internal enum StorageType
         {
             Boolean,

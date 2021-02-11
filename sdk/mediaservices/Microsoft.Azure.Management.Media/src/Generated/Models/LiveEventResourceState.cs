@@ -27,14 +27,56 @@ namespace Microsoft.Azure.Management.Media.Models
             UnderlyingValue=underlyingValue;
         }
 
+        /// <summary>
+        /// This is the initial state of the live event after creation (unless
+        /// autostart was set to true.) No billing occurs in this state. In
+        /// this state, the live event properties can be updated but streaming
+        /// is not allowed.
+        /// </summary>
         public static readonly LiveEventResourceState Stopped = "Stopped";
 
+        /// <summary>
+        /// Allocate action was called on the live event and resources are
+        /// being provisioned for this live event. Once allocation completes
+        /// successfully, the live event will transition to StandBy state.
+        /// </summary>
+        public static readonly LiveEventResourceState Allocating = "Allocating";
+
+        /// <summary>
+        /// Live event resources have been provisioned and is ready to start.
+        /// Billing occurs in this state. Most properties can still be updated,
+        /// however ingest or streaming is not allowed during this state.
+        /// </summary>
+        public static readonly LiveEventResourceState StandBy = "StandBy";
+
+        /// <summary>
+        /// The live event is being started and resources are being allocated.
+        /// No billing occurs in this state. Updates or streaming are not
+        /// allowed during this state. If an error occurs, the live event
+        /// returns to the Stopped state.
+        /// </summary>
         public static readonly LiveEventResourceState Starting = "Starting";
 
+        /// <summary>
+        /// The live event resources have been allocated, ingest and preview
+        /// URLs have been generated, and it is capable of receiving live
+        /// streams. At this point, billing is active. You must explicitly call
+        /// Stop on the live event resource to halt further billing.
+        /// </summary>
         public static readonly LiveEventResourceState Running = "Running";
 
+        /// <summary>
+        /// The live event is being stopped and resources are being
+        /// de-provisioned. No billing occurs in this transient state. Updates
+        /// or streaming are not allowed during this state.
+        /// </summary>
         public static readonly LiveEventResourceState Stopping = "Stopping";
 
+        /// <summary>
+        /// The live event is being deleted. No billing occurs in this
+        /// transient state. Updates or streaming are not allowed during this
+        /// state.
+        /// </summary>
         public static readonly LiveEventResourceState Deleting = "Deleting";
 
 

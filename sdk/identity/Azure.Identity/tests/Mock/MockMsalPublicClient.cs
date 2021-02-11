@@ -13,7 +13,7 @@ namespace Azure.Identity.Tests.Mock
 {
     internal class MockMsalPublicClient : MsalPublicClient
     {
-        public IEnumerable<IAccount> Accounts { get; set; }
+        public List<IAccount> Accounts { get; set; }
 
         public Func<string[], AuthenticationResult> AuthFactory { get; set; }
 
@@ -27,59 +27,71 @@ namespace Azure.Identity.Tests.Mock
 
         public Func<string[], AuthenticationResult> DeviceCodeAuthFactory { get; set; }
 
-        public override Task<IEnumerable<IAccount>> GetAccountsAsync()
+        public override ValueTask<List<IAccount>> GetAccountsAsync(bool async, CancellationToken cancellationToken)
         {
-            return Task.FromResult(Accounts);
+            return new ValueTask<List<IAccount>>(Accounts);
         }
 
-        public override Task<AuthenticationResult> AcquireTokenByUsernamePasswordAsync(string[] scopes, string username, SecureString password, bool async, CancellationToken cancellationToken)
+        public override ValueTask<AuthenticationResult> AcquireTokenByUsernamePasswordAsync(string[] scopes, string claims, string username, SecureString password, bool async, CancellationToken cancellationToken)
         {
             Func<string[], AuthenticationResult> factory = UserPassAuthFactory ?? AuthFactory;
 
             if (factory != null)
             {
-                return Task.FromResult(factory(scopes));
+                return new ValueTask<AuthenticationResult>(factory(scopes));
             }
 
             throw new NotImplementedException();
         }
 
-        public override Task<AuthenticationResult> AcquireTokenInteractiveAsync(string[] scopes, Prompt prompt, bool async, CancellationToken cancellationToken)
+        public override ValueTask<AuthenticationResult> AcquireTokenInteractiveAsync(string[] scopes, string claims, Prompt prompt, bool async, CancellationToken cancellationToken)
         {
             Func<string[], AuthenticationResult> factory = InteractiveAuthFactory ?? AuthFactory;
 
             if (factory != null)
             {
-                return Task.FromResult(factory(scopes));
+                return new ValueTask<AuthenticationResult>(factory(scopes));
             }
 
             throw new NotImplementedException();
         }
 
-        public override Task<AuthenticationResult> AcquireTokenSilentAsync(string[] scopes, IAccount account, bool async, CancellationToken cancellationToken)
+        public override ValueTask<AuthenticationResult> AcquireTokenSilentAsync(string[] scopes, string claims, IAccount account, bool async, CancellationToken cancellationToken)
         {
             if (ExtendedSilentAuthFactory != null)
             {
-                return Task.FromResult(ExtendedSilentAuthFactory(scopes, account, async, cancellationToken));
+                return new ValueTask<AuthenticationResult>(ExtendedSilentAuthFactory(scopes, account, async, cancellationToken));
             }
 
             Func<string[], AuthenticationResult> factory = SilentAuthFactory ?? AuthFactory;
 
             if (factory != null)
             {
-                return Task.FromResult(factory(scopes));
+                return new ValueTask<AuthenticationResult>(factory(scopes));
             }
 
             throw new NotImplementedException();
         }
 
-        public override Task<AuthenticationResult> AcquireTokenWithDeviceCodeAsync(string[] scopes, Func<DeviceCodeResult, Task> deviceCodeCallback, bool async, CancellationToken cancellationToken)
+        public override ValueTask<AuthenticationResult> AcquireTokenSilentAsync(string[] scopes, string claims, AuthenticationRecord record, bool async, CancellationToken cancellationToken)
+        {
+            Func<string[], AuthenticationResult> factory = SilentAuthFactory ?? AuthFactory;
+
+            if (factory != null)
+            {
+                return new ValueTask<AuthenticationResult>(factory(scopes));
+            }
+
+            throw new NotImplementedException();
+        }
+
+        public override ValueTask<AuthenticationResult> AcquireTokenWithDeviceCodeAsync(string[] scopes, string claims, Func<DeviceCodeResult, Task> deviceCodeCallback, bool async, CancellationToken cancellationToken)
         {
             Func<string[], AuthenticationResult> factory = DeviceCodeAuthFactory ?? AuthFactory;
 
             if (factory != null)
             {
-                return Task.FromResult(factory(scopes));
+                return new ValueTask<AuthenticationResult>(factory(scopes));
             }
 
             throw new NotImplementedException();

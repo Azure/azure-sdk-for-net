@@ -30,6 +30,11 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (property.NameEquals("terminateNotificationProfile"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     terminateNotificationProfile = TerminateNotificationProfile.DeserializeTerminateNotificationProfile(property.Value);
                     continue;
                 }

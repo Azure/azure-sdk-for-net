@@ -56,7 +56,8 @@ namespace Azure.Identity
         /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
         public AuthorizationCodeCredential(string tenantId, string clientId, string clientSecret, string authorizationCode, TokenCredentialOptions options)
         {
-            if (tenantId is null) throw new ArgumentNullException(nameof(tenantId));
+            Validations.ValidateTenantId(tenantId, nameof(tenantId));
+
             if (clientSecret is null) throw new ArgumentNullException(nameof(clientSecret));
 
             _clientId = clientId ?? throw new ArgumentNullException(nameof(clientId));
@@ -73,7 +74,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Obtains a token from the Azure Active Directory service, using the specified authorization code authenticate. This method is called by Azure SDK clients. It isn't intended for use in application code.
+        /// Obtains a token from the Azure Active Directory service, using the specified authorization code authenticate. This method is called automatically by Azure SDK client libraries. You may call this method directly, but you must also handle token caching and token refreshing.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -84,7 +85,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Obtains a token from the Azure Active Directory service, using the specified authorization code authenticate. This method is called by Azure SDK clients. It isn't intended for use in application code.
+        /// Obtains a token from the Azure Active Directory service, using the specified authorization code authenticate. This method is called automatically by Azure SDK client libraries. You may call this method directly, but you must also handle token caching and token refreshing.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>

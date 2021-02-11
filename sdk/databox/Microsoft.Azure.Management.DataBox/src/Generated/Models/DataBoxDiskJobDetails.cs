@@ -34,26 +34,28 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// </summary>
         /// <param name="contactDetails">Contact details for notification and
         /// shipping.</param>
+        /// <param name="jobStages">List of stages that run in the job.</param>
         /// <param name="shippingAddress">Shipping address of the
         /// customer.</param>
-        /// <param name="destinationAccountDetails">Destination account
-        /// details.</param>
-        /// <param name="expectedDataSizeInTerabytes">The expected size of the
-        /// data, which needs to be transferred in this job, in
-        /// terabytes.</param>
-        /// <param name="jobStages">List of stages that run in the job.</param>
         /// <param name="deliveryPackage">Delivery package shipping
         /// details.</param>
         /// <param name="returnPackage">Return package shipping
         /// details.</param>
-        /// <param name="errorDetails">Error details for failure. This is
-        /// optional.</param>
+        /// <param name="dataImportDetails">Details of the data to be imported
+        /// into azure.</param>
+        /// <param name="dataExportDetails">Details of the data to be exported
+        /// from azure.</param>
         /// <param name="preferences">Preferences for the order.</param>
         /// <param name="copyLogDetails">List of copy log details.</param>
         /// <param name="reverseShipmentLabelSasKey">Shared access key to
         /// download the return shipment label</param>
         /// <param name="chainOfCustodySasKey">Shared access key to download
         /// the chain of custody logs</param>
+        /// <param name="keyEncryptionKey">Details about which key encryption
+        /// type is being used.</param>
+        /// <param name="expectedDataSizeInTerabytes">The expected size of the
+        /// data, which needs to be transferred in this job, in
+        /// terabytes.</param>
         /// <param name="preferredDisks">User preference on what size disks are
         /// needed for the job. The map is from the disk size in TB to the
         /// count. Eg. {2,5} means 5 disks of 2 TB size. Key is string but will
@@ -64,8 +66,8 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// after the disks are shipped to the customer.</param>
         /// <param name="passkey">User entered passkey for DataBox Disk
         /// job.</param>
-        public DataBoxDiskJobDetails(ContactDetails contactDetails, ShippingAddress shippingAddress, IList<DestinationAccountDetails> destinationAccountDetails, int? expectedDataSizeInTerabytes = default(int?), IList<JobStages> jobStages = default(IList<JobStages>), PackageShippingDetails deliveryPackage = default(PackageShippingDetails), PackageShippingDetails returnPackage = default(PackageShippingDetails), IList<JobErrorDetails> errorDetails = default(IList<JobErrorDetails>), Preferences preferences = default(Preferences), IList<CopyLogDetails> copyLogDetails = default(IList<CopyLogDetails>), string reverseShipmentLabelSasKey = default(string), string chainOfCustodySasKey = default(string), IDictionary<string, int?> preferredDisks = default(IDictionary<string, int?>), IList<DataBoxDiskCopyProgress> copyProgress = default(IList<DataBoxDiskCopyProgress>), IDictionary<string, int?> disksAndSizeDetails = default(IDictionary<string, int?>), string passkey = default(string))
-            : base(contactDetails, shippingAddress, destinationAccountDetails, expectedDataSizeInTerabytes, jobStages, deliveryPackage, returnPackage, errorDetails, preferences, copyLogDetails, reverseShipmentLabelSasKey, chainOfCustodySasKey)
+        public DataBoxDiskJobDetails(ContactDetails contactDetails, IList<JobStages> jobStages = default(IList<JobStages>), ShippingAddress shippingAddress = default(ShippingAddress), PackageShippingDetails deliveryPackage = default(PackageShippingDetails), PackageShippingDetails returnPackage = default(PackageShippingDetails), IList<DataImportDetails> dataImportDetails = default(IList<DataImportDetails>), IList<DataExportDetails> dataExportDetails = default(IList<DataExportDetails>), Preferences preferences = default(Preferences), IList<CopyLogDetails> copyLogDetails = default(IList<CopyLogDetails>), string reverseShipmentLabelSasKey = default(string), string chainOfCustodySasKey = default(string), KeyEncryptionKey keyEncryptionKey = default(KeyEncryptionKey), int? expectedDataSizeInTerabytes = default(int?), IDictionary<string, int?> preferredDisks = default(IDictionary<string, int?>), IList<DataBoxDiskCopyProgress> copyProgress = default(IList<DataBoxDiskCopyProgress>), IDictionary<string, int?> disksAndSizeDetails = default(IDictionary<string, int?>), string passkey = default(string))
+            : base(contactDetails, jobStages, shippingAddress, deliveryPackage, returnPackage, dataImportDetails, dataExportDetails, preferences, copyLogDetails, reverseShipmentLabelSasKey, chainOfCustodySasKey, keyEncryptionKey, expectedDataSizeInTerabytes)
         {
             PreferredDisks = preferredDisks;
             CopyProgress = copyProgress;

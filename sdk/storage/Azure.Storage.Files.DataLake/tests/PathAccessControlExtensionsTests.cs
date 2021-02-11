@@ -11,7 +11,6 @@ namespace Azure.Storage.Files.DataLake.Tests
 {
     public class PathAccessControlExtensionsTests : PathAccessControlTestBase
     {
-
         [Test]
         public void ParseOctal()
         {
@@ -154,7 +153,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual("rw-", (RolePermissions.Read | RolePermissions.Write).ToSymbolicRolePermissions());
             Assert.AreEqual("rwx", (RolePermissions.Read | RolePermissions.Write | RolePermissions.Execute).ToSymbolicRolePermissions());
         }
-
 
         [Test]
         public void SerializeAccessControlList()

@@ -23,6 +23,8 @@ namespace NetApp.Tests.ResourceTests
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var netAppMgmtClient = NetAppTestUtilities.GetNetAppManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+                var accountsInitial = netAppMgmtClient.Accounts.List(ResourceUtils.resourceGroup);
+                int initialCount = accountsInitial.Count();
 
                 // create the account with only the one required property
                 var netAppAccount = new NetAppAccount()
@@ -37,14 +39,14 @@ namespace NetApp.Tests.ResourceTests
 
                 // get all accounts and check
                 var accountsBefore = netAppMgmtClient.Accounts.List(ResourceUtils.resourceGroup);
-                Assert.Single(accountsBefore);
+                Assert.Equal(initialCount + 1, accountsBefore.Count());
 
                 // remove the account and check
                 netAppMgmtClient.Accounts.Delete(ResourceUtils.resourceGroup, ResourceUtils.accountName1);
 
                 // get all accounts and check
                 var accountsAfter = netAppMgmtClient.Accounts.List(ResourceUtils.resourceGroup);
-                Assert.Empty(accountsAfter);
+                Assert.Equal(initialCount, accountsAfter.Count());
             }
         }
 
@@ -101,16 +103,16 @@ namespace NetApp.Tests.ResourceTests
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var netAppMgmtClient = NetAppTestUtilities.GetNetAppManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
-
+                var accountsBefore = netAppMgmtClient.Accounts.List(ResourceUtils.resourceGroup);
+                int count = accountsBefore.Count();
                 // create two accounts
                 ResourceUtils.CreateAccount(netAppMgmtClient);
                 ResourceUtils.CreateAccount(netAppMgmtClient, ResourceUtils.accountName2);
 
                 // get the account list and check
                 var accounts = netAppMgmtClient.Accounts.List(ResourceUtils.resourceGroup);
-                Assert.Equal(accounts.ElementAt(0).Name, ResourceUtils.accountName1);
-                Assert.Equal(accounts.ElementAt(1).Name, ResourceUtils.accountName2);
-                Assert.Equal(2, accounts.Count());
+                Assert.Contains(accounts, item => item.Name == ResourceUtils.accountName1);
+                Assert.Contains(accounts, item => item.Name == ResourceUtils.accountName2);
 
                 // clean up - delete the two accounts
                 ResourceUtils.DeleteAccount(netAppMgmtClient);
@@ -155,7 +157,7 @@ namespace NetApp.Tests.ResourceTests
 
                 catch (Exception ex)
                 {
-                    Assert.Equal("The Resource 'Microsoft.NetApp/netAppAccounts/" + ResourceUtils.accountName1 + "' under resource group '" + ResourceUtils.resourceGroup + "' was not found.", ex.Message);
+                    Assert.StartsWith("The Resource 'Microsoft.NetApp/netAppAccounts/" + ResourceUtils.accountName1 + "' under resource group '" + ResourceUtils.resourceGroup + "' was not found.", ex.Message);
                 }
             }
         }

@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -40,21 +39,25 @@ namespace Azure.DigitalTwins.Core.Tests
 
                 // CREATE models
                 var modelsList = new List<string> { modelBuilding, modelHvac, modelWard };
-                await client.CreateModelsAsync(modelsList).ConfigureAwait(false);
+                await CreateAndListModelsAsync(client, modelsList).ConfigureAwait(false);
 
                 // GET one created model
-                Response<ModelData> buildingModel = await client.GetModelAsync(buildingModelId).ConfigureAwait(false);
-                Console.WriteLine($"Got {buildingModelId} as {buildingModel.Value.Model}");
+                Response<DigitalTwinsModelData> buildingModel = await client.GetModelAsync(buildingModelId).ConfigureAwait(false);
+                Console.WriteLine($"Got {buildingModelId} as {buildingModel.Value.DtdlModel}");
 
                 // LIST all models
-                AsyncPageable<ModelData> models = client.GetModelsAsync();
-                await foreach (ModelData model in models)
+                AsyncPageable<DigitalTwinsModelData> models = client.GetModelsAsync();
+                await foreach (DigitalTwinsModelData model in models)
                 {
                     Console.WriteLine($"{model.Id}");
                 }
 
                 // DECOMMISSION a model
                 await client.DecommissionModelAsync(buildingModelId).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Failure in executing a step in the test case: {ex.Message}.");
             }
             finally
             {
@@ -90,16 +93,16 @@ namespace Azure.DigitalTwins.Core.Tests
             // add a model with a single value for displayName and for description, neither of which were defined as a map
             string modelWard = TestAssetsHelper.GetWardModelPayload(wardModelId);
 
-            await client.CreateModelsAsync(new[] { modelWard }).ConfigureAwait(false);
+            await CreateAndListModelsAsync(client, new List<string> { modelWard }).ConfigureAwait(false);
 
             // act
             // should not throw on deserialization
-            Response<ModelData> wardModel = await client.GetModelAsync(wardModelId).ConfigureAwait(false);
+            Response<DigitalTwinsModelData> wardModel = await client.GetModelAsync(wardModelId).ConfigureAwait(false);
 
             // assert
 
-            wardModel.Value.DisplayName.Count.Should().Be(1, "Should have 1 entry for display name");
-            wardModel.Value.DisplayName.Keys.First().Should().Be("en");
+            wardModel.Value.LanguageDisplayNames.Count.Should().Be(1, "Should have 1 entry for display name");
+            wardModel.Value.LanguageDisplayNames.Keys.First().Should().Be("en");
         }
 
         [Test]
@@ -109,7 +112,7 @@ namespace Azure.DigitalTwins.Core.Tests
             DigitalTwinsClient client = GetClient();
 
             // act
-            Func<Task> act = async () => await client.GetModelAsync("urn:doesnotexist:fakemodel:1000").ConfigureAwait(false);
+            Func<Task> act = async () => await client.GetModelAsync("dtmi:doesnotexist:fakemodel;1000").ConfigureAwait(false);
 
             // assert
             act.Should().Throw<RequestFailedException>()
@@ -144,7 +147,7 @@ namespace Azure.DigitalTwins.Core.Tests
             var modelsList = new List<string> { modelWard };
 
             // Create model once
-            await client.CreateModelsAsync(modelsList).ConfigureAwait(false);
+            await CreateAndListModelsAsync(client, modelsList).ConfigureAwait(false);
 
             // act
             Func<Task> act = async () => await client.CreateModelsAsync(modelsList).ConfigureAwait(false);

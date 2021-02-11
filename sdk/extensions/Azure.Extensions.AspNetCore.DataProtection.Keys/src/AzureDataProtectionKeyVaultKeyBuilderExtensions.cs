@@ -6,6 +6,7 @@ using Azure.Extensions.AspNetCore.DataProtection.Keys;
 using Azure.Core;
 using Azure.Core.Cryptography;
 using Azure.Security.KeyVault.Keys.Cryptography;
+using Microsoft.AspNetCore.DataProtection.Internal;
 using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -45,6 +46,7 @@ namespace Microsoft.AspNetCore.DataProtection
             Argument.AssertNotNullOrEmpty(keyIdentifier, nameof(keyIdentifier));
 
             builder.Services.AddSingleton<IKeyEncryptionKeyResolver>(keyResolver);
+            builder.Services.AddSingleton<IActivator, DecryptorTypeForwardingActivator>();
             builder.Services.Configure<KeyManagementOptions>(options =>
             {
                 options.XmlEncryptor = new AzureKeyVaultXmlEncryptor(keyResolver, keyIdentifier);

@@ -160,25 +160,25 @@ namespace Azure.Batch.Unit.Tests
 
             Random rand = new Random();
 
-            Func<object> omTaskRangeBuilder = () =>
+            object omTaskRangeBuilder()
             {
                 int rangeLimit1 = rand.Next(0, int.MaxValue);
                 int rangeLimit2 = rand.Next(0, int.MaxValue);
 
                 return new TaskIdRange(Math.Min(rangeLimit1, rangeLimit2), Math.Max(rangeLimit1, rangeLimit2));
-            };
+            }
 
-            Func<object> iFileStagingProviderBuilder = () => null;
+            object iFileStagingProviderBuilder() => null;
 
-            Func<object> batchClientBehaviorBuilder = () => null;
+            object batchClientBehaviorBuilder() => null;
 
-            Func<object> taskRangeBuilder = () =>
+            object taskRangeBuilder()
             {
                 int rangeLimit1 = rand.Next(0, int.MaxValue);
                 int rangeLimit2 = rand.Next(0, int.MaxValue);
 
                 return new Protocol.Models.TaskIdRange(Math.Min(rangeLimit1, rangeLimit2), Math.Max(rangeLimit1, rangeLimit2));
-            };
+            }
 
             ObjectFactoryConstructionSpecification certificateReferenceSpecification = new ObjectFactoryConstructionSpecification(
                 typeof(Protocol.Models.CertificateReference),
@@ -332,17 +332,15 @@ namespace Azure.Batch.Unit.Tests
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public void TestRandomBoundCloudPoolProperties()
         {
-            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
+            using BatchClient client = ClientUnitTestCommon.CreateDummyClient();
+            for (int i = 0; i < TestRunCount; i++)
             {
-                for (int i = 0; i < TestRunCount; i++)
-                {
-                    Protocol.Models.CloudPool poolModel =
-                        this.customizedObjectFactory.GenerateNew<Protocol.Models.CloudPool>();
+                Protocol.Models.CloudPool poolModel =
+                    this.customizedObjectFactory.GenerateNew<Protocol.Models.CloudPool>();
 
-                    CloudPool boundPool = new CloudPool(client, poolModel, client.CustomBehaviors);
-                    ObjectComparer.CheckEqualityResult result = this.objectComparer.CheckEquality(boundPool, poolModel);
-                    Assert.True(result.Equal, result.Message);
-                }
+                CloudPool boundPool = new CloudPool(client, poolModel, client.CustomBehaviors);
+                ObjectComparer.CheckEqualityResult result = this.objectComparer.CheckEquality(boundPool, poolModel);
+                Assert.True(result.Equal, result.Message);
             }
         }
 
@@ -350,19 +348,16 @@ namespace Azure.Batch.Unit.Tests
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public void TestRandomBoundCloudJobProperties()
         {
-            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
+            using BatchClient client = ClientUnitTestCommon.CreateDummyClient();
+            for (int i = 0; i < TestRunCount; i++)
             {
-                for (int i = 0; i < TestRunCount; i++)
-                {
-                    Protocol.Models.CloudJob jobModel =
-                        this.customizedObjectFactory.GenerateNew<Protocol.Models.CloudJob>();
+                Protocol.Models.CloudJob jobModel =
+                    this.customizedObjectFactory.GenerateNew<Protocol.Models.CloudJob>();
 
-                    CloudJob boundJob = new CloudJob(client.JobOperations.ParentBatchClient, jobModel, client.CustomBehaviors);
+                CloudJob boundJob = new CloudJob(client.JobOperations.ParentBatchClient, jobModel, client.CustomBehaviors);
 
-                    ObjectComparer.CheckEqualityResult result = this.objectComparer.CheckEquality(boundJob, jobModel);
-                    Assert.True(result.Equal, result.Message);
-                }
-
+                ObjectComparer.CheckEqualityResult result = this.objectComparer.CheckEquality(boundJob, jobModel);
+                Assert.True(result.Equal, result.Message);
             }
         }
 
@@ -370,18 +365,16 @@ namespace Azure.Batch.Unit.Tests
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public void TestRandomBoundCloudJobScheduleProperties()
         {
-            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
+            using BatchClient client = ClientUnitTestCommon.CreateDummyClient();
+            for (int i = 0; i < TestRunCount; i++)
             {
-                for (int i = 0; i < TestRunCount; i++)
-                {
-                    Protocol.Models.CloudJobSchedule jobScheduleModel =
-                        this.customizedObjectFactory.GenerateNew<Protocol.Models.CloudJobSchedule>();
+                Protocol.Models.CloudJobSchedule jobScheduleModel =
+                    this.customizedObjectFactory.GenerateNew<Protocol.Models.CloudJobSchedule>();
 
-                    CloudJobSchedule boundJobSchedule = new CloudJobSchedule(client, jobScheduleModel, client.CustomBehaviors);
+                CloudJobSchedule boundJobSchedule = new CloudJobSchedule(client, jobScheduleModel, client.CustomBehaviors);
 
-                    ObjectComparer.CheckEqualityResult result = this.objectComparer.CheckEquality(boundJobSchedule, jobScheduleModel);
-                    Assert.True(result.Equal, result.Message);
-                }
+                ObjectComparer.CheckEqualityResult result = this.objectComparer.CheckEquality(boundJobSchedule, jobScheduleModel);
+                Assert.True(result.Equal, result.Message);
             }
         }
 
@@ -389,17 +382,15 @@ namespace Azure.Batch.Unit.Tests
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public void TestRandomBoundCloudTaskProperties()
         {
-            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
+            using BatchClient client = ClientUnitTestCommon.CreateDummyClient();
+            for (int i = 0; i < TestRunCount; i++)
             {
-                for (int i = 0; i < TestRunCount; i++)
-                {
-                    Protocol.Models.CloudTask taskModel = this.customizedObjectFactory.GenerateNew<Protocol.Models.CloudTask>();
+                Protocol.Models.CloudTask taskModel = this.customizedObjectFactory.GenerateNew<Protocol.Models.CloudTask>();
 
-                    CloudTask boundTask = new CloudTask(client, "Foo", taskModel, client.CustomBehaviors);
+                CloudTask boundTask = new CloudTask(client, "Foo", taskModel, client.CustomBehaviors);
 
-                    ObjectComparer.CheckEqualityResult result = this.objectComparer.CheckEquality(boundTask, taskModel);
-                    Assert.True(result.Equal, result.Message);
-                }
+                ObjectComparer.CheckEqualityResult result = this.objectComparer.CheckEquality(boundTask, taskModel);
+                Assert.True(result.Equal, result.Message);
             }
         }
 
@@ -407,18 +398,16 @@ namespace Azure.Batch.Unit.Tests
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public void TestRandomBoundComputeNodeProperties()
         {
-            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
+            using BatchClient client = ClientUnitTestCommon.CreateDummyClient();
+            for (int i = 0; i < TestRunCount; i++)
             {
-                for (int i = 0; i < TestRunCount; i++)
-                {
-                    Protocol.Models.ComputeNode computeNodeModel =
-                        this.customizedObjectFactory.GenerateNew<Protocol.Models.ComputeNode>();
+                Protocol.Models.ComputeNode computeNodeModel =
+                    this.customizedObjectFactory.GenerateNew<Protocol.Models.ComputeNode>();
 
-                    ComputeNode boundComputeNode = new ComputeNode(client, "Foo", computeNodeModel, client.CustomBehaviors);
+                ComputeNode boundComputeNode = new ComputeNode(client, "Foo", computeNodeModel, client.CustomBehaviors);
 
-                    ObjectComparer.CheckEqualityResult result = this.objectComparer.CheckEquality(boundComputeNode, computeNodeModel);
-                    Assert.True(result.Equal, result.Message);
-                }
+                ObjectComparer.CheckEqualityResult result = this.objectComparer.CheckEquality(boundComputeNode, computeNodeModel);
+                Assert.True(result.Equal, result.Message);
             }
         }
 
@@ -426,18 +415,16 @@ namespace Azure.Batch.Unit.Tests
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public void TestRandomBoundCertificateProperties()
         {
-            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
+            using BatchClient client = ClientUnitTestCommon.CreateDummyClient();
+            for (int i = 0; i < TestRunCount; i++)
             {
-                for (int i = 0; i < TestRunCount; i++)
-                {
-                    Protocol.Models.Certificate certificateModel =
-                        this.customizedObjectFactory.GenerateNew<Protocol.Models.Certificate>();
+                Protocol.Models.Certificate certificateModel =
+                    this.customizedObjectFactory.GenerateNew<Protocol.Models.Certificate>();
 
-                    Certificate boundCertificate = new Certificate(client, certificateModel, client.CustomBehaviors);
+                Certificate boundCertificate = new Certificate(client, certificateModel, client.CustomBehaviors);
 
-                    ObjectComparer.CheckEqualityResult result = this.objectComparer.CheckEquality(boundCertificate, certificateModel);
-                    Assert.True(result.Equal, result.Message);
-                }
+                ObjectComparer.CheckEqualityResult result = this.objectComparer.CheckEquality(boundCertificate, certificateModel);
+                Assert.True(result.Equal, result.Message);
             }
         }
 
@@ -445,17 +432,15 @@ namespace Azure.Batch.Unit.Tests
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public void TestRandomBoundImageInformationProperties()
         {
-            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
+            using BatchClient client = ClientUnitTestCommon.CreateDummyClient();
+            for (int i = 0; i < TestRunCount; i++)
             {
-                for (int i = 0; i < TestRunCount; i++)
-                {
-                    Protocol.Models.ImageInformation imageModel = 
-                        this.customizedObjectFactory.GenerateNew<Protocol.Models.ImageInformation>();
+                Protocol.Models.ImageInformation imageModel =
+                    this.customizedObjectFactory.GenerateNew<Protocol.Models.ImageInformation>();
 
-                    ImageInformation boundImageInfo = new ImageInformation(imageModel);
-                    ObjectComparer.CheckEqualityResult result = this.objectComparer.CheckEquality(boundImageInfo, imageModel);
-                    Assert.True(result.Equal, result.Message);
-                }
+                ImageInformation boundImageInfo = new ImageInformation(imageModel);
+                ObjectComparer.CheckEqualityResult result = this.objectComparer.CheckEquality(boundImageInfo, imageModel);
+                Assert.True(result.Equal, result.Message);
             }
         }
 
@@ -463,19 +448,17 @@ namespace Azure.Batch.Unit.Tests
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public void TestRandomBoundPrepReleaseTaskExecutionInformationProperties()
         {
-            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
+            using BatchClient client = ClientUnitTestCommon.CreateDummyClient();
+            for (int i = 0; i < TestRunCount; i++)
             {
-                for (int i = 0; i < TestRunCount; i++)
-                {
-                    Protocol.Models.JobPreparationAndReleaseTaskExecutionInformation jobPrepReleaseExecutionInfo =
-                        this.customizedObjectFactory.GenerateNew<Protocol.Models.JobPreparationAndReleaseTaskExecutionInformation>();
+                Protocol.Models.JobPreparationAndReleaseTaskExecutionInformation jobPrepReleaseExecutionInfo =
+                    this.customizedObjectFactory.GenerateNew<Protocol.Models.JobPreparationAndReleaseTaskExecutionInformation>();
 
-                    JobPreparationAndReleaseTaskExecutionInformation boundJobPrepReleaseExecutionInfo =
-                        new JobPreparationAndReleaseTaskExecutionInformation(jobPrepReleaseExecutionInfo);
+                JobPreparationAndReleaseTaskExecutionInformation boundJobPrepReleaseExecutionInfo =
+                    new JobPreparationAndReleaseTaskExecutionInformation(jobPrepReleaseExecutionInfo);
 
-                    ObjectComparer.CheckEqualityResult result = this.objectComparer.CheckEquality(boundJobPrepReleaseExecutionInfo, jobPrepReleaseExecutionInfo);
-                    Assert.True(result.Equal, result.Message);
-                }
+                ObjectComparer.CheckEqualityResult result = this.objectComparer.CheckEquality(boundJobPrepReleaseExecutionInfo, jobPrepReleaseExecutionInfo);
+                Assert.True(result.Equal, result.Message);
             }
         }
 
@@ -524,8 +507,7 @@ namespace Azure.Batch.Unit.Tests
                         }
                         catch (TargetInvocationException e)
                         {
-                            var inner = e.InnerException as InvalidOperationException;
-                            if (inner != null)
+                            if (e.InnerException is InvalidOperationException inner)
                             {
                                 if (!inner.Message.Contains("while the object is in the Unbound state"))
                                 {
@@ -611,17 +593,15 @@ namespace Azure.Batch.Unit.Tests
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public void Bug1432987CloudTaskTaskConstraints()
         {
-            using (BatchClient batchCli = ClientUnitTestCommon.CreateDummyClient())
-            {
-                CloudTask badTask = new CloudTask("bug1432987TaskConstraints", "hostname");
+            using BatchClient batchCli = ClientUnitTestCommon.CreateDummyClient();
+            CloudTask badTask = new CloudTask("bug1432987TaskConstraints", "hostname");
 
-                TaskConstraints isThisBroken = badTask.Constraints;
-                TaskConstraints trySettingThem = new TaskConstraints(null, null, null);
+            TaskConstraints isThisBroken = badTask.Constraints;
+            TaskConstraints trySettingThem = new TaskConstraints(null, null, null);
 
-                badTask.Constraints = trySettingThem;
+            badTask.Constraints = trySettingThem;
 
-                TaskConstraints readThemBack = badTask.Constraints;
-            }
+            TaskConstraints readThemBack = badTask.Constraints;
         }
 
         [Fact]
@@ -660,10 +640,10 @@ namespace Azure.Batch.Unit.Tests
             AutoPoolSpecification autoPoolSpecification = new AutoPoolSpecification();
 
             //Properties should start out as their defaults
-            Assert.Equal(default(string), autoPoolSpecification.AutoPoolIdPrefix);
-            Assert.Equal(default(bool?), autoPoolSpecification.KeepAlive);
-            Assert.Equal(default(PoolLifetimeOption), autoPoolSpecification.PoolLifetimeOption);
-            Assert.Equal(default(PoolSpecification), autoPoolSpecification.PoolSpecification);
+            Assert.Equal(default, autoPoolSpecification.AutoPoolIdPrefix);
+            Assert.Equal(default, autoPoolSpecification.KeepAlive);
+            Assert.Equal(default, autoPoolSpecification.PoolLifetimeOption);
+            Assert.Equal(default, autoPoolSpecification.PoolSpecification);
 
             Assert.False(((IModifiable)autoPoolSpecification).HasBeenModified);
 
@@ -687,7 +667,7 @@ namespace Azure.Batch.Unit.Tests
             this.testOutputHelper.WriteLine(e.ToString());
 
             //After GetProtocolObject, the child objects should be unreadable too
-            Assert.Throws<InvalidOperationException>(() => poolSpecification.MaxTasksPerComputeNode = 4);
+            Assert.Throws<InvalidOperationException>(() => poolSpecification.TaskSlotsPerNode = 4);
 
             //The original data should be on the protocol specification
             Assert.Equal(idPrefix, protoAutoPoolSpecification.AutoPoolIdPrefix);

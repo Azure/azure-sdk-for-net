@@ -32,17 +32,17 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// Initializes a new instance of the AccountCredentialDetails class.
         /// </summary>
         /// <param name="accountName">Name of the account.</param>
-        /// <param name="dataDestinationType">Data Destination Type. Possible
-        /// values include: 'StorageAccount', 'ManagedDisk'</param>
+        /// <param name="dataAccountType">Type of the account. Possible values
+        /// include: 'StorageAccount', 'ManagedDisk'</param>
         /// <param name="accountConnectionString">Connection string of the
         /// account endpoint to use the account as a storage endpoint on the
         /// device.</param>
         /// <param name="shareCredentialDetails">Per share level unencrypted
         /// access credentials.</param>
-        public AccountCredentialDetails(string accountName = default(string), DataDestinationType? dataDestinationType = default(DataDestinationType?), string accountConnectionString = default(string), IList<ShareCredentialDetails> shareCredentialDetails = default(IList<ShareCredentialDetails>))
+        public AccountCredentialDetails(string accountName = default(string), DataAccountType? dataAccountType = default(DataAccountType?), string accountConnectionString = default(string), IList<ShareCredentialDetails> shareCredentialDetails = default(IList<ShareCredentialDetails>))
         {
             AccountName = accountName;
-            DataDestinationType = dataDestinationType;
+            DataAccountType = dataAccountType;
             AccountConnectionString = accountConnectionString;
             ShareCredentialDetails = shareCredentialDetails;
             CustomInit();
@@ -60,11 +60,11 @@ namespace Microsoft.Azure.Management.DataBox.Models
         public string AccountName { get; private set; }
 
         /// <summary>
-        /// Gets data Destination Type. Possible values include:
+        /// Gets type of the account. Possible values include:
         /// 'StorageAccount', 'ManagedDisk'
         /// </summary>
-        [JsonProperty(PropertyName = "dataDestinationType")]
-        public DataDestinationType? DataDestinationType { get; private set; }
+        [JsonProperty(PropertyName = "dataAccountType")]
+        public DataAccountType? DataAccountType { get; private set; }
 
         /// <summary>
         /// Gets connection string of the account endpoint to use the account

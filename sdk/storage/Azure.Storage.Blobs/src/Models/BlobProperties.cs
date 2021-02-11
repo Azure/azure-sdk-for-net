@@ -9,7 +9,7 @@ using Azure.Storage.Blobs.Models;
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
-    /// Propeties of a Blob
+    /// Properties of a Blob
     /// </summary>
     public partial class BlobProperties
     {
@@ -253,6 +253,11 @@ namespace Azure.Storage.Blobs.Models
         /// If this blob is in rehydrate pending state, this indicates the rehydrate priority.
         /// </summary>
         public string RehydratePriority { get; internal set; }
+
+        /// <summary>
+        /// Returns the date and time the blob was read or written to.
+        /// </summary>
+        public DateTimeOffset LastAccessed { get; internal set; }
 
         /// <summary>
         /// Constructor.

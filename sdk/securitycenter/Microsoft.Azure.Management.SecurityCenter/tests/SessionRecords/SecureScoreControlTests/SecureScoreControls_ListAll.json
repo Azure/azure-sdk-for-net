@@ -1,0 +1,68 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/providers/Microsoft.Security/secureScoreControls?api-version=2020-01-01&$expand=definitions",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDg3YmI0ODUtYjViMC00NzFlLTljMGQtMTA3MTc2MTJmODY5L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VjdXJpdHkvc2VjdXJlU2NvcmVDb250cm9scz9hcGktdmVyc2lvbj0yMDIwLTAxLTAxJiRleHBhbmQ9ZGVmaW5pdGlvbnM=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "4b9b14ef-a483-48e6-a9d2-e09a4a9bef11"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Security.SecurityCenterClient/2.1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 25 Oct 2020 14:22:37 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "749"
+        ],
+        "x-ms-request-id": [
+          "c6eb939c-d92e-4118-9d34-41c8c7b3b624"
+        ],
+        "x-ms-correlation-request-id": [
+          "c6eb939c-d92e-4118-9d34-41c8c7b3b624"
+        ],
+        "x-ms-routing-request-id": [
+          "UKSOUTH:20201025T142237Z:c6eb939c-d92e-4118-9d34-41c8c7b3b624"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "7682"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/providers/Microsoft.Security/secureScores/ascScore/secureScoreControls/a9909064-42b4-4d34-8143-275477afe18b\",\r\n      \"name\": \"a9909064-42b4-4d34-8143-275477afe18b\",\r\n      \"type\": \"Microsoft.Security/secureScores/secureScoreControls\",\r\n      \"properties\": {\r\n        \"displayName\": \"Protect applications against DDoS attacks\",\r\n        \"healthyResourceCount\": 0,\r\n        \"unhealthyResourceCount\": 1,\r\n        \"notApplicableResourceCount\": 4,\r\n        \"score\": {\r\n          \"max\": 2,\r\n          \"current\": 0.0,\r\n          \"percentage\": 0.0\r\n        },\r\n        \"weight\": 1\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/providers/Microsoft.Security/secureScores/ascScore/secureScoreControls/34a42fb3-e6db-409c-b56b-7b1db6b8aee0\",\r\n      \"name\": \"34a42fb3-e6db-409c-b56b-7b1db6b8aee0\",\r\n      \"type\": \"Microsoft.Security/secureScores/secureScoreControls\",\r\n      \"properties\": {\r\n        \"displayName\": \"Enable MFA\",\r\n        \"healthyResourceCount\": 1,\r\n        \"unhealthyResourceCount\": 0,\r\n        \"notApplicableResourceCount\": 0,\r\n        \"score\": {\r\n          \"max\": 10,\r\n          \"current\": 10.0,\r\n          \"percentage\": 1.0\r\n        },\r\n        \"weight\": 1\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/providers/Microsoft.Security/secureScores/ascScore/secureScoreControls/0e55495e-034f-4abc-8293-767229250176\",\r\n      \"name\": \"0e55495e-034f-4abc-8293-767229250176\",\r\n      \"type\": \"Microsoft.Security/secureScores/secureScoreControls\",\r\n      \"properties\": {\r\n        \"displayName\": \"Encrypt data in transit\",\r\n        \"healthyResourceCount\": 8,\r\n        \"unhealthyResourceCount\": 0,\r\n        \"notApplicableResourceCount\": 0,\r\n        \"score\": {\r\n          \"max\": 4,\r\n          \"current\": 4.0,\r\n          \"percentage\": 1.0\r\n        },\r\n        \"weight\": 8\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/providers/Microsoft.Security/secureScores/ascScore/secureScoreControls/f9d5432b-8f7b-45e9-b90c-e214a30f6a02\",\r\n      \"name\": \"f9d5432b-8f7b-45e9-b90c-e214a30f6a02\",\r\n      \"type\": \"Microsoft.Security/secureScores/secureScoreControls\",\r\n      \"properties\": {\r\n        \"displayName\": \"Restrict unauthorized network access\",\r\n        \"healthyResourceCount\": 3,\r\n        \"unhealthyResourceCount\": 1,\r\n        \"notApplicableResourceCount\": 0,\r\n        \"score\": {\r\n          \"max\": 4,\r\n          \"current\": 3.0,\r\n          \"percentage\": 0.75\r\n        },\r\n        \"weight\": 4\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/providers/Microsoft.Security/secureScores/ascScore/secureScoreControls/76763537-9feb-42d3-b4f4-78c01117be80\",\r\n      \"name\": \"76763537-9feb-42d3-b4f4-78c01117be80\",\r\n      \"type\": \"Microsoft.Security/secureScores/secureScoreControls\",\r\n      \"properties\": {\r\n        \"displayName\": \"Implement security best practices\",\r\n        \"healthyResourceCount\": 13,\r\n        \"unhealthyResourceCount\": 1,\r\n        \"notApplicableResourceCount\": 5,\r\n        \"score\": {\r\n          \"max\": 0,\r\n          \"current\": 0.0,\r\n          \"percentage\": 0.0\r\n        },\r\n        \"weight\": 14\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/providers/Microsoft.Security/secureScores/ascScore/secureScoreControls/2d63c496-0d49-4288-9a1b-e65cd9ac0e1e\",\r\n      \"name\": \"2d63c496-0d49-4288-9a1b-e65cd9ac0e1e\",\r\n      \"type\": \"Microsoft.Security/secureScores/secureScoreControls\",\r\n      \"properties\": {\r\n        \"displayName\": \"Apply data classification\",\r\n        \"healthyResourceCount\": 1,\r\n        \"unhealthyResourceCount\": 0,\r\n        \"notApplicableResourceCount\": 0,\r\n        \"score\": {\r\n          \"max\": 2,\r\n          \"current\": 2.0,\r\n          \"percentage\": 1.0\r\n        },\r\n        \"weight\": 1\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/providers/Microsoft.Security/secureScores/ascScore/secureScoreControls/27b24961-75ba-4fe4-8909-97286d5dd5ee\",\r\n      \"name\": \"27b24961-75ba-4fe4-8909-97286d5dd5ee\",\r\n      \"type\": \"Microsoft.Security/secureScores/secureScoreControls\",\r\n      \"properties\": {\r\n        \"displayName\": \"Enable auditing and logging\",\r\n        \"healthyResourceCount\": 1,\r\n        \"unhealthyResourceCount\": 3,\r\n        \"notApplicableResourceCount\": 0,\r\n        \"score\": {\r\n          \"max\": 1,\r\n          \"current\": 0.25,\r\n          \"percentage\": 0.25\r\n        },\r\n        \"weight\": 4\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/providers/Microsoft.Security/secureScores/ascScore/secureScoreControls/2d85f639-0bea-4a4a-b6c6-608952a1414a\",\r\n      \"name\": \"2d85f639-0bea-4a4a-b6c6-608952a1414a\",\r\n      \"type\": \"Microsoft.Security/secureScores/secureScoreControls\",\r\n      \"properties\": {\r\n        \"displayName\": \"Manage access and permissions\",\r\n        \"healthyResourceCount\": 1,\r\n        \"unhealthyResourceCount\": 0,\r\n        \"notApplicableResourceCount\": 0,\r\n        \"score\": {\r\n          \"max\": 4,\r\n          \"current\": 4.0,\r\n          \"percentage\": 1.0\r\n        },\r\n        \"weight\": 1\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/providers/Microsoft.Security/secureScores/ascScore/secureScoreControls/52901099-235c-4971-b9d5-a33fca3a936e\",\r\n      \"name\": \"52901099-235c-4971-b9d5-a33fca3a936e\",\r\n      \"type\": \"Microsoft.Security/secureScores/secureScoreControls\",\r\n      \"properties\": {\r\n        \"displayName\": \"Secure management ports\",\r\n        \"healthyResourceCount\": 3,\r\n        \"unhealthyResourceCount\": 1,\r\n        \"notApplicableResourceCount\": 0,\r\n        \"score\": {\r\n          \"max\": 8,\r\n          \"current\": 6.0,\r\n          \"percentage\": 0.75\r\n        },\r\n        \"weight\": 4\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/providers/Microsoft.Security/secureScores/ascScore/secureScoreControls/05daab2e-f074-4601-ac10-aadf5c9c50f6\",\r\n      \"name\": \"05daab2e-f074-4601-ac10-aadf5c9c50f6\",\r\n      \"type\": \"Microsoft.Security/secureScores/secureScoreControls\",\r\n      \"properties\": {\r\n        \"displayName\": \"Remediate vulnerabilities\",\r\n        \"healthyResourceCount\": 1,\r\n        \"unhealthyResourceCount\": 4,\r\n        \"notApplicableResourceCount\": 1,\r\n        \"score\": {\r\n          \"max\": 6,\r\n          \"current\": 1.2,\r\n          \"percentage\": 0.2\r\n        },\r\n        \"weight\": 5\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/providers/Microsoft.Security/secureScores/ascScore/secureScoreControls/4db8d6cf-075b-4149-a813-da09ca2ae120\",\r\n      \"name\": \"4db8d6cf-075b-4149-a813-da09ca2ae120\",\r\n      \"type\": \"Microsoft.Security/secureScores/secureScoreControls\",\r\n      \"properties\": {\r\n        \"displayName\": \"Enable Advanced Threat Protection\",\r\n        \"healthyResourceCount\": 1,\r\n        \"unhealthyResourceCount\": 0,\r\n        \"notApplicableResourceCount\": 0,\r\n        \"score\": {\r\n          \"max\": 0,\r\n          \"current\": 0.0,\r\n          \"percentage\": 0.0\r\n        },\r\n        \"weight\": 1\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/providers/Microsoft.Security/secureScores/ascScore/secureScoreControls/8fd574ec-43cf-426e-a439-a67cbaf2d564\",\r\n      \"name\": \"8fd574ec-43cf-426e-a439-a67cbaf2d564\",\r\n      \"type\": \"Microsoft.Security/secureScores/secureScoreControls\",\r\n      \"properties\": {\r\n        \"displayName\": \"Enable encryption at rest\",\r\n        \"healthyResourceCount\": 1,\r\n        \"unhealthyResourceCount\": 3,\r\n        \"notApplicableResourceCount\": 1,\r\n        \"score\": {\r\n          \"max\": 4,\r\n          \"current\": 1.0,\r\n          \"percentage\": 0.25\r\n        },\r\n        \"weight\": 4\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/providers/Microsoft.Security/secureScores/ascScore/secureScoreControls/61702b76-1fab-41f2-bcbc-50b7870dcf38\",\r\n      \"name\": \"61702b76-1fab-41f2-bcbc-50b7870dcf38\",\r\n      \"type\": \"Microsoft.Security/secureScores/secureScoreControls\",\r\n      \"properties\": {\r\n        \"displayName\": \"Apply system updates\",\r\n        \"healthyResourceCount\": 1,\r\n        \"unhealthyResourceCount\": 3,\r\n        \"notApplicableResourceCount\": 0,\r\n        \"score\": {\r\n          \"max\": 6,\r\n          \"current\": 1.5,\r\n          \"percentage\": 0.25\r\n        },\r\n        \"weight\": 4\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/providers/Microsoft.Security/secureScores/ascScore/secureScoreControls/12136bd9-dc24-44f2-9587-7be3af6aac14\",\r\n      \"name\": \"12136bd9-dc24-44f2-9587-7be3af6aac14\",\r\n      \"type\": \"Microsoft.Security/secureScores/secureScoreControls\",\r\n      \"properties\": {\r\n        \"displayName\": \"Enable endpoint protection\",\r\n        \"healthyResourceCount\": 1,\r\n        \"unhealthyResourceCount\": 3,\r\n        \"notApplicableResourceCount\": 0,\r\n        \"score\": {\r\n          \"max\": 2,\r\n          \"current\": 0.5,\r\n          \"percentage\": 0.25\r\n        },\r\n        \"weight\": 4\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/providers/Microsoft.Security/secureScores/ascScore/secureScoreControls/99fc8df2-e0f5-40f8-9415-a7f7ca948b5a\",\r\n      \"name\": \"99fc8df2-e0f5-40f8-9415-a7f7ca948b5a\",\r\n      \"type\": \"Microsoft.Security/secureScores/secureScoreControls\",\r\n      \"properties\": {\r\n        \"displayName\": \"Remediate security configurations\",\r\n        \"healthyResourceCount\": 1,\r\n        \"unhealthyResourceCount\": 3,\r\n        \"notApplicableResourceCount\": 0,\r\n        \"score\": {\r\n          \"max\": 4,\r\n          \"current\": 1.0,\r\n          \"percentage\": 0.25\r\n        },\r\n        \"weight\": 4\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/providers/Microsoft.Security/secureScores/ascScore/secureScoreControls/a000c66f-6da2-4f9d-826d-2364347d2588\",\r\n      \"name\": \"a000c66f-6da2-4f9d-826d-2364347d2588\",\r\n      \"type\": \"Microsoft.Security/secureScores/secureScoreControls\",\r\n      \"properties\": {\r\n        \"displayName\": \"Apply adaptive application control\",\r\n        \"healthyResourceCount\": 2,\r\n        \"unhealthyResourceCount\": 2,\r\n        \"notApplicableResourceCount\": 0,\r\n        \"score\": {\r\n          \"max\": 3,\r\n          \"current\": 1.5,\r\n          \"percentage\": 0.5\r\n        },\r\n        \"weight\": 4\r\n      }\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "487bb485-b5b0-471e-9c0d-10717612f869"
+  }
+}

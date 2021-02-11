@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -35,8 +36,8 @@ namespace Azure.Identity.Tests
 
             var mockMsalClient = new MockMsalPublicClient
             {
-                Accounts = new IAccount[] { new MockAccount("nonexpecteduser@mockdomain.com") },
-                ExtendedSilentAuthFactory = (_, account, _, _) =>
+                Accounts = new List<IAccount> { new MockAccount("nonexpecteduser@mockdomain.com") },
+                ExtendedSilentAuthFactory = (_, account, __, ___) =>
                 {
                     Assert.AreEqual(expectedUsername, account.Username);
 
@@ -65,7 +66,7 @@ namespace Azure.Identity.Tests
 
             var mockMsalClient = new MockMsalPublicClient
             {
-                Accounts = new IAccount[] { new MockAccount("mockuser@mockdomain.com") },
+                Accounts = new List<IAccount> { new MockAccount("mockuser@mockdomain.com") },
                 SilentAuthFactory = (_) => { return AuthenticationResultFactory.Create(accessToken: expToken, expiresOn: expExpiresOn); }
             };
 
@@ -86,7 +87,7 @@ namespace Azure.Identity.Tests
 
             var mockMsalClient = new MockMsalPublicClient
             {
-                Accounts = new IAccount[] { new MockAccount("fakeuser@fakedomain.com"), new MockAccount("mockuser@mockdomain.com") },
+                Accounts = new List<IAccount> { new MockAccount("fakeuser@fakedomain.com"), new MockAccount("mockuser@mockdomain.com") },
                 SilentAuthFactory = (_) => { return AuthenticationResultFactory.Create(accessToken: expToken, expiresOn: expExpiresOn); }
             };
 
@@ -99,7 +100,6 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(expExpiresOn, token.ExpiresOn);
         }
 
-
         [Test]
         public async Task OneMatchingAccountUsernameDifferentCasing()
         {
@@ -108,7 +108,7 @@ namespace Azure.Identity.Tests
 
             var mockMsalClient = new MockMsalPublicClient
             {
-                Accounts = new IAccount[] { new MockAccount("fakeuser@fakedomain.com"), new MockAccount("MockUser@mockdomain.com") },
+                Accounts = new List<IAccount> { new MockAccount("fakeuser@fakedomain.com"), new MockAccount("MockUser@mockdomain.com") },
                 SilentAuthFactory = (_) => { return AuthenticationResultFactory.Create(accessToken: expToken, expiresOn: expExpiresOn); }
             };
 
@@ -130,7 +130,7 @@ namespace Azure.Identity.Tests
             string tenantId = Guid.NewGuid().ToString();
             var mockMsalClient = new MockMsalPublicClient
             {
-                Accounts = new IAccount[] { new MockAccount("mockuser@mockdomain.com", nonMatchedTenantId), new MockAccount("fakeuser@fakedomain.com"), new MockAccount("mockuser@mockdomain.com", tenantId) },
+                Accounts = new List<IAccount> { new MockAccount("mockuser@mockdomain.com", nonMatchedTenantId), new MockAccount("fakeuser@fakedomain.com"), new MockAccount("mockuser@mockdomain.com", tenantId) },
                 SilentAuthFactory = (_) => { return AuthenticationResultFactory.Create(accessToken: expToken, expiresOn: expExpiresOn); }
             };
 
@@ -151,7 +151,7 @@ namespace Azure.Identity.Tests
             string tenantId = Guid.NewGuid().ToString();
             var mockMsalClient = new MockMsalPublicClient
             {
-                Accounts = new IAccount[] { new MockAccount("mockuser@mockdomain.com", Guid.NewGuid().ToString()), new MockAccount("fakeuser@fakedomain.com"), new MockAccount("mockuser@mockdomain.com", tenantId) },
+                Accounts = new List<IAccount> { new MockAccount("mockuser@mockdomain.com", Guid.NewGuid().ToString()), new MockAccount("fakeuser@fakedomain.com"), new MockAccount("mockuser@mockdomain.com", tenantId) },
                 SilentAuthFactory = (_) => { return AuthenticationResultFactory.Create(accessToken: expToken, expiresOn: expExpiresOn); }
             };
 
@@ -172,7 +172,7 @@ namespace Azure.Identity.Tests
 
             var mockMsalClient = new MockMsalPublicClient
             {
-                Accounts = new IAccount[] { },
+                Accounts = new List<IAccount> { },
                 SilentAuthFactory = (_) => { return AuthenticationResultFactory.Create(accessToken: expToken, expiresOn: expExpiresOn); }
             };
 
@@ -189,7 +189,6 @@ namespace Azure.Identity.Tests
             var ex2 = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential2.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
             Assert.AreEqual(SharedTokenCacheCredential.NoAccountsInCacheMessage, ex2.Message);
-
 
             // with tenantId
             var credential3 = InstrumentClient(new SharedTokenCacheCredential(Guid.NewGuid().ToString(), null, null, null, mockMsalClient));
@@ -218,7 +217,7 @@ namespace Azure.Identity.Tests
 
             var mockMsalClient = new MockMsalPublicClient
             {
-                Accounts = new IAccount[] { new MockAccount("fakeuser@fakedomain.com", fakeuserTenantId), new MockAccount("madeupuser@madeupdomain.com", madeupuserTenantId) },
+                Accounts = new List<IAccount> { new MockAccount("fakeuser@fakedomain.com", fakeuserTenantId), new MockAccount("madeupuser@madeupdomain.com", madeupuserTenantId) },
                 SilentAuthFactory = (_) => { return AuthenticationResultFactory.Create(accessToken: expToken, expiresOn: expExpiresOn); }
             };
 
@@ -241,7 +240,7 @@ namespace Azure.Identity.Tests
 
             var mockMsalClient = new MockMsalPublicClient
             {
-                Accounts = new IAccount[] { new MockAccount("fakeuser@fakedomain.com", fakeuserTenantId), new MockAccount("madeupuser@madeupdomain.com", madeupuserTenantId) },
+                Accounts = new List<IAccount> { new MockAccount("fakeuser@fakedomain.com", fakeuserTenantId), new MockAccount("madeupuser@madeupdomain.com", madeupuserTenantId) },
                 SilentAuthFactory = (_) => { return AuthenticationResultFactory.Create(accessToken: expToken, expiresOn: expExpiresOn); }
             };
 
@@ -266,7 +265,7 @@ namespace Azure.Identity.Tests
 
             var mockMsalClient = new MockMsalPublicClient
             {
-                Accounts = new IAccount[] { new MockAccount("fakeuser@fakedomain.com", fakeuserTenantId), new MockAccount("madeupuser@madeupdomain.com", madeupuserTenantId) },
+                Accounts = new List<IAccount> { new MockAccount("fakeuser@fakedomain.com", fakeuserTenantId), new MockAccount("madeupuser@madeupdomain.com", madeupuserTenantId) },
                 SilentAuthFactory = (_) => { return AuthenticationResultFactory.Create(accessToken: expToken, expiresOn: expExpiresOn); }
             };
 
@@ -291,7 +290,7 @@ namespace Azure.Identity.Tests
 
             var mockMsalClient = new MockMsalPublicClient
             {
-                Accounts = new IAccount[] { new MockAccount("fakeuser@fakedomain.com", fakeuserTenantId), new MockAccount("madeupuser@madeupdomain.com", madeupuserTenantId) },
+                Accounts = new List<IAccount> { new MockAccount("fakeuser@fakedomain.com", fakeuserTenantId), new MockAccount("madeupuser@madeupdomain.com", madeupuserTenantId) },
                 SilentAuthFactory = (_) => { return AuthenticationResultFactory.Create(accessToken: expToken, expiresOn: expExpiresOn); }
             };
 
@@ -316,7 +315,7 @@ namespace Azure.Identity.Tests
 
             var mockMsalClient = new MockMsalPublicClient
             {
-                Accounts = new IAccount[] { new MockAccount("fakeuser@fakedomain.com", fakeuserTenantId), new MockAccount("mockuser@mockdomain.com", mockuserTenantId), new MockAccount("mockuser@mockdomain.com", mockuserGuestTenantId) },
+                Accounts = new List<IAccount> { new MockAccount("fakeuser@fakedomain.com", fakeuserTenantId), new MockAccount("mockuser@mockdomain.com", mockuserTenantId), new MockAccount("mockuser@mockdomain.com", mockuserGuestTenantId) },
                 SilentAuthFactory = (_) => { return AuthenticationResultFactory.Create(accessToken: expToken, expiresOn: expExpiresOn); }
             };
 
@@ -340,7 +339,7 @@ namespace Azure.Identity.Tests
 
             var mockMsalClient = new MockMsalPublicClient
             {
-                Accounts = new IAccount[] { new MockAccount("fakeuser@fakedomain.com", fakeuserTenantId), new MockAccount("mockuser@mockdomain.com", mockuserTenantId), new MockAccount("mockuser@mockdomain.com", mockuserGuestTenantId) },
+                Accounts = new List<IAccount> { new MockAccount("fakeuser@fakedomain.com", fakeuserTenantId), new MockAccount("mockuser@mockdomain.com", mockuserTenantId), new MockAccount("mockuser@mockdomain.com", mockuserGuestTenantId) },
                 SilentAuthFactory = (_) => { return AuthenticationResultFactory.Create(accessToken: expToken, expiresOn: expExpiresOn); }
             };
 
@@ -364,7 +363,7 @@ namespace Azure.Identity.Tests
 
             var mockMsalClient = new MockMsalPublicClient
             {
-                Accounts = new IAccount[] { new MockAccount("fakeuser@fakedomain.com", fakeuserTenantId), new MockAccount("mockuser@mockdomain.com", mockuserTenantId), new MockAccount("mockuser@mockdomain.com", mockuserTenantId) },
+                Accounts = new List<IAccount> { new MockAccount("fakeuser@fakedomain.com", fakeuserTenantId), new MockAccount("mockuser@mockdomain.com", mockuserTenantId), new MockAccount("mockuser@mockdomain.com", mockuserTenantId) },
                 SilentAuthFactory = (_) => { return AuthenticationResultFactory.Create(accessToken: expToken, expiresOn: expExpiresOn); }
             };
 
@@ -385,7 +384,7 @@ namespace Azure.Identity.Tests
 
             var mockMsalClient = new MockMsalPublicClient
             {
-                Accounts = new IAccount[] { new MockAccount("mockuser@mockdomain.com") },
+                Accounts = new List<IAccount> { new MockAccount("mockuser@mockdomain.com") },
                 SilentAuthFactory = (_) => { throw new MsalUiRequiredException("code", "message"); }
             };
 
@@ -399,6 +398,58 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(expErrorMessage, ex.Message);
 
             await Task.CompletedTask;
+        }
+
+        [Test]
+        public async Task MatchAnySingleTenantIdWithEnableGuestTenantAuthentication()
+        {
+            string expToken = Guid.NewGuid().ToString();
+            DateTimeOffset expExpiresOn = DateTimeOffset.UtcNow.AddMinutes(5);
+            string tenantId = Guid.NewGuid().ToString();
+            var mockMsalClient = new MockMsalPublicClient
+            {
+                Accounts = new List<IAccount> { new MockAccount("mockuser@mockdomain.com", Guid.NewGuid().ToString()) },
+                SilentAuthFactory = (_) => { return AuthenticationResultFactory.Create(accessToken: expToken, expiresOn: expExpiresOn); }
+            };
+
+            var credential = InstrumentClient(new SharedTokenCacheCredential(tenantId, null, new SharedTokenCacheCredentialOptions { EnableGuestTenantAuthentication = true }, null, mockMsalClient));
+
+            AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
+
+            Assert.AreEqual(expToken, token.Token);
+
+            Assert.AreEqual(expExpiresOn, token.ExpiresOn);
+        }
+
+        [Test]
+        public async Task MatchAnyTenantIdWithEnableGuestTenantAuthenticationAndUsername()
+        {
+            string expToken = Guid.NewGuid().ToString();
+            DateTimeOffset expExpiresOn = DateTimeOffset.UtcNow.AddMinutes(5);
+            string tenantId = Guid.NewGuid().ToString();
+            var mockMsalClient = new MockMsalPublicClient
+            {
+                Accounts = new List<IAccount> { new MockAccount("mockuser@mockdomain.com", Guid.NewGuid().ToString()), new MockAccount("fakeuser@fakedomain.com", Guid.NewGuid().ToString()) },
+                SilentAuthFactory = (_) => { return AuthenticationResultFactory.Create(accessToken: expToken, expiresOn: expExpiresOn); }
+            };
+
+            var credential = InstrumentClient(new SharedTokenCacheCredential(tenantId, "mockuser@mockdomain.com", new SharedTokenCacheCredentialOptions { EnableGuestTenantAuthentication = true }, null, mockMsalClient));
+
+            AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
+
+            Assert.AreEqual(expToken, token.Token);
+
+            Assert.AreEqual(expExpiresOn, token.ExpiresOn);
+        }
+
+        [Test]
+        public void ValidateClientIdSetOnMsalClient()
+        {
+            var clientId = Guid.NewGuid().ToString();
+
+            var credential = new SharedTokenCacheCredential(new SharedTokenCacheCredentialOptions { ClientId = clientId });
+
+            Assert.AreEqual(clientId, credential.Client.ClientId);
         }
     }
 }

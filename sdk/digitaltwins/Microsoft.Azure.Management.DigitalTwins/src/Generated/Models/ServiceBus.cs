@@ -11,14 +11,11 @@
 namespace Microsoft.Azure.Management.DigitalTwins.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// properties related to servicebus.
+    /// Properties related to ServiceBus.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("ServiceBus")]
     public partial class ServiceBus : DigitalTwinsEndpointResourceProperties
     {
         /// <summary>
@@ -32,21 +29,37 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
         /// <summary>
         /// Initializes a new instance of the ServiceBus class.
         /// </summary>
-        /// <param name="primaryConnectionString">PrimaryConnectionString of
-        /// the endpoint. Will be obfuscated during read</param>
-        /// <param name="secondaryConnectionString">SecondaryConnectionString
-        /// of the endpoint. Will be obfuscated during read</param>
         /// <param name="provisioningState">The provisioning state. Possible
         /// values include: 'Provisioning', 'Deleting', 'Succeeded', 'Failed',
-        /// 'Canceled'</param>
+        /// 'Canceled', 'Deleted', 'Warning', 'Suspending', 'Restoring',
+        /// 'Moving', 'Disabled'</param>
         /// <param name="createdTime">Time when the Endpoint was added to
         /// DigitalTwinsInstance.</param>
-        /// <param name="tags">The resource tags.</param>
-        public ServiceBus(string primaryConnectionString, string secondaryConnectionString, string provisioningState = default(string), System.DateTime? createdTime = default(System.DateTime?), IDictionary<string, string> tags = default(IDictionary<string, string>))
-            : base(provisioningState, createdTime, tags)
+        /// <param name="authenticationType">Specifies the authentication type
+        /// being used for connecting to the endpoint. Possible values include:
+        /// 'KeyBased', 'IdentityBased'</param>
+        /// <param name="deadLetterSecret">Dead letter storage secret for
+        /// key-based authentication. Will be obfuscated during read.</param>
+        /// <param name="deadLetterUri">Dead letter storage URL for
+        /// identity-based authentication.</param>
+        /// <param name="primaryConnectionString">PrimaryConnectionString of
+        /// the endpoint for key-based authentication. Will be obfuscated
+        /// during read.</param>
+        /// <param name="secondaryConnectionString">SecondaryConnectionString
+        /// of the endpoint for key-based authentication. Will be obfuscated
+        /// during read.</param>
+        /// <param name="endpointUri">The URL of the ServiceBus namespace for
+        /// identity-based authentication. It must include the protocol
+        /// sb://</param>
+        /// <param name="entityPath">The ServiceBus Topic name for
+        /// identity-based authentication</param>
+        public ServiceBus(string provisioningState = default(string), System.DateTime? createdTime = default(System.DateTime?), string authenticationType = default(string), string deadLetterSecret = default(string), string deadLetterUri = default(string), string primaryConnectionString = default(string), string secondaryConnectionString = default(string), string endpointUri = default(string), string entityPath = default(string))
+            : base(provisioningState, createdTime, authenticationType, deadLetterSecret, deadLetterUri)
         {
             PrimaryConnectionString = primaryConnectionString;
             SecondaryConnectionString = secondaryConnectionString;
+            EndpointUri = endpointUri;
+            EntityPath = entityPath;
             CustomInit();
         }
 
@@ -56,18 +69,32 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets primaryConnectionString of the endpoint. Will be
-        /// obfuscated during read
+        /// Gets or sets primaryConnectionString of the endpoint for key-based
+        /// authentication. Will be obfuscated during read.
         /// </summary>
         [JsonProperty(PropertyName = "primaryConnectionString")]
         public string PrimaryConnectionString { get; set; }
 
         /// <summary>
-        /// Gets or sets secondaryConnectionString of the endpoint. Will be
-        /// obfuscated during read
+        /// Gets or sets secondaryConnectionString of the endpoint for
+        /// key-based authentication. Will be obfuscated during read.
         /// </summary>
         [JsonProperty(PropertyName = "secondaryConnectionString")]
         public string SecondaryConnectionString { get; set; }
+
+        /// <summary>
+        /// Gets or sets the URL of the ServiceBus namespace for identity-based
+        /// authentication. It must include the protocol sb://
+        /// </summary>
+        [JsonProperty(PropertyName = "endpointUri")]
+        public string EndpointUri { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ServiceBus Topic name for identity-based
+        /// authentication
+        /// </summary>
+        [JsonProperty(PropertyName = "entityPath")]
+        public string EntityPath { get; set; }
 
     }
 }

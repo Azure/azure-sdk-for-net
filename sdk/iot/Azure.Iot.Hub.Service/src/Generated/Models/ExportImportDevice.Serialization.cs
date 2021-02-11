@@ -81,16 +81,6 @@ namespace Azure.Iot.Hub.Service.Models
                 writer.WritePropertyName("deviceScope");
                 writer.WriteStringValue(DeviceScope);
             }
-            if (Optional.IsCollectionDefined(ParentScopes))
-            {
-                writer.WritePropertyName("parentScopes");
-                writer.WriteStartArray();
-                foreach (var item in ParentScopes)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
             writer.WriteEndObject();
         }
     }

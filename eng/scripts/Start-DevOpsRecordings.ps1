@@ -22,26 +22,25 @@ param (
 $invokeParameter = @("--organization", "https://dev.azure.com/azure-sdk", "-o", "json", "--only-show-errors")
 $commonParameters =  $invokeParameter + @( "--project", "internal")
 
-if (!$NoCancel)
-{
-    $builds = az pipelines runs list @commonParameters --tags Recording --branch "refs/pull/$PR/merge" --query-order FinishTimeDesc | ConvertFrom-Json;
-
-    $cancelPatchFile = New-TemporaryFile;
-    "{`"status`": `"Cancelling`"}" > $cancelPatchFile;
-
-    foreach ($build in $builds)
-    {
-        if ($build.status -ne "completed")
-        {
-            Write-Warning "Cancelling existing recording run '$($build.definition.name)' before we start recordings - https://dev.azure.com/azure-sdk/internal/_build/results?buildId=$($build.id)"
-            az devops invoke @invokeParameter --area build --resource builds --route-parameters "buildId=$($build.id)" project=internal --in-file $cancelPatchFile --http-method patch > $null;
-        }
-    }
-}
+$builds = az pipelines runs list @commonParameters --tags Recording --branch "refs/pull/$PR/merge" --query-order FinishTimeDesc | ConvertFrom-Json;
+$cancelPatchFile = New-TemporaryFile;
+"{`"status`": `"Cancelling`"}" > $cancelPatchFile;
 
 foreach ($sdk in $SDKs)
 {
     $pipeline = "net - $sdk - tests";
+    if (!$NoCancel)
+    {
+        foreach ($build in $builds)
+        {
+            if (($build.status -ne "completed") -and ($build.definition.name -eq $pipeline))
+            {
+                Write-Warning "Cancelling existing recording run '$($build.definition.name)' before we start recordings - https://dev.azure.com/azure-sdk/internal/_build/results?buildId=$($build.id)"
+                az devops invoke @invokeParameter --area build --resource builds --route-parameters "buildId=$($build.id)" project=internal --in-file $cancelPatchFile --http-method patch > $null;
+            }
+        }
+        
+    }
     Write-Host "Starting pipeline '$pipeline' for PR $PR"
     $build = az pipelines run --name $pipeline @commonParameters --branch "refs/pull/$PR/merge" --variables Record=true | ConvertFrom-Json;
     az pipelines runs tag add @commonParameters --run-id $build.id --tags Recording > $null;

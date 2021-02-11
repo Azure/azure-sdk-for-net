@@ -6,7 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.AI.FormRecognizer.Training;
+using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -24,24 +26,29 @@ namespace Azure.AI.FormRecognizer.Models
             }
 
             ModelInfo = modelInfo;
+            ComposedTrainResults = new ChangeTrackingList<TrainResult>();
         }
 
         /// <summary> Initializes a new instance of Model. </summary>
         /// <param name="modelInfo"> Basic custom model information. </param>
         /// <param name="keys"> Keys extracted by the custom model. </param>
-        /// <param name="trainResult"> Custom model training result. </param>
-        internal Model(CustomFormModelInfo modelInfo, KeysResult keys, TrainResult trainResult)
+        /// <param name="trainResult"> Training result for custom model. </param>
+        /// <param name="composedTrainResults"> Training result for composed model. </param>
+        internal Model(CustomFormModelInfo modelInfo, KeysResult keys, TrainResult trainResult, IReadOnlyList<TrainResult> composedTrainResults)
         {
             ModelInfo = modelInfo;
             Keys = keys;
             TrainResult = trainResult;
+            ComposedTrainResults = composedTrainResults;
         }
 
         /// <summary> Basic custom model information. </summary>
         public CustomFormModelInfo ModelInfo { get; }
         /// <summary> Keys extracted by the custom model. </summary>
         public KeysResult Keys { get; }
-        /// <summary> Custom model training result. </summary>
+        /// <summary> Training result for custom model. </summary>
         public TrainResult TrainResult { get; }
+        /// <summary> Training result for composed model. </summary>
+        public IReadOnlyList<TrainResult> ComposedTrainResults { get; }
     }
 }

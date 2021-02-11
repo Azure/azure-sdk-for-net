@@ -1185,7 +1185,7 @@ namespace Azure.Storage.Blobs.Specialized
         public static BlobLeaseClient GetBlobLeaseClient(
             this BlobBaseClient client,
             string leaseId = null) =>
-            new BlobLeaseClient(client, leaseId);
+            client.GetBlobLeaseClientCore(leaseId);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobLeaseClient"/> class.
@@ -1201,6 +1201,6 @@ namespace Azure.Storage.Blobs.Specialized
         public static BlobLeaseClient GetBlobLeaseClient(
             this BlobContainerClient client,
             string leaseId = null) =>
-            new BlobLeaseClient(client, leaseId);
+            client.GetBlobLeaseClientCore(leaseId);
     }
 }

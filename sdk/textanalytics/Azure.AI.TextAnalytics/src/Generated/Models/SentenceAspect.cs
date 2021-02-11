@@ -21,9 +21,13 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="length"> The length of the aspect. </param>
         /// <param name="text"> The aspect text detected. </param>
         /// <param name="relations"> The array of either opinion or aspect object which is related to the aspect. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="confidenceScores"/>, <paramref name="text"/>, or <paramref name="relations"/> is null. </exception>
-        internal SentenceAspect(SentenceAspectSentiment sentiment, AspectConfidenceScoreLabel confidenceScores, int offset, int length, string text, IEnumerable<AspectRelation> relations)
+        /// <exception cref="ArgumentNullException"> <paramref name="sentiment"/>, <paramref name="confidenceScores"/>, <paramref name="text"/>, or <paramref name="relations"/> is null. </exception>
+        internal SentenceAspect(string sentiment, AspectConfidenceScoreLabel confidenceScores, int offset, int length, string text, IEnumerable<AspectRelation> relations)
         {
+            if (sentiment == null)
+            {
+                throw new ArgumentNullException(nameof(sentiment));
+            }
             if (confidenceScores == null)
             {
                 throw new ArgumentNullException(nameof(confidenceScores));
@@ -52,7 +56,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="length"> The length of the aspect. </param>
         /// <param name="text"> The aspect text detected. </param>
         /// <param name="relations"> The array of either opinion or aspect object which is related to the aspect. </param>
-        internal SentenceAspect(SentenceAspectSentiment sentiment, AspectConfidenceScoreLabel confidenceScores, int offset, int length, string text, IReadOnlyList<AspectRelation> relations)
+        internal SentenceAspect(string sentiment, AspectConfidenceScoreLabel confidenceScores, int offset, int length, string text, IReadOnlyList<AspectRelation> relations)
         {
             Sentiment = sentiment;
             ConfidenceScores = confidenceScores;
@@ -61,9 +65,6 @@ namespace Azure.AI.TextAnalytics.Models
             Text = text;
             Relations = relations;
         }
-
-        /// <summary> Aspect level sentiment for the aspect in the sentence. </summary>
-        public SentenceAspectSentiment Sentiment { get; }
         /// <summary> Aspect level sentiment confidence scores for the aspect in the sentence. </summary>
         public AspectConfidenceScoreLabel ConfidenceScores { get; }
         /// <summary> The aspect offset from the start of the sentence. </summary>

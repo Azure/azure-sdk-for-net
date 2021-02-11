@@ -22,12 +22,13 @@ namespace Microsoft.Azure.Management.Marketplace.Tests.ScenarioTests
                     Assert.True(privateStores.Any());
 
                     var privateStore = privateStores.FirstOrDefault();
-                    Assert.Equal("disabled", privateStore?.Availability);
+
+                    var originalAvailability = privateStore?.Availability;
+                    var availability = privateStore?.Availability == "enabled" ? "disabled" : "enabled";
 
                     var privateStoreUpdate = new PrivateStore
                     {
-
-                        Availability = "enabled",
+                        Availability = availability,
                         ETag = privateStore?.ETag
                     };
 
@@ -35,11 +36,11 @@ namespace Microsoft.Azure.Management.Marketplace.Tests.ScenarioTests
 
                     privateStores = client.PrivateStore.List();
                     privateStore = privateStores.FirstOrDefault();
-                    Assert.Equal("enabled", privateStore?.Availability);
-
+                    Assert.Equal(availability, privateStore?.Availability);
+                    
                     privateStoreUpdate = new PrivateStore
                     {
-                        Availability = "disabled",
+                        Availability = originalAvailability,
                         ETag = privateStore?.ETag
                     };
 
@@ -51,37 +52,42 @@ namespace Microsoft.Azure.Management.Marketplace.Tests.ScenarioTests
         [Fact]
         public void PrivateStoreOffersTest()
         {
-            var privateStoreId = "420c70be-a111-4152-8d48-640c069d441f";
+            var privateStoreId = "a70d384d-ec34-47dd-9d38-ec6df452cba1";
             var offerId = "data3-limited-1019419.d3_azure_managed_services";
-            var planId = "d3-azure-cost-management";
+            var planId = "data3-managed-azure-plan";
 
             using (var context = MockContext.Start(this.GetType()))
             {
                 using (var client = context.GetServiceClient<MarketplaceManagementClient>())
                 {
+                    //clean data before test
                     var offers = client.PrivateStoreOffers.List(privateStoreId);
-                    Assert.True(offers.Count() == 3);
+                    foreach (var item in offers)
+                    {
+                        if (item.UniqueOfferId == offerId)
+                        {
+                            client.PrivateStoreOffer.Delete(privateStoreId, offerId);
+                            var o = client.PrivateStoreOffer.Get(privateStoreId, offerId);
+                            Assert.Null(o);
+                            break;
+                        }
+                    }
 
-                    var offer = client.PrivateStoreOffer.Get(privateStoreId, offerId);
-                    Assert.NotNull(offer);
-
-                    client.PrivateStoreOffer.Delete(privateStoreId, offerId);
-
-                    offers = client.PrivateStoreOffers.List(privateStoreId);
-                    Assert.True(offers.Count() == 2);
-
+                    //test
                     var offerToUpdate = new Offer
                     {
-                        ETag = offer.ETag,
+                        ETag = "57002de5-0000-0300-0000-5eaee7e50000",
                         SpecificPlanIdsLimitation = new List<string> { planId }
                     };
 
-                    offer = client.PrivateStoreOffer.CreateOrUpdate(privateStoreId, offerId, offerToUpdate);
+                    var offer = client.PrivateStoreOffer.CreateOrUpdate(privateStoreId, offerId, offerToUpdate);
                     Assert.Equal(offer.UniqueOfferId, offerId);
                     Assert.True(offer.SpecificPlanIdsLimitation.Count == 1);
 
-                    offers = client.PrivateStoreOffers.List(privateStoreId);
-                    Assert.True(offers.Count() == 3);
+                    offer = client.PrivateStoreOffer.Get(privateStoreId, offerId);
+                    Assert.NotNull(offer);
+                    
+                    client.PrivateStoreOffer.Delete(privateStoreId, offerId);
 
                 }
             }

@@ -60,6 +60,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("filter"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     filter = ConnectionMonitorEndpointFilter.DeserializeConnectionMonitorEndpointFilter(property.Value);
                     continue;
                 }

@@ -18,7 +18,7 @@ namespace Azure.Identity
         public Uri AuthorityHost
         {
             get { return _authorityHost ?? AzureAuthorityHosts.GetDefault(); }
-            set { _authorityHost = value; }
+            set { _authorityHost = Validations.ValidateAuthorityHost(value); }
         }
     }
 }

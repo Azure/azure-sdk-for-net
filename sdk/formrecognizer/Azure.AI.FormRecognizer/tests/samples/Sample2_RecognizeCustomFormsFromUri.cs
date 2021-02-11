@@ -26,7 +26,7 @@ namespace Azure.AI.FormRecognizer.Samples
             // https://docs.microsoft.com/azure/cognitive-services/form-recognizer/quickstarts/label-tool
 
             FormTrainingClient trainingClient = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
-            CustomFormModel model = await trainingClient.StartTrainingAsync(new Uri(trainingFileUrl), useTrainingLabels: false).WaitForCompletionAsync();
+            CustomFormModel model = await trainingClient.StartTrainingAsync(new Uri(trainingFileUrl), useTrainingLabels: false, "My Model").WaitForCompletionAsync();
 
             // Proceed with the custom form recognition.
 
@@ -37,22 +37,29 @@ namespace Azure.AI.FormRecognizer.Samples
 
             #region Snippet:FormRecognizerSampleRecognizeCustomFormsFromUri
             //@@ string modelId = "<modelId>";
+            //@@ Uri formUri = <formUri>;
 
-            RecognizedFormCollection forms = await client.StartRecognizeCustomFormsFromUriAsync(modelId, formUri).WaitForCompletionAsync();
+            RecognizeCustomFormsOperation operation = await client.StartRecognizeCustomFormsFromUriAsync(modelId, formUri);
+            Response<RecognizedFormCollection> operationResponse = await operation.WaitForCompletionAsync();
+            RecognizedFormCollection forms = operationResponse.Value;
+
             foreach (RecognizedForm form in forms)
             {
                 Console.WriteLine($"Form of type: {form.FormType}");
+                if (form.FormTypeConfidence.HasValue)
+                    Console.WriteLine($"Form type confidence: {form.FormTypeConfidence.Value}");
+                Console.WriteLine($"Form was analyzed with model with ID: {form.ModelId}");
                 foreach (FormField field in form.Fields.Values)
                 {
-                    Console.WriteLine($"Field '{field.Name}: ");
+                    Console.WriteLine($"Field '{field.Name}': ");
 
                     if (field.LabelData != null)
                     {
-                        Console.WriteLine($"    Label: '{field.LabelData.Text}");
+                        Console.WriteLine($"  Label: '{field.LabelData.Text}'");
                     }
 
-                    Console.WriteLine($"    Value: '{field.ValueData.Text}");
-                    Console.WriteLine($"    Confidence: '{field.Confidence}");
+                    Console.WriteLine($"  Value: '{field.ValueData.Text}'");
+                    Console.WriteLine($"  Confidence: '{field.Confidence}'");
                 }
             }
             #endregion

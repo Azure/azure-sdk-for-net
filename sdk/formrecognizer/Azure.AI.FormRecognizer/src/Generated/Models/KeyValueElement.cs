@@ -30,16 +30,20 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary> Initializes a new instance of KeyValueElement. </summary>
+        /// <param name="type"> Semantic data type of the key value element. </param>
         /// <param name="text"> The text content of the key or value. </param>
         /// <param name="boundingBox"> Bounding box of the key or value. </param>
         /// <param name="elements"> When includeTextDetails is set to true, a list of references to the text elements constituting this key or value. </param>
-        internal KeyValueElement(string text, IReadOnlyList<float> boundingBox, IReadOnlyList<string> elements)
+        internal KeyValueElement(KeyValueType? type, string text, IReadOnlyList<float> boundingBox, IReadOnlyList<string> elements)
         {
+            Type = type;
             Text = text;
             BoundingBox = boundingBox;
             Elements = elements;
         }
 
+        /// <summary> Semantic data type of the key value element. </summary>
+        public KeyValueType? Type { get; }
         /// <summary> The text content of the key or value. </summary>
         public string Text { get; }
         /// <summary> Bounding box of the key or value. </summary>

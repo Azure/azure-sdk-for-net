@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
-        public ConfigurationStoresRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2019-11-01-preview")
+        public ConfigurationStoresRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2020-06-01")
         {
             if (subscriptionId == null)
             {
@@ -66,6 +66,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 uri.AppendQuery("$skipToken", skipToken, true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -129,6 +130,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 uri.AppendQuery("$skipToken", skipToken, true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -203,6 +205,7 @@ namespace Azure.ResourceManager.AppConfiguration
             uri.AppendPath(configStoreName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -285,6 +288,7 @@ namespace Azure.ResourceManager.AppConfiguration
             uri.AppendPath(configStoreName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(configStoreCreationParameters);
@@ -373,6 +377,7 @@ namespace Azure.ResourceManager.AppConfiguration
             uri.AppendPath(configStoreName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -449,6 +454,7 @@ namespace Azure.ResourceManager.AppConfiguration
             uri.AppendPath(configStoreName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(configStoreUpdateParameters);
@@ -542,6 +548,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 uri.AppendQuery("$skipToken", skipToken, true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -627,6 +634,7 @@ namespace Azure.ResourceManager.AppConfiguration
             uri.AppendPath("/RegenerateKey", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(regenerateKeyParameters);
@@ -724,6 +732,7 @@ namespace Azure.ResourceManager.AppConfiguration
             uri.AppendPath("/listKeyValue", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(listKeyValueParameters);
@@ -814,6 +823,7 @@ namespace Azure.ResourceManager.AppConfiguration
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -882,6 +892,7 @@ namespace Azure.ResourceManager.AppConfiguration
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -960,6 +971,7 @@ namespace Azure.ResourceManager.AppConfiguration
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

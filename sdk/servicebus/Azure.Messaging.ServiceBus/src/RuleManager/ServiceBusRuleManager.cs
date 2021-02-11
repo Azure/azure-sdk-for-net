@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
-using Azure.Messaging.ServiceBus.Management;
+using Azure.Messaging.ServiceBus.Administration;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -37,7 +37,7 @@ namespace Azure.Messaging.ServiceBus
         /// <value>
         /// <c>true</c> if the rule manager is disposed; otherwise, <c>false</c>.
         /// </value>
-        public bool IsDisposed { get; private set; } = false;
+        public bool IsDisposed { get; private set; }
 
         /// <summary>
         /// The active connection to the Azure Service Bus service, enabling client communications for metadata
@@ -184,7 +184,6 @@ namespace Azure.Messaging.ServiceBus
         /// <returns>Returns a list of rules description</returns>
         public virtual async Task<IList<RuleProperties>> GetRulesAsync(CancellationToken cancellationToken = default)
         {
-
             Argument.AssertNotDisposed(IsDisposed, nameof(ServiceBusRuleManager));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             ServiceBusEventSource.Log.GetRuleStart(Identifier);
@@ -214,18 +213,18 @@ namespace Azure.Messaging.ServiceBus
         {
             IsDisposed = true;
 
-            ServiceBusEventSource.Log.ClientDisposeStart(typeof(ServiceBusRuleManager), Identifier);
+            ServiceBusEventSource.Log.ClientCloseStart(typeof(ServiceBusRuleManager), Identifier);
             try
             {
                 await InnerRuleManager.CloseAsync(CancellationToken.None).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
-                ServiceBusEventSource.Log.ClientDisposeException(typeof(ServiceBusRuleManager), Identifier, ex);
+                ServiceBusEventSource.Log.ClientCloseException(typeof(ServiceBusRuleManager), Identifier, ex);
                 throw;
             }
 
-            ServiceBusEventSource.Log.ClientDisposeComplete(typeof(ServiceBusRuleManager), Identifier);
+            ServiceBusEventSource.Log.ClientCloseComplete(typeof(ServiceBusRuleManager), Identifier);
         }
 
         /// <summary>

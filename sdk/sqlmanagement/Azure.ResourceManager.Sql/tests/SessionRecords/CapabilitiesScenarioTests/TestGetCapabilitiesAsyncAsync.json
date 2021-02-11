@@ -4,31 +4,32 @@
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Sql/locations/westus2/capabilities?api-version=2018-06-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-47f6d4819210ef4c877b80836c98b92b-d74b6a622dd1b548-00",
+        "traceparent": "00-65b9592a3ca82b4e8da89335f27a64bc-23e340b3cdbe2a4c-00",
         "User-Agent": [
-          "azsdk-net-ResourceManager.Sql/1.0.0-dev.20200817.1",
-          "(.NET Framework 4.8.4200.0; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-ResourceManager.Sql/1.0.0-alpha.20201006.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "e409b7081c8855938979737155780bb6",
+        "x-ms-client-request-id": "2240b093c8d84bad13a4dbe00a00166f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "852699",
+        "Content-Length": "821729",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 17 Aug 2020 08:23:08 GMT",
+        "Date": "Tue, 06 Oct 2020 22:34:39 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "d208b393-d4bc-4ad1-8825-94e40936edbc",
+        "x-ms-correlation-request-id": "23b5bedd-6199-49b2-a206-0d0ca46b4f2a",
         "x-ms-ratelimit-remaining-subscription-reads": "11998",
-        "x-ms-request-id": "0e9adbe2-e2cf-4864-aa95-b9e9952eac03",
-        "x-ms-routing-request-id": "WESTUS2:20200817T082309Z:d208b393-d4bc-4ad1-8825-94e40936edbc"
+        "x-ms-request-id": "585eeb36-2662-4d9d-9269-8d7cc8e19aeb",
+        "x-ms-routing-request-id": "WESTUS2:20201006T223439Z:23b5bedd-6199-49b2-a206-0d0ca46b4f2a"
       },
       "ResponseBody": {
         "name": "West US 2",
@@ -17917,66 +17918,6 @@
                         },
                         "status": "Visible",
                         "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 525312,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 3144704,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "logSize": {
-                          "limit": 30,
-                          "unit": "Percent"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 3145728,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 4194304,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "logSize": {
-                          "limit": 1048576,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 4195328,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 8388608,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "logSize": {
-                          "limit": 1048576,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
                       }
                     ],
                     "performanceLevel": {
@@ -18152,66 +18093,6 @@
                         "logSize": {
                           "limit": 30,
                           "unit": "Percent"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 656384,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 3144704,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "logSize": {
-                          "limit": 30,
-                          "unit": "Percent"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 3145728,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 4194304,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "logSize": {
-                          "limit": 1048576,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 4195328,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 8388608,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "logSize": {
-                          "limit": 1048576,
-                          "unit": "Megabytes"
                         },
                         "status": "Visible",
                         "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
@@ -18412,66 +18293,6 @@
                         },
                         "status": "Visible",
                         "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 787456,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 3144704,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "logSize": {
-                          "limit": 30,
-                          "unit": "Percent"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 3145728,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 4194304,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "logSize": {
-                          "limit": 1048576,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 4195328,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 8388608,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "logSize": {
-                          "limit": 1048576,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
                       }
                     ],
                     "performanceLevel": {
@@ -18666,66 +18487,6 @@
                         "logSize": {
                           "limit": 30,
                           "unit": "Percent"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 918528,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 3144704,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "logSize": {
-                          "limit": 30,
-                          "unit": "Percent"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 3145728,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 4194304,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "logSize": {
-                          "limit": 1048576,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 4195328,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 8388608,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "logSize": {
-                          "limit": 1048576,
-                          "unit": "Megabytes"
                         },
                         "status": "Visible",
                         "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
@@ -18926,66 +18687,6 @@
                         },
                         "status": "Visible",
                         "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 1049600,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 3144704,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "logSize": {
-                          "limit": 30,
-                          "unit": "Percent"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 3145728,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 4194304,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "logSize": {
-                          "limit": 1048576,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 4195328,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 8388608,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "logSize": {
-                          "limit": 1048576,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
                       }
                     ],
                     "performanceLevel": {
@@ -19180,66 +18881,6 @@
                         "logSize": {
                           "limit": 30,
                           "unit": "Percent"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 1180672,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 3144704,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "logSize": {
-                          "limit": 30,
-                          "unit": "Percent"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 3145728,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 4194304,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "logSize": {
-                          "limit": 1048576,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 4195328,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 8388608,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "logSize": {
-                          "limit": 1048576,
-                          "unit": "Megabytes"
                         },
                         "status": "Visible",
                         "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
@@ -19440,66 +19081,6 @@
                         },
                         "status": "Visible",
                         "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 1311744,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 3144704,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "logSize": {
-                          "limit": 30,
-                          "unit": "Percent"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 3145728,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 4194304,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "logSize": {
-                          "limit": 1048576,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 4195328,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 8388608,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "logSize": {
-                          "limit": 1048576,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
                       }
                     ],
                     "performanceLevel": {
@@ -19697,66 +19278,6 @@
                         },
                         "status": "Visible",
                         "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 1573888,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 3144704,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "logSize": {
-                          "limit": 30,
-                          "unit": "Percent"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 3145728,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 4194304,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "logSize": {
-                          "limit": 1048576,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 4195328,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 8388608,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "logSize": {
-                          "limit": 1048576,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
                       }
                     ],
                     "performanceLevel": {
@@ -19951,66 +19472,6 @@
                         "logSize": {
                           "limit": 30,
                           "unit": "Percent"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 2098176,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 3144704,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "logSize": {
-                          "limit": 30,
-                          "unit": "Percent"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 3145728,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 4194304,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "logSize": {
-                          "limit": 1048576,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 4195328,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 8388608,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "logSize": {
-                          "limit": 1048576,
-                          "unit": "Megabytes"
                         },
                         "status": "Visible",
                         "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
@@ -20219,26 +19680,6 @@
                         },
                         "maxValue": {
                           "limit": 4194304,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "logSize": {
-                          "limit": 1048576,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 4195328,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 8388608,
                           "unit": "Megabytes"
                         },
                         "scaleSize": {
@@ -54167,66 +53608,6 @@
                         },
                         "status": "Visible",
                         "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 525312,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 3144704,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "logSize": {
-                          "limit": 30,
-                          "unit": "Percent"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 3145728,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 4194304,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "logSize": {
-                          "limit": 1048576,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 4195328,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 8388608,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "logSize": {
-                          "limit": 1048576,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
                       }
                     ],
                     "supportedPerDatabaseMaxSizes": [
@@ -54269,54 +53650,6 @@
                         },
                         "maxValue": {
                           "limit": 524288,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 525312,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 3144704,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 3145728,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 4194304,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 4195328,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 8388608,
                           "unit": "Megabytes"
                         },
                         "scaleSize": {
@@ -54846,66 +54179,6 @@
                         },
                         "status": "Visible",
                         "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 656384,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 3144704,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "logSize": {
-                          "limit": 30,
-                          "unit": "Percent"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 3145728,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 4194304,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "logSize": {
-                          "limit": 1048576,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 4195328,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 8388608,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "logSize": {
-                          "limit": 1048576,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
                       }
                     ],
                     "supportedPerDatabaseMaxSizes": [
@@ -54948,54 +54221,6 @@
                         },
                         "maxValue": {
                           "limit": 655360,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 656384,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 3144704,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 3145728,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 4194304,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 4195328,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 8388608,
                           "unit": "Megabytes"
                         },
                         "scaleSize": {
@@ -55642,66 +54867,6 @@
                         },
                         "status": "Visible",
                         "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 787456,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 3144704,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "logSize": {
-                          "limit": 30,
-                          "unit": "Percent"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 3145728,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 4194304,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "logSize": {
-                          "limit": 1048576,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 4195328,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 8388608,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "logSize": {
-                          "limit": 1048576,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
                       }
                     ],
                     "supportedPerDatabaseMaxSizes": [
@@ -55744,54 +54909,6 @@
                         },
                         "maxValue": {
                           "limit": 786432,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 787456,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 3144704,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 3145728,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 4194304,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 4195328,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 8388608,
                           "unit": "Megabytes"
                         },
                         "scaleSize": {
@@ -56532,66 +55649,6 @@
                         },
                         "status": "Visible",
                         "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 918528,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 3144704,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "logSize": {
-                          "limit": 30,
-                          "unit": "Percent"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 3145728,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 4194304,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "logSize": {
-                          "limit": 1048576,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 4195328,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 8388608,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "logSize": {
-                          "limit": 1048576,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
                       }
                     ],
                     "supportedPerDatabaseMaxSizes": [
@@ -56634,54 +55691,6 @@
                         },
                         "maxValue": {
                           "limit": 917504,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 918528,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 3144704,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 3145728,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 4194304,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 4195328,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 8388608,
                           "unit": "Megabytes"
                         },
                         "scaleSize": {
@@ -57527,66 +56536,6 @@
                         },
                         "status": "Visible",
                         "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 1049600,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 3144704,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "logSize": {
-                          "limit": 30,
-                          "unit": "Percent"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 3145728,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 4194304,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "logSize": {
-                          "limit": 1048576,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 4195328,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 8388608,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "logSize": {
-                          "limit": 1048576,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
                       }
                     ],
                     "supportedPerDatabaseMaxSizes": [
@@ -57629,54 +56578,6 @@
                         },
                         "maxValue": {
                           "limit": 1048576,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 1049600,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 3144704,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 3145728,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 4194304,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 4195328,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 8388608,
                           "unit": "Megabytes"
                         },
                         "scaleSize": {
@@ -58638,66 +57539,6 @@
                         },
                         "status": "Visible",
                         "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 1180672,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 3144704,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "logSize": {
-                          "limit": 30,
-                          "unit": "Percent"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 3145728,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 4194304,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "logSize": {
-                          "limit": 1048576,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 4195328,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 8388608,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "logSize": {
-                          "limit": 1048576,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
                       }
                     ],
                     "supportedPerDatabaseMaxSizes": [
@@ -58740,54 +57581,6 @@
                         },
                         "maxValue": {
                           "limit": 1179648,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 1180672,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 3144704,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 3145728,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 4194304,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 4195328,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 8388608,
                           "unit": "Megabytes"
                         },
                         "scaleSize": {
@@ -59876,66 +58669,6 @@
                         },
                         "status": "Visible",
                         "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 1311744,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 3144704,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "logSize": {
-                          "limit": 30,
-                          "unit": "Percent"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 3145728,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 4194304,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "logSize": {
-                          "limit": 1048576,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 4195328,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 8388608,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "logSize": {
-                          "limit": 1048576,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
                       }
                     ],
                     "supportedPerDatabaseMaxSizes": [
@@ -59978,54 +58711,6 @@
                         },
                         "maxValue": {
                           "limit": 1310720,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 1311744,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 3144704,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 3145728,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 4194304,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 4195328,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 8388608,
                           "unit": "Megabytes"
                         },
                         "scaleSize": {
@@ -61252,66 +59937,6 @@
                         },
                         "status": "Visible",
                         "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 1573888,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 3144704,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "logSize": {
-                          "limit": 30,
-                          "unit": "Percent"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 3145728,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 4194304,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "logSize": {
-                          "limit": 1048576,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 4195328,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 8388608,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "logSize": {
-                          "limit": 1048576,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
                       }
                     ],
                     "supportedPerDatabaseMaxSizes": [
@@ -61354,54 +59979,6 @@
                         },
                         "maxValue": {
                           "limit": 1572864,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 1573888,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 3144704,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 3145728,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 4194304,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 4195328,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 8388608,
                           "unit": "Megabytes"
                         },
                         "scaleSize": {
@@ -62777,66 +61354,6 @@
                         },
                         "status": "Visible",
                         "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 2098176,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 3144704,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "logSize": {
-                          "limit": 30,
-                          "unit": "Percent"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 3145728,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 4194304,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "logSize": {
-                          "limit": 1048576,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 4195328,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 8388608,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "logSize": {
-                          "limit": 1048576,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
                       }
                     ],
                     "supportedPerDatabaseMaxSizes": [
@@ -62879,54 +61396,6 @@
                         },
                         "maxValue": {
                           "limit": 2097152,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 2098176,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 3144704,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 3145728,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 4194304,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 4195328,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 8388608,
                           "unit": "Megabytes"
                         },
                         "scaleSize": {
@@ -64482,26 +62951,6 @@
                         },
                         "status": "Visible",
                         "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 4195328,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 8388608,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "logSize": {
-                          "limit": 1048576,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
                       }
                     ],
                     "supportedPerDatabaseMaxSizes": [
@@ -64560,22 +63009,6 @@
                         },
                         "maxValue": {
                           "limit": 4194304,
-                          "unit": "Megabytes"
-                        },
-                        "scaleSize": {
-                          "limit": 1024,
-                          "unit": "Megabytes"
-                        },
-                        "status": "Visible",
-                        "reason": "M-Series databases/elastic pools are not available in this region for your subscription. For more information or to request quota, please contact Microsoft support."
-                      },
-                      {
-                        "minValue": {
-                          "limit": 4195328,
-                          "unit": "Megabytes"
-                        },
-                        "maxValue": {
-                          "limit": 8388608,
                           "unit": "Megabytes"
                         },
                         "scaleSize": {
@@ -67946,7 +66379,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "525404143",
+    "RandomSeed": "1408429054",
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }
 }

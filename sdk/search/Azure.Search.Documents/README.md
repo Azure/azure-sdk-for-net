@@ -43,7 +43,7 @@ Use the Azure.Search.Documents client library to:
 Install the Azure Cognitive Search client library for .NET with [NuGet][nuget]:
 
 ```Powershell
-dotnet add package Azure.Search.Documents
+dotnet add package Azure.Search.Documents --version 11.2.0-beta.1
 ```
 
 ### Prerequisites
@@ -128,9 +128,8 @@ foreach (SearchResult<SearchDocument> result in response.GetResults())
 }
 ```
 
-You can paste that into a new console app,
-[install the Azure.Search.Documents package](#install-the-package), add a
-`using Azure.Search.Documents;` statement, and then hit F5 to run.
+You can paste that into a new console app, install the Azure.Search.Documents
+package, add `using Azure; using Azure.Search.Documents; using Azure.Search.Documents.Models;` statements, and then hit Ctrl+F5 to run.
 
 ## Key concepts
 
@@ -166,6 +165,20 @@ is an older, fully featured `Microsoft.Azure.Search` client library (v10) with
 many similar looking APIs, so please be careful to avoid confusion when
 exploring online resources.  A good rule of thumb is to check for the namespace
 `using Azure.Search.Documents;` when you're looking for us._
+
+### Thread safety
+We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
+
+### Additional concepts
+<!-- CLIENT COMMON BAR -->
+[Client options](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions) |
+[Accessing the response](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#accessing-http-response-details-using-responset) |
+[Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
+[Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
+[Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md) |
+[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#mocking) |
+[Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
+<!-- CLIENT COMMON BAR -->
 
 ## Examples
 
@@ -445,7 +458,7 @@ additional questions or comments.
 [azure_sub]: https://azure.microsoft.com/free/
 [RequestFailedException]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core/src/RequestFailedException.cs
 [status_codes]: https://docs.microsoft.com/rest/api/searchservice/http-status-codes
-[samples]: samples/
+[samples]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/search/Azure.Search.Documents/samples/
 [search_contrib]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/search/CONTRIBUTING.md
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/

@@ -21,6 +21,7 @@ namespace Azure.Iot.Hub.Service
 
         private readonly DevicesRestClient _devicesRestClient;
         private readonly QueryClient _queryClient;
+        private readonly BulkRegistryRestClient _bulkRegistryClient;
 
         /// <summary>
         /// Initializes a new instance of DevicesClient.
@@ -33,14 +34,17 @@ namespace Azure.Iot.Hub.Service
         /// Initializes a new instance of DevicesClient.
         /// <param name="devicesRestClient"> The REST client to perform device, device twin, and bulk operations. </param>
         /// <param name="queryClient"> The convenience layer query client to perform query operations for the device. </param>
+        /// <param name="bulkRegistryClient"> The convenience layer client to perform bulk operations on devices. </param>
         /// </summary>
-        internal DevicesClient(DevicesRestClient devicesRestClient, QueryClient queryClient)
+        internal DevicesClient(DevicesRestClient devicesRestClient, QueryClient queryClient, BulkRegistryRestClient bulkRegistryClient)
         {
             Argument.AssertNotNull(devicesRestClient, nameof(devicesRestClient));
             Argument.AssertNotNull(queryClient, nameof(queryClient));
+            Argument.AssertNotNull(bulkRegistryClient, nameof(bulkRegistryClient));
 
             _devicesRestClient = devicesRestClient;
             _queryClient = queryClient;
+            _bulkRegistryClient = bulkRegistryClient;
         }
 
         /// <summary>
@@ -118,7 +122,7 @@ namespace Azure.Iot.Hub.Service
         /// </code>
         public virtual Task<Response<DeviceIdentity>> GetIdentityAsync(string deviceId, CancellationToken cancellationToken = default)
         {
-            return _devicesRestClient.GetDeviceAsync(deviceId, cancellationToken);
+            return _devicesRestClient.GetIdentityAsync(deviceId, cancellationToken);
         }
 
         /// <summary>
@@ -129,7 +133,7 @@ namespace Azure.Iot.Hub.Service
         /// <returns>The retrieved device identity and the http response <see cref="Response{T}"/>.</returns>
         public virtual Response<DeviceIdentity> GetIdentity(string deviceId, CancellationToken cancellationToken = default)
         {
-            return _devicesRestClient.GetDevice(deviceId, cancellationToken);
+            return _devicesRestClient.GetIdentity(deviceId, cancellationToken);
         }
 
         /// <summary>
@@ -192,9 +196,9 @@ namespace Azure.Iot.Hub.Service
                                 : ExportImportDeviceStatus.Enabled,
                     StatusReason = x.Key.StatusReason,
                     ImportMode = ExportImportDeviceImportMode.Create
-                }.WithTags(x.Value.Tags).WithPropertiesFrom(x.Value.Properties).WithParentScopes(x.Key.ParentScopes));
+                }.WithTags(x.Value.Tags).WithPropertiesFrom(x.Value.Properties));
 
-            return _devicesRestClient.BulkRegistryOperationsAsync(registryOperations, cancellationToken);
+            return _bulkRegistryClient.UpdateRegistryAsync(registryOperations, cancellationToken);
         }
 
         /// <summary>
@@ -218,9 +222,9 @@ namespace Azure.Iot.Hub.Service
                                 : ExportImportDeviceStatus.Enabled,
                     StatusReason = x.Key.StatusReason,
                     ImportMode = ExportImportDeviceImportMode.Create
-                }.WithTags(x.Value.Tags).WithPropertiesFrom(x.Value.Properties).WithParentScopes(x.Key.ParentScopes));
+                }.WithTags(x.Value.Tags).WithPropertiesFrom(x.Value.Properties));
 
-            return _devicesRestClient.BulkRegistryOperations(registryOperations, cancellationToken);
+            return _bulkRegistryClient.UpdateRegistry(registryOperations, cancellationToken);
         }
 
         /// <summary>
@@ -243,9 +247,9 @@ namespace Azure.Iot.Hub.Service
                                 : ExportImportDeviceStatus.Enabled,
                     StatusReason = x.StatusReason,
                     ImportMode = ExportImportDeviceImportMode.Create
-                }.WithParentScopes(x.ParentScopes));
+                });
 
-            return _devicesRestClient.BulkRegistryOperationsAsync(registryOperations, cancellationToken);
+            return _bulkRegistryClient.UpdateRegistryAsync(registryOperations, cancellationToken);
         }
 
         /// <summary>
@@ -268,9 +272,9 @@ namespace Azure.Iot.Hub.Service
                                 : ExportImportDeviceStatus.Enabled,
                     StatusReason = x.StatusReason,
                     ImportMode = ExportImportDeviceImportMode.Create
-                }.WithParentScopes(x.ParentScopes));
+                });
 
-            return _devicesRestClient.BulkRegistryOperations(registryOperations, cancellationToken);
+            return _bulkRegistryClient.UpdateRegistry(registryOperations, cancellationToken);
         }
 
         /// <summary>
@@ -298,9 +302,9 @@ namespace Azure.Iot.Hub.Service
                                 : ExportImportDeviceStatus.Enabled,
                     StatusReason = x.StatusReason,
                     ImportMode = precondition == BulkIfMatchPrecondition.Unconditional ? ExportImportDeviceImportMode.Update : ExportImportDeviceImportMode.UpdateIfMatchETag
-                }.WithParentScopes(x.ParentScopes));
+                });
 
-            return _devicesRestClient.BulkRegistryOperationsAsync(registryOperations, cancellationToken);
+            return _bulkRegistryClient.UpdateRegistryAsync(registryOperations, cancellationToken);
         }
 
         /// <summary>
@@ -328,9 +332,9 @@ namespace Azure.Iot.Hub.Service
                                 : ExportImportDeviceStatus.Enabled,
                     StatusReason = x.StatusReason,
                     ImportMode = precondition == BulkIfMatchPrecondition.Unconditional ? ExportImportDeviceImportMode.Update : ExportImportDeviceImportMode.UpdateIfMatchETag
-                }.WithParentScopes(x.ParentScopes));
+                });
 
-            return _devicesRestClient.BulkRegistryOperations(registryOperations, cancellationToken);
+            return _bulkRegistryClient.UpdateRegistry(registryOperations, cancellationToken);
         }
 
         /// <summary>
@@ -355,7 +359,7 @@ namespace Azure.Iot.Hub.Service
                         : ExportImportDeviceImportMode.DeleteIfMatchETag
                 });
 
-            return _devicesRestClient.BulkRegistryOperationsAsync(registryOperations, cancellationToken);
+            return _bulkRegistryClient.UpdateRegistryAsync(registryOperations, cancellationToken);
         }
 
         /// <summary>
@@ -380,7 +384,7 @@ namespace Azure.Iot.Hub.Service
                         : ExportImportDeviceImportMode.DeleteIfMatchETag
                 });
 
-            return _devicesRestClient.BulkRegistryOperations(registryOperations, cancellationToken);
+            return _bulkRegistryClient.UpdateRegistry(registryOperations, cancellationToken);
         }
 
         /// <summary>
@@ -506,7 +510,7 @@ namespace Azure.Iot.Hub.Service
                     ImportMode = precondition == BulkIfMatchPrecondition.Unconditional ? ExportImportDeviceImportMode.UpdateTwin : ExportImportDeviceImportMode.UpdateTwinIfMatchETag
                 }.WithTags(x.Tags).WithPropertiesFrom(x.Properties));
 
-            return _devicesRestClient.BulkRegistryOperationsAsync(registryOperations, cancellationToken);
+            return _bulkRegistryClient.UpdateRegistryAsync(registryOperations, cancellationToken);
         }
 
         /// <summary>
@@ -531,7 +535,7 @@ namespace Azure.Iot.Hub.Service
                         : ExportImportDeviceImportMode.UpdateTwinIfMatchETag
                 }.WithTags(x.Tags).WithPropertiesFrom(x.Properties));
 
-            return _devicesRestClient.BulkRegistryOperations(registryOperations, cancellationToken);
+            return _bulkRegistryClient.UpdateRegistry(registryOperations, cancellationToken);
         }
 
         /// <summary>
