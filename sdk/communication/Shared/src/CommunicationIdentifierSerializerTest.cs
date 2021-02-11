@@ -22,20 +22,20 @@ namespace Azure.Communication
                 new CommunicationIdentifierModel
                 {
                     RawId = TestRawId,
-                    CommunicationUser = new CommunicationUserIdentifierModel { Id = TestUserId },
-                    PhoneNumber = new PhoneNumberIdentifierModel { Value = TestPhoneNumber },
+                    CommunicationUser = new CommunicationUserIdentifierModel(TestUserId),
+                    PhoneNumber = new PhoneNumberIdentifierModel(TestPhoneNumber),
                 },
                 new CommunicationIdentifierModel
                 {
                     RawId = TestRawId,
-                    CommunicationUser = new CommunicationUserIdentifierModel { Id = TestUserId },
-                    MicrosoftTeamsUser = new MicrosoftTeamsUserIdentifierModel { UserId = TestTeamsUserId, IsAnonymous = true, Cloud = CommunicationCloudEnvironmentModel.Public, }
+                    CommunicationUser = new CommunicationUserIdentifierModel(TestUserId),
+                    MicrosoftTeamsUser = new MicrosoftTeamsUserIdentifierModel(TestTeamsUserId, isAnonymous: true, CommunicationCloudEnvironmentModel.Public),
                 },
                 new CommunicationIdentifierModel
                 {
                     RawId = TestRawId,
-                    PhoneNumber = new PhoneNumberIdentifierModel { Value = TestPhoneNumber },
-                    MicrosoftTeamsUser = new MicrosoftTeamsUserIdentifierModel { UserId = TestTeamsUserId, IsAnonymous = true, Cloud = CommunicationCloudEnvironmentModel.Public, }
+                    PhoneNumber = new PhoneNumberIdentifierModel(TestPhoneNumber),
+                    MicrosoftTeamsUser = new MicrosoftTeamsUserIdentifierModel(TestTeamsUserId, isAnonymous: true, CommunicationCloudEnvironmentModel.Public),
                 },
             };
 
@@ -49,11 +49,8 @@ namespace Azure.Communication
             CommunicationIdentifierModel[] modelsWithMissingMandatoryProperty = new[]
             {
                 new CommunicationIdentifierModel(), // Missing RawId
-                new CommunicationIdentifierModel { CommunicationUser = new CommunicationUserIdentifierModel() }, // Missing Id
-                new CommunicationIdentifierModel { PhoneNumber = new PhoneNumberIdentifierModel(), RawId = TestRawId }, // Missing PhoneNumber
-                new CommunicationIdentifierModel { RawId = TestRawId, MicrosoftTeamsUser = new MicrosoftTeamsUserIdentifierModel { UserId = TestTeamsUserId, Cloud = CommunicationCloudEnvironmentModel.Public } }, // Missing IsAnonymous
-                new CommunicationIdentifierModel { RawId = TestRawId, MicrosoftTeamsUser = new MicrosoftTeamsUserIdentifierModel { IsAnonymous = true, Cloud = CommunicationCloudEnvironmentModel.Public } }, // Missing UserId
-                new CommunicationIdentifierModel { RawId = TestRawId, MicrosoftTeamsUser = new MicrosoftTeamsUserIdentifierModel { UserId = TestTeamsUserId, IsAnonymous = true, } }, // Missing Cloud
+                new CommunicationIdentifierModel { RawId = TestRawId, MicrosoftTeamsUser = new MicrosoftTeamsUserIdentifierModel(TestTeamsUserId) { Cloud = CommunicationCloudEnvironmentModel.Public } }, // Missing IsAnonymous
+                new CommunicationIdentifierModel { RawId = TestRawId, MicrosoftTeamsUser = new MicrosoftTeamsUserIdentifierModel(TestTeamsUserId) { IsAnonymous = true, } }, // Missing Cloud
             };
 
             foreach (CommunicationIdentifierModel item in modelsWithMissingMandatoryProperty)
@@ -74,10 +71,7 @@ namespace Azure.Communication
             CommunicationUserIdentifier identifier = (CommunicationUserIdentifier)CommunicationIdentifierSerializer.Deserialize(
                 new CommunicationIdentifierModel
                 {
-                    CommunicationUser = new CommunicationUserIdentifierModel
-                    {
-                        Id = TestUserId,
-                    },
+                    CommunicationUser = new CommunicationUserIdentifierModel(TestUserId),
                     RawId = TestRawId,
                 });
 
@@ -126,10 +120,7 @@ namespace Azure.Communication
             PhoneNumberIdentifier identifier = (PhoneNumberIdentifier)CommunicationIdentifierSerializer.Deserialize(
                 new CommunicationIdentifierModel
                 {
-                    PhoneNumber = new PhoneNumberIdentifierModel
-                    {
-                        Value = TestPhoneNumber,
-                    },
+                    PhoneNumber = new PhoneNumberIdentifierModel(TestPhoneNumber),
                     RawId = TestRawId,
                 });
 
@@ -163,9 +154,8 @@ namespace Azure.Communication
             MicrosoftTeamsUserIdentifier identifier = (MicrosoftTeamsUserIdentifier)CommunicationIdentifierSerializer.Deserialize(
                 new CommunicationIdentifierModel
                 {
-                    MicrosoftTeamsUser = new MicrosoftTeamsUserIdentifierModel
+                    MicrosoftTeamsUser = new MicrosoftTeamsUserIdentifierModel(TestTeamsUserId)
                     {
-                        UserId = TestTeamsUserId,
                         IsAnonymous = isAnonymous,
                         Cloud = TestTeamsCloud,
                     },

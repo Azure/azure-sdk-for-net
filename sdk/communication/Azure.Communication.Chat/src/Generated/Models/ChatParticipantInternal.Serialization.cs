@@ -7,6 +7,7 @@
 
 using System;
 using System.Text.Json;
+using Azure.Communication;
 using Azure.Core;
 
 namespace Azure.Communication.Chat
@@ -18,6 +19,11 @@ namespace Azure.Communication.Chat
             writer.WriteStartObject();
             writer.WritePropertyName("id");
             writer.WriteStringValue(Id);
+            if (Optional.IsDefined(Identifier))
+            {
+                writer.WritePropertyName("identifier");
+                writer.WriteObjectValue(Identifier);
+            }
             if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName");
@@ -34,6 +40,7 @@ namespace Azure.Communication.Chat
         internal static ChatParticipantInternal DeserializeChatParticipantInternal(JsonElement element)
         {
             string id = default;
+            Optional<CommunicationIdentifierModel> identifier = default;
             Optional<string> displayName = default;
             Optional<DateTimeOffset> shareHistoryTime = default;
             foreach (var property in element.EnumerateObject())
@@ -41,6 +48,16 @@ namespace Azure.Communication.Chat
                 if (property.NameEquals("id"))
                 {
                     id = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("identifier"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    identifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
                     continue;
                 }
                 if (property.NameEquals("displayName"))
@@ -59,7 +76,7 @@ namespace Azure.Communication.Chat
                     continue;
                 }
             }
-            return new ChatParticipantInternal(id, displayName.Value, Optional.ToNullable(shareHistoryTime));
+            return new ChatParticipantInternal(id, identifier.Value, displayName.Value, Optional.ToNullable(shareHistoryTime));
         }
     }
 }

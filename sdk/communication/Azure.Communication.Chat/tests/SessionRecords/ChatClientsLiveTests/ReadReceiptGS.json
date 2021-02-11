@@ -144,7 +144,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
-        "Content-Length": "239",
+        "Content-Length": "487",
         "Content-Type": "application/json",
         "repeatability-Request-ID": "contoso-B0A747F1-6245-4307-8267-B974340677DB",
         "User-Agent": "azsdk-net-Communication.Chat/1.0.0-alpha.20210204.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
@@ -155,10 +155,20 @@
         "topic": "Thread topic - ReadReceipts Test",
         "participants": [
           {
-            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-ebba-eef0-8b3a0d005be5"
+            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-ebba-eef0-8b3a0d005be5",
+            "identifier": {
+              "communicationUser": {
+                "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-ebba-eef0-8b3a0d005be5"
+              }
+            }
           },
           {
-            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-ee95-eef0-8b3a0d005be6"
+            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-ee95-eef0-8b3a0d005be6",
+            "identifier": {
+              "communicationUser": {
+                "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-ee95-eef0-8b3a0d005be6"
+              }
+            }
           }
         ]
       },

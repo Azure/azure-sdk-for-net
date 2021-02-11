@@ -30,8 +30,13 @@
       "ResponseBody": {
         "identity": {
           "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-3f88-3ef0-8b3a0d006079"
+        },
+        "identifier": {
+          "communicationUser": {
+            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-3f88-3ef0-8b3a0d006079"
+          }
         }
-      }
+      }  
     },
     {
       "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/identities/8%3Aacs%3A357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-3f88-3ef0-8b3a0d006079/:issueAccessToken?api-version=2021-03-07",
@@ -99,6 +104,11 @@
       "ResponseBody": {
         "identity": {
           "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-4222-3ef0-8b3a0d00607a"
+        },
+        "identifier": {
+          "communicationUser": {
+            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-4222-3ef0-8b3a0d00607a"
+          }
         }
       }
     },
@@ -168,6 +178,11 @@
       "ResponseBody": {
         "identity": {
           "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-44c4-3ef0-8b3a0d00607b"
+        },
+        "identifier": {
+          "communicationUser": {
+            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-44c4-3ef0-8b3a0d00607b"
+          }
         }
       }
     },
@@ -351,7 +366,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
-        "Content-Length": "319",
+        "Content-Length": "691",
         "Content-Type": "application/json",
         "repeatability-Request-ID": "contoso-F0A747F1-6245-4307-8267-B974340677D2",
         "User-Agent": "azsdk-net-Communication.Chat/1.0.0-alpha.20210204.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
@@ -362,13 +377,28 @@
         "topic": "Thread sync from C# sdk",
         "participants": [
           {
-            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-3f88-3ef0-8b3a0d006079"
+            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-3f88-3ef0-8b3a0d006079",
+            "identifier": {
+              "communicationUser": {
+                "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-3f88-3ef0-8b3a0d006079"
+              }
+            }
           },
           {
-            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-4222-3ef0-8b3a0d00607a"
+            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-4222-3ef0-8b3a0d00607a",
+            "identifier": {
+              "communicationUser": {
+                "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-4222-3ef0-8b3a0d00607a"
+              }
+            }
           },
           {
-            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-44c4-3ef0-8b3a0d00607b"
+            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-44c4-3ef0-8b3a0d00607b",
+            "identifier": {
+              "communicationUser": {
+                "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-44c4-3ef0-8b3a0d00607b"
+              }
+            }
           }
         ]
       },
@@ -399,7 +429,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
-        "Content-Length": "319",
+        "Content-Length": "691",
         "Content-Type": "application/json",
         "repeatability-Request-ID": "contoso-A0A747F1-6245-4307-8267-B974340677DA",
         "User-Agent": "azsdk-net-Communication.Chat/1.0.0-alpha.20210204.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
@@ -410,13 +440,28 @@
         "topic": "Thread sync from C# sdk",
         "participants": [
           {
-            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-3f88-3ef0-8b3a0d006079"
+            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-3f88-3ef0-8b3a0d006079",
+            "identifier": {
+              "communicationUser": {
+                "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-3f88-3ef0-8b3a0d006079"
+              }
+            }
           },
           {
-            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-4222-3ef0-8b3a0d00607a"
+            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-4222-3ef0-8b3a0d00607a",
+            "identifier": {
+              "communicationUser": {
+                "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-4222-3ef0-8b3a0d00607a"
+              }
+            }
           },
           {
-            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-44c4-3ef0-8b3a0d00607b"
+            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-44c4-3ef0-8b3a0d00607b",
+            "identifier": {
+              "communicationUser": {
+                "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-44c4-3ef0-8b3a0d00607b"
+              }
+            }
           }
         ]
       },
@@ -1651,7 +1696,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
-        "Content-Length": "107",
+        "Content-Length": "231",
         "Content-Type": "application/json",
         "User-Agent": "azsdk-net-Communication.Chat/1.0.0-alpha.20210204.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "d0ee74ef00195faaffb3752b505e1ea3",
@@ -1660,7 +1705,12 @@
       "RequestBody": {
         "participants": [
           {
-            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-475b-3ef0-8b3a0d00607c"
+            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-475b-3ef0-8b3a0d00607c",
+            "identifier": {
+              "communicationUser": {
+                "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-475b-3ef0-8b3a0d00607c"
+              }
+            }
           }
         ]
       },
@@ -1683,7 +1733,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
-        "Content-Length": "107",
+        "Content-Length": "231",
         "Content-Type": "application/json",
         "User-Agent": "azsdk-net-Communication.Chat/1.0.0-alpha.20210204.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "47a17b5667d7f2bd23b7e47de7268184",
@@ -1692,7 +1742,12 @@
       "RequestBody": {
         "participants": [
           {
-            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-49f9-3ef0-8b3a0d00607d"
+            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-49f9-3ef0-8b3a0d00607d",
+            "identifier": {
+              "communicationUser": {
+                "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-49f9-3ef0-8b3a0d00607d"
+              }
+            }
           }
         ]
       },

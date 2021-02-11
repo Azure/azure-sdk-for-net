@@ -361,7 +361,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
-        "Content-Length": "320",
+        "Content-Length": "692",
         "Content-Type": "application/json",
         "repeatability-Request-ID": "contoso-C0A747F1-6245-4307-8267-B974340677DC",
         "traceparent": "00-3711e0e1044bb54e85e05ee1205a4dfb-12fff86c188bf643-00",
@@ -373,13 +373,28 @@
         "topic": "Thread async from C# sdk",
         "participants": [
           {
-            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-7bf0-3ef0-8b3a0d006087"
+            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-7bf0-3ef0-8b3a0d006087",
+            "identifier": {
+              "communicationUser": {
+                "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-7bf0-3ef0-8b3a0d006087"
+              }
+            }
           },
           {
-            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-7e83-3ef0-8b3a0d006088"
+            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-7e83-3ef0-8b3a0d006088",
+            "identifier": {
+              "communicationUser": {
+                "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-7e83-3ef0-8b3a0d006088"
+              }
+            }
           },
           {
-            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-811d-3ef0-8b3a0d006089"
+            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-811d-3ef0-8b3a0d006089",
+            "identifier": {
+              "communicationUser": {
+                "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-811d-3ef0-8b3a0d006089"
+              }
+            }
           }
         ]
       },
@@ -410,7 +425,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
-        "Content-Length": "320",
+        "Content-Length": "692",
         "Content-Type": "application/json",
         "repeatability-Request-ID": "contoso-D0A747F1-6245-4307-8267-B974340677DD",
         "traceparent": "00-9480a282f82fab4982b81a91a5b2b7c2-933dcb6169671047-00",
@@ -422,13 +437,28 @@
         "topic": "Thread async from C# sdk",
         "participants": [
           {
-            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-7bf0-3ef0-8b3a0d006087"
+            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-7bf0-3ef0-8b3a0d006087",
+            "identifier": {
+              "communicationUser": {
+                "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-7bf0-3ef0-8b3a0d006087"
+              }
+            }
           },
           {
-            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-7e83-3ef0-8b3a0d006088"
+            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-7e83-3ef0-8b3a0d006088",
+            "identifier": {
+              "communicationUser": {
+                "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-7e83-3ef0-8b3a0d006088"
+              }
+            }
           },
           {
-            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-811d-3ef0-8b3a0d006089"
+            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-811d-3ef0-8b3a0d006089",
+            "identifier": {
+              "communicationUser": {
+                "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-811d-3ef0-8b3a0d006089"
+              }
+            }
           }
         ]
       },
@@ -1690,7 +1720,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
-        "Content-Length": "107",
+        "Content-Length": "231",
         "Content-Type": "application/json",
         "traceparent": "00-62011652a1df8f4ca8e79c8949c4f315-68f6aceb660d4f41-00",
         "User-Agent": "azsdk-net-Communication.Chat/1.0.0-alpha.20210204.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
@@ -1700,7 +1730,12 @@
       "RequestBody": {
         "participants": [
           {
-            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-83c0-3ef0-8b3a0d00608a"
+            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-83c0-3ef0-8b3a0d00608a",
+            "identifier": {
+              "communicationUser": {
+                "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-83c0-3ef0-8b3a0d00608a"
+              }
+            }
           }
         ]
       },
@@ -1723,7 +1758,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
-        "Content-Length": "107",
+        "Content-Length": "231",
         "Content-Type": "application/json",
         "traceparent": "00-b64c3bf97fb29a45a3519889a705b854-b7dd899a38d3bc45-00",
         "User-Agent": "azsdk-net-Communication.Chat/1.0.0-alpha.20210204.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
@@ -1733,7 +1768,12 @@
       "RequestBody": {
         "participants": [
           {
-            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-8656-3ef0-8b3a0d00608b"
+            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-8656-3ef0-8b3a0d00608b",
+            "identifier": {
+              "communicationUser": {
+                "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-8656-3ef0-8b3a0d00608b"
+              }
+            }
           }
         ]
       },
