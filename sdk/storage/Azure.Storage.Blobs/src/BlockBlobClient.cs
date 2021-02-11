@@ -1077,8 +1077,13 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(base64BlockId)}: {base64BlockId}\n" +
                     $"{nameof(conditions)}: {conditions}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlockBlobClient)}.{nameof(StageBlock)}");
+
                 try
                 {
+                    scope.Start();
+
                     Errors.VerifyStreamPosition(content, nameof(content));
                     content = content.WithNoDispose().WithProgress(progressHandler);
 
@@ -1119,11 +1124,13 @@ namespace Azure.Storage.Blobs.Specialized
                 catch (Exception ex)
                 {
                     ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     ClientConfiguration.Pipeline.LogMethodExit(nameof(BlockBlobClient));
+                    scope.Dispose();
                 }
             }
         }

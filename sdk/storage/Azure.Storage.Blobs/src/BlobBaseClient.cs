@@ -2918,7 +2918,7 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(snapshotsOption)}: {snapshotsOption}\n" +
                     $"{nameof(conditions)}: {conditions}");
 
-                operationName ??= $"{nameof(BlobBaseClient)}.{nameof(AbortCopyFromUri)}";
+                operationName ??= $"{nameof(BlobBaseClient)}.{nameof(Delete)}";
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
 
                 try

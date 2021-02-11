@@ -298,16 +298,43 @@ namespace Azure.Storage.Blobs
         #endregion
 
         #region ToBlobContentInfo
-        // TODO
         internal static BlobContentInfo ToBlobContentInfo(this ResponseWithHeaders<AppendBlobCreateHeaders> response)
         {
-            return null;
+            if (response == null)
+            {
+                return null;
+            }
+
+            return new BlobContentInfo
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                ContentHash = response.Headers.ContentMD5,
+                VersionId = response.Headers.VersionId,
+                EncryptionKeySha256 = response.Headers.EncryptionKeySha256,
+                EncryptionScope = response.Headers.EncryptionScope,
+                //BlobSequenceNumber is not returned by Append Blobs.
+            };
         }
 
-        // TODO
         internal static BlobContentInfo ToBlobContentInfo(this ResponseWithHeaders<PageBlobCreateHeaders> response)
         {
-            return null;
+            if (response == null)
+            {
+                return null;
+            }
+
+            return new BlobContentInfo
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                ContentHash = response.Headers.ContentMD5,
+                VersionId = response.Headers.VersionId,
+                EncryptionKeySha256 = response.Headers.EncryptionKeySha256,
+                EncryptionScope = response.Headers.EncryptionScope,
+                // TODO
+                //BlobSequenceNumber = response.Headers.Blob
+            };
         }
         #endregion
 
@@ -433,25 +460,60 @@ namespace Azure.Storage.Blobs
         {
             return null;
         }
+        #endregion
 
-        // TODO
+        #region ToBlobSnapshotInfo
         internal static BlobSnapshotInfo ToBlobSnapshotInfo(this ResponseWithHeaders<BlobCreateSnapshotHeaders> response)
         {
-            return null;
+            if (response == null)
+            {
+                return null;
+            }
+
+            return new BlobSnapshotInfo
+            {
+                Snapshot = response.Headers.Snapshot,
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                VersionId = response.Headers.VersionId,
+                IsServerEncrypted = response.Headers.IsServerEncrypted.GetValueOrDefault()
+            };
         }
         #endregion
 
         #region ToBlobInfo
-        // TODO
         internal static BlobInfo ToBlobInfo(this ResponseWithHeaders<BlobSetMetadataHeaders> response)
         {
-            return null;
+            if (response == null)
+            {
+                return null;
+            }
+
+            return new BlobInfo
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                // TODO
+                //BlobSequenceNumber = response.Headers
+                VersionId = response.Headers.VersionId
+            };
         }
 
-        // TODO
         internal static BlobInfo ToBlobInfo(this ResponseWithHeaders<BlobSetHttpHeadersHeaders> response)
         {
-            return null;
+            if (response == null)
+            {
+                return null;
+            }
+
+            return new BlobInfo
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                // TODO
+                //BlobSequenceNumber = response.Headers
+                //VersionId = response.Headers.VersionId
+            };
         }
         #endregion
 
