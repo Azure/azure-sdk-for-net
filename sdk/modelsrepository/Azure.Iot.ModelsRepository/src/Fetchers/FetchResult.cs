@@ -7,9 +7,6 @@ namespace Azure.Iot.ModelsRepository.Fetchers
     {
         public string Definition { get; set; }
         public string Path { get; set; }
-        public bool FromExpanded
-        {
-            get { return Path.EndsWith("expanded.json", System.StringComparison.InvariantCultureIgnoreCase); }
-        }
+        public bool FromExpanded => Path.EndsWith("expanded.json", System.StringComparison.InvariantCultureIgnoreCase);
     }
 }

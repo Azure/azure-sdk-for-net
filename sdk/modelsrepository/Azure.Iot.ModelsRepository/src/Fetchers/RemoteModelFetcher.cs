@@ -75,6 +75,7 @@ namespace Azure.Iot.ModelsRepository.Fetchers
             request.Uri.Reset(new Uri(path));
 
             Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
+
             if (response.Status >= 200 && response.Status <= 299)
             {
                 return await GetContentAsync(response.ContentStream, cancellationToken).ConfigureAwait(false);
@@ -82,6 +83,7 @@ namespace Azure.Iot.ModelsRepository.Fetchers
 
             return null;
         }
+
         private static async Task<string> GetContentAsync(Stream content, CancellationToken cancellationToken)
         {
             using (JsonDocument json = await JsonDocument.ParseAsync(content, default, cancellationToken).ConfigureAwait(false))

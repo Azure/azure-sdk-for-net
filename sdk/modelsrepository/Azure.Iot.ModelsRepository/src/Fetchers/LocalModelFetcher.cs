@@ -20,14 +20,14 @@ namespace Azure.Iot.ModelsRepository.Fetchers
             _tryExpanded = clientOptions.DependencyResolution == DependencyResolutionOption.TryFromExpanded;
         }
 
-        public async Task<FetchResult> FetchAsync(string dtmi, Uri repositoryUri, CancellationToken cancellationToken = default)
+        public Task<FetchResult> FetchAsync(string dtmi, Uri repositoryUri, CancellationToken cancellationToken = default)
         {
-            return await Task.Run(() => Fetch(dtmi, repositoryUri, cancellationToken)).ConfigureAwait(false);
+            return Task.FromResult(Fetch(dtmi, repositoryUri, cancellationToken));
         }
 
         public FetchResult Fetch(string dtmi, Uri repositoryUri, CancellationToken cancellationToken = default)
         {
-            Queue<string> work = new Queue<string>();
+            var work = new Queue<string>();
 
             if (_tryExpanded)
                 work.Enqueue(GetPath(dtmi, repositoryUri, true));
@@ -40,7 +40,7 @@ namespace Azure.Iot.ModelsRepository.Fetchers
                 string tryContentPath = work.Dequeue();
                 ResolverEventSource.Shared.FetchingModelContent(tryContentPath);
 
-                if (EvaluatePath(tryContentPath))
+                if (File.Exists(tryContentPath))
                 {
                     return new FetchResult()
                     {
@@ -60,11 +60,6 @@ namespace Azure.Iot.ModelsRepository.Fetchers
         {
             string registryPath = repositoryUri.AbsolutePath;
             return DtmiConventions.DtmiToQualifiedPath(dtmi, registryPath, expanded);
-        }
-
-        private static bool EvaluatePath(string path)
-        {
-            return File.Exists(path);
         }
     }
 }

@@ -22,9 +22,9 @@ namespace Azure.Iot.ModelsRepository
         {
             ClientOptions = options ?? new ResolverClientOptions();
             RepositoryUri = repositoryUri;
-            _modelFetcher = repositoryUri.Scheme == "file" ?
-                _modelFetcher = new LocalModelFetcher(ClientOptions) :
-                _modelFetcher = new RemoteModelFetcher(ClientOptions);
+            _modelFetcher = repositoryUri.Scheme == "file"
+                ? _modelFetcher = new LocalModelFetcher(ClientOptions)
+                : _modelFetcher = new RemoteModelFetcher(ClientOptions);
             _clientId = Guid.NewGuid();
             ResolverEventSource.Shared.InitFetcher(_clientId, repositoryUri.Scheme);
         }
