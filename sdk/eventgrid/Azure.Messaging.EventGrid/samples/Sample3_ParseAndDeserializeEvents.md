@@ -35,17 +35,17 @@ foreach (CloudEvent cloudEvent in cloudEvents)
     {
         case "Contoso.Items.ItemReceived":
             // By default, GetData uses JsonObjectSerializer to deserialize the payload
-            ContosoItemReceivedEventData itemReceived = cloudEvent.Data.ToObjectFromJson<ContosoItemReceivedEventData>();
+            ContosoItemReceivedEventData itemReceived = cloudEvent.EventData.ToObjectFromJson<ContosoItemReceivedEventData>();
             Console.WriteLine(itemReceived.ItemSku);
             break;
         case "MyApp.Models.CustomEventType":
             // One can also specify a custom ObjectSerializer as needed to deserialize the payload correctly
-            TestPayload testPayload = cloudEvent.Data.ToObject<TestPayload>(myCustomSerializer);
+            TestPayload testPayload = cloudEvent.EventData.ToObject<TestPayload>(myCustomSerializer);
             Console.WriteLine(testPayload.Name);
             break;
         case SystemEventNames.StorageBlobDeleted:
             // Example for deserializing system events using GetData<T>
-            StorageBlobDeletedEventData blobDeleted = cloudEvent.Data.ToObjectFromJson<StorageBlobDeletedEventData>();
+            StorageBlobDeletedEventData blobDeleted = cloudEvent.EventData.ToObjectFromJson<StorageBlobDeletedEventData>();
             Console.WriteLine(blobDeleted.BlobType);
             break;
     }

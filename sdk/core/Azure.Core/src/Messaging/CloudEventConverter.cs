@@ -98,7 +98,7 @@ namespace Azure.Messaging
                 }
                 else
                 {
-                    (cloudEvent.ExtensionAttributes as CloudEventExtensionAttributes<string, object>)!.AddWithoutValidation(property.Name, property.Value.GetObject()!);
+                    (cloudEvent.ExtensionAttributes as CloudEventExtensionAttributes<string, object>).AddWithoutValidation(property.Name, property.Value.GetObject());
                 }
             }
             return cloudEvent;
