@@ -237,3 +237,16 @@ directive:
   transform: >
     delete $.Delimiter.required;
 ```
+
+### Fix BlobDeleteType
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters
+  transform: >
+    delete $.BlobDeleteType.enum;
+    $.BlobDeleteType.enum = [
+        "None",
+        "Permanent"
+    ];
+```
