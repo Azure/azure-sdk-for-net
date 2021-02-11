@@ -768,22 +768,55 @@ namespace Azure.Storage.Blobs
         #endregion
 
         #region ToBlobCopyInfo
-        // TODO
         internal static BlobCopyInfo ToBlobCopyInfo(this ResponseWithHeaders<BlobCopyFromURLHeaders> response)
         {
-            return null;
+            if (response == null)
+            {
+                return null;
+            }
+
+            return new BlobCopyInfo
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                VersionId = response.Headers.VersionId,
+                CopyId = response.Headers.CopyId,
+                CopyStatus = CopyStatusExtensions.ToCopyStatus(response.Headers.CopyStatus)
+            };
         }
 
-        // TODO
         internal static BlobCopyInfo ToBlobCopyInfo(this ResponseWithHeaders<BlobStartCopyFromURLHeaders> response)
         {
-            return null;
+            if (response == null)
+            {
+                return null;
+            }
+
+            return new BlobCopyInfo
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                VersionId = response.Headers.VersionId,
+                CopyId = response.Headers.CopyId,
+                CopyStatus = response.Headers.CopyStatus.GetValueOrDefault()
+            };
         }
 
-        // TODO
         internal static BlobCopyInfo ToBlobCopyInfo(this ResponseWithHeaders<PageBlobCopyIncrementalHeaders> response)
         {
-            return null;
+            if (response == null)
+            {
+                return null;
+            }
+
+            return new BlobCopyInfo
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                // TODO VersionId = response.Headers.VersionId,
+                CopyId = response.Headers.CopyId,
+                CopyStatus = response.Headers.CopyStatus.GetValueOrDefault()
+            };
         }
         #endregion
 

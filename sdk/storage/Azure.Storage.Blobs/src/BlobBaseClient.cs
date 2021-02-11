@@ -3046,7 +3046,6 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(Uri)}: {Uri}");
 
                 string operationName = $"{nameof(BlobBaseClient)}.{nameof(Exists)}";
-                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
 
                 try
                 {
@@ -3068,13 +3067,11 @@ namespace Azure.Storage.Blobs.Specialized
                 catch (Exception ex)
                 {
                     ClientConfiguration.Pipeline.LogException(ex);
-                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     ClientConfiguration.Pipeline.LogMethodExit(nameof(BlobBaseClient));
-                    scope.Dispose();
                 }
             }
         }
@@ -3320,7 +3317,8 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(conditions)}: {conditions}");
 
-                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobBaseClient)}.{nameof(GetProperties)}");
+                operationName ??= $"{nameof(BlobBaseClient)}.{nameof(GetProperties)}";
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
 
                 try
                 {
