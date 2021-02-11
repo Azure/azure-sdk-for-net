@@ -11,7 +11,7 @@ namespace Azure.Core
     /// <summary>
     /// A helper class for parsing Authorization challenge headers.
     /// </summary>
-    public static class AuthorizationChallengeParser
+    internal static class AuthorizationChallengeParser
     {
         /// <summary>
         /// Parses the specified parameter from a challenge hearder found in the specified <see cref="Response"/>.
