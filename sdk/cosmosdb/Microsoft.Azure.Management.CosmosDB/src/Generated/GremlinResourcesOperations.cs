@@ -874,6 +874,58 @@ namespace Microsoft.Azure.Management.CosmosDB
         }
 
         /// <summary>
+        /// Migrate an Azure Cosmos DB Gremlin database from manual throughput to
+        /// autoscale
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='accountName'>
+        /// Cosmos DB database account name.
+        /// </param>
+        /// <param name='databaseName'>
+        /// Cosmos DB database name.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<ThroughputSettingsGetResults>> MigrateGremlinDatabaseToAutoscaleWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Send request
+            AzureOperationResponse<ThroughputSettingsGetResults> _response = await BeginMigrateGremlinDatabaseToAutoscaleWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, customHeaders, cancellationToken).ConfigureAwait(false);
+            return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Migrate an Azure Cosmos DB Gremlin database from autoscale to manual
+        /// throughput
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='accountName'>
+        /// Cosmos DB database account name.
+        /// </param>
+        /// <param name='databaseName'>
+        /// Cosmos DB database name.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<ThroughputSettingsGetResults>> MigrateGremlinDatabaseToManualThroughputWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Send request
+            AzureOperationResponse<ThroughputSettingsGetResults> _response = await BeginMigrateGremlinDatabaseToManualThroughputWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, customHeaders, cancellationToken).ConfigureAwait(false);
+            return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
         /// Lists the Gremlin graph under an existing Azure Cosmos DB database account.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -1731,6 +1783,64 @@ namespace Microsoft.Azure.Management.CosmosDB
         }
 
         /// <summary>
+        /// Migrate an Azure Cosmos DB Gremlin graph from manual throughput to
+        /// autoscale
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='accountName'>
+        /// Cosmos DB database account name.
+        /// </param>
+        /// <param name='databaseName'>
+        /// Cosmos DB database name.
+        /// </param>
+        /// <param name='graphName'>
+        /// Cosmos DB graph name.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<ThroughputSettingsGetResults>> MigrateGremlinGraphToAutoscaleWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string graphName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Send request
+            AzureOperationResponse<ThroughputSettingsGetResults> _response = await BeginMigrateGremlinGraphToAutoscaleWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, graphName, customHeaders, cancellationToken).ConfigureAwait(false);
+            return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Migrate an Azure Cosmos DB Gremlin graph from autoscale to manual
+        /// throughput
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='accountName'>
+        /// Cosmos DB database account name.
+        /// </param>
+        /// <param name='databaseName'>
+        /// Cosmos DB database name.
+        /// </param>
+        /// <param name='graphName'>
+        /// Cosmos DB graph name.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<ThroughputSettingsGetResults>> MigrateGremlinGraphToManualThroughputWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string graphName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Send request
+            AzureOperationResponse<ThroughputSettingsGetResults> _response = await BeginMigrateGremlinGraphToManualThroughputWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, graphName, customHeaders, cancellationToken).ConfigureAwait(false);
+            return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
         /// Create or update an Azure Cosmos DB Gremlin database
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -2494,7 +2604,8 @@ namespace Microsoft.Azure.Management.CosmosDB
         }
 
         /// <summary>
-        /// Create or update an Azure Cosmos DB Gremlin graph
+        /// Migrate an Azure Cosmos DB Gremlin database from manual throughput to
+        /// autoscale
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -2504,12 +2615,6 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// </param>
         /// <param name='databaseName'>
         /// Cosmos DB database name.
-        /// </param>
-        /// <param name='graphName'>
-        /// Cosmos DB graph name.
-        /// </param>
-        /// <param name='createUpdateGremlinGraphParameters'>
-        /// The parameters to provide for the current Gremlin graph.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2532,7 +2637,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<GremlinGraphGetResults>> BeginCreateUpdateGremlinGraphWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string graphName, GremlinGraphCreateUpdateParameters createUpdateGremlinGraphParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ThroughputSettingsGetResults>> BeginMigrateGremlinDatabaseToAutoscaleWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -2609,16 +2714,15 @@ namespace Microsoft.Azure.Management.CosmosDB
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("databaseName", databaseName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "BeginCreateUpdateGremlinGraph", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "BeginMigrateGremlinDatabaseToAutoscale", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinDatabases/{databaseName}/graphs/{graphName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinDatabases/{databaseName}/throughputSettings/default/migrateToAutoscale").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
             _url = _url.Replace("{databaseName}", System.Uri.EscapeDataString(databaseName));
-            _url = _url.Replace("{graphName}", System.Uri.EscapeDataString(graphName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -2631,7 +2735,7 @@ namespace Microsoft.Azure.Management.CosmosDB
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("PUT");
+            _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
@@ -2662,12 +2766,6 @@ namespace Microsoft.Azure.Management.CosmosDB
 
             // Serialize Request
             string _requestContent = null;
-            if(createUpdateGremlinGraphParameters != null)
-            {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(createUpdateGremlinGraphParameters, Client.SerializationSettings);
-                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
-                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
-            }
             // Set Credentials
             if (Client.Credentials != null)
             {
@@ -2718,7 +2816,7 @@ namespace Microsoft.Azure.Management.CosmosDB
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<GremlinGraphGetResults>();
+            var _result = new AzureOperationResponse<ThroughputSettingsGetResults>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -2731,7 +2829,7 @@ namespace Microsoft.Azure.Management.CosmosDB
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<GremlinGraphGetResults>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ThroughputSettingsGetResults>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -2751,7 +2849,8 @@ namespace Microsoft.Azure.Management.CosmosDB
         }
 
         /// <summary>
-        /// Deletes an existing Azure Cosmos DB Gremlin graph.
+        /// Migrate an Azure Cosmos DB Gremlin database from autoscale to manual
+        /// throughput
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -2762,9 +2861,6 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <param name='databaseName'>
         /// Cosmos DB database name.
         /// </param>
-        /// <param name='graphName'>
-        /// Cosmos DB graph name.
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -2773,6 +2869,9 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// </param>
         /// <exception cref="ErrorResponseUpdatedFormatException">
         /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
         /// </exception>
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
@@ -2783,7 +2882,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginDeleteGremlinGraphWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string graphName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ThroughputSettingsGetResults>> BeginMigrateGremlinDatabaseToManualThroughputWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -2860,16 +2959,15 @@ namespace Microsoft.Azure.Management.CosmosDB
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("databaseName", databaseName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "BeginDeleteGremlinGraph", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "BeginMigrateGremlinDatabaseToManualThroughput", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinDatabases/{databaseName}/graphs/{graphName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinDatabases/{databaseName}/throughputSettings/default/migrateToManualThroughput").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
             _url = _url.Replace("{databaseName}", System.Uri.EscapeDataString(databaseName));
-            _url = _url.Replace("{graphName}", System.Uri.EscapeDataString(graphName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -2882,7 +2980,7 @@ namespace Microsoft.Azure.Management.CosmosDB
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("DELETE");
+            _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
@@ -2933,7 +3031,7 @@ namespace Microsoft.Azure.Management.CosmosDB
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 202 && (int)_statusCode != 204)
+            if ((int)_statusCode != 200 && (int)_statusCode != 202)
             {
                 var ex = new ErrorResponseUpdatedFormatException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -2963,12 +3061,30 @@ namespace Microsoft.Azure.Management.CosmosDB
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse();
+            var _result = new AzureOperationResponse<ThroughputSettingsGetResults>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ThroughputSettingsGetResults>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
             }
             if (_shouldTrace)
             {
@@ -2978,7 +3094,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         }
 
         /// <summary>
-        /// Update RUs per second of an Azure Cosmos DB Gremlin graph
+        /// Create or update an Azure Cosmos DB Gremlin graph
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -2992,9 +3108,8 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <param name='graphName'>
         /// Cosmos DB graph name.
         /// </param>
-        /// <param name='updateThroughputParameters'>
-        /// The RUs per second of the parameters to provide for the current Gremlin
-        /// graph.
+        /// <param name='createUpdateGremlinGraphParameters'>
+        /// The parameters to provide for the current Gremlin graph.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -3017,7 +3132,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ThroughputSettingsGetResults>> BeginUpdateGremlinGraphThroughputWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string graphName, ThroughputSettingsUpdateParameters updateThroughputParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<GremlinGraphGetResults>> BeginCreateUpdateGremlinGraphWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string graphName, GremlinGraphCreateUpdateParameters createUpdateGremlinGraphParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -3089,11 +3204,11 @@ namespace Microsoft.Azure.Management.CosmosDB
             }
             if (createUpdateGremlinGraphParameters == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "updateThroughputParameters");
+                throw new ValidationException(ValidationRules.CannotBeNull, "createUpdateGremlinGraphParameters");
             }
-            if (updateThroughputParameters != null)
+            if (createUpdateGremlinGraphParameters != null)
             {
-                updateThroughputParameters.Validate();
+                createUpdateGremlinGraphParameters.Validate();
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -3108,11 +3223,11 @@ namespace Microsoft.Azure.Management.CosmosDB
                 tracingParameters.Add("graphName", graphName);
                 tracingParameters.Add("createUpdateGremlinGraphParameters", createUpdateGremlinGraphParameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "BeginUpdateGremlinGraphThroughput", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "BeginCreateUpdateGremlinGraph", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinDatabases/{databaseName}/graphs/{graphName}/throughputSettings/default").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinDatabases/{databaseName}/graphs/{graphName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
@@ -3161,9 +3276,9 @@ namespace Microsoft.Azure.Management.CosmosDB
 
             // Serialize Request
             string _requestContent = null;
-            if(updateThroughputParameters != null)
+            if(createUpdateGremlinGraphParameters != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(updateThroughputParameters, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(createUpdateGremlinGraphParameters, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }

@@ -874,6 +874,58 @@ namespace Microsoft.Azure.Management.CosmosDB
         }
 
         /// <summary>
+        /// Migrate an Azure Cosmos DB Cassandra Keyspace from manual throughput to
+        /// autoscale
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='accountName'>
+        /// Cosmos DB database account name.
+        /// </param>
+        /// <param name='keyspaceName'>
+        /// Cosmos DB keyspace name.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<ThroughputSettingsGetResults>> MigrateCassandraKeyspaceToAutoscaleWithHttpMessagesAsync(string resourceGroupName, string accountName, string keyspaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Send request
+            AzureOperationResponse<ThroughputSettingsGetResults> _response = await BeginMigrateCassandraKeyspaceToAutoscaleWithHttpMessagesAsync(resourceGroupName, accountName, keyspaceName, customHeaders, cancellationToken).ConfigureAwait(false);
+            return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Migrate an Azure Cosmos DB Cassandra Keyspace from autoscale to manual
+        /// throughput
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='accountName'>
+        /// Cosmos DB database account name.
+        /// </param>
+        /// <param name='keyspaceName'>
+        /// Cosmos DB keyspace name.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<ThroughputSettingsGetResults>> MigrateCassandraKeyspaceToManualThroughputWithHttpMessagesAsync(string resourceGroupName, string accountName, string keyspaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Send request
+            AzureOperationResponse<ThroughputSettingsGetResults> _response = await BeginMigrateCassandraKeyspaceToManualThroughputWithHttpMessagesAsync(resourceGroupName, accountName, keyspaceName, customHeaders, cancellationToken).ConfigureAwait(false);
+            return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
         /// Lists the Cassandra table under an existing Azure Cosmos DB database
         /// account.
         /// </summary>
@@ -1733,6 +1785,64 @@ namespace Microsoft.Azure.Management.CosmosDB
         }
 
         /// <summary>
+        /// Migrate an Azure Cosmos DB Cassandra table from manual throughput to
+        /// autoscale
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='accountName'>
+        /// Cosmos DB database account name.
+        /// </param>
+        /// <param name='keyspaceName'>
+        /// Cosmos DB keyspace name.
+        /// </param>
+        /// <param name='tableName'>
+        /// Cosmos DB table name.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<ThroughputSettingsGetResults>> MigrateCassandraTableToAutoscaleWithHttpMessagesAsync(string resourceGroupName, string accountName, string keyspaceName, string tableName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Send request
+            AzureOperationResponse<ThroughputSettingsGetResults> _response = await BeginMigrateCassandraTableToAutoscaleWithHttpMessagesAsync(resourceGroupName, accountName, keyspaceName, tableName, customHeaders, cancellationToken).ConfigureAwait(false);
+            return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Migrate an Azure Cosmos DB Cassandra table from autoscale to manual
+        /// throughput
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='accountName'>
+        /// Cosmos DB database account name.
+        /// </param>
+        /// <param name='keyspaceName'>
+        /// Cosmos DB keyspace name.
+        /// </param>
+        /// <param name='tableName'>
+        /// Cosmos DB table name.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<ThroughputSettingsGetResults>> MigrateCassandraTableToManualThroughputWithHttpMessagesAsync(string resourceGroupName, string accountName, string keyspaceName, string tableName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Send request
+            AzureOperationResponse<ThroughputSettingsGetResults> _response = await BeginMigrateCassandraTableToManualThroughputWithHttpMessagesAsync(resourceGroupName, accountName, keyspaceName, tableName, customHeaders, cancellationToken).ConfigureAwait(false);
+            return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
         /// Create or update an Azure Cosmos DB Cassandra keyspace
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -2496,7 +2606,8 @@ namespace Microsoft.Azure.Management.CosmosDB
         }
 
         /// <summary>
-        /// Create or update an Azure Cosmos DB Cassandra Table
+        /// Migrate an Azure Cosmos DB Cassandra Keyspace from manual throughput to
+        /// autoscale
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -2506,12 +2617,6 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// </param>
         /// <param name='keyspaceName'>
         /// Cosmos DB keyspace name.
-        /// </param>
-        /// <param name='tableName'>
-        /// Cosmos DB table name.
-        /// </param>
-        /// <param name='createUpdateCassandraTableParameters'>
-        /// The parameters to provide for the current Cassandra Table.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2534,7 +2639,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<CassandraTableGetResults>> BeginCreateUpdateCassandraTableWithHttpMessagesAsync(string resourceGroupName, string accountName, string keyspaceName, string tableName, CassandraTableCreateUpdateParameters createUpdateCassandraTableParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ThroughputSettingsGetResults>> BeginMigrateCassandraKeyspaceToAutoscaleWithHttpMessagesAsync(string resourceGroupName, string accountName, string keyspaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -2611,16 +2716,15 @@ namespace Microsoft.Azure.Management.CosmosDB
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("keyspaceName", keyspaceName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "BeginCreateUpdateCassandraTable", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "BeginMigrateCassandraKeyspaceToAutoscale", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/tables/{tableName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/throughputSettings/default/migrateToAutoscale").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
             _url = _url.Replace("{keyspaceName}", System.Uri.EscapeDataString(keyspaceName));
-            _url = _url.Replace("{tableName}", System.Uri.EscapeDataString(tableName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -2633,7 +2737,7 @@ namespace Microsoft.Azure.Management.CosmosDB
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("PUT");
+            _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
@@ -2664,12 +2768,6 @@ namespace Microsoft.Azure.Management.CosmosDB
 
             // Serialize Request
             string _requestContent = null;
-            if(createUpdateCassandraTableParameters != null)
-            {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(createUpdateCassandraTableParameters, Client.SerializationSettings);
-                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
-                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
-            }
             // Set Credentials
             if (Client.Credentials != null)
             {
@@ -2720,7 +2818,7 @@ namespace Microsoft.Azure.Management.CosmosDB
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<CassandraTableGetResults>();
+            var _result = new AzureOperationResponse<ThroughputSettingsGetResults>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -2733,7 +2831,7 @@ namespace Microsoft.Azure.Management.CosmosDB
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<CassandraTableGetResults>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ThroughputSettingsGetResults>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -2753,7 +2851,8 @@ namespace Microsoft.Azure.Management.CosmosDB
         }
 
         /// <summary>
-        /// Deletes an existing Azure Cosmos DB Cassandra table.
+        /// Migrate an Azure Cosmos DB Cassandra Keyspace from autoscale to manual
+        /// throughput
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -2764,9 +2863,6 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <param name='keyspaceName'>
         /// Cosmos DB keyspace name.
         /// </param>
-        /// <param name='tableName'>
-        /// Cosmos DB table name.
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -2775,6 +2871,9 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// </param>
         /// <exception cref="ErrorResponseUpdatedFormatException">
         /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
         /// </exception>
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
@@ -2785,7 +2884,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginDeleteCassandraTableWithHttpMessagesAsync(string resourceGroupName, string accountName, string keyspaceName, string tableName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ThroughputSettingsGetResults>> BeginMigrateCassandraKeyspaceToManualThroughputWithHttpMessagesAsync(string resourceGroupName, string accountName, string keyspaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -2862,16 +2961,15 @@ namespace Microsoft.Azure.Management.CosmosDB
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("keyspaceName", keyspaceName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "BeginDeleteCassandraTable", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "BeginMigrateCassandraKeyspaceToManualThroughput", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/tables/{tableName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/throughputSettings/default/migrateToManualThroughput").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
             _url = _url.Replace("{keyspaceName}", System.Uri.EscapeDataString(keyspaceName));
-            _url = _url.Replace("{tableName}", System.Uri.EscapeDataString(tableName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -2884,7 +2982,7 @@ namespace Microsoft.Azure.Management.CosmosDB
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("DELETE");
+            _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
@@ -2935,7 +3033,7 @@ namespace Microsoft.Azure.Management.CosmosDB
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 202 && (int)_statusCode != 204)
+            if ((int)_statusCode != 200 && (int)_statusCode != 202)
             {
                 var ex = new ErrorResponseUpdatedFormatException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -2965,12 +3063,30 @@ namespace Microsoft.Azure.Management.CosmosDB
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse();
+            var _result = new AzureOperationResponse<ThroughputSettingsGetResults>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ThroughputSettingsGetResults>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
             }
             if (_shouldTrace)
             {
@@ -2980,7 +3096,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         }
 
         /// <summary>
-        /// Update RUs per second of an Azure Cosmos DB Cassandra table
+        /// Create or update an Azure Cosmos DB Cassandra Table
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -2994,9 +3110,8 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <param name='tableName'>
         /// Cosmos DB table name.
         /// </param>
-        /// <param name='updateThroughputParameters'>
-        /// The RUs per second of the parameters to provide for the current Cassandra
-        /// table.
+        /// <param name='createUpdateCassandraTableParameters'>
+        /// The parameters to provide for the current Cassandra Table.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -3019,7 +3134,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ThroughputSettingsGetResults>> BeginUpdateCassandraTableThroughputWithHttpMessagesAsync(string resourceGroupName, string accountName, string keyspaceName, string tableName, ThroughputSettingsUpdateParameters updateThroughputParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<CassandraTableGetResults>> BeginCreateUpdateCassandraTableWithHttpMessagesAsync(string resourceGroupName, string accountName, string keyspaceName, string tableName, CassandraTableCreateUpdateParameters createUpdateCassandraTableParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -3091,11 +3206,11 @@ namespace Microsoft.Azure.Management.CosmosDB
             }
             if (createUpdateCassandraTableParameters == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "updateThroughputParameters");
+                throw new ValidationException(ValidationRules.CannotBeNull, "createUpdateCassandraTableParameters");
             }
-            if (updateThroughputParameters != null)
+            if (createUpdateCassandraTableParameters != null)
             {
-                updateThroughputParameters.Validate();
+                createUpdateCassandraTableParameters.Validate();
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -3110,11 +3225,11 @@ namespace Microsoft.Azure.Management.CosmosDB
                 tracingParameters.Add("tableName", tableName);
                 tracingParameters.Add("createUpdateCassandraTableParameters", createUpdateCassandraTableParameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "BeginUpdateCassandraTableThroughput", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "BeginCreateUpdateCassandraTable", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/tables/{tableName}/throughputSettings/default").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/tables/{tableName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
@@ -3163,9 +3278,9 @@ namespace Microsoft.Azure.Management.CosmosDB
 
             // Serialize Request
             string _requestContent = null;
-            if(updateThroughputParameters != null)
+            if(createUpdateCassandraTableParameters != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(updateThroughputParameters, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(createUpdateCassandraTableParameters, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }

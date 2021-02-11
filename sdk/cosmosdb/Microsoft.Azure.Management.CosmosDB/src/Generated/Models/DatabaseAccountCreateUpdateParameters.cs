@@ -11,6 +11,7 @@
 namespace Microsoft.Azure.Management.CosmosDB.Models
 {
     using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -19,6 +20,7 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
     /// <summary>
     /// Parameters to create and update Cosmos DB database accounts.
     /// </summary>
+    [Rest.Serialization.JsonTransformation]
     public partial class DatabaseAccountCreateUpdateParameters : ARMResourceProperties
     {
         /// <summary>
@@ -27,7 +29,6 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// </summary>
         public DatabaseAccountCreateUpdateParameters()
         {
-            Properties = new DatabaseAccountCreateUpdateProperties();
             CustomInit();
         }
 
@@ -35,6 +36,8 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// Initializes a new instance of the
         /// DatabaseAccountCreateUpdateParameters class.
         /// </summary>
+        /// <param name="locations">An array that contains the georeplication
+        /// locations enabled for the Cosmos DB account.</param>
         /// <param name="id">The unique resource identifier of the ARM
         /// resource.</param>
         /// <param name="name">The name of the ARM resource.</param>
@@ -114,6 +117,13 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
             NetworkAclBypass = networkAclBypass;
             NetworkAclBypassResourceIds = networkAclBypassResourceIds;
             CustomInit();
+        }
+        /// <summary>
+        /// Static constructor for DatabaseAccountCreateUpdateParameters class.
+        /// </summary>
+        static DatabaseAccountCreateUpdateParameters()
+        {
+            DatabaseAccountOfferType = "Standard";
         }
 
         /// <summary>
@@ -283,13 +293,33 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Properties == null)
+            if (Locations == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Properties");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Locations");
             }
-            if (Properties != null)
+            if (ConsistencyPolicy != null)
             {
-                Properties.Validate();
+                ConsistencyPolicy.Validate();
+            }
+            if (Locations != null)
+            {
+                foreach (var element in Locations)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+            if (Cors != null)
+            {
+                foreach (var element1 in Cors)
+                {
+                    if (element1 != null)
+                    {
+                        element1.Validate();
+                    }
+                }
             }
         }
     }
