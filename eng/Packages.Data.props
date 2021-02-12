@@ -87,16 +87,17 @@
     <PackageReference Update="Microsoft.Identity.Client.Extensions.Msal" Version="2.16.6" />
     <!-- TODO: Make sure this package is arch-board approved -->
     <PackageReference Update="System.IdentityModel.Tokens.Jwt" Version="5.4.0" />
+
+    <!-- OpenTelemetry dependency approved for Azure.Monitor.OpenTelemetry.Exporter package only -->
+    <PackageReference Update="OpenTelemetry" Version="1.0.1"  Condition="'$(MSBuildProjectName)' == 'Azure.Monitor.OpenTelemetry.Exporter'" />
   </ItemGroup>
 
   <!-- 
     Dependency versions for Track 2, Microsoft.* libraries.
     These are dependencies for Track 2 integration packages
   -->
-
   <ItemGroup Condition="'$(IsClientLibrary)' == 'true' and $(MSBuildProjectName.StartsWith('Microsoft.'))">
     <PackageReference Update="CloudNative.CloudEvents" Version="2.0.0-beta.1" />
-    <PackageReference Update="OpenTelemetry" Version="0.8.0-beta.1" />
     <PackageReference Update="Microsoft.Azure.WebJobs" Version="3.0.25" />
     <PackageReference Update="Microsoft.Spatial" Version="7.5.3" />
     <PackageReference Update="Newtonsoft.Json" Version="10.0.3" />
@@ -194,9 +195,9 @@
     <PackageReference Update="NSubstitute" Version="3.1.0" />
     <PackageReference Update="NUnit" Version="3.12.0" />
     <PackageReference Update="NUnit3TestAdapter" Version="3.13.0" />
-    <PackageReference Update="OpenTelemetry.Extensions.Hosting" Version="0.8.0-beta.1" />
-    <PackageReference Update="OpenTelemetry.Instrumentation.AspNetCore" Version="0.8.0-beta.1" />
-    <PackageReference Update="OpenTelemetry.Instrumentation.Http" Version="0.8.0-beta.1" />
+    <PackageReference Update="OpenTelemetry.Extensions.Hosting" Version="1.0.0-rc2" />
+    <PackageReference Update="OpenTelemetry.Instrumentation.AspNetCore" Version="1.0.0-rc2" />
+    <PackageReference Update="OpenTelemetry.Instrumentation.Http" Version="1.0.0-rc2" />
     <PackageReference Update="Polly" Version="7.1.0" />
     <PackageReference Update="Portable.BouncyCastle" Version="1.8.5" />
     <PackageReference Update="PublicApiGenerator" Version="10.0.1" />

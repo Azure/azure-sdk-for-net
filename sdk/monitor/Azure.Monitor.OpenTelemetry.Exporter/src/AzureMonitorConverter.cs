@@ -8,6 +8,7 @@ using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
 using OpenTelemetry;
 using OpenTelemetry.Logs;
+using OpenTelemetry.Resources;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
@@ -25,7 +26,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             [TelemetryType.Event] = "EventData",
         };
 
-        internal static List<TelemetryItem> Convert(Batch<Activity> batchActivity, string instrumentationKey)
+        internal static List<TelemetryItem> Convert(Batch<Activity> batchActivity, Resource resource, string instrumentationKey)
         {
             List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
             TelemetryItem telemetryItem;
@@ -33,7 +34,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             foreach (var activity in batchActivity)
             {
                 MonitorBase telemetryData = new MonitorBase();
-                telemetryItem = TelemetryPartA.GetTelemetryItem(activity, instrumentationKey);
+                telemetryItem = TelemetryPartA.GetTelemetryItem(activity, resource, instrumentationKey);
 
                 switch (activity.GetTelemetryType())
                 {
