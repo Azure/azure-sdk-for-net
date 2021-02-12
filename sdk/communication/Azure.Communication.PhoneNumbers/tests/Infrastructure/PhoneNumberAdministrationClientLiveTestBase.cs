@@ -11,7 +11,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
     public class PhoneNumberAdministrationClientLiveTestBase : RecordedTestBase<PhoneNumberAdministrationClientTestEnvironment>
     {
         public PhoneNumberAdministrationClientLiveTestBase(bool isAsync) : base(isAsync)
-            => Sanitizer = new CommunicationRecordedTestSanitizer();
+            => Sanitizer = new PhoneNumbersClientRecordedTestSanitizer();
 
         public bool IncludePhoneNumberLiveTests
             => TestEnvironment.Mode == RecordedTestMode.Playback || Environment.GetEnvironmentVariable("INCLUDE_PHONENUMBER_LIVE_TESTS") == "True";
@@ -40,7 +40,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         protected PhoneNumberAdministrationClient CreateClientWithTokenCredential(TokenCredential token, bool isInstrumented = true)
         {
             var client = new PhoneNumberAdministrationClient(
-                    new Uri(ConnectionString.Parse(TestEnvironment.ConnectionString, allowEmptyValues: true).GetRequired("endpoint")),
+                    TestEnvironment.Endpoint,
                     token,
                     InstrumentClientOptions(new PhoneNumberAdministrationClientOptions()));
 

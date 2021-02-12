@@ -27,7 +27,7 @@ namespace Azure.Communication.Chat.Tests.samples
             AccessToken joshTokenResponse = await communicationIdentityClient.GetTokenAsync(josh, new[] { CommunicationTokenScope.Chat });
 
             ChatClient chatClient = new ChatClient(
-                new Uri(TestEnvironment.ChatApiUrl()),
+                TestEnvironment.Endpoint,
                 new CommunicationTokenCredential(joshTokenResponse.Token));
 
             var chatParticipant = new ChatParticipant(josh)

@@ -247,6 +247,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         [Test]
         [TestCase(null)]
         [TestCase("en-US")]
+
         public async Task CreateReservation(string? locale)
         {
             var client = CreateClient();
