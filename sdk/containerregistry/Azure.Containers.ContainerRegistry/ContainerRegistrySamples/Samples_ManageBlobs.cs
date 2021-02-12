@@ -52,11 +52,12 @@ namespace ContainerRegistrySamples
             // TODO: Naming here - what about Create?  usually Create takes an instance of the resource to create - we're asking the service to create 
             // one for us from scratch - like getting a ticket we'll use elsewhere.  Do we have a pattern for this elsewhere?
             // Other ideas: CreateUploadTicket() - problem with this is we're creating this Ticket concept where there was none in the ACR or Docker lit before...
-			// What about this:
-            BlobUploadDetails uploadDetails = await blobClient.InitiateResumableUploadAsync();
+            // What about this:
+            //InitiateResumableUploadResult uploadDetails = await blobClient.InitiateResumableUploadAsync();
+            ResumableBlobUpload uploadDetails = await blobClient.CreateResumableUploadAsync();
             // TODO: "digest"
             // TODO: "stream"
-            await blobClient.CompleteUploadAsync(uploadDetails, "digest", new MemoryStream());
+            await blobClient.CompleteUploadAsync(uploadDetails, "digest", /* this is the blob */ new MemoryStream());
         }
 
         public async Task UploadBlob_ResumableUploadInSeveralChunks()
@@ -65,11 +66,14 @@ namespace ContainerRegistrySamples
 
             ContainerRegistryBlobClient blobClient = registryClient.GetBlobClient("hello-world");
 
-            BlobUploadDetails uploadDetails = await blobClient.InitiateResumableUploadAsync();
+            ResumableBlobUpload uploadDetails = await blobClient.CreateResumableUploadAsync();
             bool haveChunks = true;  // TODO: how do I know?  Who decides how to break things into chunks and why?
             while (haveChunks)
             {
-                uploadDetails = await blobClient.UploadChunkAsync(uploadDetails, new MemoryStream());
+                uploadDetails = await blobClient.UploadChunkAsync(uploadDetails, /* this is the chunk */ new MemoryStream());
+
+                // Print out upload progress
+                Console.WriteLine($"Upload {uploadDetails.UploadId} has uploaded {uploadDetails.UploadProgress} to location {uploadDetails.BlobLocation.ToString()}");
             }
 
             // TODO: how to handle this multiplicity around sometimes you pass a blob here and sometimes you don't
@@ -78,9 +82,13 @@ namespace ContainerRegistrySamples
             // What would the different things be?
             // Do you need the progress 
             // TODO: What should we be doing with the returned digest?  Should we verify on behalf of the customer or no?
+            // TODO: 
 
-            //await blobClient.CompleteUpload(uploadInfo, "digest");
+            CompletedBlobUpload completedUploadDetails = await blobClient.CompleteUploadAsync(uploadDetails, "digest");
 
+            // Print out upload details
+            Console.WriteLine($"Blob with digest {completedUploadDetails.Digest} has uploaded {completedUploadDetails.UploadProgress} to location {completedUploadDetails.BlobLocation.ToString()}");
+            Console.WriteLine($"");
         }
 
         public async Task MountBlob()
