@@ -164,6 +164,8 @@ namespace Azure.Storage.Blobs
                         var value = message.ExtractResponseContent();
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
+                case 304:
+                    return ResponseWithHeaders.FromValue<Stream, BlobDownloadHeaders>(null, headers, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -198,6 +200,8 @@ namespace Azure.Storage.Blobs
                         var value = message.ExtractResponseContent();
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
+                case 304:
+                    return ResponseWithHeaders.FromValue<Stream, BlobDownloadHeaders>(null, headers, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -286,6 +290,7 @@ namespace Azure.Storage.Blobs
             switch (message.Response.Status)
             {
                 case 200:
+                case 304:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -313,6 +318,7 @@ namespace Azure.Storage.Blobs
             switch (message.Response.Status)
             {
                 case 200:
+                case 304:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -1703,6 +1709,7 @@ namespace Azure.Storage.Blobs
             switch (message.Response.Status)
             {
                 case 202:
+                case 304:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -1741,6 +1748,7 @@ namespace Azure.Storage.Blobs
             switch (message.Response.Status)
             {
                 case 202:
+                case 304:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);

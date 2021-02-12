@@ -24,5 +24,6 @@ namespace Azure.Storage.Blobs
         public long? BlobContentLength => _response.Headers.TryGetValue("x-ms-blob-content-length", out long? value) ? value : null;
         /// <summary> Indicates the version of the Blob service used to execute the request. This header is returned for requests made against version 2009-09-19 and above. </summary>
         public string Version => _response.Headers.TryGetValue("x-ms-version", out string value) ? value : null;
+        public string ErrorCode => _response.Headers.TryGetValue("x-ms-error-code", out string value) ? value : null;
     }
 }

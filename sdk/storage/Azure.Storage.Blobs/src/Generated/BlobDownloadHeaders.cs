@@ -91,5 +91,6 @@ namespace Azure.Storage.Blobs
         public DateTimeOffset? LastAccessed => _response.Headers.TryGetValue("x-ms-last-access-time", out DateTimeOffset? value) ? value : null;
         /// <summary> If the request is to read a specified range and the x-ms-range-get-content-crc64 is set to true, then the request returns a crc64 for the range, as long as the range size is less than or equal to 4 MB. If both x-ms-range-get-content-crc64 &amp; x-ms-range-get-content-md5 is specified in the same request, it will fail with 400(Bad Request). </summary>
         public byte[] ContentCrc64 => _response.Headers.TryGetValue("x-ms-content-crc64", out byte[] value) ? value : null;
+        public string ErrorCode => _response.Headers.TryGetValue("x-ms-error-code", out string value) ? value : null;
     }
 }

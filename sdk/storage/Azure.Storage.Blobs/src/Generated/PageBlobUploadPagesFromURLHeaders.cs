@@ -34,5 +34,6 @@ namespace Azure.Storage.Blobs
         public string EncryptionKeySha256 => _response.Headers.TryGetValue("x-ms-encryption-key-sha256", out string value) ? value : null;
         /// <summary> Returns the name of the encryption scope used to encrypt the blob contents and application metadata.  Note that the absence of this header implies use of the default account encryption scope. </summary>
         public string EncryptionScope => _response.Headers.TryGetValue("x-ms-encryption-scope", out string value) ? value : null;
+        public string ErrorCode => _response.Headers.TryGetValue("x-ms-error-code", out string value) ? value : null;
     }
 }

@@ -36,5 +36,6 @@ namespace Azure.Storage.Blobs
         public string EncryptionScope => _response.Headers.TryGetValue("x-ms-encryption-scope", out string value) ? value : null;
         /// <summary> The value of this header is set to true if the contents of the request are successfully encrypted using the specified algorithm, and false otherwise. </summary>
         public bool? IsServerEncrypted => _response.Headers.TryGetValue("x-ms-request-server-encrypted", out bool? value) ? value : null;
+        public string ErrorCode => _response.Headers.TryGetValue("x-ms-error-code", out string value) ? value : null;
     }
 }
