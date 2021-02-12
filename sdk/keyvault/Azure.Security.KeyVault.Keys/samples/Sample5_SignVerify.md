@@ -31,11 +31,11 @@ var ecKeyOptions = new CreateEcKeyOptions(ecKeyName, hardwareProtected: false)
     CurveName = KeyCurveName.P256K,
 };
 
-KeyVaultKey cloudRsaKey = keyClient.CreateRsaKey(rsaKeyOptions);
-Debug.WriteLine($"Key is returned with name {cloudRsaKey.Name} and type {cloudRsaKey.KeyType}");
+KeyVaultKey rsaKey = keyClient.CreateRsaKey(rsaKeyOptions);
+Debug.WriteLine($"Key is returned with name {rsaKey.Name} and type {rsaKey.KeyType}");
 
-KeyVaultKey cloudEcKey = keyClient.CreateEcKey(ecKeyOptions);
-Debug.WriteLine($"Key is returned with name {cloudEcKey.Name} and type {cloudEcKey.KeyType}");
+KeyVaultKey ecKey = keyClient.CreateEcKey(ecKeyOptions);
+Debug.WriteLine($"Key is returned with name {ecKey.Name} and type {ecKey.KeyType}");
 ```
 
 ## Creating CryptographyClients
@@ -43,9 +43,9 @@ Debug.WriteLine($"Key is returned with name {cloudEcKey.Name} and type {cloudEcK
 Then, we create the `CryptographyClient` which can perform cryptographic operations with the key we just created using the same credential created above.
 
 ```C# Snippet:KeysSample5CryptographyClient
-var rsaCryptoClient = new CryptographyClient(cloudRsaKey.Id, new DefaultAzureCredential());
+var rsaCryptoClient = new CryptographyClient(rsaKey.Id, new DefaultAzureCredential());
 
-var ecCryptoClient = new CryptographyClient(cloudEcKey.Id, new DefaultAzureCredential());
+var ecCryptoClient = new CryptographyClient(ecKey.Id, new DefaultAzureCredential());
 ```
 
 ## Signing keys with the Sign and Verify methods
