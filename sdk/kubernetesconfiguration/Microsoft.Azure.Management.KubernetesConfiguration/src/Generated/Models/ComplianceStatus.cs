@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
         /// applied.</param>
         /// <param name="messageLevel">Level of the message. Possible values
         /// include: 'Error', 'Warning', 'Information'</param>
-        public ComplianceStatus(ComplianceStateType? complianceState = default(ComplianceStateType?), System.DateTime? lastConfigApplied = default(System.DateTime?), string message = default(string), MessageLevelType? messageLevel = default(MessageLevelType?))
+        public ComplianceStatus(string complianceState = default(string), System.DateTime? lastConfigApplied = default(System.DateTime?), string message = default(string), string messageLevel = default(string))
         {
             ComplianceState = complianceState;
             LastConfigApplied = lastConfigApplied;
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
         /// 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "complianceState")]
-        public ComplianceStateType? ComplianceState { get; private set; }
+        public string ComplianceState { get; private set; }
 
         /// <summary>
         /// Gets or sets datetime the configuration was last applied.
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
         /// 'Error', 'Warning', 'Information'
         /// </summary>
         [JsonProperty(PropertyName = "messageLevel")]
-        public MessageLevelType? MessageLevel { get; set; }
+        public string MessageLevel { get; set; }
 
     }
 }

@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
         /// 'Application', 'ManagedIdentity', 'Key'</param>
         /// <param name="lastModifiedAt">The timestamp of resource last
         /// modification (UTC)</param>
-        public SystemData(string createdBy = default(string), CreatedByType? createdByType = default(CreatedByType?), System.DateTime? createdAt = default(System.DateTime?), string lastModifiedBy = default(string), CreatedByType? lastModifiedByType = default(CreatedByType?), System.DateTime? lastModifiedAt = default(System.DateTime?))
+        public SystemData(string createdBy = default(string), string createdByType = default(string), System.DateTime? createdAt = default(System.DateTime?), string lastModifiedBy = default(string), string lastModifiedByType = default(string), System.DateTime? lastModifiedAt = default(System.DateTime?))
         {
             CreatedBy = createdBy;
             CreatedByType = createdByType;
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
         /// 'Key'
         /// </summary>
         [JsonProperty(PropertyName = "createdByType")]
-        public CreatedByType? CreatedByType { get; set; }
+        public string CreatedByType { get; set; }
 
         /// <summary>
         /// Gets or sets the timestamp of resource creation (UTC).
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
         /// 'Key'
         /// </summary>
         [JsonProperty(PropertyName = "lastModifiedByType")]
-        public CreatedByType? LastModifiedByType { get; set; }
+        public string LastModifiedByType { get; set; }
 
         /// <summary>
         /// Gets or sets the timestamp of resource last modification (UTC)

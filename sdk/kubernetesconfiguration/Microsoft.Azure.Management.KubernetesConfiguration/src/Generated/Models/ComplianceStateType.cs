@@ -10,102 +10,16 @@
 
 namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
 {
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for ComplianceStateType.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(ComplianceStateTypeConverter))]
-    public struct ComplianceStateType : System.IEquatable<ComplianceStateType>
+    public static class ComplianceStateType
     {
-        private ComplianceStateType(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
-        public static readonly ComplianceStateType Pending = "Pending";
-
-        public static readonly ComplianceStateType Compliant = "Compliant";
-
-        public static readonly ComplianceStateType Noncompliant = "Noncompliant";
-
-        public static readonly ComplianceStateType Installed = "Installed";
-
-        public static readonly ComplianceStateType Failed = "Failed";
-
-
-        /// <summary>
-        /// Underlying value of enum ComplianceStateType
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for ComplianceStateType
-        /// </summary>
-        public override string ToString()
-        {
-            return UnderlyingValue == null ? null : UnderlyingValue.ToString();
-        }
-
-        /// <summary>
-        /// Compares enums of type ComplianceStateType
-        /// </summary>
-        public bool Equals(ComplianceStateType e)
-        {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert string to ComplianceStateType
-        /// </summary>
-        public static implicit operator ComplianceStateType(string value)
-        {
-            return new ComplianceStateType(value);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert ComplianceStateType to string
-        /// </summary>
-        public static implicit operator string(ComplianceStateType e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum ComplianceStateType
-        /// </summary>
-        public static bool operator == (ComplianceStateType e1, ComplianceStateType e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum ComplianceStateType
-        /// </summary>
-        public static bool operator != (ComplianceStateType e1, ComplianceStateType e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for ComplianceStateType
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is ComplianceStateType && Equals((ComplianceStateType)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode ComplianceStateType
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
+        public const string Pending = "Pending";
+        public const string Compliant = "Compliant";
+        public const string Noncompliant = "Noncompliant";
+        public const string Installed = "Installed";
+        public const string Failed = "Failed";
     }
 }

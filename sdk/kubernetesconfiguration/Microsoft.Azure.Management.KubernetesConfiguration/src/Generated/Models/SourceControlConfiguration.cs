@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
         /// Configuration</param>
         /// <param name="systemData">Top level metadata
         /// https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/common-api-contracts.md#system-metadata-for-all-azure-resources</param>
-        public SourceControlConfiguration(string id = default(string), string name = default(string), string type = default(string), string repositoryUrl = default(string), string operatorNamespace = default(string), string operatorInstanceName = default(string), OperatorType? operatorType = default(OperatorType?), string operatorParams = default(string), IDictionary<string, string> configurationProtectedSettings = default(IDictionary<string, string>), OperatorScopeType? operatorScope = default(OperatorScopeType?), string repositoryPublicKey = default(string), string sshKnownHostsContents = default(string), bool? enableHelmOperator = default(bool?), HelmOperatorProperties helmOperatorProperties = default(HelmOperatorProperties), ProvisioningStateType? provisioningState = default(ProvisioningStateType?), ComplianceStatus complianceStatus = default(ComplianceStatus), SystemData systemData = default(SystemData))
+        public SourceControlConfiguration(string id = default(string), string name = default(string), string type = default(string), string repositoryUrl = default(string), string operatorNamespace = default(string), string operatorInstanceName = default(string), string operatorType = default(string), string operatorParams = default(string), IDictionary<string, string> configurationProtectedSettings = default(IDictionary<string, string>), string operatorScope = default(string), string repositoryPublicKey = default(string), string sshKnownHostsContents = default(string), bool? enableHelmOperator = default(bool?), HelmOperatorProperties helmOperatorProperties = default(HelmOperatorProperties), string provisioningState = default(string), ComplianceStatus complianceStatus = default(ComplianceStatus), SystemData systemData = default(SystemData))
             : base(id, name, type)
         {
             RepositoryUrl = repositoryUrl;
@@ -123,7 +123,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
         /// Gets or sets type of the operator. Possible values include: 'Flux'
         /// </summary>
         [JsonProperty(PropertyName = "properties.operatorType")]
-        public OperatorType? OperatorType { get; set; }
+        public string OperatorType { get; set; }
 
         /// <summary>
         /// Gets or sets any Parameters for the Operator instance in string
@@ -144,7 +144,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
         /// Possible values include: 'cluster', 'namespace'
         /// </summary>
         [JsonProperty(PropertyName = "properties.operatorScope")]
-        public OperatorScopeType? OperatorScope { get; set; }
+        public string OperatorScope { get; set; }
 
         /// <summary>
         /// Gets public Key associated with this SourceControl configuration
@@ -179,7 +179,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
         /// 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public ProvisioningStateType? ProvisioningState { get; private set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets compliance Status of the Configuration

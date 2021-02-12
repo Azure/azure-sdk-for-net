@@ -10,98 +10,14 @@
 
 namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
 {
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for MessageLevelType.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(MessageLevelTypeConverter))]
-    public struct MessageLevelType : System.IEquatable<MessageLevelType>
+    public static class MessageLevelType
     {
-        private MessageLevelType(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
-        public static readonly MessageLevelType Error = "Error";
-
-        public static readonly MessageLevelType Warning = "Warning";
-
-        public static readonly MessageLevelType Information = "Information";
-
-
-        /// <summary>
-        /// Underlying value of enum MessageLevelType
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for MessageLevelType
-        /// </summary>
-        public override string ToString()
-        {
-            return UnderlyingValue == null ? null : UnderlyingValue.ToString();
-        }
-
-        /// <summary>
-        /// Compares enums of type MessageLevelType
-        /// </summary>
-        public bool Equals(MessageLevelType e)
-        {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert string to MessageLevelType
-        /// </summary>
-        public static implicit operator MessageLevelType(string value)
-        {
-            return new MessageLevelType(value);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert MessageLevelType to string
-        /// </summary>
-        public static implicit operator string(MessageLevelType e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum MessageLevelType
-        /// </summary>
-        public static bool operator == (MessageLevelType e1, MessageLevelType e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum MessageLevelType
-        /// </summary>
-        public static bool operator != (MessageLevelType e1, MessageLevelType e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for MessageLevelType
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is MessageLevelType && Equals((MessageLevelType)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode MessageLevelType
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
+        public const string Error = "Error";
+        public const string Warning = "Warning";
+        public const string Information = "Information";
     }
 }

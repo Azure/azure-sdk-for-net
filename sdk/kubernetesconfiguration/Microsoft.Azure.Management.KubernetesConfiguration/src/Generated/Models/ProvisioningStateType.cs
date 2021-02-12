@@ -10,102 +10,16 @@
 
 namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
 {
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for ProvisioningStateType.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(ProvisioningStateTypeConverter))]
-    public struct ProvisioningStateType : System.IEquatable<ProvisioningStateType>
+    public static class ProvisioningStateType
     {
-        private ProvisioningStateType(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
-        public static readonly ProvisioningStateType Accepted = "Accepted";
-
-        public static readonly ProvisioningStateType Deleting = "Deleting";
-
-        public static readonly ProvisioningStateType Running = "Running";
-
-        public static readonly ProvisioningStateType Succeeded = "Succeeded";
-
-        public static readonly ProvisioningStateType Failed = "Failed";
-
-
-        /// <summary>
-        /// Underlying value of enum ProvisioningStateType
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for ProvisioningStateType
-        /// </summary>
-        public override string ToString()
-        {
-            return UnderlyingValue == null ? null : UnderlyingValue.ToString();
-        }
-
-        /// <summary>
-        /// Compares enums of type ProvisioningStateType
-        /// </summary>
-        public bool Equals(ProvisioningStateType e)
-        {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert string to ProvisioningStateType
-        /// </summary>
-        public static implicit operator ProvisioningStateType(string value)
-        {
-            return new ProvisioningStateType(value);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert ProvisioningStateType to string
-        /// </summary>
-        public static implicit operator string(ProvisioningStateType e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum ProvisioningStateType
-        /// </summary>
-        public static bool operator == (ProvisioningStateType e1, ProvisioningStateType e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum ProvisioningStateType
-        /// </summary>
-        public static bool operator != (ProvisioningStateType e1, ProvisioningStateType e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for ProvisioningStateType
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is ProvisioningStateType && Equals((ProvisioningStateType)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode ProvisioningStateType
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
+        public const string Accepted = "Accepted";
+        public const string Deleting = "Deleting";
+        public const string Running = "Running";
+        public const string Succeeded = "Succeeded";
+        public const string Failed = "Failed";
     }
 }

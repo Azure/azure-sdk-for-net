@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
       // BEGIN: Code Generation Metadata Section
       public static readonly String AutoRestVersion = "v2";
       public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/kubernetesconfiguration/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --opt-in-extensible-enums --csharp-sdks-folder=C:\\Users\\joinnis\\github\\azure-sdk-for-net\\sdk";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/kubernetesconfiguration/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=C:\\Users\\joinnis\\github\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
       public static readonly String GithubCommidId = "e6a4cb677ad0d3b5567ae98024b7c7d360469393";
