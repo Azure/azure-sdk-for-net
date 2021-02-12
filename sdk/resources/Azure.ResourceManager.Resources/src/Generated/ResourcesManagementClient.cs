@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> Resources service management client. </summary>
-    public class ResourcesManagementClient
+    public partial class ResourcesManagementClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;

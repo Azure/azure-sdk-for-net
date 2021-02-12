@@ -74,11 +74,12 @@
     <!-- Azure SDK packages -->
     <PackageReference Update="Azure.Core" Version="1.9.0" />
     <PackageReference Update="Azure.Core.Amqp" Version="1.0.0" />
-    <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.7" />
+    <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.9" />
+    <PackageReference Update="Azure.Messaging.EventHubs" Version="5.3.0" />
     <PackageReference Update="Azure.Identity" Version="1.2.1" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.0.2" />
     <PackageReference Update="Azure.Security.KeyVault.Keys" Version="4.0.2" />
-    <PackageReference Update="Azure.Storage.Blobs" Version="12.6.0" />
+    <PackageReference Update="Azure.Storage.Blobs" Version="12.8.0" />
     
     <!-- Other approved packages -->
     <PackageReference Update="Microsoft.Azure.Amqp" Version="2.4.9" />
@@ -105,7 +106,7 @@
   <ItemGroup Condition="'$(IsExtensionClientLibrary)' == 'true'">
     <PackageReference Update="Microsoft.AspNetCore.DataProtection" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.Azure" Version="1.0.0" />
-    <PackageReference Update="Microsoft.Extensions.Azure" Version="1.1.0-beta.1" Condition="'$(HasReleaseVersion)' == 'false'" />
+    <PackageReference Update="Microsoft.Extensions.Azure" Version="1.1.0-beta.2" Condition="'$(HasReleaseVersion)' == 'false'" />
     <PackageReference Update="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Abstractions" Version="2.1.0" />
@@ -119,7 +120,7 @@
     All should have PrivateAssets="All" set so they don't become pacakge dependencies
   -->
   <ItemGroup>
-    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20210205.2" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20210211.1" PrivateAssets="All" />
     <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20200929.2" PrivateAssets="All" />
     <PackageReference Update="coverlet.collector" Version="1.3.0" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.1" PrivateAssets="All" />

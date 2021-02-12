@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Files.Shares
 {
-    internal class FileUploadRangeFromURLHeaders
+    internal partial class FileUploadRangeFromURLHeaders
     {
         private readonly Response _response;
         public FileUploadRangeFromURLHeaders(Response response)

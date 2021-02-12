@@ -11,7 +11,7 @@ using Azure.AI.TextAnalytics.Models;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary> The TasksStateTasksEntityRecognitionTasksItem. </summary>
-    public partial class EntityRecognitionTasksItem : TaskState
+    internal partial class EntityRecognitionTasksItem : TaskState
     {
         /// <summary> Initializes a new instance of EntityRecognitionTasksItem. </summary>
         /// <param name="lastUpdateDateTime"> . </param>
