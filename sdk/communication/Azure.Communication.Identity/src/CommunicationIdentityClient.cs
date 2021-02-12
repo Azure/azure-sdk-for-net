@@ -65,7 +65,8 @@ namespace Azure.Communication.Identity
             RestClient = new CommunicationIdentityRestClient(
                 _clientDiagnostics,
                 options.BuildHttpPipeline(connectionString),
-                connectionString.GetRequired("endpoint"));
+                connectionString.GetRequired("endpoint"),
+                apiVersion: "2021-03-07");
         }
 
         private CommunicationIdentityClient(Uri endpoint, CommunicationIdentityClientOptions options, AzureKeyCredential credential)
@@ -74,7 +75,8 @@ namespace Azure.Communication.Identity
             RestClient = new CommunicationIdentityRestClient(
                 _clientDiagnostics,
                 options.BuildHttpPipeline(credential),
-                endpoint.AbsoluteUri);
+                endpoint.AbsoluteUri,
+                apiVersion: "2021-03-07");
         }
 
         private CommunicationIdentityClient(Uri endpoint, CommunicationIdentityClientOptions options, TokenCredential tokenCredential)
@@ -83,7 +85,8 @@ namespace Azure.Communication.Identity
             RestClient = new CommunicationIdentityRestClient(
                 _clientDiagnostics,
                 options.BuildHttpPipeline(tokenCredential),
-                endpoint.AbsoluteUri);
+                endpoint.AbsoluteUri,
+                apiVersion: "2021-03-07");
         }
 
         /// <summary>Initializes a new instance of <see cref="CommunicationIdentityClient"/> for mocking.</summary>
@@ -296,7 +299,7 @@ namespace Azure.Communication.Identity
         /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual Response<CommunicationTurnCredentialsResponse> IssueTurnCredentials(CommunicationUserIdentifier communicationUser, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(IssueToken)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(IssueTurnCredentials)}");
             scope.Start();
             try
             {
@@ -315,7 +318,7 @@ namespace Azure.Communication.Identity
         /// <param name="cancellationToken">The cancellation token to use.</param>
         public virtual async Task<Response<CommunicationTurnCredentialsResponse>> IssueTurnCredentialsAsync(CommunicationUserIdentifier communicationUser, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(IssueToken)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(IssueTurnCredentials)}");
             scope.Start();
             try
             {
