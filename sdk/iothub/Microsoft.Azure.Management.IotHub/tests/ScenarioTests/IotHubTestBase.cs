@@ -73,11 +73,11 @@ namespace IotHub.Tests.ScenarioTests
                     {
                         Name = "Standard",
                         Tier = "Standard",
-                    }
+                    },
                 });
 
             Assert.Equal("Succeeded", namespaceResource.ProvisioningState);
-            _ = ehClient.EventHubs.CreateOrUpdate(resourceGroup.Name, namespaceName, ehName, new EventHubCreateOrUpdateParameters()
+            _ = ehClient.EventHubs.CreateOrUpdate(resourceGroup.Name, namespaceName, ehName, new EventHubCreateOrUpdateParameters
             {
                 Location = location,
             });
@@ -113,11 +113,11 @@ namespace IotHub.Tests.ScenarioTests
                 new SBModel.NamespaceCreateOrUpdateParameters
                 {
                     Location = location,
-                    Sku = new SBModel.Sku()
+                    Sku = new SBModel.Sku
                     {
                         Name = "Standard",
                         Tier = "Standard",
-                    }
+                    },
                 });
 
             Assert.Equal("Succeeded", namespaceResource.ProvisioningState);
@@ -127,7 +127,7 @@ namespace IotHub.Tests.ScenarioTests
                 sbName,
                 new QueueCreateOrUpdateParameters
                 {
-                    Location = location
+                    Location = location,
                 });
             _ = sbClient.Topics.CreateOrUpdate(
                 resourceGroup.Name,
@@ -135,7 +135,7 @@ namespace IotHub.Tests.ScenarioTests
                 topicName,
                 new TopicCreateOrUpdateParameters
                 {
-                    Location = location
+                    Location = location,
                 });
 
             sbClient.Queues.CreateOrUpdateAuthorizationRule(
@@ -182,7 +182,7 @@ namespace IotHub.Tests.ScenarioTests
                 Sku = new IotHubSkuInfo
                 {
                     Name = "S1",
-                    Capacity = 1
+                    Capacity = 1,
                 },
                 Properties = properties,
             };
@@ -203,7 +203,8 @@ namespace IotHub.Tests.ScenarioTests
 
         protected ResourceGroup CreateResourceGroup(string resourceGroupName)
         {
-            return resourcesClient.ResourceGroups.CreateOrUpdate(resourceGroupName,
+            return resourcesClient.ResourceGroups.CreateOrUpdate(
+                resourceGroupName,
                 new ResourceGroup
                 {
                     Location = IotHubTestUtilities.DefaultLocation
@@ -215,15 +216,21 @@ namespace IotHub.Tests.ScenarioTests
             resourcesClient.ResourceGroups.Delete(resourceGroupName);
         }
 
-        protected CertificateDescription CreateCertificate(ResourceGroup resourceGroup, string iotHubName, string certificateName, string certificateBodyDescriptionContent)
+        protected CertificateDescription CreateCertificate(
+            ResourceGroup resourceGroup,
+            string iotHubName,
+            string certificateName)
         {
-            var createCertificateBodyDescription = new CertificateBodyDescription(certificateBodyDescriptionContent);
+            var certProperties = new CertificateProperties(
+                subject: IotHubTestUtilities.DefaultIotHubCertificateSubject,
+                thumbprint: IotHubTestUtilities.DefaultIotHubCertificateThumbprint,
+                certificate: IotHubTestUtilities.DefaultIotHubCertificateContent);
 
             return iotHubClient.Certificates.CreateOrUpdate(
                 resourceGroup.Name,
                 iotHubName,
                 certificateName,
-                createCertificateBodyDescription);
+                certProperties);
         }
 
         protected CertificateListDescription GetCertificates(ResourceGroup resourceGroup, string iotHubName)
