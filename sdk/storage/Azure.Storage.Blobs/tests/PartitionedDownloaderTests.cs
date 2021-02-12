@@ -40,7 +40,7 @@ namespace Azure.Storage.Blobs.Test
             MemoryStream stream = new MemoryStream();
             MockDataSource dataSource = new MockDataSource(0);
             Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
-            blockClient.SetupGet(c => c.ClientConfiguration.ClientDiagnostics).CallBase();
+            blockClient.SetupGet(c => c.ClientConfiguration).CallBase();
 
             SetupDownload(blockClient, dataSource);
 
@@ -58,7 +58,7 @@ namespace Azure.Storage.Blobs.Test
             MemoryStream stream = new MemoryStream();
             MockDataSource dataSource = new MockDataSource(10);
             Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
-            blockClient.SetupGet(c => c.ClientConfiguration.ClientDiagnostics).CallBase();
+            blockClient.SetupGet(c => c.ClientConfiguration).CallBase();
 
             SetupDownload(blockClient, dataSource);
 
@@ -76,7 +76,7 @@ namespace Azure.Storage.Blobs.Test
             MemoryStream stream = new MemoryStream();
             MockDataSource dataSource = new MockDataSource(100);
             Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
-            blockClient.SetupGet(c => c.ClientConfiguration.ClientDiagnostics).CallBase();
+            blockClient.SetupGet(c => c.ClientConfiguration).CallBase();
             BlobProperties smallLengthProperties = new BlobProperties()
             {
                 ContentLength = 100
@@ -105,7 +105,7 @@ namespace Azure.Storage.Blobs.Test
             MemoryStream stream = new MemoryStream();
             MockDataSource dataSource = new MockDataSource(100);
             Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
-            blockClient.SetupGet(c => c.ClientConfiguration.ClientDiagnostics).CallBase();
+            blockClient.SetupGet(c => c.ClientConfiguration).CallBase();
             BlobProperties smallLengthProperties = new BlobProperties()
             {
                 ContentLength = 100
@@ -134,7 +134,7 @@ namespace Azure.Storage.Blobs.Test
             MemoryStream stream = new MemoryStream();
             MockDataSource dataSource = new MockDataSource(100);
             Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
-            blockClient.SetupGet(c => c.ClientConfiguration.ClientDiagnostics).CallBase();
+            blockClient.SetupGet(c => c.ClientConfiguration).CallBase();
             BlobProperties properties = new BlobProperties()
             {
                 ContentLength = 100,
@@ -182,7 +182,7 @@ namespace Azure.Storage.Blobs.Test
 
             MemoryStream stream = new MemoryStream();
             Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
-            blockClient.SetupGet(c => c.ClientConfiguration.ClientDiagnostics).CallBase();
+            blockClient.SetupGet(c => c.ClientConfiguration).CallBase();
             BlobProperties smallLengthProperties = new BlobProperties()
             {
                 ContentLength = 100

@@ -243,10 +243,18 @@ namespace Azure.Storage.Blobs
         #endregion
 
         #region ToBlobContainerInfo
-        // TODO
         internal static BlobContainerInfo ToBlobContainerInfo(this ResponseWithHeaders<ContainerCreateHeaders> response)
         {
-            return null;
+            if (response == null)
+            {
+                return null;
+            }
+
+            return new BlobContainerInfo
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault()
+            };
         }
         #endregion
 
@@ -709,7 +717,6 @@ namespace Azure.Storage.Blobs
         #endregion
 
         #region ToBlobProperties
-        // TODO
         internal static BlobProperties ToBlobProperties(this ResponseWithHeaders<BlobGetPropertiesHeaders> response)
         {
             if (response == null)
@@ -1230,7 +1237,6 @@ namespace Azure.Storage.Blobs
             };
         }
 
-        // TODO
         internal static BlobContainerProperties ToBlobContainerProperties(this ResponseWithHeaders<ContainerGetPropertiesHeaders> response)
         {
             if (response == null)
