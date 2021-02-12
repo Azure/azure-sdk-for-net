@@ -35,11 +35,10 @@ namespace Microsoft.Azure.Management.IotHub
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/iothub/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=C:\\code\\Azure\\asfn1\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "e6a4cb677ad0d3b5567ae98024b7c7d360469393";
-        public static readonly String CodeGenerationErrors = "";
-        public static readonly String GithubRepoName = "azure-rest-api-specs";
+      public static readonly String GithubCommidId = "a1eee0489c374782a934ec1f093abd16fa7718ca";
+      public static readonly String CodeGenerationErrors = "";
+      public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
   }
 }
-
 
