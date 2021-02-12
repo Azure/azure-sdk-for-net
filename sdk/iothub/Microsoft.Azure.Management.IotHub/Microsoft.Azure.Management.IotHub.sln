@@ -7,12 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.IotHub", "src\Microsoft.Azure.Management.IotHub.csproj", "{6D87768F-C148-4850-AA06-B6D0E0319462}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution items", "Solution items", "{D3EEACF7-2964-4D19-BE33-E5458C3845D9}"
-	ProjectSection(SolutionItems) = preProject
-		..\ci.yml = ..\ci.yml
-		..\tests.yml = ..\tests.yml
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
