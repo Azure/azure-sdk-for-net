@@ -688,7 +688,6 @@ namespace Azure.Storage.Blobs
             switch (message.Response.Status)
             {
                 case 201:
-                case 304:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -742,7 +741,6 @@ namespace Azure.Storage.Blobs
             switch (message.Response.Status)
             {
                 case 201:
-                case 304:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -831,8 +829,6 @@ namespace Azure.Storage.Blobs
                         }
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
-                case 304:
-                    return ResponseWithHeaders.FromValue<PageList, PageBlobGetPageRangesHeaders>(null, headers, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -866,8 +862,6 @@ namespace Azure.Storage.Blobs
                         }
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
-                case 304:
-                    return ResponseWithHeaders.FromValue<PageList, PageBlobGetPageRangesHeaders>(null, headers, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -965,8 +959,6 @@ namespace Azure.Storage.Blobs
                         }
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
-                case 304:
-                    return ResponseWithHeaders.FromValue<PageList, PageBlobGetPageRangesDiffHeaders>(null, headers, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -1002,8 +994,6 @@ namespace Azure.Storage.Blobs
                         }
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
-                case 304:
-                    return ResponseWithHeaders.FromValue<PageList, PageBlobGetPageRangesDiffHeaders>(null, headers, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }

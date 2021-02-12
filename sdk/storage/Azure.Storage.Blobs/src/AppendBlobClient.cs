@@ -1386,6 +1386,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifMatch: conditions?.IfMatch.ToString(),
                             ifNoneMatch: conditions?.IfNoneMatch.ToString(),
                             ifTags: conditions?.TagConditions,
+                            // TODO source access conditions are always being send even if they are null
                             sourceIfModifiedSince: sourceConditions?.IfModifiedSince,
                             sourceIfUnmodifiedSince: sourceConditions?.IfUnmodifiedSince,
                             // TODO make these ETags?

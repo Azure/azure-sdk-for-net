@@ -32,6 +32,5 @@ namespace Azure.Storage.Blobs
         public byte[] ContentMD5 => _response.Headers.TryGetValue("Content-MD5", out byte[] value) ? value : null;
         /// <summary> This response header is returned so that the client can check for the integrity of the copied content. </summary>
         public byte[] XMsContentCrc64 => _response.Headers.TryGetValue("x-ms-content-crc64", out byte[] value) ? value : null;
-        public string ErrorCode => _response.Headers.TryGetValue("x-ms-error-code", out string value) ? value : null;
     }
 }
