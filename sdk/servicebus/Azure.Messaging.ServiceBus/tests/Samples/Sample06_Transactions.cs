@@ -16,7 +16,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                var client = GetClient();
+                await using var client = CreateClient();
                 string queueName = scope.QueueName;
                 #region Snippet:ServiceBusTransactionalSend
                 //@@ string connectionString = "<connection_string>";
@@ -48,7 +48,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
-                var client = GetClient();
+                await using var client = CreateClient();
                 string queueName = scope.QueueName;
                 #region Snippet:ServiceBusTransactionalSetSessionState
                 //@@ string connectionString = "<connection_string>";

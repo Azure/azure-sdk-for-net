@@ -3,8 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Azure.AI.TextAnalytics.Models;
 using Azure.AI.TextAnalytics.Tests;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -40,9 +38,9 @@ namespace Azure.AI.TextAnalytics.Samples
                 batchDocument.Add(document);
             }
 
-            HealthcareOperation healthOperation = client.StartHealthcareBatch(batchDocument, "en");
+            AnalyzeHealthcareEntitiesOperation healthOperation = client.StartAnalyzeHealthcareEntities(batchDocument, "en");
 
-            client.StartCancelHealthJob(healthOperation);
+            healthOperation.Cancel();
         }
 
         #endregion

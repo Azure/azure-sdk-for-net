@@ -39,6 +39,12 @@ parameters:
 - name: LinuxPool
   type: string
   default: azsdk-pool-mms-ubuntu-1804-general
+- name: TestTimeoutInMinutes
+  type: number
+  default: 60
+
+variables:
+  - template: ../variables/globals.yml
 
 stages:
   - stage: Build
@@ -55,6 +61,7 @@ stages:
         TestSetupSteps: ${{ parameters.TestSetupSteps }}
         WindowsPool: ${{ parameters.WindowsPool }}
         LinuxPool: ${{ parameters.LinuxPool }}
+        TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
 
   # The Prerelease and Release stages are conditioned on whether we are building a pull request and the branch.
   - ${{if and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['System.TeamProject'], 'internal'))}}:

@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal static class StringIndexTypeResponseExtensions
+    internal static partial class StringIndexTypeResponseExtensions
     {
         public static string ToSerialString(this StringIndexTypeResponse value) => value switch
         {

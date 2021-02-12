@@ -9,6 +9,7 @@ using Azure.Core.TestFramework;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
+using Moq;
 using NUnit.Framework;
 
 namespace Azure.Storage.Files.Shares.Tests
@@ -105,7 +106,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
         [Test]
         [NonParallelizable]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
         public async Task SetPropertiesAsync()
         {
             // Arrange
@@ -134,7 +135,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
         [Test]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_12_12)]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
         [NonParallelizable]
         public async Task GetSetServicePropertiesAsync_SmbMultiChannel()
         {
@@ -506,6 +507,23 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [Test]
+        public void CanGenerateAccountSas_Mockable()
+        {
+            // Act
+            var directory = new Mock<ShareServiceClient>();
+            directory.Setup(x => x.CanGenerateAccountSasUri).Returns(false);
+
+            // Assert
+            Assert.IsFalse(directory.Object.CanGenerateAccountSasUri);
+
+            // Act
+            directory.Setup(x => x.CanGenerateAccountSasUri).Returns(true);
+
+            // Assert
+            Assert.IsTrue(directory.Object.CanGenerateAccountSasUri);
+        }
+
+        [Test]
         public void GenerateAccountSas_RequiredParameters()
         {
             // Arrange
@@ -600,5 +618,16 @@ namespace Azure.Storage.Files.Shares.Tests
             }
         }
         #endregion
+
+        [Test]
+        public void CanMockClientConstructors()
+        {
+            // One has to call .Object to trigger constructor. It's lazy.
+            var mock = new Mock<ShareServiceClient>(TestConfigDefault.ConnectionString, new ShareClientOptions()).Object;
+            mock = new Mock<ShareServiceClient>(TestConfigDefault.ConnectionString).Object;
+            mock = new Mock<ShareServiceClient>(new Uri("https://test/test/test"), new ShareClientOptions()).Object;
+            mock = new Mock<ShareServiceClient>(new Uri("https://test/test/test"), GetNewSharedKeyCredentials(), new ShareClientOptions()).Object;
+            mock = new Mock<ShareServiceClient>(new Uri("https://test/test/test"), new AzureSasCredential("foo"), new ShareClientOptions()).Object;
+        }
     }
 }

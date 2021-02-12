@@ -6,14 +6,13 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.ServiceBus.Listeners;
-using Microsoft.Azure.ServiceBus;
-using Microsoft.Azure.ServiceBus.Core;
+using Azure.Messaging.ServiceBus;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
 {
     internal static class MessageSenderExtensions
     {
-        public static async Task SendAndCreateEntityIfNotExists(this MessageSender sender, Message message,
+        public static async Task SendAndCreateEntityIfNotExists(this ServiceBusSender sender, ServiceBusMessage message,
             Guid functionInstanceId, CancellationToken cancellationToken)
         {
             if (sender == null)
@@ -25,7 +24,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
 
             cancellationToken.ThrowIfCancellationRequested();
 
-            await sender.SendAsync(message).ConfigureAwait(false);
+            await sender.SendMessageAsync(message, cancellationToken).ConfigureAwait(false);
             return;
         }
     }

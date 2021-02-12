@@ -492,64 +492,6 @@ namespace Azure.Messaging.EventHubs.Producer
         }
 
         /// <summary>
-        ///   Sends the <see cref="EventData" /> to the associated Event Hub.  To avoid the
-        ///   overhead associated with measuring and validating the size in the client, validation will
-        ///   be delegated to the Event Hubs service and is deferred until the operation is invoked.
-        ///   The call will fail if the size of the specified <paramref name="eventData"/> exceeds the
-        ///   maximum allowable size of a single event.
-        /// </summary>
-        ///
-        /// <param name="eventData">The event data to send.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
-        ///
-        /// <returns>
-        ///   A task to be resolved on when the operation has completed; if no exception is thrown when awaited, the
-        ///   Event Hubs service has acknowledge receipt and assumed responsibility for delivery of the event.
-        /// </returns>
-        ///
-        /// <seealso cref="SendAsync(EventData, SendEventOptions, CancellationToken)" />
-        /// <seealso cref="SendAsync(IEnumerable{EventData}, CancellationToken)" />
-        /// <seealso cref="SendAsync(IEnumerable{EventData}, SendEventOptions, CancellationToken)" />
-        /// <seealso cref="SendAsync(EventDataBatch, CancellationToken)" />
-        ///
-        internal virtual async Task SendAsync(EventData eventData,
-                                              CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(eventData, nameof(eventData));
-            await SendAsync(new[] { eventData }, null, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        ///   Sends the <see cref="EventData" /> to the associated Event Hub.  To avoid the
-        ///   overhead associated with measuring and validating the size in the client, validation will
-        ///   be delegated to the Event Hubs service and is deferred until the operation is invoked.
-        ///   The call will fail if the size of the specified <paramref name="eventData"/> exceeds the
-        ///   maximum allowable size of a single event.
-        /// </summary>
-        ///
-        /// <param name="eventData">The event data to send.</param>
-        /// <param name="options">The set of options to consider when sending this batch.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
-        ///
-        /// <returns>
-        ///   A task to be resolved on when the operation has completed; if no exception is thrown when awaited, the
-        ///   Event Hubs service has acknowledge receipt and assumed responsibility for delivery of the event.
-        /// </returns>
-        ///
-        /// <seealso cref="SendAsync(EventData, CancellationToken)" />
-        /// <seealso cref="SendAsync(IEnumerable{EventData}, CancellationToken)" />
-        /// <seealso cref="SendAsync(IEnumerable{EventData}, SendEventOptions, CancellationToken)" />
-        /// <seealso cref="SendAsync(EventDataBatch, CancellationToken)" />
-        ///
-        internal virtual async Task SendAsync(EventData eventData,
-                                              SendEventOptions options,
-                                              CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(eventData, nameof(eventData));
-            await SendAsync(new[] { eventData }, options, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
         ///   Sends a set of events to the associated Event Hub as a single operation.  To avoid the
         ///   overhead associated with measuring and validating the size in the client, validation will
         ///   be delegated to the Event Hubs service and is deferred until the operation is invoked.
@@ -557,7 +499,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   size of a single batch.
         /// </summary>
         ///
-        /// <param name="eventSet">The set of event data to send.</param>
+        /// <param name="eventBatch">The set of event data to send.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>
@@ -579,8 +521,8 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <seealso cref="SendAsync(EventDataBatch, CancellationToken)" />
         /// <seealso cref="CreateBatchAsync(CancellationToken)" />
         ///
-        public virtual async Task SendAsync(IEnumerable<EventData> eventSet,
-                                            CancellationToken cancellationToken = default) => await SendAsync(eventSet, null, cancellationToken).ConfigureAwait(false);
+        public virtual async Task SendAsync(IEnumerable<EventData> eventBatch,
+                                            CancellationToken cancellationToken = default) => await SendAsync(eventBatch, null, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         ///   Sends a set of events to the associated Event Hub as a single operation.  To avoid the
@@ -590,7 +532,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   size of a single batch.
         /// </summary>
         ///
-        /// <param name="eventSet">The set of event data to send.</param>
+        /// <param name="eventBatch">The set of event data to send.</param>
         /// <param name="options">The set of options to consider when sending this batch.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
         ///
@@ -613,19 +555,19 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <seealso cref="SendAsync(EventDataBatch, CancellationToken)" />
         /// <seealso cref="CreateBatchAsync(CreateBatchOptions, CancellationToken)" />
         ///
-        public virtual async Task SendAsync(IEnumerable<EventData> eventSet,
+        public virtual async Task SendAsync(IEnumerable<EventData> eventBatch,
                                             SendEventOptions options,
                                             CancellationToken cancellationToken = default)
         {
             options = options?.Clone() ?? DefaultSendOptions;
 
-            Argument.AssertNotNull(eventSet, nameof(eventSet));
+            Argument.AssertNotNull(eventBatch, nameof(eventBatch));
             AssertSinglePartitionReference(options.PartitionId, options.PartitionKey);
 
-            var events = eventSet switch
+            var events = eventBatch switch
             {
-               IReadOnlyList<EventData> eventList => eventList,
-               _ => eventSet.ToList()
+                IReadOnlyList<EventData> eventList => eventList,
+                _ => eventBatch.ToList()
             };
 
             if (events.Count == 0)

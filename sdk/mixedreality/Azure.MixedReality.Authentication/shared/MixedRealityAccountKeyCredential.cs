@@ -14,7 +14,7 @@ namespace Azure.MixedReality.Authentication
     /// <seealso cref="TokenCredential" />
     internal class MixedRealityAccountKeyCredential : TokenCredential
     {
-        private readonly string _accountId;
+        private readonly Guid _accountId;
 
         private readonly AzureKeyCredential _accountKey;
 
@@ -23,7 +23,7 @@ namespace Azure.MixedReality.Authentication
         /// </summary>
         /// <param name="accountId">The Mixed Reality service account identifier.</param>
         /// <param name="accountKey">The Mixed Reality service account primary or secondary key.</param>
-        public MixedRealityAccountKeyCredential(string accountId, string accountKey)
+        public MixedRealityAccountKeyCredential(Guid accountId, string accountKey)
             : this(accountId, new AzureKeyCredential(accountKey))
         {
         }
@@ -33,9 +33,9 @@ namespace Azure.MixedReality.Authentication
         /// </summary>
         /// <param name="accountId">The Mixed Reality service account identifier.</param>
         /// <param name="keyCredential">The Mixed Reality service account primary or secondary key credential.</param>
-        public MixedRealityAccountKeyCredential(string accountId, AzureKeyCredential keyCredential)
+        public MixedRealityAccountKeyCredential(Guid accountId, AzureKeyCredential keyCredential)
         {
-            Argument.AssertNotNullOrWhiteSpace(accountId, nameof(accountId));
+            Argument.AssertNotDefault(ref accountId, nameof(accountId));
             Argument.AssertNotNull(keyCredential, nameof(keyCredential));
 
             _accountId = accountId;

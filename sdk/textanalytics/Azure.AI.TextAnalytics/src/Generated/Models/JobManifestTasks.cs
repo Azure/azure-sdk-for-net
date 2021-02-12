@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary> The set of tasks to execute on the input documents. Cannot specify the same task more than once. </summary>
-    public partial class JobManifestTasks
+    internal partial class JobManifestTasks
     {
         /// <summary> Initializes a new instance of JobManifestTasks. </summary>
         public JobManifestTasks()

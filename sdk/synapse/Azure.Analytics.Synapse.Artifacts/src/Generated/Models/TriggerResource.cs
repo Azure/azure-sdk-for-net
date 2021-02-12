@@ -10,7 +10,7 @@ using System;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Trigger resource type. </summary>
-    public partial class TriggerResource : AzureEntityResource
+    public partial class TriggerResource : SubResource
     {
         /// <summary> Initializes a new instance of TriggerResource. </summary>
         /// <param name="properties"> Properties of the trigger. </param>

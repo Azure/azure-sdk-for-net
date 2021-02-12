@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -17,72 +16,65 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="WebNotificationHook"/> class.
-        /// <param name="name">The name to assign to the hook.</param>
-        /// <param name="endpoint">The API address to be called when an alert is triggered.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="endpoint"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="name"/> or <paramref name="endpoint"/> is empty.</exception>
         /// </summary>
-        public WebNotificationHook(string name, string endpoint)
-            : base(name)
+        public WebNotificationHook()
         {
-            Argument.AssertNotNullOrEmpty(endpoint, nameof(endpoint));
-
-            HookParameter = new WebhookHookParameter(endpoint, default, default, new ChangeTrackingDictionary<string, string>(), default, default);
-
             HookType = HookType.Webhook;
+            Headers = new ChangeTrackingDictionary<string, string>();
         }
 
         internal WebNotificationHook(HookType hookType, string id, string name, string description, string externalLink, IReadOnlyList<string> administrators, WebhookHookParameter hookParameter)
             : base(hookType, id, name, description, externalLink, administrators)
         {
-            HookParameter = hookParameter;
             HookType = hookType;
+            Endpoint = hookParameter.Endpoint;
+            Username = hookParameter.Username;
+            Password = hookParameter.Password;
+            CertificateKey = hookParameter.CertificateKey;
+            CertificatePassword = hookParameter.CertificatePassword;
+            Headers = hookParameter.Headers;
         }
 
         /// <summary>
         /// The API address to be called when an alert is triggered.
         /// </summary>
-        public string Endpoint { get => HookParameter.Endpoint; }
+        public string Endpoint { get; set; }
 
         /// <summary>
         /// The username for authenticating to the API address. Leave this blank if authentication isn't needed.
         /// </summary>
-        public string Username { get => HookParameter.Username; set => HookParameter.Username = value; }
+        public string Username { get; set; }
 
         /// <summary>
         /// The password for authenticating to the API address. Leave this blank if authentication isn't needed.
         /// </summary>
-        public string Password { get => HookParameter.Password; set => HookParameter.Password = value; }
+        public string Password { get; set; }
 
         /// <summary>
         /// The certificate key for authenticating to the API address. Leave this blank if authentication isn't needed.
         /// </summary>
-        public string CertificateKey { get => HookParameter.CertificateKey; set => HookParameter.CertificateKey = value; }
+        public string CertificateKey { get; set; }
 
         /// <summary>
         /// The certificate password for authenticating to the API address. Leave this blank if authentication isn't needed.
         /// </summary>
-        public string CertificatePassword { get => HookParameter.CertificatePassword; set => HookParameter.CertificatePassword = value; }
+        public string CertificatePassword { get; set; }
 
         /// <summary>
         /// Custom headers to send in the API call.
         /// </summary>
-        /// <exception cref="ArgumentNullException">The value assigned to <see cref="Headers"/> is null.</exception>
-#pragma warning disable CA2227 // Collection properties should be readonly
-        public IDictionary<string, string> Headers
-        {
-            get => HookParameter.Headers;
-            set
-            {
-                Argument.AssertNotNull(value, nameof(Headers));
-                HookParameter.Headers = value;
-            }
-        }
-#pragma warning restore CA2227 // Collection properties should be readonly
+        public IDictionary<string, string> Headers { get; }
 
         /// <summary>
         /// Used by CodeGen during serialization.
         /// </summary>
-        internal WebhookHookParameter HookParameter { get; private set; }
+        internal WebhookHookParameter HookParameter => new WebhookHookParameter(Endpoint)
+        {
+            Username = Username,
+            Password = Password,
+            CertificateKey = CertificateKey,
+            CertificatePassword = CertificatePassword,
+            Headers = Headers
+        };
     }
 }

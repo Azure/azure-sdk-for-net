@@ -13,7 +13,7 @@
         "x-ms-client-request-id": "1c2e1e89-959e-14a1-3394-81f4d8c52010",
         "x-ms-date": "Wed, 02 Dec 2020 17:11:37 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-04-08"
+        "x-ms-version": "2020-06-12"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -29,7 +29,7 @@
         "x-ms-is-hns-enabled": "true",
         "x-ms-request-id": "0d7ba470-101e-008c-7ece-c825ae000000",
         "x-ms-sku-name": "Standard_RAGRS",
-        "x-ms-version": "2020-04-08"
+        "x-ms-version": "2020-06-12"
       },
       "ResponseBody": []
     }

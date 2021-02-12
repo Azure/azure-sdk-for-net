@@ -3,15 +3,13 @@
 
 using System;
 using System.IO;
-using System.Runtime.Serialization;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.ServiceBus.Triggers;
-using Microsoft.Azure.ServiceBus;
-using Xunit;
-using System.Collections.Generic;
-using Microsoft.Azure.ServiceBus.InteropExtensions;
+using NUnit.Framework;
+using Azure.Messaging.ServiceBus;
+using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Triggers;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
 {
@@ -20,13 +18,13 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
         private const string TestString = "This is a test!";
         private const string TestJson = "{ value: 'This is a test!' }";
 
-        [Theory]
-        [InlineData(ContentTypes.TextPlain, TestString)]
-        [InlineData(ContentTypes.ApplicationJson, TestJson)]
-        [InlineData(ContentTypes.ApplicationOctetStream, TestString)]
-        [InlineData(null, TestJson)]
-        [InlineData("application/xml", TestJson)]
-        [InlineData(ContentTypes.TextPlain, null)]
+        [Test]
+        [TestCase(ContentTypes.TextPlain, TestString)]
+        [TestCase(ContentTypes.ApplicationJson, TestJson)]
+        [TestCase(ContentTypes.ApplicationOctetStream, TestString)]
+        [TestCase(null, TestJson)]
+        [TestCase("application/xml", TestJson)]
+        [TestCase(ContentTypes.TextPlain, null)]
         public async Task ConvertAsync_ReturnsExpectedResult_WithBinarySerializer(string contentType, string value)
         {
             byte[] bytes;
@@ -36,34 +34,44 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
                 bytes = ms.ToArray();
             }
 
-            Message message = new Message(bytes);
-            message.ContentType = contentType;
+            ServiceBusReceivedMessage message = ServiceBusModelFactory.ServiceBusReceivedMessage(body: new BinaryData(bytes), contentType: contentType);
 
             MessageToStringConverter converter = new MessageToStringConverter();
             string result = await converter.ConvertAsync(message, CancellationToken.None);
 
-            Assert.Equal(value, result);
+            Assert.AreEqual(value, result);
         }
 
         [Theory]
-        [InlineData(ContentTypes.TextPlain, TestString)]
-        [InlineData(ContentTypes.ApplicationJson, TestJson)]
-        [InlineData(ContentTypes.ApplicationOctetStream, TestString)]
-        [InlineData(null, TestJson)]
-        [InlineData("application/xml", TestJson)]
-        [InlineData(ContentTypes.TextPlain, null)]
-        [InlineData(ContentTypes.TextPlain, "")]
+        [TestCase(ContentTypes.TextPlain, TestString)]
+        [TestCase(ContentTypes.ApplicationJson, TestJson)]
+        [TestCase(ContentTypes.ApplicationOctetStream, TestString)]
+        [TestCase(null, TestJson)]
+        [TestCase("application/xml", TestJson)]
+        [TestCase(ContentTypes.TextPlain, null)]
+        [TestCase(ContentTypes.TextPlain, "")]
         public async Task ConvertAsync_ReturnsExpectedResult_WithSerializedString(string contentType, string value)
         {
-            Message message = new Message(value == null ? null : Encoding.UTF8.GetBytes(value));
-            message.ContentType = contentType;
+            ServiceBusReceivedMessage message = ServiceBusModelFactory.ServiceBusReceivedMessage(
+                body: value == null ? null : new BinaryData(value),
+                contentType: contentType);
 
             MessageToStringConverter converter = new MessageToStringConverter();
             string result = await converter.ConvertAsync(message, CancellationToken.None);
-            Assert.Equal(value, result);
+            // A received message will never have a null body as a body section is required when sending even if it
+            // is empty. This was true in Track 1 as well, but in Track 1 the actual body property could be null when
+            // constructing the message, but in practice it wouldn't be null when receiving.
+            if (value == null)
+            {
+                Assert.AreEqual("", result);
+            }
+            else
+            {
+                Assert.AreEqual(value, result);
+            }
         }
 
-        [Fact]
+        [Test]
         public async Task ConvertAsync_ReturnsExpectedResult_WithSerializedObject()
         {
             byte[] bytes;
@@ -73,11 +81,11 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
                 bytes = ms.ToArray();
             }
 
-            Message message = new Message(bytes);
+            ServiceBusReceivedMessage message = ServiceBusModelFactory.ServiceBusReceivedMessage(body: new BinaryData(bytes));
 
             MessageToStringConverter converter = new MessageToStringConverter();
             string result = await converter.ConvertAsync(message, CancellationToken.None);
-            Assert.Equal(Encoding.UTF8.GetString(message.Body), result);
+            Assert.AreEqual(message.Body.ToString(), result);
         }
 
         [Serializable]

@@ -51,10 +51,24 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                     if (info.FullyQualifiedEndpoint != null &&
                         info.TokenCredential != null)
                     {
-                        return new EventHubProducerClient(info.FullyQualifiedEndpoint, eventHubName, info.TokenCredential);
+                        return new EventHubProducerClient(
+                            info.FullyQualifiedEndpoint,
+                            eventHubName,
+                            info.TokenCredential,
+                            new EventHubProducerClientOptions
+                            {
+                                RetryOptions = _options.RetryOptions,
+                                ConnectionOptions = _options.ConnectionOptions
+                            });
                     }
 
-                    return new EventHubProducerClient(NormalizeConnectionString(info.ConnectionString, eventHubName));
+                    return new EventHubProducerClient(
+                        NormalizeConnectionString(info.ConnectionString, eventHubName),
+                        new EventHubProducerClientOptions
+                        {
+                            RetryOptions = _options.RetryOptions,
+                            ConnectionOptions = _options.ConnectionOptions
+                        });
                 }
 
                 throw new InvalidOperationException("No event hub sender named " + eventHubName);
@@ -73,7 +87,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                     eventHubName: eventHubName,
                     options: _options.EventProcessorOptions,
                     eventBatchMaximumCount: _options.MaxBatchSize,
-                    invokeProcessorAfterReceiveTimeout: _options.InvokeProcessorAfterReceiveTimeout,
+                    invokeProcessorAfterReceiveTimeout: _options.InvokeFunctionAfterReceiveTimeout,
                     exceptionHandler: _options.ExceptionHandler);
             }
             else if (!string.IsNullOrEmpty(connection))
@@ -89,7 +103,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                         credential: info.TokenCredential,
                         options: _options.EventProcessorOptions,
                         eventBatchMaximumCount: _options.MaxBatchSize,
-                        invokeProcessorAfterReceiveTimeout: _options.InvokeProcessorAfterReceiveTimeout,
+                        invokeProcessorAfterReceiveTimeout: _options.InvokeFunctionAfterReceiveTimeout,
                         exceptionHandler: _options.ExceptionHandler);
                 }
 
@@ -98,7 +112,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                     eventHubName: eventHubName,
                     options: _options.EventProcessorOptions,
                     eventBatchMaximumCount: _options.MaxBatchSize,
-                    invokeProcessorAfterReceiveTimeout: _options.InvokeProcessorAfterReceiveTimeout,
+                    invokeProcessorAfterReceiveTimeout: _options.InvokeFunctionAfterReceiveTimeout,
                     exceptionHandler: _options.ExceptionHandler);
             }
 
@@ -115,7 +129,15 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 EventHubConsumerClient client = null;
                 if (_options.RegisteredConsumerCredentials.TryGetValue(eventHubName, out var creds))
                 {
-                    client = new EventHubConsumerClient(consumerGroup, creds.EventHubConnectionString, eventHubName);
+                    client = new EventHubConsumerClient(
+                        consumerGroup,
+                        creds.EventHubConnectionString,
+                        eventHubName,
+                        new EventHubConsumerClientOptions
+                        {
+                            RetryOptions = _options.RetryOptions,
+                            ConnectionOptions = _options.ConnectionOptions
+                        });
                 }
                 else if (!string.IsNullOrEmpty(connection))
                 {
@@ -124,11 +146,27 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                     if (info.FullyQualifiedEndpoint != null &&
                         info.TokenCredential != null)
                     {
-                        client = new EventHubConsumerClient(consumerGroup, info.FullyQualifiedEndpoint, eventHubName, info.TokenCredential);
+                        client = new EventHubConsumerClient(
+                            consumerGroup,
+                            info.FullyQualifiedEndpoint,
+                            eventHubName,
+                            info.TokenCredential,
+                            new EventHubConsumerClientOptions
+                            {
+                                RetryOptions = _options.RetryOptions,
+                                ConnectionOptions = _options.ConnectionOptions
+                            });
                     }
                     else
                     {
-                        client = new EventHubConsumerClient(consumerGroup, NormalizeConnectionString(info.ConnectionString, eventHubName));
+                        client = new EventHubConsumerClient(
+                            consumerGroup,
+                            NormalizeConnectionString(info.ConnectionString, eventHubName),
+                            new EventHubConsumerClientOptions
+                            {
+                                RetryOptions = _options.RetryOptions,
+                                ConnectionOptions = _options.ConnectionOptions
+                            });
                     }
                 }
 

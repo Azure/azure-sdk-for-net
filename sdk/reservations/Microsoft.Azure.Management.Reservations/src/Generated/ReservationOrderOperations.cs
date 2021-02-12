@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.Reservations
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "body");
             }
-            string apiVersion = "2019-04-01";
+            string apiVersion = "2020-10-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -257,7 +257,7 @@ namespace Microsoft.Azure.Management.Reservations
         /// </return>
         public async Task<AzureOperationResponse<IPage<ReservationOrderResponse>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            string apiVersion = "2019-04-01";
+            string apiVersion = "2020-10-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -461,7 +461,7 @@ namespace Microsoft.Azure.Management.Reservations
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "reservationOrderId");
             }
-            string apiVersion = "2019-04-01";
+            string apiVersion = "2020-10-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -651,7 +651,7 @@ namespace Microsoft.Azure.Management.Reservations
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "body");
             }
-            string apiVersion = "2019-04-01";
+            string apiVersion = "2020-10-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

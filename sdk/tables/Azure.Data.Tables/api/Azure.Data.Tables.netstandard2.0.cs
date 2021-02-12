@@ -129,7 +129,7 @@ namespace Azure.Data.Tables
         protected TableTransactionalBatch() { }
         public virtual void AddEntities<T>(System.Collections.Generic.IEnumerable<T> entities) where T : class, Azure.Data.Tables.ITableEntity, new() { }
         public virtual void AddEntity<T>(T entity) where T : class, Azure.Data.Tables.ITableEntity, new() { }
-        public virtual void DeleteEntity(string partitionKey, string rowKey, Azure.ETag ifMatch = default(Azure.ETag)) { }
+        public virtual void DeleteEntity(string rowKey, Azure.ETag ifMatch = default(Azure.ETag)) { }
         public virtual Azure.Response<Azure.Data.Tables.Models.TableBatchResponse> SubmitBatch(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.Tables.Models.TableBatchResponse>> SubmitBatchAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual bool TryGetFailedEntityFromException(Azure.RequestFailedException exception, out Azure.Data.Tables.ITableEntity failedEntity) { throw null; }

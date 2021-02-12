@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A elastic pool operation. </summary>
-    public partial class ElasticPoolOperation : Resource
+    public partial class ElasticPoolOperation : ProxyResource
     {
         /// <summary> Initializes a new instance of ElasticPoolOperation. </summary>
         public ElasticPoolOperation()
