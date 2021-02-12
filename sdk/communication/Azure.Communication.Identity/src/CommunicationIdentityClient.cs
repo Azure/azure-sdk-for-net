@@ -295,7 +295,7 @@ namespace Azure.Communication.Identity
         /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual Response<CommunicationTurnCredentialsResponse> IssueTurnCredentials(CommunicationUserIdentifier communicationUser, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(IssueToken)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(IssueTurnCredentials)}");
             scope.Start();
             try
             {
@@ -314,7 +314,7 @@ namespace Azure.Communication.Identity
         /// <param name="cancellationToken">The cancellation token to use.</param>
         public virtual async Task<Response<CommunicationTurnCredentialsResponse>> IssueTurnCredentialsAsync(CommunicationUserIdentifier communicationUser, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(IssueToken)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(IssueTurnCredentials)}");
             scope.Start();
             try
             {
