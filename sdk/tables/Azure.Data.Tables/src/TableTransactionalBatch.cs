@@ -5,9 +5,6 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -35,14 +32,16 @@ namespace Azure.Data.Tables
         internal ConcurrentQueue<(ITableEntity Entity, HttpMessage HttpMessage)> _requestMessages = new ConcurrentQueue<(ITableEntity Entity, HttpMessage HttpMessage)>();
         private List<(ITableEntity entity, HttpMessage HttpMessage)> _submittedMessageList;
         private bool _submitted;
+        private readonly string _partitionKey;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TableTransactionalBatch"/> class.
         /// </summary>
-        /// <param name="table"></param>
-        /// <param name="tableOperations"></param>
-        /// <param name="format"></param>
-        internal TableTransactionalBatch(string table, TableRestClient tableOperations, OdataMetadataFormat format)
+        /// <param name="table">The name of the table.</param>
+        /// <param name="partitionKey">The partitionKEy value for this transactional batch.</param>
+        /// <param name="tableOperations">The <see cref="TableRestClient"/>.</param>
+        /// <param name="format">The format for the service requests.</param>
+        internal TableTransactionalBatch(string table, string partitionKey, TableRestClient tableOperations, OdataMetadataFormat format)
         {
             _table = table;
             _tableOperations = tableOperations;
@@ -51,6 +50,7 @@ namespace Azure.Data.Tables
             _format = format;
             _batch = TableRestClient.CreateBatchContent(_batchGuid);
             _changeset = _batch.AddChangeset(_changesetGuid);
+            _partitionKey = partitionKey;
         }
 
         /// <summary>
@@ -121,15 +121,7 @@ namespace Azure.Data.Tables
         /// <param name="mode">Determines the behavior of the Update operation.</param>
         public virtual void UpdateEntity<T>(T entity, ETag ifMatch, TableUpdateMode mode = TableUpdateMode.Merge) where T : class, ITableEntity, new()
         {
-            var message = _batchOperations.CreateUpdateEntityRequest(
-                _table,
-                entity.PartitionKey,
-                entity.RowKey,
-                null,
-                ifMatch: ifMatch.ToString(),
-                tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                queryOptions: new QueryOptions() { Format = _format });
-
+            HttpMessage message = CreateUpdateOrMergeRequest<T>(entity, mode, ifMatch);
             AddMessage(entity, message, RequestType.Update);
         }
 
@@ -141,14 +133,20 @@ namespace Azure.Data.Tables
         /// <param name="mode">Determines the behavior of the update operation when the entity already exists in the table. See <see cref="TableUpdateMode"/> for more details.</param>
         public virtual void UpsertEntity<T>(T entity, TableUpdateMode mode = TableUpdateMode.Merge) where T : class, ITableEntity, new()
         {
-            var message = mode switch
+            HttpMessage message = CreateUpdateOrMergeRequest<T>(entity, mode, default);
+            AddMessage(entity, message, RequestType.Upsert);
+        }
+
+        private HttpMessage CreateUpdateOrMergeRequest<T>(T entity, TableUpdateMode mode, ETag ifMatch = default) where T : class, ITableEntity, new()
+        {
+            return mode switch
             {
                 TableUpdateMode.Replace => _batchOperations.CreateUpdateEntityRequest(
                     _table,
                     entity.PartitionKey,
                     entity.RowKey,
                     null,
-                    ifMatch: null,
+                    ifMatch: ifMatch == default ? null : ifMatch.ToString(),
                     tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                     queryOptions: new QueryOptions() { Format = _format }),
                 TableUpdateMode.Merge => _batchOperations.CreateMergeEntityRequest(
@@ -156,19 +154,16 @@ namespace Azure.Data.Tables
                     entity.PartitionKey,
                     entity.RowKey,
                     null,
-                    ifMatch: null,
+                    ifMatch: ifMatch == default ? null : ifMatch.ToString(),
                     entity.ToOdataAnnotatedDictionary(),
                     new QueryOptions() { Format = _format }),
                 _ => throw new ArgumentException($"Unexpected value for {nameof(mode)}: {mode}")
             };
-
-            AddMessage(entity, message, RequestType.Upsert);
         }
 
         /// <summary>
         /// Add a DeleteEntity request to the batch.
         /// </summary>
-        /// <param name="partitionKey">The partition key of the entity to delete.</param>
         /// <param name="rowKey">The row key of the entity to delete.</param>
         /// <param name="ifMatch">
         /// The If-Match value to be used for optimistic concurrency.
@@ -176,17 +171,17 @@ namespace Azure.Data.Tables
         /// If the <see cref="ITableEntity.ETag"/> value is specified, the operation will fail with a status of 412 (Precondition Failed) if the <see cref="ETag"/> value of the entity in the table does not match.
         /// The default is to delete unconditionally.
         /// </param>
-        public virtual void DeleteEntity(string partitionKey, string rowKey, ETag ifMatch = default)
+        public virtual void DeleteEntity(string rowKey, ETag ifMatch = default)
         {
             var message = _batchOperations.CreateDeleteEntityRequest(
                 _table,
-                partitionKey,
+                _partitionKey,
                 rowKey,
-                ifMatch.ToString(),
+                ifMatch == default ? ETag.All.ToString() : ifMatch.ToString(),
                 null,
                 queryOptions: new QueryOptions() { Format = _format });
 
-            AddMessage(new TableEntity(partitionKey, rowKey) { ETag = ifMatch }, message, RequestType.Delete);
+            AddMessage(new TableEntity(_partitionKey, rowKey) { ETag = ifMatch }, message, RequestType.Delete);
         }
 
         /// <summary>

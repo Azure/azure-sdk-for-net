@@ -10,7 +10,7 @@ using System;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Dataset resource type. </summary>
-    public partial class DatasetResource : AzureEntityResource
+    public partial class DatasetResource : SubResource
     {
         /// <summary> Initializes a new instance of DatasetResource. </summary>
         /// <param name="properties"> Dataset properties. </param>

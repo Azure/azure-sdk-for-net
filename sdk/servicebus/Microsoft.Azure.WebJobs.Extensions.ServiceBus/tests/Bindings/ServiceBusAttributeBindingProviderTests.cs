@@ -6,13 +6,13 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.ServiceBus;
+using Azure.Messaging.ServiceBus;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.ServiceBus.Bindings;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Moq;
-using Xunit;
+using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Bindings
 {
@@ -31,7 +31,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Bindings
             _provider = new ServiceBusAttributeBindingProvider(mockResolver.Object, config, _configuration, new MessagingProvider(new OptionsWrapper<ServiceBusOptions>(config)));
         }
 
-        [Fact]
+        [Test]
         public async Task TryCreateAsync_AccountOverride_OverrideIsApplied()
         {
             ParameterInfo parameter = GetType().GetMethod("TestJob_AccountOverride", BindingFlags.NonPublic | BindingFlags.Static).GetParameters()[0];
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Bindings
             Assert.NotNull(binding);
         }
 
-        [Fact]
+        [Test]
         public async Task TryCreateAsync_DefaultAccount()
         {
             ParameterInfo parameter = GetType().GetMethod("TestJob", BindingFlags.NonPublic | BindingFlags.Static).GetParameters()[0];
@@ -55,15 +55,15 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Bindings
 
         internal static void TestJob_AccountOverride(
             [ServiceBusAttribute("test"),
-             ServiceBusAccount(Constants.DefaultConnectionStringName)] out Message message)
+             ServiceBusAccount(Constants.DefaultConnectionStringName)] out ServiceBusMessage message)
         {
-            message = new Message();
+            message = new ServiceBusMessage();
         }
 
         internal static void TestJob(
-            [ServiceBusAttribute("test", Connection = Constants.DefaultConnectionStringName)] out Message message)
+            [ServiceBusAttribute("test", Connection = Constants.DefaultConnectionStringName)] out ServiceBusMessage message)
         {
-            message = new Message();
+            message = new ServiceBusMessage();
         }
     }
 }

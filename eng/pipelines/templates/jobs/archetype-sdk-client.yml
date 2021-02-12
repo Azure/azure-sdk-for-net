@@ -26,11 +26,11 @@ parameters:
 - name: LinuxPool
   type: string
   default: azsdk-pool-mms-ubuntu-1804-general
+- name: TestTimeoutInMinutes
+  type: number
 
 jobs:
   - job: Build
-    variables:
-      - template: ../variables/globals.yml
     pool:
       name: ${{ parameters.WindowsPool }} # Comment this line back-out to switch to public pools.
       # vmImage: windows-2019 # Comment this line back-in to switch to public pools.
@@ -49,6 +49,8 @@ jobs:
         displayName: "Tag scheduled builds"
         condition: and(eq(variables['Build.SourceBranchName'],'master'),eq(variables['Build.Reason'],'Schedule'))
       - template: /eng/common/pipelines/templates/steps/daily-dev-build-variable.yml
+        parameters:
+          ServiceDirectory: ${{ parameters.ServiceDirectory }}
       - pwsh: |
           $skipDevBuildNumber = "false"
           # For .NET builds the only case we want to not have dev build numbers on our packages is when it is manually queued and
@@ -89,14 +91,12 @@ jobs:
           artifactName: packages
           path: $(Build.ArtifactStagingDirectory)
 
-      - template: /eng/pipelines/templates/steps/create-apireview.yml
+      - template: /eng/common/pipelines/templates/steps/create-apireview.yml
         parameters:
           Artifacts: ${{parameters.Artifacts}}
 
   - job: "Analyze"
     condition: and(succeededOrFailed(), ne(variables['Skip.Analyze'], true))
-    variables:
-      - template: ../variables/globals.yml
     pool:
       name: ${{ parameters.LinuxPool }}
       vmImage:
@@ -147,9 +147,8 @@ jobs:
         condition: and(succeededOrFailed(), ne(variables['Build.Reason'],'PullRequest'))
 
   - job: "Test"
+    timeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
     condition: and(succeededOrFailed(), ne(variables['Skip.Test'], true))
-    variables:
-      - template: ../variables/globals.yml
     strategy:
       maxParallel: $[ variables['MaxParallelTestJobs'] ]
       matrix:

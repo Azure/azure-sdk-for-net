@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Reservations.Models
     using System.Linq;
 
     /// <summary>
-    /// Quota submit request response
+    /// Response for the quota submission request.
     /// </summary>
     public partial class QuotaRequestSubmitResponse : IResource
     {
@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// <summary>
         /// Initializes a new instance of the QuotaRequestSubmitResponse class.
         /// </summary>
-        /// <param name="id">The quota request Id.</param>
+        /// <param name="id">The quota request ID.</param>
         /// <param name="name">The name of the quota request.</param>
         /// <param name="properties">The quota request details.</param>
         /// <param name="type">Type of resource.
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Reservations.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the quota request Id.
+        /// Gets the quota request ID.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }

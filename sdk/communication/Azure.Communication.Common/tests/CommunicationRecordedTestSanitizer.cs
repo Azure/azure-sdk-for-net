@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using System.Net.NetworkInformation;
 using System.Text.RegularExpressions;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -16,7 +15,11 @@ namespace Azure.Communication.Pipeline
         private static readonly Regex _phoneNumberRegEx = new Regex(@"[\\+]?[0-9]{11,15}", RegexOptions.Compiled);
         private static readonly Regex _guidRegEx = new Regex(@"(\{){0,1}[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}(\}){0,1}", RegexOptions.Compiled);
 
-        internal const string ConnectionStringEnvironmentVariableName = "COMMUNICATION_CONNECTION_STRING";
+        public const string ConnectionStringEnvironmentVariableName = "COMMUNICATION_CONNECTION_STRING";
+        public const string EndpointEnvironmentVariableName = "COMMUNICATION_ENDPOINT";
+        public const string AccessKeyEnvironmentVariableName = "COMMUNICATION_ACCESS_KEY";
+
+        public const string SanitizedAccessKey = "Kg==";
 
         public CommunicationRecordedTestSanitizer() : base()
         {
@@ -25,7 +28,6 @@ namespace Azure.Communication.Pipeline
             JsonPathSanitizers.Add("$..phonePlanId");
             JsonPathSanitizers.Add("$..phonePlanGroupId");
             JsonPathSanitizers.Add("$..phonePlanIds[:]");
-            JsonPathSanitizers.Add("$..COMMUNICATION_ENDPOINT_STRING");
         }
 
         public override void SanitizeHeaders(IDictionary<string, string[]> headers)
@@ -52,6 +54,8 @@ namespace Azure.Communication.Pipeline
             => variableName switch
             {
                 ConnectionStringEnvironmentVariableName => SanitizeConnectionString(environmentVariableValue),
+                EndpointEnvironmentVariableName => SanitizeAzureResource(environmentVariableValue),
+                AccessKeyEnvironmentVariableName => SanitizedAccessKey,
                 _ => base.SanitizeVariable(variableName, environmentVariableValue)
             };
 
@@ -63,8 +67,7 @@ namespace Azure.Communication.Pipeline
             const string endpoint = "endpoint";
 
             var parsed = ConnectionString.Parse(connectionString, allowEmptyValues: true);
-            parsed.Replace(accessKey, "Kg==;");
-
+            parsed.Replace(accessKey, SanitizedAccessKey);
             parsed.Replace(endpoint, SanitizeAzureResource(parsed.GetRequired(endpoint)));
 
             return parsed.ToString();

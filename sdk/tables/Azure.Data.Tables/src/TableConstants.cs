@@ -101,10 +101,10 @@ namespace Azure.Data.Tables
             {
                 public const string Version = "sv";
                 public const string TableName = "tn";
-                public const string StartPartitionKey = "startpk";
-                public const string EndPartitionKey = "endpk";
-                public const string StartRowKey = "startrk";
-                public const string EndRowKey = "endrk";
+                public const string StartPartitionKey = "spk";
+                public const string EndPartitionKey = "epk";
+                public const string StartRowKey = "srk";
+                public const string EndRowKey = "erk";
                 public const string TableNameUpper = "TN";
                 public const string VersionUpper = "SV";
                 public const string Services = "ss";

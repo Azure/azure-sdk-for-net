@@ -1,9 +1,9 @@
 # Release History
 
-## 1.0.0-preview.2 (2021-01-12)
+## 1.0.0-beta.2 (Unreleased)
 
-- Configured with shared source.
 
-## 1.0.0-preview.1 (2020-10-27)
+## 1.0.0-beta.1 (2021-02-10)
 
-- Initial client.
+- Initial release.
+

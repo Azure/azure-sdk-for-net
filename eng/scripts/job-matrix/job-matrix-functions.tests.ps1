@@ -1,7 +1,8 @@
-Using Module ./job-matrix-functions.psm1
 Import-Module Pester
 
 BeforeAll {
+    . ./job-matrix-functions.ps1
+
     $matrixConfig = @"
 {
     "displayNames": {
@@ -45,7 +46,6 @@ BeforeAll {
     ]
 }
 "@
-    $config = GetMatrixConfigFromJson $matrixConfig
 }
 
 Describe "Matrix-Lookup" -Tag "lookup" {
@@ -308,6 +308,9 @@ Describe "Platform Matrix Generation" -Tag "generate" {
 
     It "Should get matrix dimensions from Nd parameters" {
         GetMatrixDimensions $generateConfig.orderedMatrix | Should -Be 3, 2, 2
+
+        $generateConfig.orderedMatrix.Add("testStringParameter", "test")
+        GetMatrixDimensions $generateConfig.orderedMatrix | Should -Be 3, 2, 2, 1
     }
 
     It "Should use name overrides from displayNames" {
@@ -325,13 +328,13 @@ Describe "Platform Matrix Generation" -Tag "generate" {
     }
 
     It "Should enforce valid display name format" {
-        $generateconfig.displayNamesLookup["net461"] = '_123.Some.456.Invalid_format-name$(foo)'
+        $generateconfig.displayNamesLookup["net461"] = '123.Some.456.Invalid_format-name$(foo)'
         $generateconfig.displayNamesLookup["netcoreapp2.1"] = (New-Object string[] 150) -join "a"
         $dimensions = GetMatrixDimensions $generateConfig.orderedMatrix
         $matrix = GenerateFullMatrix $generateconfig.orderedMatrix $generateconfig.displayNamesLookup
 
         $element = GetNdMatrixElement @(0, 0, 0) $matrix $dimensions
-        $element.name | Should -Be "windows2019_some456invalid_formatnamefoo"
+        $element.name | Should -Be "windows2019_123some456invalid_formatnamefoo"
 
         $element = GetNdMatrixElement @(1, 1, 1) $matrix $dimensions
         $element.name.Length | Should -Be 100
@@ -361,7 +364,7 @@ Describe "Platform Matrix Generation" -Tag "generate" {
         $element.parameters.additionalArguments | Should -Be "--enableFoo"
     }
 
-    It "Should initialize a sparse matrix from an N-dimensional matrix" -Tag bbp -TestCases @(
+    It "Should initialize a sparse matrix from an N-dimensional matrix" -TestCases @(
         @{ i = 0; name = "windows2019_net461"; operatingSystem = "windows-2019"; framework = "net461"; additionalArguments = ""; }
         @{ i = 1; name = "ubuntu1804_netcoreapp21_withfoo"; operatingSystem = "ubuntu-18.04"; framework = "netcoreapp2.1"; additionalArguments = "--enableFoo"; }
         @{ i = 2; name = "macOS1015_net461"; operatingSystem = "macOS-10.15"; framework = "net461"; additionalArguments = ""; }
@@ -390,64 +393,39 @@ Describe "Platform Matrix Generation" -Tag "generate" {
 }
 
 Describe "Config File Object Conversion" -Tag "convert" {
+    BeforeEach {
+        $config = GetMatrixConfigFromJson $matrixConfig
+    }
+
     It "Should convert a matrix config" {
-        $converted = GetMatrixConfigFromJson $matrixConfig
+        $config.orderedMatrix | Should -BeOfType [System.Collections.Specialized.OrderedDictionary]
+        $config.orderedMatrix.operatingSystem[0] | Should -Be "windows-2019"
 
-        $converted.orderedMatrix | Should -BeOfType [System.Collections.Specialized.OrderedDictionary]
-        $converted.orderedMatrix.operatingSystem[0] | Should -Be "windows-2019"
+        $config.displayNamesLookup | Should -BeOfType [Hashtable]
+        $config.displayNamesLookup["--enableFoo"] | Should -Be "withFoo"
 
-        $converted.displayNamesLookup | Should -BeOfType [Hashtable]
-        $converted.displayNamesLookup["--enableFoo"] | Should -Be "withFoo"
-
-        $converted.include | ForEach-Object {
+        $config.include | ForEach-Object {
             $_ | Should -BeOfType [System.Collections.Specialized.OrderedDictionary]
         }
-        $converted.exclude | ForEach-Object {
+        $config.exclude | ForEach-Object {
             $_ | Should -BeOfType [System.Collections.Specialized.OrderedDictionary]
         }
     }
 }
 
 Describe "Platform Matrix Post Transformation" -Tag "transform" {
-    It "Should match partial matrix elements" -TestCases @(
-        @{ source = @{ a = 1; b = 2; }; target = @{ a = 1 }; expected = $true }
-        @{ source = @{ a = 1; b = 2; }; target = @{ a = 1; b = 2 }; expected = $true }
-        @{ source = @{ a = 1; b = 2; }; target = @{ a = 1; b = 2; c = 3 }; expected = $false }
-        @{ source = @{ a = 1; b = 2; }; target = @{ }; expected = $false }
-        @{ source = @{ }; target = @{ a = 1; b = 2; }; expected = $false }
-    ) {
-        $orderedSource = [OrderedDictionary]@{}
-        $source.GetEnumerator() | ForEach-Object {
-            $orderedSource.Add($_.Name, $_.Value)
-        }
-        $orderedTarget = [OrderedDictionary]@{}
-        $target.GetEnumerator() | ForEach-Object {
-            $orderedTarget.Add($_.Name, $_.Value)
-        }
-        MatrixElementMatch $orderedSource $orderedTarget | Should -Be $expected
+    BeforeEach {
+        $config = GetMatrixConfigFromJson $matrixConfig
     }
 
-    It "Should convert singular elements" {
-        $ordered = [OrderedDictionary]@{}
-        $ordered.Add("a", 1)
-        $ordered.Add("b", 2)
-        $matrix = ConvertToMatrixArrayFormat $ordered
-        $matrix.a.Length | Should -Be 1
-        $matrix.b.Length | Should -Be 1
-
-        $ordered = [OrderedDictionary]@{}
-        $ordered.Add("a", 1)
-        $ordered.Add("b", @(1, 2))
-        $matrix = ConvertToMatrixArrayFormat $ordered
-        $matrix.a.Length | Should -Be 1
-        $matrix.b.Length | Should -Be 2
-
-        $ordered = [OrderedDictionary]@{}
-        $ordered.Add("a", @(1, 2))
-        $ordered.Add("b", @())
-        $matrix = ConvertToMatrixArrayFormat $ordered
-        $matrix.a.Length | Should -Be 2
-        $matrix.b.Length | Should -Be 0
+    It "Should match partial matrix elements" -TestCases @(
+        @{ source = [Ordered]@{ a = 1; b = 2; }; target = [Ordered]@{ a = 1 }; expected = $true }
+        @{ source = [Ordered]@{ a = 1; b = 2; }; target = [Ordered]@{ a = 1; b = 2 }; expected = $true }
+        @{ source = [Ordered]@{ a = 1; b = 2; }; target = [Ordered]@{ a = 1; b = 2; c = 3 }; expected = $false }
+        @{ source = [Ordered]@{ a = 1; b = 2; }; target = [Ordered]@{ }; expected = $false }
+        @{ source = [Ordered]@{ }; target = [Ordered]@{ a = 1; b = 2; }; expected = $false }
+    ) {
+        MatrixElementMatch $source $target | Should -Be $expected
     }
 
     It "Should remove matrix elements based on exclude filters" {
@@ -462,7 +440,7 @@ Describe "Platform Matrix Post Transformation" -Tag "transform" {
 
     It "Should add matrix elements based on include elements" {
         $matrix = GenerateFullMatrix $config.orderedMatrix $config.displayNamesLookup
-        $withInclusion = ProcessIncludes $matrix $config.include $config.displayNamesLookup
+        $withInclusion = ProcessIncludes $config $matrix "all"
         $withInclusion.Length | Should -Be 15
     }
 
@@ -494,5 +472,91 @@ Describe "Platform Matrix Post Transformation" -Tag "transform" {
         $matrix[7].parameters.framework | Should -Be "net50"
         $matrix[7].parameters.operatingSystem | Should -Be "windows-2019"
         $matrix[7].parameters.additionalArguments | Should -Be "--enableWindowsFoo"
+    }
+}
+
+Describe "Platform Matrix Generation With Object Fields" -Tag "objectfields" {
+    BeforeEach {
+        $matrixConfigForObject = @"
+{
+    "matrix": {
+        "testObject": {
+            "testObjectName1": { "testObject1Value1": "1", "testObject1Value2": "2" },
+            "testObjectName2": { "testObject2Value1": "1", "testObject2Value2": "2" }
+        },
+        "secondTestObject": {
+            "secondTestObjectName1": { "secondTestObject1Value1": "1", "secondTestObject1Value2": "2" }
+        },
+        "testField": [ "footest", "bartest" ]
+    },
+    "include": [
+      {
+        "testObjectInclude": {
+            "testObjectIncludeName": { "testObjectValue1": "1", "testObjectValue2": "2" }
+        },
+        "testField": "footest"
+      }
+    ]
+}
+"@
+        $objectFieldConfig = GetMatrixConfigFromJson $matrixConfigForObject
+    }
+
+    It "Should parse dimensions properly" {
+        [Array]$dimensions = GetMatrixDimensions $objectFieldConfig.orderedMatrix
+        $dimensions.Length | Should -Be 3
+        $dimensions[0] | Should -Be 2
+        $dimensions[1] | Should -Be 1
+        $dimensions[2] | Should -Be 2
+    }
+
+    It "Should populate a sparse matrix dimensions properly" {
+        [Array]$matrix = GenerateMatrix $objectFieldConfig "sparse"
+        $matrix.Length | Should -Be 3
+
+        $matrix[0].name | Should -Be "testObjectName1_secondTestObjectName1_footest"
+        $matrix[0].parameters.testField | Should -Be "footest"
+        $matrix[0].parameters.testObject1Value1 | Should -Be "1"
+        $matrix[0].parameters.testObject1Value2 | Should -Be "2"
+        $matrix[0].parameters.secondTestObject1Value1 | Should -Be "1"
+        $matrix[0].parameters.Count | Should -Be 5
+
+        $matrix[1].name | Should -Be "testObjectName2_secondTestObjectName1_bartest"
+        $matrix[1].parameters.testField | Should -Be "bartest"
+        $matrix[1].parameters.testObject2Value1 | Should -Be "1"
+        $matrix[1].parameters.testObject2Value2 | Should -Be "2"
+        $matrix[1].parameters.secondTestObject1Value1 | Should -Be "1"
+        $matrix[1].parameters.Count | Should -Be 5
+
+        $matrix[2].name | Should -Be "testObjectIncludeName_footest"
+        $matrix[2].parameters.testField | Should -Be "footest"
+        $matrix[2].parameters.testObjectValue1 | Should -Be "1"
+        $matrix[2].parameters.testObjectValue2 | Should -Be "2"
+        $matrix[2].parameters.Count | Should -Be 3
+    }
+
+    It "Should splat matrix entries that are objects into key/values" {
+        [Array]$matrix = GenerateMatrix $objectFieldConfig "all"
+        $matrix.Length | Should -Be 5
+
+        $matrix[0].name | Should -Be "testObjectName1_secondTestObjectName1_footest"
+        $matrix[0].parameters.testField | Should -Be "footest"
+        $matrix[0].parameters.testObject1Value1 | Should -Be "1"
+        $matrix[0].parameters.testObject1Value2 | Should -Be "2"
+        $matrix[0].parameters.secondTestObject1Value1 | Should -Be "1"
+        $matrix[0].parameters.Count | Should -Be 5
+
+        $matrix[3].name | Should -Be "testObjectName2_secondTestObjectName1_bartest"
+        $matrix[3].parameters.testField | Should -Be "bartest"
+        $matrix[3].parameters.testObject2Value1 | Should -Be "1"
+        $matrix[3].parameters.testObject2Value2 | Should -Be "2"
+        $matrix[3].parameters.secondTestObject1Value1 | Should -Be "1"
+        $matrix[3].parameters.Count | Should -Be 5
+
+        $matrix[4].name | Should -Be "testObjectIncludeName_footest"
+        $matrix[4].parameters.testField | Should -Be "footest"
+        $matrix[4].parameters.testObjectValue1 | Should -Be "1"
+        $matrix[4].parameters.testObjectValue2 | Should -Be "2"
+        $matrix[4].parameters.Count | Should -Be 3
     }
 }

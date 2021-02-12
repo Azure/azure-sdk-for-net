@@ -2,17 +2,13 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
-using System.IO;
-using Microsoft.Azure.WebJobs.Host.Converters;
-using Microsoft.Azure.ServiceBus;
+using Azure.Messaging.ServiceBus;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
 {
-    internal class StringToBrokeredMessageConverter : IConverter<string, Message>
+    internal class StringToBrokeredMessageConverter : IConverter<string, ServiceBusMessage>
     {
-        [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
-        public Message Convert(string input)
+        public ServiceBusMessage Convert(string input)
         {
             if (input == null)
             {
@@ -21,7 +17,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
 
             byte[] bytes = StrictEncodings.Utf8.GetBytes(input);
 
-            return new Message(bytes)
+            return new ServiceBusMessage(bytes)
             {
                 ContentType = ContentTypes.TextPlain
             };

@@ -36,7 +36,7 @@ namespace Azure.Analytics.Synapse.Spark
         {
         }
 
-       public virtual async Task<SparkSessionOperation> StartCreateSparkSessionAsync(SparkSessionOptions sparkSessionOptions, bool? detailed = null, CancellationToken cancellationToken = default)
+        public virtual async Task<SparkSessionOperation> StartCreateSparkSessionAsync(SparkSessionOptions sparkSessionOptions, bool? detailed = null, CancellationToken cancellationToken = default)
             => await StartCreateSparkSessionInternal(true, sparkSessionOptions, detailed, cancellationToken).ConfigureAwait(false);
 
         public virtual SparkSessionOperation StartCreateSparkSession(SparkSessionOptions sparkSessionOptions, bool? detailed = null, CancellationToken cancellationToken = default)
@@ -66,10 +66,10 @@ namespace Azure.Analytics.Synapse.Spark
             }
         }
 
-        internal virtual async Task<SparkStatementOperation> StartCreateSparkStatementAsync(int sessionId, SparkStatementOptions sparkStatementOptions, CancellationToken cancellationToken = default)
+        public virtual async Task<SparkStatementOperation> StartCreateSparkStatementAsync(int sessionId, SparkStatementOptions sparkStatementOptions, CancellationToken cancellationToken = default)
             => await StartCreateSparkStatementInternal (true, sessionId, sparkStatementOptions, cancellationToken).ConfigureAwait(false);
 
-        internal virtual SparkStatementOperation StartCreateSparkStatement(int sessionId, SparkStatementOptions sparkStatementOptions, CancellationToken cancellationToken = default)
+        public virtual SparkStatementOperation StartCreateSparkStatement(int sessionId, SparkStatementOptions sparkStatementOptions, CancellationToken cancellationToken = default)
             => StartCreateSparkStatementInternal (false, sessionId, sparkStatementOptions, cancellationToken).EnsureCompleted();
 
         private async Task<SparkStatementOperation> StartCreateSparkStatementInternal (bool async, int sessionId, SparkStatementOptions sparkStatementOptions, CancellationToken cancellationToken = default)

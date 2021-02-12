@@ -1,7 +1,7 @@
-{
+﻿{
   "Entries": [
     {
-      "RequestUri": "https://seanmcccanary3.file.core.windows.net/test-share-d9c5b671-edaf-29c3-3899-93f4e155b2b2?comp=lease\u0026restype=share",
+      "RequestUri": "https://seanmcccanary3.file.core.windows.net/test-share-d9c5b671-edaf-29c3-3899-93f4e155b2b2?comp=lease&restype=share",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -16,7 +16,8 @@
         "x-ms-lease-duration": "-1",
         "x-ms-proposed-lease-id": "333eec4e-1263-9c7b-90b4-3ed17f2f1237",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-04-08"
+        "x-ms-version": "2020-06-12",
+        "Accept": "application/xml"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -31,12 +32,12 @@
         "x-ms-client-request-id": "925d3ed6-6757-5e85-3b29-49faaff2aa08",
         "x-ms-error-code": "ShareNotFound",
         "x-ms-request-id": "1897d092-401a-0047-5177-6bb199000000",
-        "x-ms-version": "2020-04-08"
+        "x-ms-version": "2020-06-12"
       },
       "ResponseBody": [
-        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EShareNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified share does not exist.\n",
+        "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ShareNotFound</Code><Message>The specified share does not exist.\n",
         "RequestId:1897d092-401a-0047-5177-6bb199000000\n",
-        "Time:2020-08-05T22:26:44.8617559Z\u003C/Message\u003E\u003C/Error\u003E"
+        "Time:2020-08-05T22:26:44.8617559Z</Message></Error>"
       ]
     }
   ],

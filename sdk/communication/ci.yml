@@ -26,13 +26,15 @@ extends:
     ServiceDirectory: communication
     ArtifactName: packages
     Artifacts:
-    - name: Azure.Communication.Sms
-      safeName: AzureCommunicationSms
     - name: Azure.Communication.Chat
       safeName: AzureCommunicationChat
     - name: Azure.Communication.Common
       safeName: AzureCommunicationCommon
-    - name: Azure.Communication.Administration
-      safeName: AzureCommunicationAdministration
+    - name: Azure.Communication.Sms
+      safeName: AzureCommunicationSms
+    - name: Azure.Communication.Identity
+      safeName: AzureCommunicationIdentity
+    - name: Azure.Communication.PhoneNumbers
+      safeName: AzureCommunicationPhoneNumbers
     - name: Azure.ResourceManager.Communication
       safeName: AzureResourceManagerCommunication

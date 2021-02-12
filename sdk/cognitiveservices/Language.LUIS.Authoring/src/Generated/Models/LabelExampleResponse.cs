@@ -31,7 +31,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// </summary>
         /// <param name="utteranceText">The example utterance.</param>
         /// <param name="exampleId">The newly created sample ID.</param>
-        public LabelExampleResponse(string utteranceText = default(string), int? exampleId = default(int?))
+        public LabelExampleResponse(string utteranceText = default(string), long? exampleId = default(long?))
         {
             UtteranceText = utteranceText;
             ExampleId = exampleId;
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// Gets or sets the newly created sample ID.
         /// </summary>
         [JsonProperty(PropertyName = "ExampleId")]
-        public int? ExampleId { get; set; }
+        public long? ExampleId { get; set; }
 
     }
 }

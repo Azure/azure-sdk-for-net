@@ -45,6 +45,15 @@ function Find-Mapping([string]$path) {
 
 try {
     Write-Output "======== Start Code Validation ========"
+    
+    Write-Host "Check PR associate"
+    Write-Host "REPOSITORY_NAME: $Env:REPOSITORY_NAME"
+    Write-Host "PULLREQUEST_ID: $Env:PULLREQUEST_ID"
+    if (($null -eq $Env:REPOSITORY_NAME) -or ($null -eq $Env:PULLREQUEST_ID) -or ($Env:REPOSITORY_NAME -eq "") -or ($Env:PULLREQUEST_ID -eq "") -or ($Env:PULLREQUEST_ID -match 'PullRequestNumber')) {
+        Write-Host "There is no PR associate with this run, skip the code check." -ForegroundColor red -BackgroundColor white
+        break
+    }
+
     # Get RP Mapping
     Write-Output "Start RP mapping "
     $RPMapping = [ordered]@{ }
@@ -85,13 +94,13 @@ try {
     $folderName = @()
     $changeList | ForEach-Object {
         $fileName = $_.filename
-        if ($fileName -match 'eng/mgmt/mgmtmetadata') {
+        if ($fileName -match '(?<!sdk)/eng/mgmt/mgmtmetadata') {
             $mataPath += $fileName
         }
     }
     $changeList | ForEach-Object {
         $fileName = $_.filename
-        if ($fileName -match 'sdk/') {
+        if ($fileName -match 'sdk/' -and $fileName -match '/Microsoft.Azure.Management') {
             $name = $fileName.substring(4, (($fileName.indexof('/Microsoft') - 4)))
             If ($folderName -notcontains $name) {
                 $folderName += $name
@@ -124,8 +133,12 @@ try {
         & npm install -g autorest
     }
 
+    # Running autorest first time to avoid C# version conflict
+    & autorest https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/common-types/resource-management/v2/types.json --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=../temp
+
     # Invoke AutoRest
     Write-Output "Start code-gen"
+    $commandList = @()
     foreach ($metaData in $mataPath) {
         $metaDataContent = ''
         try {
@@ -155,9 +168,11 @@ try {
                 LogError "MetaData $metaData content not correct, you may need to re-run sdk\<RP_Name>\generate.ps1"
             }
             else {
-                Write-Output "Ready to execute: autorest $readme --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=$path --use:@microsoft.azure/autorest.csharp@2.3.90"
+                $command = "Ready to execute: autorest $readme --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=$path"
+                Write-Output $command
+                $commandList += $command
                 Invoke-Block {
-                    & autorest $readme --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=$path --use:@microsoft.azure/autorest.csharp@2.3.90 
+                    & autorest $readme --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=$path
                 }
             }
         }
@@ -173,37 +188,6 @@ try {
         if ($item -notmatch 'SdkInfo_') {
             $exitCode ++
         }
-        else {
-            $changeContent = @()
-            $content = git -c core.safecrlf=false diff -U0 HEAD --ignore-space-at-eol $diffResult[0]
-            $content[4..($content.Length - 1)] | ForEach-Object {
-                if ($_.StartsWith('+') -or $_.StartsWith('-')) {
-                    $changeContent += $_
-                }
-            }
-            if ($changeContent.Length -ne 11) {
-                $exitCode ++
-            }
-    
-            # metaDataContent doesn't contains 'AutoRestCmdExecuted' part since it can't be verified
-            $metaDataContent = @('-      // BEGIN: Code Generation Metadata Section',
-                '-      public static readonly String AutoRestVersion = "v2";',
-                '-      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";',
-                '-      public static readonly String GithubForkName = "Azure";',
-                '-      public static readonly String GithubBranchName = "master";',
-                '-      public static readonly String GithubCommidId = "{0}";'.Replace('{0}', $commit),
-                '-      public static readonly String CodeGenerationErrors = "";',
-                '-      public static readonly String GithubRepoName = "azure-rest-api-specs";',
-                '-      // END: Code Generation Metadata Section'
-            )
-            foreach ($metaString in $metaDataContent) {
-                if ($metaString -notin $changeContent) {
-                    Write-Output "Diff in" $metaString
-                    $exitCode ++
-                    break
-                }
-            }
-        }
     }
     
     if ($exitCode -ne 0) {
@@ -211,7 +195,15 @@ try {
         $diffResult | ForEach-Object {
             Write-Output $_
         }
-        LogError "Generated code is manually altered, you may need to re-run sdk\<RP_Name>\generate.ps1"
+        Write-Output "Git Diff detail: "
+        git -c core.safecrlf=false diff HEAD --ignore-space-at-eol
+        Write-Host "============================"
+        LogError "Discrepancy detected between generated code in PR and reference generation. Please note, the files in the Generated folder should not be modified OR adding/excluding files. You may need to re-run sdk<RP_Name>\generate.ps1."
+        Write-Host "============================"
+        Write-Host "For reference, we are using following commands for the code check: " -ForegroundColor red -BackgroundColor white
+        $commandList | ForEach-Object {
+            Write-Host $_ -ForegroundColor red -BackgroundColor white
+        }
     }
 }
 finally {
