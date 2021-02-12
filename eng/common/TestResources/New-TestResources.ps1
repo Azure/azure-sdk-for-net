@@ -36,9 +36,10 @@ param (
     [ValidateNotNullOrEmpty()]
     [string] $TenantId,
 
-    [Parameter(ParameterSetName = 'Provisioner')]
+    # Azure SDK Developer Playground subscription
+    [Parameter()]
     [ValidatePattern('^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$')]
-    [string] $SubscriptionId,
+    [string] $SubscriptionId = 'faa080af-c1d8-40ad-9cce-e1a450ca5b57',
 
     [Parameter(ParameterSetName = 'Provisioner', Mandatory = $true)]
     [ValidatePattern('^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$')]
@@ -141,8 +142,6 @@ try {
     $root = [System.IO.Path]::Combine($repositoryRoot, "sdk", $ServiceDirectory) | Resolve-Path
     $templateFileName = 'test-resources.json'
     $templateFiles = @()
-    # Azure SDK Developer Playground
-    $defaultSubscription = "faa080af-c1d8-40ad-9cce-e1a450ca5b57"
 
     Write-Verbose "Checking for '$templateFileName' files under '$root'"
     Get-ChildItem -Path $root -Filter $templateFileName -Recurse | ForEach-Object {
@@ -202,7 +201,7 @@ try {
         $context = Get-AzContext;
         if (!$context) {
             Log "You are not logged in; connecting to 'Azure SDK Developer Playground'"
-            $context = (Connect-AzAccount -Subscription $defaultSubscription).Context
+            $context = (Connect-AzAccount -Subscription $SubscriptionId).Context
         }
 
         # If no test application ID is specified during an interactive session, create a new service principal.
@@ -582,6 +581,8 @@ is passed to the ARM template as 'tenantId'.
 .PARAMETER SubscriptionId
 Optional subscription ID to use for new resources when logging in as a
 provisioner. You can also use Set-AzContext if not provisioning.
+
+The default is the Azure SDK Developer Playground subscription ID.
 
 .PARAMETER ProvisionerApplicationId
 The AAD Application ID used to provision test resources when a provisioner is
