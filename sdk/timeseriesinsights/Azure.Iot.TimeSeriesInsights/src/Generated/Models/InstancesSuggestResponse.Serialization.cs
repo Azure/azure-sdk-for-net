@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Iot.TimeSeriesInsights;
 
 namespace Azure.Iot.TimeSeriesInsights.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.Iot.TimeSeriesInsights.Models
     {
         internal static InstancesSuggestResponse DeserializeInstancesSuggestResponse(JsonElement element)
         {
-            Optional<IReadOnlyList<InstancesSearchStringSuggestion>> suggestions = default;
+            Optional<IReadOnlyList<SearchSuggestion>> suggestions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("suggestions"))
@@ -25,10 +26,10 @@ namespace Azure.Iot.TimeSeriesInsights.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<InstancesSearchStringSuggestion> array = new List<InstancesSearchStringSuggestion>();
+                    List<SearchSuggestion> array = new List<SearchSuggestion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InstancesSearchStringSuggestion.DeserializeInstancesSearchStringSuggestion(item));
+                        array.Add(SearchSuggestion.DeserializeSearchSuggestion(item));
                     }
                     suggestions = array;
                     continue;
