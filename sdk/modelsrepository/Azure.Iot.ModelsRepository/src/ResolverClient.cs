@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -87,8 +88,14 @@ namespace Azure.Iot.ModelsRepository
         /// <exception cref="ResolverException">Thrown when a resolution failure occurs.</exception>
         /// <param name="dtmi">A well-formed DTDL model Id. For example 'dtmi:com:example:Thermostat;1'.</param>
         /// <param name="cancellationToken">The cancellationToken.</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0004:DO provide both asynchronous and synchronous variants for all service methods.", Justification = "<Pending>")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0015:Unexpected client method return type.", Justification = "<Pending>")]
+        [SuppressMessage(
+            "Usage",
+            "AZC0004:DO provide both asynchronous and synchronous variants for all service methods.",
+            Justification = "<Pending>")]
+        [SuppressMessage(
+            "Usage",
+            "AZC0015:Unexpected client method return type.",
+            Justification = "<Pending>")]
         public virtual async Task<IDictionary<string, string>> ResolveAsync(string dtmi, CancellationToken cancellationToken = default)
         {
             return await _repositoryHandler.ProcessAsync(dtmi, cancellationToken).ConfigureAwait(false);

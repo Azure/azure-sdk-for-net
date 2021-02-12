@@ -53,7 +53,8 @@ namespace Azure.Iot.ModelsRepository.Tests
                 ""name"": ""deviceInfo"",
                 ""schema"": ""dtmi:azure:DeviceManagement:DeviceInformation;1""
             }],",
-            "dtmi:com:example:Camera;3,dtmi:com:example:Camera;3,dtmi:azure:DeviceManagement:DeviceInformation;1")]
+            "dtmi:com:example:Camera;3,dtmi:com:example:Camera;3,dtmi:azure:DeviceManagement:DeviceInformation;1"
+        )]
         [TestCase(
             @"
             ""contents"":
@@ -61,7 +62,8 @@ namespace Azure.Iot.ModelsRepository.Tests
               ""@type"": ""Property"",
               ""name"": ""capacity"",
               ""schema"": ""integer""
-            }],", "")]
+            }],", ""
+        )]
         [TestCase(@"""contents"":[],", "")]
         [TestCase("", "")]
         public void GetComponentSchema(string contents, string expected)
@@ -80,7 +82,8 @@ namespace Azure.Iot.ModelsRepository.Tests
 
         [TestCase(
             "\"extends\": [\"dtmi:com:example:Camera;3\",\"dtmi:azure:DeviceManagement:DeviceInformation;1\"],",
-            "dtmi:com:example:Camera;3,dtmi:azure:DeviceManagement:DeviceInformation;1")]
+            "dtmi:com:example:Camera;3,dtmi:azure:DeviceManagement:DeviceInformation;1"
+        )]
         [TestCase("\"extends\": [],", "")]
         [TestCase("\"extends\": \"dtmi:com:example:Camera;3\",", "dtmi:com:example:Camera;3")]
         [TestCase("", "")]
@@ -142,8 +145,7 @@ namespace Azure.Iot.ModelsRepository.Tests
             }],",
             "",
             "dtmi:example:Interface2;1,dtmi:example:Interface4;1,dtmi:example:Interface6;1"
-        )
-        ]
+        )]
         public void GetModelDependencies(string id, string extends, string contents, string expected)
         {
             string[] expectedDtmis = expected.Split(new[] { "," }, System.StringSplitOptions.RemoveEmptyEntries);
