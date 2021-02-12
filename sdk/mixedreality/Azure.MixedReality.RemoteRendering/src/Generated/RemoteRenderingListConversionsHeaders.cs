@@ -10,16 +10,14 @@ using Azure.Core;
 
 namespace Azure.MixedReality.RemoteRendering
 {
-    internal partial class MixedRealityRemoteRenderingGetConversionHeaders
+    internal partial class RemoteRenderingListConversionsHeaders
     {
         private readonly Response _response;
-        public MixedRealityRemoteRenderingGetConversionHeaders(Response response)
+        public RemoteRenderingListConversionsHeaders(Response response)
         {
             _response = response;
         }
         /// <summary> Microsoft Correlation Vector. Include this value when reporting issues. </summary>
         public string MSCV => _response.Headers.TryGetValue("MS-CV", out string value) ? value : null;
-        /// <summary> Time in seconds when the status of this conversion should be polled again. </summary>
-        public int? RetryAfter => _response.Headers.TryGetValue("Retry-After", out int? value) ? value : null;
     }
 }

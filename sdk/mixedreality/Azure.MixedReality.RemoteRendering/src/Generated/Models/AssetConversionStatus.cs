@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.MixedReality.RemoteRendering
 {
-    /// <summary> The status of the conversion. Terminal states are &apos;Cancelled&apos;, &apos;Failed&apos;, &apos;Succeeded&apos;. </summary>
+    /// <summary> The status of the conversion. Terminal states are &apos;Cancelled&apos;, &apos;Failed&apos;, and &apos;Succeeded&apos;. </summary>
     public readonly partial struct AssetConversionStatus : IEquatable<AssetConversionStatus>
     {
         private readonly string _value;
@@ -28,15 +28,15 @@ namespace Azure.MixedReality.RemoteRendering
         private const string FailedValue = "Failed";
         private const string SucceededValue = "Succeeded";
 
-        /// <summary> NotStarted. </summary>
+        /// <summary> The conversion was created but hasn&apos;t started. </summary>
         public static AssetConversionStatus NotStarted { get; } = new AssetConversionStatus(NotStartedValue);
-        /// <summary> Running. </summary>
+        /// <summary> The conversion is running. </summary>
         public static AssetConversionStatus Running { get; } = new AssetConversionStatus(RunningValue);
-        /// <summary> Cancelled. </summary>
+        /// <summary> The conversion was cancelled. This is a terminal state. </summary>
         public static AssetConversionStatus Cancelled { get; } = new AssetConversionStatus(CancelledValue);
-        /// <summary> Failed. </summary>
+        /// <summary> The conversion has failed. Check the &apos;error&apos; field for more details. This is a terminal state. </summary>
         public static AssetConversionStatus Failed { get; } = new AssetConversionStatus(FailedValue);
-        /// <summary> Succeeded. </summary>
+        /// <summary> The conversion has succeeded. Check the &apos;output&apos; field for output asset location. This is a terminal state. </summary>
         public static AssetConversionStatus Succeeded { get; } = new AssetConversionStatus(SucceededValue);
         /// <summary> Determines if two <see cref="AssetConversionStatus"/> values are the same. </summary>
         public static bool operator ==(AssetConversionStatus left, AssetConversionStatus right) => left.Equals(right);
