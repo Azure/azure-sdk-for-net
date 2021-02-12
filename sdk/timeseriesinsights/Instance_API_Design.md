@@ -18,7 +18,8 @@ public virtual Response<SearchSuggestion[]> GetSearchSuggestions(string searchSt
 ### POST /timeseries/instances/$batch
 
 ```csharp
-public virtual Response<InstanceOrError[]> GetInstances(IEnumerable<TimeSeriesId> timeSeriesIds, CancellationToken cancellationToken = default);
+~~public virtual Response<InstanceOrError[]> GetInstances(IEnumerable<TimeSeriesId> timeSeriesIds, CancellationToken cancellationToken = default);~~
+public virtual Response<InstanceOrError[]> GetInstances(IEnumerable<IList<object>> timeSeriesIds, CancellationToken cancellationToken = default);
 
 // Thoughts on renaming InstanceOrError to GetInstancesOperationResult or GetInstancesResult
 ```
