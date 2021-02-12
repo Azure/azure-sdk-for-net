@@ -33,15 +33,11 @@
     <Compile Include="Shared\HashCodeBuilder.cs" />
     <Compile Include="Shared\ClientDiagnostics.cs" />
     <Compile Include="Shared\HttpMessageSanitizer.cs" />
-    <Compile Include="Shared\IUtf8JsonSerializable.cs" />
-    <Compile Include="Shared\JsonElementExtensions.cs" />
     <Compile Include="Shared\NullableAttributes.cs" />
     <Compile Include="Shared\ContentTypeUtilities.cs" />
     <Compile Include="Shared\DiagnosticScopeFactory.cs" />
     <Compile Include="Shared\DiagnosticScope.cs" />
     <Compile Include="Shared\TaskExtensions.cs" />
-    <Compile Include="Shared\TypeFormatters.cs" />
-    <Compile Include="Shared\Utf8JsonWriterExtensions.cs" />
   </ItemGroup>
 
 </Project>

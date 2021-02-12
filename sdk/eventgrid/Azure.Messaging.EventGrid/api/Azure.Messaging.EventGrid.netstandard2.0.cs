@@ -3,8 +3,8 @@ namespace Azure.Messaging.EventGrid
     public partial class EventGridEvent
     {
         public EventGridEvent(string subject, string eventType, string dataVersion, object data, System.Type dataSerializationType = null) { }
+        public System.BinaryData Data { get { throw null; } }
         public string DataVersion { get { throw null; } set { } }
-        public System.BinaryData EventData { get { throw null; } }
         public System.DateTimeOffset EventTime { get { throw null; } set { } }
         public string EventType { get { throw null; } set { } }
         public string Id { get { throw null; } set { } }

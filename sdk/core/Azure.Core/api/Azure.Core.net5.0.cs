@@ -575,18 +575,18 @@ namespace Azure.Messaging
     [System.Text.Json.Serialization.JsonConverterAttribute(typeof(Azure.Messaging.CloudEventConverter))]
     public partial class CloudEvent
     {
-        public CloudEvent(string source, string type, object jsonSerializable, System.Type dataSerializationType = null) { }
+        public CloudEvent(string source, string type, object jsonSerializable, System.Type? dataSerializationType = null) { }
         public CloudEvent(string source, string type, System.ReadOnlyMemory<byte> data, string dataContentType) { }
-        public string DataContentType { get { throw null; } set { } }
-        public string DataSchema { get { throw null; } set { } }
-        public System.BinaryData EventData { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, object> ExtensionAttributes { get { throw null; } }
-        public string Id { get { throw null; } set { } }
-        public string Source { get { throw null; } set { } }
-        public string Subject { get { throw null; } set { } }
+        public System.BinaryData? Data { get { throw null; } }
+        public string? DataContentType { get { throw null; } set { } }
+        public string? DataSchema { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, object?> ExtensionAttributes { get { throw null; } }
+        public string? Id { get { throw null; } set { } }
+        public string? Source { get { throw null; } set { } }
+        public string? Subject { get { throw null; } set { } }
         public System.DateTimeOffset? Time { get { throw null; } set { } }
-        public string Type { get { throw null; } set { } }
-        public static Azure.Messaging.CloudEvent[] Parse(string requestContent) { throw null; }
+        public string? Type { get { throw null; } set { } }
+        public static Azure.Messaging.CloudEvent[]? Parse(string requestContent) { throw null; }
     }
     public partial class CloudEventConverter : System.Text.Json.Serialization.JsonConverter<Azure.Messaging.CloudEvent>
     {

@@ -128,7 +128,7 @@ namespace Azure.Messaging.EventGrid.Tests
                     },
                     typeof(TestPayload));
 
-            Assert.IsNull(cloudEvent.EventData.ToObjectFromJson<DerivedTestPayload>().DerivedProperty);
+            Assert.IsNull(cloudEvent.Data.ToObjectFromJson<DerivedTestPayload>().DerivedProperty);
 
             List<CloudEvent> eventsList = new List<CloudEvent>()
             {
@@ -138,7 +138,7 @@ namespace Azure.Messaging.EventGrid.Tests
             await client.SendEventsAsync(eventsList);
 
             cloudEvent = DeserializeRequest(mockTransport.SingleRequest).First();
-            Assert.IsNull(cloudEvent.EventData.ToObjectFromJson<DerivedTestPayload>().DerivedProperty);
+            Assert.IsNull(cloudEvent.Data.ToObjectFromJson<DerivedTestPayload>().DerivedProperty);
         }
 
         [Test]
@@ -164,7 +164,7 @@ namespace Azure.Messaging.EventGrid.Tests
                         DerivedProperty = 5
                     });
 
-            Assert.AreEqual(5, cloudEvent.EventData.ToObjectFromJson<DerivedTestPayload>().DerivedProperty);
+            Assert.AreEqual(5, cloudEvent.Data.ToObjectFromJson<DerivedTestPayload>().DerivedProperty);
 
             List<CloudEvent> eventsList = new List<CloudEvent>()
             {
@@ -174,7 +174,7 @@ namespace Azure.Messaging.EventGrid.Tests
             await client.SendEventsAsync(eventsList);
 
             cloudEvent = DeserializeRequest(mockTransport.SingleRequest).First();
-            Assert.AreEqual(5, cloudEvent.EventData.ToObjectFromJson<DerivedTestPayload>().DerivedProperty);
+            Assert.AreEqual(5, cloudEvent.Data.ToObjectFromJson<DerivedTestPayload>().DerivedProperty);
         }
 
         private static List<CloudEvent> DeserializeRequest(Request request)

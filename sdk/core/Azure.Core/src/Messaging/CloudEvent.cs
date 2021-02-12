@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -21,14 +19,14 @@ namespace Azure.Messaging
         /// <param name="jsonSerializable"> Event data specific to the event type. </param>
         /// <param name="dataSerializationType">The type to use when serializing the data.
         /// If not specified, <see cref="object.GetType()"/> will be used on <paramref name="jsonSerializable"/>.</param>
-        public CloudEvent(string source, string type, object jsonSerializable, Type dataSerializationType = default)
+        public CloudEvent(string source, string type, object jsonSerializable, Type? dataSerializationType = default)
         {
             Argument.AssertNotNull(source, nameof(source));
             Argument.AssertNotNull(type, nameof(type));
 
             Source = source;
             Type = type;
-            DataSerializationType = dataSerializationType ?? jsonSerializable?.GetType() ?? null;
+            DataSerializationType = dataSerializationType ?? jsonSerializable?.GetType();
             JsonSerializableData = jsonSerializable;
             Id = Guid.NewGuid().ToString();
         }
@@ -56,13 +54,13 @@ namespace Azure.Messaging
         /// Gets or sets an identifier for the event. The combination of <see cref="Id"/> and <see cref="Source"/> must be unique for each distinct event.
         /// If not explicitly set, this will default to a <see cref="Guid"/>.
         /// </summary>
-        public string Id { get; set; }
+        public string? Id { get; set; }
 
         /// <summary>Gets or sets the context in which an event happened. The combination of <see cref="Id"/> and <see cref="Source"/> must be unique for each distinct event.</summary>
-        public string Source { get; set; }
+        public string? Source { get; set; }
 
         /// <summary>Gets or sets the type of event related to the originating occurrence.</summary>
-        public string Type { get; set; }
+        public string? Type { get; set; }
 
         /// <summary>
         /// The spec version of the cloud event.
@@ -76,23 +74,23 @@ namespace Azure.Messaging
         public DateTimeOffset? Time { get; set; } = DateTimeOffset.UtcNow;
 
         /// <summary>Gets or sets the schema that the data adheres to.</summary>
-        public string DataSchema { get; set; }
+        public string? DataSchema { get; set; }
 
         /// <summary>Gets or sets the content type of the data.</summary>
-        public string DataContentType { get; set; }
+        public string? DataContentType { get; set; }
 
-        internal Type DataSerializationType { get; }
+        internal Type? DataSerializationType { get; }
 
         /// <summary>Gets or sets the subject of the event in the context of the event producer (identified by source). </summary>
-        public string Subject { get; set; }
+        public string? Subject { get; set; }
 
         /// <summary>
         /// Gets extension attributes that can be additionally added to the CloudEvent envelope.
         /// </summary>
-        public IDictionary<string, object> ExtensionAttributes { get; } = new CloudEventExtensionAttributes<string, object>();
+        public IDictionary<string, object?> ExtensionAttributes { get; } = new CloudEventExtensionAttributes<string, object?>();
 
         /// <summary>Gets or sets the deserialized event data specific to the event type.</summary>
-        internal object JsonSerializableData
+        internal object? JsonSerializableData
         {
             get
             {
@@ -102,12 +100,12 @@ namespace Azure.Messaging
             {
                 if (value != null)
                 {
-                    EventData = new BinaryData(value, type: DataSerializationType);
+                    Data = new BinaryData(value, type: DataSerializationType);
                 }
                 _jsonSerializableData = value;
             }
         }
-        private object _jsonSerializableData;
+        private object? _jsonSerializableData;
 
         /// <summary>Gets or sets the event data specific to the event type, encoded as a base64 string.</summary>
         internal ReadOnlyMemory<byte>? DataBase64
@@ -120,7 +118,7 @@ namespace Azure.Messaging
             {
                 if (value != null)
                 {
-                    EventData = new BinaryData(value.Value);
+                    Data = new BinaryData(value.Value);
                     _dataBase64 = value;
                 }
             }
@@ -132,11 +130,11 @@ namespace Azure.Messaging
         /// </summary>
         /// <param name="requestContent"> The JSON-encoded representation of either a single event or an array or events, in the CloudEvent schema. </param>
         /// <returns> A list of <see cref="CloudEvent"/>. </returns>
-        public static CloudEvent[] Parse(string requestContent)
+        public static CloudEvent[]? Parse(string requestContent)
         {
             Argument.AssertNotNull(requestContent, nameof(requestContent));
 
-            CloudEvent[] cloudEvents = null;
+            CloudEvent[]? cloudEvents = null;
             JsonDocument requestDocument = JsonDocument.Parse(requestContent);
 
             // Parse JsonElement into separate events, deserialize event envelope properties
@@ -161,6 +159,6 @@ namespace Azure.Messaging
         /// Gets the event data as <see cref="BinaryData"/>. Using BinaryData,
         /// one can deserialize the payload into rich data, or access the raw JSON data using <see cref="BinaryData.ToString()"/>.
         /// </summary>
-        public BinaryData EventData { get; internal set; }
+        public BinaryData? Data { get; internal set; }
     }
 }

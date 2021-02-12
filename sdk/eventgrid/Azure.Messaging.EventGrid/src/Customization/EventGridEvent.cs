@@ -84,7 +84,7 @@ namespace Azure.Messaging.EventGrid
             set
             {
                 _jsonSerializable = value;
-                EventData = new BinaryData(_jsonSerializable, type: DataSerializationType);
+                Data = new BinaryData(_jsonSerializable, type: DataSerializationType);
             }
         }
         private object _jsonSerializable;
@@ -99,7 +99,7 @@ namespace Azure.Messaging.EventGrid
             set
             {
                 _serializedData = value;
-                EventData = BinaryData.FromStream(SerializePayloadToStream(_serializedData));
+                Data = BinaryData.FromStream(SerializePayloadToStream(_serializedData));
             }
         }
         private JsonElement _serializedData;
@@ -193,7 +193,7 @@ namespace Azure.Messaging.EventGrid
         /// Gets the event payload as <see cref="BinaryData"/>. Using BinaryData,
         /// one can deserialize the payload into rich data, or access the raw JSON data using <see cref="BinaryData.ToString()"/>.
         /// </summary>
-        public BinaryData EventData { get; internal set; }
+        public BinaryData Data { get; internal set; }
 
         private static MemoryStream SerializePayloadToStream(JsonElement payload, CancellationToken cancellationToken = default)
         {

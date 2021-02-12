@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -58,7 +56,7 @@ namespace Azure.Messaging
                     {
                         continue;
                     }
-                    cloudEvent.EventData = s_defaultSerializer.Serialize(property.Value);
+                    cloudEvent.Data = s_defaultSerializer.Serialize(property.Value);
                 }
                 else if (property.NameEquals("data_base64"))
                 {
@@ -98,7 +96,7 @@ namespace Azure.Messaging
                 }
                 else
                 {
-                    (cloudEvent.ExtensionAttributes as CloudEventExtensionAttributes<string, object>).AddWithoutValidation(property.Name, property.Value.GetObject());
+                    (cloudEvent.ExtensionAttributes as CloudEventExtensionAttributes<string, object?>)!.AddWithoutValidation(property.Name, GetObject(property.Value));
                 }
             }
             return cloudEvent;
@@ -126,7 +124,7 @@ namespace Azure.Messaging
                         CancellationToken.None);
 
                     stream.Position = 0;
-                    JsonDocument document = JsonDocument.Parse(stream);
+                    using JsonDocument document = JsonDocument.Parse(stream);
                     document.RootElement.WriteTo(writer);
                 }
             }
@@ -141,7 +139,7 @@ namespace Azure.Messaging
             if (value.Time != null)
             {
                 writer.WritePropertyName("time");
-                writer.WriteStringValue(value.Time.Value, "O");
+                writer.WriteStringValue(value.Time.Value);
             }
             writer.WritePropertyName("specversion");
             writer.WriteStringValue(value.SpecVersion);
@@ -160,12 +158,111 @@ namespace Azure.Messaging
                 writer.WritePropertyName("subject");
                 writer.WriteStringValue(value.Subject);
             }
-            foreach (KeyValuePair<string, object> item in value.ExtensionAttributes)
+            foreach (KeyValuePair<string, object?> item in value.ExtensionAttributes)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                WriteObjectValue(writer, item.Value);
             }
             writer.WriteEndObject();
+        }
+
+        private static void WriteObjectValue(Utf8JsonWriter writer, object? value)
+        {
+            switch (value)
+            {
+                case null:
+                    writer.WriteNullValue();
+                    break;
+                case byte[] bytes:
+                    writer.WriteStringValue(Convert.ToBase64String(bytes));
+                    break;
+                case int i:
+                    writer.WriteNumberValue(i);
+                    break;
+                case decimal d:
+                    writer.WriteNumberValue(d);
+                    break;
+                case double d:
+                    writer.WriteNumberValue(d);
+                    break;
+                case float f:
+                    writer.WriteNumberValue(f);
+                    break;
+                case long l:
+                    writer.WriteNumberValue(l);
+                    break;
+                case string s:
+                    writer.WriteStringValue(s);
+                    break;
+                case bool b:
+                    writer.WriteBooleanValue(b);
+                    break;
+                case Guid g:
+                    writer.WriteStringValue(g);
+                    break;
+                case IEnumerable<KeyValuePair<string, object>> enumerable:
+                    writer.WriteStartObject();
+                    foreach (KeyValuePair<string, object> pair in enumerable)
+                    {
+                        writer.WritePropertyName(pair.Key);
+                        WriteObjectValue(writer, pair.Value);
+                    }
+                    writer.WriteEndObject();
+                    break;
+                case IEnumerable<object> objectEnumerable:
+                    writer.WriteStartArray();
+                    foreach (object item in objectEnumerable)
+                    {
+                        WriteObjectValue(writer, item);
+                    }
+                    writer.WriteEndArray();
+                    break;
+
+                default:
+                    throw new NotSupportedException("Not supported type " + value.GetType());
+            }
+        }
+
+        private static object? GetObject(in JsonElement element)
+        {
+            switch (element.ValueKind)
+            {
+                case JsonValueKind.String:
+                    return element.GetString();
+                case JsonValueKind.Number:
+                    if (element.TryGetInt32(out int intValue))
+                    {
+                        return intValue;
+                    }
+                    if (element.TryGetInt64(out long longValue))
+                    {
+                        return longValue;
+                    }
+                    return element.GetDouble();
+                case JsonValueKind.True:
+                    return true;
+                case JsonValueKind.False:
+                    return false;
+                case JsonValueKind.Undefined:
+                case JsonValueKind.Null:
+                    return null;
+                case JsonValueKind.Object:
+                    var dictionary = new Dictionary<string, object?>();
+                    foreach (JsonProperty jsonProperty in element.EnumerateObject())
+                    {
+                        dictionary.Add(jsonProperty.Name, GetObject(jsonProperty.Value));
+                    }
+                    return dictionary;
+                case JsonValueKind.Array:
+                    var list = new List<object?>();
+                    foreach (JsonElement item in element.EnumerateArray())
+                    {
+                        list.Add(GetObject(item));
+                    }
+                    return list.ToArray();
+                default:
+                    throw new NotSupportedException("Not supported value kind " + element.ValueKind);
+            }
         }
     }
 }

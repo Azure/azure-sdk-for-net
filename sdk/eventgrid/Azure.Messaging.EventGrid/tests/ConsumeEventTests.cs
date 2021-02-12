@@ -156,7 +156,7 @@ namespace Azure.Messaging.EventGrid.Tests
             {
                 if (egEvent.EventType == "Contoso.Items.ItemReceived")
                 {
-                    ContosoItemReceivedEventData eventData = egEvent.EventData.ToObject<ContosoItemReceivedEventData>(new JsonObjectSerializer(
+                    ContosoItemReceivedEventData eventData = egEvent.Data.ToObject<ContosoItemReceivedEventData>(new JsonObjectSerializer(
                         new JsonSerializerOptions()
                         {
                             PropertyNamingPolicy = JsonNamingPolicy.CamelCase
@@ -179,7 +179,7 @@ namespace Azure.Messaging.EventGrid.Tests
             {
                 if (egEvent.EventType == "Contoso.Items.ItemReceived")
                 {
-                    ContosoItemReceivedEventData[] eventData = egEvent.EventData.ToObject<ContosoItemReceivedEventData[]>(new JsonObjectSerializer(
+                    ContosoItemReceivedEventData[] eventData = egEvent.Data.ToObject<ContosoItemReceivedEventData[]>(new JsonObjectSerializer(
                         new JsonSerializerOptions()
                         {
                             PropertyNamingPolicy = JsonNamingPolicy.CamelCase
@@ -204,7 +204,7 @@ namespace Azure.Messaging.EventGrid.Tests
             {
                 if (egEvent.EventType == "Contoso.Items.ItemReceived")
                 {
-                    BinaryData binaryEventData = egEvent.EventData;
+                    BinaryData binaryEventData = egEvent.Data;
                     Assert.True(binaryEventData.ToObjectFromJson<bool>());
                 }
             }
@@ -223,7 +223,7 @@ namespace Azure.Messaging.EventGrid.Tests
             {
                 if (egEvent.EventType == "Contoso.Items.ItemReceived")
                 {
-                    BinaryData binaryEventData = egEvent.EventData;
+                    BinaryData binaryEventData = egEvent.Data;
                     Assert.AreEqual("stringdata", binaryEventData.ToObjectFromJson<string>());
                 }
             }
@@ -477,7 +477,7 @@ namespace Azure.Messaging.EventGrid.Tests
         [Test]
         public void ConsumeMachineLearningServicesDatasetDriftDetectedEvent()
         {
-            string requestContent = "[{\"topic\":\"/subscriptions/60582a10-b9fd-49f1-a546-c4194134bba8/resourceGroups/copetersRG/providers/Microsoft.MachineLearningServices/workspaces/driftDemoWS\",\"eventType\":\"Microsoft.MachineLearningServices.EventDatasetDriftDetected\",\"subject\":\"datadrift/01d29aa4-e6a4-470a-9ef3-66660d21f8ef/run/01d29aa4-e6a4-470a-9ef3-66660d21f8ef_1571590300380\",\"eventTime\":\"2019-10-20T17:08:08.467191+00:00\",\"id\":\"2684de79-b145-4dcf-ad2e-6a1db798585f\",\"data\":{\"dataDriftId\":\"01d29aa4-e6a4-470a-9ef3-66660d21f8ef\",\"dataDriftName\":\"copetersDriftMonitor3\",\"runId\":\"01d29aa4-e6a4-470a-9ef3-66660d21f8ef_1571590300380\",\"baseDatasetId\":\"3c56d136-0f64-4657-a0e8-5162089a88a3\",\"tarAsSystemEventDatasetId\":\"d7e74d2e-c972-4266-b5fb-6c9c182d2a74\",\"driftCoefficient\":0.8350349068479208,\"startTime\":\"2019-07-04T00:00:00+00:00\",\"endTime\":\"2019-07-05T00:00:00+00:00\"},\"dataVersion\":\"2\",\"metadataVersion\":\"1\"}]";
+            string requestContent = "[{\"topic\":\"/subscriptions/60582a10-b9fd-49f1-a546-c4194134bba8/resourceGroups/copetersRG/providers/Microsoft.MachineLearningServices/workspaces/driftDemoWS\",\"eventType\":\"Microsoft.MachineLearningServices.DatasetDriftDetected\",\"subject\":\"datadrift/01d29aa4-e6a4-470a-9ef3-66660d21f8ef/run/01d29aa4-e6a4-470a-9ef3-66660d21f8ef_1571590300380\",\"eventTime\":\"2019-10-20T17:08:08.467191+00:00\",\"id\":\"2684de79-b145-4dcf-ad2e-6a1db798585f\",\"data\":{\"dataDriftId\":\"01d29aa4-e6a4-470a-9ef3-66660d21f8ef\",\"dataDriftName\":\"copetersDriftMonitor3\",\"runId\":\"01d29aa4-e6a4-470a-9ef3-66660d21f8ef_1571590300380\",\"baseDatasetId\":\"3c56d136-0f64-4657-a0e8-5162089a88a3\",\"tarAsSystemEventDatasetId\":\"d7e74d2e-c972-4266-b5fb-6c9c182d2a74\",\"driftCoefficient\":0.8350349068479208,\"startTime\":\"2019-07-04T00:00:00+00:00\",\"endTime\":\"2019-07-05T00:00:00+00:00\"},\"dataVersion\":\"2\",\"metadataVersion\":\"1\"}]";
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
@@ -1433,11 +1433,11 @@ namespace Azure.Messaging.EventGrid.Tests
                     switch (cloudEvent.Type)
                     {
                         case "BinaryDataType":
-                            Assert.AreEqual(Convert.ToBase64String(cloudEvent.EventData.ToArray()), "ZGF0YQ==");
+                            Assert.AreEqual(Convert.ToBase64String(cloudEvent.Data.ToArray()), "ZGF0YQ==");
                             Assert.IsFalse(cloudEvent.TryGetSystemEventData(out var _));
                             break;
                         case "Contoso.Items.ItemReceived":
-                            ContosoItemReceivedEventData itemReceived = cloudEvent.EventData.ToObject<ContosoItemReceivedEventData>(camelCaseSerializer);
+                            ContosoItemReceivedEventData itemReceived = cloudEvent.Data.ToObject<ContosoItemReceivedEventData>(camelCaseSerializer);
                             Assert.AreEqual("512d38b6-c7b8-40c8-89fe-f46f9e9622b6", itemReceived.ItemSku);
                             Assert.IsFalse(cloudEvent.TryGetSystemEventData(out var _));
                             break;
@@ -1500,7 +1500,7 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
             if (events[0].Type == "Test.Items.BinaryDataType")
             {
-                var eventData = (BinaryData)events[0].EventData;
+                var eventData = (BinaryData)events[0].Data;
                 Assert.AreEqual(eventData.ToString(), "data");
             }
         }
@@ -1520,7 +1520,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
             Assert.NotNull(events);
 
-            ContosoItemReceivedEventData eventData = events[0].EventData.ToObject<ContosoItemReceivedEventData>(camelCaseSerializer);
+            ContosoItemReceivedEventData eventData = events[0].Data.ToObject<ContosoItemReceivedEventData>(camelCaseSerializer);
             Assert.AreEqual("512d38b6-c7b8-40c8-89fe-f46f9e9622b6", eventData.ItemSku);
         }
 
@@ -1539,7 +1539,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
             Assert.NotNull(events);
 
-            ContosoItemReceivedEventData[] eventData = events[0].EventData.ToObject<ContosoItemReceivedEventData[]>(camelCaseSerializer);
+            ContosoItemReceivedEventData[] eventData = events[0].Data.ToObject<ContosoItemReceivedEventData[]>(camelCaseSerializer);
             Assert.AreEqual("512d38b6-c7b8-40c8-89fe-f46f9e9622b6", eventData[0].ItemSku);
         }
         #endregion
@@ -1551,7 +1551,7 @@ namespace Azure.Messaging.EventGrid.Tests
             string requestContent = "[{\"id\":\"994bc3f8-c90c-6fc3-9e83-6783db2221d5\",\"type\":\"type\",\"source\":\"Subject-0\",\"specversion\":\"1.0\"}]";
 
             CloudEvent[] events = CloudEvent.Parse(requestContent);
-            var eventData1 = events[0].EventData;
+            var eventData1 = events[0].Data;
 
             Assert.AreEqual(eventData1, null);
             Assert.AreEqual("type", events[0].Type);
@@ -1563,7 +1563,7 @@ namespace Azure.Messaging.EventGrid.Tests
             string requestContent = "[{\"id\":\"994bc3f8-c90c-6fc3-9e83-6783db2221d5\", \"type\":\"type\", \"source\":\"Subject-0\", \"data\":null, \"specversion\":\"1.0\"}]";
 
             CloudEvent[] events = CloudEvent.Parse(requestContent);
-            var eventData1 = events[0].EventData;
+            var eventData1 = events[0].Data;
 
             Assert.AreEqual(eventData1, null);
             Assert.AreEqual("type", events[0].Type);
@@ -1579,7 +1579,7 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            BinaryData binaryEventData = events[0].EventData;
+            BinaryData binaryEventData = events[0].Data;
             bool eventData = binaryEventData.ToObjectFromJson<bool>();
             Assert.True(eventData);
         }
@@ -1591,7 +1591,7 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            BinaryData binaryEventData = events[0].EventData;
+            BinaryData binaryEventData = events[0].Data;
             string eventData = binaryEventData.ToObjectFromJson<string>();
             Assert.AreEqual("stringdata", eventData);
         }
@@ -1836,7 +1836,7 @@ namespace Azure.Messaging.EventGrid.Tests
         [Test]
         public void ConsumeCloudEventMachineLearningServicesDatasetDriftDetectedEvent()
         {
-            string requestContent = "[{\"source\":\"/subscriptions/60582a10-b9fd-49f1-a546-c4194134bba8/resourceGroups/copetersRG/providers/Microsoft.MachineLearningServices/workspaces/driftDemoWS\",\"type\":\"Microsoft.MachineLearningServices.EventDatasetDriftDetected\",\"subject\":\"datadrift/01d29aa4-e6a4-470a-9ef3-66660d21f8ef/run/01d29aa4-e6a4-470a-9ef3-66660d21f8ef_1571590300380\",\"time\":\"2019-10-20T17:08:08.467191+00:00\",\"id\":\"2684de79-b145-4dcf-ad2e-6a1db798585f\",\"data\":{\"dataDriftId\":\"01d29aa4-e6a4-470a-9ef3-66660d21f8ef\",\"dataDriftName\":\"copetersDriftMonitor3\",\"runId\":\"01d29aa4-e6a4-470a-9ef3-66660d21f8ef_1571590300380\",\"baseDatasetId\":\"3c56d136-0f64-4657-a0e8-5162089a88a3\",\"tarAsSystemEventDatasetId\":\"d7e74d2e-c972-4266-b5fb-6c9c182d2a74\",\"driftCoefficient\":0.8350349068479208,\"startTime\":\"2019-07-04T00:00:00+00:00\",\"endTime\":\"2019-07-05T00:00:00+00:00\"}}]";
+            string requestContent = "[{\"source\":\"/subscriptions/60582a10-b9fd-49f1-a546-c4194134bba8/resourceGroups/copetersRG/providers/Microsoft.MachineLearningServices/workspaces/driftDemoWS\",\"type\":\"Microsoft.MachineLearningServices.DatasetDriftDetected\",\"subject\":\"datadrift/01d29aa4-e6a4-470a-9ef3-66660d21f8ef/run/01d29aa4-e6a4-470a-9ef3-66660d21f8ef_1571590300380\",\"time\":\"2019-10-20T17:08:08.467191+00:00\",\"id\":\"2684de79-b145-4dcf-ad2e-6a1db798585f\",\"data\":{\"dataDriftId\":\"01d29aa4-e6a4-470a-9ef3-66660d21f8ef\",\"dataDriftName\":\"copetersDriftMonitor3\",\"runId\":\"01d29aa4-e6a4-470a-9ef3-66660d21f8ef_1571590300380\",\"baseDatasetId\":\"3c56d136-0f64-4657-a0e8-5162089a88a3\",\"tarAsSystemEventDatasetId\":\"d7e74d2e-c972-4266-b5fb-6c9c182d2a74\",\"driftCoefficient\":0.8350349068479208,\"startTime\":\"2019-07-04T00:00:00+00:00\",\"endTime\":\"2019-07-05T00:00:00+00:00\"}}]";
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
