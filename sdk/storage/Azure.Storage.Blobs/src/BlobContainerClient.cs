@@ -443,7 +443,7 @@ namespace Azure.Storage.Blobs
         {
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri)
             {
-                BlobName = blobName
+                BlobName = Uri.EscapeDataString(blobName)
             };
 
             return new BlobBaseClient(
@@ -492,7 +492,7 @@ namespace Azure.Storage.Blobs
 
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri)
             {
-                BlobName = blobName
+                BlobName = Uri.EscapeDataString(blobName)
             };
 
             return new BlockBlobClient(
@@ -546,7 +546,7 @@ namespace Azure.Storage.Blobs
 
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri)
             {
-                BlobName = blobName
+                BlobName = Uri.EscapeDataString(blobName)
             };
 
             return new PageBlobClient(
