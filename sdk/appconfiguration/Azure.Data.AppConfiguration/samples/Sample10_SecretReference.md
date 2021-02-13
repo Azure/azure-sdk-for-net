@@ -27,11 +27,17 @@ client.SetConfigurationSetting(secretReferenceSetting);
 
 You can use the `GetConfigurationSetting` method to retrieve the secret reference.
 
+If you'd like to get the secret value you would need to reference the [Azure.Security.KeyVault.Secrets](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Secrets/README.md) library and use the `KeyVaultSecretIdentifier` to parse the `SecretId`, and `SecretClient.GetSecretAsync` to get the secret value.
+
 ```C# Snippet:Sample_GetSecretReference
 Response<ConfigurationSetting> response = client.GetConfigurationSetting("setting");
 if (response.Value is SecretReferenceConfigurationSetting secretReference)
 {
-    Console.WriteLine($"Setting {secretReference.Key} references {secretReference.SecretId}");
+    var identifier = new KeyVaultSecretIdentifier(secretReference.SecretId);
+    var secretClient = new SecretClient(identifier.VaultUri, new DefaultAzureCredential());
+    var secret = await secretClient.GetSecretAsync(identifier.Name, identifier.Version);
+
+    Console.WriteLine($"Setting {secretReference.Key} references {secretReference.SecretId} Secret Value: {secret.Value.Value}");
 }
 ```
 
