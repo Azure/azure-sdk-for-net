@@ -200,7 +200,20 @@ try {
         # Make sure the user is logged in to create a service principal.
         $context = Get-AzContext;
         if (!$context) {
-            Log "You are not logged in; connecting to 'Azure SDK Developer Playground'"
+            $subscriptionName = $SubscriptionId
+
+            # Use cache of well-known team subs without having to be authenticated.
+            $wellKnownSubscriptions = @{
+                'faa080af-c1d8-40ad-9cce-e1a450ca5b57' = 'Azure SDK Developer Playground'
+                'a18897a6-7e44-457d-9260-f2854c0aca42' = 'Azure SDK Engineering System'
+                '2cd617ea-1866-46b1-90e3-fffb087ebf9b' = 'Azure SDK Test Resources'
+            }
+
+            if ($wellKnownSubscriptions.ContainsKey($SubscriptionId)) {
+                $subscriptionName = '{0} ({1})' -f $wellKnownSubscriptions[$SubscriptionId], $SubscriptionId
+            }
+
+            Log "You are not logged in; connecting to $subscriptionName"
             $context = (Connect-AzAccount -Subscription $SubscriptionId).Context
         }
 
@@ -208,11 +221,11 @@ try {
         if (!$TestApplicationId) {
 
             # Cache the created service principal in this session for frequent reuse.
-            $servicePrincipal = if ($AzureTestPrincipal) {
-                Log "TestApplicationId was not specified; loading the cached service principal"
+            $servicePrincipal = if ($AzureTestPrincipal -and (Get-AzADServicePrincipal -ApplicationId $AzureTestPrincipal.ApplicationId)) {
+                Log "TestApplicationId was not specified; loading cached service principal '$($AzureTestPrincipal.ApplicationId)'"
                 $AzureTestPrincipal
             } else {
-                Log "TestApplicationId was not specified; creating a new service principal"
+                Log 'TestApplicationId was not specified; creating a new service principal'
                 $global:AzureTestPrincipal = New-AzADServicePrincipal -Role Owner
 
                 Log "Created service principal '$AzureTestPrincipal'"
