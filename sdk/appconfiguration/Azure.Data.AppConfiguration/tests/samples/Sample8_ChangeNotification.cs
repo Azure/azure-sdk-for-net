@@ -8,7 +8,7 @@ using Azure.Messaging.EventGrid.SystemEvents;
 namespace Azure.Data.AppConfiguration.Samples
 {
 #pragma warning disable 649 // Field is not initialized
-#pragma warning disable SA1430 // Declare the access modifier
+#pragma warning disable SA1400 // Declare the access modifier
     public partial class ConfigurationSamples
     {
 #region Snippet:AzConfigSample8_ChangeNotification_SharedClient
