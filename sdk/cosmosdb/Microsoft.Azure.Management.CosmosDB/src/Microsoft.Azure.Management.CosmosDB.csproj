@@ -12,7 +12,11 @@
     <PackageReleaseNotes>
       <![CDATA[
         Updating with the apiVersion 2020-01-15 azure-rest-api-specs.
-        This patch includes Network Acl Bypass support and Managed Service Identity.
+        This patch includes the following new features:
+          -Network Acl Bypass
+          -Managed Service Identity
+          -Mongo Server Version 4.0
+          -Runtime Resources are updated to use Gateway version 2020-07-15 for support Subpartitioned SQL Containers
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
