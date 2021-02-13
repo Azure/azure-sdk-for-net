@@ -201,9 +201,12 @@ try {
         $context = Get-AzContext;
         if (!$context) {
             $subscriptionName = $SubscriptionId
+
+            # Use cache of well-known team subs without having to be authenticated.
             $wellKnownSubscriptions = @{
                 'faa080af-c1d8-40ad-9cce-e1a450ca5b57' = 'Azure SDK Developer Playground'
                 'a18897a6-7e44-457d-9260-f2854c0aca42' = 'Azure SDK Engineering System'
+                '2cd617ea-1866-46b1-90e3-fffb087ebf9b' = 'Azure SDK Test Resources'
             }
 
             if ($wellKnownSubscriptions.ContainsKey($SubscriptionId)) {
