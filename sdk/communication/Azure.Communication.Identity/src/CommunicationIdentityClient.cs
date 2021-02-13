@@ -18,7 +18,10 @@ namespace Azure.Communication.Identity
     public class CommunicationIdentityClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly HttpPipeline _pipeline;
+        private readonly string _endpoint;
         internal CommunicationIdentityRestClient RestClient { get; }
+        internal CommunicationIdentityRestClient RestClientForTurn { get; }
 
         /// <summary> Initializes a new instance of <see cref="CommunicationIdentityClient"/>.</summary>
         /// <param name="endpoint">The URI of the Azure Communication Services resource.</param>
@@ -62,30 +65,36 @@ namespace Azure.Communication.Identity
         private CommunicationIdentityClient(CommunicationIdentityClientOptions options, ConnectionString connectionString)
         {
             _clientDiagnostics = new ClientDiagnostics(options);
+            _pipeline = options.BuildHttpPipeline(connectionString);
+            _endpoint = connectionString.GetRequired("endpoint");
             RestClient = new CommunicationIdentityRestClient(
                 _clientDiagnostics,
-                options.BuildHttpPipeline(connectionString),
-                connectionString.GetRequired("endpoint"),
+                _pipeline,
+                _endpoint,
                 apiVersion: "2021-03-07");
         }
 
         private CommunicationIdentityClient(Uri endpoint, CommunicationIdentityClientOptions options, AzureKeyCredential credential)
         {
             _clientDiagnostics = new ClientDiagnostics(options);
+            _pipeline = options.BuildHttpPipeline(credential);
+            _endpoint = endpoint.AbsoluteUri;
             RestClient = new CommunicationIdentityRestClient(
                 _clientDiagnostics,
-                options.BuildHttpPipeline(credential),
-                endpoint.AbsoluteUri,
+                _pipeline,
+                _endpoint,
                 apiVersion: "2021-03-07");
         }
 
         private CommunicationIdentityClient(Uri endpoint, CommunicationIdentityClientOptions options, TokenCredential tokenCredential)
         {
             _clientDiagnostics = new ClientDiagnostics(options);
-            RestClient = new CommunicationIdentityRestClient(
+            _pipeline = options.BuildHttpPipeline(tokenCredential);
+            _endpoint = endpoint.AbsoluteUri;
+            RestClientForTurn = new CommunicationIdentityRestClient(
                 _clientDiagnostics,
-                options.BuildHttpPipeline(tokenCredential),
-                endpoint.AbsoluteUri,
+                _pipeline,
+                _endpoint,
                 apiVersion: "2021-03-07");
         }
 
@@ -299,11 +308,17 @@ namespace Azure.Communication.Identity
         /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual Response<CommunicationTurnCredentialsResponse> IssueTurnCredentials(CommunicationUserIdentifier communicationUser, CancellationToken cancellationToken = default)
         {
+            var RestClientForTurn = new CommunicationIdentityRestClient(
+                _clientDiagnostics,
+                _pipeline,
+                _endpoint,
+                apiVersion: "2021-12-12");
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(IssueTurnCredentials)}");
             scope.Start();
             try
             {
-                Response<CommunicationTurnCredentialsResponse> response = RestClient.IssueTurnCredentials(communicationUser.Id, cancellationToken);
+                Response<CommunicationTurnCredentialsResponse> response = RestClientForTurn.IssueTurnCredentials(communicationUser.Id, cancellationToken);
                 return response;
             }
             catch (Exception ex)
@@ -318,11 +333,17 @@ namespace Azure.Communication.Identity
         /// <param name="cancellationToken">The cancellation token to use.</param>
         public virtual async Task<Response<CommunicationTurnCredentialsResponse>> IssueTurnCredentialsAsync(CommunicationUserIdentifier communicationUser, CancellationToken cancellationToken = default)
         {
+            var RestClientForTurn = new CommunicationIdentityRestClient(
+                _clientDiagnostics,
+                _pipeline,
+                _endpoint,
+                apiVersion: "2021-12-12");
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(IssueTurnCredentials)}");
             scope.Start();
             try
             {
-                Response<CommunicationTurnCredentialsResponse> response = await RestClient.IssueTurnCredentialsAsync(communicationUser.Id, cancellationToken).ConfigureAwait(false);
+                Response<CommunicationTurnCredentialsResponse> response = await RestClientForTurn.IssueTurnCredentialsAsync(communicationUser.Id, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception ex)

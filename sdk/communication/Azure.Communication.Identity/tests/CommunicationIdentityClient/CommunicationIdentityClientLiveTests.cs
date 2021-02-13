@@ -80,6 +80,7 @@ namespace Azure.Communication.Identity.Tests
             Response<CommunicationTurnCredentialsResponse> turnCredentialsResponse = await client.IssueTurnCredentialsAsync(userResponse.Value);
 
             Assert.IsNotNull(turnCredentialsResponse.Value);
+            Assert.IsNotNull(turnCredentialsResponse.Value.ExpiresOn);
             Assert.IsNotNull(turnCredentialsResponse.Value.TurnServers);
             // ToDo: Should we expect a set number of turn server credentials?
             // ToDo: Are there any constraints on returned values that need to be verified?
