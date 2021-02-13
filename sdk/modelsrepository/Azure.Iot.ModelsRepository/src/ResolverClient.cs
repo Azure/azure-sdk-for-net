@@ -76,7 +76,8 @@ namespace Azure.Iot.ModelsRepository
         /// <param name="options">
         /// <c>ResolverClientOptions</c> to configure resolution and client behavior.
         /// </param>
-        public ResolverClient(string repositoryUriStr, ResolverClientOptions options) : this(new Uri(repositoryUriStr), options) { }
+        public ResolverClient(string repositoryUriStr, ResolverClientOptions options)
+            : this(new Uri(repositoryUriStr), options) { }
 
         /// <summary>
         /// Resolves a model definition identified by <paramref name="dtmi"/> and optionally its dependencies.
@@ -111,8 +112,8 @@ namespace Azure.Iot.ModelsRepository
         /// <exception cref="ResolverException">Thrown when a resolution failure occurs.</exception>
         /// <param name="dtmis">A collection of well-formed DTDL model Ids.</param>
         /// <param name="cancellationToken">The cancellationToken.</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0004:DO provide both asynchronous and synchronous variants for all service methods.", Justification = "<Pending>")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0015:Unexpected client method return type.", Justification = "<Pending>")]
+        [SuppressMessage("Usage", "AZC0004:DO provide both asynchronous and synchronous variants for all service methods.", Justification = "<Pending>")]
+        [SuppressMessage("Usage", "AZC0015:Unexpected client method return type.", Justification = "<Pending>")]
         public virtual async Task<IDictionary<string, string>> ResolveAsync(IEnumerable<string> dtmis, CancellationToken cancellationToken = default)
         {
             return await _repositoryHandler.ProcessAsync(dtmis, cancellationToken).ConfigureAwait(false);

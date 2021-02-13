@@ -6,7 +6,9 @@ namespace Azure.Iot.ModelsRepository.Fetchers
     internal class FetchResult
     {
         public string Definition { get; set; }
+
         public string Path { get; set; }
-        public bool FromExpanded => Path.EndsWith("expanded.json", System.StringComparison.InvariantCultureIgnoreCase);
+
+        public bool FromExpanded => Path.EndsWith(ModelRepositoryConstants.ExpandedJsonFileExtension, System.StringComparison.InvariantCultureIgnoreCase);
     }
 }

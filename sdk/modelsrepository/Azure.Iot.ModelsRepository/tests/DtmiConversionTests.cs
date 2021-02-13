@@ -42,7 +42,9 @@ namespace Azure.Iot.ModelsRepository.Tests
             Assert.AreEqual($"{repository}/{expectedPath}", modelPath);
 
             string expandedModelPath = DtmiConventions.DtmiToQualifiedPath(dtmi, repository, true);
-            Assert.AreEqual($"{repository}/{expectedPath.Replace(".json", ".expanded.json")}", expandedModelPath);
+            Assert.AreEqual(
+                $"{repository}/{expectedPath.Replace(ModelRepositoryConstants.JsonFileExtension, ModelRepositoryConstants.ExpandedJsonFileExtension)}",
+                expandedModelPath);
         }
     }
 }

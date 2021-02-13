@@ -3,6 +3,7 @@
 
 using NUnit.Framework;
 using System;
+using System.Diagnostics.Tracing;
 using System.Runtime.InteropServices;
 
 namespace Azure.Iot.ModelsRepository.Tests
@@ -80,9 +81,9 @@ namespace Azure.Iot.ModelsRepository.Tests
             Type eventSourceType = typeof(ResolverEventSource);
 
             Assert.NotNull(eventSourceType);
-            Assert.AreEqual("Azure-Iot-ModelsRepository", ResolverEventSource.GetName(eventSourceType));
-            Assert.AreEqual(Guid.Parse("7678f8d4-81db-5fd2-39fc-23552d86b171"), ResolverEventSource.GetGuid(eventSourceType));
-            Assert.IsNotEmpty(ResolverEventSource.GenerateManifest(eventSourceType, "assemblyPathToIncludeInManifest"));
+            Assert.AreEqual(ModelRepositoryConstants.ModelRepositoryEventSourceName, EventSource.GetName(eventSourceType));
+            Assert.AreEqual(Guid.Parse("7678f8d4-81db-5fd2-39fc-23552d86b171"), EventSource.GetGuid(eventSourceType));
+            Assert.IsNotEmpty(EventSource.GenerateManifest(eventSourceType, "assemblyPathToIncludeInManifest"));
         }
     }
 }

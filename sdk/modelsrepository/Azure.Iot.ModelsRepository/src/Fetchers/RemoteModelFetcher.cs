@@ -34,7 +34,9 @@ namespace Azure.Iot.ModelsRepository.Fetchers
             Queue<string> work = new Queue<string>();
 
             if (_tryExpanded)
+            {
                 work.Enqueue(GetPath(dtmi, repositoryUri, true));
+            }
 
             work.Enqueue(GetPath(dtmi, repositoryUri, false));
 

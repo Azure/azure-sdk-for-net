@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using NUnit.Framework;
 using System;
 using System.IO;
 using System.Reflection;
@@ -12,6 +11,7 @@ namespace Azure.Iot.ModelsRepository.Tests
     public class TestHelpers
     {
         private static readonly string s_fallbackTestRemoteRepo = "https://devicemodels.azure.com/";
+
         public enum ClientType
         {
             Local,
@@ -36,9 +36,14 @@ namespace Azure.Iot.ModelsRepository.Tests
         public static ResolverClient GetTestClient(ClientType clientType, ResolverClientOptions clientOptions = null)
         {
             if (clientType == ClientType.Local)
+            {
                 return new ResolverClient(TestLocalModelRepository, clientOptions);
+            }
+
             if (clientType == ClientType.Remote)
+            {
                 return new ResolverClient(TestRemoteModelRepository, clientOptions);
+            }
 
             throw new ArgumentException();
         }
