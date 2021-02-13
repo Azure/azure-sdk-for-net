@@ -23,7 +23,7 @@ namespace Azure.Core
         /// <summary>
         /// The JSON body of the response.
         /// </summary>
-        public DynamicJson? Body { get; }
+        public JsonData? Body { get; }
 
         /// <inheritdoc />
         public override int Status => Response.Status;
@@ -47,7 +47,7 @@ namespace Azure.Core
         /// </summary>
         /// <param name="response">The response returned by the service.</param>
         /// <param name="body">The body returned by the service.</param>
-        public DynamicResponse(Response response, DynamicJson? body)
+        public DynamicResponse(Response response, JsonData? body)
         {
             Response = response;
             Body = body;
