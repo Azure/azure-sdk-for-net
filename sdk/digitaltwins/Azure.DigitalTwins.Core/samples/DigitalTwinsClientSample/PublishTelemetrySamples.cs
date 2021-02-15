@@ -41,14 +41,21 @@ namespace Azure.DigitalTwins.Samples
             await client
                 .CreateModelsAsync(new[] { newComponentModelPayload, newModelPayload });
 
-            Console.WriteLine($"Successfully created models '{componentModelId}' and '{modelId}'");
+            // Get the models we just created
+            AsyncPageable<DigitalTwinsModelData> models = client.GetModelsAsync();
+            await foreach (DigitalTwinsModelData model in models)
+            {
+                Console.WriteLine($"Successfully created model '{model.Id}'");
+            }
 
             // Create digital twin with Component payload.
             string twinPayload = SamplesConstants.TemporaryTwinPayload
                 .Replace(SamplesConstants.ModelId, modelId);
 
-            await client.CreateDigitalTwinAsync(twinId, twinPayload);
-            Console.WriteLine($"Created digital twin '{twinId}'.");
+            BasicDigitalTwin basicDigitalTwin = JsonSerializer.Deserialize<BasicDigitalTwin>(twinPayload);
+
+            Response<BasicDigitalTwin> createDigitalTwinResponse = await client.CreateOrReplaceDigitalTwinAsync<BasicDigitalTwin>(twinId, basicDigitalTwin);
+            Console.WriteLine($"Created digital twin '{createDigitalTwinResponse.Value.Id}'.");
 
             try
             {

@@ -5,6 +5,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Microsoft.Identity.Client;
 using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -31,7 +32,6 @@ namespace Azure.Identity
         public InteractiveBrowserCredential()
             : this(null, Constants.DeveloperSignOnClientId, null, null)
         {
-
         }
 
         /// <summary>
@@ -49,10 +49,10 @@ namespace Azure.Identity
         /// Creates a new <see cref="InteractiveBrowserCredential"/> with the specified options, which will authenticate users with the specified application.
         /// </summary>
         /// <param name="clientId">The client id of the application to which the users will authenticate</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public InteractiveBrowserCredential(string clientId)
             : this(null, clientId, null, null)
         {
-
         }
 
         /// <summary>
@@ -62,8 +62,9 @@ namespace Azure.Identity
         /// <param name="clientId">The client id of the application to which the users will authenticate</param>
         /// TODO: need to link to info on how the application has to be created to authenticate users, for multiple applications
         /// <param name="options">The client options for the newly created <see cref="InteractiveBrowserCredential"/>.</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public InteractiveBrowserCredential(string tenantId, string clientId, TokenCredentialOptions options = default)
-            : this(tenantId, clientId, options, null, null)
+            : this(Validations.ValidateTenantId(tenantId, nameof(tenantId), allowNull:true), clientId, options, null, null)
         {
         }
 
@@ -159,7 +160,7 @@ namespace Azure.Identity
 
             try
             {
-                scope.Succeeded(await GetTokenViaBrowserLoginAsync(requestContext.Scopes, async, cancellationToken).ConfigureAwait(false));
+                scope.Succeeded(await GetTokenViaBrowserLoginAsync(requestContext, async, cancellationToken).ConfigureAwait(false));
 
                 return Record;
             }
@@ -181,7 +182,7 @@ namespace Azure.Identity
                 {
                     try
                     {
-                        AuthenticationResult result = await Client.AcquireTokenSilentAsync(requestContext.Scopes, (AuthenticationAccount)Record, async, cancellationToken).ConfigureAwait(false);
+                        AuthenticationResult result = await Client.AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, Record, async, cancellationToken).ConfigureAwait(false);
 
                         return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
                     }
@@ -196,7 +197,7 @@ namespace Azure.Identity
                     throw new AuthenticationRequiredException(AuthenticationRequiredMessage, requestContext, inner);
                 }
 
-                return scope.Succeeded(await GetTokenViaBrowserLoginAsync(requestContext.Scopes, async, cancellationToken).ConfigureAwait(false));
+                return scope.Succeeded(await GetTokenViaBrowserLoginAsync(requestContext, async, cancellationToken).ConfigureAwait(false));
             }
             catch (Exception e)
             {
@@ -204,9 +205,9 @@ namespace Azure.Identity
             }
         }
 
-        private async Task<AccessToken> GetTokenViaBrowserLoginAsync(string[] scopes, bool async, CancellationToken cancellationToken)
+        private async Task<AccessToken> GetTokenViaBrowserLoginAsync(TokenRequestContext context, bool async, CancellationToken cancellationToken)
         {
-            AuthenticationResult result = await Client.AcquireTokenInteractiveAsync(scopes, Prompt.SelectAccount, async, cancellationToken).ConfigureAwait(false);
+            AuthenticationResult result = await Client.AcquireTokenInteractiveAsync(context.Scopes, context.Claims, Prompt.SelectAccount, async, cancellationToken).ConfigureAwait(false);
 
             Record = new AuthenticationRecord(result, ClientId);
 

@@ -71,7 +71,7 @@ namespace Azure.Identity
                 var cloudInstance = GetAzureCloudInstance(environmentName);
                 string storedCredentials = GetStoredCredentials(environmentName);
 
-                var result = await _client.AcquireTokenByRefreshToken(requestContext.Scopes, storedCredentials, cloudInstance, tenant, async, cancellationToken).ConfigureAwait(false);
+                var result = await _client.AcquireTokenByRefreshToken(requestContext.Scopes, requestContext.Claims, storedCredentials, cloudInstance, tenant, async, cancellationToken).ConfigureAwait(false);
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
             }
             catch (MsalUiRequiredException e)
@@ -96,7 +96,7 @@ namespace Azure.Identity
 
                 return storedCredentials;
             }
-            catch (InvalidOperationException ex)
+            catch (Exception ex) when (!(ex is OperationCanceledException || ex is CredentialUnavailableException))
             {
                 throw new CredentialUnavailableException("Stored credentials not found. Need to authenticate user in VSCode Azure Account.", ex);
             }
@@ -120,7 +120,7 @@ namespace Azure.Identity
         {
             var path = _vscAdapter.GetUserSettingsPath();
             tenant = _tenantId;
-            environmentName = "Azure";
+            environmentName = "AzureCloud";
 
             try
             {
@@ -164,7 +164,7 @@ namespace Azure.Identity
         private static AzureCloudInstance GetAzureCloudInstance(string name) =>
             name switch
             {
-                "Azure" => AzureCloudInstance.AzurePublic,
+                "AzureCloud" => AzureCloudInstance.AzurePublic,
                 "AzureChina" => AzureCloudInstance.AzureChina,
                 "AzureGermanCloud" => AzureCloudInstance.AzureGermany,
                 "AzureUSGovernment" => AzureCloudInstance.AzureUsGovernment,

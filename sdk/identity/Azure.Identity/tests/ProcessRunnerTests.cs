@@ -4,6 +4,7 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
@@ -28,7 +29,7 @@ namespace Azure.Identity.Tests
         {
             var output = "Test output";
             var process = new TestProcess { Output = output };
-            var runner = new ProcessRunner(process, TimeSpan.FromSeconds(30), default);
+            using var runner = new ProcessRunner(process, TimeSpan.FromSeconds(30), default);
             var result = await Run(runner);
 
             Assert.AreEqual(output, result);
@@ -39,10 +40,43 @@ namespace Azure.Identity.Tests
         {
             var output = "Test output";
             var process = CreateRealProcess($"echo {output}", $"echo {output}");
-            var runner = new ProcessRunner(process, TimeSpan.FromSeconds(30), default);
+            using var runner = new ProcessRunner(process, TimeSpan.FromSeconds(30), default);
             var result = await Run(runner);
 
-            Assert.AreEqual(output, result.TrimEnd());
+            Assert.AreEqual(output, result);
+        }
+
+        [Test]
+        public async Task ProcessRunnerRealProcessLargeOutputSucceeded()
+        {
+            var output = string.Concat(Enumerable.Repeat("Test output", 500));
+            var command = $"echo {output}";
+            var process = CreateRealProcess(command, command);
+            using var runner = new ProcessRunner(process, TimeSpan.FromSeconds(30), default);
+            var result = await Run(runner);
+
+            Assert.AreEqual(output, result);
+        }
+
+        [Test]
+        public async Task ProcessRunnerRealProcessMultipleLinesSucceeded()
+        {
+            var output = "Test output";
+            var command = string.Join("&&", Enumerable.Repeat($"echo {output}", 100));
+            var process = CreateRealProcess(command, command);
+            using var runner = new ProcessRunner(process, TimeSpan.FromSeconds(30), default);
+            var result = await Run(runner);
+
+            Assert.AreEqual(string.Join(Environment.NewLine, Enumerable.Repeat(output, 100)), result);
+        }
+
+        [Test]
+        public void ProcessRunnerProcessFailsToStart()
+        {
+            var process = new TestProcess { FailedToStart = true };
+            using var runner = new ProcessRunner(process, TimeSpan.FromSeconds(30), default);
+
+            Assert.CatchAsync<InvalidOperationException>(async () => await Run(runner));
         }
 
         [Test]
@@ -50,7 +84,7 @@ namespace Azure.Identity.Tests
         {
             var cts = new CancellationTokenSource();
             var process = new TestProcess { Output =  "Test output", Timeout = 5000 };
-            var runner = new ProcessRunner(process, TimeSpan.FromMilliseconds(100), cts.Token);
+            using var runner = new ProcessRunner(process, TimeSpan.FromMilliseconds(100), cts.Token);
 
             Assert.CatchAsync<OperationCanceledException>(async () => await Run(runner));
         }
@@ -60,7 +94,7 @@ namespace Azure.Identity.Tests
         {
             var cts = new CancellationTokenSource();
             var process = new TestProcess { Output =  "Test output", Timeout = 5000 };
-            var runner = new ProcessRunner(process, TimeSpan.FromMilliseconds(5000), cts.Token);
+            using var runner = new ProcessRunner(process, TimeSpan.FromMilliseconds(5000), cts.Token);
             cts.CancelAfter(100);
 
             Assert.CatchAsync<OperationCanceledException>(async () => await Run(runner));
@@ -71,7 +105,7 @@ namespace Azure.Identity.Tests
         {
             var process = new TestProcess { Output =  "Test output", Timeout = 5000 };
             var cancellationToken = new CancellationToken(true);
-            var runner = new ProcessRunner(process, TimeSpan.FromMilliseconds(5000), cancellationToken);
+            using var runner = new ProcessRunner(process, TimeSpan.FromMilliseconds(5000), cancellationToken);
 
             Assert.CatchAsync<OperationCanceledException>(async () => await Run(runner));
         }
@@ -81,7 +115,7 @@ namespace Azure.Identity.Tests
         {
             var cts = new CancellationTokenSource();
             var process = new TestProcess { Output =  "Test output", Timeout = 5000 };
-            var runner = new ProcessRunner(process, TimeSpan.FromMilliseconds(5000), cts.Token);
+            using var runner = new ProcessRunner(process, TimeSpan.FromMilliseconds(5000), cts.Token);
 
             cts.Cancel();
 
@@ -93,7 +127,7 @@ namespace Azure.Identity.Tests
         {
             var cts = new CancellationTokenSource();
             var process = new TestProcess { Output =  "Test output" };
-            var runner = new ProcessRunner(process, TimeSpan.FromSeconds(5000), cts.Token);
+            using var runner = new ProcessRunner(process, TimeSpan.FromSeconds(5000), cts.Token);
             await Run(runner);
             cts.Cancel();
         }
@@ -103,7 +137,7 @@ namespace Azure.Identity.Tests
         {
             var error = "Test error";
             var process = new TestProcess { Error = error };
-            var runner = new ProcessRunner(process, TimeSpan.FromSeconds(30), default);
+            using var runner = new ProcessRunner(process, TimeSpan.FromSeconds(30), default);
 
             var exception = Assert.CatchAsync<InvalidOperationException>(async () => await Run(runner));
             Assert.AreEqual(error, exception.Message);
@@ -114,7 +148,18 @@ namespace Azure.Identity.Tests
         {
             var error = "Test error";
             var process = CreateRealProcess($"echo {error} 1>&2 & exit 1", $">&2 echo {error} & exit 1");
-            var runner = new ProcessRunner(process, TimeSpan.FromSeconds(30), default);
+            using var runner = new ProcessRunner(process, TimeSpan.FromSeconds(30), default);
+
+            var exception = Assert.CatchAsync<InvalidOperationException>(async () => await Run(runner));
+            Assert.AreEqual(error, exception.Message.Trim());
+        }
+
+        [Test]
+        public void ProcessRunnerRealProcessFailedWithLargeErrorMessage()
+        {
+            var error = string.Concat(Enumerable.Repeat("Test error", 500));;
+            var process = CreateRealProcess($"echo {error} 1>&2 & exit 1", $">&2 echo {error} & exit 1");
+            using var runner = new ProcessRunner(process, TimeSpan.FromSeconds(30), default);
 
             var exception = Assert.CatchAsync<InvalidOperationException>(async () => await Run(runner));
             Assert.AreEqual(error, exception.Message.Trim());
@@ -125,7 +170,7 @@ namespace Azure.Identity.Tests
         {
             var output = "Test output";
             var process = new TestProcess { Output = output, ExceptionOnProcessKill = new Win32Exception(1), Timeout = 5000 };
-            var runner = new ProcessRunner(process, TimeSpan.FromMilliseconds(50), default);
+            using var runner = new ProcessRunner(process, TimeSpan.FromMilliseconds(50), default);
 
             var exception = Assert.CatchAsync<Win32Exception>(async () => await Run(runner));
             Assert.AreEqual(1, exception.NativeErrorCode);

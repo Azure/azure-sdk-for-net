@@ -19,8 +19,9 @@ scenarios as well as on hosted agents for continuous integration testing.
 ## On the Desktop
 
 To set up your Azure account to run live tests, you'll need to log into Azure,
-create a service principal, and set up your resources defined in
-test-resources.json as shown in the following example using Azure Search.
+and set up your resources defined in test-resources.json as shown in the following
+example using Azure Search. The script will create a service principal automatically,
+or you may create a service principal you can save and reuse subsequently.
 
 Note that `-Subscription` is an optional parameter but recommended if your account
 is a member of multiple subscriptions.
@@ -30,7 +31,7 @@ Connect-AzAccount -Subscription 'YOUR SUBSCRIPTION ID'
 eng\common\TestResources\New-TestResources.ps1 -ServiceDirectory 'search'
 ```
 
-The `OutFile` switch would be set if you are running this for a .NET project on Windows. This will save test environment settings
+The `OutFile` switch will be set by default if you are running this for a .NET project on Windows. This will save test environment settings
 into a test-resources.json.env file next to test-resources.json. The file is protected via DPAPI.
 The environment file would be scoped to the current repository directory and avoids the need to
 set environment variables or restart your IDE to recognize them.
@@ -80,14 +81,13 @@ you can remove the test resources you created above by running:
 Remove-TestResources.ps1 -BaseName 'myusername' -Force
 ```
 
-If you created a new service principal as shown above, you might also remove it:
+If you persisted environment variables, you should also remove those as well.
+
+Some test-resources.json templates utilize the `AdditionalParameters` parameter to control additional resource configuration options. For example:
 
 ```powershell
-Remove-AzADServicePrincipal -ApplicationId $sp.ApplicationId -Force
-
+New-TestResources.ps1 keyvault -AdditionalParameters @{enableHsm = $true}
 ```
-
-If you persisted environment variables, you should also remove those as well.
 
 ## In CI
 

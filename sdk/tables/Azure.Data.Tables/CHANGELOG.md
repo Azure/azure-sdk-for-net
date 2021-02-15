@@ -1,7 +1,36 @@
 # Release History
 
-## 3.0.0-beta.3 (Unreleased)
+## 3.0.0-beta.6 (Unreleased)
 
+### Key Bug Fixes
+
+- Fixed an issue that prevented start/end row key and partition key values from being used in Sas tokens
+
+### Added
+
+- Added TableUriBuilder
+- Added a constructor to TableSasBuilder and TableAccountSasBuilder that accepts a Uri with a Sas token
+
+## 3.0.0-beta.5 (2021-01-12)
+
+### Key Bug Fixes
+
+- Fixed an issue which transposed the values used for EndPartitionKey and StartRowKey in the generated Sas token Uri
+
+## 3.0.0-beta.4 (2020-12-10)
+
+### Key Bug Fixes
+
+- Fixed an issue with custom entity model serialization of the ETag property
+- Properly create secondary endpoint Uri for Azurite endpoints
+
+## 3.0.0-beta.3 (2020-11-12)
+
+### Added
+
+- Added support for Upsert batch operations.
+- Added support for some numeric type coercion for TableEntity properties.
+- Added TryGetFailedEntityFromException method on TablesTransactionalBatch to extract the entity that caused a batch failure from a RequestFailedException.
 
 ## 3.0.0-beta.2 (2020-10-06)
 

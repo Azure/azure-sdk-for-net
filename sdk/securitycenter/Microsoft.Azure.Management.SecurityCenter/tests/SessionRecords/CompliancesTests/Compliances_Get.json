@@ -1,54 +1,54 @@
 {
   "Entries": [
     {
-      "RequestUri": "/%2Fsubscriptions%2F487bb485-b5b0-471e-9c0d-10717612f869/providers/Microsoft.Security/compliances/2020-05-03Z?api-version=2017-08-01-preview",
-      "EncodedRequestUri": "LyUyRnN1YnNjcmlwdGlvbnMlMkY0ODdiYjQ4NS1iNWIwLTQ3MWUtOWMwZC0xMDcxNzYxMmY4NjkvcHJvdmlkZXJzL01pY3Jvc29mdC5TZWN1cml0eS9jb21wbGlhbmNlcy8yMDIwLTA1LTAzWj9hcGktdmVyc2lvbj0yMDE3LTA4LTAxLXByZXZpZXc=",
+      "RequestUri": "//subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/providers/Microsoft.Security/compliances/2020-05-03Z?api-version=2017-08-01-preview",
+      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zLzQ4N2JiNDg1LWI1YjAtNDcxZS05YzBkLTEwNzE3NjEyZjg2OS9wcm92aWRlcnMvTWljcm9zb2Z0LlNlY3VyaXR5L2NvbXBsaWFuY2VzLzIwMjAtMDUtMDNaP2FwaS12ZXJzaW9uPTIwMTctMDgtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "09152685-b33d-4d39-aba0-83e2eb4fb199"
+          "55508310-b3ea-4e9d-99e9-12dcbb399f95"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.29321.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Security.SecurityCenterClient/1.1.3.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Security.SecurityCenterClient/2.1.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Sun, 03 May 2020 19:58:07 GMT"
-        ],
         "Pragma": [
           "no-cache"
         ],
+        "x-ms-request-id": [
+          "b0843fde-5573-4f93-bc72-2af337c00fbe"
+        ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-request-id": [
-          "9e2d5a72-70dc-46db-a395-a830aa29ca40"
         ],
         "x-ms-ratelimit-remaining-subscription-resource-requests": [
           "749"
         ],
         "x-ms-correlation-request-id": [
-          "a6f89a0f-3e17-40d2-bc41-58c402f3bcf6"
+          "a84a7c35-1017-418f-8f58-118e2d2ab3c7"
         ],
         "x-ms-routing-request-id": [
-          "GERMANYWESTCENTRAL:20200503T195807Z:a6f89a0f-3e17-40d2-bc41-58c402f3bcf6"
+          "UKSOUTH:20201104T132336Z:a84a7c35-1017-418f-8f58-118e2d2ab3c7"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Date": [
+          "Wed, 04 Nov 2020 13:23:36 GMT"
         ],
         "Content-Length": [
           "381"
@@ -65,7 +65,5 @@
     }
   ],
   "Names": {},
-  "Variables": {
-    "SubscriptionId": "487bb485-b5b0-471e-9c0d-10717612f869"
-  }
+  "Variables": {}
 }

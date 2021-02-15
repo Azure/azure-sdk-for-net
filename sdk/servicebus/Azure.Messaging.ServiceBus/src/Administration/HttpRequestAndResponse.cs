@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.IO;
 using Azure.Core;
 using System;
 using System.Net;
@@ -9,7 +8,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus.Authorization;
-using Azure.Messaging.ServiceBus.Primitives;
 using Azure.Core.Pipeline;
 using System.Collections.Generic;
 using System.Globalization;
@@ -43,7 +41,6 @@ namespace Azure.Messaging.ServiceBus.Administration
             _port = GetPort(_fullyQualifiedNamespace);
         }
 
-
         internal async Task ThrowIfRequestFailedAsync(Request request, Response response)
         {
             if ((response.Status >= 200) && (response.Status < 400))
@@ -53,10 +50,9 @@ namespace Azure.Messaging.ServiceBus.Administration
             RequestFailedException ex = await _diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
             if (response.Status == (int)HttpStatusCode.Unauthorized)
             {
-                throw new ServiceBusException(
+                throw new UnauthorizedAccessException(
                     ex.Message,
-                    ServiceBusFailureReason.Unauthorized,
-                    innerException: ex);
+                    inner: ex);
             }
 
             if (response.Status == (int)HttpStatusCode.NotFound)
@@ -139,7 +135,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         public async Task<Page<T>> GetEntitiesPageAsync<T>(
             string path,
             string nextSkip,
-            Func<string, IReadOnlyList<T>> parseFunction,
+            Func<Response, Task<IReadOnlyList<T>>> parseFunction,
             CancellationToken cancellationToken)
         {
             int skip = 0;
@@ -149,9 +145,8 @@ namespace Azure.Messaging.ServiceBus.Administration
                 skip = int.Parse(nextSkip, CultureInfo.InvariantCulture);
             }
             Response response = await GetEntityAsync(path, $"$skip={skip}&$top={maxCount}", false, cancellationToken).ConfigureAwait(false);
-            string result = await ReadAsString(response).ConfigureAwait(false);
 
-            IReadOnlyList<T> description = parseFunction.Invoke(result);
+            IReadOnlyList<T> description = await parseFunction.Invoke(response).ConfigureAwait(false);
             skip += maxCount;
             nextSkip = skip.ToString(CultureInfo.InvariantCulture);
 
@@ -184,7 +179,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             RequestUriBuilder requestUriBuilder = new RequestUriBuilder();
             requestUriBuilder.Reset(uri);
 
-            Request request = _pipeline.CreateRequest();
+            using Request request = _pipeline.CreateRequest();
             request.Method = RequestMethod.Get;
             request.Uri = requestUriBuilder;
             Response response = await SendHttpRequestAsync(request, cancellationToken).ConfigureAwait(false);
@@ -210,7 +205,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             var requestUriBuilder = new RequestUriBuilder();
             requestUriBuilder.Reset(uri);
 
-            Request request = _pipeline.CreateRequest();
+            using Request request = _pipeline.CreateRequest();
             request.Method = RequestMethod.Put;
             request.Uri = requestUriBuilder;
             request.Content = RequestContent.Create(Encoding.UTF8.GetBytes(requestBody));
@@ -257,7 +252,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             var requestUriBuilder = new RequestUriBuilder();
             requestUriBuilder.Reset(uri);
 
-            Request request = _pipeline.CreateRequest();
+            using Request request = _pipeline.CreateRequest();
             request.Uri = requestUriBuilder;
             request.Method = RequestMethod.Delete;
 
@@ -281,14 +276,6 @@ namespace Azure.Messaging.ServiceBus.Administration
 
             await ThrowIfRequestFailedAsync(request, response).ConfigureAwait(false);
             return response;
-        }
-
-        private static async Task<string> ReadAsString(Response response)
-        {
-            string exceptionMessage;
-            using StreamReader reader = new StreamReader(response.ContentStream);
-            exceptionMessage = await reader.ReadToEndAsync().ConfigureAwait(false);
-            return exceptionMessage;
         }
 
         private static int GetPort(string endpoint)

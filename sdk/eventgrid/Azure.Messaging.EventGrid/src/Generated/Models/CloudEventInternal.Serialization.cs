@@ -29,7 +29,7 @@ namespace Azure.Messaging.EventGrid.Models
             if (Optional.IsDefined(DataBase64))
             {
                 writer.WritePropertyName("data_base64");
-                writer.WriteBase64StringValue(DataBase64);
+                writer.WriteBase64StringValue(DataBase64, "D");
             }
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
@@ -101,7 +101,7 @@ namespace Azure.Messaging.EventGrid.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    dataBase64 = property.Value.GetBytesFromBase64();
+                    dataBase64 = property.Value.GetBytesFromBase64("D");
                     continue;
                 }
                 if (property.NameEquals("type"))

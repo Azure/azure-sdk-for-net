@@ -17,6 +17,7 @@ namespace Azure.Data.AppConfiguration
     public partial class ConfigurationClient
     {
         private readonly Uri _endpoint;
+        private readonly SyncTokenPolicy _syncTokenPolicy;
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
 
@@ -50,7 +51,8 @@ namespace Azure.Data.AppConfiguration
 
             ParseConnectionString(connectionString, out _endpoint, out var credential, out var secret);
 
-            _pipeline = CreatePipeline(options, new AuthenticationPolicy(credential, secret));
+            _syncTokenPolicy = new SyncTokenPolicy();
+            _pipeline = CreatePipeline(options, new AuthenticationPolicy(credential, secret), _syncTokenPolicy);
 
             _clientDiagnostics = new ClientDiagnostics(options);
         }
@@ -77,16 +79,19 @@ namespace Azure.Data.AppConfiguration
             Argument.AssertNotNull(credential, nameof(credential));
 
             _endpoint = endpoint;
-            _pipeline = CreatePipeline(options, new BearerTokenAuthenticationPolicy(credential, GetDefaultScope(endpoint)));
+            _syncTokenPolicy = new SyncTokenPolicy();
+            _pipeline = CreatePipeline(options, new BearerTokenAuthenticationPolicy(credential, GetDefaultScope(endpoint)), _syncTokenPolicy);
 
             _clientDiagnostics = new ClientDiagnostics(options);
         }
 
-        private static HttpPipeline CreatePipeline(ConfigurationClientOptions options, HttpPipelinePolicy authenticationPolicy)
-            => HttpPipelineBuilder.Build(options,
-                new HttpPipelinePolicy[] { new CustomHeadersPolicy(), new ApiVersionPolicy(options.GetVersionString()) },
-                new HttpPipelinePolicy[] { authenticationPolicy, new SyncTokenPolicy() },
+        private static HttpPipeline CreatePipeline(ConfigurationClientOptions options, HttpPipelinePolicy authenticationPolicy, HttpPipelinePolicy syncTokenPolicy)
+        {
+            return HttpPipelineBuilder.Build(options,
+                new HttpPipelinePolicy[] {new CustomHeadersPolicy(), new ApiVersionPolicy(options.GetVersionString())},
+                new HttpPipelinePolicy[] {authenticationPolicy, syncTokenPolicy},
                 new ResponseClassifier());
+        }
 
         private static string GetDefaultScope(Uri uri)
             => $"{uri.GetComponents(UriComponents.SchemeAndServer, UriFormat.SafeUnescaped)}/.default";
@@ -705,7 +710,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         private async Task<Page<ConfigurationSetting>> GetConfigurationSettingsPageAsync(SettingSelector selector, string pageLink, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetConfigurationSettingsPage)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetConfigurationSettings)}");
             scope.Start();
 
             try
@@ -738,7 +743,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         private Page<ConfigurationSetting> GetConfigurationSettingsPage(SettingSelector selector, string pageLink, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetConfigurationSettingsPage)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetConfigurationSettings)}");
             scope.Start();
 
             try
@@ -787,7 +792,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         private async Task<Page<ConfigurationSetting>> GetRevisionsPageAsync(SettingSelector selector, string pageLink, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetRevisionsPage)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetRevisions)}");
             scope.Start();
 
             try
@@ -820,7 +825,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         private Page<ConfigurationSetting> GetRevisionsPage(SettingSelector selector, string pageLink, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetRevisionsPage)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetRevisions)}");
             scope.Start();
 
             try
@@ -985,6 +990,16 @@ namespace Azure.Data.AppConfiguration
             }
 
             return request;
+        }
+
+        /// <summary>
+        /// Adds an external synchronization token to ensure service requests receive up-to-date values.
+        /// </summary>
+        /// <param name="token">The synchronization token value.</param>
+        public virtual void AddSyncToken(string token)
+        {
+            Argument.AssertNotNull(token, nameof(token));
+            _syncTokenPolicy.AddToken(token);
         }
     }
 }

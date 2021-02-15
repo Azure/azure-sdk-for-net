@@ -40,7 +40,7 @@ namespace Azure.AI.FormRecognizer.Training
         public string ModelName { get; }
 
         /// <summary>
-        /// Model properties, like for example, if a model is composed.
+        /// Properties of a model, such as whether the model is a composed model or not.
         /// </summary>
         [CodeGenMember("Attributes")]
         public CustomFormModelProperties Properties { get; }
@@ -61,6 +61,5 @@ namespace Azure.AI.FormRecognizer.Training
         /// </summary>
         [CodeGenMember("LastUpdatedDateTime")]
         public DateTimeOffset TrainingCompletedOn { get; }
-
     }
 }

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
 
@@ -26,10 +27,10 @@ namespace Azure.Messaging.ServiceBus
                 _prefetchCount = value;
             }
         }
-        private int _prefetchCount = 0;
+        private int _prefetchCount;
 
         /// <inheritdoc cref="ServiceBusProcessorOptions.ReceiveMode"/>
-        public ReceiveMode ReceiveMode { get; set; } = ReceiveMode.PeekLock;
+        public ServiceBusReceiveMode ReceiveMode { get; set; } = ServiceBusReceiveMode.PeekLock;
 
         /// <summary>Gets or sets a value that indicates whether the processor
         /// should automatically complete messages after the <see cref="ServiceBusSessionProcessor.ProcessMessageAsync"/>
@@ -39,7 +40,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <value>true to complete the message automatically on successful execution of the event handler;
         /// otherwise, false.</value>
-        public bool AutoComplete { get; set; } = true;
+        public bool AutoCompleteMessages { get; set; } = true;
 
         /// <summary>
         /// Gets or sets the maximum duration within which the session lock will be renewed automatically. This value
@@ -62,31 +63,32 @@ namespace Azure.Messaging.ServiceBus
         private TimeSpan _maxAutoRenewDuration = TimeSpan.FromMinutes(5);
 
         /// <summary>
-        /// Gets or sets the maximum amount of time to wait for each Receive call using the processor's underlying
-        /// receiver.
+        /// Gets or sets the maximum amount of time to wait for a message to be received for the
+        /// currently active session. After this time has elapsed, the processor will close the session
+        /// and attempt to process another session.
         /// If not specified, the <see cref="ServiceBusRetryOptions.TryTimeout"/> will be used.
         /// </summary>
         ///
-        /// <remarks>If no message is returned for a call
-        /// to Receive, a new session will be requested by the processor.
-        /// Hence, if this value is set to be too low, it could cause new sessions to be requested
-        /// more often than necessary.
+        /// <remarks>
+        /// If <see cref="SessionIds"/> is populated and <see cref="MaxConcurrentSessions"/> is greater or equal to
+        /// the number of sessions specified in <see cref="SessionIds"/>, the session will not be closed when the idle timeout elapses.
+        /// However, it will still control the amount of time each receive call waits.
         /// </remarks>
-        internal TimeSpan? MaxReceiveWaitTime
+        public TimeSpan? SessionIdleTimeout
         {
-            get => _maxReceiveWaitTime;
+            get => _sessionIdleTimeout;
 
             set
             {
                 if (value.HasValue)
                 {
-                    Argument.AssertPositive(value.Value, nameof(MaxReceiveWaitTime));
+                    Argument.AssertPositive(value.Value, nameof(SessionIdleTimeout));
                 }
 
-                _maxReceiveWaitTime = value;
+                _sessionIdleTimeout = value;
             }
         }
-        private TimeSpan? _maxReceiveWaitTime;
+        private TimeSpan? _sessionIdleTimeout;
 
         /// <summary>
         /// Gets or sets the maximum number of sessions that can be processed concurrently by the processor.
@@ -126,12 +128,12 @@ namespace Azure.Messaging.ServiceBus
         private int _maxConcurrentCallsPerSessions = 1;
 
         /// <summary>
-        /// Gets or sets an optional list of session IDs to scope
-        /// the <see cref="ServiceBusSessionProcessor"/> to. If left
-        /// blank, the processor will not be limited to any specific
+        /// Gets an optional list of session IDs to scope
+        /// the <see cref="ServiceBusSessionProcessor"/> to. If the list is
+        /// left empty, the processor will not be limited to any specific
         /// session IDs.
         /// </summary>
-        public string[] SessionIds { get; set; }
+        public IList<string> SessionIds { get; } = new List<string>();
 
         /// <summary>
         /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
@@ -164,9 +166,9 @@ namespace Azure.Messaging.ServiceBus
             {
                 ReceiveMode = ReceiveMode,
                 PrefetchCount = PrefetchCount,
-                AutoComplete = AutoComplete,
+                AutoCompleteMessages = AutoCompleteMessages,
                 MaxAutoLockRenewalDuration = MaxAutoLockRenewalDuration,
-                MaxReceiveWaitTime = MaxReceiveWaitTime
+                MaxReceiveWaitTime = SessionIdleTimeout
             };
     }
 }

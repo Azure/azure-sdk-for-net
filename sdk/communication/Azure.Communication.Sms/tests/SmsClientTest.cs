@@ -14,18 +14,17 @@ namespace Azure.Communication.Sms.Tests
 {
     public class SmsClientTest
     {
-
         [TestCaseSource(nameof(TestData))]
-        public async Task SendSmsAsyncOverload_PassesToGeneratedOne(PhoneNumber expectedFrom, PhoneNumber expectedTo, string expectedMessage, SendSmsOptions expectedOptions)
+        public async Task SendSmsAsyncOverload_PassesToGeneratedOne(PhoneNumberIdentifier expectedFrom, PhoneNumberIdentifier expectedTo, string expectedMessage, SendSmsOptions expectedOptions)
         {
             Mock<SmsClient> mockClient = new Mock<SmsClient>() { CallBase = true };
             Response<SendSmsResponse>? expectedResponse = default;
             CancellationToken cancellationToken = new CancellationTokenSource().Token;
-            var callExpression = BuildExpression(x => x.SendAsync(It.IsAny<PhoneNumber>(), It.IsAny<IEnumerable<PhoneNumber>>(), It.IsAny<string>(), It.IsAny<SendSmsOptions>(), It.IsAny<CancellationToken>()));
+            var callExpression = BuildExpression(x => x.SendAsync(It.IsAny<PhoneNumberIdentifier>(), It.IsAny<IEnumerable<PhoneNumberIdentifier>>(), It.IsAny<string>(), It.IsAny<SendSmsOptions>(), It.IsAny<CancellationToken>()));
 
             mockClient
                 .Setup(callExpression)
-                .ReturnsAsync((PhoneNumber from, IEnumerable<PhoneNumber> to, string message, SendSmsOptions options, CancellationToken token) =>
+                .ReturnsAsync((PhoneNumberIdentifier from, IEnumerable<PhoneNumberIdentifier> to, string message, SendSmsOptions options, CancellationToken token) =>
                 {
                     Assert.AreEqual(expectedFrom, from);
                     Assert.AreEqual(expectedTo, to.Single());
@@ -42,16 +41,16 @@ namespace Azure.Communication.Sms.Tests
         }
 
         [TestCaseSource(nameof(TestData))]
-        public void SendSmsOverload_PassesToGeneratedOne(PhoneNumber expectedFrom, PhoneNumber expectedTo, string expectedMessage, SendSmsOptions expectedOptions)
+        public void SendSmsOverload_PassesToGeneratedOne(PhoneNumberIdentifier expectedFrom, PhoneNumberIdentifier expectedTo, string expectedMessage, SendSmsOptions expectedOptions)
         {
             Mock<SmsClient> mockClient = new Mock<SmsClient>() { CallBase = true };
             Response<SendSmsResponse>? expectedResponse = default;
             CancellationToken cancellationToken = new CancellationTokenSource().Token;
-            var callExpression = BuildExpression(x => x.Send(It.IsAny<PhoneNumber>(), It.IsAny<IEnumerable<PhoneNumber>>(), It.IsAny<string>(), It.IsAny<SendSmsOptions>(), It.IsAny<CancellationToken>()));
+            var callExpression = BuildExpression(x => x.Send(It.IsAny<PhoneNumberIdentifier>(), It.IsAny<IEnumerable<PhoneNumberIdentifier>>(), It.IsAny<string>(), It.IsAny<SendSmsOptions>(), It.IsAny<CancellationToken>()));
 
             mockClient
                 .Setup(callExpression)
-                .Returns((PhoneNumber from, IEnumerable<PhoneNumber> to, string message, SendSmsOptions options, CancellationToken token) =>
+                .Returns((PhoneNumberIdentifier from, IEnumerable<PhoneNumberIdentifier> to, string message, SendSmsOptions options, CancellationToken token) =>
                 {
                     Assert.AreEqual(expectedFrom, from);
                     Assert.AreEqual(expectedTo, to.Single());
@@ -78,7 +77,7 @@ namespace Azure.Communication.Sms.Tests
             };
 
             return optionsCombinations
-                .Select(sendOptions => new object?[] { new PhoneNumber("+18001230000"), new PhoneNumber("+18005670000"), "Hello 👋", sendOptions });
+                .Select(sendOptions => new object?[] { new PhoneNumberIdentifier("+18001230000"), new PhoneNumberIdentifier("+18005670000"), "Hello 👋", sendOptions });
         }
 
         private static Expression<Func<SmsClient, TResult>> BuildExpression<TResult>(Expression<Func<SmsClient, TResult>> expression)

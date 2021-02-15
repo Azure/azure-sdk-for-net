@@ -42,13 +42,10 @@ The simpliest way is to use the [Azure portal][azure_portal] and navigate to you
 Once you have the Azure resource credentials and the Event Hubs namespace hostname, you can create the [SchemaRegistryClient][schema_registry_client]. You'll also need the [Azure.Identity][azure_identity] package to create the credential.
 
 ```C# Snippet:SchemaRegistryCreateSchemaRegistryClient
-string endpoint = "<event_hubs_namespace_hostname>";
-var credentials = new ClientSecretCredential(
-    "<tenant_id>",
-    "<client_id>",
-    "<client_secret>"
-);
-var client = new SchemaRegistryClient(endpoint, credentials);
+// Create a new SchemaRegistry client using the default credential from Azure.Identity using environment variables previously set,
+// including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
+// For more information on Azure.Identity usage, see: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md
+var client = new SchemaRegistryClient(endpoint: endpoint, credential: new DefaultAzureCredential());
 ```
 
 ## Key concepts
@@ -65,6 +62,20 @@ A schema has 6 components:
 
 These components play different roles. Some are used as input into the operations and some are outputs. Currently, [SchemaProperties][schema_properties] only exposes those properties that are potential outputs that are used in SchemaRegistry operations. Those exposed properties are `Content` and `Id`.
 
+### Thread safety
+We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
+
+### Additional concepts
+<!-- CLIENT COMMON BAR -->
+[Client options](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions) |
+[Accessing the response](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#accessing-http-response-details-using-responset) |
+[Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
+[Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
+[Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md) |
+[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#mocking) |
+[Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
+<!-- CLIENT COMMON BAR -->
+
 ## Examples
 
 The following shows examples of what is available through the SchemaRegistryClient. There are both sync and async methods available for these client operations.
@@ -78,8 +89,7 @@ The following shows examples of what is available through the SchemaRegistryClie
 Register a schema to be stored in the Azure Schema Registry.
 
 ```C# Snippet:SchemaRegistryRegisterSchema
-string schemaName = "<schema_name>";
-string groupName = "<schema_group_name>";
+string schemaName = "employeeSample";
 SerializationType schemaType = SerializationType.Avro;
 // Example schema's content
 string schemaContent = @"
@@ -101,8 +111,7 @@ Response<SchemaProperties> schemaProperties = client.RegisterSchema(groupName, s
 Retrieve a previously registered schema ID from the Azure Schema Registry.
 
 ```C# Snippet:SchemaRegistryRetrieveSchemaId
-string schemaName = "<schema_name>";
-string groupName = "<schema_group_name>";
+string schemaName = "employeeSample";
 SerializationType schemaType = SerializationType.Avro;
 // Example schema's content
 string schemaContent = @"
@@ -125,8 +134,6 @@ string schemaId = schemaProperties.Value.Id;
 Retrieve a previously registered schema's content from the Azure Schema Registry.
 
 ```C# Snippet:SchemaRegistryRetrieveSchema
-string schemaId = "<schema_id>";
-
 Response<SchemaProperties> schemaProperties = client.GetSchema(schemaId);
 string schemaContent = schemaProperties.Value.Content;
 ```

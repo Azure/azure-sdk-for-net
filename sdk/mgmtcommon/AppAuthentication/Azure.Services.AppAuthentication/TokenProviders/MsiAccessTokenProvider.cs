@@ -144,6 +144,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
                     {
                         string probeRequestUrl = $"{ImdsEndpoint}{ImdsInstanceRoute}?api-version={ImdsInstanceApiVersion}";
                         HttpRequestMessage imdsProbeRequest = new HttpRequestMessage(HttpMethod.Get, probeRequestUrl);
+                        imdsProbeRequest.Headers.Add(AzureVMImdsHeader, "true");
 
                         try
                         {

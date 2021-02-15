@@ -10,6 +10,8 @@
 
 namespace Microsoft.Azure.Management.HealthcareApis.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -18,6 +20,7 @@ namespace Microsoft.Azure.Management.HealthcareApis.Models
     /// <summary>
     /// The description of the service.
     /// </summary>
+    [Rest.Serialization.JsonTransformation]
     public partial class ServicesPatchDescription
     {
         /// <summary>
@@ -32,9 +35,13 @@ namespace Microsoft.Azure.Management.HealthcareApis.Models
         /// Initializes a new instance of the ServicesPatchDescription class.
         /// </summary>
         /// <param name="tags">Instance tags</param>
-        public ServicesPatchDescription(IDictionary<string, string> tags = default(IDictionary<string, string>))
+        /// <param name="publicNetworkAccess">Control permission for data plane
+        /// traffic coming from public networks while private endpoint is
+        /// enabled. Possible values include: 'Enabled', 'Disabled'</param>
+        public ServicesPatchDescription(IDictionary<string, string> tags = default(IDictionary<string, string>), string publicNetworkAccess = default(string))
         {
             Tags = tags;
+            PublicNetworkAccess = publicNetworkAccess;
             CustomInit();
         }
 
@@ -48,6 +55,14 @@ namespace Microsoft.Azure.Management.HealthcareApis.Models
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
+
+        /// <summary>
+        /// Gets or sets control permission for data plane traffic coming from
+        /// public networks while private endpoint is enabled. Possible values
+        /// include: 'Enabled', 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
+        public string PublicNetworkAccess { get; set; }
 
     }
 }

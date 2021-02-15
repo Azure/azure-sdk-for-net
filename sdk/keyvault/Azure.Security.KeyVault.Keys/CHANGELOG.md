@@ -1,7 +1,38 @@
 # Release History
 
-## 4.2.0-beta.3 (Unreleased)
+## 4.2.0-beta.5 (Unreleased)
 
+## 4.2.0-beta.4 (2021-02-10)
+
+### Added
+
+- Added `CreateEcKeyOptions` class.
+- Added `CreateEcKey` and `CreateEcKeyAsync` methods to the `KeyClient` class.
+- Added constructor to `KeyVaultKeyIdentifier` to parse a `Uri`.
+
+### Changed
+
+- The default service version is now "7.2" (still in preview).
+- Renamed `EncryptOptions` to `EncryptParameters`.
+- Renamed `DecryptOptions` to `DecryptParameters`.
+- Made `EncryptParameters.AdditionalAuthenticatedData` read-only, requiring it to be passed to the constructor.
+- Made `DecryptParameters.AdditionalAuthenticatedData` read-only, requiring it to be passed to the constructor.
+
+### Removed
+
+- Removed local cryptographic support for AES-GCM.
+- Removed `Export` and `ExportAsync` methods from `KeyClient`.
+- Removed `Exportable` property from `KeyProperties`'.
+- Removed `KeyReleasePolicy` class and associated properties.
+- Removed `KeyVaultKeyIdentifier.Parse` and `KeyVaultKeyIdentifier.TryParse` in favor of the added constructor.
+
+## 4.2.0-beta.3 (2020-11-12)
+
+### Added
+
+- Added `KeyType.OctHsm` to support "oct-HSM" key operations.
+- Added AES-GCM and AES-CBC support for encrypting and decrypting, including new `Encrypt` and `Decrypt` overloads.
+- Added support for Secure Key Release including the `Export` method on `KeyClient` and `ReleasePolicy` property on various models.
 
 ## 4.2.0-beta.2 (2020-10-06)
 

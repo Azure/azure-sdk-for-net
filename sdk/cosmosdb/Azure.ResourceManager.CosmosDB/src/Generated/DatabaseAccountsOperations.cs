@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Checks that the Azure Cosmos DB account name already exists. A valid account name may contain only lowercase letters, numbers, and the &apos;-&apos; character, and must be between 3 and 50 characters. </summary>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> CheckNameExistsAsync(string accountName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> CheckNameExistsAsync(string accountName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DatabaseAccountsOperations.CheckNameExists");
             scope.Start();
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Checks that the Azure Cosmos DB account name already exists. A valid account name may contain only lowercase letters, numbers, and the &apos;-&apos; character, and must be between 3 and 50 characters. </summary>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response CheckNameExists(string accountName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> CheckNameExists(string accountName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DatabaseAccountsOperations.CheckNameExists");
             scope.Start();

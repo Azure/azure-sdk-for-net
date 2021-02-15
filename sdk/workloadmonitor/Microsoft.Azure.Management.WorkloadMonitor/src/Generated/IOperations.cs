@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
     public partial interface IOperations
     {
         /// <summary>
-        /// Gets a list of possible operations
+        /// Get a list of all available REST API operations.
         /// </summary>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="DefaultErrorException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
         /// </exception>
         Task<AzureOperationResponse<IPage<Operation>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets a list of possible operations
+        /// Get a list of all available REST API operations.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="DefaultErrorException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">

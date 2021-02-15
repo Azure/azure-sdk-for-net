@@ -16,19 +16,19 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary> Initializes a new instance of HookList. </summary>
         internal HookList()
         {
-            Value = new ChangeTrackingList<AlertingHook>();
+            Value = new ChangeTrackingList<NotificationHook>();
         }
 
         /// <summary> Initializes a new instance of HookList. </summary>
         /// <param name="nextLink"> . </param>
         /// <param name="value"> . </param>
-        internal HookList(string nextLink, IReadOnlyList<AlertingHook> value)
+        internal HookList(string nextLink, IReadOnlyList<NotificationHook> value)
         {
             NextLink = nextLink;
             Value = value;
         }
 
         public string NextLink { get; }
-        public IReadOnlyList<AlertingHook> Value { get; }
+        public IReadOnlyList<NotificationHook> Value { get; }
     }
 }

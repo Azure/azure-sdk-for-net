@@ -14,7 +14,7 @@ namespace Azure.Messaging.EventHubs.Producer
     public class CreateBatchOptions : SendEventOptions
     {
         /// <summary>The requested maximum size to allow for the batch, in bytes.</summary>
-        private long? _maximumSizeInBytes = null;
+        private long? _maximumSizeInBytes;
 
         /// <summary>
         ///   The maximum size to allow for a single batch of events, in bytes.

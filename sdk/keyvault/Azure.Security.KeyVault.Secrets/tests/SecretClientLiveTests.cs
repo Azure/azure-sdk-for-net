@@ -16,7 +16,8 @@ namespace Azure.Security.KeyVault.Secrets.Tests
     {
         private const int PagedSecretCount = 50;
 
-        public SecretClientLiveTests(bool isAsync, SecretClientOptions.ServiceVersion serviceVersion) : base(isAsync, serviceVersion)
+        public SecretClientLiveTests(bool isAsync, SecretClientOptions.ServiceVersion serviceVersion)
+            : base(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -52,7 +53,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         public async Task SetSecretWithExtendedProps()
         {
             string secretName = Recording.GenerateId();
-            IResolveConstraint createdUpdatedConstraint = Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1596061817));
+            IResolveConstraint createdUpdatedConstraint = Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1612561237));
 
             KeyVaultSecret setResult = null;
 
@@ -425,7 +426,6 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                 AssertSecretPropertiesEqual(createdSecret.Properties, returnedSecret);
             }
         }
-
 
         [Test]
         public async Task GetDeletedSecrets()

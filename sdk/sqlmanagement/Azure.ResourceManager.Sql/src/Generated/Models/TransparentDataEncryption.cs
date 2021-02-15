@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Represents a database transparent data encryption configuration. </summary>
-    public partial class TransparentDataEncryption : Resource
+    public partial class TransparentDataEncryption : ProxyResource
     {
         /// <summary> Initializes a new instance of TransparentDataEncryption. </summary>
         public TransparentDataEncryption()

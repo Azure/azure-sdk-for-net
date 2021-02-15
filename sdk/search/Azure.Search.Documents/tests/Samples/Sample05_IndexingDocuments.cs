@@ -33,9 +33,9 @@ namespace Azure.Search.Documents.Tests.Samples
     }
     #endregion
 
-    public class Sample05_IndexingDocuments : SearchTestBase
+    public class IndexingDocuments : SearchTestBase
     {
-        public Sample05_IndexingDocuments(bool async, SearchClientOptions.ServiceVersion serviceVersion)
+        public IndexingDocuments(bool async, SearchClientOptions.ServiceVersion serviceVersion)
             : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
@@ -105,6 +105,7 @@ namespace Azure.Search.Documents.Tests.Samples
         }
 
         [Test]
+        [IgnoreOnNet5("https://github.com/Azure/azure-sdk-for-net/issues/16963")]
         public async Task SimpleIndexing()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
@@ -120,13 +121,6 @@ namespace Azure.Search.Documents.Tests.Samples
                 #endregion
 
                 await WaitForDocumentCountAsync(searchClient, 1000);
-
-                // When using the free SKU, there may be enough load to prevent
-                // immediately replication to all replicas and we get back the
-                // wrong count. Wait another second before checking again. We
-                // may also upgrade to a basic SKU, but that will take longer
-                // to provision.
-                await DelayAsync(TimeSpan.FromSeconds(1));
 
                 // Check
                 #region Snippet:Azure_Search_Documents_Tests_Samples_Sample05_IndexingDocuments_SimpleIndexing2
@@ -170,7 +164,7 @@ namespace Azure.Search.Documents.Tests.Samples
                 {
                     #region Snippet:Azure_Search_Documents_Tests_Samples_Sample05_IndexingDocuments_BufferedSender1
                     await using SearchIndexingBufferedSender<Product> indexer =
-                        searchClient.CreateIndexingBufferedSender<Product>();
+                        new SearchIndexingBufferedSender<Product>(searchClient);
                     await indexer.UploadDocumentsAsync(GenerateCatalog(count: 100000));
                     #endregion
                 }

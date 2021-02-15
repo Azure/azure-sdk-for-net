@@ -15,11 +15,9 @@ namespace Microsoft.Azure.Management.WorkloadMonitor.Models
     using System.Linq;
 
     /// <summary>
-    /// Display
+    /// The localized display information for this particular operation or
+    /// action.
     /// </summary>
-    /// <remarks>
-    /// The properties of the resource operation.
-    /// </remarks>
     public partial class OperationDisplay
     {
         /// <summary>
@@ -33,10 +31,12 @@ namespace Microsoft.Azure.Management.WorkloadMonitor.Models
         /// <summary>
         /// Initializes a new instance of the OperationDisplay class.
         /// </summary>
-        /// <param name="provider">Provider Name</param>
-        /// <param name="resource">Resource Name</param>
-        /// <param name="operation">Operation Name</param>
-        /// <param name="description">Description</param>
+        /// <param name="provider">Operation resource provider name.</param>
+        /// <param name="resource">Resource on which the operation is
+        /// performed.</param>
+        /// <param name="operation">Human-readable, friendly name for the
+        /// operation.</param>
+        /// <param name="description">Operation description.</param>
         public OperationDisplay(string provider, string resource, string operation, string description)
         {
             Provider = provider;
@@ -52,38 +52,26 @@ namespace Microsoft.Azure.Management.WorkloadMonitor.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets provider Name
+        /// Gets or sets operation resource provider name.
         /// </summary>
-        /// <remarks>
-        /// Provider name of this operation.
-        /// </remarks>
         [JsonProperty(PropertyName = "provider")]
         public string Provider { get; set; }
 
         /// <summary>
-        /// Gets or sets resource Name
+        /// Gets or sets resource on which the operation is performed.
         /// </summary>
-        /// <remarks>
-        /// Resource name of this operation.
-        /// </remarks>
         [JsonProperty(PropertyName = "resource")]
         public string Resource { get; set; }
 
         /// <summary>
-        /// Gets or sets operation Name
+        /// Gets or sets human-readable, friendly name for the operation.
         /// </summary>
-        /// <remarks>
-        /// Operation name of the operation.
-        /// </remarks>
         [JsonProperty(PropertyName = "operation")]
         public string Operation { get; set; }
 
         /// <summary>
-        /// Gets or sets description
+        /// Gets or sets operation description.
         /// </summary>
-        /// <remarks>
-        /// Description of the operation.
-        /// </remarks>
         [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }
 

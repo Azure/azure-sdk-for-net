@@ -11,9 +11,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
+using Moq;
 using NUnit.Framework;
 
 namespace Azure.Storage.Files.DataLake.Tests
@@ -128,6 +130,79 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        public async Task Ctor_ConnectionString_RoundTrip()
+        {
+            // Arrange
+            string fileSystemName = GetNewFileSystemName();
+            string path = GetNewDirectoryName();
+            await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName);
+            DataLakeDirectoryClient directoryClient = InstrumentClient(test.FileSystem.GetDirectoryClient(path));
+            await directoryClient.CreateAsync();
+
+            // Act
+            string connectionString = $"DefaultEndpointsProtocol=https;AccountName={TestConfigHierarchicalNamespace.AccountName};AccountKey={TestConfigHierarchicalNamespace.AccountKey};EndpointSuffix=core.windows.net";
+            DataLakeFileClient connStringFile = InstrumentClient(new DataLakeFileClient(connectionString, fileSystemName, path, GetOptions()));
+
+            // Assert
+            await connStringFile.GetPropertiesAsync();
+            await connStringFile.GetAccessControlAsync();
+        }
+
+        [Test]
+        public async Task Ctor_ConnectionString_GenerateSas()
+        {
+            // Arrange
+            string fileSystemName = GetNewFileSystemName();
+            string path = GetNewDirectoryName();
+            await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName);
+            DataLakeDirectoryClient directoryClient = InstrumentClient(test.FileSystem.GetDirectoryClient(path));
+            await directoryClient.CreateAsync();
+
+            // Act
+            string connectionString = $"DefaultEndpointsProtocol=https;AccountName={TestConfigHierarchicalNamespace.AccountName};AccountKey={TestConfigHierarchicalNamespace.AccountKey};EndpointSuffix=core.windows.net";
+            DataLakeFileClient connStringFile = InstrumentClient(new DataLakeFileClient(connectionString, fileSystemName, path, GetOptions()));
+            Uri sasUri = connStringFile.GenerateSasUri(DataLakeSasPermissions.All, Recording.UtcNow.AddDays(1));
+            DataLakeFileClient sasFileClient = InstrumentClient(new DataLakeFileClient(sasUri, GetOptions()));
+
+            // Assert
+            await sasFileClient.GetPropertiesAsync();
+            await sasFileClient.GetAccessControlAsync();
+        }
+
+        [Test]
+        public async Task Ctor_AzureSasCredential()
+        {
+            // Arrange
+            string sas = GetNewAccountSasCredentials().ToString();
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            var client = test.FileSystem.GetRootDirectoryClient().GetFileClient(GetNewFileName());
+            await client.CreateIfNotExistsAsync();
+            Uri uri = client.Uri;
+
+            // Act
+            var sasClient = InstrumentClient(new DataLakeFileClient(uri, new AzureSasCredential(sas), GetOptions()));
+            PathProperties properties = await sasClient.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(properties);
+        }
+
+        [Test]
+        public async Task Ctor_AzureSasCredential_VerifyNoSasInUri()
+        {
+            // Arrange
+            string sas = GetNewAccountSasCredentials().ToString();
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            Uri uri = test.FileSystem.GetRootDirectoryClient().GetFileClient(GetNewFileName()).Uri;
+            uri = new Uri(uri.ToString() + "?" + sas);
+
+            // Act
+            TestHelper.AssertExpectedException<ArgumentException>(
+                () => new DataLakeFileClient(uri, new AzureSasCredential(sas)),
+                e => e.Message.Contains($"You cannot use {nameof(AzureSasCredential)} when the resource URI also contains a Shared Access Signature"));
+        }
+
+        [Test]
         public async Task CreateAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -141,7 +216,6 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             AssertValidStoragePathInfo(response.Value);
-
         }
 
         [Test]
@@ -446,7 +520,6 @@ namespace Azure.Storage.Files.DataLake.Tests
                 unauthorizedFile.DeleteIfExistsAsync(),
                 e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode));
         }
-
 
         [Test]
         public async Task DeleteAsync()
@@ -853,7 +926,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(key.SignedService, sas.KeyService);
             Assert.AreEqual(key.SignedStartsOn, sas.KeyStartsOn);
             Assert.AreEqual(key.SignedTenantId, sas.KeyTenantId);
-            Assert.AreEqual(key.SignedVersion, sas.Version);
+            //Assert.AreEqual(key.SignedVersion, sas.Version);
         }
 
         [Test]
@@ -1277,7 +1350,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Assert
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
             AssertSasUserDelegationKey(identitySasFile.Uri, userDelegationKey);
-
         }
 
         [Test]
@@ -1671,7 +1743,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsFalse(progress.List.Count == 0);
 
             Assert.AreEqual(Size, progress.List[progress.List.Count - 1]);
-
         }
 
         [Test]
@@ -1799,7 +1870,6 @@ namespace Azure.Storage.Files.DataLake.Tests
                     e => Assert.AreEqual("body", e.ParamName));
             }
         }
-
 
         [Test]
         public async Task FlushDataAsync()
@@ -2101,7 +2171,6 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Assert.IsNotNull(response.Value.ContentHash);
-
         }
 
         [Test]
@@ -2983,7 +3052,6 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             var data = GetRandomBuffer(300 * Constants.MB);
 
-
             using (var stream = new MemoryStream(data))
             {
                 var path = System.IO.Path.GetTempFileName();
@@ -3019,7 +3087,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient file = test.FileSystem.GetFileClient(GetNewFileName());
 
             var data = GetRandomBuffer(Constants.KB);
-
 
             using (var stream = new MemoryStream(data))
             {
@@ -3136,7 +3203,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient file = test.FileSystem.GetFileClient(GetNewFileName());
 
             var data = GetRandomBuffer(Constants.KB);
-
 
             using (var stream = new MemoryStream(data))
             {
@@ -3437,7 +3503,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             using StreamReader streamReader = new StreamReader(response.Value.Content);
             string s = await streamReader.ReadToEndAsync();
 
-
             // Act - with  IBlobQueryErrorReceiver
             DataLakeQueryError expectedBlobQueryError = new DataLakeQueryError
             {
@@ -3648,7 +3713,6 @@ namespace Azure.Storage.Files.DataLake.Tests
                 query,
                 options: options),
                 e => Assert.AreEqual($"{nameof(DataLakeQueryArrowOptions)} can only be used for output serialization.", e.Message));
-
         }
 
         private Stream CreateDataStream(long size)
@@ -4097,7 +4161,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             for (int i = 0; i < length / readSize; i++)
             {
-
                 await outputStream.ReadAsync(actualData, 0, readSize);
                 for (int j = 0; j < readSize; j++)
                 {
@@ -4145,25 +4208,19 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<ArgumentNullException>(
                 stream.ReadAsync(buffer: null, offset: 0, count: 10),
-                e => Assert.AreEqual($"buffer cannot be null.{Environment.NewLine}Parameter name: buffer", e.Message));
+                new ArgumentNullException("buffer", $"buffer cannot be null."));
 
             await TestHelper.AssertExpectedExceptionAsync<ArgumentOutOfRangeException>(
                 stream.ReadAsync(buffer: new byte[10], offset: -1, count: 10),
-                e => Assert.AreEqual(
-                    $"Specified argument was out of the range of valid values.{Environment.NewLine}Parameter name: offset cannot be less than 0.",
-                    e.Message));
+                new ArgumentOutOfRangeException("offset cannot be less than 0.", "Specified argument was out of the range of valid values."));
 
             await TestHelper.AssertExpectedExceptionAsync<ArgumentOutOfRangeException>(
                 stream.ReadAsync(buffer: new byte[10], offset: 11, count: 10),
-                e => Assert.AreEqual(
-                    $"Specified argument was out of the range of valid values.{Environment.NewLine}Parameter name: offset cannot exceed buffer length.",
-                    e.Message));
+                new ArgumentOutOfRangeException("offset cannot exceed buffer length.", "Specified argument was out of the range of valid values."));
 
             await TestHelper.AssertExpectedExceptionAsync<ArgumentOutOfRangeException>(
                 stream.ReadAsync(buffer: new byte[10], offset: 1, count: -1),
-                e => Assert.AreEqual(
-                    $"Specified argument was out of the range of valid values.{Environment.NewLine}Parameter name: count cannot be less than 0.",
-                    e.Message));
+                new ArgumentOutOfRangeException("count cannot be less than 0.", "Specified argument was out of the range of valid values."));
         }
 
         [Test]
@@ -4232,6 +4289,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             TestHelper.AssertExpectedException<ArgumentException>(
                 () => outputStream.Seek(size + 10, SeekOrigin.Begin),
                 new ArgumentException("You cannot seek past the last known length of the underlying blob or file."));
+
+            Assert.AreEqual(size, outputStream.Length);
         }
 
         [Test]
@@ -4276,6 +4335,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             {
                 Assert.AreEqual(size + offset, outputStream.Position);
             }
+
+            Assert.AreEqual(size, outputStream.Length);
         }
 
         [Test]
@@ -4315,6 +4376,53 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
 
             openReadStream.Seek(offset, SeekOrigin.Current);
+
+            using MemoryStream outputStream = new MemoryStream();
+            await openReadStream.CopyToAsync(outputStream);
+
+            // Assert
+            Assert.AreEqual(expectedData.Length, outputStream.ToArray().Length);
+            Assert.AreEqual(size, openReadStream.Length);
+            TestHelper.AssertSequenceEqual(expectedData, outputStream.ToArray());
+        }
+
+        [Test]
+        // lower position within _buffer
+        [TestCase(400)]
+        // higher positiuon within _buffer
+        [TestCase(500)]
+        // lower position below _buffer
+        [TestCase(250)]
+        // higher position above _buffer
+        [TestCase(550)]
+        public async Task OpenReadAsync_SetPosition(long position)
+        {
+            int size = Constants.KB;
+            int initalPosition = 450;
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            byte[] data = GetRandomBuffer(size);
+            byte[] expectedData = new byte[size - position];
+            Array.Copy(data, position, expectedData, 0, size - position);
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+            using Stream stream = new MemoryStream(data);
+            await file.UploadAsync(stream);
+
+            DataLakeOpenReadOptions options = new DataLakeOpenReadOptions(allowModifications: false)
+            {
+                BufferSize = 128
+            };
+
+            // Act
+            Stream openReadStream = await file.OpenReadAsync(options: options).ConfigureAwait(false);
+            int readbytes = initalPosition;
+            while (readbytes > 0)
+            {
+                readbytes -= await openReadStream.ReadAsync(new byte[readbytes], 0, readbytes);
+            }
+
+            openReadStream.Position = position;
 
             using MemoryStream outputStream = new MemoryStream();
             await openReadStream.CopyToAsync(outputStream);
@@ -4381,7 +4489,6 @@ namespace Azure.Storage.Files.DataLake.Tests
                 overwrite: false,
                 options))
             {
-
                 await stream.WriteAsync(data, 0, 512);
                 await stream.WriteAsync(data, 512, 1024);
                 await stream.WriteAsync(data, 1536, 2048);
@@ -4545,7 +4652,6 @@ namespace Azure.Storage.Files.DataLake.Tests
                 await file.CreateAsync();
             }
 
-
             byte[] data = GetRandomBuffer(Constants.KB);
             using Stream stream = new MemoryStream(data);
 
@@ -4662,6 +4768,241 @@ namespace Azure.Storage.Files.DataLake.Tests
                 options);
             await stream.CopyToAsync(openWriteStream);
             await openWriteStream.FlushAsync();
+        }
+
+        #region GenerateSasTests
+        [Test]
+        public void CanGenerateSas_ClientConstructors()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
+
+            // Act - DataLakeFileClient(Uri blobContainerUri, fileClientOptions options = default)
+            DataLakeFileClient file = InstrumentClient(new DataLakeFileClient(
+                blobEndpoint,
+                GetOptions()));
+            Assert.IsFalse(file.CanGenerateSasUri);
+
+            // Act - DataLakeFileClient(Uri blobContainerUri, StorageSharedKeyCredential credential, fileClientOptions options = default)
+            DataLakeFileClient file2 = InstrumentClient(new DataLakeFileClient(
+                blobEndpoint,
+                constants.Sas.SharedKeyCredential,
+                GetOptions()));
+            Assert.IsTrue(file2.CanGenerateSasUri);
+
+            // Act - DataLakeFileClient(Uri blobContainerUri, TokenCredential credential, fileClientOptions options = default)
+            var tokenCredentials = new DefaultAzureCredential();
+            DataLakeFileClient file3 = InstrumentClient(new DataLakeFileClient(
+                blobEndpoint,
+                tokenCredentials,
+                GetOptions()));
+            Assert.IsFalse(file3.CanGenerateSasUri);
+        }
+
+        [Test]
+        public void CanGenerateSas_Mockable()
+        {
+            // Act
+            var file = new Mock<DataLakeFileClient>();
+            file.Setup(x => x.CanGenerateSasUri).Returns(false);
+
+            // Assert
+            Assert.IsFalse(file.Object.CanGenerateSasUri);
+
+            // Act
+            file.Setup(x => x.CanGenerateSasUri).Returns(true);
+
+            // Assert
+            Assert.IsTrue(file.Object.CanGenerateSasUri);
+        }
+
+        [Test]
+        public void GenerateSas_RequiredParameters()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            string fileSystemName = GetNewFileSystemName();
+            string path = GetNewFileName();
+            DataLakeSasPermissions permissions = DataLakeSasPermissions.Read;
+            DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
+            var blobEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account + "/" + fileSystemName + "/" + path);
+            DataLakeFileClient fileClient = InstrumentClient(new DataLakeFileClient(
+                blobEndpoint,
+                constants.Sas.SharedKeyCredential,
+                GetOptions()));
+
+            // Act
+            Uri sasUri = fileClient.GenerateSasUri(permissions, expiresOn);
+
+            // Assert
+            DataLakeSasBuilder sasBuilder2 = new DataLakeSasBuilder(permissions, expiresOn)
+            {
+                FileSystemName = fileSystemName,
+                Path = path
+            };
+            DataLakeUriBuilder expectedUri = new DataLakeUriBuilder(blobEndpoint);
+            expectedUri.Sas = sasBuilder2.ToSasQueryParameters(constants.Sas.SharedKeyCredential);
+            Assert.AreEqual(expectedUri.ToUri().ToString(), sasUri.ToString());
+        }
+
+        [Test]
+        public void GenerateSas_Builder()
+        {
+            var constants = new TestConstants(this);
+            string fileSystemName = GetNewFileSystemName();
+            string path = GetNewFileName();
+            DataLakeSasPermissions permissions = DataLakeSasPermissions.Read;
+            DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
+            DateTimeOffset startsOn = Recording.UtcNow.AddHours(-1);
+            var blobEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account + "/" + fileSystemName + "/" + path);
+            DataLakeFileClient fileClient = InstrumentClient(new DataLakeFileClient(
+                blobEndpoint,
+                constants.Sas.SharedKeyCredential,
+                GetOptions()));
+
+            DataLakeSasBuilder sasBuilder = new DataLakeSasBuilder(permissions, expiresOn)
+            {
+                FileSystemName = fileSystemName,
+                Path = path,
+                StartsOn = startsOn
+            };
+
+            // Act
+            Uri sasUri = fileClient.GenerateSasUri(sasBuilder);
+
+            // Assert
+            DataLakeUriBuilder expectedUri = new DataLakeUriBuilder(blobEndpoint);
+            DataLakeSasBuilder sasBuilder2 = new DataLakeSasBuilder(permissions, expiresOn)
+            {
+                FileSystemName = fileSystemName,
+                Path = path,
+                StartsOn = startsOn
+            };
+            expectedUri.Sas = sasBuilder2.ToSasQueryParameters(constants.Sas.SharedKeyCredential);
+            Assert.AreEqual(expectedUri.ToUri().ToString(), sasUri.ToString());
+        }
+
+        [Test]
+        public void GenerateSas_BuilderWrongFileSystemName()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("http://127.0.0.1/");
+            UriBuilder blobUriBuilder = new UriBuilder(blobEndpoint);
+            string path = GetNewFileName();
+            DataLakeSasPermissions permissions = DataLakeSasPermissions.Read;
+            DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
+            blobUriBuilder.Path += constants.Sas.Account + "/" + GetNewFileSystemName() + "/" + path;
+            DataLakeFileClient fileClient = InstrumentClient(new DataLakeFileClient(
+                blobUriBuilder.Uri,
+                constants.Sas.SharedKeyCredential,
+                GetOptions()));
+
+            DataLakeSasBuilder sasBuilder = new DataLakeSasBuilder(permissions, expiresOn)
+            {
+                FileSystemName = GetNewFileSystemName(), // different filesystem name
+                Path = path,
+            };
+
+            // Act
+            try
+            {
+                fileClient.GenerateSasUri(sasBuilder);
+
+                Assert.Fail("DataLakeFileClient.GenerateSasUri should have failed with an ArgumentException.");
+            }
+            catch (InvalidOperationException)
+            {
+                //the correct exception came back
+            }
+        }
+
+        [Test]
+        public void GenerateSas_BuilderWrongFileName()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("http://127.0.0.1/");
+            UriBuilder blobUriBuilder = new UriBuilder(blobEndpoint);
+            string fileSystemName = GetNewFileSystemName();
+            DataLakeSasPermissions permissions = DataLakeSasPermissions.Read;
+            DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
+            blobUriBuilder.Path += constants.Sas.Account + "/" + fileSystemName + "/" + GetNewFileName();
+            DataLakeFileClient fileClient = InstrumentClient(new DataLakeFileClient(
+                blobUriBuilder.Uri,
+                constants.Sas.SharedKeyCredential,
+                GetOptions()));
+
+            DataLakeSasBuilder sasBuilder = new DataLakeSasBuilder(permissions, expiresOn)
+            {
+                FileSystemName = fileSystemName,
+                Path = GetNewFileName(), // different path
+            };
+
+            // Act
+            try
+            {
+                fileClient.GenerateSasUri(sasBuilder);
+
+                Assert.Fail("DataLakeFileClient.GenerateSasUri should have failed with an ArgumentException.");
+            }
+            catch (InvalidOperationException)
+            {
+                //the correct exception came back
+            }
+        }
+
+        [Test]
+        public void GenerateSas_BuilderIsDirectoryError()
+        {
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("http://127.0.0.1/");
+            UriBuilder blobUriBuilder = new UriBuilder(blobEndpoint);
+            string fileSystemName = GetNewFileSystemName();
+            string fileName = GetNewFileName();
+            DataLakeSasPermissions permissions = DataLakeSasPermissions.Read;
+            DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
+            blobUriBuilder.Path += constants.Sas.Account + "/" + fileSystemName + "/" + fileName;
+
+            DataLakeFileClient fileClient = InstrumentClient(new DataLakeFileClient(
+                blobUriBuilder.Uri,
+                constants.Sas.SharedKeyCredential,
+                GetOptions()));
+
+            DataLakeSasBuilder sasBuilder = new DataLakeSasBuilder(permissions, expiresOn)
+            {
+                FileSystemName = fileSystemName,
+                Path = GetNewFileName(),
+                IsDirectory = true,
+                IPRange = new SasIPRange(System.Net.IPAddress.None, System.Net.IPAddress.None),
+                ExpiresOn = Recording.UtcNow.AddHours(+1)
+            };
+
+            // Act
+            try
+            {
+                fileClient.GenerateSasUri(sasBuilder);
+
+                Assert.Fail("DataLakeFileClient.GenerateSasUri should have failed with an ArgumentException.");
+            }
+            catch (InvalidOperationException)
+            {
+                //the correct exception came back
+            }
+        }
+        #endregion
+
+        [Test]
+        public void CanMockClientConstructors()
+        {
+            // One has to call .Object to trigger constructor. It's lazy.
+            var mock = new Mock<DataLakeFileClient>(TestConfigDefault.ConnectionString, "name", "name", new DataLakeClientOptions()).Object;
+            mock = new Mock<DataLakeFileClient>(TestConfigDefault.ConnectionString, "name", "name").Object;
+            mock = new Mock<DataLakeFileClient>(new Uri("https://test/test"), new DataLakeClientOptions()).Object;
+            mock = new Mock<DataLakeFileClient>(new Uri("https://test/test"), GetNewSharedKeyCredentials(), new DataLakeClientOptions()).Object;
+            mock = new Mock<DataLakeFileClient>(new Uri("https://test/test"), new AzureSasCredential("foo"), new DataLakeClientOptions()).Object;
+            mock = new Mock<DataLakeFileClient>(new Uri("https://test/test"), GetOAuthCredential(TestConfigHierarchicalNamespace), new DataLakeClientOptions()).Object;
         }
     }
 }

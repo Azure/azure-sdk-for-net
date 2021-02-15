@@ -125,6 +125,16 @@ namespace Microsoft.Azure.Management.Synapse
         public virtual ISqlPoolReplicationLinksOperations SqlPoolReplicationLinks { get; private set; }
 
         /// <summary>
+        /// Gets the ISqlPoolMaintenanceWindowsOperations.
+        /// </summary>
+        public virtual ISqlPoolMaintenanceWindowsOperations SqlPoolMaintenanceWindows { get; private set; }
+
+        /// <summary>
+        /// Gets the ISqlPoolMaintenanceWindowOptionsOperations.
+        /// </summary>
+        public virtual ISqlPoolMaintenanceWindowOptionsOperations SqlPoolMaintenanceWindowOptions { get; private set; }
+
+        /// <summary>
         /// Gets the ISqlPoolTransparentDataEncryptionsOperations.
         /// </summary>
         public virtual ISqlPoolTransparentDataEncryptionsOperations SqlPoolTransparentDataEncryptions { get; private set; }
@@ -148,6 +158,11 @@ namespace Microsoft.Azure.Management.Synapse
         /// Gets the ISqlPoolSensitivityLabelsOperations.
         /// </summary>
         public virtual ISqlPoolSensitivityLabelsOperations SqlPoolSensitivityLabels { get; private set; }
+
+        /// <summary>
+        /// Gets the ISqlPoolRecommendedSensitivityLabelsOperations.
+        /// </summary>
+        public virtual ISqlPoolRecommendedSensitivityLabelsOperations SqlPoolRecommendedSensitivityLabels { get; private set; }
 
         /// <summary>
         /// Gets the ISqlPoolSchemasOperations.
@@ -190,6 +205,36 @@ namespace Microsoft.Azure.Management.Synapse
         public virtual ISqlPoolVulnerabilityAssessmentRuleBaselinesOperations SqlPoolVulnerabilityAssessmentRuleBaselines { get; private set; }
 
         /// <summary>
+        /// Gets the IExtendedSqlPoolBlobAuditingPoliciesOperations.
+        /// </summary>
+        public virtual IExtendedSqlPoolBlobAuditingPoliciesOperations ExtendedSqlPoolBlobAuditingPolicies { get; private set; }
+
+        /// <summary>
+        /// Gets the IDataMaskingPoliciesOperations.
+        /// </summary>
+        public virtual IDataMaskingPoliciesOperations DataMaskingPolicies { get; private set; }
+
+        /// <summary>
+        /// Gets the IDataMaskingRulesOperations.
+        /// </summary>
+        public virtual IDataMaskingRulesOperations DataMaskingRules { get; private set; }
+
+        /// <summary>
+        /// Gets the ISqlPoolColumnsOperations.
+        /// </summary>
+        public virtual ISqlPoolColumnsOperations SqlPoolColumns { get; private set; }
+
+        /// <summary>
+        /// Gets the ISqlPoolWorkloadGroupOperations.
+        /// </summary>
+        public virtual ISqlPoolWorkloadGroupOperations SqlPoolWorkloadGroup { get; private set; }
+
+        /// <summary>
+        /// Gets the ISqlPoolWorkloadClassifierOperations.
+        /// </summary>
+        public virtual ISqlPoolWorkloadClassifierOperations SqlPoolWorkloadClassifier { get; private set; }
+
+        /// <summary>
         /// Gets the IWorkspacesOperations.
         /// </summary>
         public virtual IWorkspacesOperations Workspaces { get; private set; }
@@ -200,9 +245,19 @@ namespace Microsoft.Azure.Management.Synapse
         public virtual IWorkspaceAadAdminsOperations WorkspaceAadAdmins { get; private set; }
 
         /// <summary>
+        /// Gets the IWorkspaceSqlAadAdminsOperations.
+        /// </summary>
+        public virtual IWorkspaceSqlAadAdminsOperations WorkspaceSqlAadAdmins { get; private set; }
+
+        /// <summary>
         /// Gets the IWorkspaceManagedIdentitySqlControlSettingsOperations.
         /// </summary>
         public virtual IWorkspaceManagedIdentitySqlControlSettingsOperations WorkspaceManagedIdentitySqlControlSettings { get; private set; }
+
+        /// <summary>
+        /// Gets the IRestorableDroppedSqlPoolsOperations.
+        /// </summary>
+        public virtual IRestorableDroppedSqlPoolsOperations RestorableDroppedSqlPools { get; private set; }
 
         /// <summary>
         /// Gets the IIntegrationRuntimesOperations.
@@ -255,6 +310,11 @@ namespace Microsoft.Azure.Management.Synapse
         public virtual IPrivateLinkResourcesOperations PrivateLinkResources { get; private set; }
 
         /// <summary>
+        /// Gets the IPrivateLinkHubPrivateLinkResourcesOperations.
+        /// </summary>
+        public virtual IPrivateLinkHubPrivateLinkResourcesOperations PrivateLinkHubPrivateLinkResources { get; private set; }
+
+        /// <summary>
         /// Gets the IPrivateEndpointConnectionsOperations.
         /// </summary>
         public virtual IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; private set; }
@@ -263,6 +323,51 @@ namespace Microsoft.Azure.Management.Synapse
         /// Gets the IPrivateLinkHubsOperations.
         /// </summary>
         public virtual IPrivateLinkHubsOperations PrivateLinkHubs { get; private set; }
+
+        /// <summary>
+        /// Gets the IPrivateEndpointConnectionsPrivateLinkHubOperations.
+        /// </summary>
+        public virtual IPrivateEndpointConnectionsPrivateLinkHubOperations PrivateEndpointConnectionsPrivateLinkHub { get; private set; }
+
+        /// <summary>
+        /// Gets the IWorkspaceManagedSqlServerBlobAuditingPoliciesOperations.
+        /// </summary>
+        public virtual IWorkspaceManagedSqlServerBlobAuditingPoliciesOperations WorkspaceManagedSqlServerBlobAuditingPolicies { get; private set; }
+
+        /// <summary>
+        /// Gets the IWorkspaceManagedSqlServerExtendedBlobAuditingPoliciesOperations.
+        /// </summary>
+        public virtual IWorkspaceManagedSqlServerExtendedBlobAuditingPoliciesOperations WorkspaceManagedSqlServerExtendedBlobAuditingPolicies { get; private set; }
+
+        /// <summary>
+        /// Gets the IWorkspaceManagedSqlServerSecurityAlertPolicyOperations.
+        /// </summary>
+        public virtual IWorkspaceManagedSqlServerSecurityAlertPolicyOperations WorkspaceManagedSqlServerSecurityAlertPolicy { get; private set; }
+
+        /// <summary>
+        /// Gets the IWorkspaceManagedSqlServerVulnerabilityAssessmentsOperations.
+        /// </summary>
+        public virtual IWorkspaceManagedSqlServerVulnerabilityAssessmentsOperations WorkspaceManagedSqlServerVulnerabilityAssessments { get; private set; }
+
+        /// <summary>
+        /// Gets the IWorkspaceManagedSqlServerEncryptionProtectorOperations.
+        /// </summary>
+        public virtual IWorkspaceManagedSqlServerEncryptionProtectorOperations WorkspaceManagedSqlServerEncryptionProtector { get; private set; }
+
+        /// <summary>
+        /// Gets the IWorkspaceManagedSqlServerUsagesOperations.
+        /// </summary>
+        public virtual IWorkspaceManagedSqlServerUsagesOperations WorkspaceManagedSqlServerUsages { get; private set; }
+
+        /// <summary>
+        /// Gets the IWorkspaceManagedSqlServerRecoverableSqlPoolsOperations.
+        /// </summary>
+        public virtual IWorkspaceManagedSqlServerRecoverableSqlPoolsOperations WorkspaceManagedSqlServerRecoverableSqlPools { get; private set; }
+
+        /// <summary>
+        /// Gets the IKeysOperations.
+        /// </summary>
+        public virtual IKeysOperations Keys { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the SynapseManagementClient class.
@@ -515,11 +620,14 @@ namespace Microsoft.Azure.Management.Synapse
             SqlPoolDataWarehouseUserActivities = new SqlPoolDataWarehouseUserActivitiesOperations(this);
             SqlPoolRestorePoints = new SqlPoolRestorePointsOperations(this);
             SqlPoolReplicationLinks = new SqlPoolReplicationLinksOperations(this);
+            SqlPoolMaintenanceWindows = new SqlPoolMaintenanceWindowsOperations(this);
+            SqlPoolMaintenanceWindowOptions = new SqlPoolMaintenanceWindowOptionsOperations(this);
             SqlPoolTransparentDataEncryptions = new SqlPoolTransparentDataEncryptionsOperations(this);
             SqlPoolBlobAuditingPolicies = new SqlPoolBlobAuditingPoliciesOperations(this);
             SqlPoolOperations = new SqlPoolOperations(this);
             SqlPoolUsages = new SqlPoolUsagesOperations(this);
             SqlPoolSensitivityLabels = new SqlPoolSensitivityLabelsOperations(this);
+            SqlPoolRecommendedSensitivityLabels = new SqlPoolRecommendedSensitivityLabelsOperations(this);
             SqlPoolSchemas = new SqlPoolSchemasOperations(this);
             SqlPoolTables = new SqlPoolTablesOperations(this);
             SqlPoolTableColumns = new SqlPoolTableColumnsOperations(this);
@@ -528,9 +636,17 @@ namespace Microsoft.Azure.Management.Synapse
             SqlPoolVulnerabilityAssessmentScans = new SqlPoolVulnerabilityAssessmentScansOperations(this);
             SqlPoolSecurityAlertPolicies = new SqlPoolSecurityAlertPoliciesOperations(this);
             SqlPoolVulnerabilityAssessmentRuleBaselines = new SqlPoolVulnerabilityAssessmentRuleBaselinesOperations(this);
+            ExtendedSqlPoolBlobAuditingPolicies = new ExtendedSqlPoolBlobAuditingPoliciesOperations(this);
+            DataMaskingPolicies = new DataMaskingPoliciesOperations(this);
+            DataMaskingRules = new DataMaskingRulesOperations(this);
+            SqlPoolColumns = new SqlPoolColumnsOperations(this);
+            SqlPoolWorkloadGroup = new SqlPoolWorkloadGroupOperations(this);
+            SqlPoolWorkloadClassifier = new SqlPoolWorkloadClassifierOperations(this);
             Workspaces = new WorkspacesOperations(this);
             WorkspaceAadAdmins = new WorkspaceAadAdminsOperations(this);
+            WorkspaceSqlAadAdmins = new WorkspaceSqlAadAdminsOperations(this);
             WorkspaceManagedIdentitySqlControlSettings = new WorkspaceManagedIdentitySqlControlSettingsOperations(this);
+            RestorableDroppedSqlPools = new RestorableDroppedSqlPoolsOperations(this);
             IntegrationRuntimes = new IntegrationRuntimesOperations(this);
             IntegrationRuntimeNodeIpAddress = new IntegrationRuntimeNodeIpAddressOperations(this);
             IntegrationRuntimeObjectMetadata = new IntegrationRuntimeObjectMetadataOperations(this);
@@ -541,10 +657,20 @@ namespace Microsoft.Azure.Management.Synapse
             IntegrationRuntimeMonitoringData = new IntegrationRuntimeMonitoringDataOperations(this);
             IntegrationRuntimeStatus = new IntegrationRuntimeStatusOperations(this);
             PrivateLinkResources = new PrivateLinkResourcesOperations(this);
+            PrivateLinkHubPrivateLinkResources = new PrivateLinkHubPrivateLinkResourcesOperations(this);
             PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             PrivateLinkHubs = new PrivateLinkHubsOperations(this);
+            PrivateEndpointConnectionsPrivateLinkHub = new PrivateEndpointConnectionsPrivateLinkHubOperations(this);
+            WorkspaceManagedSqlServerBlobAuditingPolicies = new WorkspaceManagedSqlServerBlobAuditingPoliciesOperations(this);
+            WorkspaceManagedSqlServerExtendedBlobAuditingPolicies = new WorkspaceManagedSqlServerExtendedBlobAuditingPoliciesOperations(this);
+            WorkspaceManagedSqlServerSecurityAlertPolicy = new WorkspaceManagedSqlServerSecurityAlertPolicyOperations(this);
+            WorkspaceManagedSqlServerVulnerabilityAssessments = new WorkspaceManagedSqlServerVulnerabilityAssessmentsOperations(this);
+            WorkspaceManagedSqlServerEncryptionProtector = new WorkspaceManagedSqlServerEncryptionProtectorOperations(this);
+            WorkspaceManagedSqlServerUsages = new WorkspaceManagedSqlServerUsagesOperations(this);
+            WorkspaceManagedSqlServerRecoverableSqlPools = new WorkspaceManagedSqlServerRecoverableSqlPoolsOperations(this);
+            Keys = new KeysOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-06-01-preview";
+            ApiVersion = "2020-12-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

@@ -19,7 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             Minutes = new ChangeTrackingList<int>();
             Hours = new ChangeTrackingList<int>();
-            WeekDays = new ChangeTrackingList<DaysOfWeek>();
+            WeekDays = new ChangeTrackingList<DayOfWeek>();
             MonthDays = new ChangeTrackingList<int>();
             MonthlyOccurrences = new ChangeTrackingList<RecurrenceScheduleOccurrence>();
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
@@ -32,7 +32,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="monthDays"> The month days. </param>
         /// <param name="monthlyOccurrences"> The monthly occurrences. </param>
         /// <param name="additionalProperties"> . </param>
-        internal RecurrenceSchedule(IList<int> minutes, IList<int> hours, IList<DaysOfWeek> weekDays, IList<int> monthDays, IList<RecurrenceScheduleOccurrence> monthlyOccurrences, IDictionary<string, object> additionalProperties)
+        internal RecurrenceSchedule(IList<int> minutes, IList<int> hours, IList<DayOfWeek> weekDays, IList<int> monthDays, IList<RecurrenceScheduleOccurrence> monthlyOccurrences, IDictionary<string, object> additionalProperties)
         {
             Minutes = minutes;
             Hours = hours;
@@ -47,7 +47,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> The hours. </summary>
         public IList<int> Hours { get; }
         /// <summary> The days of the week. </summary>
-        public IList<DaysOfWeek> WeekDays { get; }
+        public IList<DayOfWeek> WeekDays { get; }
         /// <summary> The month days. </summary>
         public IList<int> MonthDays { get; }
         /// <summary> The monthly occurrences. </summary>
@@ -65,23 +65,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public ICollection<string> Keys => AdditionalProperties.Keys;
         /// <inheritdoc />
         public ICollection<object> Values => AdditionalProperties.Values;
-        /// <inheritdoc />
+        /// <inheritdoc cref="ICollection{T}.Count"/>
         int ICollection<KeyValuePair<string, object>>.Count => AdditionalProperties.Count;
         /// <inheritdoc />
         public void Add(string key, object value) => AdditionalProperties.Add(key, value);
         /// <inheritdoc />
         public bool Remove(string key) => AdditionalProperties.Remove(key);
-        /// <inheritdoc />
+        /// <inheritdoc cref="ICollection{T}.IsReadOnly"/>
         bool ICollection<KeyValuePair<string, object>>.IsReadOnly => AdditionalProperties.IsReadOnly;
-        /// <inheritdoc />
+        /// <inheritdoc cref="ICollection{T}.Add"/>
         void ICollection<KeyValuePair<string, object>>.Add(KeyValuePair<string, object> value) => AdditionalProperties.Add(value);
-        /// <inheritdoc />
+        /// <inheritdoc cref="ICollection{T}.Remove"/>
         bool ICollection<KeyValuePair<string, object>>.Remove(KeyValuePair<string, object> value) => AdditionalProperties.Remove(value);
-        /// <inheritdoc />
+        /// <inheritdoc cref="ICollection{T}.Contains"/>
         bool ICollection<KeyValuePair<string, object>>.Contains(KeyValuePair<string, object> value) => AdditionalProperties.Contains(value);
-        /// <inheritdoc />
+        /// <inheritdoc cref="ICollection{T}.CopyTo"/>
         void ICollection<KeyValuePair<string, object>>.CopyTo(KeyValuePair<string, object>[] destination, int offset) => AdditionalProperties.CopyTo(destination, offset);
-        /// <inheritdoc />
+        /// <inheritdoc cref="ICollection{T}.Clear"/>
         void ICollection<KeyValuePair<string, object>>.Clear() => AdditionalProperties.Clear();
         /// <inheritdoc />
         public object this[string key]

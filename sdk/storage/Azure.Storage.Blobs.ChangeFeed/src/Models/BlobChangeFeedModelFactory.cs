@@ -40,7 +40,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// </summary>
         public static BlobChangeFeedEventData BlobChangeFeedEventData(
             string api,
-            Guid clientRequestId,
+            string clientRequestId,
             Guid requestId,
             ETag eTag,
             string contentType,

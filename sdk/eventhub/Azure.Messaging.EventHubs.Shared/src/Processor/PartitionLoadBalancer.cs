@@ -55,7 +55,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   read only in the context of this group.
         /// </summary>
         ///
-        public string ConsumerGroup { get;  }
+        public string ConsumerGroup { get; }
 
         /// <summary>
         ///   The identifier of the EventProcessorClient that owns this load balancer.
@@ -102,7 +102,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         private Dictionary<string, EventProcessorPartitionOwnership> InstanceOwnership { get; set; } = new Dictionary<string, EventProcessorPartitionOwnership>();
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="PartitionLoadBalancer"/> class.
+        ///   Initializes a new instance of the <see cref="PartitionLoadBalancer" /> class.
         /// </summary>
         ///
         /// <param name="storageManager">Responsible for creation of checkpoints and for ownership claim.</param>
@@ -137,7 +137,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="PartitionLoadBalancer"/> class.
+        ///   Initializes a new instance of the <see cref="PartitionLoadBalancer" /> class.
         /// </summary>
         ///
         protected PartitionLoadBalancer()
@@ -157,7 +157,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// </summary>
         ///
         /// <param name="partitionIds">The set of partitionIds available for ownership balancing.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>The claimed ownership. <c>null</c> if this instance is not eligible, if no claimable ownership was found or if the claim attempt failed.</returns>
         ///
@@ -179,10 +179,16 @@ namespace Azure.Messaging.EventHubs.Primitives
                     .ConfigureAwait(false))
                     .ToList();
             }
+            catch (TaskCanceledException)
+            {
+                throw;
+            }
+            catch (OperationCanceledException)
+            {
+                throw new TaskCanceledException();
+            }
             catch (Exception ex)
             {
-                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-
                 // If ownership list retrieval fails, give up on the current cycle.  There's nothing more we can do
                 // without an updated ownership list.  Set the EventHubName to null so it doesn't modify the exception
                 // message.  This exception message is used so the processor can retrieve the raw Operation string, and
@@ -198,13 +204,12 @@ namespace Azure.Messaging.EventHubs.Primitives
                 return default;
             }
 
-            var unclaimedPartitions = new HashSet<string>(partitionIds);
-
             // Create a partition distribution dictionary from the complete ownership list we have, mapping an owner's identifier to the list of
             // partitions it owns.  When an event processor goes down and it has only expired ownership, it will not be taken into consideration
             // by others.  The expiration time defaults to 30 seconds, but it may be overridden by a derived class.
 
-            var utcNow = DateTimeOffset.UtcNow;
+            var unclaimedPartitions = new HashSet<string>(partitionIds);
+            var utcNow = GetDateTimeOffsetNow();
             var activeOwnership = default(EventProcessorPartitionOwnership);
 
             ActiveOwnershipWithDistribution.Clear();
@@ -272,7 +277,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   Relinquishes this instance's ownership so they can be claimed by other processors and clears the OwnedPartitionIds.
         /// </summary>
         ///
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
         ///
         public virtual async Task RelinquishOwnershipAsync(CancellationToken cancellationToken)
         {
@@ -289,7 +294,6 @@ namespace Azure.Messaging.EventHubs.Primitives
                 });
 
             await StorageManager.ClaimOwnershipAsync(ownershipToRelinquish, cancellationToken).ConfigureAwait(false);
-
             InstanceOwnership.Clear();
         }
 
@@ -300,7 +304,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="completeOwnershipEnumerable">A complete enumerable of ownership obtained from the storage service.</param>
         /// <param name="unclaimedPartitions">The set of partitionIds that are currently unclaimed.</param>
         /// <param name="partitionCount">The count of partitions.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A tuple indicating whether a claim was attempted and any ownership that was claimed.  The claimed ownership will be <c>null</c> if no claim was attempted or if the claim attempt failed.</returns>
         ///
@@ -421,14 +425,14 @@ namespace Azure.Messaging.EventHubs.Primitives
 
             // No ownership has been claimed.
 
-            return new ValueTask<(bool, EventProcessorPartitionOwnership)>((false, default(EventProcessorPartitionOwnership)));
+            return new ValueTask<(bool, EventProcessorPartitionOwnership)>((false, default));
         }
 
         /// <summary>
         ///   Renews this instance's ownership so they don't expire.
         /// </summary>
         ///
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
         ///
         private async Task RenewOwnershipAsync(CancellationToken cancellationToken)
         {
@@ -436,7 +440,10 @@ namespace Azure.Messaging.EventHubs.Primitives
 
             Logger.RenewOwnershipStart(OwnerIdentifier);
 
-            IEnumerable<EventProcessorPartitionOwnership> ownershipToRenew = InstanceOwnership.Values
+            var utcNow = GetDateTimeOffsetNow();
+
+            List<EventProcessorPartitionOwnership> ownershipToRenew = InstanceOwnership.Values
+                .Where(ownership => (utcNow - ownership.LastModifiedTime) > LoadBalanceInterval)
                 .Select(ownership => new EventProcessorPartitionOwnership
                 {
                     FullyQualifiedNamespace = ownership.FullyQualifiedNamespace,
@@ -444,17 +451,27 @@ namespace Azure.Messaging.EventHubs.Primitives
                     ConsumerGroup = ownership.ConsumerGroup,
                     OwnerIdentifier = ownership.OwnerIdentifier,
                     PartitionId = ownership.PartitionId,
-                    LastModifiedTime = DateTimeOffset.UtcNow,
+                    LastModifiedTime = utcNow,
                     Version = ownership.Version
-                });
+                })
+                .ToList();
 
             try
             {
-                // Dispose of all previous partition ownership instances and get a whole new dictionary.
+                // Update ownerships we renewed and remove the ones we didn't
 
-                InstanceOwnership = (await StorageManager.ClaimOwnershipAsync(ownershipToRenew, cancellationToken)
-                    .ConfigureAwait(false))
-                    .ToDictionary(ownership => ownership.PartitionId);
+                var newOwnerships = await StorageManager.ClaimOwnershipAsync(ownershipToRenew, cancellationToken)
+                    .ConfigureAwait(false);
+
+                foreach (var oldOwnership in ownershipToRenew)
+                {
+                    InstanceOwnership.Remove(oldOwnership.PartitionId);
+                }
+
+                foreach (var newOwnership in newOwnerships)
+                {
+                    InstanceOwnership[newOwnership.PartitionId] = newOwnership;
+                }
             }
             catch (Exception ex)
             {
@@ -483,7 +500,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///
         /// <param name="partitionId">The identifier of the Event Hub partition the ownership is associated with.</param>
         /// <param name="completeOwnershipEnumerable">A complete enumerable of ownership obtained from the stored service provided by the user.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A tuple indicating whether a claim was attempted and the claimed ownership. The claimed ownership will be <c>null</c> if the claim attempt failed.</returns>
         ///
@@ -538,6 +555,17 @@ namespace Azure.Messaging.EventHubs.Primitives
             // We are expecting an enumerable with a single element if the claim attempt succeeds.
 
             return (true, claimedOwnership.FirstOrDefault());
+        }
+
+        /// <summary>
+        ///    Queries the value to use for the current date/time.  This is abstracted to allow for deterministic
+        ///    values to be used for testing.
+        /// </summary>
+        ///
+        /// <returns>The current date and time, in UTC.</returns>
+        internal virtual DateTimeOffset GetDateTimeOffsetNow()
+        {
+            return DateTimeOffset.UtcNow;
         }
     }
 }

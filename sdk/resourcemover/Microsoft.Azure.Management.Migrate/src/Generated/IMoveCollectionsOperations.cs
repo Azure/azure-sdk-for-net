@@ -282,6 +282,34 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover
         /// </exception>
         Task<AzureOperationResponse<OperationStatus>> ResolveDependenciesWithHttpMessagesAsync(string resourceGroupName, string moveCollectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Removes the set of move resources included in the request body from
+        /// move collection. The orchestration is done by service. To aid the
+        /// user to prerequisite the operation the client can call operation
+        /// with validateOnly property set to true.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// </param>
+        /// <param name='moveCollectionName'>
+        /// </param>
+        /// <param name='body'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<OperationStatus>> BulkRemoveWithHttpMessagesAsync(string resourceGroupName, string moveCollectionName, BulkRemoveRequest body = default(BulkRemoveRequest), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Get all Move Collections.
         /// </summary>
         /// <remarks>
@@ -328,6 +356,35 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<IPage<MoveCollection>>> ListMoveCollectionsByResourceGroupWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// List of the move resources for which an arm resource is required
+        /// for.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The Resource Group Name.
+        /// </param>
+        /// <param name='moveCollectionName'>
+        /// The Move Collection Name.
+        /// </param>
+        /// <param name='sourceId'>
+        /// The sourceId for which the api is invoked.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<RequiredForResourcesCollection>> ListRequiredForWithHttpMessagesAsync(string resourceGroupName, string moveCollectionName, string sourceId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes a move collection.
         /// </summary>
@@ -507,6 +564,34 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<OperationStatus>> BeginResolveDependenciesWithHttpMessagesAsync(string resourceGroupName, string moveCollectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Removes the set of move resources included in the request body from
+        /// move collection. The orchestration is done by service. To aid the
+        /// user to prerequisite the operation the client can call operation
+        /// with validateOnly property set to true.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// </param>
+        /// <param name='moveCollectionName'>
+        /// </param>
+        /// <param name='body'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<OperationStatus>> BeginBulkRemoveWithHttpMessagesAsync(string resourceGroupName, string moveCollectionName, BulkRemoveRequest body = default(BulkRemoveRequest), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get all Move Collections.
         /// </summary>

@@ -33,9 +33,9 @@
     "iotHubName": "[format('iot-smoke-{0}', parameters('baseName'))]",
     "eventHubNamespaceName": "[format('eh-smoke-{0}', parameters('baseName'))]",
     "eventHubName": "myeventhub",
-    "eventHubNameAppInsights": "myappinsightseventhub",
     "eventHubAuthorizationRuleName": "RootManageSharedAccessKey",
     "storageAccountName": "[format('stsmoke{0}', parameters('baseName'))]",
+    "eventHubNameAppInsights": "myappinsightseventhub",
     "appInsightsName": "myappinsights"
   },
   "resources": [
@@ -54,22 +54,6 @@
         "isAutoInflateEnabled": false,
         "maximumThroughputUnits": 0,
         "kafkaEnabled": false
-      }
-    },
-    {
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2017-05-10",
-      "name": "sample-IotHubConnectionString",
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "https://raw.githubusercontent.com/Azure/azure-sdk-for-net/master/samples/iothub-connect-to-eventhubs/sample-resources.json",
-          "contentVersion": "1.0.0.0"
-        },
-        "parameters": {
-          "hubname": { "value": "[variables('iotHubName')]" },
-          "location": { "value": "[parameters('location')]" }
-        }
       }
     },
     {
@@ -283,11 +267,25 @@
       ],
       "properties": {
         "publicAccess": "None"
+      }
+    },
+    { /* TODO: Remove this once file URIs are supported. See https://github.com/Azure/azure-sdk-for-net/pull/17524#discussion_r543362690 */
+      "apiVersion": "2019-11-04",
+      "type": "Microsoft.Devices/IotHubs",
+      "name": "[variables('iotHubName')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "eventHubEndpoints": {
+          "events": {
+            "retentionTimeInDays": 1,
+            "partitionCount": "4"
+          }
+        },
+        "features": "None"
       },
-      {
-        "type": "Microsoft.Web/sites/siteextensions",
-        "apiVersion": "2020-06-01",
-        "name": "[format('{0}/Microsoft.ApplicationInsights.AzureWebsites', variables('appInsightsName'))]"
+      "sku": {
+        "name": "B1",
+        "capacity": "5"
       }
     }
   ],
@@ -316,22 +314,26 @@
       "type": "string",
       "value": "[listKeys(resourceId('Microsoft.EventHub/namespaces/eventhubs/authorizationRules', variables('eventHubNamespaceName'),  variables('eventHubName'), 'Test'), '2017-04-01').primaryConnectionString]"
     },
-    "EVENT_HUBS_APP_INSIGHT_CONNECTION_STRING": {
-      "type": "string",
-      "value": "[listKeys(resourceId('Microsoft.EventHub/namespaces/eventhubs/authorizationRules', variables('eventHubNamespaceName'),  variables('eventHubNameAppInsights'), 'Test'), '2017-04-01').primaryConnectionString]"
-    },
     "BLOB_CONNECTION_STRING": {
       "type": "string",
       "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2019-06-01').keys[0].value, ';EndpointSuffix=', parameters('storageEndpointSuffix'))]"
     },
-    "IOTHUB_CONNECTION_STRING": {
+    "IOTHUB_CONNECTION_STRING": { /* TODO: Remove this once file URIs are supported. See https://github.com/Azure/azure-sdk-for-net/pull/17524#discussion_r543362690 */
       "type": "string",
-      "value": "[reference('sample-IotHubConnectionString').outputs.IoTHubConnectionString.value]"
+      "value": "[concat('HostName=', reference(resourceId('Microsoft.Devices/IoTHubs', variables('iotHubName')), providers('Microsoft.Devices', 'IoTHubs').apiVersions[0]).hostName, ';SharedAccessKeyName=iothubowner;SharedAccessKey=', listKeys(resourceId('Microsoft.Devices/IotHubs', variables('iotHubName')), providers('Microsoft.Devices', 'IoTHubs').apiVersions[0]).value[0].primaryKey)]"
+    },
+    "IoTHubName": { /* TODO: Remove this once file URIs are supported. See https://github.com/Azure/azure-sdk-for-net/pull/17524#discussion_r543362690 */
+      "type": "string",
+      "value": "[variables('iotHubName')]"
     },
     "APPINSIGHTS_INSTRUMENTATION_KEY": {
       "type": "string",
       "value": "[reference(resourceId('Microsoft.Insights/components', variables('appInsightsName')), '2014-04-01').InstrumentationKey]"
 
+    },
+    "EVENT_HUBS_APP_INSIGHT_CONNECTION_STRING": {
+      "type": "string",
+      "value": "[listKeys(resourceId('Microsoft.EventHub/namespaces/eventhubs/authorizationRules', variables('eventHubNamespaceName'),  variables('eventHubNameAppInsights'), 'Test'), '2017-04-01').primaryConnectionString]"
     }
   }
 }

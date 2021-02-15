@@ -1,45 +1,213 @@
 namespace Azure.AI.MetricsAdvisor
 {
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AlertQueryTimeMode : System.IEquatable<Azure.AI.MetricsAdvisor.AlertQueryTimeMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AlertQueryTimeMode(string value) { throw null; }
+        public static Azure.AI.MetricsAdvisor.AlertQueryTimeMode AnomalyTime { get { throw null; } }
+        public static Azure.AI.MetricsAdvisor.AlertQueryTimeMode CreatedTime { get { throw null; } }
+        public static Azure.AI.MetricsAdvisor.AlertQueryTimeMode ModifiedTime { get { throw null; } }
+        public bool Equals(Azure.AI.MetricsAdvisor.AlertQueryTimeMode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.MetricsAdvisor.AlertQueryTimeMode left, Azure.AI.MetricsAdvisor.AlertQueryTimeMode right) { throw null; }
+        public static implicit operator Azure.AI.MetricsAdvisor.AlertQueryTimeMode (string value) { throw null; }
+        public static bool operator !=(Azure.AI.MetricsAdvisor.AlertQueryTimeMode left, Azure.AI.MetricsAdvisor.AlertQueryTimeMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FeedbackQueryTimeMode : System.IEquatable<Azure.AI.MetricsAdvisor.FeedbackQueryTimeMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FeedbackQueryTimeMode(string value) { throw null; }
+        public static Azure.AI.MetricsAdvisor.FeedbackQueryTimeMode FeedbackCreatedTime { get { throw null; } }
+        public static Azure.AI.MetricsAdvisor.FeedbackQueryTimeMode MetricTimestamp { get { throw null; } }
+        public bool Equals(Azure.AI.MetricsAdvisor.FeedbackQueryTimeMode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.MetricsAdvisor.FeedbackQueryTimeMode left, Azure.AI.MetricsAdvisor.FeedbackQueryTimeMode right) { throw null; }
+        public static implicit operator Azure.AI.MetricsAdvisor.FeedbackQueryTimeMode (string value) { throw null; }
+        public static bool operator !=(Azure.AI.MetricsAdvisor.FeedbackQueryTimeMode left, Azure.AI.MetricsAdvisor.FeedbackQueryTimeMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class GetAlertsOptions
+    {
+        public GetAlertsOptions(System.DateTimeOffset startTime, System.DateTimeOffset endTime, Azure.AI.MetricsAdvisor.AlertQueryTimeMode timeMode) { }
+        public System.DateTimeOffset EndTime { get { throw null; } }
+        public int? SkipCount { get { throw null; } set { } }
+        public System.DateTimeOffset StartTime { get { throw null; } }
+        public Azure.AI.MetricsAdvisor.AlertQueryTimeMode TimeMode { get { throw null; } }
+        public int? TopCount { get { throw null; } set { } }
+    }
+    public partial class GetAllFeedbackOptions
+    {
+        public GetAllFeedbackOptions() { }
+        public System.DateTimeOffset? EndTime { get { throw null; } set { } }
+        public Azure.AI.MetricsAdvisor.Models.FeedbackType? FeedbackType { get { throw null; } set { } }
+        public Azure.AI.MetricsAdvisor.Models.DimensionKey Filter { get { throw null; } }
+        public int? SkipCount { get { throw null; } set { } }
+        public System.DateTimeOffset? StartTime { get { throw null; } set { } }
+        public Azure.AI.MetricsAdvisor.FeedbackQueryTimeMode? TimeMode { get { throw null; } set { } }
+        public int? TopCount { get { throw null; } set { } }
+    }
+    public partial class GetAnomaliesForAlertOptions
+    {
+        public GetAnomaliesForAlertOptions() { }
+        public int? SkipCount { get { throw null; } set { } }
+        public int? TopCount { get { throw null; } set { } }
+    }
+    public partial class GetAnomaliesForDetectionConfigurationFilter
+    {
+        public GetAnomaliesForDetectionConfigurationFilter() { }
+        public GetAnomaliesForDetectionConfigurationFilter(Azure.AI.MetricsAdvisor.Models.AnomalySeverity minimumSeverity, Azure.AI.MetricsAdvisor.Models.AnomalySeverity maximumSeverity) { }
+        public Azure.AI.MetricsAdvisor.Models.AnomalySeverity? MaximumSeverity { get { throw null; } }
+        public Azure.AI.MetricsAdvisor.Models.AnomalySeverity? MinimumSeverity { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.AI.MetricsAdvisor.Models.DimensionKey> SeriesGroupKeys { get { throw null; } }
+    }
+    public partial class GetAnomaliesForDetectionConfigurationOptions
+    {
+        public GetAnomaliesForDetectionConfigurationOptions(System.DateTimeOffset startTime, System.DateTimeOffset endTime) { }
+        public System.DateTimeOffset EndTime { get { throw null; } }
+        public Azure.AI.MetricsAdvisor.GetAnomaliesForDetectionConfigurationFilter Filter { get { throw null; } set { } }
+        public int? SkipCount { get { throw null; } set { } }
+        public System.DateTimeOffset StartTime { get { throw null; } }
+        public int? TopCount { get { throw null; } set { } }
+    }
+    public partial class GetDataFeedIngestionStatusesOptions
+    {
+        public GetDataFeedIngestionStatusesOptions(System.DateTimeOffset startTime, System.DateTimeOffset endTime) { }
+        public System.DateTimeOffset EndTime { get { throw null; } }
+        public int? SkipCount { get { throw null; } set { } }
+        public System.DateTimeOffset StartTime { get { throw null; } }
+        public int? TopCount { get { throw null; } set { } }
+    }
+    public partial class GetDataFeedsFilter
+    {
+        public GetDataFeedsFilter() { }
+        public string Creator { get { throw null; } set { } }
+        public Azure.AI.MetricsAdvisor.Models.DataFeedGranularityType? GranularityType { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        public Azure.AI.MetricsAdvisor.Models.DataFeedSourceType? SourceType { get { throw null; } set { } }
+        public Azure.AI.MetricsAdvisor.Models.DataFeedStatus? Status { get { throw null; } set { } }
+    }
+    public partial class GetDataFeedsOptions
+    {
+        public GetDataFeedsOptions() { }
+        public Azure.AI.MetricsAdvisor.GetDataFeedsFilter GetDataFeedsFilter { get { throw null; } set { } }
+        public int? SkipCount { get { throw null; } set { } }
+        public int? TopCount { get { throw null; } set { } }
+    }
+    public partial class GetDimensionValuesOptions
+    {
+        public GetDimensionValuesOptions() { }
+        public string DimensionValueToFilter { get { throw null; } set { } }
+        public int? SkipCount { get { throw null; } set { } }
+        public int? TopCount { get { throw null; } set { } }
+    }
+    public partial class GetHooksOptions
+    {
+        public GetHooksOptions() { }
+        public string HookNameFilter { get { throw null; } set { } }
+        public int? SkipCount { get { throw null; } set { } }
+        public int? TopCount { get { throw null; } set { } }
+    }
+    public partial class GetIncidentsForAlertOptions
+    {
+        public GetIncidentsForAlertOptions() { }
+        public int? SkipCount { get { throw null; } set { } }
+        public int? TopCount { get { throw null; } set { } }
+    }
+    public partial class GetIncidentsForDetectionConfigurationOptions
+    {
+        public GetIncidentsForDetectionConfigurationOptions(System.DateTimeOffset startTime, System.DateTimeOffset endTime) { }
+        public System.Collections.Generic.IList<Azure.AI.MetricsAdvisor.Models.DimensionKey> DimensionsToFilter { get { throw null; } set { } }
+        public System.DateTimeOffset EndTime { get { throw null; } }
+        public System.DateTimeOffset StartTime { get { throw null; } }
+        public int? TopCount { get { throw null; } set { } }
+    }
+    public partial class GetMetricEnrichmentStatusesOptions
+    {
+        public GetMetricEnrichmentStatusesOptions(System.DateTimeOffset startTime, System.DateTimeOffset endTime) { }
+        public System.DateTimeOffset EndTime { get { throw null; } }
+        public int? SkipCount { get { throw null; } set { } }
+        public System.DateTimeOffset StartTime { get { throw null; } }
+        public int? TopCount { get { throw null; } set { } }
+    }
+    public partial class GetMetricSeriesDataOptions
+    {
+        public GetMetricSeriesDataOptions(System.DateTimeOffset startTime, System.DateTimeOffset endTime) { }
+        public System.DateTimeOffset EndTime { get { throw null; } }
+        public System.Collections.Generic.ICollection<Azure.AI.MetricsAdvisor.Models.DimensionKey> SeriesToFilter { get { throw null; } }
+        public System.DateTimeOffset StartTime { get { throw null; } }
+    }
+    public partial class GetMetricSeriesDefinitionsOptions
+    {
+        public GetMetricSeriesDefinitionsOptions(System.DateTimeOffset activeSince) { }
+        public System.DateTimeOffset ActiveSince { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<string>> DimensionCombinationsToFilter { get { throw null; } }
+        public int? SkipCount { get { throw null; } set { } }
+        public int? TopCount { get { throw null; } set { } }
+    }
+    public partial class GetValuesOfDimensionWithAnomaliesOptions
+    {
+        public GetValuesOfDimensionWithAnomaliesOptions(System.DateTimeOffset startTime, System.DateTimeOffset endTime) { }
+        public Azure.AI.MetricsAdvisor.Models.DimensionKey DimensionToFilter { get { throw null; } }
+        public System.DateTimeOffset EndTime { get { throw null; } }
+        public int? SkipCount { get { throw null; } set { } }
+        public System.DateTimeOffset StartTime { get { throw null; } }
+        public int? TopCount { get { throw null; } set { } }
+    }
     public partial class MetricsAdvisorClient
     {
         protected MetricsAdvisorClient() { }
         public MetricsAdvisorClient(System.Uri endpoint, Azure.AI.MetricsAdvisor.MetricsAdvisorKeyCredential credential) { }
-        public MetricsAdvisorClient(System.Uri endpoint, Azure.AI.MetricsAdvisor.MetricsAdvisorKeyCredential credential, Azure.AI.MetricsAdvisor.MetricsAdvisorClientOptions options) { }
-        public virtual Azure.Response<Azure.AI.MetricsAdvisor.Models.MetricFeedback> CreateMetricFeedback(Azure.AI.MetricsAdvisor.Models.MetricFeedback feedback, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.MetricsAdvisor.Models.MetricFeedback>> CreateMetricFeedbackAsync(Azure.AI.MetricsAdvisor.Models.MetricFeedback feedback, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.AI.MetricsAdvisor.Models.AnomalyAlert> GetAlerts(string alertConfigurationId, Azure.AI.MetricsAdvisor.Models.GetAlertsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.AI.MetricsAdvisor.Models.AnomalyAlert> GetAlertsAsync(string alertConfigurationId, Azure.AI.MetricsAdvisor.Models.GetAlertsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.AI.MetricsAdvisor.Models.DataAnomaly> GetAnomaliesForAlert(string alertConfigurationId, string alertId, Azure.AI.MetricsAdvisor.Models.GetAnomaliesForAlertOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.AI.MetricsAdvisor.Models.DataAnomaly> GetAnomaliesForAlertAsync(string alertConfigurationId, string alertId, Azure.AI.MetricsAdvisor.Models.GetAnomaliesForAlertOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.AI.MetricsAdvisor.Models.DataAnomaly> GetAnomaliesForDetectionConfiguration(string detectionConfigurationId, Azure.AI.MetricsAdvisor.Models.GetAnomaliesForDetectionConfigurationOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.AI.MetricsAdvisor.Models.DataAnomaly> GetAnomaliesForDetectionConfigurationAsync(string detectionConfigurationId, Azure.AI.MetricsAdvisor.Models.GetAnomaliesForDetectionConfigurationOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.MetricsAdvisor.Models.IncidentRootCause>> GetIncidentRootCauses(string detectionConfigurationId, string incidentId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.MetricsAdvisor.Models.IncidentRootCause>>> GetIncidentRootCausesAsync(string detectionConfigurationId, string incidentId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.AI.MetricsAdvisor.Models.AnomalyIncident> GetIncidentsForAlert(string alertConfigurationId, string alertId, Azure.AI.MetricsAdvisor.Models.GetIncidentsForAlertOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.AI.MetricsAdvisor.Models.AnomalyIncident> GetIncidentsForAlertAsync(string alertConfigurationId, string alertId, Azure.AI.MetricsAdvisor.Models.GetIncidentsForAlertOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.AI.MetricsAdvisor.Models.AnomalyIncident> GetIncidentsForDetectionConfiguration(string detectionConfigurationId, Azure.AI.MetricsAdvisor.Models.GetIncidentsForDetectionConfigurationOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.AI.MetricsAdvisor.Models.AnomalyIncident> GetIncidentsForDetectionConfigurationAsync(string detectionConfigurationId, Azure.AI.MetricsAdvisor.Models.GetIncidentsForDetectionConfigurationOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<string> GetMetricDimensionValues(string metricId, string dimensionName, Azure.AI.MetricsAdvisor.Models.GetMetricDimensionValuesOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<string> GetMetricDimensionValuesAsync(string metricId, string dimensionName, Azure.AI.MetricsAdvisor.Models.GetMetricDimensionValuesOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.MetricsAdvisor.Models.MetricEnrichedSeriesData>> GetMetricEnrichedSeriesData(System.Collections.Generic.IEnumerable<Azure.AI.MetricsAdvisor.Models.DimensionKey> seriesKeys, string detectionConfigurationId, System.DateTimeOffset startTime, System.DateTimeOffset endTime, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.MetricsAdvisor.Models.MetricEnrichedSeriesData>>> GetMetricEnrichedSeriesDataAsync(System.Collections.Generic.IEnumerable<Azure.AI.MetricsAdvisor.Models.DimensionKey> seriesKeys, string detectionConfigurationId, System.DateTimeOffset startTime, System.DateTimeOffset endTime, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.AI.MetricsAdvisor.Models.EnrichmentStatus> GetMetricEnrichmentStatuses(string metricId, Azure.AI.MetricsAdvisor.Models.GetMetricEnrichmentStatusesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.AI.MetricsAdvisor.Models.EnrichmentStatus> GetMetricEnrichmentStatusesAsync(string metricId, Azure.AI.MetricsAdvisor.Models.GetMetricEnrichmentStatusesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.AI.MetricsAdvisor.Models.MetricFeedback> GetMetricFeedback(string feedbackId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.MetricsAdvisor.Models.MetricFeedback>> GetMetricFeedbackAsync(string feedbackId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.AI.MetricsAdvisor.Models.MetricFeedback> GetMetricFeedbacks(string metricId, Azure.AI.MetricsAdvisor.Models.GetMetricFeedbacksOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.AI.MetricsAdvisor.Models.MetricFeedback> GetMetricFeedbacksAsync(string metricId, Azure.AI.MetricsAdvisor.Models.GetMetricFeedbacksOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.MetricsAdvisor.Models.MetricSeriesData>> GetMetricSeriesData(string metricId, Azure.AI.MetricsAdvisor.Models.GetMetricSeriesDataOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.MetricsAdvisor.Models.MetricSeriesData>>> GetMetricSeriesDataAsync(string metricId, Azure.AI.MetricsAdvisor.Models.GetMetricSeriesDataOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.AI.MetricsAdvisor.Models.MetricSeriesDefinition> GetMetricSeriesDefinitions(string metricId, Azure.AI.MetricsAdvisor.Models.GetMetricSeriesDefinitionsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.AI.MetricsAdvisor.Models.MetricSeriesDefinition> GetMetricSeriesDefinitionsAsync(string metricId, Azure.AI.MetricsAdvisor.Models.GetMetricSeriesDefinitionsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<string> GetValuesOfDimensionWithAnomalies(string detectionConfigurationId, string dimensionName, Azure.AI.MetricsAdvisor.Models.GetValuesOfDimensionWithAnomaliesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<string> GetValuesOfDimensionWithAnomaliesAsync(string detectionConfigurationId, string dimensionName, Azure.AI.MetricsAdvisor.Models.GetValuesOfDimensionWithAnomaliesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public MetricsAdvisorClient(System.Uri endpoint, Azure.AI.MetricsAdvisor.MetricsAdvisorKeyCredential credential, Azure.AI.MetricsAdvisor.MetricsAdvisorClientsOptions options) { }
+        public MetricsAdvisorClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
+        public MetricsAdvisorClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.MetricsAdvisor.MetricsAdvisorClientsOptions options) { }
+        public virtual Azure.Response<Azure.AI.MetricsAdvisor.Models.MetricFeedback> AddFeedback(Azure.AI.MetricsAdvisor.Models.MetricFeedback feedback, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.MetricsAdvisor.Models.MetricFeedback>> AddFeedbackAsync(Azure.AI.MetricsAdvisor.Models.MetricFeedback feedback, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.AI.MetricsAdvisor.Models.AnomalyAlert> GetAlerts(string alertConfigurationId, Azure.AI.MetricsAdvisor.GetAlertsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.AI.MetricsAdvisor.Models.AnomalyAlert> GetAlertsAsync(string alertConfigurationId, Azure.AI.MetricsAdvisor.GetAlertsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.AI.MetricsAdvisor.Models.MetricFeedback> GetAllFeedback(string metricId, Azure.AI.MetricsAdvisor.GetAllFeedbackOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.AI.MetricsAdvisor.Models.MetricFeedback> GetAllFeedbackAsync(string metricId, Azure.AI.MetricsAdvisor.GetAllFeedbackOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.AI.MetricsAdvisor.Models.DataPointAnomaly> GetAnomalies(string detectionConfigurationId, Azure.AI.MetricsAdvisor.GetAnomaliesForDetectionConfigurationOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.AI.MetricsAdvisor.Models.DataPointAnomaly> GetAnomalies(string alertConfigurationId, string alertId, Azure.AI.MetricsAdvisor.GetAnomaliesForAlertOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.AI.MetricsAdvisor.Models.DataPointAnomaly> GetAnomaliesAsync(string detectionConfigurationId, Azure.AI.MetricsAdvisor.GetAnomaliesForDetectionConfigurationOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.AI.MetricsAdvisor.Models.DataPointAnomaly> GetAnomaliesAsync(string alertConfigurationId, string alertId, Azure.AI.MetricsAdvisor.GetAnomaliesForAlertOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<string> GetDimensionValues(string metricId, string dimensionName, Azure.AI.MetricsAdvisor.GetDimensionValuesOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<string> GetDimensionValuesAsync(string metricId, string dimensionName, Azure.AI.MetricsAdvisor.GetDimensionValuesOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.MetricsAdvisor.Models.MetricFeedback> GetFeedback(string feedbackId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.MetricsAdvisor.Models.MetricFeedback>> GetFeedbackAsync(string feedbackId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.AI.MetricsAdvisor.Models.IncidentRootCause> GetIncidentRootCauses(Azure.AI.MetricsAdvisor.Models.AnomalyIncident incident, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.AI.MetricsAdvisor.Models.IncidentRootCause> GetIncidentRootCauses(string detectionConfigurationId, string incidentId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.AI.MetricsAdvisor.Models.IncidentRootCause> GetIncidentRootCausesAsync(Azure.AI.MetricsAdvisor.Models.AnomalyIncident incident, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.AI.MetricsAdvisor.Models.IncidentRootCause> GetIncidentRootCausesAsync(string detectionConfigurationId, string incidentId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.AI.MetricsAdvisor.Models.AnomalyIncident> GetIncidents(string detectionConfigurationId, Azure.AI.MetricsAdvisor.GetIncidentsForDetectionConfigurationOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.AI.MetricsAdvisor.Models.AnomalyIncident> GetIncidents(string alertConfigurationId, string alertId, Azure.AI.MetricsAdvisor.GetIncidentsForAlertOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.AI.MetricsAdvisor.Models.AnomalyIncident> GetIncidentsAsync(string detectionConfigurationId, Azure.AI.MetricsAdvisor.GetIncidentsForDetectionConfigurationOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.AI.MetricsAdvisor.Models.AnomalyIncident> GetIncidentsAsync(string alertConfigurationId, string alertId, Azure.AI.MetricsAdvisor.GetIncidentsForAlertOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.AI.MetricsAdvisor.Models.MetricEnrichedSeriesData> GetMetricEnrichedSeriesData(System.Collections.Generic.IEnumerable<Azure.AI.MetricsAdvisor.Models.DimensionKey> seriesKeys, string detectionConfigurationId, System.DateTimeOffset startTime, System.DateTimeOffset endTime, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.AI.MetricsAdvisor.Models.MetricEnrichedSeriesData> GetMetricEnrichedSeriesDataAsync(System.Collections.Generic.IEnumerable<Azure.AI.MetricsAdvisor.Models.DimensionKey> seriesKeys, string detectionConfigurationId, System.DateTimeOffset startTime, System.DateTimeOffset endTime, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.AI.MetricsAdvisor.Models.EnrichmentStatus> GetMetricEnrichmentStatuses(string metricId, Azure.AI.MetricsAdvisor.GetMetricEnrichmentStatusesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.AI.MetricsAdvisor.Models.EnrichmentStatus> GetMetricEnrichmentStatusesAsync(string metricId, Azure.AI.MetricsAdvisor.GetMetricEnrichmentStatusesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.AI.MetricsAdvisor.Models.MetricSeriesData> GetMetricSeriesData(string metricId, Azure.AI.MetricsAdvisor.GetMetricSeriesDataOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.AI.MetricsAdvisor.Models.MetricSeriesData> GetMetricSeriesDataAsync(string metricId, Azure.AI.MetricsAdvisor.GetMetricSeriesDataOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.AI.MetricsAdvisor.Models.MetricSeriesDefinition> GetMetricSeriesDefinitions(string metricId, Azure.AI.MetricsAdvisor.GetMetricSeriesDefinitionsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.AI.MetricsAdvisor.Models.MetricSeriesDefinition> GetMetricSeriesDefinitionsAsync(string metricId, Azure.AI.MetricsAdvisor.GetMetricSeriesDefinitionsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<string> GetValuesOfDimensionWithAnomalies(string detectionConfigurationId, string dimensionName, Azure.AI.MetricsAdvisor.GetValuesOfDimensionWithAnomaliesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<string> GetValuesOfDimensionWithAnomaliesAsync(string detectionConfigurationId, string dimensionName, Azure.AI.MetricsAdvisor.GetValuesOfDimensionWithAnomaliesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class MetricsAdvisorClientOptions : Azure.Core.ClientOptions
+    public partial class MetricsAdvisorClientsOptions : Azure.Core.ClientOptions
     {
-        public MetricsAdvisorClientOptions(Azure.AI.MetricsAdvisor.MetricsAdvisorClientOptions.ServiceVersion version = Azure.AI.MetricsAdvisor.MetricsAdvisorClientOptions.ServiceVersion.V1_0) { }
-        public Azure.AI.MetricsAdvisor.MetricsAdvisorClientOptions.ServiceVersion Version { get { throw null; } }
+        public MetricsAdvisorClientsOptions(Azure.AI.MetricsAdvisor.MetricsAdvisorClientsOptions.ServiceVersion version = Azure.AI.MetricsAdvisor.MetricsAdvisorClientsOptions.ServiceVersion.V1_0) { }
+        public Azure.AI.MetricsAdvisor.MetricsAdvisorClientsOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
         {
             V1_0 = 1,
@@ -48,8 +216,8 @@ namespace Azure.AI.MetricsAdvisor
     public partial class MetricsAdvisorKeyCredential
     {
         public MetricsAdvisorKeyCredential(string subscriptionKey, string apiKey) { }
-        public void UpdateApiKey(string key) { }
-        public void UpdateSubscriptionKey(string key) { }
+        public void UpdateApiKey(string apiKey) { }
+        public void UpdateSubscriptionKey(string subscriptionKey) { }
     }
 }
 namespace Azure.AI.MetricsAdvisor.Administration
@@ -58,75 +226,59 @@ namespace Azure.AI.MetricsAdvisor.Administration
     {
         protected MetricsAdvisorAdministrationClient() { }
         public MetricsAdvisorAdministrationClient(System.Uri endpoint, Azure.AI.MetricsAdvisor.MetricsAdvisorKeyCredential credential) { }
-        public MetricsAdvisorAdministrationClient(System.Uri endpoint, Azure.AI.MetricsAdvisor.MetricsAdvisorKeyCredential credential, Azure.AI.MetricsAdvisor.MetricsAdvisorClientOptions options) { }
-        public virtual Azure.Response<Azure.AI.MetricsAdvisor.Models.AnomalyAlertConfiguration> CreateAnomalyAlertConfiguration(Azure.AI.MetricsAdvisor.Models.AnomalyAlertConfiguration alertConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.MetricsAdvisor.Models.AnomalyAlertConfiguration>> CreateAnomalyAlertConfigurationAsync(Azure.AI.MetricsAdvisor.Models.AnomalyAlertConfiguration alertConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.AI.MetricsAdvisor.Models.DataFeed> CreateDataFeed(string dataFeedName, Azure.AI.MetricsAdvisor.Models.DataFeedSource dataSource, Azure.AI.MetricsAdvisor.Models.DataFeedGranularity dataFeedGranularity, Azure.AI.MetricsAdvisor.Models.DataFeedSchema dataFeedSchema, Azure.AI.MetricsAdvisor.Models.DataFeedIngestionSettings dataFeedIngestionSettings, Azure.AI.MetricsAdvisor.Models.DataFeedOptions dataFeedOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.MetricsAdvisor.Models.DataFeed>> CreateDataFeedAsync(string dataFeedName, Azure.AI.MetricsAdvisor.Models.DataFeedSource dataSource, Azure.AI.MetricsAdvisor.Models.DataFeedGranularity dataFeedGranularity, Azure.AI.MetricsAdvisor.Models.DataFeedSchema dataFeedSchema, Azure.AI.MetricsAdvisor.Models.DataFeedIngestionSettings dataFeedIngestionSettings, Azure.AI.MetricsAdvisor.Models.DataFeedOptions dataFeedOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.AI.MetricsAdvisor.Models.AlertingHook> CreateHook(Azure.AI.MetricsAdvisor.Models.AlertingHook hook, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.MetricsAdvisor.Models.AlertingHook>> CreateHookAsync(Azure.AI.MetricsAdvisor.Models.AlertingHook hook, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.AI.MetricsAdvisor.Models.AnomalyDetectionConfiguration> CreateMetricAnomalyDetectionConfiguration(Azure.AI.MetricsAdvisor.Models.AnomalyDetectionConfiguration detectionConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.MetricsAdvisor.Models.AnomalyDetectionConfiguration>> CreateMetricAnomalyDetectionConfigurationAsync(Azure.AI.MetricsAdvisor.Models.AnomalyDetectionConfiguration detectionConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response DeleteAnomalyAlertConfiguration(string alertConfigurationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAnomalyAlertConfigurationAsync(string alertConfigurationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public MetricsAdvisorAdministrationClient(System.Uri endpoint, Azure.AI.MetricsAdvisor.MetricsAdvisorKeyCredential credential, Azure.AI.MetricsAdvisor.MetricsAdvisorClientsOptions options) { }
+        public MetricsAdvisorAdministrationClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
+        public MetricsAdvisorAdministrationClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.MetricsAdvisor.MetricsAdvisorClientsOptions options) { }
+        public virtual Azure.Response<Azure.AI.MetricsAdvisor.Models.AnomalyAlertConfiguration> CreateAlertConfiguration(Azure.AI.MetricsAdvisor.Models.AnomalyAlertConfiguration alertConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.MetricsAdvisor.Models.AnomalyAlertConfiguration>> CreateAlertConfigurationAsync(Azure.AI.MetricsAdvisor.Models.AnomalyAlertConfiguration alertConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.MetricsAdvisor.Models.DataFeed> CreateDataFeed(Azure.AI.MetricsAdvisor.Models.DataFeed dataFeed, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.MetricsAdvisor.Models.DataFeed>> CreateDataFeedAsync(Azure.AI.MetricsAdvisor.Models.DataFeed dataFeed, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.MetricsAdvisor.Models.AnomalyDetectionConfiguration> CreateDetectionConfiguration(Azure.AI.MetricsAdvisor.Models.AnomalyDetectionConfiguration detectionConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.MetricsAdvisor.Models.AnomalyDetectionConfiguration>> CreateDetectionConfigurationAsync(Azure.AI.MetricsAdvisor.Models.AnomalyDetectionConfiguration detectionConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.MetricsAdvisor.Models.NotificationHook> CreateHook(Azure.AI.MetricsAdvisor.Models.NotificationHook hook, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.MetricsAdvisor.Models.NotificationHook>> CreateHookAsync(Azure.AI.MetricsAdvisor.Models.NotificationHook hook, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response DeleteAlertConfiguration(string alertConfigurationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAlertConfigurationAsync(string alertConfigurationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteDataFeed(string dataFeedId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteDataFeedAsync(string dataFeedId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response DeleteDetectionConfiguration(string detectionConfigurationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteDetectionConfigurationAsync(string detectionConfigurationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteHook(string hookId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteHookAsync(string hookId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response DeleteMetricAnomalyDetectionConfiguration(string detectionConfigurationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteMetricAnomalyDetectionConfigurationAsync(string detectionConfigurationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.AI.MetricsAdvisor.Models.AnomalyAlertConfiguration> GetAnomalyAlertConfiguration(string alertConfigurationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.MetricsAdvisor.Models.AnomalyAlertConfiguration>> GetAnomalyAlertConfigurationAsync(string alertConfigurationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.MetricsAdvisor.Models.AnomalyAlertConfiguration>> GetAnomalyAlertConfigurations(string alertConfigurationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.MetricsAdvisor.Models.AnomalyAlertConfiguration>>> GetAnomalyAlertConfigurationsAsync(string alertConfigurationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.MetricsAdvisor.Models.AnomalyAlertConfiguration> GetAlertConfiguration(string alertConfigurationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.MetricsAdvisor.Models.AnomalyAlertConfiguration>> GetAlertConfigurationAsync(string alertConfigurationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.AI.MetricsAdvisor.Models.AnomalyAlertConfiguration> GetAlertConfigurations(string detectionConfigurationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.AI.MetricsAdvisor.Models.AnomalyAlertConfiguration> GetAlertConfigurationsAsync(string detectionConfigurationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.MetricsAdvisor.Models.DataFeed> GetDataFeed(string dataFeedId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.MetricsAdvisor.Models.DataFeed>> GetDataFeedAsync(string dataFeedId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.MetricsAdvisor.Models.DataFeedIngestionProgress> GetDataFeedIngestionProgress(string dataFeedId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.MetricsAdvisor.Models.DataFeedIngestionProgress>> GetDataFeedIngestionProgressAsync(string dataFeedId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.AI.MetricsAdvisor.Models.DataFeedIngestionStatus> GetDataFeedIngestionStatuses(string dataFeedId, Azure.AI.MetricsAdvisor.Models.GetDataFeedIngestionStatusesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.AI.MetricsAdvisor.Models.DataFeedIngestionStatus> GetDataFeedIngestionStatusesAsync(string dataFeedId, Azure.AI.MetricsAdvisor.Models.GetDataFeedIngestionStatusesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.AI.MetricsAdvisor.Models.DataFeed> GetDataFeeds(Azure.AI.MetricsAdvisor.Models.GetDataFeedsOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.AI.MetricsAdvisor.Models.DataFeed> GetDataFeedsAsync(Azure.AI.MetricsAdvisor.Models.GetDataFeedsOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.AI.MetricsAdvisor.Models.AlertingHook> GetHook(string hookId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.MetricsAdvisor.Models.AlertingHook>> GetHookAsync(string hookId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.AI.MetricsAdvisor.Models.AlertingHook> GetHooks(Azure.AI.MetricsAdvisor.Models.GetHooksOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.AI.MetricsAdvisor.Models.AlertingHook> GetHooksAsync(Azure.AI.MetricsAdvisor.Models.GetHooksOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.AI.MetricsAdvisor.Models.AnomalyDetectionConfiguration> GetMetricAnomalyDetectionConfiguration(string detectionConfigurationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.MetricsAdvisor.Models.AnomalyDetectionConfiguration>> GetMetricAnomalyDetectionConfigurationAsync(string detectionConfigurationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.MetricsAdvisor.Models.AnomalyDetectionConfiguration>> GetMetricAnomalyDetectionConfigurations(string metricId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.MetricsAdvisor.Models.AnomalyDetectionConfiguration>>> GetMetricAnomalyDetectionConfigurationsAsync(string metricId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.AI.MetricsAdvisor.Models.DataFeedIngestionStatus> GetDataFeedIngestionStatuses(string dataFeedId, Azure.AI.MetricsAdvisor.GetDataFeedIngestionStatusesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.AI.MetricsAdvisor.Models.DataFeedIngestionStatus> GetDataFeedIngestionStatusesAsync(string dataFeedId, Azure.AI.MetricsAdvisor.GetDataFeedIngestionStatusesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.AI.MetricsAdvisor.Models.DataFeed> GetDataFeeds(Azure.AI.MetricsAdvisor.GetDataFeedsOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.AI.MetricsAdvisor.Models.DataFeed> GetDataFeedsAsync(Azure.AI.MetricsAdvisor.GetDataFeedsOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.MetricsAdvisor.Models.AnomalyDetectionConfiguration> GetDetectionConfiguration(string detectionConfigurationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.MetricsAdvisor.Models.AnomalyDetectionConfiguration>> GetDetectionConfigurationAsync(string detectionConfigurationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.AI.MetricsAdvisor.Models.AnomalyDetectionConfiguration> GetDetectionConfigurations(string metricId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.AI.MetricsAdvisor.Models.AnomalyDetectionConfiguration> GetDetectionConfigurationsAsync(string metricId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.MetricsAdvisor.Models.NotificationHook> GetHook(string hookId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.MetricsAdvisor.Models.NotificationHook>> GetHookAsync(string hookId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.AI.MetricsAdvisor.Models.NotificationHook> GetHooks(Azure.AI.MetricsAdvisor.GetHooksOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.AI.MetricsAdvisor.Models.NotificationHook> GetHooksAsync(Azure.AI.MetricsAdvisor.GetHooksOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response RefreshDataFeedIngestion(string dataFeedId, System.DateTimeOffset startTime, System.DateTimeOffset endTime, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RefreshDataFeedIngestionAsync(string dataFeedId, System.DateTimeOffset startTime, System.DateTimeOffset endTime, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response UpdateAnomalyAlertConfiguration(string alertConfigurationId, Azure.AI.MetricsAdvisor.Models.AnomalyAlertConfiguration alertConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateAnomalyAlertConfigurationAsync(string alertConfigurationId, Azure.AI.MetricsAdvisor.Models.AnomalyAlertConfiguration alertConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response UpdateAlertConfiguration(string alertConfigurationId, Azure.AI.MetricsAdvisor.Models.AnomalyAlertConfiguration alertConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateAlertConfigurationAsync(string alertConfigurationId, Azure.AI.MetricsAdvisor.Models.AnomalyAlertConfiguration alertConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response UpdateDataFeed(string dataFeedId, Azure.AI.MetricsAdvisor.Models.DataFeed dataFeed, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateDataFeedAsync(string dataFeedId, Azure.AI.MetricsAdvisor.Models.DataFeed dataFeed, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response UpdateHook(string hookId, Azure.AI.MetricsAdvisor.Models.AlertingHook hook, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateHookAsync(string hookId, Azure.AI.MetricsAdvisor.Models.AlertingHook hook, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response UpdateMetricAnomalyDetectionConfiguration(string detectionConfigurationId, Azure.AI.MetricsAdvisor.Models.AnomalyDetectionConfiguration detectionConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateMetricAnomalyDetectionConfigurationAsync(string detectionConfigurationId, Azure.AI.MetricsAdvisor.Models.AnomalyDetectionConfiguration detectionConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class MetricsAdvisorAdministrationClientOptions : Azure.Core.ClientOptions
-    {
-        public MetricsAdvisorAdministrationClientOptions(Azure.AI.MetricsAdvisor.Administration.MetricsAdvisorAdministrationClientOptions.ServiceVersion version = Azure.AI.MetricsAdvisor.Administration.MetricsAdvisorAdministrationClientOptions.ServiceVersion.V1_0) { }
-        public Azure.AI.MetricsAdvisor.Administration.MetricsAdvisorAdministrationClientOptions.ServiceVersion Version { get { throw null; } }
-        public enum ServiceVersion
-        {
-            V1_0 = 1,
-        }
+        public virtual Azure.Response UpdateDetectionConfiguration(string detectionConfigurationId, Azure.AI.MetricsAdvisor.Models.AnomalyDetectionConfiguration detectionConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateDetectionConfigurationAsync(string detectionConfigurationId, Azure.AI.MetricsAdvisor.Models.AnomalyDetectionConfiguration detectionConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response UpdateHook(string hookId, Azure.AI.MetricsAdvisor.Models.NotificationHook hook, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateHookAsync(string hookId, Azure.AI.MetricsAdvisor.Models.NotificationHook hook, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    public partial class AlertingHook
-    {
-        internal AlertingHook() { }
-        public System.Collections.Generic.IReadOnlyList<string> Administrators { get { throw null; } }
-        public string Description { get { throw null; } set { } }
-        public string ExternalLink { get { throw null; } set { } }
-        public string Id { get { throw null; } }
-        public string Name { get { throw null; } }
-    }
     public partial class AnomalyAlert
     {
         internal AnomalyAlert() { }
@@ -137,24 +289,24 @@ namespace Azure.AI.MetricsAdvisor.Models
     }
     public partial class AnomalyAlertConfiguration
     {
-        public AnomalyAlertConfiguration(string name, System.Collections.Generic.IList<string> idsOfHooksToAlert, System.Collections.Generic.IList<Azure.AI.MetricsAdvisor.Models.MetricAnomalyAlertConfiguration> metricAlertConfigurations) { }
+        public AnomalyAlertConfiguration() { }
         public Azure.AI.MetricsAdvisor.Models.MetricAnomalyAlertConfigurationsOperator? CrossMetricsOperator { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public string Id { get { throw null; } }
         public System.Collections.Generic.IList<string> IdsOfHooksToAlert { get { throw null; } }
         public System.Collections.Generic.IList<Azure.AI.MetricsAdvisor.Models.MetricAnomalyAlertConfiguration> MetricAlertConfigurations { get { throw null; } }
-        public string Name { get { throw null; } }
+        public string Name { get { throw null; } set { } }
     }
     public partial class AnomalyDetectionConfiguration
     {
-        public AnomalyDetectionConfiguration(string metricId, string name, Azure.AI.MetricsAdvisor.Models.MetricWholeSeriesDetectionCondition wholeSeriesDetectionConditions) { }
+        public AnomalyDetectionConfiguration() { }
         public string Description { get { throw null; } set { } }
         public string Id { get { throw null; } }
-        public string MetricId { get { throw null; } }
-        public string Name { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.AI.MetricsAdvisor.Models.MetricSingleSeriesDetectionCondition> SeriesDetectionConditions { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.AI.MetricsAdvisor.Models.MetricSeriesGroupDetectionCondition> SeriesGroupDetectionConditions { get { throw null; } set { } }
-        public Azure.AI.MetricsAdvisor.Models.MetricWholeSeriesDetectionCondition WholeSeriesDetectionConditions { get { throw null; } }
+        public string MetricId { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.AI.MetricsAdvisor.Models.MetricSingleSeriesDetectionCondition> SeriesDetectionConditions { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.AI.MetricsAdvisor.Models.MetricSeriesGroupDetectionCondition> SeriesGroupDetectionConditions { get { throw null; } }
+        public Azure.AI.MetricsAdvisor.Models.MetricWholeSeriesDetectionCondition WholeSeriesDetectionConditions { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AnomalyDetectorDirection : System.IEquatable<Azure.AI.MetricsAdvisor.Models.AnomalyDetectorDirection>
@@ -185,7 +337,25 @@ namespace Azure.AI.MetricsAdvisor.Models
         public string MetricId { get { throw null; } }
         public Azure.AI.MetricsAdvisor.Models.AnomalySeverity Severity { get { throw null; } }
         public System.DateTimeOffset StartTime { get { throw null; } }
-        public Azure.AI.MetricsAdvisor.Models.IncidentStatus? Status { get { throw null; } }
+        public Azure.AI.MetricsAdvisor.Models.AnomalyIncidentStatus Status { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AnomalyIncidentStatus : System.IEquatable<Azure.AI.MetricsAdvisor.Models.AnomalyIncidentStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AnomalyIncidentStatus(string value) { throw null; }
+        public static Azure.AI.MetricsAdvisor.Models.AnomalyIncidentStatus Active { get { throw null; } }
+        public static Azure.AI.MetricsAdvisor.Models.AnomalyIncidentStatus Resolved { get { throw null; } }
+        public bool Equals(Azure.AI.MetricsAdvisor.Models.AnomalyIncidentStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.MetricsAdvisor.Models.AnomalyIncidentStatus left, Azure.AI.MetricsAdvisor.Models.AnomalyIncidentStatus right) { throw null; }
+        public static implicit operator Azure.AI.MetricsAdvisor.Models.AnomalyIncidentStatus (string value) { throw null; }
+        public static bool operator !=(Azure.AI.MetricsAdvisor.Models.AnomalyIncidentStatus left, Azure.AI.MetricsAdvisor.Models.AnomalyIncidentStatus right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AnomalySeverity : System.IEquatable<Azure.AI.MetricsAdvisor.Models.AnomalySeverity>
@@ -246,26 +416,47 @@ namespace Azure.AI.MetricsAdvisor.Models
     public partial class AzureApplicationInsightsDataFeedSource : Azure.AI.MetricsAdvisor.Models.DataFeedSource
     {
         public AzureApplicationInsightsDataFeedSource(string applicationId, string apiKey, string azureCloud, string query) { }
+        public string ApiKey { get { throw null; } }
+        public string ApplicationId { get { throw null; } }
+        public string AzureCloud { get { throw null; } }
+        public string Query { get { throw null; } }
     }
     public partial class AzureBlobDataFeedSource : Azure.AI.MetricsAdvisor.Models.DataFeedSource
     {
         public AzureBlobDataFeedSource(string connectionString, string container, string blobTemplate) { }
+        public string BlobTemplate { get { throw null; } }
+        public string ConnectionString { get { throw null; } }
+        public string Container { get { throw null; } }
     }
     public partial class AzureCosmosDbDataFeedSource : Azure.AI.MetricsAdvisor.Models.DataFeedSource
     {
         public AzureCosmosDbDataFeedSource(string connectionString, string sqlQuery, string database, string collectionId) { }
+        public string CollectionId { get { throw null; } }
+        public string ConnectionString { get { throw null; } }
+        public string Database { get { throw null; } }
+        public string SqlQuery { get { throw null; } }
     }
     public partial class AzureDataExplorerDataFeedSource : Azure.AI.MetricsAdvisor.Models.DataFeedSource
     {
         public AzureDataExplorerDataFeedSource(string connectionString, string query) { }
+        public string ConnectionString { get { throw null; } }
+        public string Query { get { throw null; } }
     }
     public partial class AzureDataLakeStorageGen2DataFeedSource : Azure.AI.MetricsAdvisor.Models.DataFeedSource
     {
         public AzureDataLakeStorageGen2DataFeedSource(string accountName, string accountKey, string fileSystemName, string directoryTemplate, string fileTemplate) { }
+        public string AccountKey { get { throw null; } }
+        public string AccountName { get { throw null; } }
+        public string DirectoryTemplate { get { throw null; } }
+        public string FileSystemName { get { throw null; } }
+        public string FileTemplate { get { throw null; } }
     }
     public partial class AzureTableDataFeedSource : Azure.AI.MetricsAdvisor.Models.DataFeedSource
     {
         public AzureTableDataFeedSource(string connectionString, string table, string query) { }
+        public string ConnectionString { get { throw null; } }
+        public string Query { get { throw null; } }
+        public string Table { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct BoundaryDirection : System.IEquatable<Azure.AI.MetricsAdvisor.Models.BoundaryDirection>
@@ -314,33 +505,28 @@ namespace Azure.AI.MetricsAdvisor.Models
         public int ShiftPoint { get { throw null; } }
         public Azure.AI.MetricsAdvisor.Models.SuppressCondition SuppressCondition { get { throw null; } }
     }
-    public partial class DataAnomaly
-    {
-        internal DataAnomaly() { }
-        public string AnomalyDetectionConfigurationId { get { throw null; } }
-        public System.DateTimeOffset? CreatedTime { get { throw null; } }
-        public string MetricId { get { throw null; } }
-        public System.DateTimeOffset? ModifiedTime { get { throw null; } }
-        public Azure.AI.MetricsAdvisor.Models.DimensionKey SeriesKey { get { throw null; } }
-        public Azure.AI.MetricsAdvisor.Models.AnomalySeverity Severity { get { throw null; } }
-        public Azure.AI.MetricsAdvisor.Models.AnomalyStatus? Status { get { throw null; } }
-        public System.DateTimeOffset Timestamp { get { throw null; } }
-    }
     public partial class DataFeed
     {
-        internal DataFeed() { }
+        public DataFeed() { }
+        public Azure.AI.MetricsAdvisor.Models.DataFeedAccessMode? AccessMode { get { throw null; } set { } }
+        public string ActionLinkTemplate { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Administrators { get { throw null; } }
         public System.DateTimeOffset? CreatedTime { get { throw null; } }
         public string Creator { get { throw null; } }
-        public Azure.AI.MetricsAdvisor.Models.DataFeedGranularity Granularity { get { throw null; } }
+        public Azure.AI.MetricsAdvisor.Models.DataFeedSource DataSource { get { throw null; } set { } }
+        public string Description { get { throw null; } set { } }
+        public Azure.AI.MetricsAdvisor.Models.DataFeedGranularity Granularity { get { throw null; } set { } }
         public string Id { get { throw null; } }
-        public Azure.AI.MetricsAdvisor.Models.DataFeedIngestionSettings IngestionSettings { get { throw null; } }
+        public Azure.AI.MetricsAdvisor.Models.DataFeedIngestionSettings IngestionSettings { get { throw null; } set { } }
         public bool? IsAdministrator { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> MetricIds { get { throw null; } }
-        public string Name { get { throw null; } }
-        public Azure.AI.MetricsAdvisor.Models.DataFeedOptions Options { get { throw null; } }
-        public Azure.AI.MetricsAdvisor.Models.DataFeedSchema Schema { get { throw null; } }
-        public Azure.AI.MetricsAdvisor.Models.DataFeedSourceType SourceType { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> MetricIds { get { throw null; } }
+        public Azure.AI.MetricsAdvisor.Models.DataFeedMissingDataPointFillSettings MissingDataPointFillSettings { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        public Azure.AI.MetricsAdvisor.Models.DataFeedRollupSettings RollupSettings { get { throw null; } set { } }
+        public Azure.AI.MetricsAdvisor.Models.DataFeedSchema Schema { get { throw null; } set { } }
+        public Azure.AI.MetricsAdvisor.Models.DataFeedSourceType? SourceType { get { throw null; } }
         public Azure.AI.MetricsAdvisor.Models.DataFeedStatus? Status { get { throw null; } }
+        public System.Collections.Generic.IList<string> Viewers { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DataFeedAccessMode : System.IEquatable<Azure.AI.MetricsAdvisor.Models.DataFeedAccessMode>
@@ -382,6 +568,12 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static bool operator !=(Azure.AI.MetricsAdvisor.Models.DataFeedAutoRollupMethod left, Azure.AI.MetricsAdvisor.Models.DataFeedAutoRollupMethod right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class DataFeedDimension
+    {
+        public DataFeedDimension(string dimensionName) { }
+        public string DimensionDisplayName { get { throw null; } set { } }
+        public string DimensionName { get { throw null; } }
+    }
     public partial class DataFeedGranularity
     {
         public DataFeedGranularity(Azure.AI.MetricsAdvisor.Models.DataFeedGranularityType granularityType) { }
@@ -397,9 +589,9 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static Azure.AI.MetricsAdvisor.Models.DataFeedGranularityType Custom { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.DataFeedGranularityType Daily { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.DataFeedGranularityType Hourly { get { throw null; } }
-        public static Azure.AI.MetricsAdvisor.Models.DataFeedGranularityType Minutely { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.DataFeedGranularityType Monthly { get { throw null; } }
-        public static Azure.AI.MetricsAdvisor.Models.DataFeedGranularityType Secondly { get { throw null; } }
+        public static Azure.AI.MetricsAdvisor.Models.DataFeedGranularityType PerMinute { get { throw null; } }
+        public static Azure.AI.MetricsAdvisor.Models.DataFeedGranularityType PerSecond { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.DataFeedGranularityType Weekly { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.DataFeedGranularityType Yearly { get { throw null; } }
         public bool Equals(Azure.AI.MetricsAdvisor.Models.DataFeedGranularityType other) { throw null; }
@@ -420,19 +612,19 @@ namespace Azure.AI.MetricsAdvisor.Models
     }
     public partial class DataFeedIngestionSettings
     {
-        public DataFeedIngestionSettings(System.DateTimeOffset ingestionStartTime) { }
+        public DataFeedIngestionSettings() { }
         public int? DataSourceRequestConcurrency { get { throw null; } set { } }
         public System.TimeSpan? IngestionRetryDelay { get { throw null; } set { } }
         public System.TimeSpan? IngestionStartOffset { get { throw null; } set { } }
-        public System.DateTimeOffset IngestionStartTime { get { throw null; } }
+        public System.DateTimeOffset? IngestionStartTime { get { throw null; } set { } }
         public System.TimeSpan? StopRetryAfter { get { throw null; } set { } }
     }
     public partial class DataFeedIngestionStatus
     {
         internal DataFeedIngestionStatus() { }
         public string Message { get { throw null; } }
-        public Azure.AI.MetricsAdvisor.Models.IngestionStatusType? Status { get { throw null; } }
-        public System.DateTimeOffset? Timestamp { get { throw null; } }
+        public Azure.AI.MetricsAdvisor.Models.IngestionStatusType Status { get { throw null; } }
+        public System.DateTimeOffset Timestamp { get { throw null; } }
     }
     public partial class DataFeedMetric
     {
@@ -468,22 +660,11 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static bool operator !=(Azure.AI.MetricsAdvisor.Models.DataFeedMissingDataPointFillType left, Azure.AI.MetricsAdvisor.Models.DataFeedMissingDataPointFillType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DataFeedOptions
-    {
-        public DataFeedOptions() { }
-        public Azure.AI.MetricsAdvisor.Models.DataFeedAccessMode? AccessMode { get { throw null; } set { } }
-        public string ActionLinkTemplate { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> Administrators { get { throw null; } set { } }
-        public string Description { get { throw null; } set { } }
-        public Azure.AI.MetricsAdvisor.Models.DataFeedMissingDataPointFillSettings MissingDataPointFillSettings { get { throw null; } set { } }
-        public Azure.AI.MetricsAdvisor.Models.DataFeedRollupSettings RollupSettings { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> Viewers { get { throw null; } set { } }
-    }
     public partial class DataFeedRollupSettings
     {
         public DataFeedRollupSettings() { }
         public string AlreadyRollupIdentificationValue { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> AutoRollupGroupByColumnNames { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> AutoRollupGroupByColumnNames { get { throw null; } }
         public Azure.AI.MetricsAdvisor.Models.DataFeedAutoRollupMethod? RollupMethod { get { throw null; } set { } }
         public Azure.AI.MetricsAdvisor.Models.DataFeedRollupType? RollupType { get { throw null; } set { } }
     }
@@ -508,8 +689,8 @@ namespace Azure.AI.MetricsAdvisor.Models
     }
     public partial class DataFeedSchema
     {
-        public DataFeedSchema(System.Collections.Generic.IList<Azure.AI.MetricsAdvisor.Models.DataFeedMetric> metricColumns) { }
-        public System.Collections.Generic.IList<Azure.AI.MetricsAdvisor.Models.MetricDimension> DimensionColumns { get { throw null; } set { } }
+        public DataFeedSchema() { }
+        public System.Collections.Generic.IList<Azure.AI.MetricsAdvisor.Models.DataFeedDimension> DimensionColumns { get { throw null; } }
         public System.Collections.Generic.IList<Azure.AI.MetricsAdvisor.Models.DataFeedMetric> MetricColumns { get { throw null; } }
         public string TimestampColumn { get { throw null; } set { } }
     }
@@ -564,6 +745,18 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static bool operator !=(Azure.AI.MetricsAdvisor.Models.DataFeedStatus left, Azure.AI.MetricsAdvisor.Models.DataFeedStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class DataPointAnomaly
+    {
+        internal DataPointAnomaly() { }
+        public string AnomalyDetectionConfigurationId { get { throw null; } }
+        public System.DateTimeOffset? CreatedTime { get { throw null; } }
+        public string MetricId { get { throw null; } }
+        public System.DateTimeOffset? ModifiedTime { get { throw null; } }
+        public Azure.AI.MetricsAdvisor.Models.DimensionKey SeriesKey { get { throw null; } }
+        public Azure.AI.MetricsAdvisor.Models.AnomalySeverity Severity { get { throw null; } }
+        public Azure.AI.MetricsAdvisor.Models.AnomalyStatus? Status { get { throw null; } }
+        public System.DateTimeOffset Timestamp { get { throw null; } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DetectionConditionsOperator : System.IEquatable<Azure.AI.MetricsAdvisor.Models.DetectionConditionsOperator>
     {
@@ -598,11 +791,15 @@ namespace Azure.AI.MetricsAdvisor.Models
     }
     public partial class ElasticsearchDataFeedSource : Azure.AI.MetricsAdvisor.Models.DataFeedSource
     {
-        public ElasticsearchDataFeedSource(string host, string port, string authHeader, string query) { }
+        public ElasticsearchDataFeedSource(string host, string port, string authorizationHeader, string query) { }
+        public string AuthorizationHeader { get { throw null; } }
+        public string Host { get { throw null; } }
+        public string Port { get { throw null; } }
+        public string Query { get { throw null; } }
     }
-    public partial class EmailHook : Azure.AI.MetricsAdvisor.Models.AlertingHook
+    public partial class EmailNotificationHook : Azure.AI.MetricsAdvisor.Models.NotificationHook
     {
-        public EmailHook(string name, System.Collections.Generic.IList<string> emailsToAlert) { }
+        public EmailNotificationHook() { }
         public System.Collections.Generic.IList<string> EmailsToAlert { get { throw null; } }
     }
     public partial class EnrichmentStatus
@@ -610,30 +807,12 @@ namespace Azure.AI.MetricsAdvisor.Models
         internal EnrichmentStatus() { }
         public string Message { get { throw null; } }
         public string Status { get { throw null; } }
-        public System.DateTimeOffset? Timestamp { get { throw null; } }
+        public System.DateTimeOffset Timestamp { get { throw null; } }
     }
     public partial class FeedbackDimensionFilter
     {
-        public FeedbackDimensionFilter(Azure.AI.MetricsAdvisor.Models.DimensionKey dimensionFilter) { }
+        public FeedbackDimensionFilter() { }
         public Azure.AI.MetricsAdvisor.Models.DimensionKey DimensionFilter { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct FeedbackQueryTimeMode : System.IEquatable<Azure.AI.MetricsAdvisor.Models.FeedbackQueryTimeMode>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public FeedbackQueryTimeMode(string value) { throw null; }
-        public static Azure.AI.MetricsAdvisor.Models.FeedbackQueryTimeMode FeedbackCreatedTime { get { throw null; } }
-        public static Azure.AI.MetricsAdvisor.Models.FeedbackQueryTimeMode MetricTimestamp { get { throw null; } }
-        public bool Equals(Azure.AI.MetricsAdvisor.Models.FeedbackQueryTimeMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.MetricsAdvisor.Models.FeedbackQueryTimeMode left, Azure.AI.MetricsAdvisor.Models.FeedbackQueryTimeMode right) { throw null; }
-        public static implicit operator Azure.AI.MetricsAdvisor.Models.FeedbackQueryTimeMode (string value) { throw null; }
-        public static bool operator !=(Azure.AI.MetricsAdvisor.Models.FeedbackQueryTimeMode left, Azure.AI.MetricsAdvisor.Models.FeedbackQueryTimeMode right) { throw null; }
-        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct FeedbackType : System.IEquatable<Azure.AI.MetricsAdvisor.Models.FeedbackType>
@@ -655,135 +834,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static bool operator !=(Azure.AI.MetricsAdvisor.Models.FeedbackType left, Azure.AI.MetricsAdvisor.Models.FeedbackType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class GetAlertsOptions
-    {
-        public GetAlertsOptions(System.DateTimeOffset startTime, System.DateTimeOffset endTime, Azure.AI.MetricsAdvisor.Models.TimeMode timeMode) { }
-        public System.DateTimeOffset EndTime { get { throw null; } }
-        public int? SkipCount { get { throw null; } set { } }
-        public System.DateTimeOffset StartTime { get { throw null; } }
-        public Azure.AI.MetricsAdvisor.Models.TimeMode TimeMode { get { throw null; } }
-        public int? TopCount { get { throw null; } set { } }
-    }
-    public partial class GetAnomaliesForAlertOptions
-    {
-        public GetAnomaliesForAlertOptions() { }
-        public int? SkipCount { get { throw null; } set { } }
-        public int? TopCount { get { throw null; } set { } }
-    }
-    public partial class GetAnomaliesForDetectionConfigurationFilter
-    {
-        public GetAnomaliesForDetectionConfigurationFilter() { }
-        public GetAnomaliesForDetectionConfigurationFilter(Azure.AI.MetricsAdvisor.Models.AnomalySeverity minimumSeverity, Azure.AI.MetricsAdvisor.Models.AnomalySeverity maximumSeverity) { }
-        public Azure.AI.MetricsAdvisor.Models.AnomalySeverity? MaximumSeverity { get { throw null; } }
-        public Azure.AI.MetricsAdvisor.Models.AnomalySeverity? MinimumSeverity { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.AI.MetricsAdvisor.Models.DimensionKey> SeriesGroupKeys { get { throw null; } set { } }
-    }
-    public partial class GetAnomaliesForDetectionConfigurationOptions
-    {
-        public GetAnomaliesForDetectionConfigurationOptions(System.DateTimeOffset startTime, System.DateTimeOffset endTime) { }
-        public System.DateTimeOffset EndTime { get { throw null; } }
-        public Azure.AI.MetricsAdvisor.Models.GetAnomaliesForDetectionConfigurationFilter Filter { get { throw null; } set { } }
-        public int? SkipCount { get { throw null; } set { } }
-        public System.DateTimeOffset StartTime { get { throw null; } }
-        public int? TopCount { get { throw null; } set { } }
-    }
-    public partial class GetDataFeedIngestionStatusesOptions
-    {
-        public GetDataFeedIngestionStatusesOptions(System.DateTimeOffset startTime, System.DateTimeOffset endTime) { }
-        public System.DateTimeOffset EndTime { get { throw null; } }
-        public int? SkipCount { get { throw null; } set { } }
-        public System.DateTimeOffset StartTime { get { throw null; } }
-        public int? TopCount { get { throw null; } set { } }
-    }
-    public partial class GetDataFeedsFilter
-    {
-        public GetDataFeedsFilter() { }
-        public string Creator { get { throw null; } set { } }
-        public Azure.AI.MetricsAdvisor.Models.DataFeedGranularityType? GranularityType { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-        public Azure.AI.MetricsAdvisor.Models.DataFeedSourceType? SourceType { get { throw null; } set { } }
-        public Azure.AI.MetricsAdvisor.Models.DataFeedStatus? Status { get { throw null; } set { } }
-    }
-    public partial class GetDataFeedsOptions
-    {
-        public GetDataFeedsOptions() { }
-        public Azure.AI.MetricsAdvisor.Models.GetDataFeedsFilter GetDataFeedsFilter { get { throw null; } set { } }
-        public int? SkipCount { get { throw null; } set { } }
-        public int? TopCount { get { throw null; } set { } }
-    }
-    public partial class GetHooksOptions
-    {
-        public GetHooksOptions() { }
-        public string HookNameFilter { get { throw null; } set { } }
-        public int? SkipCount { get { throw null; } set { } }
-        public int? TopCount { get { throw null; } set { } }
-    }
-    public partial class GetIncidentsForAlertOptions
-    {
-        public GetIncidentsForAlertOptions() { }
-        public int? SkipCount { get { throw null; } set { } }
-        public int? TopCount { get { throw null; } set { } }
-    }
-    public partial class GetIncidentsForDetectionConfigurationOptions
-    {
-        public GetIncidentsForDetectionConfigurationOptions(System.DateTimeOffset startTime, System.DateTimeOffset endTime) { }
-        public System.Collections.Generic.IList<Azure.AI.MetricsAdvisor.Models.DimensionKey> DimensionsToFilter { get { throw null; } set { } }
-        public System.DateTimeOffset EndTime { get { throw null; } }
-        public System.DateTimeOffset StartTime { get { throw null; } }
-        public int? TopCount { get { throw null; } set { } }
-    }
-    public partial class GetMetricDimensionValuesOptions
-    {
-        public GetMetricDimensionValuesOptions() { }
-        public string DimensionValueToFilter { get { throw null; } set { } }
-        public int? SkipCount { get { throw null; } set { } }
-        public int? TopCount { get { throw null; } set { } }
-    }
-    public partial class GetMetricEnrichmentStatusesOptions
-    {
-        public GetMetricEnrichmentStatusesOptions(System.DateTimeOffset startTime, System.DateTimeOffset endTime) { }
-        public System.DateTimeOffset EndTime { get { throw null; } }
-        public int? SkipCount { get { throw null; } set { } }
-        public System.DateTimeOffset StartTime { get { throw null; } }
-        public int? TopCount { get { throw null; } set { } }
-    }
-    public partial class GetMetricFeedbacksOptions
-    {
-        public GetMetricFeedbacksOptions() { }
-        public System.DateTimeOffset? EndTime { get { throw null; } set { } }
-        public Azure.AI.MetricsAdvisor.Models.FeedbackType? FeedbackType { get { throw null; } set { } }
-        public Azure.AI.MetricsAdvisor.Models.DimensionKey Filter { get { throw null; } }
-        public int? SkipCount { get { throw null; } set { } }
-        public System.DateTimeOffset? StartTime { get { throw null; } set { } }
-        public Azure.AI.MetricsAdvisor.Models.FeedbackQueryTimeMode? TimeMode { get { throw null; } set { } }
-        public int? TopCount { get { throw null; } set { } }
-    }
-    public partial class GetMetricSeriesDataOptions
-    {
-        public GetMetricSeriesDataOptions(System.Collections.Generic.IEnumerable<Azure.AI.MetricsAdvisor.Models.DimensionKey> seriesToFilter, System.DateTimeOffset startTime, System.DateTimeOffset endTime) { }
-        public System.DateTimeOffset EndTime { get { throw null; } }
-        public System.Collections.Generic.IEnumerable<Azure.AI.MetricsAdvisor.Models.DimensionKey> SeriesToFilter { get { throw null; } }
-        public int? SkipCount { get { throw null; } set { } }
-        public System.DateTimeOffset StartTime { get { throw null; } }
-        public int? TopCount { get { throw null; } set { } }
-    }
-    public partial class GetMetricSeriesDefinitionsOptions
-    {
-        public GetMetricSeriesDefinitionsOptions(System.DateTimeOffset activeSince) { }
-        public System.DateTimeOffset ActiveSince { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<string>> DimensionCombinationsToFilter { get { throw null; } set { } }
-        public int? SkipCount { get { throw null; } set { } }
-        public int? TopCount { get { throw null; } set { } }
-    }
-    public partial class GetValuesOfDimensionWithAnomaliesOptions
-    {
-        public GetValuesOfDimensionWithAnomaliesOptions(System.DateTimeOffset startTime, System.DateTimeOffset endTime) { }
-        public Azure.AI.MetricsAdvisor.Models.DimensionKey DimensionToFilter { get { throw null; } set { } }
-        public System.DateTimeOffset EndTime { get { throw null; } }
-        public int? SkipCount { get { throw null; } set { } }
-        public System.DateTimeOffset StartTime { get { throw null; } }
-        public int? TopCount { get { throw null; } set { } }
-    }
     public partial class HardThresholdCondition
     {
         public HardThresholdCondition(Azure.AI.MetricsAdvisor.Models.AnomalyDetectorDirection anomalyDetectorDirection, Azure.AI.MetricsAdvisor.Models.SuppressCondition suppressCondition) { }
@@ -795,6 +845,10 @@ namespace Azure.AI.MetricsAdvisor.Models
     public partial class HttpRequestDataFeedSource : Azure.AI.MetricsAdvisor.Models.DataFeedSource
     {
         public HttpRequestDataFeedSource(System.Uri url, string httpHeader, string httpMethod, string payload) { }
+        public string HttpHeader { get { throw null; } }
+        public string HttpMethod { get { throw null; } }
+        public string Payload { get { throw null; } }
+        public System.Uri Url { get { throw null; } }
     }
     public partial class IncidentRootCause
     {
@@ -804,27 +858,14 @@ namespace Azure.AI.MetricsAdvisor.Models
         public System.Collections.Generic.IReadOnlyList<string> Paths { get { throw null; } }
         public double Score { get { throw null; } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct IncidentStatus : System.IEquatable<Azure.AI.MetricsAdvisor.Models.IncidentStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public IncidentStatus(string value) { throw null; }
-        public static Azure.AI.MetricsAdvisor.Models.IncidentStatus Active { get { throw null; } }
-        public static Azure.AI.MetricsAdvisor.Models.IncidentStatus Resolved { get { throw null; } }
-        public bool Equals(Azure.AI.MetricsAdvisor.Models.IncidentStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.MetricsAdvisor.Models.IncidentStatus left, Azure.AI.MetricsAdvisor.Models.IncidentStatus right) { throw null; }
-        public static implicit operator Azure.AI.MetricsAdvisor.Models.IncidentStatus (string value) { throw null; }
-        public static bool operator !=(Azure.AI.MetricsAdvisor.Models.IncidentStatus left, Azure.AI.MetricsAdvisor.Models.IncidentStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class InfluxDbDataFeedSource : Azure.AI.MetricsAdvisor.Models.DataFeedSource
     {
         public InfluxDbDataFeedSource(string connectionString, string database, string username, string password, string query) { }
+        public string ConnectionString { get { throw null; } }
+        public string Database { get { throw null; } }
+        public string Password { get { throw null; } }
+        public string Query { get { throw null; } }
+        public string Username { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct IngestionStatusType : System.IEquatable<Azure.AI.MetricsAdvisor.Models.IngestionStatusType>
@@ -916,9 +957,9 @@ namespace Azure.AI.MetricsAdvisor.Models
     public partial class MetricAnomalyAlertSnoozeCondition
     {
         public MetricAnomalyAlertSnoozeCondition(int autoSnooze, Azure.AI.MetricsAdvisor.Models.SnoozeScope snoozeScope, bool isOnlyForSuccessive) { }
-        public int AutoSnooze { get { throw null; } }
-        public bool IsOnlyForSuccessive { get { throw null; } }
-        public Azure.AI.MetricsAdvisor.Models.SnoozeScope SnoozeScope { get { throw null; } }
+        public int AutoSnooze { get { throw null; } set { } }
+        public bool IsOnlyForSuccessive { get { throw null; } set { } }
+        public Azure.AI.MetricsAdvisor.Models.SnoozeScope SnoozeScope { get { throw null; } set { } }
     }
     public partial class MetricAnomalyFeedback : Azure.AI.MetricsAdvisor.Models.MetricFeedback
     {
@@ -933,7 +974,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         public MetricBoundaryCondition(Azure.AI.MetricsAdvisor.Models.BoundaryDirection direction) { }
         public string CompanionMetricId { get { throw null; } set { } }
-        public Azure.AI.MetricsAdvisor.Models.BoundaryDirection Direction { get { throw null; } }
+        public Azure.AI.MetricsAdvisor.Models.BoundaryDirection Direction { get { throw null; } set { } }
         public double? LowerBound { get { throw null; } set { } }
         public bool? TriggerForMissing { get { throw null; } set { } }
         public double? UpperBound { get { throw null; } set { } }
@@ -952,25 +993,19 @@ namespace Azure.AI.MetricsAdvisor.Models
         public System.DateTimeOffset? EndTime { get { throw null; } set { } }
         public System.DateTimeOffset? StartTime { get { throw null; } set { } }
     }
-    public partial class MetricDimension
-    {
-        public MetricDimension(string dimensionName) { }
-        public string DimensionDisplayName { get { throw null; } set { } }
-        public string DimensionName { get { throw null; } }
-    }
     public partial class MetricEnrichedSeriesData
     {
         internal MetricEnrichedSeriesData() { }
-        public System.Collections.Generic.IReadOnlyList<double> ExpectedValues { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<bool> IsAnomaly { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<double> LowerBoundaries { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<int> Periods { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<double?> ExpectedValues { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<bool?> IsAnomaly { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<double?> LowerBoundaries { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<int?> Periods { get { throw null; } }
         public Azure.AI.MetricsAdvisor.Models.DimensionKey SeriesKey { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<System.DateTimeOffset> Timestamps { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<double> UpperBoundaries { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<double?> UpperBoundaries { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<double> Values { get { throw null; } }
     }
-    public partial class MetricFeedback
+    public abstract partial class MetricFeedback
     {
         internal MetricFeedback() { }
         public System.DateTimeOffset? CreatedTime { get { throw null; } }
@@ -1001,12 +1036,12 @@ namespace Azure.AI.MetricsAdvisor.Models
     }
     public partial class MetricSeriesGroupDetectionCondition : Azure.AI.MetricsAdvisor.Models.MetricWholeSeriesDetectionCondition
     {
-        public MetricSeriesGroupDetectionCondition(Azure.AI.MetricsAdvisor.Models.DimensionKey seriesGroupKey) { }
+        public MetricSeriesGroupDetectionCondition() { }
         public Azure.AI.MetricsAdvisor.Models.DimensionKey SeriesGroupKey { get { throw null; } }
     }
     public partial class MetricSingleSeriesDetectionCondition : Azure.AI.MetricsAdvisor.Models.MetricWholeSeriesDetectionCondition
     {
-        public MetricSingleSeriesDetectionCondition(Azure.AI.MetricsAdvisor.Models.DimensionKey seriesKey) { }
+        public MetricSingleSeriesDetectionCondition() { }
         public Azure.AI.MetricsAdvisor.Models.DimensionKey SeriesKey { get { throw null; } }
     }
     public partial class MetricWholeSeriesDetectionCondition
@@ -1020,10 +1055,24 @@ namespace Azure.AI.MetricsAdvisor.Models
     public partial class MongoDbDataFeedSource : Azure.AI.MetricsAdvisor.Models.DataFeedSource
     {
         public MongoDbDataFeedSource(string connectionString, string database, string command) { }
+        public string Command { get { throw null; } }
+        public string ConnectionString { get { throw null; } }
+        public string Database { get { throw null; } }
     }
     public partial class MySqlDataFeedSource : Azure.AI.MetricsAdvisor.Models.DataFeedSource
     {
         public MySqlDataFeedSource(string connectionString, string query) { }
+        public string ConnectionString { get { throw null; } }
+        public string Query { get { throw null; } }
+    }
+    public partial class NotificationHook
+    {
+        internal NotificationHook() { }
+        public System.Collections.Generic.IReadOnlyList<string> Administrators { get { throw null; } }
+        public string Description { get { throw null; } set { } }
+        public string ExternalLink { get { throw null; } set { } }
+        public string Id { get { throw null; } }
+        public string Name { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PeriodType : System.IEquatable<Azure.AI.MetricsAdvisor.Models.PeriodType>
@@ -1046,12 +1095,14 @@ namespace Azure.AI.MetricsAdvisor.Models
     public partial class PostgreSqlDataFeedSource : Azure.AI.MetricsAdvisor.Models.DataFeedSource
     {
         public PostgreSqlDataFeedSource(string connectionString, string query) { }
+        public string ConnectionString { get { throw null; } }
+        public string Query { get { throw null; } }
     }
     public partial class SeverityCondition
     {
         public SeverityCondition(Azure.AI.MetricsAdvisor.Models.AnomalySeverity minimumAlertSeverity, Azure.AI.MetricsAdvisor.Models.AnomalySeverity maximumAlertSeverity) { }
-        public Azure.AI.MetricsAdvisor.Models.AnomalySeverity MaximumAlertSeverity { get { throw null; } }
-        public Azure.AI.MetricsAdvisor.Models.AnomalySeverity MinimumAlertSeverity { get { throw null; } }
+        public Azure.AI.MetricsAdvisor.Models.AnomalySeverity MaximumAlertSeverity { get { throw null; } set { } }
+        public Azure.AI.MetricsAdvisor.Models.AnomalySeverity MinimumAlertSeverity { get { throw null; } set { } }
     }
     public partial class SmartDetectionCondition
     {
@@ -1081,31 +1132,14 @@ namespace Azure.AI.MetricsAdvisor.Models
     public partial class SqlServerDataFeedSource : Azure.AI.MetricsAdvisor.Models.DataFeedSource
     {
         public SqlServerDataFeedSource(string connectionString, string query) { }
+        public string ConnectionString { get { throw null; } }
+        public string Query { get { throw null; } }
     }
     public partial class SuppressCondition
     {
         public SuppressCondition(int minimumNumber, double minimumRatio) { }
         public int MinimumNumber { get { throw null; } }
         public double MinimumRatio { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct TimeMode : System.IEquatable<Azure.AI.MetricsAdvisor.Models.TimeMode>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public TimeMode(string value) { throw null; }
-        public static Azure.AI.MetricsAdvisor.Models.TimeMode AnomalyTime { get { throw null; } }
-        public static Azure.AI.MetricsAdvisor.Models.TimeMode CreatedTime { get { throw null; } }
-        public static Azure.AI.MetricsAdvisor.Models.TimeMode ModifiedTime { get { throw null; } }
-        public bool Equals(Azure.AI.MetricsAdvisor.Models.TimeMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.MetricsAdvisor.Models.TimeMode left, Azure.AI.MetricsAdvisor.Models.TimeMode right) { throw null; }
-        public static implicit operator Azure.AI.MetricsAdvisor.Models.TimeMode (string value) { throw null; }
-        public static bool operator !=(Azure.AI.MetricsAdvisor.Models.TimeMode left, Azure.AI.MetricsAdvisor.Models.TimeMode right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class TopNGroupScope
     {
@@ -1114,13 +1148,13 @@ namespace Azure.AI.MetricsAdvisor.Models
         public int Period { get { throw null; } }
         public int Top { get { throw null; } }
     }
-    public partial class WebHook : Azure.AI.MetricsAdvisor.Models.AlertingHook
+    public partial class WebNotificationHook : Azure.AI.MetricsAdvisor.Models.NotificationHook
     {
-        public WebHook(string name, string endpoint) { }
+        public WebNotificationHook() { }
         public string CertificateKey { get { throw null; } set { } }
         public string CertificatePassword { get { throw null; } set { } }
-        public string Endpoint { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> Headers { get { throw null; } set { } }
+        public string Endpoint { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Headers { get { throw null; } }
         public string Password { get { throw null; } set { } }
         public string Username { get { throw null; } set { } }
     }

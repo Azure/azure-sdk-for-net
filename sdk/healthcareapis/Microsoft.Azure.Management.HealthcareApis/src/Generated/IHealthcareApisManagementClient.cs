@@ -84,5 +84,15 @@ namespace Microsoft.Azure.Management.HealthcareApis
         /// </summary>
         IOperationResultsOperations OperationResults { get; }
 
+        /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkResourcesOperations.
+        /// </summary>
+        IPrivateLinkResourcesOperations PrivateLinkResources { get; }
+
     }
 }

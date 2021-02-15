@@ -9,19 +9,14 @@
     <Description>Provides NetApp storage management capabilities for Microsoft Azure.</Description>
     <AssemblyTitle>Microsoft Azure NetApp Management</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Management.NetApp</AssemblyName>
-    <Version>1.7.0</Version>
+    <Version>1.9.0</Version>
     <PackageTags>MicrosoftAzure Management;NetApp</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        Version 1.7.0 relates to NetApp Files (ANF) 2020-06-01.
-          - Added support for Azure NetAppFiles data protection features snapshotpolicy, backuppolicy and backups.  
-          - Added BreakReplicationRequest body property to BreakReplication operation to force break a replication
-          - Added reinitializeReplication. Re-Initializes the replication connection on the destination volume
-					- Added PoolChange operation to volumes. Moves volume to another pool
-					- Added status enum to ActiveDirectory
-					- Added adName, kdcIP, serverRootCACertificate optional parameters to Activedirectory.
-					- Added totalThroughputMibps, utilizedThroughputMibps, qosType to Pool properties					
-					
+        Version 1.9.0 relates to NetApp Files (ANF) 2020-09-01.
+          - Added Security operators to ActiveDirectory
+          - smbEncryption, smbContinuouslyAvailable to Volume
+					- Added ListNextLink.GetAllResourcesByPollingNextLink() to query large result sets for volumes
         Azure NetApp Files:
           Provides the capability to create multiple file system volumes through Microsoft Azure.
           Volumes reside within an account pool, a container representing the total data allocation available. A typical usage might be:

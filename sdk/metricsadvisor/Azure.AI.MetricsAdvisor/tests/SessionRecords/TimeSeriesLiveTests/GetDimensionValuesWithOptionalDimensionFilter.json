@@ -1,0 +1,51 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://js-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/metrics/27e3015f-04fd-44ba-a20b-bc529a0aebae/dimension/query",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "52",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20201214.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "x-api-key": "Sanitized",
+        "x-ms-client-request-id": "c49ee0c41724a883443268e80db0a895",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "dimensionName": "city",
+        "dimensionValueFilter": "ba"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "77c58549-4442-4bdd-a10a-4b0412e8a6cc",
+        "Content-Length": "93",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 15 Dec 2020 01:35:47 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "94",
+        "x-request-id": "77c58549-4442-4bdd-a10a-4b0412e8a6cc"
+      },
+      "ResponseBody": {
+        "value": [
+          "Ahmadabad",
+          "Baghdad",
+          "Bangkok",
+          "Barcelona",
+          "Hyderabad",
+          "Mumbai"
+        ],
+        "@nextLink": null
+      }
+    }
+  ],
+  "Variables": {
+    "METRICSADVISOR_ACCOUNT_NAME": "js-metrics-advisor",
+    "METRICSADVISOR_ENDPOINT_SUFFIX": null,
+    "METRICSADVISOR_PRIMARY_API_KEY": "Sanitized",
+    "METRICSADVISOR_SUBSCRIPTION_KEY": "Sanitized",
+    "RandomSeed": "1624314030"
+  }
+}

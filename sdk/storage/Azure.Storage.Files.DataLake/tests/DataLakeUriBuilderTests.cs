@@ -3,6 +3,8 @@
 
 using System;
 using System.Net;
+using Azure.Core.TestFramework;
+using Azure.Storage.Test;
 using NUnit.Framework;
 
 namespace Azure.Storage.Files.DataLake.Tests
@@ -94,24 +96,36 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        public void DataLakeUriBuilder_AccountNamePeriod()
+        {
+            var datalakeUriBuilder = new DataLakeUriBuilder(new Uri("https://account.z.blob.core.windows.net/share/dir"));
+
+            Assert.AreEqual("account", datalakeUriBuilder.AccountName);
+        }
+
+        [Test]
+        public void DataLakeUriBuilder_AccountNameError()
+        {
+            var datalakeUriBuilder = new DataLakeUriBuilder(new Uri("http://notaurl"));
+
+            Assert.IsEmpty(datalakeUriBuilder.AccountName);
+        }
+
+        [Test]
         public void DataLakeUriBuilder_MalformedSubdomain()
         {
-            // core and file swapped
-            var datalakeUriBuilder1 = new DataLakeUriBuilder(new Uri("https://account.core.blob.windows.net/share/dir"));
-
             // account and file swapped
-            var datalakeUriBuilder2 = new DataLakeUriBuilder(new Uri("https://blob.account.core.windows.net/share/dir"));
+            var datalakeUriBuilder1 = new DataLakeUriBuilder(new Uri("https://blob.account.core.windows.net/share/dir"));
 
             // wrong service
-            var datalakeUriBuilder3 = new DataLakeUriBuilder(new Uri("https://account.queue.core.windows.net/share/dir"));
+            var datalakeUriBuilder2 = new DataLakeUriBuilder(new Uri("https://account.queue.core.windows.net/share/dir"));
 
             // empty service
-            var datalakeUriBuilder4 = new DataLakeUriBuilder(new Uri("https://account./share/dir"));
+            var datalakeUriBuilder3 = new DataLakeUriBuilder(new Uri("https://account./share/dir"));
 
             Assert.AreEqual(string.Empty, datalakeUriBuilder1.AccountName);
             Assert.AreEqual(string.Empty, datalakeUriBuilder2.AccountName);
             Assert.AreEqual(string.Empty, datalakeUriBuilder3.AccountName);
-            Assert.AreEqual(string.Empty, datalakeUriBuilder4.AccountName);
         }
 
         [Test]
@@ -307,6 +321,46 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Assert.AreEqual(new Uri("https://account.blob.core.windows.net/filesystem/"), uri);
+        }
+
+        [Test]
+        [LiveOnly] // Test recording paths are too long.
+        [TestCase("2020-10-27", "2020-10-28")]
+        [TestCase("2020-10-27T12:10Z", "2020-10-28T13:20Z")]
+        [TestCase("2020-10-27T12:10:11Z", "2020-10-28T13:20:14Z")]
+        [TestCase("2020-10-27T12:10:11.1234567Z", "2020-10-28T13:20:14.7654321Z")]
+        public void DataLakeUriBuilder_SasStartExpiryTimeFormats(string startTime, string expiryTime)
+        {
+            // Arrange
+            Uri initialUri = new Uri($"https://account.dfs.core.windows.net/filesystem/directory/file?sv=2020-06-12&st={WebUtility.UrlEncode(startTime)}&se={WebUtility.UrlEncode(expiryTime)}&sr=b&sp=racwd&sig=jQetX8odiJoZ7Yo0X8vWgh%2FMqRv9WE3GU%2Fr%2BLNMK3GU%3D");
+            DataLakeUriBuilder dataLakeUriBuilder = new DataLakeUriBuilder(initialUri);
+
+            // Act
+            Uri resultUri = dataLakeUriBuilder.ToUri();
+
+            // Assert
+            Assert.AreEqual(initialUri, resultUri);
+            Assert.IsTrue(resultUri.PathAndQuery.Contains($"st={WebUtility.UrlEncode(startTime)}"));
+            Assert.IsTrue(resultUri.PathAndQuery.Contains($"se={WebUtility.UrlEncode(expiryTime)}"));
+        }
+
+        [Test]
+        public void DataLakeUriBuilder_SasInvalidStartExpiryTimeFormat()
+        {
+            // Arrange
+            string startTime = "2020-10-27T12Z";
+            string expiryTime = "2020-10-28T13Z";
+            Uri initialUri = new Uri($"https://account.dfs.core.windows.net/filesystem/directory/file?sv=2020-06-12&st={WebUtility.UrlEncode(startTime)}&se={WebUtility.UrlEncode(expiryTime)}&sr=b&sp=racwd&sig=jQetX8odiJoZ7Yo0X8vWgh%2FMqRv9WE3GU%2Fr%2BLNMK3GU%3D");
+
+            // Act
+            try
+            {
+                new DataLakeUriBuilder(initialUri);
+            }
+            catch (FormatException e)
+            {
+                Assert.IsTrue(e.Message.Contains("was not recognized as a valid DateTime."));
+            }
         }
     }
 }

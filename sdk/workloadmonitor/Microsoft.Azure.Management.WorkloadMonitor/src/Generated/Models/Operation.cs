@@ -15,11 +15,8 @@ namespace Microsoft.Azure.Management.WorkloadMonitor.Models
     using System.Linq;
 
     /// <summary>
-    /// Operation
-    /// </summary>
-    /// <remarks>
     /// Operation supported by the resource provider.
-    /// </remarks>
+    /// </summary>
     public partial class Operation
     {
         /// <summary>
@@ -33,9 +30,12 @@ namespace Microsoft.Azure.Management.WorkloadMonitor.Models
         /// <summary>
         /// Initializes a new instance of the Operation class.
         /// </summary>
-        /// <param name="name">Operation Name</param>
-        /// <param name="display">Display</param>
-        /// <param name="origin">Origin</param>
+        /// <param name="name">The name of the operation being performed on
+        /// this particular object.</param>
+        /// <param name="display">The localized display information for this
+        /// particular operation or action.</param>
+        /// <param name="origin">The intended executor of the
+        /// operation.</param>
         public Operation(string name, OperationDisplay display, string origin)
         {
             Name = name;
@@ -50,29 +50,22 @@ namespace Microsoft.Azure.Management.WorkloadMonitor.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets operation Name
+        /// Gets or sets the name of the operation being performed on this
+        /// particular object.
         /// </summary>
-        /// <remarks>
-        /// Name of the operation.
-        /// </remarks>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets display
+        /// Gets or sets the localized display information for this particular
+        /// operation or action.
         /// </summary>
-        /// <remarks>
-        /// The properties of the resource operation.
-        /// </remarks>
         [JsonProperty(PropertyName = "display")]
         public OperationDisplay Display { get; set; }
 
         /// <summary>
-        /// Gets or sets origin
+        /// Gets or sets the intended executor of the operation.
         /// </summary>
-        /// <remarks>
-        /// The origin of the operation.
-        /// </remarks>
         [JsonProperty(PropertyName = "origin")]
         public string Origin { get; set; }
 

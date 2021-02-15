@@ -12,14 +12,8 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The format definition of a storage. </summary>
-    internal partial class DatasetStorageFormat : IReadOnlyDictionary<string, object>
+    public partial class DatasetStorageFormat : IReadOnlyDictionary<string, object>
     {
-        /// <summary> Initializes a new instance of DatasetStorageFormat. </summary>
-        internal DatasetStorageFormat()
-        {
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
-            Type = "DatasetStorageFormat";
-        }
 
         /// <summary> Type of dataset storage format. </summary>
         internal string Type { get; set; }
@@ -40,7 +34,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public IEnumerable<string> Keys => AdditionalProperties.Keys;
         /// <inheritdoc />
         public IEnumerable<object> Values => AdditionalProperties.Values;
-        /// <inheritdoc />
+        /// <inheritdoc cref="IReadOnlyCollection{T}.Count"/>
         int IReadOnlyCollection<KeyValuePair<string, object>>.Count => AdditionalProperties.Count;
         /// <inheritdoc />
         public object this[string key]

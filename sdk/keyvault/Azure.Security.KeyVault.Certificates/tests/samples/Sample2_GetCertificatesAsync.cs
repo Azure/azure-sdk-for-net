@@ -6,7 +6,6 @@ using NUnit.Framework;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using Azure.Security.KeyVault.Tests;
 
 namespace Azure.Security.KeyVault.Certificates.Samples
 {
@@ -26,7 +25,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             // Instantiate a certificate client that will be used to call the service. Notice that the client is using default Azure
             // credentials. To make default credentials work, ensure that environment variables 'AZURE_CLIENT_ID',
             // 'AZURE_CLIENT_KEY' and 'AZURE_TENANT_ID' are set with the service principal credentials.
-            var client = new CertificateClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
+            CertificateClient client = new CertificateClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
 
             // Let's create two self-signed certificates using the default policy
             string certName1 = $"defaultCert-{Guid.NewGuid()}";

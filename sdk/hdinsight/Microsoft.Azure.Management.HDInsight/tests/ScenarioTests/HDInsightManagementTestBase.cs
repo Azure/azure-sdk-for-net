@@ -113,9 +113,19 @@ namespace Management.HDInsight.Tests
             return HDInsightManagementHelper.CreateManagedIdentity(CommonData.ResourceGroupName, msiName, CommonData.Location);
         }
 
-        internal VirtualNetwork CreateVnetForPrivateLink(string location, string virtualNetworkName, string subnetName = "default")
+        internal VirtualNetwork CreateVnetForPrivateLink(string location, string virtualNetworkName, NetworkSecurityGroup networkSecurityGroup=null, string subnetName = "default")
         {
-            return HDInsightManagementHelper.CreateVirtualNetworkWithSubnet(CommonData.ResourceGroupName, location, virtualNetworkName, subnetName, false, false);
+            return HDInsightManagementHelper.CreateVirtualNetworkWithSubnet(CommonData.ResourceGroupName, location, virtualNetworkName, subnetName, networkSecurityGroup, false, false);
+        }
+
+        internal NetworkSecurityGroup CreateNetworkSecurityGroup(string location, string networkSecurityGroupName)
+        {
+            NetworkSecurityGroup networkSecurityGroup = new NetworkSecurityGroup()
+            {
+                Location = location
+            };
+
+            return HDInsightManagementHelper.CreateNetworkSecurityGroup(CommonData.ResourceGroupName, networkSecurityGroupName, networkSecurityGroup);
         }
 
         #region Dispose

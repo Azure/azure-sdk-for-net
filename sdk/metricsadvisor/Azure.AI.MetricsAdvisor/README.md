@@ -7,7 +7,7 @@ Azure Cognitive Services Metrics Advisor is a cloud service that uses machine le
 - Configure and fine-tune the anomaly detection model used on your data.
 - Diagnose anomalies and help with root cause analysis.
 
-[Source code][metricsadv_client_src] | [Package (NuGet)][metricsadv_nuget_package] | API reference documentation | [Product documentation][metricsadv_docs] | [Samples][metricsadv_samples]
+[Source code][metricsadv_client_src] | [Package (NuGet)][metricsadv_nuget_package] | [API reference documentation][metricsadv_refdocs] | [Product documentation][metricsadv_docs] | [Samples][metricsadv_samples]
 
 ## Getting started
 
@@ -16,7 +16,7 @@ Azure Cognitive Services Metrics Advisor is a cloud service that uses machine le
 Install the Azure Metrics Advisor client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-dotnet add package Azure.AI.MetricsAdvisor --version 1.0.0-beta.1
+dotnet add package Azure.AI.MetricsAdvisor --version 1.0.0-beta.3
 ```
 
 ### Prerequisites
@@ -55,7 +55,7 @@ For more information about creating the resource or how to get the location and 
 
 ### Authenticate the client
 
-In order to interact with the Metrics Advisor service, you'll need to create an instance of the [`MetricsAdvisorClient`][metrics_advisor_client_class] or the [`MetricsAdvisorAdministrationClient`][metrics_advisor_admin_client_class] classes. You will need an **endpoint**, a **subscription key** and an **API key** to instantiate a client object.
+In order to interact with the Metrics Advisor service, you'll need to create an instance of the [`MetricsAdvisorClient`][metrics_advisor_client_class] or the [`MetricsAdvisorAdministrationClient`][metrics_advisor_admin_client_class] classes. You will need an **endpoint**, a **subscription key**, and an **API key** to instantiate a client object.
 
 #### Get the Endpoint and the Subscription Key
 
@@ -95,6 +95,34 @@ var credential = new MetricsAdvisorKeyCredential(subscriptionKey, apiKey);
 var adminClient = new MetricsAdvisorAdministrationClient(new Uri(endpoint), credential);
 ```
 
+#### Create a MetricsAdvisorClient or a MetricsAdvisorAdministrationClient with Azure Active Directory
+
+`MetricsAdvisorKeyCredential` authentication is used in the examples in this getting started guide, but you can also authenticate with Azure Active Directory using the [Azure Identity library][azure_identity].
+
+To use the [DefaultAzureCredential][DefaultAzureCredential] provider shown below, or other credential providers provided with the Azure SDK, please install the `Azure.Identity` package:
+
+```PowerShell
+Install-Package Azure.Identity
+```
+
+You will also need to [register a new AAD application][register_aad_app] and [grant access][aad_grant_access] to Metrics Advisor by assigning the `"Cognitive Services Metrics Advisor User"` role to your service principal. You may want to assign the `"Cognitive Services Metrics Advisor Administrator"` role instead if administrator privileges are required.
+
+Set the values of the client ID, tenant ID, and client secret of the AAD application as environment variables: AZURE_CLIENT_ID, AZURE_TENANT_ID, AZURE_CLIENT_SECRET.
+
+Once you have the environment variables set, you can create a [`MetricsAdvisorClient`][metrics_advisor_client_class]:
+
+```C# Snippet:CreateMetricsAdvisorClientWithAad
+string endpoint = "<endpoint>";
+var client = new MetricsAdvisorClient(new Uri(endpoint), new DefaultAzureCredential());
+```
+
+Alternately, you can also create a [`MetricsAdvisorAdministrationClient`][metrics_advisor_admin_client_class] to perform administration operations:
+
+```C# Snippet:CreateMetricsAdvisorAdministrationClientWithAad
+string endpoint = "<endpoint>";
+var adminClient = new MetricsAdvisorAdministrationClient(new Uri(endpoint), new DefaultAzureCredential());
+```
+
 ## Key concepts
 
 ### MetricsAdvisorClient
@@ -107,37 +135,50 @@ var adminClient = new MetricsAdvisorAdministrationClient(new Uri(endpoint), cred
 
 ### Data Feed
 
-A `DataFeed` ingests data from your data source, such as CosmosDB or a SQL server, and makes it available for the Metrics Advisor service. It's the entry point of data and, therefore, the first required agent to be set before anomaly detection can take place. See the sample [Create a data feed from a data source](#create-a-data-feed-from-a-data-source) below for more information.
+A `DataFeed` ingests data from your data source, such as CosmosDB or a SQL server, and makes it available for the Metrics Advisor service. It's the entry point of data, and therefore, the first required agent to be set before anomaly detection can take place. See the sample [Create a data feed from a data source](#create-a-data-feed-from-a-data-source) below for more information.
 
 ### Data Feed Metric
 
 A `DataFeedMetric`, or simply "metric", is a quantifiable measure to be monitored by the Metrics Advisor service. It could be the cost of a product over the months, or even a daily measure of temperature. The service will monitor how this value varies over time in search of any anomalous behavior. A [data feed](#data-feed) can ingest multiple metrics from the same data source.
 
-### Metric Dimension
+### Data Feed Dimension
 
-A `MetricDimension`, or simply "dimension", is a set of categorical values that characterize a [metric](#data-feed-metric). For instance, if a metric represents the cost of a product, the type of product (e.g., shoes, hats) and the city in which these values were measured (e.g., New York, Tokyo) could be used as a dimension. Possible dimension values would include: `(shoes, New York)`, `(shoes, Tokyo)`, `(hats, New York)`, and `(hats, Tokyo)`.
+A `DataFeedDimension`, or simply "dimension", is a set of categorical values that characterize a [metric](#data-feed-metric). For instance, if a metric represents the cost of a product, the type of product (e.g., shoes, hats) and the city in which these values were measured (e.g., New York, Tokyo) could be used as a dimension. Possible dimension values would include: `(shoes, New York)`, `(shoes, Tokyo)`, `(hats, New York)`, and `(hats, Tokyo)`.
 
 ### Time Series
 
 A time series is a series of data points indexed in time order. These data points describe the variation of the value of a [metric](#data-feed-metric) over time.
 
-Given a metric, the Metrics Advisor service creates one series for every possible [dimension](#metric-dimension) value, which means that multiple time series can be monitored for the same metric.
+Given a metric, the Metrics Advisor service creates one series for every possible [dimension](#data-feed-dimension) value, which means that multiple time series can be monitored for the same metric.
 
-### Data Anomaly
+### Data Point Anomaly
 
-A `DataAnomaly`, or simply "anomaly", occurs when a data point in a [time series](#time-series) behaves unexpectedly. It may occur when a data point value is too high or too low, or when its value changes abruptly between close points. You can specify the conditions a data point must satisfy to be considered an anomaly with an `AnomalyDetectionConfiguration`. See the sample [Create an anomaly detection configuration](#create-an-anomaly-detection-configuration) below for more information.
+A `DataPointAnomaly`, or simply "anomaly", occurs when a data point in a [time series](#time-series) behaves unexpectedly. It may occur when a data point value is too high or too low, or when its value changes abruptly between close points. You can specify the conditions a data point must satisfy to be considered an anomaly with an `AnomalyDetectionConfiguration`. See the sample [Create an anomaly detection configuration](#create-an-anomaly-detection-configuration) below for more information.
 
 ### Anomaly Incident
 
-Detected [anomalies](#data-anomaly) within the same [time series](#time-series) can be grouped into an `AnomalyIncident`, or simply "incident". The service looks for patterns across anomalies to determine which ones are likely to have the same cause, grouping them together.
+Detected [anomalies](#data-point-anomaly) within the same [time series](#time-series) can be grouped into an `AnomalyIncident`, or simply "incident". The service looks for patterns across anomalies to determine which ones are likely to have the same cause, grouping them together.
 
 ### Anomaly Alert
 
-An `AnomalyAlert`, or simply "alert", is triggered when a detected [anomaly](#data-anomaly) meets a specified criteria. For instance, an alert could be triggered every time an anomaly with high severity is detected. You can specify the conditions an anomaly must satisfy to trigger an alert with an `AnomalyAlertConfiguration`, which make use of [hooks](#alerting-hook) to send notifications to the concerned parties every time an alert is triggered. These configurations are not set by default, so you need to create one in order to start triggering and receiving alerts. See the sample [Create an anomaly alert configuration](#create-an-anomaly-alert-configuration) below for more information.
+An `AnomalyAlert`, or simply "alert", is triggered when a detected [anomaly](#data-point-anomaly) meets a specified criteria. For instance, an alert could be triggered every time an anomaly with high severity is detected. You can specify the conditions an anomaly must satisfy to trigger an alert with an `AnomalyAlertConfiguration`, which make use of [hooks](#notification-hook) to send notifications to the concerned parties every time an alert is triggered. These configurations are not set by default, so you need to create one in order to start triggering and receiving alerts. See the sample [Create an anomaly alert configuration](#create-an-anomaly-alert-configuration) below for more information.
 
-### Alerting Hook
+### Notification Hook
 
-An `AlertingHook`, or simply "hook", is a means of subscribing to [alerts](#anomaly-alert) notifications. You can pass a hook to an `AnomalyAlertConfiguration` and start getting notifications for every alert it creates. See the sample [Create a hook for receiving anomaly alerts](#create-a-hook-for-receiving-anomaly-alerts) below for more information.
+A `NotificationHook`, or simply "hook", is a means of subscribing to [alerts](#anomaly-alert) notifications. You can pass a hook to an `AnomalyAlertConfiguration` and start getting notifications for every alert it creates. See the sample [Create a hook for receiving anomaly alerts](#create-a-hook-for-receiving-anomaly-alerts) below for more information.
+
+### Thread safety
+We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
+
+### Additional concepts
+<!-- CLIENT COMMON BAR -->
+[Client options](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions) |
+[Accessing the response](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#accessing-http-response-details-using-responset) |
+[Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
+[Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md) |
+[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#mocking) |
+[Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
+<!-- CLIENT COMMON BAR -->
 
 ## Examples
 
@@ -154,60 +195,51 @@ The following section provides several code snippets illustrating common pattern
 
 Metrics Advisor supports multiple types of data sources. In this sample we'll illustrate how to create a [`DataFeed`](#data-feed) that extracts data from a SQL server.
 
-```C# Snippet:CreateDataFeedFromDataSource
+```C# Snippet:CreateDataFeedAsync
 string sqlServerConnectionString = "<connectionString>";
 string sqlServerQuery = "<query>";
 
-var dataFeedName = "Sample data feed";
-var dataFeedSource = new MySqlDataFeedSource(sqlServerConnectionString, sqlServerQuery);
-var dataFeedGranularity = new DataFeedGranularity(DataFeedGranularityType.Daily);
+var dataFeed = new DataFeed();
 
-var dataFeedMetrics = new List<DataFeedMetric>()
+dataFeed.Name = "Sample data feed";
+dataFeed.DataSource = new SqlServerDataFeedSource(sqlServerConnectionString, sqlServerQuery);
+dataFeed.Granularity = new DataFeedGranularity(DataFeedGranularityType.Daily);
+
+dataFeed.Schema = new DataFeedSchema();
+dataFeed.Schema.MetricColumns.Add(new DataFeedMetric("cost"));
+dataFeed.Schema.MetricColumns.Add(new DataFeedMetric("revenue"));
+dataFeed.Schema.DimensionColumns.Add(new DataFeedDimension("category"));
+dataFeed.Schema.DimensionColumns.Add(new DataFeedDimension("city"));
+
+dataFeed.IngestionSettings = new DataFeedIngestionSettings()
 {
-    new DataFeedMetric("cost"),
-    new DataFeedMetric("revenue")
-};
-var dataFeedDimensions = new List<MetricDimension>()
-{
-    new MetricDimension("category"),
-    new MetricDimension("city")
-};
-var dataFeedSchema = new DataFeedSchema(dataFeedMetrics)
-{
-    DimensionColumns = dataFeedDimensions
+    IngestionStartTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z")
 };
 
-var ingestionStartTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
-var dataFeedIngestionSettings = new DataFeedIngestionSettings(ingestionStartTime);
+Response<DataFeed> response = await adminClient.CreateDataFeedAsync(dataFeed);
 
-Response<DataFeed> response = await adminClient.CreateDataFeedAsync(dataFeedName, dataFeedSource,
-    dataFeedGranularity, dataFeedSchema, dataFeedIngestionSettings);
+DataFeed createdDataFeed = response.Value;
 
-DataFeed dataFeed = response.Value;
-
-Console.WriteLine($"Data feed ID: {dataFeed.Id}");
-
-// Only the ID of the data feed is known at this point. You can perform another service
-// call to get more information, such as status, created time, the list of administrators,
-// or the metric IDs.
-
-response = await adminClient.GetDataFeedAsync(dataFeed.Id);
-
-dataFeed = response.Value;
-
-Console.WriteLine($"Data feed status: {dataFeed.Status.Value}");
-Console.WriteLine($"Data feed created time: {dataFeed.CreatedTime.Value}");
+Console.WriteLine($"Data feed ID: {createdDataFeed.Id}");
+Console.WriteLine($"Data feed status: {createdDataFeed.Status.Value}");
+Console.WriteLine($"Data feed created time: {createdDataFeed.CreatedTime.Value}");
 
 Console.WriteLine($"Data feed administrators:");
-foreach (string admin in dataFeed.Options.Administrators)
+foreach (string admin in createdDataFeed.Administrators)
 {
     Console.WriteLine($" - {admin}");
 }
 
 Console.WriteLine($"Metric IDs:");
-foreach (DataFeedMetric metric in dataFeed.Schema.MetricColumns)
+foreach (DataFeedMetric metric in createdDataFeed.Schema.MetricColumns)
 {
     Console.WriteLine($" - {metric.MetricName}: {metric.MetricId}");
+}
+
+Console.WriteLine($"Dimension columns:");
+foreach (DataFeedDimension dimension in createdDataFeed.Schema.DimensionColumns)
+{
+    Console.WriteLine($" - {dimension.DimensionName}");
 }
 ```
 
@@ -215,12 +247,15 @@ foreach (DataFeedMetric metric in dataFeed.Schema.MetricColumns)
 
 Check the ingestion status of a previously created [`DataFeed`](#data-feed).
 
-```C# Snippet:CheckIngestionStatusOfDataFeed
+```C# Snippet:GetDataFeedIngestionStatusesAsync
 string dataFeedId = "<dataFeedId>";
 
 var startTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
 var endTime = DateTimeOffset.Parse("2020-09-09T00:00:00Z");
-var options = new GetDataFeedIngestionStatusesOptions(startTime, endTime);
+var options = new GetDataFeedIngestionStatusesOptions(startTime, endTime)
+{
+    TopCount = 5
+};
 
 Console.WriteLine("Ingestion statuses:");
 Console.WriteLine();
@@ -230,12 +265,12 @@ int statusCount = 0;
 await foreach (DataFeedIngestionStatus ingestionStatus in adminClient.GetDataFeedIngestionStatusesAsync(dataFeedId, options))
 {
     Console.WriteLine($"Timestamp: {ingestionStatus.Timestamp}");
-    Console.WriteLine($"Status: {ingestionStatus.Status.Value}");
+    Console.WriteLine($"Status: {ingestionStatus.Status}");
     Console.WriteLine($"Service message: {ingestionStatus.Message}");
     Console.WriteLine();
 
-    // Print at most 10 statuses.
-    if (++statusCount >= 10)
+    // Print at most 5 statuses.
+    if (++statusCount >= 5)
     {
         break;
     }
@@ -244,120 +279,150 @@ await foreach (DataFeedIngestionStatus ingestionStatus in adminClient.GetDataFee
 
 ### Create an anomaly detection configuration
 
-Create an [`AnomalyDetectionConfiguration`](#data-anomaly) to tell the service which data points should be considered anomalies.
+Create an [`AnomalyDetectionConfiguration`](#data-point-anomaly) to tell the service which data points should be considered anomalies.
 
-```C# Snippet:CreateAnomalyDetectionConfiguration
+```C# Snippet:CreateDetectionConfigurationAsync
 string metricId = "<metricId>";
 string configurationName = "Sample anomaly detection configuration";
 
-var hardThresholdSuppressCondition = new SuppressCondition(1, 100);
-var hardThresholdCondition = new HardThresholdCondition(AnomalyDetectorDirection.Down, hardThresholdSuppressCondition)
+var detectionConfiguration = new AnomalyDetectionConfiguration()
+{
+    MetricId = metricId,
+    Name = configurationName,
+    WholeSeriesDetectionConditions = new MetricWholeSeriesDetectionCondition()
+};
+
+var detectCondition = detectionConfiguration.WholeSeriesDetectionConditions;
+
+var hardSuppress = new SuppressCondition(1, 100);
+detectCondition.HardThresholdCondition = new HardThresholdCondition(AnomalyDetectorDirection.Down, hardSuppress)
 {
     LowerBound = 5.0
 };
 
-var smartDetectionSuppressCondition = new SuppressCondition(4, 50);
-var smartDetectionCondition = new SmartDetectionCondition(10.0, AnomalyDetectorDirection.Up, smartDetectionSuppressCondition);
+var smartSuppress = new SuppressCondition(4, 50);
+detectCondition.SmartDetectionCondition = new SmartDetectionCondition(10.0, AnomalyDetectorDirection.Up, smartSuppress);
 
-var detectionCondition = new MetricWholeSeriesDetectionCondition()
-{
-    HardThresholdCondition = hardThresholdCondition,
-    SmartDetectionCondition = smartDetectionCondition,
-    CrossConditionsOperator = DetectionConditionsOperator.Or
-};
+detectCondition.CrossConditionsOperator = DetectionConditionsOperator.Or;
 
-var detectionConfiguration = new AnomalyDetectionConfiguration(metricId, configurationName, detectionCondition);
+Response<AnomalyDetectionConfiguration> response = await adminClient.CreateDetectionConfigurationAsync(detectionConfiguration);
 
-Response<AnomalyDetectionConfiguration> response = await adminClient.CreateMetricAnomalyDetectionConfigurationAsync(detectionConfiguration);
+AnomalyDetectionConfiguration createdDetectionConfiguration = response.Value;
 
-detectionConfiguration = response.Value;
-
-Console.WriteLine($"Anomaly detection configuration ID: {detectionConfiguration.Id}");
+Console.WriteLine($"Anomaly detection configuration ID: {createdDetectionConfiguration.Id}");
 ```
 
 ### Create a hook for receiving anomaly alerts
 
-Metrics Advisor supports the [`EmailHook` and `WebHook`](#alerting-hook) classes as means of subscribing to [alerts](#anomaly-alert) notifications. In this example we'll illustrate how to create an `EmailHook`. Note that you need to pass the hook to an anomaly alert configuration to start getting notifications. See the sample [Create an anomaly alert configuration](#create-an-anomaly-alert-configuration) below for more information.
+Metrics Advisor supports the [`EmailNotificationHook`](#notification-hook) and the [`WebNotificationHook`](#notification-hook) classes as means of subscribing to [alerts](#anomaly-alert) notifications. In this example we'll illustrate how to create an `EmailNotificationHook`. Note that you need to pass the hook to an anomaly alert configuration to start getting notifications. See the sample [Create an anomaly alert configuration](#create-an-anomaly-alert-configuration) below for more information.
 
-```C# Snippet:CreateHookForReceivingAnomalyAlerts
+```C# Snippet:CreateHookAsync
 string hookName = "Sample hook";
-var emailsToAlert = new List<string>()
+
+var emailHook = new EmailNotificationHook()
 {
-    "email1@sample.com",
-    "email2@sample.com"
+    Name = hookName
 };
 
-var emailHook = new EmailHook(hookName, emailsToAlert);
+emailHook.EmailsToAlert.Add("email1@sample.com");
+emailHook.EmailsToAlert.Add("email2@sample.com");
 
-Response<AlertingHook> response = adminClient.CreateHook(emailHook);
+Response<NotificationHook> response = await adminClient.CreateHookAsync(emailHook);
 
-AlertingHook hook = response.Value;
+NotificationHook createdHook = response.Value;
 
-Console.WriteLine($"Hook ID: {hook.Id}");
+Console.WriteLine($"Hook ID: {createdHook.Id}");
 ```
 
 ### Create an anomaly alert configuration
 
 Create an [`AnomalyAlertConfiguration`](#anomaly-alert) to tell the service which anomalies should trigger alerts.
 
-```C# Snippet:CreateAnomalyAlertConfiguration
+```C# Snippet:CreateAlertConfigurationAsync
 string hookId = "<hookId>";
 string anomalyDetectionConfigurationId = "<anomalyDetectionConfigurationId>";
 
 string configurationName = "Sample anomaly alert configuration";
-var idsOfHooksToAlert = new List<string>() { hookId };
 
-var scope = MetricAnomalyAlertScope.GetScopeForWholeSeries();
-var metricAlertConfigurations = new List<MetricAnomalyAlertConfiguration>()
+AnomalyAlertConfiguration alertConfiguration = new AnomalyAlertConfiguration()
 {
-    new MetricAnomalyAlertConfiguration(anomalyDetectionConfigurationId, scope)
+    Name = configurationName
 };
 
-AnomalyAlertConfiguration alertConfiguration = new AnomalyAlertConfiguration(configurationName, idsOfHooksToAlert, metricAlertConfigurations);
+alertConfiguration.IdsOfHooksToAlert.Add(hookId);
 
-Response<AnomalyAlertConfiguration> response = await adminClient.CreateAnomalyAlertConfigurationAsync(alertConfiguration);
+var scope = MetricAnomalyAlertScope.GetScopeForWholeSeries();
+var metricAlertConfiguration = new MetricAnomalyAlertConfiguration(anomalyDetectionConfigurationId, scope);
 
-alertConfiguration = response.Value;
+alertConfiguration.MetricAlertConfigurations.Add(metricAlertConfiguration);
 
-Console.WriteLine($"Alert configuration ID: {alertConfiguration.Id}");
+Response<AnomalyAlertConfiguration> response = await adminClient.CreateAlertConfigurationAsync(alertConfiguration);
+
+AnomalyAlertConfiguration createdAlertConfiguration = response.Value;
+
+Console.WriteLine($"Alert configuration ID: {createdAlertConfiguration.Id}");
 ```
 
 ### Query detected anomalies and triggered alerts
 
-Look through the [alerts](#anomaly-alert) created by a given anomaly alert configuration, and list the [anomalies](#data-anomaly) that triggered these alerts.
+Look through the [alerts](#anomaly-alert) created by a given anomaly alert configuration.
 
-```C# Snippet:QueryDetectedAnomaliesAndTriggeredAlerts
+```C# Snippet:GetAlertsAsync
 string anomalyAlertConfigurationId = "<anomalyAlertConfigurationId>";
 
 var startTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
 var endTime = DateTimeOffset.UtcNow;
-var options = new GetAlertsOptions(startTime, endTime, TimeMode.AnomalyTime);
+var options = new GetAlertsOptions(startTime, endTime, AlertQueryTimeMode.AnomalyTime)
+{
+    TopCount = 5
+};
 
 int alertCount = 0;
 
 await foreach (AnomalyAlert alert in client.GetAlertsAsync(anomalyAlertConfigurationId, options))
 {
+    Console.WriteLine($"Alert created at: {alert.CreatedTime}");
     Console.WriteLine($"Alert at timestamp: {alert.Timestamp}");
     Console.WriteLine($"Id: {alert.Id}");
-    Console.WriteLine($"Anomalies that triggered this alert:");
+    Console.WriteLine();
 
-    await foreach (DataAnomaly anomaly in client.GetAnomaliesForAlertAsync(anomalyAlertConfigurationId, alert.Id))
+    // Print at most 5 alerts.
+    if (++alertCount >= 5)
     {
-        Console.WriteLine("  Anomaly:");
-        Console.WriteLine($"    Status: {anomaly.Status.Value}");
-        Console.WriteLine($"    Severity: {anomaly.Severity}");
-        Console.WriteLine($"    Series key:");
+        break;
+    }
+}
+```
 
-        foreach (KeyValuePair<string, string> keyValuePair in anomaly.SeriesKey.AsDictionary())
-        {
-            Console.WriteLine($"      Dimension '{keyValuePair.Key}': {keyValuePair.Value}");
-        }
+Once you know an alert's ID, list the [anomalies](#data-point-anomaly) that triggered this alert.
 
-        Console.WriteLine();
+```C# Snippet:GetAnomaliesForAlertAsync
+string alertConfigurationId = "<alertConfigurationId>";
+string alertId = "<alertId>";
+
+var options = new GetAnomaliesForAlertOptions() { TopCount = 3 };
+
+int anomalyCount = 0;
+
+await foreach (DataPointAnomaly anomaly in client.GetAnomaliesAsync(alertConfigurationId, alertId, options))
+{
+    Console.WriteLine($"Anomaly detection configuration ID: {anomaly.AnomalyDetectionConfigurationId}");
+    Console.WriteLine($"Metric ID: {anomaly.MetricId}");
+    Console.WriteLine($"Anomaly at timestamp: {anomaly.Timestamp}");
+    Console.WriteLine($"Anomaly detected at: {anomaly.CreatedTime}");
+    Console.WriteLine($"Status: {anomaly.Status}");
+    Console.WriteLine($"Severity: {anomaly.Severity}");
+    Console.WriteLine("Series key:");
+
+    foreach (KeyValuePair<string, string> keyValuePair in anomaly.SeriesKey.AsDictionary())
+    {
+        Console.WriteLine($"  Dimension '{keyValuePair.Key}': {keyValuePair.Value}");
     }
 
-    // Print at most 3 alerts.
-    if (++alertCount >= 3)
+    Console.WriteLine();
+
+    // Print at most 3 anomalies.
+    if (++anomalyCount >= 3)
     {
         break;
     }
@@ -422,12 +487,16 @@ To learn more about other logging mechanisms see [Diagnostics Samples][logging].
 
 Samples showing how to use the Cognitive Services Metrics Advisor library are available in this GitHub repository. Samples are provided for each main functional area:
 
-- [Create a data feed from a data source][metricsadv-sample1]
-- [Check the ingestion status of a data feed][metricsadv-sample2]
-- [Create an anomaly detection configuration][metricsadv-sample3]
-- [Create a hook for receiving anomaly alerts][metricsadv-sample4]
-- [Create an anomaly alert configuration][metricsadv-sample5]
-- [Query detected anomalies and triggered alerts][metricsadv-sample6]
+- [Data feed CRUD operations][metricsadv-sample1]
+- [Data feed ingestion operations][metricsadv-sample2]
+- [Anomaly detection configuration CRUD operations][metricsadv-sample3]
+- [Hook CRUD operations][metricsadv-sample4]
+- [Anomaly alert configuration CRUD operations][metricsadv-sample5]
+- [Query triggered alerts][metricsadv-sample6]
+- [Query detected anomalies][metricsadv-sample7]
+- [Query incidents and their root causes][metricsadv-sample8]
+- [Query time series information][metricsadv-sample9]
+- [Feedback CRUD operations][metricsadv-sample10]
 
 ## Contributing
 
@@ -442,7 +511,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 <!-- LINKS -->
 [metricsadv_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/src
 [metricsadv_docs]: https://docs.microsoft.com/azure/cognitive-services/metrics-advisor
-[metricsadv_nuget_package]: https://www.nuget.org/packages?q=Azure.AI.MetricsAdvisor
+[metricsadv_nuget_package]: https://www.nuget.org/packages/Azure.AI.MetricsAdvisor
 [metricsadv_refdocs]: https://aka.ms/azsdk/net/docs/ref/metricsadvisor
 [metricsadv_rest_api]: https://westus2.dev.cognitive.microsoft.com/docs/services/MetricsAdvisor
 [metricsadv_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/samples/README.md
@@ -451,15 +520,22 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [metrics_advisor_admin_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/src/MetricsAdvisorAdministrationClient.cs
 [metrics_advisor_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/src/MetricsAdvisorClient.cs
 
-[metricsadv-sample1]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample1_CreateDataFeedFromDataSource.cs
-[metricsadv-sample2]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample2_CheckIngestionStatusOfDataFeed.cs
-[metricsadv-sample3]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample3_CreateAnomalyDetectionConfiguration.cs
-[metricsadv-sample4]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample4_CreateHookForReceivingAnomalyAlerts.cs
-[metricsadv-sample5]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample5_CreateAnomalyAlertConfiguration.cs
-[metricsadv-sample6]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample6_QueryDetectedAnomaliesAndTriggeredAlerts.cs
+[metricsadv-sample1]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample01_DataFeedCrudOperations.cs
+[metricsadv-sample2]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample02_DataFeedIngestionOperations.cs
+[metricsadv-sample3]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample03_DetectionConfigurationCrudOperations.cs
+[metricsadv-sample4]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample04_HookCrudOperations.cs
+[metricsadv-sample5]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample05_AlertConfigurationCrudOperations.cs
+[metricsadv-sample6]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample06_QueryTriggeredAlerts.cs
+[metricsadv-sample7]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample07_QueryDetectedAnomalies.cs
+[metricsadv-sample8]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample08_QueryIncidentsAndRootCauses.cs
+[metricsadv-sample9]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample09_QueryTimeSeriesInformation.cs
+[metricsadv-sample10]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample10_FeedbackCrudOperations.cs
 
+[aad_grant_access]: https://docs.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
 [cognitive_resource_cli]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account-cli
 [cognitive_resource_portal]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account
+[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity/README.md
+[register_aad_app]: https://docs.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
 
 [logging]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core/samples/Diagnostics.md
 

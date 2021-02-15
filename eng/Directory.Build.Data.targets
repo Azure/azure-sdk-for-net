@@ -52,7 +52,7 @@
 
   <!-- Add Client SDK Tools -->
   <ItemGroup>
-    <PackageReference Condition="'$(IsClientLibrary)' == 'true'" Include="AutoRest.CSharp.V3" PrivateAssets="All" />
+    <PackageReference Condition="'$(IsClientLibrary)' == 'true'" Include="Microsoft.Azure.AutoRest.CSharp" PrivateAssets="All" />
 
     <PackageReference Condition="'$(GenerateAPIListing)' == 'true'" Include="Microsoft.DotNet.GenAPI" PrivateAssets="All" />
 
@@ -66,13 +66,15 @@
 
   <!-- Add Package Icon to DataPlane Packages -->
   <ItemGroup Condition="'$(IsTestProject)' != 'true'">
-    <None Include="$(RepoEngPath)/images/pkgicon.png" Pack="true" PackagePath=""/>
+    <None Include="$(PackageIconPath)" Pack="true" PackagePath=""/>
     <None Condition="Exists('$(MSBuildProjectDirectory)/../CHANGELOG.md')" Include="$(MSBuildProjectDirectory)/../CHANGELOG.md" Pack="true" PackagePath=""/>
     <None Condition="Exists('$(MSBuildProjectDirectory)/../README.md')" Include="$(MSBuildProjectDirectory)/../README.md" Pack="true" PackagePath=""/>
   </ItemGroup>
 
-  <!-- Collect Code Coverage -->
-  <Import Condition="'$(CollectCoverage)' == 'true'"  Project="$(MSBuildThisFileDirectory)\CodeCoverage.targets" />
+  <!-- Add App.config to enable server GC in net461 perf and stress projects -->
+  <ItemGroup Condition="('$(IsPerfProject)' == 'true' or '$(IsStressProject)' == 'true') and '$(TargetFramework)' == 'net461'">
+    <None Include="$(RepoRoot)/common/PerfStressShared/App.config" />
+  </ItemGroup>
 
   <!-- Add StyleCop Analyzers -->
   <ItemGroup Condition="'$(EnableStyleCopAnalyzers)' == 'true'"  >
@@ -85,7 +87,7 @@
     </AdditionalFiles>
   </ItemGroup>
 
-  <!-- Enable SourceLink  -->
+  <!-- Enable SourceLink -->
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All" />
   </ItemGroup>
@@ -105,6 +107,8 @@
 
   <Import Project="ApiListing.targets" />
 
+  <Import Project="CodeCoverage.targets" />
+
   <Import Project="CodeGeneration.targets" Condition="'$(TemporaryUsePreviousGeneratorVersion)' == 'true'" />
 
   <Import Project="TestFramework.targets" Condition="'$(IsTestProject)' == 'true'"/>
@@ -119,12 +123,13 @@
   </PropertyGroup>
 
   <ItemGroup Condition="'$(UseProjectReferenceToAzureClients)' == 'true'">
-    <!-- Find all Azure projects -->
-    <AzureProjects Include="$(RepoRoot)/sdk/*/Azure.*/src/Azure.*.csproj" ProjectPath="%(Identity)" />
+    <!-- Find all non-management projects -->
+    <AzureProjects Include="$(RepoRoot)/sdk/**/src/*.csproj" Exclude="$(RepoRoot)/sdk/**/src/*.Management.*.csproj" ProjectPath="%(Identity)" />
     <PossibleProjectsToConvert Include="@(AzureProjects -> '%(Filename)')"/>
 
     <!-- Compute set of projects that intersect with the PackageReference's -->
     <_NotPackageReferences Include="@(PossibleProjectsToConvert)" Exclude="@(PackageReference)" />
+    <_NotPackageReferences Include="@(ExcludeFromProjectReferenceToConversion)" />
     <ProjectsToConvert Include="@(PossibleProjectsToConvert)" Exclude="@(_NotPackageReferences)" />
 
     <!-- Remove PackageReferences -->
@@ -154,7 +159,7 @@
   <ItemGroup Condition="'$(IsMgmtClientLibrary)' == 'true' and '$(IsTestProject)' == 'true'">
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <PackageReference Include="Azure.Identity" />
-    <PackageReference Include="nunit" />
+    <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Moq" />
@@ -175,6 +180,42 @@
            Text="When UseProjectReferenceToAzureClients=true all Azure.* references should be Project References, but the following are not [@(ShouldBeProjectReference)]" />
   </Target>
 
+  <!-- Added layer of checks to make sure release packages don't have preview dependencies -->
+  <Target Name="VerifyProjectReferencesReferences" Condition="'$(HasReleaseVersion)' == 'true' AND '$(IsPackable)' == 'true'" BeforeTargets="GenerateNuspec">
+  
+    <Msbuild
+      Projects="@(_ProjectReferencesFromAssetsFile)"
+      Targets="_GetProjectVersion"
+      SkipNonexistentTargets="true"
+      SkipNonexistentProjects="true"
+      Properties="BuildProjectReferences=false;SkipDevBuildNumber=true">
+      <Output
+        TaskParameter="TargetOutputs"
+        ItemName="_ProjectReferencesWithoutDevVersions"/>
+    </Msbuild>
+
+    <ItemGroup>
+      <_AllReferencesWithVersions Include="@(_ProjectReferencesWithoutDevVersions)" Version="%(ProjectVersion)" />
+      <_AllReferencesWithVersions Include="@(PackageReference)" Condition="!$([System.String]::Copy('%(PackageReference.PrivateAssets)').ToLower().Equals('all'))"/>
+
+      <PreviewPackageReferences Include="@(_AllReferencesWithVersions)" Condition="$([System.String]::Copy('%(Version)').Contains('-'))" />
+    </ItemGroup>
+
+    <Error Condition="'@(PreviewPackageReferences)' != ''" Text="When the project has a release version it shouldn't reference any pre-release libraries. Found the following pre-release references: @(PreviewPackageReferences, ', ')" />
+  </Target>
+
+  <!-- InheritDoc-->
+  <ItemGroup Condition="'$(InheritDocEnabled)' != 'false'">
+    <PackageReference Include="SauceControl.InheritDoc" PrivateAssets="all" />
+  </ItemGroup>
+
+  <!-- Fixup netstandard2.malformed docs issue https://github.com/saucecontrol/InheritDoc#bad-netstandard-docs -->
+  <ItemGroup Condition="'$(InheritDocEnabled)' != 'false' and '$(TargetFramework)' == 'netstandard2.0'">
+    <PackageDownload Include="NETStandard.Library.Ref" />
+    <InheritDocReference Include="$(NugetPackageRoot)\netstandard.library.ref\2.1.0\ref\netstandard2.1\netstandard.xml" />
+  </ItemGroup>
+
+<!-- Additional PackageReferences should be placed above this PropertyGroup -->
   <PropertyGroup>
     <ApiCompatExcludeAttributeList>$(MSBuildThisFileDirectory)ApiListing.exclude-attributes.txt</ApiCompatExcludeAttributeList>
   </PropertyGroup>
@@ -194,6 +235,9 @@
 
   <Target Name="ApiCompatFinishedMessage" AfterTargets="ValidateApiCompatForSrc" Condition="'$(ApiCompatVersion)' != ''">
      <Message Text="Ran ApiCompat against %(ResolvedMatchingContract.Identity) using assemblies from $(IntermediateOutputPath)" Importance="High" />
+  </Target>
+
+  <Target Name="RunApiCompat" DependsOnTargets="ValidateApiCompatForSrc" Condition="'$(ApiCompatVersion)' != ''">
   </Target>
 
   <Import Project="$(CentralPackageVersionPackagePath)\Sdk.targets" />

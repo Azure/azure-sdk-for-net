@@ -5,6 +5,8 @@ using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System.Collections.Generic;
 using Xunit;
 using System.Threading;
+using Microsoft.Rest.Azure;
+using System.Linq;
 
 namespace Microsoft.Azure.Management.Synapse.Tests
 {
@@ -45,8 +47,7 @@ namespace Microsoft.Azure.Management.Synapse.Tests
             Assert.Equal("TestUpdate", workspaceUpdate.Tags["TestTag"]);
 
             // list workspace from resource group
-            var firstPage = SynapseClient.Workspaces.ListByResourceGroup(CommonData.ResourceGroupName);
-            var workspaceFromResourceGroup = SynapseManagementTestUtilities.ListResources(firstPage, SynapseClient.Workspaces.ListNext);
+            var workspaceFromResourceGroup = SynapseClient.Workspaces.ListByResourceGroup(CommonData.ResourceGroupName).ToList();
             Assert.True(1 <= workspaceFromResourceGroup.Count);
             bool isFound = false;
             int workspaceCount = workspaceFromResourceGroup.Count;
@@ -64,9 +65,7 @@ namespace Microsoft.Azure.Management.Synapse.Tests
             Assert.True(isFound, string.Format("Workspace created earlier is not found when listing all in resource group {0}", CommonData.ResourceGroupName));
 
             // list workspace from subscription
-            firstPage = SynapseClient.Workspaces.List();
-            Assert.True(1 <= workspaceFromResourceGroup.Count);
-            var workspaceFromSubscription = SynapseManagementTestUtilities.ListResources(firstPage, SynapseClient.Workspaces.ListNext);
+            var workspaceFromSubscription = SynapseClient.Workspaces.List().ToList();
             Assert.True(1 <= workspaceFromSubscription.Count);
             isFound = false;
             for (int i = 0; i < workspaceFromSubscription.Count; i++)
@@ -82,10 +81,18 @@ namespace Microsoft.Azure.Management.Synapse.Tests
 
             Assert.True(isFound, string.Format("Workspace created earlier is not found when listing all in subscription {0}", CommonData.SubscriptionId));
 
-            // delete workspace
-            SynapseClient.Workspaces.Delete(CommonData.ResourceGroupName, workspaceName);
-            firstPage = SynapseClient.Workspaces.ListByResourceGroup(CommonData.ResourceGroupName);
-            var workspaceAfterDelete = SynapseManagementTestUtilities.ListResources(firstPage, SynapseClient.Workspaces.ListNext);
+            try
+            {
+                // delete workspace
+                SynapseClient.Workspaces.Delete(CommonData.ResourceGroupName, workspaceName);
+            }
+            catch (CloudException ex)
+            {
+                Assert.Equal(404, (int)ex.Response.StatusCode);
+                Assert.Contains($"Can not perform requested operation on nested resource. Parent resource '{workspaceName}' not found.", ex.Body.Message);
+            }
+
+            var workspaceAfterDelete = SynapseClient.Workspaces.ListByResourceGroup(CommonData.ResourceGroupName).ToList();
             Assert.True(workspaceCount-1 == workspaceAfterDelete.Count);
         }
     }

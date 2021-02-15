@@ -1,6 +1,15 @@
 # Release History
+## 5.2.0-beta.1 (Unreleased)
+
+
 ## 5.1.0-beta.1 (Unreleased)
 
+## 5.1.1 (2021-01-12)
+- Update dependency of Microsoft.Azure.Amqp to version 2.4.9
+
+## 5.1.0 (2020-11-20)
+- Bugfix - Fixing a bug in management client that is sending atom xml elements out of order [PR 16488](https://github.com/Azure/azure-sdk-for-net/pull/16488)
+- Bugfix - Convert "Invalid operation while connection is closing" to retriable ServiceBusException [PR 17023](https://github.com/Azure/azure-sdk-for-net/pull/17023)
 
 ## 5.0.0 (2020-09-11)
 ### Breaking Changes

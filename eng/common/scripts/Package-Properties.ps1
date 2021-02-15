@@ -1,4 +1,6 @@
 # Helper functions for retireving useful information from azure-sdk-for-* repo
+. "${PSScriptRoot}\logging.ps1"
+
 class PackageProps
 {
     [string]$Name
@@ -8,6 +10,8 @@ class PackageProps
     [string]$ReadMePath
     [string]$ChangeLogPath
     [string]$Group
+    [string]$SdkType
+    [boolean]$IsNewSdk
 
     PackageProps([string]$name, [string]$version, [string]$directoryPath, [string]$serviceDirectory)
     {
@@ -81,8 +85,8 @@ function Get-PkgProperties
     $serviceDirectoryPath = Join-Path $RepoRoot "sdk" $ServiceDirectory
     if (!(Test-Path $serviceDirectoryPath))
     {
-        Write-Error "Service Directory $ServiceDirectory does not exist"
-        exit 1
+        LogError "Service Directory $ServiceDirectory does not exist"
+        return $null
     }
 
     $directoriesPresent = Get-ChildItem $serviceDirectoryPath -Directory
@@ -90,13 +94,16 @@ function Get-PkgProperties
     foreach ($directory in $directoriesPresent)
     {
         $pkgDirectoryPath = Join-Path $serviceDirectoryPath $directory.Name
-        if ($GetPackageInfoFromRepoFn)
+
+        if ($GetPackageInfoFromRepoFn -and (Test-Path "Function:$GetPackageInfoFromRepoFn"))
         {
             $pkgProps = &$GetPackageInfoFromRepoFn -pkgPath $pkgDirectoryPath -serviceDirectory $ServiceDirectory -pkgName $PackageName
         }
         else
         {
-            Write-Error "The function 'Get-${Language}-PackageInfoFromRepo' was not found."
+            LogError "The function for '$GetPackageInfoFromRepoFn' was not found.`
+            Make sure it is present in eng/scripts/Language-Settings.ps1 and referenced in eng/common/scripts/common.ps1.`
+            See https://github.com/Azure/azure-sdk-tools/blob/master/doc/common/common_engsys.md#code-structure"
         }
 
         if ($pkgProps -ne $null)
@@ -104,7 +111,8 @@ function Get-PkgProperties
             return $pkgProps
         }
     }
-    Write-Error "Failed to retrive Properties for $PackageName"
+    LogWarning "Failed to retrive Properties for $PackageName"
+    return $null
 }
 
 # Takes ServiceName and Repo Root Directory
@@ -147,12 +155,24 @@ function Get-AllPkgProperties ([string]$ServiceDirectory = $null)
     return $pkgPropsResult
 }
 
+# Given the metadata url under https://github.com/Azure/azure-sdk/tree/master/_data/releases/latest, 
+# the function will return the csv metadata back as part of response.
+function Get-CSVMetadata ([string]$MetadataUri=$MetadataUri)
+{
+    $metadataResponse = Invoke-RestMethod -Uri $MetadataUri -method "GET" -MaximumRetryCount 3 -RetryIntervalSec 10 | ConvertFrom-Csv
+    return $metadataResponse
+}
+
 function Operate-OnPackages ($activePkgList, $ServiceDirectory, [Array]$pkgPropsResult)
 {
     foreach ($pkg in $activePkgList)
     {
+        LogDebug "Operating on $($pkg["name"])"
         $pkgProps = Get-PkgProperties -PackageName $pkg["name"] -ServiceDirectory $ServiceDirectory
-        $pkgPropsResult += $pkgProps
+        if ($null -ne  $pkgProps)
+        {
+            $pkgPropsResult += $pkgProps
+        }
     }
     return $pkgPropsResult
 }
@@ -160,8 +180,16 @@ function Operate-OnPackages ($activePkgList, $ServiceDirectory, [Array]$pkgProps
 function Get-PkgListFromYml ($ciYmlPath)
 {
     $ProgressPreference = "SilentlyContinue"
-    Register-PSRepository -Default -ErrorAction:SilentlyContinue
-    Install-Module -Name powershell-yaml -RequiredVersion 0.4.1 -Force -Scope CurrentUser
+    if ((Get-PSRepository | ?{$_.Name -eq "PSGallery"}).Count -eq 0)
+    {
+        Register-PSRepository -Default -ErrorAction:SilentlyContinue
+    }
+
+    if ((Get-Module -ListAvailable -Name powershell-yaml | ?{$_.Version -eq "0.4.2"}).Count -eq 0)
+    {
+        Install-Module -Name powershell-yaml -RequiredVersion 0.4.2 -Force -Scope CurrentUser
+    }
+
     $ciYmlContent = Get-Content $ciYmlPath -Raw
     $ciYmlObj = ConvertFrom-Yaml $ciYmlContent -Ordered
     if ($ciYmlObj.Contains("stages"))
@@ -174,7 +202,7 @@ function Get-PkgListFromYml ($ciYmlPath)
     }
     if ($artifactsInCI -eq $null)
     {
-        Write-Error "Failed to retrive package names in ci $ciYmlPath"
+        LogError "Failed to retrive package names in ci $ciYmlPath"
     }
     return $artifactsInCI
 }

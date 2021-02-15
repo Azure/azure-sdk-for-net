@@ -12,7 +12,7 @@ namespace NetApp.Tests.Helpers
         public const long gibibyte = 1024L * 1024L * 1024L;
 
         private const string remoteSuffix = "-R";
-        public const string vnet = "sdknettestqa2vnet464";
+        public const string vnet = "sdknettestqa2vnet464";        
         public const string backupVnet = "sdknettestqa2vnet464euap";
         public const string repVnet = "sdktestqa2vnet464";
         //public const string remoteVnet = repVnet + remoteSuffix;
@@ -21,6 +21,7 @@ namespace NetApp.Tests.Helpers
         //public const string subsId = "0661B131-4A11-479B-96BF-2F95ACCA2F73";
         public const string subsId = "69a75bda-882e-44d5-8431-63421204132a";
         public const string location = "westus2";
+        //public const string location = "eastus2euap";
         //public const string remoteLocation = "southcentralus";
         public const string remoteLocation = "eastus";
         //public const string backupLocation = "westus2";
@@ -30,7 +31,7 @@ namespace NetApp.Tests.Helpers
         //public const string resourceGroup = "ab_sdk_test_rg";
         public const string repResourceGroup = "sdk-test-qa2";
         public const string remoteResourceGroup = repResourceGroup + remoteSuffix;
-        public const string accountName1 = "sdk-net-tests-acc-208";        
+        public const string accountName1 = "sdk-net-tests-acc-208";
         public const string accountName1Repl = "sdk-net-tests-acc-20b";
         public const string remoteAccountName1 = accountName1Repl + remoteSuffix;
         public const string accountName2 = "sdk-net-tests-acc-21";
@@ -40,18 +41,18 @@ namespace NetApp.Tests.Helpers
         public const string poolName2 = "sdk-net-tests-pool-211";
         public const string volumeName1 = "sdk-net-tests-vol-2101";
         
-        public const string volumeBackupAccountName1 = "sdk-net-tests-acc-208v";
-        public const string backupVolumeName1 = "sdk-net-tests-vol-2105";
+        public const string volumeBackupAccountName1 = "sdk-net-tests-acc-211v";
+        public const string backupVolumeName1 = "sdk-net-tests-vol-2108";
 
         public const string volumeName1Repl = "sdk-net-tests-vol-1000b";
         public const string remoteVolumeName1 = volumeName1Repl + remoteSuffix;
         public const string volumeName2 = "sdk-net-tests-vol-1001";
-        public const string snapshotName1 = "sdk-net-tests-snap-10";
-        public const string snapshotName2 = "sdk-net-tests-snap-11";
+        public const string snapshotName1 = "sdk-net-tests-snap-11";
+        public const string snapshotName2 = "sdk-net-tests-snap-12";
         public const string snapshotPolicyName1 = "sdk-net-tests-snapshotPolicy-1";
         public const string snapshotPolicyName2 = "sdk-net-tests-snapshotPolicy-2";
-        public const string backupPolicyName1 = "sdk-net-tests-backupPolicy-102a";
-        public const string backupPolicyName2 = "sdk-net-tests-backupPolicy-102b";
+        public const string backupPolicyName1 = "sdk-net-tests-backupPolicy-105a";
+        public const string backupPolicyName2 = "sdk-net-tests-backupPolicy-105b";
         //public const string backupVaultId = "cbsvault";
 
         public static ActiveDirectory activeDirectory = new ActiveDirectory()
@@ -101,7 +102,7 @@ namespace NetApp.Tests.Helpers
             // request reference example
             // az netappfiles account update -g --account-name cli-lf-acc2  --active-directories '[{"username": "aduser", "password": "aduser", "smbservername": "SMBSERVER", "dns": "1.2.3.4", "domain": "westcentralus"}]' -l westus2
 
-            var activeDirectories = activeDirectory != null ? new List <ActiveDirectory> { activeDirectory } : null;
+            var activeDirectories = activeDirectory != null ? new List <ActiveDirectory> { activeDirectory } : new List<ActiveDirectory>();
 
             var netAppAccount = new NetAppAccount()
             {
@@ -125,7 +126,7 @@ namespace NetApp.Tests.Helpers
         {
             if (!poolOnly)
             {
-                CreateAccount(netAppMgmtClient, accountName, resourceGroup: resourceGroup, location: location);
+                CreateAccount(netAppMgmtClient, accountName, resourceGroup: resourceGroup, location: location, tags: tags);
             }
 
             var pool = new CapacityPool
@@ -303,7 +304,10 @@ namespace NetApp.Tests.Helpers
                     Location = location,
                 };
             }
-
+            if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
+            {
+                Thread.Sleep(delay); // some robustness against ARM caching
+            }
             var resource = netAppMgmtClient.Snapshots.Create(snapshot, resourceGroup, accountName, poolName, volumeName, snapshotName);
             Assert.Equal(resource.Name, accountName + '/' + poolName + '/' + volumeName + '/' + snapshotName);
         }

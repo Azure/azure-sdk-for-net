@@ -16,7 +16,13 @@ namespace Azure.Security.KeyVault.Keys.Tests
     {
         private const int PagedKeyCount = 2;
 
-        public KeyClientLiveTests(bool isAsync, KeyClientOptions.ServiceVersion serviceVersion) : base(isAsync, serviceVersion)
+        public KeyClientLiveTests(bool isAsync, KeyClientOptions.ServiceVersion serviceVersion)
+            : this(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
+        {
+        }
+
+        public KeyClientLiveTests(bool isAsync, KeyClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode)
+            : base(isAsync, serviceVersion, mode)
         {
             // TODO: https://github.com/Azure/azure-sdk-for-net/issues/11634
             Matcher = new RecordMatcher(compareBodies: false);
@@ -29,8 +35,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
             // is always made.  This allows tests to be replayed independently and in any order
             if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
             {
-                Client = GetClient();
-
                 ChallengeBasedAuthenticationPolicy.AuthenticationChallenge.ClearCache();
             }
         }
@@ -107,7 +111,15 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 CurveName = curveName,
             };
 
-            KeyVaultKey keyNoHsmCurve = await Client.CreateEcKeyAsync(ecCurveKey);
+            KeyVaultKey keyNoHsmCurve = null;
+            try
+            {
+                keyNoHsmCurve = await Client.CreateEcKeyAsync(ecCurveKey);
+            }
+            catch (RequestFailedException ex) when (ex.ErrorCode == "KeyCurveNotSupported")
+            {
+                Assert.Ignore(ex.Message);
+            }
 
             RegisterForCleanup(keyNoHsmCurve.Name);
 
@@ -931,13 +943,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [Test]
         public async Task GetPropertiesOfKeyVersionsNonExisting()
         {
-            int count = 0;
             List<KeyProperties> allKeys = await Client.GetPropertiesOfKeyVersionsAsync(Recording.GenerateId()).ToEnumerableAsync();
-            foreach (KeyProperties key in allKeys)
-            {
-                count++;
-            }
-            Assert.AreEqual(0, count);
+            Assert.AreEqual(0, allKeys.Count);
         }
     }
 }

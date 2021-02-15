@@ -49,10 +49,10 @@ namespace Azure.Security.KeyVault.Administration
             uri.AppendPath("/backup", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
             if (azureStorageBlobContainerUri != null)
             {
+                request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
                 content.JsonWriter.WriteObjectValue(azureStorageBlobContainerUri);
                 request.Content = content;
@@ -198,10 +198,10 @@ namespace Azure.Security.KeyVault.Administration
             uri.AppendPath("/restore", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
             if (restoreBlobDetails != null)
             {
+                request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
                 content.JsonWriter.WriteObjectValue(restoreBlobDetails);
                 request.Content = content;
@@ -349,10 +349,10 @@ namespace Azure.Security.KeyVault.Administration
             uri.AppendPath("/restore", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
             if (restoreBlobDetails != null)
             {
+                request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
                 content.JsonWriter.WriteObjectValue(restoreBlobDetails);
                 request.Content = content;

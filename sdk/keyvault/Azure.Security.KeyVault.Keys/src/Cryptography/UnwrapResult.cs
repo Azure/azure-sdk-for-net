@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
 using System.Text.Json;
 
 namespace Azure.Security.KeyVault.Keys.Cryptography
@@ -18,7 +19,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         }
 
         /// <summary>
-        /// Gets the <see cref="KeyProperties.Id"/> of the <see cref="Key"/> used to uwrap.
+        /// Gets the key identifier of the <see cref="Key"/> used to uwrap.
         /// </summary>
         public string KeyId { get; internal set; }
 

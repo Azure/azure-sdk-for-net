@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http.Headers;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.Core.Pipeline
@@ -19,17 +20,23 @@ namespace Azure.Core.Pipeline
     /// </summary>
     internal class HttpWebRequestTransport : HttpPipelineTransport
     {
+        private readonly Action<HttpWebRequest> _configureRequest;
         public static readonly HttpWebRequestTransport Shared = new HttpWebRequestTransport();
-        private readonly IWebProxy? _proxy;
+        private readonly IWebProxy? _environmentProxy;
 
         /// <summary>
         /// Creates a new instance of <see cref="HttpWebRequestTransport"/>
         /// </summary>
-        public HttpWebRequestTransport()
+        public HttpWebRequestTransport(): this (_ => { })
         {
+        }
+
+        internal HttpWebRequestTransport(Action<HttpWebRequest> configureRequest)
+        {
+            _configureRequest = configureRequest;
             if (HttpEnvironmentProxy.TryCreate(out IWebProxy webProxy))
             {
-                _proxy = webProxy;
+                _environmentProxy = webProxy;
             }
         }
 
@@ -56,12 +63,6 @@ namespace Azure.Core.Pipeline
             {
                 if (message.Request.Content != null)
                 {
-                    if (request.ContentLength == -1 &&
-                        message.Request.Content.TryComputeLength(out var length))
-                    {
-                        request.ContentLength = length;
-                    }
-
                     using var requestStream = async ? await request.GetRequestStreamAsync().ConfigureAwait(false) : request.GetRequestStream();
 
                     if (async)
@@ -88,7 +89,13 @@ namespace Azure.Core.Pipeline
                 {
                     webResponse = exception.Response;
                 }
+
                 message.Response = new HttpWebResponseImplementation(message.Request.ClientRequestId, (HttpWebResponse) webResponse);
+            }
+            // ObjectDisposedException might be thrown if the request is aborted during the content upload via SSL
+            catch (ObjectDisposedException) when (message.CancellationToken.IsCancellationRequested)
+            {
+                throw new TaskCanceledException();
             }
             // WebException is thrown in the case of .Abort() call
             catch (WebException) when (message.CancellationToken.IsCancellationRequested)
@@ -104,13 +111,25 @@ namespace Azure.Core.Pipeline
         private HttpWebRequest CreateRequest(Request messageRequest)
         {
             var request = WebRequest.CreateHttp(messageRequest.Uri.ToUri());
+
+            // Timeouts are handled by the pipeline
+            request.Timeout = Timeout.Infinite;
+            request.ReadWriteTimeout = Timeout.Infinite;
+
+            // Don't disable the default proxy when there is no environment proxy configured
+            if (_environmentProxy != null)
+            {
+                request.Proxy = _environmentProxy;
+            }
+
+            _configureRequest(request);
+
             request.Method = messageRequest.Method.Method;
-            request.Proxy = _proxy;
             foreach (var messageRequestHeader in messageRequest.Headers)
             {
                 if (string.Equals(messageRequestHeader.Name, HttpHeader.Names.ContentLength, StringComparison.OrdinalIgnoreCase))
                 {
-                    request.ContentLength = int.Parse(messageRequestHeader.Value, CultureInfo.InvariantCulture);
+                    request.ContentLength = long.Parse(messageRequestHeader.Value, CultureInfo.InvariantCulture);
                     continue;
                 }
 
@@ -150,6 +169,24 @@ namespace Azure.Core.Pipeline
                     continue;
                 }
 
+                if (string.Equals(messageRequestHeader.Name, HttpHeader.Names.IfModifiedSince, StringComparison.OrdinalIgnoreCase))
+                {
+                    request.IfModifiedSince = DateTime.Parse(messageRequestHeader.Value, CultureInfo.InvariantCulture);
+                    continue;
+                }
+
+                if (string.Equals(messageRequestHeader.Name, "Expect", StringComparison.OrdinalIgnoreCase))
+                {
+                    request.Expect = messageRequestHeader.Value;
+                    continue;
+                }
+
+                if (string.Equals(messageRequestHeader.Name, "Transfer-Encoding", StringComparison.OrdinalIgnoreCase))
+                {
+                    request.TransferEncoding = messageRequestHeader.Value;
+                    continue;
+                }
+
                 if (string.Equals(messageRequestHeader.Name, HttpHeader.Names.Range, StringComparison.OrdinalIgnoreCase))
                 {
                     var value = RangeHeaderValue.Parse(messageRequestHeader.Value);
@@ -180,6 +217,19 @@ namespace Azure.Core.Pipeline
                 request.Headers.Add(messageRequestHeader.Name, messageRequestHeader.Value);
             }
 
+            if (request.ContentLength == -1 &&
+                messageRequest.Content != null &&
+                messageRequest.Content.TryComputeLength(out var length))
+            {
+                request.ContentLength = length;
+            }
+
+            if (request.ContentLength != -1)
+            {
+                // disable buffering when the content length is known
+                // as the content stream is re-playable and we don't want to allocate extra buffers
+                request.AllowWriteStreamBuffering = false;
+            }
             return request;
         }
 

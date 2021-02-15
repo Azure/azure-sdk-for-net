@@ -8,17 +8,10 @@ using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class ClientSecretCredentialLiveTests : RecordedTestBase<IdentityTestEnvironment>
+    public class ClientSecretCredentialLiveTests : IdentityRecordedTestBase
     {
         public ClientSecretCredentialLiveTests(bool isAsync) : base(isAsync)
         {
-            Matcher.ExcludeHeaders.Add("Content-Length");
-            Matcher.ExcludeHeaders.Add("client-request-id");
-            Matcher.ExcludeHeaders.Add("x-client-OS");
-            Matcher.ExcludeHeaders.Add("x-client-SKU");
-            Matcher.ExcludeHeaders.Add("x-client-CPU");
-
-            Sanitizer = new IdentityRecordedTestSanitizer();
         }
 
         [SetUp]
@@ -37,7 +30,7 @@ namespace Azure.Identity.Tests
 
             var options = InstrumentClientOptions(new TokenCredentialOptions());
 
-            var credential = new ClientSecretCredential(tenantId, clientId, secret, options);
+            var credential = InstrumentClient(new ClientSecretCredential(tenantId, clientId, secret, options));
 
             var tokenRequestContext = new TokenRequestContext(new[] { AzureAuthorityHosts.GetDefaultScope(AzureAuthorityHosts.AzurePublicCloud) });
 
@@ -71,7 +64,7 @@ namespace Azure.Identity.Tests
 
             var options = InstrumentClientOptions(new TokenCredentialOptions());
 
-            var credential = new ClientSecretCredential(tenantId, clientId, secret, options);
+            var credential = InstrumentClient(new ClientSecretCredential(tenantId, clientId, secret, options));
 
             var tokenRequestContext = new TokenRequestContext(new[] { AzureAuthorityHosts.GetDefaultScope(AzureAuthorityHosts.AzurePublicCloud) });
 

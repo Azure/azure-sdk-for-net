@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.Media.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -36,7 +37,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// class.
         /// </summary>
         /// <param name="keyId">The content key ID.</param>
-        public ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier(System.Guid keyId)
+        public ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier(System.Guid? keyId)
         {
             KeyId = keyId;
             CustomInit();
@@ -51,17 +52,20 @@ namespace Microsoft.Azure.Management.Media.Models
         /// Gets or sets the content key ID.
         /// </summary>
         [JsonProperty(PropertyName = "keyId")]
-        public System.Guid KeyId { get; set; }
+        public System.Guid? KeyId { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            //Nothing to validate
+            if (KeyId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "KeyId");
+            }
         }
     }
 }

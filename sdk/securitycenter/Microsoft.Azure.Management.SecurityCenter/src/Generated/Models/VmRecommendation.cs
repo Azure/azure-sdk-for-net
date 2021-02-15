@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Security.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents a machine that is part of a VM/server group
+    /// Represents a machine that is part of a machine group
     /// </summary>
     public partial class VmRecommendation
     {

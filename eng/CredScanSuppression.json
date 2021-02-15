@@ -1,0 +1,20 @@
+// Here illustrate how to suppress the credScan errors. 
+//{
+//     "tool": "Credential Scanner",
+//     "suppressions": [
+//      Here is how to suppress the particular secret in file. Hash can be found in report.
+//     {    
+//         "hash": "OEa4VAspaTQ2eneu8p5RBs/1rF4uyq9rQo3E/EYBieU=",
+//         "_justification": "Secret used by test code, it is fake."
+//     },
+//     Here is how to suppress the entire file contains secret. 
+//     {
+//         "file": "sdk\\cosmos\\azure-cosmos\\src\\test\\resources\\client.jks", 
+//         "_justification": "Additional CredScan searcher specific to my team"
+//     }
+//   ]
+// }
+{
+    "tool": "Credential Scanner",
+    "suppressions": []
+}

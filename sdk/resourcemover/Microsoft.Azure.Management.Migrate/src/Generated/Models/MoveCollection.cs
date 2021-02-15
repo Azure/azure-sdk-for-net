@@ -37,14 +37,16 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
         /// resource.</param>
         /// <param name="name">The name of the resource</param>
         /// <param name="type">The type of the resource.</param>
+        /// <param name="etag">The etag of the resource.</param>
         /// <param name="tags">Resource tags.</param>
         /// <param name="location">The geo-location where the resource
         /// lives.</param>
-        public MoveCollection(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), Identity identity = default(Identity), MoveCollectionProperties properties = default(MoveCollectionProperties))
+        public MoveCollection(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), Identity identity = default(Identity), MoveCollectionProperties properties = default(MoveCollectionProperties))
         {
             Id = id;
             Name = name;
             Type = type;
+            Etag = etag;
             Tags = tags;
             Location = location;
             Identity = identity;
@@ -74,6 +76,12 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
+
+        /// <summary>
+        /// Gets the etag of the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "etag")]
+        public string Etag { get; private set; }
 
         /// <summary>
         /// Gets or sets resource tags.

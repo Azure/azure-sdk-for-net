@@ -1,10 +1,34 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0-beta.5 (Unreleased)
+
+
+## 1.0.0-beta.4 (2021-02-09)
+
+### Breaking Changes
+
+- Updated to Azure.Communication.Common version 1.0.0-beta.4. Now uses `CommunicationUserIdentifier` and `CommunicationIdentifier` in place of `CommunicationUser`, and `CommunicationTokenCredential` instead of `CommunicationUserCredential`.
+- Removed `Priority` field from `ChatMessage`.
+
+### Added
+
+- Added support for `CreateChatThreadResult` and `AddChatParticipantsResult` to handle partial errors in batch calls.
+- Added idempotency identifier parameter for chat creation calls.
+- Added pagination support for `GetReadReceipts`, `GetReadReceiptsAsync` and `GetParticipants`, `GetParticipantsAsync`.
+- Added new model for messages and content types: `Text`, `Html`, `ParticipantAdded`, `ParticipantRemoved`, `TopicUpdated`.
+- Added new model for errors (`CommunicationError`).
+- Added notifications for thread level changes.
+
+
+## 1.0.0-beta.3 (2020-11-16)
+
+### Added
+- Support for mocking all client methods that use models with internal constructors.
+- Added unit test for pagination.
 
 
 ## 1.0.0-beta.2 (2020-10-06)
-Updated `Azure.Communication.Chat` version
+Updated `Azure.Communication.Chat` version.
 
 ## 1.0.0-beta.1 (2020-09-22)
 This is the first release of Azure Communication Services for chat. For more information, please see the [README][read_me] and [documentation][documentation].

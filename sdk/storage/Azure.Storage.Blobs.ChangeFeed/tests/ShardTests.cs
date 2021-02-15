@@ -70,7 +70,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 It.IsAny<long>(),
                 It.IsAny<long>(),
                 It.IsAny<CancellationToken>()))
-                .Returns((bool _, string path, long _, long _, CancellationToken _) => Task.FromResult(chunks[path].Object));
+                .Returns((bool _, string path, long __, long ___, CancellationToken ____) => Task.FromResult(chunks[path].Object));
 
             ShardFactory shardFactory = new ShardFactory(
                 containerClient.Object,
@@ -82,7 +82,6 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 shardPath,
                 shardCursor)
                 .ConfigureAwait(false);
-
 
             ShardCursor cursor = shard.GetCursor();
 
@@ -172,7 +171,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 It.IsAny<long>(),
                 It.IsAny<long>(),
                 It.IsAny<CancellationToken>()))
-                .Returns((bool _, string path, long _, long _, CancellationToken _) => Task.FromResult(chunks[path].Object));
+                .Returns((bool _, string path, long __, long ___, CancellationToken ____) => Task.FromResult(chunks[path].Object));
 
             chunks["chunk5"].Setup(r => r.HasNext()).Returns(false);
 
@@ -271,7 +270,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 It.IsAny<long>(),
                 It.IsAny<long>(),
                 It.IsAny<CancellationToken>()))
-                .Returns((bool _, string path, long _, long _, CancellationToken _) => Task.FromResult(chunks[path].Object));
+                .Returns((bool _, string path, long __, long ___, CancellationToken ____) => Task.FromResult(chunks[path].Object));
 
             ShardFactory shardFactory = new ShardFactory(
                 containerClient.Object,
@@ -366,7 +365,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 It.IsAny<long>(),
                 It.IsAny<long>(),
                 It.IsAny<CancellationToken>()))
-                .Returns((bool _, string path, long _, long _, CancellationToken _) => Task.FromResult(chunks[path].Object));
+                .Returns((bool _, string path, long __, long ___, CancellationToken ____) => Task.FromResult(chunks[path].Object));
 
             chunks["chunk5"].Setup(r => r.HasNext()).Returns(true);
 
@@ -482,7 +481,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 It.IsAny<long>(),
                 It.IsAny<long>(),
                 It.IsAny<CancellationToken>()))
-                .Returns((bool _, string path, long _, long _, CancellationToken _) => Task.FromResult(chunks[path].Object));
+                .Returns((bool _, string path, long __, long ___, CancellationToken ____) => Task.FromResult(chunks[path].Object));
 
             chunks["chunk2"].SetupSequence(r => r.HasNext())
                 .Returns(true)
@@ -504,7 +503,6 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             for (int i = 0; i < chunkCount; i++)
             {
-
                 chunks[$"chunk{2 + i}"].SetupSequence(r => r.Next(
                     It.IsAny<bool>(),
                     default))

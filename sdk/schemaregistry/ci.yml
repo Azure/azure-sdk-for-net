@@ -19,7 +19,6 @@ pr:
   paths:
     include:
     - sdk/schemaregistry/
-    - eng/common/
 
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml

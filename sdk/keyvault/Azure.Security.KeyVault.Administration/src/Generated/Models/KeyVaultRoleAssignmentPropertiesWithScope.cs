@@ -5,7 +5,9 @@
 
 #nullable disable
 
-namespace Azure.Security.KeyVault.Administration.Models
+using Azure.Security.KeyVault.Administration.Models;
+
+namespace Azure.Security.KeyVault.Administration
 {
     /// <summary> Role assignment properties with scope. </summary>
     public partial class KeyVaultRoleAssignmentPropertiesWithScope
@@ -16,18 +18,18 @@ namespace Azure.Security.KeyVault.Administration.Models
         }
 
         /// <summary> Initializes a new instance of KeyVaultRoleAssignmentPropertiesWithScope. </summary>
-        /// <param name="scope"> The role assignment scope. </param>
+        /// <param name="scope"> The role scope. </param>
         /// <param name="roleDefinitionId"> The role definition ID. </param>
         /// <param name="principalId"> The principal ID. </param>
-        internal KeyVaultRoleAssignmentPropertiesWithScope(string scope, string roleDefinitionId, string principalId)
+        internal KeyVaultRoleAssignmentPropertiesWithScope(KeyVaultRoleScope? scope, string roleDefinitionId, string principalId)
         {
             Scope = scope;
             RoleDefinitionId = roleDefinitionId;
             PrincipalId = principalId;
         }
 
-        /// <summary> The role assignment scope. </summary>
-        public string Scope { get; }
+        /// <summary> The role scope. </summary>
+        public KeyVaultRoleScope? Scope { get; }
         /// <summary> The role definition ID. </summary>
         public string RoleDefinitionId { get; }
         /// <summary> The principal ID. </summary>

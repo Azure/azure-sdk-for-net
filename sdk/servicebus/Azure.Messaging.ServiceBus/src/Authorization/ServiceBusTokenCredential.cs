@@ -4,7 +4,6 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Messaging.ServiceBus;
 
 namespace Azure.Messaging.ServiceBus.Authorization
 {
@@ -55,8 +54,7 @@ namespace Azure.Messaging.ServiceBus.Authorization
             Resource = serviceBusResource;
 
             IsSharedAccessSignatureCredential =
-                (tokenCredential is ServiceBusSharedKeyCredential)
-                || (tokenCredential is SharedAccessSignatureCredential)
+                (tokenCredential is SharedAccessSignatureCredential)
                 || ((tokenCredential as ServiceBusTokenCredential)?.IsSharedAccessSignatureCredential == true);
         }
 

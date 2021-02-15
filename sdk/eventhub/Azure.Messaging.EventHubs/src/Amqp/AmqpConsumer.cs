@@ -33,7 +33,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         private static readonly IReadOnlyList<EventData> EmptyEventSet = Array.Empty<EventData>();
 
         /// <summary>Indicates whether or not this instance has been closed.</summary>
-        private volatile bool _closed = false;
+        private volatile bool _closed;
 
         /// <summary>
         ///   Indicates whether or not this consumer has been closed.
@@ -301,7 +301,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                         ++failedAttemptCount;
                         retryDelay = RetryPolicy.CalculateRetryDelay(activeEx, failedAttemptCount);
 
-                        if ((retryDelay.HasValue) && (!ConnectionScope.IsDisposed) && (!cancellationToken.IsCancellationRequested))
+                        if ((retryDelay.HasValue) && (!ConnectionScope.IsDisposed) && (!_closed) && (!cancellationToken.IsCancellationRequested))
                         {
                             EventHubsEventSource.Log.EventReceiveError(EventHubName, ConsumerGroup, PartitionId, operationId, activeEx.Message);
                             await Task.Delay(UseMinimum(retryDelay.Value, waitTime.CalculateRemaining(stopWatch.GetElapsedTime())), cancellationToken).ConfigureAwait(false);

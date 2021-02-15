@@ -53,13 +53,9 @@ namespace Azure.AI.FormRecognizer.Models
             {
                 IReadOnlyList<FormElement> fieldElements = ConvertTextReferences(fieldValue.Elements, readResults);
 
-                // TODO: FormEnum<T> ?
                 FieldBoundingBox boundingBox = new FieldBoundingBox(fieldValue.BoundingBox);
 
-                // Issue https://github.com/Azure/azure-sdk-for-net/issues/15845
-                int page = fieldValue.Page.HasValue ? fieldValue.Page.Value : 1;
-
-                ValueData = new FieldData(boundingBox, page, fieldValue.Text, fieldElements);
+                ValueData = new FieldData(boundingBox, fieldValue.Page.Value, fieldValue.Text, fieldElements);
             }
 
             Value = new FieldValue(fieldValue, readResults);
@@ -123,9 +119,6 @@ namespace Azure.AI.FormRecognizer.Models
 
         private static FormElement ResolveTextReference(IReadOnlyList<ReadResult> readResults, string reference)
         {
-            // TODO: Add additional validations here.
-            // https://github.com/Azure/azure-sdk-for-net/issues/10363
-
             // Example: the following should result in PageIndex = 3, LineIndex = 7, WordIndex = 12
             // "#/analyzeResult/readResults/3/lines/7/words/12" from DocumentResult
             // "#/readResults/3/lines/7/words/12" from PageResult

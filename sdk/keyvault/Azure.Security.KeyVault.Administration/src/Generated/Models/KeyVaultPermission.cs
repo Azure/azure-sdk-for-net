@@ -7,8 +7,9 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Security.KeyVault.Administration.Models;
 
-namespace Azure.Security.KeyVault.Administration.Models
+namespace Azure.Security.KeyVault.Administration
 {
     /// <summary> Role definition permissions. </summary>
     public partial class KeyVaultPermission
@@ -18,16 +19,16 @@ namespace Azure.Security.KeyVault.Administration.Models
         {
             Actions = new ChangeTrackingList<string>();
             NotActions = new ChangeTrackingList<string>();
-            DataActions = new ChangeTrackingList<string>();
-            NotDataActions = new ChangeTrackingList<string>();
+            DataActions = new ChangeTrackingList<KeyVaultDataAction>();
+            NotDataActions = new ChangeTrackingList<KeyVaultDataAction>();
         }
 
         /// <summary> Initializes a new instance of KeyVaultPermission. </summary>
-        /// <param name="actions"> Allowed actions. </param>
-        /// <param name="notActions"> Denied actions. </param>
-        /// <param name="dataActions"> Allowed Data actions. </param>
-        /// <param name="notDataActions"> Denied Data actions. </param>
-        internal KeyVaultPermission(IList<string> actions, IList<string> notActions, IList<string> dataActions, IList<string> notDataActions)
+        /// <param name="actions"> Action permissions that are granted. </param>
+        /// <param name="notActions"> Action permissions that are excluded but not denied. They may be granted by other role definitions assigned to a principal. </param>
+        /// <param name="dataActions"> Data action permissions that are granted. </param>
+        /// <param name="notDataActions"> Data action permissions that are excluded but not denied. They may be granted by other role definitions assigned to a principal. </param>
+        internal KeyVaultPermission(IList<string> actions, IList<string> notActions, IList<KeyVaultDataAction> dataActions, IList<KeyVaultDataAction> notDataActions)
         {
             Actions = actions;
             NotActions = notActions;
@@ -35,13 +36,13 @@ namespace Azure.Security.KeyVault.Administration.Models
             NotDataActions = notDataActions;
         }
 
-        /// <summary> Allowed actions. </summary>
+        /// <summary> Action permissions that are granted. </summary>
         public IList<string> Actions { get; }
-        /// <summary> Denied actions. </summary>
+        /// <summary> Action permissions that are excluded but not denied. They may be granted by other role definitions assigned to a principal. </summary>
         public IList<string> NotActions { get; }
-        /// <summary> Allowed Data actions. </summary>
-        public IList<string> DataActions { get; }
-        /// <summary> Denied Data actions. </summary>
-        public IList<string> NotDataActions { get; }
+        /// <summary> Data action permissions that are granted. </summary>
+        public IList<KeyVaultDataAction> DataActions { get; }
+        /// <summary> Data action permissions that are excluded but not denied. They may be granted by other role definitions assigned to a principal. </summary>
+        public IList<KeyVaultDataAction> NotDataActions { get; }
     }
 }

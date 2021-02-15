@@ -6,7 +6,7 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.WorkloadMonitor</PackageId>
     <Description>Provides developers with libraries for VM Health</Description>
-    <Version>0.9.2-preview</Version>
+    <Version>1.0.0-preview</Version>
     <AssemblyName>Microsoft.Azure.Management.WorkloadMonitor</AssemblyName>
     <PackageTags>vmhealth;vminsights;WorkloadMonitor;</PackageTags>
   </PropertyGroup>

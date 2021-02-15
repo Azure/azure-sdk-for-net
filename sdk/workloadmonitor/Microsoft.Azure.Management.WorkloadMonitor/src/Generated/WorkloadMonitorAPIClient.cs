@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// The API version to use for this operation.
+        /// The API version to use for the operation.
         /// </summary>
         public string ApiVersion { get; private set; }
 
@@ -75,9 +75,9 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
         public virtual IOperations Operations { get; private set; }
 
         /// <summary>
-        /// Gets the IMonitorsOperations.
+        /// Gets the IHealthMonitorsOperations.
         /// </summary>
-        public virtual IMonitorsOperations Monitors { get; private set; }
+        public virtual IHealthMonitorsOperations HealthMonitors { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the WorkloadMonitorAPIClient class.
@@ -321,7 +321,7 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
         private void Initialize()
         {
             Operations = new Operations(this);
-            Monitors = new MonitorsOperations(this);
+            HealthMonitors = new HealthMonitorsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2020-01-13-preview";
             AcceptLanguage = "en-US";

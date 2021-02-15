@@ -16,7 +16,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         internal static HookList DeserializeHookList(JsonElement element)
         {
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<AlertingHook>> value = default;
+            Optional<IReadOnlyList<NotificationHook>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@nextLink"))
@@ -31,10 +31,10 @@ namespace Azure.AI.MetricsAdvisor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AlertingHook> array = new List<AlertingHook>();
+                    List<NotificationHook> array = new List<NotificationHook>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AlertingHook.DeserializeAlertingHook(item));
+                        array.Add(NotificationHook.DeserializeNotificationHook(item));
                     }
                     value = array;
                     continue;

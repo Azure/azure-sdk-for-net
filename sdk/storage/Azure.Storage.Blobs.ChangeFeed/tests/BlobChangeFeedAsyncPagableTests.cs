@@ -556,7 +556,6 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             blobChangeFeedAsyncPagable = blobChangeFeedClient.GetChangesAsync(continuation);
             IList<BlobChangeFeedEvent> tail = await blobChangeFeedAsyncPagable.ToListAsync();
 
-
             // Assert
             Assert.AreEqual(0, tail.Count);
             Assert.Greater(AllEventIds.Count, 0);
@@ -596,7 +595,6 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             // Act
             blobChangeFeedAsyncPagable = blobChangeFeedClient.GetChangesAsync(continuation);
             IList<BlobChangeFeedEvent> tail = await blobChangeFeedAsyncPagable.ToListAsync();
-
 
             // Assert
             Assert.AreEqual(0, tail.Count);

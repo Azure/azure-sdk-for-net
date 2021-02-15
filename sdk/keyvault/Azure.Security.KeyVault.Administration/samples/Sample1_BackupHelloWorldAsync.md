@@ -36,10 +36,10 @@ UriBuilder builder = new UriBuilder(blobStorageUrl)
 BackupOperation backupOperation = await Client.StartBackupAsync(builder.Uri, sasToken);
 
 // Wait for completion of the BackupOperation.
-Response<Uri> backupResult = await backupOperation.WaitForCompletionAsync();
+Response<BackupResult> backupResult = await backupOperation.WaitForCompletionAsync();
 
-// Get the Uri for the location of you backup blob.
-Uri backupFolderUri = backupResult.Value;
+// Get the Uri for the location of your backup blob.
+Uri folderUri = backupResult.Value.FolderUri;
 ```
 
 ## Performing a full key restore
@@ -50,10 +50,10 @@ Alternatively, it is possible to [generate a SAS token in Storage Explorer](http
 
 ```C# Snippet:HelloFullRestoreAsync
 // Start the restore using the backupBlobUri returned from a previous BackupOperation.
-RestoreOperation restoreOperation = await Client.StartRestoreAsync(backupFolderUri, sasToken);
+RestoreOperation restoreOperation = await Client.StartRestoreAsync(folderUri, sasToken);
 
 // Wait for completion of the RestoreOperation.
-Response restoreResult = await restoreOperation.WaitForCompletionAsync();
+Response<RestoreResult> restoreResult = await restoreOperation.WaitForCompletionAsync();
 ```
 
 <!-- LINKS -->
