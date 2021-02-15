@@ -99,9 +99,9 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters
             /// <param name='parameters'>
             /// The application type name resource.
             /// </param>
-            public static ApplicationTypeResource Create(this IApplicationTypesOperations operations, string resourceGroupName, string clusterName, string applicationTypeName, ApplicationTypeResource parameters)
+            public static ApplicationTypeResource CreateOrUpdate(this IApplicationTypesOperations operations, string resourceGroupName, string clusterName, string applicationTypeName, ApplicationTypeResource parameters)
             {
-                return operations.CreateAsync(resourceGroupName, clusterName, applicationTypeName, parameters).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, clusterName, applicationTypeName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -129,9 +129,9 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ApplicationTypeResource> CreateAsync(this IApplicationTypesOperations operations, string resourceGroupName, string clusterName, string applicationTypeName, ApplicationTypeResource parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ApplicationTypeResource> CreateOrUpdateAsync(this IApplicationTypesOperations operations, string resourceGroupName, string clusterName, string applicationTypeName, ApplicationTypeResource parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, clusterName, applicationTypeName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, clusterName, applicationTypeName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

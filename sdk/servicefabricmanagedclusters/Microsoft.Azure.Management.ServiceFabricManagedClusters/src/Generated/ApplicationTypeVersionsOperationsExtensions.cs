@@ -111,9 +111,9 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters
             /// <param name='parameters'>
             /// The application type version resource.
             /// </param>
-            public static ApplicationTypeVersionResource Create(this IApplicationTypeVersionsOperations operations, string resourceGroupName, string clusterName, string applicationTypeName, string version, ApplicationTypeVersionResource parameters)
+            public static ApplicationTypeVersionResource CreateOrUpdate(this IApplicationTypeVersionsOperations operations, string resourceGroupName, string clusterName, string applicationTypeName, string version, ApplicationTypeVersionResource parameters)
             {
-                return operations.CreateAsync(resourceGroupName, clusterName, applicationTypeName, version, parameters).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, clusterName, applicationTypeName, version, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -145,9 +145,9 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ApplicationTypeVersionResource> CreateAsync(this IApplicationTypeVersionsOperations operations, string resourceGroupName, string clusterName, string applicationTypeName, string version, ApplicationTypeVersionResource parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ApplicationTypeVersionResource> CreateOrUpdateAsync(this IApplicationTypeVersionsOperations operations, string resourceGroupName, string clusterName, string applicationTypeName, string version, ApplicationTypeVersionResource parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, clusterName, applicationTypeName, version, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, clusterName, applicationTypeName, version, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -360,9 +360,9 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters
             /// <param name='parameters'>
             /// The application type version resource.
             /// </param>
-            public static ApplicationTypeVersionResource BeginCreate(this IApplicationTypeVersionsOperations operations, string resourceGroupName, string clusterName, string applicationTypeName, string version, ApplicationTypeVersionResource parameters)
+            public static ApplicationTypeVersionResource BeginCreateOrUpdate(this IApplicationTypeVersionsOperations operations, string resourceGroupName, string clusterName, string applicationTypeName, string version, ApplicationTypeVersionResource parameters)
             {
-                return operations.BeginCreateAsync(resourceGroupName, clusterName, applicationTypeName, version, parameters).GetAwaiter().GetResult();
+                return operations.BeginCreateOrUpdateAsync(resourceGroupName, clusterName, applicationTypeName, version, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -394,9 +394,9 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ApplicationTypeVersionResource> BeginCreateAsync(this IApplicationTypeVersionsOperations operations, string resourceGroupName, string clusterName, string applicationTypeName, string version, ApplicationTypeVersionResource parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ApplicationTypeVersionResource> BeginCreateOrUpdateAsync(this IApplicationTypeVersionsOperations operations, string resourceGroupName, string clusterName, string applicationTypeName, string version, ApplicationTypeVersionResource parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, clusterName, applicationTypeName, version, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, clusterName, applicationTypeName, version, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

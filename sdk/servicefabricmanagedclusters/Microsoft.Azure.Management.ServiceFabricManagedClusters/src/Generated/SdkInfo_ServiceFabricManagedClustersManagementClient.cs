@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/a-santamaria/azure-rest-api-specs/blob/alsantam_manged2/specification/servicefabricmanagedclusters/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=E:\\code\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "a-santamaria";
       public static readonly String GithubBranchName = "alsantam_manged2";
-      public static readonly String GithubCommidId = "0502d2798a7b6bf10c05fddb3dd03adcdf1f518b";
+      public static readonly String GithubCommidId = "8fc3bc8c585baa69e3ae06cb996b1d9c3d06e69a";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
