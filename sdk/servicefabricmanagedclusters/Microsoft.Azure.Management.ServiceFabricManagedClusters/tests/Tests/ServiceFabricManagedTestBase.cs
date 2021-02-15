@@ -1,19 +1,19 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-namespace ServiceFabric.Tests.Managed
+namespace ServiceFabricManagedClusters.Tests
 {
-    using System.Net;
+    using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Net;
     using Microsoft.Azure.Management.Resources;
     using Microsoft.Azure.Management.Resources.Models;
     using Microsoft.Azure.Management.ServiceFabricManagedClusters;
     using Microsoft.Azure.Management.ServiceFabricManagedClusters.Models;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-    using TestHelper;
+    using ServiceFabricManagedClusters.Tests.TestHelper;
     using Xunit;
-    using System.Diagnostics;
-    using System;
 
     public class ServiceFabricManagedTestBase
     {
@@ -119,6 +119,8 @@ namespace ServiceFabric.Tests.Managed
 
                 if (stopWatch.Elapsed >= timeout)
                     throw new TimeoutException($"Timeout waiting for cluster to be ready. Current state: {cluster.ClusterState}");
+
+                TestUtilities.Wait(TimeSpan.FromSeconds(30));
             }
         }
     }

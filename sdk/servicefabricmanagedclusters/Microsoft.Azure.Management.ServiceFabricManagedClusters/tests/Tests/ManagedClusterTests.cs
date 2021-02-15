@@ -1,11 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-namespace ServiceFabric.Tests.Managed
+namespace ServiceFabricManagedClusters.Tests
 {
-    using System;
-    using System.Linq;
     using System.Collections.Generic;
+    using System.Linq;
     using Microsoft.Azure.Management.Resources;
     using Microsoft.Azure.Management.ServiceFabricManagedClusters;
     using Microsoft.Azure.Management.ServiceFabricManagedClusters.Models;
