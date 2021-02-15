@@ -70,7 +70,7 @@ namespace ServiceFabric.Tests.Managed
                 location: Location,
                 id: appTypeResourceId);
 
-            var appTypeResult = serviceFabricMcClient.ApplicationTypes.Create(
+            var appTypeResult = serviceFabricMcClient.ApplicationTypes.CreateOrUpdate(
                 resourceGroup,
                 clusterName,
                 appTypeName,
@@ -96,7 +96,7 @@ namespace ServiceFabric.Tests.Managed
                 id: appTypeVersionResourceId,
                 appPackageUrl: appPackageUrl);
 
-            var appTypeVersionResult = serviceFabricMcClient.ApplicationTypeVersions.Create(
+            var appTypeVersionResult = serviceFabricMcClient.ApplicationTypeVersions.CreateOrUpdate(
                 resourceGroup,
                 clusterName,
                 appTypeName,
@@ -124,7 +124,7 @@ namespace ServiceFabric.Tests.Managed
                 version: versionResourceId,
                 upgradePolicy: new ApplicationUpgradePolicy(recreateApplication: true));
 
-            var applicationResult = serviceFabricMcClient.Applications.Create(
+            var applicationResult = serviceFabricMcClient.Applications.CreateOrUpdate(
                 resourceGroup,
                 clusterName,
                 appName,
@@ -158,7 +158,7 @@ namespace ServiceFabric.Tests.Managed
                     targetReplicaSetSize: 5,
                     minReplicaSetSize: 3));
 
-            var serviceResult = serviceFabricMcClient.Services.Create(
+            var serviceResult = serviceFabricMcClient.Services.CreateOrUpdate(
                 resourceGroup,
                 clusterName,
                 appName,
