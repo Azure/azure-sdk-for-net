@@ -68,7 +68,7 @@ namespace Azure.Communication.PhoneNumbers.Models
         private readonly int _dummyPrimitive;
         public PhoneNumberAssignmentType(string value) { throw null; }
         public static Azure.Communication.PhoneNumbers.Models.PhoneNumberAssignmentType Application { get { throw null; } }
-        public static Azure.Communication.PhoneNumbers.Models.PhoneNumberAssignmentType User { get { throw null; } }
+        public static Azure.Communication.PhoneNumbers.Models.PhoneNumberAssignmentType Person { get { throw null; } }
         public bool Equals(Azure.Communication.PhoneNumbers.Models.PhoneNumberAssignmentType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }

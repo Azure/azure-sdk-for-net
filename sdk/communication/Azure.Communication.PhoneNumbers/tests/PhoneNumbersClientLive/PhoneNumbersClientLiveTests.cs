@@ -50,75 +50,34 @@ namespace Azure.Communication.PhoneNumbers.Tests
         {
             var client = CreateClient();
             const string countryCode = "US";
-
-            // User and toll free is an invalid combination
-            var searchOperation = await client.StartSearchAvailablePhoneNumbersAsync(countryCode, PhoneNumberType.TollFree, PhoneNumberAssignmentType.User,
-                new PhoneNumberCapabilities(PhoneNumberCapabilityValue.Outbound, PhoneNumberCapabilityValue.None), new PhoneNumberSearchOptions("212", 1));
-
             try
             {
-                if (TestEnvironment.Mode == RecordedTestMode.Playback)
-                    await searchOperation.WaitForCompletionAsync(TimeSpan.Zero, default).ConfigureAwait(false);
-                else
-                    await searchOperation.WaitForCompletionAsync().ConfigureAwait(false);
+                // User and toll free is an invalid combination
+                var searchOperation = await client.StartSearchAvailablePhoneNumbersAsync(countryCode, PhoneNumberType.TollFree, PhoneNumberAssignmentType.Person,
+                    new PhoneNumberCapabilities(PhoneNumberCapabilityValue.Outbound, PhoneNumberCapabilityValue.None), new PhoneNumberSearchOptions(areaCode: "212", quantity: 1));
             }
-            catch (Exception ex)
+            catch (Azure.RequestFailedException ex)
             {
-                Assert.AreEqual("Search has failed.", ex.Message);
+                Assert.AreEqual(400, ex.Status);
                 return;
             }
 
             Assert.Fail("WaitForCompletionAsync should have thrown an exception.");
         }
 
-        [TestCase("geographic", "user", "inbound", "none")]
-        [TestCase("geographic", "application", "outbound", "none")]
-        [TestCase("geographic", "application", "inbound+outbound", "none")]
-        [TestCase("geographic", "user", "inbound", "inbound")]
-        [TestCase("geographic", "application", "outbound", "outbound")]
-        [TestCase("geographic", "application", "inbound+outbound", "inbound+outbound")]
-        [TestCase("geographic", "user", "none", "inbound")]
-        [TestCase("geographic", "application", "none", "outbound")]
-        [TestCase("geographic", "application", "none", "inbound+outbound")]
-        public async Task CreateSearch(string phoneType, string assignmentType, string calling, string sms)
+        //[TestCase("geographic", "user", "inbound", "none")]
+        //[TestCase("geographic", "application", "outbound", "none")]
+        //[TestCase("geographic", "application", "inbound+outbound", "none")]
+        //[TestCase("geographic", "user", "inbound", "inbound")]
+        //[TestCase("geographic", "application", "outbound", "outbound")]
+        //[TestCase("geographic", "application", "inbound+outbound", "inbound+outbound")]
+        //[TestCase("geographic", "user", "none", "inbound")]
+        //[TestCase("geographic", "application", "none", "outbound")]
+        //[TestCase("geographic", "application", "none", "inbound+outbound")]
+        public async Task PurchaseAndReleaseSearch(string phoneType, string assignmentType, string calling, string sms)
         {
             PhoneNumberType phoneNumberType = phoneType == "geographic" ? PhoneNumberType.Geographic : PhoneNumberType.TollFree;
-            PhoneNumberAssignmentType phoneNumberAssignmentType = assignmentType == "user" ? PhoneNumberAssignmentType.User : PhoneNumberAssignmentType.Application;
-
-            var client = CreateClient();
-            const string countryCode = "US";
-
-            var searchOperation = await client.StartSearchAvailablePhoneNumbersAsync(countryCode, phoneNumberType, phoneNumberAssignmentType,
-                new PhoneNumberCapabilities(calling, sms));
-
-            if (TestEnvironment.Mode == RecordedTestMode.Playback)
-                await searchOperation.WaitForCompletionAsync(TimeSpan.Zero, default).ConfigureAwait(false);
-            else
-                await searchOperation.WaitForCompletionAsync().ConfigureAwait(false);
-
-            Assert.IsNotNull(searchOperation);
-            Assert.IsTrue(searchOperation.HasCompleted);
-            Assert.IsTrue(searchOperation.HasValue);
-
-            var rearchResult = searchOperation.Value;
-            Assert.IsNotNull(rearchResult);
-
-            Assert.AreEqual(1, rearchResult.PhoneNumbers.Count);
-        }
-
-        [TestCase("geographic", "user", "inbound", "none")]
-        [TestCase("geographic", "application", "outbound", "none")]
-        [TestCase("geographic", "application", "inbound+outbound", "none")]
-        [TestCase("geographic", "user", "inbound", "inbound")]
-        [TestCase("geographic", "application", "outbound", "outbound")]
-        [TestCase("geographic", "application", "inbound+outbound", "inbound+outbound")]
-        [TestCase("geographic", "user", "none", "inbound")]
-        [TestCase("geographic", "application", "none", "outbound")]
-        [TestCase("geographic", "application", "none", "inbound+outbound")]
-        public async Task PurchaseSearch(string phoneType, string assignmentType, string calling, string sms)
-        {
-            PhoneNumberType phoneNumberType = phoneType == "geographic" ? PhoneNumberType.Geographic : PhoneNumberType.TollFree;
-            PhoneNumberAssignmentType phoneNumberAssignmentType = assignmentType == "user" ? PhoneNumberAssignmentType.User : PhoneNumberAssignmentType.Application;
+            PhoneNumberAssignmentType phoneNumberAssignmentType = assignmentType == "user" ? PhoneNumberAssignmentType.Person : PhoneNumberAssignmentType.Application;
 
             var client = CreateClient();
             const string countryCode = "US";
@@ -174,6 +133,18 @@ namespace Azure.Communication.PhoneNumbers.Tests
 
             Assert.AreEqual(countryCode, phoneNumber.CountryCode);
             Assert.AreEqual(searchedNumber, phoneNumber.PhoneNumber);
+
+            //Release
+
+            var releaseOperation = await client.StartReleasePhoneNumberAsync(phoneNumber.PhoneNumber);
+
+            if (TestEnvironment.Mode == RecordedTestMode.Playback)
+                await releaseOperation.WaitForCompletionAsync(TimeSpan.Zero, default).ConfigureAwait(false);
+            else
+                await releaseOperation.WaitForCompletionAsync().ConfigureAwait(false);
+
+            Assert.IsTrue(releaseOperation.HasCompleted);
+            Assert.IsTrue(releaseOperation.HasValue);
         }
     }
 }

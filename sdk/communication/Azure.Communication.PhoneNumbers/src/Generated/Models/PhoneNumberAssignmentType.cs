@@ -22,11 +22,11 @@ namespace Azure.Communication.PhoneNumbers.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string UserValue = "user";
+        private const string PersonValue = "person";
         private const string ApplicationValue = "application";
 
-        /// <summary> user. </summary>
-        public static PhoneNumberAssignmentType User { get; } = new PhoneNumberAssignmentType(UserValue);
+        /// <summary> person. </summary>
+        public static PhoneNumberAssignmentType Person { get; } = new PhoneNumberAssignmentType(PersonValue);
         /// <summary> application. </summary>
         public static PhoneNumberAssignmentType Application { get; } = new PhoneNumberAssignmentType(ApplicationValue);
         /// <summary> Determines if two <see cref="PhoneNumberAssignmentType"/> values are the same. </summary>

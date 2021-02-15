@@ -348,7 +348,7 @@ namespace Azure.Communication.PhoneNumbers
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 200:
+                case 204:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -370,7 +370,7 @@ namespace Azure.Communication.PhoneNumbers
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 200:
+                case 204:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -477,7 +477,7 @@ namespace Azure.Communication.PhoneNumbers
             var headers = new PhoneNumbersReleasePhoneNumberHeaders(message.Response);
             switch (message.Response.Status)
             {
-                case 204:
+                case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -500,7 +500,7 @@ namespace Azure.Communication.PhoneNumbers
             var headers = new PhoneNumbersReleasePhoneNumberHeaders(message.Response);
             switch (message.Response.Status)
             {
-                case 204:
+                case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -616,7 +616,7 @@ namespace Azure.Communication.PhoneNumbers
             var headers = new PhoneNumbersUpdateCapabilitiesHeaders(message.Response);
             switch (message.Response.Status)
             {
-                case 200:
+                case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -641,7 +641,7 @@ namespace Azure.Communication.PhoneNumbers
             var headers = new PhoneNumbersUpdateCapabilitiesHeaders(message.Response);
             switch (message.Response.Status)
             {
-                case 200:
+                case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);

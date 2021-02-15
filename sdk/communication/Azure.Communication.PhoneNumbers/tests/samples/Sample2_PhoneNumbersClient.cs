@@ -40,7 +40,7 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
 
             #region Snippet:SearchPhoneNumbersAsync
 
-            var searchOperation = await client.StartSearchAvailablePhoneNumbersAsync(countryCode, PhoneNumberType.Geographic, PhoneNumberAssignmentType.User,
+            var searchOperation = await client.StartSearchAvailablePhoneNumbersAsync(countryCode, PhoneNumberType.Geographic, PhoneNumberAssignmentType.Person,
                  new PhoneNumberCapabilities(PhoneNumberCapabilityValue.InboundOutbound, PhoneNumberCapabilityValue.None));
             //@@ await purchaseOperation.WaitForCompletionAsync();
             /*@@*/ await WaitForCompletionAsync(searchOperation);
@@ -114,8 +114,10 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
 
             #region Snippet:SearchPhoneNumbers
 
-            var searchOperation = client.StartSearchAvailablePhoneNumbers(countryCode, PhoneNumberType.Geographic, PhoneNumberAssignmentType.User,
-                 new PhoneNumberCapabilities(PhoneNumberCapabilityValue.InboundOutbound, PhoneNumberCapabilityValue.None));
+            var capabilities = new PhoneNumberCapabilities(PhoneNumberCapabilityValue.Outbound, PhoneNumberCapabilityValue.Outbound);
+            var searchOptions = new PhoneNumberSearchOptions(areaCode: "844");
+
+            var searchOperation = client.StartSearchAvailablePhoneNumbers(countryCode, PhoneNumberType.TollFree, PhoneNumberAssignmentType.Application, capabilities, searchOptions);
 
             while (!searchOperation.HasCompleted)
             {
@@ -127,7 +129,7 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
             #endregion Snippet:SearchPhoneNumbers
 
             #region Snippet:StartPurchaseSearch
-            var purchaseOperation = client.StartPurchasePhoneNumbers(searchOperation.Id);
+            var purchaseOperation = client.StartPurchasePhoneNumbers(searchOperation.Value.SearchId);
 
             while (!purchaseOperation.HasCompleted)
             {
