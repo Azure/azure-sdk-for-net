@@ -10,8 +10,6 @@
 
 namespace Microsoft.Azure.Management.ServiceFabricManagedClusters.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -20,7 +18,6 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters.Models
     /// <summary>
     /// The service resource.
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
     public partial class ServiceResource : ProxyResource
     {
         /// <summary>
@@ -34,43 +31,16 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters.Models
         /// <summary>
         /// Initializes a new instance of the ServiceResource class.
         /// </summary>
-        /// <param name="serviceTypeName">The name of the service type</param>
         /// <param name="id">Azure resource identifier.</param>
         /// <param name="name">Azure resource name.</param>
         /// <param name="type">Azure resource type.</param>
         /// <param name="location">Resource location depends on the parent
         /// resource.</param>
         /// <param name="tags">Azure resource tags.</param>
-        /// <param name="placementConstraints">The placement constraints as a
-        /// string. Placement constraints are boolean expressions on node
-        /// properties and allow for restricting a service to particular nodes
-        /// based on the service requirements. For example, to place a service
-        /// on nodes where NodeType is blue specify the following: "NodeColor
-        /// == blue)".</param>
-        /// <param name="defaultMoveCost">Possible values include: 'Zero',
-        /// 'Low', 'Medium', 'High'</param>
-        /// <param name="provisioningState">The current deployment or
-        /// provisioning state, which only appears in the response</param>
-        /// <param name="servicePackageActivationMode">The activation Mode of
-        /// the service package. Possible values include: 'SharedProcess',
-        /// 'ExclusiveProcess'</param>
-        /// <param name="serviceDnsName">The DNS name of the service. It
-        /// requires the DNS system service to be enabled in Service Fabric
-        /// cluster.</param>
-        public ServiceResource(string serviceTypeName, Partition partitionDescription, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SystemData systemData = default(SystemData), string placementConstraints = default(string), IList<ServiceCorrelation> correlationScheme = default(IList<ServiceCorrelation>), IList<ServiceLoadMetric> serviceLoadMetrics = default(IList<ServiceLoadMetric>), IList<ServicePlacementPolicy> servicePlacementPolicies = default(IList<ServicePlacementPolicy>), string defaultMoveCost = default(string), IList<ScalingPolicy> scalingPolicies = default(IList<ScalingPolicy>), string provisioningState = default(string), string servicePackageActivationMode = default(string), string serviceDnsName = default(string))
+        public ServiceResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SystemData systemData = default(SystemData), ServiceResourceProperties properties = default(ServiceResourceProperties))
             : base(id, name, type, location, tags, systemData)
         {
-            PlacementConstraints = placementConstraints;
-            CorrelationScheme = correlationScheme;
-            ServiceLoadMetrics = serviceLoadMetrics;
-            ServicePlacementPolicies = servicePlacementPolicies;
-            DefaultMoveCost = defaultMoveCost;
-            ScalingPolicies = scalingPolicies;
-            ProvisioningState = provisioningState;
-            ServiceTypeName = serviceTypeName;
-            PartitionDescription = partitionDescription;
-            ServicePackageActivationMode = servicePackageActivationMode;
-            ServiceDnsName = serviceDnsName;
+            Properties = properties;
             CustomInit();
         }
 
@@ -80,119 +50,21 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the placement constraints as a string. Placement
-        /// constraints are boolean expressions on node properties and allow
-        /// for restricting a service to particular nodes based on the service
-        /// requirements. For example, to place a service on nodes where
-        /// NodeType is blue specify the following: "NodeColor == blue)".
         /// </summary>
-        [JsonProperty(PropertyName = "properties.placementConstraints")]
-        public string PlacementConstraints { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.correlationScheme")]
-        public IList<ServiceCorrelation> CorrelationScheme { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.serviceLoadMetrics")]
-        public IList<ServiceLoadMetric> ServiceLoadMetrics { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.servicePlacementPolicies")]
-        public IList<ServicePlacementPolicy> ServicePlacementPolicies { get; set; }
-
-        /// <summary>
-        /// Gets or sets possible values include: 'Zero', 'Low', 'Medium',
-        /// 'High'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.defaultMoveCost")]
-        public string DefaultMoveCost { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.scalingPolicies")]
-        public IList<ScalingPolicy> ScalingPolicies { get; set; }
-
-        /// <summary>
-        /// Gets the current deployment or provisioning state, which only
-        /// appears in the response
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; private set; }
-
-        /// <summary>
-        /// Gets or sets the name of the service type
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.serviceTypeName")]
-        public string ServiceTypeName { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.partitionDescription")]
-        public Partition PartitionDescription { get; set; }
-
-        /// <summary>
-        /// Gets or sets the activation Mode of the service package. Possible
-        /// values include: 'SharedProcess', 'ExclusiveProcess'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.servicePackageActivationMode")]
-        public string ServicePackageActivationMode { get; set; }
-
-        /// <summary>
-        /// Gets or sets the DNS name of the service. It requires the DNS
-        /// system service to be enabled in Service Fabric cluster.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.serviceDnsName")]
-        public string ServiceDnsName { get; set; }
+        [JsonProperty(PropertyName = "properties")]
+        public ServiceResourceProperties Properties { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (ServiceTypeName == null)
+            if (Properties != null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ServiceTypeName");
-            }
-            if (PartitionDescription == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "PartitionDescription");
-            }
-            if (CorrelationScheme != null)
-            {
-                foreach (var element in CorrelationScheme)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
-            }
-            if (ServiceLoadMetrics != null)
-            {
-                foreach (var element1 in ServiceLoadMetrics)
-                {
-                    if (element1 != null)
-                    {
-                        element1.Validate();
-                    }
-                }
-            }
-            if (ScalingPolicies != null)
-            {
-                foreach (var element2 in ScalingPolicies)
-                {
-                    if (element2 != null)
-                    {
-                        element2.Validate();
-                    }
-                }
+                Properties.Validate();
             }
         }
     }
