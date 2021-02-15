@@ -31,9 +31,6 @@ namespace ServiceFabric.Tests.Managed
                 var ex = Assert.ThrowsAsync<ErrorModelException>(
                     () => serviceFabricMcClient.ManagedClusters.GetAsync(resourceGroupName, clusterName)).Result;
                 Assert.True(ex.Response.StatusCode == System.Net.HttpStatusCode.NotFound);
-                ex = Assert.ThrowsAsync<ErrorModelException>(
-                    () => serviceFabricMcClient.ManagedClusters.DeleteAsync(resourceGroupName, clusterName)).Result;
-                Assert.True(ex.Response.StatusCode == System.Net.HttpStatusCode.NotFound);
 
                 var cluster = this.CreateManagedCluster(resourceClient, serviceFabricMcClient, resourceGroupName, Location, clusterName, sku: "Basic");
                 Assert.NotNull(cluster);
@@ -92,9 +89,6 @@ namespace ServiceFabric.Tests.Managed
 
                 var ex = Assert.ThrowsAsync<ErrorModelException>(
                     () => serviceFabricMcClient.ManagedClusters.GetAsync(resourceGroupName, clusterName)).Result;
-                Assert.True(ex.Response.StatusCode == System.Net.HttpStatusCode.NotFound);
-                ex = Assert.ThrowsAsync<ErrorModelException>(
-                    () => serviceFabricMcClient.ManagedClusters.DeleteAsync(resourceGroupName, clusterName)).Result;
                 Assert.True(ex.Response.StatusCode == System.Net.HttpStatusCode.NotFound);
 
                 var cluster = this.CreateManagedCluster(resourceClient, serviceFabricMcClient, resourceGroupName, Location, clusterName, sku: "Standard");
