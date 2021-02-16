@@ -24,11 +24,9 @@ namespace Azure.Iot.ModelsRepository.Tests
 
             Assert.AreEqual(remoteUri, new ResolverClient(remoteUri).RepositoryUri);
             Assert.AreEqual(remoteUri, new ResolverClient(remoteUri, options).RepositoryUri);
-            Assert.AreEqual(remoteUri, new ResolverClient(remoteUri, null).RepositoryUri);
 
             Assert.AreEqual(remoteUri, new ResolverClient(remoteUriStr).RepositoryUri);
             Assert.AreEqual(remoteUri, new ResolverClient(remoteUriStr, options).RepositoryUri);
-            Assert.AreEqual(remoteUri, new ResolverClient(remoteUriStr, null).RepositoryUri);
 
             string localUriStr = TestHelpers.TestLocalModelRepository;
             Uri localUri = new Uri(localUriStr);

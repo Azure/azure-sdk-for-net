@@ -52,7 +52,7 @@ namespace Azure.Iot.ModelsRepository.Fetchers
                 }
 
                 ResolverEventSource.Shared.ErrorFetchingModelContent(tryContentPath);
-                fnfError = string.Format(CultureInfo.InvariantCulture, StandardStrings.ErrorFetchingModelContent, tryContentPath);
+                fnfError = string.Format(CultureInfo.CurrentCulture, StandardStrings.ErrorFetchingModelContent, tryContentPath);
             }
 
             throw new FileNotFoundException(fnfError);

@@ -16,20 +16,111 @@ namespace Azure.Iot.ModelsRepository.Fetchers
     internal class RemoteModelFetcher : IModelFetcher
     {
         private readonly HttpPipeline _pipeline;
+        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly bool _tryExpanded;
 
-        public RemoteModelFetcher(ResolverClientOptions clientOptions)
+        public RemoteModelFetcher(ClientDiagnostics clientDiagnostics, ResolverClientOptions clientOptions)
         {
             _pipeline = CreatePipeline(clientOptions);
             _tryExpanded = clientOptions.DependencyResolution == DependencyResolutionOption.TryFromExpanded;
+            _clientDiagnostics = clientDiagnostics;
         }
 
         public FetchResult Fetch(string dtmi, Uri repositoryUri, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("RemoteModelFetcher.Fetch");
+            scope.Start();
+            try
+            {
+                Queue<string> work = PrepareWork(dtmi, repositoryUri);
+
+                string remoteFetchError = string.Empty;
+
+                while (work.Count != 0 && !cancellationToken.IsCancellationRequested)
+                {
+                    string tryContentPath = work.Dequeue();
+
+                    using DiagnosticScope innerScope = _clientDiagnostics.CreateScope(
+                        string.Format(
+                            CultureInfo.CurrentCulture,
+                            ServiceStrings.FetchingModelContent,
+                            tryContentPath));
+
+                    innerScope.Start();
+
+                    try
+                    {
+                        string content = EvaluatePath(tryContentPath, cancellationToken);
+                        return new FetchResult()
+                        {
+                            Definition = content,
+                            Path = tryContentPath
+                        };
+                    }
+                    catch (Exception ex)
+                    {
+                        innerScope.Failed(ex);
+                        remoteFetchError = string.Format(CultureInfo.CurrentCulture, StandardStrings.ErrorFetchingModelContent, tryContentPath);
+                    }
+                }
+
+                throw new RequestFailedException(remoteFetchError);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         public async Task<FetchResult> FetchAsync(string dtmi, Uri repositoryUri, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("RemoteModelFetcher.Fetch");
+            scope.Start();
+            try
+            {
+                Queue<string> work = PrepareWork(dtmi, repositoryUri);
+
+                string remoteFetchError = string.Empty;
+
+                while (work.Count != 0 && !cancellationToken.IsCancellationRequested)
+                {
+                    string tryContentPath = work.Dequeue();
+
+                    using DiagnosticScope innerScope = _clientDiagnostics.CreateScope(
+                        string.Format(
+                            CultureInfo.CurrentCulture,
+                            ServiceStrings.FetchingModelContent,
+                            tryContentPath));
+
+                    innerScope.Start();
+
+                    try
+                    {
+                        string content = await EvaluatePathAsync(tryContentPath, cancellationToken).ConfigureAwait(false);
+                        return new FetchResult()
+                        {
+                            Definition = content,
+                            Path = tryContentPath
+                        };
+                    }
+                    catch (Exception ex)
+                    {
+                        innerScope.Failed(ex);
+                        remoteFetchError = string.Format(CultureInfo.CurrentCulture, StandardStrings.ErrorFetchingModelContent, tryContentPath);
+                    }
+                }
+
+                throw new RequestFailedException(remoteFetchError);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        private Queue<string> PrepareWork(string dtmi, Uri repositoryUri)
         {
             Queue<string> work = new Queue<string>();
 
@@ -40,27 +131,7 @@ namespace Azure.Iot.ModelsRepository.Fetchers
 
             work.Enqueue(GetPath(dtmi, repositoryUri, false));
 
-            string remoteFetchError = string.Empty;
-            while (work.Count != 0 && !cancellationToken.IsCancellationRequested)
-            {
-                string tryContentPath = work.Dequeue();
-                ResolverEventSource.Shared.FetchingModelContent(tryContentPath);
-
-                string content = await EvaluatePathAsync(tryContentPath, cancellationToken).ConfigureAwait(false);
-                if (!string.IsNullOrEmpty(content))
-                {
-                    return new FetchResult()
-                    {
-                        Definition = content,
-                        Path = tryContentPath
-                    };
-                }
-
-                ResolverEventSource.Shared.ErrorFetchingModelContent(tryContentPath);
-                remoteFetchError = string.Format(CultureInfo.CurrentCulture, StandardStrings.ErrorFetchingModelContent, tryContentPath);
-            }
-
-            throw new RequestFailedException(remoteFetchError);
+            return work;
         }
 
         private static string GetPath(string dtmi, Uri repositoryUri, bool expanded = false)
@@ -69,21 +140,80 @@ namespace Azure.Iot.ModelsRepository.Fetchers
             return DtmiConventions.DtmiToQualifiedPath(dtmi, absoluteUri, expanded);
         }
 
-        private async Task<string> EvaluatePathAsync(string path, CancellationToken cancellationToken)
+
+        private string EvaluatePath(string path, CancellationToken cancellationToken = default)
         {
-            Request request = _pipeline.CreateRequest();
-            request.Method = RequestMethod.Get;
-            request.Uri = new RequestUriBuilder();
-            request.Uri.Reset(new Uri(path));
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("RemoteModelFetcher.EvaluatePath");
+            scope.Start();
 
-            Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
-
-            if (response.Status >= 200 && response.Status <= 299)
+            try
             {
-                return await GetContentAsync(response.ContentStream, cancellationToken).ConfigureAwait(false);
-            }
+                using HttpMessage message = CreateGetRequest(path);
 
-            return null;
+                _pipeline.Send(message, cancellationToken);
+
+                if (message.Response.Status >= 200 && message.Response.Status <= 299)
+                {
+                    return GetContent(message.Response.ContentStream);
+                }
+                else
+                {
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                }
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        private async Task<string> EvaluatePathAsync(string path, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("RemoteModelFetcher.EvaluatePath");
+            scope.Start();
+
+            try
+            {
+                using HttpMessage message = CreateGetRequest(path);
+
+                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+
+                if (message.Response.Status >= 200 && message.Response.Status <= 299)
+                {
+                    return await GetContentAsync(message.Response.ContentStream, cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                }
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        private HttpMessage CreateGetRequest(string path)
+        {
+            HttpMessage message = _pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RequestUriBuilder();
+            uri.Reset(new Uri(path));
+            request.Uri = uri;
+
+            return message;
+        }
+
+        private static string GetContent(Stream content)
+        {
+            using (JsonDocument json = JsonDocument.Parse(content))
+            {
+                JsonElement root = json.RootElement;
+                return root.GetRawText();
+            }
         }
 
         private static async Task<string> GetContentAsync(Stream content, CancellationToken cancellationToken)

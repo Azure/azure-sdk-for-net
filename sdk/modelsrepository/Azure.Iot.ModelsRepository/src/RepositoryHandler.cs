@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core.Pipeline;
 using Azure.Iot.ModelsRepository.Fetchers;
 using System;
 using System.Collections.Generic;
@@ -14,17 +15,19 @@ namespace Azure.Iot.ModelsRepository
     {
         private readonly IModelFetcher _modelFetcher;
         private readonly Guid _clientId;
+        private readonly ClientDiagnostics _clientDiagnostics;
 
         public Uri RepositoryUri { get; }
         public ResolverClientOptions ClientOptions { get; }
 
-        public RepositoryHandler(Uri repositoryUri, ResolverClientOptions options = null)
+        public RepositoryHandler(Uri repositoryUri, ClientDiagnostics clientdiagnostics, ResolverClientOptions options = null)
         {
             ClientOptions = options ?? new ResolverClientOptions();
             RepositoryUri = repositoryUri;
+            _clientDiagnostics = clientdiagnostics;
             _modelFetcher = repositoryUri.Scheme == "file"
                 ? _modelFetcher = new LocalModelFetcher(ClientOptions)
-                : _modelFetcher = new RemoteModelFetcher(ClientOptions);
+                : _modelFetcher = new RemoteModelFetcher(_clientDiagnostics, ClientOptions);
             _clientId = Guid.NewGuid();
             ResolverEventSource.Shared.InitFetcher(_clientId, repositoryUri.Scheme);
         }
