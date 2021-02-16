@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Iot.TimeSeriesInsights.Customized
+namespace Azure.Iot.TimeSeriesInsights
 {
     public partial class UpdateModelSettingsOptions : IUtf8JsonSerializable
     {

@@ -3,7 +3,6 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Iot.TimeSeriesInsights.Customized;
 using Azure.Iot.TimeSeriesInsights.Models;
 using static Azure.Iot.TimeSeriesInsights.Samples.SampleLogger;
 
