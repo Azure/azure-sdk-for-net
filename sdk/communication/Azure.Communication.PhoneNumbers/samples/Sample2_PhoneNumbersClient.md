@@ -20,8 +20,10 @@ var client = new PhoneNumbersClient(connectionString);
 Phone numbers need to be searched before they can be purchased. Search is a long running operation that can be started by `StartSearchAvailablePhoneNumbers` function that returns an `SearchAvailablePhoneNumbersOperation` object. `SearchAvailablePhoneNumbersOperation` can be used to update status of the operation and to check for completeness.
 
 ```C# Snippet:SearchPhoneNumbers
-var searchOperation = client.StartSearchAvailablePhoneNumbers(countryCode, PhoneNumberType.Geographic, PhoneNumberAssignmentType.Person,
-     new PhoneNumberCapabilities(PhoneNumberCapabilityValue.InboundOutbound, PhoneNumberCapabilityValue.None));
+var capabilities = new PhoneNumberCapabilities(PhoneNumberCapabilityValue.Outbound, PhoneNumberCapabilityValue.Outbound);
+var searchOptions = new PhoneNumberSearchOptions { AreaCode = "844" };
+
+var searchOperation = client.StartSearchAvailablePhoneNumbers(countryCode, PhoneNumberType.TollFree, PhoneNumberAssignmentType.Application, capabilities, searchOptions);
 
 while (!searchOperation.HasCompleted)
 {
@@ -35,7 +37,7 @@ while (!searchOperation.HasCompleted)
 Phone numbers can be acquired through purchasing a reservation.
 
 ```C# Snippet:StartPurchaseSearch
-var purchaseOperation = client.StartPurchasePhoneNumbers(searchOperation.Id);
+var purchaseOperation = client.StartPurchasePhoneNumbers(searchOperation.Value.SearchId);
 
 while (!purchaseOperation.HasCompleted)
 {

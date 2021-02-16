@@ -93,7 +93,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="sms"> Capability value for SMS. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
-        public virtual async Task<UpdateCapabilitiesOperation> StartUpdateCapabilitiesAsync(string phoneNumber, PhoneNumberCapabilityValue? calling = null, PhoneNumberCapabilityValue? sms = null, CancellationToken cancellationToken = default)
+        public virtual async Task<UpdatePhoneNumberCapabilitiesOperation> StartUpdateCapabilitiesAsync(string phoneNumber, PhoneNumberCapabilityValue? calling = null, PhoneNumberCapabilityValue? sms = null, CancellationToken cancellationToken = default)
         {
             if (phoneNumber == null)
             {
@@ -105,7 +105,7 @@ namespace Azure.Communication.PhoneNumbers
             try
             {
                 var originalResponse = await RestClient.UpdateCapabilitiesAsync(phoneNumber, calling, sms, cancellationToken).ConfigureAwait(false);
-                return new UpdateCapabilitiesOperation(_clientDiagnostics, _pipeline, RestClient.CreateUpdateCapabilitiesRequest(phoneNumber, calling, sms).Request, originalResponse);
+                return new UpdatePhoneNumberCapabilitiesOperation(_clientDiagnostics, _pipeline, RestClient.CreateUpdateCapabilitiesRequest(phoneNumber, calling, sms).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -120,7 +120,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="sms"> Capability value for SMS. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
-        public virtual UpdateCapabilitiesOperation StartUpdateCapabilities(string phoneNumber, PhoneNumberCapabilityValue? calling = null, PhoneNumberCapabilityValue? sms = null, CancellationToken cancellationToken = default)
+        public virtual UpdatePhoneNumberCapabilitiesOperation StartUpdateCapabilities(string phoneNumber, PhoneNumberCapabilityValue? calling = null, PhoneNumberCapabilityValue? sms = null, CancellationToken cancellationToken = default)
         {
             if (phoneNumber == null)
             {
@@ -132,7 +132,7 @@ namespace Azure.Communication.PhoneNumbers
             try
             {
                 var originalResponse = RestClient.UpdateCapabilities(phoneNumber, calling, sms, cancellationToken);
-                return new UpdateCapabilitiesOperation(_clientDiagnostics, _pipeline, RestClient.CreateUpdateCapabilitiesRequest(phoneNumber, calling, sms).Request, originalResponse);
+                return new UpdatePhoneNumberCapabilitiesOperation(_clientDiagnostics, _pipeline, RestClient.CreateUpdateCapabilitiesRequest(phoneNumber, calling, sms).Request, originalResponse);
             }
             catch (Exception e)
             {

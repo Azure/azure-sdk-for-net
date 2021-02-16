@@ -16,12 +16,12 @@ using Azure.Core.Pipeline;
 namespace Azure.Communication.PhoneNumbers.Models
 {
     /// <summary> Updates the capabilities of a phone number. </summary>
-    public partial class UpdateCapabilitiesOperation : Operation<AcquiredPhoneNumber>, IOperationSource<AcquiredPhoneNumber>
+    public partial class UpdatePhoneNumberCapabilitiesOperation : Operation<AcquiredPhoneNumber>, IOperationSource<AcquiredPhoneNumber>
     {
         private readonly ArmOperationHelpers<AcquiredPhoneNumber> _operation;
-        internal UpdateCapabilitiesOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal UpdatePhoneNumberCapabilitiesOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<AcquiredPhoneNumber>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "UpdateCapabilitiesOperation");
+            _operation = new ArmOperationHelpers<AcquiredPhoneNumber>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "UpdatePhoneNumberCapabilitiesOperation");
         }
 
         /// <inheritdoc />
