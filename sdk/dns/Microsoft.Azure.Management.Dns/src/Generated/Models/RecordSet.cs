@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Dns.Models
     /// Describes a DNS record set (a collection of DNS records with the same
     /// name and type).
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
+    [JsonTransformation]
     public partial class RecordSet : IResource
     {
         /// <summary>

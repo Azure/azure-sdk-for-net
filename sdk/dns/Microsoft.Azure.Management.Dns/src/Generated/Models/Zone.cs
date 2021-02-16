@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Dns.Models
     /// <summary>
     /// Describes a DNS zone.
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
+    [JsonTransformation]
     public partial class Zone : Resource
     {
         /// <summary>
@@ -43,6 +43,10 @@ namespace Microsoft.Azure.Management.Dns.Models
         /// <param name="maxNumberOfRecordSets">The maximum number of record
         /// sets that can be created in this DNS zone.  This is a read-only
         /// property and any attempt to set this value will be ignored.</param>
+        /// <param name="maxNumberOfRecordsPerRecordSet">The maximum number of
+        /// records per record set that can be created in this DNS zone.  This
+        /// is a read-only property and any attempt to set this value will be
+        /// ignored.</param>
         /// <param name="numberOfRecordSets">The current number of record sets
         /// in this DNS zone.  This is a read-only property and any attempt to
         /// set this value will be ignored.</param>
@@ -57,11 +61,12 @@ namespace Microsoft.Azure.Management.Dns.Models
         /// <param name="resolutionVirtualNetworks">A list of references to
         /// virtual networks that resolve records in this DNS zone. This is a
         /// only when ZoneType is Private.</param>
-        public Zone(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), long? maxNumberOfRecordSets = default(long?), long? numberOfRecordSets = default(long?), IList<string> nameServers = default(IList<string>), ZoneType? zoneType = default(ZoneType?), IList<SubResource> registrationVirtualNetworks = default(IList<SubResource>), IList<SubResource> resolutionVirtualNetworks = default(IList<SubResource>))
+        public Zone(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), long? maxNumberOfRecordSets = default(long?), long? maxNumberOfRecordsPerRecordSet = default(long?), long? numberOfRecordSets = default(long?), IList<string> nameServers = default(IList<string>), ZoneType? zoneType = default(ZoneType?), IList<SubResource> registrationVirtualNetworks = default(IList<SubResource>), IList<SubResource> resolutionVirtualNetworks = default(IList<SubResource>))
             : base(location, id, name, type, tags)
         {
             Etag = etag;
             MaxNumberOfRecordSets = maxNumberOfRecordSets;
+            MaxNumberOfRecordsPerRecordSet = maxNumberOfRecordsPerRecordSet;
             NumberOfRecordSets = numberOfRecordSets;
             NameServers = nameServers;
             ZoneType = zoneType;
@@ -88,6 +93,14 @@ namespace Microsoft.Azure.Management.Dns.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.maxNumberOfRecordSets")]
         public long? MaxNumberOfRecordSets { get; private set; }
+
+        /// <summary>
+        /// Gets the maximum number of records per record set that can be
+        /// created in this DNS zone.  This is a read-only property and any
+        /// attempt to set this value will be ignored.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.maxNumberOfRecordsPerRecordSet")]
+        public long? MaxNumberOfRecordsPerRecordSet { get; private set; }
 
         /// <summary>
         /// Gets the current number of record sets in this DNS zone.  This is a

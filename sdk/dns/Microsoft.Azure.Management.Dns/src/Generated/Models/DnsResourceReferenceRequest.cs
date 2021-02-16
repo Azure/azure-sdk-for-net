@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Dns.Models
     /// <summary>
     /// Represents the properties of the Dns Resource Reference Request.
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
+    [JsonTransformation]
     public partial class DnsResourceReferenceRequest
     {
         /// <summary>
