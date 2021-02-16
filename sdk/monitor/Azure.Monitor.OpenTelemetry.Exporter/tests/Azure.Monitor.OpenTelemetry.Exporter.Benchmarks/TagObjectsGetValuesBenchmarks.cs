@@ -100,17 +100,5 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
         {
             object _ = AzMonList.GetTagValue(ref AzMonList_Items, SemanticConventions.AttributeHttpHost);
         }
-
-        [Benchmark]
-        public void GetTagValueEmptyActivityTags()
-        {
-            object _ = this.EmptyActivity.GetTagValue(SemanticConventions.AttributeHttpHost);
-        }
-
-        [Benchmark]
-        public void GetTagValueNonemptyActivityTags()
-        {
-            object _ = this.ItemActivity.GetTagValue(SemanticConventions.AttributeHttpHost);
-        }
     }
 }

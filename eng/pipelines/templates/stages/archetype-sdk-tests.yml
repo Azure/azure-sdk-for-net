@@ -65,6 +65,9 @@ parameters:
 - name: AdditionalMatrixConfigs
   type: object
   default: []
+- name: MatrixFilters
+  type: object
+  default: []
 - name: PlatformPreSteps
   type: object
   default:
@@ -124,6 +127,10 @@ stages:
                 -  ${{ config }}
               - ${{ each config in parameters.AdditionalMatrixConfigs }}:
                 -  ${{ config }}
+            MatrixFilters:
+              - ${{ each cloudFilter in cloud.value.MatrixFilters }}:
+                - ${{ cloudFilter }}
+              - ${{ parameters.MatrixFilters }}
             CloudConfig:
               SubscriptionConfiguration: ${{ cloud.value.SubscriptionConfiguration }}
               Location: ${{ coalesce(parameters.Location, cloud.value.Location) }}

@@ -30,14 +30,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
         internal static string RoleInstance { get; set; }
 
-        internal static TelemetryItem GetTelemetryItem(Activity activity, string instrumentationKey)
+        internal static TelemetryItem GetTelemetryItem(Activity activity, Resource resource, string instrumentationKey)
         {
             TelemetryItem telemetryItem = new TelemetryItem(PartA_Name_Mapping[activity.GetTelemetryType()], activity.StartTimeUtc.ToString(CultureInfo.InvariantCulture))
             {
                 InstrumentationKey = instrumentationKey
             };
 
-            InitRoleInfo(activity);
+            InitRoleInfo(resource);
             telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString()] = RoleName;
             telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()] = RoleInstance;
             telemetryItem.Tags[ContextTagKeys.AiOperationId.ToString()] = activity.TraceId.ToHexString();
@@ -82,14 +82,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             return telemetryItem;
         }
 
-        internal static void InitRoleInfo(Activity activity)
+        internal static void InitRoleInfo(Resource resource)
         {
             if (RoleName != null || RoleInstance != null)
             {
                 return;
             }
-
-            var resource = activity.GetResource();
 
             if (resource == null)
             {
@@ -101,15 +99,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             foreach (var attribute in resource.Attributes)
             {
-                if (attribute.Key == Resource.ServiceNameKey && attribute.Value is string)
+                if (attribute.Key == SemanticConventions.AttributeServiceName && attribute.Value is string)
                 {
                     serviceName = attribute.Value.ToString();
                 }
-                else if (attribute.Key == Resource.ServiceNamespaceKey && attribute.Value is string)
+                else if (attribute.Key == SemanticConventions.AttributeServiceNamespace && attribute.Value is string)
                 {
                     serviceNamespace = attribute.Value.ToString();
                 }
-                else if (attribute.Key == Resource.ServiceInstanceIdKey && attribute.Value is string)
+                else if (attribute.Key == SemanticConventions.AttributeServiceInstance && attribute.Value is string)
                 {
                     RoleInstance = attribute.Value.ToString();
                 }

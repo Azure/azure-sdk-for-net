@@ -145,7 +145,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// using the active lease ID as <see cref="LeaseId"/>, but you can
         /// specify a new <paramref name="duration"/>.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container">
+        /// Lease Container</see>.
         /// </summary>
         /// <param name="duration">
         /// Specifies the duration of the lease, in seconds, or specify
