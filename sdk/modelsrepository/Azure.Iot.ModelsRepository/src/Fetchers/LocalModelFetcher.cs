@@ -8,15 +8,18 @@ using System.Text;
 using System.Collections.Generic;
 using System.Threading;
 using System.Globalization;
+using Azure.Core.Pipeline;
 
 namespace Azure.Iot.ModelsRepository.Fetchers
 {
     internal class LocalModelFetcher : IModelFetcher
     {
         private readonly bool _tryExpanded;
+        private readonly ClientDiagnostics _clientDiagnostics;
 
-        public LocalModelFetcher(ResolverClientOptions clientOptions)
+        public LocalModelFetcher(ClientDiagnostics clientDiagnostics, ResolverClientOptions clientOptions)
         {
+            _clientDiagnostics = clientDiagnostics;
             _tryExpanded = clientOptions.DependencyResolution == DependencyResolutionOption.TryFromExpanded;
         }
 
@@ -27,35 +30,48 @@ namespace Azure.Iot.ModelsRepository.Fetchers
 
         public FetchResult Fetch(string dtmi, Uri repositoryUri, CancellationToken cancellationToken = default)
         {
-            var work = new Queue<string>();
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("LocalModelFetcher.Fetch");
+            scope.Start();
 
-            if (_tryExpanded)
+            try
             {
-                work.Enqueue(GetPath(dtmi, repositoryUri, true));
-            }
+                var work = new Queue<string>();
 
-            work.Enqueue(GetPath(dtmi, repositoryUri, false));
-
-            string fnfError = string.Empty;
-            while (work.Count != 0 && !cancellationToken.IsCancellationRequested)
-            {
-                string tryContentPath = work.Dequeue();
-                ResolverEventSource.Shared.FetchingModelContent(tryContentPath);
-
-                if (File.Exists(tryContentPath))
+                if (_tryExpanded)
                 {
-                    return new FetchResult()
-                    {
-                        Definition = File.ReadAllText(tryContentPath, Encoding.UTF8),
-                        Path = tryContentPath
-                    };
+                    work.Enqueue(GetPath(dtmi, repositoryUri, true));
                 }
 
-                ResolverEventSource.Shared.ErrorFetchingModelContent(tryContentPath);
-                fnfError = string.Format(CultureInfo.InvariantCulture, StandardStrings.ErrorFetchingModelContent, tryContentPath);
-            }
+                work.Enqueue(GetPath(dtmi, repositoryUri, false));
 
-            throw new FileNotFoundException(fnfError);
+                string fnfError = string.Empty;
+                while (work.Count != 0)
+                {
+                    cancellationToken.ThrowIfCancellationRequested();
+
+                    string tryContentPath = work.Dequeue();
+                    ResolverEventSource.Instance.FetchingModelContent(tryContentPath);
+
+                    if (File.Exists(tryContentPath))
+                    {
+                        return new FetchResult
+                        {
+                            Definition = File.ReadAllText(tryContentPath, Encoding.UTF8),
+                            Path = tryContentPath
+                        };
+                    }
+
+                    ResolverEventSource.Instance.ErrorFetchingModelContent(tryContentPath);
+                    fnfError = string.Format(CultureInfo.CurrentCulture, ServiceStrings.ErrorFetchingModelContent, tryContentPath);
+                }
+
+                throw new RequestFailedException(fnfError, new FileNotFoundException(fnfError));
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         private static string GetPath(string dtmi, Uri repositoryUri, bool expanded = false)

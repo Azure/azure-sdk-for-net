@@ -35,6 +35,11 @@ namespace Azure.Iot.ModelsRepository.Tests
 
         public static ResolverClient GetTestClient(ClientType clientType, ResolverClientOptions clientOptions = null)
         {
+            if (clientOptions == null)
+            {
+                clientOptions = new ResolverClientOptions();
+            }
+
             if (clientType == ClientType.Local)
             {
                 return new ResolverClient(TestLocalModelRepository, clientOptions);
