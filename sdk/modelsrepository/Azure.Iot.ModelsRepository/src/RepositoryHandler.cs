@@ -44,7 +44,7 @@ namespace Azure.Iot.ModelsRepository
                 if (!DtmiConventions.IsDtmi(dtmi))
                 {
                     ResolverEventSource.Shared.InvalidDtmiInput(dtmi);
-                    string invalidArgMsg = string.Format(CultureInfo.InvariantCulture, StandardStrings.InvalidDtmiFormat, dtmi);
+                    string invalidArgMsg = string.Format(CultureInfo.CurrentCulture, ServiceStrings.InvalidDtmiFormat, dtmi);
                     throw new ResolverException(dtmi, invalidArgMsg, new ArgumentException(invalidArgMsg));
                 }
 
@@ -65,10 +65,13 @@ namespace Azure.Iot.ModelsRepository
                 if (result.FromExpanded)
                 {
                     Dictionary<string, string> expanded = await new ModelQuery(result.Definition).ListToDictAsync().ConfigureAwait(false);
+
                     foreach (KeyValuePair<string, string> kvp in expanded)
                     {
                         if (!processedModels.ContainsKey(kvp.Key))
+                        {
                             processedModels.Add(kvp.Key, kvp.Value);
+                        }
                     }
 
                     continue;
@@ -81,7 +84,9 @@ namespace Azure.Iot.ModelsRepository
                     IList<string> dependencies = metadata.Dependencies;
 
                     if (dependencies.Count > 0)
+                    {
                         ResolverEventSource.Shared.DiscoveredDependencies(string.Join("\", \"", dependencies));
+                    }
 
                     foreach (string dep in dependencies)
                     {
@@ -93,7 +98,7 @@ namespace Azure.Iot.ModelsRepository
                 if (!parsedDtmi.Equals(targetDtmi, StringComparison.Ordinal))
                 {
                     ResolverEventSource.Shared.IncorrectDtmiCasing(targetDtmi, parsedDtmi);
-                    string formatErrorMsg = string.Format(CultureInfo.InvariantCulture, StandardStrings.IncorrectDtmiCasing, targetDtmi, parsedDtmi);
+                    string formatErrorMsg = string.Format(CultureInfo.CurrentCulture, ServiceStrings.IncorrectDtmiCasing, targetDtmi, parsedDtmi);
                     throw new ResolverException(targetDtmi, formatErrorMsg, new FormatException(formatErrorMsg));
                 }
 

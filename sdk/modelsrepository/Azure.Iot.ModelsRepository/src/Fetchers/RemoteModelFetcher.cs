@@ -34,7 +34,9 @@ namespace Azure.Iot.ModelsRepository.Fetchers
             Queue<string> work = new Queue<string>();
 
             if (_tryExpanded)
+            {
                 work.Enqueue(GetPath(dtmi, repositoryUri, true));
+            }
 
             work.Enqueue(GetPath(dtmi, repositoryUri, false));
 
@@ -55,7 +57,7 @@ namespace Azure.Iot.ModelsRepository.Fetchers
                 }
 
                 ResolverEventSource.Shared.ErrorFetchingModelContent(tryContentPath);
-                remoteFetchError = string.Format(CultureInfo.InvariantCulture, StandardStrings.ErrorFetchingModelContent, tryContentPath);
+                remoteFetchError = string.Format(CultureInfo.CurrentCulture, StandardStrings.ErrorFetchingModelContent, tryContentPath);
             }
 
             throw new RequestFailedException(remoteFetchError);

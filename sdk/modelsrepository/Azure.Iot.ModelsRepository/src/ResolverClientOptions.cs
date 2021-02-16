@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 
 namespace Azure.Iot.ModelsRepository
@@ -21,7 +22,7 @@ namespace Azure.Iot.ModelsRepository
             /// <summary>
             /// 2021_02_11
             /// </summary>
-            [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1707:Identifiers should not contain underscores", Justification = "<Pending>")]
+            [SuppressMessage("Naming", "CA1707:Identifiers should not contain underscores", Justification = "<Pending>")]
             V2021_02_11 = 1
         }
 
@@ -39,7 +40,9 @@ namespace Azure.Iot.ModelsRepository
         /// making requests.
         /// </param>
         /// <param name="resolutionOption">The dependency processing options.</param>
-        public ResolverClientOptions(ServiceVersion version = LatestVersion, DependencyResolutionOption resolutionOption = DependencyResolutionOption.Enabled)
+        public ResolverClientOptions(
+            ServiceVersion version = LatestVersion,
+            DependencyResolutionOption resolutionOption = DependencyResolutionOption.Enabled)
         {
             DependencyResolution = resolutionOption;
             Version = version;
@@ -49,24 +52,5 @@ namespace Azure.Iot.ModelsRepository
         /// The dependency processing options.
         /// </summary>
         public DependencyResolutionOption DependencyResolution { get; }
-    }
-
-    /// <summary>
-    /// The dependency processing options.
-    /// </summary>
-    public enum DependencyResolutionOption
-    {
-        /// <summary>
-        /// Do not process external dependencies.
-        /// </summary>
-        Disabled,
-        /// <summary>
-        /// Enable external dependencies.
-        /// </summary>
-        Enabled,
-        /// <summary>
-        /// Try to get external dependencies using .expanded.json.
-        /// </summary>
-        TryFromExpanded
     }
 }

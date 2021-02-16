@@ -10,8 +10,7 @@ namespace Azure.Iot.ModelsRepository
     [EventSource(Name = EventSourceName)]
     internal sealed class ResolverEventSource : EventSource
     {
-        // Set EventSource name to package name replacing . with -
-        private const string EventSourceName = "Azure-Iot-ModelsRepository";
+        private const string EventSourceName = ModelRepositoryConstants.ModelRepositoryEventSourceName;
 
         // Event ids defined as constants to makes it easy to keep track of them
         private const int InitFetcherEventId = 1000;
@@ -25,7 +24,12 @@ namespace Azure.Iot.ModelsRepository
 
         public static ResolverEventSource Shared { get; } = new ResolverEventSource();
 
-        private ResolverEventSource() : base(EventSourceName, EventSourceSettings.Default, AzureEventSourceListener.TraitName, AzureEventSourceListener.TraitValue) { }
+        private ResolverEventSource()
+            : base(EventSourceName,
+                  EventSourceSettings.Default,
+                  AzureEventSourceListener.TraitName,
+                  AzureEventSourceListener.TraitValue)
+        { }
 
         [Event(InitFetcherEventId, Level = EventLevel.Informational, Message = StandardStrings.ClientInitWithFetcher)]
         public void InitFetcher(Guid clientId, string scheme)
