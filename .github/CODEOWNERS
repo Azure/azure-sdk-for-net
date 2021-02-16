@@ -173,7 +173,7 @@
 #/<NotInRepo>/            @ms-premp @qiaozha
 
 # PRLabel: %Communication
-/sdk/communication/                             @RezaJooyandeh @DominikMe @ankitarorabit @Azure/azure-sdk-communication-code-reviewers
+/sdk/communication/                             @acsdevx-msft
 
 # ServiceLabel: %Compute %Service Attention
 # PRLabel: %Compute
