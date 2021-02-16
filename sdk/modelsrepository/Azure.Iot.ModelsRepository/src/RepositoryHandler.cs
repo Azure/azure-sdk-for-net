@@ -44,7 +44,7 @@ namespace Azure.Iot.ModelsRepository
                 if (!DtmiConventions.IsDtmi(dtmi))
                 {
                     ResolverEventSource.Shared.InvalidDtmiInput(dtmi);
-                    string invalidArgMsg = string.Format(CultureInfo.InvariantCulture, ServiceStrings.InvalidDtmiFormat, dtmi);
+                    string invalidArgMsg = string.Format(CultureInfo.CurrentCulture, ServiceStrings.InvalidDtmiFormat, dtmi);
                     throw new ResolverException(dtmi, invalidArgMsg, new ArgumentException(invalidArgMsg));
                 }
 
