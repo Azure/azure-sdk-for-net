@@ -26,10 +26,10 @@ namespace Azure.Iot.ModelsRepository
             RepositoryUri = repositoryUri;
             _clientDiagnostics = clientdiagnostics;
             _modelFetcher = repositoryUri.Scheme == "file"
-                ? _modelFetcher = new LocalModelFetcher(ClientOptions)
+                ? _modelFetcher = new LocalModelFetcher(_clientDiagnostics, ClientOptions)
                 : _modelFetcher = new RemoteModelFetcher(_clientDiagnostics, ClientOptions);
             _clientId = Guid.NewGuid();
-            ResolverEventSource.Shared.InitFetcher(_clientId, repositoryUri.Scheme);
+            ResolverEventSource.Instance.InitFetcher(_clientId, repositoryUri.Scheme);
         }
 
         public async Task<IDictionary<string, string>> ProcessAsync(string dtmi, CancellationToken cancellationToken)
@@ -46,7 +46,7 @@ namespace Azure.Iot.ModelsRepository
             {
                 if (!DtmiConventions.IsDtmi(dtmi))
                 {
-                    ResolverEventSource.Shared.InvalidDtmiInput(dtmi);
+                    ResolverEventSource.Instance.InvalidDtmiInput(dtmi);
                     string invalidArgMsg = string.Format(CultureInfo.CurrentCulture, ServiceStrings.InvalidDtmiFormat, dtmi);
                     throw new ResolverException(dtmi, invalidArgMsg, new ArgumentException(invalidArgMsg));
                 }
@@ -59,10 +59,10 @@ namespace Azure.Iot.ModelsRepository
                 string targetDtmi = toProcessModels.Dequeue();
                 if (processedModels.ContainsKey(targetDtmi))
                 {
-                    ResolverEventSource.Shared.SkippingPreprocessedDtmi(targetDtmi);
+                    ResolverEventSource.Instance.SkippingPreprocessedDtmi(targetDtmi);
                     continue;
                 }
-                ResolverEventSource.Shared.ProcessingDtmi(targetDtmi);
+                ResolverEventSource.Instance.ProcessingDtmi(targetDtmi);
 
                 FetchResult result = await FetchAsync(targetDtmi, cancellationToken).ConfigureAwait(false);
                 if (result.FromExpanded)
@@ -88,7 +88,7 @@ namespace Azure.Iot.ModelsRepository
 
                     if (dependencies.Count > 0)
                     {
-                        ResolverEventSource.Shared.DiscoveredDependencies(string.Join("\", \"", dependencies));
+                        ResolverEventSource.Instance.DiscoveredDependencies(string.Join("\", \"", dependencies));
                     }
 
                     foreach (string dep in dependencies)
@@ -100,7 +100,7 @@ namespace Azure.Iot.ModelsRepository
                 string parsedDtmi = metadata.Id;
                 if (!parsedDtmi.Equals(targetDtmi, StringComparison.Ordinal))
                 {
-                    ResolverEventSource.Shared.IncorrectDtmiCasing(targetDtmi, parsedDtmi);
+                    ResolverEventSource.Instance.IncorrectDtmiCasing(targetDtmi, parsedDtmi);
                     string formatErrorMsg = string.Format(CultureInfo.CurrentCulture, ServiceStrings.IncorrectDtmiCasing, targetDtmi, parsedDtmi);
                     throw new ResolverException(targetDtmi, formatErrorMsg, new FormatException(formatErrorMsg));
                 }

@@ -36,30 +36,24 @@ namespace Azure.Iot.ModelsRepository.Fetchers
 
                 string remoteFetchError = string.Empty;
 
-                while (work.Count != 0 && !cancellationToken.IsCancellationRequested)
+                while (work.Count != 0)
                 {
+                    cancellationToken.ThrowIfCancellationRequested();
+
                     string tryContentPath = work.Dequeue();
-
-                    using DiagnosticScope innerScope = _clientDiagnostics.CreateScope(
-                        string.Format(
-                            CultureInfo.CurrentCulture,
-                            ServiceStrings.FetchingModelContent,
-                            tryContentPath));
-
-                    innerScope.Start();
+                    ResolverEventSource.Instance.FetchingModelContent(tryContentPath);
 
                     try
                     {
                         string content = EvaluatePath(tryContentPath, cancellationToken);
-                        return new FetchResult()
+                        return new FetchResult
                         {
                             Definition = content,
                             Path = tryContentPath
                         };
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
-                        innerScope.Failed(ex);
                         remoteFetchError = string.Format(CultureInfo.CurrentCulture, StandardStrings.ErrorFetchingModelContent, tryContentPath);
                     }
                 }
@@ -83,17 +77,12 @@ namespace Azure.Iot.ModelsRepository.Fetchers
 
                 string remoteFetchError = string.Empty;
 
-                while (work.Count != 0 && !cancellationToken.IsCancellationRequested)
+                while (work.Count != 0)
                 {
+                    cancellationToken.ThrowIfCancellationRequested();
+
                     string tryContentPath = work.Dequeue();
-
-                    using DiagnosticScope innerScope = _clientDiagnostics.CreateScope(
-                        string.Format(
-                            CultureInfo.CurrentCulture,
-                            ServiceStrings.FetchingModelContent,
-                            tryContentPath));
-
-                    innerScope.Start();
+                    ResolverEventSource.Instance.FetchingModelContent(tryContentPath);
 
                     try
                     {
@@ -104,9 +93,8 @@ namespace Azure.Iot.ModelsRepository.Fetchers
                             Path = tryContentPath
                         };
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
-                        innerScope.Failed(ex);
                         remoteFetchError = string.Format(CultureInfo.CurrentCulture, StandardStrings.ErrorFetchingModelContent, tryContentPath);
                     }
                 }
@@ -151,13 +139,14 @@ namespace Azure.Iot.ModelsRepository.Fetchers
 
                 _pipeline.Send(message, cancellationToken);
 
-                if (message.Response.Status >= 200 && message.Response.Status <= 299)
+                switch (message.Response.Status)
                 {
-                    return GetContent(message.Response.ContentStream);
-                }
-                else
-                {
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    case 200:
+                        {
+                            return GetContent(message.Response.ContentStream);
+                        }
+                    default:
+                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
                 }
             }
             catch (Exception ex)
@@ -178,13 +167,14 @@ namespace Azure.Iot.ModelsRepository.Fetchers
 
                 await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
 
-                if (message.Response.Status >= 200 && message.Response.Status <= 299)
+                switch (message.Response.Status)
                 {
-                    return await GetContentAsync(message.Response.ContentStream, cancellationToken).ConfigureAwait(false);
-                }
-                else
-                {
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    case 200:
+                        {
+                            return await GetContentAsync(message.Response.ContentStream, cancellationToken).ConfigureAwait(false);
+                        }
+                    default:
+                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
                 }
             }
             catch (Exception ex)
@@ -208,20 +198,17 @@ namespace Azure.Iot.ModelsRepository.Fetchers
 
         private static string GetContent(Stream content)
         {
-            using (JsonDocument json = JsonDocument.Parse(content))
-            {
-                JsonElement root = json.RootElement;
-                return root.GetRawText();
-            }
+            using JsonDocument json = JsonDocument.Parse(content);
+            JsonElement root = json.RootElement;
+            return root.GetRawText();
         }
 
         private static async Task<string> GetContentAsync(Stream content, CancellationToken cancellationToken)
         {
-            using (JsonDocument json = await JsonDocument.ParseAsync(content, default, cancellationToken).ConfigureAwait(false))
-            {
-                JsonElement root = json.RootElement;
-                return root.GetRawText();
-            }
+            using JsonDocument json = await JsonDocument.ParseAsync(content, default, cancellationToken).ConfigureAwait(false);
+
+            JsonElement root = json.RootElement;
+            return root.GetRawText();
         }
 
         private static HttpPipeline CreatePipeline(ResolverClientOptions options)

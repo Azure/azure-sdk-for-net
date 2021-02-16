@@ -22,7 +22,7 @@ namespace Azure.Iot.ModelsRepository
         private const int ErrorFetchingModelContentEventId = 4004;
         private const int IncorrectDtmiCasingEventId = 4006;
 
-        public static ResolverEventSource Shared { get; } = new ResolverEventSource();
+        public static ResolverEventSource Instance { get; } = new ResolverEventSource();
 
         private ResolverEventSource()
             : base(EventSourceName,
