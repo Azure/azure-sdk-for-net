@@ -140,7 +140,6 @@ namespace Azure.Iot.ModelsRepository.Fetchers
             return DtmiConventions.DtmiToQualifiedPath(dtmi, absoluteUri, expanded);
         }
 
-
         private string EvaluatePath(string path, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("RemoteModelFetcher.EvaluatePath");
