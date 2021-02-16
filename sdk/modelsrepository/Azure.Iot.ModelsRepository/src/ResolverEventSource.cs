@@ -13,6 +13,10 @@ namespace Azure.Iot.ModelsRepository
         private const string EventSourceName = ModelRepositoryConstants.ModelRepositoryEventSourceName;
 
         // Event ids defined as constants to makes it easy to keep track of them
+        // Consider EventSource name, Guid, Event Id and parameters as public API and follow the appropriate versioning rules.
+        // More information on EventSource and Azure guidelines:
+        // https://azure.github.io/azure-sdk/dotnet_implementation.html#eventsource
+
         private const int InitFetcherEventId = 1000;
         private const int ProcessingDtmiEventId = 2000;
         private const int FetchingModelContentEventId = 2001;
