@@ -45,7 +45,7 @@ namespace Azure.Iot.ModelsRepository.Fetchers
                 work.Enqueue(GetPath(dtmi, repositoryUri, false));
 
                 string fnfError = string.Empty;
-                while (work.Count != 0 && !cancellationToken.IsCancellationRequested)
+                while (work.Count != 0)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
 
