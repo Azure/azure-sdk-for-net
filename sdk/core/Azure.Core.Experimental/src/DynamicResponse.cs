@@ -23,7 +23,7 @@ namespace Azure.Core
         /// <summary>
         /// The JSON body of the response.
         /// </summary>
-        public JsonData? Body { get; }
+        public dynamic? Body { get; }
 
         /// <inheritdoc />
         public override int Status => Response.Status;
