@@ -31,6 +31,9 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <summary>A business card file.</summary>
         public const string BusinessCardtPng = "businessCard.png";
 
+        /// <summary>A business card file.</summary>
+        public const string BusinessCardtBmp = "businessCard.bmp";
+
         /// <summary>A file with two business cards, one per page.</summary>
         public const string BusinessMultipage = "multipleBusinessCards.pdf";
 

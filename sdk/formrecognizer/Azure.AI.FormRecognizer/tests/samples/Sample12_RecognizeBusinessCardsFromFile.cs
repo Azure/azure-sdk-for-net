@@ -22,71 +22,70 @@ namespace Azure.AI.FormRecognizer.Samples
 
             FormRecognizerClient client = new FormRecognizerClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            string busienssCardsPath = FormRecognizerTestEnvironment.CreatePath("businessCard.jpg");
+            string businessCardsPath = FormRecognizerTestEnvironment.CreatePath("businessCard.jpg");
 
             #region Snippet:FormRecognizerSampleRecognizeBusinessCardFileStream
-            using (FileStream stream = new FileStream(busienssCardsPath, FileMode.Open))
+            //@@ string businessCardsPath = "<businessCardsPath>";
+
+            using var stream = new FileStream(businessCardsPath, FileMode.Open);
+            var options = new RecognizeBusinessCardsOptions() { Locale = "en-US" };
+
+            RecognizeBusinessCardsOperation operation = await client.StartRecognizeBusinessCardsAsync(stream, options);
+            Response<RecognizedFormCollection> operationResponse = await operation.WaitForCompletionAsync();
+            RecognizedFormCollection businessCards = operationResponse.Value;
+
+            // To see the list of the supported fields returned by service and its corresponding types, consult:
+            // https://aka.ms/formrecognizer/businesscardfields
+
+            foreach (RecognizedForm businessCard in businessCards)
             {
-                var options = new RecognizeBusinessCardsOptions() { Locale = "en-US" };
-                RecognizedFormCollection businessCards = await client.StartRecognizeBusinessCardsAsync(stream, options).WaitForCompletionAsync();
-
-                // To see the list of the supported fields returned by service and its corresponding types, consult:
-                // https://aka.ms/formrecognizer/businesscardfields
-
-                foreach (RecognizedForm businessCard in businessCards)
+                if (businessCard.Fields.TryGetValue("ContactNames", out FormField contactNamesField))
                 {
-                    FormField ContactNamesField;
-                    if (businessCard.Fields.TryGetValue("ContactNames", out ContactNamesField))
+                    if (contactNamesField.Value.ValueType == FieldValueType.List)
                     {
-                        if (ContactNamesField.Value.ValueType == FieldValueType.List)
+                        foreach (FormField contactNameField in contactNamesField.Value.AsList())
                         {
-                            foreach (FormField contactNameField in ContactNamesField.Value.AsList())
+                            Console.WriteLine($"Contact Name: {contactNameField.ValueData.Text}");
+
+                            if (contactNameField.Value.ValueType == FieldValueType.Dictionary)
                             {
-                                Console.WriteLine($"Contact Name: {contactNameField.ValueData.Text}");
+                                IReadOnlyDictionary<string, FormField> contactNameFields = contactNameField.Value.AsDictionary();
 
-                                if (contactNameField.Value.ValueType == FieldValueType.Dictionary)
+                                if (contactNameFields.TryGetValue("FirstName", out FormField firstNameField))
                                 {
-                                    IReadOnlyDictionary<string, FormField> contactNameFields = contactNameField.Value.AsDictionary();
-
-                                    FormField firstNameField;
-                                    if (contactNameFields.TryGetValue("FirstName", out firstNameField))
+                                    if (firstNameField.Value.ValueType == FieldValueType.String)
                                     {
-                                        if (firstNameField.Value.ValueType == FieldValueType.String)
-                                        {
-                                            string firstName = firstNameField.Value.AsString();
+                                        string firstName = firstNameField.Value.AsString();
 
-                                            Console.WriteLine($"    First Name: '{firstName}', with confidence {firstNameField.Confidence}");
-                                        }
+                                        Console.WriteLine($"  First Name: '{firstName}', with confidence {firstNameField.Confidence}");
                                     }
+                                }
 
-                                    FormField lastNameField;
-                                    if (contactNameFields.TryGetValue("LastName", out lastNameField))
+                                if (contactNameFields.TryGetValue("LastName", out FormField lastNameField))
+                                {
+                                    if (lastNameField.Value.ValueType == FieldValueType.String)
                                     {
-                                        if (lastNameField.Value.ValueType == FieldValueType.String)
-                                        {
-                                            string lastName = lastNameField.Value.AsString();
+                                        string lastName = lastNameField.Value.AsString();
 
-                                            Console.WriteLine($"    Last Name: '{lastName}', with confidence {lastNameField.Confidence}");
-                                        }
+                                        Console.WriteLine($"  Last Name: '{lastName}', with confidence {lastNameField.Confidence}");
                                     }
                                 }
                             }
                         }
                     }
+                }
 
-                    FormField emailFields;
-                    if (businessCard.Fields.TryGetValue("Emails", out emailFields))
+                if (businessCard.Fields.TryGetValue("Emails", out FormField emailFields))
+                {
+                    if (emailFields.Value.ValueType == FieldValueType.List)
                     {
-                        if (emailFields.Value.ValueType == FieldValueType.List)
+                        foreach (FormField emailField in emailFields.Value.AsList())
                         {
-                            foreach (FormField emailField in emailFields.Value.AsList())
+                            if (emailField.Value.ValueType == FieldValueType.String)
                             {
-                                if (emailField.Value.ValueType == FieldValueType.String)
-                                {
-                                    string email = emailField.Value.AsString();
+                                string email = emailField.Value.AsString();
 
-                                    Console.WriteLine($"  Email: '{email}', with confidence {emailField.Confidence}");
-                                }
+                                Console.WriteLine($"Email: '{email}', with confidence {emailField.Confidence}");
                             }
                         }
                     }

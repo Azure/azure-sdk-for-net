@@ -20,6 +20,9 @@ parameters:
 - name: Location
   type: string
   default: ''
+- name: SDKType
+  type: string
+  default: client
 - name: ServiceDirectory
   type: string
   default: not-specified
@@ -32,19 +35,24 @@ parameters:
 - name: Platforms
   type: object
   default: {}
+- name: Matrix
+  type: string
+- name: DependsOn
+  type: string
+  default: ''
 - name: UsePlatformContainer
   type: boolean
   default: false
 
 jobs:
   - job:
+    dependsOn: ${{ parameters.DependsOn }}
+    condition: ne(${{ parameters.Matrix }}, '{}')
     strategy:
       maxParallel: ${{ parameters.MaxParallel }}
-      matrix: ${{ parameters.Platforms }}
+      matrix: $[ ${{ parameters.Matrix }} ]
 
-    condition: and(succeededOrFailed(), eq(eq(variables['Record'], 'true'), eq('$(TestMode)', 'Record')))
     variables:
-      - template: ../variables/globals.yml
       # ServiceDirectory references must get passed down by the caller as variable references
       - name: ServiceDirectory
         value: ${{ parameters.ServiceDirectory }}
@@ -52,19 +60,25 @@ jobs:
         value: ''
       - name: ArmTemplateParameters
         value: '@{}'
+      - name: TestMode
+        value: 'None'
 
     timeoutInMinutes: ${{ parameters.TimeoutInMinutes }}
 
     pool:
+      name: $(Pool)
       vmImage: $(OSVmImage)
 
     ${{ if eq(parameters.UsePlatformContainer, 'true') }}:
+      # Add a default so the job doesn't fail when the matrix is empty
       container: $[ variables['Container'] ]
 
     steps:
       - ${{ parameters.PreSteps }}
 
       - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
+        parameters:
+          AgentImage: $(OSVmImage)
 
       - ${{ each step in parameters.TestSetupSteps }}:
         - ${{ each pair in step }}:
@@ -72,17 +86,26 @@ jobs:
 
       - template: /eng/common/TestResources/deploy-test-resources.yml
         parameters:
-          Location: ${{ coalesce(parameters.Location, parameters.CloudConfig.Location, 'westus2') }}
+          ${{ if or(parameters.Location, parameters.CloudConfig.Location) }}:
+            Location: ${{ coalesce(parameters.Location, parameters.CloudConfig.Location) }}
           ServiceDirectory: '${{ parameters.ServiceDirectory }}'
           SubscriptionConfiguration: ${{ parameters.CloudConfig.SubscriptionConfiguration }}
           ArmTemplateParameters: $(ArmTemplateParameters)
 
+      - pwsh: |
+          if ($env:SupportsRecording -and $env:Record) {
+            Write-Host "Enabling Record mode"
+            Write-Host "##vso[task.setvariable variable=TestMode]Record"
+          }
+        displayName: Set Test Mode
+      - template: /eng/pipelines/templates/steps/install-dotnet.yml
       - pwsh: >
           dotnet test eng/service.proj
           --framework $(TestTargetFramework)
           --filter "TestCategory!=Manually"
           --logger "trx"
           --logger:"console;verbosity=normal"
+          /p:SDKType=${{ parameters.SDKType }}
           /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
           /p:IncludeSrc=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false
           /p:BuildInParallel=${{ parameters.BuildInParallel }}
@@ -92,8 +115,7 @@ jobs:
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
-          DOTNET_MULTILEVEL_LOOKUP: 0
-          AZURE_TEST_MODE: "${{ coalesce(variables['TestMode'], 'None') }}"
+          AZURE_TEST_MODE: $(TestMode)
           ${{ each var in parameters.EnvVars }}:
             ${{ var.key }}: ${{ var.value }}
 

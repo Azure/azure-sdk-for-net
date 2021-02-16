@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/prebuilt/businessCard/analyze?includeTextDetails=false",
+      "RequestUri": "https://mariari-centraluseuap.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/prebuilt/businessCard/analyze?includeTextDetails=false",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "7",
         "Content-Type": "application/pdf",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-b2dc96327c85214b8ed8a9b36e2a3060-dc5a7ae85e182a45-00",
+        "traceparent": "00-a55ee093f90e0c4896f54c323c9e5c1a-a1453e6eebe4a946-00",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201009.1",
+          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201116.1",
           "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "58ba0b88ab4320cf72a7c9c95a5e3fe0",
@@ -19,10 +19,10 @@
       "RequestBody": "JVBERlVVVQ==",
       "StatusCode": 400,
       "ResponseHeaders": {
-        "apim-request-id": "57236bf9-e443-4580-84ac-7f8e9cb8f4fc",
+        "apim-request-id": "48edbc47-aaef-40a0-a6e0-70d2b9c74eaf",
         "Content-Length": "161",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 09 Oct 2020 23:19:47 GMT",
+        "Date": "Tue, 17 Nov 2020 00:31:53 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
         "x-envoy-upstream-service-time": "3"
@@ -31,7 +31,7 @@
         "error": {
           "code": "BadArgument",
           "innerError": {
-            "requestId": "57236bf9-e443-4580-84ac-7f8e9cb8f4fc"
+            "requestId": "48edbc47-aaef-40a0-a6e0-70d2b9c74eaf"
           },
           "message": "Bad or unrecognizable request JSON or binary file."
         }
@@ -40,7 +40,7 @@
   ],
   "Variables": {
     "FORM_RECOGNIZER_API_KEY": "Sanitized",
-    "FORM_RECOGNIZER_ENDPOINT": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/",
+    "FORM_RECOGNIZER_ENDPOINT": "https://mariari-centraluseuap.cognitiveservices.azure.com/",
     "RandomSeed": "1811291938"
   }
 }

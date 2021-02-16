@@ -10,7 +10,7 @@ namespace Azure.AI.TextAnalytics
     /// EntitiesTaskParameters class.
     /// </summary>
     [CodeGenModel("EntitiesTaskParameters")]
-    public partial class EntitiesTaskParameters
+    internal partial class EntitiesTaskParameters
     {
         /// <summary>
         /// ModelVersion
@@ -20,7 +20,6 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// StringIndexType
         /// </summary>
-        internal StringIndexType? StringIndexType { get; set; }
-
+        public StringIndexType StringIndexType { get; set; } = StringIndexType.Utf16CodeUnit;
     }
 }

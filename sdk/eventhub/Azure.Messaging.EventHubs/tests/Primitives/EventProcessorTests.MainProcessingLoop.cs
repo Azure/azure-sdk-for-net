@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -736,10 +735,10 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Callback(() => startCompletionSource.TrySetResult(true))
                 .CallBase();
 
-             mockProcessor
-                .Protected()
-                .Setup<Task>("OnPartitionProcessingStoppedAsync", ItExpr.IsAny<EventProcessorPartition>(), ItExpr.IsAny<ProcessingStoppedReason>(), ItExpr.IsAny<CancellationToken>())
-                .Throws(expectedException);
+            mockProcessor
+               .Protected()
+               .Setup<Task>("OnPartitionProcessingStoppedAsync", ItExpr.IsAny<EventProcessorPartition>(), ItExpr.IsAny<ProcessingStoppedReason>(), ItExpr.IsAny<CancellationToken>())
+               .Throws(expectedException);
 
             await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
             Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.Running), "The processor should have started.");
@@ -1308,9 +1307,9 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockConnection = new Mock<EventHubConnection>();
             var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), options, mockLoadBalancer.Object) { CallBase = true };
 
-           mockLoadBalancer
-                .SetupGet(lb => lb.OwnedPartitionIds)
-                .Returns(ownedPartitions);
+            mockLoadBalancer
+                 .SetupGet(lb => lb.OwnedPartitionIds)
+                 .Returns(ownedPartitions);
 
             mockLoadBalancer
                 .SetupSequence(lb => lb.RunLoadBalancingAsync(partitionIds, It.IsAny<CancellationToken>()))
@@ -1670,8 +1669,8 @@ namespace Azure.Messaging.EventHubs.Tests
                 })
                 .Returns(() =>
                 {
-                  completionSource.TrySetResult(true);
-                  return new ValueTask<EventProcessorPartitionOwnership>(default(EventProcessorPartitionOwnership));
+                    completionSource.TrySetResult(true);
+                    return new ValueTask<EventProcessorPartitionOwnership>(default(EventProcessorPartitionOwnership));
                 });
 
             mockConnection
@@ -1762,8 +1761,8 @@ namespace Azure.Messaging.EventHubs.Tests
                 })
                 .Returns(() =>
                 {
-                  completionSource.TrySetResult(true);
-                  return new ValueTask<EventProcessorPartitionOwnership>(default(EventProcessorPartitionOwnership));
+                    completionSource.TrySetResult(true);
+                    return new ValueTask<EventProcessorPartitionOwnership>(default(EventProcessorPartitionOwnership));
                 });
 
             mockConnection
@@ -1805,6 +1804,5 @@ namespace Azure.Messaging.EventHubs.Tests
             mockLoadBalancer
                 .Verify(lb => lb.RunLoadBalancingAsync(partitionIds, It.IsAny<CancellationToken>()), Times.Once(), "The load balancer did not run a single cycle.");
         }
-
     }
 }

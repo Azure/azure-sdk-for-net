@@ -11,13 +11,14 @@ using Azure.Storage.Queues.Models;
 using Azure.Storage.Queues.Tests;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
+using Moq;
 using NUnit.Framework;
 
 namespace Azure.Storage.Queues.Test
 {
+    [NonParallelizable]
     public class ServiceClientTests : QueueTestBase
     {
-
         public ServiceClientTests(bool async)
             : base(async, null /* RecordedTestMode.Record /* to re-record */)
         {
@@ -72,6 +73,36 @@ namespace Azure.Storage.Queues.Test
 
             Assert.IsEmpty(builder.QueueName);
             Assert.AreEqual(accountName, builder.AccountName);
+        }
+
+        [Test]
+        public async Task Ctor_AzureSasCredential()
+        {
+            // Arrange
+            string sas = GetNewAccountSasCredentials(resourceTypes: AccountSasResourceTypes.Service).ToString();
+            await using DisposingQueue test = await GetTestQueueAsync();
+            Uri uri = GetServiceClient_SharedKey().Uri;
+
+            // Act
+            var sasClient = InstrumentClient(new QueueServiceClient(uri, new AzureSasCredential(sas), GetOptions()));
+            QueueServiceProperties properties = await sasClient.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(properties);
+        }
+
+        [Test]
+        public void Ctor_AzureSasCredential_VerifyNoSasInUri()
+        {
+            // Arrange
+            string sas = GetNewAccountSasCredentials().ToString();
+            Uri uri = GetServiceClient_SharedKey().Uri;
+            uri = new Uri(uri.ToString() + "?" + sas);
+
+            // Act
+            TestHelper.AssertExpectedException<ArgumentException>(
+                () => new QueueClient(uri, new AzureSasCredential(sas)),
+                e => e.Message.Contains($"You cannot use {nameof(AzureSasCredential)} when the resource URI also contains a Shared Access Signature"));
         }
 
         [Test]
@@ -341,28 +372,84 @@ namespace Azure.Storage.Queues.Test
             string connectionString = storageConnectionString.ToString(true);
 
             // Act - QueueServiceClient(string connectionString)
-            QueueServiceClient share = new QueueServiceClient(
-                connectionString);
-            Assert.IsTrue(share.CanGenerateAccountSasUri);
+            QueueServiceClient serviceClient = InstrumentClient(new QueueServiceClient(
+                connectionString));
+            Assert.IsTrue(serviceClient.CanGenerateAccountSasUri);
 
             // Act - QueueServiceClient(string connectionString, string blobContainerName, BlobClientOptions options)
-            QueueServiceClient share2 = new QueueServiceClient(
+            QueueServiceClient serviceClient2 = InstrumentClient(new QueueServiceClient(
                 connectionString,
-                GetOptions());
-            Assert.IsTrue(share2.CanGenerateAccountSasUri);
+                GetOptions()));
+            Assert.IsTrue(serviceClient2.CanGenerateAccountSasUri);
 
             // Act - QueueServiceClient(Uri blobContainerUri, BlobClientOptions options = default)
-            QueueServiceClient share3 = new QueueServiceClient(
+            QueueServiceClient serviceClient3 = InstrumentClient(new QueueServiceClient(
                 blobEndpoint,
-                GetOptions());
-            Assert.IsFalse(share3.CanGenerateAccountSasUri);
+                GetOptions()));
+            Assert.IsFalse(serviceClient3.CanGenerateAccountSasUri);
 
             // Act - QueueServiceClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
-            QueueServiceClient share4 = new QueueServiceClient(
+            QueueServiceClient serviceClient4 = InstrumentClient(new QueueServiceClient(
                 blobEndpoint,
                 constants.Sas.SharedKeyCredential,
-                GetOptions());
-            Assert.IsTrue(share4.CanGenerateAccountSasUri);
+                GetOptions()));
+            Assert.IsTrue(serviceClient4.CanGenerateAccountSasUri);
+        }
+
+        [Test]
+        public void CanGenerateSas_GetQueueClient()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
+            var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, queueStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
+
+            // Act - QueueServiceClient(string connectionString)
+            QueueServiceClient serviceClient = InstrumentClient(new QueueServiceClient(
+                connectionString));
+            QueueClient queueClient = serviceClient.GetQueueClient(GetNewQueueName());
+            Assert.IsTrue(queueClient.CanGenerateSasUri);
+
+            // Act - QueueServiceClient(string connectionString, string blobContainerName, BlobClientOptions options)
+            QueueServiceClient serviceClient2 = InstrumentClient(new QueueServiceClient(
+                connectionString,
+                GetOptions()));
+            QueueClient queueClient2 = serviceClient2.GetQueueClient(GetNewQueueName());
+            Assert.IsTrue(queueClient2.CanGenerateSasUri);
+
+            // Act - QueueServiceClient(Uri blobContainerUri, BlobClientOptions options = default)
+            QueueServiceClient serviceClient3 = InstrumentClient(new QueueServiceClient(
+                blobEndpoint,
+                GetOptions()));
+            QueueClient queueClient3 = serviceClient3.GetQueueClient(GetNewQueueName());
+            Assert.IsFalse(queueClient3.CanGenerateSasUri);
+
+            // Act - QueueServiceClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
+            QueueServiceClient serviceClient4 = InstrumentClient(new QueueServiceClient(
+                blobEndpoint,
+                constants.Sas.SharedKeyCredential,
+                GetOptions()));
+            QueueClient queueClient4 = serviceClient4.GetQueueClient(GetNewQueueName());
+            Assert.IsTrue(queueClient4.CanGenerateSasUri);
+        }
+
+        [Test]
+        public void CanGenerateAccountSas_Mockable()
+        {
+            // Act
+            var directory = new Mock<QueueServiceClient>();
+            directory.Setup(x => x.CanGenerateAccountSasUri).Returns(false);
+
+            // Assert
+            Assert.IsFalse(directory.Object.CanGenerateAccountSasUri);
+
+            // Act
+            directory.Setup(x => x.CanGenerateAccountSasUri).Returns(true);
+
+            // Assert
+            Assert.IsTrue(directory.Object.CanGenerateAccountSasUri);
         }
 
         [Test]
@@ -377,7 +464,7 @@ namespace Azure.Storage.Queues.Test
             DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
             AccountSasPermissions permissions = AccountSasPermissions.Read | AccountSasPermissions.Write;
             AccountSasResourceTypes resourceTypes = AccountSasResourceTypes.All;
-            QueueServiceClient serviceClient = new QueueServiceClient(connectionString, GetOptions());
+            QueueServiceClient serviceClient = InstrumentClient(new QueueServiceClient(connectionString, GetOptions()));
 
             // Act
             Uri sasUri = serviceClient.GenerateAccountSasUri(
@@ -407,7 +494,7 @@ namespace Azure.Storage.Queues.Test
             DateTimeOffset startsOn = Recording.UtcNow.AddHours(-1);
             AccountSasServices services = AccountSasServices.Queues;
             AccountSasResourceTypes resourceTypes = AccountSasResourceTypes.All;
-            QueueServiceClient serviceClient = new QueueServiceClient(connectionString, GetOptions());
+            QueueServiceClient serviceClient = InstrumentClient(new QueueServiceClient(connectionString, GetOptions()));
 
             AccountSasBuilder sasBuilder = new AccountSasBuilder(permissions, expiresOn, services, resourceTypes)
             {
@@ -441,7 +528,7 @@ namespace Azure.Storage.Queues.Test
             DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
             AccountSasServices services = AccountSasServices.Blobs; // Wrong Service
             AccountSasResourceTypes resourceTypes = AccountSasResourceTypes.All;
-            QueueServiceClient serviceClient = new QueueServiceClient(connectionString, GetOptions());
+            QueueServiceClient serviceClient = InstrumentClient(new QueueServiceClient(connectionString, GetOptions()));
 
             AccountSasBuilder sasBuilder = new AccountSasBuilder(permissions, expiresOn, services, resourceTypes)
             {
@@ -462,5 +549,17 @@ namespace Azure.Storage.Queues.Test
             }
         }
         #endregion
+
+        [Test]
+        public void CanMockClientConstructors()
+        {
+            // One has to call .Object to trigger constructor. It's lazy.
+            var mock = new Mock<QueueServiceClient>(TestConfigDefault.ConnectionString, new QueueClientOptions()).Object;
+            mock = new Mock<QueueServiceClient>(TestConfigDefault.ConnectionString).Object;
+            mock = new Mock<QueueServiceClient>(new Uri("https://test/test"), new QueueClientOptions()).Object;
+            mock = new Mock<QueueServiceClient>(new Uri("https://test/test"), GetNewSharedKeyCredentials(), new QueueClientOptions()).Object;
+            mock = new Mock<QueueServiceClient>(new Uri("https://test/test"), new AzureSasCredential("foo"), new QueueClientOptions()).Object;
+            mock = new Mock<QueueServiceClient>(new Uri("https://test/test"), GetOAuthCredential(TestConfigHierarchicalNamespace), new QueueClientOptions()).Object;
+        }
     }
 }

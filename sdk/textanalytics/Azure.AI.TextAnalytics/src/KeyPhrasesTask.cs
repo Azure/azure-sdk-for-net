@@ -9,12 +9,11 @@ namespace Azure.AI.TextAnalytics
     /// KeyPhrasesTask.
     /// </summary>
     [CodeGenModel("KeyPhrasesTask")]
-    public partial class KeyPhrasesTask
+    internal partial class KeyPhrasesTask
     {
         /// <summary>
         /// Parameters for KeyPhrasesTask
         /// </summary>
         public KeyPhrasesTaskParameters Parameters { get; set; }
-
     }
 }

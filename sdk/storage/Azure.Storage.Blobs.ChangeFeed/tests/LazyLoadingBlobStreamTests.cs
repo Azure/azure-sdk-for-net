@@ -68,31 +68,23 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<ArgumentNullException>(
                 lazyStream.ReadAsync(buffer: null, offset: 0, count: 10),
-                e => Assert.AreEqual($"buffer cannot be null.{Environment.NewLine}Parameter name: buffer", e.Message));
+                new ArgumentNullException("buffer", $"buffer cannot be null."));
 
             await TestHelper.AssertExpectedExceptionAsync<ArgumentOutOfRangeException>(
                 lazyStream.ReadAsync(buffer: new byte[10], offset: -1, count: 10),
-                e => Assert.AreEqual(
-                    $"Specified argument was out of the range of valid values.{Environment.NewLine}Parameter name: offset cannot be less than 0.",
-                    e.Message));
+                new ArgumentOutOfRangeException("offset cannot be less than 0.", $"Specified argument was out of the range of valid values."));
 
             await TestHelper.AssertExpectedExceptionAsync<ArgumentOutOfRangeException>(
                 lazyStream.ReadAsync(buffer: new byte[10], offset: 11, count: 10),
-                e => Assert.AreEqual(
-                    $"Specified argument was out of the range of valid values.{Environment.NewLine}Parameter name: offset cannot exceed buffer length.",
-                    e.Message));
+                new ArgumentOutOfRangeException("offset cannot exceed buffer length.", $"Specified argument was out of the range of valid values."));
 
             await TestHelper.AssertExpectedExceptionAsync<ArgumentOutOfRangeException>(
                 lazyStream.ReadAsync(buffer: new byte[10], offset: 1, count: -1),
-                e => Assert.AreEqual(
-                    $"Specified argument was out of the range of valid values.{Environment.NewLine}Parameter name: count cannot be less than 0.",
-                    e.Message));
+                new ArgumentOutOfRangeException("count cannot be less than 0.", $"Specified argument was out of the range of valid values."));
 
             await TestHelper.AssertExpectedExceptionAsync<ArgumentOutOfRangeException>(
                 lazyStream.ReadAsync(buffer: new byte[10], offset: 5, count: 15),
-                e => Assert.AreEqual(
-                    $"Specified argument was out of the range of valid values.{Environment.NewLine}Parameter name: offset + count cannot exceed buffer length.",
-                    e.Message));
+                new ArgumentOutOfRangeException("offset + count cannot exceed buffer length.", $"Specified argument was out of the range of valid values."));
         }
     }
 }

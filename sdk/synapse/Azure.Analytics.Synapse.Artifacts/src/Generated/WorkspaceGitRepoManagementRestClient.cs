@@ -56,8 +56,8 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendPath("/getGitHubAccessToken", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(gitHubAccessTokenRequest);
             request.Content = content;

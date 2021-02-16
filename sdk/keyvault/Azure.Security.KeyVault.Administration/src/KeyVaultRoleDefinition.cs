@@ -5,7 +5,7 @@ using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration
 {
-    /// <inheritdoc/>
+    /// <summary> A Key Vault role definition. </summary>
     [CodeGenModel("RoleDefinition", Usage = new[]{"input", "output"})]
     public partial class KeyVaultRoleDefinition
     { }

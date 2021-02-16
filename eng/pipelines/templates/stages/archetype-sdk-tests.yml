@@ -5,6 +5,9 @@ parameters:
 - name: Clouds
   type: string
   default: 'Public'
+- name: SupportedClouds
+  type: string
+  default: 'Public,Canary'
 - name: UnsupportedClouds
   type: string
   default: ''
@@ -29,6 +32,9 @@ parameters:
 - name: Location
   type: string
   default: ''
+- name: SDKType
+  type: string
+  default: client
 - name: ServiceDirectory
   type: string
   default: not-specified
@@ -49,35 +55,19 @@ parameters:
       SubscriptionConfiguration: $(sub-config-gov-test-resources)
     China:
       SubscriptionConfiguration: $(sub-config-cn-test-resources)
-- name: Platforms
+- name: MatrixConfigs
   type: object
   default:
-    Linux_NetCore:
-      OSVmImage: "ubuntu-18.04"
-      TestTargetFramework: netcoreapp2.1
-    Windows_NetCore:
-      OSVmImage: "windows-2019"
-      TestTargetFramework: netcoreapp2.1
-    Windows_NetCore_ProjectRefAzureClients:
-      OSVmImage: "windows-2019"
-      TestTargetFramework: netcoreapp2.1
-      AdditionalTestArguments: "/p:UseProjectReferenceToAzureClients=true"
-    Windows_NetFramework:
-      OSVmImage: "windows-2019"
-      TestTargetFramework: net461
-    Windows_NetFramework_ProjectRefAzureClients:
-      OSVmImage: "windows-2019"
-      TestTargetFramework: net461
-      AdditionalTestArguments: "/p:UseProjectReferenceToAzureClients=true"
-    MacOS:
-      OSVmImage: "macOS-10.15"
-      TestTargetFramework: netcoreapp2.1
-      SupportedClouds: 'Public'
-    Windows_NetCore_Record:
-      OSVmImage: "windows-2019"
-      TestMode: Record
-      TestTargetFramework: netcoreapp2.1
-      SupportedClouds: 'Public'
+    - Name: NET_live_test_base
+      Path: eng/pipelines/templates/stages/platform-matrix.json
+      Selection: sparse
+      GenerateVMJobs: true
+- name: AdditionalMatrixConfigs
+  type: object
+  default: []
+- name: MatrixFilters
+  type: object
+  default: []
 - name: PlatformPreSteps
   type: object
   default:
@@ -86,7 +76,7 @@ parameters:
   type: object
   default:
     - task: CopyFiles@2
-      condition: and(succeededOrFailed(), eq(variables['Agent.JobName'], 'Windows_NetCore_Record'))
+      condition: and(succeededOrFailed(), eq(variables.TestMode, 'Record'))
       displayName: "Copy Test Recordings"
       inputs:
         sourceFolder: '$(Build.SourcesDirectory)'
@@ -95,28 +85,27 @@ parameters:
         contents: 'sdk/$(ServiceDirectory)/**/SessionRecords/**/*.json'
         targetFolder: '$(Build.ArtifactStagingDirectory)/SessionRecords'
     - task: PublishBuildArtifacts@1
-      condition: and(succeededOrFailed(), eq(variables['Agent.JobName'], 'Windows_NetCore_Record'))
+      condition: and(succeededOrFailed(), eq(variables.TestMode, 'Record'))
       displayName: "Publish Test Recordings"
       inputs:
         pathToPublish: '$(Build.ArtifactStagingDirectory)/SessionRecords'
         artifactName: SessionRecords
 
+variables:
+  - template: ../variables/globals.yml
 
 stages:
 - ${{ each cloud in parameters.CloudConfig }}:
+  # TODO: re-enable tests-weekly allow filter once sovereign cloud live tests are stable: https://github.com/Azure/azure-sdk/issues/2074
   # Run all clouds by default for weekly test pipeline, except for clouds specifically unsupported by the calling pipeline
-  - ${{ if or(contains(parameters.Clouds, cloud.key), contains(variables['Build.DefinitionName'], 'tests-weekly')) }}:
+  # - ${{ if or(contains(parameters.Clouds, cloud.key), contains(variables['Build.DefinitionName'], 'tests-weekly')) }}:
+  - ${{ if or(contains(parameters.Clouds, cloud.key), and(contains(variables['Build.DefinitionName'], 'tests-weekly'), contains(parameters.SupportedClouds, cloud.key))) }}:
     - ${{ if not(contains(parameters.UnsupportedClouds, cloud.key)) }}:
       - stage: ${{ cloud.key }}
         dependsOn: []
         jobs:
-        - template: ../jobs/archetype-sdk-tests-host.yml
+        - template: /eng/pipelines/templates/jobs/archetype-sdk-tests-generate.yml
           parameters:
-            # Flag to include the job template with a container field
-            ${{ each platform in parameters.AdditionalPlatforms }}:
-              ${{ if contains(coalesce(platform.value.SupportedClouds, parameters.Clouds), cloud.key) }}:
-                ${{ if ne(platform.value.Container, '') }}:
-                  UsePlatformContainer: true
             AdditionalParameters:
               PreSteps:
                 - ${{ parameters.PlatformPreSteps }}
@@ -129,16 +118,20 @@ stages:
               BuildInParallel: ${{ parameters.BuildInParallel }}
               TimeoutInMinutes: ${{ parameters.TimeoutInMinutes }}
               Location: ${{ parameters.Location }}
+              SDKType: ${{ parameters.SDKType }}
               ServiceDirectory: ${{ parameters.ServiceDirectory }}
               TestSetupSteps: ${{ parameters.TestSetupSteps }}
-            Platforms:
+            MatrixConfigs:
               # Enumerate platforms and additional platforms based on supported clouds (sparse platform<-->cloud matrix).
-              ${{ each platform in parameters.Platforms }}:
-                ${{ if contains(coalesce(platform.value.SupportedClouds, parameters.Clouds), cloud.key) }}:
-                  ${{ platform.key }}: ${{ platform.value }}
-              ${{ each platform in parameters.AdditionalPlatforms }}:
-                ${{ if contains(coalesce(platform.value.SupportedClouds, parameters.Clouds), cloud.key) }}:
-                  ${{ platform.key }}: ${{ platform.value }}
+              - ${{ each config in parameters.MatrixConfigs }}:
+                -  ${{ config }}
+              - ${{ each config in parameters.AdditionalMatrixConfigs }}:
+                -  ${{ config }}
+            MatrixFilters:
+              - ${{ each cloudFilter in cloud.value.MatrixFilters }}:
+                - ${{ cloudFilter }}
+              - ${{ parameters.MatrixFilters }}
             CloudConfig:
               SubscriptionConfiguration: ${{ cloud.value.SubscriptionConfiguration }}
               Location: ${{ coalesce(parameters.Location, cloud.value.Location) }}
+              Cloud: ${{ cloud.key }}

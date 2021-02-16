@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    internal static class DedicatedHostLicenseTypesExtensions
+    internal static partial class DedicatedHostLicenseTypesExtensions
     {
         public static string ToSerialString(this DedicatedHostLicenseTypes value) => value switch
         {

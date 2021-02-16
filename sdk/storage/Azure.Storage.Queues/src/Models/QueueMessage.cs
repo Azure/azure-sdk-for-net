@@ -14,6 +14,11 @@ namespace Azure.Storage.Queues.Models
     {
         internal QueueMessage() { }
 
+        internal QueueMessage(string messageText)
+        {
+            MessageText = messageText;
+        }
+
         /// <summary>
         /// The Id of the Message.
         /// </summary>
@@ -30,8 +35,8 @@ namespace Azure.Storage.Queues.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string MessageText
         {
-            get => Body.ToString();
-            internal set => Body = new BinaryData(value);
+            get => Body?.ToString();
+            internal set => Body = value == null ? null : new BinaryData(value);
         }
 
         /// <summary>
@@ -78,6 +83,11 @@ namespace Azure.Storage.Queues.Models
 
         internal static QueueMessage ToQueueMessage(DequeuedMessageItem dequeuedMessageItem, QueueMessageEncoding messageEncoding)
         {
+            if (dequeuedMessageItem == null)
+            {
+                return null;
+            }
+
             return new QueueMessage()
             {
                 MessageId = dequeuedMessageItem.MessageId,

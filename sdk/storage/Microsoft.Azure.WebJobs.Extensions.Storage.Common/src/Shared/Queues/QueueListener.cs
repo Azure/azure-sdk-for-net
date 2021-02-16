@@ -194,7 +194,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
                         // check anymore (steady state).
                         // However the queue can always be deleted from underneath us, in which case
                         // we need to recheck. That is handled below.
-                        _queueExists = await _queue.ExistsAsync().ConfigureAwait(false);
+                        _queueExists = await _queue.ExistsAsync(cancellationToken).ConfigureAwait(false);
                     }
 
                     if (_queueExists.Value)
@@ -204,7 +204,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
                         Response<QueueMessage[]> response = await _queue.ReceiveMessagesAsync(_queueProcessor.QueuesOptions.BatchSize, _visibilityTimeout, cancellationToken).ConfigureAwait(false);
                         batch = response.Value;
 
-                        int count = batch?.Count() ?? -1;
+                        int count = batch?.Length ?? -1;
                         Logger.GetMessages(_logger, _functionDescriptor.LogName, _queue.Name, response.GetRawResponse().ClientRequestId, count, sw.ElapsedMilliseconds);
                     }
                 }

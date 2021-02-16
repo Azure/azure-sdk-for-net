@@ -4,12 +4,11 @@
 using System;
 using System.Net;
 using Azure.Core.TestFramework;
-using Azure.Storage.Files.Shares.Tests;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using NUnit.Framework;
 
-namespace Azure.Storage.Files.Shares.Test
+namespace Azure.Storage.Files.Shares.Tests
 {
     public class FileUriBuilderTests : FileTestBase
     {
@@ -189,24 +188,36 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        public void FileUriBuilder_AccountNamePeriod()
+        {
+            var fileUriBuilder = new ShareUriBuilder(new Uri("https://account.z.file.core.windows.net/share/dir"));
+
+            Assert.AreEqual("account", fileUriBuilder.AccountName);
+        }
+
+        [Test]
+        public void FileUriBuilder_AccountNameError()
+        {
+            var fileUriBuilder = new ShareUriBuilder(new Uri("http://notaurl"));
+
+            Assert.IsEmpty(fileUriBuilder.AccountName);
+        }
+
+        [Test]
         public void FileUriBuilder_MalformedSubdomain()
         {
-            // core and file swapped
-            var shareUriBuilder1 = new ShareUriBuilder(new Uri("https://account.core.file.windows.net/share/dir"));
-
             // account and file swapped
-            var shareUriBuilder2 = new ShareUriBuilder(new Uri("https://file.account.core.windows.net/share/dir"));
+            var shareUriBuilder1 = new ShareUriBuilder(new Uri("https://file.account.core.windows.net/share/dir"));
 
             // wrong service
-            var shareUriBuilder3 = new ShareUriBuilder(new Uri("https://account.blob.core.windows.net/share/dir"));
+            var shareUriBuilder2 = new ShareUriBuilder(new Uri("https://account.blob.core.windows.net/share/dir"));
 
             // empty service
-            var shareUriBuilder4 = new ShareUriBuilder(new Uri("https://account./share/dir"));
+            var shareUriBuilder3 = new ShareUriBuilder(new Uri("https://account./share/dir"));
 
             Assert.AreEqual(string.Empty, shareUriBuilder1.AccountName);
             Assert.AreEqual(string.Empty, shareUriBuilder2.AccountName);
             Assert.AreEqual(string.Empty, shareUriBuilder3.AccountName);
-            Assert.AreEqual(string.Empty, shareUriBuilder4.AccountName);
         }
 
         [Test]
@@ -245,7 +256,7 @@ namespace Azure.Storage.Files.Shares.Test
         public void FileUriBuilder_SasStartExpiryTimeFormats(string startTime, string expiryTime)
         {
             // Arrange
-            Uri initialUri = new Uri($"https://account.file.core.windows.net/share/directory/file?sv=2020-02-10&st={WebUtility.UrlEncode(startTime)}&se={WebUtility.UrlEncode(expiryTime)}&sr=b&sp=racwd&sig=jQetX8odiJoZ7Yo0X8vWgh%2FMqRv9WE3GU%2Fr%2BLNMK3GU%3D");
+            Uri initialUri = new Uri($"https://account.file.core.windows.net/share/directory/file?sv=2020-06-12&st={WebUtility.UrlEncode(startTime)}&se={WebUtility.UrlEncode(expiryTime)}&sr=b&sp=racwd&sig=jQetX8odiJoZ7Yo0X8vWgh%2FMqRv9WE3GU%2Fr%2BLNMK3GU%3D");
             ShareUriBuilder shareUriBuilder = new ShareUriBuilder(initialUri);
 
             // Act
@@ -263,7 +274,7 @@ namespace Azure.Storage.Files.Shares.Test
             // Arrange
             string startTime = "2020-10-27T12Z";
             string expiryTime = "2020-10-28T13Z";
-            Uri initialUri = new Uri($"https://account.file.core.windows.net/share/directory/file?sv=2020-02-10&st={WebUtility.UrlEncode(startTime)}&se={WebUtility.UrlEncode(expiryTime)}&sr=b&sp=racwd&sig=jQetX8odiJoZ7Yo0X8vWgh%2FMqRv9WE3GU%2Fr%2BLNMK3GU%3D");
+            Uri initialUri = new Uri($"https://account.file.core.windows.net/share/directory/file?sv=2020-06-12&st={WebUtility.UrlEncode(startTime)}&se={WebUtility.UrlEncode(expiryTime)}&sr=b&sp=racwd&sig=jQetX8odiJoZ7Yo0X8vWgh%2FMqRv9WE3GU%2Fr%2BLNMK3GU%3D");
 
             // Act
             try

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Execute spark job activity. </summary>
-    public partial class SynapseSparkJobDefinitionActivity : Activity
+    public partial class SynapseSparkJobDefinitionActivity : ExecutionActivity
     {
         /// <summary> Initializes a new instance of SynapseSparkJobDefinitionActivity. </summary>
         /// <param name="name"> Activity name. </param>
@@ -39,8 +39,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"> . </param>
+        /// <param name="linkedServiceName"> Linked service reference. </param>
+        /// <param name="policy"> Activity policy. </param>
         /// <param name="sparkJob"> Synapse spark job reference. </param>
-        internal SynapseSparkJobDefinitionActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, SynapseSparkJobReference sparkJob) : base(name, type, description, dependsOn, userProperties, additionalProperties)
+        internal SynapseSparkJobDefinitionActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, SynapseSparkJobReference sparkJob) : base(name, type, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             SparkJob = sparkJob;
             Type = type ?? "SparkJob";

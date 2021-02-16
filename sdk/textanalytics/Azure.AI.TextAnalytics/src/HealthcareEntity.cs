@@ -2,20 +2,71 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// HealthcareEntity.
+    /// .
     /// </summary>
-    [CodeGenModel("HealthcareEntity")]
-    public partial class HealthcareEntity
+    public class HealthcareEntity
     {
+        internal HealthcareEntity(HealthcareEntityInternal entity)
+        {
+            Category = entity.Category;
+            Text = entity.Text;
+            SubCategory = entity.Subcategory;
+            ConfidenceScore = entity.ConfidenceScore;
+            Offset = entity.Offset;
+            Length = entity.Length;
+            DataSources = entity.Links;
+            RelatedEntities = new Dictionary<HealthcareEntity, HealthcareEntityRelationType>();
+        }
         /// <summary>
-        /// IsNegated
+        /// Gets the entity text as it appears in the input document.
         /// </summary>
-        public bool IsNegated { get; }
+        public string Text { get; }
 
+        /// <summary>
+        /// Gets the entity category inferred by the Text Analytics service's
+        /// healthcare model.  The list of available categories is
+        /// described at
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/named-entity-types?tabs=health"/>.
+        /// </summary>
+        public string Category { get; }
+
+        /// <summary>
+        /// Gets the sub category of the entity inferred by the Text Analytics service's
+        /// healthcare model.  This property may not have a value if
+        /// a sub category doesn't exist for this entity.  The list of available categories and
+        /// subcategories is described at
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/named-entity-types?tabs=health"/>.
+        /// </summary>
+        public string SubCategory { get; }
+
+        /// <summary>
+        /// Gets a score between 0 and 1, indicating the confidence that the
+        /// text substring matches this inferred entity.
+        /// </summary>
+        public double ConfidenceScore { get; }
+
+        /// <summary>
+        /// Gets the starting position for the matching text in the input document.
+        /// </summary>
+        public int Offset { get; }
+
+        /// <summary>
+        /// Gets the length for the matching entity in the input document.
+        /// </summary>
+        public int Length { get; }
+
+        /// <summary>
+        /// Get the list of data sources for the entity.
+        /// </summary>
+        public IReadOnlyCollection<EntityDataSource> DataSources { get; }
+
+        /// <summary>
+        /// Gets the entities and the relationship between the entities.
+        /// </summary>
+        public IDictionary<HealthcareEntity, HealthcareEntityRelationType> RelatedEntities { get; internal set; }
     }
 }

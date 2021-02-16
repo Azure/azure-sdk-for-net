@@ -26,6 +26,5 @@ namespace Azure.Storage.Blobs.Models
         /// the Policy ID.
         /// </summary>
         public IList<ObjectReplicationRule> Rules { get; internal set; }
-
     }
 }

@@ -53,7 +53,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         public async Task SetSecretWithExtendedProps()
         {
             string secretName = Recording.GenerateId();
-            IResolveConstraint createdUpdatedConstraint = Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1596061817));
+            IResolveConstraint createdUpdatedConstraint = Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1612561237));
 
             KeyVaultSecret setResult = null;
 
@@ -426,7 +426,6 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                 AssertSecretPropertiesEqual(createdSecret.Properties, returnedSecret);
             }
         }
-
 
         [Test]
         public async Task GetDeletedSecrets()

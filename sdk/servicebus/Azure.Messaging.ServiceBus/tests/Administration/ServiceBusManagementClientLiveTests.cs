@@ -25,24 +25,24 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
         }
 
         private string GetConnectionString() =>
-            Mode == RecordedTestMode.Playback ?
-                TestEnvironment.OverrideServiceBusConnectionString :
-                TestEnvironment.ServiceBusConnectionString;
+            Mode == RecordedTestMode.Live ?
+                TestEnvironment.ServiceBusConnectionString :
+                TestEnvironment.OverrideServiceBusConnectionString;
 
-        private ServiceBusAdministrationClient GetClient() =>
+        private ServiceBusAdministrationClient CreateClient() =>
             InstrumentClient(
                 new ServiceBusAdministrationClient(
                     GetConnectionString(),
                     InstrumentClientOptions(new ServiceBusAdministrationClientOptions())));
 
-        private ServiceBusAdministrationClient GetAADClient() =>
+        private ServiceBusAdministrationClient CreateAADClient() =>
             InstrumentClient(
                 new ServiceBusAdministrationClient(
                     TestEnvironment.FullyQualifiedNamespace,
                     GetTokenCredential(),
                     InstrumentClientOptions(new ServiceBusAdministrationClientOptions())));
 
-        private ServiceBusAdministrationClient GetSharedKeyTokenClient()
+        private ServiceBusAdministrationClient CreateSharedKeyTokenClient()
         {
             var properties = ServiceBusConnectionStringProperties.Parse(GetConnectionString());
             var credential = new ServiceBusSharedAccessKeyCredential(properties.SharedAccessKeyName, properties.SharedAccessKey);
@@ -58,7 +58,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
         public async Task BasicQueueCrudOperations()
         {
             var queueName = nameof(BasicQueueCrudOperations).ToLower() + Recording.Random.NewGuid().ToString("D").Substring(0, 8);
-            var client = GetClient();
+            var client = CreateClient();
 
             var queueOptions = new CreateQueueOptions(queueName)
             {
@@ -72,7 +72,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 ForwardTo = null,
                 LockDuration = TimeSpan.FromSeconds(45),
                 MaxDeliveryCount = 8,
-                MaxSizeInMegabytes = 2048,
+                MaxSizeInMegabytes = 1024,
                 RequiresDuplicateDetection = true,
                 RequiresSession = false,
                 UserMetadata = nameof(BasicQueueCrudOperations),
@@ -94,10 +94,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             if (Mode == RecordedTestMode.Playback)
             {
                 Assert.AreEqual(queueOptions, new CreateQueueOptions(createdQueue) { AuthorizationRules = queueOptions.AuthorizationRules.Clone() });
+                Assert.AreEqual(createdQueue, new QueueProperties(queueOptions) { AuthorizationRules = createdQueue.AuthorizationRules });
             }
             else
             {
                 Assert.AreEqual(queueOptions, new CreateQueueOptions(createdQueue));
+                Assert.AreEqual(createdQueue, new QueueProperties(queueOptions));
             }
             Response<QueueProperties> getQueueResponse = await client.GetQueueAsync(queueOptions.Name);
             rawResponse = createdQueueResponse.GetRawResponse();
@@ -133,7 +135,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             else
             {
                 Assert.AreEqual(getQueue, updatedQueue);
-
             }
             Response<bool> isExistsResponse = await client.QueueExistsAsync(queueName);
             rawResponse = createdQueueResponse.GetRawResponse();
@@ -168,7 +169,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
         public async Task BasicTopicCrudOperations()
         {
             var topicName = nameof(BasicTopicCrudOperations).ToLower() + Recording.Random.NewGuid().ToString("D").Substring(0, 8);
-            var client = GetClient();
+            var client = CreateClient();
 
             var options = new CreateTopicOptions(topicName)
             {
@@ -177,7 +178,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 DuplicateDetectionHistoryTimeWindow = TimeSpan.FromMinutes(1),
                 EnableBatchedOperations = true,
                 EnablePartitioning = false,
-                MaxSizeInMegabytes = 2048,
+                MaxSizeInMegabytes = 1024,
                 RequiresDuplicateDetection = true,
                 UserMetadata = nameof(BasicTopicCrudOperations)
             };
@@ -200,10 +201,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 // these in our test recordings, so we skip the auth rule comparison
                 // when in playback mode.
                 Assert.AreEqual(options, new CreateTopicOptions(createdTopic) { AuthorizationRules = options.AuthorizationRules.Clone() });
+                Assert.AreEqual(createdTopic, new TopicProperties(options) { AuthorizationRules = createdTopic.AuthorizationRules.Clone() });
             }
             else
             {
                 Assert.AreEqual(options, new CreateTopicOptions(createdTopic));
+                Assert.AreEqual(createdTopic, new TopicProperties(options));
             }
 
             Response<TopicProperties> getTopicResponse = await client.GetTopicAsync(options.Name);
@@ -264,7 +267,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             var topicName = nameof(BasicSubscriptionCrudOperations).ToLower() + Recording.Random.NewGuid().ToString("D").Substring(0, 8);
             var subscriptionName = Recording.Random.NewGuid().ToString("D").Substring(0, 8);
 
-            var client = GetClient();
+            var client = CreateClient();
 
             await client.CreateTopicAsync(topicName);
 
@@ -335,7 +338,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
         {
             var topicName = Recording.Random.NewGuid().ToString("D").Substring(0, 8);
             var subscriptionName = Recording.Random.NewGuid().ToString("D").Substring(0, 8);
-            var client = GetClient();
+            var client = CreateClient();
             await client.CreateTopicAsync(topicName);
 
             var rule1 = new CreateRuleOptions
@@ -423,7 +426,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
         public async Task GetQueueRuntimeInfo()
         {
             var queueName = nameof(GetQueueRuntimeInfo).ToLower() + Recording.Random.NewGuid().ToString("D").Substring(0, 8);
-            var mgmtClient = GetClient();
+            var mgmtClient = CreateClient();
             await using var sbClient = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
 
             QueueProperties queue = await mgmtClient.CreateQueueAsync(queueName);
@@ -483,7 +486,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
         {
             var topicName = nameof(GetSubscriptionRuntimeInfoTest).ToLower() + Recording.Random.NewGuid().ToString("D").Substring(0, 8);
             var subscriptionName = Recording.Random.NewGuid().ToString("D").Substring(0, 8);
-            var client = GetClient();
+            var client = CreateClient();
             await using var sbClient = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
 
             await client.CreateTopicAsync(topicName);
@@ -575,7 +578,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
         {
             var topicName = nameof(GetTopicRuntimeInfo).ToLower() + Recording.Random.NewGuid().ToString("D").Substring(0, 8);
             var subscriptionName = Recording.Random.NewGuid().ToString("D").Substring(0, 8);
-            var client = GetClient();
+            var client = CreateClient();
 
             await client.CreateTopicAsync(topicName);
 
@@ -617,7 +620,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
         [Test]
         public async Task ThrowsIfEntityDoesNotExist()
         {
-            var client = GetClient();
+            var client = CreateClient();
 
             Assert.That(
                 async () =>
@@ -673,7 +676,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessagingEntityNotFound).
                     And.Property(nameof(Exception.InnerException)).InstanceOf(typeof(RequestFailedException)));
 
-
             var queueName = Recording.Random.NewGuid().ToString("D").Substring(0, 8);
             var topicName = Recording.Random.NewGuid().ToString("D").Substring(0, 8);
 
@@ -699,7 +701,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
         [Test]
         public async Task ThrowsIfEntityAlreadyExists()
         {
-            var client = GetClient();
+            var client = CreateClient();
             var queueName = Recording.Random.NewGuid().ToString("D").Substring(0, 8);
             var topicName = Recording.Random.NewGuid().ToString("D").Substring(0, 8);
             var subscriptionName = Recording.Random.NewGuid().ToString("D").Substring(0, 8);
@@ -735,7 +737,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             var queueName = Recording.Random.NewGuid().ToString("D").Substring(0, 8);
             var destinationName = Recording.Random.NewGuid().ToString("D").Substring(0, 8);
             var dlqDestinationName = Recording.Random.NewGuid().ToString("D").Substring(0, 8);
-            var mgmtClient = GetClient();
+            var mgmtClient = CreateClient();
 
             await mgmtClient.CreateQueueAsync(dlqDestinationName);
             await mgmtClient.CreateQueueAsync(
@@ -774,7 +776,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
         [Test]
         public async Task SqlFilterParams()
         {
-            var client = GetClient();
+            var client = CreateClient();
             var topicName = Recording.Random.NewGuid().ToString("D").Substring(0, 8);
             var subscriptionName = Recording.Random.NewGuid().ToString("D").Substring(0, 8);
 
@@ -813,7 +815,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
         {
             var topicName = Recording.Random.NewGuid().ToString("D").Substring(0, 8);
             var subscriptionName = Recording.Random.NewGuid().ToString("D").Substring(0, 8);
-            var client = GetClient();
+            var client = CreateClient();
 
             await client.CreateTopicAsync(topicName);
             await client.CreateSubscriptionAsync(topicName, subscriptionName);
@@ -836,7 +838,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
         [Test]
         public async Task GetNamespaceProperties()
         {
-            var client = GetClient();
+            var client = CreateClient();
 
             NamespaceProperties nsInfo = await client.GetNamespacePropertiesAsync();
             Assert.NotNull(nsInfo);
@@ -849,7 +851,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
         {
             var queueName = Recording.Random.NewGuid().ToString("D").Substring(0, 8);
             var topicName = Recording.Random.NewGuid().ToString("D").Substring(0, 8);
-            var client = GetAADClient();
+            var client = CreateAADClient();
 
             var queueOptions = new CreateQueueOptions(queueName);
             QueueProperties createdQueue = await client.CreateQueueAsync(queueOptions);
@@ -870,7 +872,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
         {
             var queueName = Recording.Random.NewGuid().ToString("D").Substring(0, 8);
             var topicName = Recording.Random.NewGuid().ToString("D").Substring(0, 8);
-            var client = GetSharedKeyTokenClient();
+            var client = CreateSharedKeyTokenClient();
 
             var queueOptions = new CreateQueueOptions(queueName);
             QueueProperties createdQueue = await client.CreateQueueAsync(queueOptions);

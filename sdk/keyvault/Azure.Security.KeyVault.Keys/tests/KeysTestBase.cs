@@ -50,7 +50,17 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 new KeyClient(
                     Uri,
                     TestEnvironment.Credential,
-                    InstrumentClientOptions(new KeyClientOptions(_serviceVersion))),
+                    InstrumentClientOptions(
+                        new KeyClientOptions(_serviceVersion)
+                        {
+                            Diagnostics =
+                            {
+                                LoggedHeaderNames =
+                                {
+                                    "x-ms-request-id",
+                                }
+                            },
+                        })),
                 interceptors);
         }
 

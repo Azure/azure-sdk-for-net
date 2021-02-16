@@ -12,7 +12,7 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.FormRecognizer.Training
 {
     /// <summary>
-    /// Tracks the status of a long-running operation for training a model from a collection of custom forms.
+    /// Tracks the status of a long-running operation for creating a custom model.
     /// </summary>
     public class CreateCustomFormModelOperation : Operation<CustomFormModel>
     {
@@ -73,7 +73,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// </summary>
         /// <remarks>
         /// The last response returned from the server during the lifecycle of this instance.
-        /// An instance of <see cref="TrainingOperation"/> sends requests to a server in UpdateStatusAsync, UpdateStatus, and other methods.
+        /// An instance of <see cref="CreateCustomFormModelOperation"/> sends requests to a server in UpdateStatusAsync, UpdateStatus, and other methods.
         /// Responses from these requests can be accessed using GetRawResponse.
         /// </remarks>
         public override Response GetRawResponse() => _response;
@@ -116,12 +116,15 @@ namespace Azure.AI.FormRecognizer.Training
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TrainingOperation"/> class.
+        /// Initializes a new instance of the <see cref="CreateCustomFormModelOperation"/> class which
+        /// tracks the status of a long-running operation for creating a custom model.
         /// </summary>
         /// <param name="operationId">The ID of this operation.</param>
         /// <param name="client">The client used to check for completion.</param>
         public CreateCustomFormModelOperation(string operationId, FormTrainingClient client)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             Id = operationId;
             _diagnostics = client.Diagnostics;
             _serviceClient = client.ServiceClient;
@@ -159,7 +162,7 @@ namespace Azure.AI.FormRecognizer.Training
         {
             if (!_hasCompleted)
             {
-                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TrainingOperation)}.{nameof(UpdateStatus)}");
+                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CreateCustomFormModelOperation)}.{nameof(UpdateStatus)}");
                 scope.Start();
 
                 try

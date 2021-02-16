@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Castle.DynamicProxy;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 
@@ -55,6 +56,7 @@ namespace Azure.Core.TestFramework
             }
         }
         private bool _saveDebugRecordingsOnFailure;
+        protected bool ValidateClientInstrumentation { get; set; }
 
         protected RecordedTestBase(bool isAsync) : this(isAsync, RecordedTestUtilities.GetModeFromEnvironment())
         {
@@ -94,7 +96,7 @@ namespace Azure.Core.TestFramework
 
             string fileName = name + (IsAsync ? "Async" : string.Empty) + ".json";
 
-            string path = ((AssemblyMetadataAttribute) GetType().Assembly.GetCustomAttribute(typeof(AssemblyMetadataAttribute))).Value;
+            string path = TestEnvironment.GetSourcePath(GetType().Assembly);
 
             return Path.Combine(path,
                 "SessionRecords",
@@ -143,16 +145,30 @@ namespace Azure.Core.TestFramework
                 throw new IgnoreException((string) test.Properties.Get("SkipRecordings"));
             }
             Recording = new TestRecording(Mode, GetSessionFilePath(), Sanitizer, Matcher);
+            ValidateClientInstrumentation = Recording.HasRequests;
         }
 
         [TearDown]
         public virtual void StopTestRecording()
         {
-            bool save = TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Passed;
+            bool testPassed = TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Passed;
+
+            if (ValidateClientInstrumentation && testPassed)
+            {
+                throw new InvalidOperationException("The test didn't instrument any clients but had recordings. Please call InstrumentClient for the client being recorded.");
+            }
+
+            bool save = testPassed;
 #if DEBUG
             save |= SaveDebugRecordingsOnFailure;
 #endif
             Recording?.Dispose(save);
+        }
+
+        protected internal override object InstrumentClient(Type clientType, object client, IEnumerable<IInterceptor> preInterceptors)
+        {
+            ValidateClientInstrumentation = false;
+            return base.InstrumentClient(clientType, client, preInterceptors);
         }
     }
 }

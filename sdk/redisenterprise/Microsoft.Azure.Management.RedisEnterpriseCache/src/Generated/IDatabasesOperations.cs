@@ -164,6 +164,122 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Retrieves the access keys for the RedisEnterprise database.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// The name of the RedisEnterprise cluster.
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the database.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<AccessKeys>> ListKeysWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Regenerates the RedisEnterprise database's access keys.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// The name of the RedisEnterprise cluster.
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the database.
+        /// </param>
+        /// <param name='keyType'>
+        /// Which access key to regenerate. Possible values include: 'Primary',
+        /// 'Secondary'
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<AccessKeys>> RegenerateKeyWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, AccessKeyType keyType, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Imports a database file to target database.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// The name of the RedisEnterprise cluster.
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the database.
+        /// </param>
+        /// <param name='sasUri'>
+        /// SAS Uri for the target blob to import from
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> ImportWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, string sasUri, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Exports a database file from target database.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// The name of the RedisEnterprise cluster.
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the database.
+        /// </param>
+        /// <param name='sasUri'>
+        /// SAS Uri for the target directory to export to
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> ExportWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, string sasUri, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Creates a database
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -250,6 +366,94 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Regenerates the RedisEnterprise database's access keys.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// The name of the RedisEnterprise cluster.
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the database.
+        /// </param>
+        /// <param name='keyType'>
+        /// Which access key to regenerate. Possible values include: 'Primary',
+        /// 'Secondary'
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<AccessKeys>> BeginRegenerateKeyWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, AccessKeyType keyType, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Imports a database file to target database.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// The name of the RedisEnterprise cluster.
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the database.
+        /// </param>
+        /// <param name='sasUri'>
+        /// SAS Uri for the target blob to import from
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> BeginImportWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, string sasUri, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Exports a database file from target database.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// The name of the RedisEnterprise cluster.
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the database.
+        /// </param>
+        /// <param name='sasUri'>
+        /// SAS Uri for the target directory to export to
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> BeginExportWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, string sasUri, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets all databases in the specified RedisEnterprise cluster.
         /// </summary>

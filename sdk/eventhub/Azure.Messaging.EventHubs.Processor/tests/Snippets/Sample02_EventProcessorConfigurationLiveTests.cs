@@ -6,6 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Azure.Messaging.EventHubs.Processor;
 using Azure.Messaging.EventHubs.Processor.Tests;
 using Azure.Storage.Blobs;
 using NUnit.Framework;
@@ -23,37 +24,89 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
     [SuppressMessage("Style", "IDE0059:Unnecessary assignment of a value", Justification = "Example assignments needed for snippet output content.")]
     public class Sample02_EventProcessorConfigurationLiveTests
     {
-        /// <summary>The active Event Hub resource scope for the test fixture.</summary>
-        private EventHubScope _eventHubScope;
-
-        /// <summary>The active Blob storage resource scope for the test fixture.</summary>
-        private StorageScope _storageScope;
-
         /// <summary>
-        ///   Performs the tasks needed to initialize the test fixture.  This
-        ///   method runs once for the entire fixture, prior to running any tests.
+        ///   Performs basic smoke test validation of the contained snippet.
         /// </summary>
         ///
-        [OneTimeSetUp]
-        public async Task FixtureSetUp()
+        [Test]
+        public void ConfigureLoadBalancingStrategy()
         {
-            _eventHubScope = await EventHubScope.CreateAsync(2);
-            _storageScope = await StorageScope.CreateAsync();
+            #region Snippet:EventHubs_Processor_Sample02_LoadBalancingStrategy
+
+            var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
+            var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
+            /*@@*/
+            /*@@*/ storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
+            /*@@*/ blobContainerName = "not-real";
+
+            var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+            var eventHubName = "<< NAME OF THE EVENT HUB >>";
+            var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
+            /*@@*/
+            /*@@*/ eventHubsConnectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
+            /*@@*/ eventHubName = "fakeHub";
+            /*@@*/ consumerGroup = "fakeConsumer";
+
+            var processorOptions = new EventProcessorClientOptions
+            {
+                LoadBalancingStrategy = LoadBalancingStrategy.Greedy
+            };
+
+            var storageClient = new BlobContainerClient(
+                storageConnectionString,
+                blobContainerName);
+
+            var processor = new EventProcessorClient(
+                storageClient,
+                consumerGroup,
+                eventHubsConnectionString,
+                eventHubName,
+                processorOptions);
+
+            #endregion
         }
 
         /// <summary>
-        ///   Performs the tasks needed to cleanup the test fixture after all
-        ///   tests have run.  This method runs once for the entire fixture.
+        ///   Performs basic smoke test validation of the contained snippet.
         /// </summary>
         ///
-        [OneTimeTearDown]
-        public async Task FixtureTearDown()
+        [Test]
+        public void ConfigureLoadBalancingIntervals()
         {
-            await Task.WhenAll
-            (
-                _eventHubScope.DisposeAsync().AsTask(),
-                _storageScope.DisposeAsync().AsTask()
-            );
+            #region Snippet:EventHubs_Processor_Sample02_LoadBalancingIntervals
+
+            var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
+            var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
+            /*@@*/
+            /*@@*/ storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
+            /*@@*/ blobContainerName = "not-real";
+
+            var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+            var eventHubName = "<< NAME OF THE EVENT HUB >>";
+            var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
+            /*@@*/
+            /*@@*/ eventHubsConnectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
+            /*@@*/ eventHubName = "fakeHub";
+            /*@@*/ consumerGroup = "fakeConsumer";
+
+            var processorOptions = new EventProcessorClientOptions
+            {
+                LoadBalancingUpdateInterval = TimeSpan.FromSeconds(10),
+                PartitionOwnershipExpirationInterval = TimeSpan.FromSeconds(30)
+            };
+
+            var storageClient = new BlobContainerClient(
+                storageConnectionString,
+                blobContainerName);
+
+            var processor = new EventProcessorClient(
+                storageClient,
+                consumerGroup,
+                eventHubsConnectionString,
+                eventHubName,
+                processorOptions);
+
+            #endregion
         }
 
         /// <summary>
@@ -69,15 +122,15 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
             /*@@*/
             /*@@*/ storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
-            /*@@*/ blobContainerName = _storageScope.ContainerName;
+            /*@@*/ blobContainerName = "not-real";
 
             var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
             /*@@*/
             /*@@*/ eventHubsConnectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = _eventHubScope.EventHubName;
-            /*@@*/ consumerGroup = _eventHubScope.ConsumerGroups.First();
+            /*@@*/ eventHubName = "fakeHub";
+            /*@@*/ consumerGroup = "fakeConsumer";
 
             var processorOptions = new EventProcessorClientOptions
             {
@@ -114,15 +167,15 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
             /*@@*/
             /*@@*/ storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
-            /*@@*/ blobContainerName = _storageScope.ContainerName;
+            /*@@*/ blobContainerName = "not-real";
 
             var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
             /*@@*/
             /*@@*/ eventHubsConnectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = _eventHubScope.EventHubName;
-            /*@@*/ consumerGroup = _eventHubScope.ConsumerGroups.First();
+            /*@@*/ eventHubName = "fakeHub";
+            /*@@*/ consumerGroup = "fakeConsumer";
 
             var processorOptions = new EventProcessorClientOptions();
             processorOptions.ConnectionOptions.TransportType = EventHubsTransportType.AmqpWebSockets;
@@ -154,15 +207,15 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
             /*@@*/
             /*@@*/ storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
-            /*@@*/ blobContainerName = _storageScope.ContainerName;
+            /*@@*/ blobContainerName = "not-real";
 
             var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
             /*@@*/
             /*@@*/ eventHubsConnectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = _eventHubScope.EventHubName;
-            /*@@*/ consumerGroup = _eventHubScope.ConsumerGroups.First();
+            /*@@*/ eventHubName = "fakeHub";
+            /*@@*/ consumerGroup = "fakeConsumer";
 
             var processorOptions = new EventProcessorClientOptions
             {
@@ -200,15 +253,15 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
             /*@@*/
             /*@@*/ storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
-            /*@@*/ blobContainerName = _storageScope.ContainerName;
+            /*@@*/ blobContainerName = "not-real";
 
             var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
             /*@@*/
             /*@@*/ eventHubsConnectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = _eventHubScope.EventHubName;
-            /*@@*/ consumerGroup = _eventHubScope.ConsumerGroups.First();
+            /*@@*/ eventHubName = "fakeHub";
+            /*@@*/ consumerGroup = "fakeConsumer";
 
             var processorOptions = new EventProcessorClientOptions();
             processorOptions.ConnectionOptions.TransportType = EventHubsTransportType.AmqpWebSockets;
@@ -233,7 +286,47 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         /// </summary>
         ///
         [Test]
-        public void onfigureRetryWithFullOptions()
+        public void ConfigureCustomEndpointAddress()
+        {
+            #region Snippet:EventHubs_Processor_Sample02_ConnectionOptionsCustomEndpoint
+
+            var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
+            var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
+            /*@@*/
+            /*@@*/ storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
+            /*@@*/ blobContainerName = "not-real";
+
+            var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+            var eventHubName = "<< NAME OF THE EVENT HUB >>";
+            var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
+            /*@@*/
+            /*@@*/ eventHubsConnectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
+            /*@@*/ eventHubName = "fakeHub";
+            /*@@*/ consumerGroup = "fakeConsumer";
+
+            var processorOptions = new EventProcessorClientOptions();
+            processorOptions.ConnectionOptions.CustomEndpointAddress = new Uri("amqps://app-gateway.mycompany.com");
+
+            var storageClient = new BlobContainerClient(
+                storageConnectionString,
+                blobContainerName);
+
+            var processor = new EventProcessorClient(
+                storageClient,
+                consumerGroup,
+                eventHubsConnectionString,
+                eventHubName,
+                processorOptions);
+
+            #endregion
+        }
+
+        /// <summary>
+        ///   Performs basic smoke test validation of the contained snippet.
+        /// </summary>
+        ///
+        [Test]
+        public void ConfigureRetryWithFullOptions()
         {
             #region Snippet:EventHubs_Processor_Sample02_RetryWithFullOptions
 
@@ -241,15 +334,15 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
             /*@@*/
             /*@@*/ storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
-            /*@@*/ blobContainerName = _storageScope.ContainerName;
+            /*@@*/ blobContainerName = "not-real";
 
             var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
             /*@@*/
             /*@@*/ eventHubsConnectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = _eventHubScope.EventHubName;
-            /*@@*/ consumerGroup = _eventHubScope.ConsumerGroups.First();
+            /*@@*/ eventHubName = "fakeHub";
+            /*@@*/ consumerGroup = "fakeConsumer";
 
             var processorOptions = new EventProcessorClientOptions
             {
@@ -289,15 +382,15 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
             /*@@*/
             /*@@*/ storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
-            /*@@*/ blobContainerName = _storageScope.ContainerName;
+            /*@@*/ blobContainerName = "not-real";
 
             var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
             /*@@*/
             /*@@*/ eventHubsConnectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = _eventHubScope.EventHubName;
-            /*@@*/ consumerGroup = _eventHubScope.ConsumerGroups.First();
+            /*@@*/ eventHubName = "fakeHub";
+            /*@@*/ consumerGroup = "fakeConsumer";
 
             var processorOptions = new EventProcessorClientOptions();
             processorOptions.RetryOptions.Mode = EventHubsRetryMode.Fixed;

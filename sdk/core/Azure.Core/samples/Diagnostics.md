@@ -102,6 +102,9 @@ To setup ApplicationInsights tracking for your application follow the [Start Mon
 
 Follow the [OpenTelemetry configuration guide](https://github.com/open-telemetry/opentelemetry-dotnet#configuration-with-microsoftextensionsdependencyinjection) to configure collecting distribute tracing event collection using the OpenTelemetry library.
 
+### Sample
+To see an example of distributed tracing in action, take a look at our [sample app](https://github.com/Azure/azure-sdk-for-net/blob/master/samples/linecounter/README.md) that combines several Azure SDKs.
+
 ## Setting x-ms-client-request-id value sent with requests
 
 By default x-ms-client-request-id header gets a unique value per client method call. If you would like to use a specific value for a set of requests use the `HttpPipeline.CreateClientRequestIdScope` method.

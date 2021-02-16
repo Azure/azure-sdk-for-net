@@ -31,7 +31,7 @@ namespace Azure.Messaging.ServiceBus
 
         private Func<ProcessSessionMessageEventArgs, Task> _processSessionMessageAsync;
 
-        private Func<ProcessErrorEventArgs, Task> _processErrorAsync = default;
+        private Func<ProcessErrorEventArgs, Task> _processErrorAsync;
 
         private Func<ProcessSessionEventArgs, Task> _sessionInitializingAsync;
 
@@ -56,13 +56,13 @@ namespace Azure.Messaging.ServiceBus
         /// Gets the fully qualified Service Bus namespace that the receiver is associated with. This is likely
         /// to be similar to <c>{yournamespace}.servicebus.windows.net</c>.
         /// </summary>
-        public string FullyQualifiedNamespace => _connection.FullyQualifiedNamespace;
+        public virtual string FullyQualifiedNamespace => _connection.FullyQualifiedNamespace;
 
         /// <summary>
         /// Gets the path of the Service Bus entity that the processor is connected to, specific to the
         /// Service Bus namespace that contains it.
         /// </summary>
-        public string EntityPath { get; private set; }
+        public virtual string EntityPath { get; private set; }
 
         /// <summary>
         /// Gets the ID to identify this processor. This can be used to correlate logs and exceptions.
@@ -73,7 +73,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Gets the <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.
         /// </summary>
-        public ServiceBusReceiveMode ReceiveMode { get; }
+        public virtual ServiceBusReceiveMode ReceiveMode { get; }
 
         /// <summary>
         /// Gets whether the processor is configured to process session entities.
@@ -85,7 +85,7 @@ namespace Azure.Messaging.ServiceBus
         /// during processing. This is intended to help maximize throughput by allowing the
         /// processor to receive from a local cache rather than waiting on a service request.
         /// </summary>
-        public int PrefetchCount { get; }
+        public virtual int PrefetchCount { get; }
 
         /// <summary>
         /// Gets whether or not this processor is currently processing messages.
@@ -94,7 +94,7 @@ namespace Azure.Messaging.ServiceBus
         /// <value>
         /// <c>true</c> if the processor is processing messages; otherwise, <c>false</c>.
         /// </value>
-        public bool IsProcessing => ActiveReceiveTask != null;
+        public virtual bool IsProcessing => ActiveReceiveTask != null;
 
         private readonly ServiceBusProcessorOptions _options;
 
@@ -109,7 +109,8 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <value>The maximum number of concurrent calls to the message handler.</value>
-        public int MaxConcurrentCalls { get; }
+        public virtual int MaxConcurrentCalls { get; }
+        internal TimeSpan? MaxReceiveWaitTime { get; }
 
         /// <summary>
         /// Gets a value that indicates whether the processor should automatically
@@ -120,7 +121,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <value>true to complete the message processing automatically on
         /// successful execution of the operation; otherwise, false.</value>
-        public bool AutoCompleteMessages { get; }
+        public virtual bool AutoCompleteMessages { get; }
 
         /// <summary>
         /// Gets the maximum duration within which the lock will be renewed automatically. This
@@ -131,7 +132,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <remarks>The message renew can continue for sometime in the background
         /// after completion of message and result in a few false MessageLockLostExceptions temporarily.</remarks>
-        public TimeSpan MaxAutoLockRenewalDuration { get; }
+        public virtual TimeSpan MaxAutoLockRenewalDuration { get; }
 
         /// <summary>
         /// The instance of <see cref="ServiceBusEventSource" /> which can be mocked for testing.
@@ -147,14 +148,14 @@ namespace Azure.Messaging.ServiceBus
         /// <value>
         /// <c>true</c> if the processor is closed; otherwise, <c>false</c>.
         /// </value>
-        public bool IsClosed
+        public virtual bool IsClosed
         {
             get => _closed;
             private set => _closed = value;
         }
 
         /// <summary>Indicates whether or not this instance has been closed.</summary>
-        private volatile bool _closed = false;
+        private volatile bool _closed;
 
         private readonly string[] _sessionIds;
         private readonly EntityScopeFactory _scopeFactory;
@@ -200,6 +201,7 @@ namespace Azure.Messaging.ServiceBus
             PrefetchCount = _options.PrefetchCount;
             MaxAutoLockRenewalDuration = _options.MaxAutoLockRenewalDuration;
             MaxConcurrentCalls = _options.MaxConcurrentCalls;
+            MaxReceiveWaitTime = _options.MaxReceiveWaitTime;
             MaxConcurrentSessions = maxConcurrentSessions;
             MaxConcurrentCallsPerSession = maxConcurrentCallsPerSession;
             _sessionIds = sessionIds ?? Array.Empty<string>();
@@ -280,7 +282,6 @@ namespace Azure.Messaging.ServiceBus
 #pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
                 }
                 EnsureNotRunningAndInvoke(() => _processMessageAsync = value);
-
             }
 
             remove
@@ -315,7 +316,6 @@ namespace Azure.Messaging.ServiceBus
                     throw new NotSupportedException(Resources.HandlerHasAlreadyBeenAssigned);
                 }
                 EnsureNotRunningAndInvoke(() => _processSessionMessageAsync = value);
-
             }
 
             remove
@@ -385,7 +385,6 @@ namespace Azure.Messaging.ServiceBus
                     throw new NotSupportedException(Resources.HandlerHasAlreadyBeenAssigned);
                 }
                 EnsureNotRunningAndInvoke(() => _sessionInitializingAsync = value);
-
             }
 
             remove
@@ -417,7 +416,6 @@ namespace Azure.Messaging.ServiceBus
                     throw new NotSupportedException(Resources.HandlerHasAlreadyBeenAssigned);
                 }
                 EnsureNotRunningAndInvoke(() => _sessionClosingAsync = value);
-
             }
 
             remove

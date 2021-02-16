@@ -8,12 +8,7 @@
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The data stored in Parquet format. </summary>
-    internal partial class ParquetFormat : DatasetStorageFormat
+    public partial class ParquetFormat : DatasetStorageFormat
     {
-        /// <summary> Initializes a new instance of ParquetFormat. </summary>
-        internal ParquetFormat()
-        {
-            Type = "ParquetFormat";
-        }
     }
 }

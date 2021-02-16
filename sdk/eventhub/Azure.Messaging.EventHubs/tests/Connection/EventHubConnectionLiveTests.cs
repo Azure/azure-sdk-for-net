@@ -9,7 +9,6 @@ using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Identity;
 using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Core;
 using NUnit.Framework;
@@ -81,7 +80,9 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 var options = new EventHubConnectionOptions();
                 var audience = EventHubConnection.BuildConnectionAudience(options.TransportType, EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, scope.EventHubName);
-                var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringWithSharedAccessSignature(scope.EventHubName, audience);
+                EventHubsTestEnvironment tempQualifier = EventHubsTestEnvironment.Instance;
+                var signature = new SharedAccessSignature(audience, tempQualifier.SharedAccessKeyName, tempQualifier.SharedAccessKey, TimeSpan.FromMinutes(30));
+                var connectionString = $"Endpoint=sb://{tempQualifier.FullyQualifiedNamespace };EntityPath={ scope.EventHubName };SharedAccessSignature={ signature.Value }";
 
                 await using (var connection = new TestConnectionWithTransport(connectionString, options))
                 {

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -102,10 +103,15 @@ namespace Azure.Storage.Files.DataLake
         private StorageSharedKeyCredential _storageSharedKeyCredential;
 
         /// <summary>
+        /// Gets the The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS.
+        /// </summary>
+        internal virtual StorageSharedKeyCredential SharedKeyCredential => _storageSharedKeyCredential;
+
+        /// <summary>
         /// Determines whether the client is able to generate a SAS.
         /// If the client is authenticated with a <see cref="StorageSharedKeyCredential"/>.
         /// </summary>
-        public bool CanGenerateAccountSasUri => _storageSharedKeyCredential != null;
+        public virtual bool CanGenerateAccountSasUri => SharedKeyCredential != null;
 
         #region ctors
         /// <summary>
@@ -149,6 +155,59 @@ namespace Azure.Storage.Files.DataLake
         /// Initializes a new instance of the <see cref="DataLakeServiceClient"/>
         /// class.
         /// </summary>
+        /// <param name="connectionString">
+        /// A connection string includes the authentication information
+        /// required for your application to access data in an Azure Storage
+        /// account at runtime.
+        ///
+        /// For more information, <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">Configure Azure Storage connection strings</see>.
+        /// </param>
+        public DataLakeServiceClient(string connectionString)
+            : this(connectionString, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeServiceClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="connectionString">
+        /// A connection string includes the authentication information
+        /// required for your application to access data in an Azure Storage
+        /// account at runtime.
+        ///
+        /// For more information, <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">Configure Azure Storage connection strings</see>.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        public DataLakeServiceClient(string connectionString, DataLakeClientOptions options)
+        {
+            StorageConnectionString conn = StorageConnectionString.Parse(connectionString);
+            StorageSharedKeyCredential sharedKeyCredential = conn.Credentials as StorageSharedKeyCredential;
+            options ??= new DataLakeClientOptions();
+            HttpPipelinePolicy authPolicy = sharedKeyCredential.AsPolicy();
+
+            _pipeline = options.Build(authPolicy);
+            _uri = conn.BlobEndpoint;
+            _blobUri = new DataLakeUriBuilder(_uri).ToBlobUri();
+            _version = options.Version;
+            _clientDiagnostics = new ClientDiagnostics(options);
+            _storageSharedKeyCredential = sharedKeyCredential;
+            _blobServiceClient = BlobServiceClientInternals.Create(
+                _blobUri,
+                _pipeline,
+                authPolicy,
+                _version.AsBlobsVersion(),
+                _clientDiagnostics);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeServiceClient"/>
+        /// class.
+        /// </summary>
         /// <param name="serviceUri">
         /// A <see cref="Uri"/> referencing the Data Lake service.
         /// </param>
@@ -177,6 +236,49 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         public DataLakeServiceClient(Uri serviceUri, StorageSharedKeyCredential credential, DataLakeClientOptions options)
             : this(serviceUri, credential.AsPolicy(), options, null, credential)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeServiceClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="serviceUri">
+        /// A <see cref="Uri"/> referencing the Data Lake service.
+        /// Must not contain shared access signature, which should be passed in the second parameter.
+        /// </param>
+        /// <param name="credential">
+        /// The shared access signature credential used to sign requests.
+        /// </param>
+        /// <remarks>
+        /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
+        /// </remarks>
+        public DataLakeServiceClient(Uri serviceUri, AzureSasCredential credential)
+            : this(serviceUri, credential, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeServiceClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="serviceUri">
+        /// A <see cref="Uri"/> referencing the Data Lake service.
+        /// Must not contain shared access signature, which should be passed in the second parameter.
+        /// </param>
+        /// <param name="credential">
+        /// The shared access signature credential used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        /// <remarks>
+        /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
+        /// </remarks>
+        public DataLakeServiceClient(Uri serviceUri, AzureSasCredential credential, DataLakeClientOptions options)
+            : this(serviceUri, credential.AsPolicy<DataLakeUriBuilder>(serviceUri), options, null, null)
         {
         }
 
@@ -242,7 +344,6 @@ namespace Azure.Storage.Files.DataLake
             StorageSharedKeyCredential storageSharedKeyCredential)
             : this(serviceUri, authentication, options, null, storageSharedKeyCredential)
         {
-
         }
 
         /// <summary>
@@ -271,6 +372,7 @@ namespace Azure.Storage.Files.DataLake
             ClientDiagnostics clientDiagnostics,
             StorageSharedKeyCredential storageSharedKeyCredential)
         {
+            Argument.AssertNotNull(serviceUri, nameof(serviceUri));
             options ??= new DataLakeClientOptions();
             _pipeline = options.Build(authentication);
             _uri = serviceUri;
@@ -282,7 +384,7 @@ namespace Azure.Storage.Files.DataLake
                 _blobUri,
                 _pipeline,
                 authentication,
-                Version.AsBlobsVersion(),
+                _version.AsBlobsVersion(),
                 _clientDiagnostics);
         }
 
@@ -324,7 +426,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="DataLakeFileSystemClient"/> for the desired share.
         /// </returns>
         public virtual DataLakeFileSystemClient GetFileSystemClient(string fileSystemName)
-            => new DataLakeFileSystemClient(Uri.AppendToPath(fileSystemName), Pipeline, Version, ClientDiagnostics);
+            => new DataLakeFileSystemClient(Uri.AppendToPath(fileSystemName), Pipeline, SharedKeyCredential, Version, ClientDiagnostics);
 
         #region Get User Delegation Key
         /// <summary>
@@ -444,9 +546,89 @@ namespace Azure.Storage.Files.DataLake
 
         #region Get File Systems
         /// <summary>
-        /// The <see cref="GetFileSystems"/> operation returns an async
-        /// sequence of file systems in the storage account.  Enumerating the
+        /// The <see cref="GetFileSystems(FileSystemTraits, FileSystemStates, string, CancellationToken)"/>
+        /// operation returns an async sequence of file systems in the storage account.  Enumerating the
         /// file systems may make multiple requests to the service while fetching
+        /// all the values.  File systems are ordered lexicographically by name.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/list-containers2">
+        /// List Containers</see>.
+        /// </summary>
+        /// <param name="traits">
+        /// Specifies trait options for shaping the file systems.
+        /// </param>
+        /// <param name="states">
+        /// Specifies state options for shaping the file systems.
+        /// </param>
+        /// <param name="prefix">
+        /// Specifies a string that filters the results to return only file systems
+        /// whose name begins with the specified <paramref name="prefix"/>.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// An <see cref="IEnumerable{T}"/> of <see cref="Response{FileSystemItem}"/>
+        /// describing the file systems in the storage account.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [ForwardsClientCalls]
+        public virtual Pageable<FileSystemItem> GetFileSystems(
+            FileSystemTraits traits = FileSystemTraits.None,
+            FileSystemStates states = FileSystemStates.None,
+            string prefix = default,
+            CancellationToken cancellationToken = default) =>
+            new GetFileSystemsAsyncCollection(_blobServiceClient, traits, states, prefix).ToSyncCollection(cancellationToken);
+
+        /// <summary>
+        /// The <see cref="GetFileSystemsAsync(FileSystemTraits, FileSystemStates, string, CancellationToken)"/>
+        /// operation returns an async sequence of file systems in the storage account.  Enumerating the
+        /// files systems may make multiple requests to the service while fetching
+        /// all the values.  File systems are ordered lexicographically by name.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/list-containers2">
+        /// List Containers</see>.
+        /// </summary>
+        /// <param name="traits">
+        /// Specifies trait options for shaping the file systems.
+        /// </param>
+        /// <param name="states">
+        /// Specifies state options for shaping the file systems.
+        /// </param>
+        /// <param name="prefix">
+        /// Specifies a string that filters the results to return only file systems
+        /// whose name begins with the specified <paramref name="prefix"/>.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// An <see cref="AsyncPageable{T}"/> describing the
+        /// file systems in the storage account.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [ForwardsClientCalls]
+        public virtual AsyncPageable<FileSystemItem> GetFileSystemsAsync(
+            FileSystemTraits traits = FileSystemTraits.None,
+            FileSystemStates states = FileSystemStates.None,
+            string prefix = default,
+            CancellationToken cancellationToken = default) =>
+            new GetFileSystemsAsyncCollection(_blobServiceClient, traits, states, prefix).ToAsyncCollection(cancellationToken);
+
+        /// <summary>
+        /// The <see cref="GetFileSystems(FileSystemTraits, string, CancellationToken)"/>
+        /// operation returns an async sequence of file systems in the storage account.
+        /// Enumerating the file systems may make multiple requests to the service while fetching
         /// all the values.  File systems are ordered lexicographically by name.
         ///
         /// For more information, see
@@ -472,16 +654,20 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Pageable<FileSystemItem> GetFileSystems(
-            FileSystemTraits traits = FileSystemTraits.None,
-            string prefix = default,
-            CancellationToken cancellationToken = default) =>
-            new GetFileSystemsAsyncCollection(_blobServiceClient, traits, prefix).ToSyncCollection(cancellationToken);
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            FileSystemTraits traits,
+            string prefix,
+            CancellationToken cancellationToken) =>
+            new GetFileSystemsAsyncCollection(_blobServiceClient, traits, default, prefix).ToSyncCollection(cancellationToken);
 
         /// <summary>
-        /// The <see cref="GetFileSystemsAsync"/> operation returns an async
-        /// sequence of file systems in the storage account.  Enumerating the
-        /// files systems may make multiple requests to the service while fetching
+        /// The <see cref="GetFileSystemsAsync(FileSystemTraits, string, CancellationToken)"/>
+        /// operation returns an async sequence of file systems in the storage account.
+        /// Enumerating the files systems may make multiple requests to the service while fetching
         /// all the values.  File systems are ordered lexicographically by name.
         ///
         /// For more information, see
@@ -507,11 +693,15 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual AsyncPageable<FileSystemItem> GetFileSystemsAsync(
-            FileSystemTraits traits = FileSystemTraits.None,
-            string prefix = default,
-            CancellationToken cancellationToken = default) =>
-            new GetFileSystemsAsyncCollection(_blobServiceClient, traits, prefix).ToAsyncCollection(cancellationToken);
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            FileSystemTraits traits,
+            string prefix,
+            CancellationToken cancellationToken) =>
+            new GetFileSystemsAsyncCollection(_blobServiceClient, traits, default, prefix).ToAsyncCollection(cancellationToken);
         #endregion Get File Systems
 
         #region Create File System
@@ -761,6 +951,276 @@ namespace Azure.Storage.Files.DataLake
         }
         #endregion Delete File System
 
+        #region Undelete File System
+        /// <summary>
+        /// Restores a previously deleted file system.
+        /// This API is only functional is Container Soft Delete is enabled
+        /// for the storage account associated with the filesystem.
+        /// </summary>
+        /// <param name="deletedFileSystemName">
+        /// The name of the previously deleted file system.
+        /// </param>
+        /// <param name="deleteFileSystemVersion">
+        /// The version of the previously deleted file system.
+        /// </param>
+        /// <param name="destinationFileSystemName">
+        /// Optional.  Use this parameter if you would like to restore the file system
+        /// under a different name.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContainerClient}"/> pointed at the undeleted file system.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<DataLakeFileSystemClient> UndeleteFileSystem(
+            string deletedFileSystemName,
+            string deleteFileSystemVersion,
+            string destinationFileSystemName = default,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(UndeleteFileSystem)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<BlobContainerClient> response = _blobServiceClient.UndeleteBlobContainer(
+                    deletedFileSystemName,
+                    deleteFileSystemVersion,
+                    destinationFileSystemName,
+                    cancellationToken);
+
+                DataLakeFileSystemClient fileSystemClient = new DataLakeFileSystemClient(
+                    response.Value.Uri,
+                    Pipeline,
+                    SharedKeyCredential,
+                    Version,
+                    ClientDiagnostics);
+
+                return Response.FromValue(
+                    fileSystemClient,
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Restores a previously deleted file system.
+        /// This API is only functional is Container Soft Delete is enabled
+        /// for the storage account associated with the filesystem.
+        /// </summary>
+        /// <param name="deletedFileSystemName">
+        /// The name of the previously deleted file system.
+        /// </param>
+        /// <param name="deleteFileSystemVersion">
+        /// The version of the previously deleted file system.
+        /// </param>
+        /// <param name="destinationFileSystemName">
+        /// Optional.  Use this parameter if you would like to restore the file system
+        /// under a different name.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContainerClient}"/> pointed at the undeleted file system.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<DataLakeFileSystemClient>> UndeleteFileSystemAsync(
+            string deletedFileSystemName,
+            string deleteFileSystemVersion,
+            string destinationFileSystemName = default,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(UndeleteFileSystem)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<BlobContainerClient> response = await _blobServiceClient.UndeleteBlobContainerAsync(
+                    deletedFileSystemName,
+                    deleteFileSystemVersion,
+                    destinationFileSystemName,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+
+                DataLakeFileSystemClient fileSystemClient = new DataLakeFileSystemClient(
+                    response.Value.Uri,
+                    Pipeline,
+                    SharedKeyCredential,
+                    Version,
+                    ClientDiagnostics);
+
+                return Response.FromValue(
+                    fileSystemClient,
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+        #endregion Undelete File System
+
+        #region Rename File System
+        ///// <summary>
+        ///// Renames an existing Blob File System.
+        ///// </summary>
+        ///// <param name="sourceFileSystemName">
+        ///// The name of the source File System.
+        ///// </param>
+        ///// <param name="destinationFileSystemName">
+        ///// The name of the destination File System.
+        ///// </param>
+        ///// <param name="sourceConditions">
+        ///// Optional <see cref="DataLakeRequestConditions"/> that
+        ///// source file system has to meet to proceed with rename.
+        ///// Note that LeaseId is the only request condition enforced by
+        ///// this API.
+        ///// </param>
+        ///// <param name="cancellationToken">
+        ///// Optional <see cref="CancellationToken"/> to propagate
+        ///// notifications that the operation should be cancelled.
+        ///// </param>
+        ///// <returns>
+        ///// A <see cref="Response{BlobContainerClient}"/> pointed at the renamed file system.
+        ///// </returns>
+        ///// <remarks>
+        ///// A <see cref="RequestFailedException"/> will be thrown if
+        ///// a failure occurs.
+        ///// </remarks>
+        //internal virtual Response<DataLakeFileSystemClient> RenameFileSystem(
+        //    string sourceFileSystemName,
+        //    string destinationFileSystemName,
+        //    DataLakeRequestConditions sourceConditions = default,
+        //    CancellationToken cancellationToken = default)
+        //{
+        //    DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(RenameFileSystem)}");
+
+        //    try
+        //    {
+        //        scope.Start();
+
+        //        Response<BlobContainerClient> response = _blobServiceClient.RenameBlobContainer(
+        //            sourceFileSystemName,
+        //            destinationFileSystemName,
+        //            sourceConditions.ToBlobRequestConditions(),
+        //            cancellationToken);
+
+        //        DataLakeFileSystemClient fileSystemClient = new DataLakeFileSystemClient(
+        //            response.Value.Uri,
+        //            Pipeline,
+        //            SharedKeyCredential,
+        //            Version,
+        //            ClientDiagnostics);
+
+        //        return Response.FromValue(
+        //            fileSystemClient,
+        //            response.GetRawResponse());
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        scope.Failed(ex);
+        //        throw;
+        //    }
+        //    finally
+        //    {
+        //        scope.Dispose();
+        //    }
+        //}
+
+        ///// <summary>
+        ///// Renames an existing Blob File System.
+        ///// </summary>
+        ///// <param name="sourceFileSystemName">
+        ///// The name of the source File System.
+        ///// </param>
+        ///// <param name="destinationFileSystemName">
+        ///// The name of the destination File System.
+        ///// </param>
+        ///// <param name="sourceConditions">
+        ///// Optional <see cref="DataLakeRequestConditions"/> that
+        ///// source file system has to meet to proceed with rename.
+        ///// Note that LeaseId is the only request condition enforced by
+        ///// this API.
+        ///// </param>
+        ///// <param name="cancellationToken">
+        ///// Optional <see cref="CancellationToken"/> to propagate
+        ///// notifications that the operation should be cancelled.
+        ///// </param>
+        ///// <returns>
+        ///// A <see cref="Response{BlobContainerClient}"/> pointed at the renamed file system.
+        ///// </returns>
+        ///// <remarks>
+        ///// A <see cref="RequestFailedException"/> will be thrown if
+        ///// a failure occurs.
+        ///// </remarks>
+        //internal virtual async Task<Response<DataLakeFileSystemClient>> RenameFileSystemAsync(
+        //    string sourceFileSystemName,
+        //    string destinationFileSystemName,
+        //    DataLakeRequestConditions sourceConditions = default,
+        //    CancellationToken cancellationToken = default)
+        //{
+        //    DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(RenameFileSystem)}");
+
+        //    try
+        //    {
+        //        scope.Start();
+
+        //        Response<BlobContainerClient> response = await _blobServiceClient.RenameBlobContainerAsync(
+        //            sourceFileSystemName,
+        //            destinationFileSystemName,
+        //            sourceConditions.ToBlobRequestConditions(),
+        //            cancellationToken)
+        //            .ConfigureAwait(false);
+
+        //        DataLakeFileSystemClient fileSystemClient = new DataLakeFileSystemClient(
+        //            response.Value.Uri,
+        //            Pipeline,
+        //            SharedKeyCredential,
+        //            Version,
+        //            ClientDiagnostics);
+
+        //        return Response.FromValue(
+        //            fileSystemClient,
+        //            response.GetRawResponse());
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        scope.Failed(ex);
+        //        throw;
+        //    }
+        //    finally
+        //    {
+        //        scope.Dispose();
+        //    }
+        //}
+        #endregion Rename File System
+
         #region GenerateSas
         /// <summary>
         /// The <see cref="GenerateAccountSasUri(AccountSasPermissions, DateTimeOffset, AccountSasResourceTypes)"/>
@@ -838,7 +1298,7 @@ namespace Azure.Storage.Files.DataLake
                     nameof(AccountSasServices.Blobs));
             }
             DataLakeUriBuilder sasUri = new DataLakeUriBuilder(Uri);
-            sasUri.Query = builder.ToSasQueryParameters(_storageSharedKeyCredential).ToString();
+            sasUri.Query = builder.ToSasQueryParameters(SharedKeyCredential).ToString();
             return sasUri.ToUri();
         }
         #endregion

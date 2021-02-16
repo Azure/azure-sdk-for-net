@@ -23,31 +23,6 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
     [SuppressMessage("Style", "IDE0059:Unnecessary assignment of a value", Justification = "Example assignments needed for snippet output content.")]
     public class Sample02_EventHubsClientsLiveTests
     {
-        /// <summary>The active Event Hub resource scope for the test fixture.</summary>
-        private EventHubScope _scope;
-
-        /// <summary>
-        ///   Performs the tasks needed to initialize the test fixture.  This
-        ///   method runs once for the entire fixture, prior to running any tests.
-        /// </summary>
-        ///
-        [OneTimeSetUp]
-        public async Task FixtureSetUp()
-        {
-            _scope = await EventHubScope.CreateAsync(2);
-        }
-
-        /// <summary>
-        ///   Performs the tasks needed to cleanup the test fixture after all
-        ///   tests have run.  This method runs once for the entire fixture.
-        /// </summary>
-        ///
-        [OneTimeTearDown]
-        public async Task FixtureTearDown()
-        {
-            await _scope.DisposeAsync();
-        }
-
         /// <summary>
         ///   Performs basic smoke test validation of the contained snippet.
         /// </summary>
@@ -61,7 +36,6 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             /*@@*/
             /*@@*/ connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = _scope.EventHubName;
 
             var producerOptions = new EventHubProducerClientOptions
             {
@@ -97,7 +71,6 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             /*@@*/
             /*@@*/ connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = _scope.EventHubName;
 
             var producerOptions = new EventHubProducerClientOptions();
             producerOptions.ConnectionOptions.TransportType = EventHubsTransportType.AmqpWebSockets;
@@ -128,7 +101,6 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             /*@@*/
             /*@@*/ connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = _scope.EventHubName;
 
             var producerOptions = new EventHubProducerClientOptions
             {
@@ -159,17 +131,49 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         [Test]
         public async Task ConfigureProducerProxyByProperty()
         {
+            await using var scope = await EventHubScope.CreateAsync(1);
+
             #region Snippet:EventHubs_Sample02_ProducerProxyProperty
 
             var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             /*@@*/
             /*@@*/ connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = _scope.EventHubName;
+            /*@@*/ eventHubName = scope.EventHubName;
 
             var producerOptions = new EventHubProducerClientOptions();
             producerOptions.ConnectionOptions.TransportType = EventHubsTransportType.AmqpWebSockets;
             producerOptions.ConnectionOptions.Proxy = new WebProxy("https://proxyserver:80", true);
+
+            var producer = new EventHubProducerClient(
+                connectionString,
+                eventHubName,
+                producerOptions);
+
+            #endregion
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            await producer.CloseAsync(cancellationSource.Token).IgnoreExceptions();
+        }
+
+        /// <summary>
+        ///   Performs basic smoke test validation of the contained snippet.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ConfigureCustomEndpointAddress()
+        {
+            #region Snippet:EventHubs_Sample02_ConnectionOptionsCustomEndpoint
+
+            var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+            var eventHubName = "<< NAME OF THE EVENT HUB >>";
+            /*@@*/
+            /*@@*/ connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
+
+            var producerOptions = new EventHubProducerClientOptions();
+            producerOptions.ConnectionOptions.CustomEndpointAddress = new Uri("amqps://app-gateway.mycompany.com");
 
             var producer = new EventHubProducerClient(
                 connectionString,
@@ -198,7 +202,6 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
             /*@@*/
             /*@@*/ connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = _scope.EventHubName;
 
             var consumerOptions = new EventHubConsumerClientOptions
             {
@@ -239,7 +242,6 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
             /*@@*/
             /*@@*/ connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = _scope.EventHubName;
 
             var consumerOptions = new EventHubConsumerClientOptions();
             consumerOptions.RetryOptions.Mode = EventHubsRetryMode.Fixed;

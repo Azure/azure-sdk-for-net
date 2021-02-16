@@ -1,8 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>Azure AMQP types</Description>
+    <Description>This library contains AMQP model types used by Azure libraries.</Description>
     <AssemblyTitle>Microsoft Azure AMQP</AssemblyTitle>
-    <Version>1.0.0-beta.2</Version>
+    <Version>1.1.0-beta.1</Version>
+    <ApiCompatVersion>1.0.0</ApiCompatVersion>
     <PackageTags>Microsoft Azure AMQP</PackageTags>
     <Nullable>enable</Nullable>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>

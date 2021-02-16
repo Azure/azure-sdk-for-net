@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(vmScaleSetName, true);
             uri.AppendQuery("api-version", "2019-12-01", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -147,8 +147,8 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(vmScaleSetName, true);
             uri.AppendQuery("api-version", "2019-12-01", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -394,9 +394,9 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/deallocate", false);
             uri.AppendQuery("api-version", "2019-12-01", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             if (vmInstanceIDs != null)
             {
+                request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
                 content.JsonWriter.WriteObjectValue(vmInstanceIDs);
                 request.Content = content;
@@ -951,9 +951,9 @@ namespace Azure.ResourceManager.Compute
             }
             uri.AppendQuery("api-version", "2019-12-01", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             if (vmInstanceIDs != null)
             {
+                request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
                 content.JsonWriter.WriteObjectValue(vmInstanceIDs);
                 request.Content = content;
@@ -1037,9 +1037,9 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/restart", false);
             uri.AppendQuery("api-version", "2019-12-01", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             if (vmInstanceIDs != null)
             {
+                request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
                 content.JsonWriter.WriteObjectValue(vmInstanceIDs);
                 request.Content = content;
@@ -1121,9 +1121,9 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/start", false);
             uri.AppendQuery("api-version", "2019-12-01", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             if (vmInstanceIDs != null)
             {
+                request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
                 content.JsonWriter.WriteObjectValue(vmInstanceIDs);
                 request.Content = content;
@@ -1205,9 +1205,9 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/redeploy", false);
             uri.AppendQuery("api-version", "2019-12-01", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             if (vmInstanceIDs != null)
             {
+                request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
                 content.JsonWriter.WriteObjectValue(vmInstanceIDs);
                 request.Content = content;
@@ -1289,9 +1289,9 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/performMaintenance", false);
             uri.AppendQuery("api-version", "2019-12-01", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             if (vmInstanceIDs != null)
             {
+                request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
                 content.JsonWriter.WriteObjectValue(vmInstanceIDs);
                 request.Content = content;
@@ -1462,9 +1462,9 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/reimage", false);
             uri.AppendQuery("api-version", "2019-12-01", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             if (vmScaleSetReimageInput != null)
             {
+                request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
                 content.JsonWriter.WriteObjectValue(vmScaleSetReimageInput);
                 request.Content = content;
@@ -1546,9 +1546,9 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/reimageall", false);
             uri.AppendQuery("api-version", "2019-12-01", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             if (vmInstanceIDs != null)
             {
+                request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
                 content.JsonWriter.WriteObjectValue(vmInstanceIDs);
                 request.Content = content;

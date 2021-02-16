@@ -10,12 +10,11 @@ namespace Azure.AI.TextAnalytics
     /// EntitiesTask.
     /// </summary>
     [CodeGenModel("EntitiesTask")]
-    public partial class EntitiesTask
+    internal partial class EntitiesTask
     {
         /// <summary>
         /// Parameters for EntitiesTask
         /// </summary>
         public EntitiesTaskParameters Parameters { get; set; }
-
     }
 }

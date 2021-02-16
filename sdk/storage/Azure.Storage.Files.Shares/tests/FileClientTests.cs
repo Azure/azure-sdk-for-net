@@ -16,6 +16,7 @@ using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using BenchmarkDotNet.Toolchains.Roslyn;
+using Moq;
 using NUnit.Framework;
 
 namespace Azure.Storage.Files.Shares.Tests
@@ -73,6 +74,39 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             Assert.AreEqual(createResponse.Value.ETag, propertiesResponse.Value.ETag);
+        }
+
+        [Test]
+        public async Task Ctor_AzureSasCredential()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+            string sas = GetNewFileServiceSasCredentialsShare(test.Share.Name).ToString();
+            var client = test.Share.GetRootDirectoryClient().GetFileClient(GetNewFileName());
+            await client.CreateAsync(1024);
+            Uri uri = client.Uri;
+
+            // Act
+            var sasClient = InstrumentClient(new ShareFileClient(uri, new AzureSasCredential(sas), GetOptions()));
+            ShareFileProperties properties = await sasClient.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(properties);
+        }
+
+        [Test]
+        public async Task Ctor_AzureSasCredential_VerifyNoSasInUri()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+            string sas = GetNewFileServiceSasCredentialsShare(test.Share.Name).ToString();
+            Uri uri = test.Share.GetRootDirectoryClient().GetFileClient(GetNewFileName()).Uri;
+            uri = new Uri(uri.ToString() + "?" + sas);
+
+            // Act
+            TestHelper.AssertExpectedException<ArgumentException>(
+                () => new ShareFileClient(uri, new AzureSasCredential(sas)),
+                e => e.Message.Contains($"You cannot use {nameof(AzureSasCredential)} when the resource URI also contains a Shared Access Signature"));
         }
 
         [Test]
@@ -242,9 +276,10 @@ namespace Azure.Storage.Files.Shares.Tests
                 file.CreateAsync(
                     maxSize: Constants.MB,
                     filePermission: filePermission),
-                e => Assert.AreEqual(
-                    "Value must be less than or equal to 8192" + Environment.NewLine
-                    + "Parameter name: filePermission", e.Message));
+                e => {
+                    Assert.AreEqual("filePermission", e.ParamName);
+                    StringAssert.StartsWith("Value must be less than or equal to 8192", e.Message);
+                });
         }
 
         [Test]
@@ -990,7 +1025,6 @@ namespace Azure.Storage.Files.Shares.Tests
                 FileLastWrittenOn = new DateTimeOffset(2019, 8, 26, 5, 15, 25, 60, TimeSpan.Zero),
             };
 
-
             await file.CreateAsync(maxSize: Constants.KB);
 
             // Act
@@ -1020,9 +1054,7 @@ namespace Azure.Storage.Files.Shares.Tests
             await TestHelper.AssertExpectedExceptionAsync<ArgumentOutOfRangeException>(
                 file.SetHttpHeadersAsync(
                     filePermission: filePermission),
-                e => Assert.AreEqual(
-                    "Value must be less than or equal to 8192" + Environment.NewLine
-                    + "Parameter name: filePermission", e.Message));
+                new ArgumentOutOfRangeException("filePermission", "Value must be less than or equal to 8192"));
         }
 
         [Test]
@@ -1216,8 +1248,6 @@ namespace Azure.Storage.Files.Shares.Tests
                 FileLastWrittenOn = new DateTimeOffset(2019, 8, 26, 5, 15, 25, 60, TimeSpan.Zero)
             };
             string filePermission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)";
-
-
 
             // Act
             await dest.StartCopyAsync(
@@ -2073,7 +2103,10 @@ namespace Azure.Storage.Files.Shares.Tests
                     range: new HttpRange(Constants.KB, Constants.KB),
                     content: stream);
 
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                Assert.AreNotEqual(new ETag(""), response.Value.ETag);
+                Assert.AreNotEqual(DateTimeOffset.MinValue, response.Value.LastModified);
+                Assert.IsNotNull(response.Value.ContentHash);
+                Assert.IsTrue(response.Value.IsServerEncrypted);
             }
         }
 
@@ -2207,7 +2240,6 @@ namespace Azure.Storage.Files.Shares.Tests
             await response.Value.Content.CopyToAsync(actualStream);
             TestHelper.AssertSequenceEqual(expectedData, actualData);
         }
-
 
         [Test]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
@@ -2841,7 +2873,6 @@ namespace Azure.Storage.Files.Shares.Tests
             var destRange = new HttpRange(256, 256);
             var sourceRange = new HttpRange(512, 256);
 
-
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 destFile.UploadRangeFromUriAsync(
@@ -2916,7 +2947,6 @@ namespace Azure.Storage.Files.Shares.Tests
             await using DisposingDirectory test = await GetTestDirectoryAsync();
             ShareDirectoryClient directory = test.Directory;
 
-
             ShareFileClient file = InstrumentClient(directory.GetFileClient(GetNewDirectoryName()));
 
             // Act
@@ -2956,9 +2986,10 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareFileLease> response = await InstrumentClient(file.GetShareLeaseClient(leaseId)).AcquireAsync();
 
             // Assert
-            Assert.IsNotNull(response.Value.ETag);
-            Assert.IsNotNull(response.Value.LastModified);
+            Assert.AreNotEqual(new ETag(), response.Value.ETag);
+            Assert.AreNotEqual(new DateTimeOffset(), response.Value.LastModified);
             Assert.IsNotNull(response.Value.LeaseId);
+            Assert.IsNull(response.Value.LeaseTime);
         }
 
         [Test]
@@ -3036,8 +3067,10 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareFileLease> response = await leaseClient.ChangeAsync(newLeaseId);
 
             // Assert
-            Assert.IsNotNull(response.Value.ETag);
-            Assert.IsNotNull(response.Value.LastModified);
+            Assert.AreNotEqual(new ETag(), response.Value.ETag);
+            Assert.AreNotEqual(new DateTimeOffset(), response.Value.LastModified);
+            Assert.IsNotNull(response.Value.LeaseId);
+            Assert.IsNull(response.Value.LeaseTime);
         }
 
         [Test]
@@ -3076,8 +3109,10 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareFileLease> response = await leaseClient.BreakAsync();
 
             // Assert
-            Assert.IsNotNull(response.Value.ETag);
-            Assert.IsNotNull(response.Value.LastModified);
+            Assert.AreNotEqual(new ETag(), response.Value.ETag);
+            Assert.AreNotEqual(new DateTimeOffset(), response.Value.LastModified);
+            Assert.IsNull(response.Value.LeaseId);
+            Assert.AreEqual(0, response.Value.LeaseTime);
         }
 
         [Test]
@@ -3321,7 +3356,6 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             for (int i = 0; i < size / readSize; i++)
             {
-
                 await outputStream.ReadAsync(actualData, 0, readSize);
                 for (int j = 0; j < readSize; j++)
                 {
@@ -3371,25 +3405,19 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<ArgumentNullException>(
                 stream.ReadAsync(buffer: null, offset: 0, count: 10),
-                e => Assert.AreEqual($"buffer cannot be null.{Environment.NewLine}Parameter name: buffer", e.Message));
+                new ArgumentNullException("buffer", "buffer cannot be null."));
 
             await TestHelper.AssertExpectedExceptionAsync<ArgumentOutOfRangeException>(
                 stream.ReadAsync(buffer: new byte[10], offset: -1, count: 10),
-                e => Assert.AreEqual(
-                    $"Specified argument was out of the range of valid values.{Environment.NewLine}Parameter name: offset cannot be less than 0.",
-                    e.Message));
+                new ArgumentOutOfRangeException("offset cannot be less than 0.", $"Specified argument was out of the range of valid values."));
 
             await TestHelper.AssertExpectedExceptionAsync<ArgumentOutOfRangeException>(
                 stream.ReadAsync(buffer: new byte[10], offset: 11, count: 10),
-                e => Assert.AreEqual(
-                    $"Specified argument was out of the range of valid values.{Environment.NewLine}Parameter name: offset cannot exceed buffer length.",
-                    e.Message));
+                new ArgumentOutOfRangeException("offset cannot exceed buffer length.", "Specified argument was out of the range of valid values."));
 
             await TestHelper.AssertExpectedExceptionAsync<ArgumentOutOfRangeException>(
                 stream.ReadAsync(buffer: new byte[10], offset: 1, count: -1),
-                e => Assert.AreEqual(
-                    $"Specified argument was out of the range of valid values.{Environment.NewLine}Parameter name: count cannot be less than 0.",
-                    e.Message));
+                new ArgumentOutOfRangeException("count cannot be less than 0.", "Specified argument was out of the range of valid values."));
         }
 
         [Test]
@@ -3461,6 +3489,8 @@ namespace Azure.Storage.Files.Shares.Tests
             TestHelper.AssertExpectedException<ArgumentException>(
                 () => outputStream.Seek(size + 10, SeekOrigin.Begin),
                 new ArgumentException("You cannot seek past the last known length of the underlying blob or file."));
+
+            Assert.AreEqual(size, outputStream.Length);
         }
 
         [Test]
@@ -3506,6 +3536,8 @@ namespace Azure.Storage.Files.Shares.Tests
             {
                 Assert.AreEqual(size + offset, outputStream.Position);
             }
+
+            Assert.AreEqual(size, outputStream.Length);
         }
 
         [Test]
@@ -3553,6 +3585,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Assert
             Assert.AreEqual(expectedData.Length, outputStream.ToArray().Length);
             TestHelper.AssertSequenceEqual(expectedData, outputStream.ToArray());
+            Assert.AreEqual(size, openReadStream.Length);
         }
 
         [Test]
@@ -3984,32 +4017,49 @@ namespace Azure.Storage.Files.Shares.Tests
             string connectionString = storageConnectionString.ToString(true);
 
             // Act - ShareDirectoryClient(string connectionString, string blobContainerName, string blobName)
-            ShareFileClient directory = new ShareFileClient(
+            ShareFileClient directory = InstrumentClient(new ShareFileClient(
                 connectionString,
                 GetNewShareName(),
-                GetNewDirectoryName());
+                GetNewDirectoryName()));
             Assert.IsTrue(directory.CanGenerateSasUri);
 
             // Act - ShareFileClient(string connectionString, string blobContainerName, string blobName, BlobClientOptions options)
-            ShareFileClient directory2 = new ShareFileClient(
+            ShareFileClient directory2 = InstrumentClient(new ShareFileClient(
                 connectionString,
                 GetNewShareName(),
                 GetNewDirectoryName(),
-                GetOptions());
+                GetOptions()));
             Assert.IsTrue(directory2.CanGenerateSasUri);
 
             // Act - ShareFileClient(Uri blobContainerUri, BlobClientOptions options = default)
-            ShareFileClient directory3 = new ShareFileClient(
+            ShareFileClient directory3 = InstrumentClient(new ShareFileClient(
                 blobEndpoint,
-                GetOptions());
+                GetOptions()));
             Assert.IsFalse(directory3.CanGenerateSasUri);
 
             // Act - ShareFileClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
-            ShareFileClient directory4 = new ShareFileClient(
+            ShareFileClient directory4 = InstrumentClient(new ShareFileClient(
                 blobEndpoint,
                 constants.Sas.SharedKeyCredential,
-                GetOptions());
+                GetOptions()));
             Assert.IsTrue(directory4.CanGenerateSasUri);
+        }
+
+        [Test]
+        public void CanGenerateSas_Mockable()
+        {
+            // Act
+            var directory = new Mock<ShareFileClient>();
+            directory.Setup(x => x.CanGenerateSasUri).Returns(false);
+
+            // Assert
+            Assert.IsFalse(directory.Object.CanGenerateSasUri);
+
+            // Act
+            directory.Setup(x => x.CanGenerateSasUri).Returns(true);
+
+            // Assert
+            Assert.IsTrue(directory.Object.CanGenerateSasUri);
         }
 
         [Test]
@@ -4025,11 +4075,11 @@ namespace Azure.Storage.Files.Shares.Tests
             string connectionString = storageConnectionString.ToString(true);
             string shareName = GetNewShareName();
             string fileName = GetNewFileName();
-            ShareFileClient fileClient = new ShareFileClient(
+            ShareFileClient fileClient = InstrumentClient(new ShareFileClient(
                 connectionString,
                 shareName,
                 fileName,
-                GetOptions());
+                GetOptions()));
 
             // Act
             Uri sasUri = fileClient.GenerateSasUri(permissions, expiresOn);
@@ -4063,11 +4113,11 @@ namespace Azure.Storage.Files.Shares.Tests
             string shareName = GetNewShareName();
             string fileName = GetNewFileName();
 
-            ShareFileClient directoryClient = new ShareFileClient(
+            ShareFileClient directoryClient = InstrumentClient(new ShareFileClient(
                 connectionString,
                 shareName,
                 fileName,
-                GetOptions());
+                GetOptions()));
 
             ShareSasBuilder sasBuilder = new ShareSasBuilder(permissions, expiresOn)
             {
@@ -4104,10 +4154,10 @@ namespace Azure.Storage.Files.Shares.Tests
             UriBuilder uriBuilder = new UriBuilder(blobEndpoint);
             string fileName = GetNewFileName();
             uriBuilder.Path += constants.Sas.Account + "/" + GetNewShareName() + "/" + fileName;
-            ShareFileClient fileClient = new ShareFileClient(
+            ShareFileClient fileClient = InstrumentClient(new ShareFileClient(
                 uriBuilder.Uri,
                 constants.Sas.SharedKeyCredential,
-                GetOptions());
+                GetOptions()));
 
             ShareSasBuilder sasBuilder = new ShareSasBuilder(ShareFileSasPermissions.All, Recording.UtcNow.AddHours(+1))
             {
@@ -4137,10 +4187,10 @@ namespace Azure.Storage.Files.Shares.Tests
             string shareName = GetNewShareName();
             UriBuilder blobUriBuilder = new UriBuilder(blobEndpoint);
             blobUriBuilder.Path += constants.Sas.Account + "/" + shareName + "/" + GetNewFileName();
-            ShareFileClient containerClient = new ShareFileClient(
+            ShareFileClient containerClient = InstrumentClient(new ShareFileClient(
                 blobUriBuilder.Uri,
                 constants.Sas.SharedKeyCredential,
-                GetOptions());
+                GetOptions()));
 
             ShareSasBuilder sasBuilder = new ShareSasBuilder(ShareFileSasPermissions.All, Recording.UtcNow.AddHours(+1))
             {
@@ -4161,6 +4211,17 @@ namespace Azure.Storage.Files.Shares.Tests
             }
         }
         #endregion
+
+        [Test]
+        public void CanMockClientConstructors()
+        {
+            // One has to call .Object to trigger constructor. It's lazy.
+            var mock = new Mock<ShareFileClient>(TestConfigDefault.ConnectionString, "name", "name", new ShareClientOptions()).Object;
+            mock = new Mock<ShareFileClient>(TestConfigDefault.ConnectionString, "name", "name").Object;
+            mock = new Mock<ShareFileClient>(new Uri("https://test/test/test"), new ShareClientOptions()).Object;
+            mock = new Mock<ShareFileClient>(new Uri("https://test/test/test"), GetNewSharedKeyCredentials(), new ShareClientOptions()).Object;
+            mock = new Mock<ShareFileClient>(new Uri("https://test/test/test"), new AzureSasCredential("foo"), new ShareClientOptions()).Object;
+        }
 
         private async Task WaitForCopy(ShareFileClient file, int milliWait = 200)
         {

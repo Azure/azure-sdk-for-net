@@ -132,6 +132,10 @@ namespace NetApp.Tests.ResourceTests
                 Assert.NotNull(getVolume.DataProtection.Snapshot);
                 Assert.NotNull(getVolume.DataProtection.Snapshot.SnapshotPolicyId);
 
+                //ListVolumes 
+                ///TODO this is not ready, due to an issue with the result causing serialization errors, needs service side fix will be added in 2020-11-01
+                //var listVolumes = netAppMgmtClient.SnapshotPolicies.ListVolumes(ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.snapshotPolicyName1);
+                //Assert.NotNull(listVolumes);
 
                 // clean up                
                 ResourceUtils.DeleteVolume(netAppMgmtClient);
@@ -165,7 +169,8 @@ namespace NetApp.Tests.ResourceTests
                 var patchSnapshotPolicy = new SnapshotPolicyPatch()
                 {
                     //DailySchedule = patchDailySchedule,
-                    Tags = dict
+                    Tags = dict,
+                    DailySchedule = patchDailySchedule
                 };
 
                 var resultSnapshotPolicy = netAppMgmtClient.SnapshotPolicies.Update(patchSnapshotPolicy, ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.snapshotPolicyName1);

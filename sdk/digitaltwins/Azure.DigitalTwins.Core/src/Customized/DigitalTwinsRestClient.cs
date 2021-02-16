@@ -79,6 +79,7 @@ namespace Azure.DigitalTwins.Core
                         }
                     case 202:
                         return Response.FromValue<Stream>(null, message.Response);
+
                     default:
                         throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                 }
@@ -90,7 +91,11 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal Response<Stream> Add(string id, Stream twin, CreateOrReplaceDigitalTwinOptions digitalTwinsAddOptions = null, CancellationToken cancellationToken = default)
+        internal Response<Stream> Add(
+            string id,
+            Stream twin,
+            CreateOrReplaceDigitalTwinOptions digitalTwinsAddOptions = null,
+            CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -112,6 +117,7 @@ namespace Azure.DigitalTwins.Core
                     }
                 case 202:
                     return Response.FromValue<Stream>(null, message.Response);
+
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -760,10 +766,10 @@ namespace Azure.DigitalTwins.Core
         }
 
         private HttpMessage CreateAddRelationshipRequest(
-                    string id,
-                    string relationshipId,
-                    Stream relationship,
-                    CreateOrReplaceRelationshipOptions digitalTwinsAddRelationshipOptions)
+            string id,
+            string relationshipId,
+            Stream relationship,
+            CreateOrReplaceRelationshipOptions digitalTwinsAddRelationshipOptions)
         {
             HttpMessage message = _pipeline.CreateMessage();
             Request request = message.Request;
@@ -945,7 +951,7 @@ namespace Azure.DigitalTwins.Core
         // As such, these methods are declared here and made private, while the public method is declared above, too.
         // These methods should never be called.
 
-#pragma warning disable CA1801, IDE0051, IDE0060 // Remove unused parameter
+#pragma warning disable CA1801, IDE0051, IDE0060, CA1822 // Remove unused parameter
 
         // Original return type is Task<Response<object>>. Changing to object to allow returning null.
         private object AddAsync(string id, object twin, CreateOrReplaceDigitalTwinOptions digitalTwinsAddOptions = null, CancellationToken cancellationToken = default) => null;

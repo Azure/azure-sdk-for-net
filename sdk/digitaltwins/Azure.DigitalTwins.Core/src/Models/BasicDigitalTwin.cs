@@ -99,7 +99,9 @@ namespace Azure.DigitalTwins.Core
         /// <summary>
         /// This field will contain properties and components as defined in the contents section of the DTDL definition of the twin.
         /// </summary>
+#pragma warning disable CA2227 // Collection properties should be readonly
         [JsonExtensionData]
         public IDictionary<string, object> Contents { get; set; } = new Dictionary<string, object>();
+#pragma warning restore CA2227 // Collection properties should be readonly
     }
 }

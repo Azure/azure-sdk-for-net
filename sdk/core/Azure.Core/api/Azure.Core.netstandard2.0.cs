@@ -13,7 +13,12 @@ namespace Azure
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override string ToString() { throw null; }
+        public override string? ToString() { throw null; }
+    }
+    public static partial class AzureCoreExtensions
+    {
+        public static System.Threading.Tasks.ValueTask<T?> ToObjectAsync<T>(this System.BinaryData data, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static T? ToObject<T>(this System.BinaryData data, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class AzureKeyCredential
     {
@@ -21,6 +26,13 @@ namespace Azure
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string Key { get { throw null; } }
         public void Update(string key) { }
+    }
+    public partial class AzureSasCredential
+    {
+        public AzureSasCredential(string signature) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public string Signature { get { throw null; } }
+        public void Update(string signature) { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ETag : System.IEquatable<Azure.ETag>
@@ -87,12 +99,12 @@ namespace Azure
         public abstract string Id { get; }
         public abstract T Value { get; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
+        public override bool Equals(object? obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public abstract Azure.Response GetRawResponse();
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override string ToString() { throw null; }
+        public override string? ToString() { throw null; }
         public abstract Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         public abstract System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         public abstract System.Threading.Tasks.ValueTask<Azure.Response<T>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
@@ -112,7 +124,7 @@ namespace Azure
         public override int GetHashCode() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override string ToString() { throw null; }
+        public override string? ToString() { throw null; }
     }
     public abstract partial class Page<T>
     {
@@ -126,7 +138,7 @@ namespace Azure
         public override int GetHashCode() { throw null; }
         public abstract Azure.Response GetRawResponse();
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override string ToString() { throw null; }
+        public override string? ToString() { throw null; }
     }
     public partial class RequestConditions : Azure.MatchConditions
     {
@@ -174,6 +186,12 @@ namespace Azure
         public static implicit operator T (Azure.Response<T> response) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class SyncAsyncEventArgs : System.EventArgs
+    {
+        public SyncAsyncEventArgs(bool isRunningSynchronously, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
+        public System.Threading.CancellationToken CancellationToken { get { throw null; } }
+        public bool IsRunningSynchronously { get { throw null; } }
+    }
 }
 namespace Azure.Core
 {
@@ -200,7 +218,7 @@ namespace Azure.Core
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override string ToString() { throw null; }
+        public override string? ToString() { throw null; }
     }
     public partial class DiagnosticsOptions
     {
@@ -398,6 +416,7 @@ namespace Azure.Core
         public Azure.Core.RetryMode Mode { get { throw null; } set { } }
         public System.TimeSpan NetworkTimeout { get { throw null; } set { } }
     }
+    public delegate System.Threading.Tasks.Task SyncAsyncEventHandler<T>(T e) where T : Azure.SyncAsyncEventArgs;
     public abstract partial class TokenCredential
     {
         protected TokenCredential() { }
@@ -409,7 +428,9 @@ namespace Azure.Core
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public TokenRequestContext(string[] scopes, string? parentRequestId = null) { throw null; }
+        public TokenRequestContext(string[] scopes, string? parentRequestId) { throw null; }
+        public TokenRequestContext(string[] scopes, string? parentRequestId = null, string? claims = null) { throw null; }
+        public string? Claims { get { throw null; } }
         public string? ParentRequestId { get { throw null; } }
         public string[] Scopes { get { throw null; } }
     }
@@ -532,17 +553,19 @@ namespace Azure.Core.Serialization
         public JsonObjectSerializer() { }
         public JsonObjectSerializer(System.Text.Json.JsonSerializerOptions options) { }
         string? Azure.Core.Serialization.IMemberNameConverter.ConvertMemberName(System.Reflection.MemberInfo member) { throw null; }
-        public override object Deserialize(System.IO.Stream stream, System.Type returnType, System.Threading.CancellationToken cancellationToken) { throw null; }
-        public override System.Threading.Tasks.ValueTask<object> DeserializeAsync(System.IO.Stream stream, System.Type returnType, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public override object? Deserialize(System.IO.Stream stream, System.Type returnType, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public override System.Threading.Tasks.ValueTask<object?> DeserializeAsync(System.IO.Stream stream, System.Type returnType, System.Threading.CancellationToken cancellationToken) { throw null; }
         public override void Serialize(System.IO.Stream stream, object? value, System.Type inputType, System.Threading.CancellationToken cancellationToken) { }
         public override System.Threading.Tasks.ValueTask SerializeAsync(System.IO.Stream stream, object? value, System.Type inputType, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     public abstract partial class ObjectSerializer
     {
         protected ObjectSerializer() { }
-        public abstract object Deserialize(System.IO.Stream stream, System.Type returnType, System.Threading.CancellationToken cancellationToken);
-        public abstract System.Threading.Tasks.ValueTask<object> DeserializeAsync(System.IO.Stream stream, System.Type returnType, System.Threading.CancellationToken cancellationToken);
+        public abstract object? Deserialize(System.IO.Stream stream, System.Type returnType, System.Threading.CancellationToken cancellationToken);
+        public abstract System.Threading.Tasks.ValueTask<object?> DeserializeAsync(System.IO.Stream stream, System.Type returnType, System.Threading.CancellationToken cancellationToken);
         public abstract void Serialize(System.IO.Stream stream, object? value, System.Type inputType, System.Threading.CancellationToken cancellationToken);
+        public virtual System.BinaryData Serialize(object? value, System.Type? inputType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public abstract System.Threading.Tasks.ValueTask SerializeAsync(System.IO.Stream stream, object? value, System.Type inputType, System.Threading.CancellationToken cancellationToken);
+        public virtual System.Threading.Tasks.ValueTask<System.BinaryData> SerializeAsync(object? value, System.Type? inputType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }

@@ -24,6 +24,11 @@ namespace Azure.Test.Perf
         private static List<TimeSpan>[] _correctedLatencies;
         private static Channel<(TimeSpan, Stopwatch)> _pendingOperations;
 
+        private static int CompletedOperations => _completedOperations.Sum();
+        private static double OperationsPerSecond => _completedOperations.Zip(_lastCompletionTimes,
+            (operations, time) => operations > 0 ? (operations / time.TotalSeconds) : 0)
+            .Sum();
+
         public static async Task Main(Assembly assembly, string[] args)
         {
             var testTypes = assembly.ExportedTypes
@@ -66,12 +71,13 @@ namespace Azure.Test.Perf
             Console.WriteLine("=== Versions ===");
             Console.WriteLine($"Runtime: {Environment.Version}");
             var azureAssemblies = testType.Assembly.GetReferencedAssemblies()
-                .Where(a => a.Name.StartsWith("Azure", StringComparison.OrdinalIgnoreCase))
+                .Where(a => a.Name.StartsWith("Azure", StringComparison.OrdinalIgnoreCase) || a.Name.StartsWith("Microsoft.Azure", StringComparison.OrdinalIgnoreCase))
                 .Where(a => !a.Name.Equals("Azure.Test.Perf", StringComparison.OrdinalIgnoreCase))
                 .OrderBy(a => a.Name);
             foreach (var a in azureAssemblies)
             {
-                Console.WriteLine($"{a.Name}: {a.Version}");
+                var informationalVersion = FileVersionInfo.GetVersionInfo(Assembly.Load(a).Location).ProductVersion;
+                Console.WriteLine($"{a.Name}: {a.Version} ({informationalVersion})");
             }
             Console.WriteLine();
 
@@ -96,7 +102,6 @@ namespace Azure.Test.Perf
 
             try
             {
-
                 try
                 {
                     await tests[0].GlobalSetupAsync();
@@ -122,6 +127,19 @@ namespace Azure.Test.Perf
                             await RunTestsAsync(tests, options, title);
                         }
                     }
+                    catch (AggregateException ae)
+                    {
+                        foreach (Exception e in ae.InnerExceptions)
+                        {
+                            Console.WriteLine($"Exception: {e}");
+                        }
+                        throw;
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine($"Exception: {e}");
+                        throw;
+                    }
                     finally
                     {
                         if (!options.NoCleanup)
@@ -134,6 +152,11 @@ namespace Azure.Test.Perf
                             await Task.WhenAll(tests.Select(t => t.CleanupAsync()));
                         }
                     }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"Exception: {e}");
+                    throw;
                 }
                 finally
                 {
@@ -198,13 +221,15 @@ namespace Azure.Test.Perf
             using var progressStatusCts = new CancellationTokenSource();
             var progressStatusThread = PerfStressUtilities.PrintStatus(
                 $"=== {title} ===" + Environment.NewLine +
-                "Current\t\tTotal",
+                "Current\t\tTotal\t\tAverage",
                 () =>
                 {
-                    var totalCompleted = _completedOperations.Sum();
+                    var totalCompleted = CompletedOperations;
                     var currentCompleted = totalCompleted - lastCompleted;
+                    var averageCompleted = OperationsPerSecond;
+
                     lastCompleted = totalCompleted;
-                    return currentCompleted + "\t\t" + totalCompleted;
+                    return $"{currentCompleted}\t\t{totalCompleted}\t\t{averageCompleted:F2}";
                 },
                 newLine: true,
                 progressStatusCts.Token,
@@ -256,12 +281,12 @@ namespace Azure.Test.Perf
 
             Console.WriteLine("=== Results ===");
 
-            var totalOperations = _completedOperations.Sum();
-            var operationsPerSecond = _completedOperations.Zip(_lastCompletionTimes, (operations, time) => (operations / time.TotalSeconds)).Sum();
+            var totalOperations = CompletedOperations;
+            var operationsPerSecond = OperationsPerSecond;
             var secondsPerOperation = 1 / operationsPerSecond;
             var weightedAverageSeconds = totalOperations / operationsPerSecond;
 
-            Console.WriteLine($"Completed {totalOperations} operations in a weighted-average of {weightedAverageSeconds:N2}s " +
+            Console.WriteLine($"Completed {totalOperations:N0} operations in a weighted-average of {weightedAverageSeconds:N2}s " +
                 $"({operationsPerSecond:N2} ops/s, {secondsPerOperation:N3} s/op)");
             Console.WriteLine();
 

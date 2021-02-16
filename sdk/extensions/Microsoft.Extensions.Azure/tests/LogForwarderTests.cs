@@ -47,7 +47,6 @@ namespace Microsoft.Extensions.Azure.Tests
             forwarder.Dispose();
         }
 
-
         public class MockLogger : ILogger
         {
             public string CategoryName { get; }

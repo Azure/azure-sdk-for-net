@@ -49,6 +49,20 @@ Param (
     $ArtifactStagingDirectory
 )
 
+function UpdateDocIndexFiles([string]$docPath, [string] $mainJsPath) {
+    # Update docfx.json
+    $docfxContent = Get-Content -Path $docPath -Raw
+    $docfxContent = $docfxContent -replace "`"_appTitle`": `"`"", "`"_appTitle`": `"Azure SDK for .NET`""
+    $docfxContent = $docfxContent -replace "`"_appFooter`": `"`"", "`"_appFooter`": `"Azure SDK for .NET`""
+    Set-Content -Path $docPath -Value $docfxContent -NoNewline
+    # Update main.js var lang
+    $mainJsContent = Get-Content -Path $mainJsPath -Raw
+    $mainJsContent = $mainJsContent -replace "var SELECTED_LANGUAGE = ''", "var SELECTED_LANGUAGE = 'dotnet'"
+    # Update main.js var index html
+    $mainJsContent = $mainJsContent -replace "var INDEX_HTML = ''", "var INDEX_HTML = 'index.html'"
+    Set-Content -Path $mainJsPath -Value $mainJsContent -NoNewline
+}
+
 Write-Verbose "Name Reccuring paths with variable names"
 if ([System.String]::IsNullOrEmpty($ArtifactsDirectoryName)) {$ArtifactsDirectoryName = $ArtifactName}
 $PackageLocation = "${ServiceDirectory}/${ArtifactsDirectoryName}"
@@ -62,6 +76,7 @@ $DocOutApiDir = "${DocOutDir}/api"
 $DocOutHtmlDir = "${DocOutDir}/_site"
 $MDocTool = "${BinDirectory}/mdoc/mdoc.exe"
 $DocFxTool = "${BinDirectory}/docfx/docfx.exe"
+$DocCommonGenDir = "${RepoRoot}/eng/common/docgeneration"
 
 if ($LibType -eq 'management') {
     $ArtifactName = $ArtifactName.Substring($ArtifactName.LastIndexOf('.Management') + 1)
@@ -115,30 +130,47 @@ Write-Verbose "Copy over Package ReadMe"
 $PkgReadMePath = "${RepoRoot}/sdk/${PackageLocation}/README.md"
 if ([System.IO.File]::Exists($PkgReadMePath)) {
     Copy-Item $PkgReadMePath -Destination "${DocOutApiDir}/index.md" -Force
-    Copy-Item $PkgReadMePath -Destination "${DocOutDir}/index.md" -Force
 }
 else {
     New-Item "${DocOutApiDir}/index.md" -Force
     Add-Content -Path "${DocOutApiDir}/index.md" -Value "This Package Contains no Readme."
-    Copy-Item "${DocOutApiDir}/index.md" -Destination "${DocOutDir}/index.md" -Force
     Write-Verbose "Package ReadMe was not found"
 }
 
+Write-Verbose "Make changes to docfx.json and main.js."
+UpdateDocIndexFiles -docPath "${DocCommonGenDir}/docfx.json" -mainJsPath "${DocCommonGenDir}\templates\matthews\styles\main.js"
+
 Write-Verbose "Copy over generated yml and other assets"
 Copy-Item "${YamlOutDir}/*"-Destination "${DocOutApiDir}" -Recurse -Force
-Copy-Item "${DocGenDir}/assets/docfx.json" -Destination "${DocOutDir}" -Recurse -Force
 New-Item -Path "${DocOutDir}" -Name templates -ItemType directory
-Copy-Item "${DocGenDir}/templates/**" -Destination "${DocOutDir}/templates" -Recurse -Force
+Copy-Item "${DocCommonGenDir}/templates/**" -Destination "${DocOutDir}/templates" -Recurse -Force
+Copy-Item "${DocCommonGenDir}/docfx.json" -Destination "${DocOutDir}" -Force
 
 Write-Verbose "Create Toc for Site Navigation"
 New-Item "${DocOutDir}/toc.yml" -Force
-Add-Content -Path "${DocOutDir}/toc.yml" -Value "- name: ${ArtifactName}`r`n  href: api/`r`n  homepage: api/index.md"
+Add-Content -Path "${DocOutDir}/toc.yml" -Value "- name: ${ArtifactName}`r`n  href: index.md"
 
 Write-Verbose "Build Doc Content"
 & "${DocFxTool}" build "${DocOutDir}/docfx.json"
 
 Write-Verbose "Copy over site Logo"
-Copy-Item "${DocGenDir}/assets/logo.svg" -Destination "${DocOutHtmlDir}" -Recurse -Force
+Copy-Item "${DocCommonGenDir}/assets/logo.svg" -Destination "${DocOutHtmlDir}" -Recurse -Force
+
+# Copy everything inside of /api out.
+Write-Verbose "Copy index.html and toc.yml out."
+$destFolder = "${DocOutHtmlDir}/"
+Copy-Item -Path "${DocOutHtmlDir}/api/index.html" -Destination $destFolder -Confirm:$false -Force
+
+# Change the relative path inside index.html.
+Write-Verbose "Make changes on relative path on page index.html."
+$baseUrl = $destFolder + "index.html"
+$content = Get-Content -Path $baseUrl -Raw
+$hrefRegex = "[""']\.\.\/([^""']*)[""']"
+$tocRegex = "[""'](./)?toc.html[""']"
+# The order matters for the following mutations. If excutes the latter one, then we will see two same toc.html path.
+$mutatedContent = $content -replace $tocRegex , "`"./api/toc.html`""
+$mutatedContent = $mutatedContent -replace $hrefRegex, '"./$1"'
+Set-Content -Path $baseUrl -Value $mutatedContent -NoNewline
 
 Write-Verbose "Compress and copy HTML into the staging Area"
-Compress-Archive -Path "${DocOutHtmlDir}/*" -DestinationPath "${ArtifactStagingDirectory}/${ArtifactName}/${ArtifactName}.docs.zip" -CompressionLevel Fastest
+Compress-Archive -Path "${DocOutHtmlDir}/*" -DestinationPath "${ArtifactStagingDirectory}/${ArtifactName}/${ArtifactName}.docs.zip" -CompressionLevel Fastest  

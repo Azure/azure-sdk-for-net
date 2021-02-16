@@ -630,17 +630,10 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                     w.line(`${types.getDeclarationType(header.model, true, false, true)} ${naming.parameter(header.clientName)} = default;`);
                 }
             }
+            const prefixedHeaders: IHeader[] = [];
             for (const header of headers) {
                 if (isPrimitiveType(header.model) && header.model.type === 'dictionary') {
-                    const prefix = header.model.dictionaryPrefix || `x-ms-meta-`;
-                    w.line(`${valueName}.${naming.pascalCase(header.clientName)} = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);`);
-                    w.line(`foreach (Azure.Core.HttpHeader ${pairName} in ${responseName}.Headers)`);
-                    w.scope(`{`, `}`, () => {
-                        w.line(`if (${pairName}.Name.StartsWith("${prefix}", System.StringComparison.InvariantCulture))`);
-                        w.scope(`{`, `}`, () => {
-                            w.line(`${valueName}.${naming.pascalCase(header.clientName)}[${pairName}.Name.Substring(${prefix.length})] = ${pairName}.Value;`);
-                        });
-                    });
+                    prefixedHeaders.push(header);
                 } else {
                     w.line(`if (${responseName}.Headers.TryGetValue("${header.name}", out ${headerName}))`);
                     w.scope('{', '}', () => {
@@ -660,6 +653,25 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                         w.line(`;`);
                     });
                 }
+            }
+            if (prefixedHeaders.length > 0) {
+                for (const header of prefixedHeaders) {
+                    w.line(`${valueName}.${naming.pascalCase(header.clientName)} = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);`);
+                }
+                w.line(`foreach (Azure.Core.HttpHeader ${pairName} in ${responseName}.Headers)`);
+                w.scope(`{`, `}`, () => {
+                    let sep = ``;
+                    for (const header of prefixedHeaders) {
+                        if (isPrimitiveType(header.model) && header.model.type === 'dictionary') {
+                            const prefix = header.model.dictionaryPrefix || `x-ms-meta-`;
+                            w.line(`${sep}if (${pairName}.Name.StartsWith("${prefix}", System.StringComparison.OrdinalIgnoreCase))`);
+                            w.scope(`{`, `}`, () => {
+                                w.line(`${valueName}.${naming.pascalCase(header.clientName)}[${pairName}.Name.Substring(${prefix.length})] = ${pairName}.Value;`);
+                            });
+                            sep = `else `;
+                        }
+                    }
+                });
             }
             if (response.struct) {
                 w.line();
@@ -902,12 +914,17 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
                 w.line(`/// <summary>`);
                 w.line(`/// ${property.description || property.model.description || property.name}`);
                 w.line(`/// </summary>`);
+                let internalSetter = !property.isNullable && (property.readonly || property.model.type === `array`);
+                let isCollection = isPrimitiveType(property.model) && property.model.itemType && !type.struct;
                 if (property.model.type === `byte`) {
                     w.line(`#pragma warning disable CA1819 // Properties should not return arrays`);
                 }
+                if (isCollection && !internalSetter) {
+                    w.line(`#pragma warning disable CA2227 // Collection properties should be readonly`);
+                }
                 w.write(`public ${types.getDeclarationType(property.model, property.required, property.readonly)} ${naming.property(property.clientName)} { get; `);
                 if (!type.struct) {
-                    if (!property.isNullable && (property.readonly || property.model.type === `array`)) {
+                    if (internalSetter) {
                         w.write(`internal `);
                     }
                     w.write(`set; `);
@@ -916,6 +933,9 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
                 w.line();
                 if (property.model.type === `byte`) {
                     w.line(`#pragma warning restore CA1819 // Properties should not return arrays`);
+                }
+                if (isCollection && !internalSetter) {
+                    w.line(`#pragma warning restore CA2227 // Collection properties should be readonly`);
                 }
             }
 

@@ -14,7 +14,6 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets
     {
         internal static KeyVaultSecretManager Instance { get; } = new KeyVaultSecretManager();
 
-
         /// <summary>
         /// Maps secret to a configuration key.
         /// </summary>

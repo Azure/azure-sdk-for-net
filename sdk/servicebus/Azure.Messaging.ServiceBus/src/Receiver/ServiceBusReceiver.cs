@@ -28,18 +28,18 @@ namespace Azure.Messaging.ServiceBus
         /// The fully qualified Service Bus namespace that the receiver is associated with.  This is likely
         /// to be similar to <c>{yournamespace}.servicebus.windows.net</c>.
         /// </summary>
-        public string FullyQualifiedNamespace => _connection.FullyQualifiedNamespace;
+        public virtual string FullyQualifiedNamespace => _connection.FullyQualifiedNamespace;
 
         /// <summary>
         /// The path of the Service Bus entity that the receiver is connected to, specific to the
         /// Service Bus namespace that contains it.
         /// </summary>
-        public string EntityPath { get; }
+        public virtual string EntityPath { get; }
 
         /// <summary>
         /// The <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.
         /// </summary>
-        public ServiceBusReceiveMode ReceiveMode { get; }
+        public virtual ServiceBusReceiveMode ReceiveMode { get; }
 
         /// <summary>
         /// Indicates whether the receiver entity is session enabled.
@@ -51,7 +51,7 @@ namespace Azure.Messaging.ServiceBus
         /// whether a processing is currently active, intended to help maximize throughput by allowing the receiver to receive
         /// from a local cache rather than waiting on a service request.
         /// </summary>
-        public int PrefetchCount { get; }
+        public virtual int PrefetchCount { get; }
 
         /// <summary>
         /// Gets the ID to identify this client. This can be used to correlate logs and exceptions.
@@ -66,14 +66,14 @@ namespace Azure.Messaging.ServiceBus
         /// <value>
         /// <c>true</c> if the receiver is closed; otherwise, <c>false</c>.
         /// </value>
-        public bool IsClosed
+        public virtual bool IsClosed
         {
             get => _closed;
             private set => _closed = value;
         }
 
         /// <summary>Indicates whether or not this instance has been closed.</summary>
-        private volatile bool _closed = false;
+        private volatile bool _closed;
 
         /// <summary>
         /// The policy to use for determining retry behavior for when an operation fails.

@@ -35,10 +35,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests
         private AzuriteAccount account;
         private CountdownEvent countdownEvent = new CountdownEvent(2);
         private StringBuilder azuriteOutput = new StringBuilder();
+        private StringBuilder azuriteError = new StringBuilder();
         private int blobsPort;
         private int queuesPort;
 
-        public AzuriteFixture()
+        public AzuriteFixture(bool includeDebugLog = false)
         {
             // This is to force newer protocol on machines with older .NET Framework. Otherwise tests don't connect to Azurite with unsigned cert.
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
@@ -74,11 +75,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests
             process = new Process();
             process.StartInfo.FileName = "node";
             process.StartInfo.WorkingDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            process.StartInfo.Arguments = $"{azuriteScriptLocation} --oauth basic -l {tempDirectory} --blobPort 0 --queuePort 0 --cert cert.pem --key cert.pem --skipApiVersionCheck";
+            var arguments = $"{azuriteScriptLocation} --oauth basic -l {tempDirectory} --blobPort 0 --queuePort 0 --cert cert.pem --key cert.pem --skipApiVersionCheck";
+            string debugLogPath = null;
+            if (includeDebugLog)
+            {
+                debugLogPath = Path.GetTempFileName();
+                arguments += $" -d {debugLogPath}";
+            }
+            process.StartInfo.Arguments = arguments;
             process.StartInfo.EnvironmentVariables.Add("AZURITE_ACCOUNTS", $"{account.Name}:{account.Key}");
             process.StartInfo.UseShellExecute = false;
             process.StartInfo.RedirectStandardOutput = true;
             process.StartInfo.RedirectStandardInput = true;
+            process.StartInfo.RedirectStandardError = true;
             process.OutputDataReceived += delegate (object sender, DataReceivedEventArgs e)
             {
                 if (e.Data != null)
@@ -99,6 +108,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests
                     }
                 }
             };
+            process.ErrorDataReceived += delegate (object sender, DataReceivedEventArgs e)
+            {
+                if (e.Data != null)
+                {
+                    if (!countdownEvent.IsSet) // stop error collection if it started successfully.
+                    {
+                        azuriteError.AppendLine(e.Data);
+                    }
+                }
+            };
             try
             {
                 process.Start();
@@ -107,10 +126,28 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests
                 throw new ArgumentException(ErrorMessage("could not run NodeJS, make sure it's installed"), e);
             }
             process.BeginOutputReadLine();
+            process.BeginErrorReadLine();
             var didAzuriteStart = countdownEvent.Wait(TimeSpan.FromSeconds(15));
             if (!didAzuriteStart)
             {
-                throw new InvalidOperationException(ErrorMessage($"azurite process could not start with following output:\n{azuriteOutput}"));
+                if (process.HasExited)
+                {
+                    throw new InvalidOperationException(ErrorMessage($"azurite process could not start with following output:\n{azuriteOutput}\nerror:\n{azuriteError}\nexit code: {process.ExitCode}"));
+                }
+                else
+                {
+                    process.Kill();
+                    process.WaitForExit();
+                    var message = $"azurite process could not initialize within timeout with following output:\n{azuriteOutput}\nerror:\n{azuriteError}";
+                    if (includeDebugLog && File.Exists(debugLogPath))
+                    {
+                        using var fileStream = File.Open(debugLogPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                        using var streamReader = new StreamReader(fileStream);
+                        var debugLog = streamReader.ReadToEnd();
+                        message += $"\ndebug log:\n{debugLog}";
+                    }
+                    throw new InvalidOperationException(ErrorMessage(message));
+                }
             }
             account.BlobsPort = blobsPort;
             account.QueuesPort = queuesPort;
@@ -188,7 +225,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests
 
         private class AzuriteTokenCredential: TokenCredential
         {
-
             public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
             {
                 return new ValueTask<AccessToken>(GetToken(requestContext, cancellationToken));
@@ -207,7 +243,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests
                 // Encoded using https://jwt.io/
                 return new AccessToken("eyJhdWQiOiJodHRwczovL3N0b3JhZ2UuYXp1cmUuY29tIiwiaXNzIjoiaHR0cHM6Ly9zdHMud2luZG93cy1wcGUubmV0L2FiMWY3MDhkLTUwZjYtNDA0Yy1hMDA2LWQ3MWIyYWM3YTYwNi8iLCJpYXQiOjE1MTE4NTk2MDMsIm5iZiI6MTUxMTg1OTYwMywiZXhwIjo5OTk5OTk5OTk5LCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJodHRwczovL3N0b3JhZ2UuYXp1cmUuY29tIiwiaXNzIjoiaHR0cHM6Ly9zdHMud2luZG93cy1wcGUubmV0L2FiMWY3MDhkLTUwZjYtNDA0Yy1hMDA2LWQ3MWIyYWM3YTYwNi8iLCJpYXQiOjE1MTE4NTk2MDMsIm5iZiI6MTUxMTg1OTYwMywiZXhwIjo5OTk5OTk5OTk5LCJhbGciOiJIUzI1NiJ9.z48ZJz_3k0ZOATIMjZ02AQxlDnUT3NXLEJXLgdHIKl8", DateTimeOffset.MaxValue);
             }
-
         }
     }
 

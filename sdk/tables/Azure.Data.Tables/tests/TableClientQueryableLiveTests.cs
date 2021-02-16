@@ -20,7 +20,6 @@ namespace Azure.Data.Tables.Tests
     /// </remarks>
     public class TableClientQueryableLiveTests : TableServiceLiveTestsBase
     {
-
         public TableClientQueryableLiveTests(bool isAsync, TableEndpointType endpointType) : base(isAsync, endpointType /* To record tests, add this argument, RecordedTestMode.Record */)
         { }
 
@@ -261,7 +260,6 @@ namespace Azure.Data.Tables.Tests
             Assert.That(entity, Is.Not.Null);
             Assert.That(entity.PartitionKey, Is.EqualTo(PartitionKeyValue));
             Assert.That(entity.RowKey, Is.EqualTo(entitiesToCreate[1].RowKey));
-
         }
 
         [RecordedTest]
@@ -297,7 +295,6 @@ namespace Azure.Data.Tables.Tests
             }
         }
 
-
         [RecordedTest]
         public async Task TableQueryableOnSupportedTypes()
         {
@@ -321,7 +318,6 @@ namespace Azure.Data.Tables.Tests
 
             Assert.That(results.Count, Is.EqualTo(1));
 
-
             // 3. Filter on Long
             results = await client.QueryAsync<ComplexEntity>(ent => ent.Int64 >= thirdEntity.Int64).ToEnumerableAsync().ConfigureAwait(false);
 
@@ -335,7 +331,6 @@ namespace Azure.Data.Tables.Tests
 
             Assert.That(results.Count, Is.EqualTo(2));
 
-
             // 4. Filter on Double
             results = await client.QueryAsync<ComplexEntity>(ent => ent.Double >= thirdEntity.Double).ToEnumerableAsync().ConfigureAwait(false);
 
@@ -344,7 +339,6 @@ namespace Azure.Data.Tables.Tests
             results = await client.QueryAsync<ComplexEntity>(ent => ent.DoublePrimitive >= thirdEntity.DoublePrimitive).ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(results.Count, Is.EqualTo(2));
-
 
             // 5. Filter on Integer
             results = await client.QueryAsync<ComplexEntity>(ent => ent.Int32 >= thirdEntity.Int32).ToEnumerableAsync().ConfigureAwait(false);
@@ -355,7 +349,6 @@ namespace Azure.Data.Tables.Tests
 
             Assert.That(results.Count, Is.EqualTo(2));
 
-
             // 6. Filter on Date
             results = await client.QueryAsync<ComplexEntity>(ent => ent.DateTimeOffset >= thirdEntity.DateTimeOffset).ToEnumerableAsync().ConfigureAwait(false);
 
@@ -364,7 +357,6 @@ namespace Azure.Data.Tables.Tests
             results = await client.QueryAsync<ComplexEntity>(ent => ent.DateTimeOffset < thirdEntity.DateTimeOffset).ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(results.Count, Is.EqualTo(2));
-
 
             // 7. Filter on Boolean
             results = await client.QueryAsync<ComplexEntity>(ent => ent.Bool == thirdEntity.Bool).ToEnumerableAsync().ConfigureAwait(false);
@@ -375,7 +367,6 @@ namespace Azure.Data.Tables.Tests
 
             Assert.That(results.Count, Is.EqualTo(2));
 
-
             // 8. Filter on Binary
             results = await client.QueryAsync<ComplexEntity>(ent => ent.Binary == thirdEntity.Binary).ToEnumerableAsync().ConfigureAwait(false);
 
@@ -384,7 +375,6 @@ namespace Azure.Data.Tables.Tests
             results = await client.QueryAsync<ComplexEntity>(ent => ent.BinaryPrimitive == thirdEntity.BinaryPrimitive).ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(results.Count, Is.EqualTo(1));
-
 
             // 10. Complex Filter on Binary GTE
 
@@ -423,7 +413,6 @@ namespace Azure.Data.Tables.Tests
 
             Assert.That(results.Count, Is.EqualTo(1));
 
-
             // 3. Filter on Long
             results = await client.QueryAsync<TableEntity>(ent => ent.GetInt64("Int64") >= thirdEntity.Int64).ToEnumerableAsync().ConfigureAwait(false);
 
@@ -437,7 +426,6 @@ namespace Azure.Data.Tables.Tests
 
             Assert.That(results.Count, Is.EqualTo(2));
 
-
             // 4. Filter on Double
             results = await client.QueryAsync<TableEntity>(ent => ent.GetDouble("Double") >= thirdEntity.Double).ToEnumerableAsync().ConfigureAwait(false);
 
@@ -446,7 +434,6 @@ namespace Azure.Data.Tables.Tests
             results = await client.QueryAsync<TableEntity>(ent => ent.GetDouble("DoublePrimitive") >= thirdEntity.DoublePrimitive).ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(results.Count, Is.EqualTo(2));
-
 
             // 5. Filter on Integer
             results = await client.QueryAsync<TableEntity>(ent => ent.GetInt32("Int32") >= thirdEntity.Int32).ToEnumerableAsync().ConfigureAwait(false);
@@ -457,7 +444,6 @@ namespace Azure.Data.Tables.Tests
 
             Assert.That(results.Count, Is.EqualTo(2));
 
-
             // 6. Filter on Date
             results = await client.QueryAsync<TableEntity>(ent => (DateTimeOffset)ent["DateTimeOffset"] >= thirdEntity.DateTimeOffset).ToEnumerableAsync().ConfigureAwait(false);
 
@@ -467,7 +453,6 @@ namespace Azure.Data.Tables.Tests
 
             Assert.That(results.Count, Is.EqualTo(2));
 
-
             // 7. Filter on Boolean
             results = await client.QueryAsync<TableEntity>(ent => ent.GetBoolean("Bool") == thirdEntity.Bool).ToEnumerableAsync().ConfigureAwait(false);
 
@@ -476,7 +461,6 @@ namespace Azure.Data.Tables.Tests
             results = await client.QueryAsync<TableEntity>(ent => ent.GetBoolean("BoolPrimitive") == thirdEntity.BoolPrimitive).ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(results.Count, Is.EqualTo(2));
-
 
             // 8. Filter on Binary
             results = await client.QueryAsync<TableEntity>(ent => ent.GetBinary("Binary") == thirdEntity.Binary).ToEnumerableAsync().ConfigureAwait(false);
@@ -491,7 +475,6 @@ namespace Azure.Data.Tables.Tests
             results = await client.QueryAsync<TableEntity>(ent => (ent["String"] as string).CompareTo(thirdEntity.String) >= 0).ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(results.Count, Is.EqualTo(2));
-
 
             // 10. Complex Filter on Binary GTE
 

@@ -84,7 +84,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
             return this.Get(null);
         }
 
-        private TClientOptions CreateClientOptions(IConfiguration configuration)
+        protected virtual TClientOptions CreateClientOptions(IConfiguration configuration)
         {
             var clientOptions = (TClientOptions) _componentFactory.CreateClientOptions(typeof(TClientOptions), null, configuration);
             clientOptions.Diagnostics.ApplicationId ??= "AzureWebJobs";
@@ -96,7 +96,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
             return clientOptions;
         }
 
-        private HttpPipelineTransport CreateTransportForDynamicSku()
+        private static HttpPipelineTransport CreateTransportForDynamicSku()
         {
             return new HttpClientTransport(new HttpClient(new HttpClientHandler()
             {

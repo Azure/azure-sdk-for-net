@@ -84,7 +84,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
                 }
             }
 
-            return new TaskSeriesCommandResult(wait: Task.Delay(delay));
+            return new TaskSeriesCommandResult(wait: Task.Delay(delay, cancellationToken));
         }
     }
 }

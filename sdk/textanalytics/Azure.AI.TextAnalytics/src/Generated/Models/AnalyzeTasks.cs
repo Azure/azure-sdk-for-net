@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary> The TasksStateTasks. </summary>
-    public partial class AnalyzeTasks
+    internal partial class AnalyzeTasks
     {
         /// <summary> Initializes a new instance of AnalyzeTasks. </summary>
         /// <param name="completed"> . </param>
@@ -38,7 +38,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="entityRecognitionTasks"> . </param>
         /// <param name="entityRecognitionPiiTasks"> . </param>
         /// <param name="keyPhraseExtractionTasks"> . </param>
-        internal AnalyzeTasks(TasksStateTasksDetails details, int completed, int failed, int inProgress, int total, IReadOnlyList<EntityRecognitionTasksItem> entityRecognitionTasks, IReadOnlyList<EntityRecognitionPiiTasksItem> entityRecognitionPiiTasks, IReadOnlyList<KeyPhraseExtractionTasksItem> keyPhraseExtractionTasks)
+        internal AnalyzeTasks(TasksStateTasksDetailsInternal details, int completed, int failed, int inProgress, int total, IReadOnlyList<EntityRecognitionTasksItem> entityRecognitionTasks, IReadOnlyList<EntityRecognitionPiiTasksItem> entityRecognitionPiiTasks, IReadOnlyList<KeyPhraseExtractionTasksItem> keyPhraseExtractionTasks)
         {
             Details = details;
             Completed = completed;

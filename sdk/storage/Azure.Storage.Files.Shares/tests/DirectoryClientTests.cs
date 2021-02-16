@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using Azure.Storage.Files.Shares.Models;
-using Azure.Storage.Files.Shares.Tests;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
+using Moq;
 using NUnit.Framework;
 
-namespace Azure.Storage.Files.Shares.Test
+namespace Azure.Storage.Files.Shares.Tests
 {
     public class DirectoryClientTests : FileTestBase
     {
@@ -72,6 +72,39 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        public async Task Ctor_AzureSasCredential()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+            string sas = GetNewFileServiceSasCredentialsShare(test.Share.Name).ToString();
+            var client = test.Share.GetDirectoryClient(GetNewDirectoryName());
+            await client.CreateAsync();
+            Uri uri = client.Uri;
+
+            // Act
+            var sasClient = InstrumentClient(new ShareDirectoryClient(uri, new AzureSasCredential(sas), GetOptions()));
+            ShareDirectoryProperties properties = await sasClient.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(properties);
+        }
+
+        [Test]
+        public async Task Ctor_AzureSasCredential_VerifyNoSasInUri()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+            string sas = GetNewFileServiceSasCredentialsShare(test.Share.Name).ToString();
+            Uri uri = test.Share.GetDirectoryClient(GetNewDirectoryName()).Uri;
+            uri = new Uri(uri.ToString() + "?" + sas);
+
+            // Act
+            TestHelper.AssertExpectedException<ArgumentException>(
+                () => new ShareDirectoryClient(uri, new AzureSasCredential(sas)),
+                e => e.Message.Contains($"You cannot use {nameof(AzureSasCredential)} when the resource URI also contains a Shared Access Signature"));
+        }
+
+        [Test]
         public void DirectoryPathsParsing()
         {
             // nested directories
@@ -105,7 +138,6 @@ namespace Azure.Storage.Files.Shares.Test
             TestHelper.AssertCacheableProperty(string.Empty, () => directoryClient4.Name);
             TestHelper.AssertCacheableProperty(string.Empty, () => directoryClient4.Path);
             Assert.AreEqual(string.Empty, builder4.LastDirectoryOrFileName);
-
         }
 
         [Test]
@@ -182,9 +214,11 @@ namespace Azure.Storage.Files.Shares.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<ArgumentOutOfRangeException>(
                 directory.CreateAsync(filePermission: filePermission),
-                e => Assert.AreEqual(
-                    "Value must be less than or equal to 8192" + Environment.NewLine
-                    + "Parameter name: filePermission", e.Message));
+                e =>
+                {
+                    Assert.AreEqual("filePermission", e.ParamName);
+                    StringAssert.StartsWith("Value must be less than or equal to 8192", e.Message);
+                });
         }
 
         [Test]
@@ -367,6 +401,7 @@ namespace Azure.Storage.Files.Shares.Test
         public async Task Exists_Error()
         {
             // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
             // Make Read Only SAS for the Share
             AccountSasBuilder sas = new AccountSasBuilder
             {
@@ -376,9 +411,12 @@ namespace Azure.Storage.Files.Shares.Test
             };
             sas.SetPermissions(AccountSasPermissions.Read);
             StorageSharedKeyCredential credential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
-            UriBuilder sasUri = new UriBuilder(TestConfigDefault.FileServiceEndpoint);
+            var sasUri = new ShareUriBuilder(new Uri(TestConfigDefault.FileServiceEndpoint))
+            {
+                ShareName = test.Share.Name
+            };
             sasUri.Query = sas.ToSasQueryParameters(credential).ToString();
-            ShareClient share = InstrumentClient(new ShareClient(sasUri.Uri, GetOptions()));
+            ShareClient share = InstrumentClient(new ShareClient(sasUri.ToUri(), GetOptions()));
             ShareDirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
 
             // Act
@@ -602,7 +640,6 @@ namespace Azure.Storage.Files.Shares.Test
                 FileLastWrittenOn = new DateTimeOffset(2019, 8, 26, 5, 15, 25, 60, TimeSpan.Zero),
             };
 
-
             await directory.CreateIfNotExistsAsync();
 
             // Act
@@ -630,9 +667,7 @@ namespace Azure.Storage.Files.Shares.Test
             await TestHelper.AssertExpectedExceptionAsync<ArgumentOutOfRangeException>(
                 directory.SetHttpHeadersAsync(
                     filePermission: filePermission),
-                e => Assert.AreEqual(
-                    "Value must be less than or equal to 8192" + Environment.NewLine
-                    + "Parameter name: filePermission", e.Message));
+                new ArgumentOutOfRangeException("filePermission", "Value must be less than or equal to 8192"));
         }
 
         [Test]
@@ -1080,7 +1115,6 @@ namespace Azure.Storage.Files.Shares.Test
 
             Uri expectedUri = new Uri($"https://{TestConfigDefault.AccountName}.file.core.windows.net/{test.Share.Name}/{Uri.EscapeDataString(directoryName)}/{Uri.EscapeDataString(subDirectoryName)}");
 
-
             ShareDirectoryClient directoryFromConstructor = new ShareDirectoryClient(
                 TestConfigDefault.ConnectionString,
                 test.Share.Name,
@@ -1128,32 +1162,135 @@ namespace Azure.Storage.Files.Shares.Test
             string connectionString = storageConnectionString.ToString(true);
 
             // Act - ShareDirectoryClient(string connectionString, string blobContainerName, string blobName)
-            ShareDirectoryClient directory = new ShareDirectoryClient(
+            ShareDirectoryClient directory = InstrumentClient(new ShareDirectoryClient(
                 connectionString,
                 GetNewShareName(),
-                GetNewDirectoryName());
+                GetNewDirectoryName()));
             Assert.IsTrue(directory.CanGenerateSasUri);
 
             // Act - ShareDirectoryClient(string connectionString, string blobContainerName, string blobName, BlobClientOptions options)
-            ShareDirectoryClient directory2 = new ShareDirectoryClient(
+            ShareDirectoryClient directory2 = InstrumentClient(new ShareDirectoryClient(
                 connectionString,
                 GetNewShareName(),
                 GetNewDirectoryName(),
-                GetOptions());
+                GetOptions()));
             Assert.IsTrue(directory2.CanGenerateSasUri);
 
             // Act - ShareDirectoryClient(Uri blobContainerUri, BlobClientOptions options = default)
-            ShareDirectoryClient directory3 = new ShareDirectoryClient(
+            ShareDirectoryClient directory3 = InstrumentClient(new ShareDirectoryClient(
                 blobEndpoint,
-                GetOptions());
+                GetOptions()));
             Assert.IsFalse(directory3.CanGenerateSasUri);
 
             // Act - ShareDirectoryClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
-            ShareDirectoryClient directory4 = new ShareDirectoryClient(
+            ShareDirectoryClient directory4 = InstrumentClient(new ShareDirectoryClient(
                 blobEndpoint,
                 constants.Sas.SharedKeyCredential,
-                GetOptions());
+                GetOptions()));
             Assert.IsTrue(directory4.CanGenerateSasUri);
+        }
+
+        [Test]
+        public void CanGenerateSas_GetFileClient()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
+            var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, fileStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
+
+            // Act - ShareDirectoryClient(string connectionString, string blobContainerName, string blobName)
+            ShareDirectoryClient directory = InstrumentClient(new ShareDirectoryClient(
+                connectionString,
+                GetNewShareName(),
+                GetNewDirectoryName()));
+            ShareFileClient file = directory.GetFileClient(GetNewFileName());
+            Assert.IsTrue(file.CanGenerateSasUri);
+
+            // Act - ShareDirectoryClient(string connectionString, string blobContainerName, string blobName, BlobClientOptions options)
+            ShareDirectoryClient directory2 = InstrumentClient(new ShareDirectoryClient(
+                connectionString,
+                GetNewShareName(),
+                GetNewDirectoryName(),
+                GetOptions()));
+            ShareFileClient file2 = directory2.GetFileClient(GetNewFileName());
+            Assert.IsTrue(file2.CanGenerateSasUri);
+
+            // Act - ShareDirectoryClient(Uri blobContainerUri, BlobClientOptions options = default)
+            ShareDirectoryClient directory3 = InstrumentClient(new ShareDirectoryClient(
+                blobEndpoint,
+                GetOptions()));
+            ShareFileClient file3 = directory3.GetFileClient(GetNewFileName());
+            Assert.IsFalse(file3.CanGenerateSasUri);
+
+            // Act - ShareDirectoryClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
+            ShareDirectoryClient directory4 = InstrumentClient(new ShareDirectoryClient(
+                blobEndpoint,
+                constants.Sas.SharedKeyCredential,
+                GetOptions()));
+            ShareFileClient file4 = directory4.GetFileClient(GetNewFileName());
+            Assert.IsTrue(file4.CanGenerateSasUri);
+        }
+
+        [Test]
+        public void CanGenerateSas_GetSubdirectoryClient()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
+            var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, fileStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
+
+            // Act - ShareDirectoryClient(string connectionString, string blobContainerName, string blobName)
+            ShareDirectoryClient directory = InstrumentClient(new ShareDirectoryClient(
+                connectionString,
+                GetNewShareName(),
+                GetNewDirectoryName()));
+            ShareDirectoryClient subdirectory = directory.GetSubdirectoryClient(GetNewFileName());
+            Assert.IsTrue(subdirectory.CanGenerateSasUri);
+
+            // Act - ShareDirectoryClient(string connectionString, string blobContainerName, string blobName, BlobClientOptions options)
+            ShareDirectoryClient directory2 = InstrumentClient(new ShareDirectoryClient(
+                connectionString,
+                GetNewShareName(),
+                GetNewDirectoryName(),
+                GetOptions()));
+            ShareDirectoryClient subdirectory2 = directory2.GetSubdirectoryClient(GetNewFileName());
+            Assert.IsTrue(subdirectory2.CanGenerateSasUri);
+
+            // Act - ShareDirectoryClient(Uri blobContainerUri, BlobClientOptions options = default)
+            ShareDirectoryClient directory3 = InstrumentClient(new ShareDirectoryClient(
+                blobEndpoint,
+                GetOptions()));
+            ShareDirectoryClient subdirectory3 = directory3.GetSubdirectoryClient(GetNewFileName());
+            Assert.IsFalse(subdirectory3.CanGenerateSasUri);
+
+            // Act - ShareDirectoryClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
+            ShareDirectoryClient directory4 = InstrumentClient(new ShareDirectoryClient(
+                blobEndpoint,
+                constants.Sas.SharedKeyCredential,
+                GetOptions()));
+            ShareDirectoryClient subdirectory4 = directory4.GetSubdirectoryClient(GetNewFileName());
+            Assert.IsTrue(subdirectory4.CanGenerateSasUri);
+        }
+
+        [Test]
+        public void CanGenerateSas_Mockable()
+        {
+            // Act
+            var directory = new Mock<ShareDirectoryClient>();
+            directory.Setup(x => x.CanGenerateSasUri).Returns(false);
+
+            // Assert
+            Assert.IsFalse(directory.Object.CanGenerateSasUri);
+
+            // Act
+            directory.Setup(x => x.CanGenerateSasUri).Returns(true);
+
+            // Assert
+            Assert.IsTrue(directory.Object.CanGenerateSasUri);
         }
 
         [Test]
@@ -1169,11 +1306,11 @@ namespace Azure.Storage.Files.Shares.Test
             string connectionString = storageConnectionString.ToString(true);
             string shareName = GetNewShareName();
             string directoryName = GetNewDirectoryName();
-            ShareDirectoryClient directoryClient = new ShareDirectoryClient(
+            ShareDirectoryClient directoryClient = InstrumentClient(new ShareDirectoryClient(
                 connectionString,
                 shareName,
                 directoryName,
-                GetOptions());
+                GetOptions()));
 
             // Act
             Uri sasUri = directoryClient.GenerateSasUri(permissions, expiresOn);
@@ -1207,11 +1344,11 @@ namespace Azure.Storage.Files.Shares.Test
             string shareName = GetNewShareName();
             string directoryName = GetNewDirectoryName();
 
-            ShareDirectoryClient directoryClient = new ShareDirectoryClient(
+            ShareDirectoryClient directoryClient = InstrumentClient(new ShareDirectoryClient(
                 connectionString,
                 shareName,
                 directoryName,
-                GetOptions());
+                GetOptions()));
 
             ShareSasBuilder sasBuilder = new ShareSasBuilder(permissions, expiresOn)
             {
@@ -1248,10 +1385,10 @@ namespace Azure.Storage.Files.Shares.Test
             UriBuilder blobUriBuilder = new UriBuilder(blobEndpoint);
             string directoryName = GetNewDirectoryName();
             blobUriBuilder.Path += constants.Sas.Account + "/" + GetNewShareName() + "/" + directoryName;
-            ShareDirectoryClient directoryClient = new ShareDirectoryClient(
+            ShareDirectoryClient directoryClient = InstrumentClient(new ShareDirectoryClient(
                 blobUriBuilder.Uri,
                 constants.Sas.SharedKeyCredential,
-                GetOptions());
+                GetOptions()));
 
             ShareSasBuilder sasBuilder = new ShareSasBuilder(ShareFileSasPermissions.All, Recording.UtcNow.AddHours(+1))
             {
@@ -1281,10 +1418,10 @@ namespace Azure.Storage.Files.Shares.Test
             UriBuilder blobUriBuilder = new UriBuilder(blobEndpoint);
             string shareName = GetNewShareName();
             blobUriBuilder.Path += constants.Sas.Account + "/" + shareName + "/" + GetNewDirectoryName();
-            ShareDirectoryClient directoryClient = new ShareDirectoryClient(
+            ShareDirectoryClient directoryClient = InstrumentClient(new ShareDirectoryClient(
                 blobUriBuilder.Uri,
                 constants.Sas.SharedKeyCredential,
-                GetOptions());
+                GetOptions()));
 
             ShareSasBuilder sasBuilder = new ShareSasBuilder(ShareFileSasPermissions.All, Recording.UtcNow.AddHours(+1))
             {
@@ -1305,5 +1442,16 @@ namespace Azure.Storage.Files.Shares.Test
             }
         }
         #endregion
+
+        [Test]
+        public void CanMockClientConstructors()
+        {
+            // One has to call .Object to trigger constructor. It's lazy.
+            var mock = new Mock<ShareDirectoryClient>(TestConfigDefault.ConnectionString, "name", "name", new ShareClientOptions()).Object;
+            mock = new Mock<ShareDirectoryClient>(TestConfigDefault.ConnectionString, "name", "name").Object;
+            mock = new Mock<ShareDirectoryClient>(new Uri("https://test/test/test"), new ShareClientOptions()).Object;
+            mock = new Mock<ShareDirectoryClient>(new Uri("https://test/test/test"), GetNewSharedKeyCredentials(), new ShareClientOptions()).Object;
+            mock = new Mock<ShareDirectoryClient>(new Uri("https://test/test/test"), new AzureSasCredential("foo"), new ShareClientOptions()).Object;
+        }
     }
 }

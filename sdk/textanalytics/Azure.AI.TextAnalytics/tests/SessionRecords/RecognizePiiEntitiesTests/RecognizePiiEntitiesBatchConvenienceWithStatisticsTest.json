@@ -1,21 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/entities/recognition/pii?showStats=true\u0026domain=PHI\u0026stringIndexType=Utf16CodeUnit",
+      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/entities/recognition/pii?showStats=true\u0026domain=phi\u0026stringIndexType=Utf16CodeUnit",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "text/json"
-        ],
-        "Content-Length": "294",
+        "Accept": "application/json, text/json",
+        "Content-Length": "293",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-a8e06ba3948e9e4ba936bc58d17be9db-6a58580273823f46-00",
-        "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201116.1",
-          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
-        ],
+        "traceparent": "00-cf4f31a906777242af779d3fe090a14a-20201234a3f10a43-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210208.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "eecc011d319477b6a3836264a1185b02",
         "x-ms-return-client-request-id": "true"
       },
@@ -28,21 +22,21 @@
           },
           {
             "id": "1",
-            "text": "Your ABA number - 111000025 - is the first 9 digits in the lower left hand corner of your personal check.",
+            "text": "Your ABA number - 111000025 - is the first 9 digits in the lower left hand corner of your personal check",
             "language": "en"
           }
         ]
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "995eca33-f9e3-4cc5-9e25-187c590ae309",
+        "apim-request-id": "ac99fb8d-5778-4cac-b534-1d3f9be9d5a5",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2",
-        "Date": "Tue, 17 Nov 2020 20:18:12 GMT",
+        "Date": "Mon, 08 Feb 2021 16:53:36 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "101"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "174"
       },
       "ResponseBody": {
         "statistics": {
@@ -78,10 +72,10 @@
             "warnings": []
           },
           {
-            "redactedText": "Your ABA number - ********* - is the first 9 digits in the lower left hand corner of your personal check.",
+            "redactedText": "Your ABA number - ********* - is the first 9 digits in the lower left hand corner of your personal check",
             "id": "1",
             "statistics": {
-              "charactersCount": 105,
+              "charactersCount": 104,
               "transactionsCount": 1
             },
             "entities": [
@@ -118,6 +112,6 @@
   "Variables": {
     "RandomSeed": "1097726284",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com"
+    "TEXT_ANALYTICS_ENDPOINT": "https://ta-s-westeurope.cognitiveservices.azure.com"
   }
 }

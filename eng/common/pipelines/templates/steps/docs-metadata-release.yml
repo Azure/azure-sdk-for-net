@@ -19,8 +19,19 @@ parameters:
   GHTeamReviewersVariable: '' # externally set, as eng-common does not have the identity-resolver. Run as pre-step
   OnboardingBranch: ''
   CloseAfterOpenForTesting: false
+  SkipPackageJson: false
 
 steps:
+- pwsh: |
+    if ($IsWindows) {
+      REG ADD HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\FileSystem /f /v LongPathsEnabled /t REG_DWORD /d 1
+      git config --system core.longpaths true
+    }
+    else {
+      Write-Host "This script is not executing on Windows, skipping registry modification."
+    }
+  displayName: Enable Long Paths if Necessary
+  
 - pwsh: |
     git clone https://github.com/${{ parameters.TargetDocRepoOwner }}/${{ parameters.TargetDocRepoName }} ${{ parameters.WorkingDirectory }}/repo
 
@@ -48,14 +59,14 @@ steps:
       -WorkDirectory "${{ parameters.WorkingDirectory }}"
       -DocRepoLocation "${{ parameters.WorkingDirectory }}/repo"
       -Language "${{parameters.Language}}"
-      -DocRepoContentLocation ${{ parameters.DocRepoDestinationPath }}
+      -Configs "${{ parameters.CIConfigs }}"
     pwsh: true
   env:
     GH_TOKEN: $(azuresdk-github-pat)
 
 - task: PowerShell@2
   displayName: 'Update Docs.MS CI Targeted Packages'
-  condition: and(succeededOrFailed(), eq('${{ parameters.OnboardingBranch }}',''))
+  condition: and(succeededOrFailed(), eq('${{ parameters.OnboardingBranch }}',''), ne('${{ parameters.SkipPackageJson }}', true))
   inputs:
     targetType: filePath
     filePath: ${{ parameters.ScriptDirectory }}/update-docs-ci.ps1
@@ -65,7 +76,7 @@ steps:
       -RepoId ${{ parameters.RepoId }}
       -Repository ${{ parameters.PackageRepository }}
       -ReleaseSHA ${{ parameters.ReleaseSha }}
-      -CIRepository "${{ parameters.WorkingDirectory }}/repo"
+      -DocRepoLocation "${{ parameters.WorkingDirectory }}/repo"
       -Configs "${{ parameters.CIConfigs }}"
     pwsh: true
   env:
@@ -107,7 +118,7 @@ steps:
         -RepoId ${{ parameters.RepoId }}
         -Repository ${{ parameters.PackageRepository }}
         -ReleaseSHA ${{ parameters.ReleaseSha }}
-        -CIRepository "${{ parameters.WorkingDirectory }}/repo"
+        -DocRepoLocation "${{ parameters.WorkingDirectory }}/repo"
         -Configs "${{ parameters.CIConfigs }}"
       pwsh: true
     env:

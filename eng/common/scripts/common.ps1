@@ -24,9 +24,15 @@ $EngScriptsLanguageSettings = Join-path $EngScriptsDir "Language-Settings.ps1"
 if (Test-Path $EngScriptsLanguageSettings) {
   . $EngScriptsLanguageSettings
 }
+
 if (-not $LanguageShort)
 {
   $LangaugeShort = $Language
+}
+
+if (-not $LanguageDisplayName)
+{
+  $LanguageDisplayName = $Language
 }
 
 # Transformed Functions
@@ -34,3 +40,5 @@ $GetPackageInfoFromRepoFn = "Get-${Language}-PackageInfoFromRepo"
 $GetPackageInfoFromPackageFileFn = "Get-${Language}-PackageInfoFromPackageFile"
 $PublishGithubIODocsFn = "Publish-${Language}-GithubIODocs"
 $UpdateDocCIFn = "Update-${Language}-CIConfig"
+$GetGithubIoDocIndexFn = "Get-${Language}-GithubIoDocIndex"
+$FindArtifactForApiReviewFn = "Find-${Language}-Artifacts-For-Apireview"

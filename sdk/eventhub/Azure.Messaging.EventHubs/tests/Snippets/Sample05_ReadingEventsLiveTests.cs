@@ -27,71 +27,6 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
     [SuppressMessage("Style", "IDE0059:Unnecessary assignment of a value", Justification = "Example assignments needed for snippet output content.")]
     public class Sample05_ReadingEventsLiveTests
     {
-        /// <summary>The active Event Hub resource scope for the test fixture.</summary>
-        private EventHubScope _scope;
-
-        /// <summary>The set of available consumer groups for tests to use.</summary>
-        private Queue<string> _availableConsumerGroups = new Queue<string>();
-
-        /// <summary>
-        ///   Performs the tasks needed to initialize the test fixture.  This
-        ///   method runs once for the entire fixture, prior to running any tests.
-        /// </summary>
-        ///
-        [OneTimeSetUp]
-        public async Task FixtureSetUp()
-        {
-            // Create a set of consumer groups to ensure that there aren't too
-            // many concurrent readers when tests are executed concurrently.
-
-            var testCount = GetType()
-                .GetMethods(BindingFlags.Public | BindingFlags.Instance)
-                .Where(method => method.GetCustomAttribute(typeof(TestAttribute)) != null)
-                .Count();
-
-            var readersPerGroup = 5;
-            var consumerGroupCount = Math.Ceiling((double)testCount / readersPerGroup);
-            var consumerGroups = Enumerable.Range(0, (int)consumerGroupCount).Select(index => $"group{ index }");
-
-            foreach (var group in consumerGroups)
-            {
-                for (var index = 0; index < readersPerGroup; ++index)
-                {
-                    _availableConsumerGroups.Enqueue(group);
-                }
-            }
-
-            _scope = await EventHubScope.CreateAsync(2, consumerGroups);
-
-            // Because some snippets assume events are present in the first partition, publish
-            // a small set to satisfy the assumption.
-
-            using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
-
-            await using var producer = new EventHubProducerClient(EventHubsTestEnvironment.Instance.EventHubsConnectionString, _scope.EventHubName);
-
-            var toPublish = Enumerable
-                .Range(0, 5)
-                .Select(index => new EventData(new BinaryData($"Event: { index }")));
-
-            var partition = (await producer.GetPartitionIdsAsync(cancellationSource.Token)).First();
-            var options = new SendEventOptions { PartitionId = partition };
-
-            await producer.SendAsync(toPublish, options);
-        }
-
-        /// <summary>
-        ///   Performs the tasks needed to cleanup the test fixture after all
-        ///   tests have run.  This method runs once for the entire fixture.
-        /// </summary>
-        ///
-        [OneTimeTearDown]
-        public async Task FixtureTearDown()
-        {
-            await _scope.DisposeAsync();
-        }
-
         /// <summary>
         ///   Performs basic smoke test validation of the contained snippet.
         /// </summary>
@@ -99,6 +34,8 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         [Test]
         public async Task ReadAllPartitions()
         {
+            await using var scope = await EventHubScope.CreateAsync(1);
+
             #region Snippet:EventHubs_Sample05_ReadAllPartitions
 
             var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
@@ -106,8 +43,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
             /*@@*/
             /*@@*/ connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = _scope.EventHubName;
-            /*@@*/ consumerGroup = _availableConsumerGroups.Dequeue();
+            /*@@*/ eventHubName = scope.EventHubName;
 
             var consumer = new EventHubConsumerClient(
                 consumerGroup,
@@ -156,6 +92,8 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         [Test]
         public async Task ReadAllPartitionsWaitTime()
         {
+            await using var scope = await EventHubScope.CreateAsync(1);
+
             #region Snippet:EventHubs_Sample05_ReadAllPartitionsWaitTime
 
             var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
@@ -163,8 +101,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
             /*@@*/
             /*@@*/ connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = _scope.EventHubName;
-            /*@@*/ consumerGroup = _availableConsumerGroups.Dequeue();
+            /*@@*/ eventHubName = scope.EventHubName;
 
             var consumer = new EventHubConsumerClient(
                 consumerGroup,
@@ -218,6 +155,8 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         [Test]
         public async Task ReadAllPartitionsFromLatest()
         {
+            await using var scope = await EventHubScope.CreateAsync(1);
+
             #region Snippet:EventHubs_Sample05_ReadAllPartitionsFromLatest
 
             var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
@@ -225,8 +164,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
             /*@@*/
             /*@@*/ connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = _scope.EventHubName;
-            /*@@*/ consumerGroup = _availableConsumerGroups.Dequeue();
+            /*@@*/ eventHubName = scope.EventHubName;
 
             var consumer = new EventHubConsumerClient(
                 consumerGroup,
@@ -268,6 +206,8 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         [Test]
         public async Task ReadPartition()
         {
+            await using var scope = await EventHubScope.CreateAsync(1);
+
             #region Snippet:EventHubs_Sample05_ReadPartition
 
             var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
@@ -275,8 +215,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
             /*@@*/
             /*@@*/ connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = _scope.EventHubName;
-            /*@@*/ consumerGroup = _availableConsumerGroups.Dequeue();
+            /*@@*/ eventHubName = scope.EventHubName;
 
             var consumer = new EventHubConsumerClient(
                 consumerGroup,
@@ -322,6 +261,8 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         [Test]
         public async Task ReadPartitionWaitTime()
         {
+            await using var scope = await EventHubScope.CreateAsync(1);
+
             #region Snippet:EventHubs_Sample05_ReadPartitionWaitTime
 
             var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
@@ -329,8 +270,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
             /*@@*/
             /*@@*/ connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = _scope.EventHubName;
-            /*@@*/ consumerGroup = _availableConsumerGroups.Dequeue();
+            /*@@*/ eventHubName = scope.EventHubName;
 
             var consumer = new EventHubConsumerClient(
                 consumerGroup,
@@ -398,6 +338,8 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         [Test]
         public async Task ReadPartitionFromDate()
         {
+            await using var scope = await EventHubScope.CreateAsync(1);
+
             #region Snippet:EventHubs_Sample05_ReadPartitionFromDate
 
             var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
@@ -405,8 +347,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
             /*@@*/
             /*@@*/ connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = _scope.EventHubName;
-            /*@@*/ consumerGroup = _availableConsumerGroups.Dequeue();
+            /*@@*/ eventHubName = scope.EventHubName;
 
             var consumer = new EventHubConsumerClient(
                 consumerGroup,
@@ -454,6 +395,8 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         [Test]
         public async Task ReadPartitionFromOffset()
         {
+            await using var scope = await EventHubScope.CreateAsync(1);
+
             #region Snippet:EventHubs_Sample05_ReadPartitionFromOffset
 
             var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
@@ -461,8 +404,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
             /*@@*/
             /*@@*/ connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = _scope.EventHubName;
-            /*@@*/ consumerGroup = _availableConsumerGroups.Dequeue();
+            /*@@*/ eventHubName = scope.EventHubName;
 
             var consumer = new EventHubConsumerClient(
                 consumerGroup,
@@ -509,6 +451,8 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         [Test]
         public async Task ReadPartitionFromSequence()
         {
+            await using var scope = await EventHubScope.CreateAsync(1);
+
             #region Snippet:EventHubs_Sample05_ReadPartitionFromSequence
 
             var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
@@ -516,8 +460,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
             /*@@*/
             /*@@*/ connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = _scope.EventHubName;
-            /*@@*/ consumerGroup = _availableConsumerGroups.Dequeue();
+            /*@@*/ eventHubName = scope.EventHubName;
 
             var consumer = new EventHubConsumerClient(
                 consumerGroup,
@@ -564,6 +507,8 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         [Test]
         public async Task ReadPartitionTrackLastEnqueued()
         {
+            await using var scope = await EventHubScope.CreateAsync(1);
+
             #region Snippet:EventHubs_Sample05_ReadPartitionTrackLastEnqueued
 
             var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
@@ -571,8 +516,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
             /*@@*/
             /*@@*/ connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = _scope.EventHubName;
-            /*@@*/ consumerGroup = _availableConsumerGroups.Dequeue();
+            /*@@*/ eventHubName = scope.EventHubName;
 
             var consumer = new EventHubConsumerClient(
                 consumerGroup,
@@ -628,6 +572,8 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         [Test]
         public async Task ReadPartitionWithReceiver()
         {
+            await using var scope = await EventHubScope.CreateAsync(1);
+
             #region Snippet:EventHubs_Sample05_ReadPartitionWithReceiver
 
             var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
@@ -635,8 +581,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
             /*@@*/
             /*@@*/ connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = _scope.EventHubName;
-            /*@@*/ consumerGroup = _availableConsumerGroups.Dequeue();
+            /*@@*/ eventHubName = scope.EventHubName;
 
             using CancellationTokenSource cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));

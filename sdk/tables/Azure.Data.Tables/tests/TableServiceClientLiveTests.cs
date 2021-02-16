@@ -22,7 +22,6 @@ namespace Azure.Data.Tables.Tests
     /// </remarks>
     public class TableServiceClientLiveTests : TableServiceLiveTestsBase
     {
-
         public TableServiceClientLiveTests(bool isAsync, TableEndpointType endpointType) : base(isAsync, endpointType /* To record tests, add this argument, RecordedTestMode.Record */)
         { }
 
@@ -238,11 +237,6 @@ namespace Azure.Data.Tables.Tests
         [RecordedTest]
         public async Task GetPropertiesReturnsProperties()
         {
-            if (_endpointType == TableEndpointType.CosmosTable)
-            {
-                Assert.Ignore("GetProperties is currently not supported by Cosmos endpoints.");
-            }
-
             // Get current properties
 
             TableServiceProperties responseToChange = await service.GetPropertiesAsync().ConfigureAwait(false);
@@ -271,11 +265,6 @@ namespace Azure.Data.Tables.Tests
         [RecordedTest]
         public async Task GetTableServiceStatsReturnsStats()
         {
-            if (_endpointType == TableEndpointType.CosmosTable)
-            {
-                Assert.Ignore("GetProperties is currently not supported by Cosmos endpoints.");
-            }
-
             // Get statistics
 
             TableServiceStatistics stats = await service.GetStatisticsAsync().ConfigureAwait(false);

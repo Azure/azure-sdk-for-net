@@ -12,7 +12,6 @@ namespace Azure.AI.TextAnalytics.Models
     [CodeGenModel("AnalyzeBatchInput")]
     internal partial class AnalyzeBatchInput
     {
-
         /// <summary> Initializes a new instance of AnalyzeBatchInput. </summary>
         /// <param name="analysisInput"> Contains a set of input documents to be analyzed by the service. </param>
         /// <param name="tasks"> The set of tasks to execute on the input documents. Cannot specify the same task more than once. </param>

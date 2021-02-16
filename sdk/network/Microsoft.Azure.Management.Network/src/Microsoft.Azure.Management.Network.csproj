@@ -10,17 +10,15 @@
 			Development of this library has shifted focus to the Azure Unified SDK. The future development will be focused on "Azure.ResourceManager.Network" (https://www.nuget.org/packages/Azure.ResourceManager.Network/). Please see the package changelog for more information.
 		</Description>
 		<AssemblyName>Microsoft.Azure.Management.Network</AssemblyName>
-		<Version>20.2.1</Version>
+		<Version>20.3.0</Version>
 		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>
 		<PackageReleaseNotes>
 		<![CDATA[
-            - Added new api version 2020-07-01
-			- Update LB and PIP with new global load balancing properties
-			- Adding express route port authorization apis 
-			- Add type "Local gateway" to virtualNetworkGateway 
-			- Added Sku Tier property to public ip address prefix 
-			- Add Firewall Policy sku tier
-			- Update ipGroup swagger to include firewallPolicies
+            - Added new api version 2020-08-01
+			- Added extended location properties for private link and other resources
+			- Fixed GetIkeSas returns restult as a string
+			- Added supporting for listing IKE Security Assosiations for Virtual Network Gateway Connections
+			- Added location parameter for LB backend address pool properties
 		]]></PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>

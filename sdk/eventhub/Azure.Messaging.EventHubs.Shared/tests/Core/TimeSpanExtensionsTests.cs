@@ -89,7 +89,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                        TimeSpan elapsed,
                                        TimeSpan expectedRemaining)
         {
-            Assert.That(initialPeriod.CalculateRemaining(elapsed), Is.EqualTo(expectedRemaining));
+            Assert.That(initialPeriod.CalculateRemaining(elapsed), Is.EqualTo(expectedRemaining).Within(TimeSpan.FromMilliseconds(1)));
         }
     }
 }

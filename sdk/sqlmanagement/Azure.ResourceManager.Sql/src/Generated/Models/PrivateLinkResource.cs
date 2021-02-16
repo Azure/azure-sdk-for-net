@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A private link resource. </summary>
-    public partial class PrivateLinkResource : Resource
+    public partial class PrivateLinkResource : ProxyResource
     {
         /// <summary> Initializes a new instance of PrivateLinkResource. </summary>
         public PrivateLinkResource()

@@ -242,7 +242,6 @@ namespace Azure.Storage.Blobs.Test
             BlobContainerClient client2 = InstrumentClient(new BlobContainerClient(blobEndpoint));
             BlobContainerClient client3 = InstrumentClient(new BlobContainerClient(blobEndpoint, tokenCredentials));
 
-
             Assert.AreEqual(accountName, client1.AccountName);
             Assert.AreEqual(accountName, client2.AccountName);
             Assert.AreEqual(accountName, client3.AccountName);
@@ -293,6 +292,37 @@ namespace Azure.Storage.Blobs.Test
             TestHelper.AssertExpectedException(
                 () => new BlobContainerClient(new Uri(TestConfigDefault.BlobServiceEndpoint), blobClientOptions),
                 new ArgumentException("CustomerProvidedKey and EncryptionScope cannot both be set"));
+        }
+
+        [Test]
+        public async Task Ctor_AzureSasCredential()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            string sas = GetAccountSasCredentials().SasToken;
+            Uri uri = test.Container.Uri;
+
+            // Act
+            var sasClient = InstrumentClient(new BlobContainerClient(uri, new AzureSasCredential(sas), GetOptions()));
+            BlobContainerProperties properties = await sasClient.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(properties);
+        }
+
+        [Test]
+        public async Task Ctor_AzureSasCredential_VerifyNoSasInUri()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            string sas = GetAccountSasCredentials().SasToken;
+            Uri uri = test.Container.Uri;
+            uri = new Uri(uri.ToString() + "?" + sas);
+
+            // Act
+            TestHelper.AssertExpectedException<ArgumentException>(
+                () => new BlobContainerClient(uri, new AzureSasCredential(sas)),
+                e => e.Message.Contains($"You cannot use {nameof(AzureSasCredential)} when the resource URI also contains a Shared Access Signature"));
         }
 
         [Test]
@@ -2319,7 +2349,6 @@ namespace Azure.Storage.Blobs.Test
             // Act
             IList<BlobHierarchyItem> blobs = await test.Container.GetBlobsByHierarchyAsync(prefix: "foo").ToListAsync();
 
-
             // Assert
             Assert.AreEqual(3, blobs.Count);
         }
@@ -2607,38 +2636,155 @@ namespace Azure.Storage.Blobs.Test
             string connectionString = storageConnectionString.ToString(true);
 
             // Act - BlobContainerClient(string connectionString, string blobContainerName)
-            BlobContainerClient container = new BlobContainerClient(
+            BlobContainerClient container = InstrumentClient(new BlobContainerClient(
                 connectionString,
-                GetNewContainerName());
+                GetNewContainerName()));
             Assert.IsTrue(container.CanGenerateSasUri);
 
             // Act - BlobContainerClient(string connectionString, string blobContainerName, BlobClientOptions options)
-            BlobContainerClient container2 = new BlobContainerClient(
+            BlobContainerClient container2 = InstrumentClient(new BlobContainerClient(
                 connectionString,
                 GetNewContainerName(),
-                GetOptions());
+                GetOptions()));
             Assert.IsTrue(container2.CanGenerateSasUri);
 
             // Act - BlobContainerClient(Uri blobContainerUri, BlobClientOptions options = default)
-            BlobContainerClient container3 = new BlobContainerClient(
+            BlobContainerClient container3 = InstrumentClient(new BlobContainerClient(
                 blobEndpoint,
-                GetOptions());
+                GetOptions()));
             Assert.IsFalse(container3.CanGenerateSasUri);
 
             // Act - BlobContainerClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
-            BlobContainerClient container4 = new BlobContainerClient(
+            BlobContainerClient container4 = InstrumentClient(new BlobContainerClient(
                 blobEndpoint,
                 constants.Sas.SharedKeyCredential,
-                GetOptions());
+                GetOptions()));
             Assert.IsTrue(container4.CanGenerateSasUri);
 
             // Act - BlobContainerClient(Uri blobContainerUri, TokenCredential credential, BlobClientOptions options = default)
             var tokenCredentials = new DefaultAzureCredential();
-            BlobContainerClient container5 = new BlobContainerClient(
+            BlobContainerClient container5 = InstrumentClient(new BlobContainerClient(
                 blobEndpoint,
                 tokenCredentials,
-                GetOptions());
+                GetOptions()));
             Assert.IsFalse(container5.CanGenerateSasUri);
+        }
+
+        [Test]
+        public void CanGenerateSas_Mockable()
+        {
+            // Act
+            var container = new Mock<BlobContainerClient>();
+            container.Setup(x => x.CanGenerateSasUri).Returns(false);
+
+            // Assert
+            Assert.IsFalse(container.Object.CanGenerateSasUri);
+
+            // Act
+            container.Setup(x => x.CanGenerateSasUri).Returns(true);
+
+            // Assert
+            Assert.IsTrue(container.Object.CanGenerateSasUri);
+        }
+
+        [Test]
+        public void CanGenerateSas_GetBlobClient()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
+            var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
+
+            // Act - BlobContainerClient(string connectionString, string blobContainerName)
+            BlobContainerClient container = InstrumentClient(new BlobContainerClient(
+                connectionString,
+                GetNewContainerName()));
+            BlobBaseClient blob = container.GetBlobBaseClient(GetNewBlobName());
+            Assert.IsTrue(blob.CanGenerateSasUri);
+
+            // Act - BlobContainerClient(string connectionString, string blobContainerName, BlobClientOptions options)
+            BlobContainerClient container2 = InstrumentClient(new BlobContainerClient(
+                connectionString,
+                GetNewContainerName(),
+                GetOptions()));
+            BlobBaseClient blob2 = container2.GetBlobBaseClient(GetNewBlobName());
+            Assert.IsTrue(blob2.CanGenerateSasUri);
+
+            // Act - BlobContainerClient(Uri blobContainerUri, BlobClientOptions options = default)
+            BlobContainerClient container3 = InstrumentClient(new BlobContainerClient(
+                blobEndpoint,
+                GetOptions()));
+            BlobBaseClient blob3 = container3.GetBlobBaseClient(GetNewBlobName());
+            Assert.IsFalse(blob3.CanGenerateSasUri);
+
+            // Act - BlobContainerClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
+            BlobContainerClient container4 = InstrumentClient(new BlobContainerClient(
+                blobEndpoint,
+                constants.Sas.SharedKeyCredential,
+                GetOptions()));
+            BlobBaseClient blob4 = container4.GetBlobBaseClient(GetNewBlobName());
+            Assert.IsTrue(blob4.CanGenerateSasUri);
+
+            // Act - BlobContainerClient(Uri blobContainerUri, TokenCredential credential, BlobClientOptions options = default)
+            var tokenCredentials = new DefaultAzureCredential();
+            BlobContainerClient container5 = InstrumentClient(new BlobContainerClient(
+                blobEndpoint,
+                tokenCredentials,
+                GetOptions()));
+            BlobBaseClient blob5 = container5.GetBlobBaseClient(GetNewBlobName());
+            Assert.IsFalse(blob5.CanGenerateSasUri);
+        }
+
+        [Test]
+        public void CanGenerateSas_GetParentServiceClient()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
+            var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
+
+            // Act - BlobContainerClient(string connectionString, string blobContainerName)
+            BlobContainerClient container = InstrumentClient(new BlobContainerClient(
+                connectionString,
+                GetNewContainerName()));
+            BlobServiceClient service = container.GetParentBlobServiceClient();
+            Assert.IsTrue(service.CanGenerateAccountSasUri);
+
+            // Act - BlobContainerClient(string connectionString, string blobContainerName, BlobClientOptions options)
+            BlobContainerClient container2 = InstrumentClient(new BlobContainerClient(
+                connectionString,
+                GetNewContainerName(),
+                GetOptions()));
+            BlobServiceClient service2 = container2.GetParentBlobServiceClient();
+            Assert.IsTrue(service2.CanGenerateAccountSasUri);
+
+            // Act - BlobContainerClient(Uri blobContainerUri, BlobClientOptions options = default)
+            BlobContainerClient container3 = InstrumentClient(new BlobContainerClient(
+                blobEndpoint,
+                GetOptions()));
+            BlobServiceClient service3 = container3.GetParentBlobServiceClient();
+            Assert.IsFalse(service3.CanGenerateAccountSasUri);
+
+            // Act - BlobContainerClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
+            BlobContainerClient container4 = InstrumentClient(new BlobContainerClient(
+                blobEndpoint,
+                constants.Sas.SharedKeyCredential,
+                GetOptions()));
+            BlobServiceClient service4 = container4.GetParentBlobServiceClient();
+            Assert.IsTrue(service4.CanGenerateAccountSasUri);
+
+            // Act - BlobContainerClient(Uri blobContainerUri, TokenCredential credential, BlobClientOptions options = default)
+            var tokenCredentials = new DefaultAzureCredential();
+            BlobContainerClient container5 = InstrumentClient(new BlobContainerClient(
+                blobEndpoint,
+                tokenCredentials,
+                GetOptions()));
+            BlobServiceClient service5 = container5.GetParentBlobServiceClient();
+            Assert.IsFalse(service5.CanGenerateAccountSasUri);
         }
 
         [Test]
@@ -2653,7 +2799,7 @@ namespace Azure.Storage.Blobs.Test
             string containerName = GetNewContainerName();
             BlobContainerSasPermissions permissions = BlobContainerSasPermissions.Read;
             DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
-            BlobContainerClient containerClient = new BlobContainerClient(connectionString, containerName, GetOptions());
+            BlobContainerClient containerClient = InstrumentClient(new BlobContainerClient(connectionString, containerName, GetOptions()));
 
             //Act
             Uri sasUri = containerClient.GenerateSasUri(permissions, expiresOn);
@@ -2683,7 +2829,7 @@ namespace Azure.Storage.Blobs.Test
             BlobContainerSasPermissions permissions = BlobContainerSasPermissions.Read;
             DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
             BlobContainerClient containerClient =
-                new BlobContainerClient(connectionString, containerName, GetOptions());
+                InstrumentClient(new BlobContainerClient(connectionString, containerName, GetOptions()));
 
             BlobSasBuilder sasBuilder = new BlobSasBuilder(permissions, expiresOn)
             {
@@ -2716,10 +2862,10 @@ namespace Azure.Storage.Blobs.Test
             blobUriBuilder.Path += constants.Sas.Account + "/" + GetNewContainerName();
             BlobSasPermissions permissions = BlobSasPermissions.Read;
             DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
-            BlobContainerClient containerClient = new BlobContainerClient(
+            BlobContainerClient containerClient = InstrumentClient(new BlobContainerClient(
                 blobUriBuilder.Uri,
                 constants.Sas.SharedKeyCredential,
-                GetOptions());
+                GetOptions()));
 
             BlobSasBuilder sasBuilder = new BlobSasBuilder(permissions, expiresOn)
             {
@@ -2830,6 +2976,144 @@ namespace Azure.Storage.Blobs.Test
             await container.DeleteIfExistsAsync();
         }
 
+        [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18257")]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task RenameAsync()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            string oldContainerName = GetNewContainerName();
+            string newContainerName = GetNewContainerName();
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(oldContainerName));
+            await container.CreateAsync();
+
+            // Act
+            BlobContainerClient newContainer = await container.RenameAsync(
+                destinationContainerName: newContainerName);
+
+            // Assert
+            await newContainer.GetPropertiesAsync();
+
+            // Cleanup
+            await newContainer.DeleteAsync();
+        }
+
+        [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18257")]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task RenameAsync_AccountSas()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            string oldContainerName = GetNewContainerName();
+            string newContainerName = GetNewContainerName();
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(oldContainerName));
+            await container.CreateAsync();
+            SasQueryParameters sasQueryParameters = GetNewAccountSas();
+            service = InstrumentClient(new BlobServiceClient(new Uri($"{service.Uri}?{sasQueryParameters}"), GetOptions()));
+            BlobContainerClient sasContainer = InstrumentClient(service.GetBlobContainerClient(oldContainerName));
+
+            // Act
+            BlobContainerClient newContainer = await sasContainer.RenameAsync(
+                destinationContainerName: newContainerName);
+
+            // Assert
+            await newContainer.GetPropertiesAsync();
+
+            // Cleanup
+            await newContainer.DeleteAsync();
+        }
+
+        [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18257")]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task RenameAsync_Error()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobContainerClient containerClient = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                containerClient.RenameAsync(GetNewContainerName()),
+                e => Assert.AreEqual(BlobErrorCode.ContainerNotFound.ToString(), e.ErrorCode));
+        }
+
+        [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18257")]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task RenameAsync_SourceLease()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            string oldContainerName = GetNewContainerName();
+            string newContainerName = GetNewContainerName();
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(oldContainerName));
+            await container.CreateAsync();
+            string leaseId = Recording.Random.NewGuid().ToString();
+
+            BlobLeaseClient leaseClient = InstrumentClient(container.GetBlobLeaseClient(leaseId));
+            await leaseClient.AcquireAsync(duration: TimeSpan.FromSeconds(30));
+
+            BlobRequestConditions sourceConditions = new BlobRequestConditions
+            {
+                LeaseId = leaseId
+            };
+
+            // Act
+            BlobContainerClient newContainer = await container.RenameAsync(
+                destinationContainerName: newContainerName,
+                sourceConditions: sourceConditions);
+
+            // Assert
+            await newContainer.GetPropertiesAsync();
+
+            // Cleanup
+            await newContainer.DeleteAsync();
+        }
+
+        [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18257")]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task RenameAsync_SourceLeaseFailed()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            string oldContainerName = GetNewContainerName();
+            string newContainerName = GetNewContainerName();
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(oldContainerName));
+            await container.CreateAsync();
+            string leaseId = Recording.Random.NewGuid().ToString();
+
+            BlobRequestConditions sourceConditions = new BlobRequestConditions
+            {
+                LeaseId = leaseId
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                container.RenameAsync(
+                    destinationContainerName: newContainerName,
+                    sourceConditions: sourceConditions),
+                e => Assert.AreEqual(BlobErrorCode.LeaseNotPresentWithContainerOperation.ToString(), e.ErrorCode));
+
+            // Cleanup
+            await container.DeleteAsync();
+        }
+
+        [Test]
+        public void CanMockClientConstructors()
+        {
+            // One has to call .Object to trigger constructor. It's lazy.
+            var mock = new Mock<BlobContainerClient>(TestConfigDefault.ConnectionString, "name", new BlobClientOptions()).Object;
+            mock = new Mock<BlobContainerClient>(TestConfigDefault.ConnectionString, "name").Object;
+            mock = new Mock<BlobContainerClient>(new Uri("https://test/test"), new BlobClientOptions()).Object;
+            mock = new Mock<BlobContainerClient>(new Uri("https://test/test"), GetNewSharedKeyCredentials(), new BlobClientOptions()).Object;
+            mock = new Mock<BlobContainerClient>(new Uri("https://test/test"), new AzureSasCredential("foo"), new BlobClientOptions()).Object;
+            mock = new Mock<BlobContainerClient>(new Uri("https://test/test"), GetOAuthCredential(TestConfigHierarchicalNamespace), new BlobClientOptions()).Object;
+        }
+
         #region Secondary Storage
         [Test]
         public async Task ListContainersSegmentAsync_SecondaryStorageFirstRetrySuccessful()
@@ -2837,7 +3121,6 @@ namespace Azure.Storage.Blobs.Test
             TestExceptionPolicy testExceptionPolicy = await PerformSecondaryStorageTest(1); // one GET failure means the GET request should end up using the SECONDARY host
             AssertSecondaryStorageFirstRetrySuccessful(SecondaryStorageTenantPrimaryHost(), SecondaryStorageTenantSecondaryHost(), testExceptionPolicy);
         }
-
 
         private async Task<TestExceptionPolicy> PerformSecondaryStorageTest(int numberOfReadFailuresToSimulate, bool retryOn404 = false)
         {
@@ -2931,7 +3214,6 @@ namespace Azure.Storage.Blobs.Test
             bool ifUnmodifiedSince,
             bool lease)
         {
-
             var accessConditions = new BlobRequestConditions { IfModifiedSince = parameters.IfModifiedSince };
             if (ifUnmodifiedSince)
             {

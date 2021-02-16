@@ -58,7 +58,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             var context = new BlobTriggerExecutorContext
             {
                 Blob = new BlobWithContainer<BlobBaseClient>(otherContainer, blob),
-                TriggerSource = BlobTriggerSource.ContainerScan
+                TriggerSource = BlobTriggerScanSource.ContainerScan
             };
 
             // Act
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             Assert.AreEqual(containerName + "/{name}", logMessage.GetStateValue<string>("pattern"));
             Assert.AreEqual(blob.Name, logMessage.GetStateValue<string>("blobName"));
             Assert.Null(logMessage.GetStateValue<string>("pollId"));
-            Assert.AreEqual(context.TriggerSource, logMessage.GetStateValue<BlobTriggerSource>("triggerSource"));
+            Assert.AreEqual(context.TriggerSource, logMessage.GetStateValue<BlobTriggerScanSource>("triggerSource"));
             Assert.True(!string.IsNullOrWhiteSpace(logMessage.GetStateValue<string>("{OriginalFormat}")));
         }
 
@@ -103,7 +103,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             Assert.AreEqual(context.Blob.BlobClient.Name, logMessage.GetStateValue<string>("blobName"));
             Assert.AreEqual("FunctionIdLogName", logMessage.GetStateValue<string>("functionName"));
             Assert.AreEqual(context.PollId, logMessage.GetStateValue<string>("pollId"));
-            Assert.AreEqual(context.TriggerSource, logMessage.GetStateValue<BlobTriggerSource>("triggerSource"));
+            Assert.AreEqual(context.TriggerSource, logMessage.GetStateValue<BlobTriggerScanSource>("triggerSource"));
             Assert.True(!string.IsNullOrWhiteSpace(logMessage.GetStateValue<string>("{OriginalFormat}")));
         }
 
@@ -133,7 +133,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             Assert.AreEqual(context.Blob.BlobClient.Name, logMessage.GetStateValue<string>("blobName"));
             Assert.AreEqual(expectedETag, logMessage.GetStateValue<string>("eTag"));
             Assert.AreEqual(context.PollId, logMessage.GetStateValue<string>("pollId"));
-            Assert.AreEqual(context.TriggerSource, logMessage.GetStateValue<BlobTriggerSource>("triggerSource"));
+            Assert.AreEqual(context.TriggerSource, logMessage.GetStateValue<BlobTriggerScanSource>("triggerSource"));
             Assert.True(!string.IsNullOrWhiteSpace(logMessage.GetStateValue<string>("{OriginalFormat}")));
         }
 
@@ -373,7 +373,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             string expectedETag = context.Blob.BlobClient.GetProperties().Value.ETag.ToString();
             IBlobPathSource input = CreateBlobPath(context.Blob);
 
-
             Mock<IBlobReceiptManager> managerMock = CreateReceiptManagerReferenceMock();
             managerMock
                 .Setup(m => m.TryReadAsync(It.IsAny<BlockBlobClient>(), It.IsAny<CancellationToken>()))
@@ -427,7 +426,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             Assert.AreEqual("testQueueName", logMessage.GetStateValue<string>("queueName"));
             Assert.AreEqual("testMessageId", logMessage.GetStateValue<string>("messageId"));
             Assert.AreEqual(context.PollId, logMessage.GetStateValue<string>("pollId"));
-            Assert.AreEqual(context.TriggerSource, logMessage.GetStateValue<BlobTriggerSource>("triggerSource"));
+            Assert.AreEqual(context.TriggerSource, logMessage.GetStateValue<BlobTriggerScanSource>("triggerSource"));
             Assert.True(!string.IsNullOrWhiteSpace(logMessage.GetStateValue<string>("{OriginalFormat}")));
         }
 
@@ -437,7 +436,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             {
                 Blob = CreateBlobReference(ContainerName, "blob", createBlob),
                 PollId = TestClientRequestId,
-                TriggerSource = BlobTriggerSource.ContainerScan
+                TriggerSource = BlobTriggerScanSource.ContainerScan
             };
         }
 

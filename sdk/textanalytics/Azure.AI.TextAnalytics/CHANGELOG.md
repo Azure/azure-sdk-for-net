@@ -1,10 +1,50 @@
 # Release History
 
+## 5.1.0-beta.5 (Unreleased)
+
+
+## 5.1.0-beta.4 (2021-02-10)
+### New features
+- Added property `Length` to `CategorizedEntity`, `SentenceSentiment`, `LinkedEntityMatch`, `AspectSentiment`, `OpinionSentiment`, and `PiiEntity`.
+- `StringIndexType` has been added to all endpoints that expose the new properties `Offset` and `Length` to determine the encoding which service should use. It is added into the `TextAnalyticsRequestOptions` class and default for this SDK is `UTF-16` code unit.
+- `AnalyzeHealthcareEntitiesOperation` now exposes the properties `CreatedOn`, `ExpiresOn`, `LastModified`, and `Status`.
+- `AnalyzeBatchActionsOperation ` now exposes the properties `CreatedOn`, `ExpiresOn`, `LastModified`, `Status`, `ActionsFailed`, `ActionsInProgress`,  `ActionsSucceeded`,  `DisplayName`, and `TotalActions`.
+
+### Breaking changes
+- Renamed `JobStatus` to `TextAnalyticsOperationStatus`.
+
+#### Analyze Healthcare Entities
+- Pagination support was added for all `StartAnalyzeHealthcareEntities` methods.
+- Moved `Cancel` and `CancelAsync` for Healthcare from `TextAnalyticsClient` to `AnalyzeHealthcareEntitiesOperation`.
+- The healthcare entities returned by `StartAnalyzeHealthcareEntities` are now organized as a directed graph where the edges represent a certain type of healthcare relationship between the source and target entities. Edges are stored in the `RelatedEntities` property.
+- Renamed `StartHealthcareBatch` and `StartHealthcareBatchAsync` to `StartAnalyzeHealthcareEntities` and `StartAnalyzeHealthcareEntitiesAsync` respectively.
+- Renamed `RecognizeHealthcareEntitiesResultCollection` to `AnalyzeHealthcareEntitiesResultCollection`.
+- Renamed `DocumentHealthcareResult` to `AnalyzeHealthcareEntitiesResult`.
+- Renamed `HealthcareOperation` to `AnalyzeHealthcareEntitiesOperation`.
+- Renamed `HealthcareOptions` to `AnalyzeHealthcareEntitiesOptions`, and removed types `Skip` and `Top` from it. Pagination is now done automatically by the SDK.
+- Renamed `HealthcareEntityLink` to `EntityDataSource` with `DataSource` to `EntityDataSource` and `Id` to `Name`.
+- Renamed `HealthcareRelation` to `HealthcareRelationType`.
+- Removed method `GetHealthcareEntities` as pagination is now done with the main `StartAnalyzeHealthcareEntities` methods.
+- Removed `HealthcareTaskResult`.
+- Removed `StartHealthcare` and `StartHealthcareAsync` methods.
+- Removed `IsNegated` property from `HealthcareEntity`.
+
+#### Analyze batch actions
+- The word `action` is now used consistently in our names and documentation instead of `task`.
+- Pagination support was added for all `StartAnalyzeBatchActions` methods.
+- Renamed methods `StartAnalyzeOperationBatch` and `StartAnalyzeOperationBatchAsync` to `StartAnalyzeBatchActions` and `StartAnalyzeBatchActionsAsync` respectively.
+- Type `TextAnalyticsActions` added to `StartAnalyzeBatchActions` methods to specify the actions to execute in the batch of documents instead of in `AnalyzeOperationOptions`.
+- The way to configure the options for each action is now exposed in the respective `ExtractKeyPhrasesOptions`, `RecognizeEntitiesOptions`, or `RecognizePiiEntitiesOptions` object.
+- Results for the `StartAnalyzeBatchActions` method are now returned in a `AnalyzeHealthcareEntitiesResultCollection` object that contains information per type of action.
+- Renamed `AnalyzeOperation` to `AnalyzeBatchActionsOperation`.
+- Reuse `PiiEntityDomainType` instead of `PiiTaskParametersDomain`.
+- Removed `AnalyzeTasks`, `EntitiesTask`, `EntitiesTaskParameters`, `EntityRecognitionTasksItem`, `JobManifestTasks`, `KeyPhraseExtractionTasksItem`, `KeyPhrasesTask`, `KeyPhrasesTaskParameters`, `PiiTask`, `PiiTaskParameters`.
+
 ## 5.1.0-beta.3 (2020-11-19)
 ### New Features
-- Added `HealthcareOperation` long running operation for new asynchronous `Text Analytics for health` hosted API with support for batch processing.
+- Added `HealthcareOperation` long running operation for new asynchronous `Text Analytics for health` hosted API with support for batch processing. Note this is a currently in a gated preview where AAD is not supported. More information [here](https://docs.microsoft.com/azure/cognitive-services/text-analytics/how-tos/text-analytics-for-health?tabs=ner#request-access-to-the-public-preview).
 - Added `AnalyzeOperation` long running operation for new asynchronous `Analyze API` to support batch processing of Named entity recognition, Personally Identifiable Information and Key phrase extraction.
-- Both new features listed above are available in `West US2`, `East US2`, `Central US`, `North Europe` and `West Europe` regions. Also, both the new features are available in Standard tier.
+- Both new features listed above are available in `West US2`, `East US2`, `Central US`, `North Europe` and `West Europe` regions and in Standard tier.
 
 ### Breaking changes
 - Modified the way to turn on Opinion Mining feature in `AnalyzeSentiment` to a bool property called `IncludeOpinionMining`.

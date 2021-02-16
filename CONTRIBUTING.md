@@ -9,9 +9,10 @@
 - Install VS 2019 (Community or higher) and make sure you have the latest updates (https://www.visualstudio.com/).
   - Need at least .NET Framework 4.6.1 and 4.7 development tools
 - Install the **.NET Core cross-platform development** workloads in VisualStudio
-- Install **.NET Core 3.1.301 SDK** for your specific platform. (or a higher version within the 3.1.*** band)  (https://dotnet.microsoft.com/download/dotnet-core/3.1)
+- Install **.NET Core 5.0.100 SDK** for your specific platform. (or a higher version within the 5.0.*** band)  (https://dotnet.microsoft.com/download/dotnet-core/5.0)
 - Install the latest version of git (https://git-scm.com/downloads)
-- Install [NodeJS](https://nodejs.org/en/) (14.x.x) if you plan to use [C# code generation](https://github.com/Azure/autorest.csharp).
+- Install [PowerShell](https://docs.microsoft.com/powershell/scripting/install/installing-powershell), version 6 or higher, if you plan to make public API changes or are working with generated code snippets.
+- Install [NodeJS](https://nodejs.org/) (14.x.x) if you plan to use [C# code generation](https://github.com/Azure/autorest.csharp).
 
 ## GENERAL THINGS TO KNOW:
 
@@ -55,8 +56,11 @@ Nuget package will be created in root directory under \artifacts\packages\Debug 
 ### Using the command line:
 
 Run e.g. `msbuild eng\mgmt.proj /t:"Runtests" /p:Scope=Compute`
-In the above example _RunTests_ will build and run tests for Compute only or you can use command line CLI
-`dotnet test Compute\Microsoft.Azure.Management.Compute\tests\Microsoft.Azure.Management.Tests.csproj`
+In the above example _RunTests_ will build and run tests for Compute only or you can use command line CLI:
+
+```bash
+dotnet test Compute\Microsoft.Azure.Management.Compute\tests\Microsoft.Azure.Management.Tests.csproj
+```
 
 ### Non-Windows command line build
 
@@ -66,6 +70,22 @@ Now you can use the same command on non-windows as above for e.g. on Ubuntu you 
 - `dotnet msbuild eng\mgmt.proj /t:RunTests /p:scope=Compute`
 - `dotnet msbuild eng\mgmt.proj /t:CreateNugetPackage /p:scope=Compute`
 - `dotnet msbuild build.proj /t:Util /p:UtilityName=InstallPsModules`
+
+### Code Coverage
+
+If you want to enable code coverage reporting, on the command line pass `/p:CollectCoverage=true` like so:
+
+```bash
+dotnet tool restore
+dotnet test /p:CollectCoverage=true
+```
+
+On developers' machines, you can open `index.html` from within the `TestResults` directory in each of your test projects.
+Coverage reports can also be found in Azure Pipelines on the "Code Coverage" tab after a pull request validation build completes.
+All covered projects should have 70% or better test coverage.
+
+By default, all _Azure.*_ libraries are covered, and any project that sets the `IsClientLibrary=true` MSBuild property.
+To exclude a project, set `ExcludeFromCodeCoverage=true` in the project's MSBuild properties before other targets are imported.
 
 ### Update build tools
 
@@ -231,58 +251,87 @@ Each library needs to provide a `ApiCompatVersion` property which is set to the 
 ### Releasing a new version of a GA'ed libary
 Since the [eng/Packages.Data.props](https://github.com/Azure/azure-sdk-for-net/blob/master/eng/Packages.Data.props) is currently maintained manually, you will need to update the version number for your library in this file when releasing a new version.
 
-## Dev Feed
-We publish daily built packages to a [dev feed](https://dev.azure.com/azure-sdk/public/_packaging?_a=feed&feed=azure-sdk-for-net) which can be consumed by adding the dev feed as a package source in Visual Studio. 
+## NuGet Package Dev Feed
 
-Follow instructions provided [here](https://docs.microsoft.com/nuget/consume-packages/install-use-packages-visual-studio#package-sources) and use `https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json` as the source.
+The Azure SDK for .NET releases packages daily from our CI pipeline to our NuGet package dev feed to help developers use and test new libraries before they are officially released to NuGet.
 
-You can also achieve this from the command line.
+**Dev Feed Package Browser**:
 
-```nuget.exe sources add -Name "Azure SDK for Net Dev Feed" -Source "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json"```
+- https://dev.azure.com/azure-sdk/public/_packaging?_a=feed&feed=azure-sdk-for-net
 
-Open your NuGet.config file to ensure that the dev feed source comes before the public repository source:
+**Dev Feed Package Source**:
+
+- https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json
+
+### 1. Add NuGet Package Dev Feed
+
+You have multiple options for referencing the dev feed. You can either add it via the NuGet CLI or manually edit your NuGet.Config file.
+
+#### NuGet CLI
+
+You can add the dev feed using the [NuGet CLI](https://docs.microsoft.com/nuget/reference/nuget-exe-cli-reference), which will add it to the NuGet.Config file.
+
+```bash
+nuget sources add -Name "Azure SDK for .NET Dev Feed" -Source "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json"
+```
+
+You can then view the list of NuGet package sources with this command:
+
+```bash
+nuget sources
+```
+
+#### NuGet Config file
+
+You can add the dev feed to your NuGet.Config file, which can be at the Solution, User, or Computer level. See [NuGet.Config file locations and uses](https://docs.microsoft.com/nuget/consume-packages/configuring-nuget-behavior#config-file-locations-and-uses) to locate your NuGet.Config file.
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <configuration>
   <packageSources>
-    <add key="Azure SDK for Net Dev Feed" value="https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json" protocolVersion="3" />
-    <add key="nuget.org" value="https://api.nuget.org/v3/index.json" protocolVersion="3" />
+    <clear />
+    <add key="Azure SDK for .NET Dev Feed" value="https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json" />
   </packageSources>
+  <disabledPackageSources>
+    <clear />
+  </disabledPackageSources>
 </configuration>
 ```
 
-You can then consume packages from this package source, remember to check the [Include prerelease](https://docs.microsoft.com/nuget/create-packages/prerelease-packages#installing-and-updating-pre-release-packages) box in Visual Studio when searching for the packages. 
+> You can place a NuGet.Config file in the root of your solution. Projects within the solution will use the feed defined in that file.
 
-To see the list of packages you can browse the [dev feed](https://dev.azure.com/azure-sdk/public/_packaging?_a=feed&feed=azure-sdk-for-net) and search for the package you are interested in. Or you can do it from the command line via `nuget.exe list -Prelease -Source "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json"`
+### 2. Find NuGet Package
 
-To consume the a dev package set the exact version in your project or to consume the latest dev package set the version to `x.y.z-dev.*` for example:
+You can use the following options to find the available dev feed packages:
+
+1. Search the Azure SDK for .NET Dev Feed: https://dev.azure.com/azure-sdk/public/_packaging?_a=feed&feed=azure-sdk-for-net
+1. In Visual Studio, use the [Package Manager UI](https://docs.microsoft.com/nuget/create-packages/prerelease-packages#installing-and-updating-pre-release-packages), be sure to check "Include prerelease".
+1. Use the NuGet CLI, for example `nuget list azure.identity -Prerelease -Allversions`
+
+### 3. Reference NuGet Package
+
+Now that you have found the package you want to use, it is time to add it to your project file.
+
+As you can see in the example below, we want to use the `Azure.Data.Tables` version `3.0.0-alpha.*`. By using the `*` in the version number each `dotnet restore` will pull the latest version from the dev feed.
 
 ```xml
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-  </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Azure.Identity" Version="1.2.0-dev.*" />
+    <PackageReference Include="Azure.Data.Tables" Version="3.0.0-alpha.*" />
   </ItemGroup>
 </Project>
 ```
 
-## Preparing to a release of the new library
+## Preparing a new library release
 
-To update the CHANGELOG, version and release tracking information use the `.\eng\scripts\Prepare-Release.ps1` script.
-
-The syntax is `.\eng\scripts\Prepare-Release.ps1 <package_name>`. The script would ask you for a new version or `NA` if you are not releasing in this cycle.
+To prepare a package for release you should make use of `.\eng\common\scripts\Prepare-Release.ps1` script passing it appropriate arguments for the package intended for release as well as the release date. This script will correctly update the package version in the repo as well as update DevOps release work items for that release. 
 
 If you are releasing out-of-band please use the `-ReleaseDate` parameter to specify the release data. `ReleaseDate` should be in `yyyy-MM-dd` format.
 
 Example invocations:
 
 ```powershell
-.\eng\scripts\Prepare-Release.ps1 Azure.Core
-.\eng\scripts\Prepare-Release.ps1 Azure.Core -ReleaseDate 2020-10-01
+.\eng\scripts\Prepare-Release.ps1 -PackageName "Azure.Core" -SerivceDirectory "core" -ReleaseDate "2020-10-01"
 ```
 
 ## On-boarding New Libraries

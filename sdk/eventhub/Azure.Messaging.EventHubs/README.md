@@ -1,6 +1,6 @@
 # Azure Event Hubs client library for .NET
 
-Azure Event Hubs is a highly scalable publish-subscribe service that can ingest millions of events per second and stream them to multiple consumers. This lets you process and analyze the massive amounts of data produced by your connected devices and applications. Once Event Hubs has collected the data, you can retrieve, transform and store it by using any real-time analytics provider or with batching/storage adapters.  If you would like to know more about Azure Event Hubs, you may wish to review: [What is Event Hubs](https://docs.microsoft.com/azure/event-hubs/event-hubs-about)?
+Azure Event Hubs is a highly scalable publish-subscribe service that can ingest millions of events per second and stream them to multiple consumers. This lets you process and analyze the massive amounts of data produced by your connected devices and applications. Once Event Hubs has collected the data, you can retrieve, transform, and store it by using any real-time analytics provider or with batching/storage adapters.  If you would like to know more about Azure Event Hubs, you may wish to review: [What is Event Hubs](https://docs.microsoft.com/azure/event-hubs/event-hubs-about).
 
 The Azure Event Hubs client library allows for publishing and consuming of Azure Event Hubs events and may be used to:
 
@@ -12,7 +12,7 @@ The Azure Event Hubs client library allows for publishing and consuming of Azure
 
 - Receive events from one or more publishers, transform them to better meet the needs of your ecosystem, then publish the transformed events to a new stream for consumers to observe.
 
-[Source code](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/src) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Messaging.EventHubs/) | [API reference documentation](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs?view=azure-dotnet)) | [Product documentation](https://docs.microsoft.com/azure/event-hubs/) | [Migration guide](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/MigrationGuide.md)
+[Source code](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/src) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Messaging.EventHubs/) | [API reference documentation](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs)) | [Product documentation](https://docs.microsoft.com/azure/event-hubs/) | [Migration guide](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/MigrationGuide.md)
 
 ## Getting started
 
@@ -32,7 +32,7 @@ The Azure Event Hubs client library allows for publishing and consuming of Azure
 
 To quickly create a basic set of Event Hubs resources in Azure and to receive a connection string for them, you can deploy our sample template by clicking:
 
-[![](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-sdk-for-net%2Fmaster%2Fsdk%2Feventhub%2FAzure.Messaging.EventHubs%2Fassets%2Fsamples-azure-deploy.json)
+[![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-sdk-for-net%2Fmaster%2Fsdk%2Feventhub%2FAzure.Messaging.EventHubs%2Fassets%2Fsamples-azure-deploy.json)
 
 ### Install the package
 
@@ -241,11 +241,12 @@ An `EventHubsException` is triggered when an operation specific to Event Hubs ha
   - **Quota Exceeded** : This typically indicates that there are too many active read operations for a single consumer group.  This limit depends on the tier of the Event Hubs namespace, and moving to a higher tier may be desired.  An alternative would be to create additional consumer groups and ensure that the number of consumer client reads for any group is within the limit.  Please see [Azure Event Hubs quotas and limits](https://docs.microsoft.com/azure/event-hubs/event-hubs-quotas) for more information.
 
   - **Message Size Exceeded** : Event data as a maximum size allowed for both an individual event and a batch of events.  This includes the data of the event, as well as any associated metadata and system overhead.  The best approach for resolving this error is to reduce the number of events being sent in a batch or the size of data included in the message.  Because size limits are subject to change, please refer to [Azure Event Hubs quotas and limits](https://docs.microsoft.com/azure/event-hubs/event-hubs-quotas) for specifics.  
+  
   - **Consumer Disconnected** : A consumer client was disconnected by the Event Hub service from the Event Hub instance.  This typically occurs when a consumer with a higher owner level asserts ownership over a partition and consumer group pairing.
   
   - **Resource Not Found**: An Event Hubs resource, such as an Event Hub, consumer group, or partition, could not be found by the Event Hubs service.  This may indicate that it has been deleted from the service or that there is an issue with the Event Hubs service itself.
   
-Reacting to a specific failure reason for the `EventHubException` can be accomplished in several ways, such as by applying an exception filter clause as part of the `catch` block:
+Reacting to a specific failure reason for the `EventHubsException` can be accomplished in several ways, such as by applying an exception filter clause as part of the `catch` block:
 
 ```C# Snippet:EventHubs_ReadMe_ExceptionFilter
 try

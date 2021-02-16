@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -11,6 +12,7 @@ using Azure.Core.TestFramework;
 using Azure.Data.Tables;
 using Azure.Data.Tables.Sas;
 using NUnit.Framework;
+using Parms = Azure.Data.Tables.TableConstants.Sas.Parameters;
 
 namespace Azure.Tables.Tests
 {
@@ -101,6 +103,31 @@ namespace Azure.Tables.Tests
 
             Assert.That(sas.Permissions, Is.EqualTo(permissions.ToPermissionsString()));
             Assert.That(sas.ExpiresOn, Is.EqualTo(expiry));
+        }
+
+        [Test]
+        public void GetSasBuilderGeneratesCorrectUri()
+        {
+            var expiry = new DateTimeOffset(2020, 1, 1, 1, 1, 1, TimeSpan.Zero);
+            var permissions = TableSasPermissions.All;
+
+            var sas = client.GetSasBuilder(permissions.ToPermissionsString(), expiry);
+
+            const string startIP = "123.45.67.89";
+            const string endIP = "123.65.43.21";
+            sas.IPRange = new TableSasIPRange(IPAddress.Parse(startIP), IPAddress.Parse(endIP));
+            sas.PartitionKeyEnd = "PKEND";
+            sas.PartitionKeyStart = "PKSTART";
+            sas.RowKeyEnd = "PKEND";
+            sas.RowKeyStart = "RKSTART";
+            sas.StartsOn = expiry.AddHours(-1);
+
+            string token = sas.Sign(new TableSharedKeyCredential("foo", "Kg=="));
+
+            Assert.That(
+                token,
+                Is.EqualTo(
+                    $"{Parms.TableName}={TableName}&{Parms.StartPartitionKey}={sas.PartitionKeyStart}&{Parms.EndPartitionKey}={sas.PartitionKeyEnd}&{Parms.StartRowKey}={sas.RowKeyStart}&{Parms.EndRowKey}={sas.RowKeyEnd}&{Parms.Version}=2019-02-02&{Parms.StartTime}=2020-01-01T00%3A01%3A01Z&{Parms.ExpiryTime}=2020-01-01T01%3A01%3A01Z&{Parms.IPRange}=123.45.67.89-123.65.43.21&{Parms.Permissions}=raud&{Parms.Signature}=nUfFBSzJ7NckYoHxSeX5nKcVbqJDBJQfPpGffr5Ui2M%3D"));
         }
 
         /// <summary>
