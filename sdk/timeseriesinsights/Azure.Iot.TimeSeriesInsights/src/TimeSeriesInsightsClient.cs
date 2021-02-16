@@ -112,8 +112,7 @@ namespace Azure.Iot.TimeSeriesInsights
             try
             {
                 // To do: Generate client session Id
-                Guid gd = Guid.NewGuid();
-                Response<ModelSettingsResponse> modelSettings = await _modelSettingsRestClient.GetAsync(gd.ToString(), cancellationToken).ConfigureAwait(false);
+                Response<ModelSettingsResponse> modelSettings = await _modelSettingsRestClient.GetAsync(null, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(modelSettings.Value.ModelSettings, modelSettings.GetRawResponse());
             }
             catch (Exception ex)
