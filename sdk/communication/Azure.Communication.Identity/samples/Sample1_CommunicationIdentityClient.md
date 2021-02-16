@@ -63,6 +63,26 @@ Console.WriteLine($"Token: {token}");
 Console.WriteLine($"Expires On: {expiresOn}");
 ```
 
+## Generate TURN credentials
+
+The example code snippet below shows how to generate TURN credentials for an Azure Communication user that was created following the steps above.
+A set of TURN credentials are returned for the user. Each TURN credential consists of a url for a TURN server, its corresponding username and a credential. 
+
+Every set of TURN credentials is stamped with an expiry date. Once the credentials are expired, you can renew the token by calling the same method.
+
+```C# Snippet:CreateTURNTokenAsync
+Response<CommunicationTurnCredentialsResponse> turnTokenResponse = await client.IssueTurnCredentialsAsync(user);
+DateTimeOffset turnTokenExpiresOn = turnTokenResponse.Value.ExpiresOn;
+IReadOnlyList<CommunicationTurnServer> turnServers = turnTokenResponse.Value.TurnServers;
+Console.WriteLine($"Expires On: {turnTokenExpiresOn}");
+foreach (CommunicationTurnServer turnServer in turnServers)
+{
+    Console.WriteLine($"TURN Url: {turnServer.Urls}");
+    Console.WriteLine($"TURN Username: {turnServer.Username}");
+    Console.WriteLine($"TURN Credential: {turnServer.Credential}");
+}
+```
+
 <!--
 To see the full example source files, see:
 * [Generate user token][GenerateUserTokenCode]

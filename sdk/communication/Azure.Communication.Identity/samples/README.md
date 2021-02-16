@@ -16,12 +16,11 @@ To get started you will need to have an Azure Subscription. Once you have this y
 
 This client library allows to do following operations:
  - Generate user tokens that allows the holders to access Azure Communication Services.
- - Purchase, configure and release phone numbers.
+ - Generate TURN server credentials that allows the holders to get access to a TURN server for media relay.
 
  #### You can find samples for each of these functions below.
- - Generate user tokens [synchronously][sample_identity] or [asynchronously][sample_identity_async]
+ - Generate user tokens and TURN credentials [synchronously][sample_identity] or [asynchronously][sample_identity_async]
  
 <!-- LINKS -->
 [sample_identity]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/communication/Azure.Communication.Identity/samples/Sample1_CommunicationIdentityClient.md
 [sample_identity_async]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/communication/Azure.Communication.Identity/samples/Sample1_CommunicationIdentityClientAsync.md
-[
