@@ -47,6 +47,8 @@ namespace Azure.Iot.ModelsRepository.Fetchers
                 string fnfError = string.Empty;
                 while (work.Count != 0 && !cancellationToken.IsCancellationRequested)
                 {
+                    cancellationToken.ThrowIfCancellationRequested();
+
                     string tryContentPath = work.Dequeue();
                     ResolverEventSource.Instance.FetchingModelContent(tryContentPath);
 

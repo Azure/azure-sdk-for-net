@@ -12,10 +12,12 @@ namespace Azure.Iot.ModelsRepository
         /// Do not process external dependencies.
         /// </summary>
         Disabled,
+
         /// <summary>
         /// Enable external dependencies.
         /// </summary>
         Enabled,
+
         /// <summary>
         /// Try to get external dependencies using .expanded.json.
         /// </summary>
