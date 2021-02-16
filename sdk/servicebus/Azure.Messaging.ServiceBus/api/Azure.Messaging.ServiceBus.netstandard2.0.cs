@@ -370,6 +370,7 @@ namespace Azure.Messaging.ServiceBus
         public virtual int MaxConcurrentSessions { get { throw null; } }
         public virtual int PrefetchCount { get { throw null; } }
         public virtual Azure.Messaging.ServiceBus.ServiceBusReceiveMode ReceiveMode { get { throw null; } }
+        public virtual System.TimeSpan? SessionIdleTimeout { get { throw null; } }
         public event System.Func<Azure.Messaging.ServiceBus.ProcessErrorEventArgs, System.Threading.Tasks.Task> ProcessErrorAsync { add { } remove { } }
         public event System.Func<Azure.Messaging.ServiceBus.ProcessSessionMessageEventArgs, System.Threading.Tasks.Task> ProcessMessageAsync { add { } remove { } }
         public event System.Func<Azure.Messaging.ServiceBus.ProcessSessionEventArgs, System.Threading.Tasks.Task> SessionClosingAsync { add { } remove { } }
@@ -394,6 +395,7 @@ namespace Azure.Messaging.ServiceBus
         public int MaxConcurrentSessions { get { throw null; } set { } }
         public int PrefetchCount { get { throw null; } set { } }
         public Azure.Messaging.ServiceBus.ServiceBusReceiveMode ReceiveMode { get { throw null; } set { } }
+        public System.TimeSpan? SessionIdleTimeout { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> SessionIds { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }

@@ -55,8 +55,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// 'NotStarted', 'InProgress', 'Succeeded', 'Failed'</param>
         /// <param name="hostName">The host name of the endpoint structured as
         /// {endpointName}.{DNSZone}, e.g. contoso.azureedge.net</param>
-        public AFDEndpoint(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SystemData systemData = default(SystemData), int? originResponseTimeoutSeconds = default(int?), string enabledState = default(string), string provisioningState = default(string), string deploymentStatus = default(string), string hostName = default(string))
-            : base(location, id, name, type, tags, systemData)
+        public AFDEndpoint(string location, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), IDictionary<string, string> tags = default(IDictionary<string, string>), int? originResponseTimeoutSeconds = default(int?), string enabledState = default(string), string provisioningState = default(string), string deploymentStatus = default(string), string hostName = default(string))
+            : base(location, id, name, type, systemData, tags)
         {
             OriginResponseTimeoutSeconds = originResponseTimeoutSeconds;
             EnabledState = enabledState;

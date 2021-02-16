@@ -9,12 +9,12 @@ using System;
 
 namespace Azure.MixedReality.RemoteRendering
 {
-    /// <summary> Settings for where to retrieve input files from and where to write output files. Supplied when creating the conversion. </summary>
+    /// <summary> Conversion settings describe the origin of input files and destination of output files. </summary>
     public partial class AssetConversionOptions
     {
         /// <summary> Initializes a new instance of AssetConversionOptions. </summary>
-        /// <param name="inputOptions"> Settings for the conversion input. </param>
-        /// <param name="outputOptions"> Settings for the conversion output. </param>
+        /// <param name="inputOptions"> Conversion input settings describe the origin of conversion input. </param>
+        /// <param name="outputOptions"> Conversion output settings describe the destination of conversion output. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inputOptions"/> or <paramref name="outputOptions"/> is null. </exception>
         public AssetConversionOptions(AssetConversionInputOptions inputOptions, AssetConversionOutputOptions outputOptions)
         {

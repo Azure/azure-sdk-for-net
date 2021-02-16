@@ -70,7 +70,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             ));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TestGetSparkJob()
         {
             SparkJobDefinitionClient client = CreateClient ();
@@ -87,7 +87,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TestDeleteSparkJob()
         {
             SparkJobDefinitionClient client = CreateClient();
@@ -98,7 +98,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             await deleteOperation.WaitAndAssertSuccessfulCompletion();
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TestRenameSparkJob()
         {
             SparkJobDefinitionClient client = CreateClient();
@@ -118,7 +118,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         }
 
         [Ignore ("https://github.com/Azure/azure-sdk-for-net/issues/18079 - SYNAPSE_API_ISSUE - Parameter name: ClassName")]
-        [Test]
+        [RecordedTest]
         public async Task TestExecute()
         {
             SparkJobDefinitionClient client = CreateClient();
@@ -129,7 +129,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         }
 
         [Ignore ("https://github.com/Azure/azure-sdk-for-net/issues/18079 - SYNAPSE_API_ISSUE - Causes internal error")]
-        [Test]
+        [RecordedTest]
         public async Task TestDebug()
         {
             SparkJobDefinitionClient client = CreateClient();

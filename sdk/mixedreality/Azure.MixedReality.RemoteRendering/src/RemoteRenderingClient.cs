@@ -21,7 +21,7 @@ namespace Azure.MixedReality.RemoteRendering
 
         private readonly HttpPipeline _pipeline;
 
-        private readonly MixedRealityRemoteRenderingRestClient _restClient;
+        private readonly RemoteRenderingRestClient _restClient;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RemoteRenderingClient" /> class.
@@ -63,7 +63,7 @@ namespace Azure.MixedReality.RemoteRendering
             _accountId = account.AccountId;
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(mrTokenCredential, GetDefaultScope(remoteRenderingEndpoint)));
-            _restClient = new MixedRealityRemoteRenderingRestClient(_clientDiagnostics, _pipeline, remoteRenderingEndpoint.ToString(), options.Version);
+            _restClient = new RemoteRenderingRestClient(_clientDiagnostics, _pipeline, remoteRenderingEndpoint.ToString(), options.Version);
         }
 
 #pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.

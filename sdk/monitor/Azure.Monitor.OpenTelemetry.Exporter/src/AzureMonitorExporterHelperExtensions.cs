@@ -30,7 +30,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             configure?.Invoke(options);
 
             // TODO: Pick Simple vs Batching based on AzureMonitorExporterOptions
-            return builder.AddProcessor(new BatchExportProcessor<Activity>(new AzureMonitorTraceExporter(options)));
+            return builder.AddProcessor(new BatchActivityExportProcessor(new AzureMonitorTraceExporter(options)));
         }
     }
 }

@@ -114,6 +114,28 @@ namespace Azure.Communication.Identity.Samples
         }
 
         [Test]
+        public async Task CreateIdentityWithAccessKey()
+        {
+            #region Snippet:CreateCommunicationIdentityFromAccessKey
+            var endpoint = new Uri("https://my-resource.communication.azure.com");
+            var accessKey = "<access_key>";
+            /*@@*/ endpoint = TestEnvironment.Endpoint;
+            /*@@*/ accessKey = TestEnvironment.AccessKey;
+            var client = new CommunicationIdentityClient(endpoint, new AzureKeyCredential(accessKey));
+            #endregion Snippet:CreateCommunicationIdentityFromAccessKey
+
+            client = CreateClientWithAzureKeyCredential();
+            try
+            {
+                Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync();
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+        }
+
+        [Test]
         public async Task Troubleshooting()
         {
             var connectionString = TestEnvironment.ConnectionString;
@@ -131,7 +153,7 @@ namespace Azure.Communication.Identity.Samples
             {
                 Console.WriteLine(ex.Message);
             }
-            #endregion
+            #endregion Snippet:CommunicationIdentityClient_Troubleshooting
             catch (Exception ex)
             {
                 Assert.Fail($"Unexpected error: {ex}");

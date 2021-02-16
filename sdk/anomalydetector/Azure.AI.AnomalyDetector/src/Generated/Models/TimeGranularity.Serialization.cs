@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.AI.AnomalyDetector.Models
 {
-    internal static class TimeGranularityExtensions
+    internal static partial class TimeGranularityExtensions
     {
         public static string ToSerialString(this TimeGranularity value) => value switch
         {

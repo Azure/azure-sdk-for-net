@@ -1,9 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.Diagnostics;
 using global::OpenTelemetry;
 using global::OpenTelemetry.Resources;
+
+using OpenTelemetry.Trace;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
 {
@@ -13,9 +16,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
 
         public static void Main()
         {
-            var resource = Resources.CreateServiceResource("my-service", "roleinstance1", "my-namespace");
+            var resourceAttributes = new Dictionary<string, object> { { "service.name", "my-service" }, { "service.namespace", "my-namespace" }, { "service.instance.id", "my-instance" } };
+            var resourceBuilder = ResourceBuilder.CreateDefault().AddAttributes(resourceAttributes);
+
             using var tracerProvider = Sdk.CreateTracerProviderBuilder()
-                .SetResource(resource)
+                .SetResourceBuilder(resourceBuilder)
                 .AddSource("Demo.DemoServer")
                 .AddSource("Demo.DemoClient")
                 .AddAzureMonitorTraceExporter(o => {

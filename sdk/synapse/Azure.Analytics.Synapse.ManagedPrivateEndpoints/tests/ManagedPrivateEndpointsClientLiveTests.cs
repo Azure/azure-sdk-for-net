@@ -36,7 +36,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Tests
         }
 
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/17455")]
-        [Test]
+        [RecordedTest]
         public async Task TestManagedPrivateEndpoints()
         {
             ManagedPrivateEndpointsClient client = CreateClient();

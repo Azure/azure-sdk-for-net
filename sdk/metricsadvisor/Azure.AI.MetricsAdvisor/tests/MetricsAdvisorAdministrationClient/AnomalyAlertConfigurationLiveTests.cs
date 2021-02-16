@@ -931,7 +931,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             try
             {
-                configId = await adminClient.CreateAlertConfigurationAsync(configToCreate);
+                AnomalyAlertConfiguration createdConfig = await adminClient.CreateAlertConfigurationAsync(configToCreate);
+                configId = createdConfig.Id;
 
                 Assert.That(configId, Is.Not.Null.And.Not.Empty);
             }

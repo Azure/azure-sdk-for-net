@@ -108,5 +108,10 @@ namespace Azure.MixedReality.RemoteRendering
             }
             return _response;
         }
+
+        /// <summary> Initializes a new instance of StartRenderingSessionOperation for mocking. </summary>
+        protected StartRenderingSessionOperation()
+        {
+        }
     }
 }
