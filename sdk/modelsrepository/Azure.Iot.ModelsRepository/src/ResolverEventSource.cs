@@ -10,7 +10,6 @@ namespace Azure.Iot.ModelsRepository
     [EventSource(Name = EventSourceName)]
     internal sealed class ResolverEventSource : EventSource
     {
-        // Set EventSource name to package name replacing . with -
         private const string EventSourceName = ModelRepositoryConstants.ModelRepositoryEventSourceName;
 
         // Event ids defined as constants to makes it easy to keep track of them
@@ -26,8 +25,7 @@ namespace Azure.Iot.ModelsRepository
         public static ResolverEventSource Shared { get; } = new ResolverEventSource();
 
         private ResolverEventSource()
-            : base(
-                  EventSourceName,
+            : base(EventSourceName,
                   EventSourceSettings.Default,
                   AzureEventSourceListener.TraitName,
                   AzureEventSourceListener.TraitValue)
