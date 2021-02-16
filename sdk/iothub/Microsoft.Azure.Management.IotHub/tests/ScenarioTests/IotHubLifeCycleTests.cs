@@ -37,7 +37,7 @@ namespace IotHub.Tests.ScenarioTests
                     .CheckNameAvailabilityAsync(IotHubTestUtilities.DefaultIotHubName)
                     .ConfigureAwait(false);
 
-                if (!(bool)iotHubNameAvailabilityInfo.NameAvailable)
+                if (!iotHubNameAvailabilityInfo.NameAvailable.Value)
                 {
                     _ = await iotHubClient.IotHubResource
                         .DeleteAsync(
@@ -73,6 +73,7 @@ namespace IotHub.Tests.ScenarioTests
                         })
                     .ConfigureAwait(false);
 
+                iotHub.Should().NotBeNull();
                 iotHub.Name.Should().Be(IotHubTestUtilities.DefaultIotHubName);
                 iotHub.Location.Should().Be(IotHubTestUtilities.DefaultLocation);
                 iotHub.Sku.Name.Should().Be(IotHubSku.S1);
@@ -196,12 +197,10 @@ namespace IotHub.Tests.ScenarioTests
                         IotHubTestUtilities.DefaultResourceGroupName,
                         IotHubTestUtilities.DefaultIotHubName,
                         IotHubTestUtilities.EventsEndpointName,
-                        "testConsumerGroup",
-                        new EventHubConsumerGroupName("testConsumerGroup"))
+                        "testConsumerGroup")
                     .ConfigureAwait(false);
 
                 ehConsumerGroup.Name.Should().Be("testConsumerGroup");
-
 
                 // Get EH consumer group
                 ehConsumerGroup = await iotHubClient.IotHubResource
@@ -263,6 +262,7 @@ namespace IotHub.Tests.ScenarioTests
             catch (ErrorDetailsException ex)
             {
                 Console.WriteLine(ex.ToString());
+                Console.WriteLine($"{ex.Body.Message}: {ex.Body.Details}");
                 throw;
             }
             catch (Exception ex)
@@ -275,152 +275,181 @@ namespace IotHub.Tests.ScenarioTests
         [Fact]
         public async Task TestIotHubUpdateLifecycle()
         {
-            using MockContext context = MockContext.Start(GetType());
-            Initialize(context);
-
-            // Create Resource Group
-            ResourceGroup resourceGroup = await CreateResourceGroupAsync(IotHubTestUtilities.DefaultUpdateResourceGroupName);
-
-            // Check if Hub Exists and Delete
-            var iotHubNameAvailabilityInfo = await iotHubClient.IotHubResource
-                .CheckNameAvailabilityAsync(IotHubTestUtilities.DefaultUpdateIotHubName)
-                .ConfigureAwait(false);
-
-            if (!(bool)iotHubNameAvailabilityInfo.NameAvailable)
+            try
             {
-                await iotHubClient.IotHubResource
-                    .DeleteAsync(
-                        IotHubTestUtilities.DefaultResourceGroupName,
+                using MockContext context = MockContext.Start(GetType());
+                Initialize(context);
+
+                // Create Resource Group
+                ResourceGroup resourceGroup = await CreateResourceGroupAsync(IotHubTestUtilities.DefaultUpdateResourceGroupName);
+
+                // Check if Hub Exists and Delete
+                var iotHubNameAvailabilityInfo = await iotHubClient.IotHubResource
+                    .CheckNameAvailabilityAsync(IotHubTestUtilities.DefaultUpdateIotHubName)
+                    .ConfigureAwait(false);
+
+                if (!iotHubNameAvailabilityInfo.NameAvailable.Value)
+                {
+                    _ = await iotHubClient.IotHubResource
+                        .DeleteAsync(
+                            IotHubTestUtilities.DefaultResourceGroupName,
+                            IotHubTestUtilities.DefaultUpdateIotHubName)
+                        .ConfigureAwait(false);
+                }
+
+                var iotHub = await CreateIotHubAsync(resourceGroup, IotHubTestUtilities.DefaultLocation, IotHubTestUtilities.DefaultUpdateIotHubName, null)
+                    .ConfigureAwait(false);
+
+                iotHub.Should().NotBeNull();
+                iotHub.Sku.Name.Should().Be(IotHubSku.S1);
+                iotHub.Name.Should().Be(IotHubTestUtilities.DefaultUpdateIotHubName);
+
+                // Update capacity
+                iotHub.Sku.Capacity += 1;
+                var retIotHub = await UpdateIotHubAsync(resourceGroup, iotHub, IotHubTestUtilities.DefaultUpdateIotHubName)
+                    .ConfigureAwait(false);
+
+                // Update IotHub with routing rules
+                iotHub.Properties.Routing = await GetIotHubRoutingPropertiesAsync(resourceGroup).ConfigureAwait(false);
+                retIotHub = await UpdateIotHubAsync(resourceGroup, iotHub, IotHubTestUtilities.DefaultUpdateIotHubName).ConfigureAwait(false);
+
+                retIotHub.Should().NotBeNull();
+                retIotHub.Name.Should().Be(IotHubTestUtilities.DefaultUpdateIotHubName);
+                retIotHub.Properties.Routing.Routes.Count.Should().Be(4);
+                retIotHub.Properties.Routing.Endpoints.EventHubs.Count.Should().Be(1);
+                retIotHub.Properties.Routing.Endpoints.ServiceBusTopics.Count.Should().Be(1);
+                retIotHub.Properties.Routing.Endpoints.ServiceBusQueues.Count.Should().Be(1);
+                retIotHub.Properties.Routing.Routes[0].Name.Should().Be("route1");
+
+                // Get an Iot Hub
+                var iotHubDesc = await iotHubClient.IotHubResource
+                    .GetAsync(
+                        IotHubTestUtilities.DefaultUpdateResourceGroupName,
                         IotHubTestUtilities.DefaultUpdateIotHubName)
                     .ConfigureAwait(false);
 
-                iotHubNameAvailabilityInfo = await iotHubClient.IotHubResource
-                    .CheckNameAvailabilityAsync(IotHubTestUtilities.DefaultUpdateIotHubName)
-                    .ConfigureAwait(false);
-                Assert.True(iotHubNameAvailabilityInfo.NameAvailable);
+                iotHubDesc.Should().NotBeNull();
+                iotHubDesc.Sku.Name.Should().Be(IotHubSku.S1);
+                iotHubDesc.Sku.Capacity.Should().Be(iotHub.Sku.Capacity);
+                iotHubDesc.Name.Should().Be(IotHubTestUtilities.DefaultUpdateIotHubName);
+
+                // Update Again
+                // perform a fake update
+                iotHubDesc.Properties.Routing.Endpoints.EventHubs[0].ResourceGroup = "1";
+                retIotHub = await UpdateIotHubAsync(resourceGroup, iotHubDesc, IotHubTestUtilities.DefaultUpdateIotHubName).ConfigureAwait(false);
+
+                retIotHub.Should().NotBeNull();
+                retIotHub.Name.Should().Be(IotHubTestUtilities.DefaultUpdateIotHubName);
+                retIotHub.Properties.Routing.Routes.Count.Should().Be(4);
+                retIotHub.Properties.Routing.Endpoints.EventHubs.Count.Should().Be(1);
+                retIotHub.Properties.Routing.Endpoints.ServiceBusTopics.Count.Should().Be(1);
+                retIotHub.Properties.Routing.Endpoints.ServiceBusQueues.Count.Should().Be(1);
+                retIotHub.Properties.Routing.Routes[0].Name.Should().Be("route1");
             }
-
-            var iotHub = await CreateIotHubAsync(resourceGroup, IotHubTestUtilities.DefaultLocation, IotHubTestUtilities.DefaultUpdateIotHubName, null)
-                .ConfigureAwait(false);
-
-            Assert.NotNull(iotHub);
-            Assert.Equal(IotHubSku.S1, iotHub.Sku.Name);
-            Assert.Equal(IotHubTestUtilities.DefaultUpdateIotHubName, iotHub.Name);
-
-            // Update capacity
-            iotHub.Sku.Capacity += 1;
-            var retIotHub = await UpdateIotHubAsync(resourceGroup, iotHub, IotHubTestUtilities.DefaultUpdateIotHubName)
-                .ConfigureAwait(false);
-
-            Assert.NotNull(retIotHub);
-            Assert.Equal(IotHubSku.S1, retIotHub.Sku.Name);
-            Assert.Equal(iotHub.Sku.Capacity, retIotHub.Sku.Capacity);
-            Assert.Equal(IotHubTestUtilities.DefaultUpdateIotHubName, retIotHub.Name);
-
-            // Update IotHub with routing rules
-
-            iotHub.Properties.Routing = await GetIotHubRoutingPropertiesAsync(resourceGroup);
-            retIotHub = await UpdateIotHubAsync(resourceGroup, iotHub, IotHubTestUtilities.DefaultUpdateIotHubName);
-
-            Assert.NotNull(retIotHub);
-            Assert.Equal(IotHubTestUtilities.DefaultUpdateIotHubName, retIotHub.Name);
-            Assert.Equal(4, retIotHub.Properties.Routing.Routes.Count);
-            Assert.Equal(1, retIotHub.Properties.Routing.Endpoints.EventHubs.Count);
-            Assert.Equal(1, retIotHub.Properties.Routing.Endpoints.ServiceBusTopics.Count);
-            Assert.Equal(1, retIotHub.Properties.Routing.Endpoints.ServiceBusQueues.Count);
-            Assert.Equal("route1", retIotHub.Properties.Routing.Routes[0].Name);
-
-            // Get an Iot Hub
-            var iotHubDesc = iotHubClient.IotHubResource.Get(
-                IotHubTestUtilities.DefaultUpdateResourceGroupName,
-                IotHubTestUtilities.DefaultUpdateIotHubName);
-
-
-            Assert.NotNull(iotHubDesc);
-            Assert.Equal(IotHubSku.S1, iotHubDesc.Sku.Name);
-            Assert.Equal(iotHub.Sku.Capacity, iotHubDesc.Sku.Capacity);
-            Assert.Equal(IotHubTestUtilities.DefaultUpdateIotHubName, iotHubDesc.Name);
-
-            // Update Again
-            // perform a dummy update
-            iotHubDesc.Properties.Routing.Endpoints.EventHubs[0].ResourceGroup = "1";
-            retIotHub = await UpdateIotHubAsync(resourceGroup, iotHubDesc, IotHubTestUtilities.DefaultUpdateIotHubName);
-
-            Assert.NotNull(retIotHub);
-            Assert.Equal(IotHubTestUtilities.DefaultUpdateIotHubName, retIotHub.Name);
-            Assert.Equal(4, retIotHub.Properties.Routing.Routes.Count);
-            Assert.Equal(1, retIotHub.Properties.Routing.Endpoints.EventHubs.Count);
-            Assert.Equal(1, retIotHub.Properties.Routing.Endpoints.ServiceBusTopics.Count);
-            Assert.Equal(1, retIotHub.Properties.Routing.Endpoints.ServiceBusQueues.Count);
-            Assert.Equal("route1", retIotHub.Properties.Routing.Routes[0].Name);
+            catch (ErrorDetailsException ex)
+            {
+                Console.WriteLine(ex.ToString());
+                Console.WriteLine($"{ex.Body.Message}: {ex.Body.Details}");
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                throw;
+            }
         }
 
         [Fact]
         public async Task TestIotHubCertificateLifecycle()
         {
-            using var context = MockContext.Start(GetType());
-            Initialize(context);
-
-            // Create Resource Group
-            var resourceGroup = await CreateResourceGroupAsync(IotHubTestUtilities.DefaultCertificateResourceGroupName);
-
-            // Check if Hub Exists and Delete
-            var iotHubNameAvailabilityInfo = iotHubClient.IotHubResource.CheckNameAvailability(IotHubTestUtilities.DefaultCertificateIotHubName);
-
-            if (!(bool)iotHubNameAvailabilityInfo.NameAvailable)
+            try
             {
-                iotHubClient.IotHubResource.Delete(
-                    IotHubTestUtilities.DefaultCertificateResourceGroupName,
-                    IotHubTestUtilities.DefaultCertificateIotHubName);
+                using var context = MockContext.Start(GetType());
+                Initialize(context);
 
-                iotHubNameAvailabilityInfo = iotHubClient.IotHubResource.CheckNameAvailability(IotHubTestUtilities.DefaultCertificateIotHubName);
-                Assert.True(iotHubNameAvailabilityInfo.NameAvailable);
+                // Create Resource Group
+                ResourceGroup resourceGroup = await CreateResourceGroupAsync(IotHubTestUtilities.DefaultCertificateResourceGroupName).ConfigureAwait(false);
+
+                // Check if Hub Exists and Delete
+                IotHubNameAvailabilityInfo iotHubNameAvailabilityInfo = await iotHubClient.IotHubResource
+                    .CheckNameAvailabilityAsync(IotHubTestUtilities.DefaultCertificateIotHubName)
+                    .ConfigureAwait(false);
+
+                if (!iotHubNameAvailabilityInfo.NameAvailable.Value)
+                {
+                    _ = await iotHubClient.IotHubResource
+                        .DeleteAsync(
+                            IotHubTestUtilities.DefaultCertificateResourceGroupName,
+                            IotHubTestUtilities.DefaultCertificateIotHubName)
+                        .ConfigureAwait(false);
+                }
+
+                // Create Hub
+                IotHubDescription iotHub = await CreateIotHubAsync(resourceGroup, IotHubTestUtilities.DefaultLocation, IotHubTestUtilities.DefaultCertificateIotHubName, null)
+                    .ConfigureAwait(false);
+
+                // Upload Certificate to the Hub
+                CertificateDescription newCertificateDescription = await CreateCertificateAsync(
+                        resourceGroup,
+                        IotHubTestUtilities.DefaultCertificateIotHubName,
+                        IotHubTestUtilities.DefaultIotHubCertificateName)
+                    .ConfigureAwait(false);
+                newCertificateDescription.Name.Should().Be(IotHubTestUtilities.DefaultIotHubCertificateName);
+                newCertificateDescription.Properties.Subject.Should().Be(IotHubTestUtilities.DefaultIotHubCertificateSubject);
+                newCertificateDescription.Properties.Thumbprint.Should().Be(IotHubTestUtilities.DefaultIotHubCertificateThumbprint);
+                newCertificateDescription.Type.Should().Be(IotHubTestUtilities.DefaultIotHubCertificateType);
+                newCertificateDescription.Properties.IsVerified.Should().BeFalse();
+
+                // Get all certificates
+                var certificateList = await GetCertificatesAsync(resourceGroup, IotHubTestUtilities.DefaultCertificateIotHubName).ConfigureAwait(false);
+                certificateList.Value.Count().Should().Be(1);
+
+                // Get certificate
+                CertificateDescription certificate = await GetCertificateAsync(resourceGroup, IotHubTestUtilities.DefaultCertificateIotHubName, IotHubTestUtilities.DefaultIotHubCertificateName)
+                    .ConfigureAwait(false);
+                certificate.Name.Should().Be(IotHubTestUtilities.DefaultIotHubCertificateName);
+                certificate.Properties.Subject.Should().Be(IotHubTestUtilities.DefaultIotHubCertificateSubject);
+                certificate.Properties.Thumbprint.Should().Be(IotHubTestUtilities.DefaultIotHubCertificateThumbprint);
+                certificate.Type.Should().Be(IotHubTestUtilities.DefaultIotHubCertificateType);
+                certificate.Properties.IsVerified.Should().BeFalse();
+
+                CertificateWithNonceDescription certificateWithNonceDescription = await GenerateVerificationCodeAsync(
+                        resourceGroup,
+                        IotHubTestUtilities.DefaultCertificateIotHubName,
+                        IotHubTestUtilities.DefaultIotHubCertificateName,
+                        certificate.Etag)
+                    .ConfigureAwait(false);
+                certificateWithNonceDescription.Name.Should().Be(IotHubTestUtilities.DefaultIotHubCertificateName);
+                certificateWithNonceDescription.Properties.Subject.Should().Be(IotHubTestUtilities.DefaultIotHubCertificateSubject);
+                certificateWithNonceDescription.Properties.Thumbprint.Should().Be(IotHubTestUtilities.DefaultIotHubCertificateThumbprint);
+                certificateWithNonceDescription.Type.Should().Be(IotHubTestUtilities.DefaultIotHubCertificateType);
+                certificateWithNonceDescription.Properties.IsVerified.Should().BeFalse();
+                certificateWithNonceDescription.Properties.VerificationCode.Should().NotBeNull();
+
+                // Delete certificate
+                await DeleteCertificateAsync(
+                        resourceGroup,
+                        IotHubTestUtilities.DefaultCertificateIotHubName,
+                        IotHubTestUtilities.DefaultIotHubCertificateName,
+                        certificateWithNonceDescription.Etag)
+                    .ConfigureAwait(false);
+
+                // Get all certificate after delete
+                var certificateListAfterDelete = await GetCertificatesAsync(resourceGroup, IotHubTestUtilities.DefaultCertificateIotHubName)
+                    .ConfigureAwait(false);
+                certificateListAfterDelete.Value.Count().Should().Be(0);
             }
-
-            // Create Hub
-            var iotHub = await CreateIotHubAsync(resourceGroup, IotHubTestUtilities.DefaultLocation, IotHubTestUtilities.DefaultCertificateIotHubName, null);
-
-            // Upload Certificate to the Hub
-            var newCertificateDescription = await CreateCertificateAsync(
-                resourceGroup,
-                IotHubTestUtilities.DefaultCertificateIotHubName,
-                IotHubTestUtilities.DefaultIotHubCertificateName);
-            Assert.Equal(IotHubTestUtilities.DefaultIotHubCertificateName, newCertificateDescription.Name);
-            Assert.Equal(IotHubTestUtilities.DefaultIotHubCertificateSubject, newCertificateDescription.Properties.Subject);
-            Assert.Equal(IotHubTestUtilities.DefaultIotHubCertificateThumbprint, newCertificateDescription.Properties.Thumbprint);
-            Assert.Equal(IotHubTestUtilities.DefaultIotHubCertificateType, newCertificateDescription.Type);
-            Assert.False(newCertificateDescription.Properties.IsVerified);
-
-            // Get all certificates
-            var certificateList = await GetCertificatesAsync(resourceGroup, IotHubTestUtilities.DefaultCertificateIotHubName);
-            Assert.True(certificateList.Value.Count().Equals(1));
-
-            // Get certificate
-            var certificate = await GetCertificateAsync(resourceGroup, IotHubTestUtilities.DefaultCertificateIotHubName, IotHubTestUtilities.DefaultIotHubCertificateName);
-            Assert.Equal(IotHubTestUtilities.DefaultIotHubCertificateName, certificate.Name);
-            Assert.Equal(IotHubTestUtilities.DefaultIotHubCertificateSubject, certificate.Properties.Subject);
-            Assert.Equal(IotHubTestUtilities.DefaultIotHubCertificateThumbprint, certificate.Properties.Thumbprint);
-            Assert.Equal(IotHubTestUtilities.DefaultIotHubCertificateType, certificate.Type);
-            Assert.False(certificate.Properties.IsVerified);
-
-            var certificateWithNonceDescription = await GenerateVerificationCodeAsync(
-                resourceGroup,
-                IotHubTestUtilities.DefaultCertificateIotHubName,
-                IotHubTestUtilities.DefaultIotHubCertificateName,
-                certificate.Etag);
-            Assert.Equal(IotHubTestUtilities.DefaultIotHubCertificateName, certificateWithNonceDescription.Name);
-            Assert.Equal(IotHubTestUtilities.DefaultIotHubCertificateSubject, certificateWithNonceDescription.Properties.Subject);
-            Assert.Equal(IotHubTestUtilities.DefaultIotHubCertificateThumbprint, certificateWithNonceDescription.Properties.Thumbprint);
-            Assert.Equal(IotHubTestUtilities.DefaultIotHubCertificateType, certificateWithNonceDescription.Type);
-            Assert.False(certificateWithNonceDescription.Properties.IsVerified);
-            Assert.NotNull(certificateWithNonceDescription.Properties.VerificationCode);
-
-            // Delete certificate
-            await DeleteCertificateAsync(resourceGroup, IotHubTestUtilities.DefaultCertificateIotHubName, IotHubTestUtilities.DefaultIotHubCertificateName, certificateWithNonceDescription.Etag);
-
-            // Get all certificate after delete
-            var certificateListAfterDelete = await GetCertificatesAsync(resourceGroup, IotHubTestUtilities.DefaultCertificateIotHubName);
-            Assert.True(certificateListAfterDelete.Value.Count().Equals(0));
+            catch (ErrorDetailsException ex)
+            {
+                Console.WriteLine(ex.ToString());
+                Console.WriteLine($"{ex.Body.Message}: {ex.Body.Details}");
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                throw;
+            }
         }
 
         private async Task<RoutingProperties> GetIotHubRoutingPropertiesAsync(ResourceGroup resourceGroup)

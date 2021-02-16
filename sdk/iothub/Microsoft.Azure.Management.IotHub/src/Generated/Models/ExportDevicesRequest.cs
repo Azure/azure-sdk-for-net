@@ -42,19 +42,12 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// <param name="authenticationType">Specifies authentication type
         /// being used for connecting to the storage account. Possible values
         /// include: 'keyBased', 'identityBased'</param>
-        /// <param name="includeConfigurations">The value indicating whether
-        /// configurations should be exported.</param>
-        /// <param name="configurationsBlobName">The name of the blob that will
-        /// be created in the provided output blob container. This blob will
-        /// contain the exported configurations for the Iot Hub.</param>
-        public ExportDevicesRequest(string exportBlobContainerUri, bool excludeKeys, string exportBlobName = default(string), string authenticationType = default(string), bool? includeConfigurations = default(bool?), string configurationsBlobName = default(string))
+        public ExportDevicesRequest(string exportBlobContainerUri, bool excludeKeys, string exportBlobName = default(string), string authenticationType = default(string))
         {
             ExportBlobContainerUri = exportBlobContainerUri;
             ExcludeKeys = excludeKeys;
             ExportBlobName = exportBlobName;
             AuthenticationType = authenticationType;
-            IncludeConfigurations = includeConfigurations;
-            ConfigurationsBlobName = configurationsBlobName;
             CustomInit();
         }
 
@@ -91,21 +84,6 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// </summary>
         [JsonProperty(PropertyName = "authenticationType")]
         public string AuthenticationType { get; set; }
-
-        /// <summary>
-        /// Gets or sets the value indicating whether configurations should be
-        /// exported.
-        /// </summary>
-        [JsonProperty(PropertyName = "includeConfigurations")]
-        public bool? IncludeConfigurations { get; set; }
-
-        /// <summary>
-        /// Gets or sets the name of the blob that will be created in the
-        /// provided output blob container. This blob will contain the exported
-        /// configurations for the Iot Hub.
-        /// </summary>
-        [JsonProperty(PropertyName = "configurationsBlobName")]
-        public string ConfigurationsBlobName { get; set; }
 
         /// <summary>
         /// Validate the object.

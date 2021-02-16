@@ -341,8 +341,6 @@ namespace Microsoft.Azure.Management.IotHub
         /// <param name='name'>
         /// The name of the consumer group to add.
         /// </param>
-        /// <param name='properties'>
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -358,7 +356,7 @@ namespace Microsoft.Azure.Management.IotHub
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<EventHubConsumerGroupInfo>> CreateEventHubConsumerGroupWithHttpMessagesAsync(string resourceGroupName, string resourceName, string eventHubEndpointName, string name, EventHubConsumerGroupName properties = default(EventHubConsumerGroupName), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<EventHubConsumerGroupInfo>> CreateEventHubConsumerGroupWithHttpMessagesAsync(string resourceGroupName, string resourceName, string eventHubEndpointName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete a consumer group from an Event Hub-compatible endpoint in an
         /// IoT hub

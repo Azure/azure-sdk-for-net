@@ -10,8 +10,6 @@
 
 namespace Microsoft.Azure.Management.IotHub.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -45,23 +43,11 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// shows that the IoT Hub has not established a connection with the
         /// endpoint. No messages have been delivered to or rejected from this
         /// endpoint. Possible values include: 'unknown', 'healthy',
-        /// 'degraded', 'unhealthy', 'dead'</param>
-        /// <param name="lastKnownError">Last error obtained when a message
-        /// failed to be delivered to iot hub</param>
-        /// <param name="lastKnownErrorTime">Time at which the last known error
-        /// occurred</param>
-        /// <param name="lastSuccessfulSendAttemptTime">Last time iot hub
-        /// successfully sent a message to the endpoint</param>
-        /// <param name="lastSendAttemptTime">Last time iot hub tried to send a
-        /// message to the endpoint</param>
-        public EndpointHealthData(string endpointId = default(string), string healthStatus = default(string), string lastKnownError = default(string), System.DateTime? lastKnownErrorTime = default(System.DateTime?), System.DateTime? lastSuccessfulSendAttemptTime = default(System.DateTime?), System.DateTime? lastSendAttemptTime = default(System.DateTime?))
+        /// 'unhealthy', 'dead'</param>
+        public EndpointHealthData(string endpointId = default(string), string healthStatus = default(string))
         {
             EndpointId = endpointId;
             HealthStatus = healthStatus;
-            LastKnownError = lastKnownError;
-            LastKnownErrorTime = lastKnownErrorTime;
-            LastSuccessfulSendAttemptTime = lastSuccessfulSendAttemptTime;
-            LastSendAttemptTime = lastSendAttemptTime;
             CustomInit();
         }
 
@@ -89,41 +75,10 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// issues with endpoints. The 'unknown' status shows that the IoT Hub
         /// has not established a connection with the endpoint. No messages
         /// have been delivered to or rejected from this endpoint. Possible
-        /// values include: 'unknown', 'healthy', 'degraded', 'unhealthy',
-        /// 'dead'
+        /// values include: 'unknown', 'healthy', 'unhealthy', 'dead'
         /// </summary>
         [JsonProperty(PropertyName = "healthStatus")]
         public string HealthStatus { get; set; }
-
-        /// <summary>
-        /// Gets or sets last error obtained when a message failed to be
-        /// delivered to iot hub
-        /// </summary>
-        [JsonProperty(PropertyName = "lastKnownError")]
-        public string LastKnownError { get; set; }
-
-        /// <summary>
-        /// Gets or sets time at which the last known error occurred
-        /// </summary>
-        [JsonConverter(typeof(DateTimeRfc1123JsonConverter))]
-        [JsonProperty(PropertyName = "lastKnownErrorTime")]
-        public System.DateTime? LastKnownErrorTime { get; set; }
-
-        /// <summary>
-        /// Gets or sets last time iot hub successfully sent a message to the
-        /// endpoint
-        /// </summary>
-        [JsonConverter(typeof(DateTimeRfc1123JsonConverter))]
-        [JsonProperty(PropertyName = "lastSuccessfulSendAttemptTime")]
-        public System.DateTime? LastSuccessfulSendAttemptTime { get; set; }
-
-        /// <summary>
-        /// Gets or sets last time iot hub tried to send a message to the
-        /// endpoint
-        /// </summary>
-        [JsonConverter(typeof(DateTimeRfc1123JsonConverter))]
-        [JsonProperty(PropertyName = "lastSendAttemptTime")]
-        public System.DateTime? LastSendAttemptTime { get; set; }
 
     }
 }

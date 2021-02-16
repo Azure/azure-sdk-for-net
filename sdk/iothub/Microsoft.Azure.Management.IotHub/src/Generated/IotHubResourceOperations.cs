@@ -1519,8 +1519,6 @@ namespace Microsoft.Azure.Management.IotHub
         /// <param name='name'>
         /// The name of the consumer group to add.
         /// </param>
-        /// <param name='properties'>
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -1542,7 +1540,7 @@ namespace Microsoft.Azure.Management.IotHub
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<EventHubConsumerGroupInfo>> CreateEventHubConsumerGroupWithHttpMessagesAsync(string resourceGroupName, string resourceName, string eventHubEndpointName, string name, EventHubConsumerGroupName properties = default(EventHubConsumerGroupName), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<EventHubConsumerGroupInfo>> CreateEventHubConsumerGroupWithHttpMessagesAsync(string resourceGroupName, string resourceName, string eventHubEndpointName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -1568,11 +1566,6 @@ namespace Microsoft.Azure.Management.IotHub
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "name");
             }
-            EventHubConsumerGroupBodyDescription consumerGroupBody = new EventHubConsumerGroupBodyDescription();
-            if (properties != null)
-            {
-                consumerGroupBody.Properties = properties;
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1584,7 +1577,6 @@ namespace Microsoft.Azure.Management.IotHub
                 tracingParameters.Add("resourceName", resourceName);
                 tracingParameters.Add("eventHubEndpointName", eventHubEndpointName);
                 tracingParameters.Add("name", name);
-                tracingParameters.Add("consumerGroupBody", consumerGroupBody);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CreateEventHubConsumerGroup", tracingParameters);
             }
@@ -1639,12 +1631,6 @@ namespace Microsoft.Azure.Management.IotHub
 
             // Serialize Request
             string _requestContent = null;
-            if(consumerGroupBody != null)
-            {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(consumerGroupBody, Client.SerializationSettings);
-                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
-                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
-            }
             // Set Credentials
             if (Client.Credentials != null)
             {

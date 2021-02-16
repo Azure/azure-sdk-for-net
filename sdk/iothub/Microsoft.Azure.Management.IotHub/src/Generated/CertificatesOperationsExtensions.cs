@@ -141,11 +141,13 @@ namespace Microsoft.Azure.Management.IotHub
             /// ETag of the Certificate. Do not specify for creating a brand new
             /// certificate. Required to update an existing certificate.
             /// </param>
-            /// <param name='properties'>
+            /// <param name='certificate'>
+            /// base-64 representation of the X509 leaf certificate .cer file or just .pem
+            /// file content.
             /// </param>
-            public static CertificateDescription CreateOrUpdate(this ICertificatesOperations operations, string resourceGroupName, string resourceName, string certificateName, string ifMatch = default(string), CertificateProperties properties = default(CertificateProperties))
+            public static CertificateDescription CreateOrUpdate(this ICertificatesOperations operations, string resourceGroupName, string resourceName, string certificateName, string ifMatch = default(string), string certificate = default(string))
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, resourceName, certificateName, ifMatch, properties).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, resourceName, certificateName, ifMatch, certificate).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -170,14 +172,16 @@ namespace Microsoft.Azure.Management.IotHub
             /// ETag of the Certificate. Do not specify for creating a brand new
             /// certificate. Required to update an existing certificate.
             /// </param>
-            /// <param name='properties'>
+            /// <param name='certificate'>
+            /// base-64 representation of the X509 leaf certificate .cer file or just .pem
+            /// file content.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CertificateDescription> CreateOrUpdateAsync(this ICertificatesOperations operations, string resourceGroupName, string resourceName, string certificateName, string ifMatch = default(string), CertificateProperties properties = default(CertificateProperties), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CertificateDescription> CreateOrUpdateAsync(this ICertificatesOperations operations, string resourceGroupName, string resourceName, string certificateName, string ifMatch = default(string), string certificate = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, resourceName, certificateName, ifMatch, properties, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, resourceName, certificateName, ifMatch, certificate, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

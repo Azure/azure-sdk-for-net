@@ -14,7 +14,7 @@ namespace IotHub.Tests.Helpers
     public class IotHubTestUtilities
     {
         public static string DefaultLocation = "WestUS2";
-        public static string DefaultFailoverLocation = "EastUS2";
+        public static string DefaultFailoverLocation = "WestCentralUS";
         public static string DefaultIotHubName = "DotNetHub";
         public static string DefaultUpdateIotHubName = "UpdateDotNetHub";
         public static string DefaultResourceGroupName = "DotNetHubRG";
