@@ -57,7 +57,7 @@ namespace Azure.Iot.ModelsRepository.Fetchers
                 }
 
                 ResolverEventSource.Shared.ErrorFetchingModelContent(tryContentPath);
-                remoteFetchError = string.Format(CultureInfo.InvariantCulture, StandardStrings.ErrorFetchingModelContent, tryContentPath);
+                remoteFetchError = string.Format(CultureInfo.CurrentCulture, StandardStrings.ErrorFetchingModelContent, tryContentPath);
             }
 
             throw new RequestFailedException(remoteFetchError);

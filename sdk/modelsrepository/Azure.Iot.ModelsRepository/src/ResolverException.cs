@@ -16,7 +16,7 @@ namespace Azure.Iot.ModelsRepository
         /// </summary>
         /// <param name="dtmi"></param>
         public ResolverException(string dtmi)
-            : base(string.Format(CultureInfo.InvariantCulture, ServiceStrings.GenericResolverError, dtmi))
+            : base(string.Format(CultureInfo.CurrentCulture, ServiceStrings.GenericResolverError, dtmi))
         {
         }
 
@@ -26,7 +26,7 @@ namespace Azure.Iot.ModelsRepository
         /// <param name="dtmi"></param>
         /// <param name="message"></param>
         public ResolverException(string dtmi, string message)
-            : base($"{string.Format(CultureInfo.InvariantCulture, ServiceStrings.GenericResolverError, dtmi)} {message}")
+            : base($"{string.Format(CultureInfo.CurrentCulture, ServiceStrings.GenericResolverError, dtmi)} {message}")
         {
         }
 
@@ -36,7 +36,7 @@ namespace Azure.Iot.ModelsRepository
         /// <param name="dtmi"></param>
         /// <param name="innerException"></param>
         public ResolverException(string dtmi, Exception innerException)
-            : base(string.Format(CultureInfo.InvariantCulture, ServiceStrings.GenericResolverError, dtmi), innerException)
+            : base(string.Format(CultureInfo.CurrentCulture, ServiceStrings.GenericResolverError, dtmi), innerException)
         {
         }
 
@@ -47,7 +47,7 @@ namespace Azure.Iot.ModelsRepository
         /// <param name="message"></param>
         /// <param name="innerException"></param>
         public ResolverException(string dtmi, string message, Exception innerException)
-            : base($"{string.Format(CultureInfo.InvariantCulture, ServiceStrings.GenericResolverError, dtmi)} {message}", innerException)
+            : base($"{string.Format(CultureInfo.CurrentCulture, ServiceStrings.GenericResolverError, dtmi)} {message}", innerException)
         {
         }
     }

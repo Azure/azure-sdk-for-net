@@ -98,7 +98,7 @@ namespace Azure.Iot.ModelsRepository
                 if (!parsedDtmi.Equals(targetDtmi, StringComparison.Ordinal))
                 {
                     ResolverEventSource.Shared.IncorrectDtmiCasing(targetDtmi, parsedDtmi);
-                    string formatErrorMsg = string.Format(CultureInfo.InvariantCulture, ServiceStrings.IncorrectDtmiCasing, targetDtmi, parsedDtmi);
+                    string formatErrorMsg = string.Format(CultureInfo.CurrentCulture, ServiceStrings.IncorrectDtmiCasing, targetDtmi, parsedDtmi);
                     throw new ResolverException(targetDtmi, formatErrorMsg, new FormatException(formatErrorMsg));
                 }
 

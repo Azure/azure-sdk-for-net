@@ -22,7 +22,7 @@ namespace Azure.Iot.ModelsRepository
 
             if (dtmiPath == null)
             {
-                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, StandardStrings.InvalidDtmiFormat, dtmi));
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, StandardStrings.InvalidDtmiFormat, dtmi));
             }
 
             if (!basePath.EndsWith("/", StringComparison.InvariantCultureIgnoreCase))
@@ -34,7 +34,9 @@ namespace Azure.Iot.ModelsRepository
 
             if (fromExpanded)
             {
-                fullyQualifiedPath = fullyQualifiedPath.Replace(ModelRepositoryConstants.JsonFileExtension, ModelRepositoryConstants.ExpandedJsonFileExtension);
+                fullyQualifiedPath = fullyQualifiedPath.Replace(
+                    ModelRepositoryConstants.JsonFileExtension,
+                    ModelRepositoryConstants.ExpandedJsonFileExtension);
             }
 
             return fullyQualifiedPath;
