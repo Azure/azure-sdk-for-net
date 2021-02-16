@@ -115,7 +115,7 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
             #region Snippet:SearchPhoneNumbers
 
             var capabilities = new PhoneNumberCapabilities(PhoneNumberCapabilityValue.Outbound, PhoneNumberCapabilityValue.Outbound);
-            var searchOptions = new PhoneNumberSearchOptions(areaCode: "844");
+            var searchOptions = new PhoneNumberSearchOptions { AreaCode = "844" };
 
             var searchOperation = client.StartSearchAvailablePhoneNumbers(countryCode, PhoneNumberType.TollFree, PhoneNumberAssignmentType.Application, capabilities, searchOptions);
 
