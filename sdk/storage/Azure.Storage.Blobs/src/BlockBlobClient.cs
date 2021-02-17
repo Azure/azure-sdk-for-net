@@ -391,12 +391,9 @@ namespace Azure.Storage.Blobs.Specialized
         private BlockBlobRestClient BuildBlockBlobRestClient(BlobUriBuilder uriBuilder)
         {
             string containerName = uriBuilder.BlobContainerName;
-            // TODO what if blobName has special characters or is encode?
             string blobName = uriBuilder.BlobName;
             uriBuilder.BlobContainerName = null;
             uriBuilder.BlobName = null;
-            // TODO we need to be able to access the underlying readonly private properties here,
-            // or The AppendBlobClient won't be mockable
             return new BlockBlobRestClient(
                 clientDiagnostics: _clientConfiguration.ClientDiagnostics,
                 pipeline: _clientConfiguration.Pipeline,

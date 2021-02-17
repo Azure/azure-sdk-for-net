@@ -273,8 +273,6 @@ namespace Azure.Storage.Blobs.Specialized
             string blobName = uriBuilder.BlobName;
             uriBuilder.BlobContainerName = null;
             uriBuilder.BlobName = null;
-            // TODO we need to be able to access the underlying readonly private properties here,
-            // or The AppendBlobClient won't be mockable
             return new PageBlobRestClient(
                 clientDiagnostics: _clientConfiguration.ClientDiagnostics,
                 pipeline: _clientConfiguration.Pipeline,

@@ -447,8 +447,6 @@ namespace Azure.Storage.Blobs.Specialized
             string blobName = uriBuilder.BlobName;
             uriBuilder.BlobContainerName = null;
             uriBuilder.BlobName = null;
-            // TODO we need to be able to access the underlying readonly private properties here,
-            // or The BlobClient won't be mockable
             return new BlobRestClient(
                 clientDiagnostics: _clientConfiguration.ClientDiagnostics,
                 pipeline: _clientConfiguration.Pipeline,
