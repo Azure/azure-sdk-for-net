@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace Azure.Communication.PhoneNumbers.Models
 {
     /// <summary>
-    /// Model factory that enables mocking for the Administration library.
+    /// Model factory that enables mocking for the Azure.Communication.PhoneNumbers library.
     /// </summary>
     public static class PhoneNumbersModelFactory
     {

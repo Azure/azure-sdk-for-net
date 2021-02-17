@@ -17,10 +17,10 @@ namespace Azure.Communication.PhoneNumbers.Tests
             => TestEnvironment.Mode == RecordedTestMode.Playback || Environment.GetEnvironmentVariable("INCLUDE_PHONENUMBER_LIVE_TESTS") == "True";
 
         /// <summary>
-        /// Creates a <see cref="PhoneNumberAdministrationClient" /> with the connectionstring via environment
+        /// Creates a <see cref="PhoneNumbersClient" /> with the connectionstring via environment
         /// variables and instruments it to make use of the Azure Core Test Framework functionalities.
         /// </summary>
-        /// <returns>The instrumented <see cref="PhoneNumberAdministrationClient" />.</returns>
+        /// <returns>The instrumented <see cref="PhoneNumbersClient" />.</returns>
         protected PhoneNumbersClient CreateClient(bool isInstrumented = true)
         {
             var client = new PhoneNumbersClient(
@@ -33,10 +33,10 @@ namespace Azure.Communication.PhoneNumbers.Tests
         }
 
         /// <summary>
-        /// Creates a <see cref="PhoneNumberAdministrationClient" /> with the token credential
+        /// Creates a <see cref="PhoneNumbersClient" /> with the token credential
         /// and instruments it to make use of the Azure Core Test Framework functionalities.
         /// </summary>
-        /// <returns>The instrumented <see cref="PhoneNumberAdministrationClient" />.</returns>
+        /// <returns>The instrumented <see cref="PhoneNumbersClient" />.</returns>
         protected PhoneNumbersClient CreateClientWithTokenCredential(TokenCredential token, bool isInstrumented = true)
         {
             var client = new PhoneNumbersClient(

@@ -1,4 +1,4 @@
-# Azure.Communication.Administration
+# Azure.Communication.PhoneNumbers
 
 Run `dotnet msbuild /t:GenerateCode` to generate code.
 
@@ -9,6 +9,6 @@ Run `dotnet msbuild /t:GenerateCode` to generate code.
 public-clients: true
 input-file:
     -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/967da531665d4b51a7a5599324e5edd95489cc3d/specification/communication/data-plane/Microsoft.CommunicationServicesPhoneNumbers/stable/2021-03-07/phonenumbers.json
-title: Phone number administration
+title: Phone numbers
 payload-flattening-threshold: 3
 ```
