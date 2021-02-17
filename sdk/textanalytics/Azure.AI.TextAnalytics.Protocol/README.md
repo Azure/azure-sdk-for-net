@@ -1,4 +1,4 @@
-# Experimental REST Bindings for Azure Cognitive Services Text Analytics 
+# Azure REST Bindings for Azure Cognitive Services Text Analytics client library for .NET
 
 Azure.AI.TextAnalytics.Protocol is an experimental library for interacting directly with the REST endpoints for the Azure Cognitive Services Text Analytics service.
 
