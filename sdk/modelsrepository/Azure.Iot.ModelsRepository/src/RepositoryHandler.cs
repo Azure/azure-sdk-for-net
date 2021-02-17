@@ -34,12 +34,12 @@ namespace Azure.Iot.ModelsRepository
 
         public async Task<IDictionary<string, string>> ProcessAsync(string dtmi, CancellationToken cancellationToken)
         {
-            return await ProcessAsync(new List<string>() { dtmi }, true, cancellationToken).ConfigureAwait(false);
+            return await ProcessAsync(new List<string> { dtmi }, true, cancellationToken).ConfigureAwait(false);
         }
 
         public IDictionary<string, string> Process(string dtmi, CancellationToken cancellationToken)
         {
-            return ProcessAsync(new List<string>() { dtmi }, false, cancellationToken).EnsureCompleted();
+            return ProcessAsync(new List<string> { dtmi }, false, cancellationToken).EnsureCompleted();
         }
 
         public Task<IDictionary<string, string>> ProcessAsync(IEnumerable<string> dtmis, CancellationToken cancellationToken)
@@ -54,7 +54,7 @@ namespace Azure.Iot.ModelsRepository
 
         private async Task<IDictionary<string, string>> ProcessAsync(IEnumerable<string> dtmis, bool async, CancellationToken cancellationToken)
         {
-            Dictionary<string, string> processedModels = new Dictionary<string, string>();
+            var processedModels = new Dictionary<string, string>();
             Queue<string> toProcessModels = PrepareWork(dtmis);
 
             while (toProcessModels.Count != 0)
@@ -69,16 +69,10 @@ namespace Azure.Iot.ModelsRepository
                 }
 
                 ResolverEventSource.Instance.ProcessingDtmi(targetDtmi);
-                FetchResult result;
 
-                if (async)
-                {
-                    result = await FetchAsync(targetDtmi, cancellationToken).ConfigureAwait(false);
-                }
-                else
-                {
-                    result = Fetch(targetDtmi, cancellationToken);
-                }
+                FetchResult result = async
+                    ? await FetchAsync(targetDtmi, cancellationToken).ConfigureAwait(false)
+                    : Fetch(targetDtmi, cancellationToken);
 
                 if (result.FromExpanded)
                 {
@@ -152,7 +146,7 @@ namespace Azure.Iot.ModelsRepository
 
         private static Queue<string> PrepareWork(IEnumerable<string> dtmis)
         {
-            Queue<string> toProcessModels = new Queue<string>();
+            var toProcessModels = new Queue<string>();
             foreach (string dtmi in dtmis)
             {
                 if (!DtmiConventions.IsDtmi(dtmi))

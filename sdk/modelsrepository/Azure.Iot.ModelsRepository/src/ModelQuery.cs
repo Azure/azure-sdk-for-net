@@ -146,13 +146,11 @@ namespace Azure.Iot.ModelsRepository
                     {
                         using MemoryStream stream = WriteJsonElementToStream(element);
 
-                        using (StreamReader streamReader = new StreamReader(stream))
-                        {
-                            string serialized = streamReader.ReadToEnd();
+                        using StreamReader streamReader = new StreamReader(stream);
+                        string serialized = streamReader.ReadToEnd();
 
-                            string id = new ModelQuery(serialized).GetId();
-                            result.Add(id, serialized);
-                        }
+                        string id = new ModelQuery(serialized).GetId();
+                        result.Add(id, serialized);
                     }
                 }
             }
