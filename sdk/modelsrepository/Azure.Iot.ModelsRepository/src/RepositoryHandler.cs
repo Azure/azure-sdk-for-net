@@ -34,81 +34,25 @@ namespace Azure.Iot.ModelsRepository
 
         public async Task<IDictionary<string, string>> ProcessAsync(string dtmi, CancellationToken cancellationToken)
         {
-            return await ProcessAsync(new List<string>() { dtmi }, cancellationToken).ConfigureAwait(false);
+            return await ProcessAsync(new List<string>() { dtmi }, true, cancellationToken).ConfigureAwait(false);
         }
 
         public IDictionary<string, string> Process(string dtmi, CancellationToken cancellationToken)
         {
-            return Process(new List<string>() { dtmi }, cancellationToken);
+            return ProcessAsync(new List<string>() { dtmi }, false, cancellationToken).EnsureCompleted();
+        }
+
+        public Task<IDictionary<string, string>> ProcessAsync(IEnumerable<string> dtmis, CancellationToken cancellationToken)
+        {
+            return ProcessAsync(dtmis, true, cancellationToken);
         }
 
         public IDictionary<string, string> Process(IEnumerable<string> dtmis, CancellationToken cancellationToken)
         {
-            Dictionary<string, string> processedModels = new Dictionary<string, string>();
-            Queue<string> toProcessModels = PrepareWork(dtmis);
-
-            while (toProcessModels.Count != 0)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-
-                string targetDtmi = toProcessModels.Dequeue();
-                if (processedModels.ContainsKey(targetDtmi))
-                {
-                    ResolverEventSource.Instance.SkippingPreprocessedDtmi(targetDtmi);
-                    continue;
-                }
-
-                ResolverEventSource.Instance.ProcessingDtmi(targetDtmi);
-
-                FetchResult result = Fetch(targetDtmi, cancellationToken);
-
-                if (result.FromExpanded)
-                {
-                    Dictionary<string, string> expanded = new ModelQuery(result.Definition).ListToDict();
-
-                    foreach (KeyValuePair<string, string> kvp in expanded)
-                    {
-                        if (!processedModels.ContainsKey(kvp.Key))
-                        {
-                            processedModels.Add(kvp.Key, kvp.Value);
-                        }
-                    }
-
-                    continue;
-                }
-
-                ModelMetadata metadata = new ModelQuery(result.Definition).GetMetadata();
-
-                if (ClientOptions.DependencyResolution >= DependencyResolutionOption.Enabled)
-                {
-                    IList<string> dependencies = metadata.Dependencies;
-
-                    if (dependencies.Count > 0)
-                    {
-                        ResolverEventSource.Instance.DiscoveredDependencies(string.Join("\", \"", dependencies));
-                    }
-
-                    foreach (string dep in dependencies)
-                    {
-                        toProcessModels.Enqueue(dep);
-                    }
-                }
-
-                string parsedDtmi = metadata.Id;
-                if (!parsedDtmi.Equals(targetDtmi, StringComparison.Ordinal))
-                {
-                    ResolverEventSource.Instance.IncorrectDtmiCasing(targetDtmi, parsedDtmi);
-                    string formatErrorMsg = string.Format(CultureInfo.CurrentCulture, ServiceStrings.IncorrectDtmiCasing, targetDtmi, parsedDtmi);
-                    throw new ResolverException(targetDtmi, formatErrorMsg, new FormatException(formatErrorMsg));
-                }
-
-                processedModels.Add(targetDtmi, result.Definition);
-            }
-
-            return processedModels;
+            return ProcessAsync(dtmis, false, cancellationToken).EnsureCompleted();
         }
 
-        public async Task<IDictionary<string, string>> ProcessAsync(IEnumerable<string> dtmis, CancellationToken cancellationToken)
+        private async Task<IDictionary<string, string>> ProcessAsync(IEnumerable<string> dtmis, bool async, CancellationToken cancellationToken)
         {
             Dictionary<string, string> processedModels = new Dictionary<string, string>();
             Queue<string> toProcessModels = PrepareWork(dtmis);
@@ -125,8 +69,16 @@ namespace Azure.Iot.ModelsRepository
                 }
 
                 ResolverEventSource.Instance.ProcessingDtmi(targetDtmi);
+                FetchResult result;
 
-                FetchResult result = await FetchAsync(targetDtmi, cancellationToken).ConfigureAwait(false);
+                if (async)
+                {
+                    result = await FetchAsync(targetDtmi, cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    result = Fetch(targetDtmi, cancellationToken);
+                }
 
                 if (result.FromExpanded)
                 {
