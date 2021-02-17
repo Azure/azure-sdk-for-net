@@ -91,7 +91,7 @@ namespace Azure.Communication.Identity
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = options.BuildHttpPipeline(tokenCredential);
             _endpoint = endpoint.AbsoluteUri;
-            RestClientForTurn = new CommunicationIdentityRestClient(
+            RestClient = new CommunicationIdentityRestClient(
                 _clientDiagnostics,
                 _pipeline,
                 _endpoint,
