@@ -8,8 +8,8 @@
         "Authorization": "Sanitized",
         "Content-Length": "2",
         "Content-Type": "application/json",
-        "Date": "Wed, 17 Feb 2021 00:51:50 GMT",
-        "traceparent": "00-3ebe9c41bab93a4f818c5acd3ffe7270-02f19e0dda1c2f44-00",
+        "Date": "Wed, 17 Feb 2021 04:10:23 GMT",
+        "traceparent": "00-16ff2a05eb6ba14d9b76f5fd03bccf4f-e982b71b3864db45-00",
         "User-Agent": [
           "azsdk-net-Communication.Identity/1.0.0-alpha.20210216.1",
           "(.NET 5.0.3; Microsoft Windows 10.0.18363)"
@@ -23,30 +23,30 @@
       "ResponseHeaders": {
         "api-supported-versions": "2020-07-20-preview2, 2021-03-07",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 17 Feb 2021 00:51:49 GMT",
-        "MS-CV": "rgf1oJQcJUqATgiBVl\u002B5Mg.0",
+        "Date": "Wed, 17 Feb 2021 04:10:22 GMT",
+        "MS-CV": "6\u002BSnbvIwkkulm/yWujhpvw.0",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0pmgsYAAAAABJQ3tklez7QK099Ro9kInLWVZSMzBFREdFMDMxMQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "0L5csYAAAAABVW8RYHRndRKkxS6hPApyXWVZSMzBFREdFMDQxMwA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
         "x-ms-client-request-id": "5bcf0bff02c0de827e06967978ceaa22",
         "X-Processing-Time": "16ms"
       },
       "ResponseBody": {
         "identity": {
-          "id": "Sanitized"
+          "id": "8:acs:ac80d96a-85de-48b1-995d-a3a3fa3627c8_00000008-4e10-3476-99c6-593a0d00382b"
         }
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/identities/sanitized/:issueAccessToken?api-version=2021-03-07",
+      "RequestUri": "https://sanitized.communication.azure.com/identities/8%3Aacs%3Aac80d96a-85de-48b1-995d-a3a3fa3627c8_00000008-4e10-3476-99c6-593a0d00382b/:issueAccessToken?api-version=2021-03-07",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "26",
         "Content-Type": "application/json",
-        "Date": "Wed, 17 Feb 2021 00:51:50 GMT",
-        "traceparent": "00-aa1c82c99c4b464b8af08f082eaa6645-b0eed135eacdd447-00",
+        "Date": "Wed, 17 Feb 2021 04:10:23 GMT",
+        "traceparent": "00-99a25e6474ea8d44b13a63120d967bf9-ec0dcd59f2b3244e-00",
         "User-Agent": [
           "azsdk-net-Communication.Identity/1.0.0-alpha.20210216.1",
           "(.NET 5.0.3; Microsoft Windows 10.0.18363)"
@@ -65,17 +65,17 @@
       "ResponseHeaders": {
         "api-supported-versions": "2020-07-20-preview2, 2021-03-07",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 17 Feb 2021 00:51:49 GMT",
-        "MS-CV": "5y1fQ\u002BMZQUuiY8U97V2\u002Bdw.0",
+        "Date": "Wed, 17 Feb 2021 04:10:22 GMT",
+        "MS-CV": "hX4YZ9bt8UOX59iWuU5GAQ.0",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0pmgsYAAAAABp78aYZkFfTaJu9CIOqP9KWVZSMzBFREdFMDMxMQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "0L5csYAAAAADa4mhawUg1QapPqxt7x8GjWVZSMzBFREdFMDQxMwA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
         "x-ms-client-request-id": "9e0839b0a6398a934945dee07595300b",
-        "X-Processing-Time": "25ms"
+        "X-Processing-Time": "23ms"
       },
       "ResponseBody": {
         "token": "Sanitized",
-        "expiresOn": "2021-02-18T00:51:49.1752813\u002B00:00"
+        "expiresOn": "2021-02-18T04:10:22.2966841\u002B00:00"
       }
     }
   ],

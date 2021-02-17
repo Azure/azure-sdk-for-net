@@ -15,6 +15,14 @@ namespace Azure.Communication.Chat.Tests
         public ChatRecordedTestSanitizer() : base()
             => JsonPathSanitizers.Add("$..token");
 
+        public override void SanitizeHeaders(IDictionary<string, string[]> headers)
+        {
+            if (headers.ContainsKey("Location"))
+                headers["Location"] = headers["Location"].Select(x => SanitizeUri(x)).ToArray();
+            else
+                base.SanitizeHeaders(headers);
+        }
+
         protected override void SanitizeAuthenticationHeader(IDictionary<string, string[]> headers)
         {
             if (headers.ContainsKey(HttpHeader.Names.UserAgent) && headers[HttpHeader.Names.UserAgent].Any(x => x.Contains("Communication.Chat")))
