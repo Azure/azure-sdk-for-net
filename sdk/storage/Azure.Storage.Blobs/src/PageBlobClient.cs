@@ -10,6 +10,7 @@ using System.Xml.Serialization;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Shared;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
 
@@ -269,7 +270,6 @@ namespace Azure.Storage.Blobs.Specialized
         private PageBlobRestClient BuildPageBlobRestClient(BlobUriBuilder uriBuilder)
         {
             string containerName = uriBuilder.BlobContainerName;
-            // TODO what if blobName has special characters or is encode?
             string blobName = uriBuilder.BlobName;
             uriBuilder.BlobContainerName = null;
             uriBuilder.BlobName = null;
@@ -280,7 +280,7 @@ namespace Azure.Storage.Blobs.Specialized
                 pipeline: _clientConfiguration.Pipeline,
                 url: uriBuilder.ToUri().ToString(),
                 containerName: containerName,
-                blob: blobName,
+                blob: blobName.EscapePath(),
                 version: _clientConfiguration.Version.ToVersionString());
         }
         #endregion ctors
@@ -3124,7 +3124,7 @@ namespace Azure.Storage.Blobs.Specialized
                     if (async)
                     {
                         response = await PageBlobRestClient.UploadPagesFromURLAsync(
-                            sourceUrl: sourceUri.ToString(),
+                            sourceUrl: sourceUri.AbsoluteUri,
                             sourceRange: sourceRange.ToString(),
                             contentLength: 0,
                             range: range.ToString(),
@@ -3151,7 +3151,7 @@ namespace Azure.Storage.Blobs.Specialized
                     else
                     {
                         response = PageBlobRestClient.UploadPagesFromURL(
-                            sourceUrl: sourceUri.ToString(),
+                            sourceUrl: sourceUri.AbsoluteUri,
                             sourceRange: sourceRange.ToString(),
                             contentLength: 0,
                             range: range.ToString(),

@@ -436,7 +436,7 @@ namespace Azure.Storage.Blobs.Specialized
             BlobUriBuilder uriBuilder = new BlobUriBuilder(conn.BlobEndpoint)
             {
                 BlobContainerName = blobContainerName,
-                BlobName = blobName
+                BlobName = blobName.EscapePath(),
             };
             return BuildBlobRestClient(uriBuilder);
         }

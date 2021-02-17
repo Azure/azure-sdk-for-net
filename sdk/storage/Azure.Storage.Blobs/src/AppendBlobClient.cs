@@ -275,7 +275,6 @@ namespace Azure.Storage.Blobs.Specialized
         private AppendBlobRestClient BuildAppendBlobRestClient(BlobUriBuilder uriBuilder)
         {
             string containerName = uriBuilder.BlobContainerName;
-            // TODO what if blobName has special characters or is encode?
             string blobName = uriBuilder.BlobName;
             uriBuilder.BlobContainerName = null;
             uriBuilder.BlobName = null;
@@ -286,7 +285,7 @@ namespace Azure.Storage.Blobs.Specialized
                 pipeline: _clientConfiguration.Pipeline,
                 url: uriBuilder.ToUri().ToString(),
                 containerName: containerName,
-                blob: blobName,
+                blob: blobName.EscapePath(),
                 version: _clientConfiguration.Version.ToVersionString());
         }
         #endregion ctors
@@ -1370,8 +1369,7 @@ namespace Azure.Storage.Blobs.Specialized
                     if (async)
                     {
                         response = await AppendBlobRestClient.AppendBlockFromUrlAsync(
-                            // TODO what about sourceUrls with special characters?
-                            sourceUrl: sourceUri.ToString(),
+                            sourceUrl: sourceUri.AbsoluteUri,
                             contentLength: 0,
                             sourceRange: sourceRange.ToString(),
                             sourceContentMD5: sourceContentHash,
@@ -1398,8 +1396,7 @@ namespace Azure.Storage.Blobs.Specialized
                     else
                     {
                         response = AppendBlobRestClient.AppendBlockFromUrl(
-                            // TODO what about sourceUrls with special characters?
-                            sourceUrl: sourceUri.ToString(),
+                            sourceUrl: sourceUri.AbsoluteUri,
                             contentLength: 0,
                             sourceRange: sourceRange.ToString(),
                             sourceContentMD5: sourceContentHash,

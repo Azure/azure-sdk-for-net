@@ -402,7 +402,7 @@ namespace Azure.Storage.Blobs.Specialized
                 pipeline: _clientConfiguration.Pipeline,
                 url: uriBuilder.ToUri().ToString(),
                 containerName: containerName,
-                blob: blobName,
+                blob: blobName.EscapePath(),
                 version: _clientConfiguration.Version.ToVersionString());
         }
         #endregion ctors
@@ -1391,7 +1391,7 @@ namespace Azure.Storage.Blobs.Specialized
                             blockId: base64BlockId,
                             contentLength: 0,
                             // TODO what if the source Uri contains special characters?
-                            sourceUrl: sourceUri.ToString(),
+                            sourceUrl: sourceUri.AbsoluteUri,
                             sourceRange: sourceRange.ToString(),
                             sourceContentMD5: sourceContentHash,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
