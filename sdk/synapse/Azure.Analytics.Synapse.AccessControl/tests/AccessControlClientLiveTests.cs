@@ -34,12 +34,12 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
                 Assignment = assignment;
             }
 
-            public static async ValueTask<DisposableClientRole> Create (RoleAssignmentsClient assignmentsClient, RoleDefinitionsClient definitionsClient) =>
-                new DisposableClientRole (assignmentsClient, definitionsClient, await CreateResource (assignmentsClient, definitionsClient));
+            public static async ValueTask<DisposableClientRole> Create (RoleAssignmentsClient assignmentsClient, RoleDefinitionsClient definitionsClient, SynapseTestEnvironment testEnvironment) =>
+                new DisposableClientRole (assignmentsClient, definitionsClient, await CreateResource (assignmentsClient, definitionsClient, testEnvironment));
 
-            public static async ValueTask<RoleAssignmentDetails> CreateResource (RoleAssignmentsClient assignmentsClient, RoleDefinitionsClient definitionsClient)
+            public static async ValueTask<RoleAssignmentDetails> CreateResource (RoleAssignmentsClient assignmentsClient, RoleDefinitionsClient definitionsClient, SynapseTestEnvironment testEnvironment)
             {
-                string scope = "workspaces/workspacechhamosynapse";
+                string scope = "workspaces/" + testEnvironment.WorkspaceName;
 
                 Guid? roleID = (await definitionsClient.ListRoleDefinitionsAsync()).Value.First (x => x.Name == "Synapse Administrator").Id;
                 Guid principalId = Guid.NewGuid();
@@ -81,7 +81,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
             RoleAssignmentsClient assignmentsClient = CreateAssignmentClient();
             RoleDefinitionsClient definitionsClient = CreateDefinitionsClient();
 
-            await using DisposableClientRole role = await DisposableClientRole.Create (assignmentsClient, definitionsClient);
+            await using DisposableClientRole role = await DisposableClientRole.Create (assignmentsClient, definitionsClient, TestEnvironment);
 
             Assert.NotNull(role.Assignment.Id);
             Assert.NotNull(role.Assignment.RoleDefinitionId);
@@ -94,7 +94,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
             RoleAssignmentsClient assignmentsClient = CreateAssignmentClient();
             RoleDefinitionsClient definitionsClient = CreateDefinitionsClient();
 
-            await using DisposableClientRole role = await DisposableClientRole.Create (assignmentsClient, definitionsClient);
+            await using DisposableClientRole role = await DisposableClientRole.Create (assignmentsClient, definitionsClient, TestEnvironment);
 
             RoleAssignmentDetails roleAssignment = await assignmentsClient.GetRoleAssignmentByIdAsync(role.Assignment.Id);
 
@@ -108,7 +108,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
             RoleAssignmentsClient assignmentsClient = CreateAssignmentClient();
             RoleDefinitionsClient definitionsClient = CreateDefinitionsClient();
 
-            await using DisposableClientRole role = await DisposableClientRole.Create (assignmentsClient, definitionsClient);
+            await using DisposableClientRole role = await DisposableClientRole.Create (assignmentsClient, definitionsClient, TestEnvironment);
 
             Response<IReadOnlyList<SynapseRoleDefinition>> roleAssignments = await definitionsClient.ListRoleDefinitionsAsync();
             foreach (SynapseRoleDefinition expected in roleAssignments.Value)
@@ -126,7 +126,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
             RoleAssignmentsClient assignmentsClient = CreateAssignmentClient();
             RoleDefinitionsClient definitionsClient = CreateDefinitionsClient();
 
-            RoleAssignmentDetails assignment = await DisposableClientRole.CreateResource (assignmentsClient, definitionsClient);
+            RoleAssignmentDetails assignment = await DisposableClientRole.CreateResource (assignmentsClient, definitionsClient, TestEnvironment);
 
             Response response = await assignmentsClient.DeleteRoleAssignmentByIdAsync (assignment.Id);
             response.AssertSuccess();

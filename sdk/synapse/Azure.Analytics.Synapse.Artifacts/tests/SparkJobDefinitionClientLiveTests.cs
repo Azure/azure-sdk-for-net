@@ -19,7 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
     /// These tests have a dependency on live Azure services and may incur costs for the associated
     /// Azure subscription.
     /// </remarks>
-    // [Ignore("This test case cannot be automated due to the inability to configure infrastructure to test against.")]
+    [LiveOnly] // Requires uploaded application on associated storage (wordcount.zip sample)
     public class SparkJobDefinitionClientLiveTests : RecordedTestBase<SynapseTestEnvironment>
     {
         internal class DisposableSparkJobDefinition : IAsyncDisposable
