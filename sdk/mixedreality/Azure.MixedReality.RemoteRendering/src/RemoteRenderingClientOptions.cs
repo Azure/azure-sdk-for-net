@@ -18,7 +18,7 @@ namespace Azure.MixedReality.RemoteRendering
         /// <summary>
         /// The authentication endpoint. If this is not set, the RemoteRenderingClient will use a value based on the account domain.
         /// </summary>
-        internal Uri AuthenticationEndpoint { get; set; }
+        public Uri AuthenticationEndpoint { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RemoteRenderingClientOptions"/> class.

@@ -1,7 +1,7 @@
 # Release History
 
 ## 1.0.0-beta.3 (Unreleased)
-
+- Allow the STS endpoint to be customized.
 
 ## 1.0.0-beta.2 (2021-02-16)
 - Reflect minor REST API improvements.
