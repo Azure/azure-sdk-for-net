@@ -159,6 +159,8 @@ namespace Azure.Identity.Tests
             mockSerializer1.Verify(m => m.DeserializeMsalV3(updatedBytes, false), Times.Exactly(1));
             mockSerializer2.Verify(m => m.DeserializeMsalV3(bytes, true), Times.Exactly(1));
             mockSerializer2.Verify(m => m.SerializeMsalV3(), Times.Exactly(1));
+
+            // validate that we ended up with the merged cache.
             Assert.That(cache.Data, Is.EqualTo(mergedBytes));
         }
 
