@@ -1569,86 +1569,6 @@
                 ]
             }
         },
-        "ImageSignature": {
-            "description": "Signature of a signed manifest",
-            "properties": {
-                "header": {
-                    "description": "A JSON web signature",
-                    "$ref": "#/definitions/JWK"
-                },
-                "signature": {
-                    "type": "string",
-                    "description": "A signature for the image manifest, signed by a libtrust private key"
-                },
-                "protected": {
-                    "type": "string",
-                    "description": "The signed protected header"
-                }
-            },
-            "example": {
-                "header": {
-                    "jwk": {
-                        "crv": "P-256",
-                        "kid": "WGXM:EYWQ:DA53:LQUP:BCWG:5RDG:S3ZM:ETH7:VMQS:WWKZ:EWDG:V74Q",
-                        "kty": "EC",
-                        "x": "OxZ9k5BVjPZ7jb3BmBD4X0d8MVPJqfF4NeSe8reoqnY",
-                        "y": "EaCqTe4-vYwhk7qU6Bs2-AeLGOVtCe_-IY2MdE0Vfyc"
-                    },
-                    "alg": "ES256"
-                },
-                "signature": "p73LfotMGD8nNXz2g9YX2XtSllb4GI5-b3vjqP5N0nkv8QXg-r5z_omGiVbOZE2BYG1X_4TIN23l1KSEqsXxOg",
-                "protected": "eyJmb3JtYXRMZW5ndGgiOjI5ODYsImZvcm1hdFRhaWwiOiJDbjAiLCJ0aW1lIjoiMjAxOC0wOS0yMFQyMzo0MTo1MloifQ"
-            }
-        },
-        "JWK": {
-            "description": "A JSON web signature",
-            "properties": {
-                "jwk": {
-                    "$ref": "#/definitions/JWKHeader"
-                },
-                "alg": {
-                    "type": "string",
-                    "description": "The algorithm used to sign or encrypt the JWT"
-                }
-            }
-        },
-        "JWKHeader": {
-            "description": "JSON web key parameter",
-            "properties": {
-                "crv": {
-                    "type": "string",
-                    "description": "crv value"
-                },
-                "kid": {
-                    "type": "string",
-                    "description": "kid value"
-                },
-                "kty": {
-                    "type": "string",
-                    "description": "kty value"
-                },
-                "x": {
-                    "type": "string",
-                    "description": "x value"
-                },
-                "y": {
-                    "type": "string",
-                    "description": "y value"
-                }
-            }
-        },
-        "History": {
-            "description": "A list of unstructured historical data for v1 compatibility",
-            "properties": {
-                "v1Compatibility": {
-                    "type": "string",
-                    "description": "The raw v1 compatibility information"
-                }
-            },
-            "example": {
-                "v1Compatibility": "v1 compatibility info"
-            }
-        },
         "Repositories": {
             "description": "List of repositories",
             "properties": {
@@ -1702,18 +1622,6 @@
                     "type": "object",
                     "description": "Error details"
                 }
-            }
-        },
-        "FsLayer": {
-            "description": "Image layer information",
-            "properties": {
-                "blobSum": {
-                    "type": "string",
-                    "description": "SHA of an image layer"
-                }
-            },
-            "example": {
-                "blobSum": "sha256:1f7d468f830cb0ed4beb8edc9438f18096e8c682e56a35242f60e6c61b718b30"
             }
         },
         "Descriptor": {
@@ -1916,39 +1824,6 @@
                 "annotations": {
                     "description": "(OCI, OCIIndex) Additional metadata",
                     "$ref": "#/definitions/Annotations"
-                },
-                "architecture": {
-                    "type": "string",
-                    "description": "(V1) CPU architecture"
-                },
-                "name": {
-                    "type": "string",
-                    "description": "(V1) Image name"
-                },
-                "tag": {
-                    "type": "string",
-                    "description": "(V1) Image tag"
-                },
-                "fsLayers": {
-                    "type": "array",
-                    "description": "(V1) List of layer information",
-                    "items": {
-                        "$ref": "#/definitions/FsLayer"
-                    }
-                },
-                "history": {
-                    "type": "array",
-                    "description": "(V1) Image history",
-                    "items": {
-                        "$ref": "#/definitions/History"
-                    }
-                },
-                "signatures": {
-                    "type": "array",
-                    "description": "(V1) Image signature",
-                    "items": {
-                        "$ref": "#/definitions/ImageSignature"
-                    }
                 }
             },
             "allOf": [
@@ -2114,50 +1989,6 @@
                 },
                 "annotations": {
                     "$ref": "#/definitions/Annotations"
-                }
-            },
-            "allOf": [
-                {
-                    "$ref": "#/definitions/Manifest"
-                }
-            ]
-        },
-        "V1Manifest": {
-            "description": "Returns the requested V1 manifest file",
-            "x-ms-discriminator-value": "application/vnd.oci.image.manifest.v1+json",
-            "properties": {
-                "architecture": {
-                    "type": "string",
-                    "description": "CPU architecture"
-                },
-                "name": {
-                    "type": "string",
-                    "description": "Image name"
-                },
-                "tag": {
-                    "type": "string",
-                    "description": "Image tag"
-                },
-                "fsLayers": {
-                    "type": "array",
-                    "description": "List of layer information",
-                    "items": {
-                        "$ref": "#/definitions/FsLayer"
-                    }
-                },
-                "history": {
-                    "type": "array",
-                    "description": "Image history",
-                    "items": {
-                        "$ref": "#/definitions/History"
-                    }
-                },
-                "signatures": {
-                    "type": "array",
-                    "description": "Image signature",
-                    "items": {
-                        "$ref": "#/definitions/ImageSignature"
-                    }
                 }
             },
             "allOf": [

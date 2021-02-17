@@ -15,7 +15,6 @@ namespace Azure.Containers.ContainerRegistry.Models
             OrderBy = orderBy;
         }
         
-        // TODO: determine syntax supported by orderby to model this correctly
         public ManifestOrderBy OrderBy { get; }
     }
 }

@@ -58,51 +58,6 @@ namespace Azure.Containers.ContainerRegistry.Models
                     writer.WriteNull("annotations");
                 }
             }
-            if (Optional.IsDefined(Architecture))
-            {
-                writer.WritePropertyName("architecture");
-                writer.WriteStringValue(Architecture);
-            }
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(Tag))
-            {
-                writer.WritePropertyName("tag");
-                writer.WriteStringValue(Tag);
-            }
-            if (Optional.IsCollectionDefined(FsLayers))
-            {
-                writer.WritePropertyName("fsLayers");
-                writer.WriteStartArray();
-                foreach (var item in FsLayers)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(History))
-            {
-                writer.WritePropertyName("history");
-                writer.WriteStartArray();
-                foreach (var item in History)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(Signatures))
-            {
-                writer.WritePropertyName("signatures");
-                writer.WriteStartArray();
-                foreach (var item in Signatures)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
             if (Optional.IsDefined(SchemaVersion))
             {
                 writer.WritePropertyName("schemaVersion");
@@ -118,12 +73,6 @@ namespace Azure.Containers.ContainerRegistry.Models
             Optional<ContentDescriptor> config = default;
             Optional<IList<ContentDescriptor>> layers = default;
             Optional<Annotations> annotations = default;
-            Optional<string> architecture = default;
-            Optional<string> name = default;
-            Optional<string> tag = default;
-            Optional<IList<FsLayer>> fsLayers = default;
-            Optional<IList<History>> history = default;
-            Optional<IList<ImageSignature>> signatures = default;
             Optional<int> schemaVersion = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -182,66 +131,6 @@ namespace Azure.Containers.ContainerRegistry.Models
                     annotations = Annotations.DeserializeAnnotations(property.Value);
                     continue;
                 }
-                if (property.NameEquals("architecture"))
-                {
-                    architecture = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("name"))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("tag"))
-                {
-                    tag = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("fsLayers"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<FsLayer> array = new List<FsLayer>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(FsLayer.DeserializeFsLayer(item));
-                    }
-                    fsLayers = array;
-                    continue;
-                }
-                if (property.NameEquals("history"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<History> array = new List<History>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(Models.History.DeserializeHistory(item));
-                    }
-                    history = array;
-                    continue;
-                }
-                if (property.NameEquals("signatures"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<ImageSignature> array = new List<ImageSignature>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ImageSignature.DeserializeImageSignature(item));
-                    }
-                    signatures = array;
-                    continue;
-                }
                 if (property.NameEquals("schemaVersion"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -253,7 +142,7 @@ namespace Azure.Containers.ContainerRegistry.Models
                     continue;
                 }
             }
-            return new CombinedManifest(Optional.ToNullable(schemaVersion), mediaType.Value, Optional.ToList(manifests), config.Value, Optional.ToList(layers), annotations.Value, architecture.Value, name.Value, tag.Value, Optional.ToList(fsLayers), Optional.ToList(history), Optional.ToList(signatures));
+            return new CombinedManifest(Optional.ToNullable(schemaVersion), mediaType.Value, Optional.ToList(manifests), config.Value, Optional.ToList(layers), annotations.Value);
         }
     }
 }
