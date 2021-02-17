@@ -2206,7 +2206,7 @@ namespace Azure.AI.TextAnalytics
 
                 var _idToIndexMap = CreateIdToIndexMap(batchInput.Documents);
 
-                return new AnalyzeHealthcareEntitiesOperation(_serviceRestClient, _clientDiagnostics, location, _idToIndexMap, options.Top, options.Skip, options.IncludeStatistics);
+                return new AnalyzeHealthcareEntitiesOperation(_serviceRestClient, _clientDiagnostics, _options.GetVersionString(),  location, _idToIndexMap, options.IncludeStatistics);
             }
             catch (Exception e)
             {
@@ -2229,107 +2229,13 @@ namespace Azure.AI.TextAnalytics
 
                 var _idToIndexMap = CreateIdToIndexMap(batchInput.Documents);
 
-                return new AnalyzeHealthcareEntitiesOperation(_serviceRestClient, _clientDiagnostics, location, _idToIndexMap, options.Top, options.Skip, options.IncludeStatistics);
+                return new AnalyzeHealthcareEntitiesOperation(_serviceRestClient, _clientDiagnostics, _options.GetVersionString(), location, _idToIndexMap, options.IncludeStatistics);
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Gets collection of healthcare entities from the HealthOperation using async pageable.
-        /// </summary>
-        /// <param name="operation"> Healthcare operation class object which is returned when operation is started. <see cref="AnalyzeHealthcareEntitiesOperation"/></param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A collection of <see cref="AnalyzeHealthcareEntitiesResult"/> items.</returns>
-        public virtual AsyncPageable<AnalyzeHealthcareEntitiesResult> GetHealthcareEntities(AnalyzeHealthcareEntitiesOperation operation, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<AnalyzeHealthcareEntitiesResult>> FirstPageFunc(int? pageSizeHint)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(GetHealthcareEntities)}");
-                scope.Start();
-
-                try
-                {
-                    Response<AnalyzeHealthcareEntitiesResultCollection> response = await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-
-                    AnalyzeHealthcareEntitiesResultCollection result = operation.Value;
-                    return Page.FromValues(result.AsEnumerable(), operation.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AnalyzeHealthcareEntitiesResult>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(GetHealthcareEntities)}");
-                scope.Start();
-
-                try
-                {
-                    int top = default;
-                    int skip = default;
-                    bool showStats = default;
-
-                    // Extracting Job ID and parameters from the URL.
-                    // TODO - Update with Regex for cleaner implementation
-                    // nextLink - https://cognitiveusw2dev.azure-api.net/text/analytics/v3.1-preview.3/entities/health/jobs/8002878d-2e43-4675-ad20-455fe004641b?$skip=20&$top=0&showStats=true
-
-                    string[] nextLinkSplit = nextLink.Split('/');
-                    // nextLinkSplit = [ 'https:', '', 'cognitiveusw2dev.azure-api.net', 'text', ..., '8002878d-2e43-4675-ad20-455fe004641b?$skip=20&$top=0']
-
-                    string[] jobIdParams = nextLinkSplit.Last().Split('?');
-                    // jobIdParams = ['8002878d-2e43-4675-ad20-455fe004641b', '$skip=20&$top=0']
-
-                    if (jobIdParams.Length != 2)
-                    {
-                        throw new InvalidOperationException($"Failed to parse element reference: {nextLink}");
-                    }
-
-                    // The Id for the Job i.e. the first index of the list
-                    string jobId = jobIdParams[0];
-                    // '8002878d-2e43-4675-ad20-455fe004641b'
-
-                    // Extracting Top and Skip parameter values
-                    string[] parameters = jobIdParams[1].Split('&');
-                    // '$skip=20', '$top=0', 'showStats=true'
-
-                    foreach (string paramater in parameters)
-                    {
-                        if (paramater.Contains("top"))
-                        {
-                            _ = int.TryParse(paramater.Split('=')[1], out top);
-                            // 0
-                        }
-                        if (paramater.Contains("skip"))
-                        {
-                            _ = int.TryParse(paramater.Split('=')[1], out skip);
-                            // 20
-                        }
-                        if (paramater.Contains("showStats"))
-                        {
-                            _ = bool.TryParse(paramater.Split('=')[1], out showStats);
-                            // 20
-                        }
-                    }
-
-                    Response<HealthcareJobState> jobState = await _serviceRestClient.HealthStatusAsync(new Guid(jobId), top, skip, showStats, cancellationToken).ConfigureAwait(false);
-
-                    AnalyzeHealthcareEntitiesResultCollection result = Transforms.ConvertToRecognizeHealthcareEntitiesResultCollection(jobState.Value.Results, operation._idToIndexMap);
-                    return Page.FromValues(result.AsEnumerable(), jobState.Value.NextLink, jobState.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         #endregion
@@ -2337,182 +2243,135 @@ namespace Azure.AI.TextAnalytics
         #region Analyze Operation
 
         /// <summary>
-        /// StartAnalyzeOperationBatchAsync enables the application to have multiple tasks including NER, PII and KPE.
+        /// StartAnalyzeBatchActionsAsync enables the application to have multiple actions including NER, PII and KPE.
         /// Accepts a list of strings which are analyzed asynchronously.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
         /// <param name="documents">The list of documents to analyze.</param>
         /// <param name="language">The language that the document is written in.</param>
-        /// <param name="options"> The different operations to pass as options.
-        /// You can use it to have multiple tasks to analyze as well as multiple task item per each individual task.
-        /// For example -
-        ///    AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
-        ///    {
-        ///        KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters(),
-        ///        EntitiesTaskParameters = new EntitiesTaskParameters(),
-        ///        PiiTaskParameters = new PiiTaskParameters(),
-        ///        DisplayName = "AnalyzeOperation"
-        ///    };
-        /// By default ModelVersion is set as 'latest' and it can set from the task parameters.
-        /// KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters()
-        /// {
-        ///     ModelVersion = "latest"
-        /// },
-        /// For additional configurable options see <see cref="AnalyzeOperationOptions"/> </param>
+        /// <param name="actions">
+        /// The different actions to pass as arguments.
+        /// You can use it to have multiple actions to analyze as well as multiple action item per each individual action.
+        /// </param>
+        /// <param name="options">Sets the IncludeStatistcs property on the analyze action operation. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual async Task<AnalyzeOperation> StartAnalyzeOperationBatchAsync(IEnumerable<string> documents, AnalyzeOperationOptions options, string language = default, CancellationToken cancellationToken = default)
+        public virtual async Task<AnalyzeBatchActionsOperation> StartAnalyzeBatchActionsAsync(IEnumerable<string> documents, TextAnalyticsActions actions, string language = default, AnalyzeBatchActionsOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(actions, nameof(actions));
             MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
 
-            return await StartAnalyzeOperationBatchAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
+            return await StartAnalyzeBatchActionsAsync(documentInputs, actions, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Analyze Operation enables the application to have multiple tasks including NER, PII and KPE.
+        /// StartAnalyzeBatchActions enables the application to have multiple actions including NER, PII and KPE.
         /// Accepts a list of strings which are analyzed asynchronously.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
         /// <param name="documents">The list of documents to analyze.</param>
+        /// <param name="actions">
+        /// The different actions to pass as arguments.
+        /// You can use it to have multiple actions to analyze as well as multiple action item per each individual action.
+        /// </param>
         /// <param name="language">The language that the document is written in.</param>
-        /// <param name="options"> The different operations to pass as options.
-        /// You can use it to have multiple tasks to analyze as well as multiple task item per each individual task.
-        /// For example -
-        ///    AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
-        ///    {
-        ///        KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters(),
-        ///        EntitiesTaskParameters = new EntitiesTaskParameters(),
-        ///        PiiTaskParameters = new PiiTaskParameters(),
-        ///        DisplayName = "AnalyzeOperation"
-        ///    };
-        /// By default ModelVersion is set as 'latest' and it can set from the task parameters.
-        /// KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters()
-        /// {
-        ///     ModelVersion = "latest"
-        /// },
-        /// For additional configurable options see <see cref="AnalyzeOperationOptions"/> </param>
+        /// <param name="options">Sets the IncludeStatistcs property on the analyze action operation. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual AnalyzeOperation StartAnalyzeOperationBatch(IEnumerable<string> documents, AnalyzeOperationOptions options, string language = default, CancellationToken cancellationToken = default)
+        public virtual AnalyzeBatchActionsOperation StartAnalyzeBatchActions(IEnumerable<string> documents, TextAnalyticsActions actions, string language = default, AnalyzeBatchActionsOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(actions, nameof(actions));
             MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
 
-            return StartAnalyzeOperationBatch(documentInputs, options, cancellationToken);
+            return StartAnalyzeBatchActions(documentInputs, actions, options, cancellationToken);
         }
 
         /// <summary>
-        /// Analyze Operation enables the application to have multiple tasks including NER, PII and KPE.
+        /// StartAnalyzeBatchActions enables the application to have multiple actions including NER, PII and KPE.
         /// Accepts a list of strings which are analyzed asynchronously.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
         /// <param name="documents">The list of documents to analyze.</param>
-        /// <param name="options"> The different operations to pass as options.
-        /// You can use it to have multiple tasks to analyze as well as multiple task item per each individual task.
-        /// For example -
-        ///    AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
-        ///    {
-        ///        KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters(),
-        ///        EntitiesTaskParameters = new EntitiesTaskParameters(),
-        ///        PiiTaskParameters = new PiiTaskParameters(),
-        ///        DisplayName = "AnalyzeOperation"
-        ///    };
-        /// By default ModelVersion is set as 'latest' and it can set from the task parameters.
-        /// KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters()
-        /// {
-        ///     ModelVersion = "latest"
-        /// },
-        /// For additional configurable options see <see cref="AnalyzeOperationOptions"/> </param>
+        /// <param name="actions">
+        /// The different actions to pass as arguments.
+        /// You can use it to have multiple actions to analyze as well as multiple action item per each individual action.
+        /// </param>
+        /// <param name="options">Sets the IncludeStatistcs property on the analyze action operation. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual AnalyzeOperation StartAnalyzeOperationBatch(IEnumerable<TextDocumentInput> documents, AnalyzeOperationOptions options, CancellationToken cancellationToken = default)
+        public virtual AnalyzeBatchActionsOperation StartAnalyzeBatchActions(IEnumerable<TextDocumentInput> documents, TextAnalyticsActions actions, AnalyzeBatchActionsOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(actions, nameof(actions));
             MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents);
 
-            return StartAnalyzeOperationBatch(documentInputs, options, cancellationToken);
+            return StartAnalyzeBatchActions(documentInputs, actions, options, cancellationToken);
         }
 
         /// <summary>
-        /// Analyze Operation enables the application to have multiple tasks including NER, PII and KPE.
+        /// StartAnalyzeBatchActionsAsync enables the application to have multiple actions including NER, PII and KPE.
         /// Accepts a list of strings which are analyzed asynchronously.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
         /// <param name="documents">The list of documents to analyze.</param>
-        /// <param name="options"> The different operations to pass as options.
-        /// You can use it to have multiple tasks to analyze as well as multiple task item per each individual task.
-        /// For example -
-        ///    AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
-        ///    {
-        ///        KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters(),
-        ///        EntitiesTaskParameters = new EntitiesTaskParameters(),
-        ///        PiiTaskParameters = new PiiTaskParameters(),
-        ///        DisplayName = "AnalyzeOperation"
-        ///    };
-        /// By default ModelVersion is set as 'latest' and it can set from the task parameters.
-        /// KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters()
-        /// {
-        ///     ModelVersion = "latest"
-        /// },
-        /// For additional configurable options see <see cref="AnalyzeOperationOptions"/> </param>
+        /// <param name="actions">
+        /// The different actions to pass as arguments.
+        /// You can use it to have multiple actions to analyze as well as multiple action item per each individual action.
+        /// </param>
+        /// <param name="options">Sets the IncludeStatistcs property on the analyze action operation. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual async Task<AnalyzeOperation> StartAnalyzeOperationBatchAsync(IEnumerable<TextDocumentInput> documents, AnalyzeOperationOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<AnalyzeBatchActionsOperation> StartAnalyzeBatchActionsAsync(IEnumerable<TextDocumentInput> documents, TextAnalyticsActions actions, AnalyzeBatchActionsOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(actions, nameof(actions));
             MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents);
 
-            return await StartAnalyzeOperationBatchAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
+            return await StartAnalyzeBatchActionsAsync(documentInputs, actions, options, cancellationToken).ConfigureAwait(false);
         }
 
-        private AnalyzeOperation StartAnalyzeOperationBatch(MultiLanguageBatchInput batchInput, AnalyzeOperationOptions options, CancellationToken cancellationToken = default)
+        private AnalyzeBatchActionsOperation StartAnalyzeBatchActions(MultiLanguageBatchInput batchInput, TextAnalyticsActions actions, AnalyzeBatchActionsOptions options = default, CancellationToken cancellationToken = default)
         {
             JobManifestTasks tasks = new JobManifestTasks();
 
-            if (options.PiiTaskParameters != null)
+            options ??= new AnalyzeBatchActionsOptions();
+
+            if (actions.RecognizePiiEntitiesOptions != null)
             {
-                tasks.EntityRecognitionPiiTasks = new List<PiiTask>() { new PiiTask() { Parameters = options.PiiTaskParameters } };
+                tasks.EntityRecognitionPiiTasks = Transforms.ConvertFromPiiEntityOptionsToTasks(actions.RecognizePiiEntitiesOptions);
             }
-            if (options.EntitiesTaskParameters != null)
+            if (actions.RecognizeEntitiesOptions != null)
             {
-                tasks.EntityRecognitionTasks = new List<EntitiesTask>() { new EntitiesTask() { Parameters = options.EntitiesTaskParameters } };
+                tasks.EntityRecognitionTasks = Transforms.ConvertFromEntityOptionsToTasks(actions.RecognizeEntitiesOptions);
             }
-            if (options.KeyPhrasesTaskParameters != null)
+            if (actions.ExtractKeyPhrasesOptions != null)
             {
-                tasks.KeyPhraseExtractionTasks = new List<KeyPhrasesTask>() { new KeyPhrasesTask() { Parameters = options.KeyPhrasesTaskParameters } };
+                tasks.KeyPhraseExtractionTasks = Transforms.ConvertFromKeyPhrasesOptionsToTasks(actions.ExtractKeyPhrasesOptions);
             }
 
-            AnalyzeBatchInput analyzeDocumentInputs = new AnalyzeBatchInput(batchInput, tasks, options.DisplayName);
+            AnalyzeBatchInput analyzeDocumentInputs = new AnalyzeBatchInput(batchInput, tasks, actions.DisplayName);
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartAnalyzeOperationBatch)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartAnalyzeBatchActions)}");
             scope.Start();
 
             try
             {
-                // TODO - Add Top and Skip once pagination is implemented for Analyze operation
-                // Github issue - https://github.com/Azure/azure-sdk-for-net/issues/16958
-                int _top = default;
-                int _skip = default;
-
                 ResponseWithHeaders<TextAnalyticsAnalyzeHeaders> response = _serviceRestClient.Analyze(analyzeDocumentInputs, cancellationToken);
                 string location = response.Headers.OperationLocation;
 
                 IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(batchInput.Documents);
 
-                return new AnalyzeOperation(_serviceRestClient, _clientDiagnostics, location, idToIndexMap, _top, _skip, options.IncludeStatistics);
+                return new AnalyzeBatchActionsOperation(_serviceRestClient, _clientDiagnostics, _options.GetVersionString(), location, idToIndexMap, options.IncludeStatistics);
             }
             catch (Exception e)
             {
@@ -2521,41 +2380,38 @@ namespace Azure.AI.TextAnalytics
             }
         }
 
-        private async Task<AnalyzeOperation> StartAnalyzeOperationBatchAsync(MultiLanguageBatchInput batchInput, AnalyzeOperationOptions options, CancellationToken cancellationToken = default)
+        private async Task<AnalyzeBatchActionsOperation> StartAnalyzeBatchActionsAsync(MultiLanguageBatchInput batchInput, TextAnalyticsActions actions, AnalyzeBatchActionsOptions options = default, CancellationToken cancellationToken = default)
         {
             JobManifestTasks tasks = new JobManifestTasks();
 
-            if (options.PiiTaskParameters != null)
+            options ??= new AnalyzeBatchActionsOptions();
+
+            if (actions.RecognizePiiEntitiesOptions != null)
             {
-                tasks.EntityRecognitionPiiTasks = new List<PiiTask>() { new PiiTask() { Parameters = options.PiiTaskParameters } };
+                tasks.EntityRecognitionPiiTasks = Transforms.ConvertFromPiiEntityOptionsToTasks(actions.RecognizePiiEntitiesOptions);
             }
-            if (options.EntitiesTaskParameters != null)
+            if (actions.RecognizeEntitiesOptions != null)
             {
-                tasks.EntityRecognitionTasks = new List<EntitiesTask>() { new EntitiesTask() { Parameters = options.EntitiesTaskParameters } };
+                tasks.EntityRecognitionTasks = Transforms.ConvertFromEntityOptionsToTasks(actions.RecognizeEntitiesOptions);
             }
-            if (options.KeyPhrasesTaskParameters != null)
+            if (actions.ExtractKeyPhrasesOptions != null)
             {
-                tasks.KeyPhraseExtractionTasks = new List<KeyPhrasesTask>() { new KeyPhrasesTask() { Parameters = options.KeyPhrasesTaskParameters } };
+                tasks.KeyPhraseExtractionTasks = Transforms.ConvertFromKeyPhrasesOptionsToTasks(actions.ExtractKeyPhrasesOptions);
             }
 
-            AnalyzeBatchInput analyzeDocumentInputs = new AnalyzeBatchInput(batchInput, tasks, options.DisplayName);
+            AnalyzeBatchInput analyzeDocumentInputs = new AnalyzeBatchInput(batchInput, tasks, actions.DisplayName);
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartAnalyzeOperationBatch)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartAnalyzeBatchActions)}");
             scope.Start();
 
             try
             {
-                // TODO - Add Top and Skip once pagination is implemented for Analyze operation
-                // Github issue - https://github.com/Azure/azure-sdk-for-net/issues/16958
-                int _top = default;
-                int _skip = default;
-
                 ResponseWithHeaders<TextAnalyticsAnalyzeHeaders> response = await _serviceRestClient.AnalyzeAsync(analyzeDocumentInputs, cancellationToken).ConfigureAwait(false);
                 string location = response.Headers.OperationLocation;
 
                 IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(batchInput.Documents);
 
-                return new AnalyzeOperation(_serviceRestClient, _clientDiagnostics, location, idToIndexMap, _top, _skip, options.IncludeStatistics);
+                return new AnalyzeBatchActionsOperation(_serviceRestClient, _clientDiagnostics, _options.GetVersionString(), location, idToIndexMap, options.IncludeStatistics);
             }
             catch (Exception e)
             {

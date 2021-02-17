@@ -65,12 +65,7 @@ function Get-TocMapping {
     $orderServiceMapping = @{}
 
     foreach ($artifact in $artifacts) {
-        $packageInfo = $metadata | ? {$_.Package -eq $artifact}
-        
-        if ($packageInfo -and $packageInfo[0].Hide -eq 'true') {
-            LogDebug "The artifact $artifact set 'Hide' to 'true'."
-            continue
-        }
+        $packageInfo = $metadata | ? { $_.Package -eq $artifact -and $_.Hide -ne "true" }
         $serviceName = ""
         $displayName = ""
         if (!$packageInfo) {

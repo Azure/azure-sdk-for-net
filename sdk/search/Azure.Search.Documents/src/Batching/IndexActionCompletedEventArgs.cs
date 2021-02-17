@@ -37,7 +37,7 @@ namespace Azure.Search.Documents.Models
         /// The <see cref="IndexingResult"/> of an action that was successfully
         /// completed.
         /// </param>
-        /// <param name="runSynchronously">
+        /// <param name="isRunningSynchronously">
         /// A value indicating whether the event handler was invoked
         /// synchronously or asynchronously.  Please see
         /// <see cref="Azure.Core.SyncAsyncEventHandler{T}"/> for more details.
@@ -57,9 +57,9 @@ namespace Azure.Search.Documents.Models
             SearchIndexingBufferedSender<T> sender,
             IndexDocumentsAction<T> action,
             IndexingResult result,
-            bool runSynchronously,
+            bool isRunningSynchronously,
             CancellationToken cancellationToken = default)
-            : base(sender, action, runSynchronously, cancellationToken)
+            : base(sender, action, isRunningSynchronously, cancellationToken)
         {
             Argument.AssertNotNull(result, nameof(result));
             Result = result;

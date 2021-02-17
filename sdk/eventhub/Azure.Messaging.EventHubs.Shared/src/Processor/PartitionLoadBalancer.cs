@@ -179,10 +179,16 @@ namespace Azure.Messaging.EventHubs.Primitives
                     .ConfigureAwait(false))
                     .ToList();
             }
+            catch (TaskCanceledException)
+            {
+                throw;
+            }
+            catch (OperationCanceledException)
+            {
+                throw new TaskCanceledException();
+            }
             catch (Exception ex)
             {
-                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-
                 // If ownership list retrieval fails, give up on the current cycle.  There's nothing more we can do
                 // without an updated ownership list.  Set the EventHubName to null so it doesn't modify the exception
                 // message.  This exception message is used so the processor can retrieve the raw Operation string, and
@@ -198,14 +204,12 @@ namespace Azure.Messaging.EventHubs.Primitives
                 return default;
             }
 
-            var unclaimedPartitions = new HashSet<string>(partitionIds);
-
             // Create a partition distribution dictionary from the complete ownership list we have, mapping an owner's identifier to the list of
             // partitions it owns.  When an event processor goes down and it has only expired ownership, it will not be taken into consideration
             // by others.  The expiration time defaults to 30 seconds, but it may be overridden by a derived class.
 
+            var unclaimedPartitions = new HashSet<string>(partitionIds);
             var utcNow = GetDateTimeOffsetNow();
-
             var activeOwnership = default(EventProcessorPartitionOwnership);
 
             ActiveOwnershipWithDistribution.Clear();
@@ -290,7 +294,6 @@ namespace Azure.Messaging.EventHubs.Primitives
                 });
 
             await StorageManager.ClaimOwnershipAsync(ownershipToRelinquish, cancellationToken).ConfigureAwait(false);
-
             InstanceOwnership.Clear();
         }
 
@@ -422,7 +425,7 @@ namespace Azure.Messaging.EventHubs.Primitives
 
             // No ownership has been claimed.
 
-            return new ValueTask<(bool, EventProcessorPartitionOwnership)>((false, default(EventProcessorPartitionOwnership)));
+            return new ValueTask<(bool, EventProcessorPartitionOwnership)>((false, default));
         }
 
         /// <summary>

@@ -384,7 +384,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             new JObject
         {
             { nameof(EventHubConnectionOptions.TransportType), ConnectionOptions.TransportType.ToString() },
-            { nameof(EventHubConnectionOptions.Proxy), ConnectionOptions.Proxy?.ToString()},
+            { nameof(EventHubConnectionOptions.Proxy), ConnectionOptions.Proxy?.ToString() ?? string.Empty},
         };
 
         private JObject ConstructRetryOptions() =>

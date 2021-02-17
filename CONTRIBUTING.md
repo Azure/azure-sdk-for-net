@@ -292,17 +292,14 @@ To consume the a dev package set the exact version in your project or to consume
 
 ## Preparing to a release of the new library
 
-To update the CHANGELOG, version and release tracking information use the `.\eng\scripts\Prepare-Release.ps1` script.
-
-The syntax is `.\eng\scripts\Prepare-Release.ps1 <package_name>`. The script would ask you for a new version or `NA` if you are not releasing in this cycle.
+To prepare a package for release you should make use of `.\eng\common\scripts\Prepare-Release.ps1` script passing it appropriate arguments for the package intended for release as well as the release date. This script will correctly update the package version in the repo as well as update DevOps release work items for that release. 
 
 If you are releasing out-of-band please use the `-ReleaseDate` parameter to specify the release data. `ReleaseDate` should be in `yyyy-MM-dd` format.
 
 Example invocations:
 
 ```powershell
-.\eng\scripts\Prepare-Release.ps1 Azure.Core
-.\eng\scripts\Prepare-Release.ps1 Azure.Core -ReleaseDate 2020-10-01
+.\eng\scripts\Prepare-Release.ps1 -PackageName "Azure.Core" -SerivceDirectory "core" -ReleaseDate "2020-10-01"
 ```
 
 ## On-boarding New Libraries

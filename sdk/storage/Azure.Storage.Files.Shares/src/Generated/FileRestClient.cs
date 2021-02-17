@@ -96,7 +96,7 @@ namespace Azure.Storage.Files.Shares
             }
             if (fileHttpHeaders?.FileContentMD5 != null)
             {
-                request.Headers.Add("x-ms-content-md5", fileHttpHeaders.FileContentMD5);
+                request.Headers.Add("x-ms-content-md5", fileHttpHeaders.FileContentMD5, "D");
             }
             if (fileHttpHeaders?.FileContentDisposition != null)
             {
@@ -446,7 +446,7 @@ namespace Azure.Storage.Files.Shares
             }
             if (fileHttpHeaders?.FileContentMD5 != null)
             {
-                request.Headers.Add("x-ms-content-md5", fileHttpHeaders.FileContentMD5);
+                request.Headers.Add("x-ms-content-md5", fileHttpHeaders.FileContentMD5, "D");
             }
             if (fileHttpHeaders?.FileContentDisposition != null)
             {
@@ -917,7 +917,7 @@ namespace Azure.Storage.Files.Shares
                 request.Headers.Add("Content-Length", contentLength);
                 if (contentMD5 != null)
                 {
-                    request.Headers.Add("Content-MD5", contentMD5);
+                    request.Headers.Add("Content-MD5", contentMD5, "D");
                 }
                 request.Headers.Add("Content-Type", "application/octet-stream");
                 request.Content = RequestContent.Create(optionalbody);
@@ -1007,15 +1007,15 @@ namespace Azure.Storage.Files.Shares
             request.Headers.Add("x-ms-write", fileRangeWriteFromUrl);
             if (sourceContentCrc64 != null)
             {
-                request.Headers.Add("x-ms-source-content-crc64", sourceContentCrc64);
+                request.Headers.Add("x-ms-source-content-crc64", sourceContentCrc64, "D");
             }
             if (sourceModifiedAccessConditions?.SourceIfMatchCrc64 != null)
             {
-                request.Headers.Add("x-ms-source-if-match-crc64", sourceModifiedAccessConditions.SourceIfMatchCrc64);
+                request.Headers.Add("x-ms-source-if-match-crc64", sourceModifiedAccessConditions.SourceIfMatchCrc64, "D");
             }
             if (sourceModifiedAccessConditions?.SourceIfNoneMatchCrc64 != null)
             {
-                request.Headers.Add("x-ms-source-if-none-match-crc64", sourceModifiedAccessConditions.SourceIfNoneMatchCrc64);
+                request.Headers.Add("x-ms-source-if-none-match-crc64", sourceModifiedAccessConditions.SourceIfNoneMatchCrc64, "D");
             }
             request.Headers.Add("x-ms-version", version);
             if (leaseAccessConditions?.LeaseId != null)

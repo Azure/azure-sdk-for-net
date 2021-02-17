@@ -1,10 +1,14 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0-preview.4 (2021-02-10)
 
+### Changed
+- Changed APIs on `SparkBatchClient` and `SparkSessionClient` to provide a Long Running Operation (LRO) when operations can be long in duration.
+- Renamed `Msg` to `Message` on `SparkStatementCancellationResult`.
+- Renamed `DotNetSpark` to `Dotnetspark` and `PySpark` to `Pyspark` on `SparkStatementCollection`.
 
-## 1.0.0-beta.1 (2020-11-22)
-- This release contains bug fixes to improve quality.
+### Added
+- Improved samples and documentation
 
 ## 1.0.0-preview.2 (2020-09-01)
 - This release contains bug fixes to improve quality.
