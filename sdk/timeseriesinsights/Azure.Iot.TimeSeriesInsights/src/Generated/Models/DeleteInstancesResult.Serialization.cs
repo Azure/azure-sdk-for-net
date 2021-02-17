@@ -8,17 +8,18 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Iot.TimeSeriesInsights.Models;
 
-namespace Azure.Iot.TimeSeriesInsights.Models
+namespace Azure.Iot.TimeSeriesInsights
 {
-    public partial class TsiErrorBody
+    public partial class DeleteInstancesResult
     {
-        internal static TsiErrorBody DeserializeTsiErrorBody(JsonElement element)
+        internal static DeleteInstancesResult DeserializeDeleteInstancesResult(JsonElement element)
         {
             Optional<string> code = default;
             Optional<string> message = default;
             Optional<string> target = default;
-            Optional<TsiErrorBody> innerError = default;
+            Optional<DeleteInstancesResult> innerError = default;
             Optional<IReadOnlyList<TsiErrorDetails>> details = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
@@ -46,7 +47,7 @@ namespace Azure.Iot.TimeSeriesInsights.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    innerError = DeserializeTsiErrorBody(property.Value);
+                    innerError = DeserializeDeleteInstancesResult(property.Value);
                     continue;
                 }
                 if (property.NameEquals("details"))
@@ -67,7 +68,7 @@ namespace Azure.Iot.TimeSeriesInsights.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new TsiErrorBody(code.Value, message.Value, target.Value, innerError.Value, Optional.ToList(details), additionalProperties);
+            return new DeleteInstancesResult(code.Value, message.Value, target.Value, innerError.Value, Optional.ToList(details), additionalProperties);
         }
     }
 }

@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -262,6 +263,198 @@ namespace Azure.Iot.TimeSeriesInsights
         }
 
         /// <summary>
+        /// Gets Time Series instances from the environment by instance names asynchronously.
+        /// </summary>
+        /// <param name="timeSeriesNames">List of names of the Time Series instance to return.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// List of instance or error objects corresponding by position to the array in the request. Instance object is set when operation is successful
+        /// and error object is set when operation is unsuccessful.
+        /// </returns>
+        /// <remarks>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.Iot.TimeSeriesInsights/samples">our repo samples</see>.
+        /// </remarks>
+        /// <example>
+        /// <code snippet="Snippet:TimeSeriesInsightsSampleGetInstancesByNames">
+        /// </code>
+        /// </example>
+        public virtual async Task<Response<InstancesOperationResult[]>> GetInstancesAsync(
+            IEnumerable<string> timeSeriesNames,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetInstances)}");
+            scope.Start();
+
+            try
+            {
+                Argument.AssertNotNullOrEmpty(timeSeriesNames, nameof(timeSeriesNames));
+
+                InstancesBatchRequest batchRequest = new InstancesBatchRequest()
+                {
+                    Get = new InstancesRequestBatchGetOrDelete()
+                };
+
+                foreach (string timeSeriesName in timeSeriesNames)
+                {
+                    batchRequest.Get.Names.Add(timeSeriesName);
+                }
+
+                Response<InstancesBatchResponse> executeBatchResponse = await _timeSeriesInstancesRestClient
+                    .ExecuteBatchAsync(batchRequest, _clientSessionId, cancellationToken)
+                    .ConfigureAwait(false);
+
+                return Response.FromValue(executeBatchResponse.Value.Get.ToArray(), executeBatchResponse.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets Time Series instances from the environment by instance names.
+        /// </summary>
+        /// <param name="timeSeriesNames">List of names of the Time Series instance to return.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// List of instance or error objects corresponding by position to the array in the request. Instance object is set when operation is successful
+        /// and error object is set when operation is unsuccessful.
+        /// </returns>
+        /// <seealso cref="GetInstancesAsync(IEnumerable{string}, CancellationToken)">
+        /// See the asynchronous version of this method for examples.
+        /// </seealso>
+        public virtual Response<InstancesOperationResult[]> GetInstances(
+            IEnumerable<string> timeSeriesNames,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetInstances)}");
+            scope.Start();
+
+            try
+            {
+                Argument.AssertNotNullOrEmpty(timeSeriesNames, nameof(timeSeriesNames));
+
+                InstancesBatchRequest batchRequest = new InstancesBatchRequest()
+                {
+                    Get = new InstancesRequestBatchGetOrDelete()
+                };
+
+                foreach (string timeSeriesName in timeSeriesNames)
+                {
+                    batchRequest.Get.Names.Add(timeSeriesName);
+                }
+
+                Response<InstancesBatchResponse> executeBatchResponse = _timeSeriesInstancesRestClient
+                    .ExecuteBatch(batchRequest, _clientSessionId, cancellationToken);
+
+                return Response.FromValue(executeBatchResponse.Value.Get.ToArray(), executeBatchResponse.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets Time Series instances from the environment by Time Series Id asynchronously.
+        /// </summary>
+        /// <param name="timeSeriesIds">List of Ids of the Time Series instance to return.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// List of instance or error objects corresponding by position to the array in the request. Instance object is set when operation is successful
+        /// and error object is set when operation is unsuccessful.
+        /// </returns>
+        /// <remarks>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.Iot.TimeSeriesInsights/samples">our repo samples</see>.
+        /// </remarks>
+        /// <example>
+        /// <code snippet="Snippet:TimeSeriesInsightsSampleGetInstancesByIds">
+        /// </code>
+        /// </example>
+        public virtual async Task<Response<InstancesOperationResult[]>> GetInstancesAsync(
+            IEnumerable<TimeSeriesId> timeSeriesIds,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetInstances)}");
+            scope.Start();
+
+            try
+            {
+                Argument.AssertNotNullOrEmpty(timeSeriesIds, nameof(timeSeriesIds));
+
+                InstancesBatchRequest batchRequest = new InstancesBatchRequest()
+                {
+                    Get = new InstancesRequestBatchGetOrDelete()
+                };
+
+                foreach (TimeSeriesId timeSeriesId in timeSeriesIds)
+                {
+                    IList<object> timeSeriesIdProperties = timeSeriesId.IdAsList();
+                    batchRequest.Get.TimeSeriesIds.Add(timeSeriesIdProperties);
+                }
+
+                Response<InstancesBatchResponse> executeBatchResponse = await _timeSeriesInstancesRestClient
+                    .ExecuteBatchAsync(batchRequest, _clientSessionId, cancellationToken)
+                    .ConfigureAwait(false);
+
+                return Response.FromValue(executeBatchResponse.Value.Get.ToArray(), executeBatchResponse.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets Time Series instances from the environment by Time Series Id.
+        /// </summary>
+        /// <param name="timeSeriesIds">List of Ids of the Time Series instance to return.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// List of instance or error objects corresponding by position to the array in the request. Instance object is set when operation is successful
+        /// and error object is set when operation is unsuccessful.
+        /// </returns>
+        /// <seealso cref="GetInstancesAsync(IEnumerable{TimeSeriesId}, CancellationToken)">
+        /// See the asynchronous version of this method for examples.
+        /// </seealso>
+        public virtual Response<InstancesOperationResult[]> GetInstances(
+            IEnumerable<TimeSeriesId> timeSeriesIds,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetInstances)}");
+            scope.Start();
+
+            try
+            {
+                Argument.AssertNotNullOrEmpty(timeSeriesIds, nameof(timeSeriesIds));
+
+                InstancesBatchRequest batchRequest = new InstancesBatchRequest()
+                {
+                    Get = new InstancesRequestBatchGetOrDelete()
+                };
+
+                foreach (TimeSeriesId timeSeriesId in timeSeriesIds)
+                {
+                    IList<object> timeSeriesIdProperties = timeSeriesId.IdAsList();
+                    batchRequest.Get.TimeSeriesIds.Add(timeSeriesIdProperties);
+                }
+
+                Response<InstancesBatchResponse> executeBatchResponse = _timeSeriesInstancesRestClient
+                    .ExecuteBatch(batchRequest, _clientSessionId, cancellationToken);
+
+                return Response.FromValue(executeBatchResponse.Value.Get.ToArray(), executeBatchResponse.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Get search suggestion keywords asynchronously based on Time Series instance attributes to be later used to search for instances.
         /// </summary>
         /// <param name="searchString">The search string for which suggestions are required. Empty is allowed, but not null.</param>
@@ -341,9 +534,9 @@ namespace Azure.Iot.TimeSeriesInsights
 
         /// <summary>
         /// Creates Time Series instances asynchronously. If a provided instance is already in use, then this will attempt to replace the existing
-        /// instance with the provided event route.
+        /// instance with the provided Time Series Instance.
         /// </summary>
-        /// <param name="timeSeriesInstances">The Time Series instances to be created or updated.</param>
+        /// <param name="timeSeriesInstances">The Time Series instances to be created or replaced.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
         /// List of objects corresponding by position to the <paramref name="timeSeriesInstances"/> array in the request. Instance object
@@ -356,7 +549,7 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <code snippet="Snippet:TimeSeriesInsightsSampleCreateOrReplaceInstances">
         /// </code>
         /// </example>
-        public virtual async Task<Response<InstanceOrError[]>> CreateOrReplaceTimeSeriesInstancesAsync(
+        public virtual async Task<Response<InstancesOperationResult[]>> CreateOrReplaceTimeSeriesInstancesAsync(
             IEnumerable<TimeSeriesInstance> timeSeriesInstances,
             CancellationToken cancellationToken = default)
         {
@@ -390,9 +583,9 @@ namespace Azure.Iot.TimeSeriesInsights
 
         /// <summary>
         /// Creates Time Series instances. If a provided instance is already in use, then this will attempt to replace the existing
-        /// instance with the provided event route.
+        /// instance with the provided Time Series Instance.
         /// </summary>
-        /// <param name="timeSeriesInstances">The Time Series instances to be created or updated.</param>
+        /// <param name="timeSeriesInstances">The Time Series instances to be created or replaced.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
         /// List of objects corresponding by position to the <paramref name="timeSeriesInstances"/> array in the request. Instance object
@@ -401,7 +594,7 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <seealso cref="CreateOrReplaceTimeSeriesInstancesAsync(IEnumerable{TimeSeriesInstance}, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
-        public virtual Response<InstanceOrError[]> CreateOrReplaceTimeSeriesInstances(
+        public virtual Response<InstancesOperationResult[]> CreateOrReplaceTimeSeriesInstances(
             IEnumerable<TimeSeriesInstance> timeSeriesInstances,
             CancellationToken cancellationToken = default)
         {
@@ -423,6 +616,288 @@ namespace Azure.Iot.TimeSeriesInsights
                     .ExecuteBatch(batchRequest, _clientSessionId, cancellationToken);
 
                 return Response.FromValue(executeBatchResponse.Value.Put.ToArray(), executeBatchResponse.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Replaces Time Series instances asynchronously.
+        /// </summary>
+        /// <param name="timeSeriesInstances">The Time Series instances to replaced.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// List of objects corresponding by position to the <paramref name="timeSeriesInstances"/> array in the request. Instance object
+        /// is set when operation is successful and error object is set when operation is unsuccessful.
+        /// </returns>
+        /// <remarks>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.Iot.TimeSeriesInsights/samples">our repo samples</see>.
+        /// </remarks>
+        /// <example>
+        /// <code snippet="Snippet:TimeSeriesInsightsSampleReplaceInstances">
+        /// </code>
+        /// </example>
+        public virtual async Task<Response<InstancesOperationResult[]>> ReplaceTimeSeriesInstancesAsync(
+            IEnumerable<TimeSeriesInstance> timeSeriesInstances,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics
+                .CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(CreateOrReplaceTimeSeriesInstances)}");
+            scope.Start();
+
+            try
+            {
+                Argument.AssertNotNull(timeSeriesInstances, nameof(timeSeriesInstances));
+
+                InstancesBatchRequest batchRequest = new InstancesBatchRequest();
+
+                foreach (TimeSeriesInstance instance in timeSeriesInstances)
+                {
+                    batchRequest.Update.Add(instance);
+                }
+
+                Response<InstancesBatchResponse> executeBatchResponse = await _timeSeriesInstancesRestClient
+                    .ExecuteBatchAsync(batchRequest, _clientSessionId, cancellationToken)
+                    .ConfigureAwait(false);
+
+                return Response.FromValue(executeBatchResponse.Value.Update.ToArray(), executeBatchResponse.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Replaces Time Series instances.
+        /// </summary>
+        /// <param name="timeSeriesInstances">The Time Series instances to be replaced.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// List of objects corresponding by position to the <paramref name="timeSeriesInstances"/> array in the request. Instance object
+        /// is set when operation is successful and error object is set when operation is unsuccessful.
+        /// </returns>
+        /// <seealso cref="ReplaceTimeSeriesInstancesAsync(IEnumerable{TimeSeriesInstance}, CancellationToken)">
+        /// See the asynchronous version of this method for examples.
+        /// </seealso>
+        public virtual Response<InstancesOperationResult[]> ReplaceTimeSeriesInstances(
+            IEnumerable<TimeSeriesInstance> timeSeriesInstances,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(CreateOrReplaceTimeSeriesInstances)}");
+            scope.Start();
+
+            try
+            {
+                Argument.AssertNotNull(timeSeriesInstances, nameof(timeSeriesInstances));
+
+                InstancesBatchRequest batchRequest = new InstancesBatchRequest();
+
+                foreach (TimeSeriesInstance instance in timeSeriesInstances)
+                {
+                    batchRequest.Update.Add(instance);
+                }
+
+                Response<InstancesBatchResponse> executeBatchResponse = _timeSeriesInstancesRestClient
+                    .ExecuteBatch(batchRequest, _clientSessionId, cancellationToken);
+
+                return Response.FromValue(executeBatchResponse.Value.Update.ToArray(), executeBatchResponse.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes Time Series instances from the environment by instance names asynchronously.
+        /// </summary>
+        /// <param name="timeSeriesNames">List of names of the Time Series instance to delete.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// List of error objects corresponding by position to the array in the request. Null means the instance has been deleted, or did not exist.
+        /// Error object is set when operation is unsuccessful.
+        /// </returns>
+        /// <remarks>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.Iot.TimeSeriesInsights/samples">our repo samples</see>.
+        /// </remarks>
+        /// <example>
+        /// <code snippet="Snippet:TimeSeriesInsightsSampleDeletesInstancesByNames">
+        /// </code>
+        /// </example>
+        public virtual async Task<Response<DeleteInstancesResult[]>> DeleteInstancesAsync(
+            IEnumerable<string> timeSeriesNames,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetInstances)}");
+            scope.Start();
+
+            try
+            {
+                Argument.AssertNotNullOrEmpty(timeSeriesNames, nameof(timeSeriesNames));
+
+                InstancesBatchRequest batchRequest = new InstancesBatchRequest()
+                {
+                    Delete = new InstancesRequestBatchGetOrDelete()
+                };
+
+                foreach (string timeSeriesName in timeSeriesNames)
+                {
+                    batchRequest.Delete.Names.Add(timeSeriesName);
+                }
+
+                Response<InstancesBatchResponse> executeBatchResponse = await _timeSeriesInstancesRestClient
+                    .ExecuteBatchAsync(batchRequest, _clientSessionId, cancellationToken)
+                    .ConfigureAwait(false);
+
+                return Response.FromValue(executeBatchResponse.Value.Delete.ToArray(), executeBatchResponse.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes Time Series instances from the environment by instance names.
+        /// </summary>
+        /// <param name="timeSeriesNames">List of names of the Time Series instance to delete.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// List of error objects corresponding by position to the array in the request. Null means the instance has been deleted, or did not exist.
+        /// Error object is set when operation is unsuccessful.
+        /// </returns>
+        /// <seealso cref="DeleteInstancesAsync(IEnumerable{string}, CancellationToken)">
+        /// See the asynchronous version of this method for examples.
+        /// </seealso>
+        public virtual Response<DeleteInstancesResult[]> DeleteInstances(
+            IEnumerable<string> timeSeriesNames,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetInstances)}");
+            scope.Start();
+
+            try
+            {
+                Argument.AssertNotNullOrEmpty(timeSeriesNames, nameof(timeSeriesNames));
+
+                InstancesBatchRequest batchRequest = new InstancesBatchRequest()
+                {
+                    Delete = new InstancesRequestBatchGetOrDelete()
+                };
+
+                foreach (string timeSeriesName in timeSeriesNames)
+                {
+                    batchRequest.Delete.Names.Add(timeSeriesName);
+                }
+
+                Response<InstancesBatchResponse> executeBatchResponse = _timeSeriesInstancesRestClient
+                    .ExecuteBatch(batchRequest, _clientSessionId, cancellationToken);
+
+                return Response.FromValue(executeBatchResponse.Value.Delete.ToArray(), executeBatchResponse.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes Time Series instances from the environment by Time Series Id asynchronously.
+        /// </summary>
+        /// <param name="timeSeriesIds">List of Ids of the Time Series instance to delete.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// List of error objects corresponding by position to the array in the request. Null means the instance has been deleted, or did not exist.
+        /// Error object is set when operation is unsuccessful.
+        /// </returns>
+        /// <remarks>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.Iot.TimeSeriesInsights/samples">our repo samples</see>.
+        /// </remarks>
+        /// <example>
+        /// <code snippet="Snippet:TimeSeriesInsightsSampleDeleteInstancesByIds">
+        /// </code>
+        /// </example>
+        public virtual async Task<Response<DeleteInstancesResult[]>> DeleteInstancesAsync(
+            IEnumerable<TimeSeriesId> timeSeriesIds,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetInstances)}");
+            scope.Start();
+
+            try
+            {
+                Argument.AssertNotNullOrEmpty(timeSeriesIds, nameof(timeSeriesIds));
+
+                InstancesBatchRequest batchRequest = new InstancesBatchRequest()
+                {
+                    Delete = new InstancesRequestBatchGetOrDelete()
+                };
+
+                foreach (TimeSeriesId timeSeriesId in timeSeriesIds)
+                {
+                    IList<object> timeSeriesIdProperties = timeSeriesId.IdAsList();
+                    batchRequest.Delete.TimeSeriesIds.Add(timeSeriesIdProperties);
+                }
+
+                Response<InstancesBatchResponse> executeBatchResponse = await _timeSeriesInstancesRestClient
+                    .ExecuteBatchAsync(batchRequest, _clientSessionId, cancellationToken)
+                    .ConfigureAwait(false);
+
+                return Response.FromValue(executeBatchResponse.Value.Delete.ToArray(), executeBatchResponse.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes Time Series instances from the environment by Time Series Id.
+        /// </summary>
+        /// <param name="timeSeriesIds">List of Ids of the Time Series instance to delete.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// List of error objects corresponding by position to the array in the request. Null means the instance has been deleted, or did not exist.
+        /// Error object is set when operation is unsuccessful.
+        /// </returns>
+        /// <seealso cref="DeleteInstancesAsync(IEnumerable{TimeSeriesId}, CancellationToken)">
+        /// See the asynchronous version of this method for examples.
+        /// </seealso>
+        public virtual Response<DeleteInstancesResult[]> DeleteInstances(
+            IEnumerable<TimeSeriesId> timeSeriesIds,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetInstances)}");
+            scope.Start();
+
+            try
+            {
+                Argument.AssertNotNullOrEmpty(timeSeriesIds, nameof(timeSeriesIds));
+
+                InstancesBatchRequest batchRequest = new InstancesBatchRequest()
+                {
+                    Delete = new InstancesRequestBatchGetOrDelete()
+                };
+
+                foreach (TimeSeriesId timeSeriesId in timeSeriesIds)
+                {
+                    IList<object> timeSeriesIdProperties = timeSeriesId.IdAsList();
+                    batchRequest.Delete.TimeSeriesIds.Add(timeSeriesIdProperties);
+                }
+
+                Response<InstancesBatchResponse> executeBatchResponse = _timeSeriesInstancesRestClient
+                    .ExecuteBatch(batchRequest, _clientSessionId, cancellationToken);
+
+                return Response.FromValue(executeBatchResponse.Value.Delete.ToArray(), executeBatchResponse.GetRawResponse());
             }
             catch (Exception ex)
             {

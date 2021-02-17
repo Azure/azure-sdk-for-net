@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Iot.TimeSeriesInsights;
 
 namespace Azure.Iot.TimeSeriesInsights.Models
 {
@@ -14,7 +15,7 @@ namespace Azure.Iot.TimeSeriesInsights.Models
     {
         internal static TsiError DeserializeTsiError(JsonElement element)
         {
-            Optional<TsiErrorBody> error = default;
+            Optional<DeleteInstancesResult> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("error"))
@@ -24,7 +25,7 @@ namespace Azure.Iot.TimeSeriesInsights.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = TsiErrorBody.DeserializeTsiErrorBody(property.Value);
+                    error = DeleteInstancesResult.DeserializeDeleteInstancesResult(property.Value);
                     continue;
                 }
             }

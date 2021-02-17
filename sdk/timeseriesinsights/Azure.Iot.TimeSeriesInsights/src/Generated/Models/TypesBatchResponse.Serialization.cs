@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Iot.TimeSeriesInsights;
 
 namespace Azure.Iot.TimeSeriesInsights.Models
 {
@@ -17,7 +18,7 @@ namespace Azure.Iot.TimeSeriesInsights.Models
         {
             Optional<IReadOnlyList<TimeSeriesTypeOrError>> @get = default;
             Optional<IReadOnlyList<TimeSeriesTypeOrError>> put = default;
-            Optional<IReadOnlyList<TsiErrorBody>> delete = default;
+            Optional<IReadOnlyList<DeleteInstancesResult>> delete = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("get"))
@@ -57,10 +58,10 @@ namespace Azure.Iot.TimeSeriesInsights.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<TsiErrorBody> array = new List<TsiErrorBody>();
+                    List<DeleteInstancesResult> array = new List<DeleteInstancesResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TsiErrorBody.DeserializeTsiErrorBody(item));
+                        array.Add(DeleteInstancesResult.DeserializeDeleteInstancesResult(item));
                     }
                     delete = array;
                     continue;

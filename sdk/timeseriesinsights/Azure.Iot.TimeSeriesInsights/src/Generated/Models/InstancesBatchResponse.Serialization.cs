@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Iot.TimeSeriesInsights;
 
 namespace Azure.Iot.TimeSeriesInsights.Models
 {
@@ -15,10 +16,10 @@ namespace Azure.Iot.TimeSeriesInsights.Models
     {
         internal static InstancesBatchResponse DeserializeInstancesBatchResponse(JsonElement element)
         {
-            Optional<IReadOnlyList<InstanceOrError>> @get = default;
-            Optional<IReadOnlyList<InstanceOrError>> put = default;
-            Optional<IReadOnlyList<InstanceOrError>> update = default;
-            Optional<IReadOnlyList<TsiErrorBody>> delete = default;
+            Optional<IReadOnlyList<InstancesOperationResult>> @get = default;
+            Optional<IReadOnlyList<InstancesOperationResult>> put = default;
+            Optional<IReadOnlyList<InstancesOperationResult>> update = default;
+            Optional<IReadOnlyList<DeleteInstancesResult>> delete = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("get"))
@@ -28,10 +29,10 @@ namespace Azure.Iot.TimeSeriesInsights.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<InstanceOrError> array = new List<InstanceOrError>();
+                    List<InstancesOperationResult> array = new List<InstancesOperationResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InstanceOrError.DeserializeInstanceOrError(item));
+                        array.Add(InstancesOperationResult.DeserializeInstancesOperationResult(item));
                     }
                     @get = array;
                     continue;
@@ -43,10 +44,10 @@ namespace Azure.Iot.TimeSeriesInsights.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<InstanceOrError> array = new List<InstanceOrError>();
+                    List<InstancesOperationResult> array = new List<InstancesOperationResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InstanceOrError.DeserializeInstanceOrError(item));
+                        array.Add(InstancesOperationResult.DeserializeInstancesOperationResult(item));
                     }
                     put = array;
                     continue;
@@ -58,10 +59,10 @@ namespace Azure.Iot.TimeSeriesInsights.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<InstanceOrError> array = new List<InstanceOrError>();
+                    List<InstancesOperationResult> array = new List<InstancesOperationResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InstanceOrError.DeserializeInstanceOrError(item));
+                        array.Add(InstancesOperationResult.DeserializeInstancesOperationResult(item));
                     }
                     update = array;
                     continue;
@@ -73,10 +74,10 @@ namespace Azure.Iot.TimeSeriesInsights.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<TsiErrorBody> array = new List<TsiErrorBody>();
+                    List<DeleteInstancesResult> array = new List<DeleteInstancesResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TsiErrorBody.DeserializeTsiErrorBody(item));
+                        array.Add(DeleteInstancesResult.DeserializeDeleteInstancesResult(item));
                     }
                     delete = array;
                     continue;

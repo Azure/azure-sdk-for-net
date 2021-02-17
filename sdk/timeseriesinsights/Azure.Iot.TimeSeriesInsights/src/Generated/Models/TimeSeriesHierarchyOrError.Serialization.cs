@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Iot.TimeSeriesInsights;
 
 namespace Azure.Iot.TimeSeriesInsights.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.Iot.TimeSeriesInsights.Models
         internal static TimeSeriesHierarchyOrError DeserializeTimeSeriesHierarchyOrError(JsonElement element)
         {
             Optional<TimeSeriesHierarchy> hierarchy = default;
-            Optional<TsiErrorBody> error = default;
+            Optional<DeleteInstancesResult> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hierarchy"))
@@ -35,7 +36,7 @@ namespace Azure.Iot.TimeSeriesInsights.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = TsiErrorBody.DeserializeTsiErrorBody(property.Value);
+                    error = DeleteInstancesResult.DeserializeDeleteInstancesResult(property.Value);
                     continue;
                 }
             }

@@ -5,20 +5,22 @@
 
 #nullable disable
 
-namespace Azure.Iot.TimeSeriesInsights.Models
+using Azure.Iot.TimeSeriesInsights.Models;
+
+namespace Azure.Iot.TimeSeriesInsights
 {
     /// <summary> Result of a batch operation on a particular time series instance. Instance object is set when operation is successful (except put operation) and error object is set when operation is unsuccessful. </summary>
-    public partial class InstanceOrError
+    public partial class InstancesOperationResult
     {
-        /// <summary> Initializes a new instance of InstanceOrError. </summary>
-        internal InstanceOrError()
+        /// <summary> Initializes a new instance of InstancesOperationResult. </summary>
+        internal InstancesOperationResult()
         {
         }
 
-        /// <summary> Initializes a new instance of InstanceOrError. </summary>
+        /// <summary> Initializes a new instance of InstancesOperationResult. </summary>
         /// <param name="instance"> Time series instance object - set when the operation is successful (except put operation). </param>
         /// <param name="error"> Error object - set when the operation is unsuccessful. </param>
-        internal InstanceOrError(TimeSeriesInstance instance, TsiErrorBody error)
+        internal InstancesOperationResult(TimeSeriesInstance instance, DeleteInstancesResult error)
         {
             Instance = instance;
             Error = error;
@@ -27,6 +29,6 @@ namespace Azure.Iot.TimeSeriesInsights.Models
         /// <summary> Time series instance object - set when the operation is successful (except put operation). </summary>
         public TimeSeriesInstance Instance { get; }
         /// <summary> Error object - set when the operation is unsuccessful. </summary>
-        public TsiErrorBody Error { get; }
+        public DeleteInstancesResult Error { get; }
     }
 }

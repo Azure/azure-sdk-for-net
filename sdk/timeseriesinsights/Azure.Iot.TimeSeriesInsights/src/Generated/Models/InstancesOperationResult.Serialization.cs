@@ -7,15 +7,16 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Iot.TimeSeriesInsights.Models;
 
-namespace Azure.Iot.TimeSeriesInsights.Models
+namespace Azure.Iot.TimeSeriesInsights
 {
-    public partial class InstanceOrError
+    public partial class InstancesOperationResult
     {
-        internal static InstanceOrError DeserializeInstanceOrError(JsonElement element)
+        internal static InstancesOperationResult DeserializeInstancesOperationResult(JsonElement element)
         {
             Optional<TimeSeriesInstance> instance = default;
-            Optional<TsiErrorBody> error = default;
+            Optional<DeleteInstancesResult> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("instance"))
@@ -35,11 +36,11 @@ namespace Azure.Iot.TimeSeriesInsights.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = TsiErrorBody.DeserializeTsiErrorBody(property.Value);
+                    error = DeleteInstancesResult.DeserializeDeleteInstancesResult(property.Value);
                     continue;
                 }
             }
-            return new InstanceOrError(instance.Value, error.Value);
+            return new InstancesOperationResult(instance.Value, error.Value);
         }
     }
 }

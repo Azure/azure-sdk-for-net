@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Iot.TimeSeriesInsights;
+
 namespace Azure.Iot.TimeSeriesInsights.Models
 {
     /// <summary> Information about an API error. </summary>
@@ -17,12 +19,12 @@ namespace Azure.Iot.TimeSeriesInsights.Models
 
         /// <summary> Initializes a new instance of TsiError. </summary>
         /// <param name="error"> A particular API error with an error code and a message. </param>
-        internal TsiError(TsiErrorBody error)
+        internal TsiError(DeleteInstancesResult error)
         {
             Error = error;
         }
 
         /// <summary> A particular API error with an error code and a message. </summary>
-        public TsiErrorBody Error { get; }
+        public DeleteInstancesResult Error { get; }
     }
 }

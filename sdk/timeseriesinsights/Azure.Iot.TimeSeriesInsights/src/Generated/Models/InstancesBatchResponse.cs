@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Iot.TimeSeriesInsights;
 
 namespace Azure.Iot.TimeSeriesInsights.Models
 {
@@ -16,10 +17,10 @@ namespace Azure.Iot.TimeSeriesInsights.Models
         /// <summary> Initializes a new instance of InstancesBatchResponse. </summary>
         internal InstancesBatchResponse()
         {
-            Get = new ChangeTrackingList<InstanceOrError>();
-            Put = new ChangeTrackingList<InstanceOrError>();
-            Update = new ChangeTrackingList<InstanceOrError>();
-            Delete = new ChangeTrackingList<TsiErrorBody>();
+            Get = new ChangeTrackingList<InstancesOperationResult>();
+            Put = new ChangeTrackingList<InstancesOperationResult>();
+            Update = new ChangeTrackingList<InstancesOperationResult>();
+            Delete = new ChangeTrackingList<DeleteInstancesResult>();
         }
 
         /// <summary> Initializes a new instance of InstancesBatchResponse. </summary>
@@ -27,7 +28,7 @@ namespace Azure.Iot.TimeSeriesInsights.Models
         /// <param name="put"> List of error objects corresponding by position to the &quot;put&quot; array in the request. Error object is set when operation is unsuccessful. </param>
         /// <param name="update"> List of error objects corresponding by position to the &quot;update&quot; array in the request. Instance object is set when operation is successful and error object is set when operation is unsuccessful. </param>
         /// <param name="delete"> List of error objects corresponding by position to the &quot;delete&quot; array in the request. Null means the instance has been deleted, or did not exist. Error object is set when operation is unsuccessful (e.g. when there are events associated with this time series instance). </param>
-        internal InstancesBatchResponse(IReadOnlyList<InstanceOrError> @get, IReadOnlyList<InstanceOrError> put, IReadOnlyList<InstanceOrError> update, IReadOnlyList<TsiErrorBody> delete)
+        internal InstancesBatchResponse(IReadOnlyList<InstancesOperationResult> @get, IReadOnlyList<InstancesOperationResult> put, IReadOnlyList<InstancesOperationResult> update, IReadOnlyList<DeleteInstancesResult> delete)
         {
             Get = @get;
             Put = put;
@@ -36,12 +37,12 @@ namespace Azure.Iot.TimeSeriesInsights.Models
         }
 
         /// <summary> List of instance or error objects corresponding by position to the &quot;get&quot; array in the request. Instance object is set when operation is successful and error object is set when operation is unsuccessful. </summary>
-        public IReadOnlyList<InstanceOrError> Get { get; }
+        public IReadOnlyList<InstancesOperationResult> Get { get; }
         /// <summary> List of error objects corresponding by position to the &quot;put&quot; array in the request. Error object is set when operation is unsuccessful. </summary>
-        public IReadOnlyList<InstanceOrError> Put { get; }
+        public IReadOnlyList<InstancesOperationResult> Put { get; }
         /// <summary> List of error objects corresponding by position to the &quot;update&quot; array in the request. Instance object is set when operation is successful and error object is set when operation is unsuccessful. </summary>
-        public IReadOnlyList<InstanceOrError> Update { get; }
+        public IReadOnlyList<InstancesOperationResult> Update { get; }
         /// <summary> List of error objects corresponding by position to the &quot;delete&quot; array in the request. Null means the instance has been deleted, or did not exist. Error object is set when operation is unsuccessful (e.g. when there are events associated with this time series instance). </summary>
-        public IReadOnlyList<TsiErrorBody> Delete { get; }
+        public IReadOnlyList<DeleteInstancesResult> Delete { get; }
     }
 }
