@@ -61,7 +61,7 @@ namespace Azure.Storage.Blobs
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateDownloadRequest(string snapshot, string versionId, int? timeout, string range, string leaseId, bool? rangeGetContentMD5, bool? rangeGetContentCRC64, string encryptionKey, string encryptionKeySha256, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags)
+        internal HttpMessage CreateDownloadRequest(string snapshot, string versionId, int? timeout, string range, string leaseId, bool? rangeGetContentMD5, bool? rangeGetContentCRC64, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -109,7 +109,10 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("x-ms-encryption-key-sha256", encryptionKeySha256);
             }
-            request.Headers.Add("x-ms-encryption-algorithm", "AES256");
+            if (encryptionAlgorithm != null)
+            {
+                request.Headers.Add("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToSerialString());
+            }
             if (ifModifiedSince != null)
             {
                 request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "R");
@@ -145,15 +148,16 @@ namespace Azure.Storage.Blobs
         /// <param name="rangeGetContentCRC64"> When set to true and specified together with the Range, the service returns the CRC64 hash for the range, as long as the range is less than or equal to 4 MB in size. </param>
         /// <param name="encryptionKey"> Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services. </param>
         /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Currently, the only accepted value is &quot;AES256&quot;. Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
         /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<Stream, BlobDownloadHeaders>> DownloadAsync(string snapshot = null, string versionId = null, int? timeout = null, string range = null, string leaseId = null, bool? rangeGetContentMD5 = null, bool? rangeGetContentCRC64 = null, string encryptionKey = null, string encryptionKeySha256 = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<Stream, BlobDownloadHeaders>> DownloadAsync(string snapshot = null, string versionId = null, int? timeout = null, string range = null, string leaseId = null, bool? rangeGetContentMD5 = null, bool? rangeGetContentCRC64 = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateDownloadRequest(snapshot, versionId, timeout, range, leaseId, rangeGetContentMD5, rangeGetContentCRC64, encryptionKey, encryptionKeySha256, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags);
+            using var message = CreateDownloadRequest(snapshot, versionId, timeout, range, leaseId, rangeGetContentMD5, rangeGetContentCRC64, encryptionKey, encryptionKeySha256, encryptionAlgorithm, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new BlobDownloadHeaders(message.Response);
             switch (message.Response.Status)
@@ -179,15 +183,16 @@ namespace Azure.Storage.Blobs
         /// <param name="rangeGetContentCRC64"> When set to true and specified together with the Range, the service returns the CRC64 hash for the range, as long as the range is less than or equal to 4 MB in size. </param>
         /// <param name="encryptionKey"> Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services. </param>
         /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Currently, the only accepted value is &quot;AES256&quot;. Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
         /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<Stream, BlobDownloadHeaders> Download(string snapshot = null, string versionId = null, int? timeout = null, string range = null, string leaseId = null, bool? rangeGetContentMD5 = null, bool? rangeGetContentCRC64 = null, string encryptionKey = null, string encryptionKeySha256 = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<Stream, BlobDownloadHeaders> Download(string snapshot = null, string versionId = null, int? timeout = null, string range = null, string leaseId = null, bool? rangeGetContentMD5 = null, bool? rangeGetContentCRC64 = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateDownloadRequest(snapshot, versionId, timeout, range, leaseId, rangeGetContentMD5, rangeGetContentCRC64, encryptionKey, encryptionKeySha256, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags);
+            using var message = CreateDownloadRequest(snapshot, versionId, timeout, range, leaseId, rangeGetContentMD5, rangeGetContentCRC64, encryptionKey, encryptionKeySha256, encryptionAlgorithm, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags);
             _pipeline.Send(message, cancellationToken);
             var headers = new BlobDownloadHeaders(message.Response);
             switch (message.Response.Status)
@@ -203,7 +208,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateGetPropertiesRequest(string snapshot, string versionId, int? timeout, string leaseId, string encryptionKey, string encryptionKeySha256, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags)
+        internal HttpMessage CreateGetPropertiesRequest(string snapshot, string versionId, int? timeout, string leaseId, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -239,7 +244,10 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("x-ms-encryption-key-sha256", encryptionKeySha256);
             }
-            request.Headers.Add("x-ms-encryption-algorithm", "AES256");
+            if (encryptionAlgorithm != null)
+            {
+                request.Headers.Add("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToSerialString());
+            }
             if (ifModifiedSince != null)
             {
                 request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "R");
@@ -272,15 +280,16 @@ namespace Azure.Storage.Blobs
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
         /// <param name="encryptionKey"> Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services. </param>
         /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Currently, the only accepted value is &quot;AES256&quot;. Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
         /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<BlobGetPropertiesHeaders>> GetPropertiesAsync(string snapshot = null, string versionId = null, int? timeout = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<BlobGetPropertiesHeaders>> GetPropertiesAsync(string snapshot = null, string versionId = null, int? timeout = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetPropertiesRequest(snapshot, versionId, timeout, leaseId, encryptionKey, encryptionKeySha256, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags);
+            using var message = CreateGetPropertiesRequest(snapshot, versionId, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new BlobGetPropertiesHeaders(message.Response);
             switch (message.Response.Status)
@@ -299,15 +308,16 @@ namespace Azure.Storage.Blobs
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
         /// <param name="encryptionKey"> Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services. </param>
         /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Currently, the only accepted value is &quot;AES256&quot;. Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
         /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<BlobGetPropertiesHeaders> GetProperties(string snapshot = null, string versionId = null, int? timeout = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<BlobGetPropertiesHeaders> GetProperties(string snapshot = null, string versionId = null, int? timeout = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetPropertiesRequest(snapshot, versionId, timeout, leaseId, encryptionKey, encryptionKeySha256, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags);
+            using var message = CreateGetPropertiesRequest(snapshot, versionId, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags);
             _pipeline.Send(message, cancellationToken);
             var headers = new BlobGetPropertiesHeaders(message.Response);
             switch (message.Response.Status)
@@ -683,7 +693,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateSetMetadataRequest(int? timeout, IDictionary<string, string> metadata, string leaseId, string encryptionKey, string encryptionKeySha256, string encryptionScope, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags)
+        internal HttpMessage CreateSetMetadataRequest(int? timeout, IDictionary<string, string> metadata, string leaseId, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm, string encryptionScope, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -716,7 +726,10 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("x-ms-encryption-key-sha256", encryptionKeySha256);
             }
-            request.Headers.Add("x-ms-encryption-algorithm", "AES256");
+            if (encryptionAlgorithm != null)
+            {
+                request.Headers.Add("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToSerialString());
+            }
             if (encryptionScope != null)
             {
                 request.Headers.Add("x-ms-encryption-scope", encryptionScope);
@@ -752,6 +765,7 @@ namespace Azure.Storage.Blobs
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
         /// <param name="encryptionKey"> Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services. </param>
         /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Currently, the only accepted value is &quot;AES256&quot;. Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="encryptionScope"> Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services. </param>
         /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
@@ -759,9 +773,9 @@ namespace Azure.Storage.Blobs
         /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<BlobSetMetadataHeaders>> SetMetadataAsync(int? timeout = null, IDictionary<string, string> metadata = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, string encryptionScope = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<BlobSetMetadataHeaders>> SetMetadataAsync(int? timeout = null, IDictionary<string, string> metadata = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateSetMetadataRequest(timeout, metadata, leaseId, encryptionKey, encryptionKeySha256, encryptionScope, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags);
+            using var message = CreateSetMetadataRequest(timeout, metadata, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new BlobSetMetadataHeaders(message.Response);
             switch (message.Response.Status)
@@ -779,6 +793,7 @@ namespace Azure.Storage.Blobs
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
         /// <param name="encryptionKey"> Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services. </param>
         /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Currently, the only accepted value is &quot;AES256&quot;. Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="encryptionScope"> Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services. </param>
         /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
@@ -786,9 +801,9 @@ namespace Azure.Storage.Blobs
         /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<BlobSetMetadataHeaders> SetMetadata(int? timeout = null, IDictionary<string, string> metadata = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, string encryptionScope = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<BlobSetMetadataHeaders> SetMetadata(int? timeout = null, IDictionary<string, string> metadata = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateSetMetadataRequest(timeout, metadata, leaseId, encryptionKey, encryptionKeySha256, encryptionScope, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags);
+            using var message = CreateSetMetadataRequest(timeout, metadata, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags);
             _pipeline.Send(message, cancellationToken);
             var headers = new BlobSetMetadataHeaders(message.Response);
             switch (message.Response.Status)
@@ -1309,7 +1324,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateCreateSnapshotRequest(int? timeout, IDictionary<string, string> metadata, string encryptionKey, string encryptionKeySha256, string encryptionScope, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, string leaseId)
+        internal HttpMessage CreateCreateSnapshotRequest(int? timeout, IDictionary<string, string> metadata, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm, string encryptionScope, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, string leaseId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1338,7 +1353,10 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("x-ms-encryption-key-sha256", encryptionKeySha256);
             }
-            request.Headers.Add("x-ms-encryption-algorithm", "AES256");
+            if (encryptionAlgorithm != null)
+            {
+                request.Headers.Add("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToSerialString());
+            }
             if (encryptionScope != null)
             {
                 request.Headers.Add("x-ms-encryption-scope", encryptionScope);
@@ -1377,6 +1395,7 @@ namespace Azure.Storage.Blobs
         /// <param name="metadata"> Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information. </param>
         /// <param name="encryptionKey"> Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services. </param>
         /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Currently, the only accepted value is &quot;AES256&quot;. Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="encryptionScope"> Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services. </param>
         /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
@@ -1385,9 +1404,9 @@ namespace Azure.Storage.Blobs
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<BlobCreateSnapshotHeaders>> CreateSnapshotAsync(int? timeout = null, IDictionary<string, string> metadata = null, string encryptionKey = null, string encryptionKeySha256 = null, string encryptionScope = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string leaseId = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<BlobCreateSnapshotHeaders>> CreateSnapshotAsync(int? timeout = null, IDictionary<string, string> metadata = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string leaseId = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCreateSnapshotRequest(timeout, metadata, encryptionKey, encryptionKeySha256, encryptionScope, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, leaseId);
+            using var message = CreateCreateSnapshotRequest(timeout, metadata, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, leaseId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new BlobCreateSnapshotHeaders(message.Response);
             switch (message.Response.Status)
@@ -1404,6 +1423,7 @@ namespace Azure.Storage.Blobs
         /// <param name="metadata"> Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information. </param>
         /// <param name="encryptionKey"> Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services. </param>
         /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Currently, the only accepted value is &quot;AES256&quot;. Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="encryptionScope"> Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services. </param>
         /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
@@ -1412,9 +1432,9 @@ namespace Azure.Storage.Blobs
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<BlobCreateSnapshotHeaders> CreateSnapshot(int? timeout = null, IDictionary<string, string> metadata = null, string encryptionKey = null, string encryptionKeySha256 = null, string encryptionScope = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string leaseId = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<BlobCreateSnapshotHeaders> CreateSnapshot(int? timeout = null, IDictionary<string, string> metadata = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string leaseId = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCreateSnapshotRequest(timeout, metadata, encryptionKey, encryptionKeySha256, encryptionScope, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, leaseId);
+            using var message = CreateCreateSnapshotRequest(timeout, metadata, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, leaseId);
             _pipeline.Send(message, cancellationToken);
             var headers = new BlobCreateSnapshotHeaders(message.Response);
             switch (message.Response.Status)
@@ -1967,7 +1987,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateQueryRequest(string snapshot, int? timeout, string leaseId, string encryptionKey, string encryptionKeySha256, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, QueryRequest queryRequest)
+        internal HttpMessage CreateQueryRequest(string snapshot, int? timeout, string leaseId, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, QueryRequest queryRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -2000,7 +2020,10 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("x-ms-encryption-key-sha256", encryptionKeySha256);
             }
-            request.Headers.Add("x-ms-encryption-algorithm", "AES256");
+            if (encryptionAlgorithm != null)
+            {
+                request.Headers.Add("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToSerialString());
+            }
             if (ifModifiedSince != null)
             {
                 request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "R");
@@ -2039,6 +2062,7 @@ namespace Azure.Storage.Blobs
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
         /// <param name="encryptionKey"> Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services. </param>
         /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Currently, the only accepted value is &quot;AES256&quot;. Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
@@ -2046,9 +2070,9 @@ namespace Azure.Storage.Blobs
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="queryRequest"> the query request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<Stream, BlobQueryHeaders>> QueryAsync(string snapshot = null, int? timeout = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, QueryRequest queryRequest = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<Stream, BlobQueryHeaders>> QueryAsync(string snapshot = null, int? timeout = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, QueryRequest queryRequest = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateQueryRequest(snapshot, timeout, leaseId, encryptionKey, encryptionKeySha256, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, queryRequest);
+            using var message = CreateQueryRequest(snapshot, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, queryRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new BlobQueryHeaders(message.Response);
             switch (message.Response.Status)
@@ -2070,6 +2094,7 @@ namespace Azure.Storage.Blobs
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
         /// <param name="encryptionKey"> Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services. </param>
         /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Currently, the only accepted value is &quot;AES256&quot;. Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
@@ -2077,9 +2102,9 @@ namespace Azure.Storage.Blobs
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="queryRequest"> the query request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<Stream, BlobQueryHeaders> Query(string snapshot = null, int? timeout = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, QueryRequest queryRequest = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<Stream, BlobQueryHeaders> Query(string snapshot = null, int? timeout = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, QueryRequest queryRequest = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateQueryRequest(snapshot, timeout, leaseId, encryptionKey, encryptionKeySha256, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, queryRequest);
+            using var message = CreateQueryRequest(snapshot, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, queryRequest);
             _pipeline.Send(message, cancellationToken);
             var headers = new BlobQueryHeaders(message.Response);
             switch (message.Response.Status)

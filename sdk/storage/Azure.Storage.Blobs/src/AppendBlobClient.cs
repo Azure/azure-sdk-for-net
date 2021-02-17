@@ -822,7 +822,6 @@ namespace Azure.Storage.Blobs.Specialized
                     if (async)
                     {
                         response = await AppendBlobRestClient.CreateAsync(
-                            // TODO remove this parameter
                             contentLength: 0,
                             blobContentType: httpHeaders?.ContentType,
                             blobContentEncoding: httpHeaders?.ContentEncoding,
@@ -834,6 +833,7 @@ namespace Azure.Storage.Blobs.Specialized
                             blobContentDisposition: httpHeaders?.ContentDisposition,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             encryptionScope: ClientConfiguration.EncryptionScope,
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
@@ -848,7 +848,6 @@ namespace Azure.Storage.Blobs.Specialized
                     else
                     {
                         response = AppendBlobRestClient.Create(
-                            // TODO remove this parameter
                             contentLength: 0,
                             blobContentType: httpHeaders?.ContentType,
                             blobContentEncoding: httpHeaders?.ContentEncoding,
@@ -860,7 +859,7 @@ namespace Azure.Storage.Blobs.Specialized
                             blobContentDisposition: httpHeaders?.ContentDisposition,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
-                            // TODO figure out how to now send EncryptionAlgorithm with every request.
+                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             encryptionScope: ClientConfiguration.EncryptionScope,
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
@@ -1093,6 +1092,7 @@ namespace Azure.Storage.Blobs.Specialized
                             appendPosition: conditions?.IfAppendPositionEqual,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             encryptionScope: ClientConfiguration.EncryptionScope,
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
@@ -1113,6 +1113,7 @@ namespace Azure.Storage.Blobs.Specialized
                             appendPosition: conditions?.IfAppendPositionEqual,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             encryptionScope: ClientConfiguration.EncryptionScope,
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
@@ -1375,6 +1376,7 @@ namespace Azure.Storage.Blobs.Specialized
                             sourceContentMD5: sourceContentHash,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             encryptionScope: ClientConfiguration.EncryptionScope,
                             leaseId: conditions?.LeaseId,
                             maxSize: conditions?.IfMaxSizeLessThanOrEqual,
@@ -1402,6 +1404,7 @@ namespace Azure.Storage.Blobs.Specialized
                             sourceContentMD5: sourceContentHash,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             encryptionScope: ClientConfiguration.EncryptionScope,
                             leaseId: conditions?.LeaseId,
                             maxSize: conditions?.IfMaxSizeLessThanOrEqual,

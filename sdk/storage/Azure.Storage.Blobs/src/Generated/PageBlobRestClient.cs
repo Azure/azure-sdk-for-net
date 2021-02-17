@@ -61,7 +61,7 @@ namespace Azure.Storage.Blobs
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateCreateRequest(long contentLength, long blobContentLength, int? timeout, PremiumPageBlobAccessTier? tier, string blobContentType, string blobContentEncoding, string blobContentLanguage, byte[] blobContentMD5, string blobCacheControl, IDictionary<string, string> metadata, string leaseId, string blobContentDisposition, string encryptionKey, string encryptionKeySha256, string encryptionScope, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, long? blobSequenceNumber, string blobTagsString)
+        internal HttpMessage CreateCreateRequest(long contentLength, long blobContentLength, int? timeout, PremiumPageBlobAccessTier? tier, string blobContentType, string blobContentEncoding, string blobContentLanguage, byte[] blobContentMD5, string blobCacheControl, IDictionary<string, string> metadata, string leaseId, string blobContentDisposition, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm, string encryptionScope, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, long? blobSequenceNumber, string blobTagsString)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -122,7 +122,10 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("x-ms-encryption-key-sha256", encryptionKeySha256);
             }
-            request.Headers.Add("x-ms-encryption-algorithm", "AES256");
+            if (encryptionAlgorithm != null)
+            {
+                request.Headers.Add("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToSerialString());
+            }
             if (encryptionScope != null)
             {
                 request.Headers.Add("x-ms-encryption-scope", encryptionScope);
@@ -176,6 +179,7 @@ namespace Azure.Storage.Blobs
         /// <param name="blobContentDisposition"> Optional. Sets the blob&apos;s Content-Disposition header. </param>
         /// <param name="encryptionKey"> Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services. </param>
         /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Currently, the only accepted value is &quot;AES256&quot;. Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="encryptionScope"> Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services. </param>
         /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
@@ -185,9 +189,9 @@ namespace Azure.Storage.Blobs
         /// <param name="blobSequenceNumber"> Set for page blobs only. The sequence number is a user-controlled value that you can use to track requests. The value of the sequence number must be between 0 and 2^63 - 1. </param>
         /// <param name="blobTagsString"> Optional.  Used to set blob tags in various blob operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<PageBlobCreateHeaders>> CreateAsync(long contentLength, long blobContentLength, int? timeout = null, PremiumPageBlobAccessTier? tier = null, string blobContentType = null, string blobContentEncoding = null, string blobContentLanguage = null, byte[] blobContentMD5 = null, string blobCacheControl = null, IDictionary<string, string> metadata = null, string leaseId = null, string blobContentDisposition = null, string encryptionKey = null, string encryptionKeySha256 = null, string encryptionScope = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, long? blobSequenceNumber = null, string blobTagsString = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<PageBlobCreateHeaders>> CreateAsync(long contentLength, long blobContentLength, int? timeout = null, PremiumPageBlobAccessTier? tier = null, string blobContentType = null, string blobContentEncoding = null, string blobContentLanguage = null, byte[] blobContentMD5 = null, string blobCacheControl = null, IDictionary<string, string> metadata = null, string leaseId = null, string blobContentDisposition = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, long? blobSequenceNumber = null, string blobTagsString = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCreateRequest(contentLength, blobContentLength, timeout, tier, blobContentType, blobContentEncoding, blobContentLanguage, blobContentMD5, blobCacheControl, metadata, leaseId, blobContentDisposition, encryptionKey, encryptionKeySha256, encryptionScope, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, blobSequenceNumber, blobTagsString);
+            using var message = CreateCreateRequest(contentLength, blobContentLength, timeout, tier, blobContentType, blobContentEncoding, blobContentLanguage, blobContentMD5, blobCacheControl, metadata, leaseId, blobContentDisposition, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, blobSequenceNumber, blobTagsString);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new PageBlobCreateHeaders(message.Response);
             switch (message.Response.Status)
@@ -214,6 +218,7 @@ namespace Azure.Storage.Blobs
         /// <param name="blobContentDisposition"> Optional. Sets the blob&apos;s Content-Disposition header. </param>
         /// <param name="encryptionKey"> Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services. </param>
         /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Currently, the only accepted value is &quot;AES256&quot;. Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="encryptionScope"> Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services. </param>
         /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
@@ -223,9 +228,9 @@ namespace Azure.Storage.Blobs
         /// <param name="blobSequenceNumber"> Set for page blobs only. The sequence number is a user-controlled value that you can use to track requests. The value of the sequence number must be between 0 and 2^63 - 1. </param>
         /// <param name="blobTagsString"> Optional.  Used to set blob tags in various blob operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<PageBlobCreateHeaders> Create(long contentLength, long blobContentLength, int? timeout = null, PremiumPageBlobAccessTier? tier = null, string blobContentType = null, string blobContentEncoding = null, string blobContentLanguage = null, byte[] blobContentMD5 = null, string blobCacheControl = null, IDictionary<string, string> metadata = null, string leaseId = null, string blobContentDisposition = null, string encryptionKey = null, string encryptionKeySha256 = null, string encryptionScope = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, long? blobSequenceNumber = null, string blobTagsString = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<PageBlobCreateHeaders> Create(long contentLength, long blobContentLength, int? timeout = null, PremiumPageBlobAccessTier? tier = null, string blobContentType = null, string blobContentEncoding = null, string blobContentLanguage = null, byte[] blobContentMD5 = null, string blobCacheControl = null, IDictionary<string, string> metadata = null, string leaseId = null, string blobContentDisposition = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, long? blobSequenceNumber = null, string blobTagsString = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCreateRequest(contentLength, blobContentLength, timeout, tier, blobContentType, blobContentEncoding, blobContentLanguage, blobContentMD5, blobCacheControl, metadata, leaseId, blobContentDisposition, encryptionKey, encryptionKeySha256, encryptionScope, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, blobSequenceNumber, blobTagsString);
+            using var message = CreateCreateRequest(contentLength, blobContentLength, timeout, tier, blobContentType, blobContentEncoding, blobContentLanguage, blobContentMD5, blobCacheControl, metadata, leaseId, blobContentDisposition, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, blobSequenceNumber, blobTagsString);
             _pipeline.Send(message, cancellationToken);
             var headers = new PageBlobCreateHeaders(message.Response);
             switch (message.Response.Status)
@@ -237,7 +242,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateUploadPagesRequest(long contentLength, Stream body, byte[] transactionalContentMD5, byte[] transactionalContentCrc64, int? timeout, string range, string leaseId, string encryptionKey, string encryptionKeySha256, string encryptionScope, long? ifSequenceNumberLessThanOrEqualTo, long? ifSequenceNumberLessThan, long? ifSequenceNumberEqualTo, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags)
+        internal HttpMessage CreateUploadPagesRequest(long contentLength, Stream body, byte[] transactionalContentMD5, byte[] transactionalContentCrc64, int? timeout, string range, string leaseId, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm, string encryptionScope, long? ifSequenceNumberLessThanOrEqualTo, long? ifSequenceNumberLessThan, long? ifSequenceNumberEqualTo, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -275,7 +280,10 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("x-ms-encryption-key-sha256", encryptionKeySha256);
             }
-            request.Headers.Add("x-ms-encryption-algorithm", "AES256");
+            if (encryptionAlgorithm != null)
+            {
+                request.Headers.Add("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToSerialString());
+            }
             if (encryptionScope != null)
             {
                 request.Headers.Add("x-ms-encryption-scope", encryptionScope);
@@ -334,6 +342,7 @@ namespace Azure.Storage.Blobs
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
         /// <param name="encryptionKey"> Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services. </param>
         /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Currently, the only accepted value is &quot;AES256&quot;. Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="encryptionScope"> Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services. </param>
         /// <param name="ifSequenceNumberLessThanOrEqualTo"> Specify this header value to operate only on a blob if it has a sequence number less than or equal to the specified. </param>
         /// <param name="ifSequenceNumberLessThan"> Specify this header value to operate only on a blob if it has a sequence number less than the specified. </param>
@@ -345,14 +354,14 @@ namespace Azure.Storage.Blobs
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<ResponseWithHeaders<PageBlobUploadPagesHeaders>> UploadPagesAsync(long contentLength, Stream body, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, int? timeout = null, string range = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, string encryptionScope = null, long? ifSequenceNumberLessThanOrEqualTo = null, long? ifSequenceNumberLessThan = null, long? ifSequenceNumberEqualTo = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<PageBlobUploadPagesHeaders>> UploadPagesAsync(long contentLength, Stream body, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, int? timeout = null, string range = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, long? ifSequenceNumberLessThanOrEqualTo = null, long? ifSequenceNumberLessThan = null, long? ifSequenceNumberEqualTo = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateUploadPagesRequest(contentLength, body, transactionalContentMD5, transactionalContentCrc64, timeout, range, leaseId, encryptionKey, encryptionKeySha256, encryptionScope, ifSequenceNumberLessThanOrEqualTo, ifSequenceNumberLessThan, ifSequenceNumberEqualTo, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags);
+            using var message = CreateUploadPagesRequest(contentLength, body, transactionalContentMD5, transactionalContentCrc64, timeout, range, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, ifSequenceNumberLessThanOrEqualTo, ifSequenceNumberLessThan, ifSequenceNumberEqualTo, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new PageBlobUploadPagesHeaders(message.Response);
             switch (message.Response.Status)
@@ -374,6 +383,7 @@ namespace Azure.Storage.Blobs
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
         /// <param name="encryptionKey"> Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services. </param>
         /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Currently, the only accepted value is &quot;AES256&quot;. Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="encryptionScope"> Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services. </param>
         /// <param name="ifSequenceNumberLessThanOrEqualTo"> Specify this header value to operate only on a blob if it has a sequence number less than or equal to the specified. </param>
         /// <param name="ifSequenceNumberLessThan"> Specify this header value to operate only on a blob if it has a sequence number less than the specified. </param>
@@ -385,14 +395,14 @@ namespace Azure.Storage.Blobs
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public ResponseWithHeaders<PageBlobUploadPagesHeaders> UploadPages(long contentLength, Stream body, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, int? timeout = null, string range = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, string encryptionScope = null, long? ifSequenceNumberLessThanOrEqualTo = null, long? ifSequenceNumberLessThan = null, long? ifSequenceNumberEqualTo = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<PageBlobUploadPagesHeaders> UploadPages(long contentLength, Stream body, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, int? timeout = null, string range = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, long? ifSequenceNumberLessThanOrEqualTo = null, long? ifSequenceNumberLessThan = null, long? ifSequenceNumberEqualTo = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateUploadPagesRequest(contentLength, body, transactionalContentMD5, transactionalContentCrc64, timeout, range, leaseId, encryptionKey, encryptionKeySha256, encryptionScope, ifSequenceNumberLessThanOrEqualTo, ifSequenceNumberLessThan, ifSequenceNumberEqualTo, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags);
+            using var message = CreateUploadPagesRequest(contentLength, body, transactionalContentMD5, transactionalContentCrc64, timeout, range, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, ifSequenceNumberLessThanOrEqualTo, ifSequenceNumberLessThan, ifSequenceNumberEqualTo, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags);
             _pipeline.Send(message, cancellationToken);
             var headers = new PageBlobUploadPagesHeaders(message.Response);
             switch (message.Response.Status)
@@ -404,7 +414,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateClearPagesRequest(long contentLength, int? timeout, string range, string leaseId, string encryptionKey, string encryptionKeySha256, string encryptionScope, long? ifSequenceNumberLessThanOrEqualTo, long? ifSequenceNumberLessThan, long? ifSequenceNumberEqualTo, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags)
+        internal HttpMessage CreateClearPagesRequest(long contentLength, int? timeout, string range, string leaseId, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm, string encryptionScope, long? ifSequenceNumberLessThanOrEqualTo, long? ifSequenceNumberLessThan, long? ifSequenceNumberEqualTo, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -438,7 +448,10 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("x-ms-encryption-key-sha256", encryptionKeySha256);
             }
-            request.Headers.Add("x-ms-encryption-algorithm", "AES256");
+            if (encryptionAlgorithm != null)
+            {
+                request.Headers.Add("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToSerialString());
+            }
             if (encryptionScope != null)
             {
                 request.Headers.Add("x-ms-encryption-scope", encryptionScope);
@@ -487,6 +500,7 @@ namespace Azure.Storage.Blobs
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
         /// <param name="encryptionKey"> Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services. </param>
         /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Currently, the only accepted value is &quot;AES256&quot;. Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="encryptionScope"> Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services. </param>
         /// <param name="ifSequenceNumberLessThanOrEqualTo"> Specify this header value to operate only on a blob if it has a sequence number less than or equal to the specified. </param>
         /// <param name="ifSequenceNumberLessThan"> Specify this header value to operate only on a blob if it has a sequence number less than the specified. </param>
@@ -497,9 +511,9 @@ namespace Azure.Storage.Blobs
         /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<PageBlobClearPagesHeaders>> ClearPagesAsync(long contentLength, int? timeout = null, string range = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, string encryptionScope = null, long? ifSequenceNumberLessThanOrEqualTo = null, long? ifSequenceNumberLessThan = null, long? ifSequenceNumberEqualTo = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<PageBlobClearPagesHeaders>> ClearPagesAsync(long contentLength, int? timeout = null, string range = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, long? ifSequenceNumberLessThanOrEqualTo = null, long? ifSequenceNumberLessThan = null, long? ifSequenceNumberEqualTo = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateClearPagesRequest(contentLength, timeout, range, leaseId, encryptionKey, encryptionKeySha256, encryptionScope, ifSequenceNumberLessThanOrEqualTo, ifSequenceNumberLessThan, ifSequenceNumberEqualTo, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags);
+            using var message = CreateClearPagesRequest(contentLength, timeout, range, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, ifSequenceNumberLessThanOrEqualTo, ifSequenceNumberLessThan, ifSequenceNumberEqualTo, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new PageBlobClearPagesHeaders(message.Response);
             switch (message.Response.Status)
@@ -518,6 +532,7 @@ namespace Azure.Storage.Blobs
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
         /// <param name="encryptionKey"> Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services. </param>
         /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Currently, the only accepted value is &quot;AES256&quot;. Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="encryptionScope"> Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services. </param>
         /// <param name="ifSequenceNumberLessThanOrEqualTo"> Specify this header value to operate only on a blob if it has a sequence number less than or equal to the specified. </param>
         /// <param name="ifSequenceNumberLessThan"> Specify this header value to operate only on a blob if it has a sequence number less than the specified. </param>
@@ -528,9 +543,9 @@ namespace Azure.Storage.Blobs
         /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<PageBlobClearPagesHeaders> ClearPages(long contentLength, int? timeout = null, string range = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, string encryptionScope = null, long? ifSequenceNumberLessThanOrEqualTo = null, long? ifSequenceNumberLessThan = null, long? ifSequenceNumberEqualTo = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<PageBlobClearPagesHeaders> ClearPages(long contentLength, int? timeout = null, string range = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, long? ifSequenceNumberLessThanOrEqualTo = null, long? ifSequenceNumberLessThan = null, long? ifSequenceNumberEqualTo = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateClearPagesRequest(contentLength, timeout, range, leaseId, encryptionKey, encryptionKeySha256, encryptionScope, ifSequenceNumberLessThanOrEqualTo, ifSequenceNumberLessThan, ifSequenceNumberEqualTo, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags);
+            using var message = CreateClearPagesRequest(contentLength, timeout, range, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, ifSequenceNumberLessThanOrEqualTo, ifSequenceNumberLessThan, ifSequenceNumberEqualTo, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags);
             _pipeline.Send(message, cancellationToken);
             var headers = new PageBlobClearPagesHeaders(message.Response);
             switch (message.Response.Status)
@@ -542,7 +557,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateUploadPagesFromURLRequest(string sourceUrl, string sourceRange, long contentLength, string range, byte[] sourceContentMD5, byte[] sourceContentcrc64, int? timeout, string encryptionKey, string encryptionKeySha256, string encryptionScope, string leaseId, long? ifSequenceNumberLessThanOrEqualTo, long? ifSequenceNumberLessThan, long? ifSequenceNumberEqualTo, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch)
+        internal HttpMessage CreateUploadPagesFromURLRequest(string sourceUrl, string sourceRange, long contentLength, string range, byte[] sourceContentMD5, byte[] sourceContentcrc64, int? timeout, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm, string encryptionScope, string leaseId, long? ifSequenceNumberLessThanOrEqualTo, long? ifSequenceNumberLessThan, long? ifSequenceNumberEqualTo, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -579,7 +594,10 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("x-ms-encryption-key-sha256", encryptionKeySha256);
             }
-            request.Headers.Add("x-ms-encryption-algorithm", "AES256");
+            if (encryptionAlgorithm != null)
+            {
+                request.Headers.Add("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToSerialString());
+            }
             if (encryptionScope != null)
             {
                 request.Headers.Add("x-ms-encryption-scope", encryptionScope);
@@ -651,6 +669,7 @@ namespace Azure.Storage.Blobs
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="encryptionKey"> Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services. </param>
         /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Currently, the only accepted value is &quot;AES256&quot;. Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="encryptionScope"> Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
         /// <param name="ifSequenceNumberLessThanOrEqualTo"> Specify this header value to operate only on a blob if it has a sequence number less than or equal to the specified. </param>
@@ -667,7 +686,7 @@ namespace Azure.Storage.Blobs
         /// <param name="sourceIfNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceUrl"/>, <paramref name="sourceRange"/>, or <paramref name="range"/> is null. </exception>
-        public async Task<ResponseWithHeaders<PageBlobUploadPagesFromURLHeaders>> UploadPagesFromURLAsync(string sourceUrl, string sourceRange, long contentLength, string range, byte[] sourceContentMD5 = null, byte[] sourceContentcrc64 = null, int? timeout = null, string encryptionKey = null, string encryptionKeySha256 = null, string encryptionScope = null, string leaseId = null, long? ifSequenceNumberLessThanOrEqualTo = null, long? ifSequenceNumberLessThan = null, long? ifSequenceNumberEqualTo = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<PageBlobUploadPagesFromURLHeaders>> UploadPagesFromURLAsync(string sourceUrl, string sourceRange, long contentLength, string range, byte[] sourceContentMD5 = null, byte[] sourceContentcrc64 = null, int? timeout = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, string leaseId = null, long? ifSequenceNumberLessThanOrEqualTo = null, long? ifSequenceNumberLessThan = null, long? ifSequenceNumberEqualTo = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (sourceUrl == null)
             {
@@ -682,7 +701,7 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentNullException(nameof(range));
             }
 
-            using var message = CreateUploadPagesFromURLRequest(sourceUrl, sourceRange, contentLength, range, sourceContentMD5, sourceContentcrc64, timeout, encryptionKey, encryptionKeySha256, encryptionScope, leaseId, ifSequenceNumberLessThanOrEqualTo, ifSequenceNumberLessThan, ifSequenceNumberEqualTo, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch);
+            using var message = CreateUploadPagesFromURLRequest(sourceUrl, sourceRange, contentLength, range, sourceContentMD5, sourceContentcrc64, timeout, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, leaseId, ifSequenceNumberLessThanOrEqualTo, ifSequenceNumberLessThan, ifSequenceNumberEqualTo, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new PageBlobUploadPagesFromURLHeaders(message.Response);
             switch (message.Response.Status)
@@ -704,6 +723,7 @@ namespace Azure.Storage.Blobs
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="encryptionKey"> Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services. </param>
         /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Currently, the only accepted value is &quot;AES256&quot;. Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="encryptionScope"> Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
         /// <param name="ifSequenceNumberLessThanOrEqualTo"> Specify this header value to operate only on a blob if it has a sequence number less than or equal to the specified. </param>
@@ -720,7 +740,7 @@ namespace Azure.Storage.Blobs
         /// <param name="sourceIfNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceUrl"/>, <paramref name="sourceRange"/>, or <paramref name="range"/> is null. </exception>
-        public ResponseWithHeaders<PageBlobUploadPagesFromURLHeaders> UploadPagesFromURL(string sourceUrl, string sourceRange, long contentLength, string range, byte[] sourceContentMD5 = null, byte[] sourceContentcrc64 = null, int? timeout = null, string encryptionKey = null, string encryptionKeySha256 = null, string encryptionScope = null, string leaseId = null, long? ifSequenceNumberLessThanOrEqualTo = null, long? ifSequenceNumberLessThan = null, long? ifSequenceNumberEqualTo = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<PageBlobUploadPagesFromURLHeaders> UploadPagesFromURL(string sourceUrl, string sourceRange, long contentLength, string range, byte[] sourceContentMD5 = null, byte[] sourceContentcrc64 = null, int? timeout = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, string leaseId = null, long? ifSequenceNumberLessThanOrEqualTo = null, long? ifSequenceNumberLessThan = null, long? ifSequenceNumberEqualTo = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (sourceUrl == null)
             {
@@ -735,7 +755,7 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentNullException(nameof(range));
             }
 
-            using var message = CreateUploadPagesFromURLRequest(sourceUrl, sourceRange, contentLength, range, sourceContentMD5, sourceContentcrc64, timeout, encryptionKey, encryptionKeySha256, encryptionScope, leaseId, ifSequenceNumberLessThanOrEqualTo, ifSequenceNumberLessThan, ifSequenceNumberEqualTo, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch);
+            using var message = CreateUploadPagesFromURLRequest(sourceUrl, sourceRange, contentLength, range, sourceContentMD5, sourceContentcrc64, timeout, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, leaseId, ifSequenceNumberLessThanOrEqualTo, ifSequenceNumberLessThan, ifSequenceNumberEqualTo, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch);
             _pipeline.Send(message, cancellationToken);
             var headers = new PageBlobUploadPagesFromURLHeaders(message.Response);
             switch (message.Response.Status)
@@ -999,7 +1019,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateResizeRequest(long blobContentLength, int? timeout, string leaseId, string encryptionKey, string encryptionKeySha256, string encryptionScope, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags)
+        internal HttpMessage CreateResizeRequest(long blobContentLength, int? timeout, string leaseId, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm, string encryptionScope, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1028,7 +1048,10 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("x-ms-encryption-key-sha256", encryptionKeySha256);
             }
-            request.Headers.Add("x-ms-encryption-algorithm", "AES256");
+            if (encryptionAlgorithm != null)
+            {
+                request.Headers.Add("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToSerialString());
+            }
             if (encryptionScope != null)
             {
                 request.Headers.Add("x-ms-encryption-scope", encryptionScope);
@@ -1065,6 +1088,7 @@ namespace Azure.Storage.Blobs
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
         /// <param name="encryptionKey"> Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services. </param>
         /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Currently, the only accepted value is &quot;AES256&quot;. Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="encryptionScope"> Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services. </param>
         /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
@@ -1072,9 +1096,9 @@ namespace Azure.Storage.Blobs
         /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<PageBlobResizeHeaders>> ResizeAsync(long blobContentLength, int? timeout = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, string encryptionScope = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<PageBlobResizeHeaders>> ResizeAsync(long blobContentLength, int? timeout = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateResizeRequest(blobContentLength, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionScope, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags);
+            using var message = CreateResizeRequest(blobContentLength, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new PageBlobResizeHeaders(message.Response);
             switch (message.Response.Status)
@@ -1092,6 +1116,7 @@ namespace Azure.Storage.Blobs
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
         /// <param name="encryptionKey"> Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services. </param>
         /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Currently, the only accepted value is &quot;AES256&quot;. Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="encryptionScope"> Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services. </param>
         /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
@@ -1099,9 +1124,9 @@ namespace Azure.Storage.Blobs
         /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<PageBlobResizeHeaders> Resize(long blobContentLength, int? timeout = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, string encryptionScope = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<PageBlobResizeHeaders> Resize(long blobContentLength, int? timeout = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateResizeRequest(blobContentLength, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionScope, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags);
+            using var message = CreateResizeRequest(blobContentLength, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags);
             _pipeline.Send(message, cancellationToken);
             var headers = new PageBlobResizeHeaders(message.Response);
             switch (message.Response.Status)
