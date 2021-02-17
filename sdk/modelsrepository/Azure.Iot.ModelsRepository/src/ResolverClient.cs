@@ -24,7 +24,7 @@ namespace Azure.Iot.ModelsRepository
         /// Initializes the <c>ResolverClient</c> with default client options while pointing to
         /// the Azure IoT Plug and Play Model repository https://devicemodels.azure.com for resolution.
         /// </summary>
-        public ResolverClient() : this(new Uri(DefaultModelRepository), new ResolverClientOptions()) { }
+        public ResolverClient() : this(new Uri(DefaultModelsRepository), new ResolverClientOptions()) { }
 
         /// <summary>
         /// Initializes the <c>ResolverClient</c> with default client options while pointing to
@@ -42,7 +42,7 @@ namespace Azure.Iot.ModelsRepository
         /// <param name="options">
         /// <c>ResolverClientOptions</c> to configure resolution and client behavior.
         /// </param>
-        public ResolverClient(ResolverClientOptions options) : this(new Uri(DefaultModelRepository), options) { }
+        public ResolverClient(ResolverClientOptions options) : this(new Uri(DefaultModelsRepository), options) { }
 
         /// <summary>
         /// Initializes the <c>ResolverClient</c> with default client options while pointing to
@@ -172,6 +172,6 @@ namespace Azure.Iot.ModelsRepository
         /// <summary>
         /// Azure Device Models Repository used by default.
         /// </summary>
-        public static string DefaultModelRepository => ModelRepositoryConstants.DefaultModelRepository;
+        public static string DefaultModelsRepository => ModelRepositoryConstants.DefaultModelsRepository;
     }
 }
