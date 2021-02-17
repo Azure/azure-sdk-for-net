@@ -837,7 +837,6 @@ namespace Azure.Storage.Blobs.Specialized
                             encryptionScope: ClientConfiguration.EncryptionScope,
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            // TODO make these parameters ETags?
                             ifMatch: conditions?.IfMatch?.ToString(),
                             ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             ifTags: conditions?.TagConditions,
@@ -863,7 +862,6 @@ namespace Azure.Storage.Blobs.Specialized
                             encryptionScope: ClientConfiguration.EncryptionScope,
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            // TODO make these parameters ETags?
                             ifMatch: conditions?.IfMatch?.ToString(),
                             ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             ifTags: conditions?.TagConditions,
@@ -1389,7 +1387,6 @@ namespace Azure.Storage.Blobs.Specialized
                             // TODO source access conditions are always being send even if they are null
                             sourceIfModifiedSince: sourceConditions?.IfModifiedSince,
                             sourceIfUnmodifiedSince: sourceConditions?.IfUnmodifiedSince,
-                            // TODO make these ETags?
                             sourceIfMatch: sourceConditions?.IfMatch.ToString(),
                             sourceIfNoneMatch: sourceConditions?.IfNoneMatch.ToString(),
                             cancellationToken: cancellationToken)
@@ -1416,7 +1413,6 @@ namespace Azure.Storage.Blobs.Specialized
                             ifTags: conditions?.TagConditions,
                             sourceIfModifiedSince: sourceConditions?.IfModifiedSince,
                             sourceIfUnmodifiedSince: sourceConditions?.IfUnmodifiedSince,
-                            // TODO make these ETags?
                             sourceIfMatch: sourceConditions?.IfMatch.ToString(),
                             sourceIfNoneMatch: sourceConditions?.IfNoneMatch.ToString(),
                             cancellationToken: cancellationToken);

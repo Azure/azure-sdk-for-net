@@ -11,7 +11,6 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// Contains blob page range information returned from the PageBlobClient.GetPageRanges operations.
     /// </summary>
-    // TODO we need to do a convertion to this class somewhere!
     public class PageRangesInfo
     {
         /// <summary>

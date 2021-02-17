@@ -502,13 +502,11 @@ namespace Azure.Storage.Blobs
             };
         }
 
-        // TODO this might be wrong
         internal static HttpRange ToHttpRange(this PageRange pageRange)
             => new HttpRange(
                 offset: pageRange.Start,
                 length: pageRange.End - pageRange.Start + 1);
 
-        // TODO this might be wrong
         internal static HttpRange ToHttpRange(this ClearRange clearRange)
             => new HttpRange(
                 offset: clearRange.Start,

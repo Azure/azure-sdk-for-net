@@ -898,9 +898,7 @@ namespace Azure.Storage.Blobs.Specialized
             PageBlobRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken,
-#pragma warning disable CA1801 // Review unused parameters
             string operationName = null)
-#pragma warning restore CA1801 // Review unused parameters
         {
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
             {
@@ -912,7 +910,8 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(sequenceNumber)}: {sequenceNumber}\n" +
                     $"{nameof(httpHeaders)}: {httpHeaders}");
 
-                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(PageBlobClient)}.{nameof(Create)}");
+                operationName ??= $"{nameof(PageBlobClient)}.{nameof(Create)}";
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
 
                 try
                 {
@@ -924,7 +923,6 @@ namespace Azure.Storage.Blobs.Specialized
                         response = await PageBlobRestClient.CreateAsync(
                             contentLength: 0,
                             blobContentLength: size,
-                            // TODO?
                             tier: null,
                             blobContentType: httpHeaders?.ContentType,
                             blobContentEncoding: httpHeaders?.ContentEncoding,
@@ -953,7 +951,6 @@ namespace Azure.Storage.Blobs.Specialized
                         response = PageBlobRestClient.Create(
                             contentLength: 0,
                             blobContentLength: size,
-                            // TODO?
                             tier: null,
                             blobContentType: httpHeaders?.ContentType,
                             blobContentEncoding: httpHeaders?.ContentEncoding,

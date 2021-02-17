@@ -364,7 +364,6 @@ namespace Azure.Storage.Blobs
                 clientSideEncryption: null);
         }
 
-        // TODO this might not works.
         private ServiceRestClient BuildServiceRestClient(Uri uri)
             => new ServiceRestClient(
                 clientDiagnostics: _clientConfiguration.ClientDiagnostics,
