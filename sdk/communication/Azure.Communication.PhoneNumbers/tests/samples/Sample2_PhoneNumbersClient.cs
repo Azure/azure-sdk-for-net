@@ -19,7 +19,7 @@ using NUnit.Framework;
 namespace Azure.Communication.PhoneNumbers.Tests.Samples
 {
     /// <summary>
-    /// Basic Azure Communication Administration samples.
+    /// Basic Azure Communication Phone Numbers samples.
     /// </summary>
     public class Sample2_PhoneNumbersClient : PhoneNumbersClientLiveTestBase
     {

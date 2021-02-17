@@ -16,7 +16,7 @@ using NUnit.Framework;
 namespace Azure.Communication.PhoneNumbers.Tests
 {
     /// <summary>
-    /// The suite of tests for the <see cref="PhoneNumberAdministrationClient"/> class.
+    /// The suite of tests for the <see cref="PhoneNumbersClient"/> class.
     /// </summary>
     /// <remarks>
     /// These tests have a dependency on live Azure services and may incur costs for the associated
