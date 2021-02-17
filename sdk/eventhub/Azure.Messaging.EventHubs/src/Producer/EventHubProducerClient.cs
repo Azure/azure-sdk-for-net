@@ -800,7 +800,6 @@ namespace Azure.Messaging.EventHubs.Producer
             }
 
             using DiagnosticScope scope = CreateDiagnosticScope(diagnosticIdentifiers);
-
             var pooledProducer = PartitionProducerPool.GetPooledProducer(options.PartitionId, PartitionProducerLifespan);
 
             while (!cancellationToken.IsCancellationRequested)
@@ -813,7 +812,8 @@ namespace Azure.Messaging.EventHubs.Producer
                     return;
                 }
                 catch (EventHubsException eventHubException)
-                    when (eventHubException.Reason == EventHubsException.FailureReason.ClientClosed && ShouldRecreateProducer(pooledProducer.TransportProducer, options.PartitionId))
+                    when (eventHubException.Reason == EventHubsException.FailureReason.ClientClosed
+                        && ShouldRecreateProducer(pooledProducer.TransportProducer, options.PartitionId))
                 {
                     if (++attempts >= MaximumCreateProducerAttempts)
                     {
