@@ -40,8 +40,10 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
 
             #region Snippet:SearchPhoneNumbersAsync
 
-            var searchOperation = await client.StartSearchAvailablePhoneNumbersAsync(countryCode, PhoneNumberType.Geographic, PhoneNumberAssignmentType.Person,
-                 new PhoneNumberCapabilities(PhoneNumberCapabilityValue.InboundOutbound, PhoneNumberCapabilityValue.None));
+            var capabilities = new PhoneNumberCapabilities(PhoneNumberCapabilityValue.Outbound, PhoneNumberCapabilityValue.Outbound);
+            var searchOptions = new PhoneNumberSearchOptions { AreaCode = "844", Quantity = 1 };
+
+            var searchOperation = await client.StartSearchAvailablePhoneNumbersAsync(countryCode, PhoneNumberType.TollFree, PhoneNumberAssignmentType.Application, capabilities, searchOptions);
             //@@ await purchaseOperation.WaitForCompletionAsync();
             /*@@*/ await WaitForCompletionAsync(searchOperation);
 
@@ -115,7 +117,7 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
             #region Snippet:SearchPhoneNumbers
 
             var capabilities = new PhoneNumberCapabilities(PhoneNumberCapabilityValue.Outbound, PhoneNumberCapabilityValue.Outbound);
-            var searchOptions = new PhoneNumberSearchOptions { AreaCode = "844" };
+            var searchOptions = new PhoneNumberSearchOptions { AreaCode = "844", Quantity = 1 };
 
             var searchOperation = client.StartSearchAvailablePhoneNumbers(countryCode, PhoneNumberType.TollFree, PhoneNumberAssignmentType.Application, capabilities, searchOptions);
 
