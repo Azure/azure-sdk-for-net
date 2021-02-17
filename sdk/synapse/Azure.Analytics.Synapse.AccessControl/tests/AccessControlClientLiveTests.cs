@@ -20,7 +20,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
     /// These tests have a dependency on live Azure services and may incur costs for the associated
     /// Azure subscription.
     /// </remarks>
-    [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18080 - roleAssignmentId can not be reused in recording due to reuse 409.")]
+    [LiveOnly] // Assignment IDs can not be reused for at least 30 days.
     public class AccessControlClientLiveTests : RecordedTestBase<SynapseTestEnvironment>
     {
         internal class DisposableClientRole : IAsyncDisposable
@@ -34,27 +34,16 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
                 Assignment = assignment;
             }
 
-            public static async ValueTask<DisposableClientRole> Create (RoleAssignmentsClient assignmentsClient, RoleDefinitionsClient definitionsClient, TestRecording recording) =>
-                new DisposableClientRole (assignmentsClient, definitionsClient, await CreateResource (assignmentsClient, definitionsClient, recording));
+            public static async ValueTask<DisposableClientRole> Create (RoleAssignmentsClient assignmentsClient, RoleDefinitionsClient definitionsClient) =>
+                new DisposableClientRole (assignmentsClient, definitionsClient, await CreateResource (assignmentsClient, definitionsClient));
 
-            public static async ValueTask<RoleAssignmentDetails> CreateResource (RoleAssignmentsClient assignmentsClient, RoleDefinitionsClient definitionsClient, TestRecording recording)
+            public static async ValueTask<RoleAssignmentDetails> CreateResource (RoleAssignmentsClient assignmentsClient, RoleDefinitionsClient definitionsClient)
             {
                 string scope = "workspaces/workspacechhamosynapse";
 
                 Guid? roleID = (await definitionsClient.ListRoleDefinitionsAsync()).Value.First (x => x.Name == "Synapse Administrator").Id;
-                Guid principalId = recording.Random.NewGuid();
-
-                string roleAssignmentId;
-                // Assignment IDs can not be reused for at least 30 days, so only respect recording's copy in playback
-                if (recording.Mode == RecordedTestMode.Playback)
-                {
-                    roleAssignmentId = recording.Random.NewGuid().ToString();
-                }
-                else
-                {
-                    roleAssignmentId = Guid.NewGuid().ToString();
-                }
-
+                Guid principalId = Guid.NewGuid();
+                string roleAssignmentId = Guid.NewGuid().ToString();
                 return await assignmentsClient.CreateRoleAssignmentAsync(roleAssignmentId, roleID.Value, principalId, scope);
             }
 
@@ -92,7 +81,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
             RoleAssignmentsClient assignmentsClient = CreateAssignmentClient();
             RoleDefinitionsClient definitionsClient = CreateDefinitionsClient();
 
-            await using DisposableClientRole role = await DisposableClientRole.Create (assignmentsClient, definitionsClient, this.Recording);
+            await using DisposableClientRole role = await DisposableClientRole.Create (assignmentsClient, definitionsClient);
 
             Assert.NotNull(role.Assignment.Id);
             Assert.NotNull(role.Assignment.RoleDefinitionId);
@@ -105,7 +94,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
             RoleAssignmentsClient assignmentsClient = CreateAssignmentClient();
             RoleDefinitionsClient definitionsClient = CreateDefinitionsClient();
 
-            await using DisposableClientRole role = await DisposableClientRole.Create (assignmentsClient, definitionsClient, this.Recording);
+            await using DisposableClientRole role = await DisposableClientRole.Create (assignmentsClient, definitionsClient);
 
             RoleAssignmentDetails roleAssignment = await assignmentsClient.GetRoleAssignmentByIdAsync(role.Assignment.Id);
 
@@ -119,7 +108,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
             RoleAssignmentsClient assignmentsClient = CreateAssignmentClient();
             RoleDefinitionsClient definitionsClient = CreateDefinitionsClient();
 
-            await using DisposableClientRole role = await DisposableClientRole.Create (assignmentsClient, definitionsClient, this.Recording);
+            await using DisposableClientRole role = await DisposableClientRole.Create (assignmentsClient, definitionsClient);
 
             Response<IReadOnlyList<SynapseRoleDefinition>> roleAssignments = await definitionsClient.ListRoleDefinitionsAsync();
             foreach (SynapseRoleDefinition expected in roleAssignments.Value)
@@ -137,7 +126,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
             RoleAssignmentsClient assignmentsClient = CreateAssignmentClient();
             RoleDefinitionsClient definitionsClient = CreateDefinitionsClient();
 
-            RoleAssignmentDetails assignment = await DisposableClientRole.CreateResource (assignmentsClient, definitionsClient, this.Recording);
+            RoleAssignmentDetails assignment = await DisposableClientRole.CreateResource (assignmentsClient, definitionsClient);
 
             Response response = await assignmentsClient.DeleteRoleAssignmentByIdAsync (assignment.Id);
             response.AssertSuccess();

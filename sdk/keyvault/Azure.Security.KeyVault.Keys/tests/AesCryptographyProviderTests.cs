@@ -74,7 +74,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             AesCryptographyProvider provider = new AesCryptographyProvider(key.Key, key.Properties);
 
             byte[] iv = { 0x3d, 0xaf, 0xba, 0x42, 0x9d, 0x9e, 0xb4, 0x30, 0xb4, 0x22, 0xda, 0x80, 0x2c, 0x9f, 0xac, 0x41 };
-            EncryptOptions options = EncryptOptions.A128CbcOptions(Encoding.UTF8.GetBytes("Single block msg"), iv);
+            EncryptParameters options = EncryptParameters.A128CbcParameters(Encoding.UTF8.GetBytes("Single block msg"), iv);
 
             InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => provider.Encrypt(options, default));
             Assert.AreEqual($"The key \"test\" is not valid before {key.Properties.NotBefore.Value:r}.", ex.Message);
@@ -97,7 +97,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             AesCryptographyProvider provider = new AesCryptographyProvider(key.Key, key.Properties);
 
             byte[] iv = { 0x3d, 0xaf, 0xba, 0x42, 0x9d, 0x9e, 0xb4, 0x30, 0xb4, 0x22, 0xda, 0x80, 0x2c, 0x9f, 0xac, 0x41 };
-            EncryptOptions options = EncryptOptions.A128CbcOptions(Encoding.UTF8.GetBytes("Single block msg"), iv);
+            EncryptParameters options = EncryptParameters.A128CbcParameters(Encoding.UTF8.GetBytes("Single block msg"), iv);
 
             InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => provider.Encrypt(options, default));
             Assert.AreEqual($"The key \"test\" is not valid after {key.Properties.ExpiresOn.Value:r}.", ex.Message);
@@ -113,7 +113,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             JsonWebKey key = new JsonWebKey(aes);
 
             AesCryptographyProvider provider = new AesCryptographyProvider(key, null);
-            Assert.IsNull(provider.Encrypt(new EncryptOptions(new EncryptionAlgorithm("invalid"), new byte[] { 0 })));
+            Assert.IsNull(provider.Encrypt(new EncryptParameters(new EncryptionAlgorithm("invalid"), new byte[] { 0 })));
 
             EventWrittenEventArgs e = listener.SingleEventById(KeysEventSource.AlgorithmNotSupportedEvent);
             Assert.AreEqual("Encrypt", e.GetProperty<string>("operation"));
@@ -130,7 +130,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             JsonWebKey key = new JsonWebKey(aes);
 
             AesCryptographyProvider provider = new AesCryptographyProvider(key, null);
-            Assert.IsNull(provider.Decrypt(new DecryptOptions(new EncryptionAlgorithm("invalid"), new byte[] { 0 })));
+            Assert.IsNull(provider.Decrypt(new DecryptParameters(new EncryptionAlgorithm("invalid"), new byte[] { 0 })));
 
             EventWrittenEventArgs e = listener.SingleEventById(KeysEventSource.AlgorithmNotSupportedEvent);
             Assert.AreEqual("Decrypt", e.GetProperty<string>("operation"));
@@ -155,7 +155,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             byte[] plaintext = Encoding.UTF8.GetBytes("plaintext");
 
-            EncryptOptions encryptOptions = new EncryptOptions(algorithm, plaintext, iv, aad);
+            EncryptParameters encryptOptions = new EncryptParameters(algorithm, plaintext, iv, aad);
             EncryptResult encrypted = provider.Encrypt(encryptOptions, default);
 
             Assert.IsNotNull(encrypted);
@@ -218,7 +218,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                     break;
             }
 
-            DecryptOptions decryptOptions = new DecryptOptions(algorithm, encrypted.Ciphertext, encrypted.Iv);
+            DecryptParameters decryptOptions = new DecryptParameters(algorithm, encrypted.Ciphertext, encrypted.Iv);
 
             DecryptResult decrypted = provider.Decrypt(decryptOptions, default);
             Assert.IsNotNull(decrypted);
@@ -242,13 +242,13 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             byte[] plaintext = Encoding.UTF8.GetBytes("plaintext");
 
-            EncryptOptions encryptOptions = new EncryptOptions(algorithm, plaintext, null, null);
+            EncryptParameters encryptOptions = new EncryptParameters(algorithm, plaintext, null, null);
             EncryptResult encrypted = provider.Encrypt(encryptOptions, default);
 
             Assert.IsNotNull(encryptOptions.Iv);
             CollectionAssert.AreEqual(encryptOptions.Iv, encrypted.Iv);
 
-            DecryptOptions decryptOptions = new DecryptOptions(algorithm, encrypted.Ciphertext, encrypted.Iv);
+            DecryptParameters decryptOptions = new DecryptParameters(algorithm, encrypted.Ciphertext, encrypted.Iv);
             DecryptResult decrypted = provider.Decrypt(decryptOptions, default);
 
             Assert.IsNotNull(decrypted);
@@ -271,7 +271,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             byte[] plaintext = Encoding.UTF8.GetBytes("plaintext");
 
             AesCryptographyProvider provider = new AesCryptographyProvider(key, null);
-            Assert.IsNull(provider.Encrypt(new EncryptOptions(algorithm, plaintext)));
+            Assert.IsNull(provider.Encrypt(new EncryptParameters(algorithm, plaintext)));
         }
 
         [Test]
@@ -290,7 +290,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             byte[] tag = new byte[] { 0xeb, 0x2f, 0x3a, 0xd3, 0x87, 0xb0, 0x72, 0x68, 0xba, 0xcc, 0x04, 0x91 };
 
             AesCryptographyProvider provider = new AesCryptographyProvider(key, null);
-            Assert.IsNull(provider.Decrypt(new DecryptOptions(algorithm, ciphertext, iv, tag, null)));
+            Assert.IsNull(provider.Decrypt(new DecryptParameters(algorithm, ciphertext, iv, tag, null)));
         }
 
         private static IEnumerable GetEncryptionAlgorithms()

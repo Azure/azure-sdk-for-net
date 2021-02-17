@@ -8,13 +8,8 @@
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> A copy activity tabular translator. </summary>
-    internal partial class TabularTranslator : CopyTranslator
+    public partial class TabularTranslator : CopyTranslator
     {
-        /// <summary> Initializes a new instance of TabularTranslator. </summary>
-        internal TabularTranslator()
-        {
-            Type = "TabularTranslator";
-        }
 
         /// <summary> Column mappings. Example: &quot;UserId: MyUserId, Group: MyGroup, Name: MyName&quot; Type: string (or Expression with resultType string). This property will be retired. Please use mappings property. </summary>
         public object ColumnMappings { get; }

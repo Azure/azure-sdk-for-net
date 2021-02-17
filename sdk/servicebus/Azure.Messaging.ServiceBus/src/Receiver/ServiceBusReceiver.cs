@@ -60,6 +60,13 @@ namespace Azure.Messaging.ServiceBus
         internal string Identifier { get; }
 
         /// <summary>
+        /// Gets the transaction group associated with the receiver. This is an
+        /// arbitrary string that is used to all senders, receivers, and processors that you
+        /// wish to use in a transaction that spans multiple different queues, topics, or subscriptions.
+        /// </summary>
+        public virtual string TransactionGroup { get; }
+
+        /// <summary>
         ///   Indicates whether or not this <see cref="ServiceBusReceiver"/> has been closed.
         /// </summary>
         ///
@@ -162,6 +169,7 @@ namespace Azure.Messaging.ServiceBus
                 }
 
                 IsSessionReceiver = isSessionEntity;
+                TransactionGroup = options.TransactionGroup;
                 _innerReceiver = _connection.CreateTransportReceiver(
                     entityPath: EntityPath,
                     retryPolicy: _retryPolicy,
@@ -169,7 +177,8 @@ namespace Azure.Messaging.ServiceBus
                     prefetchCount: (uint)PrefetchCount,
                     identifier: Identifier,
                     sessionId: sessionId,
-                    isSessionReceiver: IsSessionReceiver);
+                    isSessionReceiver: IsSessionReceiver,
+                    transactionGroup: TransactionGroup);
                 _scopeFactory = new EntityScopeFactory(EntityPath, FullyQualifiedNamespace);
                 _plugins = plugins;
                 if (!isSessionEntity)

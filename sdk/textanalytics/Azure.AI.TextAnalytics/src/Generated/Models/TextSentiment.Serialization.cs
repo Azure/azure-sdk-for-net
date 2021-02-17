@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.AI.TextAnalytics
 {
-    internal static class TextSentimentExtensions
+    internal static partial class TextSentimentExtensions
     {
         public static string ToSerialString(this TextSentiment value) => value switch
         {

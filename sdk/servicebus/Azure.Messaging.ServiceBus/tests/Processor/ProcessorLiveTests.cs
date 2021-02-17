@@ -24,7 +24,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 enablePartitioning: false,
                 enableSession: false))
             {
-                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                await using var client = CreateClient();
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
                 // use double the number of threads so we can make sure we test that we don't
@@ -96,7 +96,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 enablePartitioning: false,
                 enableSession: false))
             {
-                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                await using var client = CreateClient();
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
                 // use double the number of threads so we can make sure we test that we don't
@@ -179,7 +179,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 enableSession: false,
                 lockDuration: lockDuration))
             {
-                await using var client = GetClient();
+                await using var client = CreateClient();
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
                 using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
@@ -251,7 +251,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 enableSession: false,
                 lockDuration: lockDuration))
             {
-                await using var client = GetClient();
+                await using var client = CreateClient();
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
                 using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
@@ -319,7 +319,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 enablePartitioning: false,
                 enableSession: false))
             {
-                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                await using var client = CreateClient();
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 int numMessages = 100;
                 using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
@@ -356,7 +356,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 }
                 await tcs.Task;
 
-                var receiver = GetNoRetryClient().CreateReceiver(scope.QueueName);
+                var receiver = CreateNoRetryClient().CreateReceiver(scope.QueueName);
                 var receivedMessages = await receiver.ReceiveMessagesAsync(numMessages);
                 // can't assert on the exact amount processed due to threads that
                 // are already in flight when calling StopProcessingAsync, but we can at least verify that there are remaining messages
@@ -370,7 +370,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         {
             var invalidQueueName = "nonexistentqueuename";
             var exceptionReceivedHandlerCalled = false;
-            var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+            await using var client = CreateClient();
             ServiceBusProcessor processor = client.CreateProcessor(invalidQueueName);
             TaskCompletionSource<bool> taskCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             processor.ProcessMessageAsync += ProcessMessage;
@@ -424,7 +424,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         public async Task StartStopMultipleTimes()
         {
             var invalidQueueName = "nonexistentqueuename";
-            var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+            await using var client = CreateClient();
             await using ServiceBusProcessor processor = client.CreateProcessor(invalidQueueName);
             TaskCompletionSource<bool> taskCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             processor.ProcessMessageAsync += eventArgs => Task.CompletedTask;
@@ -454,7 +454,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 enablePartitioning: false,
                 enableSession: false))
             {
-                await using var client = GetClient();
+                await using var client = CreateClient();
 
                 await using var processor = client.CreateProcessor(scope.QueueName);
 
@@ -486,7 +486,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 enablePartitioning: false,
                 enableSession: false))
             {
-                await using var client = GetClient();
+                await using var client = CreateClient();
                 var sender = client.CreateSender(scope.QueueName);
                 await sender.SendMessageAsync(GetMessage());
                 await using var processor = client.CreateProcessor(scope.QueueName, new ServiceBusProcessorOptions
@@ -525,7 +525,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 enablePartitioning: false,
                 enableSession: false))
             {
-                await using var client = GetClient();
+                await using var client = CreateClient();
                 var sender = client.CreateSender(scope.QueueName);
                 await sender.SendMessageAsync(GetMessage());
                 await using var processor = client.CreateProcessor(scope.QueueName, new ServiceBusProcessorOptions

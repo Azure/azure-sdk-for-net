@@ -66,7 +66,9 @@ namespace Cdn.Tests.ScenarioTests
                     DateTime dateTimeBegin = new DateTime(2021, 1, 27, 0, 0, 0);
                     DateTime dateTimeEnd = new DateTime(2021, 1, 27, 0, 0, 1);
                     string granularity = "PT5M";
-                    MetricsResponse response = cdnMgmtClient.LogAnalytics.GetLogAnalyticsMetrics(resourceGroupName, profileName, metrics, dateTimeBegin, dateTimeEnd, granularity);
+                    IList<string> customDomains = new List<string>();
+                    IList< string > protocols = new List<string>();
+                    MetricsResponse response = cdnMgmtClient.LogAnalytics.GetLogAnalyticsMetrics(resourceGroupName, profileName, metrics, dateTimeBegin, dateTimeEnd, granularity, customDomains, protocols);
                     Assert.NotNull(response);
                     Assert.Equal(dateTimeBegin, response.DateTimeBegin);
                     Assert.Equal(dateTimeEnd, response.DateTimeEnd);

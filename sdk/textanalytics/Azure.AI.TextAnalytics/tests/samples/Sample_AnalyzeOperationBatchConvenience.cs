@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.TextAnalytics.Models;
 using Azure.AI.TextAnalytics.Tests;
@@ -16,7 +17,7 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples: SamplesBase<TextAnalyticsTestEnvironment>
     {
         [Test]
-        public async Task AnalyzeOperationBatchConvenience()
+        public void AnalyzeOperationBatchConvenience()
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
@@ -24,36 +25,55 @@ namespace Azure.AI.TextAnalytics.Samples
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             #region Snippet:AnalyzeOperationBatchConvenience
-            string document = @"We went to Contoso Steakhouse located at midtown NYC last week for a dinner party, 
-                                and we adore the spot! They provide marvelous food and they have a great menu. The
-                                chief cook happens to be the owner (I think his name is John Doe) and he is super 
-                                nice, coming out of the kitchen and greeted us all. We enjoyed very much dining in 
-                                the place! The Sirloin steak I ordered was tender and juicy, and the place was impeccably
-                                clean. You can even pre-order from their online menu at www.contososteakhouse.com, 
-                                call 312-555-0176 or send email to order@contososteakhouse.com! The only complaint 
-                                I have is the food didn't come fast enough. Overall I highly recommend it!";
+            string documentA = @"We love this trail and make the trip every year. The views are breathtaking and well
+                                worth the hike! Yesterday was foggy though, so we missed the spectacular views.
+                                We tried again today and it was amazing. Everyone in my family liked the trail although
+                                it was too challenging for the less athletic among us.
+                                Not necessarily recommended for small children.
+                                A hotel close to the trail offers services for childcare in case you want that.";
 
-            var batchDocuments = new List<string> { document };
+            string documentB = @"Last week we stayed at Hotel Foo to celebrate our anniversary. The staff knew about
+                                our anniversary so they helped me organize a little surprise for my partner.
+                                The room was clean and with the decoration I requested. It was perfect!";
 
-            AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
+            string documentC = @"That was the best day of my life! We went on a 4 day trip where we stayed at Hotel Foo.
+                                They had great amenities that included an indoor pool, a spa, and a bar.
+                                The spa offered couples massages which were really good. 
+                                The spa was clean and felt very peaceful. Overall the whole experience was great.
+                                We will definitely come back.";
+
+            var batchDocuments = new List<string>
             {
-                KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters(),
-                EntitiesTaskParameters = new EntitiesTaskParameters(),
-                PiiTaskParameters = new PiiTaskParameters(),
+                documentA,
+                documentB,
+                documentC
+            };
+
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            {
+                ExtractKeyPhrasesOptions = new List<ExtractKeyPhrasesOptions>() { new ExtractKeyPhrasesOptions() },
+                RecognizeEntitiesOptions = new List<RecognizeEntitiesOptions>() { new RecognizeEntitiesOptions() },
+                RecognizePiiEntitiesOptions = new List<RecognizePiiEntitiesOptions>() { new RecognizePiiEntitiesOptions() },
                 DisplayName = "AnalyzeOperationSample"
             };
 
-            AnalyzeOperation operation = client.StartAnalyzeOperationBatch(batchDocuments, operationOptions);
+            AnalyzeBatchActionsOperation operation = client.StartAnalyzeBatchActions(batchDocuments, batchActions);
 
-            await operation.WaitForCompletionAsync();
+            TimeSpan pollingInterval = new TimeSpan(1000);
 
-            foreach (AnalyzeOperationResult documentsInPage in operation.GetValues())
+            while (!operation.HasCompleted)
             {
-                RecognizeEntitiesResultCollection entitiesResult = documentsInPage.Tasks.EntityRecognitionTasks[0].Results;
+                Thread.Sleep(pollingInterval);
+                operation.UpdateStatus();
+            }
 
-                ExtractKeyPhrasesResultCollection keyPhrasesResult = documentsInPage.Tasks.KeyPhraseExtractionTasks[0].Results;
+            foreach (AnalyzeBatchActionsResult documentsInPage in operation.GetValues())
+            {
+                RecognizeEntitiesResultCollection entitiesResult = documentsInPage.RecognizeEntitiesActionsResults.FirstOrDefault().Result;
 
-                RecognizePiiEntitiesResultCollection piiResult = documentsInPage.Tasks.EntityRecognitionPiiTasks[0].Results;
+                ExtractKeyPhrasesResultCollection keyPhrasesResult = documentsInPage.ExtractKeyPhrasesActionsResults.FirstOrDefault().Result;
+
+                RecognizePiiEntitiesResultCollection piiResult = documentsInPage.RecognizePiiEntitiesActionsResults.FirstOrDefault().Result;
 
                 Console.WriteLine("Recognized Entities");
 

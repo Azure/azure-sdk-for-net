@@ -12,9 +12,9 @@ function Invoke-AzBoardsCmd($subCmd, $parameters, $output = $true)
   return Invoke-Expression "$azCmdStr" | ConvertFrom-Json -AsHashTable
 }
 
-function LoginToAzureDevops([string]$devop_pat)
+function LoginToAzureDevops([string]$devops_pat)
 {
-  if (!$devop_pat) {
+  if (!$devops_pat) {
     return
   }
   $azCmdStr = "'$devops_pat' | az devops login $($ReleaseDevOpsOrgParameters -join ' ')"
@@ -44,7 +44,7 @@ function BuildHashKey()
 }
 
 $parentWorkItems = @{}
-function FindParentWorkItem($serviceName, $packageDisplayName, $outputCommand = $true)
+function FindParentWorkItem($serviceName, $packageDisplayName, $outputCommand = $false)
 {
   $key = BuildHashKey $serviceName $packageDisplayName
   if ($key -and $parentWorkItems.ContainsKey($key)) {
@@ -73,7 +73,7 @@ function FindParentWorkItem($serviceName, $packageDisplayName, $outputCommand = 
   foreach ($wi in $workItems) {
     $localKey = BuildHashKey $wi.fields["Custom.ServiceName"] $wi.fields["Custom.PackageDisplayName"]
     if (!$localKey) { continue }
-    if ($parentWorkItems.ContainsKey($localKey)) {
+    if ($parentWorkItems.ContainsKey($localKey) -and $parentWorkItems[$localKey].id -ne $wi.id) {
       Write-Warning "Already found parent [$($parentWorkItems[$localKey].id)] with key [$localKey], using that one instead of [$($wi.id)]."
     }
     else {
@@ -148,7 +148,7 @@ function FindPackageWorkItem($lang, $packageName, $version, $outputCommand = $tr
   $query = "SELECT ${fieldList} FROM WorkItems WHERE [Work Item Type] = 'Package'"
 
   if (!$includeClosed -and !$lang) {
-    $query += " AND [State] <> 'No Active Development'"
+    $query += " AND [State] <> 'No Active Development' AND [PackageTypeNewLibrary] = true"
   }
   if ($lang) {
     $query += " AND [Language] = '${lang}'"
@@ -172,7 +172,7 @@ function FindPackageWorkItem($lang, $packageName, $version, $outputCommand = $tr
       Write-Host "Skipping package [$($wi.id)]$($wi.fields['System.Title']) which is missing required fields language, package, or version."
       continue 
     }
-    if ($packageWorkItems.ContainsKey($localKey)) {
+    if ($packageWorkItems.ContainsKey($localKey) -and $packageWorkItems[$localKey].id -ne $wi.id) {
       Write-Warning "Already found package [$($packageWorkItems[$localKey].id)] with key [$localKey], using that one instead of [$($wi.id)]."
     }
     else {
@@ -344,7 +344,7 @@ function CreateOrUpdatePackageWorkItem($lang, $pkg, $verMajorMinor, $existingIte
     if ($title -ne $existingItem.fields["System.Title"]) { $changedField = "System.Title" }
 
     if ($changedField) {
-      Write-Host "At least field $changedField ($($existingItem.fields[$field])) changed so updating."
+      Write-Host "At least field $changedField ($($existingItem.fields[$changedField])) changed so updating."
     }
 
     $beforeState = $existingItem.fields["System.State"]
@@ -356,12 +356,12 @@ function CreateOrUpdatePackageWorkItem($lang, $pkg, $verMajorMinor, $existingIte
     }
     $existingItem = ResetWorkItemState $existingItem $beforeState -outputCommand $outputCommand
 
-    $newparentItem = FindOrCreatePackageGroupParent $serviceName $pkgDisplayName -outputCommand $outputCommand
+    $newparentItem = FindOrCreatePackageGroupParent $serviceName $pkgDisplayName -outputCommand $false
     UpdateWorkItemParent $existingItem $newParentItem -outputCommand $outputCommand
     return $existingItem
   }
 
-  $parentItem = FindOrCreatePackageGroupParent $serviceName $pkgDisplayName -outputCommand $outputCommand
+  $parentItem = FindOrCreatePackageGroupParent $serviceName $pkgDisplayName -outputCommand $false
   $workItem = CreateWorkItem $title "Package" "Release" "Release" $fields $assignedTo $parentItem.id -outputCommand $outputCommand
   $workItem = ResetWorkItemState $workItem -outputCommand $outputCommand
   Write-Host "[$($workItem.id)]$lang - $pkgName($verMajorMinor) - Created"
@@ -496,7 +496,6 @@ function GetMDVersionValue($versionlist)
 {
   $mdVersions = ""
   $mdFormat = "| {0} | {1} | {2} |`n"
-  $versionlist | ForEach-Object { $mdVersions += ($mdFormat -f $_.Type, $_.Version, $_.Date) }
 
   $htmlVersions = ""
   $htmlFormat = @"
@@ -507,7 +506,11 @@ function GetMDVersionValue($versionlist)
 </tr>
 
 "@
-  $versionlist | ForEach-Object { $htmlVersions += ($htmlFormat -f $_.Type, $_.Version, $_.Date) }
+
+  foreach ($version in $versionList) {
+    $mdVersions += ($mdFormat -f $version.Type, $version.Version, $version.Date)
+    $htmlVersions += ($htmlFormat -f $version.Type, $version.Version, $version.Date)
+  }
 
   $htmlTemplate = @"
 <div style='display:none;width:0;height:0;overflow:hidden;position:absolute;font-size:0;' id=__md>| Type | Version | Date |
@@ -697,7 +700,7 @@ function UpdatePackageVersions($pkgWorkItem, $plannedVersions, $shippedVersions)
   {
     if (!$shippedVersionSet.ContainsKey($version.Version))
     {
-      $shippedVersionSet[$v.Version] = $version
+      $shippedVersionSet[$version.Version] = $version
       $updateShipped = $true
     }
   }
@@ -711,7 +714,7 @@ function UpdatePackageVersions($pkgWorkItem, $plannedVersions, $shippedVersions)
     }
   }
 
-  foreach ($version in $plannedVersionSet.Keys)
+  foreach ($version in @($plannedVersionSet.Keys))
   {
     if (!$versionSet.ContainsKey($version))
     {
@@ -728,7 +731,7 @@ function UpdatePackageVersions($pkgWorkItem, $plannedVersions, $shippedVersions)
   $fieldUpdates = @()
   if ($updatePlanned)
   {
-    $plannedPackages = GetMDVersionValue ($plannedVersionSet.Values | Sort-Object Date, Version -Descending)
+    $plannedPackages = GetMDVersionValue ($plannedVersionSet.Values | Sort-Object {$_.Date -as [DateTime]}, Version -Descending)
     $fieldUpdates += @"
 {
   "op": "replace",
@@ -740,7 +743,7 @@ function UpdatePackageVersions($pkgWorkItem, $plannedVersions, $shippedVersions)
 
   if ($updateShipped)
   {
-    $newShippedVersions = $shippedVersionSet.Values | Sort-Object Date, Version -Descending
+    $newShippedVersions = $shippedVersionSet.Values | Sort-Object {$_.Date -as [DateTime]}, Version -Descending
     $shippedPackages = GetMDVersionValue $newShippedVersions
     $fieldUpdates += @"
 {
@@ -771,14 +774,13 @@ function UpdatePackageVersions($pkgWorkItem, $plannedVersions, $shippedVersions)
   }
 
   # Full merged version set
-  $versionList = $versionSet.Values | Sort-Object Date, Version -Descending
+  $versionList = $versionSet.Values | Sort-Object {$_.Date -as [DateTime]}, Version -Descending
 
   $versionFieldUpdates = GetTextVersionFields $versionList $pkgWorkItem
   if ($versionFieldUpdates.Count -gt 0)
   {
     $fieldUpdates += $versionFieldUpdates
   }
-
 
   # If no version files to update do nothing
   if ($fieldUpdates.Count -eq 0) {
@@ -796,9 +798,18 @@ function UpdatePackageVersions($pkgWorkItem, $plannedVersions, $shippedVersions)
 
   $body = "[" + ($fieldUpdates -join ',') + "]"
 
-  # Get a temp access token from the logged in az cli user for azure devops resource
-  $jwt_accessToken = (az account get-access-token --resource "499b84ac-1321-427f-aa17-267ca6975798" --query "accessToken" --output tsv)
-  $headers = @{ Authorization = "Bearer $jwt_accessToken" }
+  $headers = $null
+  if (Get-Variable -Name "devops_pat" -ValueOnly -ErrorAction "Ignore")
+  {
+    $encodedToken = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes([string]::Format("{0}:{1}", "", $devops_pat)))
+    $headers = @{ Authorization = "Basic $encodedToken" }
+  }
+  else 
+  {
+    # Get a temp access token from the logged in az cli user for azure devops resource
+    $jwt_accessToken = (az account get-access-token --resource "499b84ac-1321-427f-aa17-267ca6975798" --query "accessToken" --output tsv)
+    $headers = @{ Authorization = "Bearer $jwt_accessToken" }
+  }
   $response = Invoke-RestMethod -Method PATCH `
     -Uri "https://dev.azure.com/azure-sdk/_apis/wit/workitems/${id}?api-version=6.0" `
     -Headers $headers -Body $body -ContentType "application/json-patch+json"

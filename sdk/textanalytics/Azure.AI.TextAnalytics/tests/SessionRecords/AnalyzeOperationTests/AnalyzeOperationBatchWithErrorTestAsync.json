@@ -1,15 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze",
+      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json, text/json",
-        "Content-Length": "410",
+        "Content-Length": "460",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-1b0e658d0b9e6d449a79dc8da51133f5-5fff3ca2afa41a4c-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201112.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-d9dc90dc3e444f43b934e6420e7b36e1-8dba0f5eec2bef48-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210208.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "e97bbbcf82adc1bcfc469a941c1a1f32",
         "x-ms-return-client-request-id": "true"
       },
@@ -39,25 +39,223 @@
               "parameters": {
                 "model-version": "latest"
               }
+            },
+            {
+              "parameters": {
+                "model-version": "InvalidVersion"
+              }
             }
           ]
         },
         "displayName": "AnalyzeOperationBatchWithErrorTest"
       },
-      "StatusCode": 400,
+      "StatusCode": 202,
       "ResponseHeaders": {
-        "apim-request-id": "ef5fce97-32c2-48b0-a447-2996240f4eae",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 12 Nov 2020 19:27:10 GMT",
+        "apim-request-id": "6ab9eb7b-21e8-47c5-a403-9938850bdd18",
+        "Date": "Mon, 08 Feb 2021 16:36:18 GMT",
+        "operation-location": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/a3ddf9b0-946d-4d42-860b-66b9d4e64c8b_637483392000000000",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "43"
+        "x-envoy-upstream-service-time": "2254"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/a3ddf9b0-946d-4d42-860b-66b9d4e64c8b_637483392000000000?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210208.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "f5de274f64483fa962594be7359ef698",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "304999f5-2950-41f1-af4c-d80e06f5de23",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 08 Feb 2021 16:36:18 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "125"
       },
       "ResponseBody": {
-        "error": {
-          "code": "InvalidArgument",
-          "message": "At least one document is missing a Text attribute."
+        "displayName": "AnalyzeOperationBatchWithErrorTest",
+        "jobId": "a3ddf9b0-946d-4d42-860b-66b9d4e64c8b_637483392000000000",
+        "lastUpdateDateTime": "2021-02-08T16:36:16Z",
+        "createdDateTime": "2021-02-08T16:36:16Z",
+        "expirationDateTime": "2021-02-09T16:36:16Z",
+        "status": "notStarted",
+        "errors": [],
+        "tasks": {
+          "details": {
+            "name": "AnalyzeOperationBatchWithErrorTest",
+            "lastUpdateDateTime": "2021-02-08T16:36:16Z"
+          },
+          "completed": 0,
+          "failed": 0,
+          "inProgress": 0,
+          "total": 0
+        }
+      }
+    },
+    {
+      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/a3ddf9b0-946d-4d42-860b-66b9d4e64c8b_637483392000000000?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210208.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "4b4fcf12eb12dad73eb83948f92dcc69",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "e9176617-e305-41b2-afb8-f575f940f604",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 08 Feb 2021 16:36:20 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "382"
+      },
+      "ResponseBody": {
+        "displayName": "AnalyzeOperationBatchWithErrorTest",
+        "jobId": "a3ddf9b0-946d-4d42-860b-66b9d4e64c8b_637483392000000000",
+        "lastUpdateDateTime": "2021-02-08T16:36:20Z",
+        "createdDateTime": "2021-02-08T16:36:16Z",
+        "expirationDateTime": "2021-02-09T16:36:16Z",
+        "status": "running",
+        "errors": [
+          {
+            "code": "InvalidRequest",
+            "message": "Job task parameter value InvalidVersion is not supported for model-version parameter for job task type KeyPhraseExtraction. Supported values latest,2020-07-01.",
+            "target": "#/tasks/keyPhraseExtractionTasks/1"
+          }
+        ],
+        "tasks": {
+          "details": {
+            "name": "AnalyzeOperationBatchWithErrorTest",
+            "lastUpdateDateTime": "2021-02-08T16:36:20Z"
+          },
+          "completed": 0,
+          "failed": 1,
+          "inProgress": 1,
+          "total": 2,
+          "keyPhraseExtractionTasks": [
+            {
+              "name": "AnalyzeOperationBatchWithErrorTest",
+              "lastUpdateDateTime": "2021-02-08T16:36:20.6177663Z",
+              "results": {
+                "documents": [],
+                "errors": [],
+                "modelVersion": ""
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/a3ddf9b0-946d-4d42-860b-66b9d4e64c8b_637483392000000000?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210208.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "faf1e8be4fb56b9b123c875336d58b5d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "294e7fb7-d308-4ad9-982e-e98761353f41",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 08 Feb 2021 16:36:21 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "408"
+      },
+      "ResponseBody": {
+        "displayName": "AnalyzeOperationBatchWithErrorTest",
+        "jobId": "a3ddf9b0-946d-4d42-860b-66b9d4e64c8b_637483392000000000",
+        "lastUpdateDateTime": "2021-02-08T16:36:20Z",
+        "createdDateTime": "2021-02-08T16:36:16Z",
+        "expirationDateTime": "2021-02-09T16:36:16Z",
+        "status": "partiallySucceeded",
+        "errors": [
+          {
+            "code": "InvalidRequest",
+            "message": "Job task parameter value InvalidVersion is not supported for model-version parameter for job task type KeyPhraseExtraction. Supported values latest,2020-07-01.",
+            "target": "#/tasks/keyPhraseExtractionTasks/1"
+          }
+        ],
+        "tasks": {
+          "details": {
+            "name": "AnalyzeOperationBatchWithErrorTest",
+            "lastUpdateDateTime": "2021-02-08T16:36:20Z"
+          },
+          "completed": 1,
+          "failed": 1,
+          "inProgress": 0,
+          "total": 2,
+          "keyPhraseExtractionTasks": [
+            {
+              "name": "AnalyzeOperationBatchWithErrorTest",
+              "lastUpdateDateTime": "2021-02-08T16:36:20.6177663Z",
+              "results": {
+                "documents": [
+                  {
+                    "id": "0",
+                    "keyPhrases": [
+                      "Subject",
+                      "ibuprofen"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "1",
+                    "keyPhrases": [
+                      "panic",
+                      "psychosis",
+                      "delirium",
+                      "irregular heartbeat",
+                      "heart failure"
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [
+                  {
+                    "id": "2",
+                    "error": {
+                      "code": "InvalidRequest",
+                      "message": "Invalid document in request.",
+                      "innererror": {
+                        "code": "InvalidDocument",
+                        "message": "Document text is empty."
+                      }
+                    }
+                  }
+                ],
+                "modelVersion": "2020-07-01"
+              }
+            },
+            {
+              "name": "AnalyzeOperationBatchWithErrorTest",
+              "lastUpdateDateTime": "2021-02-08T16:36:20.6177663Z",
+              "results": {
+                "documents": [],
+                "errors": [],
+                "modelVersion": ""
+              }
+            }
+          ]
         }
       }
     }
@@ -65,6 +263,6 @@
   "Variables": {
     "RandomSeed": "1707937123",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com"
+    "TEXT_ANALYTICS_ENDPOINT": "https://ta-s-westeurope.cognitiveservices.azure.com"
   }
 }
