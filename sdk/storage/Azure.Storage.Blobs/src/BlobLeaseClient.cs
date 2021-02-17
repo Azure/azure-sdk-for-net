@@ -747,8 +747,8 @@ namespace Azure.Storage.Blobs.Specialized
                                 leaseId: LeaseId,
                                 ifModifiedSince: conditions?.IfModifiedSince,
                                 ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                                ifMatch: conditions?.IfMatch.ToString(),
-                                ifNoneMatch: conditions?.IfNoneMatch.ToString(),
+                                ifMatch: conditions?.IfMatch?.ToString(),
+                                ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                                 ifTags: tagConditions,
                                 cancellationToken: cancellationToken)
                                 .ConfigureAwait(false);
@@ -759,8 +759,8 @@ namespace Azure.Storage.Blobs.Specialized
                                 leaseId: LeaseId,
                                 ifModifiedSince: conditions?.IfModifiedSince,
                                 ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                                ifMatch: conditions?.IfMatch.ToString(),
-                                ifNoneMatch: conditions?.IfNoneMatch.ToString(),
+                                ifMatch: conditions?.IfMatch?.ToString(),
+                                ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                                 ifTags: tagConditions,
                                 cancellationToken: cancellationToken);
                         }
@@ -1265,7 +1265,7 @@ namespace Azure.Storage.Blobs.Specialized
                                 ifModifiedSince: conditions?.IfModifiedSince,
                                 ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                                 ifMatch: conditions?.IfMatch?.ToString(),
-                                ifNoneMatch: conditions?.IfNoneMatch.ToString(),
+                                ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                                 ifTags: tagConditions,
                                 cancellationToken: cancellationToken);
                         }

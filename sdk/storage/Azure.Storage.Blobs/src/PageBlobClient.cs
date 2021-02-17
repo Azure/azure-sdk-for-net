@@ -938,8 +938,8 @@ namespace Azure.Storage.Blobs.Specialized
                             encryptionScope: ClientConfiguration.EncryptionScope,
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch.ToString(),
+                            ifMatch: conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             ifTags: conditions?.TagConditions,
                             blobSequenceNumber: sequenceNumber,
                             blobTagsString: tags?.ToTagsString(),
@@ -966,8 +966,8 @@ namespace Azure.Storage.Blobs.Specialized
                             encryptionScope: ClientConfiguration.EncryptionScope,
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch.ToString(),
+                            ifMatch: conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             ifTags: conditions?.TagConditions,
                             blobSequenceNumber: sequenceNumber,
                             blobTagsString: tags?.ToTagsString(),
@@ -1215,8 +1215,8 @@ namespace Azure.Storage.Blobs.Specialized
                             ifSequenceNumberEqualTo: conditions?.IfSequenceNumberEqual,
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch.ToString(),
+                            ifMatch: conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             ifTags: conditions?.TagConditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -1238,8 +1238,8 @@ namespace Azure.Storage.Blobs.Specialized
                             ifSequenceNumberEqualTo: conditions?.IfSequenceNumberEqual,
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch.ToString(),
+                            ifMatch: conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             ifTags: conditions?.TagConditions,
                             cancellationToken: cancellationToken);
                     }
@@ -1423,8 +1423,8 @@ namespace Azure.Storage.Blobs.Specialized
                             ifSequenceNumberEqualTo: conditions?.IfSequenceNumberEqual,
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch.ToString(),
+                            ifMatch: conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             ifTags: conditions?.TagConditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -1443,8 +1443,8 @@ namespace Azure.Storage.Blobs.Specialized
                             ifSequenceNumberEqualTo: conditions?.IfSequenceNumberEqual,
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch.ToString(),
+                            ifMatch: conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             ifTags: conditions?.TagConditions,
                             cancellationToken: cancellationToken);
                     }
@@ -1631,8 +1631,8 @@ namespace Azure.Storage.Blobs.Specialized
                             leaseId: conditions?.LeaseId,
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch.ToString(),
+                            ifMatch: conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             ifTags: conditions?.TagConditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -1645,8 +1645,8 @@ namespace Azure.Storage.Blobs.Specialized
                             leaseId: conditions?.LeaseId,
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch.ToString(),
+                            ifMatch: conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             ifTags: conditions?.TagConditions,
                             cancellationToken: cancellationToken);
                     }
@@ -1893,8 +1893,8 @@ namespace Azure.Storage.Blobs.Specialized
                             leaseId: conditions?.LeaseId,
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch.ToString(),
+                            ifMatch: conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             ifTags: conditions?.TagConditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -1909,8 +1909,8 @@ namespace Azure.Storage.Blobs.Specialized
                             leaseId: conditions?.LeaseId,
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch.ToString(),
+                            ifMatch: conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             ifTags: conditions?.TagConditions,
                             cancellationToken: cancellationToken);
                     }
@@ -2218,8 +2218,8 @@ namespace Azure.Storage.Blobs.Specialized
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch.ToString(),
+                            ifMatch: conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             ifTags: conditions?.TagConditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -2234,8 +2234,8 @@ namespace Azure.Storage.Blobs.Specialized
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch.ToString(),
+                            ifMatch: conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             ifTags: conditions?.TagConditions,
                             cancellationToken: cancellationToken);
                     }
@@ -2458,8 +2458,8 @@ namespace Azure.Storage.Blobs.Specialized
                             leaseId: conditions?.LeaseId,
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch.ToString(),
+                            ifMatch: conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             ifTags: conditions?.TagConditions,
                             blobSequenceNumber: sequenceNumber,
                             cancellationToken: cancellationToken)
@@ -2472,8 +2472,8 @@ namespace Azure.Storage.Blobs.Specialized
                             leaseId: conditions?.LeaseId,
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch.ToString(),
+                            ifMatch: conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             ifTags: conditions?.TagConditions,
                             blobSequenceNumber: sequenceNumber,
                             cancellationToken: cancellationToken);
@@ -2846,8 +2846,8 @@ namespace Azure.Storage.Blobs.Specialized
                             copySource: sourcePageBlobClient.Uri.AbsoluteUri,
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch.ToString(),
+                            ifMatch: conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             ifTags: conditions?.TagConditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -2858,8 +2858,8 @@ namespace Azure.Storage.Blobs.Specialized
                             copySource: sourcePageBlobClient.Uri.AbsoluteUri,
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch.ToString(),
+                            ifMatch: conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             ifTags: conditions?.TagConditions,
                             cancellationToken: cancellationToken);
                     }
@@ -3142,13 +3142,13 @@ namespace Azure.Storage.Blobs.Specialized
                             ifSequenceNumberEqualTo: conditions?.IfSequenceNumberEqual,
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch.ToString(),
+                            ifMatch: conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             ifTags: conditions?.TagConditions,
                             sourceIfModifiedSince: sourceConditions?.IfModifiedSince,
                             sourceIfUnmodifiedSince: sourceConditions?.IfUnmodifiedSince,
-                            sourceIfMatch: sourceConditions?.IfMatch.ToString(),
-                            sourceIfNoneMatch: sourceConditions?.IfNoneMatch.ToString(),
+                            sourceIfMatch: sourceConditions?.IfMatch?.ToString(),
+                            sourceIfNoneMatch: sourceConditions?.IfNoneMatch?.ToString(),
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -3170,13 +3170,13 @@ namespace Azure.Storage.Blobs.Specialized
                             ifSequenceNumberEqualTo: conditions?.IfSequenceNumberEqual,
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch.ToString(),
+                            ifMatch: conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             ifTags: conditions?.TagConditions,
                             sourceIfModifiedSince: sourceConditions?.IfModifiedSince,
                             sourceIfUnmodifiedSince: sourceConditions?.IfUnmodifiedSince,
-                            sourceIfMatch: sourceConditions?.IfMatch.ToString(),
-                            sourceIfNoneMatch: sourceConditions?.IfNoneMatch.ToString(),
+                            sourceIfMatch: sourceConditions?.IfMatch?.ToString(),
+                            sourceIfNoneMatch: sourceConditions?.IfNoneMatch?.ToString(),
                             cancellationToken: cancellationToken);
                     }
 
