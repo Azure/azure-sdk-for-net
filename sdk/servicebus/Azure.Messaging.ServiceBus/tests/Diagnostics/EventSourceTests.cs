@@ -1278,7 +1278,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     It.IsAny<uint>(),
                     It.IsAny<string>(),
                     It.IsAny<string>(),
-                    It.IsAny<bool>()))
+                    It.IsAny<bool>(),
+                    It.IsAny<string>()))
                 .Returns(mockTransportReceiver.Object);
             return mockConnection;
         }
@@ -1293,6 +1294,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 connection => connection.CreateTransportSender(
                     It.IsAny<string>(),
                     It.IsAny<ServiceBusRetryPolicy>(),
+                    It.IsAny<string>(),
                     It.IsAny<string>()))
                 .Returns(mockTransportSender.Object);
             return mockConnection;
