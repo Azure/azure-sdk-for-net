@@ -16,13 +16,22 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Core" />
+    <!-- TODO: revert when Azure.Core ships -->
+    <!-- <PackageReference Include="Azure.Core" /> -->
+    <!-- TODO: End -->
     <PackageReference Include="Azure.Identity" />
     <PackageReference Include="Azure.Security.KeyVault.Secrets" />
     <PackageReference Include="System.CommandLine" VersionOverride="2.0.0-beta1.20371.2" />
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
-  
+
+
+   <!-- TODO: revert when Azure.Core ships -->
+   <ItemGroup>  
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
+   </ItemGroup>
+   <!-- TODO: End -->
+
   <ItemGroup Condition="'$(IsSample)' == 'true'">
     <PackageReference Include="Microsoft.Azure.AutoRest.CSharp" PrivateAssets="All" />
   </ItemGroup>
@@ -31,8 +40,10 @@
 
   <ItemGroup Condition="'$(IsClientLibrary)' != 'true'">
     <!-- Define package versions when not generating source (uses central package versions) -->
-    <PackageReference Update="Azure.Core" Version="1.4.1" />
-    <PackageReference Update="Azure.Identity" Version="1.2.2" />
+    <!-- TODO: revert when Azure.Core ships -->
+    <!-- <PackageReference Update="Azure.Core" Version="1.9.0" /> -->
+    <!-- TODO: End -->
+    <PackageReference Update="Azure.Identity" Version="1.3.0" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.1.0" />
     <PackageReference Update="System.CommandLine" Version="%(VersionOverride)" />
     <PackageReference Update="System.Text.Json" Version="4.6.0" />
@@ -46,6 +57,9 @@
   <ItemGroup Condition="'$(IsSample)' == 'true'">
     <!-- Link files needed by the source generator -->
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)AuthorizationChallengeParser.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)Base64Url.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)BearerTokenChallengeAuthenticationPolicy.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
 
   <Target Name="CopySource">

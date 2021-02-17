@@ -404,7 +404,7 @@ namespace Azure.Communication.Chat.Tests
         {
             Response<CommunicationUserIdentifier> user = communicationIdentityClient.CreateUser();
             IEnumerable<CommunicationTokenScope> scopes = new[] { CommunicationTokenScope.Chat };
-            Response<AccessToken> tokenResponseUser = communicationIdentityClient.IssueToken(user.Value, scopes);
+            Response<AccessToken> tokenResponseUser = communicationIdentityClient.GetToken(user.Value, scopes);
 
             return (user, tokenResponseUser.Value.Token);
         }
@@ -413,7 +413,7 @@ namespace Azure.Communication.Chat.Tests
         {
             Response<CommunicationUserIdentifier> user = await communicationIdentityClient.CreateUserAsync();
             IEnumerable<CommunicationTokenScope> scopes = new[] { CommunicationTokenScope.Chat };
-            Response<AccessToken> tokenResponseUser = await communicationIdentityClient.IssueTokenAsync(user.Value, scopes);
+            Response<AccessToken> tokenResponseUser = await communicationIdentityClient.GetTokenAsync(user.Value, scopes);
 
             return (user, tokenResponseUser.Value.Token);
         }

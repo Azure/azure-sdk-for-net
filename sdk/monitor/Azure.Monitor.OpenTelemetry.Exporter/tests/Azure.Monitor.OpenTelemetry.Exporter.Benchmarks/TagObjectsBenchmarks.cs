@@ -86,30 +86,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
         }
 
         [Benchmark]
-        public void Enumerate_AzMonList_NoItem()
-        {
-            NoItemActivity.EnumerateTags(ref monitorTags);
-        }
-
-        [Benchmark]
-        public void Enumerate_AzMonList_Part_B()
-        {
-            PartBActivity.EnumerateTags(ref monitorTags);
-        }
-
-        [Benchmark]
-        public void Enumerate_AzMonList_Part_C()
-        {
-            PartCActivity.EnumerateTags(ref monitorTags);
-        }
-
-        [Benchmark]
-        public void Enumerate_AzMonList_PartB_And_C()
-        {
-            PartBAndCActivity.EnumerateTags(ref monitorTags);
-        }
-
-        [Benchmark]
         public void Enumerate_TagObjects_NoItem()
         {
             _ = tagObjects.ToAzureMonitorTags(out var _, out var _);

@@ -20,7 +20,9 @@ namespace Azure.Identity.Tests
 
         public static Random random = new Random();
         public TokenCache cache;
-        public byte[] bytes = new byte[512];
+        public byte[] bytes = new byte[] { 1, 0 };
+        public byte[] updatedBytes = new byte[] { 0, 2 };
+        public byte[] mergedBytes = new byte[] { 1, 2 };
         public Mock<ITokenCacheSerializer> mockSerializer1;
         public Mock<ITokenCacheSerializer> mockSerializer2;
         public Mock<ITokenCache> mockMSALCache;
@@ -32,7 +34,6 @@ namespace Azure.Identity.Tests
         [SetUp]
         public void Setup()
         {
-            random.NextBytes(bytes);
             cache = new TokenCache(bytes);
             mockSerializer1 = new Mock<ITokenCacheSerializer>();
             mockSerializer2 = new Mock<ITokenCacheSerializer>();
@@ -97,14 +98,10 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task MergeOccursOnSecondUpdate()
         {
-            TokenCacheNotificationArgs mockArgs1 = GetMockArgs(mockSerializer1, true);
-            TokenCacheNotificationArgs mockArgs2 = GetMockArgs(mockSerializer2, true);
             var mockPublicClient = new Mock<IPublicClientApplication>();
             var mergeMSALCache = new Mock<ITokenCache>();
-            var updatedBytes = new byte[512];
-            var mergedBytes = new byte[512];
-            random.NextBytes(updatedBytes);
-            random.NextBytes(mergedBytes);
+            TokenCacheNotificationArgs mockArgs1 = GetMockArgs(mockSerializer1, true);
+            TokenCacheNotificationArgs mockArgs2 = GetMockArgs(mockSerializer2, true);
 
             mockMSALCache
                 .Setup(m => m.SetBeforeAccessAsync(It.IsAny<Func<TokenCacheNotificationArgs, Task>>()))
@@ -117,20 +114,17 @@ namespace Azure.Identity.Tests
                 .Callback<TokenCacheCallback>(beforeAccess =>
                 {
                     merge_OnBeforeCacheAccessAsync = beforeAccess;
-                }
-                );
+                });
             mergeMSALCache
                 .Setup(m => m.SetAfterAccess(It.IsAny<TokenCacheCallback>()))
                 .Callback<TokenCacheCallback>(afterAccess => merge_OnAfterCacheAccessAsync = afterAccess);
             mockSerializer1
                 .SetupSequence(m => m.SerializeMsalV3())
                 .Returns(bytes)
-                .Returns(updatedBytes)
                 .Returns(mergedBytes);
             mockSerializer2
                 .SetupSequence(m => m.SerializeMsalV3())
-                .Returns(updatedBytes)
-                .Returns(mergedBytes);
+                .Returns(updatedBytes);
             mockPublicClient
                 .SetupGet(m => m.UserTokenCache).Returns(mergeMSALCache.Object);
             mockPublicClient
@@ -153,18 +147,19 @@ namespace Azure.Identity.Tests
             await main_OnBeforeCacheAccessAsync.Invoke(mockArgs1);
             // Read and write the cache from consumer 2.
             await main_OnBeforeCacheAccessAsync.Invoke(mockArgs2);
+            // Dealy to ensure that the timestamps are different between last read and last updated.
+            await Task.Delay(100);
             await main_OnAfterCacheAccessAsync.Invoke(mockArgs2);
             // Consumer 1 now writes, and must update its cache first.
             await main_OnAfterCacheAccessAsync.Invoke(mockArgs1);
 
-            //mockSerializer2.Verify(m => m.DeserializeMsalV3(bytes, It.IsAny<bool>()), Times.Exactly(0));
             mockSerializer1.Verify(m => m.DeserializeMsalV3(bytes, true), Times.Exactly(1));
             mockSerializer1.Verify(m => m.SerializeMsalV3(), Times.Exactly(2));
             mockSerializer1.Verify(m => m.DeserializeMsalV3(bytes, false), Times.Exactly(1));
             mockSerializer1.Verify(m => m.DeserializeMsalV3(updatedBytes, false), Times.Exactly(1));
             mockSerializer2.Verify(m => m.DeserializeMsalV3(bytes, true), Times.Exactly(1));
             mockSerializer2.Verify(m => m.SerializeMsalV3(), Times.Exactly(1));
-            //Assert.That(cache.Data, Is.EqualTo(mergedBytes));
+            Assert.That(cache.Data, Is.EqualTo(mergedBytes));
         }
 
         private static TokenCacheNotificationArgs GetMockArgs(Mock<ITokenCacheSerializer> mockSerializer, bool hasStateChanged)

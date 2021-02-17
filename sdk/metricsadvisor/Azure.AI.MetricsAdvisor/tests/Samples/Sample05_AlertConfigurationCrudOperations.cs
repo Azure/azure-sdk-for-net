@@ -44,17 +44,17 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             alertConfiguration.MetricAlertConfigurations.Add(metricAlertConfiguration);
 
-            Response<string> response = await adminClient.CreateAlertConfigurationAsync(alertConfiguration);
+            Response<AnomalyAlertConfiguration> response = await adminClient.CreateAlertConfigurationAsync(alertConfiguration);
 
-            string alertConfigurationId = response.Value;
+            AnomalyAlertConfiguration createdAlertConfiguration = response.Value;
 
-            Console.WriteLine($"Alert configuration ID: {alertConfigurationId}");
+            Console.WriteLine($"Alert configuration ID: {createdAlertConfiguration.Id}");
             #endregion
 
             // Delete the anomaly alert configuration to clean up the Metrics Advisor resource. Do not
             // perform this step if you intend to keep using the configuration.
 
-            await adminClient.DeleteAlertConfigurationAsync(alertConfigurationId);
+            await adminClient.DeleteAlertConfigurationAsync(createdAlertConfiguration.Id);
         }
 
         [Test]

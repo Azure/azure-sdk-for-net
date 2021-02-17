@@ -9,13 +9,13 @@ using System;
 
 namespace Azure.MixedReality.RemoteRendering
 {
-    /// <summary> The SessionProperties. </summary>
+    /// <summary> The properties of a rendering session. </summary>
     public partial class RenderingSession
     {
         /// <summary> Initializes a new instance of RenderingSession. </summary>
-        /// <param name="sessionId"> The id of the session supplied when the sessions was created. </param>
-        /// <param name="size"> Size of the server used for the rendering session. Remote Rendering with Standard size server has a maximum scene size of 20 million polygons. Remote Rendering with Premium size does not enforce a hard maximum, but performance may be degraded if your content exceeds the rendering capabilities of the service. </param>
-        /// <param name="status"> The status of the rendering session. Once the status reached the &apos;Ready&apos; state it can be connected to. The terminal state is &apos;Stopped&apos;. </param>
+        /// <param name="sessionId"> The ID of the session supplied when the session was created. </param>
+        /// <param name="size"> The size of the server used for the rendering session. The size impacts the number of polygons the server can render. Refer to https://docs.microsoft.com/azure/remote-rendering/reference/vm-sizes for details. </param>
+        /// <param name="status"> The status of the rendering session. Terminal states are &apos;Error&apos;, &apos;Expired&apos;, and &apos;Stopped&apos;. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sessionId"/> is null. </exception>
         internal RenderingSession(string sessionId, RenderingServerSize size, RenderingSessionStatus status)
         {
@@ -30,15 +30,15 @@ namespace Azure.MixedReality.RemoteRendering
         }
 
         /// <summary> Initializes a new instance of RenderingSession. </summary>
-        /// <param name="sessionId"> The id of the session supplied when the sessions was created. </param>
+        /// <param name="sessionId"> The ID of the session supplied when the session was created. </param>
         /// <param name="arrInspectorPort"> The TCP port at which the Azure Remote Rendering Inspector tool is hosted. </param>
-        /// <param name="handshakePort"> The TCP port used for the handshake. </param>
-        /// <param name="elapsedTimeMinutes"> Amount of time in minutes the session is or has been in Ready state. Time is rounded down to a full minute. </param>
+        /// <param name="handshakePort"> The TCP port used for the handshake when establishing a connection. </param>
+        /// <param name="elapsedTimeMinutes"> Amount of time in minutes the session is or was in the &apos;Ready&apos; state. Time is rounded down to a full minute. </param>
         /// <param name="host"> The hostname under which the rendering session is reachable. </param>
         /// <param name="maxLeaseTimeMinutes"> The time in minutes the session will run after reaching the &apos;Ready&apos; state. </param>
-        /// <param name="size"> Size of the server used for the rendering session. Remote Rendering with Standard size server has a maximum scene size of 20 million polygons. Remote Rendering with Premium size does not enforce a hard maximum, but performance may be degraded if your content exceeds the rendering capabilities of the service. </param>
-        /// <param name="status"> The status of the rendering session. Once the status reached the &apos;Ready&apos; state it can be connected to. The terminal state is &apos;Stopped&apos;. </param>
-        /// <param name="teraflops"> The computational power of the rendering session GPU measured in Teraflops. </param>
+        /// <param name="size"> The size of the server used for the rendering session. The size impacts the number of polygons the server can render. Refer to https://docs.microsoft.com/azure/remote-rendering/reference/vm-sizes for details. </param>
+        /// <param name="status"> The status of the rendering session. Terminal states are &apos;Error&apos;, &apos;Expired&apos;, and &apos;Stopped&apos;. </param>
+        /// <param name="teraflops"> The computational power of the rendering session GPU measured in teraflops. </param>
         /// <param name="error"> The error object containing details about the rendering session startup failure. </param>
         /// <param name="createdOn"> The time when the rendering session was created. Date and time in ISO 8601 format. </param>
         internal RenderingSession(string sessionId, int? arrInspectorPort, int? handshakePort, int? elapsedTimeMinutes, string host, int? maxLeaseTimeMinutes, RenderingServerSize size, RenderingSessionStatus status, float? teraflops, RemoteRenderingServiceError error, DateTimeOffset? createdOn)
@@ -57,15 +57,15 @@ namespace Azure.MixedReality.RemoteRendering
         }
         /// <summary> The TCP port at which the Azure Remote Rendering Inspector tool is hosted. </summary>
         public int? ArrInspectorPort { get; }
-        /// <summary> The TCP port used for the handshake. </summary>
+        /// <summary> The TCP port used for the handshake when establishing a connection. </summary>
         public int? HandshakePort { get; }
-        /// <summary> Amount of time in minutes the session is or has been in Ready state. Time is rounded down to a full minute. </summary>
+        /// <summary> Amount of time in minutes the session is or was in the &apos;Ready&apos; state. Time is rounded down to a full minute. </summary>
         public int? ElapsedTimeMinutes { get; }
-        /// <summary> Size of the server used for the rendering session. Remote Rendering with Standard size server has a maximum scene size of 20 million polygons. Remote Rendering with Premium size does not enforce a hard maximum, but performance may be degraded if your content exceeds the rendering capabilities of the service. </summary>
+        /// <summary> The size of the server used for the rendering session. The size impacts the number of polygons the server can render. Refer to https://docs.microsoft.com/azure/remote-rendering/reference/vm-sizes for details. </summary>
         public RenderingServerSize Size { get; }
-        /// <summary> The status of the rendering session. Once the status reached the &apos;Ready&apos; state it can be connected to. The terminal state is &apos;Stopped&apos;. </summary>
+        /// <summary> The status of the rendering session. Terminal states are &apos;Error&apos;, &apos;Expired&apos;, and &apos;Stopped&apos;. </summary>
         public RenderingSessionStatus Status { get; }
-        /// <summary> The computational power of the rendering session GPU measured in Teraflops. </summary>
+        /// <summary> The computational power of the rendering session GPU measured in teraflops. </summary>
         public float? Teraflops { get; }
         /// <summary> The error object containing details about the rendering session startup failure. </summary>
         public RemoteRenderingServiceError Error { get; }

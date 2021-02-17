@@ -65,7 +65,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             ));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TestGetLinkedService()
         {
             LinkedServiceClient client = CreateClient();
@@ -83,7 +83,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TestDeleteLinkedService()
         {
             LinkedServiceClient client = CreateClient();
@@ -94,7 +94,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             await operation.WaitAndAssertSuccessfulCompletion();
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TestRenameLinkedService()
         {
             LinkedServiceClient client = CreateClient();

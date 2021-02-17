@@ -109,7 +109,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 PartCTags = AzMonList.Initialize()
             };
 
-            activity.EnumerateTags(ref monitorTags);
+            monitorTags.ForEach(activity.TagObjects);
             return monitorTags;
         }
 

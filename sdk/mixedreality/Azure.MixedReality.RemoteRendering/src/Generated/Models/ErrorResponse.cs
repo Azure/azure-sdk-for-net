@@ -10,7 +10,7 @@ using Azure.MixedReality.RemoteRendering;
 
 namespace Azure.MixedReality.RemoteRendering.Models
 {
-    /// <summary> The ErrorResponse. </summary>
+    /// <summary> The error response containing details of why the request failed. </summary>
     internal partial class ErrorResponse
     {
         /// <summary> Initializes a new instance of ErrorResponse. </summary>

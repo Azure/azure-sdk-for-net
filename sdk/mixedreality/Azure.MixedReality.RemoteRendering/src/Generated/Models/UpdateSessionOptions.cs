@@ -7,7 +7,7 @@
 
 namespace Azure.MixedReality.RemoteRendering
 {
-    /// <summary> The UpdateSessionSettings. </summary>
+    /// <summary> Settings used to update the session. </summary>
     public partial class UpdateSessionOptions
     {
     }

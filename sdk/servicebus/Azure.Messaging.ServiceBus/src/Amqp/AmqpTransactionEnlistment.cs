@@ -15,17 +15,20 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private readonly string _transactionId;
         private readonly AmqpTransactionManager _transactionManager;
         private readonly AmqpConnectionScope _connectionScope;
+        private readonly string _transactionGroup;
         private readonly TimeSpan _timeout;
 
         public AmqpTransactionEnlistment(
             Transaction transaction,
             AmqpTransactionManager transactionManager,
             AmqpConnectionScope connectionScope,
+            string transactionGroup,
             TimeSpan timeout)
         {
             _transactionId = transaction.TransactionInformation.LocalIdentifier;
             _transactionManager = transactionManager;
             _connectionScope = connectionScope;
+            _transactionGroup = transactionGroup;
             _timeout = timeout;
         }
 
@@ -35,8 +38,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
         {
             try
             {
-                FaultTolerantAmqpObject<Controller> faultTolerantController = _connectionScope.TransactionController;
-                Controller controller = await faultTolerantController.GetOrCreateAsync(timeout).ConfigureAwait(false);
+                Controller controller = await GetController(timeout).ConfigureAwait(false);
+
                 AmqpTransactionId = await controller.DeclareAsync().ConfigureAwait(false);
                 ServiceBusEventSource.Log.TransactionDeclared(_transactionId, AmqpTransactionId);
                 return this;
@@ -47,6 +50,21 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 _transactionManager.RemoveEnlistment(_transactionId);
                 throw;
             }
+        }
+
+        private async Task<Controller> GetController(TimeSpan timeout)
+        {
+            FaultTolerantAmqpObject<Controller> faultTolerantController;
+            if (_transactionGroup == null)
+            {
+                faultTolerantController = _connectionScope.SingleEntityTransactionController;
+            }
+            else
+            {
+                faultTolerantController = _connectionScope.TransactionGroups[_transactionGroup].Controller;
+            }
+            Controller controller = await faultTolerantController.GetOrCreateAsync(timeout).ConfigureAwait(false);
+            return controller;
         }
 
         protected override void OnSafeClose(AmqpTransactionEnlistment value)
@@ -67,10 +85,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         {
             try
             {
-                FaultTolerantAmqpObject<Controller> faultTolerantController = _connectionScope.TransactionController;
-                Controller controller = await faultTolerantController.GetOrCreateAsync(_timeout)
-                    .ConfigureAwait(false);
-
+                Controller controller = await GetController(_timeout).ConfigureAwait(false);
                 await controller.DischargeAsync(AmqpTransactionId, fail: false).ConfigureAwait(false);
                 singlePhaseEnlistment.Committed();
                 ServiceBusEventSource.Log.TransactionDischarged(
@@ -100,10 +115,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         {
             try
             {
-                FaultTolerantAmqpObject<Controller> faultTolerantController = _connectionScope.TransactionController;
-                Controller controller = await faultTolerantController.GetOrCreateAsync(_timeout)
-                    .ConfigureAwait(false);
-
+                Controller controller = await GetController(_timeout).ConfigureAwait(false);
                 await controller.DischargeAsync(AmqpTransactionId, fail: true).ConfigureAwait(false);
                 singlePhaseEnlistment.Aborted();
                 ServiceBusEventSource.Log.TransactionDischarged(_transactionId, AmqpTransactionId, true);

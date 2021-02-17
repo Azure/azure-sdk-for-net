@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.MixedReality.RemoteRendering
 {
-    /// <summary> Size of the server used for the rendering session. Remote Rendering with Standard size server has a maximum scene size of 20 million polygons. Remote Rendering with Premium size does not enforce a hard maximum, but performance may be degraded if your content exceeds the rendering capabilities of the service. </summary>
+    /// <summary> The size of the server used for the rendering session. The size impacts the number of polygons the server can render. Refer to https://docs.microsoft.com/azure/remote-rendering/reference/vm-sizes for details. </summary>
     public readonly partial struct RenderingServerSize : IEquatable<RenderingServerSize>
     {
         private readonly string _value;
@@ -25,9 +25,9 @@ namespace Azure.MixedReality.RemoteRendering
         private const string StandardValue = "Standard";
         private const string PremiumValue = "Premium";
 
-        /// <summary> Standard. </summary>
+        /// <summary> Standard rendering session size. </summary>
         public static RenderingServerSize Standard { get; } = new RenderingServerSize(StandardValue);
-        /// <summary> Premium. </summary>
+        /// <summary> Premium rendering session size. </summary>
         public static RenderingServerSize Premium { get; } = new RenderingServerSize(PremiumValue);
         /// <summary> Determines if two <see cref="RenderingServerSize"/> values are the same. </summary>
         public static bool operator ==(RenderingServerSize left, RenderingServerSize right) => left.Equals(right);

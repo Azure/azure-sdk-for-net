@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
     /// A Azure Cosmos DB restorable database account.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class RestorableDatabaseAccountGetResult : ARMResourceProperties
+    public partial class RestorableDatabaseAccountGetResult
     {
         /// <summary>
         /// Initializes a new instance of the
@@ -36,12 +36,6 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// Initializes a new instance of the
         /// RestorableDatabaseAccountGetResult class.
         /// </summary>
-        /// <param name="id">The unique resource identifier of the ARM
-        /// resource.</param>
-        /// <param name="name">The name of the ARM resource.</param>
-        /// <param name="type">The type of Azure resource.</param>
-        /// <param name="location">The location of the resource group to which
-        /// the resource belongs.</param>
         /// <param name="accountName">The name of the global database
         /// account</param>
         /// <param name="creationTime">The creation time of the restorable
@@ -53,14 +47,23 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// 'Cassandra', 'Table', 'Sql', 'GremlinV2'</param>
         /// <param name="restorableLocations">List of regions where the of the
         /// database account can be restored from.</param>
-        public RestorableDatabaseAccountGetResult(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ManagedServiceIdentity identity = default(ManagedServiceIdentity), string accountName = default(string), System.DateTime? creationTime = default(System.DateTime?), System.DateTime? deletionTime = default(System.DateTime?), string apiType = default(string), IList<RestorableLocationResource> restorableLocations = default(IList<RestorableLocationResource>))
-            : base(id, name, type, location, tags, identity)
+        /// <param name="id">The unique resource identifier of the ARM
+        /// resource.</param>
+        /// <param name="name">The name of the ARM resource.</param>
+        /// <param name="type">The type of Azure resource.</param>
+        /// <param name="location">The location of the resource group to which
+        /// the resource belongs.</param>
+        public RestorableDatabaseAccountGetResult(string accountName = default(string), System.DateTime? creationTime = default(System.DateTime?), System.DateTime? deletionTime = default(System.DateTime?), string apiType = default(string), IList<RestorableLocationResource> restorableLocations = default(IList<RestorableLocationResource>), string id = default(string), string name = default(string), string type = default(string), string location = default(string))
         {
             AccountName = accountName;
             CreationTime = creationTime;
             DeletionTime = deletionTime;
             ApiType = apiType;
             RestorableLocations = restorableLocations;
+            Id = id;
+            Name = name;
+            Type = type;
+            Location = location;
             CustomInit();
         }
 
@@ -103,6 +106,31 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.restorableLocations")]
         public IList<RestorableLocationResource> RestorableLocations { get; private set; }
+
+        /// <summary>
+        /// Gets the unique resource identifier of the ARM resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; private set; }
+
+        /// <summary>
+        /// Gets the name of the ARM resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; private set; }
+
+        /// <summary>
+        /// Gets the type of Azure resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the location of the resource group to which the
+        /// resource belongs.
+        /// </summary>
+        [JsonProperty(PropertyName = "location")]
+        public string Location { get; set; }
 
     }
 }

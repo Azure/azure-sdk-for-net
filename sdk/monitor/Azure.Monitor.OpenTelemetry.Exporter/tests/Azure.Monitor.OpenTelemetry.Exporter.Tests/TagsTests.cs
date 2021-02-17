@@ -34,7 +34,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             };
 
             using var activity = CreateTestActivity();
-            activity.EnumerateTags(ref monitorTags);
+            monitorTags.ForEach(activity.TagObjects);
 
             Assert.Equal(PartBType.Unknown, monitorTags.activityType);
             Assert.Empty(monitorTags.PartBTags);
@@ -51,7 +51,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             };
 
             using var activity = CreateTestActivity(new Dictionary<string, object>());
-            activity.EnumerateTags(ref monitorTags);
+            monitorTags.ForEach(activity.TagObjects);
 
             Assert.Equal(PartBType.Unknown, monitorTags.activityType);
             Assert.Empty(monitorTags.PartBTags);
@@ -75,7 +75,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             };
 
             using var activity = CreateTestActivity(tagObjects);
-            activity.EnumerateTags(ref monitorTags);
+            monitorTags.ForEach(activity.TagObjects);
 
             Assert.Equal(PartBType.Unknown, monitorTags.activityType);
             Assert.Empty(monitorTags.PartBTags);
@@ -96,7 +96,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             IEnumerable<KeyValuePair<string, object>> tagObjects = new Dictionary<string, object> { ["somekey"] = "value" }; ;
             using var activity = CreateTestActivity(tagObjects);
-            activity.EnumerateTags(ref monitorTags);
+            monitorTags.ForEach(activity.TagObjects);
 
             Assert.Equal(PartBType.Unknown, monitorTags.activityType);
             Assert.Empty(monitorTags.PartBTags);
@@ -122,7 +122,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             };
 
             using var activity = CreateTestActivity(tagObjects);
-            activity.EnumerateTags(ref monitorTags);
+            monitorTags.ForEach(activity.TagObjects);
 
             Assert.Equal(PartBType.Http, monitorTags.activityType);
             Assert.Equal(4, monitorTags.PartBTags.Length);
@@ -152,7 +152,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             };
 
             using var activity = CreateTestActivity(tagObjects);
-            activity.EnumerateTags(ref monitorTags);
+            monitorTags.ForEach(activity.TagObjects);
 
             Assert.Equal(PartBType.Http, monitorTags.activityType);
             Assert.Equal(3, monitorTags.PartBTags.Length);
@@ -180,7 +180,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             };
 
             using var activity = CreateTestActivity(tagObjects);
-            activity.EnumerateTags(ref monitorTags);
+            monitorTags.ForEach(activity.TagObjects);
 
             Assert.Equal(PartBType.Unknown, monitorTags.activityType);
             Assert.Empty(monitorTags.PartBTags);
@@ -204,7 +204,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             };
 
             using var activity = CreateTestActivity(tagObjects);
-            activity.EnumerateTags(ref monitorTags);
+            monitorTags.ForEach(activity.TagObjects);
 
             Assert.Equal(PartBType.Unknown, monitorTags.activityType);
             Assert.Empty(monitorTags.PartBTags);
@@ -228,7 +228,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             };
 
             using var activity = CreateTestActivity(tagObjects);
-            activity.EnumerateTags(ref monitorTags);
+            monitorTags.ForEach(activity.TagObjects);
 
             Assert.Equal(PartBType.Unknown, monitorTags.activityType);
             Assert.Empty(monitorTags.PartBTags);
@@ -252,7 +252,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             };
 
             using var activity = CreateTestActivity(tagObjects);
-            activity.EnumerateTags(ref monitorTags);
+            monitorTags.ForEach(activity.TagObjects);
 
             Assert.Equal(PartBType.Unknown, monitorTags.activityType);
             Assert.Empty(monitorTags.PartBTags);
@@ -276,7 +276,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             };
 
             using var activity = CreateTestActivity(tagObjects);
-            activity.EnumerateTags(ref monitorTags);
+            monitorTags.ForEach(activity.TagObjects);
 
             Assert.Equal(PartBType.Unknown, monitorTags.activityType);
             Assert.Empty(monitorTags.PartBTags);
@@ -305,7 +305,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             };
 
             using var activity = CreateTestActivity(tagObjects);
-            activity.EnumerateTags(ref monitorTags);
+            monitorTags.ForEach(activity.TagObjects);
 
             Assert.Equal(PartBType.Unknown, monitorTags.activityType);
             Assert.Empty(monitorTags.PartBTags);
