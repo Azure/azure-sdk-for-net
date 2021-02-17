@@ -3,7 +3,8 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.ServiceBus;
+using System.Threading;
+using Azure.Messaging.ServiceBus;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Azure.WebJobs.ServiceBus.Config;
 using Microsoft.Extensions.Logging;
@@ -29,7 +30,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
         public void Constructor_SetsExpectedDefaults()
         {
             ServiceBusOptions config = new ServiceBusOptions();
-            Assert.AreEqual(16 * Utility.GetProcessorCount(), config.MessageHandlerOptions.MaxConcurrentCalls);
+            Assert.AreEqual(16 * Utility.GetProcessorCount(), config.MaxConcurrentCalls);
             Assert.AreEqual(0, config.PrefetchCount);
         }
 
@@ -45,12 +46,12 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
         [Test]
         public void LogExceptionReceivedEvent_NonTransientEvent_LoggedAsError()
         {
-            var ex = new ServiceBusException(false);
+            var ex = new ServiceBusException(isTransient: false, message: "message");
             Assert.False(ex.IsTransient);
-            ExceptionReceivedEventArgs e = new ExceptionReceivedEventArgs(ex, "TestAction", "TestEndpoint", "TestEntity", "TestClient");
+            ProcessErrorEventArgs e = new ProcessErrorEventArgs(ex, ServiceBusErrorSource.Abandon, "TestEndpoint", "TestEntity", CancellationToken.None);
             ServiceBusExtensionConfigProvider.LogExceptionReceivedEvent(e, _loggerFactory);
 
-            var expectedMessage = $"Message processing error (Action=TestAction, ClientId=TestClient, EntityPath=TestEntity, Endpoint=TestEndpoint)";
+            var expectedMessage = $"Message processing error (Action=Abandon, EntityPath=TestEntity, Endpoint=TestEndpoint)";
             var logMessage = _loggerProvider.GetAllLogMessages().Single();
             Assert.AreEqual(LogLevel.Error, logMessage.Level);
             Assert.AreSame(ex, logMessage.Exception);
@@ -60,12 +61,12 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
         [Test]
         public void LogExceptionReceivedEvent_TransientEvent_LoggedAsInformation()
         {
-            var ex = new ServiceBusException(true);
+            var ex = new ServiceBusException(message: "message", isTransient: true);
             Assert.True(ex.IsTransient);
-            ExceptionReceivedEventArgs e = new ExceptionReceivedEventArgs(ex, "TestAction", "TestEndpoint", "TestEntity", "TestClient");
+            ProcessErrorEventArgs e = new ProcessErrorEventArgs(ex, ServiceBusErrorSource.Receive, "TestEndpoint", "TestEntity", CancellationToken.None);
             ServiceBusExtensionConfigProvider.LogExceptionReceivedEvent(e, _loggerFactory);
 
-            var expectedMessage = $"Message processing error (Action=TestAction, ClientId=TestClient, EntityPath=TestEntity, Endpoint=TestEndpoint)";
+            var expectedMessage = $"Message processing error (Action=Receive, EntityPath=TestEntity, Endpoint=TestEndpoint)";
             var logMessage = _loggerProvider.GetAllLogMessages().Single();
             Assert.AreEqual(LogLevel.Information, logMessage.Level);
             Assert.AreSame(ex, logMessage.Exception);
@@ -76,10 +77,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
         public void LogExceptionReceivedEvent_NonMessagingException_LoggedAsError()
         {
             var ex = new MissingMethodException("What method??");
-            ExceptionReceivedEventArgs e = new ExceptionReceivedEventArgs(ex, "TestAction", "TestEndpoint", "TestEntity", "TestClient");
+            ProcessErrorEventArgs e = new ProcessErrorEventArgs(ex, ServiceBusErrorSource.Complete, "TestEndpoint", "TestEntity", CancellationToken.None);
             ServiceBusExtensionConfigProvider.LogExceptionReceivedEvent(e, _loggerFactory);
 
-            var expectedMessage = $"Message processing error (Action=TestAction, ClientId=TestClient, EntityPath=TestEntity, Endpoint=TestEndpoint)";
+            var expectedMessage = $"Message processing error (Action=Complete, EntityPath=TestEntity, Endpoint=TestEndpoint)";
             var logMessage = _loggerProvider.GetAllLogMessages().Single();
             Assert.AreEqual(LogLevel.Error, logMessage.Level);
             Assert.AreSame(ex, logMessage.Exception);

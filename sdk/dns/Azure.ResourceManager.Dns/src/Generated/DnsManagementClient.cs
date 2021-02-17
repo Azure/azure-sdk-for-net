@@ -13,7 +13,7 @@ using Azure.ResourceManager.Dns;
 namespace Azure.ResourceManager.Dns
 {
     /// <summary> Dns service management client. </summary>
-    public class DnsManagementClient
+    public partial class DnsManagementClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;

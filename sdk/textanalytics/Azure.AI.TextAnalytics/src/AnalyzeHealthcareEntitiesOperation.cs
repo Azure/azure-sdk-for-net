@@ -12,7 +12,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.AI.TextAnalytics
 {
-    /// <summary> The AnalyzeHealthcareEntitiesOperation class for LRO. </summary>
+    /// <summary> Pageable operation class for analyzing multiple healthcare documents using long running operation. </summary>
     public class AnalyzeHealthcareEntitiesOperation : PageableOperation<AnalyzeHealthcareEntitiesResultCollection>
     {
         /// <summary>
@@ -42,7 +42,7 @@ namespace Azure.AI.TextAnalytics
         public TextAnalyticsOperationStatus Status => _status;
 
         /// <summary>
-        /// Gets the final result of the long-running operation in a synchronous way.
+        /// Gets the final result of the long-running operation asynchronously.
         /// </summary>
         /// <remarks>
         /// This property can be accessed only after the operation completes successfully (HasValue is true).
@@ -59,25 +59,50 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         public override bool HasValue => _firstPage != null;
 
-        /// <summary>Provides communication with the Text Analytics Azure Cognitive Service through its REST API.</summary>
+        /// <summary>
+        /// Provides communication with the Text Analytics Azure Cognitive Service through its REST API.
+        /// </summary>
         private readonly TextAnalyticsRestClient _serviceClient;
 
-        /// <summary>Provides tools for exception creation in case of failure.</summary>
+        /// <summary>
+        /// Provides tools for exception creation in case of failure.
+        /// </summary>
         private readonly ClientDiagnostics _diagnostics;
 
-        /// <summary><c>true</c> if the long-running operation has completed. Otherwise, <c>false</c>.</summary>
+        /// <summary>
+        /// <c>true</c> if the long-running operation has completed. Otherwise, <c>false</c>.
+        /// </summary>
         private bool _hasCompleted;
 
+        /// <summary>
+        /// Represents the status of the long-running operation.
+        /// </summary>
         private TextAnalyticsOperationStatus _status;
 
+        /// <summary>
+        /// If the operation has an exception, this property saves its information.
+        /// </summary>
         private RequestFailedException _requestFailedException;
 
+        /// <summary>
+        /// Represents the HTTP response from the service.
+        /// </summary>
         private Response _response;
 
+        /// <summary>
+        /// Provides the results for the first page.
+        /// </summary>
         private Page<AnalyzeHealthcareEntitiesResultCollection> _firstPage;
 
+        /// <summary>
+        /// Represents the desire of the user to request statistics.
+        /// This is used in every GET request.
+        /// </summary>
         private readonly bool? _showStats;
 
+        /// <summary>
+        /// Provides the api version to use when doing pagination.
+        /// </summary>
         private readonly string _apiVersion;
 
         /// <summary>
@@ -294,17 +319,14 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Gets the final result of the long-running operation in an asynchronous way.
+        /// Gets the final result of the long-running operation asynchronously.
         /// </summary>
         /// <remarks>
         /// Operation must complete successfully (HasValue is true) for it to provide values.
         /// </remarks>
         public override AsyncPageable<AnalyzeHealthcareEntitiesResultCollection> GetValuesAsync()
         {
-            if (!HasCompleted)
-                throw new InvalidOperationException("The operation has not completed yet.");
-            if (HasCompleted && !HasValue)
-                throw _requestFailedException;
+            ValidateOperationStatus();
 
             async Task<Page<AnalyzeHealthcareEntitiesResultCollection>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
@@ -326,17 +348,14 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Gets the final result of the long-running operation in an asynchronous way.
+        /// Gets the final result of the long-running operation in synchronously.
         /// </summary>
         /// <remarks>
         /// Operation must complete successfully (HasValue is true) for it to provide values.
         /// </remarks>
         public override Pageable<AnalyzeHealthcareEntitiesResultCollection> GetValues()
         {
-            if (!HasCompleted)
-                throw new InvalidOperationException("The operation has not completed yet.");
-            if (HasCompleted && !HasValue)
-                throw _requestFailedException;
+            ValidateOperationStatus();
 
             Page<AnalyzeHealthcareEntitiesResultCollection> NextPageFunc(string nextLink, int? pageSizeHint)
             {
@@ -355,6 +374,14 @@ namespace Azure.AI.TextAnalytics
             }
 
             return PageableHelpers.CreateEnumerable(_ => _firstPage, NextPageFunc);
+        }
+
+        private void ValidateOperationStatus()
+        {
+            if (!HasCompleted)
+                throw new InvalidOperationException("The operation has not completed yet.");
+            if (!HasValue)
+                throw _requestFailedException;
         }
     }
 }

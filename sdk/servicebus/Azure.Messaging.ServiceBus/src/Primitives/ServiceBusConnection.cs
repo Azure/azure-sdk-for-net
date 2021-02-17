@@ -213,8 +213,9 @@ namespace Azure.Messaging.ServiceBus
         internal virtual TransportSender CreateTransportSender(
             string entityPath,
             ServiceBusRetryPolicy retryPolicy,
-            string identifier) =>
-            _innerClient.CreateSender(entityPath, retryPolicy, identifier);
+            string identifier,
+            string transactionGroup) =>
+            _innerClient.CreateSender(entityPath, retryPolicy, identifier, transactionGroup);
 
         internal virtual TransportReceiver CreateTransportReceiver(
             string entityPath,
@@ -222,8 +223,9 @@ namespace Azure.Messaging.ServiceBus
             ServiceBusReceiveMode receiveMode,
             uint prefetchCount,
             string identifier,
-            string sessionId = default,
-            bool isSessionReceiver = default) =>
+            string sessionId,
+            bool isSessionReceiver,
+            string transactionGroup) =>
                 _innerClient.CreateReceiver(
                     entityPath,
                     retryPolicy,
@@ -231,7 +233,8 @@ namespace Azure.Messaging.ServiceBus
                     prefetchCount,
                     identifier,
                     sessionId,
-                    isSessionReceiver);
+                    isSessionReceiver,
+                    transactionGroup);
 
         internal virtual TransportRuleManager CreateTransportRuleManager(
             string subscriptionPath,

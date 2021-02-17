@@ -9,7 +9,7 @@ namespace Azure.AI.TextAnalytics
     /// PiiTaskParametersDomain.
     /// </summary>
     [CodeGenModel("PiiTaskParametersDomain")]
-    public readonly partial struct PiiTaskParametersDomain
+    internal partial struct PiiTaskParametersDomain
     {
     }
 }

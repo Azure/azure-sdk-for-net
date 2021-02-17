@@ -1,6 +1,10 @@
 # Release History
 
-## 12.9.0-beta.1 (Unreleased)
+## 12.9.0-beta.2 (Unreleased)
+
+
+## 12.9.0-beta.1 (2021-02-09)
+- Added support for service version 2020-06-12.
 - Fixed bug where BlobBaseClient.CanGenerateSasUri, BlobContainerClient.CanGenerateSasUri, BlobServiceClient.CanGenerateSasUri was not mockable
 
 ## 12.8.0 (2021-01-12)

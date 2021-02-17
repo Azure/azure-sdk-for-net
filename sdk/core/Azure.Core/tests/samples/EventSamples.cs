@@ -25,11 +25,11 @@ namespace Azure.Core.Samples
             public async Task SnoozeAsync(CancellationToken cancellationToken = default) =>
                 await SnoozeInternal(false, cancellationToken).ConfigureAwait(false);
 
-            protected virtual async Task SnoozeInternal(bool runSynchronously, CancellationToken cancellationToken)
+            protected virtual async Task SnoozeInternal(bool isRunningSynchronously, CancellationToken cancellationToken)
             {
                 // Why does snoozing an alarm always wait 9 minutes?
                 TimeSpan delay = TimeSpan.FromMilliseconds(900);
-                if (runSynchronously)
+                if (isRunningSynchronously)
                 {
                     cancellationToken.WaitHandle.WaitOne(delay);
                 }
@@ -37,7 +37,7 @@ namespace Azure.Core.Samples
                 {
                     await Task.Delay(delay, cancellationToken).ConfigureAwait(false);
                 }
-                SyncAsyncEventArgs e = new SyncAsyncEventArgs(runSynchronously, cancellationToken);
+                SyncAsyncEventArgs e = new SyncAsyncEventArgs(isRunningSynchronously, cancellationToken);
                 await Ring.RaiseAsync(e, nameof(AlarmClient), nameof(Ring), _clientDiagnostics).ConfigureAwait(false);
             }
         }
@@ -77,7 +77,7 @@ namespace Azure.Core.Samples
             var client = new AlarmClient();
             client.Ring += async (SyncAsyncEventArgs e) =>
             {
-                if (e.RunSynchronously)
+                if (e.IsRunningSynchronously)
                 {
                     Console.WriteLine("Wake up!");
                 }

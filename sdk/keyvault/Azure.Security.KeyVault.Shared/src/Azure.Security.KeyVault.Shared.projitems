@@ -20,6 +20,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" Link="Shared\HashCodeBuilder.cs" />
+    <Compile Include="$(AzureCoreSharedSources)AuthorizationChallengeParser.cs" Link="Shared\AuthorizationChallengeParser.cs" />
     <Compile Include="$(AzureCoreSharedSources)Base64Url.cs" Link="Shared\Base64Url.cs" />
+    <Compile Include="$(AzureCoreSharedSources)BearerTokenChallengeAuthenticationPolicy.cs" Link="Shared\BearerTokenChallengeAuthenticationPolicy.cs" />
   </ItemGroup>
 </Project>

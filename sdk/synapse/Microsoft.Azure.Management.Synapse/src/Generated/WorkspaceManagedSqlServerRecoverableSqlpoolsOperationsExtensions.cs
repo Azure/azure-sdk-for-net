@@ -17,9 +17,9 @@ namespace Microsoft.Azure.Management.Synapse
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for WorkspaceManagedSqlServerRecoverableSqlpoolsOperations.
+    /// Extension methods for WorkspaceManagedSqlServerRecoverableSqlPoolsOperations.
     /// </summary>
-    public static partial class WorkspaceManagedSqlServerRecoverableSqlpoolsOperationsExtensions
+    public static partial class WorkspaceManagedSqlServerRecoverableSqlPoolsOperationsExtensions
     {
             /// <summary>
             /// Get list of recoverable sql pools for the server.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// <param name='workspaceName'>
             /// The name of the workspace
             /// </param>
-            public static IPage<RecoverableSqlPool> List(this IWorkspaceManagedSqlServerRecoverableSqlpoolsOperations operations, string resourceGroupName, string workspaceName)
+            public static IPage<RecoverableSqlPool> List(this IWorkspaceManagedSqlServerRecoverableSqlPoolsOperations operations, string resourceGroupName, string workspaceName)
             {
                 return operations.ListAsync(resourceGroupName, workspaceName).GetAwaiter().GetResult();
             }
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<RecoverableSqlPool>> ListAsync(this IWorkspaceManagedSqlServerRecoverableSqlpoolsOperations operations, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<RecoverableSqlPool>> ListAsync(this IWorkspaceManagedSqlServerRecoverableSqlPoolsOperations operations, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, workspaceName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -82,12 +82,12 @@ namespace Microsoft.Azure.Management.Synapse
             /// <param name='workspaceName'>
             /// The name of the workspace
             /// </param>
-            /// <param name='sqlComputeName'>
-            /// The name of the sql compute
+            /// <param name='sqlPoolName'>
+            /// The name of the sql pool
             /// </param>
-            public static RecoverableSqlPool Get(this IWorkspaceManagedSqlServerRecoverableSqlpoolsOperations operations, string resourceGroupName, string workspaceName, string sqlComputeName)
+            public static RecoverableSqlPool Get(this IWorkspaceManagedSqlServerRecoverableSqlPoolsOperations operations, string resourceGroupName, string workspaceName, string sqlPoolName)
             {
-                return operations.GetAsync(resourceGroupName, workspaceName, sqlComputeName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, workspaceName, sqlPoolName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -105,15 +105,15 @@ namespace Microsoft.Azure.Management.Synapse
             /// <param name='workspaceName'>
             /// The name of the workspace
             /// </param>
-            /// <param name='sqlComputeName'>
-            /// The name of the sql compute
+            /// <param name='sqlPoolName'>
+            /// The name of the sql pool
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RecoverableSqlPool> GetAsync(this IWorkspaceManagedSqlServerRecoverableSqlpoolsOperations operations, string resourceGroupName, string workspaceName, string sqlComputeName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RecoverableSqlPool> GetAsync(this IWorkspaceManagedSqlServerRecoverableSqlPoolsOperations operations, string resourceGroupName, string workspaceName, string sqlPoolName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, workspaceName, sqlComputeName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, workspaceName, sqlPoolName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -131,7 +131,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<RecoverableSqlPool> ListNext(this IWorkspaceManagedSqlServerRecoverableSqlpoolsOperations operations, string nextPageLink)
+            public static IPage<RecoverableSqlPool> ListNext(this IWorkspaceManagedSqlServerRecoverableSqlPoolsOperations operations, string nextPageLink)
             {
                 return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
@@ -151,7 +151,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<RecoverableSqlPool>> ListNextAsync(this IWorkspaceManagedSqlServerRecoverableSqlpoolsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<RecoverableSqlPool>> ListNextAsync(this IWorkspaceManagedSqlServerRecoverableSqlPoolsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
