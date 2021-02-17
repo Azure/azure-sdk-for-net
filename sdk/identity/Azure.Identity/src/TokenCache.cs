@@ -19,9 +19,10 @@ namespace Azure.Identity
     public class TokenCache
 #pragma warning restore CA1001 // Types that own disposable fields should be disposable
     {
-        private readonly SemaphoreSlim _lock = new SemaphoreSlim(1,1);
+        private readonly SemaphoreSlim _lock = new SemaphoreSlim(1, 1);
         private DateTimeOffset _lastUpdated;
         private ConditionalWeakTable<object, CacheTimestamp> _cacheAccessMap;
+        internal Func<IPublicClientApplication> _publicClientApplicationFactory;
 
         /// <summary>
         /// The internal state of the cache.
@@ -37,9 +38,10 @@ namespace Azure.Identity
                 Update();
             }
 
-            public void Update()
+            public DateTimeOffset Update()
             {
                 _timestamp = DateTimeOffset.UtcNow;
+                return _timestamp;
             }
 
             public DateTimeOffset Value { get { return _timestamp; } }
@@ -53,11 +55,12 @@ namespace Azure.Identity
         {
         }
 
-        internal TokenCache(byte[] data)
+        internal TokenCache(byte[] data, Func<IPublicClientApplication> publicApplicationFactory = null)
         {
             Data = data;
             _lastUpdated = DateTimeOffset.UtcNow;
             _cacheAccessMap = new ConditionalWeakTable<object, CacheTimestamp>();
+            _publicClientApplicationFactory = publicApplicationFactory ?? new (() => PublicClientApplicationBuilder.Create(Guid.NewGuid().ToString()).Build());
         }
 
         /// <summary>
@@ -132,9 +135,7 @@ namespace Azure.Identity
                     Data = tokenCache.SerializeMsalV3();
                 }
 
-                _cacheAccessMap.GetOrCreateValue(tokenCache).Update();
-
-                _lastUpdated = DateTime.UtcNow;
+                _lastUpdated = _cacheAccessMap.GetOrCreateValue(tokenCache).Update();
             }
             finally
             {
@@ -150,11 +151,11 @@ namespace Azure.Identity
             }
         }
 
-        private static async Task<byte[]> MergeCacheData(byte[] cacheA, byte[] cacheB)
+        private async Task<byte[]> MergeCacheData(byte[] cacheA, byte[] cacheB)
         {
             byte[] merged = null;
 
-            var client = PublicClientApplicationBuilder.Create(Guid.NewGuid().ToString()).Build();
+            IPublicClientApplication client = _publicClientApplicationFactory();
 
             client.UserTokenCache.SetBeforeAccess(args => args.TokenCache.DeserializeMsalV3(cacheA));
 
