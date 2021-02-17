@@ -1649,15 +1649,12 @@ namespace Azure.Storage.Blobs.Specialized
                             cancellationToken: cancellationToken);
                     }
 
-                    // TODO
-                    //// Return an exploding Response on 304
-                    //return response.IsUnavailable() ?
-                    //    response.GetRawResponse().AsNoBodyResponse<PageRangesInfo>() :
-                    //    Response.FromValue(new PageRangesInfo(response.Value), response.GetRawResponse());
-
-                    return Response.FromValue(
-                        response.ToPageRangesInfo(),
-                        response.GetRawResponse());
+                    // Return an exploding Response on 304
+                    return response.IsUnavailable()
+                        ? response.GetRawResponse().AsNoBodyResponse<PageRangesInfo>()
+                        : Response.FromValue(
+                            response.ToPageRangesInfo(),
+                            response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {

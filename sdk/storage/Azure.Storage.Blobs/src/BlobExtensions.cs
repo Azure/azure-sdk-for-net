@@ -340,8 +340,7 @@ namespace Azure.Storage.Blobs
                 VersionId = response.Headers.VersionId,
                 EncryptionKeySha256 = response.Headers.EncryptionKeySha256,
                 EncryptionScope = response.Headers.EncryptionScope,
-                // TODO
-                //BlobSequenceNumber = response.Headers.Blob
+                // Create Page Blob does not return BlobSequenceNumber.
             };
         }
         #endregion
@@ -402,8 +401,8 @@ namespace Azure.Storage.Blobs
             {
                 ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                // TODO BlobSequenceNumber.  Don't think it applies to Append Blobs
-                // TODO VersionId
+                // BlobSequenceNumber does not apply to Append Blobs.
+                // Seal Append Blob does not return VersionId
             };
         }
         #endregion
@@ -442,8 +441,8 @@ namespace Azure.Storage.Blobs
                 ContentHash = response.Headers.ContentMD5,
                 ContentCrc64 = response.Headers.XMsContentCrc64,
                 BlobSequenceNumber = response.Headers.BlobSequenceNumber.GetValueOrDefault(),
-                // TODO EncryptionKeySha256 = response.Headers.EncryptionKeySha256,
-                // TODO EncryptionScope = response.Headers.EncryptionScope
+                // Clear Page Blob does not return EncryptionKeySha256.
+                // Clear Page Blob does not return EncryptionScope.
             };
         }
 
@@ -596,7 +595,7 @@ namespace Azure.Storage.Blobs
                 VersionId = response.Headers.VersionId,
                 EncryptionKeySha256 = response.Headers.EncryptionKeySha256,
                 EncryptionScope = response.Headers.EncryptionScope,
-                // TODO BlobSequenceNumber - I don't think it applies to Block Blobs.
+                // BlobSequenceNumber does not apply to Block Blobs.
             };
         }
 
@@ -690,8 +689,7 @@ namespace Azure.Storage.Blobs
             {
                 ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                // TODO
-                //BlobSequenceNumber = response.Headers
+                // Set Metadata does not return BlobSequenceNumber.
                 VersionId = response.Headers.VersionId
             };
         }
@@ -707,9 +705,8 @@ namespace Azure.Storage.Blobs
             {
                 ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                // TODO
-                //BlobSequenceNumber = response.Headers
-                //VersionId = response.Headers.VersionId
+                // Set HTTP Headers does not return BlobSequenceNumber.
+                // Set HTTP Headers does not returnVersionId.
             };
         }
         #endregion
@@ -818,7 +815,7 @@ namespace Azure.Storage.Blobs
             {
                 ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                // TODO VersionId = response.Headers.VersionId,
+                // Page Blob Copy Incremental does not return VersionId.
                 CopyId = response.Headers.CopyId,
                 CopyStatus = response.Headers.CopyStatus.GetValueOrDefault()
             };
@@ -857,7 +854,6 @@ namespace Azure.Storage.Blobs
                     CopyProgress = response.Headers.CopyProgress,
                     CopySource = response.Headers.CopySource == null ? null : new Uri(response.Headers.CopySource),
                     CopyStatus = response.Headers.CopyStatus.GetValueOrDefault(),
-                    // TODO double check this
                     LeaseDuration = response.Headers.LeaseDuration ?? LeaseDurationType.Infinite,
                     LeaseState = response.Headers.LeaseState.GetValueOrDefault(),
                     AcceptRanges = response.Headers.AcceptRanges,
@@ -871,7 +867,7 @@ namespace Azure.Storage.Blobs
                     IsSealed = response.Headers.IsSealed.GetValueOrDefault(),
                     ObjectReplicationSourceProperties
                         = response.Headers.ObjectReplicationRules?.Count > 0
-                        ? BlobExtensions.ParseObjectReplicationIds(response.Headers.ObjectReplicationRules)
+                        ? ParseObjectReplicationIds(response.Headers.ObjectReplicationRules)
                         : null,
                     ObjectReplicationDestinationPolicyId = response.Headers.ObjectReplicationPolicyId,
                     LastAccessed = response.Headers.LastAccessed.GetValueOrDefault()
@@ -910,7 +906,6 @@ namespace Azure.Storage.Blobs
                     CopyProgress = response.Headers.CopyProgress,
                     CopySource = response.Headers.CopySource == null ? null : new Uri(response.Headers.CopySource),
                     CopyStatus = response.Headers.CopyStatus.GetValueOrDefault(),
-                    // TODO double check this
                     LeaseDuration = response.Headers.LeaseDuration ?? LeaseDurationType.Infinite,
                     LeaseState = response.Headers.LeaseState.GetValueOrDefault(),
                     AcceptRanges = response.Headers.AcceptRanges,
@@ -1168,7 +1163,6 @@ namespace Azure.Storage.Blobs
                 IsSealed = blobPropertiesInternal.IsSealed,
                 RehydratePriority = blobPropertiesInternal.RehydratePriority,
                 LastAccessedOn = blobPropertiesInternal.LastAccessedOn,
-                // TODO fix this in autorest.md
                 ETag = new ETag(blobPropertiesInternal.Etag),
                 CreatedOn = blobPropertiesInternal.CreationTime,
                 CopyCompletedOn = blobPropertiesInternal.CopyCompletionTime,
@@ -1253,9 +1247,8 @@ namespace Azure.Storage.Blobs
                 HasLegalHold = response.Headers.HasLegalHold,
                 DefaultEncryptionScope = response.Headers.DefaultEncryptionScope,
                 PreventEncryptionScopeOverride = response.Headers.DenyEncryptionScopeOverride,
-                // TODO
-                //DeletedOn =
-                //RemainingRetentionDays =
+                // Container Get Properties does not return DeletedOn.
+                // Container Get Properties does not return RemainingRetentionDays.
                 ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
                 Metadata = response.Headers.Metadata
             };
