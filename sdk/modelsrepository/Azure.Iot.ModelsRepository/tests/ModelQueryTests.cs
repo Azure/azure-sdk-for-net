@@ -163,13 +163,13 @@ namespace Azure.Iot.ModelsRepository.Tests
         }
 
         [Test]
-        public async Task ListToDictAsync()
+        public void ListToDict()
         {
             string testRepoPath = TestHelpers.TestLocalModelRepository;
             string expandedContent = File.ReadAllText(
                 $"{testRepoPath}/dtmi/com/example/temperaturecontroller-1.expanded.json", Encoding.UTF8);
             ModelQuery query = new ModelQuery(expandedContent);
-            Dictionary<string, string> transformResult = await query.ListToDictAsync();
+            Dictionary<string, string> transformResult = query.ListToDict();
 
             // Assert KPI's for TemperatureController;1.
             // Ensure transform of expanded content to dictionary is what we'd expect.

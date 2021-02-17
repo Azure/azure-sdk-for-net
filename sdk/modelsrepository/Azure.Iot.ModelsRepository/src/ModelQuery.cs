@@ -4,7 +4,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace Azure.Iot.ModelsRepository
 {
@@ -29,16 +28,14 @@ namespace Azure.Iot.ModelsRepository
 
         public string GetId()
         {
-            using (JsonDocument document = JsonDocument.Parse(_content, _parseOptions))
-            {
-                JsonElement _root = document.RootElement;
+            using JsonDocument document = JsonDocument.Parse(_content, _parseOptions);
+            JsonElement _root = document.RootElement;
 
-                if (_root.ValueKind == JsonValueKind.Object && _root.TryGetProperty("@id", out JsonElement id))
+            if (_root.ValueKind == JsonValueKind.Object && _root.TryGetProperty("@id", out JsonElement id))
+            {
+                if (id.ValueKind == JsonValueKind.String)
                 {
-                    if (id.ValueKind == JsonValueKind.String)
-                    {
-                        return id.GetString();
-                    }
+                    return id.GetString();
                 }
             }
 
@@ -49,33 +46,31 @@ namespace Azure.Iot.ModelsRepository
         {
             List<string> dependencies = new List<string>();
 
-            using (JsonDocument document = JsonDocument.Parse(_content, _parseOptions))
-            {
-                JsonElement _root = document.RootElement;
+            using JsonDocument document = JsonDocument.Parse(_content, _parseOptions);
+            JsonElement _root = document.RootElement;
 
-                if (_root.ValueKind == JsonValueKind.Object && _root.TryGetProperty("extends", out JsonElement extends))
+            if (_root.ValueKind == JsonValueKind.Object && _root.TryGetProperty("extends", out JsonElement extends))
+            {
+                if (extends.ValueKind == JsonValueKind.Array)
                 {
-                    if (extends.ValueKind == JsonValueKind.Array)
+                    foreach (JsonElement extendElement in extends.EnumerateArray())
                     {
-                        foreach (JsonElement extendElement in extends.EnumerateArray())
+                        if (extendElement.ValueKind == JsonValueKind.String)
                         {
-                            if (extendElement.ValueKind == JsonValueKind.String)
-                            {
-                                dependencies.Add(extendElement.GetString());
-                            }
-                            else if (extendElement.ValueKind == JsonValueKind.Object)
-                            {
-                                // extends can have multiple levels and can contain components.
-                                // TODO: Support object ctor - inefficient serialize.
-                                ModelMetadata nested_interface = new ModelQuery(JsonSerializer.Serialize(extendElement)).GetMetadata();
-                                dependencies.AddRange(nested_interface.Dependencies);
-                            }
+                            dependencies.Add(extendElement.GetString());
+                        }
+                        else if (extendElement.ValueKind == JsonValueKind.Object)
+                        {
+                            // extends can have multiple levels and can contain components.
+                            // TODO: Support object ctor - inefficient serialize.
+                            ModelMetadata nested_interface = new ModelQuery(JsonSerializer.Serialize(extendElement)).GetMetadata();
+                            dependencies.AddRange(nested_interface.Dependencies);
                         }
                     }
-                    else if (extends.ValueKind == JsonValueKind.String)
-                    {
-                        dependencies.Add(extends.GetString());
-                    }
+                }
+                else if (extends.ValueKind == JsonValueKind.String)
+                {
+                    dependencies.Add(extends.GetString());
                 }
             }
 
@@ -87,44 +82,42 @@ namespace Azure.Iot.ModelsRepository
         {
             List<string> componentSchemas = new List<string>();
 
-            using (JsonDocument document = JsonDocument.Parse(_content, _parseOptions))
-            {
-                JsonElement _root = document.RootElement;
+            using JsonDocument document = JsonDocument.Parse(_content, _parseOptions);
+            JsonElement _root = document.RootElement;
 
-                if (_root.ValueKind == JsonValueKind.Object && _root.TryGetProperty("contents", out JsonElement contents))
+            if (_root.ValueKind == JsonValueKind.Object && _root.TryGetProperty("contents", out JsonElement contents))
+            {
+                if (contents.ValueKind == JsonValueKind.Array)
                 {
-                    if (contents.ValueKind == JsonValueKind.Array)
+                    foreach (JsonElement element in contents.EnumerateArray())
                     {
-                        foreach (JsonElement element in contents.EnumerateArray())
+                        if (element.TryGetProperty("@type", out JsonElement type))
                         {
-                            if (element.TryGetProperty("@type", out JsonElement type))
+                            if (type.ValueKind == JsonValueKind.String && type.GetString() == "Component")
                             {
-                                if (type.ValueKind == JsonValueKind.String && type.GetString() == "Component")
+                                if (element.TryGetProperty("schema", out JsonElement schema))
                                 {
-                                    if (element.TryGetProperty("schema", out JsonElement schema))
+                                    if (schema.ValueKind == JsonValueKind.String)
                                     {
-                                        if (schema.ValueKind == JsonValueKind.String)
+                                        componentSchemas.Add(schema.GetString());
+                                    }
+                                    else if (schema.ValueKind == JsonValueKind.Array)
+                                    {
+                                        foreach (JsonElement schemaElement in schema.EnumerateArray())
                                         {
-                                            componentSchemas.Add(schema.GetString());
-                                        }
-                                        else if (schema.ValueKind == JsonValueKind.Array)
-                                        {
-                                            foreach (JsonElement schemaElement in schema.EnumerateArray())
+                                            if (schemaElement.ValueKind == JsonValueKind.String)
                                             {
-                                                if (schemaElement.ValueKind == JsonValueKind.String)
-                                                {
-                                                    componentSchemas.Add(schemaElement.GetString());
-                                                }
+                                                componentSchemas.Add(schemaElement.GetString());
                                             }
                                         }
-                                        else if (schema.ValueKind == JsonValueKind.Object)
+                                    }
+                                    else if (schema.ValueKind == JsonValueKind.Object)
+                                    {
+                                        if (schema.TryGetProperty("extends", out JsonElement schemaObjExtends))
                                         {
-                                            if (schema.TryGetProperty("extends", out JsonElement schemaObjExtends))
+                                            if (schemaObjExtends.ValueKind == JsonValueKind.String)
                                             {
-                                                if (schemaObjExtends.ValueKind == JsonValueKind.String)
-                                                {
-                                                    componentSchemas.Add(schemaObjExtends.GetString());
-                                                }
+                                                componentSchemas.Add(schemaObjExtends.GetString());
                                             }
                                         }
                                     }
@@ -138,39 +131,43 @@ namespace Azure.Iot.ModelsRepository
             return componentSchemas;
         }
 
-        public async Task<Dictionary<string, string>> ListToDictAsync()
+        public Dictionary<string, string> ListToDict()
         {
             Dictionary<string, string> result = new Dictionary<string, string>();
 
-            using (JsonDocument document = JsonDocument.Parse(_content, _parseOptions))
+            using JsonDocument document = JsonDocument.Parse(_content, _parseOptions);
+            JsonElement _root = document.RootElement;
+
+            if (_root.ValueKind == JsonValueKind.Array)
             {
-                JsonElement _root = document.RootElement;
-
-                if (_root.ValueKind == JsonValueKind.Array)
+                foreach (JsonElement element in _root.EnumerateArray())
                 {
-                    foreach (JsonElement element in _root.EnumerateArray())
+                    if (element.ValueKind == JsonValueKind.Object)
                     {
-                        if (element.ValueKind == JsonValueKind.Object)
-                        {
-                            using (MemoryStream stream = new MemoryStream())
-                            {
-                                await JsonSerializer.SerializeAsync(stream, element).ConfigureAwait(false);
-                                stream.Position = 0;
+                        using MemoryStream stream = WriteJsonElementToStream(element);
 
-                                using (StreamReader streamReader = new StreamReader(stream))
-                                {
-                                    string serialized = await streamReader.ReadToEndAsync().ConfigureAwait(false);
+                        using StreamReader streamReader = new StreamReader(stream);
+                        string serialized = streamReader.ReadToEnd();
 
-                                    string id = new ModelQuery(serialized).GetId();
-                                    result.Add(id, serialized);
-                                }
-                            }
-                        }
+                        string id = new ModelQuery(serialized).GetId();
+                        result.Add(id, serialized);
                     }
                 }
             }
 
             return result;
+        }
+
+        private static MemoryStream WriteJsonElementToStream(JsonElement item)
+        {
+            var memoryStream = new MemoryStream();
+            using var writer = new Utf8JsonWriter(memoryStream);
+
+            item.WriteTo(writer);
+            writer.Flush();
+            memoryStream.Seek(0, SeekOrigin.Begin);
+
+            return memoryStream;
         }
     }
 }

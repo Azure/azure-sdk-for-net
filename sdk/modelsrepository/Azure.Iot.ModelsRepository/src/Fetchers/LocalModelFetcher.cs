@@ -65,7 +65,7 @@ namespace Azure.Iot.ModelsRepository.Fetchers
                     fnfError = string.Format(CultureInfo.CurrentCulture, ServiceStrings.ErrorFetchingModelContent, tryContentPath);
                 }
 
-                throw new RequestFailedException(fnfError, new FileNotFoundException(fnfError));
+                throw new FileNotFoundException(fnfError);
             }
             catch (Exception ex)
             {

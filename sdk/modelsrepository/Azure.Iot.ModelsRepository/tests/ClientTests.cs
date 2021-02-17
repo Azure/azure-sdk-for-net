@@ -18,9 +18,9 @@ namespace Azure.Iot.ModelsRepository.Tests
 
             ResolverClientOptions options = new ResolverClientOptions();
 
-            Assert.AreEqual(new Uri(ResolverClient.DefaultRepository), new ResolverClient().RepositoryUri);
-            Assert.AreEqual($"{ResolverClient.DefaultRepository}/", new ResolverClient().RepositoryUri.AbsoluteUri);
-            Assert.AreEqual(new Uri(ResolverClient.DefaultRepository), new ResolverClient(options).RepositoryUri);
+            Assert.AreEqual(new Uri(ResolverClient.DefaultModelsRepository), new ResolverClient().RepositoryUri);
+            Assert.AreEqual($"{ResolverClient.DefaultModelsRepository}/", new ResolverClient().RepositoryUri.AbsoluteUri);
+            Assert.AreEqual(new Uri(ResolverClient.DefaultModelsRepository), new ResolverClient(options).RepositoryUri);
 
             Assert.AreEqual(remoteUri, new ResolverClient(remoteUri).RepositoryUri);
             Assert.AreEqual(remoteUri, new ResolverClient(remoteUri, options).RepositoryUri);

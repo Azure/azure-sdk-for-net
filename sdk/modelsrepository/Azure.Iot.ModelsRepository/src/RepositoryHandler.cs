@@ -34,40 +34,49 @@ namespace Azure.Iot.ModelsRepository
 
         public async Task<IDictionary<string, string>> ProcessAsync(string dtmi, CancellationToken cancellationToken)
         {
-            return await ProcessAsync(new List<string>() { dtmi }, cancellationToken).ConfigureAwait(false);
+            return await ProcessAsync(new List<string> { dtmi }, true, cancellationToken).ConfigureAwait(false);
         }
 
-        public async Task<IDictionary<string, string>> ProcessAsync(IEnumerable<string> dtmis, CancellationToken cancellationToken)
+        public IDictionary<string, string> Process(string dtmi, CancellationToken cancellationToken)
         {
-            Dictionary<string, string> processedModels = new Dictionary<string, string>();
-            Queue<string> toProcessModels = new Queue<string>();
+            return ProcessAsync(new List<string> { dtmi }, false, cancellationToken).EnsureCompleted();
+        }
 
-            foreach (string dtmi in dtmis)
+        public Task<IDictionary<string, string>> ProcessAsync(IEnumerable<string> dtmis, CancellationToken cancellationToken)
+        {
+            return ProcessAsync(dtmis, true, cancellationToken);
+        }
+
+        public IDictionary<string, string> Process(IEnumerable<string> dtmis, CancellationToken cancellationToken)
+        {
+            return ProcessAsync(dtmis, false, cancellationToken).EnsureCompleted();
+        }
+
+        private async Task<IDictionary<string, string>> ProcessAsync(IEnumerable<string> dtmis, bool async, CancellationToken cancellationToken)
+        {
+            var processedModels = new Dictionary<string, string>();
+            Queue<string> toProcessModels = PrepareWork(dtmis);
+
+            while (toProcessModels.Count != 0)
             {
-                if (!DtmiConventions.IsDtmi(dtmi))
-                {
-                    ResolverEventSource.Instance.InvalidDtmiInput(dtmi);
-                    string invalidArgMsg = string.Format(CultureInfo.CurrentCulture, ServiceStrings.InvalidDtmiFormat, dtmi);
-                    throw new ResolverException(dtmi, invalidArgMsg, new ArgumentException(invalidArgMsg));
-                }
+                cancellationToken.ThrowIfCancellationRequested();
 
-                toProcessModels.Enqueue(dtmi);
-            }
-
-            while (toProcessModels.Count != 0 && !cancellationToken.IsCancellationRequested)
-            {
                 string targetDtmi = toProcessModels.Dequeue();
                 if (processedModels.ContainsKey(targetDtmi))
                 {
                     ResolverEventSource.Instance.SkippingPreprocessedDtmi(targetDtmi);
                     continue;
                 }
+
                 ResolverEventSource.Instance.ProcessingDtmi(targetDtmi);
 
-                FetchResult result = await FetchAsync(targetDtmi, cancellationToken).ConfigureAwait(false);
+                FetchResult result = async
+                    ? await FetchAsync(targetDtmi, cancellationToken).ConfigureAwait(false)
+                    : Fetch(targetDtmi, cancellationToken);
+
                 if (result.FromExpanded)
                 {
-                    Dictionary<string, string> expanded = await new ModelQuery(result.Definition).ListToDictAsync().ConfigureAwait(false);
+                    Dictionary<string, string> expanded = new ModelQuery(result.Definition).ListToDict();
 
                     foreach (KeyValuePair<string, string> kvp in expanded)
                     {
@@ -121,6 +130,36 @@ namespace Azure.Iot.ModelsRepository
             {
                 throw new ResolverException(dtmi, ex.Message, ex);
             }
+        }
+
+        private FetchResult Fetch(string dtmi, CancellationToken cancellationToken)
+        {
+            try
+            {
+                return _modelFetcher.Fetch(dtmi, RepositoryUri, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                throw new ResolverException(dtmi, ex.Message, ex);
+            }
+        }
+
+        private static Queue<string> PrepareWork(IEnumerable<string> dtmis)
+        {
+            var toProcessModels = new Queue<string>();
+            foreach (string dtmi in dtmis)
+            {
+                if (!DtmiConventions.IsDtmi(dtmi))
+                {
+                    ResolverEventSource.Instance.InvalidDtmiInput(dtmi);
+                    string invalidArgMsg = string.Format(CultureInfo.CurrentCulture, ServiceStrings.InvalidDtmiFormat, dtmi);
+                    throw new ResolverException(dtmi, invalidArgMsg, new ArgumentException(invalidArgMsg));
+                }
+
+                toProcessModels.Enqueue(dtmi);
+            }
+
+            return toProcessModels;
         }
     }
 }
