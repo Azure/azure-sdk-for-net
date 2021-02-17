@@ -48,28 +48,10 @@ namespace Azure.Core.Pipeline
                 {
                     if (property.NameEquals("error"))
                     {
-                        if (property.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            property.ThrowNonNullablePropertyIsNull();
-                        }
-                        foreach (var errorsProperty in property.Value.EnumerateObject())
-                        {
-                            if (errorsProperty.NameEquals("code"))
-                            {
-                                errorCode = errorsProperty.Value.GetString();
-                                continue;
-                            }
-                            if (errorsProperty.NameEquals("message"))
-                            {
-                                message = errorsProperty.Value.GetString();
-                                continue;
-                            }
-                            if (errorsProperty.NameEquals("target"))
-                            {
-                                additionalInfo = new Dictionary<string, string>() { { "target", errorsProperty.Value.GetString() } };
-                                continue;
-                            }
-                        }
+                        var communicationError = CommunicationError.DeserializeCommunicationError(property.Value);
+                        errorCode = communicationError.Code;
+                        message = communicationError.Message;
+                        additionalInfo = new Dictionary<string, string>() { { "target", communicationError.Target } };
                         break;
                     }
                 }
