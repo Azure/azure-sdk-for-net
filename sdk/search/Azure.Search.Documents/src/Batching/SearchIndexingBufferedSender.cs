@@ -36,7 +36,7 @@ namespace Azure.Search.Documents
         /// The single publisher responsible for submitting requests.
         /// </summary>
 #pragma warning disable CA2213 // Member should be disposed. Disposed in DisposeAsync
-        private SearchIndexingPublisher<T> _publisher;
+        private readonly SearchIndexingPublisher<T> _publisher;
 #pragma warning restore CA2213 // Member should be disposed. Disposed in DisposeAsync
 
         /// <summary>
@@ -103,15 +103,21 @@ namespace Azure.Search.Documents
         protected SearchIndexingBufferedSender() { }
 
         /// <summary>
-        /// Creates a new instance of the SearchIndexingBufferedSender.
+        /// Creates a new instance of <see cref="SearchIndexingBufferedSender{T}"/> that
+        /// can be used to index search documents with intelligent batching,
+        /// automatic flushing, and retries for failed indexing actions.
         /// </summary>
         /// <param name="searchClient">
         /// The SearchClient used to send requests to the service.
         /// </param>
         /// <param name="options">
-        /// Provides the configuration options for the sender.
+        /// The <see cref="SearchIndexingBufferedSenderOptions{T}"/> to
+        /// customize the sender's behavior.
         /// </param>
-        internal SearchIndexingBufferedSender(
+        /// <exception cref="ArgumentNullException">
+        /// Thrown when the <paramref name="searchClient"/> is null.
+        /// </exception>
+        public SearchIndexingBufferedSender(
             SearchClient searchClient,
             SearchIndexingBufferedSenderOptions<T> options = null)
         {
@@ -126,9 +132,9 @@ namespace Azure.Search.Documents
                 options.AutoFlushInterval,
                 options.InitialBatchActionCount,
                 options.BatchPayloadSize,
-                options.MaxRetries,
-                options.RetryDelay,
-                options.MaxRetryDelay,
+                options.MaxRetriesPerIndexAction,
+                options.ThrottlingDelay,
+                options.MaxThrottlingDelay,
                 options.FlushCancellationToken);
         }
 
@@ -177,11 +183,11 @@ namespace Azure.Search.Documents
                 try
                 {
                     #pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
-                    throw new InvalidOperationException(
+                    throw new ObjectNotDisposedException(
                         $"{nameof(SearchIndexingBufferedSender<T>)} has {_publisher.IndexingActionsCount} unsent indexing actions.");
                     #pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
                 }
-                catch (InvalidOperationException)
+                catch (ObjectNotDisposedException)
                 {
                 }
             }

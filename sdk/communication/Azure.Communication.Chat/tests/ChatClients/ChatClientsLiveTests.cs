@@ -7,10 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Azure.Core;
-#region Snippet:Azure_Communication_Chat_Tests_E2E_UsingStatements
 using Azure.Communication.Identity;
-//@@ using Azure.Communication.Chat;
-#endregion Snippet:Azure_Communication_Chat_Tests_E2E_UsingStatements
 
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -68,9 +65,6 @@ namespace Azure.Communication.Chat.Tests
             ChatClient chatClient3 = CreateInstrumentedChatClient(token3);
 
             //act
-            #region Snippet:Azure_Communication_Chat_Tests_E2E_InitializeChatThreadClient
-            //@@ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient("threadId");
-            #endregion Snippet:Azure_Communication_Chat_Tests_E2E_InitializeChatThreadClient
             CreateChatThreadResult createChatThreadResult = chatClient.CreateChatThread(topic, participants, repeatabilityRequestId1);
             ChatThreadClient chatThreadClient = GetInstrumentedChatThreadClient(chatClient, createChatThreadResult.ChatThread.Id);
             var threadId = chatThreadClient.Id;
@@ -83,18 +77,12 @@ namespace Azure.Communication.Chat.Tests
             var chatParticipantsOnCreationCount = chatParticipantsOnCreation.Count();
 
             string updatedTopic = "Launch meeting";
-            #region Snippet:Azure_Communication_Chat_Tests_E2E_UpdateThread
             chatThreadClient.UpdateTopic(topic: "Launch meeting");
-            #endregion Snippet:Azure_Communication_Chat_Tests_E2E_UpdateThread
 
-            #region Snippet:Azure_Communication_Chat_Tests_E2E_GetChatThread
             ChatThread chatThread = chatClient.GetChatThread(threadId);
-            #endregion Snippet:Azure_Communication_Chat_Tests_E2E_GetChatThread
 
             string messageContent = "Let's meet at 11am";
-            #region Snippet:Azure_Communication_Chat_Tests_E2E_SendMessage
             string messageId = chatThreadClient.SendMessage("Let's meet at 11am");
-            #endregion Snippet:Azure_Communication_Chat_Tests_E2E_SendMessage
             string messageContent2 = "Content for message 2";
             string messageId2 = chatThreadClient2.SendMessage(messageContent2, ChatMessageType.Text, displayNameMessage);
             string messageContent3 = "Content for message 3";
@@ -106,18 +94,14 @@ namespace Azure.Communication.Chat.Tests
             string messageContent6 = "Content for message 6";
             string messageId6 = chatThreadClient3.SendMessage(messageContent6, ChatMessageType.Text, displayNameMessage);
 
-            #region Snippet:Azure_Communication_Chat_Tests_E2E_GetMessage
             ChatMessage message = chatThreadClient.GetMessage(messageId);
-            #endregion Snippet:Azure_Communication_Chat_Tests_E2E_GetMessage
             ChatMessage message2 = chatThreadClient2.GetMessage(messageId2);
             ChatMessage message3 = chatThreadClient3.GetMessage(messageId3);
             ChatMessage message4 = chatThreadClient3.GetMessage(messageId4);
             ChatMessage message5 = chatThreadClient3.GetMessage(messageId5);
             ChatMessage message6 = chatThreadClient3.GetMessage(messageId6);
 
-            #region Snippet:Azure_Communication_Chat_Tests_E2E_GetMessages
             Pageable<ChatMessage> messages = chatThreadClient.GetMessages();
-            #endregion Snippet:Azure_Communication_Chat_Tests_E2E_GetMessages
             Pageable<ChatMessage> messages2 = chatThreadClient2.GetMessages();
             var getMessagesCount = messages.Count();
             var getMessagesCount2 = messages2.Count();
@@ -126,27 +110,19 @@ namespace Azure.Communication.Chat.Tests
             PageableTester<ChatMessage>.AssertPagination(enumerableResource:pageableMessages, expectedPageSize: 2, expectedTotalResources : 8);
 
             string updatedMessageContent = "Instead of 11am, let's meet at 2pm";
-            #region Snippet:Azure_Communication_Chat_Tests_E2E_UpdateMessage
             chatThreadClient.UpdateMessage(messageId, content: "Instead of 11am, let's meet at 2pm");
-            #endregion Snippet:Azure_Communication_Chat_Tests_E2E_UpdateMessage
             Response<ChatMessage> actualUpdateMessage = chatThreadClient.GetMessage(messageId);
 
-            #region Snippet:Azure_Communication_Chat_Tests_E2E_DeleteMessage
             chatThreadClient.DeleteMessage(messageId);
-            #endregion Snippet:Azure_Communication_Chat_Tests_E2E_DeleteMessage
             Pageable<ChatMessage> messagesAfterOneDeleted = chatThreadClient.GetMessages();
             ChatMessage deletedChatMessage = messagesAfterOneDeleted.First(x => x.Id == messageId);
 
-            #region Snippet:Azure_Communication_Chat_Tests_E2E_GetParticipants
             Pageable<ChatParticipant> chatParticipants = chatThreadClient.GetParticipants();
-            #endregion Snippet:Azure_Communication_Chat_Tests_E2E_GetParticipants
             var chatParticipantsCount = chatParticipants.Count();
 
             var newParticipant = new ChatParticipant(user4);
             var newParticipant2 = new ChatParticipant(user5);
-            #region Snippet:Azure_Communication_Chat_Tests_E2E_AddParticipants
             chatThreadClient.AddParticipants(participants: new[] { newParticipant });
-            #endregion Snippet:Azure_Communication_Chat_Tests_E2E_AddParticipants
             AddChatParticipantsResult addChatParticipantsResult = chatThreadClient.AddParticipant(newParticipant2);
 
             Pageable<ChatParticipant> chatParticipantsAfterTwoAdded = chatThreadClient.GetParticipants();
@@ -154,25 +130,17 @@ namespace Azure.Communication.Chat.Tests
             var chatParticipantsAfterTwoAddedCount = chatParticipantsAfterTwoAdded.Count();
 
             CommunicationUserIdentifier participantToBeRemoved = user4;
-            #region Snippet:Azure_Communication_Chat_Tests_E2E_RemoveParticipant
             chatThreadClient.RemoveParticipant(user: participantToBeRemoved);
-            #endregion Snippet:Azure_Communication_Chat_Tests_E2E_RemoveParticipant
             Pageable<ChatParticipant> chatParticipantAfterOneDeleted = chatThreadClient.GetParticipants();
             var chatParticipantAfterOneDeletedCount = chatParticipantAfterOneDeleted.Count();
 
             Response typingNotificationResponse = chatThreadClient.SendTypingNotification();
-            #region Snippet:Azure_Communication_Chat_Tests_E2E_SendTypingNotification
             chatThreadClient.SendTypingNotification();
-            #endregion Snippet:Azure_Communication_Chat_Tests_E2E_SendTypingNotification
 
-            #region Snippet:Azure_Communication_Chat_Tests_E2E_GetChatThreadsInfo
             Pageable<ChatThreadInfo> threads = chatClient.GetChatThreadsInfo();
-            #endregion Snippet:Azure_Communication_Chat_Tests_E2E_GetChatThreadsInfo
             var threadsCount = threads.Count();
 
-            #region Snippet:Azure_Communication_Chat_Tests_E2E_DeleteChatThread
             chatClient.DeleteChatThread(threadId);
-            #endregion Snippet:Azure_Communication_Chat_Tests_E2E_DeleteChatThread
 
             //assert
             Assert.AreEqual(updatedTopic, chatThread.Topic);
@@ -230,14 +198,10 @@ namespace Azure.Communication.Chat.Tests
             var messageId2 = chatThreadClient.SendMessage("This is message 1 content");
             var messageId = chatThreadClient2.SendMessage("This is message 2 content");
 
-            #region Snippet:Azure_Communication_Chat_Tests_E2E_SendReadReceipt
             chatThreadClient.SendReadReceipt(messageId);
-            #endregion Snippet:Azure_Communication_Chat_Tests_E2E_SendReadReceipt
             chatThreadClient2.SendReadReceipt(messageId2);
 
-            #region Snippet:Azure_Communication_Chat_Tests_E2E_GetReadReceipts
             Pageable<ChatMessageReadReceipt> readReceipts = chatThreadClient.GetReadReceipts();
-            #endregion Snippet:Azure_Communication_Chat_Tests_E2E_GetReadReceipts
             Pageable<ChatMessageReadReceipt> readReceipts2 = chatThreadClient2.GetReadReceipts();
             var readReceiptsCount = readReceipts.Count();
             var readReceiptsCount2 = readReceipts2.Count();
@@ -440,7 +404,7 @@ namespace Azure.Communication.Chat.Tests
         {
             Response<CommunicationUserIdentifier> user = communicationIdentityClient.CreateUser();
             IEnumerable<CommunicationTokenScope> scopes = new[] { CommunicationTokenScope.Chat };
-            Response<AccessToken> tokenResponseUser = communicationIdentityClient.IssueToken(user.Value, scopes);
+            Response<AccessToken> tokenResponseUser = communicationIdentityClient.GetToken(user.Value, scopes);
 
             return (user, tokenResponseUser.Value.Token);
         }
@@ -449,7 +413,7 @@ namespace Azure.Communication.Chat.Tests
         {
             Response<CommunicationUserIdentifier> user = await communicationIdentityClient.CreateUserAsync();
             IEnumerable<CommunicationTokenScope> scopes = new[] { CommunicationTokenScope.Chat };
-            Response<AccessToken> tokenResponseUser = await communicationIdentityClient.IssueTokenAsync(user.Value, scopes);
+            Response<AccessToken> tokenResponseUser = await communicationIdentityClient.GetTokenAsync(user.Value, scopes);
 
             return (user, tokenResponseUser.Value.Token);
         }

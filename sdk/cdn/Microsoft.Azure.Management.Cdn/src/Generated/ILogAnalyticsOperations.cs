@@ -41,15 +41,15 @@ namespace Microsoft.Azure.Management.Cdn
         /// <param name='granularity'>
         /// Possible values include: 'PT5M', 'PT1H', 'P1D'
         /// </param>
+        /// <param name='customDomains'>
+        /// </param>
+        /// <param name='protocols'>
+        /// </param>
         /// <param name='groupBy'>
         /// </param>
         /// <param name='continents'>
         /// </param>
         /// <param name='countryOrRegions'>
-        /// </param>
-        /// <param name='customDomains'>
-        /// </param>
-        /// <param name='protocols'>
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<MetricsResponse>> GetLogAnalyticsMetricsWithHttpMessagesAsync(string resourceGroupName, string profileName, IList<string> metrics, System.DateTime dateTimeBegin, System.DateTime dateTimeEnd, string granularity, IList<string> groupBy = default(IList<string>), IList<string> continents = default(IList<string>), IList<string> countryOrRegions = default(IList<string>), IList<string> customDomains = default(IList<string>), IList<string> protocols = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<MetricsResponse>> GetLogAnalyticsMetricsWithHttpMessagesAsync(string resourceGroupName, string profileName, IList<string> metrics, System.DateTime dateTimeBegin, System.DateTime dateTimeEnd, string granularity, IList<string> customDomains, IList<string> protocols, IList<string> groupBy = default(IList<string>), IList<string> continents = default(IList<string>), IList<string> countryOrRegions = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get log analytics ranking report for AFD profile
         /// </summary>

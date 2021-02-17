@@ -8,13 +8,8 @@
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Identity properties of the workspace resource. </summary>
-    internal partial class WorkspaceIdentity
+    public partial class WorkspaceIdentity
     {
-        /// <summary> Initializes a new instance of WorkspaceIdentity. </summary>
-        internal WorkspaceIdentity()
-        {
-            Type = "SystemAssigned";
-        }
 
         /// <summary> The identity type. Currently the only supported type is &apos;SystemAssigned&apos;. </summary>
         public string Type { get; }

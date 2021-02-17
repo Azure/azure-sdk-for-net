@@ -269,6 +269,7 @@ namespace Azure.Core
             public static string Range { get { throw null; } }
             public static string Referer { get { throw null; } }
             public static string UserAgent { get { throw null; } }
+            public static string WWWAuthenticate { get { throw null; } }
             public static string XMsDate { get { throw null; } }
             public static string XMsRange { get { throw null; } }
             public static string XMsRequestId { get { throw null; } }

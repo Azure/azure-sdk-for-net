@@ -43,7 +43,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             {
                 Client = GetClient();
 
-                ChallengeBasedAuthenticationPolicy.AuthenticationChallenge.ClearCache();
+                ChallengeBasedAuthenticationPolicy.ClearCache();
             }
         }
 
@@ -101,9 +101,15 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 Assert.Inconclusive("The create operation completed before it could be canceled.");
             }
 
+            if (operation.HasCompleted)
+            {
+                Assert.Inconclusive("The create operation completed before it could be canceled.");
+            }
+
             OperationCanceledException ex = Assert.ThrowsAsync<OperationCanceledException>(
                 () => WaitForCompletion(operation),
                 $"Expected exception {nameof(OperationCanceledException)} not thrown. Operation status: {operation?.Properties?.Status}, error: {operation?.Properties?.Error?.Message}");
+
             Assert.AreEqual("The operation was canceled so no value is available.", ex.Message);
 
             Assert.IsTrue(operation.HasCompleted);

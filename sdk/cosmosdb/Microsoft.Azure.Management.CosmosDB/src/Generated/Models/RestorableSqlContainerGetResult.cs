@@ -13,15 +13,13 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// An Azure Cosmos DB restorable SQL container
+    /// An Azure Cosmos DB SQL container event
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class RestorableSqlContainerGetResult : ARMResourceProperties
+    public partial class RestorableSqlContainerGetResult
     {
         /// <summary>
         /// Initializes a new instance of the RestorableSqlContainerGetResult
@@ -36,16 +34,18 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// Initializes a new instance of the RestorableSqlContainerGetResult
         /// class.
         /// </summary>
-        /// <param name="id">The unique resource identifier of the ARM
+        /// <param name="resource">The resource of an Azure Cosmos DB SQL
+        /// container event</param>
+        /// <param name="id">The unique resource Identifier of the ARM
         /// resource.</param>
         /// <param name="name">The name of the ARM resource.</param>
         /// <param name="type">The type of Azure resource.</param>
-        /// <param name="location">The location of the resource group to which
-        /// the resource belongs.</param>
-        public RestorableSqlContainerGetResult(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ManagedServiceIdentity identity = default(ManagedServiceIdentity), RestorableSqlContainerPropertiesResource resource = default(RestorableSqlContainerPropertiesResource))
-            : base(id, name, type, location, tags, identity)
+        public RestorableSqlContainerGetResult(RestorableSqlContainerPropertiesResource resource = default(RestorableSqlContainerPropertiesResource), string id = default(string), string name = default(string), string type = default(string))
         {
             Resource = resource;
+            Id = id;
+            Name = name;
+            Type = type;
             CustomInit();
         }
 
@@ -55,9 +55,28 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the resource of an Azure Cosmos DB SQL container event
         /// </summary>
         [JsonProperty(PropertyName = "properties.resource")]
         public RestorableSqlContainerPropertiesResource Resource { get; set; }
+
+        /// <summary>
+        /// Gets the unique resource Identifier of the ARM resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; private set; }
+
+        /// <summary>
+        /// Gets the name of the ARM resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; private set; }
+
+        /// <summary>
+        /// Gets the type of Azure resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; private set; }
 
         /// <summary>
         /// Validate the object.

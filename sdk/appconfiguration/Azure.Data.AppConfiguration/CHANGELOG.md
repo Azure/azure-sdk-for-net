@@ -2,6 +2,13 @@
 
 ## 1.1.0-beta.1 (Unreleased)
 
+### Changes
+
+#### New Features
+
+- Added `SecretReferenceConfigurationSetting` type to represent a configuration setting that references a KeyVault Secret. 
+- Added `FeatureFlagConfigurationSetting` type to represent a configuration setting that controls a feature flag.
+- Added `AddSyncToken` to `ConfigurationClient` to be able to provide external synchronization tokens.
 
 ## 1.0.2 (2020-09-10)
 

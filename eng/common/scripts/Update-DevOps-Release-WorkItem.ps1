@@ -12,7 +12,8 @@ param(
   [string]$packageDisplayName = $null,
   [string]$packageRepoPath = "NA",
   [string]$packageType = "client",
-  [string]$packageNewLibrary = "true"
+  [string]$packageNewLibrary = "true",
+  [string]$devops_pat = $env:DEVOPS_PAT
 )
 Set-StrictMode -Version 3
 

@@ -48,17 +48,17 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             detectCondition.CrossConditionsOperator = DetectionConditionsOperator.Or;
 
-            Response<string> response = await adminClient.CreateDetectionConfigurationAsync(detectionConfiguration);
+            Response<AnomalyDetectionConfiguration> response = await adminClient.CreateDetectionConfigurationAsync(detectionConfiguration);
 
-            string detectionConfigurationId = response.Value;
+            AnomalyDetectionConfiguration createdDetectionConfiguration = response.Value;
 
-            Console.WriteLine($"Anomaly detection configuration ID: {detectionConfigurationId}");
+            Console.WriteLine($"Anomaly detection configuration ID: {createdDetectionConfiguration.Id}");
             #endregion
 
             // Delete the created anomaly detection configuration to clean up the Metrics Advisor resource.
             // Do not perform this step if you intend to keep using the configuration.
 
-            await adminClient.DeleteDetectionConfigurationAsync(detectionConfigurationId);
+            await adminClient.DeleteDetectionConfigurationAsync(createdDetectionConfiguration.Id);
         }
 
         [Test]
