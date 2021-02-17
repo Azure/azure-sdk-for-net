@@ -19,9 +19,9 @@ namespace Microsoft.Azure.Management.RedisEnterprise
     using System.Threading.Tasks;
 
     /// <summary>
-    /// GetOperations operations.
+    /// OperationsStatus operations.
     /// </summary>
-    public partial interface IGetOperations
+    public partial interface IOperationsStatus
     {
         /// <summary>
         /// Gets the status of operation.
@@ -47,6 +47,6 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<OperationStatus>> OperationStatusMethodWithHttpMessagesAsync(string location, string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<OperationStatus>> GetWithHttpMessagesAsync(string location, string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

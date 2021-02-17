@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
     /// <summary>
     /// REST API for managing Redis Enterprise resources in Azure.
     /// </summary>
-    public partial interface IredisenterpriseClient : System.IDisposable
+    public partial interface IRedisEnterpriseManagementClient : System.IDisposable
     {
         /// <summary>
         /// The base URI of the service.
@@ -41,14 +41,12 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// Gets subscription credentials which uniquely identify the Microsoft
-        /// Azure subscription. The subscription ID forms part of the URI for
-        /// every service call.
+        /// The ID of the target subscription.
         /// </summary>
         string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Client Api Version.
+        /// The API version to use for this operation.
         /// </summary>
         string ApiVersion { get; }
 
@@ -77,9 +75,9 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         IOperations Operations { get; }
 
         /// <summary>
-        /// Gets the IGetOperations.
+        /// Gets the IOperationsStatus.
         /// </summary>
-        IGetOperations Get { get; }
+        IOperationsStatus OperationsStatus { get; }
 
         /// <summary>
         /// Gets the IRedisEnterpriseOperations.

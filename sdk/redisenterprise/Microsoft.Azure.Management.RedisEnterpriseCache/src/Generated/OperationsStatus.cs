@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.RedisEnterprise
     using System.Threading.Tasks;
 
     /// <summary>
-    /// GetOperations operations.
+    /// OperationsStatus operations.
     /// </summary>
-    internal partial class GetOperations : IServiceOperations<redisenterpriseClient>, IGetOperations
+    internal partial class OperationsStatus : IServiceOperations<RedisEnterpriseManagementClient>, IOperationsStatus
     {
         /// <summary>
-        /// Initializes a new instance of the GetOperations class.
+        /// Initializes a new instance of the OperationsStatus class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal GetOperations(redisenterpriseClient client)
+        internal OperationsStatus(RedisEnterpriseManagementClient client)
         {
             if (client == null)
             {
@@ -46,9 +46,9 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         }
 
         /// <summary>
-        /// Gets a reference to the redisenterpriseClient
+        /// Gets a reference to the RedisEnterpriseManagementClient
         /// </summary>
-        public redisenterpriseClient Client { get; private set; }
+        public RedisEnterpriseManagementClient Client { get; private set; }
 
         /// <summary>
         /// Gets the status of operation.
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<OperationStatus>> OperationStatusMethodWithHttpMessagesAsync(string location, string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<OperationStatus>> GetWithHttpMessagesAsync(string location, string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (location == null)
             {
@@ -108,7 +108,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
                 tracingParameters.Add("location", location);
                 tracingParameters.Add("operationId", operationId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "OperationStatusMethod", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
