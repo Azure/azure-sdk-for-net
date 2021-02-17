@@ -57,7 +57,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             FaultTolerantAmqpObject<Controller> faultTolerantController;
             if (_transactionGroup == null)
             {
-                faultTolerantController = _connectionScope.TransactionController;
+                faultTolerantController = _connectionScope.SingleEntityTransactionController;
             }
             else
             {

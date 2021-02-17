@@ -118,7 +118,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///  The controller responsible for managing transactions. This is not used
         ///  for entities where TransactionGroup is set.
         /// </summary>
-        internal FaultTolerantAmqpObject<Controller> TransactionController { get; }
+        internal FaultTolerantAmqpObject<Controller> SingleEntityTransactionController { get; }
 
         /// <summary>
         /// A dictionary of transaction key to transaction group. This is populated when the TransactionGroup option is used.
@@ -157,7 +157,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             ActiveConnection = new FaultTolerantAmqpObject<AmqpConnection>(
                 connectionFactory,
                 CloseConnection);
-            TransactionController = new FaultTolerantAmqpObject<Controller>(
+            SingleEntityTransactionController = new FaultTolerantAmqpObject<Controller>(
                 async (timeout) =>
                 {
                     var stopWatch = ValueStopwatch.StartNew();

@@ -48,22 +48,6 @@ namespace Azure.Messaging.ServiceBus.Core
         ///
         public abstract TransportSender CreateSender(string entityPath, ServiceBusRetryPolicy retryPolicy, string identifier, string transactionGroup);
 
-        /// <summary>
-        ///   Creates a receiver strongly aligned with the active protocol and transport, responsible
-        ///   for reading <see cref="ServiceBusMessage" /> from a specific Service Bus entity.
-        /// </summary>
-        /// <param name="entityPath"></param>
-        ///
-        /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
-        /// <param name="receiveMode">The <see cref="ServiceBusReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
-        /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.  If <c>null</c> a default will be used.</param>
-        /// <param name="identifier"></param>
-        /// <param name="sessionId"></param>
-        /// <param name="isSessionReceiver"></param>
-        /// <param name="transactionGroup"></param>
-        ///
-        /// <returns>A <see cref="TransportReceiver" /> configured in the requested manner.</returns>
-        ///
         public abstract TransportReceiver CreateReceiver(
             string entityPath,
             ServiceBusRetryPolicy retryPolicy,
