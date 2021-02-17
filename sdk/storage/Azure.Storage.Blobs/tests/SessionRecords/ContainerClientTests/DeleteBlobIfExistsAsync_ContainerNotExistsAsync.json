@@ -6,13 +6,13 @@
       "RequestHeaders": {
         "Accept": "application/xml",
         "Authorization": "Sanitized",
-        "traceparent": "00-7dccd0d6a2584845b593839d31c28c5d-d646c3e7ed9ea347-00",
+        "traceparent": "00-9f3e81bb21dadc439b4c7ea52ace9b50-7b60053724353c47-00",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs/12.9.0-alpha.20210216.1",
+          "azsdk-net-Storage.Blobs/12.9.0-alpha.20210217.1",
           "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "7fb7b988-a18b-1a30-d2c7-4331e4f8369a",
-        "x-ms-date": "Wed, 17 Feb 2021 02:31:24 GMT",
+        "x-ms-date": "Wed, 17 Feb 2021 18:59:41 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2020-06-12"
       },
@@ -21,20 +21,20 @@
       "ResponseHeaders": {
         "Content-Length": "225",
         "Content-Type": "application/xml",
-        "Date": "Wed, 17 Feb 2021 02:31:24 GMT",
+        "Date": "Wed, 17 Feb 2021 18:59:41 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-client-request-id": "7fb7b988-a18b-1a30-d2c7-4331e4f8369a",
         "x-ms-error-code": "ContainerNotFound",
-        "x-ms-request-id": "8c8c4189-201e-008a-65d4-048173000000",
+        "x-ms-request-id": "86792440-c01e-0076-325f-05508a000000",
         "x-ms-version": "2020-06-12"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EContainerNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified container does not exist.\n",
-        "RequestId:8c8c4189-201e-008a-65d4-048173000000\n",
-        "Time:2021-02-17T02:31:24.7239716Z\u003C/Message\u003E\u003C/Error\u003E"
+        "RequestId:86792440-c01e-0076-325f-05508a000000\n",
+        "Time:2021-02-17T18:59:42.0487086Z\u003C/Message\u003E\u003C/Error\u003E"
       ]
     },
     {
@@ -43,21 +43,20 @@
       "RequestHeaders": {
         "Accept": "application/xml",
         "Authorization": "Sanitized",
-        "traceparent": "00-0892c39fad09e0459f7ded32e4f04f3e-9b7596fb36de1a49-00",
+        "traceparent": "00-bb6f5a61ea5ee945aed5695ee0ce5272-de486b27d996bf47-00",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs/12.9.0-alpha.20210216.1",
+          "azsdk-net-Storage.Blobs/12.9.0-alpha.20210217.1",
           "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "667761e3-7be9-bf2f-d939-949b716ed6e2",
-        "x-ms-date": "Wed, 17 Feb 2021 02:31:24 GMT",
-        "x-ms-encryption-algorithm": "AES256",
+        "x-ms-date": "Wed, 17 Feb 2021 18:59:42 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2020-06-12"
       },
       "RequestBody": null,
       "StatusCode": 404,
       "ResponseHeaders": {
-        "Date": "Wed, 17 Feb 2021 02:31:24 GMT",
+        "Date": "Wed, 17 Feb 2021 18:59:41 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
           "Microsoft-HTTPAPI/2.0"
@@ -65,7 +64,7 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "667761e3-7be9-bf2f-d939-949b716ed6e2",
         "x-ms-error-code": "ContainerNotFound",
-        "x-ms-request-id": "8c8c41b6-201e-008a-0ed4-048173000000",
+        "x-ms-request-id": "8679246a-c01e-0076-505f-05508a000000",
         "x-ms-version": "2020-06-12"
       },
       "ResponseBody": []

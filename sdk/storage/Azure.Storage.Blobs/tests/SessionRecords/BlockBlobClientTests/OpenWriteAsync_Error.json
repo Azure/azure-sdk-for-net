@@ -8,15 +8,14 @@
         "Authorization": "Sanitized",
         "Content-Length": "0",
         "Content-Type": "application/octet-stream",
-        "traceparent": "00-6f08914526f16b48b4c53a91d51111e4-9c416afe5b57b54b-00",
+        "traceparent": "00-fea03dbceee7c74291cee8e07bfdded2-c07928cd5f423c4f-00",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs/12.9.0-alpha.20210216.1",
+          "azsdk-net-Storage.Blobs/12.9.0-alpha.20210217.1",
           "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-blob-type": "BlockBlob",
         "x-ms-client-request-id": "e32695a3-898d-1ccc-3a18-9dd8fca62578",
-        "x-ms-date": "Wed, 17 Feb 2021 02:33:03 GMT",
-        "x-ms-encryption-algorithm": "AES256",
+        "x-ms-date": "Wed, 17 Feb 2021 18:56:32 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2020-06-12"
       },
@@ -25,20 +24,20 @@
       "ResponseHeaders": {
         "Content-Length": "225",
         "Content-Type": "application/xml",
-        "Date": "Wed, 17 Feb 2021 02:33:03 GMT",
+        "Date": "Wed, 17 Feb 2021 18:56:32 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-client-request-id": "e32695a3-898d-1ccc-3a18-9dd8fca62578",
         "x-ms-error-code": "ContainerNotFound",
-        "x-ms-request-id": "0449c809-001e-0034-56d5-04e90a000000",
+        "x-ms-request-id": "d6206d61-b01e-001e-0b5e-05361a000000",
         "x-ms-version": "2020-06-12"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EContainerNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified container does not exist.\n",
-        "RequestId:0449c809-001e-0034-56d5-04e90a000000\n",
-        "Time:2021-02-17T02:33:03.8243130Z\u003C/Message\u003E\u003C/Error\u003E"
+        "RequestId:d6206d61-b01e-001e-0b5e-05361a000000\n",
+        "Time:2021-02-17T18:56:32.6291576Z\u003C/Message\u003E\u003C/Error\u003E"
       ]
     }
   ],

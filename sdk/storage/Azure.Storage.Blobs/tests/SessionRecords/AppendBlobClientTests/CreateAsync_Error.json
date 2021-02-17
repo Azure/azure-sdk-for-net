@@ -6,15 +6,14 @@
       "RequestHeaders": {
         "Accept": "application/xml",
         "Authorization": "Sanitized",
-        "traceparent": "00-b87d88338e6e58409097186a25f18ea5-5baf63fc3137624e-00",
+        "traceparent": "00-7f7372a0c614e84cbaa4e4f63ed4b71d-8e32100aace8f742-00",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs/12.9.0-alpha.20210216.1",
+          "azsdk-net-Storage.Blobs/12.9.0-alpha.20210217.1",
           "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-blob-type": "AppendBlob",
         "x-ms-client-request-id": "11eab92d-3962-1e6f-eedd-7384c5d47642",
-        "x-ms-date": "Wed, 17 Feb 2021 01:59:50 GMT",
-        "x-ms-encryption-algorithm": "AES256",
+        "x-ms-date": "Wed, 17 Feb 2021 18:42:27 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2020-06-12"
       },
@@ -23,20 +22,20 @@
       "ResponseHeaders": {
         "Content-Length": "225",
         "Content-Type": "application/xml",
-        "Date": "Wed, 17 Feb 2021 01:59:50 GMT",
+        "Date": "Wed, 17 Feb 2021 18:42:27 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-client-request-id": "11eab92d-3962-1e6f-eedd-7384c5d47642",
         "x-ms-error-code": "ContainerNotFound",
-        "x-ms-request-id": "24a79240-201e-000c-46d0-044dca000000",
+        "x-ms-request-id": "37c5e0a4-701e-005c-0a5c-058f9a000000",
         "x-ms-version": "2020-06-12"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EContainerNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified container does not exist.\n",
-        "RequestId:24a79240-201e-000c-46d0-044dca000000\n",
-        "Time:2021-02-17T01:59:50.9695100Z\u003C/Message\u003E\u003C/Error\u003E"
+        "RequestId:37c5e0a4-701e-005c-0a5c-058f9a000000\n",
+        "Time:2021-02-17T18:42:27.9566246Z\u003C/Message\u003E\u003C/Error\u003E"
       ]
     }
   ],
