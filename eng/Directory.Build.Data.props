@@ -55,7 +55,7 @@
     <GenerateAPIListing Condition="'$(IsShippingClientLibrary)' == 'true'">true</GenerateAPIListing>
     <UpdateSourceOnBuild Condition="'$(UpdateSourceOnBuild)' == ''">$(AZURE_DEV_UPDATESOURCESONBUILD)</UpdateSourceOnBuild>
     <PowerShellExe Condition="'$(PowerShellExe)' == ''">pwsh</PowerShellExe>
-    <InheritDocEnabled>true</InheritDocEnabled>
+    <InheritDocEnabled Condition="'$(InheritDocEnabled)'=='' and '$(DesignTimeBuild)'!='true' and '$(BuildingForLiveUnitTesting)'!='true'">true</InheritDocEnabled>
     <InheritDocTrimLevel>private</InheritDocTrimLevel>
   </PropertyGroup>
 
@@ -94,11 +94,18 @@
     <RequiredTargetFrameworks Condition="'$(SupportsNetStandard20)' == 'true'">netstandard2.0</RequiredTargetFrameworks>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true' or '$(IsSamplesProject)' == 'true' or '$(IsPerfProject)' == 'true' or '$(IsStressProject)' == 'true'">
+  <PropertyGroup Condition="'$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true' or '$(IsSamplesProject)' == 'true'">
     <IsPackable>false</IsPackable>
     <RequiredTargetFrameworks>netcoreapp2.1;net5.0</RequiredTargetFrameworks>
     <!-- Also test net461 on Windows; it's listed first so that coverage reports are for netcoreapp2.1 (the "primary"). -->
     <RequiredTargetFrameworks Condition="'$(OS)' == 'Windows_NT'">net461;netcoreapp2.1;net5.0</RequiredTargetFrameworks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(IsPerfProject)' == 'true' or '$(IsStressProject)' == 'true'">
+    <IsPackable>false</IsPackable>
+    <RequiredTargetFrameworks>netcoreapp2.1;netcoreapp3.1;net5.0</RequiredTargetFrameworks>
+    <!-- Also test net461 on Windows; it's listed first so that coverage reports are for netcoreapp2.1 (the "primary"). -->
+    <RequiredTargetFrameworks Condition="'$(OS)' == 'Windows_NT'">net461;netcoreapp2.1;netcoreapp3.1;net5.0</RequiredTargetFrameworks>
   </PropertyGroup>
 
   <Import Project="$(RepoRoot)/sdk/core/Azure.Core/src/Azure.Core.props" Condition="'$(IsMgmtClientLibrary)' == 'true'"/>
@@ -167,7 +174,7 @@
     <DocumentationFile></DocumentationFile>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(IsPerfProject)' == 'true'">
+  <PropertyGroup Condition="'$(IsPerfProject)' == 'true' or '$(IsStressProject)' == 'true'">
     <ServerGarbageCollection>true</ServerGarbageCollection>
   </PropertyGroup>
 

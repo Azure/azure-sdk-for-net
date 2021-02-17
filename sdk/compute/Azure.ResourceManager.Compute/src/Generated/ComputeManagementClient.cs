@@ -13,7 +13,7 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> Compute service management client. </summary>
-    public class ComputeManagementClient
+    public partial class ComputeManagementClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;

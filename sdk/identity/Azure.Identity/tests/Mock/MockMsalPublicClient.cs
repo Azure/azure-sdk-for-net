@@ -32,7 +32,7 @@ namespace Azure.Identity.Tests.Mock
             return new ValueTask<List<IAccount>>(Accounts);
         }
 
-        public override ValueTask<AuthenticationResult> AcquireTokenByUsernamePasswordAsync(string[] scopes, string username, SecureString password, bool async, CancellationToken cancellationToken)
+        public override ValueTask<AuthenticationResult> AcquireTokenByUsernamePasswordAsync(string[] scopes, string claims, string username, SecureString password, bool async, CancellationToken cancellationToken)
         {
             Func<string[], AuthenticationResult> factory = UserPassAuthFactory ?? AuthFactory;
 
@@ -44,7 +44,7 @@ namespace Azure.Identity.Tests.Mock
             throw new NotImplementedException();
         }
 
-        public override ValueTask<AuthenticationResult> AcquireTokenInteractiveAsync(string[] scopes, Prompt prompt, bool async, CancellationToken cancellationToken)
+        public override ValueTask<AuthenticationResult> AcquireTokenInteractiveAsync(string[] scopes, string claims, Prompt prompt, bool async, CancellationToken cancellationToken)
         {
             Func<string[], AuthenticationResult> factory = InteractiveAuthFactory ?? AuthFactory;
 
@@ -56,7 +56,7 @@ namespace Azure.Identity.Tests.Mock
             throw new NotImplementedException();
         }
 
-        public override ValueTask<AuthenticationResult> AcquireTokenSilentAsync(string[] scopes, IAccount account, bool async, CancellationToken cancellationToken)
+        public override ValueTask<AuthenticationResult> AcquireTokenSilentAsync(string[] scopes, string claims, IAccount account, bool async, CancellationToken cancellationToken)
         {
             if (ExtendedSilentAuthFactory != null)
             {
@@ -73,7 +73,7 @@ namespace Azure.Identity.Tests.Mock
             throw new NotImplementedException();
         }
 
-        public override ValueTask<AuthenticationResult> AcquireTokenSilentAsync(string[] scopes, AuthenticationRecord record, bool async, CancellationToken cancellationToken)
+        public override ValueTask<AuthenticationResult> AcquireTokenSilentAsync(string[] scopes, string claims, AuthenticationRecord record, bool async, CancellationToken cancellationToken)
         {
             Func<string[], AuthenticationResult> factory = SilentAuthFactory ?? AuthFactory;
 
@@ -85,7 +85,7 @@ namespace Azure.Identity.Tests.Mock
             throw new NotImplementedException();
         }
 
-        public override ValueTask<AuthenticationResult> AcquireTokenWithDeviceCodeAsync(string[] scopes, Func<DeviceCodeResult, Task> deviceCodeCallback, bool async, CancellationToken cancellationToken)
+        public override ValueTask<AuthenticationResult> AcquireTokenWithDeviceCodeAsync(string[] scopes, string claims, Func<DeviceCodeResult, Task> deviceCodeCallback, bool async, CancellationToken cancellationToken)
         {
             Func<string[], AuthenticationResult> factory = DeviceCodeAuthFactory ?? AuthFactory;
 

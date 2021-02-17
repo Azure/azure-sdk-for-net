@@ -8,7 +8,7 @@
 namespace Azure.AI.TextAnalytics
 {
     /// <summary> The EntitiesTask. </summary>
-    public partial class EntitiesTask
+    internal partial class EntitiesTask
     {
         /// <summary> Initializes a new instance of EntitiesTask. </summary>
         public EntitiesTask()

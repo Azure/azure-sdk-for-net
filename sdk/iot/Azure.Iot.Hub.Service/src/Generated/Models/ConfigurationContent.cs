@@ -17,7 +17,7 @@ namespace Azure.Iot.Hub.Service.Models
         public ConfigurationContent()
         {
             DeviceContent = new ChangeTrackingDictionary<string, object>();
-            ModulesContent = new ChangeTrackingDictionary<string, object>();
+            ModulesContent = new ChangeTrackingDictionary<string, IDictionary<string, object>>();
             ModuleContent = new ChangeTrackingDictionary<string, object>();
         }
 
@@ -25,7 +25,7 @@ namespace Azure.Iot.Hub.Service.Models
         /// <param name="deviceContent"> The device configuration content. </param>
         /// <param name="modulesContent"> The modules configuration content. </param>
         /// <param name="moduleContent"> The module configuration content. </param>
-        internal ConfigurationContent(IDictionary<string, object> deviceContent, IDictionary<string, object> modulesContent, IDictionary<string, object> moduleContent)
+        internal ConfigurationContent(IDictionary<string, object> deviceContent, IDictionary<string, IDictionary<string, object>> modulesContent, IDictionary<string, object> moduleContent)
         {
             DeviceContent = deviceContent;
             ModulesContent = modulesContent;
@@ -35,7 +35,7 @@ namespace Azure.Iot.Hub.Service.Models
         /// <summary> The device configuration content. </summary>
         public IDictionary<string, object> DeviceContent { get; }
         /// <summary> The modules configuration content. </summary>
-        public IDictionary<string, object> ModulesContent { get; }
+        public IDictionary<string, IDictionary<string, object>> ModulesContent { get; }
         /// <summary> The module configuration content. </summary>
         public IDictionary<string, object> ModuleContent { get; }
     }

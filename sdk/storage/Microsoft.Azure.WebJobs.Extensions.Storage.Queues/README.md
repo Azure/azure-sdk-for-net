@@ -37,17 +37,23 @@ The connection string can be supplied through [AzureWebJobsStorage app setting](
 
 ## Key concepts
 
-### Using Queue binding
-
-Please follow the [binding tutorial](https://docs.microsoft.com/azure/azure-functions/functions-bindings-storage-queue-output?tabs=csharp) to learn about using this extension for producing messages into queues in Azure Functions.
-
 ### Using Queue trigger
 
+The queue storage trigger runs a function as messages are added to Azure Queue storage.
+
 Please follow the [tutorial](https://docs.microsoft.com/azure/azure-functions/functions-bindings-storage-queue-trigger?tabs=csharp) to learn about how to listen to queues in Azure Functions.
+
+### Using Queue binding
+
+Azure Functions can create new Azure Queue storage messages by setting up an output binding.
+
+Please follow the [binding tutorial](https://docs.microsoft.com/azure/azure-functions/functions-bindings-storage-queue-output?tabs=csharp) to learn about using this extension for producing messages into queues in Azure Functions.
 
 ## Examples
 
 ### Listening to queue
+
+The following set of examples shows how to receive and react to messages that are being added to the queue.
 
 #### Binding queue message to string
 
@@ -60,6 +66,36 @@ public static class QueueTriggerFunction_String
         ILogger logger)
     {
         logger.LogInformation("Received message from sample-queue, content={content}", message);
+    }
+}
+```
+
+#### Binding queue message to BinaryData
+
+```C# Snippet:QueueTriggerFunction_BinaryData
+public static class QueueTriggerFunction_BinaryData
+{
+    [FunctionName("QueueTriggerFunction")]
+    public static void Run(
+        [QueueTrigger("sample-queue")] BinaryData message,
+        ILogger logger)
+    {
+        logger.LogInformation("Received message from sample-queue, content={content}", message.ToString());
+    }
+}
+```
+
+#### Binding queue message to QueueMessage
+
+```C# Snippet:QueueTriggerFunction_QueueMessage
+public static class QueueTriggerFunction_QueueMessage
+{
+    [FunctionName("QueueTriggerFunction")]
+    public static void Run(
+        [QueueTrigger("sample-queue")] QueueMessage message,
+        ILogger logger)
+    {
+        logger.LogInformation("Received message from sample-queue, content={content}", message.Body.ToString());
     }
 }
 ```
@@ -101,6 +137,10 @@ public static class QueueTriggerFunction_JObject
 
 ### Publishing messages to queue
 
+The following set of examples shows how to add messages to queue by using `Queue` attribute.
+
+The `QueueTrigger` is used just for sample completeness, i.e. any other trigger mechanism can be used instead.
+
 #### Publishing message as string
 
 ```C# Snippet:QueueSenderFunction_String_Return
@@ -113,6 +153,42 @@ public static class QueueSenderFunction_String_Return
         ILogger logger)
     {
         logger.LogInformation("Received message from sample-queue-1, content={content}", message);
+        logger.LogInformation("Dispatching message to sample-queue-2");
+        return message;
+    }
+}
+```
+
+#### Publishing message as BinaryData
+
+```C# Snippet:QueueSenderFunction_BinaryData_Return
+public static class QueueSenderFunction_BinaryData_Return
+{
+    [FunctionName("QueueFunction")]
+    [return: Queue("sample-queue-2")]
+    public static BinaryData Run(
+        [QueueTrigger("sample-queue-1")] BinaryData message,
+        ILogger logger)
+    {
+        logger.LogInformation("Received message from sample-queue-1, content={content}", message.ToString());
+        logger.LogInformation("Dispatching message to sample-queue-2");
+        return message;
+    }
+}
+```
+
+#### Publishing message as QueueMessage
+
+```C# Snippet:QueueSenderFunction_QueueMessage_Return
+public static class QueueSenderFunction_QueueMessage_Return
+{
+    [FunctionName("QueueFunction")]
+    [return: Queue("sample-queue-2")]
+    public static QueueMessage Run(
+        [QueueTrigger("sample-queue-1")] QueueMessage message,
+        ILogger logger)
+    {
+        logger.LogInformation("Received message from sample-queue-1, content={content}", message.Body.ToString());
         logger.LogInformation("Dispatching message to sample-queue-2");
         return message;
     }
@@ -164,6 +240,28 @@ public static class QueueSenderFunction_CustomObject_Collector
     }
 }
 ```
+
+### Accessing queue properties
+
+```C# Snippet:Function_BindingToQueueClient
+public static class Function_BindingToQueueClient
+{
+    [FunctionName("QueueFunction")]
+    public static async Task Run(
+        [QueueTrigger("sample-queue")] string message,
+        [Queue("sample-queue")] QueueClient queueClient,
+        ILogger logger)
+    {
+        logger.LogInformation("Received message from sample-queue, content={content}", message);
+        QueueProperties queueProperties = await queueClient.GetPropertiesAsync();
+        logger.LogInformation("There are approximatelly {count} messages", queueProperties.ApproximateMessagesCount);
+    }
+}
+```
+
+### Configuring the extension
+
+Please refer to [sample functions app](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Queues/samples/functionapp).
 
 ## Troubleshooting
 

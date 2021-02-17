@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Producer;
@@ -134,7 +133,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
                 else
                 {
-                   queuedEvents.Dequeue();
+                    queuedEvents.Dequeue();
                 }
             }
 

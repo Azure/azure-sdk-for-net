@@ -565,8 +565,12 @@ namespace Compute.Tests
                 {
                     Source = new UserArtifactSource
                     {
-                        FileName = "test.zip",
                         MediaLink = applicationMediaLink
+                    },
+                    ManageActions = new UserArtifactManage
+                    {
+                        Install = "powershell -command \"Expand-Archive -Path test.zip -DestinationPath C:\\package\"",
+                        Remove = "del C:\\package "
                     },
                     ReplicaCount = 1,
                     StorageAccountType = StorageAccountType.StandardLRS,

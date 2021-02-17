@@ -909,7 +909,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                 if (connection.IsClosing())
                 {
-                     throw new EventHubsException(true, EventHubName, Resources.UnknownCommunicationException, EventHubsException.FailureReason.ServiceCommunicationProblem);
+                    throw new EventHubsException(true, EventHubName, Resources.UnknownCommunicationException, EventHubsException.FailureReason.ServiceCommunicationProblem);
                 }
 
                 var authLink = connection.Extensions.Find<AmqpCbsLink>();

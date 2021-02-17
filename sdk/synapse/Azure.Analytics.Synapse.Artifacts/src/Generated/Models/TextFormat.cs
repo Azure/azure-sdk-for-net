@@ -8,13 +8,8 @@
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The data stored in text format. </summary>
-    internal partial class TextFormat : DatasetStorageFormat
+    public partial class TextFormat : DatasetStorageFormat
     {
-        /// <summary> Initializes a new instance of TextFormat. </summary>
-        internal TextFormat()
-        {
-            Type = "TextFormat";
-        }
 
         /// <summary> The column delimiter. Type: string (or Expression with resultType string). </summary>
         public object ColumnDelimiter { get; }

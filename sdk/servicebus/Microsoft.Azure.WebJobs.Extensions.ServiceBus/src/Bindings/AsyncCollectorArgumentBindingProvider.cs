@@ -5,7 +5,7 @@ using System;
 using System.Diagnostics;
 using System.Reflection;
 using System.Threading.Tasks;
-using Microsoft.Azure.ServiceBus;
+using Azure.Messaging.ServiceBus;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Converters;
 
@@ -53,9 +53,9 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
 
         private class AsyncCollectorArgumentBinding<TItem> : IArgumentBinding<ServiceBusEntity>
         {
-            private readonly IConverter<TItem, Message> _converter;
+            private readonly IConverter<TItem, ServiceBusMessage> _converter;
 
-            public AsyncCollectorArgumentBinding(IConverter<TItem, Message> converter)
+            public AsyncCollectorArgumentBinding(IConverter<TItem, ServiceBusMessage> converter)
             {
                 _converter = converter;
             }

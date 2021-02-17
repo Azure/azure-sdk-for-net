@@ -17,12 +17,13 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public readonly struct SentenceSentiment
     {
-        internal SentenceSentiment(TextSentiment sentiment, string text, double positiveScore, double neutralScore, double negativeScore, int offset, IReadOnlyList<MinedOpinion> minedOpinions)
+        internal SentenceSentiment(TextSentiment sentiment, string text, double positiveScore, double neutralScore, double negativeScore, int offset, int length, IReadOnlyList<MinedOpinion> minedOpinions)
         {
             Sentiment = sentiment;
             Text = text;
             ConfidenceScores = new SentimentConfidenceScores(positiveScore, neutralScore, negativeScore);
             Offset = offset;
+            Length = length;
             MinedOpinions = new List<MinedOpinion>(minedOpinions);
         }
 
@@ -36,6 +37,7 @@ namespace Azure.AI.TextAnalytics
             Sentiment = (TextSentiment)Enum.Parse(typeof(TextSentiment), sentenceSentiment.Sentiment, ignoreCase: true);
             MinedOpinions = ConvertToMinedOpinions(sentenceSentiment, allSentences);
             Offset = sentenceSentiment.Offset;
+            Length = sentenceSentiment.Length;
         }
 
         /// <summary>
@@ -61,9 +63,14 @@ namespace Azure.AI.TextAnalytics
         public IReadOnlyCollection<MinedOpinion> MinedOpinions { get; }
 
         /// <summary>
-        /// Gets the starting position (in UTF-16 code units) for the matching text in the sentence.
+        /// Gets the starting position for the matching text in the sentence.
         /// </summary>
         public int Offset { get; }
+
+        /// <summary>
+        /// Gets the length the matching text in the sentence.
+        /// </summary>
+        public int Length { get; }
 
         private static IReadOnlyCollection<MinedOpinion> ConvertToMinedOpinions(SentenceSentimentInternal sentence, IReadOnlyList<SentenceSentimentInternal> allSentences)
         {

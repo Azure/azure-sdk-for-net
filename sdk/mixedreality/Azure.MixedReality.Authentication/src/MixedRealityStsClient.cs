@@ -23,7 +23,7 @@ namespace Azure.MixedReality.Authentication
         /// <summary>
         /// Gets the Mixed Reality service account identifier.
         /// </summary>
-        public string AccountId { get; }
+        public Guid AccountId { get; }
 
         /// <summary>
         /// The Mixed Reality STS service endpoint.
@@ -37,7 +37,7 @@ namespace Azure.MixedReality.Authentication
         /// <param name="accountDomain">The Mixed Reality service account domain.</param>
         /// <param name="keyCredential">The Mixed Reality service account primary or secondary key credential.</param>
         /// <param name="options">The options.</param>
-        public MixedRealityStsClient(string accountId, string accountDomain, AzureKeyCredential keyCredential, MixedRealityStsClientOptions? options = null)
+        public MixedRealityStsClient(Guid accountId, string accountDomain, AzureKeyCredential keyCredential, MixedRealityStsClientOptions options = null)
             : this(accountId, AuthenticationEndpoint.ConstructFromDomain(accountDomain), new MixedRealityAccountKeyCredential(accountId, keyCredential), options) { }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace Azure.MixedReality.Authentication
         /// <param name="endpoint">The Mixed Reality STS service endpoint.</param>
         /// <param name="keyCredential">The Mixed Reality service account primary or secondary key credential.</param>
         /// <param name="options">The options.</param>
-        public MixedRealityStsClient(string accountId, Uri endpoint, AzureKeyCredential keyCredential, MixedRealityStsClientOptions? options = null)
+        public MixedRealityStsClient(Guid accountId, Uri endpoint, AzureKeyCredential keyCredential, MixedRealityStsClientOptions options = null)
             : this(accountId, endpoint, new MixedRealityAccountKeyCredential(accountId, keyCredential), options) { }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Azure.MixedReality.Authentication
         /// <param name="accountDomain">The Mixed Reality service account domain.</param>
         /// <param name="credential">The credential used to access the Mixed Reality service.</param>
         /// <param name="options">The options.</param>
-        public MixedRealityStsClient(string accountId, string accountDomain, TokenCredential credential, MixedRealityStsClientOptions? options = null)
+        public MixedRealityStsClient(Guid accountId, string accountDomain, TokenCredential credential, MixedRealityStsClientOptions options = null)
             : this(accountId, AuthenticationEndpoint.ConstructFromDomain(accountDomain), credential, options) { }
 
         /// <summary>
@@ -67,9 +67,9 @@ namespace Azure.MixedReality.Authentication
         /// <param name="endpoint">The Mixed Reality STS service endpoint.</param>
         /// <param name="credential">The credential used to access the Mixed Reality service.</param>
         /// <param name="options">The options.</param>
-        public MixedRealityStsClient(string accountId, Uri endpoint, TokenCredential credential, MixedRealityStsClientOptions? options = null)
+        public MixedRealityStsClient(Guid accountId, Uri endpoint, TokenCredential credential, MixedRealityStsClientOptions options = null)
         {
-            Argument.AssertNotNull(accountId, nameof(accountId));
+            Argument.AssertNotDefault(ref accountId, nameof(accountId));
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
 

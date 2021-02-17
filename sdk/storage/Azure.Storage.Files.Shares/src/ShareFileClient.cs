@@ -37,38 +37,24 @@ namespace Azure.Storage.Files.Shares
         public virtual Uri Uri => _uri;
 
         /// <summary>
-        /// The <see cref="HttpPipeline"/> transport pipeline used to send
-        /// every request.
+        /// <see cref="ShareClientConfiguration"/>.
         /// </summary>
-        private readonly HttpPipeline _pipeline;
+        private readonly ShareClientConfiguration _clientConfiguration;
 
         /// <summary>
-        /// Gets the <see cref="HttpPipeline"/> transport pipeline used to send
-        /// every request.
+        /// <see cref="ShareClientConfiguration"/>.
         /// </summary>
-        internal virtual HttpPipeline Pipeline => _pipeline;
+        internal virtual ShareClientConfiguration ClientConfiguration => _clientConfiguration;
 
         /// <summary>
-        /// The version of the service to use when sending requests.
+        /// FileRestClient.
         /// </summary>
-        private readonly ShareClientOptions.ServiceVersion _version;
+        private readonly FileRestClient _fileRestClient;
 
         /// <summary>
-        /// The version of the service to use when sending requests.
+        /// FileRestClient.
         /// </summary>
-        internal virtual ShareClientOptions.ServiceVersion Version => _version;
-
-        /// <summary>
-        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
-        /// every request.
-        /// </summary>
-        private readonly ClientDiagnostics _clientDiagnostics;
-
-        /// <summary>
-        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
-        /// every request.
-        /// </summary>
-        internal virtual ClientDiagnostics ClientDiagnostics => _clientDiagnostics;
+        internal virtual FileRestClient FileRestClient => _fileRestClient;
 
         /// <summary>
         /// The Storage account name corresponding to the file client.
@@ -139,20 +125,10 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary>
-        /// The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS
-        /// </summary>
-        internal readonly StorageSharedKeyCredential _storageSharedKeyCredential;
-
-        /// <summary>
-        /// Gets the The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS.
-        /// </summary>
-        internal virtual StorageSharedKeyCredential SharedKeyCredential => _storageSharedKeyCredential;
-
-        /// <summary>
         /// Determines whether the client is able to generate a SAS.
         /// If the client is authenticated with a <see cref="StorageSharedKeyCredential"/>.
         /// </summary>
-        public bool CanGenerateSasUri => SharedKeyCredential != null;
+        public virtual bool CanGenerateSasUri => ClientConfiguration.SharedKeyCredential != null;
 
         //const string fileType = "file";
 
@@ -221,17 +197,19 @@ namespace Azure.Storage.Files.Shares
         {
             options ??= new ShareClientOptions();
             var conn = StorageConnectionString.Parse(connectionString);
-            var builder =
+            ShareUriBuilder uriBuilder =
                 new ShareUriBuilder(conn.FileEndpoint)
                 {
                     ShareName = shareName,
                     DirectoryOrFilePath = filePath
                 };
-            _uri = builder.ToUri();
-            _pipeline = options.Build(conn.Credentials);
-            _version = options.Version;
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _storageSharedKeyCredential = conn.Credentials as StorageSharedKeyCredential;
+            _uri = uriBuilder.ToUri();
+            _clientConfiguration = new ShareClientConfiguration(
+                pipeline: options.Build(conn.Credentials),
+                sharedKeyCredential: conn.Credentials as StorageSharedKeyCredential,
+                clientDiagnostics: new ClientDiagnostics(options),
+                version: options.Version);
+            _fileRestClient = BuildFileRestClient(_uri);
         }
 
         /// <summary>
@@ -327,10 +305,12 @@ namespace Azure.Storage.Files.Shares
             Argument.AssertNotNull(fileUri, nameof(fileUri));
             options ??= new ShareClientOptions();
             _uri = fileUri;
-            _pipeline = options.Build(authentication);
-            _version = options.Version;
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _storageSharedKeyCredential = storageSharedKeyCredential;
+            _clientConfiguration = new ShareClientConfiguration(
+                pipeline: options.Build(authentication),
+                sharedKeyCredential: storageSharedKeyCredential,
+                clientDiagnostics: new ClientDiagnostics(options),
+                version: options.Version);
+            _fileRestClient = BuildFileRestClient(fileUri);
         }
 
         /// <summary>
@@ -340,31 +320,31 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="Uri"/> referencing the file that includes the
         /// name of the account, the name of the share, and the path of the file.
         /// </param>
-        /// <param name="pipeline">
-        /// The transport pipeline used to send every request.
-        /// </param>
-        /// <param name="storageSharedKeyCredential">
-        /// The shared key credential used to sign requests.
-        /// </param>
-        /// <param name="version">
-        /// The version of the service to use when sending requests.
-        /// </param>
-        /// <param name="clientDiagnostics">
-        /// The <see cref="ClientDiagnostics"/> instance used to create
-        /// diagnostic scopes every request.
+        /// <param name="clientConfiguration">
+        /// <see cref="ShareClientConfiguration"/>.
         /// </param>
         internal ShareFileClient(
             Uri fileUri,
-            HttpPipeline pipeline,
-            StorageSharedKeyCredential storageSharedKeyCredential,
-            ShareClientOptions.ServiceVersion version,
-            ClientDiagnostics clientDiagnostics)
+            ShareClientConfiguration clientConfiguration)
         {
             _uri = fileUri;
-            _pipeline = pipeline;
-            _storageSharedKeyCredential = storageSharedKeyCredential;
-            _version = version;
-            _clientDiagnostics = clientDiagnostics;
+            _clientConfiguration = clientConfiguration;
+            _fileRestClient = BuildFileRestClient(fileUri);
+        }
+
+        private FileRestClient BuildFileRestClient(Uri uri)
+        {
+            ShareUriBuilder uriBuilder = new ShareUriBuilder(uri)
+            {
+                ShareName = null,
+                DirectoryOrFilePath = null
+            };
+            return new FileRestClient(
+                _clientConfiguration.ClientDiagnostics,
+                _clientConfiguration.Pipeline,
+                uriBuilder.ToUri().ToString(),
+                path: $"{ShareName}/{Path.EscapePath()}",
+                _clientConfiguration.Version.ToVersionString());
         }
         #endregion ctors
 
@@ -389,7 +369,7 @@ namespace Azure.Storage.Files.Shares
         public virtual ShareFileClient WithSnapshot(string shareSnapshot)
         {
             var builder = new ShareUriBuilder(Uri) { Snapshot = shareSnapshot };
-            return new ShareFileClient(builder.ToUri(), Pipeline, SharedKeyCredential, Version, ClientDiagnostics);
+            return new ShareFileClient(builder.ToUri(), ClientConfiguration);
         }
 
         /// <summary>
@@ -707,16 +687,21 @@ namespace Azure.Storage.Files.Shares
             CancellationToken cancellationToken,
             string operationName = default)
         {
-            using (Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareFileClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(maxSize)}: {maxSize}\n" +
                     $"{nameof(httpHeaders)}: {httpHeaders}");
+
+                operationName ??= $"{nameof(ShareFileClient)}.{nameof(Create)}";
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
+
                 try
                 {
+                    scope.Start();
                     FileSmbProperties smbProps = smbProperties ?? new FileSmbProperties();
 
                     ShareExtensions.AssertValidFilePermissionAndKey(filePermission, smbProps.FilePermissionKey);
@@ -726,40 +711,52 @@ namespace Azure.Storage.Files.Shares
                         filePermission = Constants.File.FilePermissionInherit;
                     }
 
-                    Response<RawStorageFileInfo> response = await FileRestClient.File.CreateAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
-                        fileContentLength: maxSize,
-                        fileContentType: httpHeaders?.ContentType,
-                        fileContentEncoding: httpHeaders?.ContentEncoding,
-                        fileContentLanguage: httpHeaders?.ContentLanguage,
-                        fileCacheControl: httpHeaders?.CacheControl,
-                        fileContentHash: httpHeaders?.ContentHash,
-                        fileContentDisposition: httpHeaders?.ContentDisposition,
-                        metadata: metadata,
-                        fileAttributes: smbProps.FileAttributes?.ToAttributesString() ?? Constants.File.FileAttributesNone,
-                        filePermission: filePermission,
-                        fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString() ?? Constants.File.FileTimeNow,
-                        fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.FileTimeNow,
-                        filePermissionKey: smbProps.FilePermissionKey,
-                        leaseId: conditions?.LeaseId,
-                        async: async,
-                        cancellationToken: cancellationToken,
-                        operationName: operationName ?? $"{nameof(ShareFileClient)}.{nameof(Create)}")
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<FileCreateHeaders> response;
 
-                    return Response.FromValue(new ShareFileInfo(response.Value), response.GetRawResponse());
+                    if (async)
+                    {
+                        response = await FileRestClient.CreateAsync(
+                            fileContentLength: maxSize,
+                            fileAttributes: smbProps.FileAttributes?.ToAttributesString() ?? Constants.File.FileAttributesNone,
+                            fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString() ?? Constants.File.FileTimeNow,
+                            fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.FileTimeNow,
+                            metadata: metadata,
+                            filePermission: filePermission,
+                            filePermissionKey: smbProps.FilePermissionKey,
+                            fileHttpHeaders: httpHeaders.ToFileHttpHeaders(),
+                            leaseAccessConditions: conditions,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = FileRestClient.Create(
+                            fileContentLength: maxSize,
+                            fileAttributes: smbProps.FileAttributes?.ToAttributesString() ?? Constants.File.FileAttributesNone,
+                            fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString() ?? Constants.File.FileTimeNow,
+                            fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.FileTimeNow,
+                            metadata: metadata,
+                            filePermission: filePermission,
+                            filePermissionKey: smbProps.FilePermissionKey,
+                            fileHttpHeaders: httpHeaders.ToFileHttpHeaders(),
+                            leaseAccessConditions: conditions,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.ToShareFileInfo(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -837,9 +834,9 @@ namespace Azure.Storage.Files.Shares
             CancellationToken cancellationToken,
             string operationName = default)
         {
-            using (Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareFileClient),
                     message:
                     $"{nameof(Uri)}: {Uri}");
@@ -864,12 +861,12 @@ namespace Azure.Storage.Files.Shares
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareFileClient));
                 }
             }
         }
@@ -971,9 +968,9 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareFileClient),
                     message:
                     $"{nameof(Uri)}: {Uri}");
@@ -996,12 +993,12 @@ namespace Azure.Storage.Files.Shares
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareFileClient));
                 }
             }
         }
@@ -1306,44 +1303,71 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareFileClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(sourceUri)}: {sourceUri}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(StartCopy)}");
+
                 try
                 {
-                    return await FileRestClient.File.StartCopyAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
-                        copySource: sourceUri,
-                        metadata: metadata,
-                        leaseId: conditions?.LeaseId,
-                        filePermission: filePermission,
-                        filePermissionKey: smbProperties?.FilePermissionKey,
-                        filePermissionCopyMode: filePermissionCopyMode,
-                        ignoreReadOnly: ignoreReadOnly,
-                        fileAttributes: smbProperties?.FileAttributes?.ToAttributesString(),
-                        fileCreationTime: smbProperties?.FileCreatedOn.ToFileDateTimeString(),
-                        fileLastWriteTime: smbProperties?.FileLastWrittenOn.ToFileDateTimeString(),
-                        setArchiveAttribute: setArchiveAttribute,
-                        async: async,
-                        cancellationToken: cancellationToken,
-                        operationName: $"{nameof(ShareFileClient)}.{nameof(StartCopy)}")
-                        .ConfigureAwait(false);
+                    scope.Start();
+                    ResponseWithHeaders<FileStartCopyHeaders> response;
+
+                    CopyFileSmbInfo copyFileSmbInfo = new CopyFileSmbInfo
+                    {
+                        FilePermissionCopyMode = filePermissionCopyMode,
+                        IgnoreReadOnly = ignoreReadOnly,
+                        FileAttributes = smbProperties?.FileAttributes?.ToAttributesString(),
+                        FileCreationTime = smbProperties?.FileCreatedOn.ToFileDateTimeString(),
+                        FileLastWriteTime = smbProperties?.FileLastWrittenOn.ToFileDateTimeString(),
+                        SetArchiveAttribute = setArchiveAttribute
+                    };
+
+                    ShareUriBuilder uriBuilder = new ShareUriBuilder(sourceUri);
+
+                    if (async)
+                    {
+                        response = await FileRestClient.StartCopyAsync(
+                            copySource: uriBuilder.ToString(),
+                            metadata: metadata,
+                            filePermission: filePermission,
+                            filePermissionKey: smbProperties?.FilePermissionKey,
+                            copyFileSmbInfo: copyFileSmbInfo,
+                            leaseAccessConditions: conditions,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = FileRestClient.StartCopy(
+                            copySource: uriBuilder.ToString(),
+                            metadata: metadata,
+                            filePermission: filePermission,
+                            filePermissionKey: smbProperties?.FilePermissionKey,
+                            copyFileSmbInfo: copyFileSmbInfo,
+                            leaseAccessConditions: conditions,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.ToShareFileCopyInfo(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -1526,35 +1550,49 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareFileClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(copyId)}: {copyId}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(AbortCopy)}");
+
                 try
                 {
-                    return await FileRestClient.File.AbortCopyAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        copyId: copyId,
-                        leaseId: conditions?.LeaseId,
-                        version: Version.ToVersionString(),
-                        async: async,
-                        cancellationToken: cancellationToken,
-                        operationName: $"{nameof(ShareFileClient)}.{nameof(AbortCopy)}")
-                        .ConfigureAwait(false);
+                    scope.Start();
+                    ResponseWithHeaders<FileAbortCopyHeaders> response;
+
+                    if (async)
+                    {
+                        response = await FileRestClient.AbortCopyAsync(
+                            copyId: copyId,
+                            leaseAccessConditions: conditions,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = FileRestClient.AbortCopy(
+                            copyId: copyId,
+                            leaseAccessConditions: conditions,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return response.GetRawResponse();
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -1803,17 +1841,22 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareFileClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(rangeGetContentHash)}: {rangeGetContentHash}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(Download)}");
+
                 try
                 {
+                    scope.Start();
+
                     // Start downloading the file
-                    (Response<FlattenedStorageFileProperties> response, Stream stream) = await StartDownloadAsync(
+                    (Response<ShareFileDownloadInfo> response, Stream stream) = await StartDownloadAsync(
                         range,
                         rangeGetContentHash,
                         conditions: conditions,
@@ -1846,21 +1889,21 @@ namespace Azure.Storage.Files.Shares
                                 cancellationToken)
                                 .ConfigureAwait(false))
                                 .Item2,
-                        Pipeline.ResponseClassifier,
+                        ClientConfiguration.Pipeline.ResponseClassifier,
                         Constants.MaxReliabilityRetries);
 
-                    // Wrap the FlattenedStorageFileProperties into a StorageFileDownloadInfo
-                    // to make the Content easier to find
-                    return Response.FromValue(new ShareFileDownloadInfo(response.Value), response.GetRawResponse());
+                    return response;
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -1899,11 +1942,9 @@ namespace Azure.Storage.Files.Shares
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{FlattenedStorageFileProperties}"/> describing the
-        /// downloaded file.  <see cref="FlattenedStorageFileProperties.Content"/> contains
-        /// the file's data.
+        /// <see cref="Response{ShareFileDownloadInfo}"/> and a <see cref="Stream"/>.
         /// </returns>
-        private async Task<(Response<FlattenedStorageFileProperties>, Stream)> StartDownloadAsync(
+        private async Task<(Response<ShareFileDownloadInfo>, Stream)> StartDownloadAsync(
             HttpRange range = default,
             bool rangeGetContentHash = default,
             long startOffset = 0,
@@ -1916,22 +1957,33 @@ namespace Azure.Storage.Files.Shares
                 range.Length.HasValue ?
                     range.Length.Value - startOffset :
                     (long?)null);
-            Pipeline.LogTrace($"Download {Uri} with range: {pageRange}");
-            (Response<FlattenedStorageFileProperties> response, Stream stream) =
-                await FileRestClient.File.DownloadAsync(
-                    ClientDiagnostics,
-                    Pipeline,
-                    Uri,
-                    version: Version.ToVersionString(),
+            ClientConfiguration.Pipeline.LogTrace($"Download {Uri} with range: {pageRange}");
+
+            ResponseWithHeaders<Stream, FileDownloadHeaders> response;
+
+            if (async)
+            {
+                response = await FileRestClient.DownloadAsync(
                     range: pageRange.ToString(),
-                    rangeGetContentHash: rangeGetContentHash ? (bool?)true : null,
-                    leaseId: conditions?.LeaseId,
-                    async: async,
-                    cancellationToken: cancellationToken,
-                    operationName: $"{nameof(ShareFileClient)}.{nameof(Download)}")
+                    rangeGetContentMD5: range == default ? null : rangeGetContentHash,
+                    leaseAccessConditions: conditions,
+                    cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
-            Pipeline.LogTrace($"Response: {response.GetRawResponse().Status}, ContentLength: {response.Value.ContentLength}");
-            return (response, stream);
+            }
+            else
+            {
+                response = FileRestClient.Download(
+                    range: pageRange.ToString(),
+                    rangeGetContentMD5: range == default ? null : rangeGetContentHash,
+                    leaseAccessConditions: conditions,
+                    cancellationToken: cancellationToken);
+            }
+
+            return (
+                Response.FromValue(
+                    response.ToShareFileDownloadInfo(),
+                    response.GetRawResponse()),
+                response.Value);
         }
         #endregion Download
 
@@ -2180,7 +2232,7 @@ namespace Azure.Storage.Files.Shares
             CancellationToken cancellationToken)
 #pragma warning restore CA1801
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(OpenRead)}");
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(OpenRead)}");
             try
             {
                 scope.Start();
@@ -2385,32 +2437,46 @@ namespace Azure.Storage.Files.Shares
             CancellationToken cancellationToken,
             string operationName = default)
         {
-            using (Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareFileClient),
                     message: $"{nameof(Uri)}: {Uri}");
+
+                operationName ??= $"{nameof(ShareFileClient)}.{nameof(Delete)}";
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
+
                 try
                 {
-                    return await FileRestClient.File.DeleteAsync(
-                        clientDiagnostics: ClientDiagnostics,
-                        pipeline: Pipeline,
-                        resourceUri: Uri,
-                        leaseId: conditions?.LeaseId,
-                        version: Version.ToVersionString(),
-                        async: async,
-                        cancellationToken: cancellationToken,
-                        operationName: operationName ?? $"{nameof(ShareFileClient)}.{nameof(Delete)}")
-                        .ConfigureAwait(false);
+                    scope.Start();
+                    ResponseWithHeaders<FileDeleteHeaders> response;
+
+                    if (async)
+                    {
+                        response = await FileRestClient.DeleteAsync(
+                            leaseAccessConditions: conditions,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = FileRestClient.Delete(
+                            leaseAccessConditions: conditions,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return response.GetRawResponse();
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -2590,38 +2656,52 @@ namespace Azure.Storage.Files.Shares
             CancellationToken cancellationToken,
             string operationName = default)
         {
-            using (Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareFileClient),
                     message:
                     $"{nameof(Uri)}: {Uri}");
+
+                operationName ??= $"{nameof(ShareFileClient)}.{nameof(GetProperties)}";
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
+
                 try
                 {
-                    Response<RawStorageFileProperties> response = await FileRestClient.File.GetPropertiesAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        leaseId: conditions?.LeaseId,
-                        version: Version.ToVersionString(),
-                        async: async,
-                        cancellationToken: cancellationToken,
-                        operationName: operationName ?? $"{nameof(ShareFileClient)}.{nameof(GetProperties)}")
-                        .ConfigureAwait(false);
+                    scope.Start();
+                    ResponseWithHeaders<FileGetPropertiesHeaders> response;
+
+                    if (async)
+                    {
+                        response = await FileRestClient.GetPropertiesAsync(
+                            leaseAccessConditions: conditions,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = FileRestClient.GetProperties(
+                            leaseAccessConditions: conditions,
+                            cancellationToken: cancellationToken);
+                    }
 
                     // Return an exploding Response on 304
-                    return response.IsUnavailable() ?
-                        response.GetRawResponse().AsNoBodyResponse<ShareFileProperties>() :
-                        Response.FromValue(new ShareFileProperties(response.Value), response.GetRawResponse());
+                    return response.GetRawResponse().Status == Constants.HttpStatusCode.NotModified
+                        ? response.GetRawResponse().AsNoBodyResponse<ShareFileProperties>()
+                        : Response.FromValue(
+                        response.ToShareFileProperties(),
+                            response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -2900,16 +2980,20 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareFileClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(newSize)}: {newSize}\n" +
                     $"{nameof(httpHeaders)}: {httpHeaders}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(SetHttpHeaders)}");
+
                 try
                 {
+                    scope.Start();
                     FileSmbProperties smbProps = smbProperties ?? new FileSmbProperties();
 
                     ShareExtensions.AssertValidFilePermissionAndKey(filePermission, smbProps.FilePermissionKey);
@@ -2918,39 +3002,50 @@ namespace Azure.Storage.Files.Shares
                         filePermission = Constants.File.Preserve;
                     }
 
-                    Response<RawStorageFileInfo> response = await FileRestClient.File.SetPropertiesAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
-                        fileContentLength: newSize,
-                        fileContentType: httpHeaders?.ContentType,
-                        fileContentEncoding: httpHeaders?.ContentEncoding,
-                        fileContentLanguage: httpHeaders?.ContentLanguage,
-                        fileCacheControl: httpHeaders?.CacheControl,
-                        fileContentHash: httpHeaders?.ContentHash,
-                        fileContentDisposition: httpHeaders?.ContentDisposition,
-                        fileAttributes: smbProps.FileAttributes?.ToAttributesString() ?? Constants.File.Preserve,
-                        filePermission: filePermission,
-                        fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString() ?? Constants.File.Preserve,
-                        fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.Preserve,
-                        filePermissionKey: smbProps.FilePermissionKey,
-                        leaseId: conditions?.LeaseId,
-                        async: async,
-                        operationName: $"{nameof(ShareFileClient)}.{nameof(SetHttpHeaders)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<FileSetHttpHeadersHeaders> response;
 
-                    return Response.FromValue(new ShareFileInfo(response.Value), response.GetRawResponse());
+                    if (async)
+                    {
+                        response = await FileRestClient.SetHttpHeadersAsync(
+                            fileAttributes: smbProps.FileAttributes?.ToAttributesString() ?? Constants.File.Preserve,
+                            fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString() ?? Constants.File.Preserve,
+                            fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.Preserve,
+                            fileContentLength: newSize,
+                            filePermission: filePermission,
+                            filePermissionKey: smbProps.FilePermissionKey,
+                            fileHttpHeaders: httpHeaders.ToFileHttpHeaders(),
+                            leaseAccessConditions: conditions,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = FileRestClient.SetHttpHeaders(
+                            fileAttributes: smbProps.FileAttributes?.ToAttributesString() ?? Constants.File.Preserve,
+                            fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString() ?? Constants.File.Preserve,
+                            fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.Preserve,
+                            fileContentLength: newSize,
+                            filePermission: filePermission,
+                            filePermissionKey: smbProps.FilePermissionKey,
+                            fileHttpHeaders: httpHeaders.ToFileHttpHeaders(),
+                            leaseAccessConditions: conditions,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.ToShareFileInfo(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -3141,35 +3236,49 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareFileClient),
                     message: $"{nameof(Uri)}: {Uri}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(SetMetadata)}");
+
                 try
                 {
-                    Response<RawStorageFileInfo> response = await FileRestClient.File.SetMetadataAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
-                        metadata: metadata,
-                        leaseId: conditions?.LeaseId,
-                        async: async,
-                        cancellationToken: cancellationToken,
-                        operationName: $"{nameof(ShareFileClient)}.{nameof(SetMetadata)}")
-                        .ConfigureAwait(false);
+                    scope.Start();
+                    ResponseWithHeaders<FileSetMetadataHeaders> response;
 
-                    return Response.FromValue(new ShareFileInfo(response.Value), response.GetRawResponse());
+                    if (async)
+                    {
+                        response = await FileRestClient.SetMetadataAsync(
+                            metadata: metadata,
+                            leaseAccessConditions: conditions,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = FileRestClient.SetMetadata(
+                            metadata: metadata,
+                            leaseAccessConditions: conditions,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.ToShareFileInfo(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -3288,40 +3397,58 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
-                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(ClearRange)}");
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(ClearRange)}");
 
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareFileClient),
                     message:
                     $"{nameof(Uri)}: {Uri}");
                 try
                 {
                     scope.Start();
-                    return await FileRestClient.File.UploadRangeAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
-                        range: range.ToString(),
-                        fileRangeWrite: ShareFileRangeWriteType.Clear,
-                        contentLength: 0,
-                        leaseId: conditions?.LeaseId,
-                        async: async,
-                        cancellationToken: cancellationToken,
-                        operationName: $"{nameof(ShareFileClient)}.{nameof(UploadRange)}").ConfigureAwait(false);
+
+                    ResponseWithHeaders<FileUploadRangeHeaders> response;
+
+                    if (async)
+                    {
+                        response = await FileRestClient.UploadRangeAsync(
+                            range: range.ToString(),
+                            fileRangeWrite: ShareFileRangeWriteType.Clear,
+                            contentLength: 0,
+                            // TODO remove this
+                            optionalbody: new MemoryStream(),
+                            leaseAccessConditions: conditions,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = FileRestClient.UploadRange(
+                            range: range.ToString(),
+                            fileRangeWrite: ShareFileRangeWriteType.Clear,
+                            contentLength: 0,
+                            // TODO remove this
+                            optionalbody: new MemoryStream(),
+                            leaseAccessConditions: conditions,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.ToShareFileUploadInfo(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
                     scope.Failed(ex);
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
                     scope.Dispose();
-                    Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareFileClient));
                 }
             }
         }
@@ -3621,39 +3748,61 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareFileClient),
                     message:
                     $"{nameof(Uri)}: {Uri}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(UploadRange)}");
+
                 try
                 {
+                    scope.Start();
                     Errors.VerifyStreamPosition(content, nameof(content));
                     content = content.WithNoDispose().WithProgress(progressHandler);
-                    return await FileRestClient.File.UploadRangeAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
-                        optionalbody: content,
-                        contentLength: (content?.Length - content?.Position) ?? 0,
-                        range: range.ToString(),
-                        fileRangeWrite: ShareFileRangeWriteType.Update,
-                        contentHash: transactionalContentHash,
-                        leaseId: conditions?.LeaseId,
-                        async: async,
-                        cancellationToken: cancellationToken,
-                        operationName: $"{nameof(ShareFileClient)}.{nameof(UploadRange)}").ConfigureAwait(false);
+
+                    ResponseWithHeaders<FileUploadRangeHeaders> response;
+
+                    if (async)
+                    {
+                        response = await FileRestClient.UploadRangeAsync(
+                            range: range.ToString(),
+                            fileRangeWrite: ShareFileRangeWriteType.Update,
+                            contentLength: (content?.Length - content?.Position) ?? 0,
+                            optionalbody: content,
+                            contentMD5: transactionalContentHash,
+                            leaseAccessConditions: conditions,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = FileRestClient.UploadRange(
+                            range: range.ToString(),
+                            fileRangeWrite: ShareFileRangeWriteType.Update,
+                            contentLength: (content?.Length - content?.Position) ?? 0,
+                            optionalbody: content,
+                            contentMD5: transactionalContentHash,
+                            leaseAccessConditions: conditions,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.ToShareFileUploadInfo(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -3884,46 +4033,51 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareFileClient),
                     message:
                     $"{nameof(this.Uri)}: {this.Uri}\n" +
                     $"{nameof(sourceUri)}: {sourceUri}");
                 try
                 {
-                    var response = await FileRestClient.File.UploadRangeFromURLAsync(
-                        clientDiagnostics: ClientDiagnostics,
-                        pipeline: Pipeline,
-                        resourceUri: Uri,
-                        range: range.ToString(),
-                        copySource: sourceUri,
-                        contentLength: default,
-                        version: Version.ToVersionString(),
-                        sourceRange: sourceRange.ToString(),
-                        leaseId: conditions?.LeaseId,
-                        async: async,
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<FileUploadRangeFromURLHeaders> response;
+
+                    if (async)
+                    {
+                        response = await FileRestClient.UploadRangeFromURLAsync(
+                            range: range.ToString(),
+                            copySource: sourceUri.ToString(),
+                            contentLength: 0,
+                            sourceRange: sourceRange.ToString(),
+                            leaseAccessConditions: conditions,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = FileRestClient.UploadRangeFromURL(
+                            range: range.ToString(),
+                            copySource: sourceUri.ToString(),
+                            contentLength: 0,
+                            sourceRange: sourceRange.ToString(),
+                            leaseAccessConditions: conditions,
+                            cancellationToken: cancellationToken);
+                    }
 
                     return Response.FromValue(
-                        new ShareFileUploadInfo
-                        {
-                            ETag = response.Value.ETag,
-                            LastModified = response.Value.LastModified,
-                            ContentHash = response.Value.XMSContentCrc64,
-                            IsServerEncrypted = response.Value.IsServerEncrypted
-                        }, response.GetRawResponse());
+                        response.ToShareFileUploadInfo(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareFileClient));
                 }
             }
         }
@@ -4518,37 +4672,55 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareFileClient),
                     message:
                     $"{nameof(Uri)}: {Uri}");
+
+                operationName ??= $"{nameof(ShareFileClient)}.{nameof(GetRangeList)}";
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
+
                 try
                 {
-                    Response<ShareFileRangeInfoInternal> response = await FileRestClient.File.GetRangeListAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
-                        sharesnapshot: snapshot,
-                        prevsharesnapshot: previousSnapshot,
-                        range: range?.ToString(),
-                        leaseId: conditions?.LeaseId,
-                        async: async,
-                        cancellationToken: cancellationToken,
-                        operationName: operationName?? $"{nameof(ShareFileClient)}.{nameof(GetRangeList)}")
-                        .ConfigureAwait(false);
-                    return Response.FromValue(new ShareFileRangeInfo(response.Value), response.GetRawResponse());
+                    scope.Start();
+                    ResponseWithHeaders<ShareFileRangeList, FileGetRangeListHeaders> response;
+
+                    if (async)
+                    {
+                        response = await FileRestClient.GetRangeListAsync(
+                            sharesnapshot: snapshot,
+                            prevsharesnapshot: previousSnapshot,
+                            range: range?.ToString(),
+                            leaseAccessConditions: conditions,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = FileRestClient.GetRangeList(
+                            sharesnapshot: snapshot,
+                            prevsharesnapshot: previousSnapshot,
+                            range: range?.ToString(),
+                            leaseAccessConditions: conditions,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.ToShareFileRangeInfo(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -4724,36 +4896,52 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareFileClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(marker)}: {marker}\n" +
                     $"{nameof(maxResults)}: {maxResults}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(GetHandles)}");
+
                 try
                 {
-                    return await FileRestClient.File.ListHandlesAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
-                        marker: marker,
-                        maxresults: maxResults,
-                        async: async,
-                        operationName: $"{nameof(ShareFileClient)}.{nameof(GetHandles)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    scope.Start();
+                    ResponseWithHeaders<ListHandlesResponse, FileListHandlesHeaders> response;
+
+                    if (async)
+                    {
+                        response = await FileRestClient.ListHandlesAsync(
+                            marker: marker,
+                            maxresults: maxResults,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = FileRestClient.ListHandles(
+                            marker: marker,
+                            maxresults: maxResults,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.Value.ToStorageHandlesSegment(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -5022,36 +5210,53 @@ namespace Azure.Storage.Files.Shares
             CancellationToken cancellationToken,
             string operationName = null)
         {
-            using (Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareFileClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(handleId)}: {handleId}\n" +
                     $"{nameof(marker)}: {marker}");
+
+                operationName ??= $"{nameof(ShareFileClient)}.{nameof(ForceCloseAllHandles)}";
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
+
                 try
                 {
-                    return await FileRestClient.File.ForceCloseHandlesAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        marker: marker,
-                        handleId: handleId,
-                        version: Version.ToVersionString(),
-                        async: async,
-                        cancellationToken: cancellationToken,
-                        operationName: operationName ?? $"{nameof(ShareFileClient)}.{nameof(ForceCloseAllHandles)}")
-                        .ConfigureAwait(false);
+                    scope.Start();
+                    ResponseWithHeaders<FileForceCloseHandlesHeaders> response;
+
+                    if (async)
+                    {
+                        response = await FileRestClient.ForceCloseHandlesAsync(
+                            handleId: handleId,
+                            marker: marker,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = FileRestClient.ForceCloseHandles(
+                            handleId: handleId,
+                            marker: marker,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.ToStorageClosedHandlesSegment(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -5167,7 +5372,7 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(OpenWrite)}");
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(OpenWrite)}");
 
             try
             {
@@ -5320,7 +5525,7 @@ namespace Azure.Storage.Files.Shares
             }
             ShareUriBuilder sasUri = new ShareUriBuilder(Uri)
             {
-                Query = builder.ToSasQueryParameters(SharedKeyCredential).ToString()
+                Query = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential).ToString()
             };
             return sasUri.ToUri();
         }

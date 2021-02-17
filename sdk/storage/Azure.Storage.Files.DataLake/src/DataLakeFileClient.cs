@@ -26,7 +26,7 @@ namespace Azure.Storage.Files.DataLake
     public class DataLakeFileClient : DataLakePathClient
     {
         /// <summary>
-        /// Gets the maximum number of bytes that can be sent in a call
+        /// Gets the maximum number of bytes that can be sent in each append call in
         /// to <see cref="UploadAsync(Stream, PathHttpHeaders, DataLakeRequestConditions, IProgress{long}, StorageTransferOptions, CancellationToken)"/>.
         /// Supported value is now larger than <see cref="int.MaxValue"/>; please use
         /// <see cref="MaxUploadLongBytes"/>.
@@ -37,8 +37,8 @@ namespace Azure.Storage.Files.DataLake
             : int.MaxValue;  // value is larger than can be represented by an int
 
         /// <summary>
-        /// Gets the maximum number of bytes that can be sent in a call
-        /// to <see cref="UploadAsync(Stream, PathHttpHeaders, DataLakeRequestConditions, IProgress{long}, StorageTransferOptions, CancellationToken)"/>.
+        /// Gets the maximum number of bytes that can be sent in each append call in
+        /// <see cref="UploadAsync(Stream, PathHttpHeaders, DataLakeRequestConditions, IProgress{long}, StorageTransferOptions, CancellationToken)"/>.
         /// </summary>
         public virtual long MaxUploadLongBytes => Version < DataLakeClientOptions.ServiceVersion.V2019_12_12
             ? Constants.DataLake.Pre_2019_12_12_MaxAppendBytes

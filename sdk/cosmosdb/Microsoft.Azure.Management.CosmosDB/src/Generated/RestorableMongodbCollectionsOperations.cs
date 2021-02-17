@@ -51,8 +51,11 @@ namespace Microsoft.Azure.Management.CosmosDB
         public CosmosDBManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Lists all the restorable Azure Cosmos DB MongoDB collection available for a
-        /// specific database.
+        /// Show the event feed of all mutations done on all the Azure Cosmos DB
+        /// MongoDB collections under a specific database.  This helps in scenario
+        /// where container was accidentally deleted.  This API requires
+        /// 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/*/read'
+        /// permission
         /// </summary>
         /// <param name='location'>
         /// Cosmos DB region, with spaces between words and each word capitalized.
@@ -61,7 +64,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// The instanceId GUID of a restorable database account.
         /// </param>
         /// <param name='restorableMongodbDatabaseRid'>
-        /// The resource id of the restorable Mongo database.
+        /// The resource ID of the MongoDB database.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -69,7 +72,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="DefaultErrorResponseException">
+        /// <exception cref="CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -195,13 +198,14 @@ namespace Microsoft.Azure.Management.CosmosDB
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new DefaultErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    DefaultErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<DefaultErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
+                        ex = new CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
                     }
                 }
@@ -211,6 +215,10 @@ namespace Microsoft.Azure.Management.CosmosDB
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);

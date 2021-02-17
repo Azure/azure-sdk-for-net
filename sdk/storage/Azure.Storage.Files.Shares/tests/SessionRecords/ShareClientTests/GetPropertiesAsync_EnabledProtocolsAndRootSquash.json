@@ -1,4 +1,4 @@
-{
+﻿{
   "Entries": [
     {
       "RequestUri": "https://seancanarypremiumfile2.file.core.windows.net/test-share-31da7c42-d479-9a5e-41e3-0e9abb71b88e?restype=share",
@@ -15,13 +15,14 @@
         "x-ms-enabled-protocols": "NFS",
         "x-ms-return-client-request-id": "true",
         "x-ms-root-squash": "AllSquash",
-        "x-ms-version": "2020-04-08"
+        "x-ms-version": "2020-06-12",
+        "Accept": "application/xml"
       },
       "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
         "Date": "Tue, 20 Oct 2020 19:02:58 GMT",
-        "ETag": "\u00220x8D8752AC2EE1ED7\u0022",
+        "ETag": "\"0x8D8752AC2EE1ED7\"",
         "Last-Modified": "Tue, 20 Oct 2020 19:02:59 GMT",
         "Server": [
           "Windows-Azure-File/1.0",
@@ -30,7 +31,7 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "ebcb4831-9496-9370-f9ff-9188a3fc59e7",
         "x-ms-request-id": "15b12132-a01a-0073-3e13-a76edf000000",
-        "x-ms-version": "2020-04-08"
+        "x-ms-version": "2020-06-12"
       },
       "ResponseBody": []
     },
@@ -47,13 +48,14 @@
         "x-ms-client-request-id": "7368d4b8-cda6-8ef7-4eeb-ea3f1f2b5e08",
         "x-ms-date": "Tue, 20 Oct 2020 19:02:58 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-04-08"
+        "x-ms-version": "2020-06-12",
+        "Accept": "application/xml"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Date": "Tue, 20 Oct 2020 19:02:58 GMT",
-        "ETag": "\u00220x8D8752AC2EE1ED7\u0022",
+        "ETag": "\"0x8D8752AC2EE1ED7\"",
         "Last-Modified": "Tue, 20 Oct 2020 19:02:59 GMT",
         "Server": [
           "Windows-Azure-File/1.0",
@@ -72,7 +74,7 @@
         "x-ms-share-provisioned-ingress-mbps": "44",
         "x-ms-share-provisioned-iops": "500",
         "x-ms-share-quota": "100",
-        "x-ms-version": "2020-04-08"
+        "x-ms-version": "2020-06-12"
       },
       "ResponseBody": []
     }

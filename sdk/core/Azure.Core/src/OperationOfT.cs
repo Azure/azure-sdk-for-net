@@ -15,7 +15,9 @@ namespace Azure
     /// </summary>
     /// <typeparam name="T">The final result of the long-running operation.</typeparam>
 #pragma warning disable SA1649 // File name should match first type name
+#pragma warning disable AZC0012 // Avoid single word type names
     public abstract class Operation<T> where T : notnull
+#pragma warning restore AZC0012 // Avoid single word type names
 #pragma warning restore SA1649 // File name should match first type name
     {
         /// <summary>

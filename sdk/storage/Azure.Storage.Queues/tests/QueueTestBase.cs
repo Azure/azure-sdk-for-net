@@ -56,13 +56,15 @@ namespace Azure.Storage.Queues.Tests
         }
 
         public QueueServiceClient GetServiceClient_SharedKey(QueueClientOptions options = default)
-            => InstrumentClient(
-                new QueueServiceClient(
+            => InstrumentClient(GetServiceClient_SharedKey_UnInstrumented(options));
+
+        private QueueServiceClient GetServiceClient_SharedKey_UnInstrumented(QueueClientOptions options = default)
+            => new QueueServiceClient(
                     new Uri(TestConfigDefault.QueueServiceEndpoint),
                     new StorageSharedKeyCredential(
                         TestConfigDefault.AccountName,
                         TestConfigDefault.AccountKey),
-                    options ?? GetOptions()));
+                    options ?? GetOptions());
 
         public QueueServiceClient GetServiceClient_AccountSas(StorageSharedKeyCredential sharedKeyCredentials = default, SasQueryParameters sasCredentials = default)
             => InstrumentClient(
@@ -153,12 +155,18 @@ namespace Azure.Storage.Queues.Tests
 
         public QueueClient GetEncodingClient(
             string queueName,
-            QueueMessageEncoding encoding)
+            QueueMessageEncoding encoding,
+            params SyncAsyncEventHandler<QueueMessageDecodingFailedEventArgs>[] messageDecodingFailedHandlers)
         {
             var options = GetOptions();
             options.MessageEncoding = encoding;
-            var service = GetServiceClient_SharedKey(options);
-            return InstrumentClient(service.GetQueueClient(queueName));
+            foreach (var messageDecodingFailedHandler in messageDecodingFailedHandlers)
+            {
+                options.MessageDecodingFailed += messageDecodingFailedHandler;
+            }
+            var service = GetServiceClient_SharedKey_UnInstrumented(options);
+            var queueClient = service.GetQueueClient(queueName);
+            return InstrumentClient(queueClient);
         }
 
         public StorageSharedKeyCredential GetNewSharedKeyCredentials()
