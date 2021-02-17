@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.Kubernetes.Models
+namespace Microsoft.Kubernetes.Models
 {
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;

@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.Kubernetes.Models
+namespace Microsoft.Kubernetes.Models
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
