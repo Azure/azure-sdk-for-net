@@ -5,12 +5,12 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    public class DynamicJsonMutableTests
+    public class JsonDataMutableTests
     {
         [Test]
         public void ArrayItemsCanBeAssigned()
         {
-            var json = DynamicJson.Parse("[0, 1, 2, 3]");
+            var json = JsonData.FromString("[0, 1, 2, 3]");
             json[1] = 2;
             json[2] = null;
             json[3] = "string";
@@ -21,7 +21,7 @@ namespace Azure.Core.Tests
         [Test]
         public void ExistingObjectPropertiesCanBeAssigned()
         {
-            var json = DynamicJson.Parse("{\"a\":1}");
+            var json = JsonData.FromString("{\"a\":1}");
             json["a"] = "2";
 
             Assert.AreEqual(json.ToString(), "{\"a\":\"2\"}");

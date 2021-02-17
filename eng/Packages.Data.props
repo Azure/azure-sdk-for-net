@@ -70,6 +70,7 @@
     <PackageReference Update="System.Text.Json" Version="4.6.0" />
     <PackageReference Update="System.ValueTuple" Version="4.5.0" />
     <PackageReference Update="Microsoft.Bcl.AsyncInterfaces" Version="1.0.0" />
+    <PackageReference Update="Microsoft.CSharp" Version="4.5.0" />
 
     <!-- Azure SDK packages -->
     <PackageReference Update="Azure.Core" Version="1.9.0" />

@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 namespace Azure.Core
 {
     /// <summary>
-    /// Represents an HTTP request with <see cref="DynamicJson"/> content.
+    /// Represents an HTTP request with <see cref="JsonData"/> content.
     /// </summary>
     [DebuggerDisplay("Body: {Body}")]
     public class DynamicRequest : Request
@@ -24,8 +24,6 @@ namespace Azure.Core
         private Request Request { get; }
         private HttpPipeline HttpPipeline { get; }
         private bool _disposed;
-
-        private static readonly Encoding Utf8NoBom = new UTF8Encoding(false, true);
 
         /// <inheritdoc />
         public override RequestContent? Content
@@ -39,10 +37,7 @@ namespace Azure.Core
                     value.WriteTo(ms, default);
                     ms.Seek(0, SeekOrigin.Begin);
                 }
-                using (StreamReader sr = new StreamReader(ms, Utf8NoBom))
-                {
-                    Body = new DynamicJson(sr.ReadToEnd());
-                }
+                Body = JsonData.FromStream(ms);
                 Request.Content = value;
             }
         }
@@ -51,11 +46,16 @@ namespace Azure.Core
         /// <summary>
         /// The JSON body of request.
         /// </summary>
-        public DynamicJson Body { get; set; } = DynamicJson.Object();
+        public JsonData Body { get; set; } = JsonData.EmptyObject();
+
+        /// <summary>
+        /// The JSON body of the request.
+        /// </summary>
+        public dynamic DynamicBody { get => Body; }
 
         // TODO(matell): In Krzysztof's prototype we also took DiagnosticScope as a parameter, do we still need that?
         /// <summary>
-        /// Creates an instance of <see cref="RequestContent"/> that wraps <see cref="DynamicJson"/> content.
+        /// Creates an instance of <see cref="RequestContent"/> that wraps <see cref="JsonData"/> content.
         /// </summary>
         /// <param name="request">The <see cref="Request"/> to send.</param>
         /// <param name="pipeline">The HTTP pipeline for sending and receiving REST requests and responses.</param>
@@ -76,12 +76,11 @@ namespace Azure.Core
             Request.Content = Content;
 
             Response res = await HttpPipeline.SendRequestAsync(Request, cancellationToken).ConfigureAwait(false);
-            DynamicJson? dynamicContent = null;
+            JsonData? dynamicContent = null;
 
             if (res.ContentStream != null)
             {
-                JsonDocument doc = await JsonDocument.ParseAsync(res.ContentStream, new JsonDocumentOptions(), cancellationToken).ConfigureAwait(false);
-                dynamicContent = new DynamicJson(doc.RootElement);
+                dynamicContent = await JsonData.FromStreamAsync(res.ContentStream, cancellationToken).ConfigureAwait(false);
             }
 
             return new DynamicResponse(res, dynamicContent);
@@ -98,12 +97,11 @@ namespace Azure.Core
             Request.Content = Content;
 
             Response res = HttpPipeline.SendRequest(Request, cancellationToken);
-            DynamicJson? dynamicContent = null;
+            JsonData? dynamicContent = null;
 
             if (res.ContentStream != null)
             {
-                JsonDocument doc = JsonDocument.Parse(res.ContentStream);
-                dynamicContent = new DynamicJson(doc.RootElement);
+                dynamicContent = JsonData.FromStream(res.ContentStream);
             }
 
             return new DynamicResponse(res, dynamicContent);
