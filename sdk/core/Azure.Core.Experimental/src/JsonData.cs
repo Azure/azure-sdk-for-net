@@ -390,18 +390,33 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Sets the property of an object to an empty object or empty array.
+        /// Sets the property of an object to a new empty object.
         /// </summary>
         /// <param name="propertyName">The property to set.</param>
-        /// <param name="isArray"><code>true</code> if the property should be initialized to an empty array and <code>false</code> if it should be initialized to an empty object.</param>
-        /// <returns>A <see cref="JsonData"/> that represents the newly created empty object or array.</returns>
+        /// <returns>A <see cref="JsonData"/> for the newly created empty object.</returns>
         /// <remarks>
         /// If the property already exists, the value is overwritten.
         /// If the <see cref="Kind"/> property is not <see cref="JsonValueKind.Object"/> this method throws <see cref="InvalidOperationException"/>.
         /// </remarks>
-        public JsonData SetEmpty(string propertyName, bool isArray = false)
+        public JsonData SetEmptyObject(string propertyName)
         {
-            JsonData value = new JsonData(isArray);
+            JsonData value = EmptyObject();
+            EnsureObject()[propertyName] = value;
+            return value;
+        }
+
+        /// <summary>
+        /// Sets the property of an object to a new empty array.
+        /// </summary>
+        /// <param name="propertyName">The property to set.</param>
+        /// <returns>A <see cref="JsonData"/> for the newly created empty array.</returns>
+        /// <remarks>
+        /// If the property already exists, the value is overwritten.
+        /// If the <see cref="Kind"/> property is not <see cref="JsonValueKind.Object"/> this method throws <see cref="InvalidOperationException"/>.
+        /// </remarks>
+        public JsonData SetEmptyArray(string propertyName)
+        {
+            JsonData value = EmptyArray();
             EnsureObject()[propertyName] = value;
             return value;
         }
@@ -523,16 +538,29 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Inserts a new value at the end of an array.
+        /// Inserts a new empty object at the end of an array.
         /// </summary>
-        /// <param name="isArray"><code>true</code> if the property should be initialized to an empty array and <code>false</code> if it should be initialized to an empty object.</param>
-        /// <returns>A <see cref="JsonData"/> that represents the newly created empty object or array.</returns>
+        /// <returns>A <see cref="JsonData"/> for the newly created empty object.</returns>
         /// <remarks>
         /// If the <see cref="Kind"/> property is not <see cref="JsonValueKind.Array"/> this method throws <see cref="InvalidOperationException"/>.
         /// </remarks>
-        public JsonData AddEmpty(bool isArray = false)
+        public JsonData AddEmptyObjet()
         {
-            JsonData value = new JsonData(isArray);
+            JsonData value = EmptyObject();
+            EnsureArray().Add(value);
+            return value;
+        }
+
+        /// <summary>
+        /// Inserts a new empty array at the end of an array.
+        /// </summary>
+        /// <returns>A <see cref="JsonData"/> for the newly created empty array.</returns>
+        /// <remarks>
+        /// If the <see cref="Kind"/> property is not <see cref="JsonValueKind.Array"/> this method throws <see cref="InvalidOperationException"/>.
+        /// </remarks>
+        public JsonData AddEmptyArray()
+        {
+            JsonData value = EmptyArray();
             EnsureArray().Add(value);
             return value;
         }

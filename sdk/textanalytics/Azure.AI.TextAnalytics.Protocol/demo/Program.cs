@@ -55,7 +55,7 @@ namespace DemoApp
 
 
                 var body = new JsonData();
-                JsonData documents = req.Body.SetEmpty("documents", isArray: true);
+                JsonData documents = req.Body.SetEmptyArray("documents");
                 documents.Add(new
                 {
                     countryHint = "US",
