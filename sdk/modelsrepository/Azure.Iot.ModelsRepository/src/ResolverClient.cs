@@ -17,7 +17,6 @@ namespace Azure.Iot.ModelsRepository
     /// </summary>
     public class ResolverClient
     {
-        internal const string DefaultRepository = "https://devicemodels.azure.com";
         private readonly RepositoryHandler _repositoryHandler;
         private readonly ClientDiagnostics _clientDiagnostics;
 
@@ -25,7 +24,7 @@ namespace Azure.Iot.ModelsRepository
         /// Initializes the <c>ResolverClient</c> with default client options while pointing to
         /// the Azure IoT Plug and Play Model repository https://devicemodels.azure.com for resolution.
         /// </summary>
-        public ResolverClient() : this(new Uri(DefaultRepository), new ResolverClientOptions()) { }
+        public ResolverClient() : this(new Uri(DefaultModelRepository), new ResolverClientOptions()) { }
 
         /// <summary>
         /// Initializes the <c>ResolverClient</c> with default client options while pointing to
@@ -43,7 +42,7 @@ namespace Azure.Iot.ModelsRepository
         /// <param name="options">
         /// <c>ResolverClientOptions</c> to configure resolution and client behavior.
         /// </param>
-        public ResolverClient(ResolverClientOptions options) : this(new Uri(DefaultRepository), options) { }
+        public ResolverClient(ResolverClientOptions options) : this(new Uri(DefaultModelRepository), options) { }
 
         /// <summary>
         /// Initializes the <c>ResolverClient</c> with default client options while pointing to
@@ -169,5 +168,10 @@ namespace Azure.Iot.ModelsRepository
         /// Gets the <c>ResolverClientOptions</c> associated with the ResolverClient instance.
         /// </summary>
         public ResolverClientOptions ClientOptions => _repositoryHandler.ClientOptions;
+
+        /// <summary>
+        /// Azure Device Models Repository used by default.
+        /// </summary>
+        public static string DefaultModelRepository => ModelRepositoryConstants.DefaultModelRepository;
     }
 }
