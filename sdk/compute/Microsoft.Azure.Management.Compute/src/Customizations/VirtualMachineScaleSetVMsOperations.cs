@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string instanceId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string instanceId, Dictionary<string, List<string>> customHeaders, CancellationToken cancellationToken)
         {
             // Send request
             AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceId, customHeaders, cancellationToken).ConfigureAwait(false);
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string instanceId, Dictionary<string, List<string>> customHeaders = null)
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string instanceId, Dictionary<string, List<string>> customHeaders)
         {
             // Send request
             AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceId, customHeaders, cancellationToken).ConfigureAwait(false);
@@ -95,7 +95,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string instanceId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string instanceId, Dictionary<string, List<string>> customHeaders, CancellationToken cancellationToken)
         {
             if (resourceGroupName == null)
             {
