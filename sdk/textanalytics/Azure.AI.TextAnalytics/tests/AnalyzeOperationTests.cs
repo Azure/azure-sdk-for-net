@@ -380,9 +380,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             Assert.AreEqual(1, result.Count);
 
-            // TODO - Update this once the service starts returning RedactedText
-            //var redactedText = string.Empty;
-            //Assert.AreEqual(redactedText, result[0].Entities.RedactedText);
+            Assert.IsNotEmpty(result[0].Entities.RedactedText);
 
             Assert.IsFalse(result[0].HasError);
             Assert.AreEqual(2, result[0].Entities.Count);
