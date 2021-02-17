@@ -6,7 +6,7 @@
 
 Azure Communication Administration is managing phone numbers for Azure Communication Services.
 
-[Source code][source] | [Package (NuGet)][package] | [Product documentation][product_docs] | [Samples][source_samples]
+[Source code]| [Package (NuGet)][package] | [Product documentation][product_docs] | [Samples][source_samples]
 
 ## Getting started
 
@@ -66,119 +66,6 @@ Phone numbers reservation can be performed through the reservation creation API 
 
 Phone numbers can be assigned to a callback URL via the configure number API. As part of the configuration, you will need an acquired phone number, callback URL and application id.
 
-## Examples
-
-### Get list of the countries that are supported by the service
-
-```C#
-string connectionString = "<connection_string>";
-PhoneNumberAdministrationClient client = new PhoneNumberAdministrationClient(connectionString);
-Pageable<PhoneNumberCountry> countries = client.GetAllSupportedCountries();
-
-foreach (var country in countries)
-{
-    Console.WriteLine($"Country code {country.CountryCode}, Country name: {country.LocalizedName}");
-}
-```
-
-### Get phone plan groups
-
-Phone plan groups come in two types, Geographic and Toll-Free.
-
-```C#
-var phonePlanGroups = client.GetPhonePlanGroups(countryCode);
-
-foreach (var group in phonePlanGroups)
-{
-    Console.WriteLine($"PhonePlanGroupId {group.PhonePlanGroupId}, Name: {group.LocalizedName}, PhoneNumberType: {group.PhoneNumberType}");
-}
-```
-
-### Get phone plans
-
-Unlike Toll-Free phone plans, area codes for Geographic Phone Plans are empty. Area codes are found in the Area Codes API.
-
-```C#
-var phonePlans = client.GetPhonePlans(countryCode, planGroupId);
-
-foreach (var plan in phonePlans)
-{
-    Console.WriteLine($"PhonePlanId {plan.PhonePlanId}, Name: {plan.LocalizedName}");
-    Console.WriteLine("Top 10 area codes");
-    foreach (var areaCode in plan.AreaCodes.Take(10).ToList())
-    {
-        Console.WriteLine($"Area code: {areaCode}");
-    }
-}
-```
-
-### Get location options
-
-For Geographic phone plans, you can query the available geographic locations. The locations options are structured like the geographic hierarchy of a country. For example, the US has states and within each state are cities.
-
-```C#
-var locationOptionsResponse = client.GetPhonePlanLocationOptions(countryCode, phonePlanGroupId, phonePlanId);
-var locationOprions = locationOptionsResponse.Value.LocationOptions;
-
-Console.WriteLine($"LabelId: {locationOprions.LabelId}, LabelName: {locationOprions.LabelName}");
-foreach(var locationOption in locationOprions.Options)
-{
-    Console.WriteLine($"Name: {locationOption.Name}, Value: {locationOption.Value}");
-}
-```
-
-### Get area codes
-
-Fetching area codes for geographic phone plans will require the the location options queries set. You must include the chain of geographic locations traversing down the location options object returned by the GetLocationOptions API.
-
-```C#
-var areaCodesResponse = client.GetAllAreaCodes(locationType, countryCode, planId, locationOptionsQueries);
-var areaCodes = areaCodesResponse.Value;
-
-foreach(var primaryAreaCode in areaCodes.PrimaryAreaCodes)
-{
-    Console.WriteLine("Primary area code" + primaryAreaCode);
-}
-
-foreach (var secondaryAreaCode in areaCodes.SecondaryAreaCodes)
-{
-    Console.WriteLine("Secondary area code" + secondaryAreaCode);
-}
-```
-
-### Create reservation
-
-```C#
-var reservationOptions = new CreateReservationOptions(displayName, description, plans, areaCode) { Quantity = 1 };
-var reservationOperation = await client.StartReservationAsync(reservationOptions).ConfigureAwait(false);
-var reservationResponse = await reservationOperation.WaitForCompletionAsync().ConfigureAwait(false);
-
-Console.WriteLine($"ReservationId: {reservationResponse.Value.ReservationId}, Status {reservationResponse.Value.Status}");
-```
-
-### Purchase reservation
-
-```C#
-var reservationPurchaseOperation = await client.StartPurchaseReservationAsync(reservationId).ConfigureAwait(false);
-await reservationPurchaseOperation.WaitForCompletionAsync().ConfigureAwait(false);
-```
-
-### Configure phone number
-
-```C#
-var pstnConfiguration = new PstnConfiguration("<url>");
-var phoneNumber = new PhoneNumber("<phone_number>");
-client.ConfigureNumber(pstnConfiguration, phoneNumber);
-```
-
-### Release phone numbers
-
-```C#
-var releasePhoneNumberOperation = await client.StartReleasePhoneNumbersAsync(numbers).ConfigureAwait(false);
-await releasePhoneNumberOperation.WaitForCompletionAsync().ConfigureAwait(false);
-
-Console.WriteLine($"ReleaseId: {releasePhoneNumberOperation.Value.ReleaseId}, Status: {releasePhoneNumberOperation.Value.Status}");
-```
 ## Troubleshooting
 
 ## Next steps
@@ -195,7 +82,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For m
 
 [azure_sub]: https://azure.microsoft.com/free/
 [azure_portal]: https://portal.azure.com
-[source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/communication/Azure.Communication.Administration/src
 [source_samples]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/communication/Azure.Communication.Administration/samples
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/
