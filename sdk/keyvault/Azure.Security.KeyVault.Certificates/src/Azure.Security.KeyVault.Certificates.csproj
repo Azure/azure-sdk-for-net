@@ -14,9 +14,6 @@
     <NoWarn>$(NoWarn);1591</NoWarn>
   </PropertyGroup>
 
-  <!-- Import the Azure.Core project -->
-  <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
-
   <Import Project="..\..\Azure.Security.KeyVault.Shared\src\Azure.Security.KeyVault.Shared.projitems" Label="Shared" />
 
   <ItemGroup>
@@ -37,5 +34,13 @@
     <Compile Include="$(AzureCoreSharedSources)PageResponseEnumerator.cs" />
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" />
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" />
+  </ItemGroup>
+
+  <!-- Import the Azure.Core project
+  TODO: revert this when Azure.Core ships the TokenCredential updates
+  <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
+  -->
+  <ItemGroup>  
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
   </ItemGroup>
 </Project>

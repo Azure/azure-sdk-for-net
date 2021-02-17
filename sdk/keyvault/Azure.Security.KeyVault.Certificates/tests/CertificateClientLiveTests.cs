@@ -43,7 +43,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             {
                 Client = GetClient();
 
-                ChallengeBasedAuthenticationPolicy.AuthenticationChallenge.ClearCache();
+                ChallengeBasedAuthenticationPolicy.ClearCache();
             }
         }
 
