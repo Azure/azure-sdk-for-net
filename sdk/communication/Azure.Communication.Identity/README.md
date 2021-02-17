@@ -88,7 +88,7 @@ Console.WriteLine($"User id: {user.Id}");
 ### Issuing a token for an existing user
 
 ```C# Snippet:CreateCommunicationTokenAsync
-Response<AccessToken> tokenResponse = await client.IssueTokenAsync(user, scopes: new[] { CommunicationTokenScope.Chat });
+Response<AccessToken> tokenResponse = await client.GetTokenAsync(user, scopes: new[] { CommunicationTokenScope.Chat });
 string token = tokenResponse.Value.Token;
 DateTimeOffset expiresOn = tokenResponse.Value.ExpiresOn;
 Console.WriteLine($"Token: {token}");

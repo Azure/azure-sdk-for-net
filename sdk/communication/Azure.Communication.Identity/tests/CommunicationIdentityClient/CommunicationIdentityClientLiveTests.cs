@@ -35,7 +35,7 @@ namespace Azure.Communication.Identity.Tests
         [TestCase(AuthMethod.ConnectionString, "chat", "voip", TestName = "IssuingTokenWithMultipleScopesWithConnectionString")]
         [TestCase(AuthMethod.KeyCredential, "chat", "voip", TestName = "IssuingTokenWithMultipleScopesWithKeyCredential")]
         [TestCase(AuthMethod.TokenCredential, "chat", "voip", TestName = "IssuingTokenWithMultipleScopesWithTokenCredential")]
-        public async Task IssuingTokenGeneratesTokenAndIdentityWithScopes(AuthMethod authMethod, params string[] scopes)
+        public async Task GetTokenGeneratesTokenAndIdentityWithScopes(AuthMethod authMethod, params string[] scopes)
         {
             CommunicationIdentityClient client = authMethod switch
             {
@@ -46,7 +46,7 @@ namespace Azure.Communication.Identity.Tests
             };
 
             Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync();
-            Response<AccessToken> tokenResponse = await client.IssueTokenAsync(userResponse.Value, scopes: scopes.Select(x => new CommunicationTokenScope(x)));
+            Response<AccessToken> tokenResponse = await client.GetTokenAsync(userResponse.Value, scopes: scopes.Select(x => new CommunicationTokenScope(x)));
             Assert.IsNotNull(tokenResponse.Value);
             Assert.IsFalse(string.IsNullOrWhiteSpace(tokenResponse.Value.Token));
             ValidateScopesIfNotSanitized();
