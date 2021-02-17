@@ -56,7 +56,7 @@ namespace KubernetesService.Tests
         }
 
         /// <summary>
-        /// CreateManagedCluster creates an AKS managed cluster
+        /// CreateConnectedCluster creates a connected cluster
         /// </summary>
         /// <param name="resourceManagementClient"></param>
         /// <param name="kubernetesServiceClient"></param>

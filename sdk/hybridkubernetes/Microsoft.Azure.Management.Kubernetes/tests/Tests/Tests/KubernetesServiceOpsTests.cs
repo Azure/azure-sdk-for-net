@@ -34,7 +34,7 @@ namespace KubernetesService.Tests
 
                 string clusterName = TestUtilities.GenerateName();
 
-                // Create a managed AKS cluster
+                // Create a connected cluster
                 ConnectedCluster connectedClusterResult = await KubernetesServiceTestUtilities.CreateConnectedCluster(
                     context,
                     ResourceManagementClient,
@@ -74,7 +74,7 @@ namespace KubernetesService.Tests
 
                 string clusterName = TestUtilities.GenerateName();
 
-                // Create a managed AKS cluster
+                // Create a connected cluster
                 ConnectedCluster managedClusterResult = await KubernetesServiceTestUtilities.CreateConnectedCluster(
                     context,
                     ResourceManagementClient,
