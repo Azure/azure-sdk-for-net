@@ -4,3 +4,20 @@ Azure.AI.TextAnalytics.Protocol is an experimental library for interacting direc
 
 At this time, if you are looking to interact with the Azure Cognitive Services Text Analytics service, we recommend using the officialy supported [Azure.AI.TextAnalytics](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics) library.
 
+## Getting started
+
+### Install the package
+
+### Prerequisites
+
+### Authenticate the client
+
+## Key concepts
+
+## Examples
+
+## Troubleshooting
+
+## Next steps
+
+## Contributing
