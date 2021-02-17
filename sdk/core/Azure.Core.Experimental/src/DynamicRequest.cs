@@ -46,7 +46,12 @@ namespace Azure.Core
         /// <summary>
         /// The JSON body of request.
         /// </summary>
-        public dynamic Body { get; set; } = JsonData.EmptyObject();
+        public JsonData Body { get; set; } = JsonData.EmptyObject();
+
+        /// <summary>
+        /// The JSON body of the request.
+        /// </summary>
+        public dynamic DynamicBody { get => Body; }
 
         // TODO(matell): In Krzysztof's prototype we also took DiagnosticScope as a parameter, do we still need that?
         /// <summary>
