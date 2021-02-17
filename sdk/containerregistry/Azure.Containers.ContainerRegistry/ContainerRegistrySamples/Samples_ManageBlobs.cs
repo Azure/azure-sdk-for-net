@@ -73,7 +73,7 @@ namespace ContainerRegistrySamples
                 uploadDetails = await blobClient.UploadChunkAsync(uploadDetails, /* this is the chunk */ new MemoryStream());
 
                 // Print out upload progress
-                Console.WriteLine($"Upload {uploadDetails.UploadId} has uploaded {uploadDetails.UploadProgress} to location {uploadDetails.BlobLocation.ToString()}");
+                Console.WriteLine($"Upload {uploadDetails.UploadId} has uploaded {uploadDetails.Range} to location {uploadDetails.BlobLocation.ToString()}");
             }
 
             // TODO: how to handle this multiplicity around sometimes you pass a blob here and sometimes you don't
@@ -87,7 +87,7 @@ namespace ContainerRegistrySamples
             CompletedBlobUpload completedUploadDetails = await blobClient.CompleteUploadAsync(uploadDetails, "digest");
 
             // Print out upload details
-            Console.WriteLine($"Blob with digest {completedUploadDetails.Digest} has uploaded {completedUploadDetails.UploadProgress} to location {completedUploadDetails.BlobLocation.ToString()}");
+            Console.WriteLine($"Blob with digest {completedUploadDetails.Digest} has uploaded {completedUploadDetails.Range} to location {completedUploadDetails.BlobLocation.ToString()}");
             Console.WriteLine($"");
         }
 

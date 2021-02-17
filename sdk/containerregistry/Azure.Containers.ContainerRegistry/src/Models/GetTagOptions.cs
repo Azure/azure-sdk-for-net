@@ -10,9 +10,9 @@ namespace Azure.Containers.ContainerRegistry.Models
 {
     public class GetTagOptions
     {
-        public GetTagOptions(IEnumerable<string> orderBy)
+        public GetTagOptions(TagOrderBy orderBy)
         {
-            OrderBy = orderBy.ToList();
+            OrderBy = orderBy;
         }
 
         public GetTagOptions(string digest)
@@ -25,7 +25,7 @@ namespace Azure.Containers.ContainerRegistry.Models
         // Is it basically OData? ... looks like it's not OData.
         // Reference: https://github.com/Azure/acr-cli/pull/72
         // https://docs.microsoft.com/en-us/rest/api/azure/devops/serviceendpoint/types/list?view=azure-devops-rest-6.0
-        public IList<string> OrderBy { get; }
+        public TagOrderBy OrderBy { get; }
 
         public string Digest { get; }
     }

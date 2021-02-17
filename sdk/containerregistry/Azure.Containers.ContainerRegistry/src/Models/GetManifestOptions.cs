@@ -10,12 +10,12 @@ namespace Azure.Containers.ContainerRegistry.Models
 {
     public class GetManifestOptions
     {
-        public GetManifestOptions(IEnumerable<string> orderBy)
+        public GetManifestOptions(ManifestOrderBy orderBy)
         {
-            OrderBy = orderBy.ToList();
+            OrderBy = orderBy;
         }
         
         // TODO: determine syntax supported by orderby to model this correctly
-        public IList<string> OrderBy { get; }
+        public ManifestOrderBy OrderBy { get; }
     }
 }

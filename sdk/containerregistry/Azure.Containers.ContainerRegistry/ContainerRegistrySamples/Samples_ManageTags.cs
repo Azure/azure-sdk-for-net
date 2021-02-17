@@ -50,13 +50,80 @@ namespace ContainerRegistrySamples
             var repositoryClient = registryClient.GetRepositoryClient("hello-world");
 
             AsyncPageable<TagAttributes> tags = repositoryClient.GetTagsAsync(new GetTagOptions(
-                // TODO: Figure this out from portal... ?
-                orderBy: new List<string>() { "timedesc" } // <-- TODO: provide enum of supported values if list is small?
+              
+              // Set of orderby values can be found in the az acr client (see --orderby / Allowed values
+              //PS C: \Users\annelo > az acr repository show - tags--help
+
+              //Command
+              //    az acr repository show - tags : Show tags for a repository in an Azure Container Registry.
+
+              //  Arguments
+              //      --name - n[Required] : The name of the container registry.You can configure the default
+
+              //                                registry name using `az configure --defaults acr =< registry name >`.
+              //    --repository[Required] : The name of the repository.
+
+              //   --detail:
+              //            Show detailed information.
+
+              //--orderby:
+              //            Order the items in the results. Default to alphabetical order of
+              //                              names.Allowed values: time_asc, time_desc.
+
+              //  --password - p           : The password used to log into a container registry.
+
+              //   --suffix:
+              //            The tenant suffix in registry login server.You may specify '--suffix
+              //                              tenant' if your registry login server is in the format 'registry -
+              //                              tenant.azurecr.io'. Applicable if you're accessing the registry from a
+              //                              different subscription or you have permission to access images but not
+              //                              the permission to manage the registry resource.
+              //    --top                   : Limit the number of items in the results.
+              //    --username - u           : The username used to log into a container registry.
+
+              //Global Arguments
+              //    --debug                 : Increase logging verbosity to show all debug logs.
+              //    --help - h               : Show this help message and exit.
+              //    --only - show - errors      : Only show errors, suppressing warnings.
+              //    --output - o             : Output format.  Allowed values: json, jsonc, none, table, tsv, yaml,
+              //                              yamlc.Default: json.
+
+              //  --query:
+              //            JMESPath query string.See http://jmespath.org/ for more information
+              //            and examples.
+              //    --subscription          : Name or ID of subscription.You can configure the default subscription
+              //                              using `az account set - s NAME_OR_ID`.
+              //    --verbose               : Increase logging verbosity.Use--debug for full debug logs.
+
+
+              //Examples
+
+              //  Show tags of a repository in an Azure Container Registry.
+
+              //      az acr repository show - tags - n MyRegistry--repository MyRepository
+
+
+              //  Show the detailed information of tags of a repository in an Azure Container Registry.
+
+              //      az acr repository show - tags - n MyRegistry--repository MyRepository--detail
+
+
+              //  Show the detailed information of the latest 10 tags ordered by timestamp of a repository in an
+
+              //  Azure Container Registry.
+
+              //      az acr repository show - tags - n MyRegistry--repository MyRepository--top 10--orderby
+
+              //      time_desc--detail
+              //
+              // From Teja: you can only sort by last update time, not created time
+
+              orderBy: TagOrderBy.LastUpdateTimeDescending
                 ));
 
             await foreach (TagAttributes tag in tags)
             {
-                Console.WriteLine( $"Updated {tag.LastUpdateTime}: Tag: {tag.Name}" );
+                Console.WriteLine($"Updated {tag.LastUpdateTime}: Tag: {tag.Name}");
             }
         }
 
@@ -69,7 +136,7 @@ namespace ContainerRegistrySamples
                 digest: "sha256:90659bf80b44ce6be8234e6ff90a1ac34acbeb826903b02cfa0da11c82cbc042"
                 ));
 
-            
+
             await foreach (TagAttributes tag in tags)
             {
                 Console.WriteLine($"Updated {tag.LastUpdateTime}: Tag: {tag.Name}");

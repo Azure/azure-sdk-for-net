@@ -265,7 +265,7 @@ namespace Azure.Containers.ContainerRegistry.Blobs
                 return Response.FromValue(
                     new ResumableBlobUpload(
                         response.Headers.Location.ToString(),
-                        response.Headers.Range,
+                        ParseHttpRange(response.Headers.Range),
                         new Guid(response.Headers.DockerUploadUuid)), response);
             }
             catch (Exception e)
@@ -288,7 +288,7 @@ namespace Azure.Containers.ContainerRegistry.Blobs
                 return Response.FromValue(
                    new ResumableBlobUpload(
                        response.Headers.Location.ToString(),
-                       response.Headers.Range,
+                       ParseHttpRange(response.Headers.Range),
                        new Guid(response.Headers.DockerUploadUuid)), response);
             }
             catch (Exception e)
@@ -313,7 +313,7 @@ namespace Azure.Containers.ContainerRegistry.Blobs
                 return Response.FromValue(
                     new CompletedBlobUpload(
                         response.Headers.Location.ToString(),
-                        response.Headers.Range,
+                        ParseHttpRange(response.Headers.Range),
                         response.Headers.DockerContentDigest), response);
             }
             catch (Exception e)
@@ -341,7 +341,7 @@ namespace Azure.Containers.ContainerRegistry.Blobs
                 return Response.FromValue(
                     new CompletedBlobUpload(
                         response.Headers.Location.ToString(),
-                        response.Headers.Range,
+                        ParseHttpRange(response.Headers.Range),
                         response.Headers.DockerContentDigest), response);
             }
             catch (Exception e)
@@ -367,7 +367,7 @@ namespace Azure.Containers.ContainerRegistry.Blobs
                 return Response.FromValue(
                     new CompletedBlobUpload(
                         response.Headers.Location.ToString(),
-                        new HttpRange(response.Headers.Range),
+                        ParseHttpRange(response.Headers.Range),
                         response.Headers.DockerContentDigest), response);
             }
             catch (Exception e)
@@ -375,6 +375,11 @@ namespace Azure.Containers.ContainerRegistry.Blobs
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        private HttpRange ParseHttpRange(string rangeHeaderValue)
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary> Complete the upload, providing all the data in the body, if necessary. A request without a body will just complete the upload with previously uploaded content. </summary>
@@ -396,7 +401,7 @@ namespace Azure.Containers.ContainerRegistry.Blobs
                 return Response.FromValue(
                     new CompletedBlobUpload(
                         response.Headers.Location.ToString(),
-                        response.Headers.Range,
+                        ParseHttpRange(response.Headers.Range),
                         response.Headers.DockerContentDigest), response);
             }
             catch (Exception e)
@@ -459,7 +464,7 @@ namespace Azure.Containers.ContainerRegistry.Blobs
                 ResponseWithHeaders<ContainerRegistryBlobStartUploadHeaders> response = await RestClient.StartUploadAsync(_repositoryName, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ResumableBlobUpload(
                     response.Headers.Location,
-                    response.Headers.Range,
+                    ParseHttpRange(response.Headers.Range),
                     new Guid(response.Headers.DockerUploadUuid)), response);
             }
             catch (Exception e)
@@ -480,7 +485,7 @@ namespace Azure.Containers.ContainerRegistry.Blobs
                 ResponseWithHeaders<ContainerRegistryBlobStartUploadHeaders> response = RestClient.StartUpload(_repositoryName, cancellationToken);
                 return Response.FromValue(new ResumableBlobUpload(
                     response.Headers.Location,
-                    response.Headers.Range,
+                    ParseHttpRange(response.Headers.Range),
                     new Guid(response.Headers.DockerUploadUuid)), response);
             }
             catch (Exception e)
