@@ -1390,7 +1390,6 @@ namespace Azure.Storage.Blobs.Specialized
                         response = await BlockBlobRestClient.StageBlockFromURLAsync(
                             blockId: base64BlockId,
                             contentLength: 0,
-                            // TODO what if the source Uri contains special characters?
                             sourceUrl: sourceUri.AbsoluteUri,
                             sourceRange: sourceRange.ToString(),
                             sourceContentMD5: sourceContentHash,
@@ -1410,8 +1409,7 @@ namespace Azure.Storage.Blobs.Specialized
                         response = BlockBlobRestClient.StageBlockFromURL(
                             blockId: base64BlockId,
                             contentLength: 0,
-                            // TODO what if the source Uri contains special characters?
-                            sourceUrl: sourceUri.ToString(),
+                            sourceUrl: sourceUri.AbsoluteUri,
                             sourceRange: sourceRange.ToString(),
                             sourceContentMD5: sourceContentHash,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
@@ -2624,8 +2622,7 @@ namespace Azure.Storage.Blobs.Specialized
                     {
                         response = await BlockBlobRestClient.PutBlobFromUrlAsync(
                             contentLength: 0,
-                            // TODO what if source URI has special characters?
-                            copySource: copySource.ToString(),
+                            copySource: copySource.AbsoluteUri,
                             blobContentType: options?.HttpHeaders?.ContentType,
                             blobContentEncoding: options?.HttpHeaders?.ContentEncoding,
                             blobContentLanguage: options?.HttpHeaders?.ContentLanguage,
@@ -2659,8 +2656,7 @@ namespace Azure.Storage.Blobs.Specialized
                     {
                         response = BlockBlobRestClient.PutBlobFromUrl(
                             contentLength: 0,
-                            // TODO what if source URI has special characters?
-                            copySource: copySource.ToString(),
+                            copySource: copySource.AbsoluteUri,
                             blobContentType: options?.HttpHeaders?.ContentType,
                             blobContentEncoding: options?.HttpHeaders?.ContentEncoding,
                             blobContentLanguage: options?.HttpHeaders?.ContentLanguage,

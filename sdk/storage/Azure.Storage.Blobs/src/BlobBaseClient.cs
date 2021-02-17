@@ -436,7 +436,7 @@ namespace Azure.Storage.Blobs.Specialized
             BlobUriBuilder uriBuilder = new BlobUriBuilder(conn.BlobEndpoint)
             {
                 BlobContainerName = blobContainerName,
-                BlobName = blobName.EscapePath(),
+                BlobName = blobName,
             };
             return BuildBlobRestClient(uriBuilder);
         }
@@ -444,7 +444,6 @@ namespace Azure.Storage.Blobs.Specialized
         private BlobRestClient BuildBlobRestClient(BlobUriBuilder uriBuilder)
         {
             string containerName = uriBuilder.BlobContainerName;
-            // TODO what if blobName has special characters or is encode?
             string blobName = uriBuilder.BlobName;
             uriBuilder.BlobContainerName = null;
             uriBuilder.BlobName = null;
@@ -455,7 +454,7 @@ namespace Azure.Storage.Blobs.Specialized
                 pipeline: _clientConfiguration.Pipeline,
                 url: uriBuilder.ToUri().ToString(),
                 containerName: containerName,
-                blob: blobName,
+                blob: blobName.EscapePath(),
                 version: _clientConfiguration.Version.ToVersionString());
         }
         #endregion ctors
@@ -2148,7 +2147,7 @@ namespace Azure.Storage.Blobs.Specialized
                     if (async)
                     {
                         response = await BlobRestClient.StartCopyFromURLAsync(
-                            copySource: source.ToString(),
+                            copySource: source.AbsoluteUri,
                             metadata: metadata,
                             tier: accessTier,
                             rehydratePriority: rehydratePriority,
@@ -2171,7 +2170,7 @@ namespace Azure.Storage.Blobs.Specialized
                     else
                     {
                         response = BlobRestClient.StartCopyFromURL(
-                            copySource: source.ToString(),
+                            copySource: source.AbsoluteUri,
                             metadata: metadata,
                             tier: accessTier,
                             rehydratePriority: rehydratePriority,
@@ -2557,7 +2556,7 @@ namespace Azure.Storage.Blobs.Specialized
                     if (async)
                     {
                         response = await BlobRestClient.CopyFromURLAsync(
-                            copySource: source.ToString(),
+                            copySource: source.AbsoluteUri,
                             metadata: metadata,
                             tier: accessTier,
                             sourceIfModifiedSince: sourceConditions?.IfModifiedSince,
@@ -2577,7 +2576,7 @@ namespace Azure.Storage.Blobs.Specialized
                     else
                     {
                         response = BlobRestClient.CopyFromURL(
-                            copySource: source.ToString(),
+                            copySource: source.AbsoluteUri,
                             metadata: metadata,
                             tier: accessTier,
                             sourceIfModifiedSince: sourceConditions?.IfModifiedSince,

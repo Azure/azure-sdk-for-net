@@ -2831,7 +2831,7 @@ namespace Azure.Storage.Blobs.Specialized
                     scope.Start();
 
                     // Create copySource Uri
-                    PageBlobClient pageBlobUri = new PageBlobClient(
+                    PageBlobClient sourcePageBlobClient = new PageBlobClient(
                         sourceUri,
                         ClientConfiguration).WithSnapshot(snapshot);
 
@@ -2840,7 +2840,7 @@ namespace Azure.Storage.Blobs.Specialized
                     if (async)
                     {
                         response = await PageBlobRestClient.CopyIncrementalAsync(
-                            copySource: pageBlobUri.Uri.ToString(),
+                            copySource: sourcePageBlobClient.Uri.AbsoluteUri,
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                             ifMatch: conditions?.IfMatch.ToString(),
@@ -2852,7 +2852,7 @@ namespace Azure.Storage.Blobs.Specialized
                     else
                     {
                         response = PageBlobRestClient.CopyIncremental(
-                            copySource: pageBlobUri.Uri.ToString(),
+                            copySource: sourcePageBlobClient.Uri.AbsoluteUri,
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                             ifMatch: conditions?.IfMatch.ToString(),
