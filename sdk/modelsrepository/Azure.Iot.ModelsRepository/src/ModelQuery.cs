@@ -138,7 +138,7 @@ namespace Azure.Iot.ModelsRepository
             return componentSchemas;
         }
 
-        public async Task<Dictionary<string, string>> ListToDictAsync()
+        public Dictionary<string, string> ListToDict()
         {
             Dictionary<string, string> result = new Dictionary<string, string>();
 
@@ -152,18 +152,14 @@ namespace Azure.Iot.ModelsRepository
                     {
                         if (element.ValueKind == JsonValueKind.Object)
                         {
-                            using (MemoryStream stream = new MemoryStream())
+                            using MemoryStream stream = WriteJsonElementToStream(element);
+
+                            using (StreamReader streamReader = new StreamReader(stream))
                             {
-                                await JsonSerializer.SerializeAsync(stream, element).ConfigureAwait(false);
-                                stream.Position = 0;
+                                string serialized = streamReader.ReadToEnd();
 
-                                using (StreamReader streamReader = new StreamReader(stream))
-                                {
-                                    string serialized = await streamReader.ReadToEndAsync().ConfigureAwait(false);
-
-                                    string id = new ModelQuery(serialized).GetId();
-                                    result.Add(id, serialized);
-                                }
+                                string id = new ModelQuery(serialized).GetId();
+                                result.Add(id, serialized);
                             }
                         }
                     }
@@ -171,6 +167,18 @@ namespace Azure.Iot.ModelsRepository
             }
 
             return result;
+        }
+
+        private static MemoryStream WriteJsonElementToStream(JsonElement item)
+        {
+            var memoryStream = new MemoryStream();
+            using var writer = new Utf8JsonWriter(memoryStream);
+
+            item.WriteTo(writer);
+            writer.Flush();
+            memoryStream.Seek(0, SeekOrigin.Begin);
+
+            return memoryStream;
         }
     }
 }
