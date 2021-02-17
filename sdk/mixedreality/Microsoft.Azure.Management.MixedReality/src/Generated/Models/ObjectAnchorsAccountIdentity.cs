@@ -12,19 +12,19 @@ namespace Microsoft.Azure.Management.MixedReality.Models
 {
     using System.Linq;
 
-    public partial class RemoteRenderingAccountIdentity : Identity
+    public partial class ObjectAnchorsAccountIdentity : Identity
     {
         /// <summary>
-        /// Initializes a new instance of the RemoteRenderingAccountIdentity
+        /// Initializes a new instance of the ObjectAnchorsAccountIdentity
         /// class.
         /// </summary>
-        public RemoteRenderingAccountIdentity()
+        public ObjectAnchorsAccountIdentity()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the RemoteRenderingAccountIdentity
+        /// Initializes a new instance of the ObjectAnchorsAccountIdentity
         /// class.
         /// </summary>
         /// <param name="principalId">The principal ID of resource
@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.MixedReality.Models
         /// <param name="tenantId">The tenant ID of resource.</param>
         /// <param name="type">The identity type. Possible values include:
         /// 'SystemAssigned'</param>
-        public RemoteRenderingAccountIdentity(string principalId = default(string), string tenantId = default(string), ResourceIdentityType? type = default(ResourceIdentityType?))
+        public ObjectAnchorsAccountIdentity(string principalId = default(string), string tenantId = default(string), ResourceIdentityType? type = default(ResourceIdentityType?))
             : base(principalId, tenantId, type)
         {
             CustomInit();

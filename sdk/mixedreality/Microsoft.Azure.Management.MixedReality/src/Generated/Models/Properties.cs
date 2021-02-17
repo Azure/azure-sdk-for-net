@@ -14,27 +14,25 @@ namespace Microsoft.Azure.Management.MixedReality.Models
     using System.Linq;
 
     /// <summary>
-    /// Request for account key regeneration
+    /// Operation properties.
     /// </summary>
-    public partial class AccountKeyRegenerateRequest
+    public partial class Properties
     {
         /// <summary>
-        /// Initializes a new instance of the AccountKeyRegenerateRequest
-        /// class.
+        /// Initializes a new instance of the Properties class.
         /// </summary>
-        public AccountKeyRegenerateRequest()
+        public Properties()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AccountKeyRegenerateRequest
-        /// class.
+        /// Initializes a new instance of the Properties class.
         /// </summary>
-        /// <param name="serial">Serial of key to be regenerated</param>
-        public AccountKeyRegenerateRequest(int? serial = default(int?))
+        /// <param name="serviceSpecification">Service specification.</param>
+        public Properties(ServiceSpecification serviceSpecification = default(ServiceSpecification))
         {
-            Serial = serial;
+            ServiceSpecification = serviceSpecification;
             CustomInit();
         }
 
@@ -44,10 +42,10 @@ namespace Microsoft.Azure.Management.MixedReality.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets serial of key to be regenerated
+        /// Gets or sets service specification.
         /// </summary>
-        [JsonProperty(PropertyName = "serial")]
-        public int? Serial { get; set; }
+        [JsonProperty(PropertyName = "serviceSpecification")]
+        public ServiceSpecification ServiceSpecification { get; set; }
 
     }
 }

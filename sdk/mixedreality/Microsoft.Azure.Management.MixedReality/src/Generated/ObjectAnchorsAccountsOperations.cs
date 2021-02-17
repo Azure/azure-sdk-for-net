@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.MixedReality
     using System.Threading.Tasks;
 
     /// <summary>
-    /// RemoteRenderingAccountsOperations operations.
+    /// ObjectAnchorsAccountsOperations operations.
     /// </summary>
-    internal partial class RemoteRenderingAccountsOperations : IServiceOperations<MixedRealityClient>, IRemoteRenderingAccountsOperations
+    internal partial class ObjectAnchorsAccountsOperations : IServiceOperations<MixedRealityClient>, IObjectAnchorsAccountsOperations
     {
         /// <summary>
-        /// Initializes a new instance of the RemoteRenderingAccountsOperations class.
+        /// Initializes a new instance of the ObjectAnchorsAccountsOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.MixedReality
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal RemoteRenderingAccountsOperations(MixedRealityClient client)
+        internal ObjectAnchorsAccountsOperations(MixedRealityClient client)
         {
             if (client == null)
             {
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.MixedReality
         public MixedRealityClient Client { get; private set; }
 
         /// <summary>
-        /// List Remote Rendering Accounts by Subscription
+        /// List Object Anchors Accounts by Subscription
         /// </summary>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.MixedReality
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<RemoteRenderingAccount>>> ListBySubscriptionWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ObjectAnchorsAccount>>> ListBySubscriptionWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -96,7 +96,7 @@ namespace Microsoft.Azure.Management.MixedReality
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.MixedReality/remoteRenderingAccounts").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.MixedReality/objectAnchorsAccounts").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -196,7 +196,7 @@ namespace Microsoft.Azure.Management.MixedReality
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<RemoteRenderingAccount>>();
+            var _result = new AzureOperationResponse<IPage<ObjectAnchorsAccount>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -209,7 +209,7 @@ namespace Microsoft.Azure.Management.MixedReality
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<RemoteRenderingAccount>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<ObjectAnchorsAccount>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -255,7 +255,7 @@ namespace Microsoft.Azure.Management.MixedReality
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<RemoteRenderingAccount>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ObjectAnchorsAccount>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -297,7 +297,7 @@ namespace Microsoft.Azure.Management.MixedReality
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MixedReality/remoteRenderingAccounts").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MixedReality/objectAnchorsAccounts").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             List<string> _queryParameters = new List<string>();
@@ -398,7 +398,7 @@ namespace Microsoft.Azure.Management.MixedReality
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<RemoteRenderingAccount>>();
+            var _result = new AzureOperationResponse<IPage<ObjectAnchorsAccount>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -411,7 +411,7 @@ namespace Microsoft.Azure.Management.MixedReality
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<RemoteRenderingAccount>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<ObjectAnchorsAccount>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -431,7 +431,7 @@ namespace Microsoft.Azure.Management.MixedReality
         }
 
         /// <summary>
-        /// Delete a Remote Rendering Account.
+        /// Delete an Object Anchors Account.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of an Azure resource group.
@@ -519,7 +519,7 @@ namespace Microsoft.Azure.Management.MixedReality
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MixedReality/remoteRenderingAccounts/{accountName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MixedReality/objectAnchorsAccounts/{accountName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
@@ -636,7 +636,7 @@ namespace Microsoft.Azure.Management.MixedReality
         }
 
         /// <summary>
-        /// Retrieve a Remote Rendering Account.
+        /// Retrieve an Object Anchors Account.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of an Azure resource group.
@@ -665,7 +665,7 @@ namespace Microsoft.Azure.Management.MixedReality
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<RemoteRenderingAccount>> GetWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ObjectAnchorsAccount>> GetWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -727,7 +727,7 @@ namespace Microsoft.Azure.Management.MixedReality
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MixedReality/remoteRenderingAccounts/{accountName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MixedReality/objectAnchorsAccounts/{accountName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
@@ -829,7 +829,7 @@ namespace Microsoft.Azure.Management.MixedReality
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<RemoteRenderingAccount>();
+            var _result = new AzureOperationResponse<ObjectAnchorsAccount>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -842,7 +842,7 @@ namespace Microsoft.Azure.Management.MixedReality
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<RemoteRenderingAccount>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ObjectAnchorsAccount>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -862,7 +862,7 @@ namespace Microsoft.Azure.Management.MixedReality
         }
 
         /// <summary>
-        /// Updating a Remote Rendering Account
+        /// Updating an Object Anchors Account
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of an Azure resource group.
@@ -870,8 +870,8 @@ namespace Microsoft.Azure.Management.MixedReality
         /// <param name='accountName'>
         /// Name of an Mixed Reality Account.
         /// </param>
-        /// <param name='remoteRenderingAccount'>
-        /// Remote Rendering Account parameter.
+        /// <param name='objectAnchorsAccount'>
+        /// Object Anchors Account parameter.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -894,7 +894,7 @@ namespace Microsoft.Azure.Management.MixedReality
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<RemoteRenderingAccount>> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, RemoteRenderingAccount remoteRenderingAccount, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ObjectAnchorsAccount>> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, ObjectAnchorsAccount objectAnchorsAccount, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -938,9 +938,9 @@ namespace Microsoft.Azure.Management.MixedReality
                     throw new ValidationException(ValidationRules.Pattern, "accountName", "^[-\\w\\._\\(\\)]+$");
                 }
             }
-            if (remoteRenderingAccount == null)
+            if (objectAnchorsAccount == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "remoteRenderingAccount");
+                throw new ValidationException(ValidationRules.CannotBeNull, "objectAnchorsAccount");
             }
             if (Client.ApiVersion == null)
             {
@@ -955,13 +955,13 @@ namespace Microsoft.Azure.Management.MixedReality
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("accountName", accountName);
-                tracingParameters.Add("remoteRenderingAccount", remoteRenderingAccount);
+                tracingParameters.Add("objectAnchorsAccount", objectAnchorsAccount);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Update", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MixedReality/remoteRenderingAccounts/{accountName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MixedReality/objectAnchorsAccounts/{accountName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
@@ -1008,9 +1008,9 @@ namespace Microsoft.Azure.Management.MixedReality
 
             // Serialize Request
             string _requestContent = null;
-            if(remoteRenderingAccount != null)
+            if(objectAnchorsAccount != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(remoteRenderingAccount, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(objectAnchorsAccount, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -1069,7 +1069,7 @@ namespace Microsoft.Azure.Management.MixedReality
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<RemoteRenderingAccount>();
+            var _result = new AzureOperationResponse<ObjectAnchorsAccount>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1082,7 +1082,7 @@ namespace Microsoft.Azure.Management.MixedReality
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<RemoteRenderingAccount>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ObjectAnchorsAccount>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1102,7 +1102,7 @@ namespace Microsoft.Azure.Management.MixedReality
         }
 
         /// <summary>
-        /// Creating or Updating a Remote Rendering Account.
+        /// Creating or Updating an object anchors Account.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of an Azure resource group.
@@ -1110,8 +1110,8 @@ namespace Microsoft.Azure.Management.MixedReality
         /// <param name='accountName'>
         /// Name of an Mixed Reality Account.
         /// </param>
-        /// <param name='remoteRenderingAccount'>
-        /// Remote Rendering Account parameter.
+        /// <param name='objectAnchorsAccount'>
+        /// Object Anchors Account parameter.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1134,7 +1134,7 @@ namespace Microsoft.Azure.Management.MixedReality
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<RemoteRenderingAccount>> CreateWithHttpMessagesAsync(string resourceGroupName, string accountName, RemoteRenderingAccount remoteRenderingAccount, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ObjectAnchorsAccount>> CreateWithHttpMessagesAsync(string resourceGroupName, string accountName, ObjectAnchorsAccount objectAnchorsAccount, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -1178,13 +1178,13 @@ namespace Microsoft.Azure.Management.MixedReality
                     throw new ValidationException(ValidationRules.Pattern, "accountName", "^[-\\w\\._\\(\\)]+$");
                 }
             }
-            if (remoteRenderingAccount == null)
+            if (objectAnchorsAccount == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "remoteRenderingAccount");
+                throw new ValidationException(ValidationRules.CannotBeNull, "objectAnchorsAccount");
             }
-            if (remoteRenderingAccount != null)
+            if (objectAnchorsAccount != null)
             {
-                remoteRenderingAccount.Validate();
+                objectAnchorsAccount.Validate();
             }
             if (Client.ApiVersion == null)
             {
@@ -1199,13 +1199,13 @@ namespace Microsoft.Azure.Management.MixedReality
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("accountName", accountName);
-                tracingParameters.Add("remoteRenderingAccount", remoteRenderingAccount);
+                tracingParameters.Add("objectAnchorsAccount", objectAnchorsAccount);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Create", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MixedReality/remoteRenderingAccounts/{accountName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MixedReality/objectAnchorsAccounts/{accountName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
@@ -1252,9 +1252,9 @@ namespace Microsoft.Azure.Management.MixedReality
 
             // Serialize Request
             string _requestContent = null;
-            if(remoteRenderingAccount != null)
+            if(objectAnchorsAccount != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(remoteRenderingAccount, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(objectAnchorsAccount, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -1313,7 +1313,7 @@ namespace Microsoft.Azure.Management.MixedReality
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<RemoteRenderingAccount>();
+            var _result = new AzureOperationResponse<ObjectAnchorsAccount>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1326,7 +1326,7 @@ namespace Microsoft.Azure.Management.MixedReality
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<RemoteRenderingAccount>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ObjectAnchorsAccount>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1344,7 +1344,7 @@ namespace Microsoft.Azure.Management.MixedReality
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<RemoteRenderingAccount>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ObjectAnchorsAccount>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1364,7 +1364,7 @@ namespace Microsoft.Azure.Management.MixedReality
         }
 
         /// <summary>
-        /// List Both of the 2 Keys of a Remote Rendering Account
+        /// List Both of the 2 Keys of an object anchors Account
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of an Azure resource group.
@@ -1455,7 +1455,7 @@ namespace Microsoft.Azure.Management.MixedReality
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MixedReality/remoteRenderingAccounts/{accountName}/listKeys").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MixedReality/objectAnchorsAccounts/{accountName}/listKeys").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
@@ -1590,7 +1590,7 @@ namespace Microsoft.Azure.Management.MixedReality
         }
 
         /// <summary>
-        /// Regenerate specified Key of a Remote Rendering Account
+        /// Regenerate specified Key of an object anchors Account
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of an Azure resource group.
@@ -1690,7 +1690,7 @@ namespace Microsoft.Azure.Management.MixedReality
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MixedReality/remoteRenderingAccounts/{accountName}/regenerateKeys").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MixedReality/objectAnchorsAccounts/{accountName}/regenerateKeys").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
@@ -1831,7 +1831,7 @@ namespace Microsoft.Azure.Management.MixedReality
         }
 
         /// <summary>
-        /// List Remote Rendering Accounts by Subscription
+        /// List Object Anchors Accounts by Subscription
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -1857,7 +1857,7 @@ namespace Microsoft.Azure.Management.MixedReality
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<RemoteRenderingAccount>>> ListBySubscriptionNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ObjectAnchorsAccount>>> ListBySubscriptionNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -1971,7 +1971,7 @@ namespace Microsoft.Azure.Management.MixedReality
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<RemoteRenderingAccount>>();
+            var _result = new AzureOperationResponse<IPage<ObjectAnchorsAccount>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1984,7 +1984,7 @@ namespace Microsoft.Azure.Management.MixedReality
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<RemoteRenderingAccount>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<ObjectAnchorsAccount>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -2030,7 +2030,7 @@ namespace Microsoft.Azure.Management.MixedReality
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<RemoteRenderingAccount>>> ListByResourceGroupNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ObjectAnchorsAccount>>> ListByResourceGroupNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -2144,7 +2144,7 @@ namespace Microsoft.Azure.Management.MixedReality
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<RemoteRenderingAccount>>();
+            var _result = new AzureOperationResponse<IPage<ObjectAnchorsAccount>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -2157,7 +2157,7 @@ namespace Microsoft.Azure.Management.MixedReality
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<RemoteRenderingAccount>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<ObjectAnchorsAccount>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

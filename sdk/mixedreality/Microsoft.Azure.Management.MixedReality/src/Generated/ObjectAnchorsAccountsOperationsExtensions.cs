@@ -17,23 +17,23 @@ namespace Microsoft.Azure.Management.MixedReality
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for RemoteRenderingAccountsOperations.
+    /// Extension methods for ObjectAnchorsAccountsOperations.
     /// </summary>
-    public static partial class RemoteRenderingAccountsOperationsExtensions
+    public static partial class ObjectAnchorsAccountsOperationsExtensions
     {
             /// <summary>
-            /// List Remote Rendering Accounts by Subscription
+            /// List Object Anchors Accounts by Subscription
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<RemoteRenderingAccount> ListBySubscription(this IRemoteRenderingAccountsOperations operations)
+            public static IPage<ObjectAnchorsAccount> ListBySubscription(this IObjectAnchorsAccountsOperations operations)
             {
                 return operations.ListBySubscriptionAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// List Remote Rendering Accounts by Subscription
+            /// List Object Anchors Accounts by Subscription
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.MixedReality
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<RemoteRenderingAccount>> ListBySubscriptionAsync(this IRemoteRenderingAccountsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ObjectAnchorsAccount>> ListBySubscriptionAsync(this IObjectAnchorsAccountsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListBySubscriptionWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.MixedReality
             /// <param name='resourceGroupName'>
             /// Name of an Azure resource group.
             /// </param>
-            public static IPage<RemoteRenderingAccount> ListByResourceGroup(this IRemoteRenderingAccountsOperations operations, string resourceGroupName)
+            public static IPage<ObjectAnchorsAccount> ListByResourceGroup(this IObjectAnchorsAccountsOperations operations, string resourceGroupName)
             {
                 return operations.ListByResourceGroupAsync(resourceGroupName).GetAwaiter().GetResult();
             }
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.MixedReality
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<RemoteRenderingAccount>> ListByResourceGroupAsync(this IRemoteRenderingAccountsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ObjectAnchorsAccount>> ListByResourceGroupAsync(this IObjectAnchorsAccountsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Management.MixedReality
             }
 
             /// <summary>
-            /// Delete a Remote Rendering Account.
+            /// Delete an Object Anchors Account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -95,13 +95,13 @@ namespace Microsoft.Azure.Management.MixedReality
             /// <param name='accountName'>
             /// Name of an Mixed Reality Account.
             /// </param>
-            public static void Delete(this IRemoteRenderingAccountsOperations operations, string resourceGroupName, string accountName)
+            public static void Delete(this IObjectAnchorsAccountsOperations operations, string resourceGroupName, string accountName)
             {
                 operations.DeleteAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Delete a Remote Rendering Account.
+            /// Delete an Object Anchors Account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -115,13 +115,13 @@ namespace Microsoft.Azure.Management.MixedReality
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IRemoteRenderingAccountsOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IObjectAnchorsAccountsOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
-            /// Retrieve a Remote Rendering Account.
+            /// Retrieve an Object Anchors Account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -132,13 +132,13 @@ namespace Microsoft.Azure.Management.MixedReality
             /// <param name='accountName'>
             /// Name of an Mixed Reality Account.
             /// </param>
-            public static RemoteRenderingAccount Get(this IRemoteRenderingAccountsOperations operations, string resourceGroupName, string accountName)
+            public static ObjectAnchorsAccount Get(this IObjectAnchorsAccountsOperations operations, string resourceGroupName, string accountName)
             {
                 return operations.GetAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Retrieve a Remote Rendering Account.
+            /// Retrieve an Object Anchors Account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -152,7 +152,7 @@ namespace Microsoft.Azure.Management.MixedReality
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RemoteRenderingAccount> GetAsync(this IRemoteRenderingAccountsOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ObjectAnchorsAccount> GetAsync(this IObjectAnchorsAccountsOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -161,7 +161,7 @@ namespace Microsoft.Azure.Management.MixedReality
             }
 
             /// <summary>
-            /// Updating a Remote Rendering Account
+            /// Updating an Object Anchors Account
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -172,16 +172,16 @@ namespace Microsoft.Azure.Management.MixedReality
             /// <param name='accountName'>
             /// Name of an Mixed Reality Account.
             /// </param>
-            /// <param name='remoteRenderingAccount'>
-            /// Remote Rendering Account parameter.
+            /// <param name='objectAnchorsAccount'>
+            /// Object Anchors Account parameter.
             /// </param>
-            public static RemoteRenderingAccount Update(this IRemoteRenderingAccountsOperations operations, string resourceGroupName, string accountName, RemoteRenderingAccount remoteRenderingAccount)
+            public static ObjectAnchorsAccount Update(this IObjectAnchorsAccountsOperations operations, string resourceGroupName, string accountName, ObjectAnchorsAccount objectAnchorsAccount)
             {
-                return operations.UpdateAsync(resourceGroupName, accountName, remoteRenderingAccount).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, accountName, objectAnchorsAccount).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Updating a Remote Rendering Account
+            /// Updating an Object Anchors Account
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -192,22 +192,22 @@ namespace Microsoft.Azure.Management.MixedReality
             /// <param name='accountName'>
             /// Name of an Mixed Reality Account.
             /// </param>
-            /// <param name='remoteRenderingAccount'>
-            /// Remote Rendering Account parameter.
+            /// <param name='objectAnchorsAccount'>
+            /// Object Anchors Account parameter.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RemoteRenderingAccount> UpdateAsync(this IRemoteRenderingAccountsOperations operations, string resourceGroupName, string accountName, RemoteRenderingAccount remoteRenderingAccount, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ObjectAnchorsAccount> UpdateAsync(this IObjectAnchorsAccountsOperations operations, string resourceGroupName, string accountName, ObjectAnchorsAccount objectAnchorsAccount, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, accountName, remoteRenderingAccount, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, accountName, objectAnchorsAccount, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Creating or Updating a Remote Rendering Account.
+            /// Creating or Updating an object anchors Account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -218,16 +218,16 @@ namespace Microsoft.Azure.Management.MixedReality
             /// <param name='accountName'>
             /// Name of an Mixed Reality Account.
             /// </param>
-            /// <param name='remoteRenderingAccount'>
-            /// Remote Rendering Account parameter.
+            /// <param name='objectAnchorsAccount'>
+            /// Object Anchors Account parameter.
             /// </param>
-            public static RemoteRenderingAccount Create(this IRemoteRenderingAccountsOperations operations, string resourceGroupName, string accountName, RemoteRenderingAccount remoteRenderingAccount)
+            public static ObjectAnchorsAccount Create(this IObjectAnchorsAccountsOperations operations, string resourceGroupName, string accountName, ObjectAnchorsAccount objectAnchorsAccount)
             {
-                return operations.CreateAsync(resourceGroupName, accountName, remoteRenderingAccount).GetAwaiter().GetResult();
+                return operations.CreateAsync(resourceGroupName, accountName, objectAnchorsAccount).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Creating or Updating a Remote Rendering Account.
+            /// Creating or Updating an object anchors Account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -238,22 +238,22 @@ namespace Microsoft.Azure.Management.MixedReality
             /// <param name='accountName'>
             /// Name of an Mixed Reality Account.
             /// </param>
-            /// <param name='remoteRenderingAccount'>
-            /// Remote Rendering Account parameter.
+            /// <param name='objectAnchorsAccount'>
+            /// Object Anchors Account parameter.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RemoteRenderingAccount> CreateAsync(this IRemoteRenderingAccountsOperations operations, string resourceGroupName, string accountName, RemoteRenderingAccount remoteRenderingAccount, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ObjectAnchorsAccount> CreateAsync(this IObjectAnchorsAccountsOperations operations, string resourceGroupName, string accountName, ObjectAnchorsAccount objectAnchorsAccount, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, accountName, remoteRenderingAccount, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, accountName, objectAnchorsAccount, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// List Both of the 2 Keys of a Remote Rendering Account
+            /// List Both of the 2 Keys of an object anchors Account
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -264,13 +264,13 @@ namespace Microsoft.Azure.Management.MixedReality
             /// <param name='accountName'>
             /// Name of an Mixed Reality Account.
             /// </param>
-            public static AccountKeys ListKeys(this IRemoteRenderingAccountsOperations operations, string resourceGroupName, string accountName)
+            public static AccountKeys ListKeys(this IObjectAnchorsAccountsOperations operations, string resourceGroupName, string accountName)
             {
                 return operations.ListKeysAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// List Both of the 2 Keys of a Remote Rendering Account
+            /// List Both of the 2 Keys of an object anchors Account
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -284,7 +284,7 @@ namespace Microsoft.Azure.Management.MixedReality
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AccountKeys> ListKeysAsync(this IRemoteRenderingAccountsOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AccountKeys> ListKeysAsync(this IObjectAnchorsAccountsOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListKeysWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -293,7 +293,7 @@ namespace Microsoft.Azure.Management.MixedReality
             }
 
             /// <summary>
-            /// Regenerate specified Key of a Remote Rendering Account
+            /// Regenerate specified Key of an object anchors Account
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -307,13 +307,13 @@ namespace Microsoft.Azure.Management.MixedReality
             /// <param name='serial'>
             /// Serial of key to be regenerated
             /// </param>
-            public static AccountKeys RegenerateKeys(this IRemoteRenderingAccountsOperations operations, string resourceGroupName, string accountName, int? serial = 1)
+            public static AccountKeys RegenerateKeys(this IObjectAnchorsAccountsOperations operations, string resourceGroupName, string accountName, int? serial = 1)
             {
                 return operations.RegenerateKeysAsync(resourceGroupName, accountName, serial).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Regenerate specified Key of a Remote Rendering Account
+            /// Regenerate specified Key of an object anchors Account
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -330,7 +330,7 @@ namespace Microsoft.Azure.Management.MixedReality
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AccountKeys> RegenerateKeysAsync(this IRemoteRenderingAccountsOperations operations, string resourceGroupName, string accountName, int? serial = 1, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AccountKeys> RegenerateKeysAsync(this IObjectAnchorsAccountsOperations operations, string resourceGroupName, string accountName, int? serial = 1, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.RegenerateKeysWithHttpMessagesAsync(resourceGroupName, accountName, serial, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -339,7 +339,7 @@ namespace Microsoft.Azure.Management.MixedReality
             }
 
             /// <summary>
-            /// List Remote Rendering Accounts by Subscription
+            /// List Object Anchors Accounts by Subscription
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -347,13 +347,13 @@ namespace Microsoft.Azure.Management.MixedReality
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<RemoteRenderingAccount> ListBySubscriptionNext(this IRemoteRenderingAccountsOperations operations, string nextPageLink)
+            public static IPage<ObjectAnchorsAccount> ListBySubscriptionNext(this IObjectAnchorsAccountsOperations operations, string nextPageLink)
             {
                 return operations.ListBySubscriptionNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// List Remote Rendering Accounts by Subscription
+            /// List Object Anchors Accounts by Subscription
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -364,7 +364,7 @@ namespace Microsoft.Azure.Management.MixedReality
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<RemoteRenderingAccount>> ListBySubscriptionNextAsync(this IRemoteRenderingAccountsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ObjectAnchorsAccount>> ListBySubscriptionNextAsync(this IObjectAnchorsAccountsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListBySubscriptionNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -381,7 +381,7 @@ namespace Microsoft.Azure.Management.MixedReality
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<RemoteRenderingAccount> ListByResourceGroupNext(this IRemoteRenderingAccountsOperations operations, string nextPageLink)
+            public static IPage<ObjectAnchorsAccount> ListByResourceGroupNext(this IObjectAnchorsAccountsOperations operations, string nextPageLink)
             {
                 return operations.ListByResourceGroupNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
@@ -398,7 +398,7 @@ namespace Microsoft.Azure.Management.MixedReality
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<RemoteRenderingAccount>> ListByResourceGroupNextAsync(this IRemoteRenderingAccountsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ObjectAnchorsAccount>> ListByResourceGroupNextAsync(this IObjectAnchorsAccountsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByResourceGroupNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
