@@ -76,6 +76,9 @@ namespace Azure.Communication.PhoneNumbers.Tests
         //[TestCase("geographic", "application", "none", "inbound+outbound")]
         public async Task PurchaseAndReleaseSearch(string phoneType, string assignmentType, string calling, string sms)
         {
+            if (!IncludePhoneNumberLiveTests)
+                Assert.Ignore("Include phone number live tests flag is off.");
+
             PhoneNumberType phoneNumberType = phoneType == "geographic" ? PhoneNumberType.Geographic : PhoneNumberType.TollFree;
             PhoneNumberAssignmentType phoneNumberAssignmentType = assignmentType == "user" ? PhoneNumberAssignmentType.Person : PhoneNumberAssignmentType.Application;
 
