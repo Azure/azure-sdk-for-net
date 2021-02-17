@@ -12,7 +12,7 @@ using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.Blobs
 {
-    internal class ContainerGetAccessPolicyHeaders
+    internal partial class ContainerGetAccessPolicyHeaders
     {
         private readonly Response _response;
         public ContainerGetAccessPolicyHeaders(Response response)

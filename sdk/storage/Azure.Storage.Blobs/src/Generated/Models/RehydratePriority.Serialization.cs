@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal static class RehydratePriorityExtensions
+    internal static partial class RehydratePriorityExtensions
     {
         public static string ToSerialString(this RehydratePriority value) => value switch
         {

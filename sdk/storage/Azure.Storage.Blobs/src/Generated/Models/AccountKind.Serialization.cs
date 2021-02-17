@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal static class AccountKindExtensions
+    internal static partial class AccountKindExtensions
     {
         public static string ToSerialString(this AccountKind value) => value switch
         {

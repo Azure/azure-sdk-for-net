@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal static class BlockListTypeExtensions
+    internal static partial class BlockListTypeExtensions
     {
         public static string ToSerialString(this BlockListType value) => value switch
         {

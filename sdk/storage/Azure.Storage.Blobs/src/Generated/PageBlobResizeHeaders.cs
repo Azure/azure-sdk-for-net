@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs
 {
-    internal class PageBlobResizeHeaders
+    internal partial class PageBlobResizeHeaders
     {
         private readonly Response _response;
         public PageBlobResizeHeaders(Response response)

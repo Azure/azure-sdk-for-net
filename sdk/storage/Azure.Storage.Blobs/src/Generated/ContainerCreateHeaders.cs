@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs
 {
-    internal class ContainerCreateHeaders
+    internal partial class ContainerCreateHeaders
     {
         private readonly Response _response;
         public ContainerCreateHeaders(Response response)

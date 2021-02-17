@@ -13,7 +13,7 @@ using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.Blobs
 {
-    internal class BlobGetPropertiesHeaders
+    internal partial class BlobGetPropertiesHeaders
     {
         private readonly Response _response;
         public BlobGetPropertiesHeaders(Response response)

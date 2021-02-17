@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs
 {
-    internal class BlobReleaseLeaseHeaders
+    internal partial class BlobReleaseLeaseHeaders
     {
         private readonly Response _response;
         public BlobReleaseLeaseHeaders(Response response)

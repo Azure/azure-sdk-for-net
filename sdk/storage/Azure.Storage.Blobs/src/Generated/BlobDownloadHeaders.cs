@@ -13,7 +13,7 @@ using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.Blobs
 {
-    internal class BlobDownloadHeaders
+    internal partial class BlobDownloadHeaders
     {
         private readonly Response _response;
         public BlobDownloadHeaders(Response response)

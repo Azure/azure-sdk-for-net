@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs
 {
-    internal class BlobSetExpiryHeaders
+    internal partial class BlobSetExpiryHeaders
     {
         private readonly Response _response;
         public BlobSetExpiryHeaders(Response response)

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs
 {
-    internal class BlobCreateSnapshotHeaders
+    internal partial class BlobCreateSnapshotHeaders
     {
         private readonly Response _response;
         public BlobCreateSnapshotHeaders(Response response)

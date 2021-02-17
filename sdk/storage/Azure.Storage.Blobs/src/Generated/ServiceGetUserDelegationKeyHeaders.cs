@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs
 {
-    internal class ServiceGetUserDelegationKeyHeaders
+    internal partial class ServiceGetUserDelegationKeyHeaders
     {
         private readonly Response _response;
         public ServiceGetUserDelegationKeyHeaders(Response response)

@@ -12,7 +12,7 @@ using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.Blobs
 {
-    internal class PageBlobCopyIncrementalHeaders
+    internal partial class PageBlobCopyIncrementalHeaders
     {
         private readonly Response _response;
         public PageBlobCopyIncrementalHeaders(Response response)

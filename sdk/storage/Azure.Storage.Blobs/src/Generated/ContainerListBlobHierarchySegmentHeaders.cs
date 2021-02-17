@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs
 {
-    internal class ContainerListBlobHierarchySegmentHeaders
+    internal partial class ContainerListBlobHierarchySegmentHeaders
     {
         private readonly Response _response;
         public ContainerListBlobHierarchySegmentHeaders(Response response)

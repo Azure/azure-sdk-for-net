@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs
 {
-    internal class ContainerSetAccessPolicyHeaders
+    internal partial class ContainerSetAccessPolicyHeaders
     {
         private readonly Response _response;
         public ContainerSetAccessPolicyHeaders(Response response)

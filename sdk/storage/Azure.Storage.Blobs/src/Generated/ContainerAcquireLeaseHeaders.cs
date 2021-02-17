@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs
 {
-    internal class ContainerAcquireLeaseHeaders
+    internal partial class ContainerAcquireLeaseHeaders
     {
         private readonly Response _response;
         public ContainerAcquireLeaseHeaders(Response response)

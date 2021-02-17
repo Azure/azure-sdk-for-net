@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs
 {
-    internal class AppendBlobSealHeaders
+    internal partial class AppendBlobSealHeaders
     {
         private readonly Response _response;
         public AppendBlobSealHeaders(Response response)

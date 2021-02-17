@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal static class QueryFormatTypeExtensions
+    internal static partial class QueryFormatTypeExtensions
     {
         public static string ToSerialString(this QueryFormatType value) => value switch
         {

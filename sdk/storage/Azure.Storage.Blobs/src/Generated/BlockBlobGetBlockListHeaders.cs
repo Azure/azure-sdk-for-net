@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs
 {
-    internal class BlockBlobGetBlockListHeaders
+    internal partial class BlockBlobGetBlockListHeaders
     {
         private readonly Response _response;
         public BlockBlobGetBlockListHeaders(Response response)

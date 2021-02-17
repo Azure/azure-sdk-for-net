@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs
 {
-    internal class BlockBlobStageBlockFromURLHeaders
+    internal partial class BlockBlobStageBlockFromURLHeaders
     {
         private readonly Response _response;
         public BlockBlobStageBlockFromURLHeaders(Response response)

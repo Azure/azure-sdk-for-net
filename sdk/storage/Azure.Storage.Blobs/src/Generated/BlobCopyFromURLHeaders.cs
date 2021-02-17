@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs
 {
-    internal class BlobCopyFromURLHeaders
+    internal partial class BlobCopyFromURLHeaders
     {
         private readonly Response _response;
         public BlobCopyFromURLHeaders(Response response)

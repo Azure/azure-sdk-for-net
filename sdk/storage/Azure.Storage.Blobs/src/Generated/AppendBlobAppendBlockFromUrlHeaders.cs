@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs
 {
-    internal class AppendBlobAppendBlockFromUrlHeaders
+    internal partial class AppendBlobAppendBlockFromUrlHeaders
     {
         private readonly Response _response;
         public AppendBlobAppendBlockFromUrlHeaders(Response response)

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs
 {
-    internal class BlockBlobUploadHeaders
+    internal partial class BlockBlobUploadHeaders
     {
         private readonly Response _response;
         public BlockBlobUploadHeaders(Response response)

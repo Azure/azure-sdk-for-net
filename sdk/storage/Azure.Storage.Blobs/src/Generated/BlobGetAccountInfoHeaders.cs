@@ -11,7 +11,7 @@ using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.Blobs
 {
-    internal class BlobGetAccountInfoHeaders
+    internal partial class BlobGetAccountInfoHeaders
     {
         private readonly Response _response;
         public BlobGetAccountInfoHeaders(Response response)

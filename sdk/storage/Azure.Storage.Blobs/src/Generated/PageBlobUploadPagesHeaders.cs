@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs
 {
-    internal class PageBlobUploadPagesHeaders
+    internal partial class PageBlobUploadPagesHeaders
     {
         private readonly Response _response;
         public PageBlobUploadPagesHeaders(Response response)

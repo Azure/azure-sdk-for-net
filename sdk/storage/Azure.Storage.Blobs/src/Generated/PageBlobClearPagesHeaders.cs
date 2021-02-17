@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs
 {
-    internal class PageBlobClearPagesHeaders
+    internal partial class PageBlobClearPagesHeaders
     {
         private readonly Response _response;
         public PageBlobClearPagesHeaders(Response response)

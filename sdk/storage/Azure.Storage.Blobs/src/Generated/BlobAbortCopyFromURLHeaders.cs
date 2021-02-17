@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs
 {
-    internal class BlobAbortCopyFromURLHeaders
+    internal partial class BlobAbortCopyFromURLHeaders
     {
         private readonly Response _response;
         public BlobAbortCopyFromURLHeaders(Response response)

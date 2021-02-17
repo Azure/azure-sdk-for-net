@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs
 {
-    internal class ContainerDeleteHeaders
+    internal partial class ContainerDeleteHeaders
     {
         private readonly Response _response;
         public ContainerDeleteHeaders(Response response)

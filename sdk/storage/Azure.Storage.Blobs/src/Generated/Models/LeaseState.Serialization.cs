@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal static class LeaseStateExtensions
+    internal static partial class LeaseStateExtensions
     {
         public static string ToSerialString(this LeaseState value) => value switch
         {

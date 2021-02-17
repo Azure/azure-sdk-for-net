@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs
 {
-    internal class PageBlobUpdateSequenceNumberHeaders
+    internal partial class PageBlobUpdateSequenceNumberHeaders
     {
         private readonly Response _response;
         public PageBlobUpdateSequenceNumberHeaders(Response response)

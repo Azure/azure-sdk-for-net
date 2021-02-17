@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs
 {
-    internal class PageBlobGetPageRangesDiffHeaders
+    internal partial class PageBlobGetPageRangesDiffHeaders
     {
         private readonly Response _response;
         public PageBlobGetPageRangesDiffHeaders(Response response)

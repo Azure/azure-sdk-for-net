@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs
 {
-    internal class ContainerRenameHeaders
+    internal partial class ContainerRenameHeaders
     {
         private readonly Response _response;
         public ContainerRenameHeaders(Response response)

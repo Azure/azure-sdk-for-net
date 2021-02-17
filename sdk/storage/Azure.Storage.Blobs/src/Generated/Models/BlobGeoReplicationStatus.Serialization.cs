@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal static class BlobGeoReplicationStatusExtensions
+    internal static partial class BlobGeoReplicationStatusExtensions
     {
         public static string ToSerialString(this BlobGeoReplicationStatus value) => value switch
         {

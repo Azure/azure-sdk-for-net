@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs
 {
-    internal class BlobSetMetadataHeaders
+    internal partial class BlobSetMetadataHeaders
     {
         private readonly Response _response;
         public BlobSetMetadataHeaders(Response response)

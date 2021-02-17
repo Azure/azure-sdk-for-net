@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs
 {
-    internal class ContainerSubmitBatchHeaders
+    internal partial class ContainerSubmitBatchHeaders
     {
         private readonly Response _response;
         public ContainerSubmitBatchHeaders(Response response)

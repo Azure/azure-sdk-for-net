@@ -13,7 +13,7 @@ using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.Blobs
 {
-    internal class BlobQueryHeaders
+    internal partial class BlobQueryHeaders
     {
         private readonly Response _response;
         public BlobQueryHeaders(Response response)

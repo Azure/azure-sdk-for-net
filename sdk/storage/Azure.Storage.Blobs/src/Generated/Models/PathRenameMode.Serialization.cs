@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal static class PathRenameModeExtensions
+    internal static partial class PathRenameModeExtensions
     {
         public static string ToSerialString(this PathRenameMode value) => value switch
         {

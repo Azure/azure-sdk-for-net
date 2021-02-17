@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs
 {
-    internal class BlockBlobCommitBlockListHeaders
+    internal partial class BlockBlobCommitBlockListHeaders
     {
         private readonly Response _response;
         public BlockBlobCommitBlockListHeaders(Response response)

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs
 {
-    internal class BlobSetTagsHeaders
+    internal partial class BlobSetTagsHeaders
     {
         private readonly Response _response;
         public BlobSetTagsHeaders(Response response)

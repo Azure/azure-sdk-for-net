@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs
 {
-    internal class ServiceListContainersSegmentHeaders
+    internal partial class ServiceListContainersSegmentHeaders
     {
         private readonly Response _response;
         public ServiceListContainersSegmentHeaders(Response response)

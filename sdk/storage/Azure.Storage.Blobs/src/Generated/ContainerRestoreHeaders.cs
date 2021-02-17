@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs
 {
-    internal class ContainerRestoreHeaders
+    internal partial class ContainerRestoreHeaders
     {
         private readonly Response _response;
         public ContainerRestoreHeaders(Response response)

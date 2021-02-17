@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal static class EncryptionAlgorithmTypeInternalExtensions
+    internal static partial class EncryptionAlgorithmTypeInternalExtensions
     {
         public static string ToSerialString(this EncryptionAlgorithmTypeInternal value) => value switch
         {

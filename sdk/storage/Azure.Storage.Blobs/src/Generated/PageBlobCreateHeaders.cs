@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs
 {
-    internal class PageBlobCreateHeaders
+    internal partial class PageBlobCreateHeaders
     {
         private readonly Response _response;
         public PageBlobCreateHeaders(Response response)

@@ -12,7 +12,7 @@ using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.Blobs
 {
-    internal class BlobStartCopyFromURLHeaders
+    internal partial class BlobStartCopyFromURLHeaders
     {
         private readonly Response _response;
         public BlobStartCopyFromURLHeaders(Response response)

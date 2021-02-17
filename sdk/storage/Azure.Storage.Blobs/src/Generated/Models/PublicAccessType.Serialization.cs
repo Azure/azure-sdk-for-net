@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal static class PublicAccessTypeExtensions
+    internal static partial class PublicAccessTypeExtensions
     {
         public static string ToSerialString(this PublicAccessType value) => value switch
         {

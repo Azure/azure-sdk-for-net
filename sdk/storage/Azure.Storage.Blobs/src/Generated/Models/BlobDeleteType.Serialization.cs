@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal static class BlobDeleteTypeExtensions
+    internal static partial class BlobDeleteTypeExtensions
     {
         public static string ToSerialString(this BlobDeleteType value) => value switch
         {
