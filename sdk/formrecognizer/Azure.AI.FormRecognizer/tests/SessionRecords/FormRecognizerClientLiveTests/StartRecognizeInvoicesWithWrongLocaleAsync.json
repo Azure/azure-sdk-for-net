@@ -5,10 +5,10 @@
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "915108",
-        "Content-Type": "image/jpeg",
+        "Content-Length": "147362",
+        "Content-Type": "application/pdf",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-0ae40ee354dbc340aeb1d39ddd07195a-1f1738502d99ae40-00",
+        "traceparent": "00-b836b69916a78c4c83bb751db85b18bd-1d838e49b074a547-00",
         "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210216.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "9e4c2bdaae3ea005d96829796f3e7250",
         "x-ms-return-client-request-id": "true"
@@ -16,19 +16,19 @@
       "RequestBody": null,
       "StatusCode": 400,
       "ResponseHeaders": {
-        "apim-request-id": "11dd82e3-51f8-4351-ae58-fec844d676c2",
+        "apim-request-id": "cea927fe-9e2d-4f44-ac04-7941a6179092",
         "Content-Length": "169",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 17 Feb 2021 00:25:02 GMT",
+        "Date": "Wed, 17 Feb 2021 00:39:47 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "479"
+        "x-envoy-upstream-service-time": "166"
       },
       "ResponseBody": {
         "error": {
           "code": "UnsupportedLocale",
           "innerError": {
-            "requestId": "11dd82e3-51f8-4351-ae58-fec844d676c2"
+            "requestId": "cea927fe-9e2d-4f44-ac04-7941a6179092"
           },
           "message": "Locale unsupported. Supported locale includes en-US."
         }
