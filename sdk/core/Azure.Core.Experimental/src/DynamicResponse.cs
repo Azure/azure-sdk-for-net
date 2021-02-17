@@ -11,7 +11,7 @@ using System.Text;
 namespace Azure.Core
 {
     /// <summary>
-    /// Represents a result of Azure operation with a <see cref="DynamicJson"/> response.
+    /// Represents a result of Azure operation with a <see cref="JsonData"/> response.
     /// </summary>
     [DebuggerDisplay("Status: {Response.Status}, Value: {Value}")]
     public class DynamicResponse : Response
@@ -48,7 +48,7 @@ namespace Azure.Core
         protected override IEnumerable<HttpHeader> EnumerateHeaders() => Response.Headers;
 
         /// <summary>
-        /// Represents a result of Azure operation with a <see cref="DynamicJson"/> response.
+        /// Represents a result of Azure operation with a <see cref="JsonData"/> response.
         /// </summary>
         /// <param name="response">The response returned by the service.</param>
         /// <param name="body">The body returned by the service.</param>

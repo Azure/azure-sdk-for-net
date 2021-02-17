@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace Azure.Core
 {
     /// <summary>
-    /// Represents the <see cref="DynamicJson"/> sent as part of the Azure.Core.Request.
+    /// Represents the <see cref="JsonData"/> sent as part of the Azure.Core.Request.
     /// </summary>
     [DebuggerDisplay("Content: {_body}")]
     public class DynamicContent : RequestContent

@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 namespace Azure.Core
 {
     /// <summary>
-    /// Represents an HTTP request with <see cref="DynamicJson"/> content.
+    /// Represents an HTTP request with <see cref="JsonData"/> content.
     /// </summary>
     [DebuggerDisplay("Body: {Body}")]
     public class DynamicRequest : Request
@@ -55,7 +55,7 @@ namespace Azure.Core
 
         // TODO(matell): In Krzysztof's prototype we also took DiagnosticScope as a parameter, do we still need that?
         /// <summary>
-        /// Creates an instance of <see cref="RequestContent"/> that wraps <see cref="DynamicJson"/> content.
+        /// Creates an instance of <see cref="RequestContent"/> that wraps <see cref="JsonData"/> content.
         /// </summary>
         /// <param name="request">The <see cref="Request"/> to send.</param>
         /// <param name="pipeline">The HTTP pipeline for sending and receiving REST requests and responses.</param>
