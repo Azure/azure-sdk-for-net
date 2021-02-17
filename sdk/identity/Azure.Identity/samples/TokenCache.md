@@ -71,7 +71,7 @@ TokenCache tokenCache;
 
 using (var cacheStream = new FileStream(TOKEN_CACHE_PATH, FileMode.OpenOrCreate, FileAccess.Read))
 {
-    var tokenCache = await TokenCacheSerializer.DeserializeAsync(cacheStream);
+    tokenCache = await TokenCacheSerializer.DeserializeAsync(cacheStream);
 }
 ```
 
