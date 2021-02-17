@@ -790,7 +790,7 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Returns the number of elements in this instance.
+        /// Returns the number of elements in this array.
         /// </summary>
         /// <remarks>If <see cref="Kind"/> is not <see cref="JsonValueKind.Array"/> this methods thows <see cref="InvalidOperationException"/>.</remarks>
         public int Length
@@ -799,12 +799,21 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Returns the names of all the properties of this instance.
+        /// Returns the names of all the properties of this object.
         /// </summary>
         /// <remarks>If <see cref="Kind"/> is not <see cref="JsonValueKind.Object"/> this methods thows <see cref="InvalidOperationException"/>.</remarks>
         public IEnumerable<string> Properties
         {
             get => EnsureObject().Keys;
+        }
+
+        /// <summary>
+        /// Returns all the elements in this array.
+        /// </summary>
+        /// <remarks>If<see cref="Kind"/> is not<see cref="JsonValueKind.Array"/> this methods thows <see cref = "InvalidOperationException" />.</remarks>
+        public IEnumerable<JsonData> Items
+        {
+            get => EnsureArray();
         }
 
         /// <summary>

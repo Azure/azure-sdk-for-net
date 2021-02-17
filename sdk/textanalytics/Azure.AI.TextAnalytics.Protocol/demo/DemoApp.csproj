@@ -9,4 +9,10 @@
     <ProjectReference Include="..\src\Azure.AI.TextAnalytics.Protocol.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="reviews_english.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

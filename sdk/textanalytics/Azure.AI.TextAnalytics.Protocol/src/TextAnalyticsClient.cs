@@ -97,6 +97,33 @@ namespace Azure.AI.TextAnalytics.Protocol
         /// <param name="showStats">if set to true, response will contain input and document level statistics.</param>
         /// <param name="cancellationToken">A token to check for cancellation.</param>
         /// <returns>
+        /// A task which represents the response of the operation.
+        /// </returns>
+        /// <remarks>
+        /// The <see href="https://westus2.dev.cognitive.microsoft.com/docs/services/TextAnalytics-v3-0/operations/EntitiesRecognitionGeneral">
+        /// REST API Documentation</see> has more information on the body of the request and the response.
+        /// </remarks>
+        public virtual async Task<DynamicResponse> GetEntitiesAsync(dynamic body, string modelVersion = null, bool? showStats = null, CancellationToken cancellationToken = default)
+        {
+            DynamicRequest req = GetEntitiesRequest();
+
+            req.Content = DynamicContent.Create(ToJsonData(body));
+            return await req.SendAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// The API returns a list of general named entities in a given document. For the list of supported entity types,
+        /// check <see href="https://aka.ms/taner">Supported Entity Types in Text Analytics API</see>. See the
+        /// <see href="https://aka.ms/talangs">Supported languages in Text Analytics API</see> for the list of enabled languages.
+        /// </summary>
+        /// <param name="body">The request body</param>
+        /// <param name="modelVersion">
+        /// This value indicates which model will be used for scoring. If a modelVersion is not specified,
+        /// the API should default to the latest, non-preview version.
+        /// </param>
+        /// <param name="showStats">if set to true, response will contain input and document level statistics.</param>
+        /// <param name="cancellationToken">A token to check for cancellation.</param>
+        /// <returns>
         /// The response of the operation.
         /// </returns>
         /// <remarks>
@@ -107,6 +134,33 @@ namespace Azure.AI.TextAnalytics.Protocol
         {
             DynamicRequest req = GetEntitiesRequest(modelVersion, showStats);
             req.Content = DynamicContent.Create(body);
+
+            return req.Send(cancellationToken);
+        }
+
+        /// <summary>
+        /// The API returns a list of general named entities in a given document. For the list of supported entity types,
+        /// check <see href="https://aka.ms/taner">Supported Entity Types in Text Analytics API</see>. See the
+        /// <see href="https://aka.ms/talangs">Supported languages in Text Analytics API</see> for the list of enabled languages.
+        /// </summary>
+        /// <param name="body">The request body</param>
+        /// <param name="modelVersion">
+        /// This value indicates which model will be used for scoring. If a modelVersion is not specified,
+        /// the API should default to the latest, non-preview version.
+        /// </param>
+        /// <param name="showStats">if set to true, response will contain input and document level statistics.</param>
+        /// <param name="cancellationToken">A token to check for cancellation.</param>
+        /// <returns>
+        /// The response of the operation.
+        /// </returns>
+        /// <remarks>
+        /// The <see href="https://westus2.dev.cognitive.microsoft.com/docs/services/TextAnalytics-v3-0/operations/EntitiesRecognitionGeneral">
+        /// REST API Documentation</see> has more information on the body of the request and the response.
+        /// </remarks>
+        public virtual DynamicResponse GetEntities(dynamic body, string modelVersion = null, bool? showStats = null, CancellationToken cancellationToken = default)
+        {
+            DynamicRequest req = GetEntitiesRequest(modelVersion, showStats);
+            req.Content = DynamicContent.Create(ToJsonData(body));
 
             return req.Send(cancellationToken);
         }
@@ -192,6 +246,32 @@ namespace Azure.AI.TextAnalytics.Protocol
         /// <param name="showStats">if set to true, response will contain input and document level statistics.</param>
         /// <param name="cancellationToken">A token to check for cancellation.</param>
         /// <returns>
+        /// A task which represents the response of the operation.
+        /// </returns>
+        /// <remarks>
+        /// The <see href="https://westus2.dev.cognitive.microsoft.com/docs/services/TextAnalytics-v3-0/operations/EntitiesLinking">
+        /// REST API Documentation</see> has more information on the body of the request and the response.
+        /// </remarks>
+        public virtual async Task<DynamicResponse> GetLinkedEntitiesAsync(dynamic body, string modelVersion = null, bool? showStats = null, CancellationToken cancellationToken = default)
+        {
+            DynamicRequest req = GetLinkedEntitiesRequest();
+            req.Content = DynamicContent.Create(ToJsonData(body));
+
+            return await req.SendAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// The API returns a list of recognized entities with links to a well-known knowledge base. See the
+        /// <see href="https://aka.ms/talangs">Supported languages in Text Analytics API</see> for the list of enabled languages.
+        /// </summary>
+        /// <param name="body">The request body</param>
+        /// <param name="modelVersion">
+        /// This value indicates which model will be used for scoring. If a modelVersion is not specified,
+        /// the API should default to the latest, non-preview version.
+        /// </param>
+        /// <param name="showStats">if set to true, response will contain input and document level statistics.</param>
+        /// <param name="cancellationToken">A token to check for cancellation.</param>
+        /// <returns>
         /// The response of the operation.
         /// </returns>
         /// <remarks>
@@ -202,6 +282,32 @@ namespace Azure.AI.TextAnalytics.Protocol
         {
             DynamicRequest req = GetLinkedEntitiesRequest(modelVersion, showStats);
             req.Content = DynamicContent.Create(body);
+
+            return req.Send(cancellationToken);
+        }
+
+        /// <summary>
+        /// The API returns a list of recognized entities with links to a well-known knowledge base. See the
+        /// <see href="https://aka.ms/talangs">Supported languages in Text Analytics API</see> for the list of enabled languages.
+        /// </summary>
+        /// <param name="body">The request body</param>
+        /// <param name="modelVersion">
+        /// This value indicates which model will be used for scoring. If a modelVersion is not specified,
+        /// the API should default to the latest, non-preview version.
+        /// </param>
+        /// <param name="showStats">if set to true, response will contain input and document level statistics.</param>
+        /// <param name="cancellationToken">A token to check for cancellation.</param>
+        /// <returns>
+        /// The response of the operation.
+        /// </returns>
+        /// <remarks>
+        /// The <see href="https://westus2.dev.cognitive.microsoft.com/docs/services/TextAnalytics-v3-0/operations/EntitiesLinking">
+        /// REST API Documentation</see> has more information on the body of the request and the response.
+        /// </remarks>
+        public virtual DynamicResponse GetLinkedEntities(dynamic body, string modelVersion = null, bool? showStats = null, CancellationToken cancellationToken = default)
+        {
+            DynamicRequest req = GetLinkedEntitiesRequest(modelVersion, showStats);
+            req.Content = DynamicContent.Create(ToJsonData(body));
 
             return req.Send(cancellationToken);
         }
@@ -286,6 +392,32 @@ namespace Azure.AI.TextAnalytics.Protocol
         /// <param name="showStats">if set to true, response will contain input and document level statistics.</param>
         /// <param name="cancellationToken">A token to check for cancellation.</param>
         /// <returns>
+        /// A task which represents the response of the operation.
+        /// </returns>
+        /// <remarks>
+        /// The <see href="https://westus2.dev.cognitive.microsoft.com/docs/services/TextAnalytics-v3-0/operations/KeyPhrases">
+        /// REST API Documentation</see> has more information on the body of the request and the response.
+        /// </remarks>
+        public virtual async Task<DynamicResponse> GetKeyPhrasesAsync(dynamic body, string modelVersion = null, bool? showStats = null, CancellationToken cancellationToken = default)
+        {
+            DynamicRequest req = GetKeyPhrasesRequest();
+            req.Content = DynamicContent.Create(ToJsonData(body));
+
+            return await req.SendAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// The API returns a list of strings denoting the key phrases in the input text. See the
+        /// <see href="https://aka.ms/talangs">Supported languages in Text Analytics API</see> for the list of enabled languages.
+        /// </summary>
+        /// <param name="body">The request body</param>
+        /// <param name="modelVersion">
+        /// This value indicates which model will be used for scoring. If a modelVersion is not specified,
+        /// the API should default to the latest, non-preview version.
+        /// </param>
+        /// <param name="showStats">if set to true, response will contain input and document level statistics.</param>
+        /// <param name="cancellationToken">A token to check for cancellation.</param>
+        /// <returns>
         /// The response of the operation.
         /// </returns>
         /// <remarks>
@@ -296,6 +428,32 @@ namespace Azure.AI.TextAnalytics.Protocol
         {
             DynamicRequest req = GetKeyPhrasesRequest(modelVersion, showStats);
             req.Content = DynamicContent.Create(body);
+
+            return req.Send(cancellationToken);
+        }
+
+        /// <summary>
+        /// The API returns a list of strings denoting the key phrases in the input text. See the
+        /// <see href="https://aka.ms/talangs">Supported languages in Text Analytics API</see> for the list of enabled languages.
+        /// </summary>
+        /// <param name="body">The request body</param>
+        /// <param name="modelVersion">
+        /// This value indicates which model will be used for scoring. If a modelVersion is not specified,
+        /// the API should default to the latest, non-preview version.
+        /// </param>
+        /// <param name="showStats">if set to true, response will contain input and document level statistics.</param>
+        /// <param name="cancellationToken">A token to check for cancellation.</param>
+        /// <returns>
+        /// The response of the operation.
+        /// </returns>
+        /// <remarks>
+        /// The <see href="https://westus2.dev.cognitive.microsoft.com/docs/services/TextAnalytics-v3-0/operations/KeyPhrases">
+        /// REST API Documentation</see> has more information on the body of the request and the response.
+        /// </remarks>
+        public virtual DynamicResponse GetKeyPhrases(dynamic body, string modelVersion = null, bool? showStats = null, CancellationToken cancellationToken = default)
+        {
+            DynamicRequest req = GetKeyPhrasesRequest(modelVersion, showStats);
+            req.Content = DynamicContent.Create(ToJsonData(body));
 
             return req.Send(cancellationToken);
         }
@@ -382,6 +540,33 @@ namespace Azure.AI.TextAnalytics.Protocol
         /// <param name="showStats">if set to true, response will contain input and document level statistics.</param>
         /// <param name="cancellationToken">A token to check for cancellation.</param>
         /// <returns>
+        /// A task which represents the response of the operation.
+        /// </returns>
+        /// <remarks>
+        /// The <see href="https://westus2.dev.cognitive.microsoft.com/docs/services/TextAnalytics-v3-0/operations/Languages">
+        /// REST API Documentation</see> has more information on the body of the request and the response.
+        /// </remarks>
+        public virtual async Task<DynamicResponse> GetLanguagesAsync(dynamic body, string modelVersion = null, bool? showStats = null, CancellationToken cancellationToken = default)
+        {
+            DynamicRequest req = GetLanguagesRequest();
+            req.Content = DynamicContent.Create(ToJsonData(body));
+
+            return await req.SendAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// The API returns the detected language and a numeric score between 0 and 1. Scores close to 1 indicate 100% certainty
+        /// that the identified language is true. See the<see href="https://aka.ms/talangs">Supported languages in Text
+        /// Analytics API</see> for the list of enabled languages.
+        /// </summary>
+        /// <param name="body">The request body</param>
+        /// <param name="modelVersion">
+        /// This value indicates which model will be used for scoring. If a modelVersion is not specified,
+        /// the API should default to the latest, non-preview version.
+        /// </param>
+        /// <param name="showStats">if set to true, response will contain input and document level statistics.</param>
+        /// <param name="cancellationToken">A token to check for cancellation.</param>
+        /// <returns>
         /// The response of the operation.
         /// </returns>
         /// <remarks>
@@ -392,6 +577,33 @@ namespace Azure.AI.TextAnalytics.Protocol
         {
             DynamicRequest req = GetLanguagesRequest(modelVersion, showStats);
             req.Content = DynamicContent.Create(body);
+
+            return req.Send(cancellationToken);
+        }
+
+        /// <summary>
+        /// The API returns the detected language and a numeric score between 0 and 1. Scores close to 1 indicate 100% certainty
+        /// that the identified language is true. See the<see href="https://aka.ms/talangs">Supported languages in Text
+        /// Analytics API</see> for the list of enabled languages.
+        /// </summary>
+        /// <param name="body">The request body</param>
+        /// <param name="modelVersion">
+        /// This value indicates which model will be used for scoring. If a modelVersion is not specified,
+        /// the API should default to the latest, non-preview version.
+        /// </param>
+        /// <param name="showStats">if set to true, response will contain input and document level statistics.</param>
+        /// <param name="cancellationToken">A token to check for cancellation.</param>
+        /// <returns>
+        /// The response of the operation.
+        /// </returns>
+        /// <remarks>
+        /// The <see href="https://westus2.dev.cognitive.microsoft.com/docs/services/TextAnalytics-v3-0/operations/Languages">
+        /// REST API Documentation</see> has more information on the body of the request and the response.
+        /// </remarks>
+        public virtual DynamicResponse GetLanguages(dynamic body, string modelVersion = null, bool? showStats = null, CancellationToken cancellationToken = default)
+        {
+            DynamicRequest req = GetLanguagesRequest(modelVersion, showStats);
+            req.Content = DynamicContent.Create(ToJsonData(body));
 
             return req.Send(cancellationToken);
         }
@@ -479,6 +691,33 @@ namespace Azure.AI.TextAnalytics.Protocol
         /// <param name="showStats">if set to true, response will contain input and document level statistics.</param>
         /// <param name="cancellationToken">A token to check for cancellation.</param>
         /// <returns>
+        /// A task which represents the response of the operation.
+        /// </returns>
+        /// <remarks>
+        /// The <see href="https://westus2.dev.cognitive.microsoft.com/docs/services/TextAnalytics-v3-0/operations/Sentiment">
+        /// REST API Documentation</see> has more information on the body of the request and the response.
+        /// </remarks>
+        public virtual async Task<DynamicResponse> GetSentimentAsync(dynamic body, string modelVersion = null, bool? showStats = null, CancellationToken cancellationToken = default)
+        {
+            DynamicRequest req = GetSentimentRequest();
+            req.Content = DynamicContent.Create(ToJsonData(body));
+
+            return await req.SendAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// The API returns a sentiment prediction, as well as sentiment scores for each sentiment class (Positive, Negative, and Neutral
+        /// for the document and each sentence within it. See the <see href="https://aka.ms/talangs">Supported languages in Text
+        /// Analytics API</see> for the list of enabled languages.
+        /// </summary>
+        /// <param name="body">The request body</param>
+        /// <param name="modelVersion">
+        /// This value indicates which model will be used for scoring. If a modelVersion is not specified,
+        /// the API should default to the latest, non-preview version.
+        /// </param>
+        /// <param name="showStats">if set to true, response will contain input and document level statistics.</param>
+        /// <param name="cancellationToken">A token to check for cancellation.</param>
+        /// <returns>
         /// The response of the operation.
         /// </returns>
         /// <remarks>
@@ -489,6 +728,33 @@ namespace Azure.AI.TextAnalytics.Protocol
         {
             DynamicRequest req = GetSentimentRequest(modelVersion, showStats);
             req.Content = DynamicContent.Create(body);
+
+            return req.Send(cancellationToken);
+        }
+
+        /// <summary>
+        /// The API returns a sentiment prediction, as well as sentiment scores for each sentiment class (Positive, Negative, and Neutral
+        /// for the document and each sentence within it. See the <see href="https://aka.ms/talangs">Supported languages in Text
+        /// Analytics API</see> for the list of enabled languages.
+        /// </summary>
+        /// <param name="body">The request body</param>
+        /// <param name="modelVersion">
+        /// This value indicates which model will be used for scoring. If a modelVersion is not specified,
+        /// the API should default to the latest, non-preview version.
+        /// </param>
+        /// <param name="showStats">if set to true, response will contain input and document level statistics.</param>
+        /// <param name="cancellationToken">A token to check for cancellation.</param>
+        /// <returns>
+        /// The response of the operation.
+        /// </returns>
+        /// <remarks>
+        /// The <see href="https://westus2.dev.cognitive.microsoft.com/docs/services/TextAnalytics-v3-0/operations/Sentiment">
+        /// REST API Documentation</see> has more information on the body of the request and the response.
+        /// </remarks>
+        public virtual DynamicResponse GetSentiment(dynamic body, string modelVersion = null, bool? showStats = null, CancellationToken cancellationToken = default)
+        {
+            DynamicRequest req = GetSentimentRequest(modelVersion, showStats);
+            req.Content = DynamicContent.Create(ToJsonData(body));
 
             return req.Send(cancellationToken);
         }
@@ -534,6 +800,15 @@ namespace Azure.AI.TextAnalytics.Protocol
             req.Headers.SetValue("Accept", "application/json");
 
             return new DynamicRequest(req, HttpPipeline);
+        }
+
+        private static JsonData ToJsonData(object value)
+        {
+            if (value is JsonData) {
+                return (JsonData)value;
+            }
+
+            return new JsonData(value);
         }
     }
 }
