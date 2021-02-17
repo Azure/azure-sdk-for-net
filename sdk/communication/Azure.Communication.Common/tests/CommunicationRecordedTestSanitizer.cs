@@ -13,6 +13,7 @@ namespace Azure.Communication.Pipeline
         private static readonly Regex _azureResourceRegEx = new Regex(@"[^/]+?(?=(.communication.azure))", RegexOptions.Compiled);
         private static readonly Regex _identityInRouteRegEx = new Regex(@"(?<=identities/)([^/]+)", RegexOptions.Compiled);
         private static readonly Regex _phoneNumberRegEx = new Regex(@"[\\+]?[0-9]{11,15}", RegexOptions.Compiled);
+        private static readonly Regex _urlEncodedPhoneNumberRegEx = new Regex(@"[\\%2B]{0,3}[0-9]{11,15}", RegexOptions.Compiled);
         private static readonly Regex _guidRegEx = new Regex(@"(\{){0,1}[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}(\}){0,1}", RegexOptions.Compiled);
 
         public const string ConnectionStringEnvironmentVariableName = "COMMUNICATION_CONNECTION_STRING";
@@ -76,7 +77,8 @@ namespace Azure.Communication.Pipeline
         public override string SanitizeUri(string uri)
         {
             uri = SanitizeAzureResource(_identityInRouteRegEx.Replace(uri, SanitizeValue.ToLower()));
-            return _guidRegEx.Replace(uri, SanitizeValue);
+            uri = _guidRegEx.Replace(uri, SanitizeValue);
+            return _urlEncodedPhoneNumberRegEx.Replace(uri, SanitizeValue);
         }
     }
 }

@@ -35,6 +35,11 @@ namespace Azure.Core.Pipeline
 #pragma warning restore CA1801 // Review unused parameters
             )
         {
+            if (string.IsNullOrEmpty(content))
+            {
+                return;
+            }
+
             try
             {
                 using var document = JsonDocument.Parse(content);

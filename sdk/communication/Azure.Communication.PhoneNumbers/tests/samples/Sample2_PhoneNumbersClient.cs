@@ -40,7 +40,7 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
 
             #region Snippet:SearchPhoneNumbersAsync
 
-            var capabilities = new PhoneNumberCapabilities(PhoneNumberCapabilityValue.Outbound, PhoneNumberCapabilityValue.Outbound);
+            var capabilities = new PhoneNumberCapabilities(PhoneNumberCapabilityValue.None, PhoneNumberCapabilityValue.Outbound);
             var searchOptions = new PhoneNumberSearchOptions { AreaCode = "844", Quantity = 1 };
 
             var searchOperation = await client.StartSearchAvailablePhoneNumbersAsync(countryCode, PhoneNumberType.TollFree, PhoneNumberAssignmentType.Application, capabilities, searchOptions);
@@ -51,7 +51,7 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
 
             #region Snippet:StartPurchaseSearchAsync
 
-            var purchaseOperation = await client.StartPurchasePhoneNumbersAsync(searchOperation.Id);
+            var purchaseOperation = await client.StartPurchasePhoneNumbersAsync(searchOperation.Value.SearchId);
             //@@ await purchaseOperation.WaitForCompletionAsync();
             /*@@*/ await WaitForCompletionAsync(purchaseOperation);
 
@@ -116,7 +116,7 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
 
             #region Snippet:SearchPhoneNumbers
 
-            var capabilities = new PhoneNumberCapabilities(PhoneNumberCapabilityValue.Outbound, PhoneNumberCapabilityValue.Outbound);
+            var capabilities = new PhoneNumberCapabilities(PhoneNumberCapabilityValue.None, PhoneNumberCapabilityValue.Outbound);
             var searchOptions = new PhoneNumberSearchOptions { AreaCode = "844", Quantity = 1 };
 
             var searchOperation = client.StartSearchAvailablePhoneNumbers(countryCode, PhoneNumberType.TollFree, PhoneNumberAssignmentType.Application, capabilities, searchOptions);
