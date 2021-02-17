@@ -22,6 +22,7 @@ function Get-dotnet-PackageInfoFromRepo ($pkgPath, $serviceDirectory, $pkgName)
     $pkgProp = [PackageProps]::new($pkgName, $pkgVersion, $pkgPath, $serviceDirectory)
     $pkgProp.SdkType = $sdkType
     $pkgProp.IsNewSdk = $pkgName.StartsWith("Azure")
+    $pkgProp.ArtifactName = $pkgName
     return $pkgProp
   }
   else
