@@ -2680,6 +2680,7 @@ namespace Azure.Storage.Blobs.Specialized
                             sourceIfMatch: options?.SourceConditions?.IfMatch.ToString(),
                             sourceIfNoneMatch: options?.SourceConditions?.IfNoneMatch.ToString(),
                             sourceIfTags: options?.SourceConditions?.TagConditions,
+                            sourceContentMD5: options?.ContentHash,
                             blobTagsString: options?.Tags?.ToTagsString(),
                             copySourceBlobProperties: options?.CopySourceBlobProperties,
                             cancellationToken: cancellationToken);
