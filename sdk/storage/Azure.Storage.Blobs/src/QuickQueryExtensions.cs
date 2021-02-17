@@ -65,40 +65,6 @@ namespace Azure.Storage.Blobs
             return serialization;
         }
 
-        // TODO remove
-        //internal static BlobDownloadInfo ToBlobDownloadInfo(this BlobQueryResult quickQueryResult)
-        //    => BlobsModelFactory.BlobDownloadInfo(
-        //        lastModified: quickQueryResult.LastModified,
-        //        blobSequenceNumber: quickQueryResult.BlobSequenceNumber,
-        //        blobType: quickQueryResult.BlobType,
-        //        contentCrc64: quickQueryResult.ContentCrc64,
-        //        contentLanguage: quickQueryResult.ContentLanguage,
-        //        copyStatusDescription: quickQueryResult.CopyStatusDescription,
-        //        copyId: quickQueryResult.CopyId,
-        //        copyProgress: quickQueryResult.CopyProgress,
-        //        copySource: quickQueryResult.CopySource != default ? new Uri(quickQueryResult.CopySource) : default,
-        //        copyStatus: quickQueryResult.CopyStatus,
-        //        contentDisposition: quickQueryResult.ContentDisposition,
-        //        leaseDuration: quickQueryResult.LeaseDuration,
-        //        cacheControl: quickQueryResult.CacheControl,
-        //        leaseState: quickQueryResult.LeaseState,
-        //        contentEncoding: quickQueryResult.ContentEncoding,
-        //        leaseStatus: quickQueryResult.LeaseStatus,
-        //        contentHash: quickQueryResult.ContentHash,
-        //        acceptRanges: quickQueryResult.AcceptRanges,
-        //        eTag: quickQueryResult.ETag,
-        //        blobCommittedBlockCount: quickQueryResult.BlobCommittedBlockCount,
-        //        contentRange: quickQueryResult.ContentRange,
-        //        isServerEncrypted: quickQueryResult.IsServerEncrypted,
-        //        contentType: quickQueryResult.ContentType,
-        //        encryptionKeySha256: quickQueryResult.EncryptionKeySha256,
-        //        encryptionScope: quickQueryResult.EncryptionScope,
-        //        contentLength: quickQueryResult.ContentLength,
-        //        blobContentHash: quickQueryResult.BlobContentMD5,
-        //        metadata: quickQueryResult.Metadata,
-        //        content: quickQueryResult.Body,
-        //        copyCompletionTime: quickQueryResult.CopyCompletionTime);
-
         internal static ArrowFieldInternal ToArrowFieldInternal(this BlobQueryArrowField blobQueryArrowField)
         {
             if (blobQueryArrowField == null)
