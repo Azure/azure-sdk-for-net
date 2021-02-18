@@ -12,34 +12,36 @@ using System.Threading.Tasks;
 namespace Azure.Core
 {
     /// <summary>
-    /// Represents the <see cref="DynamicJson"/> sent as part of the Azure.Core.Request.
+    /// Represents the <see cref="JsonData"/> sent as part of the Azure.Core.Request.
     /// </summary>
     [DebuggerDisplay("Content: {_body}")]
     public class DynamicContent : RequestContent
     {
-        private readonly DynamicJson _body;
+        private readonly JsonData _body;
 
-        internal DynamicContent(DynamicJson body)
+        internal DynamicContent(JsonData body)
         {
             _body = body;
         }
 
-        internal static RequestContent Create(DynamicJson body) => new DynamicContent(body);
+        // TODO(matell): When this moves to Azure.Core, this static method should be exposed from the abstract RequestContent class.
+        /// <summary>
+        /// Creates a RequestConent for a given JSON object.
+        /// </summary>
+        /// <param name="body">The JSON object the request content represents</param>
+        /// <returns>A RequestContent which is the UTF-8 encoding of the underlying DynamicJson</returns>
+        public static RequestContent Create(JsonData body) => new DynamicContent(body);
 
         /// <inheritdoc />
         public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
         {
-            using Utf8JsonWriter writer = new Utf8JsonWriter(stream);
-            _body.WriteTo(writer);
-            await writer.FlushAsync(cancellation).ConfigureAwait(false);
+            await _body.WriteToAsync(stream, cancellation).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
         public override void WriteTo(Stream stream, CancellationToken cancellation)
         {
-            using Utf8JsonWriter writer = new Utf8JsonWriter(stream);
-            _body.WriteTo(writer);
-            writer.Flush();
+            _body.WriteTo(stream);
         }
 
         /// <inheritdoc />

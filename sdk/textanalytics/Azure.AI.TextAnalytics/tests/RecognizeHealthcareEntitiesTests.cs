@@ -334,7 +334,6 @@ namespace Azure.AI.TextAnalytics.Tests
             foreach (HealthcareEntity entity in entities)
             {
                 Assert.That(entity.Text, Is.Not.Null.And.Not.Empty);
-                Assert.IsTrue(minimumExpectedOutput.Contains(entity.Text, StringComparer.OrdinalIgnoreCase));
                 Assert.IsNotNull(entity.Category);
                 Assert.GreaterOrEqual(entity.ConfidenceScore, 0.0);
                 Assert.GreaterOrEqual(entity.Offset, 0);

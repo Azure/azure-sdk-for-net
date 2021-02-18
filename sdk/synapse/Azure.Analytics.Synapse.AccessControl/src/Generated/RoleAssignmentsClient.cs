@@ -37,6 +37,46 @@ namespace Azure.Analytics.Synapse.AccessControl
             _pipeline = pipeline;
         }
 
+        /// <summary> Check if the given principalId has access to perform list of actions at a given scope. </summary>
+        /// <param name="subject"> Subject details. </param>
+        /// <param name="actions"> List of actions. </param>
+        /// <param name="scope"> Scope at which the check access is done. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<CheckPrincipalAccessResponse>> CheckPrincipalAccessAsync(SubjectInfo subject, IEnumerable<RequiredAction> actions, string scope, CancellationToken cancellationToken = default)
+        {
+            using var scope0 = _clientDiagnostics.CreateScope("RoleAssignmentsClient.CheckPrincipalAccess");
+            scope0.Start();
+            try
+            {
+                return await RestClient.CheckPrincipalAccessAsync(subject, actions, scope, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Check if the given principalId has access to perform list of actions at a given scope. </summary>
+        /// <param name="subject"> Subject details. </param>
+        /// <param name="actions"> List of actions. </param>
+        /// <param name="scope"> Scope at which the check access is done. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<CheckPrincipalAccessResponse> CheckPrincipalAccess(SubjectInfo subject, IEnumerable<RequiredAction> actions, string scope, CancellationToken cancellationToken = default)
+        {
+            using var scope0 = _clientDiagnostics.CreateScope("RoleAssignmentsClient.CheckPrincipalAccess");
+            scope0.Start();
+            try
+            {
+                return RestClient.CheckPrincipalAccess(subject, actions, scope, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> List role assignments. </summary>
         /// <param name="roleId"> Synapse Built-In Role Id. </param>
         /// <param name="principalId"> Object ID of the AAD principal or security-group. </param>
@@ -189,46 +229,6 @@ namespace Azure.Analytics.Synapse.AccessControl
             try
             {
                 return RestClient.DeleteRoleAssignmentById(roleAssignmentId, scope, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Check if the given principalId has access to perform list of actions at a given scope. </summary>
-        /// <param name="subject"> Subject details. </param>
-        /// <param name="actions"> List of actions. </param>
-        /// <param name="scope"> Scope at which the check access is done. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CheckPrincipalAccessResponse>> CheckPrincipalAccessAsync(SubjectInfo subject, IEnumerable<RequiredAction> actions, string scope, CancellationToken cancellationToken = default)
-        {
-            using var scope0 = _clientDiagnostics.CreateScope("RoleAssignmentsClient.CheckPrincipalAccess");
-            scope0.Start();
-            try
-            {
-                return await RestClient.CheckPrincipalAccessAsync(subject, actions, scope, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Check if the given principalId has access to perform list of actions at a given scope. </summary>
-        /// <param name="subject"> Subject details. </param>
-        /// <param name="actions"> List of actions. </param>
-        /// <param name="scope"> Scope at which the check access is done. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CheckPrincipalAccessResponse> CheckPrincipalAccess(SubjectInfo subject, IEnumerable<RequiredAction> actions, string scope, CancellationToken cancellationToken = default)
-        {
-            using var scope0 = _clientDiagnostics.CreateScope("RoleAssignmentsClient.CheckPrincipalAccess");
-            scope0.Start();
-            try
-            {
-                return RestClient.CheckPrincipalAccess(subject, actions, scope, cancellationToken);
             }
             catch (Exception e)
             {
