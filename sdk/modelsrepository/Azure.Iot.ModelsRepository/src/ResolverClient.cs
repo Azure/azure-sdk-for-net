@@ -19,6 +19,8 @@ namespace Azure.Iot.ModelsRepository
     {
         private readonly RepositoryHandler _repositoryHandler;
         private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly ResolverClientOptions _clientOptions;
+        private readonly Uri _repositoryUri;
 
         /// <summary>
         /// Initializes the <c>ResolverClient</c> with default client options while pointing to
@@ -80,8 +82,10 @@ namespace Azure.Iot.ModelsRepository
         {
             Argument.AssertNotNull(options, nameof(options));
 
+            _clientOptions = options;
             _clientDiagnostics = new ClientDiagnostics(options);
-            _repositoryHandler = new RepositoryHandler(repositoryUri, _clientDiagnostics, options);
+            _repositoryUri = repositoryUri;
+            _repositoryHandler = new RepositoryHandler(_repositoryUri, _clientDiagnostics, _clientOptions);
         }
 
         /// <summary>
@@ -205,12 +209,12 @@ namespace Azure.Iot.ModelsRepository
         /// <summary>
         /// Gets the <c>Uri</c> associated with the ResolverClient instance.
         /// </summary>
-        public Uri RepositoryUri => _repositoryHandler.RepositoryUri;
+        public Uri RepositoryUri => _repositoryUri;
 
         /// <summary>
         /// Gets the <c>ResolverClientOptions</c> associated with the ResolverClient instance.
         /// </summary>
-        public ResolverClientOptions ClientOptions => _repositoryHandler.ClientOptions;
+        public ResolverClientOptions ClientOptions => _clientOptions;
 
         /// <summary>
         /// Azure Device Models Repository used by default.
