@@ -10,7 +10,6 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// <summary>
     /// Describes a Virtual Machine Update.
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
     public partial class VirtualMachineUpdate : UpdateResource
     {
 
