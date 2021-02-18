@@ -84,7 +84,7 @@ namespace Azure.MixedReality.RemoteRendering.Tests
             string conversionId = Recording.Random.NewGuid().ToString();
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(() => client.StartConversionAsync(conversionId, conversionOptions));
-            Assert.AreEqual(ex.Status, 400);
+            Assert.AreEqual(403, ex.Status);
             // Error accessing connected storage account due to insufficient permissions. Check if the Mixed Reality resource has correct permissions assigned
             Assert.IsTrue(ex.Message.ToLower().Contains("storage"));
             Assert.IsTrue(ex.Message.ToLower().Contains("permissions"));
@@ -179,7 +179,7 @@ namespace Azure.MixedReality.RemoteRendering.Tests
             string sessionId = Recording.Random.NewGuid().ToString();
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(() => client.StartSessionAsync(sessionId, options));
-            Assert.AreEqual(ex.Status, 400);
+            Assert.AreEqual(400, ex.Status);
 
             // The maxLeaseTimeMinutes value cannot be negative
             Assert.IsTrue(ex.Message.ToLower().Contains("lease"));
