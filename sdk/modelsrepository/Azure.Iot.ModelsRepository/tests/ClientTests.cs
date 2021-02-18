@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 
 namespace Azure.Iot.ModelsRepository.Tests
 {
-    public class ClientTests
+    public class ClientTests : ModelsRepoTestBase
     {
         [Test]
         public void CtorOverloads()
@@ -28,7 +28,7 @@ namespace Azure.Iot.ModelsRepository.Tests
             Assert.AreEqual(remoteUri, new ResolverClient(remoteUriStr).RepositoryUri);
             Assert.AreEqual(remoteUri, new ResolverClient(remoteUriStr, options).RepositoryUri);
 
-            string localUriStr = TestHelpers.TestLocalModelRepository;
+            string localUriStr = TestLocalModelRepository;
             Uri localUri = new Uri(localUriStr);
 
             Assert.AreEqual(localUri, new ResolverClient(localUri).RepositoryUri);
@@ -57,8 +57,10 @@ namespace Azure.Iot.ModelsRepository.Tests
         public void ClientOptions()
         {
             DependencyResolutionOption defaultResolutionOption = DependencyResolutionOption.Enabled;
+
             ResolverClientOptions customOptions =
                 new ResolverClientOptions(resolutionOption: DependencyResolutionOption.TryFromExpanded);
+
             int maxRetries = 10;
             customOptions.Retry.MaxRetries = maxRetries;
 
