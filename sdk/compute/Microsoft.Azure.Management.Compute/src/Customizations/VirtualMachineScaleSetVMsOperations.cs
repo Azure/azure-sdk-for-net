@@ -118,7 +118,6 @@ namespace Microsoft.Azure.Management.Compute
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
-            CancellationToken cancellationToken = default(CancellationToken);
             if (_shouldTrace)
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
@@ -295,6 +294,7 @@ namespace Microsoft.Azure.Management.Compute
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
             string apiVersion = "2020-12-01";
+            CancellationToken cancellationToken = default(CancellationToken);
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
