@@ -20,8 +20,12 @@ namespace Azure.Security.KeyVault.Tests
         }
 
         [Test]
+        [NonParallelizable]
         public async Task ScopesAreInitializedFromCache()
         {
+            // Clear the cache to ensure the test starts with an empty cache.
+            ChallengeBasedAuthenticationPolicy.ClearCache();
+
             var keyvaultChallengeResponse = new MockResponse(401);
             keyvaultChallengeResponse.AddHeader(new HttpHeader("WWW-Authenticate", KeyVaultChallenge));
             MockTransport transport = CreateMockTransport(keyvaultChallengeResponse, new MockResponse(200));
