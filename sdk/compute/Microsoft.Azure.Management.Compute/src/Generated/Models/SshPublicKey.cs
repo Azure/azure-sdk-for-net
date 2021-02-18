@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// authenticate with the VM through ssh. The key needs to be at least
         /// 2048-bit and in ssh-rsa format. &lt;br&gt;&lt;br&gt; For creating
         /// ssh keys, see [Create SSH keys on Linux and Mac for Linux VMs in
-        /// Azure](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-mac-create-ssh-keys?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json).</param>
+        /// Azure](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/mac-create-ssh-keys?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json).</param>
         public SshPublicKey(string path = default(string), string keyData = default(string))
         {
             Path = path;
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// the VM through ssh. The key needs to be at least 2048-bit and in
         /// ssh-rsa format. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; For creating
         /// ssh keys, see [Create SSH keys on Linux and Mac for Linux VMs in
-        /// Azure](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-mac-create-ssh-keys?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json).
+        /// Azure](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/mac-create-ssh-keys?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json).
         /// </summary>
         [JsonProperty(PropertyName = "keyData")]
         public string KeyData { get; set; }
