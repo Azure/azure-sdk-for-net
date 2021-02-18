@@ -156,7 +156,6 @@ namespace Microsoft.Azure.Management.Compute.Models
             LicenseType = licenseType;
             VmId = vmId;
             ExtensionsTimeBudget = extensionsTimeBudget;
-            PlatformFaultDomain = platformFaultDomain;
             Identity = identity;
             Zones = zones;
             CustomInit();
@@ -186,9 +185,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             LicenseType = licenseType;
             VmId = vmId;
             ExtensionsTimeBudget = extensionsTimeBudget;
-            PlatformFaultDomain = platformFaultDomain;
             Identity = identity;
-            Zones = zones;
             CustomInit();
         }
     }
