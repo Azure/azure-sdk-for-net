@@ -12,6 +12,7 @@ namespace Azure.Communication.Pipeline
     {
         private static readonly Regex _azureResourceRegEx = new Regex(@"[^/]+?(?=(.communication.azure))", RegexOptions.Compiled);
         private static readonly Regex _identityInRouteRegEx = new Regex(@"(?<=identities/)([^/]+)", RegexOptions.Compiled);
+        private static readonly Regex _turnInRouteRegEx = new Regex(@"(?<=turn/)([^/]+)", RegexOptions.Compiled);
         private static readonly Regex _phoneNumberRegEx = new Regex(@"[\\+]?[0-9]{11,15}", RegexOptions.Compiled);
         private static readonly Regex _guidRegEx = new Regex(@"(\{){0,1}[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}(\}){0,1}", RegexOptions.Compiled);
 
@@ -28,6 +29,9 @@ namespace Azure.Communication.Pipeline
             JsonPathSanitizers.Add("$..phonePlanId");
             JsonPathSanitizers.Add("$..phonePlanGroupId");
             JsonPathSanitizers.Add("$..phonePlanIds[:]");
+            JsonPathSanitizers.Add("$..urls");
+            JsonPathSanitizers.Add("$..username");
+            JsonPathSanitizers.Add("$..credential");
         }
 
         public override void SanitizeHeaders(IDictionary<string, string[]> headers)
@@ -76,6 +80,7 @@ namespace Azure.Communication.Pipeline
         public override string SanitizeUri(string uri)
         {
             uri = SanitizeAzureResource(_identityInRouteRegEx.Replace(uri, SanitizeValue.ToLower()));
+            uri = SanitizeAzureResource(_turnInRouteRegEx.Replace(uri, SanitizeValue.ToLower()));
             return _guidRegEx.Replace(uri, SanitizeValue);
         }
     }
