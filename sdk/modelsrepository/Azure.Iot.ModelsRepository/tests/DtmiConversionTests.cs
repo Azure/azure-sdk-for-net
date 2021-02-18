@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 
 namespace Azure.Iot.ModelsRepository.Tests
 {
-    public class DtmiConversionTests : ModelRepoTestBase
+    public class DtmiConversionTests : ModelsRepoTestBase
     {
         [TestCase("dtmi:com:Example:Model;1", "dtmi/com/example/model-1.json")]
         [TestCase("dtmi:com:example:Model;1", "dtmi/com/example/model-1.json")]

@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 
 namespace Azure.Iot.ModelsRepository.Tests
 {
-    public class ClientTests : ModelRepoTestBase
+    public class ClientTests : ModelsRepoTestBase
     {
         [Test]
         public void CtorOverloads()

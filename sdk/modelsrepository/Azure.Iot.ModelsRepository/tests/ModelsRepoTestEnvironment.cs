@@ -5,7 +5,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.Iot.ModelsRepository.Tests
 {
-    public class ModelRepoTestEnvironment : TestEnvironment
+    public class ModelsRepoTestEnvironment : TestEnvironment
     {
     }
 }

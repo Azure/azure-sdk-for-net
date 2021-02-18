@@ -8,7 +8,7 @@ using NUnit.Framework;
 
 namespace Azure.Iot.ModelsRepository.Tests
 {
-    public class ModelRepoRecordedTestBase : RecordedTestBase<ModelRepoTestEnvironment>
+    public class ModelsRepoRecordedTestBase : RecordedTestBase<ModelsRepoTestEnvironment>
     {
         protected const string TestModeEnvVariable = "AZURE_TEST_MODE";
 
@@ -16,7 +16,7 @@ namespace Azure.Iot.ModelsRepository.Tests
             typeof(RecordedTestMode),
             Environment.GetEnvironmentVariable(TestModeEnvVariable));
 
-        public ModelRepoRecordedTestBase(bool isAsync) : base(isAsync, TestMode)
+        public ModelsRepoRecordedTestBase(bool isAsync) : base(isAsync, TestMode)
         {
         }
 
@@ -26,7 +26,7 @@ namespace Azure.Iot.ModelsRepository.Tests
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
         }
 
-        protected ResolverClient GetClient(ModelRepoTestBase.ClientType clientType, ResolverClientOptions options = null)
+        protected ResolverClient GetClient(ModelsRepoTestBase.ClientType clientType, ResolverClientOptions options = null)
         {
             if (options == null)
             {
@@ -34,14 +34,14 @@ namespace Azure.Iot.ModelsRepository.Tests
             }
 
             return
-                clientType == ModelRepoTestBase.ClientType.Local
+                clientType == ModelsRepoTestBase.ClientType.Local
                 ? InstrumentClient(
                     new ResolverClient(
-                        new Uri(ModelRepoTestBase.TestLocalModelRepository),
+                        new Uri(ModelsRepoTestBase.TestLocalModelRepository),
                         InstrumentClientOptions(options)))
                 : InstrumentClient(
                     new ResolverClient(
-                        new Uri(ModelRepoTestBase.TestRemoteModelRepository),
+                        new Uri(ModelsRepoTestBase.TestRemoteModelRepository),
                         InstrumentClientOptions(options)));
         }
     }

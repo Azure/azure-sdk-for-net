@@ -11,9 +11,9 @@ namespace Azure.Iot.ModelsRepository.Tests
     /// <summary>
     /// This class will initialize all the settings and create and instance of the ResolverClient client.
     /// </summary>
-    public abstract class ModelRepoTestBase
+    public abstract class ModelsRepoTestBase
     {
-        public ModelRepoTestBase()
+        public ModelsRepoTestBase()
         {
         }
 
