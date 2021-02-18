@@ -12,10 +12,11 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
 {
 
     /// <summary>
-    /// Defines values for RestoreMode.
+    /// Defines values for BackupPolicyType.
     /// </summary>
-    public static class RestoreMode
+    public static class BackupPolicyType
     {
-        public const string PointInTime = "PointInTime";
+        public const string Periodic = "Periodic";
+        public const string Continuous = "Continuous";
     }
 }

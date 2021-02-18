@@ -13,25 +13,25 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    public partial class ApiProperties
+    /// <summary>
+    /// An error response from the service.
+    /// </summary>
+    public partial class ErrorResponseUpdatedFormat
     {
         /// <summary>
-        /// Initializes a new instance of the ApiProperties class.
+        /// Initializes a new instance of the ErrorResponseUpdatedFormat class.
         /// </summary>
-        public ApiProperties()
+        public ErrorResponseUpdatedFormat()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ApiProperties class.
+        /// Initializes a new instance of the ErrorResponseUpdatedFormat class.
         /// </summary>
-        /// <param name="serverVersion">Describes the ServerVersion of an a
-        /// MongoDB account. Possible values include: '3.2', '3.6',
-        /// '4.0'</param>
-        public ApiProperties(string serverVersion = default(string))
+        public ErrorResponseUpdatedFormat(ErrorResponse error = default(ErrorResponse))
         {
-            ServerVersion = serverVersion;
+            Error = error;
             CustomInit();
         }
 
@@ -41,11 +41,9 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets describes the ServerVersion of an a MongoDB account.
-        /// Possible values include: '3.2', '3.6', '4.0'
         /// </summary>
-        [JsonProperty(PropertyName = "serverVersion")]
-        public string ServerVersion { get; set; }
+        [JsonProperty(PropertyName = "error")]
+        public ErrorResponse Error { get; set; }
 
     }
 }
