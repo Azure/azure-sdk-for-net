@@ -89,7 +89,7 @@ namespace Azure.Iot.ModelsRepository
                     continue;
                 }
 
-                ModelMetadata metadata = new ModelQuery(result.Definition).GetMetadata();
+                ModelMetadata metadata = new ModelQuery(result.Definition).ParseModel();
 
                 if (ClientOptions.DependencyResolution >= DependencyResolutionOption.Enabled)
                 {

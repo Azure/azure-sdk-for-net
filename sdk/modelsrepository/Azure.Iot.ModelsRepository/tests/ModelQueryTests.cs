@@ -5,7 +5,6 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Azure.Iot.ModelsRepository.Tests
 {
@@ -27,7 +26,7 @@ namespace Azure.Iot.ModelsRepository.Tests
         {
             string modelContent = string.Format(_modelTemplate, formatId, "", "");
             ModelQuery query = new ModelQuery(modelContent);
-            Assert.AreEqual(query.GetId(), expectedId);
+            Assert.AreEqual(query.ParseModel().Id, expectedId);
         }
 
         [TestCase(
@@ -71,7 +70,7 @@ namespace Azure.Iot.ModelsRepository.Tests
             string[] expectedDtmis = expected.Split(new[] { "," }, System.StringSplitOptions.RemoveEmptyEntries);
             string modelContent = string.Format(_modelTemplate, "", "", contents);
             ModelQuery query = new ModelQuery(modelContent);
-            IList<string> componentSchemas = query.GetComponentSchemas();
+            IList<string> componentSchemas = query.ParseModel().ComponentSchemas;
             Assert.AreEqual(componentSchemas.Count, expectedDtmis.Length);
 
             foreach (string schema in componentSchemas)
@@ -92,7 +91,7 @@ namespace Azure.Iot.ModelsRepository.Tests
             string[] expectedDtmis = expected.Split(new[] { "," }, System.StringSplitOptions.RemoveEmptyEntries);
             string modelContent = string.Format(_modelTemplate, "", extends, "");
             ModelQuery query = new ModelQuery(modelContent);
-            IList<string> extendsDtmis = query.GetExtends();
+            IList<string> extendsDtmis = query.ParseModel().Extends;
             Assert.AreEqual(extendsDtmis.Count, expectedDtmis.Length);
 
             foreach (string dtmi in extendsDtmis)
@@ -150,7 +149,7 @@ namespace Azure.Iot.ModelsRepository.Tests
         {
             string[] expectedDtmis = expected.Split(new[] { "," }, System.StringSplitOptions.RemoveEmptyEntries);
             string modelContent = string.Format(_modelTemplate, id, extends, contents);
-            ModelMetadata metadata = new ModelQuery(modelContent).GetMetadata();
+            ModelMetadata metadata = new ModelQuery(modelContent).ParseModel();
 
             IList<string> dependencies = metadata.Dependencies;
 
