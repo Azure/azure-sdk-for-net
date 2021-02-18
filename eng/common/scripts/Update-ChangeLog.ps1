@@ -12,6 +12,7 @@ param (
   [String]$ServiceDirectory,
   [Parameter(Mandatory = $true)]
   [String]$PackageName,
+  [String]$ChangelogPath,
   [Boolean]$Unreleased = $true,
   [Boolean]$ReplaceLatestEntryTitle = $false,
   [String]$ReleaseDate
@@ -51,8 +52,13 @@ if ($null -eq [AzureEngSemanticVersion]::ParseVersionString($Version))
     exit 1
 }
 
-$PkgProperties = Get-PkgProperties -PackageName $PackageName -ServiceDirectory $ServiceDirectory
-$ChangeLogEntries = Get-ChangeLogEntries -ChangeLogLocation $PkgProperties.ChangeLogPath
+if (!$ChangelogPath)
+{
+    $PkgProperties = Get-PkgProperties -PackageName $PackageName -ServiceDirectory $ServiceDirectory
+    $ChangelogPath = $PkgProperties.ChangeLogPath
+}
+
+$ChangeLogEntries = Get-ChangeLogEntries -ChangeLogLocation $ChangelogPath
 
 
 if ($ChangeLogEntries.Contains($Version))
@@ -65,7 +71,7 @@ if ($ChangeLogEntries.Contains($Version))
 
     if ($Unreleased -and ($ChangeLogEntries[$Version].ReleaseStatus -ne $ReleaseStatus))
     {
-        LogWarning "Version [$Version] is already present in change log with a release date. Please review [$($PkgProperties.ChangeLogPath)]. No Change made."
+        LogWarning "Version [$Version] is already present in change log with a release date. Please review [$($ChangelogPath)]. No Change made."
         exit(0)
     }
 
@@ -73,7 +79,7 @@ if ($ChangeLogEntries.Contains($Version))
     {
         if ((Get-Date ($ChangeLogEntries[$Version].ReleaseStatus).Trim("()")) -gt (Get-Date $ReleaseStatus.Trim("()")))
         {
-            LogWarning "New ReleaseDate for version [$Version] is older than existing release date in changelog. Please review [$($PkgProperties.ChangeLogPath)]. No Change made."
+            LogWarning "New ReleaseDate for version [$Version] is older than existing release date in changelog. Please review [$($ChangelogPath)]. No Change made."
             exit(0)
         }
     }
@@ -121,4 +127,4 @@ else
     }
 }
 
-Set-ChangeLogContent -ChangeLogLocation $PkgProperties.ChangeLogPath -ChangeLogEntries $ChangeLogEntries
+Set-ChangeLogContent -ChangeLogLocation $ChangelogPath -ChangeLogEntries $ChangeLogEntries
