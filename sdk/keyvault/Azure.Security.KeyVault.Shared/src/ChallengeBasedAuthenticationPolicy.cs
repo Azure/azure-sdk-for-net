@@ -67,6 +67,11 @@ namespace Azure.Security.KeyVault
                 // set the content to the original content.
                 message.Request.Content = originalContent;
             }
+            else
+            {
+                // We fetched the scope from the cache, but we have not initialized the Scopes in the base yet.
+                Scopes = _scope.Scopes;
+            }
         }
 
         protected override bool TryGetTokenRequestContextFromChallenge(HttpMessage message, out TokenRequestContext context)

@@ -19,7 +19,7 @@ namespace Azure.Core.Pipeline
     internal class BearerTokenChallengeAuthenticationPolicy : HttpPipelinePolicy
     {
         private readonly AccessTokenCache _accessTokenCache;
-        protected string[] Scopes { get; private set; }
+        protected string[] Scopes { get; set; }
 
         /// <summary>
         /// Creates a new instance of <see cref="BearerTokenChallengeAuthenticationPolicy"/> using provided token credential and scope to authenticate for.
