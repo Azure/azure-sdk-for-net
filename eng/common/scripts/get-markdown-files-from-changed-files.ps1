@@ -2,7 +2,7 @@ param (
   # The root repo we scaned with.
   [string] $RootRepo = '$PSScriptRoot/../../..',
   # The target branch to compare with.
-  [string] $targetBranch = "${env:SYSTEM_PULLREQUEST_TARGETBRANCH}"
+  [string] $targetBranch = ("origin/${env:SYSTEM_PULLREQUEST_TARGETBRANCH}" -replace "refs/heads/")
 )
 
 # Trim the "ref/head" for master branch
