@@ -19,7 +19,7 @@ namespace Azure.Iot.ModelsRepository.Tests
         [TestCase(ModelRepoTestBase.ClientType.Remote)]
         public void ResolveWithWrongCasingThrowsException(ModelRepoTestBase.ClientType clientType)
         {
-            string dtmi = "dtmi:com:example:thermostat;1";
+            const string dtmi = "dtmi:com:example:thermostat;1";
 
             ResolverClient client = GetClient(clientType);
             string expectedExMsg =
@@ -46,7 +46,7 @@ namespace Azure.Iot.ModelsRepository.Tests
         [TestCase(ModelRepoTestBase.ClientType.Remote)]
         public void ResolveNoneExistentDtmiFileThrowsException(ModelRepoTestBase.ClientType clientType)
         {
-            string dtmi = "dtmi:com:example:thermojax;999";
+            const string dtmi = "dtmi:com:example:thermojax;999";
 
             ResolverClient client = GetClient(clientType);
             ResolverException re = Assert.ThrowsAsync<ResolverException>(async () => await client.ResolveAsync(dtmi));
@@ -55,8 +55,8 @@ namespace Azure.Iot.ModelsRepository.Tests
 
         public void ResolveInvalidDtmiDepsThrowsException()
         {
-            string dtmi = "dtmi:com:example:invalidmodel;1";
-            string invalidDep = "dtmi:azure:fakeDeviceManagement:FakeDeviceInformation;2";
+            const string dtmi = "dtmi:com:example:invalidmodel;1";
+            const string invalidDep = "dtmi:azure:fakeDeviceManagement:FakeDeviceInformation;2";
 
             ResolverClient client = GetClient(ModelRepoTestBase.ClientType.Local);
             ResolverException resolverException = Assert.ThrowsAsync<ResolverException>(async () => await client.ResolveAsync(dtmi));
@@ -67,7 +67,7 @@ namespace Azure.Iot.ModelsRepository.Tests
         [TestCase(ModelRepoTestBase.ClientType.Remote)]
         public async Task ResolveSingleModelNoDeps(ModelRepoTestBase.ClientType clientType)
         {
-            string dtmi = "dtmi:com:example:Thermostat;1";
+            const string dtmi = "dtmi:com:example:Thermostat;1";
 
             ResolverClient client = GetClient(clientType);
             IDictionary<string, string> result = await client.ResolveAsync(dtmi);
@@ -80,8 +80,8 @@ namespace Azure.Iot.ModelsRepository.Tests
         [TestCase(ModelRepoTestBase.ClientType.Remote)]
         public async Task ResolveMultipleModelsNoDeps(ModelRepoTestBase.ClientType clientType)
         {
-            string dtmi1 = "dtmi:com:example:Thermostat;1";
-            string dtmi2 = "dtmi:azure:DeviceManagement:DeviceInformation;1";
+            const string dtmi1 = "dtmi:com:example:Thermostat;1";
+            const string dtmi2 = "dtmi:azure:DeviceManagement:DeviceInformation;1";
 
             ResolverClient client = GetClient(clientType);
             IDictionary<string, string> result = await client.ResolveAsync(new string[] { dtmi1, dtmi2 });
@@ -96,8 +96,8 @@ namespace Azure.Iot.ModelsRepository.Tests
         [TestCase(ModelRepoTestBase.ClientType.Remote)]
         public async Task ResolveSingleModelWithDeps(ModelRepoTestBase.ClientType clientType)
         {
-            string dtmi = "dtmi:com:example:TemperatureController;1";
-            string expectedDeps = "dtmi:com:example:Thermostat;1,dtmi:azure:DeviceManagement:DeviceInformation;1";
+            const string dtmi = "dtmi:com:example:TemperatureController;1";
+            const string expectedDeps = "dtmi:com:example:Thermostat;1,dtmi:azure:DeviceManagement:DeviceInformation;1";
 
             ResolverClient client = GetClient(clientType);
             IDictionary<string, string> result = await client.ResolveAsync(dtmi);
@@ -131,11 +131,9 @@ namespace Azure.Iot.ModelsRepository.Tests
 
         public async Task ResolveMultipleModelsWithDeps()
         {
-            string dtmi1 = "dtmi:com:example:Phone;2";
-
-            string dtmi2 = "dtmi:com:example:TemperatureController;1";
-
-            string expectedDeps = "dtmi:com:example:Thermostat;1," +
+            const string dtmi1 = "dtmi:com:example:Phone;2";
+            const string dtmi2 = "dtmi:com:example:TemperatureController;1";
+            const string expectedDeps = "dtmi:com:example:Thermostat;1," +
                   "dtmi:azure:DeviceManagement:DeviceInformation;1," +
                   "dtmi:azure:DeviceManagement:DeviceInformation;2," +
                   "dtmi:com:example:Camera;3";
@@ -154,9 +152,9 @@ namespace Azure.Iot.ModelsRepository.Tests
 
         public async Task ResolveMultipleModelsWithDepsFromExtends()
         {
-            string dtmi1 = "dtmi:com:example:TemperatureController;1";
-            string dtmi2 = "dtmi:com:example:ConferenceRoom;1";
-            string expectedDeps = "dtmi:com:example:Thermostat;1,dtmi:azure:DeviceManagement:DeviceInformation;1,dtmi:com:example:Room;1";
+            const string dtmi1 = "dtmi:com:example:TemperatureController;1";
+            const string dtmi2 = "dtmi:com:example:ConferenceRoom;1";
+            const string expectedDeps = "dtmi:com:example:Thermostat;1,dtmi:azure:DeviceManagement:DeviceInformation;1,dtmi:com:example:Room;1";
             ResolverClient client = GetClient(ModelRepoTestBase.ClientType.Local);
             IDictionary<string, string> result = await client.ResolveAsync(new[] { dtmi1, dtmi2 });
             var expectedDtmis = $"{dtmi1},{dtmi2},{expectedDeps}".Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
@@ -171,9 +169,9 @@ namespace Azure.Iot.ModelsRepository.Tests
 
         public async Task ResolveMultipleModelsWithDepsFromExtendsVariant()
         {
-            string dtmi1 = "dtmi:com:example:TemperatureController;1";
-            string dtmi2 = "dtmi:com:example:ColdStorage;1";
-            string expectedDeps = "dtmi:com:example:Thermostat;1," +
+            const string dtmi1 = "dtmi:com:example:TemperatureController;1";
+            const string dtmi2 = "dtmi:com:example:ColdStorage;1";
+            const string expectedDeps = "dtmi:com:example:Thermostat;1," +
                   "dtmi:azure:DeviceManagement:DeviceInformation;1," +
                   "dtmi:com:example:Room;1," +
                   "dtmi:com:example:Freezer;1";
@@ -192,7 +190,7 @@ namespace Azure.Iot.ModelsRepository.Tests
 
         public async Task ResolveSingleModelWithDepsFromExtendsInline()
         {
-            string dtmi = "dtmi:com:example:base;1";
+            const string dtmi = "dtmi:com:example:base;1";
             ResolverClient client = GetClient(ModelRepoTestBase.ClientType.Local);
             IDictionary<string, string> result = await client.ResolveAsync(dtmi);
 
@@ -203,8 +201,8 @@ namespace Azure.Iot.ModelsRepository.Tests
 
         public async Task ResolveSingleModelWithDepsFromExtendsInlineVariant()
         {
-            string dtmi = "dtmi:com:example:base;2";
-            string expected = "dtmi:com:example:Freezer;1," +
+            const string dtmi = "dtmi:com:example:base;2";
+            const string expected = "dtmi:com:example:Freezer;1," +
                   "dtmi:com:example:Thermostat;1";
 
             ResolverClient client = GetClient(ModelRepoTestBase.ClientType.Local);
@@ -221,8 +219,8 @@ namespace Azure.Iot.ModelsRepository.Tests
 
         public async Task ResolveEnsuresNoDupes()
         {
-            string dtmiDupe1 = "dtmi:azure:DeviceManagement:DeviceInformation;1";
-            string dtmiDupe2 = "dtmi:azure:DeviceManagement:DeviceInformation;1";
+            const string dtmiDupe1 = "dtmi:azure:DeviceManagement:DeviceInformation;1";
+            const string dtmiDupe2 = "dtmi:azure:DeviceManagement:DeviceInformation;1";
 
             ResolverClient client = GetClient(ModelRepoTestBase.ClientType.Local);
             IDictionary<string, string> result = await client.ResolveAsync(new[] { dtmiDupe1, dtmiDupe2 });
@@ -234,7 +232,7 @@ namespace Azure.Iot.ModelsRepository.Tests
         [TestCase(ModelRepoTestBase.ClientType.Remote)]
         public async Task ResolveSingleModelWithDepsDisableDependencyResolution(ModelRepoTestBase.ClientType clientType)
         {
-            string dtmi = "dtmi:com:example:Thermostat;1";
+            const string dtmi = "dtmi:com:example:Thermostat;1";
 
             ResolverClientOptions options = new ResolverClientOptions(resolutionOption: DependencyResolutionOption.Disabled);
             ResolverClient client = GetClient(clientType, options);
@@ -250,8 +248,8 @@ namespace Azure.Iot.ModelsRepository.Tests
         [TestCase(ModelRepoTestBase.ClientType.Remote)]
         public async Task ResolveSingleModelTryFromExpanded(ModelRepoTestBase.ClientType clientType)
         {
-            string dtmi = "dtmi:com:example:TemperatureController;1";
-            string expectedDeps = "dtmi:com:example:Thermostat;1,dtmi:azure:DeviceManagement:DeviceInformation;1";
+            const string dtmi = "dtmi:com:example:TemperatureController;1";
+            const string expectedDeps = "dtmi:com:example:Thermostat;1,dtmi:azure:DeviceManagement:DeviceInformation;1";
 
             var expectedDtmis = $"{dtmi},{expectedDeps}".Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
 
@@ -280,11 +278,11 @@ namespace Azure.Iot.ModelsRepository.Tests
 
         public async Task ResolveMultipleModelsTryFromExpandedPartial()
         {
-            string dtmisExpanded = "dtmi:com:example:TemperatureController;1," +  // Expanded available.
+            const string dtmisExpanded = "dtmi:com:example:TemperatureController;1," +  // Expanded available.
                   "dtmi:com:example:Thermostat;1," +
                   "dtmi:azure:DeviceManagement:DeviceInformation;1";
 
-            string dtmisNonExpanded = "dtmi:com:example:ColdStorage;1," + // Model uses extends[], No Expanded available.
+            const string dtmisNonExpanded = "dtmi:com:example:ColdStorage;1," + // Model uses extends[], No Expanded available.
                   "dtmi:com:example:Room;1," +
                   "dtmi:com:example:Freezer;1";
 
