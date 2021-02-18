@@ -18,7 +18,7 @@ namespace Azure.Iot.TimeSeriesInsights.Models
         {
             Optional<IReadOnlyList<TimeSeriesHierarchyOrError>> @get = default;
             Optional<IReadOnlyList<TimeSeriesHierarchyOrError>> put = default;
-            Optional<IReadOnlyList<DeleteInstancesResult>> delete = default;
+            Optional<IReadOnlyList<InstancesOperationError>> delete = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("get"))
@@ -58,10 +58,10 @@ namespace Azure.Iot.TimeSeriesInsights.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DeleteInstancesResult> array = new List<DeleteInstancesResult>();
+                    List<InstancesOperationError> array = new List<InstancesOperationError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeleteInstancesResult.DeserializeDeleteInstancesResult(item));
+                        array.Add(InstancesOperationError.DeserializeInstancesOperationError(item));
                     }
                     delete = array;
                     continue;

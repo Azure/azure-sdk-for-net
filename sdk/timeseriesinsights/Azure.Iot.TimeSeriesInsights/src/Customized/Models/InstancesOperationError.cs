@@ -6,10 +6,10 @@ using Azure.Core;
 namespace Azure.Iot.TimeSeriesInsights
 {
     /// <summary>
-    /// A particular aPI error with an error code and a message.
+    /// A particular API error with an error code and a message.
     /// </summary>
     [CodeGenModel("TsiErrorBody")]
-    public partial class DeleteInstancesResult
+    public partial class InstancesOperationError
     {
     }
 }

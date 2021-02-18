@@ -12,14 +12,14 @@ using Azure.Iot.TimeSeriesInsights.Models;
 
 namespace Azure.Iot.TimeSeriesInsights
 {
-    public partial class DeleteInstancesResult
+    public partial class InstancesOperationError
     {
-        internal static DeleteInstancesResult DeserializeDeleteInstancesResult(JsonElement element)
+        internal static InstancesOperationError DeserializeInstancesOperationError(JsonElement element)
         {
             Optional<string> code = default;
             Optional<string> message = default;
             Optional<string> target = default;
-            Optional<DeleteInstancesResult> innerError = default;
+            Optional<InstancesOperationError> innerError = default;
             Optional<IReadOnlyList<TsiErrorDetails>> details = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
@@ -47,7 +47,7 @@ namespace Azure.Iot.TimeSeriesInsights
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    innerError = DeserializeDeleteInstancesResult(property.Value);
+                    innerError = DeserializeInstancesOperationError(property.Value);
                     continue;
                 }
                 if (property.NameEquals("details"))
@@ -68,7 +68,7 @@ namespace Azure.Iot.TimeSeriesInsights
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DeleteInstancesResult(code.Value, message.Value, target.Value, innerError.Value, Optional.ToList(details), additionalProperties);
+            return new InstancesOperationError(code.Value, message.Value, target.Value, innerError.Value, Optional.ToList(details), additionalProperties);
         }
     }
 }
