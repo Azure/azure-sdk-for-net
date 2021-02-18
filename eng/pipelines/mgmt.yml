@@ -6,6 +6,7 @@ pr:
     - '*-preview'
   paths:
     include:
+    - eng/pipelines/mgmt.yml
     - sdk/advisor/Microsoft.Azure.Management.Advisor
     - sdk/alertsmanagement/Microsoft.Azure.Management.AlertsManagement
     - sdk/analysisservices/Microsoft.Azure.Management.AnalysisServices
