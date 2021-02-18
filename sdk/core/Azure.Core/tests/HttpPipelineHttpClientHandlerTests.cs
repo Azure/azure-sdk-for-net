@@ -10,11 +10,12 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
+using Azure.Core.Tests;
 using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class HttpExtensionsTests
+    public class HttpPipelineHttpClientHandlerTests
     {
         private static (string, string)[] s_testHeaders = new (string, string)[]
         {
@@ -46,9 +47,10 @@ namespace Azure.Identity.Tests
         };
 
         [Test]
-        public void ValidateRequestHeaders()
+        public async Task ValidateRequestHeaders()
         {
-            var pipeline = HttpPipelineBuilder.Build(new TokenCredentialOptions());
+            var mockTransport = new MockTransport(new MockResponse(200));
+            var client = CreateHttpClient(mockTransport);
 
             var content = new StringContent("{\"key\":\"value\"}", Encoding.UTF8, "application/json");
 
@@ -66,7 +68,8 @@ namespace Azure.Identity.Tests
                 request.Headers.Add(header.Item1, header.Item2);
             }
 
-            var result = request.ToPipelineRequestAsync(pipeline).Result;
+            await client.SendAsync(request);
+            var result = mockTransport.SingleRequest;
 
             foreach (var expHeader in request.Headers)
             {
@@ -97,7 +100,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public void ValidateResponseHeaders()
+        public async Task ValidateResponseHeaders()
         {
             var response = new MockResponse(200);
 
@@ -108,8 +111,12 @@ namespace Azure.Identity.Tests
                 response.AddHeader(new HttpHeader(header.Item1, header.Item2));
             }
 
-            var httpResponseMessage = response.ToHttpResponseMessage();
+            var mockTransport = new MockTransport(response);
+            var client = CreateHttpClient(mockTransport);
 
+            var httpResponseMessage = await client.GetAsync("http://foo.com/");
+
+            Assert.AreEqual((int)httpResponseMessage.StatusCode, 200);
             foreach (var header in httpResponseMessage.Headers)
             {
                 Assert.IsTrue(response.Headers.TryGetValues(header.Key, out IEnumerable<string> actValues));
@@ -136,6 +143,12 @@ namespace Azure.Identity.Tests
                     Assert.IsTrue(httpResponseMessage.Content.Headers.Contains(header.Name));
                 }
             }
+        }
+
+        private static HttpClient CreateHttpClient(MockTransport mockTransport)
+        {
+            var client = new HttpClient(new HttpPipelineMessageHandler(new HttpPipeline(mockTransport)));
+            return client;
         }
     }
 }
