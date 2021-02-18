@@ -24,22 +24,10 @@ namespace Azure.Storage.Blobs.Models
             string exposedHeaders,
             int maxAgeInSeconds)
         {
-            if (allowedOrigins == null)
-            {
-                throw new ArgumentNullException(nameof(allowedOrigins));
-            }
-            if (allowedMethods == null)
-            {
-                throw new ArgumentNullException(nameof(allowedMethods));
-            }
-            if (allowedHeaders == null)
-            {
-                throw new ArgumentNullException(nameof(allowedHeaders));
-            }
-            if (exposedHeaders == null)
-            {
-                throw new ArgumentNullException(nameof(exposedHeaders));
-            }
+            Argument.AssertNotNull(allowedOrigins, nameof(allowedOrigins));
+            Argument.AssertNotNull(allowedMethods, nameof(allowedMethods));
+            Argument.AssertNotNull(allowedHeaders, nameof(allowedHeaders));
+            Argument.AssertNotNull(exposedHeaders, nameof(exposedHeaders));
 
             AllowedOrigins = allowedOrigins;
             AllowedMethods = allowedMethods;
