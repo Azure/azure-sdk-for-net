@@ -16,6 +16,7 @@ using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using BenchmarkDotNet.Toolchains.Roslyn;
+using Moq;
 using NUnit.Framework;
 
 namespace Azure.Storage.Files.Shares.Tests
@@ -2102,7 +2103,10 @@ namespace Azure.Storage.Files.Shares.Tests
                     range: new HttpRange(Constants.KB, Constants.KB),
                     content: stream);
 
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                Assert.AreNotEqual(new ETag(""), response.Value.ETag);
+                Assert.AreNotEqual(DateTimeOffset.MinValue, response.Value.LastModified);
+                Assert.IsNotNull(response.Value.ContentHash);
+                Assert.IsTrue(response.Value.IsServerEncrypted);
             }
         }
 
@@ -2982,9 +2986,10 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareFileLease> response = await InstrumentClient(file.GetShareLeaseClient(leaseId)).AcquireAsync();
 
             // Assert
-            Assert.IsNotNull(response.Value.ETag);
-            Assert.IsNotNull(response.Value.LastModified);
+            Assert.AreNotEqual(new ETag(), response.Value.ETag);
+            Assert.AreNotEqual(new DateTimeOffset(), response.Value.LastModified);
             Assert.IsNotNull(response.Value.LeaseId);
+            Assert.IsNull(response.Value.LeaseTime);
         }
 
         [Test]
@@ -3062,8 +3067,10 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareFileLease> response = await leaseClient.ChangeAsync(newLeaseId);
 
             // Assert
-            Assert.IsNotNull(response.Value.ETag);
-            Assert.IsNotNull(response.Value.LastModified);
+            Assert.AreNotEqual(new ETag(), response.Value.ETag);
+            Assert.AreNotEqual(new DateTimeOffset(), response.Value.LastModified);
+            Assert.IsNotNull(response.Value.LeaseId);
+            Assert.IsNull(response.Value.LeaseTime);
         }
 
         [Test]
@@ -3102,8 +3109,10 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareFileLease> response = await leaseClient.BreakAsync();
 
             // Assert
-            Assert.IsNotNull(response.Value.ETag);
-            Assert.IsNotNull(response.Value.LastModified);
+            Assert.AreNotEqual(new ETag(), response.Value.ETag);
+            Assert.AreNotEqual(new DateTimeOffset(), response.Value.LastModified);
+            Assert.IsNull(response.Value.LeaseId);
+            Assert.AreEqual(0, response.Value.LeaseTime);
         }
 
         [Test]
@@ -4037,6 +4046,23 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [Test]
+        public void CanGenerateSas_Mockable()
+        {
+            // Act
+            var directory = new Mock<ShareFileClient>();
+            directory.Setup(x => x.CanGenerateSasUri).Returns(false);
+
+            // Assert
+            Assert.IsFalse(directory.Object.CanGenerateSasUri);
+
+            // Act
+            directory.Setup(x => x.CanGenerateSasUri).Returns(true);
+
+            // Assert
+            Assert.IsTrue(directory.Object.CanGenerateSasUri);
+        }
+
+        [Test]
         public void GenerateSas_RequiredParameters()
         {
             // Arrange
@@ -4185,6 +4211,17 @@ namespace Azure.Storage.Files.Shares.Tests
             }
         }
         #endregion
+
+        [Test]
+        public void CanMockClientConstructors()
+        {
+            // One has to call .Object to trigger constructor. It's lazy.
+            var mock = new Mock<ShareFileClient>(TestConfigDefault.ConnectionString, "name", "name", new ShareClientOptions()).Object;
+            mock = new Mock<ShareFileClient>(TestConfigDefault.ConnectionString, "name", "name").Object;
+            mock = new Mock<ShareFileClient>(new Uri("https://test/test/test"), new ShareClientOptions()).Object;
+            mock = new Mock<ShareFileClient>(new Uri("https://test/test/test"), GetNewSharedKeyCredentials(), new ShareClientOptions()).Object;
+            mock = new Mock<ShareFileClient>(new Uri("https://test/test/test"), new AzureSasCredential("foo"), new ShareClientOptions()).Object;
+        }
 
         private async Task WaitForCopy(ShareFileClient file, int milliWait = 200)
         {

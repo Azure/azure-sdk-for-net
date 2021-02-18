@@ -6,34 +6,29 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 
+#nullable enable
+
 namespace Azure.Communication
 {
     internal sealed class AutoRefreshTokenCredential : ICommunicationTokenCredential
     {
         private readonly ThreadSafeRefreshableAccessTokenCache _accessTokenCache;
 
-        public AutoRefreshTokenCredential(
-            Func<CancellationToken, string> tokenRefresher,
-            Func<CancellationToken, ValueTask<string>> asyncTokenRefresher,
-            string? initialToken,
-            bool refreshProactively)
-            : this(tokenRefresher, asyncTokenRefresher, initialToken, refreshProactively, null, null)
+        public AutoRefreshTokenCredential(CommunicationTokenRefreshOptions options)
+            : this(options, null, null)
         { }
 
         internal AutoRefreshTokenCredential(
-            Func<CancellationToken, string> tokenRefresher,
-            Func<CancellationToken, ValueTask<string>> asyncTokenRefresher,
-            string? initialToken,
-            bool refreshProactively,
+            CommunicationTokenRefreshOptions options,
             Func<Action, TimeSpan, ThreadSafeRefreshableAccessTokenCache.IScheduledAction>? scheduler,
             Func<DateTimeOffset>? utcNowProvider)
         {
-            if (initialToken == null)
+            if (options.InitialToken is null)
             {
                 _accessTokenCache = new ThreadSafeRefreshableAccessTokenCache(
                     Refresh,
                     RefreshAsync,
-                    refreshProactively,
+                    options.RefreshProactively,
                     scheduler,
                     utcNowProvider);
             }
@@ -42,17 +37,17 @@ namespace Azure.Communication
                 _accessTokenCache = new ThreadSafeRefreshableAccessTokenCache(
                     Refresh,
                     RefreshAsync,
-                    refreshProactively,
-                    initialValue: JwtTokenParser.CreateAccessToken(initialToken),
+                    options.RefreshProactively,
+                    initialValue: JwtTokenParser.CreateAccessToken(options.InitialToken),
                     scheduler,
                     utcNowProvider);
             }
 
             AccessToken Refresh(CancellationToken cancellationToken)
-                => JwtTokenParser.CreateAccessToken(tokenRefresher(cancellationToken));
+                => JwtTokenParser.CreateAccessToken(options.TokenRefresher(cancellationToken));
 
             async ValueTask<AccessToken> RefreshAsync(CancellationToken cancellationToken)
-                => JwtTokenParser.CreateAccessToken(await asyncTokenRefresher(cancellationToken).ConfigureAwait(false));
+                => JwtTokenParser.CreateAccessToken(await options.AsyncTokenRefresher(cancellationToken).ConfigureAwait(false));
         }
 
         public AccessToken GetToken(CancellationToken cancellationToken = default)

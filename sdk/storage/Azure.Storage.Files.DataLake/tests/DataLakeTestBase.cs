@@ -22,7 +22,8 @@ namespace Azure.Storage.Files.DataLake.Tests
         DataLakeClientOptions.ServiceVersion.V2019_07_07,
         DataLakeClientOptions.ServiceVersion.V2019_12_12,
         DataLakeClientOptions.ServiceVersion.V2020_02_10,
-        DataLakeClientOptions.ServiceVersion.V2020_04_08)]
+        DataLakeClientOptions.ServiceVersion.V2020_04_08,
+        DataLakeClientOptions.ServiceVersion.V2020_06_12)]
     public abstract class DataLakeTestBase : StorageTestBase
     {
         protected readonly DataLakeClientOptions.ServiceVersion _serviceVersion;
@@ -355,6 +356,24 @@ namespace Azure.Storage.Files.DataLake.Tests
             };
             dataLakeSasBuilder.SetPermissions(DataLakeSasPermissions.All);
             return dataLakeSasBuilder.ToSasQueryParameters(userDelegationKey, accountName);
+        }
+
+        public SasQueryParameters GetNewAccountSas(
+            AccountSasResourceTypes resourceTypes = AccountSasResourceTypes.All,
+            AccountSasPermissions permissions = AccountSasPermissions.All,
+            StorageSharedKeyCredential sharedKeyCredentials = default)
+        {
+            var builder = new AccountSasBuilder
+            {
+                Protocol = SasProtocol.None,
+                Services = AccountSasServices.Blobs,
+                ResourceTypes = resourceTypes,
+                StartsOn = Recording.UtcNow.AddHours(-1),
+                ExpiresOn = Recording.UtcNow.AddHours(+1),
+                IPRange = new SasIPRange(IPAddress.None, IPAddress.None),
+            };
+            builder.SetPermissions(permissions);
+            return builder.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
         }
 
         //TODO consider removing this.

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,11 +15,11 @@ namespace Azure.Communication.Chat
     {
         internal static ChatThreadInternal DeserializeChatThreadInternal(JsonElement element)
         {
-            Optional<string> id = default;
-            Optional<string> topic = default;
-            Optional<DateTimeOffset> createdOn = default;
-            Optional<string> createdBy = default;
-            Optional<IReadOnlyList<ChatThreadMemberInternal>> members = default;
+            string id = default;
+            string topic = default;
+            DateTimeOffset createdOn = default;
+            string createdBy = default;
+            Optional<DateTimeOffset> deletedOn = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -35,11 +34,6 @@ namespace Azure.Communication.Chat
                 }
                 if (property.NameEquals("createdOn"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     createdOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
@@ -48,23 +42,18 @@ namespace Azure.Communication.Chat
                     createdBy = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("members"))
+                if (property.NameEquals("deletedOn"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ChatThreadMemberInternal> array = new List<ChatThreadMemberInternal>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ChatThreadMemberInternal.DeserializeChatThreadMemberInternal(item));
-                    }
-                    members = array;
+                    deletedOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }
-            return new ChatThreadInternal(id.Value, topic.Value, Optional.ToNullable(createdOn), createdBy.Value, Optional.ToList(members));
+            return new ChatThreadInternal(id, topic, createdOn, createdBy, Optional.ToNullable(deletedOn));
         }
     }
 }

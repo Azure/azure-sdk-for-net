@@ -102,14 +102,23 @@ namespace Azure.Security.KeyVault.Administration.Tests
             // This results in consistent results when recording or playing back recorded tests.
             if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
             {
-                ChallengeBasedAuthenticationPolicy.AuthenticationChallenge.ClearCache();
+                ChallengeBasedAuthenticationPolicy.ClearCache();
             }
 
             KeyClient = InstrumentClient(
                 new KeyClient(
                     Uri,
                     TestEnvironment.Credential,
-                    InstrumentClientOptions(new KeyClientOptions())));
+                    InstrumentClientOptions(new KeyClientOptions
+                    {
+                        Diagnostics =
+                        {
+                            LoggedHeaderNames =
+                            {
+                                "x-ms-request-id",
+                            },
+                        },
+                    })));
 
             Start();
         }

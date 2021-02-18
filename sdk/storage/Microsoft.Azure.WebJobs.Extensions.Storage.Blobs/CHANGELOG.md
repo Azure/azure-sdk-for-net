@@ -1,7 +1,12 @@
 # Release History
 
-## 5.0.0-beta.2 (Unreleased)
+## 5.0.0-beta.3 (Unreleased)
 
+
+## 5.0.0-beta.2 (2021-02-09)
+
+### Major changes and features
+- EventGrid support for the Blob Trigger was added. Details of the feature can be found [here](https://github.com/Azure/azure-sdk-for-net/pull/17137#issue-525036753).
 
 ## 5.0.0-beta.1 (2020-11-10)
 

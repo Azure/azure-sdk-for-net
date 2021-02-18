@@ -1,4 +1,3 @@
-# Azure.ResourceManager.MachineLearningServices
 trigger: none
 
 extends:

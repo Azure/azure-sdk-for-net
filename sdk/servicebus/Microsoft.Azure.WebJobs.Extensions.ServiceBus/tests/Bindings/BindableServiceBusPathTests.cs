@@ -1,16 +1,15 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System.Collections.Generic;
-using Microsoft.Azure.WebJobs.Host.TestCommon;
+using System;
 using Microsoft.Azure.WebJobs.ServiceBus.Bindings;
-using Xunit;
+using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Bindings
 {
     public class BindableServiceBusPathTests
     {
-        [Fact]
+        [Test]
         public void Create_IfNonParameterizedPattern_ReturnsBoundPath()
         {
             const string queueOrTopicNamePattern = "queue-name-with-no-parameters";
@@ -18,11 +17,11 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Bindings
             IBindableServiceBusPath path = BindableServiceBusPath.Create(queueOrTopicNamePattern);
 
             Assert.NotNull(path);
-            Assert.Equal(queueOrTopicNamePattern, path.QueueOrTopicNamePattern);
+            Assert.AreEqual(queueOrTopicNamePattern, path.QueueOrTopicNamePattern);
             Assert.True(path.IsBound);
         }
 
-        [Fact]
+        [Test]
         public void Create_IfParameterizedPattern_ReturnsNotBoundPath()
         {
             const string queueOrTopicNamePattern = "queue-{name}-with-{parameter}";
@@ -30,22 +29,22 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Bindings
             IBindableServiceBusPath path = BindableServiceBusPath.Create(queueOrTopicNamePattern);
 
             Assert.NotNull(path);
-            Assert.Equal(queueOrTopicNamePattern, path.QueueOrTopicNamePattern);
+            Assert.AreEqual(queueOrTopicNamePattern, path.QueueOrTopicNamePattern);
             Assert.False(path.IsBound);
         }
 
-        [Fact]
+        [Test]
         public void Create_IfNullPattern_Throws()
         {
-            ExceptionAssert.ThrowsArgumentNull(() => BindableServiceBusPath.Create(null), "queueOrTopicNamePattern");
+            Assert.Throws<ArgumentNullException>(() => BindableServiceBusPath.Create(null), "queueOrTopicNamePattern");
         }
 
-        [Fact]
+        [Test]
         public void Create_IfMalformedPattern_PropagatesThrownException()
         {
             const string queueNamePattern = "malformed-queue-{name%";
 
-            ExceptionAssert.ThrowsFormat(
+            Assert.Throws<FormatException>(
                 () => BindableServiceBusPath.Create(queueNamePattern),
                 "Invalid template 'malformed-queue-{name%'. Missing closing bracket at position 17.");
         }

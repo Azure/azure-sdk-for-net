@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Microsoft.Azure.WebJobs.Description;
 using Microsoft.Azure.WebJobs.ServiceBus;
-using Microsoft.Azure.ServiceBus;
 
 namespace Microsoft.Azure.WebJobs
 {

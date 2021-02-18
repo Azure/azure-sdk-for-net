@@ -12,6 +12,7 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
+    using Microsoft.Rest.Azure.OData;
     using Models;
     using System.Collections;
     using System.Collections.Generic;
@@ -32,6 +33,13 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover
         /// <param name='moveCollectionName'>
         /// The Move Collection Name.
         /// </param>
+        /// <param name='odataQuery'>
+        /// OData parameters to apply to the operation.
+        /// </param>
+        /// <param name='dependencyLevel'>
+        /// Defines the dependency level. Possible values include: 'Direct',
+        /// 'Descendant'
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -47,6 +55,28 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<UnresolvedDependencyCollection>> GetWithHttpMessagesAsync(string resourceGroupName, string moveCollectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<UnresolvedDependency>>> GetWithHttpMessagesAsync(string resourceGroupName, string moveCollectionName, ODataQuery<UnresolvedDependenciesFilter> odataQuery = default(ODataQuery<UnresolvedDependenciesFilter>), string dependencyLevel = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets a list of unresolved dependencies.
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<UnresolvedDependency>>> GetNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

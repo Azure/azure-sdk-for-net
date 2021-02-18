@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> An Azure SQL Database sync agent linked database. </summary>
-    public partial class SyncAgentLinkedDatabase : Resource
+    public partial class SyncAgentLinkedDatabase : ProxyResource
     {
         /// <summary> Initializes a new instance of SyncAgentLinkedDatabase. </summary>
         public SyncAgentLinkedDatabase()

@@ -4,18 +4,18 @@
 using System;
 using System.Threading;
 using Microsoft.Azure.WebJobs.Host.Converters;
-using Microsoft.Azure.ServiceBus;
 using Azure.Core.Pipeline;
+using Azure.Messaging.ServiceBus;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
 {
     internal class MessageSenderCollector<T> : ICollector<T>
     {
         private readonly ServiceBusEntity _entity;
-        private readonly IConverter<T, Message> _converter;
+        private readonly IConverter<T, ServiceBusMessage> _converter;
         private readonly Guid _functionInstanceId;
 
-        public MessageSenderCollector(ServiceBusEntity entity, IConverter<T, Message> converter,
+        public MessageSenderCollector(ServiceBusEntity entity, IConverter<T, ServiceBusMessage> converter,
             Guid functionInstanceId)
         {
             if (entity == null)
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
 
         public void Add(T item)
         {
-            Message message = _converter.Convert(item);
+            ServiceBusMessage message = _converter.Convert(item);
 
             if (message == null)
             {

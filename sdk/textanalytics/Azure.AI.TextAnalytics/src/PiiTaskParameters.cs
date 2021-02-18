@@ -10,7 +10,7 @@ namespace Azure.AI.TextAnalytics
     /// PiiTaskParameters class.
     /// </summary>
     [CodeGenModel("PiiTaskParameters")]
-    public partial class PiiTaskParameters
+    internal partial class PiiTaskParameters
     {
         /// <summary>
         /// ModelVersion

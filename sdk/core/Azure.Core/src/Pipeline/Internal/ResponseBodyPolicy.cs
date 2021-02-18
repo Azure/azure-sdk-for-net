@@ -25,15 +25,11 @@ namespace Azure.Core.Pipeline
             _networkTimeout = networkTimeout;
         }
 
-        public override async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
-        {
-            await ProcessAsync(message, pipeline, true).ConfigureAwait(false);
-        }
+        public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline) =>
+            ProcessAsync(message, pipeline, true);
 
-        public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
-        {
+        public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline) =>
             ProcessAsync(message, pipeline, false).EnsureCompleted();
-        }
 
         private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
