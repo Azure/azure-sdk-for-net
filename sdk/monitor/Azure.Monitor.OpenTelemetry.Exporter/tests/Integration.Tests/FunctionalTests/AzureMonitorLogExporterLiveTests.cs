@@ -25,7 +25,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.FunctionalTests
         {
         }
 
-        [RecordedTest]
+        /// <summary>
+        /// TODO: This test is using <see cref="ApplicationInsightsDataClient"/> that currently can't be mocked for the RecordedTests.
+        /// See: (https://github.com/Azure/azure-sdk-for-net/issues/18853).
+        /// Will change this to [RecordedTest] at a later date.
+        /// </summary>
+        [LiveOnly]
         public async Task VerifyLogExporter()
         {
             // SETUP
@@ -55,6 +60,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.FunctionalTests
 
             // TODO: MAYBE WE COULD HAVE A SHORT WAIT, AND IF NO TELEMETRY IS FOUND, WAIT FOR A LONGER PERIOD.
             // THIS MIGHT MAKE TEST RUN FASTER, BUT PROVIDE A TRY-AGAIN MECHANIC FOR DAYS THAT INGESTION IS HAVING A BAD DAY.
+            // DON'T KNOW IF THIS WOULD BE COMPATIBLE WITH THE RECORDED TESTS
             await this.WaitForIgnestionAsync();
 
             // VERIFY

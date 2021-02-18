@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" VersionOverride="2.1.1" />
-    <PackageReference Include="Microsoft.Azure.ApplicationInsights.Query" VersionOverride="1.0.0" />
     <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.Authentication" VersionOverride="2.4.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
 
@@ -33,6 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\applicationinsights\Microsoft.Azure.ApplicationInsights.Query\src\Microsoft.Azure.ApplicationInsights.Query.csproj" />
     <ProjectReference Include="..\..\..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj" />
     <ProjectReference Include="..\..\src\Azure.Monitor.OpenTelemetry.Exporter.csproj" />
     <ProjectReference Include="..\Integration.Tests.AspNetCoreWebApp\Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.AspNetCoreWebApp.csproj" />

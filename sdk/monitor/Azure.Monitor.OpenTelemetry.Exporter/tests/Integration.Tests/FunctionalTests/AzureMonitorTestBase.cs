@@ -33,6 +33,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.FunctionalTests
         /// </remarks>
         internal AzureMonitorLogExporter GetAzureMonitorLogExporter()
         {
+            // TODO: I WOULD LIKE TO TAKE ADVANTAGE OF THIS: https://github.com/open-telemetry/opentelemetry-dotnet/pull/1837
+            // In these tests we have to manually build the Exporter and processor so we can call ForceFlush in the tests.
+            // But we would expect customers to use the Extension method 
+
             var exporterOptions = new AzureMonitorExporterOptions
             {
                 ConnectionString = TestEnvironment.ConnectionString,
