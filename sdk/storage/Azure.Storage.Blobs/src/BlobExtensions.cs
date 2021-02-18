@@ -219,9 +219,13 @@ namespace Azure.Storage.Blobs
             {
                 return RehydratePriority.High;
             }
-            else
+            else if (rehydratePriority == RehydratePriority.Standard.ToString())
             {
                 return RehydratePriority.Standard;
+            }
+            else
+            {
+                throw new ArgumentException($"Unknown Rehydrate Priority value: {rehydratePriority}");
             }
         }
         #endregion

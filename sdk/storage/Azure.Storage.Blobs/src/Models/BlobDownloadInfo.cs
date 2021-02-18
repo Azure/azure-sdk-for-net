@@ -50,50 +50,6 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         internal BlobDownloadInfo() { }
 
-        ///// <summary>
-        ///// Creates a new DownloadInfo backed by FlattenedDownloadProperties
-        ///// </summary>
-        ///// <param name="flattened">The FlattenedDownloadProperties returned with the request</param>
-        //internal BlobDownloadInfo(FlattenedDownloadProperties flattened)
-        //{
-        //    _flattened = flattened;
-        //    Details = new BlobDownloadDetails() {
-        //        LastModified = flattened.LastModified,
-        //        Metadata = flattened.Metadata,
-        //        ContentRange = flattened.ContentRange,
-        //        ETag = flattened.ETag,
-        //        ContentEncoding = flattened.ContentEncoding,
-        //        CacheControl = flattened.CacheControl,
-        //        ContentDisposition = flattened.ContentDisposition,
-        //        ContentLanguage = flattened.ContentLanguage,
-        //        BlobSequenceNumber = flattened.BlobSequenceNumber,
-        //        CopyCompletedOn = flattened.CopyCompletionTime,
-        //        CopyStatusDescription = flattened.CopyStatusDescription,
-        //        CopyId = flattened.CopyId,
-        //        CopyProgress = flattened.CopyProgress,
-        //        CopySource = flattened.CopySource,
-        //        CopyStatus = flattened.CopyStatus,
-        //        LeaseDuration = flattened.LeaseDuration,
-        //        LeaseState = flattened.LeaseState,
-        //        LeaseStatus = flattened.LeaseStatus,
-        //        AcceptRanges = flattened.AcceptRanges,
-        //        BlobCommittedBlockCount = flattened.BlobCommittedBlockCount,
-        //        IsServerEncrypted = flattened.IsServerEncrypted,
-        //        EncryptionKeySha256 = flattened.EncryptionKeySha256,
-        //        EncryptionScope = flattened.EncryptionScope,
-        //        BlobContentHash = flattened.BlobContentHash,
-        //        TagCount = flattened.TagCount,
-        //        VersionId = flattened.VersionId,
-        //        IsSealed = flattened.IsSealed,
-        //        ObjectReplicationSourceProperties =
-        //            flattened.ObjectReplicationRules?.Count > 0
-        //            ? BlobExtensions.ParseObjectReplicationIds(flattened.ObjectReplicationRules)
-        //            : null,
-        //        ObjectReplicationDestinationPolicyId = flattened.ObjectReplicationPolicyId,
-        //        LastAccessed = flattened.LastAccessed
-        //    };
-        //}
-
         /// <summary>
         /// Disposes the BlobDownloadInfo by calling Dispose on the underlying Content stream.
         /// </summary>

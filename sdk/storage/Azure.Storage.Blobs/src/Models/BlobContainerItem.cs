@@ -33,21 +33,6 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Creates a new BlobContainerItem instance.
         /// </summary>
-        internal BlobContainerItem()
-            : this(false)
-        {
-        }
-
-        /// <summary>
-        /// Creates a new BlobContainerItem instance.
-        /// </summary>
-        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
-        internal BlobContainerItem(bool skipInitialization)
-        {
-            if (!skipInitialization)
-            {
-                Properties = new BlobContainerProperties();
-            }
-        }
+        internal BlobContainerItem() {}
     }
 }
