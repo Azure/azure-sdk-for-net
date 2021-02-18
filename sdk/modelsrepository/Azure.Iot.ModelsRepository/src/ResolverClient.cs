@@ -100,7 +100,17 @@ namespace Azure.Iot.ModelsRepository
             Justification = "<Pending>")]
         public virtual async Task<IDictionary<string, string>> ResolveAsync(string dtmi, CancellationToken cancellationToken = default)
         {
-            return await _repositoryHandler.ProcessAsync(dtmi, cancellationToken).ConfigureAwait(false);
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ResolverClient)}.{nameof(Resolve)}");
+            scope.Start();
+            try
+            {
+                return await _repositoryHandler.ProcessAsync(dtmi, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -119,7 +129,18 @@ namespace Azure.Iot.ModelsRepository
             Justification = "<Pending>")]
         public virtual IDictionary<string, string> Resolve(string dtmi, CancellationToken cancellationToken = default)
         {
-            return _repositoryHandler.Process(dtmi, cancellationToken);
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ResolverClient)}.{nameof(Resolve)}");
+            scope.Start();
+
+            try
+            {
+                return _repositoryHandler.Process(dtmi, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -135,7 +156,18 @@ namespace Azure.Iot.ModelsRepository
         [SuppressMessage("Usage", "AZC0015:Unexpected client method return type.", Justification = "<Pending>")]
         public virtual async Task<IDictionary<string, string>> ResolveAsync(IEnumerable<string> dtmis, CancellationToken cancellationToken = default)
         {
-            return await _repositoryHandler.ProcessAsync(dtmis, cancellationToken).ConfigureAwait(false);
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ResolverClient)}.{nameof(Resolve)}");
+            scope.Start();
+
+            try
+            {
+                return await _repositoryHandler.ProcessAsync(dtmis, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -151,7 +183,18 @@ namespace Azure.Iot.ModelsRepository
         [SuppressMessage("Usage", "AZC0015:Unexpected client method return type.", Justification = "<Pending>")]
         public virtual IDictionary<string, string> Resolve(IEnumerable<string> dtmis, CancellationToken cancellationToken = default)
         {
-            return _repositoryHandler.Process(dtmis, cancellationToken);
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ResolverClient)}.{nameof(Resolve)}");
+            scope.Start();
+
+            try
+            {
+                return _repositoryHandler.Process(dtmis, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>

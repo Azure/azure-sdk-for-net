@@ -5,11 +5,10 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Azure.Iot.ModelsRepository.Tests
 {
-    public class ModelQueryTests
+    public class ModelQueryTests : ModelRepoTestBase
     {
         private readonly string _modelTemplate = @"{{
             {0}
@@ -165,7 +164,7 @@ namespace Azure.Iot.ModelsRepository.Tests
         [Test]
         public void ListToDict()
         {
-            string testRepoPath = TestHelpers.TestLocalModelRepository;
+            string testRepoPath = TestLocalModelRepository;
             string expandedContent = File.ReadAllText(
                 $"{testRepoPath}/dtmi/com/example/temperaturecontroller-1.expanded.json", Encoding.UTF8);
             ModelQuery query = new ModelQuery(expandedContent);
@@ -183,7 +182,7 @@ namespace Azure.Iot.ModelsRepository.Tests
             foreach (string id in expectedIds)
             {
                 Assert.True(transformResult.ContainsKey(id));
-                Assert.True(TestHelpers.ParseRootDtmiFromJson(transformResult[id]).Equals(id, System.StringComparison.Ordinal));
+                Assert.True(ParseRootDtmiFromJson(transformResult[id]).Equals(id, System.StringComparison.Ordinal));
             }
         }
     }
