@@ -21,14 +21,14 @@ namespace Azure.Identity
         private static AsyncLockWithValue<MsalCacheHelper> cacheHelperLock = new AsyncLockWithValue<MsalCacheHelper>();
         private static AsyncLockWithValue<MsalCacheHelper> s_ProtectedCacheHelperLock = new AsyncLockWithValue<MsalCacheHelper>();
         private static AsyncLockWithValue<MsalCacheHelper> s_FallbackCacheHelperLock = new AsyncLockWithValue<MsalCacheHelper>();
-        private readonly bool _allowUnencryptedStorage;
-        private readonly string _name;
+        internal readonly bool _allowUnencryptedStorage;
+        internal readonly string _name;
 
         /// <summary>
         /// Creates a new instance of <see cref="PersistentTokenCache"/>.
         /// </summary>
         /// <param name="allowUnencryptedStorage"></param>
-        public PersistentTokenCache(bool allowUnencryptedStorage = true)
+        public PersistentTokenCache(bool allowUnencryptedStorage = false)
         {
             _allowUnencryptedStorage = allowUnencryptedStorage;
         }
