@@ -13,19 +13,38 @@ using System.Collections.Generic;
 
 namespace Azure.Identity
 {
-    internal static class HttpExtensions
+    /// <summary>
+    /// An HttpMessageHandler which delegates SendAsync to a specified HttpPipeline.
+    /// </summary>
+    internal class HttpPipelineMessageHandler: HttpMessageHandler
     {
-        public static async Task<Request> ToPipelineRequestAsync(this HttpRequestMessage request, HttpPipeline pipeline)
+        private readonly HttpPipeline _pipeline;
+
+        public HttpPipelineMessageHandler(HttpPipeline pipeline)
         {
-            Request pipelineRequest = pipeline.CreateRequest();
+            _pipeline = pipeline;
+        }
+
+        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        {
+            Request pipelineRequest = await ToPipelineRequestAsync(request).ConfigureAwait(false);
+
+            Response pipelineResponse = await _pipeline.SendRequestAsync(pipelineRequest, cancellationToken).ConfigureAwait(false);
+
+            return ToHttpResponseMessage(pipelineResponse);
+        }
+
+        private async Task<Request> ToPipelineRequestAsync(HttpRequestMessage request)
+        {
+            Request pipelineRequest = _pipeline.CreateRequest();
 
             pipelineRequest.Method = RequestMethod.Parse(request.Method.Method);
 
             pipelineRequest.Uri.Reset(request.RequestUri);
 
-            pipelineRequest.Content = await request.Content.ToPipelineRequestContentAsync().ConfigureAwait(false);
+            pipelineRequest.Content = await ToPipelineRequestContentAsync(request.Content).ConfigureAwait(false);
 
-            foreach (System.Collections.Generic.KeyValuePair<string, System.Collections.Generic.IEnumerable<string>> header in request.Headers)
+            foreach (KeyValuePair<string, IEnumerable<string>> header in request.Headers)
             {
                 foreach (var value in header.Value)
                 {
@@ -47,14 +66,16 @@ namespace Azure.Identity
             return pipelineRequest;
         }
 
-        public static HttpResponseMessage ToHttpResponseMessage(this Response response)
+        private static HttpResponseMessage ToHttpResponseMessage(Response response)
         {
             HttpResponseMessage responseMessage = new HttpResponseMessage
             {
-                StatusCode = (HttpStatusCode)response.Status,
-
-                Content = new StreamContent(response.ContentStream)
+                StatusCode = (HttpStatusCode)response.Status
             };
+            if (response.ContentStream != null)
+            {
+                responseMessage.Content = new StreamContent(response.ContentStream);
+            }
 
             foreach (HttpHeader header in response.Headers)
             {
@@ -73,7 +94,7 @@ namespace Azure.Identity
             return responseMessage;
         }
 
-        public static async Task<RequestContent> ToPipelineRequestContentAsync(this HttpContent content)
+        private static async Task<RequestContent> ToPipelineRequestContentAsync(HttpContent content)
         {
             if (content != null)
             {
