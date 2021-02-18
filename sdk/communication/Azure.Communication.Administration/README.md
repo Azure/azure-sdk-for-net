@@ -66,6 +66,8 @@ Phone numbers reservation can be performed through the reservation creation API 
 
 Phone numbers can be assigned to a callback URL via the configure number API. As part of the configuration, you will need an acquired phone number, callback URL and application id.
 
+## Examples
+
 ## Troubleshooting
 
 ## Next steps
