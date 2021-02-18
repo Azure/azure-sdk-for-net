@@ -330,6 +330,22 @@ namespace Azure.AI.TextAnalytics.Tests
                         ModelVersion = "InvalidVersion"
                     }
                 },
+                RecognizeEntitiesOptions = new List<RecognizeEntitiesOptions>()
+                {
+                    new RecognizeEntitiesOptions(),
+                    new RecognizeEntitiesOptions()
+                    {
+                        ModelVersion = "InvalidVersion"
+                    }
+                },
+                RecognizePiiEntitiesOptions = new List<RecognizePiiEntitiesOptions>()
+                {
+                    new RecognizePiiEntitiesOptions(),
+                    new RecognizePiiEntitiesOptions()
+                    {
+                        ModelVersion = "InvalidVersion"
+                    }
+                },
                 DisplayName = "AnalyzeOperationBatchWithErrorTest",
             };
 
@@ -340,15 +356,41 @@ namespace Azure.AI.TextAnalytics.Tests
             //Take the first page
             AnalyzeBatchActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
 
-            ExtractKeyPhrasesActionResult resultWithActionError = resultCollection.ExtractKeyPhrasesActionsResults.ElementAtOrDefault(1);
+            //Key phrases
+            var keyPhrasesActions = resultCollection.ExtractKeyPhrasesActionsResults.ToList();
 
-            ExtractKeyPhrasesResultCollection resultWithDocumentError = resultCollection.ExtractKeyPhrasesActionsResults.FirstOrDefault().Result;
+            Assert.IsFalse(keyPhrasesActions[0].HasError);
+            Assert.AreEqual(3, keyPhrasesActions[0].Result.Count);
+            var kpEmptyDocument = keyPhrasesActions[0].Result.ElementAt(2);
+            Assert.IsTrue(kpEmptyDocument.HasError);
+            Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocument, kpEmptyDocument.Error.ErrorCode.ToString());
 
-            Assert.IsTrue(resultWithActionError.HasError);
-            Assert.AreEqual(TextAnalyticsErrorCode.InvalidRequest, resultWithActionError.Error.ErrorCode.ToString());
+            Assert.IsTrue(keyPhrasesActions[1].HasError);
+            Assert.AreEqual(TextAnalyticsErrorCode.InvalidRequest, keyPhrasesActions[1].Error.ErrorCode.ToString());
 
-            Assert.IsTrue(resultWithDocumentError.ElementAt(2).HasError);
-            Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocument, resultWithDocumentError.ElementAt(2).Error.ErrorCode.ToString());
+            // Entities
+            var entitiesActions = resultCollection.RecognizeEntitiesActionsResults.ToList();
+
+            Assert.IsFalse(entitiesActions[0].HasError);
+            Assert.AreEqual(3, entitiesActions[0].Result.Count);
+            var entitiesEmptyDocument = entitiesActions[0].Result.ElementAt(2);
+            Assert.IsTrue(entitiesEmptyDocument.HasError);
+            Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocument, entitiesEmptyDocument.Error.ErrorCode.ToString());
+
+            Assert.IsTrue(entitiesActions[1].HasError);
+            Assert.AreEqual(TextAnalyticsErrorCode.InvalidRequest, entitiesActions[1].Error.ErrorCode.ToString());
+
+            // PII entities
+            var piiEntitiesActions = resultCollection.RecognizePiiEntitiesActionsResults.ToList();
+
+            Assert.IsFalse(piiEntitiesActions[0].HasError);
+            Assert.AreEqual(3, piiEntitiesActions[0].Result.Count);
+            var piiEntitiesEmptyDocument = piiEntitiesActions[0].Result.ElementAt(2);
+            Assert.IsTrue(piiEntitiesEmptyDocument.HasError);
+            Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocument, piiEntitiesEmptyDocument.Error.ErrorCode.ToString());
+
+            Assert.IsTrue(piiEntitiesActions[1].HasError);
+            Assert.AreEqual(TextAnalyticsErrorCode.InvalidRequest, piiEntitiesActions[1].Error.ErrorCode.ToString());
         }
 
         [Test]
@@ -380,9 +422,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             Assert.AreEqual(1, result.Count);
 
-            // TODO - Update this once the service starts returning RedactedText
-            //var redactedText = string.Empty;
-            //Assert.AreEqual(redactedText, result[0].Entities.RedactedText);
+            Assert.IsNotEmpty(result[0].Entities.RedactedText);
 
             Assert.IsFalse(result[0].HasError);
             Assert.AreEqual(2, result[0].Entities.Count);

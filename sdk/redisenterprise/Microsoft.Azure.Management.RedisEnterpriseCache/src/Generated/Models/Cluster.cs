@@ -45,10 +45,11 @@ namespace Microsoft.Azure.Management.RedisEnterprise.Models
         /// "Microsoft.Compute/virtualMachines" or
         /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="tags">Resource tags.</param>
-        /// <param name="zones">The zones where this cluster will be
-        /// deployed.</param>
+        /// <param name="zones">The Availability Zones where this cluster will
+        /// be deployed.</param>
         /// <param name="minimumTlsVersion">The minimum TLS version for the
-        /// cluster to support, e.g. '1.2'</param>
+        /// cluster to support, e.g. '1.2'. Possible values include: '1.0',
+        /// '1.1', '1.2'</param>
         /// <param name="hostName">DNS name of the cluster endpoint</param>
         /// <param name="provisioningState">Current provisioning status of the
         /// cluster. Possible values include: 'Succeeded', 'Failed',
@@ -89,14 +90,15 @@ namespace Microsoft.Azure.Management.RedisEnterprise.Models
         public Sku Sku { get; set; }
 
         /// <summary>
-        /// Gets or sets the zones where this cluster will be deployed.
+        /// Gets or sets the Availability Zones where this cluster will be
+        /// deployed.
         /// </summary>
         [JsonProperty(PropertyName = "zones")]
         public IList<string> Zones { get; set; }
 
         /// <summary>
         /// Gets or sets the minimum TLS version for the cluster to support,
-        /// e.g. '1.2'
+        /// e.g. '1.2'. Possible values include: '1.0', '1.1', '1.2'
         /// </summary>
         [JsonProperty(PropertyName = "properties.minimumTlsVersion")]
         public string MinimumTlsVersion { get; set; }

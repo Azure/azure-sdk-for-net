@@ -74,7 +74,6 @@ namespace Azure.Storage.Files.DataLake.Tests
                     MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 60),
                     NetworkTimeout = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 100 : 400),
                 },
-                Transport = GetTransport()
             };
             if (Mode != RecordedTestMode.Live)
             {

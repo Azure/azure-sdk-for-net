@@ -264,7 +264,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   Event Hub will result in a connection string that contains the name.
         /// </remarks>
         ///
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string"/>
+        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
         protected EventProcessor(int eventBatchMaximumCount,
                                  string consumerGroup,
@@ -289,7 +289,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   passed only once, either as part of the connection string or separately.
         /// </remarks>
         ///
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string"/>
+        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
         protected EventProcessor(int eventBatchMaximumCount,
                                  string consumerGroup,

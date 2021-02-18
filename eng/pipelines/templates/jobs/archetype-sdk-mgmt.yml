@@ -56,8 +56,8 @@ jobs:
           Pool: Azure Pipelines
           OSVmImage: "macOS-10.15"
     pool:
-      name: Pool
-      vmImage: "$(OSVmImage)"
+      name: $(Pool)
+      vmImage: $(OSVmImage)
     steps:
       - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
         parameters:

@@ -60,7 +60,7 @@ private const string TOKEN_CACHE_PATH = "./tokencache.bin";
 ```C# Snippet:Identity_TokenCache_CustomPersistence_Write
 using (var cacheStream = new FileStream(TOKEN_CACHE_PATH, FileMode.Create, FileAccess.Write))
 {
-    await tokenCache.SerializeAsync(cacheStream);
+    await TokenCacheSerializer.SerializeAsync(tokenCache, cacheStream);
 }
 ```
 
@@ -71,7 +71,7 @@ TokenCache tokenCache;
 
 using (var cacheStream = new FileStream(TOKEN_CACHE_PATH, FileMode.OpenOrCreate, FileAccess.Read))
 {
-    tokenCache = await TokenCache.DeserializeAsync(cacheStream);
+    tokenCache = await TokenCacheSerializer.DeserializeAsync(cacheStream);
 }
 ```
 
@@ -84,7 +84,7 @@ public static async Task<TokenCache> ReadTokenCacheAsync()
 
     using (var cacheStream = new FileStream(TOKEN_CACHE_PATH, FileMode.OpenOrCreate, FileAccess.Read))
     {
-        tokenCache = await TokenCache.DeserializeAsync(cacheStream);
+        tokenCache = await TokenCacheSerializer.DeserializeAsync(cacheStream);
         tokenCache.Updated += WriteCacheOnUpdateAsync;
     }
 
@@ -95,7 +95,7 @@ public static async Task WriteCacheOnUpdateAsync(TokenCacheUpdatedArgs args)
 {
     using (var cacheStream = new FileStream(TOKEN_CACHE_PATH, FileMode.Create, FileAccess.Write))
     {
-        await args.Cache.SerializeAsync(cacheStream);
+        await TokenCacheSerializer.SerializeAsync(args.Cache, cacheStream);
     }
 }
 
