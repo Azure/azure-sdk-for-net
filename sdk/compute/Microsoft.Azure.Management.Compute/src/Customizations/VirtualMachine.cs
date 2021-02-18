@@ -10,7 +10,6 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// <summary>
     /// Describes a Virtual Machine.
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
     public partial class VirtualMachine : Resource
     {
 
