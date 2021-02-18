@@ -22,6 +22,122 @@ namespace Microsoft.Azure.Management.DataShare
     public static partial class ProviderShareSubscriptionsOperationsExtensions
     {
             /// <summary>
+            /// Reinstate share subscription in a provider share.
+            /// </summary>
+            /// <remarks>
+            /// Reinstate share subscription in a provider share
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the share account.
+            /// </param>
+            /// <param name='shareName'>
+            /// The name of the share.
+            /// </param>
+            /// <param name='providerShareSubscriptionId'>
+            /// To locate shareSubscription
+            /// </param>
+            public static ProviderShareSubscription Reinstate(this IProviderShareSubscriptionsOperations operations, string resourceGroupName, string accountName, string shareName, string providerShareSubscriptionId)
+            {
+                return operations.ReinstateAsync(resourceGroupName, accountName, shareName, providerShareSubscriptionId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Reinstate share subscription in a provider share.
+            /// </summary>
+            /// <remarks>
+            /// Reinstate share subscription in a provider share
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the share account.
+            /// </param>
+            /// <param name='shareName'>
+            /// The name of the share.
+            /// </param>
+            /// <param name='providerShareSubscriptionId'>
+            /// To locate shareSubscription
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ProviderShareSubscription> ReinstateAsync(this IProviderShareSubscriptionsOperations operations, string resourceGroupName, string accountName, string shareName, string providerShareSubscriptionId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ReinstateWithHttpMessagesAsync(resourceGroupName, accountName, shareName, providerShareSubscriptionId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Revoke share subscription in a provider share.
+            /// </summary>
+            /// <remarks>
+            /// Revoke share subscription in a provider share
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the share account.
+            /// </param>
+            /// <param name='shareName'>
+            /// The name of the share.
+            /// </param>
+            /// <param name='providerShareSubscriptionId'>
+            /// To locate shareSubscription
+            /// </param>
+            public static ProviderShareSubscription Revoke(this IProviderShareSubscriptionsOperations operations, string resourceGroupName, string accountName, string shareName, string providerShareSubscriptionId)
+            {
+                return operations.RevokeAsync(resourceGroupName, accountName, shareName, providerShareSubscriptionId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Revoke share subscription in a provider share.
+            /// </summary>
+            /// <remarks>
+            /// Revoke share subscription in a provider share
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the share account.
+            /// </param>
+            /// <param name='shareName'>
+            /// The name of the share.
+            /// </param>
+            /// <param name='providerShareSubscriptionId'>
+            /// To locate shareSubscription
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ProviderShareSubscription> RevokeAsync(this IProviderShareSubscriptionsOperations operations, string resourceGroupName, string accountName, string shareName, string providerShareSubscriptionId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.RevokeWithHttpMessagesAsync(resourceGroupName, accountName, shareName, providerShareSubscriptionId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Get share subscription in a provider share.
             /// </summary>
             /// <remarks>
@@ -132,122 +248,6 @@ namespace Microsoft.Azure.Management.DataShare
             public static async Task<IPage<ProviderShareSubscription>> ListByShareAsync(this IProviderShareSubscriptionsOperations operations, string resourceGroupName, string accountName, string shareName, string skipToken = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByShareWithHttpMessagesAsync(resourceGroupName, accountName, shareName, skipToken, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Revoke share subscription in a provider share.
-            /// </summary>
-            /// <remarks>
-            /// Revoke share subscription in a provider share
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the share account.
-            /// </param>
-            /// <param name='shareName'>
-            /// The name of the share.
-            /// </param>
-            /// <param name='providerShareSubscriptionId'>
-            /// To locate shareSubscription
-            /// </param>
-            public static ProviderShareSubscription Revoke(this IProviderShareSubscriptionsOperations operations, string resourceGroupName, string accountName, string shareName, string providerShareSubscriptionId)
-            {
-                return operations.RevokeAsync(resourceGroupName, accountName, shareName, providerShareSubscriptionId).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Revoke share subscription in a provider share.
-            /// </summary>
-            /// <remarks>
-            /// Revoke share subscription in a provider share
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the share account.
-            /// </param>
-            /// <param name='shareName'>
-            /// The name of the share.
-            /// </param>
-            /// <param name='providerShareSubscriptionId'>
-            /// To locate shareSubscription
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<ProviderShareSubscription> RevokeAsync(this IProviderShareSubscriptionsOperations operations, string resourceGroupName, string accountName, string shareName, string providerShareSubscriptionId, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.RevokeWithHttpMessagesAsync(resourceGroupName, accountName, shareName, providerShareSubscriptionId, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Reinstate share subscription in a provider share.
-            /// </summary>
-            /// <remarks>
-            /// Reinstate share subscription in a provider share
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the share account.
-            /// </param>
-            /// <param name='shareName'>
-            /// The name of the share.
-            /// </param>
-            /// <param name='providerShareSubscriptionId'>
-            /// To locate shareSubscription
-            /// </param>
-            public static ProviderShareSubscription Reinstate(this IProviderShareSubscriptionsOperations operations, string resourceGroupName, string accountName, string shareName, string providerShareSubscriptionId)
-            {
-                return operations.ReinstateAsync(resourceGroupName, accountName, shareName, providerShareSubscriptionId).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Reinstate share subscription in a provider share.
-            /// </summary>
-            /// <remarks>
-            /// Reinstate share subscription in a provider share
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the share account.
-            /// </param>
-            /// <param name='shareName'>
-            /// The name of the share.
-            /// </param>
-            /// <param name='providerShareSubscriptionId'>
-            /// To locate shareSubscription
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<ProviderShareSubscription> ReinstateAsync(this IProviderShareSubscriptionsOperations operations, string resourceGroupName, string accountName, string shareName, string providerShareSubscriptionId, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ReinstateWithHttpMessagesAsync(resourceGroupName, accountName, shareName, providerShareSubscriptionId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
