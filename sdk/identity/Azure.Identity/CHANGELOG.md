@@ -2,6 +2,9 @@
 
 ## 1.4.0-beta.4 (Unreleased)
 
+### Fixes and Improvements
+
+- Added the `[Serializable]` attribute to all custom exception types.
 
 ## 1.4.0-beta.3 (2021-02-09)
 
