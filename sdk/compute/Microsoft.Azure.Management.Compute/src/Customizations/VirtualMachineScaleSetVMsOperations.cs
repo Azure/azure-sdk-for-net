@@ -61,6 +61,7 @@ namespace Microsoft.Azure.Management.Compute
         public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string instanceId, Dictionary<string, List<string>> customHeaders)
         {
             // Send request
+            CancellationToken cancellationToken = default(CancellationToken);
             AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceId, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
@@ -117,6 +118,7 @@ namespace Microsoft.Azure.Management.Compute
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
+            CancellationToken cancellationToken = default(CancellationToken);
             if (_shouldTrace)
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
