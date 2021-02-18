@@ -26,5 +26,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             TriggerName = triggerName;
             ProvisioningStatus = provisioningStatus;
         }
+
+        /// <summary> Trigger name. </summary>
+        public string TriggerName { get; set; }
+        /// <summary> Provisioning status. </summary>
+        public string ProvisioningStatus { get; set; }
     }
 }
