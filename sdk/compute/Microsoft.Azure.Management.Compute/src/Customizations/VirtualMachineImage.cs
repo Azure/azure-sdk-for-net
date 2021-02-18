@@ -13,13 +13,6 @@ namespace Microsoft.Azure.Management.Compute.Models
     [Rest.Serialization.JsonTransformation]
     public partial class VirtualMachineImage : VirtualMachineImageResource
     {
-        /// <summary>
-        /// Initializes a new instance of the VirtualMachineImage class.
-        /// </summary>
-        public VirtualMachineImage()
-        {
-            CustomInit();
-        }
 
         /// <summary>
         /// Initializes a new instance of the VirtualMachineImage class.
@@ -91,72 +84,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         {
             Plan = plan;
             CustomInit();
-        }
-
-        /// <summary>
-        /// An initialization method that performs custom operations like setting defaults
-        /// </summary>
-        partial void CustomInit();
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.plan")]
-        public PurchasePlan Plan { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.osDiskImage")]
-        public OSDiskImage OsDiskImage { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.dataDiskImages")]
-        public IList<DataDiskImage> DataDiskImages { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.automaticOSUpgradeProperties")]
-        public AutomaticOSUpgradeProperties AutomaticOSUpgradeProperties { get; set; }
-
-        /// <summary>
-        /// Gets or sets possible values include: 'V1', 'V2'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.hyperVGeneration")]
-        public string HyperVGeneration { get; set; }
-
-        /// <summary>
-        /// Gets or sets specifies disallowed configuration for the
-        /// VirtualMachine created from the image
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.disallowed")]
-        public DisallowedConfiguration Disallowed { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.features")]
-        public IList<VirtualMachineImageFeature> Features { get; set; }
-
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public override void Validate()
-        {
-            base.Validate();
-            if (Plan != null)
-            {
-                Plan.Validate();
-            }
-            if (OsDiskImage != null)
-            {
-                OsDiskImage.Validate();
-            }
-            if (AutomaticOSUpgradeProperties != null)
-            {
-                AutomaticOSUpgradeProperties.Validate();
-            }
         }
     }
 }
