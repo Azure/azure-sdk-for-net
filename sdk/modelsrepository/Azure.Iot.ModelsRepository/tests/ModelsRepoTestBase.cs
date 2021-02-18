@@ -9,7 +9,7 @@ using System.Text.Json;
 namespace Azure.Iot.ModelsRepository.Tests
 {
     /// <summary>
-    /// This class will initialize all the settings and create and instance of the ResolverClient client.
+    /// This class will initialize all the settings and create and instance of the ModelsRepoClient.
     /// </summary>
     public abstract class ModelsRepoTestBase
     {

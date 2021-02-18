@@ -18,9 +18,9 @@ namespace Azure.Iot.ModelsRepository
         private readonly Guid _clientId;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _repositoryUri;
-        private readonly ResolverClientOptions _clientOptions;
+        private readonly ModelsRepoClientOptions _clientOptions;
 
-        public RepositoryHandler(Uri repositoryUri, ClientDiagnostics clientDiagnostics, ResolverClientOptions options)
+        public RepositoryHandler(Uri repositoryUri, ClientDiagnostics clientDiagnostics, ModelsRepoClientOptions options)
         {
             Argument.AssertNotNull(options, nameof(options));
 
@@ -33,7 +33,7 @@ namespace Azure.Iot.ModelsRepository
 
             _repositoryUri = repositoryUri;
 
-            ResolverEventSource.Instance.InitFetcher(_clientId, repositoryUri.Scheme);
+            ModelsRepoEventSource.Instance.InitFetcher(_clientId, repositoryUri.Scheme);
         }
 
         public async Task<IDictionary<string, string>> ProcessAsync(string dtmi, CancellationToken cancellationToken)
@@ -68,11 +68,11 @@ namespace Azure.Iot.ModelsRepository
                 string targetDtmi = toProcessModels.Dequeue();
                 if (processedModels.ContainsKey(targetDtmi))
                 {
-                    ResolverEventSource.Instance.SkippingPreprocessedDtmi(targetDtmi);
+                    ModelsRepoEventSource.Instance.SkippingPreprocessedDtmi(targetDtmi);
                     continue;
                 }
 
-                ResolverEventSource.Instance.ProcessingDtmi(targetDtmi);
+                ModelsRepoEventSource.Instance.ProcessingDtmi(targetDtmi);
 
                 FetchResult result = async
                     ? await FetchAsync(targetDtmi, cancellationToken).ConfigureAwait(false)
@@ -101,7 +101,7 @@ namespace Azure.Iot.ModelsRepository
 
                     if (dependencies.Count > 0)
                     {
-                        ResolverEventSource.Instance.DiscoveredDependencies(string.Join("\", \"", dependencies));
+                        ModelsRepoEventSource.Instance.DiscoveredDependencies(string.Join("\", \"", dependencies));
                     }
 
                     foreach (string dep in dependencies)
@@ -113,7 +113,7 @@ namespace Azure.Iot.ModelsRepository
                 string parsedDtmi = metadata.Id;
                 if (!parsedDtmi.Equals(targetDtmi, StringComparison.Ordinal))
                 {
-                    ResolverEventSource.Instance.IncorrectDtmiCasing(targetDtmi, parsedDtmi);
+                    ModelsRepoEventSource.Instance.IncorrectDtmiCasing(targetDtmi, parsedDtmi);
                     string formatErrorMsg = string.Format(CultureInfo.CurrentCulture, ServiceStrings.IncorrectDtmiCasing, targetDtmi, parsedDtmi);
                     throw new ResolverException(targetDtmi, formatErrorMsg, new FormatException(formatErrorMsg));
                 }
@@ -155,7 +155,7 @@ namespace Azure.Iot.ModelsRepository
             {
                 if (!DtmiConventions.IsDtmi(dtmi))
                 {
-                    ResolverEventSource.Instance.InvalidDtmiInput(dtmi);
+                    ModelsRepoEventSource.Instance.InvalidDtmiInput(dtmi);
                     string invalidArgMsg = string.Format(CultureInfo.CurrentCulture, ServiceStrings.InvalidDtmiFormat, dtmi);
                     throw new ResolverException(dtmi, invalidArgMsg, new ArgumentException(invalidArgMsg));
                 }

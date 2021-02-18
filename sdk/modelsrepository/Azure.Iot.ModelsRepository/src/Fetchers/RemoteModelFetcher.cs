@@ -19,7 +19,7 @@ namespace Azure.Iot.ModelsRepository.Fetchers
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly bool _tryExpanded;
 
-        public RemoteModelFetcher(ClientDiagnostics clientDiagnostics, ResolverClientOptions clientOptions)
+        public RemoteModelFetcher(ClientDiagnostics clientDiagnostics, ModelsRepoClientOptions clientOptions)
         {
             _pipeline = CreatePipeline(clientOptions);
             _tryExpanded = clientOptions.DependencyResolution == DependencyResolutionOption.TryFromExpanded;
@@ -41,7 +41,7 @@ namespace Azure.Iot.ModelsRepository.Fetchers
                     cancellationToken.ThrowIfCancellationRequested();
 
                     string tryContentPath = work.Dequeue();
-                    ResolverEventSource.Instance.FetchingModelContent(tryContentPath);
+                    ModelsRepoEventSource.Instance.FetchingModelContent(tryContentPath);
 
                     try
                     {
@@ -82,7 +82,7 @@ namespace Azure.Iot.ModelsRepository.Fetchers
                     cancellationToken.ThrowIfCancellationRequested();
 
                     string tryContentPath = work.Dequeue();
-                    ResolverEventSource.Instance.FetchingModelContent(tryContentPath);
+                    ModelsRepoEventSource.Instance.FetchingModelContent(tryContentPath);
 
                     try
                     {
@@ -211,7 +211,7 @@ namespace Azure.Iot.ModelsRepository.Fetchers
             return root.GetRawText();
         }
 
-        private static HttpPipeline CreatePipeline(ResolverClientOptions options)
+        private static HttpPipeline CreatePipeline(ModelsRepoClientOptions options)
         {
             return HttpPipelineBuilder.Build(options);
         }
