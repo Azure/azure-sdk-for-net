@@ -35,7 +35,7 @@ namespace Azure.Core
         /// <summary>
         ///  Creates a new JsonData object which represents an JSON object with no properties.
         /// </summary>
-        public JsonData() : this(System.Array.Empty<KeyValuePair<string, JsonData>>())
+        public JsonData() : this(Array.Empty<KeyValuePair<string, JsonData>>())
         {
         }
 
@@ -242,8 +242,11 @@ namespace Azure.Core
             return JsonSerializer.Deserialize<T>(ToString(), options);
         }
 
-        /// <inheritdoc />
-        public override string ToString()
+        /// <summary>
+        /// Returns a stringified version of the JSON for this value.
+        /// </summary>
+        /// <returns>Returns a stringified version of the JSON for this value.</returns>
+        public string ToJsonString()
         {
             using var memoryStream = new MemoryStream();
             using (var writer = new Utf8JsonWriter(memoryStream))
@@ -726,6 +729,68 @@ namespace Azure.Core
         public static implicit operator JsonData(bool? value) => new JsonData(value);
 
         /// <summary>
+        /// Returns true if a <see cref="JsonData"/> has the same value as a given string,
+        /// and false otherwise.
+        /// </summary>
+        /// <param name="left">The <see cref="JsonData"/> to compare.</param>
+        /// <param name="right">The <see cref="string"/> to compare.</param>
+        /// <returns>True if the given JsonData represents the given string, and false otherwise.</returns>
+        public static bool operator ==(JsonData? left, string? right)
+        {
+            if (left is null && right is null)
+            {
+                return true;
+            }
+
+            if (left is null || right is null)
+            {
+                return false;
+            }
+
+            return left.Kind == JsonValueKind.String && ((string?) left._value) == right;
+        }
+
+        /// <summary>
+        /// Returns false if a <see cref="JsonData"/> has the same value as a given string,
+        /// and true otherwise.
+        /// </summary>
+        /// <param name="left">The <see cref="JsonData"/> to compare.</param>
+        /// <param name="right">The <see cref="string"/> to compare.</param>
+        /// <returns>False if the given JsonData represents the given string, and false otherwise</returns>
+        public static bool operator !=(JsonData? left, string? right) => !(left == right);
+
+        /// <summary>
+        /// Returns true if a <see cref="JsonData"/> has the same value as a given string,
+        /// and false otherwise.
+        /// </summary>
+        /// <param name="left">The <see cref="string"/> to compare.</param>
+        /// <param name="right">The <see cref="JsonData"/> to compare.</param>
+        /// <returns>True if the given JsonData represents the given string, and false otherwise.</returns>
+        public static bool operator ==(string? left, JsonData? right)
+        {
+            if (left is null && right is null)
+            {
+                return true;
+            }
+
+            if (left is null || right is null)
+            {
+                return false;
+            }
+
+            return right.Kind == JsonValueKind.String && ((string?)right._value) == left;
+        }
+
+        /// <summary>
+        /// Returns false if a <see cref="JsonData"/> has the same value as a given string,
+        /// and true otherwise.
+        /// </summary>
+        /// <param name="left">The <see cref="string"/> to compare.</param>
+        /// <param name="right">The <see cref="JsonData"/> to compare.</param>
+        /// <returns>False if the given JsonData represents the given string, and false otherwise</returns>
+        public static bool operator !=(string? left, JsonData? right) => !(left == right);
+
+        /// <summary>
         /// Parses text representing a single JSON value into a <see cref="JsonData"/>.
         /// </summary>
         /// <param name="json">A string representing a JSON value.</param>
@@ -841,6 +906,39 @@ namespace Azure.Core
             WriteTo(writer);
             await writer.FlushAsync(cancellationToken).ConfigureAwait(false);
             return writer.BytesCommitted;
+        }
+
+        /// <inheritdoc />
+        public override string ToString()
+        {
+            if (_kind == JsonValueKind.Object || _kind == JsonValueKind.Array)
+            {
+                return ToJsonString();
+            }
+
+            return (_value ?? "<null>").ToString();
+        }
+
+        /// <inheritdoc />
+        public override bool Equals(object? obj)
+        {
+            if (obj is string)
+            {
+                return this == ((string?)obj);
+            }
+
+            return base.Equals(obj);
+        }
+
+        /// <inheritdoc />
+        public override int GetHashCode()
+        {
+            if (_kind == JsonValueKind.String)
+            {
+                return ((string?)_value)!.GetHashCode();
+            }
+
+            return base.GetHashCode();
         }
 
         private string? GetString() => (string?)EnsureValue();
@@ -1017,7 +1115,7 @@ namespace Azure.Core
 
         private string DebuggerDisplay
         {
-            get => $"Kind: {_kind}, Value: {ToString()}";
+            get => $"Kind: {_kind}, JSON: {ToJsonString()}";
         }
 
         private struct Number

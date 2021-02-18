@@ -36,7 +36,6 @@ namespace DemoApp
             {
                 foreach (var document in response.Body["documents"].Items)
                 {
-                    // NOTE(ellismg): There are quotes around these values in the output because ToString() JSON Serializes the value.
                     Console.WriteLine($"{document["id"]} is {document["sentiment"]}");
                 }
             }
@@ -72,9 +71,7 @@ namespace DemoApp
                 {
                     foreach (var entity in document["entities"].Items)
                     {
-                        // NOTE(ellismg): The cast here is subtle, note that ".ToString()" would do the wrong thing
-                        // and wrap the value in quotes (since it returns a stringified JSON document).
-                        switch ((string)entity["category"])
+                        switch (entity["category"].ToString())
                         {
                             case "Person":
                             case "Location":
@@ -116,8 +113,7 @@ namespace DemoApp
                 {
                     foreach (var entity in document["entities"].Items)
                     {
-                        // NOTE(ellismg): Would be nice if we overloaded == against a string here.
-                        if ((string)entity["dataSource"] == "Wikipedia")
+                        if (entity["dataSource"] == "Wikipedia")
                         {
                             Console.WriteLine($"Learn more about {entity["text"]} on ${entity["dataSource"]} ({entity["url"]})");
                         }

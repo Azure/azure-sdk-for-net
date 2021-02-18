@@ -24,7 +24,7 @@ namespace Azure.Core.Tests
         {
             var jsonData = JsonData.FromString("\"string\"");
 
-            Assert.AreEqual("\"string\"", jsonData.ToString());
+            Assert.AreEqual("\"string\"", jsonData.ToJsonString());
         }
 
         [Test]
