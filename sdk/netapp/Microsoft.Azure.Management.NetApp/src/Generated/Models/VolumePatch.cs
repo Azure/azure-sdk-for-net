@@ -159,6 +159,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
             {
                 throw new ValidationException(ValidationRules.InclusiveMinimum, "UsageThreshold", 107374182400);
             }
+
             if (ThroughputMibps != null)
             {
                 if (ThroughputMibps > 4500)

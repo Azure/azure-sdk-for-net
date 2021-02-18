@@ -13,10 +13,13 @@
     <PackageTags>MicrosoftAzure Management;NetApp</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        Version 1.9.0 relates to NetApp Files (ANF) 2020-09-01.
-          - Added Security operators to ActiveDirectory
-          - smbEncryption, smbContinuouslyAvailable to Volume
-					- Added ListNextLink.GetAllResourcesByPollingNextLink() to query large result sets for volumes
+        Version 1.10.0 relates to NetApp Files (ANF) 2020-11-01.
+          - Added ldapOverTLS to ActiveDirectory
+          - Added failureReason to Backup and backup patch  
+          - Added encryption and systemData to NetAppAccount
+          - Added encryption and 
+          - Added encryptionKeySource to volume
+          
         Azure NetApp Files:
           Provides the capability to create multiple file system volumes through Microsoft Azure.
           Volumes reside within an account pool, a container representing the total data allocation available. A typical usage might be:
