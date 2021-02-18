@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
     /// <summary>
     /// REST API for managing Redis Enterprise resources in Azure.
     /// </summary>
-    public partial class redisenterpriseClient : ServiceClient<redisenterpriseClient>, IredisenterpriseClient, IAzureClient
+    public partial class RedisEnterpriseManagementClient : ServiceClient<RedisEnterpriseManagementClient>, IRedisEnterpriseManagementClient, IAzureClient
     {
         /// <summary>
         /// The base URI of the service.
@@ -47,14 +47,12 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// Gets subscription credentials which uniquely identify the Microsoft Azure
-        /// subscription. The subscription ID forms part of the URI for every service
-        /// call.
+        /// The ID of the target subscription.
         /// </summary>
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Client Api Version.
+        /// The API version to use for this operation.
         /// </summary>
         public string ApiVersion { get; private set; }
 
@@ -82,9 +80,9 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         public virtual IOperations Operations { get; private set; }
 
         /// <summary>
-        /// Gets the IGetOperations.
+        /// Gets the IOperationsStatus.
         /// </summary>
-        public virtual IGetOperations Get { get; private set; }
+        public virtual IOperationsStatus OperationsStatus { get; private set; }
 
         /// <summary>
         /// Gets the IRedisEnterpriseOperations.
@@ -107,31 +105,31 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         public virtual IPrivateLinkResourcesOperations PrivateLinkResources { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the redisenterpriseClient class.
+        /// Initializes a new instance of the RedisEnterpriseManagementClient class.
         /// </summary>
         /// <param name='httpClient'>
         /// HttpClient to be used
         /// </param>
         /// <param name='disposeHttpClient'>
-        /// True: will dispose the provided httpClient on calling redisenterpriseClient.Dispose(). False: will not dispose provided httpClient</param>
-        protected redisenterpriseClient(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
+        /// True: will dispose the provided httpClient on calling RedisEnterpriseManagementClient.Dispose(). False: will not dispose provided httpClient</param>
+        protected RedisEnterpriseManagementClient(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
         {
             Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the redisenterpriseClient class.
+        /// Initializes a new instance of the RedisEnterpriseManagementClient class.
         /// </summary>
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        protected redisenterpriseClient(params DelegatingHandler[] handlers) : base(handlers)
+        protected RedisEnterpriseManagementClient(params DelegatingHandler[] handlers) : base(handlers)
         {
             Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the redisenterpriseClient class.
+        /// Initializes a new instance of the RedisEnterpriseManagementClient class.
         /// </summary>
         /// <param name='rootHandler'>
         /// Optional. The http client handler used to handle http transport.
@@ -139,13 +137,13 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        protected redisenterpriseClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
+        protected RedisEnterpriseManagementClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
         {
             Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the redisenterpriseClient class.
+        /// Initializes a new instance of the RedisEnterpriseManagementClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -156,7 +154,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        protected redisenterpriseClient(System.Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
+        protected RedisEnterpriseManagementClient(System.Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
@@ -166,7 +164,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         }
 
         /// <summary>
-        /// Initializes a new instance of the redisenterpriseClient class.
+        /// Initializes a new instance of the RedisEnterpriseManagementClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -180,7 +178,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        protected redisenterpriseClient(System.Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        protected RedisEnterpriseManagementClient(System.Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (baseUri == null)
             {
@@ -190,7 +188,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         }
 
         /// <summary>
-        /// Initializes a new instance of the redisenterpriseClient class.
+        /// Initializes a new instance of the RedisEnterpriseManagementClient class.
         /// </summary>
         /// <param name='credentials'>
         /// Required. Credentials needed for the client to connect to Azure.
@@ -201,7 +199,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public redisenterpriseClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        public RedisEnterpriseManagementClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (credentials == null)
             {
@@ -215,7 +213,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         }
 
         /// <summary>
-        /// Initializes a new instance of the redisenterpriseClient class.
+        /// Initializes a new instance of the RedisEnterpriseManagementClient class.
         /// </summary>
         /// <param name='credentials'>
         /// Required. Credentials needed for the client to connect to Azure.
@@ -224,11 +222,11 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// HttpClient to be used
         /// </param>
         /// <param name='disposeHttpClient'>
-        /// True: will dispose the provided httpClient on calling redisenterpriseClient.Dispose(). False: will not dispose provided httpClient</param>
+        /// True: will dispose the provided httpClient on calling RedisEnterpriseManagementClient.Dispose(). False: will not dispose provided httpClient</param>
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public redisenterpriseClient(ServiceClientCredentials credentials, HttpClient httpClient, bool disposeHttpClient) : this(httpClient, disposeHttpClient)
+        public RedisEnterpriseManagementClient(ServiceClientCredentials credentials, HttpClient httpClient, bool disposeHttpClient) : this(httpClient, disposeHttpClient)
         {
             if (credentials == null)
             {
@@ -242,7 +240,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         }
 
         /// <summary>
-        /// Initializes a new instance of the redisenterpriseClient class.
+        /// Initializes a new instance of the RedisEnterpriseManagementClient class.
         /// </summary>
         /// <param name='credentials'>
         /// Required. Credentials needed for the client to connect to Azure.
@@ -256,7 +254,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public redisenterpriseClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        public RedisEnterpriseManagementClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (credentials == null)
             {
@@ -270,7 +268,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         }
 
         /// <summary>
-        /// Initializes a new instance of the redisenterpriseClient class.
+        /// Initializes a new instance of the RedisEnterpriseManagementClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -284,7 +282,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public redisenterpriseClient(System.Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        public RedisEnterpriseManagementClient(System.Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
@@ -303,7 +301,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         }
 
         /// <summary>
-        /// Initializes a new instance of the redisenterpriseClient class.
+        /// Initializes a new instance of the RedisEnterpriseManagementClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -320,7 +318,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public redisenterpriseClient(System.Uri baseUri, ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        public RedisEnterpriseManagementClient(System.Uri baseUri, ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (baseUri == null)
             {
@@ -348,13 +346,13 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         private void Initialize()
         {
             Operations = new Operations(this);
-            Get = new GetOperations(this);
+            OperationsStatus = new OperationsStatus(this);
             RedisEnterprise = new RedisEnterpriseOperations(this);
             Databases = new DatabasesOperations(this);
             PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             PrivateLinkResources = new PrivateLinkResourcesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2020-10-01-preview";
+            ApiVersion = "2021-03-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

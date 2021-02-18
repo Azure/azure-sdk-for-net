@@ -17,9 +17,9 @@ namespace Microsoft.Azure.Management.RedisEnterprise
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for GetOperations.
+    /// Extension methods for OperationsStatus.
     /// </summary>
-    public static partial class GetOperationsExtensions
+    public static partial class OperationsStatusExtensions
     {
             /// <summary>
             /// Gets the status of operation.
@@ -33,9 +33,9 @@ namespace Microsoft.Azure.Management.RedisEnterprise
             /// <param name='operationId'>
             /// The operation's unique identifier.
             /// </param>
-            public static OperationStatus OperationStatusMethod(this IGetOperations operations, string location, string operationId)
+            public static OperationStatus Get(this IOperationsStatus operations, string location, string operationId)
             {
-                return operations.OperationStatusMethodAsync(location, operationId).GetAwaiter().GetResult();
+                return operations.GetAsync(location, operationId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -53,9 +53,9 @@ namespace Microsoft.Azure.Management.RedisEnterprise
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationStatus> OperationStatusMethodAsync(this IGetOperations operations, string location, string operationId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> GetAsync(this IOperationsStatus operations, string location, string operationId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.OperationStatusMethodWithHttpMessagesAsync(location, operationId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(location, operationId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
