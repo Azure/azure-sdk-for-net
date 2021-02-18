@@ -16,29 +16,29 @@ namespace Azure.Iot.ModelsRepository.Tests
             string remoteUriStr = "https://dtmi.com";
             Uri remoteUri = new Uri(remoteUriStr);
 
-            ResolverClientOptions options = new ResolverClientOptions();
+            ModelsRepoClientOptions options = new ModelsRepoClientOptions();
 
-            Assert.AreEqual(new Uri(ResolverClient.DefaultModelsRepository), new ResolverClient().RepositoryUri);
-            Assert.AreEqual($"{ResolverClient.DefaultModelsRepository}/", new ResolverClient().RepositoryUri.AbsoluteUri);
-            Assert.AreEqual(new Uri(ResolverClient.DefaultModelsRepository), new ResolverClient(options).RepositoryUri);
+            Assert.AreEqual(new Uri(ModelsRepoClient.DefaultModelsRepository), new ModelsRepoClient().RepositoryUri);
+            Assert.AreEqual($"{ModelsRepoClient.DefaultModelsRepository}/", new ModelsRepoClient().RepositoryUri.AbsoluteUri);
+            Assert.AreEqual(new Uri(ModelsRepoClient.DefaultModelsRepository), new ModelsRepoClient(options).RepositoryUri);
 
-            Assert.AreEqual(remoteUri, new ResolverClient(remoteUri).RepositoryUri);
-            Assert.AreEqual(remoteUri, new ResolverClient(remoteUri, options).RepositoryUri);
+            Assert.AreEqual(remoteUri, new ModelsRepoClient(remoteUri).RepositoryUri);
+            Assert.AreEqual(remoteUri, new ModelsRepoClient(remoteUri, options).RepositoryUri);
 
-            Assert.AreEqual(remoteUri, new ResolverClient(remoteUriStr).RepositoryUri);
-            Assert.AreEqual(remoteUri, new ResolverClient(remoteUriStr, options).RepositoryUri);
+            Assert.AreEqual(remoteUri, new ModelsRepoClient(remoteUriStr).RepositoryUri);
+            Assert.AreEqual(remoteUri, new ModelsRepoClient(remoteUriStr, options).RepositoryUri);
 
             string localUriStr = TestLocalModelRepository;
             Uri localUri = new Uri(localUriStr);
 
-            Assert.AreEqual(localUri, new ResolverClient(localUri).RepositoryUri);
+            Assert.AreEqual(localUri, new ModelsRepoClient(localUri).RepositoryUri);
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 localUriStr = localUriStr.Replace("\\", "/");
             }
 
-            Assert.AreEqual(localUriStr, new ResolverClient(localUri).RepositoryUri.AbsolutePath);
+            Assert.AreEqual(localUriStr, new ModelsRepoClient(localUri).RepositoryUri.AbsolutePath);
         }
 
         [TestCase("dtmi:com:example:Thermostat;1", true)]
@@ -50,7 +50,7 @@ namespace Azure.Iot.ModelsRepository.Tests
         [TestCase(null, false)]
         public void ClientIsValidDtmi(string dtmi, bool expected)
         {
-            Assert.AreEqual(expected, ResolverClient.IsValidDtmi(dtmi));
+            Assert.AreEqual(expected, ModelsRepoClient.IsValidDtmi(dtmi));
         }
 
         [Test]
@@ -58,8 +58,8 @@ namespace Azure.Iot.ModelsRepository.Tests
         {
             DependencyResolutionOption defaultResolutionOption = DependencyResolutionOption.Enabled;
 
-            ResolverClientOptions customOptions =
-                new ResolverClientOptions(resolutionOption: DependencyResolutionOption.TryFromExpanded);
+            ModelsRepoClientOptions customOptions =
+                new ModelsRepoClientOptions(resolutionOption: DependencyResolutionOption.TryFromExpanded);
 
             int maxRetries = 10;
             customOptions.Retry.MaxRetries = maxRetries;
@@ -67,10 +67,10 @@ namespace Azure.Iot.ModelsRepository.Tests
             string repositoryUriString = "https://localhost/myregistry/";
             Uri repositoryUri = new Uri(repositoryUriString);
 
-            ResolverClient defaultClient = new ResolverClient(repositoryUri);
+            ModelsRepoClient defaultClient = new ModelsRepoClient(repositoryUri);
             Assert.AreEqual(defaultResolutionOption, defaultClient.ClientOptions.DependencyResolution);
 
-            ResolverClient customClient = new ResolverClient(repositoryUriString, customOptions);
+            ModelsRepoClient customClient = new ModelsRepoClient(repositoryUriString, customOptions);
             Assert.AreEqual(DependencyResolutionOption.TryFromExpanded, customClient.ClientOptions.DependencyResolution);
             Assert.AreEqual(maxRetries, customClient.ClientOptions.Retry.MaxRetries);
         }
@@ -78,7 +78,7 @@ namespace Azure.Iot.ModelsRepository.Tests
         [Test]
         public void EvaluateEventSourceKPIs()
         {
-            Type eventSourceType = typeof(ResolverEventSource);
+            Type eventSourceType = typeof(ModelsRepoEventSource);
 
             Assert.NotNull(eventSourceType);
             Assert.AreEqual(ModelRepositoryConstants.ModelRepositoryEventSourceName, EventSource.GetName(eventSourceType));

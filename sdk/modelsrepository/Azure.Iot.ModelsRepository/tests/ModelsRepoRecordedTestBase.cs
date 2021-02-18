@@ -26,21 +26,21 @@ namespace Azure.Iot.ModelsRepository.Tests
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
         }
 
-        protected ResolverClient GetClient(ModelsRepoTestBase.ClientType clientType, ResolverClientOptions options = null)
+        protected ModelsRepoClient GetClient(ModelsRepoTestBase.ClientType clientType, ModelsRepoClientOptions options = null)
         {
             if (options == null)
             {
-                options = new ResolverClientOptions();
+                options = new ModelsRepoClientOptions();
             }
 
             return
                 clientType == ModelsRepoTestBase.ClientType.Local
                 ? InstrumentClient(
-                    new ResolverClient(
+                    new ModelsRepoClient(
                         new Uri(ModelsRepoTestBase.TestLocalModelRepository),
                         InstrumentClientOptions(options)))
                 : InstrumentClient(
-                    new ResolverClient(
+                    new ModelsRepoClient(
                         new Uri(ModelsRepoTestBase.TestRemoteModelRepository),
                         InstrumentClientOptions(options)));
         }

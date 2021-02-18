@@ -8,7 +8,7 @@ using System.Diagnostics.Tracing;
 namespace Azure.Iot.ModelsRepository
 {
     [EventSource(Name = EventSourceName)]
-    internal sealed class ResolverEventSource : EventSource
+    internal sealed class ModelsRepoEventSource : EventSource
     {
         private const string EventSourceName = ModelRepositoryConstants.ModelRepositoryEventSourceName;
 
@@ -26,9 +26,9 @@ namespace Azure.Iot.ModelsRepository
         private const int ErrorFetchingModelContentEventId = 4004;
         private const int IncorrectDtmiCasingEventId = 4006;
 
-        public static ResolverEventSource Instance { get; } = new ResolverEventSource();
+        public static ModelsRepoEventSource Instance { get; } = new ModelsRepoEventSource();
 
-        private ResolverEventSource()
+        private ModelsRepoEventSource()
             : base(EventSourceName,
                   EventSourceSettings.Default,
                   AzureEventSourceListener.TraitName,

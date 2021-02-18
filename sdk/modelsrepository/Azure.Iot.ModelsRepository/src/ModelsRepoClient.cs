@@ -12,80 +12,78 @@ using Azure.Core.Pipeline;
 namespace Azure.Iot.ModelsRepository
 {
     /// <summary>
-    /// The <c>ResolverClient</c> class supports DTDL model resolution providing functionality to
+    /// The <c>ModelsRepoClient</c> class supports DTDL model resolution providing functionality to
     /// resolve models by retrieving model definitions and their dependencies.
     /// </summary>
-    public class ResolverClient
+    public class ModelsRepoClient
     {
         private readonly RepositoryHandler _repositoryHandler;
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ResolverClientOptions _clientOptions;
-        private readonly Uri _repositoryUri;
 
         /// <summary>
-        /// Initializes the <c>ResolverClient</c> with default client options while pointing to
+        /// Initializes the <c>ModelsRepoClient</c> with default client options while pointing to
         /// the Azure IoT Plug and Play Model repository https://devicemodels.azure.com for resolution.
         /// </summary>
-        public ResolverClient() : this(new Uri(DefaultModelsRepository), new ResolverClientOptions()) { }
+        public ModelsRepoClient() : this(new Uri(DefaultModelsRepository), new ModelsRepoClientOptions()) { }
 
         /// <summary>
-        /// Initializes the <c>ResolverClient</c> with default client options while pointing to
+        /// Initializes the <c>ModelsRepoClient</c> with default client options while pointing to
         /// a custom <paramref name="repositoryUri"/> for resolution.
         /// </summary>
         /// <param name="repositoryUri">
         /// The model repository <c>Uri</c> value. This can be a remote endpoint or local directory.
         /// </param>
-        public ResolverClient(Uri repositoryUri) : this(repositoryUri, new ResolverClientOptions()) { }
+        public ModelsRepoClient(Uri repositoryUri) : this(repositoryUri, new ModelsRepoClientOptions()) { }
 
         /// <summary>
-        /// Initializes the <c>ResolverClient</c> with custom client <paramref name="options"/> while pointing to
+        /// Initializes the <c>ModelsRepoClient</c> with custom client <paramref name="options"/> while pointing to
         /// the Azure IoT Plug and Play Model repository https://devicemodels.azure.com for resolution.
         /// </summary>
         /// <param name="options">
-        /// <c>ResolverClientOptions</c> to configure resolution and client behavior.
+        /// <c>ModelsRepoClientOptions</c> to configure resolution and client behavior.
         /// </param>
-        public ResolverClient(ResolverClientOptions options) : this(new Uri(DefaultModelsRepository), options) { }
+        public ModelsRepoClient(ModelsRepoClientOptions options) : this(new Uri(DefaultModelsRepository), options) { }
 
         /// <summary>
-        /// Initializes the <c>ResolverClient</c> with default client options while pointing to
+        /// Initializes the <c>ModelsRepoClient</c> with default client options while pointing to
         /// a custom <paramref name="repositoryUriStr"/> for resolution.
         /// </summary>
         /// <param name="repositoryUriStr">
         /// The model repository <c>Uri</c> in string format. This can be a remote endpoint or local directory.
         /// </param>
-        public ResolverClient(string repositoryUriStr) : this(repositoryUriStr, new ResolverClientOptions()) { }
+        public ModelsRepoClient(string repositoryUriStr) : this(repositoryUriStr, new ModelsRepoClientOptions()) { }
 
         /// <summary>
-        /// Initializes the <c>ResolverClient</c> with custom client <paramref name="options"/> while pointing to
+        /// Initializes the <c>ModelsRepoClient</c> with custom client <paramref name="options"/> while pointing to
         /// a custom <paramref name="repositoryUriStr"/> for resolution.
         /// </summary>
         /// <param name="repositoryUriStr">
         /// The model repository <c>Uri</c> in string format. This can be a remote endpoint or local directory.
         /// </param>
         /// <param name="options">
-        /// <c>ResolverClientOptions</c> to configure resolution and client behavior.
+        /// <c>ModelsRepoClientOptions</c> to configure resolution and client behavior.
         /// </param>
-        public ResolverClient(string repositoryUriStr, ResolverClientOptions options)
+        public ModelsRepoClient(string repositoryUriStr, ModelsRepoClientOptions options)
             : this(new Uri(repositoryUriStr), options) { }
 
         /// <summary>
-        /// Initializes the <c>ResolverClient</c> with custom client <paramref name="options"/> while pointing to
+        /// Initializes the <c>ModelsRepoClient</c> with custom client <paramref name="options"/> while pointing to
         /// a custom <paramref name="repositoryUri"/> for resolution.
         /// </summary>
         /// <param name="repositoryUri">
         /// The model repository <c>Uri</c>. This can be a remote endpoint or local directory.
         /// </param>
         /// <param name="options">
-        /// <c>ResolverClientOptions</c> to configure resolution and client behavior.
+        /// <c>ModelsRepoClientOptions</c> to configure resolution and client behavior.
         /// </param>
-        public ResolverClient(Uri repositoryUri, ResolverClientOptions options)
+        public ModelsRepoClient(Uri repositoryUri, ModelsRepoClientOptions options)
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            _clientOptions = options;
+            ClientOptions = options;
+            RepositoryUri = repositoryUri;
             _clientDiagnostics = new ClientDiagnostics(options);
-            _repositoryUri = repositoryUri;
-            _repositoryHandler = new RepositoryHandler(_repositoryUri, _clientDiagnostics, _clientOptions);
+            _repositoryHandler = new RepositoryHandler(RepositoryUri, _clientDiagnostics, ClientOptions);
         }
 
         /// <summary>
@@ -104,7 +102,7 @@ namespace Azure.Iot.ModelsRepository
             Justification = "<Pending>")]
         public virtual async Task<IDictionary<string, string>> ResolveAsync(string dtmi, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ResolverClient)}.{nameof(Resolve)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ModelsRepoClient)}.{nameof(Resolve)}");
             scope.Start();
             try
             {
@@ -133,7 +131,7 @@ namespace Azure.Iot.ModelsRepository
             Justification = "<Pending>")]
         public virtual IDictionary<string, string> Resolve(string dtmi, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ResolverClient)}.{nameof(Resolve)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ModelsRepoClient)}.{nameof(Resolve)}");
             scope.Start();
 
             try
@@ -160,7 +158,7 @@ namespace Azure.Iot.ModelsRepository
         [SuppressMessage("Usage", "AZC0015:Unexpected client method return type.", Justification = "<Pending>")]
         public virtual async Task<IDictionary<string, string>> ResolveAsync(IEnumerable<string> dtmis, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ResolverClient)}.{nameof(Resolve)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ModelsRepoClient)}.{nameof(Resolve)}");
             scope.Start();
 
             try
@@ -187,7 +185,7 @@ namespace Azure.Iot.ModelsRepository
         [SuppressMessage("Usage", "AZC0015:Unexpected client method return type.", Justification = "<Pending>")]
         public virtual IDictionary<string, string> Resolve(IEnumerable<string> dtmis, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ResolverClient)}.{nameof(Resolve)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ModelsRepoClient)}.{nameof(Resolve)}");
             scope.Start();
 
             try
@@ -207,14 +205,14 @@ namespace Azure.Iot.ModelsRepository
         public static bool IsValidDtmi(string dtmi) => DtmiConventions.IsDtmi(dtmi);
 
         /// <summary>
-        /// Gets the <c>Uri</c> associated with the ResolverClient instance.
+        /// Gets the <c>Uri</c> associated with the ModelsRepoClient instance.
         /// </summary>
-        public Uri RepositoryUri => _repositoryUri;
+        public Uri RepositoryUri { get; }
 
         /// <summary>
-        /// Gets the <c>ResolverClientOptions</c> associated with the ResolverClient instance.
+        /// Gets the <c>ModelsRepoClientOptions</c> associated with the ModelsRepoClient instance.
         /// </summary>
-        public ResolverClientOptions ClientOptions => _clientOptions;
+        public ModelsRepoClientOptions ClientOptions { get; }
 
         /// <summary>
         /// Azure Device Models Repository used by default.
