@@ -93,6 +93,46 @@
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-12-12",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 18 Feb 2021 01:28:57 GMT",
+        "MS-CV": "FiXKVatplk\u002B8CMMtnrIWEw.0",
+        "Request-Context": "appId=",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "02sItYAAAAAASCNdi4ZT4Rp89A1IinKKjV1NURURHRTA4MTAAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "x-ms-client-request-id": "09d0a92bcf8a648a7167dd20a484dcc4",
+        "X-Processing-Time": "56ms"
+      },
+      "ResponseBody": {
+        "expiresOn": "2021-02-18T01:28:58.385042\u002B00:00",
+        "turnServers": [
+          {
+            "urls": "Sanitized",
+            "username": "Sanitized",
+            "credential": "Sanitized"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://sanitized.communication.azure.com/identities/sanitized/:revokeAccessTokens?api-version=2021-03-07",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Date": "Thu, 18 Feb 2021 01:28:58 GMT",
+        "User-Agent": [
+          "azsdk-net-Communication.Identity/1.0.0-alpha.20210217.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.21313 )"
+        ],
+        "x-ms-client-request-id": "9914a8c9df07d639785cbd7737142647",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
       "StatusCode": 204,
       "ResponseHeaders": {
         "api-supported-versions": "2020-07-20-preview2, 2021-03-07",
@@ -117,7 +157,7 @@
           "azsdk-net-Communication.Identity/1.0.0-alpha.20210218.1",
           "(.NET 5.0.3; Microsoft Windows 10.0.18363)"
         ],
-        "x-ms-client-request-id": "9914a8c9df07d639785cbd7737142647",
+        "x-ms-client-request-id": "8f2ebbb3761cfad4a1ef035e494baab7",
         "x-ms-content-sha256": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
