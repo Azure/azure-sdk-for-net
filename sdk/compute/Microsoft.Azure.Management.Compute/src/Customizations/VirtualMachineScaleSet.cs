@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// set</param>
         /// <param name="extendedLocation">The extended location of the Virtual
         /// Machine Scale Set.</param>
-        public VirtualMachineScaleSet(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), Plan plan = default(Plan), UpgradePolicy upgradePolicy = default(UpgradePolicy), AutomaticRepairsPolicy automaticRepairsPolicy = default(AutomaticRepairsPolicy), VirtualMachineScaleSetVMProfile virtualMachineProfile = default(VirtualMachineScaleSetVMProfile), string provisioningState = default(string), bool? overprovision = default(bool?), bool? doNotRunExtensionsOnOverprovisionedVMs = default(bool?), string uniqueId = default(string), bool? singlePlacementGroup = default(bool?), bool? zoneBalance = default(bool?), int? platformFaultDomainCount = default(int?), SubResource proximityPlacementGroup = default(SubResource), SubResource hostGroup = default(SubResource), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), ScaleInPolicy scaleInPolicy = default(ScaleInPolicy), VirtualMachineScaleSetIdentity identity, IList<string> zones, ExtendedLocation extendedLocation)
+        public VirtualMachineScaleSet(string location, string id, string name, string type, IDictionary<string, string> tags, Sku sku, Plan plan, UpgradePolicy upgradePolicy, AutomaticRepairsPolicy automaticRepairsPolicy, VirtualMachineScaleSetVMProfile virtualMachineProfile, string provisioningState, bool? overprovision, bool? doNotRunExtensionsOnOverprovisionedVMs, string uniqueId, bool? singlePlacementGroup, bool? zoneBalance, int? platformFaultDomainCount, SubResource proximityPlacementGroup = default(SubResource), SubResource hostGroup, AdditionalCapabilities additionalCapabilities, ScaleInPolicy scaleInPolicy, VirtualMachineScaleSetIdentity identity, IList<string> zones, ExtendedLocation extendedLocation)
             : base(location, id, name, type, tags)
         {
             Sku = sku;
@@ -107,7 +107,6 @@ namespace Microsoft.Azure.Management.Compute.Models
             HostGroup = hostGroup;
             AdditionalCapabilities = additionalCapabilities;
             ScaleInPolicy = scaleInPolicy;
-            OrchestrationMode = orchestrationMode;
             Identity = identity;
             Zones = zones;
             ExtendedLocation = extendedLocation;
@@ -179,7 +178,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="zones">The virtual machine scale set zones. NOTE:
         /// Availability zones can only be set when you create the scale
         /// set</param>
-        public VirtualMachineScaleSet(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), Plan plan = default(Plan), UpgradePolicy upgradePolicy = default(UpgradePolicy), AutomaticRepairsPolicy automaticRepairsPolicy = default(AutomaticRepairsPolicy), VirtualMachineScaleSetVMProfile virtualMachineProfile = default(VirtualMachineScaleSetVMProfile), string provisioningState = default(string), bool? overprovision = default(bool?), bool? doNotRunExtensionsOnOverprovisionedVMs = default(bool?), string uniqueId = default(string), bool? singlePlacementGroup = default(bool?), bool? zoneBalance = default(bool?), int? platformFaultDomainCount = default(int?), SubResource proximityPlacementGroup = default(SubResource), SubResource hostGroup = default(SubResource), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), ScaleInPolicy scaleInPolicy = default(ScaleInPolicy), VirtualMachineScaleSetIdentity identity, IList<string> zones)
+        public VirtualMachineScaleSet(string location, string id, string name, string type, IDictionary<string, string> tags, Sku sku, Plan plan, UpgradePolicy upgradePolicy, AutomaticRepairsPolicy automaticRepairsPolicy, VirtualMachineScaleSetVMProfile virtualMachineProfile, string provisioningState, bool? overprovision, bool? doNotRunExtensionsOnOverprovisionedVMs, string uniqueId, bool? singlePlacementGroup, bool? zoneBalance, int? platformFaultDomainCount, SubResource proximityPlacementGroup, SubResource hostGroup, AdditionalCapabilities additionalCapabilities, ScaleInPolicy scaleInPolicy, VirtualMachineScaleSetIdentity identity, IList<string> zones)
             : base(location, id, name, type, tags)
         {
             Sku = sku;
@@ -198,7 +197,6 @@ namespace Microsoft.Azure.Management.Compute.Models
             HostGroup = hostGroup;
             AdditionalCapabilities = additionalCapabilities;
             ScaleInPolicy = scaleInPolicy;
-            OrchestrationMode = orchestrationMode;
             Identity = identity;
             Zones = zones;
             CustomInit();
@@ -266,7 +264,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 'Uniform', 'Flexible'</param>
         /// <param name="identity">The identity of the virtual machine scale
         /// set, if configured.</param>
-        public VirtualMachineScaleSet(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), Plan plan = default(Plan), UpgradePolicy upgradePolicy = default(UpgradePolicy), AutomaticRepairsPolicy automaticRepairsPolicy = default(AutomaticRepairsPolicy), VirtualMachineScaleSetVMProfile virtualMachineProfile = default(VirtualMachineScaleSetVMProfile), string provisioningState = default(string), bool? overprovision = default(bool?), bool? doNotRunExtensionsOnOverprovisionedVMs = default(bool?), string uniqueId = default(string), bool? singlePlacementGroup = default(bool?), bool? zoneBalance = default(bool?), int? platformFaultDomainCount = default(int?), SubResource proximityPlacementGroup = default(SubResource), SubResource hostGroup = default(SubResource), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), ScaleInPolicy scaleInPolicy = default(ScaleInPolicy), VirtualMachineScaleSetIdentity identity)
+        public VirtualMachineScaleSet(string location, string id, string name, string type, IDictionary<string, string> tags, Sku sku, Plan plan, UpgradePolicy upgradePolicy, AutomaticRepairsPolicy automaticRepairsPolicy, VirtualMachineScaleSetVMProfile virtualMachineProfile, string provisioningState, bool? overprovision, bool? doNotRunExtensionsOnOverprovisionedVMs, string uniqueId, bool? singlePlacementGroup, bool? zoneBalance, int? platformFaultDomainCount, SubResource proximityPlacementGroup, SubResource hostGroup, AdditionalCapabilities additionalCapabilities, ScaleInPolicy scaleInPolicy, VirtualMachineScaleSetIdentity identity)
             : base(location, id, name, type, tags)
         {
             Sku = sku;
@@ -285,7 +283,6 @@ namespace Microsoft.Azure.Management.Compute.Models
             HostGroup = hostGroup;
             AdditionalCapabilities = additionalCapabilities;
             ScaleInPolicy = scaleInPolicy;
-            OrchestrationMode = orchestrationMode;
             Identity = identity;
             CustomInit();
         }
