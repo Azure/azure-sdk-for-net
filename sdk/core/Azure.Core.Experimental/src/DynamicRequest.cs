@@ -18,7 +18,7 @@ namespace Azure.Core
     /// <summary>
     /// Represents an HTTP request with <see cref="JsonData"/> content.
     /// </summary>
-    [DebuggerDisplay("Body: {Body}")]
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class DynamicRequest : Request
     {
         private Request Request { get; }
@@ -153,5 +153,10 @@ namespace Azure.Core
 
         /// <inheritdoc />
         protected override bool TryGetHeaderValues(string name, [NotNullWhen(true)] out IEnumerable<string>? values) => Request.Headers.TryGetValues(name, out values);
+
+        private string DebuggerDisplay
+        {
+            get => $"{{Body: {((Body == null) ? "" : Body.ToJsonString())}}}";
+        }
     }
 }

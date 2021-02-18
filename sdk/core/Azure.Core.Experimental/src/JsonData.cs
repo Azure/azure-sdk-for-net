@@ -23,7 +23,7 @@ namespace Azure.Core
     /// A mutable representation of a JSON value.
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class JsonData : IDynamicMetaObjectProvider
+    public class JsonData : IDynamicMetaObjectProvider, IEquatable<JsonData>
     {
         private readonly JsonValueKind _kind;
         private Dictionary<string, JsonData>? _objectRepresentation;
@@ -927,7 +927,34 @@ namespace Azure.Core
                 return this == ((string?)obj);
             }
 
+            if (obj is JsonData)
+            {
+                return Equals((JsonData)obj);
+            }
+
             return base.Equals(obj);
+        }
+
+        /// <inheritdoc />
+        public bool Equals(JsonData other)
+        {
+            if (_kind != other._kind)
+            {
+                return false;
+            }
+
+            switch (_kind)
+            {
+                case JsonValueKind.Null:
+                case JsonValueKind.Undefined:
+                    return true;
+                case JsonValueKind.Object:
+                    return _objectRepresentation!.Equals(other._objectRepresentation);
+                case JsonValueKind.Array:
+                    return _arrayRepresentation!.Equals(other._arrayRepresentation);
+                default:
+                    return _value!.Equals(other._value);
+            }
         }
 
         /// <inheritdoc />
@@ -1115,7 +1142,7 @@ namespace Azure.Core
 
         private string DebuggerDisplay
         {
-            get => $"Kind: {_kind}, JSON: {ToJsonString()}";
+            get => $"{{Kind: {_kind}, JSON: {ToJsonString()}}}";
         }
 
         private struct Number

@@ -10,7 +10,7 @@ namespace Azure.Core
         public override void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellation) { }
         public override System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellation) { throw null; }
     }
-    [System.Diagnostics.DebuggerDisplayAttribute("Body: {Body}")]
+    [System.Diagnostics.DebuggerDisplayAttribute("{DebuggerDisplay,nq}")]
     public partial class DynamicRequest : Azure.Core.Request
     {
         public DynamicRequest(Azure.Core.Request request, Azure.Core.Pipeline.HttpPipeline pipeline) { }
@@ -29,7 +29,7 @@ namespace Azure.Core
         protected override bool TryGetHeader(string name, out string? value) { throw null; }
         protected override bool TryGetHeaderValues(string name, out System.Collections.Generic.IEnumerable<string>? values) { throw null; }
     }
-    [System.Diagnostics.DebuggerDisplayAttribute("Status: {Response.Status}, Value: {Value}")]
+    [System.Diagnostics.DebuggerDisplayAttribute("{DebuggerDisplay,nq}")]
     public partial class DynamicResponse : Azure.Response
     {
         public DynamicResponse(Azure.Response response, Azure.Core.JsonData? body) { }
@@ -47,7 +47,7 @@ namespace Azure.Core
         protected override bool TryGetHeaderValues(string name, out System.Collections.Generic.IEnumerable<string>? values) { throw null; }
     }
     [System.Diagnostics.DebuggerDisplayAttribute("{DebuggerDisplay,nq}")]
-    public partial class JsonData : System.Dynamic.IDynamicMetaObjectProvider
+    public partial class JsonData : System.Dynamic.IDynamicMetaObjectProvider, System.IEquatable<Azure.Core.JsonData>
     {
         public JsonData() { }
         public JsonData(object? value) { }
@@ -73,6 +73,7 @@ namespace Azure.Core
         public Azure.Core.JsonData Add<T>(T[] serializable, System.Text.Json.JsonSerializerOptions options) { throw null; }
         public static Azure.Core.JsonData EmptyArray() { throw null; }
         public static Azure.Core.JsonData EmptyObject() { throw null; }
+        public bool Equals(Azure.Core.JsonData other) { throw null; }
         public override bool Equals(object? obj) { throw null; }
         public static Azure.Core.JsonData FromBytes(byte[] utf8Json) { throw null; }
         public static Azure.Core.JsonData FromBytes(System.ReadOnlyMemory<byte> utf8Json) { throw null; }
