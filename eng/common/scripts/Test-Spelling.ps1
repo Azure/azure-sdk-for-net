@@ -2,14 +2,18 @@
 Param (
     [Parameter()]
     [ValidateNotNullOrEmpty()]
-    [string] $TargetRef = 'master'
+    [string] $TargetRef = 'master', 
+
+    [Parameter()]
+    [ValidateNotNullOrEmpty()]
+    [string] $CspellConfigPath = "./.vscode/cspell.json"
 )
 
 . $PSScriptRoot/logging.ps1
 
 
 if ((Get-Command npx | Measure-Object).Count -eq 0) { 
-    Write-Error "Could not locate npx. Install NodeJS (includes npm and npx) https://nodejs.org/en/download/"
+    LogError "Could not locate npx. Install NodeJS (includes npm and npx) https://nodejs.org/en/download/"
     exit 1
 }
 
@@ -36,8 +40,8 @@ try {
 
     $changedFilesString = $changedFiles | Join-String -Separator ' '
 
-    Write-Host "npx cspell --config ./eng/cspell.json $changedFilesString"
-    $spellingErrors = Invoke-Expression "npx cspell --config ./eng/cspell.json $changedFilesString"
+    Write-Host "npx cspell --config $CspellConfigPath $changedFilesString"
+    $spellingErrors = Invoke-Expression "npx cspell --config $CspellConfigPath $changedFilesString"
 
     if ($spellingErrors) {
         $exitCode = 1
@@ -50,3 +54,30 @@ try {
 }
 
 exit $exitCode
+
+<#
+.SYNOPSIS
+Uses cspell (from NPM) to check spelling of recently changed files
+
+.DESCRIPTION
+This script checks files that have changed relative to a base branch (default 
+`master`) for spelling errors. Dictionaries and spelling configurations reside 
+in a configurable `cspell.json` location.
+
+This script uses `npx` and assumes that NodeJS (and by extension `npm` and `npx`
+) are installed on the machine. If it does not detect `npx` it will warn the 
+user and exit with an error. 
+
+The entire file is scanned, not just changed sections. Spelling errors in parts 
+of the file not touched will still be shown.
+
+Running this on the local machine will trigger tests 
+
+.PARAMETER TargetRef
+Optional git ref to compare changes. Default value is `master`.
+
+.PARAMETER CspellConfigPath
+Optional location to use for cspell.json path. Default value is 
+`./.vscode/cspell.json`
+
+#>
