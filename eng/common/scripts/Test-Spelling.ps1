@@ -11,6 +11,10 @@ Param (
 
 . $PSScriptRoot/logging.ps1
 
+if ((Get-Command git | Measure-Object).Count -eq 0) { 
+    LogError "Could not locate git. Install git https://git-scm.com/downloads"
+    exit 1
+}
 
 if ((Get-Command npx | Measure-Object).Count -eq 0) { 
     LogError "Could not locate npx. Install NodeJS (includes npm and npx) https://nodejs.org/en/download/"
