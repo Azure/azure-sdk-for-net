@@ -20,12 +20,12 @@ namespace Azure.Iot.ModelsRepository
         private readonly Uri _repositoryUri;
         private readonly ResolverClientOptions _clientOptions;
 
-        public RepositoryHandler(Uri repositoryUri, ClientDiagnostics clientdiagnostics, ResolverClientOptions options)
+        public RepositoryHandler(Uri repositoryUri, ClientDiagnostics clientDiagnostics, ResolverClientOptions options)
         {
             Argument.AssertNotNull(options, nameof(options));
 
             _clientOptions = options;
-            _clientDiagnostics = clientdiagnostics;
+            _clientDiagnostics = clientDiagnostics;
             _modelFetcher = repositoryUri.Scheme == "file"
                 ? _modelFetcher = new LocalModelFetcher(_clientDiagnostics, _clientOptions)
                 : _modelFetcher = new RemoteModelFetcher(_clientDiagnostics, _clientOptions);
