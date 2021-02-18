@@ -723,7 +723,7 @@ namespace Azure.Storage.Blobs
             {
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
                 CreatedOn = response.Headers.CreationTime.GetValueOrDefault(),
-                Metadata = response.Headers.Metadata,
+                Metadata = response.Headers.Metadata.ToMetadata(),
                 ObjectReplicationDestinationPolicyId = response.Headers.ObjectReplicationPolicyId,
                 ObjectReplicationSourceProperties =
                     response.Headers.ObjectReplicationRules?.Count > 0
@@ -840,7 +840,7 @@ namespace Azure.Storage.Blobs
                 Details = new BlobDownloadDetails
                 {
                     LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                    Metadata = response.Headers.Metadata,
+                    Metadata = response.Headers.Metadata.ToMetadata(),
                     ContentRange = response.Headers.ContentRange,
                     ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
                     ContentEncoding = response.Headers.ContentEncoding,
@@ -892,7 +892,7 @@ namespace Azure.Storage.Blobs
                 Details = new BlobDownloadDetails
                 {
                     LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                    Metadata = response.Headers.Metadata,
+                    Metadata = response.Headers.Metadata.ToMetadata(),
                     ContentRange = response.Headers.ContentRange,
                     ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
                     ContentEncoding = response.Headers.ContentEncoding,
@@ -1113,9 +1113,7 @@ namespace Azure.Storage.Blobs
                 VersionId = blobItemInternal.VersionId,
                 IsLatestVersion = blobItemInternal.IsCurrentVersion,
                 Properties = blobItemInternal.Properties.ToBlobItemProperties(),
-                Metadata = blobItemInternal.Metadata?.Count > 0
-                    ? blobItemInternal.Metadata.ToDictionary(kvp => kvp.Key, kvp => kvp.Value)
-                    : new Dictionary<string, string>(),
+                Metadata = blobItemInternal.Metadata.ToMetadata(),
                 Tags = blobItemInternal.BlobTags.ToTagDictionary(),
                 ObjectReplicationSourceProperties = blobItemInternal.ObjectReplicationMetadata?.Count > 0
                     ? ParseObjectReplicationMetadata(blobItemInternal.ObjectReplicationMetadata)
@@ -1225,7 +1223,7 @@ namespace Azure.Storage.Blobs
                 DeletedOn = containerPropertiesInternal.DeletedTime,
                 RemainingRetentionDays = containerPropertiesInternal.RemainingRetentionDays,
                 ETag = new ETag(containerPropertiesInternal.Etag),
-                Metadata = metadata?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value)
+                Metadata = metadata.ToMetadata(),
             };
         }
 
@@ -1250,8 +1248,42 @@ namespace Azure.Storage.Blobs
                 // Container Get Properties does not return DeletedOn.
                 // Container Get Properties does not return RemainingRetentionDays.
                 ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
-                Metadata = response.Headers.Metadata
+                Metadata = response.Headers.Metadata.ToMetadata()
             };
+        }
+
+        internal static IDictionary<string, string> ToMetadata(this IDictionary<string, string> originalMetadata)
+        {
+            if (originalMetadata == null)
+            {
+                return null;
+            }
+
+            IDictionary<string, string> metadata = new Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+
+            foreach (KeyValuePair<string, string> entry in originalMetadata)
+            {
+                metadata.Add(entry.Key, entry.Value);
+            }
+
+            return metadata;
+        }
+
+        internal static IDictionary<string, string> ToMetadata(this IReadOnlyDictionary<string, string> originalMetadata)
+        {
+            if (originalMetadata == null)
+            {
+                return null;
+            }
+
+            IDictionary<string, string> metadata = new Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+
+            foreach (KeyValuePair<string, string> entry in originalMetadata)
+            {
+                metadata.Add(entry.Key, entry.Value);
+            }
+
+            return metadata;
         }
         #endregion
     }
