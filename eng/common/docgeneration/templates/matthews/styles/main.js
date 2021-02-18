@@ -4,9 +4,9 @@ containers.removeClass("container");
 containers.addClass("container-fluid");
 
 WINDOW_CONTENTS = window.location.href.split('/')
-var SELECTED_LANGUAGE = 'java'
-var PACKAGE_REGEX = ""
-var PACKAGE_REPLACEMENT = ""
+var SELECTED_LANGUAGE = ''
+var PACKAGE_REGEX = ''
+var PACKAGE_REPLACEMENT = ''
 
 ATTR1 = '[<span class="hljs-meta">System.ComponentModel.EditorBrowsable</span>]\n<'
 
