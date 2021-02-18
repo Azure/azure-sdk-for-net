@@ -7,6 +7,11 @@ using System.Text.Json;
 
 namespace Azure.Iot.ModelsRepository
 {
+    /// <summary>
+    /// The <c>ModelQuery</c> class is responsible for parsing DTDL v2 models to produce key metadata.
+    /// In the current form <c>ModelQuery</c> is focused on determining model dependencies recursively
+    /// via extends and component schemas.
+    /// </summary>
     internal class ModelQuery
     {
         private readonly string _content;
@@ -51,7 +56,7 @@ namespace Azure.Iot.ModelsRepository
 
         private static IList<string> ParseExtends(JsonElement root)
         {
-            List<string> dependencies = new List<string>();
+            var dependencies = new List<string>();
 
             if (root.ValueKind != JsonValueKind.Object)
             {
@@ -67,7 +72,7 @@ namespace Azure.Iot.ModelsRepository
             {
                 dependencies.Add(extends.GetString());
             }
-            else if (isInterfaceObject(extends))
+            else if (IsInterfaceObject(extends))
             {
                 ModelMetadata meta = ParseInterface(extends);
                 dependencies.AddRange(meta.Dependencies);
@@ -81,7 +86,7 @@ namespace Azure.Iot.ModelsRepository
                         dependencies.Add(extendElement.GetString());
                     }
                     // Extends can have multiple levels and contain inline interfaces.
-                    else if (isInterfaceObject(extendElement))
+                    else if (IsInterfaceObject(extendElement))
                     {
                         ModelMetadata meta = ParseInterface(extendElement);
                         dependencies.AddRange(meta.Dependencies);
@@ -94,7 +99,7 @@ namespace Azure.Iot.ModelsRepository
 
         private static IList<string> ParseContents(JsonElement root)
         {
-            List<string> dependencies = new List<string>();
+            var dependencies = new List<string>();
 
             if (root.ValueKind != JsonValueKind.Object)
             {
@@ -113,7 +118,7 @@ namespace Azure.Iot.ModelsRepository
 
             foreach (JsonElement contentElement in contents.EnumerateArray())
             {
-                if (isComponentObject(contentElement))
+                if (IsComponentObject(contentElement))
                 {
                     dependencies.AddRange(ParseComponent(contentElement));
                 }
@@ -126,7 +131,7 @@ namespace Azure.Iot.ModelsRepository
         {
             // We already know root is an object of @type Component
 
-            List<string> dependencies = new List<string>();
+            var dependencies = new List<string>();
 
             if (!root.TryGetProperty(ModelPropertyConstants.Schema, out JsonElement componentSchema))
             {
@@ -137,7 +142,7 @@ namespace Azure.Iot.ModelsRepository
             {
                 dependencies.Add(componentSchema.GetString());
             }
-            else if (isInterfaceObject(componentSchema))
+            else if (IsInterfaceObject(componentSchema))
             {
                 ModelMetadata meta = ParseInterface(componentSchema);
                 dependencies.AddRange(meta.Dependencies);
@@ -150,7 +155,7 @@ namespace Azure.Iot.ModelsRepository
                     {
                         dependencies.Add(componentSchemaElement.GetString());
                     }
-                    else if (isInterfaceObject(componentSchemaElement))
+                    else if (IsInterfaceObject(componentSchemaElement))
                     {
                         ModelMetadata meta = ParseInterface(componentSchemaElement);
                         dependencies.AddRange(meta.Dependencies);
@@ -161,7 +166,7 @@ namespace Azure.Iot.ModelsRepository
             return dependencies;
         }
 
-        private static bool isInterfaceObject(JsonElement root)
+        private static bool IsInterfaceObject(JsonElement root)
         {
             return root.ValueKind == JsonValueKind.Object &&
                 root.TryGetProperty(ModelPropertyConstants.Type, out JsonElement objectType) &&
@@ -169,7 +174,7 @@ namespace Azure.Iot.ModelsRepository
                 objectType.GetString() == ModelPropertyConstants.TypeValueInterface;
         }
 
-        private static bool isComponentObject(JsonElement root)
+        private static bool IsComponentObject(JsonElement root)
         {
             return root.ValueKind == JsonValueKind.Object &&
                 root.TryGetProperty(ModelPropertyConstants.Type, out JsonElement objectType) &&

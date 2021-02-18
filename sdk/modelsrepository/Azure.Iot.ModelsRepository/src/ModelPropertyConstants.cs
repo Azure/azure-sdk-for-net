@@ -3,6 +3,10 @@
 
 namespace Azure.Iot.ModelsRepository
 {
+    /// <summary>
+    /// The <c>ModelPropertyConstants</c> class contains DTDL v2 property names and property values
+    /// used by the <c>ModelQuery</c> class to parse DTDL model key indicators.
+    /// </summary>
     internal static class ModelPropertyConstants
     {
         public const string Dtmi = "@id";
