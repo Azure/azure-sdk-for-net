@@ -3952,8 +3952,8 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await blob.SetHttpHeadersAsync(new BlobHttpHeaders
             {
-                ContentEncoding = "deflate, gzip",
-                ContentLanguage = "de-DE, en-CA",
+                ContentEncoding = "deflate,gzip",
+                ContentLanguage = "de-DE,en-CA",
             });
 
             // Assert
