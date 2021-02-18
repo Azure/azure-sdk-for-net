@@ -40,9 +40,6 @@ namespace Microsoft.Azure.Management.MixedReality.Models
             Name = name;
             IsDataAction = isDataAction;
             Display = display;
-            IsDataAction = isDataAction;
-            Origin = origin;
-            Properties = properties;
             CustomInit();
         }
 
@@ -68,24 +65,6 @@ namespace Microsoft.Azure.Management.MixedReality.Models
         /// </summary>
         [JsonProperty(PropertyName = "display")]
         public OperationDisplay Display { get; set; }
-
-        /// <summary>
-        /// Gets or sets whether or not this is a data plane operation
-        /// </summary>
-        [JsonProperty(PropertyName = "isDataAction")]
-        public bool? IsDataAction { get; set; }
-
-        /// <summary>
-        /// Gets or sets the origin
-        /// </summary>
-        [JsonProperty(PropertyName = "origin")]
-        public string Origin { get; set; }
-
-        /// <summary>
-        /// Gets or sets properties of the operation
-        /// </summary>
-        [JsonProperty(PropertyName = "properties")]
-        public OperationProperties Properties { get; set; }
 
         /// <summary>
         /// Validate the object.
