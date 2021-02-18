@@ -16,46 +16,44 @@ namespace Microsoft.Azure.Management.DataShare.Models
     using System.Linq;
 
     /// <summary>
-    /// A Kusto database data set mapping
+    /// A Synapse Workspace Sql Pool Table data set mapping
     /// </summary>
-    [Newtonsoft.Json.JsonObject("KustoDatabase")]
+    [Newtonsoft.Json.JsonObject("SynapseWorkspaceSqlPoolTable")]
     [Rest.Serialization.JsonTransformation]
-    public partial class KustoDatabaseDataSetMapping : DataSetMapping
+    public partial class SynapseWorkspaceSqlPoolTableDataSetMapping : DataSetMapping
     {
         /// <summary>
-        /// Initializes a new instance of the KustoDatabaseDataSetMapping
-        /// class.
+        /// Initializes a new instance of the
+        /// SynapseWorkspaceSqlPoolTableDataSetMapping class.
         /// </summary>
-        public KustoDatabaseDataSetMapping()
+        public SynapseWorkspaceSqlPoolTableDataSetMapping()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the KustoDatabaseDataSetMapping
-        /// class.
+        /// Initializes a new instance of the
+        /// SynapseWorkspaceSqlPoolTableDataSetMapping class.
         /// </summary>
         /// <param name="dataSetId">The id of the source data set.</param>
-        /// <param name="kustoClusterResourceId">Resource id of the sink kusto
-        /// cluster.</param>
+        /// <param name="synapseWorkspaceSqlPoolTableResourceId">Resource id of
+        /// the Synapse Workspace SQL Pool Table</param>
         /// <param name="id">The resource id of the azure resource</param>
         /// <param name="name">Name of the azure resource</param>
         /// <param name="systemData">System Data of the Azure resource.</param>
         /// <param name="type">Type of the azure resource</param>
         /// <param name="dataSetMappingStatus">Gets the status of the data set
         /// mapping. Possible values include: 'Ok', 'Broken'</param>
-        /// <param name="location">Location of the sink kusto cluster.</param>
         /// <param name="provisioningState">Provisioning state of the data set
         /// mapping. Possible values include: 'Succeeded', 'Creating',
         /// 'Deleting', 'Moving', 'Failed'</param>
-        public KustoDatabaseDataSetMapping(string dataSetId, string kustoClusterResourceId, string id = default(string), string name = default(string), SystemData systemData = default(SystemData), string type = default(string), string dataSetMappingStatus = default(string), string location = default(string), string provisioningState = default(string))
+        public SynapseWorkspaceSqlPoolTableDataSetMapping(string dataSetId, string synapseWorkspaceSqlPoolTableResourceId, string id = default(string), string name = default(string), SystemData systemData = default(SystemData), string type = default(string), string dataSetMappingStatus = default(string), string provisioningState = default(string))
             : base(id, name, systemData, type)
         {
             DataSetId = dataSetId;
             DataSetMappingStatus = dataSetMappingStatus;
-            KustoClusterResourceId = kustoClusterResourceId;
-            Location = location;
             ProvisioningState = provisioningState;
+            SynapseWorkspaceSqlPoolTableResourceId = synapseWorkspaceSqlPoolTableResourceId;
             CustomInit();
         }
 
@@ -78,23 +76,17 @@ namespace Microsoft.Azure.Management.DataShare.Models
         public string DataSetMappingStatus { get; private set; }
 
         /// <summary>
-        /// Gets or sets resource id of the sink kusto cluster.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.kustoClusterResourceId")]
-        public string KustoClusterResourceId { get; set; }
-
-        /// <summary>
-        /// Gets location of the sink kusto cluster.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.location")]
-        public string Location { get; private set; }
-
-        /// <summary>
         /// Gets provisioning state of the data set mapping. Possible values
         /// include: 'Succeeded', 'Creating', 'Deleting', 'Moving', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets or sets resource id of the Synapse Workspace SQL Pool Table
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.synapseWorkspaceSqlPoolTableResourceId")]
+        public string SynapseWorkspaceSqlPoolTableResourceId { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -108,9 +100,9 @@ namespace Microsoft.Azure.Management.DataShare.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "DataSetId");
             }
-            if (KustoClusterResourceId == null)
+            if (SynapseWorkspaceSqlPoolTableResourceId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "KustoClusterResourceId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "SynapseWorkspaceSqlPoolTableResourceId");
             }
         }
     }

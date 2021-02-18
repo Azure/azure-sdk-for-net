@@ -33,11 +33,12 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// </summary>
         /// <param name="id">The resource id of the azure resource</param>
         /// <param name="name">Name of the azure resource</param>
+        /// <param name="systemData">System Data of the Azure resource.</param>
         /// <param name="type">Type of the azure resource</param>
         /// <param name="location">Location of the azure resource.</param>
         /// <param name="tags">Tags on the azure resource.</param>
-        public DefaultDto(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
-            : base(id, name, type)
+        public DefaultDto(string id = default(string), string name = default(string), SystemData systemData = default(SystemData), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+            : base(id, name, systemData, type)
         {
             Location = location;
             Tags = tags;
