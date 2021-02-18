@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Iot.ModelsRepository.Fetchers;
 using System;
@@ -16,19 +17,22 @@ namespace Azure.Iot.ModelsRepository
         private readonly IModelFetcher _modelFetcher;
         private readonly Guid _clientId;
         private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly Uri _repositoryUri;
+        private readonly ResolverClientOptions _clientOptions;
 
-        public Uri RepositoryUri { get; }
-        public ResolverClientOptions ClientOptions { get; }
-
-        public RepositoryHandler(Uri repositoryUri, ClientDiagnostics clientdiagnostics, ResolverClientOptions options = null)
+        public RepositoryHandler(Uri repositoryUri, ClientDiagnostics clientdiagnostics, ResolverClientOptions options)
         {
-            ClientOptions = options ?? new ResolverClientOptions();
-            RepositoryUri = repositoryUri;
+            Argument.AssertNotNull(options, nameof(options));
+
+            _clientOptions = options;
             _clientDiagnostics = clientdiagnostics;
             _modelFetcher = repositoryUri.Scheme == "file"
-                ? _modelFetcher = new LocalModelFetcher(_clientDiagnostics, ClientOptions)
-                : _modelFetcher = new RemoteModelFetcher(_clientDiagnostics, ClientOptions);
+                ? _modelFetcher = new LocalModelFetcher(_clientDiagnostics, _clientOptions)
+                : _modelFetcher = new RemoteModelFetcher(_clientDiagnostics, _clientOptions);
             _clientId = Guid.NewGuid();
+
+            _repositoryUri = repositoryUri;
+
             ResolverEventSource.Instance.InitFetcher(_clientId, repositoryUri.Scheme);
         }
 
@@ -91,7 +95,7 @@ namespace Azure.Iot.ModelsRepository
 
                 ModelMetadata metadata = new ModelQuery(result.Definition).GetMetadata();
 
-                if (ClientOptions.DependencyResolution >= DependencyResolutionOption.Enabled)
+                if (_clientOptions.DependencyResolution >= DependencyResolutionOption.Enabled)
                 {
                     IList<string> dependencies = metadata.Dependencies;
 
@@ -124,7 +128,7 @@ namespace Azure.Iot.ModelsRepository
         {
             try
             {
-                return await _modelFetcher.FetchAsync(dtmi, RepositoryUri, cancellationToken).ConfigureAwait(false);
+                return await _modelFetcher.FetchAsync(dtmi, _repositoryUri, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -136,7 +140,7 @@ namespace Azure.Iot.ModelsRepository
         {
             try
             {
-                return _modelFetcher.Fetch(dtmi, RepositoryUri, cancellationToken);
+                return _modelFetcher.Fetch(dtmi, _repositoryUri, cancellationToken);
             }
             catch (Exception ex)
             {
