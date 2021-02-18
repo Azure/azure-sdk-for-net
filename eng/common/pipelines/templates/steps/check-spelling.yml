@@ -1,0 +1,31 @@
+# Checks spelling of files that changed between the current state of the repo
+# and some ref (branch, tag, etc.) or commit hash. Only runs on PRs.
+# ContinueOnError - true: Pipeline warns on spelling error 
+#                   false: Pipeline fails on spelling error
+
+parameters:
+  ContinueOnError: true
+
+steps:
+  - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
+    # Devops uses a git config that changes ref names. 
+    # For example: refs/heads/master -> refs/remotes/origin/master
+    # Set in: fetch = +refs/heads/*:refs/remotes/origin/*
+    # Rather than try to convert $(System.PullRequest.TargetBranch) this
+    # explicitly fetches the ref with a specific name that will not collide with
+    # the other refs fetched
+    - task: PowerShell@2
+      displayName: Fetch ref for $(System.PullRequest.TargetBranch)
+      inputs:
+        pwsh: true
+        targetType: inline
+        script: git fetch origin $(System.PullRequest.TargetBranch):refs/spellcheck/baseref
+
+    - task: PowerShell@2
+      displayName: Check spelling (cspell)
+      continueOnError: ${{ parameters.ContinueOnError }}
+      inputs: 
+        targetType: filePath
+        filePath: eng/common/scripts/Test-Spelling.ps1
+        arguments: -TargetRef refs/spellcheck/baseref
+        pwsh: true
