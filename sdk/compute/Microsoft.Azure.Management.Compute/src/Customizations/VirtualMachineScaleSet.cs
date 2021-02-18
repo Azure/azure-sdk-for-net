@@ -10,7 +10,6 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// <summary>
     /// Describes a Virtual Machine Scale Set.
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
     public partial class VirtualMachineScaleSet : Resource
     {
 
