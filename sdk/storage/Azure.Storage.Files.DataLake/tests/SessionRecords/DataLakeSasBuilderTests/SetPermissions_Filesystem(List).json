@@ -1,18 +1,19 @@
 {
   "Entries": [
     {
-      "RequestUri": "http://amandaadlscanary2.blob.core.windows.net/test-filesystem-75cbe65a-922e-257e-e743-81b58e074e9b?restype=container",
+      "RequestUri": "https://seannse.blob.core.windows.net/test-filesystem-75cbe65a-922e-257e-e743-81b58e074e9b?restype=container",
       "RequestMethod": "PUT",
       "RequestHeaders": {
+        "Accept": "application/xml",
         "Authorization": "Sanitized",
-        "traceparent": "00-5eb66277eda7444194e91ea7f3a5aae0-f0411fa507b4c742-00",
+        "traceparent": "00-36442360d22e114c9f532fa56e7b8165-a7a3ad270418aa40-00",
         "User-Agent": [
-          "azsdk-net-Storage.Files.DataLake/12.5.0-alpha.20201029.1",
-          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
+          "azsdk-net-Storage.Files.DataLake/12.7.0-alpha.20210217.1",
+          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-blob-public-access": "container",
         "x-ms-client-request-id": "0eeff1ad-a713-0b1d-288c-fc8d34c252d0",
-        "x-ms-date": "Thu, 29 Oct 2020 21:29:48 GMT",
+        "x-ms-date": "Wed, 17 Feb 2021 22:17:57 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2020-06-12"
       },
@@ -20,26 +21,27 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Thu, 29 Oct 2020 21:29:48 GMT",
-        "ETag": "\u00220x8D87C51C3A7AD5F\u0022",
-        "Last-Modified": "Thu, 29 Oct 2020 21:29:48 GMT",
+        "Date": "Wed, 17 Feb 2021 22:17:57 GMT",
+        "ETag": "\u00220x8D8D391E12B204A\u0022",
+        "Last-Modified": "Wed, 17 Feb 2021 22:17:57 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-client-request-id": "0eeff1ad-a713-0b1d-288c-fc8d34c252d0",
-        "x-ms-request-id": "e994e77a-901e-00df-603a-aebd1b000000",
+        "x-ms-request-id": "2f1ea8ef-601e-001c-487a-052d3f000000",
         "x-ms-version": "2020-06-12"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "http://amandaadlscanary2.dfs.core.windows.net/test-filesystem-75cbe65a-922e-257e-e743-81b58e074e9b?sv=2020-06-12\u0026st=2020-10-29T20%3A29%3A49Z\u0026se=2020-10-29T22%3A29%3A49Z\u0026sr=c\u0026sp=l\u0026sig=Sanitized\u0026resource=filesystem\u0026recursive=false\u0026upn=false",
+      "RequestUri": "https://seannse.dfs.core.windows.net/test-filesystem-75cbe65a-922e-257e-e743-81b58e074e9b?sv=2020-06-12\u0026st=2021-02-17T21%3A17%3A57Z\u0026se=2021-02-17T23%3A17%3A57Z\u0026sr=c\u0026sp=l\u0026sig=Sanitized\u0026resource=filesystem\u0026recursive=false\u0026upn=false",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "traceparent": "00-534b91fe01f3ff418b675ce28856c26a-f57a1a65b07aff47-00",
         "User-Agent": [
-          "azsdk-net-Storage.Files.DataLake/12.5.0-alpha.20201029.1",
-          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
+          "azsdk-net-Storage.Files.DataLake/12.7.0-alpha.20210217.1",
+          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "9c073809-4017-b087-9e27-648fad87f3b5",
         "x-ms-return-client-request-id": "true",
@@ -49,14 +51,14 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 29 Oct 2020 21:29:48 GMT",
+        "Date": "Wed, 17 Feb 2021 22:17:57 GMT",
         "Server": [
           "Windows-Azure-HDFS/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "9c073809-4017-b087-9e27-648fad87f3b5",
-        "x-ms-request-id": "c15cbd1f-301f-00a4-3c3a-aeff87000000",
+        "x-ms-request-id": "7fb7d707-401f-0056-737a-058eb0000000",
         "x-ms-version": "2020-06-12"
       },
       "ResponseBody": [
@@ -64,17 +66,18 @@
       ]
     },
     {
-      "RequestUri": "http://amandaadlscanary2.blob.core.windows.net/test-filesystem-75cbe65a-922e-257e-e743-81b58e074e9b?restype=container",
+      "RequestUri": "https://seannse.blob.core.windows.net/test-filesystem-75cbe65a-922e-257e-e743-81b58e074e9b?restype=container",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
+        "Accept": "application/xml",
         "Authorization": "Sanitized",
-        "traceparent": "00-d3a6a65bb2d822498f3a3301fb84883e-3baf0121e508c64a-00",
+        "traceparent": "00-a456b7fad5c3e54485517708495652f0-af87b81871c87c43-00",
         "User-Agent": [
-          "azsdk-net-Storage.Files.DataLake/12.5.0-alpha.20201029.1",
-          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
+          "azsdk-net-Storage.Files.DataLake/12.7.0-alpha.20210217.1",
+          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "fc837a48-b5ba-d3b8-2098-cd3572490349",
-        "x-ms-date": "Thu, 29 Oct 2020 21:29:49 GMT",
+        "x-ms-date": "Wed, 17 Feb 2021 22:17:57 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2020-06-12"
       },
@@ -82,21 +85,21 @@
       "StatusCode": 202,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Thu, 29 Oct 2020 21:29:48 GMT",
+        "Date": "Wed, 17 Feb 2021 22:17:57 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-client-request-id": "fc837a48-b5ba-d3b8-2098-cd3572490349",
-        "x-ms-request-id": "e994e787-901e-00df-6a3a-aebd1b000000",
+        "x-ms-request-id": "2f1eaa4b-601e-001c-037a-052d3f000000",
         "x-ms-version": "2020-06-12"
       },
       "ResponseBody": []
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2020-10-29T14:29:49.0249094-07:00",
+    "DateTimeOffsetNow": "2021-02-17T16:17:57.6051833-06:00",
     "RandomSeed": "358058065",
-    "Storage_TestConfigHierarchicalNamespace": "NamespaceTenant\namandaadlscanary2\nU2FuaXRpemVk\nhttp://amandaadlscanary2.blob.core.windows.net\nhttp://amandaadlscanary2.file.core.windows.net\nhttp://amandaadlscanary2.queue.core.windows.net\nhttp://amandaadlscanary2.table.core.windows.net\n\n\n\n\nhttp://amandaadlscanary2-secondary.blob.core.windows.net\nhttp://amandaadlscanary2-secondary.file.core.windows.net\nhttp://amandaadlscanary2-secondary.queue.core.windows.net\n\n68390a19-a643-458b-b726-408abf67b4fc\nSanitized\n72f988bf-86f1-41af-91ab-2d7cd011db47\nhttps://login.microsoftonline.com/\nCloud\nBlobEndpoint=http://amandaadlscanary2.blob.core.windows.net/;QueueEndpoint=http://amandaadlscanary2.queue.core.windows.net/;FileEndpoint=http://amandaadlscanary2.file.core.windows.net/;BlobSecondaryEndpoint=http://amandaadlscanary2-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://amandaadlscanary2-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://amandaadlscanary2-secondary.file.core.windows.net/;AccountName=amandaadlscanary2;AccountKey=Sanitized\n"
+    "Storage_TestConfigHierarchicalNamespace": "NamespaceTenant\nseannse\nU2FuaXRpemVk\nhttps://seannse.blob.core.windows.net\nhttps://seannse.file.core.windows.net\nhttps://seannse.queue.core.windows.net\nhttps://seannse.table.core.windows.net\n\n\n\n\nhttps://seannse-secondary.blob.core.windows.net\nhttps://seannse-secondary.file.core.windows.net\nhttps://seannse-secondary.queue.core.windows.net\nhttps://seannse-secondary.table.core.windows.net\n68390a19-a643-458b-b726-408abf67b4fc\nSanitized\n72f988bf-86f1-41af-91ab-2d7cd011db47\nhttps://login.microsoftonline.com/\nCloud\nBlobEndpoint=https://seannse.blob.core.windows.net/;QueueEndpoint=https://seannse.queue.core.windows.net/;FileEndpoint=https://seannse.file.core.windows.net/;BlobSecondaryEndpoint=https://seannse-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seannse-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seannse-secondary.file.core.windows.net/;AccountName=seannse;AccountKey=Sanitized\n"
   }
 }
