@@ -43,7 +43,7 @@ namespace Azure.Iot.ModelsRepository
 
         private static string ParseRootDtmi(JsonElement root)
         {
-            if (root.ValueKind == JsonValueKind.Object && root.TryGetProperty(ModelPropertyConstants.Dtmi, out JsonElement id))
+            if (root.ValueKind == JsonValueKind.Object && root.TryGetProperty(ModelRepositoryConstants.ModelProperties.Dtmi, out JsonElement id))
             {
                 if (id.ValueKind == JsonValueKind.String)
                 {
@@ -63,7 +63,7 @@ namespace Azure.Iot.ModelsRepository
                 return dependencies;
             }
 
-            if (!root.TryGetProperty(ModelPropertyConstants.Extends, out JsonElement extends))
+            if (!root.TryGetProperty(ModelRepositoryConstants.ModelProperties.Extends, out JsonElement extends))
             {
                 return dependencies;
             }
@@ -106,7 +106,7 @@ namespace Azure.Iot.ModelsRepository
                 return dependencies;
             }
 
-            if (!root.TryGetProperty(ModelPropertyConstants.Contents, out JsonElement contents))
+            if (!root.TryGetProperty(ModelRepositoryConstants.ModelProperties.Contents, out JsonElement contents))
             {
                 return dependencies;
             }
@@ -133,7 +133,7 @@ namespace Azure.Iot.ModelsRepository
 
             var dependencies = new List<string>();
 
-            if (!root.TryGetProperty(ModelPropertyConstants.Schema, out JsonElement componentSchema))
+            if (!root.TryGetProperty(ModelRepositoryConstants.ModelProperties.Schema, out JsonElement componentSchema))
             {
                 return dependencies;
             }
@@ -169,17 +169,17 @@ namespace Azure.Iot.ModelsRepository
         private static bool IsInterfaceObject(JsonElement root)
         {
             return root.ValueKind == JsonValueKind.Object &&
-                root.TryGetProperty(ModelPropertyConstants.Type, out JsonElement objectType) &&
+                root.TryGetProperty(ModelRepositoryConstants.ModelProperties.Type, out JsonElement objectType) &&
                 objectType.ValueKind == JsonValueKind.String &&
-                objectType.GetString() == ModelPropertyConstants.TypeValueInterface;
+                objectType.GetString() == ModelRepositoryConstants.ModelProperties.TypeValueInterface;
         }
 
         private static bool IsComponentObject(JsonElement root)
         {
             return root.ValueKind == JsonValueKind.Object &&
-                root.TryGetProperty(ModelPropertyConstants.Type, out JsonElement objectType) &&
+                root.TryGetProperty(ModelRepositoryConstants.ModelProperties.Type, out JsonElement objectType) &&
                 objectType.ValueKind == JsonValueKind.String &&
-                objectType.GetString() == ModelPropertyConstants.TypeValueComponent;
+                objectType.GetString() == ModelRepositoryConstants.ModelProperties.TypeValueComponent;
         }
 
         public Dictionary<string, string> ListToDict()
