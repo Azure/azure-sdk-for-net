@@ -309,7 +309,7 @@ namespace Azure.Messaging.EventHubs
         ///   Event Hub will result in a connection string that contains the name.</para>
         /// </remarks>
         ///
-        /// <seealso href="https://docs.microsoft.com/azure/event-hubs/event-hubs-get-connection-string" />
+        /// <seealso href="https://docs.microsoft.com/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
         public EventProcessorClient(BlobContainerClient checkpointStore,
                                     string consumerGroup,
@@ -338,7 +338,7 @@ namespace Azure.Messaging.EventHubs
         ///   Event Hub will result in a connection string that contains the name.</para>
         /// </remarks>
         ///
-        /// <seealso href="https://docs.microsoft.com/azure/event-hubs/event-hubs-get-connection-string" />
+        /// <seealso href="https://docs.microsoft.com/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
         public EventProcessorClient(BlobContainerClient checkpointStore,
                                     string consumerGroup,
@@ -365,7 +365,7 @@ namespace Azure.Messaging.EventHubs
         ///   passed only once, either as part of the connection string or separately.</para>
         /// </remarks>
         ///
-        /// <seealso href="https://docs.microsoft.com/azure/event-hubs/event-hubs-get-connection-string" />
+        /// <seealso href="https://docs.microsoft.com/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
         public EventProcessorClient(BlobContainerClient checkpointStore,
                                     string consumerGroup,
@@ -393,7 +393,7 @@ namespace Azure.Messaging.EventHubs
         ///   passed only once, either as part of the connection string or separately.</para>
         /// </remarks>
         ///
-        /// <seealso href="https://docs.microsoft.com/azure/event-hubs/event-hubs-get-connection-string" />
+        /// <seealso href="https://docs.microsoft.com/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
         public EventProcessorClient(BlobContainerClient checkpointStore,
                                     string consumerGroup,
