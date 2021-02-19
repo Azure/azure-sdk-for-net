@@ -24,7 +24,7 @@ namespace Azure.MixedReality.ObjectAnchors.Tests
         private readonly ObjectAnchorsClientOptions options;
 
         public ObjectAnchorsClientLiveTest(bool isAsync)
-            : base(isAsync, RecordedTestMode.Playback)
+            : base(isAsync)
         {
             //TODO: https://github.com/Azure/autorest.csharp/issues/689
             TestDiagnostics = false;
@@ -41,6 +41,7 @@ namespace Azure.MixedReality.ObjectAnchors.Tests
             string localFilePath = TestEnvironment.AssetLocalFilePath;
             Vector3 assetGravity = new Vector3(TestEnvironment.AssetGravityX, TestEnvironment.AssetGravityY, TestEnvironment.AssetGravityZ);
             float scale = TestEnvironment.AssetScale;
+            Recording.DisableIdReuse();
 
             AzureKeyCredential credential = new AzureKeyCredential(TestEnvironment.AccountKey);
 

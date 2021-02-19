@@ -47,8 +47,6 @@ namespace Azure.MixedReality.ObjectAnchors.Tests.Samples
 
             AssetConversionOperation operation = await client.StartAssetConversionAsync(ingestionJobOptions);
 
-            Guid jobId = new Guid(operation.Id);
-
             await operation.WaitForCompletionAsync();
 
             if (!operation.HasCompletedSuccessfully)
