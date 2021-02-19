@@ -1,14 +1,15 @@
 # Checks spelling of files that changed between the current state of the repo
 # and some ref (branch, tag, etc.) or commit hash. Only runs on PRs.
-# ContinueOnError - true: Pipeline warns on spelling error 
-#                   false: Pipeline fails on spelling error
-# TargetRef       - Target ref (e.g. master) to compare to create file change
-#                   list.
-# CspellConfigPath - Path to cspell.json config location
+# ContinueOnError   - true: Pipeline warns on spelling error 
+#                     false: Pipeline fails on spelling error
+# TargetBranch      - Target ref (e.g. master) to compare to create file change
+#                     list.
+# CspellConfigPath  - Path to cspell.json config location
 
 parameters:
   ContinueOnError: true
-  TargetRef: $(System.PullRequest.TargetBranch)
+  TargetBranch: $(System.PullRequest.TargetBranch)
+  SourceBranch: HEAD
   CspellConfigPath: ./.vscode/cspell.json
 
 steps:
@@ -18,8 +19,9 @@ steps:
       continueOnError: ${{ parameters.ContinueOnError }}
       inputs: 
         targetType: filePath
-        filePath: eng/common/scripts/Test-Spelling.ps1
+        filePath: eng/common/scripts/check-spelling-in-changed-files.ps1
         arguments: >- 
-          -TargetRef "origin/$("${{ parameters.TargetRef }}" -replace "refs/heads/")"
+          -TargetBranch "origin/$("${{ parameters.TargetBranch }}" -replace "refs/heads/")"
+          -SourceBranch ${{ parameters.SourceBranch }}
           -CspellConfigPath ${{ parameters.CspellConfigPath }}
         pwsh: true
