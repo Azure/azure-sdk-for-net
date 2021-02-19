@@ -21,7 +21,7 @@ namespace Azure.MixedReality.ObjectAnchors.Tests
     public class ObjectAnchorsClientLiveTest : RecordedTestBase<ObjectAnchorsClientTestEnvironment>
     {
         public ObjectAnchorsClientLiveTest(bool isAsync)
-            : base(isAsync)
+            : base(isAsync, RecordedTestMode.Record)
         {
             //TODO: https://github.com/Azure/autorest.csharp/issues/689
             TestDiagnostics = false;
@@ -29,7 +29,7 @@ namespace Azure.MixedReality.ObjectAnchors.Tests
             Matcher = new MixedRealityRecordMatcher();
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RunIngestion()
         {
             Recording.DisableIdReuse();
