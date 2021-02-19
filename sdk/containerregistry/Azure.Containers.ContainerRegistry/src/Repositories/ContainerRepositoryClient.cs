@@ -33,6 +33,29 @@ namespace Azure.Containers.ContainerRegistry
             _repositoryName = repositoryName;
         }
 
+        public ContainerRepositoryClient(Uri endpoint, string repositoryName, string username, string password) : this(endpoint, repositoryName, username, password, new ContainerRegistryClientOptions())
+        {
+        }
+
+        public ContainerRepositoryClient(Uri endpoint, string repositoryName, string username, string password, ContainerRegistryClientOptions options)
+        {
+            _repositoryName = repositoryName;
+        }
+
+        /// <summary>
+        /// anonymous access
+        /// </summary>
+        /// <param name="endpoint"></param>
+        /// <param name="repositoryName"></param>
+        public ContainerRepositoryClient(Uri endpoint, string repositoryName) : this(endpoint, repositoryName, new ContainerRegistryClientOptions())
+        {
+        }
+
+        public ContainerRepositoryClient(Uri endpoint, string repositoryName, ContainerRegistryClientOptions options)
+        {
+            _repositoryName = repositoryName;
+        }
+
         /// <summary> Initializes a new instance of ContainerRegistryRepositoryClient for mocking. </summary>
         protected ContainerRepositoryClient()
         {

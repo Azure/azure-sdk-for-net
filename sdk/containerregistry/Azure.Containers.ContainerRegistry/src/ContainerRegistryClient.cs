@@ -21,17 +21,32 @@ namespace Azure.Containers.ContainerRegistry
         private readonly HttpPipeline _pipeline;
         internal ContainerRegistryRestClient RestClient { get; }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ContainerRegistryClient"/>.
-        /// </summary>
         public ContainerRegistryClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new ContainerRegistryClientOptions())
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ContainerRegistryClient"/>.
-        /// </summary>
         public ContainerRegistryClient(Uri endpoint, TokenCredential credential, ContainerRegistryClientOptions options)
+        {
+        }
+
+        public ContainerRegistryClient(Uri endpoint, string username, string password) : this(endpoint, username, password, new ContainerRegistryClientOptions())
+        {
+        }
+
+        public ContainerRegistryClient(Uri endpoint, string username, string password, ContainerRegistryClientOptions options)
+        {
+        }
+
+        public ContainerRegistryClient(Uri endpoint) : this(endpoint, new ContainerRegistryClientOptions())
+        {
+        }
+
+        /// <summary>
+        /// Anonymous access
+        /// </summary>
+        /// <param name="endpoint"></param>
+        /// <param name="options"></param>
+        public ContainerRegistryClient(Uri endpoint, ContainerRegistryClientOptions options)
         {
         }
 

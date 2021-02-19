@@ -38,10 +38,29 @@ namespace Azure.Containers.ContainerRegistry.Blobs
             _repositoryName = repositoryName;
         }
 
+        public ContainerRegistryBlobClient(Uri endpoint, string repositoryName, string username, string password) : this(endpoint, repositoryName, username, password, new ContainerRegistryClientOptions())
+        {
+        }
+
+        public ContainerRegistryBlobClient(Uri endpoint, string repositoryName, string username, string password, ContainerRegistryClientOptions options)
+        {
+            _repositoryName = repositoryName;
+        }
+
+        public ContainerRegistryBlobClient(Uri endpoint, string repositoryName) : this(endpoint, repositoryName, new ContainerRegistryClientOptions())
+        {
+        }
+
+        public ContainerRegistryBlobClient(Uri endpoint, string repositoryName, ContainerRegistryClientOptions options)
+        {
+            _repositoryName = repositoryName;
+        }
+
         /// <summary> Initializes a new instance of ContainerRegistryBlobClient for mocking. </summary>
         protected ContainerRegistryBlobClient()
         {
         }
+
         /// <summary> Initializes a new instance of ContainerRegistryBlobClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
