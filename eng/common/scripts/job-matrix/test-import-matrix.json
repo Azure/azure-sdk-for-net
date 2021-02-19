@@ -1,0 +1,11 @@
+{
+  "matrix": {
+    "Foo": [ "foo1", "foo2" ],
+    "Bar": [ "bar1", "bar2" ]
+  },
+  "include": [
+    {
+      "Baz": "importedBaz"
+    }
+  ]
+}
