@@ -12,11 +12,6 @@ namespace Azure.Storage.Blobs.Models
     [CodeGenModel("SignedIdentifier")]
     public partial class BlobSignedIdentifier
     {
-        /// <summary>
-        /// Creates a new BlobSignedIdentifier instance.
-        /// </summary>
-        public BlobSignedIdentifier() { }
-
         internal BlobSignedIdentifier(string id, BlobAccessPolicy accessPolicy)
         {
             if (id == null)
@@ -30,6 +25,26 @@ namespace Azure.Storage.Blobs.Models
 
             Id = id;
             AccessPolicy = accessPolicy;
+        }
+
+        /// <summary>
+        /// Creates a new BlobSignedIdentifier instance.
+        /// </summary>
+        public BlobSignedIdentifier()
+            : this(false)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new BlobSignedIdentifier instance.
+        /// </summary>
+        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
+        internal BlobSignedIdentifier(bool skipInitialization)
+        {
+            if (!skipInitialization)
+            {
+                AccessPolicy = new Azure.Storage.Blobs.Models.BlobAccessPolicy();
+            }
         }
     }
 }

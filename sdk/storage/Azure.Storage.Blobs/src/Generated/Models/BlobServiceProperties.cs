@@ -13,11 +13,6 @@ namespace Azure.Storage.Blobs.Models
     /// <summary> Storage Service Properties. </summary>
     public partial class BlobServiceProperties
     {
-        /// <summary> Initializes a new instance of BlobServiceProperties. </summary>
-        public BlobServiceProperties()
-        {
-            Cors = new ChangeTrackingList<BlobCorsRule>();
-        }
 
         /// <summary> Initializes a new instance of BlobServiceProperties. </summary>
         /// <param name="logging"> Azure Analytics Logging settings. </param>

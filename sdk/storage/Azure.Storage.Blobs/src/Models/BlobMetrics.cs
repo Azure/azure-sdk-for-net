@@ -20,11 +20,21 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Creates a new BlobMetrics instance.
         /// </summary>
-        public BlobMetrics() { }
-
-        internal BlobMetrics(bool enabled)
+        public BlobMetrics()
+            : this(false)
         {
-            Enabled = enabled;
+        }
+
+        /// <summary>
+        /// Creates a new BlobMetrics instance.
+        /// </summary>
+        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
+        internal BlobMetrics(bool skipInitialization)
+        {
+            if (!skipInitialization)
+            {
+                RetentionPolicy = new Azure.Storage.Blobs.Models.BlobRetentionPolicy();
+            }
         }
     }
 }

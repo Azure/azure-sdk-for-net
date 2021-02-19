@@ -62,7 +62,7 @@ namespace Azure.Storage.Blobs
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
             uri.AppendPath("/", false);
-            uri.AppendPath(containerName, true);
+            uri.AppendPath(containerName, false);
             uri.AppendQuery("restype", "container", true);
             if (timeout != null)
             {
@@ -140,7 +140,7 @@ namespace Azure.Storage.Blobs
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
             uri.AppendPath("/", false);
-            uri.AppendPath(containerName, true);
+            uri.AppendPath(containerName, false);
             uri.AppendQuery("restype", "container", true);
             if (timeout != null)
             {
@@ -200,7 +200,7 @@ namespace Azure.Storage.Blobs
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
             uri.AppendPath("/", false);
-            uri.AppendPath(containerName, true);
+            uri.AppendPath(containerName, false);
             uri.AppendQuery("restype", "container", true);
             if (timeout != null)
             {
@@ -272,7 +272,7 @@ namespace Azure.Storage.Blobs
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
             uri.AppendPath("/", false);
-            uri.AppendPath(containerName, true);
+            uri.AppendPath(containerName, false);
             uri.AppendQuery("restype", "container", true);
             uri.AppendQuery("comp", "metadata", true);
             if (timeout != null)
@@ -345,7 +345,7 @@ namespace Azure.Storage.Blobs
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
             uri.AppendPath("/", false);
-            uri.AppendPath(containerName, true);
+            uri.AppendPath(containerName, false);
             uri.AppendQuery("restype", "container", true);
             uri.AppendQuery("comp", "acl", true);
             if (timeout != null)
@@ -432,7 +432,7 @@ namespace Azure.Storage.Blobs
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
             uri.AppendPath("/", false);
-            uri.AppendPath(containerName, true);
+            uri.AppendPath(containerName, false);
             uri.AppendQuery("restype", "container", true);
             uri.AppendQuery("comp", "acl", true);
             if (timeout != null)
@@ -525,7 +525,7 @@ namespace Azure.Storage.Blobs
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
             uri.AppendPath("/", false);
-            uri.AppendPath(containerName, true);
+            uri.AppendPath(containerName, false);
             uri.AppendQuery("restype", "container", true);
             uri.AppendQuery("comp", "undelete", true);
             if (timeout != null)
@@ -592,7 +592,7 @@ namespace Azure.Storage.Blobs
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
             uri.AppendPath("/", false);
-            uri.AppendPath(containerName, true);
+            uri.AppendPath(containerName, false);
             uri.AppendQuery("restype", "container", true);
             uri.AppendQuery("comp", "rename", true);
             if (timeout != null)
@@ -668,7 +668,7 @@ namespace Azure.Storage.Blobs
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
             uri.AppendPath("/", false);
-            uri.AppendPath(containerName, true);
+            uri.AppendPath(containerName, false);
             uri.AppendQuery("restype", "container", true);
             uri.AppendQuery("comp", "batch", true);
             if (timeout != null)
@@ -759,7 +759,7 @@ namespace Azure.Storage.Blobs
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
             uri.AppendPath("/", false);
-            uri.AppendPath(containerName, true);
+            uri.AppendPath(containerName, false);
             uri.AppendQuery("comp", "lease", true);
             uri.AppendQuery("restype", "container", true);
             if (timeout != null)
@@ -839,7 +839,7 @@ namespace Azure.Storage.Blobs
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
             uri.AppendPath("/", false);
-            uri.AppendPath(containerName, true);
+            uri.AppendPath(containerName, false);
             uri.AppendQuery("comp", "lease", true);
             uri.AppendQuery("restype", "container", true);
             if (timeout != null)
@@ -922,7 +922,7 @@ namespace Azure.Storage.Blobs
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
             uri.AppendPath("/", false);
-            uri.AppendPath(containerName, true);
+            uri.AppendPath(containerName, false);
             uri.AppendQuery("comp", "lease", true);
             uri.AppendQuery("restype", "container", true);
             if (timeout != null)
@@ -1005,7 +1005,7 @@ namespace Azure.Storage.Blobs
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
             uri.AppendPath("/", false);
-            uri.AppendPath(containerName, true);
+            uri.AppendPath(containerName, false);
             uri.AppendQuery("comp", "lease", true);
             uri.AppendQuery("restype", "container", true);
             if (timeout != null)
@@ -1079,7 +1079,7 @@ namespace Azure.Storage.Blobs
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
             uri.AppendPath("/", false);
-            uri.AppendPath(containerName, true);
+            uri.AppendPath(containerName, false);
             uri.AppendQuery("comp", "lease", true);
             uri.AppendQuery("restype", "container", true);
             if (timeout != null)
@@ -1173,7 +1173,7 @@ namespace Azure.Storage.Blobs
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
             uri.AppendPath("/", false);
-            uri.AppendPath(containerName, true);
+            uri.AppendPath(containerName, false);
             uri.AppendQuery("restype", "container", true);
             uri.AppendQuery("comp", "list", true);
             if (prefix != null)
@@ -1268,7 +1268,7 @@ namespace Azure.Storage.Blobs
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
             uri.AppendPath("/", false);
-            uri.AppendPath(containerName, true);
+            uri.AppendPath(containerName, false);
             uri.AppendQuery("restype", "container", true);
             uri.AppendQuery("comp", "list", true);
             if (prefix != null)
@@ -1369,7 +1369,7 @@ namespace Azure.Storage.Blobs
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
             uri.AppendPath("/", false);
-            uri.AppendPath(containerName, true);
+            uri.AppendPath(containerName, false);
             uri.AppendQuery("restype", "account", true);
             uri.AppendQuery("comp", "properties", true);
             request.Uri = uri;

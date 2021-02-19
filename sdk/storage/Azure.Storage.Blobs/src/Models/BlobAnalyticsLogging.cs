@@ -15,7 +15,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Creates a new BlobAnalyticsLogging instance.
         /// </summary>
-        public BlobAnalyticsLogging() { }
+        public BlobAnalyticsLogging() : this(false) { }
 
         internal BlobAnalyticsLogging(
             string version,
@@ -38,6 +38,18 @@ namespace Azure.Storage.Blobs.Models
             Read = read;
             Write = write;
             RetentionPolicy = retentionPolicy;
+        }
+
+        /// <summary>
+        /// Creates a new BlobAnalyticsLogging instance
+        /// </summary>
+        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
+        internal BlobAnalyticsLogging(bool skipInitialization)
+        {
+            if (!skipInitialization)
+            {
+                RetentionPolicy = new Azure.Storage.Blobs.Models.BlobRetentionPolicy();
+            }
         }
     }
 }

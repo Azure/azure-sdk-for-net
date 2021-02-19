@@ -17,13 +17,14 @@ directive:
     delete $.Blob["x-ms-parameter-location"];
 ```
 
-### Don't encode BlobName
+### Don't encode BlobName or 
 ``` yaml
 directive:
 - from: swagger-document
   where: $.parameters
   transform: >
     $.Blob["x-ms-skip-url-encoding"] = true;
+    $.ContainerName["x-ms-skip-url-encoding"] = true;
 ```
 
 ### ErrorCode

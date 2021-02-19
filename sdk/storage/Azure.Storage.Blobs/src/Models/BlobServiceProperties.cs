@@ -18,5 +18,26 @@ namespace Azure.Storage.Blobs.Models
 #pragma warning disable CA2227 // Collection properties should be readonly
         public IList<BlobCorsRule> Cors { get; set; }
 #pragma warning restore CA2227 // Collection properties should be readonly
+
+        /// <summary>
+        /// Creates a new BlobServiceProperties instance.
+        /// </summary>
+        public BlobServiceProperties() : this(false) {}
+
+        /// <summary>
+        /// Creates a new BlobServiceProperties instance.
+        /// </summary>
+        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
+        internal BlobServiceProperties(bool skipInitialization)
+        {
+            if (!skipInitialization)
+            {
+                Logging = new Azure.Storage.Blobs.Models.BlobAnalyticsLogging();
+                HourMetrics = new Azure.Storage.Blobs.Models.BlobMetrics();
+                MinuteMetrics = new Azure.Storage.Blobs.Models.BlobMetrics();
+                DeleteRetentionPolicy = new Azure.Storage.Blobs.Models.BlobRetentionPolicy();
+                StaticWebsite = new Azure.Storage.Blobs.Models.BlobStaticWebsite();
+            }
+        }
     }
 }
