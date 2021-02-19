@@ -8,7 +8,7 @@ Azure Object Anchors enables an application to detect an object in the physical 
   - [Getting started](#getting-started)
     - [Install the package](#install-the-package)
     - [Prerequisites](#prerequisites)
-    - [Construct and authenticate the client](#construct-and-authenticate-the-client)
+    - [Authenticate the client](#authenticate-the-client)
   - [Key concepts](#key-concepts)
     - [ObjectAnchorsClient](#objectanchorsclient)
   - [Examples](#examples)
@@ -16,6 +16,7 @@ Azure Object Anchors enables an application to detect an object in the physical 
     - [Begin Object Anchors asset conversion after uploading an asset](#begin-object-anchors-asset-conversion-after-uploading-an-asset)
     - [Poll an existing ObjectAnchors asset conversion until completion and download the result](#poll-an-existing-objectanchors-asset-conversion-until-completion-and-download-the-result)
   - [Troubleshooting](#troubleshooting)
+  - [Next steps](#next-steps)
   - [Contributing](#contributing)
 
 ## Getting started
@@ -47,7 +48,7 @@ Add a package reference:
 - You must have an [Azure subscription](https://azure.microsoft.com/free/).
 - You must have an [Azure Object Anchors](https://review.docs.microsoft.com/azure/object-anchors/) account.
 
-### Construct and authenticate the client
+### Authenticate the client
 
 Mixed Reality services support a few different forms of authentication:
 
@@ -123,6 +124,10 @@ BlobDownloadInfo downloadInfo = await blobClient.DownloadAsync();
 
 - See [Error Handling](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md#error-handling) for Azure.Identity.
 - See [Logging](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md#logging) for Azure.Identity.
+
+## Next steps
+
+- Read the [Product documentation](https://review.docs.microsoft.com/azure/object-anchors/)
 
 ## Contributing
 
