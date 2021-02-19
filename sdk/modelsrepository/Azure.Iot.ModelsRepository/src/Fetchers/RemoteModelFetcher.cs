@@ -13,6 +13,10 @@ using System.Threading.Tasks;
 
 namespace Azure.Iot.ModelsRepository.Fetchers
 {
+    /// <summary>
+    /// The RemoteModelFetcher is an implementation of IModelFetcher
+    /// for supporting http[s] based model content fetching.
+    /// </summary>
     internal class RemoteModelFetcher : IModelFetcher
     {
         private readonly HttpPipeline _pipeline;
@@ -54,7 +58,9 @@ namespace Azure.Iot.ModelsRepository.Fetchers
                     }
                     catch (Exception)
                     {
-                        remoteFetchError = string.Format(CultureInfo.CurrentCulture, StandardStrings.ErrorFetchingModelContent, tryContentPath);
+                        remoteFetchError =
+                            $"{string.Format(CultureInfo.CurrentCulture, ServiceStrings.GenericResolverError, dtmi)} " +
+                            string.Format(CultureInfo.CurrentCulture, StandardStrings.ErrorFetchingModelContent, tryContentPath);
                     }
                 }
 
@@ -95,7 +101,9 @@ namespace Azure.Iot.ModelsRepository.Fetchers
                     }
                     catch (Exception)
                     {
-                        remoteFetchError = string.Format(CultureInfo.CurrentCulture, StandardStrings.ErrorFetchingModelContent, tryContentPath);
+                        remoteFetchError =
+                            $"{string.Format(CultureInfo.CurrentCulture, ServiceStrings.GenericResolverError, dtmi)} " +
+                            string.Format(CultureInfo.CurrentCulture, StandardStrings.ErrorFetchingModelContent, tryContentPath);
                     }
                 }
 

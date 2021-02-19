@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace Azure.Iot.ModelsRepository.Fetchers
 {
+    /// <summary>
+    /// The IModelFetcher is an abstraction that supports fetching
+    /// model content via a particular protocol or mechanism of interaction.
+    /// </summary>
     internal interface IModelFetcher
     {
         Task<FetchResult> FetchAsync(string dtmi, Uri repositoryUri, CancellationToken cancellationToken = default);

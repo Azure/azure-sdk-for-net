@@ -8,8 +8,8 @@ using System.Text.Json;
 namespace Azure.Iot.ModelsRepository
 {
     /// <summary>
-    /// The <c>ModelQuery</c> class is responsible for parsing DTDL v2 models to produce key metadata.
-    /// In the current form <c>ModelQuery</c> is focused on determining model dependencies recursively
+    /// The ModelQuery class is responsible for parsing DTDL v2 models to produce key metadata.
+    /// In the current form ModelQuery is focused on determining model dependencies recursively
     /// via extends and component schemas.
     /// </summary>
     internal class ModelQuery

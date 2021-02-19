@@ -170,7 +170,7 @@ namespace Azure.Iot.ModelsRepository.Tests
             ModelQuery query = new ModelQuery(expandedContent);
             Dictionary<string, string> transformResult = query.ListToDict();
 
-            // Assert KPI's for TemperatureController;1.
+            // Assert KPIs for TemperatureController;1.
             // Ensure transform of expanded content to dictionary is what we'd expect.
             string[] expectedIds = new string[] {
                 "dtmi:azure:DeviceManagement:DeviceInformation;1",

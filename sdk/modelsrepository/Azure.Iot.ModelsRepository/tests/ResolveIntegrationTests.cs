@@ -27,7 +27,7 @@ namespace Azure.Iot.ModelsRepository.Tests
                 " " +
                 string.Format(ServiceStrings.IncorrectDtmiCasing, "dtmi:com:example:thermostat;1", "dtmi:com:example:Thermostat;1");
 
-            ResolverException re = Assert.ThrowsAsync<ResolverException>(async () => await client.ResolveAsync(dtmi));
+            RequestFailedException re = Assert.ThrowsAsync<RequestFailedException>(async () => await client.ResolveAsync(dtmi));
             Assert.AreEqual(re.Message, expectedExMsg);
         }
 
@@ -38,7 +38,7 @@ namespace Azure.Iot.ModelsRepository.Tests
         {
             ModelsRepoClient client = GetClient(ModelsRepoTestBase.ClientType.Local);
             string expectedExMsg = $"{string.Format(ServiceStrings.GenericResolverError, dtmi)} {string.Format(ServiceStrings.InvalidDtmiFormat, dtmi)}";
-            ResolverException re = Assert.ThrowsAsync<ResolverException>(async () => await client.ResolveAsync(dtmi));
+            RequestFailedException re = Assert.ThrowsAsync<RequestFailedException>(async () => await client.ResolveAsync(dtmi));
             Assert.AreEqual(re.Message, expectedExMsg);
         }
 
@@ -49,7 +49,7 @@ namespace Azure.Iot.ModelsRepository.Tests
             const string dtmi = "dtmi:com:example:thermojax;999";
 
             ModelsRepoClient client = GetClient(clientType);
-            ResolverException re = Assert.ThrowsAsync<ResolverException>(async () => await client.ResolveAsync(dtmi));
+            RequestFailedException re = Assert.ThrowsAsync<RequestFailedException>(async () => await client.ResolveAsync(dtmi));
             Assert.True(re.Message.StartsWith($"Unable to resolve \"{dtmi}\""));
         }
 
@@ -59,7 +59,7 @@ namespace Azure.Iot.ModelsRepository.Tests
             const string invalidDep = "dtmi:azure:fakeDeviceManagement:FakeDeviceInformation;2";
 
             ModelsRepoClient client = GetClient(ModelsRepoTestBase.ClientType.Local);
-            ResolverException resolverException = Assert.ThrowsAsync<ResolverException>(async () => await client.ResolveAsync(dtmi));
+            RequestFailedException resolverException = Assert.ThrowsAsync<RequestFailedException>(async () => await client.ResolveAsync(dtmi));
             Assert.True(resolverException.Message.StartsWith($"Unable to resolve \"{invalidDep}\""));
         }
 

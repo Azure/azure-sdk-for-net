@@ -15,8 +15,8 @@ namespace Azure.Iot.ModelsRepository
         public const string ExpandedJsonFileExtension = ".expanded.json";
 
         /// <summary>
-        /// The <c>ModelRepositoryConstants.ModelProperties</c> class contains DTDL v2 property names and property values
-        /// used by the <c>ModelQuery</c> class to parse DTDL model key indicators.
+        /// The ModelRepositoryConstants.ModelProperties class contains DTDL v2 property names and property values
+        /// used by the ModelQuery class to parse DTDL model key indicators.
         /// </summary>
         internal static class ModelProperties
         {
