@@ -424,7 +424,6 @@ namespace Azure.Storage.Files.DataLake
             DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(uri);
             string fileSystemName = uriBuilder.FileSystemName;
             uriBuilder.FileSystemName = null;
-            // TODO get rid of resource parameter on FileSystemRestClient constructor.
             return new FileSystemRestClient(
                 clientDiagnostics: _clientConfiguration.ClientDiagnostics,
                 pipeline: _clientConfiguration.Pipeline,
