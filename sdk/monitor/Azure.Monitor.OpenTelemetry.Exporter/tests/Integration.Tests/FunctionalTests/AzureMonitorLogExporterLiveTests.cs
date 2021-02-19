@@ -8,7 +8,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.FunctionalTests
     using global::Azure.Core.TestFramework;
 
     using global::OpenTelemetry;
-    using global::OpenTelemetry.Logs;
 
     using Microsoft.Azure.ApplicationInsights.Query;
     using Microsoft.Extensions.DependencyInjection;
@@ -21,16 +20,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.FunctionalTests
     /// </summary>
     public class AzureMonitorLogExporterLiveTests : AzureMonitorTestBase
     {
-        public AzureMonitorLogExporterLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
-        {
-        }
+        public AzureMonitorLogExporterLiveTests(bool isAsync) : base(isAsync) { }
 
-        /// <summary>
-        /// TODO: This test is using <see cref="ApplicationInsightsDataClient"/> that currently can't be mocked for the RecordedTests.
-        /// See: (https://github.com/Azure/azure-sdk-for-net/issues/18853).
-        /// Will change this to [RecordedTest] at a later date.
-        /// </summary>
-        [LiveOnly]
+        [RecordedTest]
         public async Task VerifyLogExporter()
         {
             // SETUP
@@ -64,7 +56,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.FunctionalTests
             await this.WaitForIgnestionAsync();
 
             // VERIFY
-            // TODO: NEED TO WORK WITH PAVEL TO MAKE THIS STUBBABLE SO IT CAN BE USED IN RECORDED TESTS
             var client = await this.GetApplicationInsightsDataClientAsync();
 
             var telemetry = await client.Events.GetTraceEventsAsync(appId: TestEnvironment.ApplicationId, timespan: QueryDuration.TenMinutes);

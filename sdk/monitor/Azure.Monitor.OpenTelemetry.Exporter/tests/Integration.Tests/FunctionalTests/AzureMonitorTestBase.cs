@@ -4,7 +4,11 @@
 namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.FunctionalTests
 {
     using System;
+    using System.Net.Http;
     using System.Threading.Tasks;
+
+    using Azure.Core.Pipeline;
+    using Azure.Identity;
 
     using global::Azure.Core.TestFramework;
 
@@ -20,6 +24,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.FunctionalTests
         public AzureMonitorTestBase(bool isAsync) : base(isAsync) { }
 
         public AzureMonitorTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) { }
+
+        [SetUp]
+        public void SetUp()
+        {
+            /// <see cref="ApplicationInsightsDataClient"/> and <see cref="HttpClient"/> are not fully compatible with the Azure.Core.TestFramework.
+            /// We must disable the Client validation for tests to run.
+            this.ValidateClientInstrumentation = false;
+        }
 
         /// <summary>
         /// We need to have one TEST in this class for NUnit to discover this class.
@@ -74,7 +86,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.FunctionalTests
 
             var creds = await ApplicationTokenProvider.LoginSilentAsync(domain, clientId, clientSecret, adSettings);
 
-            var client = new ApplicationInsightsDataClient(creds);
+            var handler = new HttpPipelineMessageHandler(new HttpPipeline(Recording.CreateTransport(new HttpClientTransport())));
+            var httpClient = new HttpClient(handler);
+
+            var client = new ApplicationInsightsDataClient(credentials: creds, httpClient: httpClient, disposeHttpClient: true);
             return client;
         }
 
