@@ -4,6 +4,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-b0e5f340ef6cac41babdc9d4ca77c180-709d3e394e7e474b-00",
         "User-Agent": [
@@ -35,9 +36,10 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/meta%2Fsegments.json",
+      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/meta/segments.json",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-a095b23427f14f47981fdb187604b761-41793702a846c645-00",
         "User-Agent": [
@@ -85,6 +87,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container\u0026comp=list\u0026prefix=idx%2Fsegments%2F\u0026delimiter=%2F",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200805.1",
@@ -111,6 +114,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container\u0026comp=list\u0026prefix=idx%2Fsegments%2F2020%2F",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200805.1",
@@ -137,6 +141,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/idx%2Fsegments%2F2020%2F08%2F05%2F1700%2Fmeta.json",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-d40e62d5972f9e49a0b587f08ed540eb-0232e54283966944-00",
         "User-Agent": [
@@ -199,6 +204,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container\u0026comp=list\u0026prefix=log%2F00%2F2020%2F08%2F05%2F1700%2F",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200805.1",
@@ -225,6 +231,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log%2F00%2F2020%2F08%2F05%2F1700%2F00000.avro",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-5f937b78fc398240aefb50081484e995-e19ef0323dd9c249-00",
         "User-Agent": [
@@ -263,6 +270,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container\u0026comp=list\u0026prefix=log%2F01%2F2020%2F08%2F05%2F1700%2F",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200805.1",
@@ -289,6 +297,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log%2F01%2F2020%2F08%2F05%2F1700%2F00000.avro",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-5d1bc7da606aa148b0deda464f43f509-60a17fcac8f6fd4c-00",
         "User-Agent": [
@@ -327,6 +336,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container\u0026comp=list\u0026prefix=log%2F02%2F2020%2F08%2F05%2F1700%2F",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200805.1",
@@ -353,6 +363,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log%2F02%2F2020%2F08%2F05%2F1700%2F00000.avro",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-a42efbb2adb39843bae6ef871c7d29e9-1808efd2e1283041-00",
         "User-Agent": [
@@ -391,6 +402,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/idx%2Fsegments%2F2020%2F08%2F05%2F1800%2Fmeta.json",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-33d06de027625a4aa9dd7b150a4fc02a-e962a409a9037249-00",
         "User-Agent": [
@@ -453,6 +465,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container\u0026comp=list\u0026prefix=log%2F00%2F2020%2F08%2F05%2F1800%2F",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200805.1",
@@ -479,6 +492,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log%2F00%2F2020%2F08%2F05%2F1800%2F00000.avro",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-534eec706cc4ef4aac13e26e72433b2c-b3c8e5d7f910434c-00",
         "User-Agent": [
@@ -517,6 +531,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container\u0026comp=list\u0026prefix=log%2F01%2F2020%2F08%2F05%2F1800%2F",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200805.1",
@@ -543,6 +558,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log%2F01%2F2020%2F08%2F05%2F1800%2F00000.avro",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-7c743e53d44bba40b711fcb66b5c6237-8328391f277f154b-00",
         "User-Agent": [
@@ -581,6 +597,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container\u0026comp=list\u0026prefix=log%2F02%2F2020%2F08%2F05%2F1800%2F",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200805.1",
@@ -607,6 +624,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log%2F02%2F2020%2F08%2F05%2F1800%2F00000.avro",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-0baa8615a072534896bfad61f6cc8a7a-9e55e3c90f4a9944-00",
         "User-Agent": [
@@ -645,6 +663,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-44e1367daf3f76418230e5fe009d408e-a86d2e25c847d447-00",
         "User-Agent": [
@@ -676,9 +695,10 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/meta%2Fsegments.json",
+      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/meta/segments.json",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-5ed122c43c88c94d8633550357f7b381-4d9196d2bdbfd84a-00",
         "User-Agent": [
@@ -726,6 +746,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container\u0026comp=list\u0026prefix=idx%2Fsegments%2F\u0026delimiter=%2F",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200805.1",
@@ -752,6 +773,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container\u0026comp=list\u0026prefix=idx%2Fsegments%2F2020%2F",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200805.1",
@@ -778,6 +800,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/idx%2Fsegments%2F2020%2F08%2F05%2F1700%2Fmeta.json",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-0c12e0df06cc8e449199269265003ac2-ec742a88ed3d6b45-00",
         "User-Agent": [
@@ -840,6 +863,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container\u0026comp=list\u0026prefix=log%2F00%2F2020%2F08%2F05%2F1700%2F",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200805.1",
@@ -866,6 +890,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log%2F00%2F2020%2F08%2F05%2F1700%2F00000.avro",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-a2c9cffa4c314b4ca35a990f6aa8e11f-5b99e7ba5e607148-00",
         "User-Agent": [
@@ -904,6 +929,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container\u0026comp=list\u0026prefix=log%2F01%2F2020%2F08%2F05%2F1700%2F",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200805.1",
@@ -930,6 +956,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log%2F01%2F2020%2F08%2F05%2F1700%2F00000.avro",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-f112cac8dc95ce4bbc533738ec9a6d1e-8070d446ea58ca45-00",
         "User-Agent": [
@@ -968,6 +995,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container\u0026comp=list\u0026prefix=log%2F02%2F2020%2F08%2F05%2F1700%2F",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200805.1",
@@ -994,6 +1022,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log%2F02%2F2020%2F08%2F05%2F1700%2F00000.avro",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-f63ecc8530793647a45a242b7f158564-3f1ce0e21b933f48-00",
         "User-Agent": [
@@ -1032,6 +1061,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-64b6c2ae6376ae4a810fa13e018b6a66-b40bd3e62520374f-00",
         "User-Agent": [
@@ -1063,9 +1093,10 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/meta%2Fsegments.json",
+      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/meta/segments.json",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-e7d8ae99bb654b47835e9fd5e45ed826-5499bdf240549a45-00",
         "User-Agent": [
@@ -1113,6 +1144,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container\u0026comp=list\u0026prefix=idx%2Fsegments%2F\u0026delimiter=%2F",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200805.1",
@@ -1139,6 +1171,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container\u0026comp=list\u0026prefix=idx%2Fsegments%2F2020%2F",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200805.1",
@@ -1165,6 +1198,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/idx%2Fsegments%2F2020%2F08%2F05%2F1700%2Fmeta.json",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-b1168b9f4525ce4496f3cb803008304c-3a7c348978207a43-00",
         "User-Agent": [
@@ -1227,6 +1261,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container\u0026comp=list\u0026prefix=log%2F00%2F2020%2F08%2F05%2F1700%2F",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200805.1",
@@ -1253,6 +1288,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log%2F00%2F2020%2F08%2F05%2F1700%2F00000.avro",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-9960d94368a38340a45ce866bd93da39-70e3c04d2c1f3a4a-00",
         "User-Agent": [
@@ -1291,6 +1327,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log%2F00%2F2020%2F08%2F05%2F1700%2F00000.avro",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-11bb9be956a8154cbb1dfb1ef68d3177-1aef47b5271c5f4f-00",
         "User-Agent": [
@@ -1329,6 +1366,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container\u0026comp=list\u0026prefix=log%2F01%2F2020%2F08%2F05%2F1700%2F",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200805.1",
@@ -1355,6 +1393,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log%2F01%2F2020%2F08%2F05%2F1700%2F00000.avro",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-5db0f34bd97a3d4684a2f9735ef86cec-1cdb1561ab007e49-00",
         "User-Agent": [
@@ -1393,6 +1432,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container\u0026comp=list\u0026prefix=log%2F02%2F2020%2F08%2F05%2F1700%2F",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200805.1",
@@ -1419,6 +1459,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log%2F02%2F2020%2F08%2F05%2F1700%2F00000.avro",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-257b053421d7584cb49ccd68fac72b8c-699b124ce36caa47-00",
         "User-Agent": [
@@ -1457,6 +1498,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-4f007f462b56814d9a3cc86fa038c018-1650c1a9e33a0d41-00",
         "User-Agent": [
@@ -1488,9 +1530,10 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/meta%2Fsegments.json",
+      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/meta/segments.json",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-4c7d0728f168044cb63c94a90b056c50-4569933d04116d40-00",
         "User-Agent": [
@@ -1538,6 +1581,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container\u0026comp=list\u0026prefix=idx%2Fsegments%2F\u0026delimiter=%2F",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200805.1",
@@ -1564,6 +1608,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container\u0026comp=list\u0026prefix=idx%2Fsegments%2F2020%2F",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200805.1",
@@ -1590,6 +1635,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/idx%2Fsegments%2F2020%2F08%2F05%2F1700%2Fmeta.json",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-e0d851099f0c3844930a2e295ac97602-f96cb1439a68374d-00",
         "User-Agent": [
@@ -1652,6 +1698,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container\u0026comp=list\u0026prefix=log%2F00%2F2020%2F08%2F05%2F1700%2F",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200805.1",
@@ -1678,6 +1725,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log%2F00%2F2020%2F08%2F05%2F1700%2F00000.avro",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-7e3210b49eaad549a575eeabfd10ae99-c4aa1caecaf42146-00",
         "User-Agent": [
@@ -1716,6 +1764,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log%2F00%2F2020%2F08%2F05%2F1700%2F00000.avro",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-6a2e0ef510ccf7478dcd81573f7714ee-06da9b36a5fea546-00",
         "User-Agent": [
@@ -1754,6 +1803,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container\u0026comp=list\u0026prefix=log%2F01%2F2020%2F08%2F05%2F1700%2F",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200805.1",
@@ -1780,6 +1830,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log%2F01%2F2020%2F08%2F05%2F1700%2F00000.avro",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-aade55689e89264b92df9507da8be9d2-986a64d1960ee647-00",
         "User-Agent": [
@@ -1818,6 +1869,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container\u0026comp=list\u0026prefix=log%2F02%2F2020%2F08%2F05%2F1700%2F",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200805.1",
@@ -1844,6 +1896,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log%2F02%2F2020%2F08%2F05%2F1700%2F00000.avro",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-cf62a47b70cbb8498275a1d5431614df-4ed96c767df09747-00",
         "User-Agent": [
@@ -1882,6 +1935,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/idx%2Fsegments%2F2020%2F08%2F05%2F1800%2Fmeta.json",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-ac33e657047cd040bb3683d3bac990fd-a00ab3742f335140-00",
         "User-Agent": [
@@ -1944,6 +1998,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container\u0026comp=list\u0026prefix=log%2F00%2F2020%2F08%2F05%2F1800%2F",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200805.1",
@@ -1970,6 +2025,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log%2F00%2F2020%2F08%2F05%2F1800%2F00000.avro",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-e42c50837cb8f5409f86e0847afee8b7-e2f842c076f4b244-00",
         "User-Agent": [
@@ -2008,6 +2064,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container\u0026comp=list\u0026prefix=log%2F01%2F2020%2F08%2F05%2F1800%2F",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200805.1",
@@ -2034,6 +2091,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log%2F01%2F2020%2F08%2F05%2F1800%2F00000.avro",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-9a856f0c2d88e9408b6d90404fef3325-6eae0a272ba0804c-00",
         "User-Agent": [
@@ -2072,6 +2130,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container\u0026comp=list\u0026prefix=log%2F02%2F2020%2F08%2F05%2F1800%2F",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200805.1",
@@ -2098,6 +2157,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log%2F02%2F2020%2F08%2F05%2F1800%2F00000.avro",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-d93c069ea2abb64cb313607eeb1c48ba-5217f81d3ab77b49-00",
         "User-Agent": [

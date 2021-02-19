@@ -4,6 +4,7 @@
       "RequestUri": "http://emilydevtest.blob.core.windows.net/$blobchangefeed?restype=container",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-1b3d4386b2847d4fa51456579c894f79-b4844195e5255c45-00",
         "User-Agent": [
@@ -40,9 +41,10 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "http://emilydevtest.blob.core.windows.net/$blobchangefeed/meta%2Fsegments.json",
+      "RequestUri": "http://emilydevtest.blob.core.windows.net/$blobchangefeed/meta/segments.json",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-40931b07532cbd4eb74cc3d4f2fc7794-747d180bbccbed48-00",
         "User-Agent": [
@@ -95,6 +97,7 @@
       "RequestUri": "http://emilydevtest.blob.core.windows.net/$blobchangefeed?restype=container\u0026comp=list\u0026prefix=idx%2Fsegments%2F\u0026delimiter=%2F",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200805.1",
@@ -126,6 +129,7 @@
       "RequestUri": "http://emilydevtest.blob.core.windows.net/$blobchangefeed?restype=container\u0026comp=list\u0026prefix=idx%2Fsegments%2F2020%2F",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200805.1",
@@ -157,6 +161,7 @@
       "RequestUri": "http://emilydevtest.blob.core.windows.net/$blobchangefeed/idx%2Fsegments%2F2020%2F08%2F05%2F1600%2Fmeta.json",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-edda0303d3437a4a88aca0ff299674f9-2cfa9ccbd0578740-00",
         "User-Agent": [
@@ -222,6 +227,7 @@
       "RequestUri": "http://emilydevtest.blob.core.windows.net/$blobchangefeed?restype=container\u0026comp=list\u0026prefix=log%2F00%2F2020%2F08%2F05%2F1600%2F",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200805.1",
@@ -253,6 +259,7 @@
       "RequestUri": "http://emilydevtest.blob.core.windows.net/$blobchangefeed/log%2F00%2F2020%2F08%2F05%2F1600%2F00000.avro",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-0d24269581615e449034db98f09afa51-efd98f27de176942-00",
         "User-Agent": [
@@ -296,6 +303,7 @@
       "RequestUri": "http://emilydevtest.blob.core.windows.net/$blobchangefeed/idx%2Fsegments%2F2020%2F08%2F05%2F1700%2Fmeta.json",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-86896806c7f5ba46801be0f71317b6d7-81f6038483037e45-00",
         "User-Agent": [
@@ -361,6 +369,7 @@
       "RequestUri": "http://emilydevtest.blob.core.windows.net/$blobchangefeed?restype=container\u0026comp=list\u0026prefix=log%2F00%2F2020%2F08%2F05%2F1700%2F",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200805.1",
@@ -392,6 +401,7 @@
       "RequestUri": "http://emilydevtest.blob.core.windows.net/$blobchangefeed/log%2F00%2F2020%2F08%2F05%2F1700%2F00000.avro",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-f1a28f9fcb08984f8bd9800c368ae5e8-ad4d259e6c237440-00",
         "User-Agent": [
@@ -435,6 +445,7 @@
       "RequestUri": "http://emilydevtest.blob.core.windows.net/$blobchangefeed/idx%2Fsegments%2F2020%2F08%2F05%2F1800%2Fmeta.json",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-09e6f3e514277641bc5e5f29b02e6655-17144a96fd9ace48-00",
         "User-Agent": [
@@ -500,6 +511,7 @@
       "RequestUri": "http://emilydevtest.blob.core.windows.net/$blobchangefeed?restype=container\u0026comp=list\u0026prefix=log%2F00%2F2020%2F08%2F05%2F1800%2F",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200805.1",
@@ -531,6 +543,7 @@
       "RequestUri": "http://emilydevtest.blob.core.windows.net/$blobchangefeed/log%2F00%2F2020%2F08%2F05%2F1800%2F00000.avro",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-d072487b616c9d40822b41be87b07e4b-03a504e276b96d43-00",
         "User-Agent": [
