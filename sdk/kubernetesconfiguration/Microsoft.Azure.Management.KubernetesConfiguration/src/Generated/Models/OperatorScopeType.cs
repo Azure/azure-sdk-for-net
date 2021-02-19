@@ -12,10 +12,11 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
 {
 
     /// <summary>
-    /// Defines values for OperatorType.
+    /// Defines values for OperatorScopeType.
     /// </summary>
-    public static class OperatorType
+    public static class OperatorScopeType
     {
-        public const string Flux = "Flux";
+        public const string Cluster = "cluster";
+        public const string Namespace = "namespace";
     }
 }

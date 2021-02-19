@@ -12,10 +12,13 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
 {
 
     /// <summary>
-    /// Defines values for OperatorType.
+    /// Defines values for CreatedByType.
     /// </summary>
-    public static class OperatorType
+    public static class CreatedByType
     {
-        public const string Flux = "Flux";
+        public const string User = "User";
+        public const string Application = "Application";
+        public const string ManagedIdentity = "ManagedIdentity";
+        public const string Key = "Key";
     }
 }

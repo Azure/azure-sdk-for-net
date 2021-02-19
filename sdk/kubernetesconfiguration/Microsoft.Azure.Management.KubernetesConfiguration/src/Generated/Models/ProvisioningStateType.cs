@@ -12,10 +12,14 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
 {
 
     /// <summary>
-    /// Defines values for OperatorType.
+    /// Defines values for ProvisioningStateType.
     /// </summary>
-    public static class OperatorType
+    public static class ProvisioningStateType
     {
-        public const string Flux = "Flux";
+        public const string Accepted = "Accepted";
+        public const string Deleting = "Deleting";
+        public const string Running = "Running";
+        public const string Succeeded = "Succeeded";
+        public const string Failed = "Failed";
     }
 }

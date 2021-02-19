@@ -12,10 +12,14 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
 {
 
     /// <summary>
-    /// Defines values for OperatorType.
+    /// Defines values for ComplianceStateType.
     /// </summary>
-    public static class OperatorType
+    public static class ComplianceStateType
     {
-        public const string Flux = "Flux";
+        public const string Pending = "Pending";
+        public const string Compliant = "Compliant";
+        public const string Noncompliant = "Noncompliant";
+        public const string Installed = "Installed";
+        public const string Failed = "Failed";
     }
 }

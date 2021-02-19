@@ -12,10 +12,12 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
 {
 
     /// <summary>
-    /// Defines values for OperatorType.
+    /// Defines values for MessageLevelType.
     /// </summary>
-    public static class OperatorType
+    public static class MessageLevelType
     {
-        public const string Flux = "Flux";
+        public const string Error = "Error";
+        public const string Warning = "Warning";
+        public const string Information = "Information";
     }
 }
