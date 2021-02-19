@@ -121,8 +121,3 @@ var oboCredential = new OnBehalfOfCredential(clientId, clientSecret, userAccessT
 
 var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), oboCredential);
 ```
-
-## Rotating client certificates
-The `ClientCertificateCredential` in Azure.Identity takes a certificate or certificate path on construction and there is no way to rotate this certificate. We're investigating adding rotation ability directly into the `ClientCertificateCredential`, but in the meantime users can implement their own.
-
-This example implements the `RotatingCertificateCredential` which uses the `ClientCertificateCredential` to obtain tokens.
