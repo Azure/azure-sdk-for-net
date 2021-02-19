@@ -11,21 +11,13 @@ namespace Azure.Identity
     internal class MsalCacheHelperWrapper
     {
         private MsalCacheHelper _helper;
-        private readonly bool _isMock;
 
         /// <summary>
         /// Default Constructor.
         /// </summary>
-        /// <param name="isMock">If true, the MsalCacheHelper will not be initialized when <see cref="InitializeAsync"/> is called.</param>
-        public MsalCacheHelperWrapper(bool isMock)
+        public MsalCacheHelperWrapper()
         {
-            _isMock = isMock;
         }
-
-        /// <summary>
-        /// Constructor for mocking.
-        /// </summary>
-        internal MsalCacheHelperWrapper() { }
 
         /// <summary>
         /// Creates a new instance of Microsoft.Identity.Client.Extensions.Msal.MsalCacheHelper.

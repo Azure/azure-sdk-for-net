@@ -30,7 +30,7 @@ namespace Azure.Identity
         {
             _allowUnencryptedStorage = options?.AllowUnencryptedStorage ?? false;
             _name = options?.Name ?? Constants.DefaultMsalTokenCacheName;
-            _cacheHelperWrapper = new MsalCacheHelperWrapper(false);
+            _cacheHelperWrapper = new MsalCacheHelperWrapper();
         }
 
         internal PersistentTokenCache(PersistentTokenCacheOptions options, MsalCacheHelperWrapper cacheHelperWrapper)
