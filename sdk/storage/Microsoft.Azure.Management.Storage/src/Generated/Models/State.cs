@@ -10,69 +10,16 @@
 
 namespace Microsoft.Azure.Management.Storage.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for State.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum State
+    public static class State
     {
-        [EnumMember(Value = "provisioning")]
-        Provisioning,
-        [EnumMember(Value = "deprovisioning")]
-        Deprovisioning,
-        [EnumMember(Value = "succeeded")]
-        Succeeded,
-        [EnumMember(Value = "failed")]
-        Failed,
-        [EnumMember(Value = "networkSourceDeleted")]
-        NetworkSourceDeleted
-    }
-    internal static class StateEnumExtension
-    {
-        internal static string ToSerializedValue(this State? value)
-        {
-            return value == null ? null : ((State)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this State value)
-        {
-            switch( value )
-            {
-                case State.Provisioning:
-                    return "provisioning";
-                case State.Deprovisioning:
-                    return "deprovisioning";
-                case State.Succeeded:
-                    return "succeeded";
-                case State.Failed:
-                    return "failed";
-                case State.NetworkSourceDeleted:
-                    return "networkSourceDeleted";
-            }
-            return null;
-        }
-
-        internal static State? ParseState(this string value)
-        {
-            switch( value )
-            {
-                case "provisioning":
-                    return State.Provisioning;
-                case "deprovisioning":
-                    return State.Deprovisioning;
-                case "succeeded":
-                    return State.Succeeded;
-                case "failed":
-                    return State.Failed;
-                case "networkSourceDeleted":
-                    return State.NetworkSourceDeleted;
-            }
-            return null;
-        }
+        public const string Provisioning = "provisioning";
+        public const string Deprovisioning = "deprovisioning";
+        public const string Succeeded = "succeeded";
+        public const string Failed = "failed";
+        public const string NetworkSourceDeleted = "networkSourceDeleted";
     }
 }

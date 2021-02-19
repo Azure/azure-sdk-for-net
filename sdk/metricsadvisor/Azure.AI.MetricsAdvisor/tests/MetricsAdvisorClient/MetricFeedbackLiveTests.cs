@@ -12,6 +12,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
 {
     public class MetricFeedbackLiveTests : MetricsAdvisorLiveTestBase
     {
+        private const string ExpectedCity = "Delhi";
+
+        private const string ExpectedCategory = "Handmade";
+
         public MetricFeedbackLiveTests(bool isAsync) : base(isAsync)
         {
         }
@@ -20,38 +24,23 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
         private DateTimeOffset CreatedFeedbackEndTime => DateTimeOffset.Parse("2020-09-29T00:00:00Z");
 
-        /// <param name="populateOptionalMembers">
-        /// When <c>true</c>, all optional properties are populated to make sure values are being passed and returned
-        /// correctly. When <c>false</c>, the test makes sure it's still possible to make a request with the minimum
-        /// configuration and that the responses with <c>null</c> and <c>default</c> values can be parsed by the client.
-        /// </param>
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task AddAndGetAnomalyFeedback(bool populateOptionalMembers)
+        public async Task AddAndGetAnomalyFeedbackWithMinimumSetup(bool useTokenCredential)
         {
-            MetricsAdvisorClient client = GetMetricsAdvisorClient();
+            MetricsAdvisorClient client = GetMetricsAdvisorClient(useTokenCredential);
 
-            var dimensionKey = new DimensionKey();
-            dimensionKey.AddDimensionColumn("city", "Delhi");
-            dimensionKey.AddDimensionColumn("category", "Handmade");
+            var filter = new FeedbackDimensionFilter();
 
-            var filter = new FeedbackDimensionFilter(dimensionKey);
+            filter.DimensionFilter.AddDimensionColumn("city", ExpectedCity);
+            filter.DimensionFilter.AddDimensionColumn("category", ExpectedCategory);
 
             var feedbackToAdd = new MetricAnomalyFeedback(MetricId, filter, CreatedFeedbackStartTime, CreatedFeedbackEndTime, AnomalyValue.AutoDetect);
 
-            if (populateOptionalMembers)
-            {
-                feedbackToAdd.AnomalyDetectionConfigurationId = DetectionConfigurationId;
-            }
+            MetricFeedback addedFeedback = await client.AddFeedbackAsync(feedbackToAdd);
 
-            string feedbackId = await client.AddFeedbackAsync(feedbackToAdd);
-
-            Assert.That(feedbackId, Is.Not.Null);
-
-            MetricFeedback addedFeedback = await client.GetFeedbackAsync(feedbackId);
-
-            ValidateMetricFeedback(addedFeedback, feedbackId, dimensionKey);
+            ValidateMetricFeedback(addedFeedback);
 
             Assert.That(addedFeedback.Type, Is.EqualTo(FeedbackType.Anomaly));
 
@@ -61,17 +50,39 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(anomalyFeedback.AnomalyValue, Is.EqualTo(AnomalyValue.AutoDetect));
             Assert.That(anomalyFeedback.StartTime, Is.EqualTo(CreatedFeedbackStartTime));
             Assert.That(anomalyFeedback.EndTime, Is.EqualTo(CreatedFeedbackEndTime));
+            Assert.That(anomalyFeedback.AnomalyDetectionConfigurationId, Is.Null);
+            Assert.That(anomalyFeedback.AnomalyDetectionConfigurationSnapshot, Is.Null);
+        }
 
-            if (populateOptionalMembers)
+        [RecordedTest]
+        public async Task AddAndGetAnomalyFeedbackWithOptionalDetectionConfigurationFilter()
+        {
+            MetricsAdvisorClient client = GetMetricsAdvisorClient();
+
+            var filter = new FeedbackDimensionFilter();
+
+            filter.DimensionFilter.AddDimensionColumn("city", ExpectedCity);
+            filter.DimensionFilter.AddDimensionColumn("category", ExpectedCategory);
+
+            var feedbackToAdd = new MetricAnomalyFeedback(MetricId, filter, CreatedFeedbackStartTime, CreatedFeedbackEndTime, AnomalyValue.AutoDetect)
             {
-                Assert.That(anomalyFeedback.AnomalyDetectionConfigurationId, Is.EqualTo(DetectionConfigurationId));
-                // TODO: Add snapshot validation (https://github.com/azure/azure-sdk-for-net/issues/15915).
-            }
-            else
-            {
-                Assert.That(anomalyFeedback.AnomalyDetectionConfigurationId, Is.Null);
-                Assert.That(anomalyFeedback.AnomalyDetectionConfigurationSnapshot, Is.Null);
-            }
+                AnomalyDetectionConfigurationId = DetectionConfigurationId
+            };
+
+            MetricFeedback addedFeedback = await client.AddFeedbackAsync(feedbackToAdd);
+
+            ValidateMetricFeedback(addedFeedback);
+
+            Assert.That(addedFeedback.Type, Is.EqualTo(FeedbackType.Anomaly));
+
+            var anomalyFeedback = addedFeedback as MetricAnomalyFeedback;
+
+            Assert.That(anomalyFeedback, Is.Not.Null);
+            Assert.That(anomalyFeedback.AnomalyValue, Is.EqualTo(AnomalyValue.AutoDetect));
+            Assert.That(anomalyFeedback.StartTime, Is.EqualTo(CreatedFeedbackStartTime));
+            Assert.That(anomalyFeedback.EndTime, Is.EqualTo(CreatedFeedbackEndTime));
+            Assert.That(anomalyFeedback.AnomalyDetectionConfigurationId, Is.EqualTo(DetectionConfigurationId));
+            // TODO: Add snapshot validation (https://github.com/azure/azure-sdk-for-net/issues/15915)
         }
 
         [RecordedTest]
@@ -79,21 +90,16 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
-            var dimensionKey = new DimensionKey();
-            dimensionKey.AddDimensionColumn("city", "Delhi");
-            dimensionKey.AddDimensionColumn("category", "Handmade");
+            var filter = new FeedbackDimensionFilter();
 
-            var filter = new FeedbackDimensionFilter(dimensionKey);
+            filter.DimensionFilter.AddDimensionColumn("city", ExpectedCity);
+            filter.DimensionFilter.AddDimensionColumn("category", ExpectedCategory);
 
             var feedbackToAdd = new MetricChangePointFeedback(MetricId, filter, CreatedFeedbackStartTime, CreatedFeedbackEndTime, ChangePointValue.AutoDetect);
 
-            string feedbackId = await client.AddFeedbackAsync(feedbackToAdd);
+            MetricFeedback addedFeedback = await client.AddFeedbackAsync(feedbackToAdd);
 
-            Assert.That(feedbackId, Is.Not.Null);
-
-            MetricFeedback addedFeedback = await client.GetFeedbackAsync(feedbackId);
-
-            ValidateMetricFeedback(addedFeedback, feedbackId, dimensionKey);
+            ValidateMetricFeedback(addedFeedback);
 
             Assert.That(addedFeedback.Type, Is.EqualTo(FeedbackType.ChangePoint));
 
@@ -111,34 +117,22 @@ namespace Azure.AI.MetricsAdvisor.Tests
         /// configuration and that the responses with <c>null</c> and <c>default</c> values can be parsed by the client.
         /// </param>
         [RecordedTest]
-        [TestCase(true)]
-        [TestCase(false)]
-        public async Task AddAndGetCommentFeedback(bool populateOptionalMembers)
+        public async Task AddAndGetCommentFeedbackWithMinimumSetup()
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
-            var dimensionKey = new DimensionKey();
-            dimensionKey.AddDimensionColumn("city", "Delhi");
-            dimensionKey.AddDimensionColumn("category", "Handmade");
+            var filter = new FeedbackDimensionFilter();
 
-            var filter = new FeedbackDimensionFilter(dimensionKey);
+            filter.DimensionFilter.AddDimensionColumn("city", ExpectedCity);
+            filter.DimensionFilter.AddDimensionColumn("category", ExpectedCategory);
+
             var comment = "Feedback created in a .NET test.";
 
             var feedbackToAdd = new MetricCommentFeedback(MetricId, filter, comment);
 
-            if (populateOptionalMembers)
-            {
-                feedbackToAdd.StartTime = CreatedFeedbackStartTime;
-                feedbackToAdd.EndTime = CreatedFeedbackEndTime;
-            }
+            MetricFeedback addedFeedback = await client.AddFeedbackAsync(feedbackToAdd);
 
-            string feedbackId = await client.AddFeedbackAsync(feedbackToAdd);
-
-            Assert.That(feedbackId, Is.Not.Null);
-
-            MetricFeedback addedFeedback = await client.GetFeedbackAsync(feedbackId);
-
-            ValidateMetricFeedback(addedFeedback, feedbackId, dimensionKey);
+            ValidateMetricFeedback(addedFeedback);
 
             Assert.That(addedFeedback.Type, Is.EqualTo(FeedbackType.Comment));
 
@@ -146,17 +140,40 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             Assert.That(commentFeedback, Is.Not.Null);
             Assert.That(commentFeedback.Comment, Is.EqualTo(comment));
+            Assert.That(commentFeedback.StartTime, Is.Null);
+            Assert.That(commentFeedback.EndTime, Is.Null);
+        }
 
-            if (populateOptionalMembers)
+        [RecordedTest]
+        public async Task AddAndGetCommentFeedbackWithOptionalTimeFilters()
+        {
+            MetricsAdvisorClient client = GetMetricsAdvisorClient();
+
+            var filter = new FeedbackDimensionFilter();
+
+            filter.DimensionFilter.AddDimensionColumn("city", ExpectedCity);
+            filter.DimensionFilter.AddDimensionColumn("category", ExpectedCategory);
+
+            var comment = "Feedback created in a .NET test.";
+
+            var feedbackToAdd = new MetricCommentFeedback(MetricId, filter, comment)
             {
-                Assert.That(commentFeedback.StartTime, Is.EqualTo(CreatedFeedbackStartTime));
-                Assert.That(commentFeedback.EndTime, Is.EqualTo(CreatedFeedbackEndTime));
-            }
-            else
-            {
-                Assert.That(commentFeedback.StartTime, Is.Null);
-                Assert.That(commentFeedback.EndTime, Is.Null);
-            }
+                StartTime = CreatedFeedbackStartTime,
+                EndTime = CreatedFeedbackEndTime
+            };
+
+            MetricFeedback addedFeedback = await client.AddFeedbackAsync(feedbackToAdd);
+
+            ValidateMetricFeedback(addedFeedback);
+
+            Assert.That(addedFeedback.Type, Is.EqualTo(FeedbackType.Comment));
+
+            var commentFeedback = addedFeedback as MetricCommentFeedback;
+
+            Assert.That(commentFeedback, Is.Not.Null);
+            Assert.That(commentFeedback.Comment, Is.EqualTo(comment));
+            Assert.That(commentFeedback.StartTime, Is.EqualTo(CreatedFeedbackStartTime));
+            Assert.That(commentFeedback.EndTime, Is.EqualTo(CreatedFeedbackEndTime));
         }
 
         [RecordedTest]
@@ -164,22 +181,18 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
-            var dimensionKey = new DimensionKey();
-            dimensionKey.AddDimensionColumn("city", "Delhi");
-            dimensionKey.AddDimensionColumn("category", "Handmade");
+            var filter = new FeedbackDimensionFilter();
 
-            var filter = new FeedbackDimensionFilter(dimensionKey);
+            filter.DimensionFilter.AddDimensionColumn("city", ExpectedCity);
+            filter.DimensionFilter.AddDimensionColumn("category", ExpectedCategory);
+
             var periodValue = 10;
 
             var feedbackToAdd = new MetricPeriodFeedback(MetricId, filter, PeriodType.AutoDetect, periodValue);
 
-            string feedbackId = await client.AddFeedbackAsync(feedbackToAdd);
+            MetricFeedback addedFeedback = await client.AddFeedbackAsync(feedbackToAdd);
 
-            Assert.That(feedbackId, Is.Not.Null);
-
-            MetricFeedback addedFeedback = await client.GetFeedbackAsync(feedbackId);
-
-            ValidateMetricFeedback(addedFeedback, feedbackId, dimensionKey);
+            ValidateMetricFeedback(addedFeedback);
 
             Assert.That(addedFeedback.Type, Is.EqualTo(FeedbackType.Period));
 
@@ -190,39 +203,16 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(periodFeedback.PeriodValue, Is.EqualTo(periodValue));
         }
 
-        /// <param name="populateOptionalMembers">
-        /// When <c>true</c>, all optional properties are populated to make sure values are being passed and returned
-        /// correctly. When <c>false</c>, the test makes sure it's still possible to make a request with the minimum
-        /// configuration and that the responses with <c>null</c> and <c>default</c> values can be parsed by the client.
-        /// </param>
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task GetAllFeedback(bool populateOptionalMembers)
+        public async Task GetAllFeedbackWithMinimumSetup(bool useTokenCredential)
         {
-            MetricsAdvisorClient client = GetMetricsAdvisorClient();
-
-            // The sampling time range was chosen in a way to make sure there'll be feedback returned by the
-            // service call. Changing these values can make this test fail.
-
-            DateTimeOffset feedbackSamplingStartTime = DateTimeOffset.Parse("2020-12-01T00:00:00Z");
-            DateTimeOffset feedbackSamplingEndTime = DateTimeOffset.Parse("2020-12-31T00:00:00Z");
-
-            var options = new GetAllFeedbackOptions();
-
-            if (populateOptionalMembers)
-            {
-                options.TimeMode = FeedbackQueryTimeMode.FeedbackCreatedTime;
-                options.StartTime = feedbackSamplingStartTime;
-                options.EndTime = feedbackSamplingEndTime;
-                options.FeedbackType = FeedbackType.Comment;
-
-                options.Filter.AddDimensionColumn("city", "Delhi");
-            }
+            MetricsAdvisorClient client = GetMetricsAdvisorClient(useTokenCredential);
 
             var feedbackCount = 0;
 
-            await foreach (MetricFeedback feedback in client.GetAllFeedbackAsync(MetricId, options))
+            await foreach (MetricFeedback feedback in client.GetAllFeedbackAsync(MetricId))
             {
                 Assert.That(feedback, Is.Not.Null);
                 Assert.That(feedback.Id, Is.Not.Null.And.Not.Empty);
@@ -234,18 +224,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(feedback.DimensionFilter.DimensionFilter, Is.Not.Null);
 
                 ValidateGroupKey(feedback.DimensionFilter.DimensionFilter);
-
-                if (populateOptionalMembers)
-                {
-                    Assert.That(feedback.CreatedTime, Is.GreaterThanOrEqualTo(feedbackSamplingStartTime));
-                    Assert.That(feedback.CreatedTime, Is.LessThanOrEqualTo(feedbackSamplingEndTime));
-                    Assert.That(feedback.Type, Is.EqualTo(FeedbackType.Comment));
-
-                    Dictionary<string, string> dimensionColumns = feedback.DimensionFilter.DimensionFilter.AsDictionary();
-
-                    Assert.That(dimensionColumns.ContainsKey("city"));
-                    Assert.That(dimensionColumns["city"], Is.EqualTo("Delhi"));
-                }
 
                 if (feedback.Type == FeedbackType.Anomaly)
                 {
@@ -292,10 +270,69 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(feedbackCount, Is.GreaterThan(0));
         }
 
-        private void ValidateMetricFeedback(MetricFeedback feedback, string expectedFeedbackId, DimensionKey expectedDimensionKey)
+        [RecordedTest]
+        public async Task GetAllFeedbackWithOptionalFeedbackFilter()
+        {
+            MetricsAdvisorClient client = GetMetricsAdvisorClient();
+
+            // The sampling time range was chosen in a way to make sure there'll be feedback returned by the
+            // service call. Changing these values can make this test fail.
+
+            DateTimeOffset feedbackSamplingStartTime = DateTimeOffset.Parse("2020-12-01T00:00:00Z");
+            DateTimeOffset feedbackSamplingEndTime = DateTimeOffset.Parse("2020-12-31T00:00:00Z");
+
+            var options = new GetAllFeedbackOptions()
+            {
+                TimeMode = FeedbackQueryTimeMode.FeedbackCreatedTime,
+                StartTime = feedbackSamplingStartTime,
+                EndTime = feedbackSamplingEndTime,
+                FeedbackType = FeedbackType.Comment,
+            };
+
+            options.Filter.AddDimensionColumn("city", "Delhi");
+
+            var feedbackCount = 0;
+
+            await foreach (MetricFeedback feedback in client.GetAllFeedbackAsync(MetricId, options))
+            {
+                Assert.That(feedback, Is.Not.Null);
+                Assert.That(feedback.Id, Is.Not.Null.And.Not.Empty);
+                Assert.That(feedback.MetricId, Is.EqualTo(MetricId));
+                Assert.That(feedback.UserPrincipal, Is.Not.Null.And.Not.Empty);
+                Assert.That(feedback.CreatedTime, Is.Not.Null);
+                Assert.That(feedback.CreatedTime, Is.GreaterThanOrEqualTo(feedbackSamplingStartTime));
+                Assert.That(feedback.CreatedTime, Is.LessThanOrEqualTo(feedbackSamplingEndTime));
+
+                Assert.That(feedback.DimensionFilter, Is.Not.Null);
+                Assert.That(feedback.DimensionFilter.DimensionFilter, Is.Not.Null);
+
+                ValidateGroupKey(feedback.DimensionFilter.DimensionFilter);
+
+                Dictionary<string, string> dimensionColumns = feedback.DimensionFilter.DimensionFilter.AsDictionary();
+
+                Assert.That(dimensionColumns.ContainsKey("city"));
+                Assert.That(dimensionColumns["city"], Is.EqualTo("Delhi"));
+
+                Assert.That(feedback.Type, Is.EqualTo(FeedbackType.Comment));
+
+                var commentFeedback = feedback as MetricCommentFeedback;
+
+                Assert.That(commentFeedback, Is.Not.Null);
+                Assert.That(commentFeedback.Comment, Is.Not.Null.And.Not.Empty);
+
+                if (++feedbackCount >= MaximumSamplesCount)
+                {
+                    break;
+                }
+            }
+
+            Assert.That(feedbackCount, Is.GreaterThan(0));
+        }
+
+        private void ValidateMetricFeedback(MetricFeedback feedback)
         {
             Assert.That(feedback, Is.Not.Null);
-            Assert.That(feedback.Id, Is.EqualTo(expectedFeedbackId));
+            Assert.That(feedback.Id, Is.Not.Null.And.Not.Empty);
             Assert.That(feedback.MetricId, Is.EqualTo(MetricId));
             Assert.That(feedback.UserPrincipal, Is.Not.Null.And.Not.Empty);
 
@@ -303,7 +340,15 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(feedback.CreatedTime, Is.GreaterThan(justNow));
 
             Assert.That(feedback.DimensionFilter, Is.Not.Null);
-            Assert.That(feedback.DimensionFilter.DimensionFilter, Is.EqualTo(expectedDimensionKey));
+            Assert.That(feedback.DimensionFilter.DimensionFilter, Is.Not.Null);
+
+            var dimensionColumns = feedback.DimensionFilter.DimensionFilter.AsDictionary();
+
+            Assert.That(dimensionColumns.Count, Is.EqualTo(2));
+            Assert.That(dimensionColumns.ContainsKey("city"));
+            Assert.That(dimensionColumns.ContainsKey("category"));
+            Assert.That(dimensionColumns["city"], Is.EqualTo(ExpectedCity));
+            Assert.That(dimensionColumns["category"], Is.EqualTo(ExpectedCategory));
         }
     }
 }

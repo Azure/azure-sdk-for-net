@@ -25,12 +25,12 @@ namespace Azure.AI.TextAnalytics.Tests
 
             if (useTokenCredential)
             {
-                return new TextAnalyticsClient(endpoint, TestEnvironment.Credential, InstrumentClientOptions(options));
+                return InstrumentClient(new TextAnalyticsClient(endpoint, TestEnvironment.Credential, InstrumentClientOptions(options)));
             }
             else
             {
                 credential ??= new AzureKeyCredential(TestEnvironment.ApiKey);
-                return new TextAnalyticsClient(endpoint, credential, InstrumentClientOptions(options));
+                return InstrumentClient(new TextAnalyticsClient(endpoint, credential, InstrumentClientOptions(options)));
             }
         }
     }

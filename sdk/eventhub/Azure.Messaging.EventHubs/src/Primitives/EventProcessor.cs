@@ -264,7 +264,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   Event Hub will result in a connection string that contains the name.
         /// </remarks>
         ///
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string"/>
+        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
         protected EventProcessor(int eventBatchMaximumCount,
                                  string consumerGroup,
@@ -289,7 +289,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   passed only once, either as part of the connection string or separately.
         /// </remarks>
         ///
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string"/>
+        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
         protected EventProcessor(int eventBatchMaximumCount,
                                  string consumerGroup,
@@ -764,6 +764,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <summary>
         ///   Produces a list of the available checkpoints for the Event Hub and consumer group associated with the
         ///   event processor instance, so that processing for a given set of partitions can be properly initialized.
+        ///   It's recommended that <see cref="GetCheckpointAsync"/> is implemented as well as <see cref="ListCheckpointsAsync"/> to achieve an optimal performance.
         /// </summary>
         ///
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the processing.  This is most likely to occur when the processor is shutting down.</param>
@@ -780,6 +781,41 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// </remarks>
         ///
         protected abstract Task<IEnumerable<EventProcessorCheckpoint>> ListCheckpointsAsync(CancellationToken cancellationToken);
+
+        /// <summary>
+        ///   Returns a checkpoint for the Event Hub, consumer group, and identifier of the partition associated with the
+        ///   event processor instance, so that processing for a given partition can be properly initialized.
+        ///   The default implementation calls the <see cref="ListCheckpointsAsync"/> and filters results by <see cref="EventProcessorCheckpoint.PartitionId"/>.
+        ///   It's recommended that this method is overriden in <see cref="EventProcessor{TPartition}"/> implementations to achieve an optimal performance.
+        /// </summary>
+        ///
+        /// <param name="partitionId">The identifier of the partition for which to retrieve the checkpoint.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the processing.  This is most likely to occur when the processor is shutting down.</param>
+        ///
+        /// <returns>The checkpoint for the processor to take into account when initializing partition.</returns>
+        ///
+        /// <remarks>
+        ///   Should a partition not have a corresponding checkpoint, the <see cref="EventProcessorOptions.DefaultStartingPosition" /> will
+        ///   be used to initialize the partition for processing.
+        ///
+        ///   In the event that a custom starting point is desired for a single partition, or each partition should start at a unique place,
+        ///   it is recommended that this method express that intent by returning checkpoints for those partitions with the desired custom
+        ///   starting location set.
+        /// </remarks>
+        ///
+        protected virtual async Task<EventProcessorCheckpoint> GetCheckpointAsync(string partitionId,
+                                                                                  CancellationToken cancellationToken)
+        {
+            foreach (var checkpoint in await ListCheckpointsAsync(cancellationToken).ConfigureAwait(false))
+            {
+                if (checkpoint.PartitionId == partitionId)
+                {
+                    return checkpoint;
+                }
+            }
+
+            return null;
+        }
 
         /// <summary>
         ///   Produces a list of the ownership assignments for partitions between each of the cooperating event processor
@@ -1357,18 +1393,13 @@ namespace Azure.Messaging.EventHubs.Primitives
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
                 operationDescription = Resources.OperationListCheckpoints;
 
-                var checkpoints = await ListCheckpointsAsync(cancellationToken).ConfigureAwait(false);
-                operationDescription = Resources.OperationClaimOwnership;
-
                 // Determine the starting position for processing the partition.
 
-                foreach (var checkpoint in checkpoints)
+                var checkpoint = await GetCheckpointAsync(partitionId, cancellationToken).ConfigureAwait(false);
+                operationDescription = Resources.OperationClaimOwnership;
+                if (checkpoint != null)
                 {
-                    if (checkpoint.PartitionId == partitionId)
-                    {
-                        startingPosition = checkpoint.StartingPosition;
-                        break;
-                    }
+                    startingPosition = checkpoint.StartingPosition;
                 }
 
                 // Create and register the partition processor.  Ownership of the cancellationSource is transferred
@@ -1604,6 +1635,21 @@ namespace Azure.Messaging.EventHubs.Primitives
             public override Task UpdateCheckpointAsync(EventProcessorCheckpoint checkpoint,
                                                        EventData eventData,
                                                        CancellationToken cancellationToken) => throw new NotImplementedException();
+
+            /// <summary>
+            ///   Retrieves a checkpoint information from the chosen storage service. The default implementation calls <see cref="ListCheckpointsAsync"/> and selects a checkpoint by id.
+            /// </summary>
+            ///
+            /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the ownership are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+            /// <param name="eventHubName">The name of the specific Event Hub the ownership are associated with, relative to the Event Hubs namespace that contains it.</param>
+            /// <param name="consumerGroup">The name of the consumer group the ownership are associated with.</param>
+            /// <param name="partitionId">The identifier of the partition to read a checkpoint for.</param>
+            /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
+            ///
+            /// <returns>An <see cref="EventProcessorCheckpoint"/> instance if a checkpoint is found for a particular partition otherwise, <code>null</code>.</returns>
+            ///
+            public override async Task<EventProcessorCheckpoint> GetCheckpointAsync(string fullyQualifiedNamespace, string eventHubName, string consumerGroup, string partitionId, CancellationToken cancellationToken)
+                => await Processor.GetCheckpointAsync(partitionId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

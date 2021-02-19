@@ -36,13 +36,6 @@ namespace Azure.Search.Documents.Tests
         public const string CognitiveKeyVariableName = "SEARCH_COGNITIVE_KEY";
 
         /// <summary>
-        /// Creates a new instance of the <see cref="SearchTestEnvironment"/> class.
-        /// </summary>
-        public SearchTestEnvironment() : base("search")
-        {
-        }
-
-        /// <summary>
         /// Gets the service name.
         /// </summary>
         public string SearchServiceName => GetRecordedVariable("SEARCH_SERVICE_NAME");
@@ -71,6 +64,11 @@ namespace Azure.Search.Documents.Tests
         /// Gets the Cognitive Services key for skillsets.
         /// </summary>
         public string SearchCognitiveKey => GetRecordedVariable(CognitiveKeyVariableName);
+
+        /// <summary>
+        /// Gets the search service suffix.
+        /// </summary>
+        public string SearchEndpointSuffix => GetRecordedOptionalVariable("SEARCH_ENDPOINT_SUFFIX") ?? "search.windows.net";
 
         /// <summary>
         /// Gets the optional Key Vault URL used for double-encrypted indexes.

@@ -16,6 +16,7 @@ using Azure.Messaging.ServiceBus.Primitives;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Encoding;
 using Microsoft.Azure.Amqp.Framing;
+using Microsoft.Azure.Amqp.Transaction;
 
 namespace Azure.Messaging.ServiceBus.Amqp
 {
@@ -70,8 +71,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private readonly ServiceBusReceiveMode _receiveMode;
         private readonly string _identifier;
         private readonly FaultTolerantAmqpObject<ReceivingAmqpLink> _receiveLink;
-
         private readonly FaultTolerantAmqpObject<RequestResponseAmqpLink> _managementLink;
+        private readonly string _transactionGroup;
 
         /// <summary>
         /// Gets the sequence number of the last peeked message.
@@ -82,7 +83,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// The Session Id associated with the receiver.
         /// </summary>
         public override string SessionId { get; protected set; }
-
         public override DateTimeOffset SessionLockedUntil { get; protected set; }
 
         private Exception LinkException { get; set; }
@@ -104,6 +104,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="identifier"></param>
         /// <param name="sessionId"></param>
         /// <param name="isSessionReceiver"></param>
+        /// <param name="transactionGroup"></param>
         ///
         /// <remarks>
         /// As an internal type, this class performs only basic sanity checks against its arguments.  It
@@ -121,7 +122,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
             ServiceBusRetryPolicy retryPolicy,
             string identifier,
             string sessionId,
-            bool isSessionReceiver)
+            bool isSessionReceiver,
+            string transactionGroup)
         {
             Argument.AssertNotNullOrEmpty(entityPath, nameof(entityPath));
             Argument.AssertNotNull(connectionScope, nameof(connectionScope));
@@ -135,6 +137,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             _identifier = identifier;
             _requestResponseLockedMessages = new ConcurrentExpiringSet<Guid>();
             SessionId = sessionId;
+            _transactionGroup = transactionGroup;
 
             _receiveLink = new FaultTolerantAmqpObject<ReceivingAmqpLink>(
                 timeout =>
@@ -142,7 +145,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         timeout: timeout,
                         prefetchCount: prefetchCount,
                         receiveMode: receiveMode,
-                        isSessionReceiver: isSessionReceiver),
+                        isSessionReceiver: isSessionReceiver,
+                        identifier: identifier,
+                        transactionGroup: transactionGroup),
                 link => CloseLink(link));
 
             _managementLink = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(
@@ -166,19 +171,23 @@ namespace Azure.Messaging.ServiceBus.Amqp
             TimeSpan timeout,
             uint prefetchCount,
             ServiceBusReceiveMode receiveMode,
-            bool isSessionReceiver)
+            bool isSessionReceiver,
+            string identifier,
+            string transactionGroup)
         {
             ServiceBusEventSource.Log.CreateReceiveLinkStart(_identifier);
 
             try
             {
                 ReceivingAmqpLink link = await _connectionScope.OpenReceiverLinkAsync(
+                    identifier: identifier,
                     entityPath: _entityPath,
                     timeout: timeout,
                     prefetchCount: prefetchCount,
                     receiveMode: receiveMode,
                     sessionId: SessionId,
                     isSessionReceiver: isSessionReceiver,
+                    transactionGroup: transactionGroup,
                     cancellationToken: CancellationToken.None).ConfigureAwait(false);
                 if (isSessionReceiver)
                 {
@@ -404,6 +413,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     transactionId = await AmqpTransactionManager.Instance.EnlistAsync(
                         ambientTransaction,
                         _connectionScope,
+                        _transactionGroup,
                         timeout).ConfigureAwait(false);
                 }
 
@@ -994,6 +1004,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 _connectionScope,
                 _managementLink,
                 amqpRequestMessage,
+                _transactionGroup,
                 timeout).ConfigureAwait(false);
             return amqpResponseMessage;
         }

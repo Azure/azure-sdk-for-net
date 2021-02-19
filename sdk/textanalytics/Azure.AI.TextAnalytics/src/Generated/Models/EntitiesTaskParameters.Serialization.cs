@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
 {
-    public partial class EntitiesTaskParameters : IUtf8JsonSerializable
+    internal partial class EntitiesTaskParameters : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -23,7 +23,7 @@ namespace Azure.AI.TextAnalytics
             if (Optional.IsDefined(StringIndexType))
             {
                 writer.WritePropertyName("stringIndexType");
-                writer.WriteStringValue(StringIndexType.Value.ToString());
+                writer.WriteStringValue(StringIndexType.ToString());
             }
             writer.WriteEndObject();
         }

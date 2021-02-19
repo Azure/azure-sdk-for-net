@@ -6,7 +6,6 @@ using Microsoft.Azure.Management.RedisEnterprise;
 using Microsoft.Azure.Management.RedisEnterprise.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System.Collections.Generic;
-using System;
 using Xunit;
 using Microsoft.Azure.Management.ResourceManager;
 
@@ -26,19 +25,19 @@ namespace AzureRedisEnterpriseCache.Tests
         {
             using (var context = MockContext.Start(this.GetType()))
             {
-                var _client = RedisEnterpriseCacheManagementTestUtilities.GetRedisEnterpriseManagementClient(this, context);
+                RedisEnterpriseManagementClient _client = RedisEnterpriseCacheManagementTestUtilities.GetRedisEnterpriseManagementClient(this, context);
 
-                var responseCreate = _client.RedisEnterprise.Create(resourceGroupName: fixture.ResourceGroupName, clusterName: fixture.RedisEnterpriseCacheName,
-                                        parameters: new Cluster
-                                        {
-                                            Location = RedisEnterpriseCacheManagementHelper.Location,
-                                            Sku = new Sku()
-                                            {
-                                                Name = SkuName.EnterpriseFlashF300,
-                                                Capacity = 3
-                                            },
-                                            Zones = new List<string> { "1", "2", "3" },
-                                        });
+                Cluster responseCreate = _client.RedisEnterprise.Create(resourceGroupName: fixture.ResourceGroupName, clusterName: fixture.RedisEnterpriseCacheName,
+                                         parameters: new Cluster
+                                         {
+                                             Location = RedisEnterpriseCacheManagementHelper.Location,
+                                             Sku = new Sku()
+                                             {
+                                                 Name = SkuName.EnterpriseFlashF300,
+                                                 Capacity = 3
+                                             },
+                                             Zones = new List<string> { "1", "2", "3" },
+                                         });
 
                 Assert.Contains(fixture.RedisEnterpriseCacheName, responseCreate.Id);
                 Assert.Equal(RedisEnterpriseCacheManagementHelper.Location, responseCreate.Location);
@@ -52,13 +51,13 @@ namespace AzureRedisEnterpriseCache.Tests
                 Assert.Equal(0, responseCreate.PrivateEndpointConnections.Count);
                 Assert.Equal(0, responseCreate.Tags.Count);
 
-                var responseCreateDatabase = _client.Databases.Create(resourceGroupName: fixture.ResourceGroupName, clusterName: fixture.RedisEnterpriseCacheName, databaseName: fixture.DatabaseName,
-                                                parameters: new Database
-                                                {
-                                                    ClientProtocol = Protocol.Plaintext,
-                                                    ClusteringPolicy = ClusteringPolicy.EnterpriseCluster,
-                                                    EvictionPolicy = EvictionPolicy.VolatileLRU,
-                                                });
+                Database responseCreateDatabase = _client.Databases.Create(resourceGroupName: fixture.ResourceGroupName, clusterName: fixture.RedisEnterpriseCacheName, databaseName: fixture.DatabaseName,
+                                                  parameters: new Database
+                                                  {
+                                                      ClientProtocol = Protocol.Plaintext,
+                                                      ClusteringPolicy = ClusteringPolicy.EnterpriseCluster,
+                                                      EvictionPolicy = EvictionPolicy.VolatileLRU,
+                                                  });
 
                 Assert.Contains(fixture.DatabaseName, responseCreateDatabase.Id);
                 Assert.Equal(fixture.DatabaseName, responseCreateDatabase.Name);
@@ -71,11 +70,11 @@ namespace AzureRedisEnterpriseCache.Tests
 
                 // Database update operations are not currently supported
                 /*
-                var responseUpdateDatabase = _client.Databases.Update(resourceGroupName: fixture.ResourceGroupName, clusterName: fixture.RedisEnterpriseCacheName, databaseName: fixture.DatabaseName,
-                                                parameters: new DatabaseUpdate
-                                                {
-                                                    ClientProtocol = Protocol.Encrypted,
-                                                });
+                Database responseUpdateDatabase = _client.Databases.Update(resourceGroupName: fixture.ResourceGroupName, clusterName: fixture.RedisEnterpriseCacheName, databaseName: fixture.DatabaseName,
+                                                  parameters: new DatabaseUpdate
+                                                  {
+                                                      ClientProtocol = Protocol.Encrypted,
+                                                  });
 
                 Assert.Contains(fixture.DatabaseName, responseUpdateDatabase.Id);
                 Assert.Equal(fixture.DatabaseName, responseUpdateDatabase.Name);

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> type = default;
             string location = default;
             Optional<IDictionary<string, string>> tags = default;
-            Optional<GalleryArtifactPublishingProfileBase> publishingProfile = default;
+            Optional<GalleryImageVersionPublishingProfile> publishingProfile = default;
             Optional<GalleryImageVersionPropertiesProvisioningState> provisioningState = default;
             Optional<GalleryImageVersionStorageProfile> storageProfile = default;
             Optional<ReplicationStatus> replicationStatus = default;
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Compute.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            publishingProfile = GalleryArtifactPublishingProfileBase.DeserializeGalleryArtifactPublishingProfileBase(property0.Value);
+                            publishingProfile = GalleryImageVersionPublishingProfile.DeserializeGalleryImageVersionPublishingProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))

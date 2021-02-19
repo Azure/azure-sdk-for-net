@@ -31,6 +31,8 @@ namespace Azure.Storage.Test.Shared
 #if !NETCOREAPP
             ServicePointManager.DefaultConnectionLimit = int.MaxValue;
 #endif
+            // To avoid threadpool starvation when we run live tests in parallel.
+            ThreadPool.SetMinThreads(100, 100);
         }
 
         public StorageTestBase(bool async, RecordedTestMode? mode = null)
@@ -180,13 +182,6 @@ namespace Azure.Storage.Test.Shared
         }
 
         public DateTimeOffset GetUtcNow() => Recording.UtcNow;
-
-        protected HttpPipelineTransport GetTransport() =>
-            new HttpClientTransport(
-                new HttpClient()
-                {
-                    Timeout = TestConstants.HttpTimeoutDuration
-                });
 
         public byte[] GetRandomBuffer(long size)
             => TestHelper.GetRandomBuffer(size, Recording.Random);

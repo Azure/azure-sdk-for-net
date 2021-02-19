@@ -46,7 +46,9 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// role.</param>
         /// <param name="scriptActions">The list of script actions on the
         /// role.</param>
-        public Role(string name = default(string), int? minInstanceCount = default(int?), int? targetInstanceCount = default(int?), Autoscale autoscaleConfiguration = default(Autoscale), HardwareProfile hardwareProfile = default(HardwareProfile), OsProfile osProfile = default(OsProfile), VirtualNetworkProfile virtualNetworkProfile = default(VirtualNetworkProfile), IList<DataDisksGroups> dataDisksGroups = default(IList<DataDisksGroups>), IList<ScriptAction> scriptActions = default(IList<ScriptAction>))
+        /// <param name="encryptDataDisks">Indicates whether encrypt the data
+        /// disks.</param>
+        public Role(string name = default(string), int? minInstanceCount = default(int?), int? targetInstanceCount = default(int?), Autoscale autoscaleConfiguration = default(Autoscale), HardwareProfile hardwareProfile = default(HardwareProfile), OsProfile osProfile = default(OsProfile), VirtualNetworkProfile virtualNetworkProfile = default(VirtualNetworkProfile), IList<DataDisksGroups> dataDisksGroups = default(IList<DataDisksGroups>), IList<ScriptAction> scriptActions = default(IList<ScriptAction>), bool? encryptDataDisks = default(bool?))
         {
             Name = name;
             MinInstanceCount = minInstanceCount;
@@ -57,6 +59,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
             VirtualNetworkProfile = virtualNetworkProfile;
             DataDisksGroups = dataDisksGroups;
             ScriptActions = scriptActions;
+            EncryptDataDisks = encryptDataDisks;
             CustomInit();
         }
 
@@ -118,6 +121,12 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// </summary>
         [JsonProperty(PropertyName = "scriptActions")]
         public IList<ScriptAction> ScriptActions { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates whether encrypt the data disks.
+        /// </summary>
+        [JsonProperty(PropertyName = "encryptDataDisks")]
+        public bool? EncryptDataDisks { get; set; }
 
     }
 }

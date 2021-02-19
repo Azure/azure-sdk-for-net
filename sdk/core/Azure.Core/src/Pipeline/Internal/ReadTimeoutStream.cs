@@ -92,7 +92,7 @@ namespace Azure.Core.Pipeline
         private void InitializeTokenSource()
         {
             _cancellationTokenSource = new CancellationTokenSource();
-            _cancellationTokenSource.Token.Register(() => DisposeStream());
+            _cancellationTokenSource.Token.Register(static state => ((ReadTimeoutStream)state!).DisposeStream(), this);
         }
 
         private void DisposeStream()
@@ -138,7 +138,10 @@ namespace Azure.Core.Pipeline
         {
             try
             {
-                _stream.ReadTimeout = (int) _readTimeout.TotalMilliseconds;
+                if (_stream.CanTimeout)
+                {
+                    _stream.ReadTimeout = (int) _readTimeout.TotalMilliseconds;
+                }
             }
             catch
             {

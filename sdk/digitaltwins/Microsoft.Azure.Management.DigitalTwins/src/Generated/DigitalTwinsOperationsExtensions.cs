@@ -13,8 +13,6 @@ namespace Microsoft.Azure.Management.DigitalTwins
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -127,12 +125,12 @@ namespace Microsoft.Azure.Management.DigitalTwins
             /// <param name='resourceName'>
             /// The name of the DigitalTwinsInstance.
             /// </param>
-            /// <param name='tags'>
-            /// Instance tags
+            /// <param name='digitalTwinsPatchDescription'>
+            /// The DigitalTwinsInstance and security metadata.
             /// </param>
-            public static DigitalTwinsDescription Update(this IDigitalTwinsOperations operations, string resourceGroupName, string resourceName, IDictionary<string, string> tags = default(IDictionary<string, string>))
+            public static DigitalTwinsDescription Update(this IDigitalTwinsOperations operations, string resourceGroupName, string resourceName, DigitalTwinsPatchDescription digitalTwinsPatchDescription)
             {
-                return operations.UpdateAsync(resourceGroupName, resourceName, tags).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, resourceName, digitalTwinsPatchDescription).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -147,15 +145,15 @@ namespace Microsoft.Azure.Management.DigitalTwins
             /// <param name='resourceName'>
             /// The name of the DigitalTwinsInstance.
             /// </param>
-            /// <param name='tags'>
-            /// Instance tags
+            /// <param name='digitalTwinsPatchDescription'>
+            /// The DigitalTwinsInstance and security metadata.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DigitalTwinsDescription> UpdateAsync(this IDigitalTwinsOperations operations, string resourceGroupName, string resourceName, IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DigitalTwinsDescription> UpdateAsync(this IDigitalTwinsOperations operations, string resourceGroupName, string resourceName, DigitalTwinsPatchDescription digitalTwinsPatchDescription, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, resourceName, tags, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, resourceName, digitalTwinsPatchDescription, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -350,6 +348,52 @@ namespace Microsoft.Azure.Management.DigitalTwins
             public static async Task<DigitalTwinsDescription> BeginCreateOrUpdateAsync(this IDigitalTwinsOperations operations, string resourceGroupName, string resourceName, DigitalTwinsDescription digitalTwinsCreate, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, resourceName, digitalTwinsCreate, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Update metadata of DigitalTwinsInstance.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the DigitalTwinsInstance.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the DigitalTwinsInstance.
+            /// </param>
+            /// <param name='digitalTwinsPatchDescription'>
+            /// The DigitalTwinsInstance and security metadata.
+            /// </param>
+            public static DigitalTwinsDescription BeginUpdate(this IDigitalTwinsOperations operations, string resourceGroupName, string resourceName, DigitalTwinsPatchDescription digitalTwinsPatchDescription)
+            {
+                return operations.BeginUpdateAsync(resourceGroupName, resourceName, digitalTwinsPatchDescription).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Update metadata of DigitalTwinsInstance.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the DigitalTwinsInstance.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the DigitalTwinsInstance.
+            /// </param>
+            /// <param name='digitalTwinsPatchDescription'>
+            /// The DigitalTwinsInstance and security metadata.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<DigitalTwinsDescription> BeginUpdateAsync(this IDigitalTwinsOperations operations, string resourceGroupName, string resourceName, DigitalTwinsPatchDescription digitalTwinsPatchDescription, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, resourceName, digitalTwinsPatchDescription, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

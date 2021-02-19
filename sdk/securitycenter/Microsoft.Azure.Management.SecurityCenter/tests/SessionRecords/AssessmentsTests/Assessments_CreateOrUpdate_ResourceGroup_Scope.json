@@ -1,0 +1,140 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/providers/Microsoft.Security/assessmentMetadata/9b0c3939-c9db-4ffc-ad4b-4673ff25cdd8?api-version=2020-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDg3YmI0ODUtYjViMC00NzFlLTljMGQtMTA3MTc2MTJmODY5L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VjdXJpdHkvYXNzZXNzbWVudE1ldGFkYXRhLzliMGMzOTM5LWM5ZGItNGZmYy1hZDRiLTQ2NzNmZjI1Y2RkOD9hcGktdmVyc2lvbj0yMDIwLTAxLTAx",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"Customer managed metadata\",\r\n    \"description\": \"Customer managed description\",\r\n    \"severity\": \"Low\",\r\n    \"assessmentType\": \"CustomerManaged\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "dc6391d7-e470-4b6e-8e51-70e2a0b37fda"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Security.SecurityCenterClient/2.2.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "194"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1196"
+        ],
+        "x-ms-request-id": [
+          "1cd5aeb2-7f9a-4c6d-88db-4beaae11b0af"
+        ],
+        "x-ms-correlation-request-id": [
+          "1cd5aeb2-7f9a-4c6d-88db-4beaae11b0af"
+        ],
+        "x-ms-routing-request-id": [
+          "UKSOUTH:20201202T194908Z:1cd5aeb2-7f9a-4c6d-88db-4beaae11b0af"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 02 Dec 2020 19:49:07 GMT"
+        ],
+        "Content-Length": [
+          "417"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/providers/Microsoft.Security/assessmentMetadata/9b0c3939-c9db-4ffc-ad4b-4673ff25cdd8\",\r\n  \"name\": \"9b0c3939-c9db-4ffc-ad4b-4673ff25cdd8\",\r\n  \"type\": \"Microsoft.Security/assessmentMetadata\",\r\n  \"properties\": {\r\n    \"displayName\": \"Customer managed metadata\",\r\n    \"assessmentType\": \"CustomerManaged\",\r\n    \"description\": \"Customer managed description\",\r\n    \"categories\": [\r\n      \"Unknown\"\r\n    ],\r\n    \"severity\": \"Low\"\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "//subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/resourceGroups/myService1/providers/Microsoft.OperationalInsights/workspaces/TestServiceWS/providers/Microsoft.Security/assessments/9b0c3939-c9db-4ffc-ad4b-4673ff25cdd8?api-version=2020-01-01",
+      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zLzQ4N2JiNDg1LWI1YjAtNDcxZS05YzBkLTEwNzE3NjEyZjg2OS9yZXNvdXJjZUdyb3Vwcy9teVNlcnZpY2UxL3Byb3ZpZGVycy9NaWNyb3NvZnQuT3BlcmF0aW9uYWxJbnNpZ2h0cy93b3Jrc3BhY2VzL1Rlc3RTZXJ2aWNlV1MvcHJvdmlkZXJzL01pY3Jvc29mdC5TZWN1cml0eS9hc3Nlc3NtZW50cy85YjBjMzkzOS1jOWRiLTRmZmMtYWQ0Yi00NjczZmYyNWNkZDg/YXBpLXZlcnNpb249MjAyMC0wMS0wMQ==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"resourceDetails\": {\r\n      \"Source\": \"Azure\"\r\n    },\r\n    \"status\": {\r\n      \"code\": \"Healthy\",\r\n      \"cause\": \"NA\",\r\n      \"description\": \"NA\"\r\n    }\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "60afa5ee-f00c-4237-b69b-dd2aee42fd09"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Security.SecurityCenterClient/2.2.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "186"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1195"
+        ],
+        "x-ms-request-id": [
+          "8c797140-5c7e-4574-ade6-798506cfa160"
+        ],
+        "x-ms-correlation-request-id": [
+          "8c797140-5c7e-4574-ade6-798506cfa160"
+        ],
+        "x-ms-routing-request-id": [
+          "UKSOUTH:20201202T194908Z:8c797140-5c7e-4574-ade6-798506cfa160"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 02 Dec 2020 19:49:07 GMT"
+        ],
+        "Content-Length": [
+          "619"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"type\": \"Microsoft.Security/assessments\",\r\n  \"id\": \"/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/resourceGroups/myService1/providers/Microsoft.OperationalInsights/workspaces/TestServiceWS/providers/Microsoft.Security/assessments/9b0c3939-c9db-4ffc-ad4b-4673ff25cdd8\",\r\n  \"name\": \"9b0c3939-c9db-4ffc-ad4b-4673ff25cdd8\",\r\n  \"properties\": {\r\n    \"resourceDetails\": {\r\n      \"Source\": \"Azure\",\r\n      \"Id\": \"/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/resourceGroups/myService1/providers/Microsoft.OperationalInsights/workspaces/TestServiceWS\"\r\n    },\r\n    \"displayName\": \"Customer managed metadata\",\r\n    \"status\": {\r\n      \"code\": \"Healthy\",\r\n      \"cause\": \"NA\",\r\n      \"description\": \"NA\"\r\n    }\r\n  }\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "487bb485-b5b0-471e-9c0d-10717612f869"
+  }
+}

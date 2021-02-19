@@ -10,7 +10,7 @@ using System;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> RerunTrigger resource type. </summary>
-    public partial class RerunTriggerResource : AzureEntityResource
+    public partial class RerunTriggerResource : SubResource
     {
         /// <summary> Initializes a new instance of RerunTriggerResource. </summary>
         /// <param name="properties"> Properties of the rerun trigger. </param>

@@ -148,8 +148,8 @@ namespace Azure.Messaging.EventHubs.Tests
         public void EventDataInitializesProperties()
         {
             var body = new BinaryData("Hello");
-            var properties = new Dictionary<string, object> {{ "id", 12 }};
-            var systemProperties = new Dictionary<string, object> {{ "custom", "sys-value" }};
+            var properties = new Dictionary<string, object> { { "id", 12 } };
+            var systemProperties = new Dictionary<string, object> { { "custom", "sys-value" } };
             var sequenceNumber = long.MaxValue - 512;
             var offset = long.MaxValue - 1024;
             var enqueueTime = new DateTimeOffset(2015, 10, 27, 12, 0, 0, TimeSpan.Zero);

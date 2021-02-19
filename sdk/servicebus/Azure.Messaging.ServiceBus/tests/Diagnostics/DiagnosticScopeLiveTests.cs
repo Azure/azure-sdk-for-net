@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Azure.Core.Tests;
 using Azure.Messaging.ServiceBus.Diagnostics;
@@ -71,7 +72,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     Activity receiveActivity = (Activity)receiveStart.Value;
                     AssertCommonTags(receiveActivity, receiver.EntityPath, receiver.FullyQualifiedNamespace);
 
-                    var receiveLinkedActivities = ((IEnumerable<Activity>)receiveActivity.GetType().GetProperty("Links").GetValue(receiveActivity)).ToArray();
+                    var receiveLinkedActivities = ((IEnumerable<Activity>)receiveActivity.GetType().GetTypeInfo().GetDeclaredProperty("Links").GetValue(receiveActivity)).ToArray();
                     for (int i = 0; i < receiveLinkedActivities.Length; i++)
                     {
                         Assert.AreEqual(sendActivities[i].ParentId, receiveLinkedActivities[i].ParentId);
@@ -199,7 +200,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     (string Key, object Value, DiagnosticListener) stopSchedule = _listener.Events.Dequeue();
 
                     Assert.AreEqual(DiagnosticProperty.ScheduleActivityName + ".Stop", stopSchedule.Key);
-                    var linkedActivities = ((IEnumerable<Activity>)startSchedule.Value.GetType().GetProperty("Links").GetValue(startSchedule.Value)).ToArray();
+                    var linkedActivities = ((IEnumerable<Activity>)startSchedule.Value.GetType().GetTypeInfo().GetDeclaredProperty("Links").GetValue(startSchedule.Value)).ToArray();
                     Assert.AreEqual(1, linkedActivities.Length);
                     Assert.AreEqual(messageActivity.Id, linkedActivities[0].ParentId);
 
@@ -287,7 +288,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     new ServiceBusSessionProcessorOptions
                     {
                         AutoCompleteMessages = false,
-                        MaxReceiveWaitTime = TimeSpan.FromSeconds(10),
+                        SessionIdleTimeout = TimeSpan.FromSeconds(10),
                         MaxConcurrentSessions = 1
                     });
                 TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();
@@ -343,7 +344,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             (string Key, object Value, DiagnosticListener) stopSend = _listener.Events.Dequeue();
             Assert.AreEqual(DiagnosticProperty.SendActivityName + ".Stop", stopSend.Key);
 
-            var sendLinkedActivities = ((IEnumerable<Activity>)startSend.Value.GetType().GetProperty("Links").GetValue(startSend.Value)).ToArray();
+            var sendLinkedActivities = ((IEnumerable<Activity>)startSend.Value.GetType().GetTypeInfo().GetDeclaredProperty("Links").GetValue(startSend.Value)).ToArray();
             for (int i = 0; i < sendLinkedActivities.Length; i++)
             {
                 Assert.AreEqual(messageActivities[i].Id, sendLinkedActivities[i].ParentId);

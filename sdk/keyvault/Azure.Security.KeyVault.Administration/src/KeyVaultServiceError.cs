@@ -9,7 +9,6 @@ using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
-    ///<inheritdoc/>
     [CodeGenModel("Error")]
     internal partial class KeyVaultServiceError
     {}

@@ -33,8 +33,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
-            var filter = new FeedbackDimensionFilter(new DimensionKey());
-            var feedback = new MetricCommentFeedback(FakeGuid, filter, "comment");
+            var feedback = new MetricCommentFeedback(FakeGuid, new (), "comment");
 
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
@@ -50,9 +49,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             Assert.That(() => client.GetFeedbackAsync(null), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => client.GetFeedbackAsync(""), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => client.GetFeedbackAsync("feedbackId"), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
 
             Assert.That(() => client.GetFeedback(null), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => client.GetFeedback(""), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => client.GetFeedback("feedbackId"), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
         }
 
         [Test]
@@ -74,9 +75,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             Assert.That(() => client.GetAllFeedbackAsync(null), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => client.GetAllFeedbackAsync(""), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => client.GetAllFeedbackAsync("metricId"), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
 
             Assert.That(() => client.GetAllFeedback(null), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => client.GetAllFeedback(""), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => client.GetAllFeedback("metricId"), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
         }
 
         [Test]

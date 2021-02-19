@@ -53,3 +53,4 @@ extends:
 
     TestSetupSteps:
     - template: /sdk/storage/tests-install-azurite.yml
+    TestTimeoutInMinutes: 100

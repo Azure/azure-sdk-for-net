@@ -62,18 +62,17 @@ namespace Azure.Core.Pipeline
             ProcessAsync(message, false).EnsureCompleted();
 #else
             // Intentionally blocking here
+#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
             ProcessAsync(message).AsTask().GetAwaiter().GetResult();
+#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
 #endif
         }
 
         /// <inheritdoc />
-        public sealed override async ValueTask ProcessAsync(HttpMessage message)
-        {
-            await ProcessAsync(message, true).ConfigureAwait(false);
-        }
+        public sealed override ValueTask ProcessAsync(HttpMessage message) => ProcessAsync(message, true);
 
 #pragma warning disable CA1801 // async parameter unused on netstandard
-        private async Task ProcessAsync(HttpMessage message, bool async)
+        private async ValueTask ProcessAsync(HttpMessage message, bool async)
 #pragma warning restore CA1801
         {
             using HttpRequestMessage httpRequest = BuildRequestMessage(message);
@@ -89,7 +88,9 @@ namespace Azure.Core.Pipeline
                 else
 #endif
                 {
+#pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
                     responseMessage = await _client.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, message.CancellationToken)
+#pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
                         .ConfigureAwait(false);
                 }
 
@@ -105,10 +106,16 @@ namespace Azure.Core.Pipeline
                         contentStream = responseMessage.Content.ReadAsStream(message.CancellationToken);
                     }
 #else
+#pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
                     contentStream = await responseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false);
+#pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
 #endif
-
                 }
+            }
+            // HttpClient on NET5 throws OperationCanceledException from sync call sites, normalize to TaskCanceledException
+            catch (OperationCanceledException)
+            {
+                throw new TaskCanceledException();
             }
             catch (HttpRequestException e)
             {
@@ -130,7 +137,11 @@ namespace Azure.Core.Pipeline
             ServicePointHelpers.SetLimits(httpClientHandler);
 #endif
 
-            return new HttpClient(httpClientHandler);
+            return new HttpClient(httpClientHandler)
+            {
+                // Timeouts are handled by the pipeline
+                Timeout = Timeout.InfiniteTimeSpan
+            };
         }
 
         private static HttpRequestMessage BuildRequestMessage(HttpMessage message)

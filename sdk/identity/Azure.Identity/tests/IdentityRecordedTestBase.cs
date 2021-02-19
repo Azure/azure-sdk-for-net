@@ -20,13 +20,12 @@ namespace Azure.Identity.Tests
         private void InitialzeRecordingSettings()
         {
             // the following headers are added by MSAL and need to be excluded from matching for recordings
-            Matcher.ExcludeHeaders.Add("Content-Length");
-            Matcher.ExcludeHeaders.Add("client-request-id");
-            Matcher.ExcludeHeaders.Add("x-client-OS");
-            Matcher.ExcludeHeaders.Add("x-client-SKU");
-            Matcher.ExcludeHeaders.Add("x-client-CPU");
-            Matcher.ExcludeHeaders.Add("x-client-Ver");
-
+            Matcher.LegacyExcludedHeaders.Add("Content-Length");
+            Matcher.LegacyExcludedHeaders.Add("client-request-id");
+            Matcher.LegacyExcludedHeaders.Add("x-client-OS");
+            Matcher.LegacyExcludedHeaders.Add("x-client-SKU");
+            Matcher.LegacyExcludedHeaders.Add("x-client-CPU");
+            Matcher.LegacyExcludedHeaders.Add("x-client-Ver");
             Sanitizer = new IdentityRecordedTestSanitizer();
         }
     }

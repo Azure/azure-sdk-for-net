@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Represents a database recommended index. </summary>
-    public partial class RecommendedIndex : Resource
+    public partial class RecommendedIndex : ProxyResource
     {
         /// <summary> Initializes a new instance of RecommendedIndex. </summary>
         public RecommendedIndex()

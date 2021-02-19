@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> An Azure SQL Database sync group. </summary>
-    public partial class SyncGroup : Resource
+    public partial class SyncGroup : ProxyResource
     {
         /// <summary> Initializes a new instance of SyncGroup. </summary>
         public SyncGroup()

@@ -309,7 +309,7 @@ namespace Azure.Messaging.EventHubs
         ///   Event Hub will result in a connection string that contains the name.</para>
         /// </remarks>
         ///
-        /// <seealso href="https://docs.microsoft.com/azure/event-hubs/event-hubs-get-connection-string" />
+        /// <seealso href="https://docs.microsoft.com/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
         public EventProcessorClient(BlobContainerClient checkpointStore,
                                     string consumerGroup,
@@ -338,7 +338,7 @@ namespace Azure.Messaging.EventHubs
         ///   Event Hub will result in a connection string that contains the name.</para>
         /// </remarks>
         ///
-        /// <seealso href="https://docs.microsoft.com/azure/event-hubs/event-hubs-get-connection-string" />
+        /// <seealso href="https://docs.microsoft.com/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
         public EventProcessorClient(BlobContainerClient checkpointStore,
                                     string consumerGroup,
@@ -365,7 +365,7 @@ namespace Azure.Messaging.EventHubs
         ///   passed only once, either as part of the connection string or separately.</para>
         /// </remarks>
         ///
-        /// <seealso href="https://docs.microsoft.com/azure/event-hubs/event-hubs-get-connection-string" />
+        /// <seealso href="https://docs.microsoft.com/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
         public EventProcessorClient(BlobContainerClient checkpointStore,
                                     string consumerGroup,
@@ -393,7 +393,7 @@ namespace Azure.Messaging.EventHubs
         ///   passed only once, either as part of the connection string or separately.</para>
         /// </remarks>
         ///
-        /// <seealso href="https://docs.microsoft.com/azure/event-hubs/event-hubs-get-connection-string" />
+        /// <seealso href="https://docs.microsoft.com/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
         public EventProcessorClient(BlobContainerClient checkpointStore,
                                     string consumerGroup,
@@ -776,6 +776,43 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
+        ///   Returns a checkpoint for the Event Hub, consumer group, and partition ID associated with the
+        ///   event processor instance, so that processing for a given partition can be properly initialized.
+        /// </summary>
+        ///
+        /// <param name="partitionId">The ID of the partition for which to retrieve the checkpoint.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the processing.  This is most likely to occur when the processor is shutting down.</param>
+        ///
+        /// <returns>The checkpoint for the processor to take into account when initializing partition.</returns>
+        ///
+        /// <remarks>
+        ///   Should a partition not have a corresponding checkpoint, the <see cref="EventProcessorOptions.DefaultStartingPosition" /> will
+        ///   be used to initialize the partition for processing.
+        ///
+        ///   In the event that a custom starting point is desired for a single partition, or each partition should start at a unique place,
+        ///   it is recommended that this method express that intent by returning checkpoints for those partitions with the desired custom
+        ///   starting location set.
+        /// </remarks>
+        ///
+        protected override async Task<EventProcessorCheckpoint> GetCheckpointAsync(string partitionId, CancellationToken cancellationToken)
+        {
+            var checkpoint = await StorageManager.GetCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partitionId, cancellationToken).ConfigureAwait(false);
+
+            // If there was no initialization handler, no custom starting positions
+            // could have been specified.  Return the checkpoint without further processing.
+
+            if (_partitionInitializingAsync == null)
+            {
+                return checkpoint;
+            }
+
+            // Process the checkpoints to inject mock checkpoints for partitions that
+            // specify a custom default and do not have an actual checkpoint.
+
+            return checkpoint ?? CreateCheckpointWithDefaultStartingPosition(partitionId);
+        }
+
+        /// <summary>
         ///   Produces a list of the ownership assignments for partitions between each of the cooperating event processor
         ///   instances for a given Event Hub and consumer group pairing.  This method is used when load balancing to allow
         ///   the processor to discover other active collaborators and to make decisions about how to best balance work
@@ -1041,16 +1078,29 @@ namespace Azure.Messaging.EventHubs
             {
                 if (!knownCheckpoints.Contains(partition))
                 {
-                    yield return new EventProcessorCheckpoint
-                    {
-                       FullyQualifiedNamespace = FullyQualifiedNamespace,
-                       EventHubName = EventHubName,
-                       ConsumerGroup = ConsumerGroup,
-                       PartitionId = partition,
-                       StartingPosition = PartitionStartingPositionDefaults.TryGetValue(partition, out EventPosition position) ? position : DefaultStartingPosition
-                    };
+                    yield return CreateCheckpointWithDefaultStartingPosition(partition);
                 }
             }
+        }
+
+        /// <summary>
+        ///   Creates a checkpoint with a default starting position set.
+        /// </summary>
+        ///
+        /// <param name="partitionId">The partition id.</param>
+        ///
+        /// <returns>Returns an artificial checkpoint for a provided partition with a starting position set to <see cref="DefaultStartingPosition"/>.</returns>
+        ///
+        private EventProcessorCheckpoint CreateCheckpointWithDefaultStartingPosition(string partitionId)
+        {
+            return new EventProcessorCheckpoint
+            {
+                FullyQualifiedNamespace = FullyQualifiedNamespace,
+                EventHubName = EventHubName,
+                ConsumerGroup = ConsumerGroup,
+                PartitionId = partitionId,
+                StartingPosition = PartitionStartingPositionDefaults.TryGetValue(partitionId, out EventPosition position) ? position : DefaultStartingPosition
+            };
         }
 
         /// <summary>

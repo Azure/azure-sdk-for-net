@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The SqlSourceParameter. </summary>
@@ -15,18 +13,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary> Initializes a new instance of SqlSourceParameter. </summary>
         /// <param name="connectionString"> Database connection string. </param>
         /// <param name="query"> Query script. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> or <paramref name="query"/> is null. </exception>
         public SqlSourceParameter(string connectionString, string query)
         {
-            if (connectionString == null)
-            {
-                throw new ArgumentNullException(nameof(connectionString));
-            }
-            if (query == null)
-            {
-                throw new ArgumentNullException(nameof(query));
-            }
-
             ConnectionString = connectionString;
             Query = query;
         }

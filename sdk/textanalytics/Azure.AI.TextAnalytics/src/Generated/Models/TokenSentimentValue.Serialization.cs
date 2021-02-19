@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal static class TokenSentimentValueExtensions
+    internal static partial class TokenSentimentValueExtensions
     {
         public static string ToSerialString(this TokenSentimentValue value) => value switch
         {

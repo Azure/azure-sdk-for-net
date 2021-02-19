@@ -384,7 +384,7 @@ namespace Microsoft.Azure.Management.Network
         Task<AzureOperationResponse<NetworkInterfaceIPConfiguration>> GetVirtualMachineScaleSetIpConfigurationWithHttpMessagesAsync(string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string ipConfigurationName, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets information about all network interfaces in a role instance in
-        /// a cloud service
+        /// a cloud service.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -446,7 +446,7 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the cloud service.
         /// </param>
         /// <param name='roleInstanceName'>
-        /// The name of role instance
+        /// The name of role instance.
         /// </param>
         /// <param name='networkInterfaceName'>
         /// The name of the network interface.
@@ -685,7 +685,7 @@ namespace Microsoft.Azure.Management.Network
         Task<AzureOperationResponse<IPage<NetworkInterfaceIPConfiguration>>> ListVirtualMachineScaleSetIpConfigurationsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets information about all network interfaces in a role instance in
-        /// a cloud service
+        /// a cloud service.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

@@ -93,13 +93,17 @@ $targets = ($Configs | ConvertFrom-Json).targets
 foreach ($config in $targets) {
   if ($config.mode -eq "Preview") { $includePreview = $true } else { $includePreview = $false }
   $pkgsFiltered = $pkgs | ? { $_.IsPrerelease -eq $includePreview}
+  $suffix = ""
+  if ($config.suffix) {
+    $suffix = $config.suffix
+  }
 
   if ($pkgsFiltered) {
     Write-Host "Given the visible artifacts, $($config.mode) Readme updates against $($config.path_to_config) will be processed for the following packages."
     Write-Host ($pkgsFiltered | % { $_.PackageId + " " + $_.PackageVersion })
   
     foreach ($packageInfo in $pkgsFiltered) {
-      $readmeName = "$($packageInfo.PackageId.Replace('azure-','').Replace('Azure.', '').Replace('@azure/', '').ToLower())-readme.md"
+      $readmeName = "$($packageInfo.DocsReadMeName.ToLower())-readme${suffix}.md"
       $readmeFolder = Join-Path $DocRepoLocation $config.content_folder
       $readmeLocation = Join-Path $readmeFolder $readmeName
 

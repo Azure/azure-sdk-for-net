@@ -201,6 +201,8 @@ namespace Azure.Core.Tests
             }
 
             public override int ReadTimeout { get; set; }
+
+            public override bool CanTimeout { get; } = true;
         }
 
         private class ReadTrackingStream : TestReadStream

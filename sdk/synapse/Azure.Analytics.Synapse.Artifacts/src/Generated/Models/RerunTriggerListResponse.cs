@@ -12,20 +12,8 @@ using System.Linq;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> A list of rerun triggers. </summary>
-    internal partial class RerunTriggerListResponse
+    public partial class RerunTriggerListResponse
     {
-        /// <summary> Initializes a new instance of RerunTriggerListResponse. </summary>
-        /// <param name="value"> List of rerun triggers. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal RerunTriggerListResponse(IEnumerable<RerunTriggerResource> value)
-        {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
-
-            Value = value.ToList();
-        }
 
         /// <summary> List of rerun triggers. </summary>
         public IReadOnlyList<RerunTriggerResource> Value { get; }

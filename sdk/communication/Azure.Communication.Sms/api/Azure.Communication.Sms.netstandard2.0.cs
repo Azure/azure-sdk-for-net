@@ -13,16 +13,19 @@ namespace Azure.Communication.Sms
     public partial class SmsClient
     {
         protected SmsClient() { }
-        public SmsClient(string connectionString, Azure.Communication.Sms.SmsClientOptions? options = null) { }
-        public virtual Azure.Response<Azure.Communication.Sms.SendSmsResponse> Send(Azure.Communication.PhoneNumber from, Azure.Communication.PhoneNumber to, string message, Azure.Communication.Sms.SendSmsOptions? sendSmsOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Communication.Sms.SendSmsResponse> Send(Azure.Communication.PhoneNumber from, System.Collections.Generic.IEnumerable<Azure.Communication.PhoneNumber> to, string message, Azure.Communication.Sms.SendSmsOptions? sendSmsOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.Sms.SendSmsResponse>> SendAsync(Azure.Communication.PhoneNumber from, Azure.Communication.PhoneNumber to, string message, Azure.Communication.Sms.SendSmsOptions? sendSmsOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.Sms.SendSmsResponse>> SendAsync(Azure.Communication.PhoneNumber from, System.Collections.Generic.IEnumerable<Azure.Communication.PhoneNumber> to, string message, Azure.Communication.Sms.SendSmsOptions? sendSmsOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public SmsClient(string connectionString) { }
+        public SmsClient(string connectionString, Azure.Communication.Sms.SmsClientOptions options) { }
+        public SmsClient(System.Uri endpoint, Azure.AzureKeyCredential keyCredential, Azure.Communication.Sms.SmsClientOptions options = null) { }
+        public SmsClient(System.Uri endpoint, Azure.Core.TokenCredential tokenCredential, Azure.Communication.Sms.SmsClientOptions options = null) { }
+        public virtual Azure.Response<Azure.Communication.Sms.SendSmsResponse> Send(Azure.Communication.PhoneNumberIdentifier from, Azure.Communication.PhoneNumberIdentifier to, string message, Azure.Communication.Sms.SendSmsOptions sendSmsOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Communication.Sms.SendSmsResponse> Send(Azure.Communication.PhoneNumberIdentifier from, System.Collections.Generic.IEnumerable<Azure.Communication.PhoneNumberIdentifier> to, string message, Azure.Communication.Sms.SendSmsOptions sendSmsOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.Sms.SendSmsResponse>> SendAsync(Azure.Communication.PhoneNumberIdentifier from, Azure.Communication.PhoneNumberIdentifier to, string message, Azure.Communication.Sms.SendSmsOptions sendSmsOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.Sms.SendSmsResponse>> SendAsync(Azure.Communication.PhoneNumberIdentifier from, System.Collections.Generic.IEnumerable<Azure.Communication.PhoneNumberIdentifier> to, string message, Azure.Communication.Sms.SendSmsOptions sendSmsOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class SmsClientOptions : Azure.Core.ClientOptions
     {
         public const Azure.Communication.Sms.SmsClientOptions.ServiceVersion LatestVersion = Azure.Communication.Sms.SmsClientOptions.ServiceVersion.V1;
-        public SmsClientOptions(Azure.Communication.Sms.SmsClientOptions.ServiceVersion version = Azure.Communication.Sms.SmsClientOptions.ServiceVersion.V1, Azure.Core.RetryOptions? retryOptions = null, Azure.Core.Pipeline.HttpPipelineTransport? transport = null) { }
+        public SmsClientOptions(Azure.Communication.Sms.SmsClientOptions.ServiceVersion version = Azure.Communication.Sms.SmsClientOptions.ServiceVersion.V1, Azure.Core.RetryOptions retryOptions = null, Azure.Core.Pipeline.HttpPipelineTransport transport = null) { }
         public enum ServiceVersion
         {
             V1 = 1,

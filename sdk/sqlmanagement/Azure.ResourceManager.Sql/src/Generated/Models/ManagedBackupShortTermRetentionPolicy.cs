@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A short term retention policy. </summary>
-    public partial class ManagedBackupShortTermRetentionPolicy : Resource
+    public partial class ManagedBackupShortTermRetentionPolicy : ProxyResource
     {
         /// <summary> Initializes a new instance of ManagedBackupShortTermRetentionPolicy. </summary>
         public ManagedBackupShortTermRetentionPolicy()

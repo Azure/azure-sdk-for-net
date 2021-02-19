@@ -50,7 +50,19 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 new KeyClient(
                     Uri,
                     TestEnvironment.Credential,
-                    InstrumentClientOptions(new KeyClientOptions(_serviceVersion))),
+                    InstrumentClientOptions(
+                        new KeyClientOptions(_serviceVersion)
+                        {
+                            Diagnostics =
+                            {
+                                LoggedHeaderNames =
+                                {
+                                    "x-ms-request-id",
+                                },
+                                // TODO: Remove once https://github.com/Azure/azure-sdk-for-net/issues/18800 is resolved.
+                                IsLoggingContentEnabled = Mode != RecordedTestMode.Playback,
+                            },
+                        })),
                 interceptors);
         }
 
