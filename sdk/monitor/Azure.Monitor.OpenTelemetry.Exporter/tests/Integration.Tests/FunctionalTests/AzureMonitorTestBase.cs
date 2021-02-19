@@ -4,15 +4,17 @@
 namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.FunctionalTests
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Net.Http;
     using System.Threading.Tasks;
 
     using Azure.Core.Pipeline;
+    using Azure.Core.TestFramework;
     using Azure.Identity;
 
-    using global::Azure.Core.TestFramework;
-
     using Microsoft.Azure.ApplicationInsights.Query;
+    using Microsoft.Azure.ApplicationInsights.Query.Models;
     using Microsoft.Rest.Azure.Authentication;
 
     using NUnit.Framework;
@@ -34,7 +36,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.FunctionalTests
         }
 
         /// <summary>
-        /// We need to have one TEST in this class for NUnit to discover this class.
+        /// We need to have one TEST for NUnit to discover this class.
         /// </summary>
         [Test]
         public void Dummy() { }
@@ -94,28 +96,63 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.FunctionalTests
         }
 
         /// <summary>
+        /// Application Insights Ingestion is not immediate.
+        /// On a good day this can still take a few minutes.
+        /// - IN LIVE OR RECORD TEST MODE
+        /// Tests must wait before querying for telemetry.
+        /// This test will wait for a short period, up to a timeout duration.
+        /// - IN PLAYBACK TEST MODE
+        /// Test must repeat the same behavior of the recording.
+        /// In this scenario there is a negligible delay.
+        /// </summary>
+        /// <remarks>
+        /// TODO: WHEN WE INTRODUCE MORE TESTS, WILL NEED TO ADD PARAMETERS HERE TO CUSTOMIZE THE QUERY.
+        /// </remarks>
+        protected async Task<IList<EventsTraceResult>> FetchTelemetryAsync()
+        {
+            var timeoutDuration = TimeSpan.FromMinutes(5); // timeout after 5 minutes.
+            var period = GetWaitPeriod(); // query once every 30 seconds.
+
+            var client = await this.GetApplicationInsightsDataClientAsync();
+            IList<EventsTraceResult> telemetry = null;
+
+            for (double actualDuration = 0; actualDuration <= timeoutDuration.TotalMilliseconds; actualDuration += period.TotalMilliseconds)
+            {
+                await Task.Delay(period);
+
+                var queryResult = await client.Events.GetTraceEventsAsync(appId: TestEnvironment.ApplicationId, timespan: QueryDuration.TenMinutes);
+
+                if (queryResult.Value.Any())
+                {
+                    telemetry = queryResult.Value;
+                    break;
+                }
+            }
+
+            if (telemetry == null)
+            {
+                Assert.Inconclusive("Failed to query telemetry from Kusto. This is not necessarily a test failure, this could be a result of an ingestion delay.");
+            }
+
+            return telemetry;
+        }
+
+        /// <summary>
         /// Application Insights ingestion is not immediate.
-        /// On a good day, this can take a few minutes.
         /// Unit tests need to consider the <see cref="RecordedTestMode"/> and wait accordingly.
         /// </summary>
-        protected async Task WaitForIgnestionAsync()
+        private TimeSpan GetWaitPeriod()
         {
-            TimeSpan timeSpan;
-
             switch (this.Mode)
             {
                 case RecordedTestMode.Live:
                 case RecordedTestMode.Record:
-                    timeSpan = TimeSpan.FromMinutes(5);
-                    break;
+                    return TimeSpan.FromSeconds(30);
                 case RecordedTestMode.Playback:
-                    timeSpan = TimeSpan.FromSeconds(0);
-                    break;
+                    return TimeSpan.FromSeconds(0);
                 default:
                     throw new Exception($"Unknown RecordedTestMode '{this.Mode}'");
             }
-
-            await Task.Delay(timeSpan);
         }
 
         /// <summary>
