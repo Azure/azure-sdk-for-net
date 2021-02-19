@@ -1,8 +1,8 @@
 [CmdletBinding()]
 Param (
-    [Parameter()]
+    [Parameter(Mandatory)]
     [ValidateNotNullOrEmpty()]
-    [string] $TargetRef = 'master', 
+    [string] $TargetRef,
 
     [Parameter()]
     [ValidateNotNullOrEmpty()]
@@ -21,40 +21,38 @@ if ((Get-Command npx | Measure-Object).Count -eq 0) {
     exit 1
 }
 
-$initialDirectory = Get-Location
+if (!(Test-Path $CspellConfigPath)) {
+    LogError "Could not locate config file $CspellConfigPath"
+    exit 1
+}
+
 $exitCode = 0
-try { 
-    Set-Location "$PSScriptRoot/../../.."
 
-    # Lists names of files that were in some way changed between the 
-    # current ref and $TargetRef. Excludes files that were deleted to
-    # prevent errors in Resolve-Path
-    Write-Host "git diff --diff-filter=d --name-only $TargetRef"
-    $changedFiles = git diff --diff-filter=d --name-only $TargetRef `
-        | Resolve-Path
-    
-    $changedFilesCount = ($changedFiles | Measure-Object).Count
-    Write-Host "Git Detected $changedFilesCount changed file(s). Files checked by cspell may exclude files according to cspell.json"
+# Lists names of files that were in some way changed between the 
+# current ref and $TargetRef. Excludes files that were deleted to
+# prevent errors in Resolve-Path
+Write-Host "git diff --diff-filter=d --name-only $TargetRef"
+$changedFiles = git diff --diff-filter=d --name-only $TargetRef `
+    | Resolve-Path
 
-    if ($changedFilesCount -eq 0) {
-        Write-Host "No changes detected"
-        # The finally block still runs after calling exit here
-        exit $exitCode
-    }
+$changedFilesCount = ($changedFiles | Measure-Object).Count
+Write-Host "Git Detected $changedFilesCount changed file(s). Files checked by cspell may exclude files according to cspell.json"
 
-    $changedFilesString = $changedFiles | Join-String -Separator ' '
+if ($changedFilesCount -eq 0) {
+    Write-Host "No changes detected"
+    exit $exitCode
+}
 
-    Write-Host "npx cspell --config $CspellConfigPath $changedFilesString"
-    $spellingErrors = Invoke-Expression "npx cspell --config $CspellConfigPath $changedFilesString"
+$changedFilesString = $changedFiles -join ' '
 
-    if ($spellingErrors) {
-        $exitCode = 1
-        foreach ($spellingError in $spellingErrors) { 
-            LogWarning $spellingError
-        }    
-    }
-} finally {
-    Set-Location $initialDirectory
+Write-Host "npx cspell --config $CspellConfigPath $changedFilesString"
+$spellingErrors = Invoke-Expression "npx cspell --config $CspellConfigPath $changedFilesString"
+
+if ($spellingErrors) {
+    $exitCode = 1
+    foreach ($spellingError in $spellingErrors) { 
+        LogWarning $spellingError
+    }    
 }
 
 exit $exitCode
@@ -78,10 +76,16 @@ of the file not touched will still be shown.
 Running this on the local machine will trigger tests 
 
 .PARAMETER TargetRef
-Optional git ref to compare changes. Default value is `master`.
+Git ref to compare changes.
 
 .PARAMETER CspellConfigPath
 Optional location to use for cspell.json path. Default value is 
 `./.vscode/cspell.json`
+
+.EXAMPLE
+./eng/common/scripts/Test-Spelling.ps1 -TargetRef 'target_branch_name'
+
+This will run spell check with changes in the current branch with respect to 
+`target_branch_name`
 
 #>

@@ -3,7 +3,7 @@
 # ContinueOnError - true: Pipeline warns on spelling error 
 #                   false: Pipeline fails on spelling error
 # TargetRef       - Target ref (e.g. master) to compare to create file change
-#                   list
+#                   list.
 # CspellConfigPath - Path to cspell.json config location
 
 parameters:
@@ -13,19 +13,6 @@ parameters:
 
 steps:
   - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
-    # Devops uses a git config that changes ref names. 
-    # For example: refs/heads/master -> refs/remotes/origin/master
-    # Set in: fetch = +refs/heads/*:refs/remotes/origin/*
-    # Rather than try to convert ${{ parameters.TargetRef }} this
-    # explicitly fetches the ref with a specific name that will not collide with
-    # the other refs fetched
-    - task: PowerShell@2
-      displayName: Fetch ref for ${{ parameters.TargetRef }}
-      inputs:
-        pwsh: true
-        targetType: inline
-        script: git fetch origin ${{ parameters.TargetRef }}:refs/spellcheck/baseref
-
     - task: PowerShell@2
       displayName: Check spelling (cspell)
       continueOnError: ${{ parameters.ContinueOnError }}
@@ -33,6 +20,6 @@ steps:
         targetType: filePath
         filePath: eng/common/scripts/Test-Spelling.ps1
         arguments: >- 
-          -TargetRef refs/spellcheck/baseref
+          -TargetRef "origin/$("${{ parameters.TargetRef }}" -replace "refs/heads/")"
           -CspellConfigPath ${{ parameters.CspellConfigPath }}
         pwsh: true
