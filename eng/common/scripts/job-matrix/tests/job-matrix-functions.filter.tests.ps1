@@ -1,7 +1,7 @@
 Import-Module Pester
 
 BeforeAll {
-    . ./job-matrix-functions.ps1
+    . $PSScriptRoot/../job-matrix-functions.ps1
 
     $matrixConfig = @"
 {

@@ -439,14 +439,17 @@ The matrix is stored as a one-dimensional array, with a row-major indexing schem
 
 ## Testing
 
-The matrix functions can be tested using [pester](https://pester.dev/):
+The matrix functions can be tested using [pester](https://pester.dev/). The test command must be run from within the tests directory.
 
 ```
+$ cd tests
 $ Invoke-Pester
 
-Starting discovery in 1 files.
-Discovery finished in 384ms.
-[+] /home/ben/sdk/azure-sdk-tools/eng/common/scripts/job-matrix/job-matrix-functions.tests.ps1 4.09s (1.52s|2.22s)
-Tests completed in 4.12s
-Tests Passed: 120, Failed: 0, Skipped: 4 NotRun: 0
+Starting discovery in 3 files.
+Discovery finished in 75ms.
+[+] /home/ben/sdk/azure-sdk-tools/eng/common/scripts/job-matrix/tests/job-matrix-functions.filter.tests.ps1 750ms (309ms|428ms)
+[+] /home/ben/sdk/azure-sdk-tools/eng/common/scripts/job-matrix/tests/job-matrix-functions.modification.tests.ps1 867ms (250ms|608ms)
+[+] /home/ben/sdk/azure-sdk-tools/eng/common/scripts/job-matrix/tests/job-matrix-functions.tests.ps1 2.71s (725ms|1.93s)
+Tests completed in 4.33s
+Tests Passed: 141, Failed: 0, Skipped: 4 NotRun: 0
 ```

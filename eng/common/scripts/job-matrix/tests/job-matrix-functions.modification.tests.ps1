@@ -2,7 +2,7 @@ Import-Module Pester
 
 
 BeforeAll {
-    . ./job-matrix-functions.ps1
+    . $PSScriptRoot/../job-matrix-functions.ps1
 
     function CompareMatrices([Array]$matrix, [Array]$expected) {
         $matrix.Length | Should -Be $expected.Length
