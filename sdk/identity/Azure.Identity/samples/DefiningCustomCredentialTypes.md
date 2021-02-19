@@ -119,7 +119,7 @@ The following example shows an how the `OnBehalfOfCredential` could be used to a
 ```C# Snippet:OnBehalfOfCredentialUsage
 var oboCredential = new OnBehalfOfCredential(clientId, clientSecret, userAccessToken);
 
-var client = new SecretClient(new Uri("https://myvault.vauls.azure.net/"), oboCredential);
+var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), oboCredential);
 ```
 
 ## Rotating client certificates
