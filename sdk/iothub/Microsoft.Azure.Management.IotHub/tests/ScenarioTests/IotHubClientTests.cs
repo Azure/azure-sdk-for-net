@@ -18,10 +18,10 @@ using Xunit;
 
 namespace IotHub.Tests.ScenarioTests
 {
-    public class IotHubLifeCycleTests : IotHubTestBase
+    public class IotHubClientTests : IotHubTestBase
     {
         [Fact]
-        public async Task TestIotHubCreateLifecycle()
+        public async Task IotHubClient_HubCreate()
         {
             try
             {
@@ -273,7 +273,7 @@ namespace IotHub.Tests.ScenarioTests
         }
 
         [Fact]
-        public async Task TestIotHubUpdateLifecycle()
+        public async Task IotHubClient_HubUpdate()
         {
             try
             {
@@ -360,7 +360,7 @@ namespace IotHub.Tests.ScenarioTests
         }
 
         [Fact]
-        public async Task TestIotHubCertificateLifecycle()
+        public async Task IotHubClient_HubCertificate()
         {
             try
             {
