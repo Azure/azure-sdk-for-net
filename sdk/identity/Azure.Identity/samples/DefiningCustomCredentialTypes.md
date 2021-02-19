@@ -1,5 +1,5 @@
 # Defining Custom Credential types
-The Azure.Identity library covers a broad range of Azure Active Directory authentication scenarios. However, it's possible the credential implementations in Azure.Identity might not meet the specific needs your application, or an application might want to totally avoid a dependency on the Azure.Identity library.
+The Azure.Identity library covers a broad range of Azure Active Directory authentication scenarios. However, it's possible the credential implementations in Azure.Identity might not meet the specific needs your application, or an application might want to avoid taking a dependency on the Azure.Identity library.
 
 ## Authenticating with a prefetched access token
 The Azure.Identity library does not contain a `TokenCredential` implementation which can be constructed directly with an `AccessToken`. This is intentionally omitted as authenticating a client with a static token is in most cases an anti-pattern, as access tokens expire frequently and have constrained usage. However, there are some scenarios where authenticating a service client with a prefetched token is necessary.
