@@ -47,7 +47,13 @@ jobs:
           Path: eng/scripts/job-matrix/samples/matrix.json
           Selection: sparse
           GenerateVMJobs: true
-      < remaining parameters ...>
+      JobTemplatePath: /eng/common/scripts/job-matrix/samples/matrix-job-sample.yml
+      AdditionalParameters: []
+      CloudConfig:
+        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+        Location: eastus2
+        Cloud: Public
+      MatrixFilters: []
 ```
 
 ## Matrix config file syntax
