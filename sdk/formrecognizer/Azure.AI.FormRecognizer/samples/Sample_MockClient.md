@@ -29,15 +29,14 @@ private static async Task<bool> IsExpensiveAsync(string modelId, Uri documentUri
 To start, create a mock for the `FormRecognizerClient`. Most methods in this service make use of [Long-Running Operations][lros], so you'll likely need to create a mock operation as well.
 
 ```C# Snippet:FormRecognizerCreateMocks
-var fakeModelId = Guid.NewGuid().ToString();
-var fakeOperationId = $"{fakeModelId}/analyzeResults/{Guid.NewGuid()}";
 var mockClient = new Mock<FormRecognizerClient>();
-var mockOperation = new Mock<RecognizeCustomFormsOperation>(fakeOperationId, mockClient.Object);
+var mockOperation = new Mock<RecognizeCustomFormsOperation>();
 ```
 
 Then, set up the client methods that will be executed. In this case, we will call the `StartRecognizeCustomFormsFromUriAsync` method.
 
 ```C# Snippet:FormRecognizerSetUpClientMock
+var fakeModelId = Guid.NewGuid().ToString();
 var fakeDocumentUri = new Uri("https://fake.document.uri");
 
 mockClient.Setup(c => c.StartRecognizeCustomFormsFromUriAsync(fakeModelId, fakeDocumentUri,

@@ -19,13 +19,12 @@ namespace Azure.AI.FormRecognizer.Tests
         public async Task RecognizeCustomFormsAsync()
         {
             #region Snippet:FormRecognizerCreateMocks
-            var fakeModelId = Guid.NewGuid().ToString();
-            var fakeOperationId = $"{fakeModelId}/analyzeResults/{Guid.NewGuid()}";
             var mockClient = new Mock<FormRecognizerClient>();
-            var mockOperation = new Mock<RecognizeCustomFormsOperation>(fakeOperationId, mockClient.Object);
+            var mockOperation = new Mock<RecognizeCustomFormsOperation>();
             #endregion
 
             #region Snippet:FormRecognizerSetUpClientMock
+            var fakeModelId = Guid.NewGuid().ToString();
             var fakeDocumentUri = new Uri("https://fake.document.uri");
 
             mockClient.Setup(c => c.StartRecognizeCustomFormsFromUriAsync(fakeModelId, fakeDocumentUri,
