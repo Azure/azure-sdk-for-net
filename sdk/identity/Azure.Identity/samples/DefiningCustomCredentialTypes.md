@@ -83,7 +83,7 @@ var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), new C
 ```
 
 ## Authenticating with the On Behalf Of Flow
-Currently the Azure.Identity library doesn't provide a credential type for clients which need to authenticate with via the On Behalf Of flow. While future support for this is planned, users requiring this immediately will have to implement their own `TokenCredential` class.
+Currently the Azure.Identity library doesn't provide a credential type for clients which need to authenticate via the On Behalf Of flow. While future support for this is planned, users requiring this immediately will have to implement their own `TokenCredential` class.
 
 In this example the `OnBehalfOfCredential` accepts a client id, client secret, and a user's access token, and creates an instance of `IConfidentialClientApplication` from the Microsoft.Identity.Client library (MSAL) to obtain an obo tokens which can be used to authenticate client requests.
 
