@@ -1,5 +1,8 @@
 trigger: none
 
+variables:
+  - template: /eng/pipelines/templates/variables/globals.yml
+
 jobs:
   - template: /eng/common/pipelines/templates/jobs/archetype-sdk-tests-generate.yml
     parameters:
