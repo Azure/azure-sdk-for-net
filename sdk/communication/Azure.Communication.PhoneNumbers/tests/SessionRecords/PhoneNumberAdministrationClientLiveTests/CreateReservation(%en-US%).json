@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/countries/US/phoneplangroups?locale=en-US\u0026api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/countries/US/phoneplangroups?locale=en-US\u0026api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -52,7 +52,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/countries/US/phoneplangroups/Sanitized/phoneplans?locale=en-US\u0026api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/countries/US/phoneplangroups/Sanitized/phoneplans?locale=en-US\u0026api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -204,7 +204,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/searches?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/searches?api-version=2020-07-20-preview1",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -245,7 +245,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/searches/Sanitized?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/searches/7364009a-32c1-4341-907c-e17965f0a93e?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -288,7 +288,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/searches/Sanitized?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/searches/7364009a-32c1-4341-907c-e17965f0a93e?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -331,7 +331,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/searches/Sanitized?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/searches/7364009a-32c1-4341-907c-e17965f0a93e?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -374,7 +374,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/searches/Sanitized?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/searches/7364009a-32c1-4341-907c-e17965f0a93e?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -417,7 +417,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/searches/Sanitized?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/searches/7364009a-32c1-4341-907c-e17965f0a93e?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -463,14 +463,14 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/searches/Sanitized/cancel?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/searches/7364009a-32c1-4341-907c-e17965f0a93e/cancel?api-version=2020-07-20-preview1",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Date": "Sat, 12 Dec 2020 03:11:05 GMT",
         "traceparent": "00-e0b15ecc13cbfa4e84e7e438c871b227-d1ba518ac4f06f41-00",
-        "User-Agent": "azsdk-net-Communication.Administration/1.0.0-alpha.20201211.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "199d9c4feb171905af487019199471b3",
         "x-ms-content-sha256": "Sanitized",
         "x-ms-return-client-request-id": "true"
@@ -488,7 +488,7 @@
     }
   ],
   "Variables": {
-    "COMMUNICATION_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.com/;accesskey=Kg==",
+    "COMMUNICATION_CONNECTION_STRING": "endpoint=https://chitchat-test.communication.azure.com/;accesskey=Kg==",
     "RandomSeed": "2053017020"
   }
 }
