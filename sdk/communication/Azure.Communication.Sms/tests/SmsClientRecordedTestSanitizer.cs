@@ -7,13 +7,10 @@ namespace Azure.Communication.Sms.Tests
 {
     public class SmsClientRecordedTestSanitizer : CommunicationRecordedTestSanitizer
     {
-        public SmsClientRecordedTestSanitizer() : base()
+        public SmsClientRecordedTestSanitizer()
         {
-            JsonPathSanitizers.Add("$..token");
-            JsonPathSanitizers.Add("$..id");
             JsonPathSanitizers.Add("$..from");
             JsonPathSanitizers.Add("$..to");
-            JsonPathSanitizers.Add("$..messageId");
         }
 
         public override string SanitizeVariable(string variableName, string environmentVariableValue)
