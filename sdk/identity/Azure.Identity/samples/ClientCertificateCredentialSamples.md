@@ -38,7 +38,7 @@ var credential = new ClientCertificateCredential(tenantId, clientId, certificate
 
 Long running applications may have the need to roll certificates during process execution. Certificate rotation is not currently supported by the `ClientCertficateCredential` which treats the certificate used to construct the credential as immutable. This means that any clients constructed with an `ClientCertificateCredential` using a particular cert would fail to authenticate requests after that cert has been rolled and the original is no longer valid. 
 
-However, if an application wants to roll this certificate without creating new service clients, it can accomplish this by creating it's own `TokenCredential` implementation which wraps the `ClientCertificateCredential`. The implementation of this custom credential `TokenCredential` would somewhat depend on how the application handles certificate rotation.
+However, if an application wants to roll this certificate without creating new service clients, it can accomplish this by creating its own `TokenCredential` implementation which wraps the `ClientCertificateCredential`. The implementation of this custom credential `TokenCredential` would somewhat depend on how the application handles certificate rotation.
 
 ### Explicit rotation
 
