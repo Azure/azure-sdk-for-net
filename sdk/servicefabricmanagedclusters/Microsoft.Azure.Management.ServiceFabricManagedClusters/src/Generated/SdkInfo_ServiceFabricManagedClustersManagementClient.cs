@@ -32,10 +32,10 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters
       // BEGIN: Code Generation Metadata Section
       public static readonly String AutoRestVersion = "v2";
       public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/a-santamaria/azure-rest-api-specs/blob/alsantam_manged2/specification/servicefabricmanagedclusters/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=E:\\code\\azure-sdk-for-net\\sdk";
-      public static readonly String GithubForkName = "a-santamaria";
-      public static readonly String GithubBranchName = "alsantam_manged2";
-      public static readonly String GithubCommidId = "8fc3bc8c585baa69e3ae06cb996b1d9c3d06e69a";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/servicefabricmanagedclusters/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=E:\\code\\azure-sdk-for-net\\sdk";
+      public static readonly String GithubForkName = "Azure";
+      public static readonly String GithubBranchName = "master";
+      public static readonly String GithubCommidId = "8240593bde5350e6762015523ccd57cb61e32da5";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
