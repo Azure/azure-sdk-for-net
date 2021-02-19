@@ -168,7 +168,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <summary>
         /// Gets the <see cref="KeyVaultKey.Id"/> of the key used to perform cryptographic operations for the client.
         /// </summary>
-        public virtual string KeyId => _keyId.ToString();
+        public virtual string KeyId => _keyId;
 
         /// <summary>
         /// Gets whether this <see cref="CryptographyClient"/> runs only local operations.
