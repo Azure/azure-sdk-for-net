@@ -1620,7 +1620,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             amqpLinkSettings.AddProperty(AmqpClientConstants.EntityTypeName, AmqpClientConstants.EntityTypeManagement);
 
             var endpointUri = new Uri(this.ServiceBusConnection.Endpoint, entityPath);
-            string[] claims = { ClaimConstants.Manage, ClaimConstants.Listen };
+            string[] claims = { ClaimConstants.Listen };
             var amqpRequestResponseLinkCreator = new AmqpRequestResponseLinkCreator(
                 entityPath,
                 this.ServiceBusConnection,
