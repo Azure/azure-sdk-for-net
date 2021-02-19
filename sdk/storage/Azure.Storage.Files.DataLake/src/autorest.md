@@ -80,3 +80,14 @@ directive:
         "type": "string"
     };
 ```
+
+### Fix append file consumes
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{filesystem}/{path}?action=append"]
+  transform: >
+    $.patch.consumes = [
+      "application/octet-stream"
+    ]
+```

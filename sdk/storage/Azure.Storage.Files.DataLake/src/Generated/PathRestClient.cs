@@ -1269,7 +1269,7 @@ namespace Azure.Storage.Files.DataLake
             {
                 request.Headers.Add("Content-MD5", transactionalContentHash, "D");
             }
-            request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Content-Type", "application/octet-stream");
             request.Content = RequestContent.Create(body);
             return message;
         }
