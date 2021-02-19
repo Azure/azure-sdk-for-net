@@ -229,10 +229,13 @@ namespace Azure.Identity
     {
         public TokenCache() { }
         public event System.Func<Azure.Identity.TokenCacheUpdatedArgs, System.Threading.Tasks.Task> Updated { add { } remove { } }
+    }
+    public static partial class TokenCacheSerializer
+    {
         public static Azure.Identity.TokenCache Deserialize(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Identity.TokenCache> DeserializeAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public void Serialize(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
-        public System.Threading.Tasks.Task SerializeAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static void Serialize(Azure.Identity.TokenCache tokenCache, System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
+        public static System.Threading.Tasks.Task SerializeAsync(Azure.Identity.TokenCache tokenCache, System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class TokenCacheUpdatedArgs
     {

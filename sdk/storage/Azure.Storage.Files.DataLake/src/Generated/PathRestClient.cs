@@ -292,7 +292,7 @@ namespace Azure.Storage.Files.DataLake
             request.Headers.Add("x-ms-version", version);
             if (contentMD5 != null)
             {
-                request.Headers.Add("x-ms-content-md5", contentMD5);
+                request.Headers.Add("x-ms-content-md5", contentMD5, "D");
             }
             if (leaseId != null)
             {
@@ -1119,7 +1119,7 @@ namespace Azure.Storage.Files.DataLake
             request.Uri = uri;
             if (contentMD5 != null)
             {
-                request.Headers.Add("x-ms-content-md5", contentMD5);
+                request.Headers.Add("x-ms-content-md5", contentMD5, "D");
             }
             if (leaseId != null)
             {
@@ -1253,7 +1253,7 @@ namespace Azure.Storage.Files.DataLake
             request.Uri = uri;
             if (transactionalContentCrc64 != null)
             {
-                request.Headers.Add("x-ms-content-crc64", transactionalContentCrc64);
+                request.Headers.Add("x-ms-content-crc64", transactionalContentCrc64, "D");
             }
             if (leaseId != null)
             {
@@ -1267,7 +1267,7 @@ namespace Azure.Storage.Files.DataLake
             }
             if (transactionalContentHash != null)
             {
-                request.Headers.Add("Content-MD5", transactionalContentHash);
+                request.Headers.Add("Content-MD5", transactionalContentHash, "D");
             }
             request.Headers.Add("Content-Type", "application/json");
             request.Content = RequestContent.Create(body);

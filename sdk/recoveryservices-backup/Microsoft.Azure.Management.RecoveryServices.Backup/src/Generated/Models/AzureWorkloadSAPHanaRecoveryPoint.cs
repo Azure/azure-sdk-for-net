@@ -10,6 +10,8 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -35,8 +37,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// point was created</param>
         /// <param name="type">Type of restore point. Possible values include:
         /// 'Invalid', 'Full', 'Log', 'Differential', 'Incremental'</param>
-        public AzureWorkloadSAPHanaRecoveryPoint(System.DateTime? recoveryPointTimeInUTC = default(System.DateTime?), string type = default(string))
-            : base(recoveryPointTimeInUTC, type)
+        /// <param name="recoveryPointTierDetails">Recovery point tier
+        /// information.</param>
+        /// <param name="recoveryPointMoveReadinessInfo">Eligibility of RP to
+        /// be moved to another tier</param>
+        public AzureWorkloadSAPHanaRecoveryPoint(System.DateTime? recoveryPointTimeInUTC = default(System.DateTime?), string type = default(string), IList<RecoveryPointTierInformation> recoveryPointTierDetails = default(IList<RecoveryPointTierInformation>), IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo = default(IDictionary<string, RecoveryPointMoveReadinessInfo>))
+            : base(recoveryPointTimeInUTC, type, recoveryPointTierDetails, recoveryPointMoveReadinessInfo)
         {
             CustomInit();
         }

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Files.DataLake
 {
-    internal class PathAppendDataHeaders
+    internal partial class PathAppendDataHeaders
     {
         private readonly Response _response;
         public PathAppendDataHeaders(Response response)

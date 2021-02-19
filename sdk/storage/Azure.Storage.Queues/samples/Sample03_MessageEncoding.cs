@@ -47,7 +47,7 @@ namespace Azure.Storage.Queues.Samples.Tests
                 {
                     Console.WriteLine($"Invalid message has been received, message id={args.ReceivedMessage.MessageId} body={args.ReceivedMessage.Body}");
 
-                    if (args.RunSynchronously)
+                    if (args.IsRunningSynchronously)
                     {
                         args.Queue.DeleteMessage(args.ReceivedMessage.MessageId, args.ReceivedMessage.PopReceipt);
                     }

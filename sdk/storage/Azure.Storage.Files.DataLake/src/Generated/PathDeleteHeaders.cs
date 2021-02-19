@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Files.DataLake
 {
-    internal class PathDeleteHeaders
+    internal partial class PathDeleteHeaders
     {
         private readonly Response _response;
         public PathDeleteHeaders(Response response)

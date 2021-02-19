@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Files.DataLake
 {
-    internal class PathFlushDataHeaders
+    internal partial class PathFlushDataHeaders
     {
         private readonly Response _response;
         public PathFlushDataHeaders(Response response)

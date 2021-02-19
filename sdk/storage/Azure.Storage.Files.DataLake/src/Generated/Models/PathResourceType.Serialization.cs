@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
-    internal static class PathResourceTypeExtensions
+    internal static partial class PathResourceTypeExtensions
     {
         public static string ToSerialString(this PathResourceType value) => value switch
         {

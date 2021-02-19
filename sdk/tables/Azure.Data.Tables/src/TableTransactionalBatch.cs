@@ -121,15 +121,7 @@ namespace Azure.Data.Tables
         /// <param name="mode">Determines the behavior of the Update operation.</param>
         public virtual void UpdateEntity<T>(T entity, ETag ifMatch, TableUpdateMode mode = TableUpdateMode.Merge) where T : class, ITableEntity, new()
         {
-            var message = _batchOperations.CreateUpdateEntityRequest(
-                _table,
-                entity.PartitionKey,
-                entity.RowKey,
-                null,
-                ifMatch: ifMatch.ToString(),
-                tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                queryOptions: new QueryOptions() { Format = _format });
-
+            HttpMessage message = CreateUpdateOrMergeRequest<T>(entity, mode, ifMatch);
             AddMessage(entity, message, RequestType.Update);
         }
 
@@ -141,14 +133,20 @@ namespace Azure.Data.Tables
         /// <param name="mode">Determines the behavior of the update operation when the entity already exists in the table. See <see cref="TableUpdateMode"/> for more details.</param>
         public virtual void UpsertEntity<T>(T entity, TableUpdateMode mode = TableUpdateMode.Merge) where T : class, ITableEntity, new()
         {
-            var message = mode switch
+            HttpMessage message = CreateUpdateOrMergeRequest<T>(entity, mode, default);
+            AddMessage(entity, message, RequestType.Upsert);
+        }
+
+        private HttpMessage CreateUpdateOrMergeRequest<T>(T entity, TableUpdateMode mode, ETag ifMatch = default) where T : class, ITableEntity, new()
+        {
+            return mode switch
             {
                 TableUpdateMode.Replace => _batchOperations.CreateUpdateEntityRequest(
                     _table,
                     entity.PartitionKey,
                     entity.RowKey,
                     null,
-                    ifMatch: null,
+                    ifMatch: ifMatch == default ? null : ifMatch.ToString(),
                     tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                     queryOptions: new QueryOptions() { Format = _format }),
                 TableUpdateMode.Merge => _batchOperations.CreateMergeEntityRequest(
@@ -156,13 +154,11 @@ namespace Azure.Data.Tables
                     entity.PartitionKey,
                     entity.RowKey,
                     null,
-                    ifMatch: null,
+                    ifMatch: ifMatch == default ? null : ifMatch.ToString(),
                     entity.ToOdataAnnotatedDictionary(),
                     new QueryOptions() { Format = _format }),
                 _ => throw new ArgumentException($"Unexpected value for {nameof(mode)}: {mode}")
             };
-
-            AddMessage(entity, message, RequestType.Upsert);
         }
 
         /// <summary>

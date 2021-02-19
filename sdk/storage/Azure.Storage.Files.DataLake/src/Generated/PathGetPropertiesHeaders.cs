@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Files.DataLake
 {
-    internal class PathGetPropertiesHeaders
+    internal partial class PathGetPropertiesHeaders
     {
         private readonly Response _response;
         public PathGetPropertiesHeaders(Response response)

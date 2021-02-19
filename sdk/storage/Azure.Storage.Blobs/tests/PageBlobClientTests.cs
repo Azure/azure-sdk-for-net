@@ -1505,7 +1505,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [PlaybackOnly("Not possible to programmatically create a managed disk storage account")]
+        [Ignore("Not possible to programmatically create a managed disk storage account")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
         public async Task GetManagedDiskPageRangesDiffAsync()
         {
@@ -1556,7 +1556,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [PlaybackOnly("Not possible to programmatically create a managed disk storage account")]
+        [Ignore("Not possible to programmatically create a managed disk storage account")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
         public async Task GetManagedDiskPageRangesDiffAsync_Error()
         {
@@ -1578,7 +1578,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [PlaybackOnly("Not possible to programmatically create a managed disk storage account")]
+        [Ignore("Not possible to programmatically create a managed disk storage account")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
         public async Task GetManagedDiskPageRangesDiffAsync_AccessConditions()
         {
@@ -1632,7 +1632,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [PlaybackOnly("Not possible to programmatically create a managed disk storage account")]
+        [Ignore("Not possible to programmatically create a managed disk storage account")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
         public async Task GetManagedDiskPageRangesDiffAsync_AccessConditionsFail()
         {
@@ -1687,7 +1687,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [PlaybackOnly("Not possible to programmatically create a managed disk storage account")]
+        [Ignore("Not possible to programmatically create a managed disk storage account")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
         public async Task GetManagedDiskPageRangesDiffAsync_NonAsciiPrevSnapshotUri()
         {
@@ -2074,7 +2074,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [PlaybackOnly("#10715 - Disabled failing StartCopyIncrementalAsync live tests")]
+        [Ignore("#10715 - Disabled failing StartCopyIncrementalAsync live tests")]
         public async Task StartCopyIncrementalAsync()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -2142,7 +2142,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [PlaybackOnly("#10715 - Disabled failing StartCopyIncrementalAsync live tests")]
+        [Ignore("#10715 - Disabled failing StartCopyIncrementalAsync live tests")]
         public async Task StartCopyIncrementalAsync_AccessConditions()
         {
             foreach (AccessConditionParameters parameters in Reduced_AccessConditions_Data)

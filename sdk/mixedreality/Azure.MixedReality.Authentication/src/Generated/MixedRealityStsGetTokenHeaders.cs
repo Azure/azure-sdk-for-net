@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.MixedReality.Authentication
 {
-    internal class MixedRealityStsGetTokenHeaders
+    internal partial class MixedRealityStsGetTokenHeaders
     {
         private readonly Response _response;
         public MixedRealityStsGetTokenHeaders(Response response)

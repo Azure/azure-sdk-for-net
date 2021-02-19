@@ -105,7 +105,7 @@ namespace Azure.AI.TextAnalytics
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SentenceSentiment SentenceSentiment(TextSentiment sentiment, string text, double positiveScore, double neutralScore, double negativeScore)
         {
-            return new SentenceSentiment(sentiment, text, positiveScore, neutralScore, negativeScore, default, new List<MinedOpinion>());
+            return new SentenceSentiment(sentiment, text, positiveScore, neutralScore, negativeScore, default, default, new List<MinedOpinion>());
         }
 
         /// <summary>
@@ -117,12 +117,13 @@ namespace Azure.AI.TextAnalytics
         /// <param name="neutralScore">Sets the <see cref="SentimentConfidenceScores.Neutral"/> property.</param>
         /// <param name="negativeScore">Sets the <see cref="SentimentConfidenceScores.Negative"/> property.</param>
         /// <param name="offset">Sets the <see cref="SentenceSentiment.Offset"/> property.</param>
+        /// <param name="length">Sets the <see cref="SentenceSentiment.Length"/> property.</param>
         /// <param name="minedOpinions">Sets the <see cref="SentenceSentiment.MinedOpinions"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.SentenceSentiment"/> for mocking purposes.</returns>
-        public static SentenceSentiment SentenceSentiment(TextSentiment sentiment, string text, double positiveScore, double neutralScore, double negativeScore, int offset, IReadOnlyList<MinedOpinion> minedOpinions)
+        public static SentenceSentiment SentenceSentiment(TextSentiment sentiment, string text, double positiveScore, double neutralScore, double negativeScore, int offset, int length, IReadOnlyList<MinedOpinion> minedOpinions)
         {
             minedOpinions ??= new List<MinedOpinion>();
-            return new SentenceSentiment(sentiment, text, positiveScore, neutralScore, negativeScore, offset, minedOpinions);
+            return new SentenceSentiment(sentiment, text, positiveScore, neutralScore, negativeScore, offset, length, minedOpinions);
         }
 
         /// <summary>
@@ -133,10 +134,11 @@ namespace Azure.AI.TextAnalytics
         /// <param name="positiveScore">Sets the <see cref="SentimentConfidenceScores.Positive"/> property.</param>
         /// <param name="negativeScore">Sets the <see cref="SentimentConfidenceScores.Negative"/> property.</param>
         /// <param name="offset">Sets the <see cref="AspectSentiment.Offset"/> property.</param>
+        /// <param name="length">Sets the <see cref="AspectSentiment.Length"/> property.</param>
         /// <returns>>A new instance of <see cref="TextAnalytics.AspectSentiment"/> for mocking purposes.</returns>
-        public static AspectSentiment AspectSentiment(TextSentiment sentiment, string text, double positiveScore, double negativeScore, int offset)
+        public static AspectSentiment AspectSentiment(TextSentiment sentiment, string text, double positiveScore, double negativeScore, int offset, int length)
         {
-            return new AspectSentiment(sentiment, text, positiveScore, negativeScore, offset);
+            return new AspectSentiment(sentiment, text, positiveScore, negativeScore, offset, length);
         }
 
         /// <summary>
@@ -148,10 +150,11 @@ namespace Azure.AI.TextAnalytics
         /// <param name="text">Sets the <see cref="OpinionSentiment.Text"/> property.</param>
         /// <param name="isNegated">Sets the <see cref="OpinionSentiment.IsNegated"/> property.</param>
         /// <param name="offset">Sets the <see cref="OpinionSentiment.Offset"/> property.</param>
+        /// <param name="length">Sets the <see cref="OpinionSentiment.Length"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.OpinionSentiment"/> for mocking purposes.</returns>
-        public static OpinionSentiment OpinionSentiment(TextSentiment sentiment, double positiveScore, double negativeScore, string text, bool isNegated, int offset)
+        public static OpinionSentiment OpinionSentiment(TextSentiment sentiment, double positiveScore, double negativeScore, string text, bool isNegated, int offset, int length)
         {
-            return new OpinionSentiment(sentiment, positiveScore, negativeScore, text, isNegated, offset);
+            return new OpinionSentiment(sentiment, positiveScore, negativeScore, text, isNegated, offset, length);
         }
 
         /// <summary>
@@ -489,7 +492,7 @@ namespace Azure.AI.TextAnalytics
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static LinkedEntityMatch LinkedEntityMatch(string text, double score)
         {
-            return new LinkedEntityMatch(score, text, default);
+            return new LinkedEntityMatch(score, text, default, default);
         }
 
         /// <summary>
@@ -498,10 +501,11 @@ namespace Azure.AI.TextAnalytics
         /// <param name="text">Sets the <see cref="LinkedEntityMatch.Text"/> property.</param>
         /// <param name="score">Sets the <see cref="LinkedEntityMatch.ConfidenceScore"/> property.</param>
         /// <param name="offset">Sets the <see cref="LinkedEntityMatch.Offset"/> property.</param>
+        /// <param name="length">Sets the <see cref="LinkedEntityMatch.Length"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.LinkedEntityMatch"/> for mocking purposes.</returns>
-        public static LinkedEntityMatch LinkedEntityMatch(string text, double score, int offset)
+        public static LinkedEntityMatch LinkedEntityMatch(string text, double score, int offset, int length)
         {
-            return new LinkedEntityMatch(score, text, offset);
+            return new LinkedEntityMatch(score, text, offset, length);
         }
 
         /// <summary>

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Files.DataLake
 {
-    internal class FileSystemDeleteHeaders
+    internal partial class FileSystemDeleteHeaders
     {
         private readonly Response _response;
         public FileSystemDeleteHeaders(Response response)

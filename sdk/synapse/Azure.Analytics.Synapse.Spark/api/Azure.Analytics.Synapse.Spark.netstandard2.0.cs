@@ -56,6 +56,8 @@ namespace Azure.Analytics.Synapse.Spark
         public virtual System.Threading.Tasks.Task<Azure.Response> ResetSparkSessionTimeoutAsync(int sessionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Analytics.Synapse.Spark.SparkSessionOperation StartCreateSparkSession(Azure.Analytics.Synapse.Spark.Models.SparkSessionOptions sparkSessionOptions, bool? detailed = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Analytics.Synapse.Spark.SparkSessionOperation> StartCreateSparkSessionAsync(Azure.Analytics.Synapse.Spark.Models.SparkSessionOptions sparkSessionOptions, bool? detailed = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Analytics.Synapse.Spark.SparkStatementOperation StartCreateSparkStatement(int sessionId, Azure.Analytics.Synapse.Spark.Models.SparkStatementOptions sparkStatementOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Analytics.Synapse.Spark.SparkStatementOperation> StartCreateSparkStatementAsync(int sessionId, Azure.Analytics.Synapse.Spark.Models.SparkStatementOptions sparkStatementOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class SparkSessionOperation : Azure.Operation<Azure.Analytics.Synapse.Spark.Models.SparkSession>
     {

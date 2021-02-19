@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Files.DataLake
 {
-    internal class ServiceListFileSystemsHeaders
+    internal partial class ServiceListFileSystemsHeaders
     {
         private readonly Response _response;
         public ServiceListFileSystemsHeaders(Response response)

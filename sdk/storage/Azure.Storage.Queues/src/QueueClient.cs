@@ -3172,19 +3172,19 @@ namespace Azure.Storage.Queues
         /// </summary>
         /// <param name="receivedMessage">The <see cref="QueueMessage"/> with raw body, if present.</param>
         /// <param name="peekedMessage">The <see cref="PeekedMessage"/> with raw body, if present.</param>
-        /// <param name="runSynchronously">A value indicating whether the event handler was invoked
+        /// <param name="isRunningSynchronously">A value indicating whether the event handler was invoked
         /// synchronously or asynchronously.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns></returns>
         protected virtual async Task OnMessageDecodingFailedAsync(QueueMessage receivedMessage, PeekedMessage peekedMessage,
-            bool runSynchronously, CancellationToken cancellationToken)
+            bool isRunningSynchronously, CancellationToken cancellationToken)
         {
             await ClientConfiguration.QueueMessageDecodingFailedHandlers.RaiseAsync(
                 new QueueMessageDecodingFailedEventArgs(
                     queueClient: this,
                     receivedMessage: receivedMessage,
                     peekedMessage: peekedMessage,
-                    runSynchronously: runSynchronously,
+                    isRunningSynchronously: isRunningSynchronously,
                     cancellationToken: cancellationToken),
                 nameof(QueueClientOptions),
                 nameof(QueueClientOptions.MessageDecodingFailed),

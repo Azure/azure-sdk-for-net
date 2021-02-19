@@ -8,7 +8,7 @@
 namespace Azure.AI.TextAnalytics
 {
     /// <summary> The PiiTaskParameters. </summary>
-    public partial class PiiTaskParameters
+    internal partial class PiiTaskParameters
     {
         /// <summary> Initializes a new instance of PiiTaskParameters. </summary>
         public PiiTaskParameters()

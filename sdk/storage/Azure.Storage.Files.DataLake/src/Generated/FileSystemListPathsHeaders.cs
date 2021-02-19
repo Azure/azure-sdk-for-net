@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Files.DataLake
 {
-    internal class FileSystemListPathsHeaders
+    internal partial class FileSystemListPathsHeaders
     {
         private readonly Response _response;
         public FileSystemListPathsHeaders(Response response)

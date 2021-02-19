@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
-    internal static class PathSetAccessControlRecursiveModeExtensions
+    internal static partial class PathSetAccessControlRecursiveModeExtensions
     {
         public static string ToSerialString(this PathSetAccessControlRecursiveMode value) => value switch
         {

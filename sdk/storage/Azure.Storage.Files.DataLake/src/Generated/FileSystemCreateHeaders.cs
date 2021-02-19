@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Files.DataLake
 {
-    internal class FileSystemCreateHeaders
+    internal partial class FileSystemCreateHeaders
     {
         private readonly Response _response;
         public FileSystemCreateHeaders(Response response)

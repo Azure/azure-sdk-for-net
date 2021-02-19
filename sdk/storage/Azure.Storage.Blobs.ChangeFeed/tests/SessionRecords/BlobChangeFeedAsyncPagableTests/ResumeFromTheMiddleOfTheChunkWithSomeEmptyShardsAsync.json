@@ -4,6 +4,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-86425ef5d89dfc47a0fbd5e55e273b08-165f47b7a2dbdc47-00",
         "User-Agent": [
@@ -35,9 +36,10 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/meta%2Fsegments.json",
+      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/meta/segments.json",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-0d2877c5467ba343a262f2ab25c51c9b-5e7569a76177fd4e-00",
         "User-Agent": [
@@ -85,6 +87,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container\u0026comp=list\u0026prefix=idx%2Fsegments%2F\u0026delimiter=%2F",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200805.1",
@@ -111,6 +114,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container\u0026comp=list\u0026prefix=idx%2Fsegments%2F2020%2F",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200805.1",
@@ -134,9 +138,10 @@
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022https://btdxscnapby3pev38a.blob.preprod.core.windows.net/\u0022 ContainerName=\u0022$blobchangefeed\u0022\u003E\u003CPrefix\u003Eidx/segments/2020/\u003C/Prefix\u003E\u003CBlobs\u003E\u003CBlob\u003E\u003CName\u003Eidx/segments/2020/08/05/1500/meta.json\u003C/Name\u003E\u003CProperties\u003E\u003CCreation-Time\u003EWed, 05 Aug 2020 15:03:10 GMT\u003C/Creation-Time\u003E\u003CLast-Modified\u003EWed, 05 Aug 2020 16:01:00 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E0x8D83958BF973800\u003C/Etag\u003E\u003CContent-Length\u003E537\u003C/Content-Length\u003E\u003CContent-Type\u003Eapplication/json\u003C/Content-Type\u003E\u003CContent-Encoding /\u003E\u003CContent-Language /\u003E\u003CContent-CRC64 /\u003E\u003CContent-MD5\u003EB3Q/Hgdtwv54fBs/6toSgA==\u003C/Content-MD5\u003E\u003CCache-Control /\u003E\u003CContent-Disposition /\u003E\u003CBlobType\u003EBlockBlob\u003C/BlobType\u003E\u003CAccessTier\u003EHot\u003C/AccessTier\u003E\u003CAccessTierInferred\u003Etrue\u003C/AccessTierInferred\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CServerEncrypted\u003Efalse\u003C/ServerEncrypted\u003E\u003C/Properties\u003E\u003COrMetadata /\u003E\u003C/Blob\u003E\u003CBlob\u003E\u003CName\u003Eidx/segments/2020/08/05/1600/meta.json\u003C/Name\u003E\u003CProperties\u003E\u003CCreation-Time\u003EWed, 05 Aug 2020 16:01:00 GMT\u003C/Creation-Time\u003E\u003CLast-Modified\u003EWed, 05 Aug 2020 17:01:00 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E0x8D8396121446CBE\u003C/Etag\u003E\u003CContent-Length\u003E537\u003C/Content-Length\u003E\u003CContent-Type\u003Eapplication/json\u003C/Content-Type\u003E\u003CContent-Encoding /\u003E\u003CContent-Language /\u003E\u003CContent-CRC64 /\u003E\u003CContent-MD5\u003EbV6fxdNaV8JppOeH5lFHng==\u003C/Content-MD5\u003E\u003CCache-Control /\u003E\u003CContent-Disposition /\u003E\u003CBlobType\u003EBlockBlob\u003C/BlobType\u003E\u003CAccessTier\u003EHot\u003C/AccessTier\u003E\u003CAccessTierInferred\u003Etrue\u003C/AccessTierInferred\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CServerEncrypted\u003Efalse\u003C/ServerEncrypted\u003E\u003C/Properties\u003E\u003COrMetadata /\u003E\u003C/Blob\u003E\u003CBlob\u003E\u003CName\u003Eidx/segments/2020/08/05/1700/meta.json\u003C/Name\u003E\u003CProperties\u003E\u003CCreation-Time\u003EWed, 05 Aug 2020 17:01:00 GMT\u003C/Creation-Time\u003E\u003CLast-Modified\u003EWed, 05 Aug 2020 18:01:00 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E0x8D83969831BE68F\u003C/Etag\u003E\u003CContent-Length\u003E537\u003C/Content-Length\u003E\u003CContent-Type\u003Eapplication/json\u003C/Content-Type\u003E\u003CContent-Encoding /\u003E\u003CContent-Language /\u003E\u003CContent-CRC64 /\u003E\u003CContent-MD5\u003EY6L/Qw\u002B5fsR8QLto05gJPg==\u003C/Content-MD5\u003E\u003CCache-Control /\u003E\u003CContent-Disposition /\u003E\u003CBlobType\u003EBlockBlob\u003C/BlobType\u003E\u003CAccessTier\u003EHot\u003C/AccessTier\u003E\u003CAccessTierInferred\u003Etrue\u003C/AccessTierInferred\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CServerEncrypted\u003Efalse\u003C/ServerEncrypted\u003E\u003C/Properties\u003E\u003COrMetadata /\u003E\u003C/Blob\u003E\u003CBlob\u003E\u003CName\u003Eidx/segments/2020/08/05/1800/meta.json\u003C/Name\u003E\u003CProperties\u003E\u003CCreation-Time\u003EWed, 05 Aug 2020 18:01:00 GMT\u003C/Creation-Time\u003E\u003CLast-Modified\u003EWed, 05 Aug 2020 19:01:00 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E0x8D83971E4C91D83\u003C/Etag\u003E\u003CContent-Length\u003E537\u003C/Content-Length\u003E\u003CContent-Type\u003Eapplication/json\u003C/Content-Type\u003E\u003CContent-Encoding /\u003E\u003CContent-Language /\u003E\u003CContent-CRC64 /\u003E\u003CContent-MD5\u003EiAjrZTWxDjMYZ5zQllynpg==\u003C/Content-MD5\u003E\u003CCache-Control /\u003E\u003CContent-Disposition /\u003E\u003CBlobType\u003EBlockBlob\u003C/BlobType\u003E\u003CAccessTier\u003EHot\u003C/AccessTier\u003E\u003CAccessTierInferred\u003Etrue\u003C/AccessTierInferred\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CServerEncrypted\u003Efalse\u003C/ServerEncrypted\u003E\u003C/Properties\u003E\u003COrMetadata /\u003E\u003C/Blob\u003E\u003CBlob\u003E\u003CName\u003Eidx/segments/2020/08/05/1900/meta.json\u003C/Name\u003E\u003CProperties\u003E\u003CCreation-Time\u003EWed, 05 Aug 2020 19:01:00 GMT\u003C/Creation-Time\u003E\u003CLast-Modified\u003EWed, 05 Aug 2020 19:01:00 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E0x8D83971E4B658E6\u003C/Etag\u003E\u003CContent-Length\u003E538\u003C/Content-Length\u003E\u003CContent-Type\u003Eapplication/json\u003C/Content-Type\u003E\u003CContent-Encoding /\u003E\u003CContent-Language /\u003E\u003CContent-CRC64 /\u003E\u003CContent-MD5\u003EY/4O2789BaWkPGdJRLEOag==\u003C/Content-MD5\u003E\u003CCache-Control /\u003E\u003CContent-Disposition /\u003E\u003CBlobType\u003EBlockBlob\u003C/BlobType\u003E\u003CAccessTier\u003EHot\u003C/AccessTier\u003E\u003CAccessTierInferred\u003Etrue\u003C/AccessTierInferred\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CServerEncrypted\u003Efalse\u003C/ServerEncrypted\u003E\u003C/Properties\u003E\u003COrMetadata /\u003E\u003C/Blob\u003E\u003C/Blobs\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
     },
     {
-      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/idx%2Fsegments%2F2020%2F08%2F05%2F1700%2Fmeta.json",
+      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/idx/segments/2020/08/05/1700/meta.json",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-802fbeaf5df8f04da7e3a703e0cb08e2-621fdc67037a9b44-00",
         "User-Agent": [
@@ -199,6 +204,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container\u0026comp=list\u0026prefix=log%2F00%2F2020%2F08%2F05%2F1700%2F",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200805.1",
@@ -222,9 +228,10 @@
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022https://btdxscnapby3pev38a.blob.preprod.core.windows.net/\u0022 ContainerName=\u0022$blobchangefeed\u0022\u003E\u003CPrefix\u003Elog/00/2020/08/05/1700/\u003C/Prefix\u003E\u003CBlobs\u003E\u003CBlob\u003E\u003CName\u003Elog/00/2020/08/05/1700/00000.avro\u003C/Name\u003E\u003CProperties\u003E\u003CCreation-Time\u003EWed, 05 Aug 2020 17:02:00 GMT\u003C/Creation-Time\u003E\u003CLast-Modified\u003EWed, 05 Aug 2020 18:00:00 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E0x8D839695F29BDC6\u003C/Etag\u003E\u003CContent-Length\u003E329962\u003C/Content-Length\u003E\u003CContent-Type\u003Eavro/binary\u003C/Content-Type\u003E\u003CContent-Encoding /\u003E\u003CContent-Language /\u003E\u003CContent-CRC64 /\u003E\u003CContent-MD5 /\u003E\u003CCache-Control /\u003E\u003CContent-Disposition /\u003E\u003CBlobType\u003EAppendBlob\u003C/BlobType\u003E\u003CAccessTier\u003EHot\u003C/AccessTier\u003E\u003CAccessTierInferred\u003Etrue\u003C/AccessTierInferred\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CServerEncrypted\u003Efalse\u003C/ServerEncrypted\u003E\u003C/Properties\u003E\u003COrMetadata /\u003E\u003C/Blob\u003E\u003C/Blobs\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
     },
     {
-      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log%2F00%2F2020%2F08%2F05%2F1700%2F00000.avro",
+      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log/00/2020/08/05/1700/00000.avro",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-e32c67521dfaa142b363a614e8ebbd6d-12f590f61cadd34a-00",
         "User-Agent": [
@@ -263,6 +270,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container\u0026comp=list\u0026prefix=log%2F01%2F2020%2F08%2F05%2F1700%2F",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200805.1",
@@ -286,9 +294,10 @@
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022https://btdxscnapby3pev38a.blob.preprod.core.windows.net/\u0022 ContainerName=\u0022$blobchangefeed\u0022\u003E\u003CPrefix\u003Elog/01/2020/08/05/1700/\u003C/Prefix\u003E\u003CBlobs\u003E\u003CBlob\u003E\u003CName\u003Elog/01/2020/08/05/1700/00000.avro\u003C/Name\u003E\u003CProperties\u003E\u003CCreation-Time\u003EWed, 05 Aug 2020 17:02:00 GMT\u003C/Creation-Time\u003E\u003CLast-Modified\u003EWed, 05 Aug 2020 17:02:00 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E0x8D8396145063825\u003C/Etag\u003E\u003CContent-Length\u003E2434\u003C/Content-Length\u003E\u003CContent-Type\u003Eavro/binary\u003C/Content-Type\u003E\u003CContent-Encoding /\u003E\u003CContent-Language /\u003E\u003CContent-CRC64 /\u003E\u003CContent-MD5 /\u003E\u003CCache-Control /\u003E\u003CContent-Disposition /\u003E\u003CBlobType\u003EAppendBlob\u003C/BlobType\u003E\u003CAccessTier\u003EHot\u003C/AccessTier\u003E\u003CAccessTierInferred\u003Etrue\u003C/AccessTierInferred\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CServerEncrypted\u003Efalse\u003C/ServerEncrypted\u003E\u003C/Properties\u003E\u003COrMetadata /\u003E\u003C/Blob\u003E\u003C/Blobs\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
     },
     {
-      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log%2F01%2F2020%2F08%2F05%2F1700%2F00000.avro",
+      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log/01/2020/08/05/1700/00000.avro",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-f61e99fded86574a94ee13f26db94a59-fcaa1782eecc3f4e-00",
         "User-Agent": [
@@ -327,6 +336,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container\u0026comp=list\u0026prefix=log%2F02%2F2020%2F08%2F05%2F1700%2F",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200805.1",
@@ -350,9 +360,10 @@
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022https://btdxscnapby3pev38a.blob.preprod.core.windows.net/\u0022 ContainerName=\u0022$blobchangefeed\u0022\u003E\u003CPrefix\u003Elog/02/2020/08/05/1700/\u003C/Prefix\u003E\u003CBlobs\u003E\u003CBlob\u003E\u003CName\u003Elog/02/2020/08/05/1700/00000.avro\u003C/Name\u003E\u003CProperties\u003E\u003CCreation-Time\u003EWed, 05 Aug 2020 17:02:00 GMT\u003C/Creation-Time\u003E\u003CLast-Modified\u003EWed, 05 Aug 2020 17:02:00 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E0x8D83961450B18E1\u003C/Etag\u003E\u003CContent-Length\u003E2434\u003C/Content-Length\u003E\u003CContent-Type\u003Eavro/binary\u003C/Content-Type\u003E\u003CContent-Encoding /\u003E\u003CContent-Language /\u003E\u003CContent-CRC64 /\u003E\u003CContent-MD5 /\u003E\u003CCache-Control /\u003E\u003CContent-Disposition /\u003E\u003CBlobType\u003EAppendBlob\u003C/BlobType\u003E\u003CAccessTier\u003EHot\u003C/AccessTier\u003E\u003CAccessTierInferred\u003Etrue\u003C/AccessTierInferred\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CServerEncrypted\u003Efalse\u003C/ServerEncrypted\u003E\u003C/Properties\u003E\u003COrMetadata /\u003E\u003C/Blob\u003E\u003C/Blobs\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
     },
     {
-      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log%2F02%2F2020%2F08%2F05%2F1700%2F00000.avro",
+      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log/02/2020/08/05/1700/00000.avro",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-8d7317f79b1906428cba5a390f688724-4cefde9c413b6b44-00",
         "User-Agent": [
@@ -388,9 +399,10 @@
       "ResponseBody": "T2JqAQQUYXZyby5jb2RlYwhudWxsFmF2cm8uc2NoZW1hnCV7InR5cGUiOiJyZWNvcmQiLCJuYW1lIjoiQmxvYkNoYW5nZUV2ZW50IiwibmFtZXNwYWNlIjoiTWljcm9zb2Z0LlN0b3JhZ2UiLCJmaWVsZHMiOlt7Im5hbWUiOiJzY2hlbWFWZXJzaW9uIiwidHlwZSI6ImxvbmciLCJkZWZhdWx0Ijo0fSx7Im5hbWUiOiJ0b3BpYyIsInR5cGUiOiJzdHJpbmciLCJkZWZhdWx0IjoiIn0seyJuYW1lIjoic3ViamVjdCIsInR5cGUiOiJzdHJpbmciLCJkZWZhdWx0IjoiIn0seyJuYW1lIjoiZXZlbnRUeXBlIiwidHlwZSI6eyJ0eXBlIjoiZW51bSIsIm5hbWUiOiJFdmVudFR5cGVFbnVtIiwic3ltYm9scyI6WyJVbnNwZWNpZmllZEV2ZW50VHlwZSIsIkJsb2JDcmVhdGVkIiwiQmxvYkRlbGV0ZWQiLCJCbG9iUHJvcGVydGllc1VwZGF0ZWQiLCJCbG9iU25hcHNob3RDcmVhdGVkIiwiQ29udHJvbCIsIkJsb2JUaWVyQ2hhbmdlZCIsIkJsb2JBc3luY09wZXJhdGlvbkluaXRpYXRlZCJdLCJkZWZhdWx0IjoiVW5zcGVjaWZpZWRFdmVudFR5cGUifX0seyJuYW1lIjoiZXZlbnRUaW1lIiwidHlwZSI6InN0cmluZyIsImRlZmF1bHQiOiIifSx7Im5hbWUiOiJpZCIsInR5cGUiOiJzdHJpbmciLCJkZWZhdWx0IjoiIn0seyJuYW1lIjoiZGF0YSIsInR5cGUiOnsidHlwZSI6InJlY29yZCIsIm5hbWUiOiJCbG9iQ2hhbmdlRXZlbnREYXRhIiwiZmllbGRzIjpbeyJuYW1lIjoiYXBpIiwidHlwZSI6eyJ0eXBlIjoiZW51bSIsIm5hbWUiOiJBcGlFbnVtIiwic3ltYm9scyI6WyJVbnNwZWNpZmllZEFwaSIsIlB1dEJsb2IiLCJQdXRCbG9ja0xpc3QiLCJDb3B5QmxvYiIsIkRlbGV0ZUJsb2IiLCJTZXRCbG9iTWV0YWRhdGEiLCJDb250cm9sRXZlbnQiLCJVbmRlbGV0ZUJsb2IiLCJTZXRCbG9iUHJvcGVydGllcyIsIlNuYXBzaG90QmxvYiIsIlNldEJsb2JUaWVyIiwiQWJvcnRDb3B5QmxvYiJdLCJkZWZhdWx0IjoiVW5zcGVjaWZpZWRBcGkifSwiZGVmYXVsdCI6IlVuc3BlY2lmaWVkQXBpIn0seyJuYW1lIjoiY2xpZW50UmVxdWVzdElkIiwidHlwZSI6InN0cmluZyIsImRlZmF1bHQiOiIifSx7Im5hbWUiOiJyZXF1ZXN0SWQiLCJ0eXBlIjoic3RyaW5nIiwiZGVmYXVsdCI6IiJ9LHsibmFtZSI6ImV0YWciLCJ0eXBlIjoic3RyaW5nIiwiZGVmYXVsdCI6IiJ9LHsibmFtZSI6ImNvbnRlbnRUeXBlIiwidHlwZSI6InN0cmluZyIsImRlZmF1bHQiOiIifSx7Im5hbWUiOiJjb250ZW50TGVuZ3RoIiwidHlwZSI6ImxvbmciLCJkZWZhdWx0IjowfSx7Im5hbWUiOiJibG9iVHlwZSIsInR5cGUiOnsidHlwZSI6ImVudW0iLCJuYW1lIjoiQmxvYlR5cGVFbnVtIiwic3ltYm9scyI6WyJVbnNwZWNpZmllZEJsb2JUeXBlIiwiQmxvY2tCbG9iIiwiUGFnZUJsb2IiLCJBcHBlbmRCbG9iIl0sImRlZmF1bHQiOiJVbnNwZWNpZmllZEJsb2JUeXBlIn0sImRlZmF1bHQiOiJVbnNwZWNpZmllZEJsb2JUeXBlIn0seyJuYW1lIjoiYmxvYlZlcnNpb24iLCJ0eXBlIjpbIm51bGwiLCJzdHJpbmciXSwiZGVmYXVsdCI6bnVsbH0seyJuYW1lIjoiY29udGFpbmVyVmVyc2lvbiIsInR5cGUiOlsibnVsbCIsInN0cmluZyJdLCJkZWZhdWx0IjpudWxsfSx7Im5hbWUiOiJibG9iVGllciIsInR5cGUiOlsibnVsbCIseyJ0eXBlIjoiZW51bSIsIm5hbWUiOiJCbG9iVGllckVudW0iLCJzeW1ib2xzIjpbIlVuc3BlY2lmaWVkQmxvYlRpZXIiLCJIb3QiLCJDb29sIiwiQXJjaGl2ZSJdLCJkZWZhdWx0IjoiVW5zcGVjaWZpZWRCbG9iVGllciJ9XSwiZGVmYXVsdCI6bnVsbH0seyJuYW1lIjoidXJsIiwidHlwZSI6InN0cmluZyIsImRlZmF1bHQiOiIifSx7Im5hbWUiOiJzZXF1ZW5jZXIiLCJ0eXBlIjoic3RyaW5nIiwiZGVmYXVsdCI6IiJ9LHsibmFtZSI6InByZXZpb3VzSW5mbyIsInR5cGUiOlsibnVsbCIseyJ0eXBlIjoibWFwIiwidmFsdWVzIjoic3RyaW5nIn1dLCJkZWZhdWx0IjpudWxsfSx7Im5hbWUiOiJzbmFwc2hvdCIsInR5cGUiOlsibnVsbCIsInN0cmluZyJdLCJkZWZhdWx0IjpudWxsfSx7Im5hbWUiOiJibG9iUHJvcGVydGllc1VwZGF0ZWQiLCJ0eXBlIjpbIm51bGwiLHsidHlwZSI6Im1hcCIsInZhbHVlcyI6eyJ0eXBlIjoicmVjb3JkIiwibmFtZSI6InZhbHVlcyIsImZpZWxkcyI6W3sibmFtZSI6ImN1cnJlbnQiLCJ0eXBlIjoic3RyaW5nIiwiZGVmYXVsdCI6IiJ9LHsibmFtZSI6InByZXZpb3VzIiwidHlwZSI6InN0cmluZyIsImRlZmF1bHQiOiIifV19fV0sImRlZmF1bHQiOm51bGx9LHsibmFtZSI6ImFzeW5jT3BlcmF0aW9uSW5mbyIsInR5cGUiOlsibnVsbCIseyJ0eXBlIjoibWFwIiwidmFsdWVzIjoic3RyaW5nIn1dLCJkZWZhdWx0IjpudWxsfSx7Im5hbWUiOiJzdG9yYWdlRGlhZ25vc3RpY3MiLCJ0eXBlIjp7InR5cGUiOiJtYXAiLCJ2YWx1ZXMiOiJzdHJpbmcifSwiZGVmYXVsdCI6e319XX19XX0ADQcPDAQEDAABCQEHCw8OCQ=="
     },
     {
-      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/idx%2Fsegments%2F2020%2F08%2F05%2F1800%2Fmeta.json",
+      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/idx/segments/2020/08/05/1800/meta.json",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-c851cc45607ea84d931c973d7e895a87-e8da0a5a04e92043-00",
         "User-Agent": [
@@ -453,6 +465,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container\u0026comp=list\u0026prefix=log%2F00%2F2020%2F08%2F05%2F1800%2F",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200805.1",
@@ -476,9 +489,10 @@
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022https://btdxscnapby3pev38a.blob.preprod.core.windows.net/\u0022 ContainerName=\u0022$blobchangefeed\u0022\u003E\u003CPrefix\u003Elog/00/2020/08/05/1800/\u003C/Prefix\u003E\u003CBlobs\u003E\u003CBlob\u003E\u003CName\u003Elog/00/2020/08/05/1800/00000.avro\u003C/Name\u003E\u003CProperties\u003E\u003CCreation-Time\u003EWed, 05 Aug 2020 18:02:00 GMT\u003C/Creation-Time\u003E\u003CLast-Modified\u003EWed, 05 Aug 2020 19:00:00 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E0x8D83971C0E945BD\u003C/Etag\u003E\u003CContent-Length\u003E329962\u003C/Content-Length\u003E\u003CContent-Type\u003Eavro/binary\u003C/Content-Type\u003E\u003CContent-Encoding /\u003E\u003CContent-Language /\u003E\u003CContent-CRC64 /\u003E\u003CContent-MD5 /\u003E\u003CCache-Control /\u003E\u003CContent-Disposition /\u003E\u003CBlobType\u003EAppendBlob\u003C/BlobType\u003E\u003CAccessTier\u003EHot\u003C/AccessTier\u003E\u003CAccessTierInferred\u003Etrue\u003C/AccessTierInferred\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CServerEncrypted\u003Efalse\u003C/ServerEncrypted\u003E\u003C/Properties\u003E\u003COrMetadata /\u003E\u003C/Blob\u003E\u003C/Blobs\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
     },
     {
-      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log%2F00%2F2020%2F08%2F05%2F1800%2F00000.avro",
+      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log/00/2020/08/05/1800/00000.avro",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-e78b3a1c86f6814699b27cf30b2577dc-7b634412a3b56542-00",
         "User-Agent": [
@@ -517,6 +531,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container\u0026comp=list\u0026prefix=log%2F01%2F2020%2F08%2F05%2F1800%2F",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200805.1",
@@ -540,9 +555,10 @@
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022https://btdxscnapby3pev38a.blob.preprod.core.windows.net/\u0022 ContainerName=\u0022$blobchangefeed\u0022\u003E\u003CPrefix\u003Elog/01/2020/08/05/1800/\u003C/Prefix\u003E\u003CBlobs\u003E\u003CBlob\u003E\u003CName\u003Elog/01/2020/08/05/1800/00000.avro\u003C/Name\u003E\u003CProperties\u003E\u003CCreation-Time\u003EWed, 05 Aug 2020 18:02:00 GMT\u003C/Creation-Time\u003E\u003CLast-Modified\u003EWed, 05 Aug 2020 18:02:00 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E0x8D83969A6D72229\u003C/Etag\u003E\u003CContent-Length\u003E2434\u003C/Content-Length\u003E\u003CContent-Type\u003Eavro/binary\u003C/Content-Type\u003E\u003CContent-Encoding /\u003E\u003CContent-Language /\u003E\u003CContent-CRC64 /\u003E\u003CContent-MD5 /\u003E\u003CCache-Control /\u003E\u003CContent-Disposition /\u003E\u003CBlobType\u003EAppendBlob\u003C/BlobType\u003E\u003CAccessTier\u003EHot\u003C/AccessTier\u003E\u003CAccessTierInferred\u003Etrue\u003C/AccessTierInferred\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CServerEncrypted\u003Efalse\u003C/ServerEncrypted\u003E\u003C/Properties\u003E\u003COrMetadata /\u003E\u003C/Blob\u003E\u003C/Blobs\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
     },
     {
-      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log%2F01%2F2020%2F08%2F05%2F1800%2F00000.avro",
+      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log/01/2020/08/05/1800/00000.avro",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-e3ca2db034b5954ebdcec9a82ed91008-236789f86bc8eb40-00",
         "User-Agent": [
@@ -581,6 +597,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container\u0026comp=list\u0026prefix=log%2F02%2F2020%2F08%2F05%2F1800%2F",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200805.1",
@@ -604,9 +621,10 @@
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022https://btdxscnapby3pev38a.blob.preprod.core.windows.net/\u0022 ContainerName=\u0022$blobchangefeed\u0022\u003E\u003CPrefix\u003Elog/02/2020/08/05/1800/\u003C/Prefix\u003E\u003CBlobs\u003E\u003CBlob\u003E\u003CName\u003Elog/02/2020/08/05/1800/00000.avro\u003C/Name\u003E\u003CProperties\u003E\u003CCreation-Time\u003EWed, 05 Aug 2020 18:02:00 GMT\u003C/Creation-Time\u003E\u003CLast-Modified\u003EWed, 05 Aug 2020 18:02:00 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E0x8D83969A6DD8930\u003C/Etag\u003E\u003CContent-Length\u003E2434\u003C/Content-Length\u003E\u003CContent-Type\u003Eavro/binary\u003C/Content-Type\u003E\u003CContent-Encoding /\u003E\u003CContent-Language /\u003E\u003CContent-CRC64 /\u003E\u003CContent-MD5 /\u003E\u003CCache-Control /\u003E\u003CContent-Disposition /\u003E\u003CBlobType\u003EAppendBlob\u003C/BlobType\u003E\u003CAccessTier\u003EHot\u003C/AccessTier\u003E\u003CAccessTierInferred\u003Etrue\u003C/AccessTierInferred\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CServerEncrypted\u003Efalse\u003C/ServerEncrypted\u003E\u003C/Properties\u003E\u003COrMetadata /\u003E\u003C/Blob\u003E\u003C/Blobs\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
     },
     {
-      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log%2F02%2F2020%2F08%2F05%2F1800%2F00000.avro",
+      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log/02/2020/08/05/1800/00000.avro",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-c9e76f94f4b5be40b2abcd5c28ae2e09-87b49ba7cacf5749-00",
         "User-Agent": [
@@ -645,6 +663,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-a46f184cec149941ae246c9f52ec52f3-7d6f9dd690a3c142-00",
         "User-Agent": [
@@ -676,9 +695,10 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/meta%2Fsegments.json",
+      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/meta/segments.json",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-914ca652f2e66145b809fb9c4157642a-8ab3fd815017a242-00",
         "User-Agent": [
@@ -726,6 +746,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container\u0026comp=list\u0026prefix=idx%2Fsegments%2F\u0026delimiter=%2F",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200805.1",
@@ -752,6 +773,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container\u0026comp=list\u0026prefix=idx%2Fsegments%2F2020%2F",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200805.1",
@@ -775,9 +797,10 @@
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022https://btdxscnapby3pev38a.blob.preprod.core.windows.net/\u0022 ContainerName=\u0022$blobchangefeed\u0022\u003E\u003CPrefix\u003Eidx/segments/2020/\u003C/Prefix\u003E\u003CBlobs\u003E\u003CBlob\u003E\u003CName\u003Eidx/segments/2020/08/05/1500/meta.json\u003C/Name\u003E\u003CProperties\u003E\u003CCreation-Time\u003EWed, 05 Aug 2020 15:03:10 GMT\u003C/Creation-Time\u003E\u003CLast-Modified\u003EWed, 05 Aug 2020 16:01:00 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E0x8D83958BF973800\u003C/Etag\u003E\u003CContent-Length\u003E537\u003C/Content-Length\u003E\u003CContent-Type\u003Eapplication/json\u003C/Content-Type\u003E\u003CContent-Encoding /\u003E\u003CContent-Language /\u003E\u003CContent-CRC64 /\u003E\u003CContent-MD5\u003EB3Q/Hgdtwv54fBs/6toSgA==\u003C/Content-MD5\u003E\u003CCache-Control /\u003E\u003CContent-Disposition /\u003E\u003CBlobType\u003EBlockBlob\u003C/BlobType\u003E\u003CAccessTier\u003EHot\u003C/AccessTier\u003E\u003CAccessTierInferred\u003Etrue\u003C/AccessTierInferred\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CServerEncrypted\u003Efalse\u003C/ServerEncrypted\u003E\u003C/Properties\u003E\u003COrMetadata /\u003E\u003C/Blob\u003E\u003CBlob\u003E\u003CName\u003Eidx/segments/2020/08/05/1600/meta.json\u003C/Name\u003E\u003CProperties\u003E\u003CCreation-Time\u003EWed, 05 Aug 2020 16:01:00 GMT\u003C/Creation-Time\u003E\u003CLast-Modified\u003EWed, 05 Aug 2020 17:01:00 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E0x8D8396121446CBE\u003C/Etag\u003E\u003CContent-Length\u003E537\u003C/Content-Length\u003E\u003CContent-Type\u003Eapplication/json\u003C/Content-Type\u003E\u003CContent-Encoding /\u003E\u003CContent-Language /\u003E\u003CContent-CRC64 /\u003E\u003CContent-MD5\u003EbV6fxdNaV8JppOeH5lFHng==\u003C/Content-MD5\u003E\u003CCache-Control /\u003E\u003CContent-Disposition /\u003E\u003CBlobType\u003EBlockBlob\u003C/BlobType\u003E\u003CAccessTier\u003EHot\u003C/AccessTier\u003E\u003CAccessTierInferred\u003Etrue\u003C/AccessTierInferred\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CServerEncrypted\u003Efalse\u003C/ServerEncrypted\u003E\u003C/Properties\u003E\u003COrMetadata /\u003E\u003C/Blob\u003E\u003CBlob\u003E\u003CName\u003Eidx/segments/2020/08/05/1700/meta.json\u003C/Name\u003E\u003CProperties\u003E\u003CCreation-Time\u003EWed, 05 Aug 2020 17:01:00 GMT\u003C/Creation-Time\u003E\u003CLast-Modified\u003EWed, 05 Aug 2020 18:01:00 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E0x8D83969831BE68F\u003C/Etag\u003E\u003CContent-Length\u003E537\u003C/Content-Length\u003E\u003CContent-Type\u003Eapplication/json\u003C/Content-Type\u003E\u003CContent-Encoding /\u003E\u003CContent-Language /\u003E\u003CContent-CRC64 /\u003E\u003CContent-MD5\u003EY6L/Qw\u002B5fsR8QLto05gJPg==\u003C/Content-MD5\u003E\u003CCache-Control /\u003E\u003CContent-Disposition /\u003E\u003CBlobType\u003EBlockBlob\u003C/BlobType\u003E\u003CAccessTier\u003EHot\u003C/AccessTier\u003E\u003CAccessTierInferred\u003Etrue\u003C/AccessTierInferred\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CServerEncrypted\u003Efalse\u003C/ServerEncrypted\u003E\u003C/Properties\u003E\u003COrMetadata /\u003E\u003C/Blob\u003E\u003CBlob\u003E\u003CName\u003Eidx/segments/2020/08/05/1800/meta.json\u003C/Name\u003E\u003CProperties\u003E\u003CCreation-Time\u003EWed, 05 Aug 2020 18:01:00 GMT\u003C/Creation-Time\u003E\u003CLast-Modified\u003EWed, 05 Aug 2020 19:01:00 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E0x8D83971E4C91D83\u003C/Etag\u003E\u003CContent-Length\u003E537\u003C/Content-Length\u003E\u003CContent-Type\u003Eapplication/json\u003C/Content-Type\u003E\u003CContent-Encoding /\u003E\u003CContent-Language /\u003E\u003CContent-CRC64 /\u003E\u003CContent-MD5\u003EiAjrZTWxDjMYZ5zQllynpg==\u003C/Content-MD5\u003E\u003CCache-Control /\u003E\u003CContent-Disposition /\u003E\u003CBlobType\u003EBlockBlob\u003C/BlobType\u003E\u003CAccessTier\u003EHot\u003C/AccessTier\u003E\u003CAccessTierInferred\u003Etrue\u003C/AccessTierInferred\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CServerEncrypted\u003Efalse\u003C/ServerEncrypted\u003E\u003C/Properties\u003E\u003COrMetadata /\u003E\u003C/Blob\u003E\u003CBlob\u003E\u003CName\u003Eidx/segments/2020/08/05/1900/meta.json\u003C/Name\u003E\u003CProperties\u003E\u003CCreation-Time\u003EWed, 05 Aug 2020 19:01:00 GMT\u003C/Creation-Time\u003E\u003CLast-Modified\u003EWed, 05 Aug 2020 19:01:00 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E0x8D83971E4B658E6\u003C/Etag\u003E\u003CContent-Length\u003E538\u003C/Content-Length\u003E\u003CContent-Type\u003Eapplication/json\u003C/Content-Type\u003E\u003CContent-Encoding /\u003E\u003CContent-Language /\u003E\u003CContent-CRC64 /\u003E\u003CContent-MD5\u003EY/4O2789BaWkPGdJRLEOag==\u003C/Content-MD5\u003E\u003CCache-Control /\u003E\u003CContent-Disposition /\u003E\u003CBlobType\u003EBlockBlob\u003C/BlobType\u003E\u003CAccessTier\u003EHot\u003C/AccessTier\u003E\u003CAccessTierInferred\u003Etrue\u003C/AccessTierInferred\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CServerEncrypted\u003Efalse\u003C/ServerEncrypted\u003E\u003C/Properties\u003E\u003COrMetadata /\u003E\u003C/Blob\u003E\u003C/Blobs\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
     },
     {
-      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/idx%2Fsegments%2F2020%2F08%2F05%2F1700%2Fmeta.json",
+      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/idx/segments/2020/08/05/1700/meta.json",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-899454c314c52e44bc8d967e54941e45-fb377792e488f24c-00",
         "User-Agent": [
@@ -840,6 +863,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container\u0026comp=list\u0026prefix=log%2F00%2F2020%2F08%2F05%2F1700%2F",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200805.1",
@@ -863,9 +887,10 @@
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022https://btdxscnapby3pev38a.blob.preprod.core.windows.net/\u0022 ContainerName=\u0022$blobchangefeed\u0022\u003E\u003CPrefix\u003Elog/00/2020/08/05/1700/\u003C/Prefix\u003E\u003CBlobs\u003E\u003CBlob\u003E\u003CName\u003Elog/00/2020/08/05/1700/00000.avro\u003C/Name\u003E\u003CProperties\u003E\u003CCreation-Time\u003EWed, 05 Aug 2020 17:02:00 GMT\u003C/Creation-Time\u003E\u003CLast-Modified\u003EWed, 05 Aug 2020 18:00:00 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E0x8D839695F29BDC6\u003C/Etag\u003E\u003CContent-Length\u003E329962\u003C/Content-Length\u003E\u003CContent-Type\u003Eavro/binary\u003C/Content-Type\u003E\u003CContent-Encoding /\u003E\u003CContent-Language /\u003E\u003CContent-CRC64 /\u003E\u003CContent-MD5 /\u003E\u003CCache-Control /\u003E\u003CContent-Disposition /\u003E\u003CBlobType\u003EAppendBlob\u003C/BlobType\u003E\u003CAccessTier\u003EHot\u003C/AccessTier\u003E\u003CAccessTierInferred\u003Etrue\u003C/AccessTierInferred\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CServerEncrypted\u003Efalse\u003C/ServerEncrypted\u003E\u003C/Properties\u003E\u003COrMetadata /\u003E\u003C/Blob\u003E\u003C/Blobs\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
     },
     {
-      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log%2F00%2F2020%2F08%2F05%2F1700%2F00000.avro",
+      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log/00/2020/08/05/1700/00000.avro",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-6a431d30fad2924e8ac71cf8fc590965-0c34a5cabf1dcb48-00",
         "User-Agent": [
@@ -904,6 +929,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container\u0026comp=list\u0026prefix=log%2F01%2F2020%2F08%2F05%2F1700%2F",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200805.1",
@@ -927,9 +953,10 @@
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022https://btdxscnapby3pev38a.blob.preprod.core.windows.net/\u0022 ContainerName=\u0022$blobchangefeed\u0022\u003E\u003CPrefix\u003Elog/01/2020/08/05/1700/\u003C/Prefix\u003E\u003CBlobs\u003E\u003CBlob\u003E\u003CName\u003Elog/01/2020/08/05/1700/00000.avro\u003C/Name\u003E\u003CProperties\u003E\u003CCreation-Time\u003EWed, 05 Aug 2020 17:02:00 GMT\u003C/Creation-Time\u003E\u003CLast-Modified\u003EWed, 05 Aug 2020 17:02:00 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E0x8D8396145063825\u003C/Etag\u003E\u003CContent-Length\u003E2434\u003C/Content-Length\u003E\u003CContent-Type\u003Eavro/binary\u003C/Content-Type\u003E\u003CContent-Encoding /\u003E\u003CContent-Language /\u003E\u003CContent-CRC64 /\u003E\u003CContent-MD5 /\u003E\u003CCache-Control /\u003E\u003CContent-Disposition /\u003E\u003CBlobType\u003EAppendBlob\u003C/BlobType\u003E\u003CAccessTier\u003EHot\u003C/AccessTier\u003E\u003CAccessTierInferred\u003Etrue\u003C/AccessTierInferred\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CServerEncrypted\u003Efalse\u003C/ServerEncrypted\u003E\u003C/Properties\u003E\u003COrMetadata /\u003E\u003C/Blob\u003E\u003C/Blobs\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
     },
     {
-      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log%2F01%2F2020%2F08%2F05%2F1700%2F00000.avro",
+      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log/01/2020/08/05/1700/00000.avro",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-02639d62383c514f827a25f32fce2c4c-3c1becf7f79ec840-00",
         "User-Agent": [
@@ -968,6 +995,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container\u0026comp=list\u0026prefix=log%2F02%2F2020%2F08%2F05%2F1700%2F",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200805.1",
@@ -991,9 +1019,10 @@
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022https://btdxscnapby3pev38a.blob.preprod.core.windows.net/\u0022 ContainerName=\u0022$blobchangefeed\u0022\u003E\u003CPrefix\u003Elog/02/2020/08/05/1700/\u003C/Prefix\u003E\u003CBlobs\u003E\u003CBlob\u003E\u003CName\u003Elog/02/2020/08/05/1700/00000.avro\u003C/Name\u003E\u003CProperties\u003E\u003CCreation-Time\u003EWed, 05 Aug 2020 17:02:00 GMT\u003C/Creation-Time\u003E\u003CLast-Modified\u003EWed, 05 Aug 2020 17:02:00 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E0x8D83961450B18E1\u003C/Etag\u003E\u003CContent-Length\u003E2434\u003C/Content-Length\u003E\u003CContent-Type\u003Eavro/binary\u003C/Content-Type\u003E\u003CContent-Encoding /\u003E\u003CContent-Language /\u003E\u003CContent-CRC64 /\u003E\u003CContent-MD5 /\u003E\u003CCache-Control /\u003E\u003CContent-Disposition /\u003E\u003CBlobType\u003EAppendBlob\u003C/BlobType\u003E\u003CAccessTier\u003EHot\u003C/AccessTier\u003E\u003CAccessTierInferred\u003Etrue\u003C/AccessTierInferred\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CServerEncrypted\u003Efalse\u003C/ServerEncrypted\u003E\u003C/Properties\u003E\u003COrMetadata /\u003E\u003C/Blob\u003E\u003C/Blobs\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
     },
     {
-      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log%2F02%2F2020%2F08%2F05%2F1700%2F00000.avro",
+      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log/02/2020/08/05/1700/00000.avro",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-52e2f2dd246e5144b34f91c062a62978-2ddb0320b7b6a340-00",
         "User-Agent": [
@@ -1032,6 +1061,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-a2cf6d21d9093f409c6a0e2d02ad87f4-49ea51abc6fccd4c-00",
         "User-Agent": [
@@ -1063,9 +1093,10 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/meta%2Fsegments.json",
+      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/meta/segments.json",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-1798b0d1b18a4547ad73464567a08aea-67b1b80daf423e4e-00",
         "User-Agent": [
@@ -1113,6 +1144,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container\u0026comp=list\u0026prefix=idx%2Fsegments%2F\u0026delimiter=%2F",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200805.1",
@@ -1139,6 +1171,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container\u0026comp=list\u0026prefix=idx%2Fsegments%2F2020%2F",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200805.1",
@@ -1162,9 +1195,10 @@
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022https://btdxscnapby3pev38a.blob.preprod.core.windows.net/\u0022 ContainerName=\u0022$blobchangefeed\u0022\u003E\u003CPrefix\u003Eidx/segments/2020/\u003C/Prefix\u003E\u003CBlobs\u003E\u003CBlob\u003E\u003CName\u003Eidx/segments/2020/08/05/1500/meta.json\u003C/Name\u003E\u003CProperties\u003E\u003CCreation-Time\u003EWed, 05 Aug 2020 15:03:10 GMT\u003C/Creation-Time\u003E\u003CLast-Modified\u003EWed, 05 Aug 2020 16:01:00 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E0x8D83958BF973800\u003C/Etag\u003E\u003CContent-Length\u003E537\u003C/Content-Length\u003E\u003CContent-Type\u003Eapplication/json\u003C/Content-Type\u003E\u003CContent-Encoding /\u003E\u003CContent-Language /\u003E\u003CContent-CRC64 /\u003E\u003CContent-MD5\u003EB3Q/Hgdtwv54fBs/6toSgA==\u003C/Content-MD5\u003E\u003CCache-Control /\u003E\u003CContent-Disposition /\u003E\u003CBlobType\u003EBlockBlob\u003C/BlobType\u003E\u003CAccessTier\u003EHot\u003C/AccessTier\u003E\u003CAccessTierInferred\u003Etrue\u003C/AccessTierInferred\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CServerEncrypted\u003Efalse\u003C/ServerEncrypted\u003E\u003C/Properties\u003E\u003COrMetadata /\u003E\u003C/Blob\u003E\u003CBlob\u003E\u003CName\u003Eidx/segments/2020/08/05/1600/meta.json\u003C/Name\u003E\u003CProperties\u003E\u003CCreation-Time\u003EWed, 05 Aug 2020 16:01:00 GMT\u003C/Creation-Time\u003E\u003CLast-Modified\u003EWed, 05 Aug 2020 17:01:00 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E0x8D8396121446CBE\u003C/Etag\u003E\u003CContent-Length\u003E537\u003C/Content-Length\u003E\u003CContent-Type\u003Eapplication/json\u003C/Content-Type\u003E\u003CContent-Encoding /\u003E\u003CContent-Language /\u003E\u003CContent-CRC64 /\u003E\u003CContent-MD5\u003EbV6fxdNaV8JppOeH5lFHng==\u003C/Content-MD5\u003E\u003CCache-Control /\u003E\u003CContent-Disposition /\u003E\u003CBlobType\u003EBlockBlob\u003C/BlobType\u003E\u003CAccessTier\u003EHot\u003C/AccessTier\u003E\u003CAccessTierInferred\u003Etrue\u003C/AccessTierInferred\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CServerEncrypted\u003Efalse\u003C/ServerEncrypted\u003E\u003C/Properties\u003E\u003COrMetadata /\u003E\u003C/Blob\u003E\u003CBlob\u003E\u003CName\u003Eidx/segments/2020/08/05/1700/meta.json\u003C/Name\u003E\u003CProperties\u003E\u003CCreation-Time\u003EWed, 05 Aug 2020 17:01:00 GMT\u003C/Creation-Time\u003E\u003CLast-Modified\u003EWed, 05 Aug 2020 18:01:00 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E0x8D83969831BE68F\u003C/Etag\u003E\u003CContent-Length\u003E537\u003C/Content-Length\u003E\u003CContent-Type\u003Eapplication/json\u003C/Content-Type\u003E\u003CContent-Encoding /\u003E\u003CContent-Language /\u003E\u003CContent-CRC64 /\u003E\u003CContent-MD5\u003EY6L/Qw\u002B5fsR8QLto05gJPg==\u003C/Content-MD5\u003E\u003CCache-Control /\u003E\u003CContent-Disposition /\u003E\u003CBlobType\u003EBlockBlob\u003C/BlobType\u003E\u003CAccessTier\u003EHot\u003C/AccessTier\u003E\u003CAccessTierInferred\u003Etrue\u003C/AccessTierInferred\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CServerEncrypted\u003Efalse\u003C/ServerEncrypted\u003E\u003C/Properties\u003E\u003COrMetadata /\u003E\u003C/Blob\u003E\u003CBlob\u003E\u003CName\u003Eidx/segments/2020/08/05/1800/meta.json\u003C/Name\u003E\u003CProperties\u003E\u003CCreation-Time\u003EWed, 05 Aug 2020 18:01:00 GMT\u003C/Creation-Time\u003E\u003CLast-Modified\u003EWed, 05 Aug 2020 19:01:00 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E0x8D83971E4C91D83\u003C/Etag\u003E\u003CContent-Length\u003E537\u003C/Content-Length\u003E\u003CContent-Type\u003Eapplication/json\u003C/Content-Type\u003E\u003CContent-Encoding /\u003E\u003CContent-Language /\u003E\u003CContent-CRC64 /\u003E\u003CContent-MD5\u003EiAjrZTWxDjMYZ5zQllynpg==\u003C/Content-MD5\u003E\u003CCache-Control /\u003E\u003CContent-Disposition /\u003E\u003CBlobType\u003EBlockBlob\u003C/BlobType\u003E\u003CAccessTier\u003EHot\u003C/AccessTier\u003E\u003CAccessTierInferred\u003Etrue\u003C/AccessTierInferred\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CServerEncrypted\u003Efalse\u003C/ServerEncrypted\u003E\u003C/Properties\u003E\u003COrMetadata /\u003E\u003C/Blob\u003E\u003CBlob\u003E\u003CName\u003Eidx/segments/2020/08/05/1900/meta.json\u003C/Name\u003E\u003CProperties\u003E\u003CCreation-Time\u003EWed, 05 Aug 2020 19:01:00 GMT\u003C/Creation-Time\u003E\u003CLast-Modified\u003EWed, 05 Aug 2020 19:01:00 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E0x8D83971E4B658E6\u003C/Etag\u003E\u003CContent-Length\u003E538\u003C/Content-Length\u003E\u003CContent-Type\u003Eapplication/json\u003C/Content-Type\u003E\u003CContent-Encoding /\u003E\u003CContent-Language /\u003E\u003CContent-CRC64 /\u003E\u003CContent-MD5\u003EY/4O2789BaWkPGdJRLEOag==\u003C/Content-MD5\u003E\u003CCache-Control /\u003E\u003CContent-Disposition /\u003E\u003CBlobType\u003EBlockBlob\u003C/BlobType\u003E\u003CAccessTier\u003EHot\u003C/AccessTier\u003E\u003CAccessTierInferred\u003Etrue\u003C/AccessTierInferred\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CServerEncrypted\u003Efalse\u003C/ServerEncrypted\u003E\u003C/Properties\u003E\u003COrMetadata /\u003E\u003C/Blob\u003E\u003C/Blobs\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
     },
     {
-      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/idx%2Fsegments%2F2020%2F08%2F05%2F1700%2Fmeta.json",
+      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/idx/segments/2020/08/05/1700/meta.json",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-cfc10fdf2d751f4ea8d08894d128980a-7f7324d49600e84c-00",
         "User-Agent": [
@@ -1227,6 +1261,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container\u0026comp=list\u0026prefix=log%2F00%2F2020%2F08%2F05%2F1700%2F",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200805.1",
@@ -1250,9 +1285,10 @@
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022https://btdxscnapby3pev38a.blob.preprod.core.windows.net/\u0022 ContainerName=\u0022$blobchangefeed\u0022\u003E\u003CPrefix\u003Elog/00/2020/08/05/1700/\u003C/Prefix\u003E\u003CBlobs\u003E\u003CBlob\u003E\u003CName\u003Elog/00/2020/08/05/1700/00000.avro\u003C/Name\u003E\u003CProperties\u003E\u003CCreation-Time\u003EWed, 05 Aug 2020 17:02:00 GMT\u003C/Creation-Time\u003E\u003CLast-Modified\u003EWed, 05 Aug 2020 18:00:00 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E0x8D839695F29BDC6\u003C/Etag\u003E\u003CContent-Length\u003E329962\u003C/Content-Length\u003E\u003CContent-Type\u003Eavro/binary\u003C/Content-Type\u003E\u003CContent-Encoding /\u003E\u003CContent-Language /\u003E\u003CContent-CRC64 /\u003E\u003CContent-MD5 /\u003E\u003CCache-Control /\u003E\u003CContent-Disposition /\u003E\u003CBlobType\u003EAppendBlob\u003C/BlobType\u003E\u003CAccessTier\u003EHot\u003C/AccessTier\u003E\u003CAccessTierInferred\u003Etrue\u003C/AccessTierInferred\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CServerEncrypted\u003Efalse\u003C/ServerEncrypted\u003E\u003C/Properties\u003E\u003COrMetadata /\u003E\u003C/Blob\u003E\u003C/Blobs\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
     },
     {
-      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log%2F00%2F2020%2F08%2F05%2F1700%2F00000.avro",
+      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log/00/2020/08/05/1700/00000.avro",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-5c76e775639e6a458581e582aada67c6-2cda0510655ec14f-00",
         "User-Agent": [
@@ -1288,9 +1324,10 @@
       "ResponseBody": "T2JqAQQUYXZyby5jb2RlYwhudWxsFmF2cm8uc2NoZW1hnCV7InR5cGUiOiJyZWNvcmQiLCJuYW1lIjoiQmxvYkNoYW5nZUV2ZW50IiwibmFtZXNwYWNlIjoiTWljcm9zb2Z0LlN0b3JhZ2UiLCJmaWVsZHMiOlt7Im5hbWUiOiJzY2hlbWFWZXJzaW9uIiwidHlwZSI6ImxvbmciLCJkZWZhdWx0Ijo0fSx7Im5hbWUiOiJ0b3BpYyIsInR5cGUiOiJzdHJpbmciLCJkZWZhdWx0IjoiIn0seyJuYW1lIjoic3ViamVjdCIsInR5cGUiOiJzdHJpbmciLCJkZWZhdWx0IjoiIn0seyJuYW1lIjoiZXZlbnRUeXBlIiwidHlwZSI6eyJ0eXBlIjoiZW51bSIsIm5hbWUiOiJFdmVudFR5cGVFbnVtIiwic3ltYm9scyI6WyJVbnNwZWNpZmllZEV2ZW50VHlwZSIsIkJsb2JDcmVhdGVkIiwiQmxvYkRlbGV0ZWQiLCJCbG9iUHJvcGVydGllc1VwZGF0ZWQiLCJCbG9iU25hcHNob3RDcmVhdGVkIiwiQ29udHJvbCIsIkJsb2JUaWVyQ2hhbmdlZCIsIkJsb2JBc3luY09wZXJhdGlvbkluaXRpYXRlZCJdLCJkZWZhdWx0IjoiVW5zcGVjaWZpZWRFdmVudFR5cGUifX0seyJuYW1lIjoiZXZlbnRUaW1lIiwidHlwZSI6InN0cmluZyIsImRlZmF1bHQiOiIifSx7Im5hbWUiOiJpZCIsInR5cGUiOiJzdHJpbmciLCJkZWZhdWx0IjoiIn0seyJuYW1lIjoiZGF0YSIsInR5cGUiOnsidHlwZSI6InJlY29yZCIsIm5hbWUiOiJCbG9iQ2hhbmdlRXZlbnREYXRhIiwiZmllbGRzIjpbeyJuYW1lIjoiYXBpIiwidHlwZSI6eyJ0eXBlIjoiZW51bSIsIm5hbWUiOiJBcGlFbnVtIiwic3ltYm9scyI6WyJVbnNwZWNpZmllZEFwaSIsIlB1dEJsb2IiLCJQdXRCbG9ja0xpc3QiLCJDb3B5QmxvYiIsIkRlbGV0ZUJsb2IiLCJTZXRCbG9iTWV0YWRhdGEiLCJDb250cm9sRXZlbnQiLCJVbmRlbGV0ZUJsb2IiLCJTZXRCbG9iUHJvcGVydGllcyIsIlNuYXBzaG90QmxvYiIsIlNldEJsb2JUaWVyIiwiQWJvcnRDb3B5QmxvYiJdLCJkZWZhdWx0IjoiVW5zcGVjaWZpZWRBcGkifSwiZGVmYXVsdCI6IlVuc3BlY2lmaWVkQXBpIn0seyJuYW1lIjoiY2xpZW50UmVxdWVzdElkIiwidHlwZSI6InN0cmluZyIsImRlZmF1bHQiOiIifSx7Im5hbWUiOiJyZXF1ZXN0SWQiLCJ0eXBlIjoic3RyaW5nIiwiZGVmYXVsdCI6IiJ9LHsibmFtZSI6ImV0YWciLCJ0eXBlIjoic3RyaW5nIiwiZGVmYXVsdCI6IiJ9LHsibmFtZSI6ImNvbnRlbnRUeXBlIiwidHlwZSI6InN0cmluZyIsImRlZmF1bHQiOiIifSx7Im5hbWUiOiJjb250ZW50TGVuZ3RoIiwidHlwZSI6ImxvbmciLCJkZWZhdWx0IjowfSx7Im5hbWUiOiJibG9iVHlwZSIsInR5cGUiOnsidHlwZSI6ImVudW0iLCJuYW1lIjoiQmxvYlR5cGVFbnVtIiwic3ltYm9scyI6WyJVbnNwZWNpZmllZEJsb2JUeXBlIiwiQmxvY2tCbG9iIiwiUGFnZUJsb2IiLCJBcHBlbmRCbG9iIl0sImRlZmF1bHQiOiJVbnNwZWNpZmllZEJsb2JUeXBlIn0sImRlZmF1bHQiOiJVbnNwZWNpZmllZEJsb2JUeXBlIn0seyJuYW1lIjoiYmxvYlZlcnNpb24iLCJ0eXBlIjpbIm51bGwiLCJzdHJpbmciXSwiZGVmYXVsdCI6bnVsbH0seyJuYW1lIjoiY29udGFpbmVyVmVyc2lvbiIsInR5cGUiOlsibnVsbCIsInN0cmluZyJdLCJkZWZhdWx0IjpudWxsfSx7Im5hbWUiOiJibG9iVGllciIsInR5cGUiOlsibnVsbCIseyJ0eXBlIjoiZW51bSIsIm5hbWUiOiJCbG9iVGllckVudW0iLCJzeW1ib2xzIjpbIlVuc3BlY2lmaWVkQmxvYlRpZXIiLCJIb3QiLCJDb29sIiwiQXJjaGl2ZSJdLCJkZWZhdWx0IjoiVW5zcGVjaWZpZWRCbG9iVGllciJ9XSwiZGVmYXVsdCI6bnVsbH0seyJuYW1lIjoidXJsIiwidHlwZSI6InN0cmluZyIsImRlZmF1bHQiOiIifSx7Im5hbWUiOiJzZXF1ZW5jZXIiLCJ0eXBlIjoic3RyaW5nIiwiZGVmYXVsdCI6IiJ9LHsibmFtZSI6InByZXZpb3VzSW5mbyIsInR5cGUiOlsibnVsbCIseyJ0eXBlIjoibWFwIiwidmFsdWVzIjoic3RyaW5nIn1dLCJkZWZhdWx0IjpudWxsfSx7Im5hbWUiOiJzbmFwc2hvdCIsInR5cGUiOlsibnVsbCIsInN0cmluZyJdLCJkZWZhdWx0IjpudWxsfSx7Im5hbWUiOiJibG9iUHJvcGVydGllc1VwZGF0ZWQiLCJ0eXBlIjpbIm51bGwiLHsidHlwZSI6Im1hcCIsInZhbHVlcyI6eyJ0eXBlIjoicmVjb3JkIiwibmFtZSI6InZhbHVlcyIsImZpZWxkcyI6W3sibmFtZSI6ImN1cnJlbnQiLCJ0eXBlIjoic3RyaW5nIiwiZGVmYXVsdCI6IiJ9LHsibmFtZSI6InByZXZpb3VzIiwidHlwZSI6InN0cmluZyIsImRlZmF1bHQiOiIifV19fV0sImRlZmF1bHQiOm51bGx9LHsibmFtZSI6ImFzeW5jT3BlcmF0aW9uSW5mbyIsInR5cGUiOlsibnVsbCIseyJ0eXBlIjoibWFwIiwidmFsdWVzIjoic3RyaW5nIn1dLCJkZWZhdWx0IjpudWxsfSx7Im5hbWUiOiJzdG9yYWdlRGlhZ25vc3RpY3MiLCJ0eXBlIjp7InR5cGUiOiJtYXAiLCJ2YWx1ZXMiOiJzdHJpbmcifSwiZGVmYXVsdCI6e319XX19XX0ADQcPDAQEDAABCQEHCw8OCaSAgICAgICAgADAqYGAgICAgIAACKwCL3N1YnNjcmlwdGlvbnMvODg4ODg4ODgtMDAwMS0wMDAxLTAwMDEtOGRlZTI2MzY5MTIwL3Jlc291cmNlR3JvdXBzL2FjY291bnRwb29sc2VydmljZXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvcmFnZS9zdG9yYWdlQWNjb3VudHMvYnRkeHNjbmFwYnkzcGV2MzhhgAEvYmxvYlNlcnZpY2VzL2RlZmF1bHQvY29udGFpbmVycy9jaGFuZ2VmZWVkLXRlc3QvYmxvYnMvYmxvYi14eHh4AjgyMDIwLTA4LTA1VDE3OjAwOjAwLjYwMjYzNjVaSDg2N2IxMDY2LTEwMWUtMDAwMS0wNDQ5LTZiMDE1NTA2NTQxMwJINGE4ZDhkZmItM2Q2My00YjUyLTk0OWUtY2QyNzFlZmE5NzAwSDg2N2IxMDY2LTEwMWUtMDAwMS0wNDQ5LTZiMDE1NTAwMDAwMCIweDhEODM5NjBGRDg2NzM5RDBhcHBsaWNhdGlvbi9vY3RldC1zdHJlYW1iAgACIDAxRDY2QThFM0U2NUU4RTMAAGAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwQTAwMDAwMDAwMDAwMjMxZmYAAAAABgZiaWRIODg1NWEwYjktOTAwNi0wMDA0LTAwNGEtNmIxNGY0MDAwMDAwBnNpZEgwNTVkMzFlYS02YjQ5LTY5Y2MtNTZjNS00ODU5ZjMzNDg4ZmEGc2VxMCgxMCwyNDY4NSwxNDM4NzEsMTQzODY1KQAIrAIvc3Vic2NyaXB0aW9ucy84ODg4ODg4"
     },
     {
-      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log%2F00%2F2020%2F08%2F05%2F1700%2F00000.avro",
+      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log/00/2020/08/05/1700/00000.avro",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-db0db5bc38ae4643b7bdfa73828f1b3b-0829dbc0cf1ce147-00",
         "User-Agent": [
@@ -1329,6 +1366,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container\u0026comp=list\u0026prefix=log%2F01%2F2020%2F08%2F05%2F1700%2F",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200805.1",
@@ -1352,9 +1390,10 @@
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022https://btdxscnapby3pev38a.blob.preprod.core.windows.net/\u0022 ContainerName=\u0022$blobchangefeed\u0022\u003E\u003CPrefix\u003Elog/01/2020/08/05/1700/\u003C/Prefix\u003E\u003CBlobs\u003E\u003CBlob\u003E\u003CName\u003Elog/01/2020/08/05/1700/00000.avro\u003C/Name\u003E\u003CProperties\u003E\u003CCreation-Time\u003EWed, 05 Aug 2020 17:02:00 GMT\u003C/Creation-Time\u003E\u003CLast-Modified\u003EWed, 05 Aug 2020 17:02:00 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E0x8D8396145063825\u003C/Etag\u003E\u003CContent-Length\u003E2434\u003C/Content-Length\u003E\u003CContent-Type\u003Eavro/binary\u003C/Content-Type\u003E\u003CContent-Encoding /\u003E\u003CContent-Language /\u003E\u003CContent-CRC64 /\u003E\u003CContent-MD5 /\u003E\u003CCache-Control /\u003E\u003CContent-Disposition /\u003E\u003CBlobType\u003EAppendBlob\u003C/BlobType\u003E\u003CAccessTier\u003EHot\u003C/AccessTier\u003E\u003CAccessTierInferred\u003Etrue\u003C/AccessTierInferred\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CServerEncrypted\u003Efalse\u003C/ServerEncrypted\u003E\u003C/Properties\u003E\u003COrMetadata /\u003E\u003C/Blob\u003E\u003C/Blobs\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
     },
     {
-      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log%2F01%2F2020%2F08%2F05%2F1700%2F00000.avro",
+      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log/01/2020/08/05/1700/00000.avro",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-94aac7ea61e63e42ac7b9e794abf4b05-799b82f8c6a80341-00",
         "User-Agent": [
@@ -1393,6 +1432,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container\u0026comp=list\u0026prefix=log%2F02%2F2020%2F08%2F05%2F1700%2F",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200805.1",
@@ -1416,9 +1456,10 @@
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022https://btdxscnapby3pev38a.blob.preprod.core.windows.net/\u0022 ContainerName=\u0022$blobchangefeed\u0022\u003E\u003CPrefix\u003Elog/02/2020/08/05/1700/\u003C/Prefix\u003E\u003CBlobs\u003E\u003CBlob\u003E\u003CName\u003Elog/02/2020/08/05/1700/00000.avro\u003C/Name\u003E\u003CProperties\u003E\u003CCreation-Time\u003EWed, 05 Aug 2020 17:02:00 GMT\u003C/Creation-Time\u003E\u003CLast-Modified\u003EWed, 05 Aug 2020 17:02:00 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E0x8D83961450B18E1\u003C/Etag\u003E\u003CContent-Length\u003E2434\u003C/Content-Length\u003E\u003CContent-Type\u003Eavro/binary\u003C/Content-Type\u003E\u003CContent-Encoding /\u003E\u003CContent-Language /\u003E\u003CContent-CRC64 /\u003E\u003CContent-MD5 /\u003E\u003CCache-Control /\u003E\u003CContent-Disposition /\u003E\u003CBlobType\u003EAppendBlob\u003C/BlobType\u003E\u003CAccessTier\u003EHot\u003C/AccessTier\u003E\u003CAccessTierInferred\u003Etrue\u003C/AccessTierInferred\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CServerEncrypted\u003Efalse\u003C/ServerEncrypted\u003E\u003C/Properties\u003E\u003COrMetadata /\u003E\u003C/Blob\u003E\u003C/Blobs\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
     },
     {
-      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log%2F02%2F2020%2F08%2F05%2F1700%2F00000.avro",
+      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log/02/2020/08/05/1700/00000.avro",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-f8c01de43fb7ca4195097de554a61f71-fa3239af1c4f2047-00",
         "User-Agent": [
@@ -1457,6 +1498,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-3663ba3186439c4fa6b992f4c1154d02-0ac4c0fc63330849-00",
         "User-Agent": [
@@ -1488,9 +1530,10 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/meta%2Fsegments.json",
+      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/meta/segments.json",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-51c9fef970775644982f5fe53b9e026c-07b050209ef21845-00",
         "User-Agent": [
@@ -1538,6 +1581,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container\u0026comp=list\u0026prefix=idx%2Fsegments%2F\u0026delimiter=%2F",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200805.1",
@@ -1564,6 +1608,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container\u0026comp=list\u0026prefix=idx%2Fsegments%2F2020%2F",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200805.1",
@@ -1587,9 +1632,10 @@
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022https://btdxscnapby3pev38a.blob.preprod.core.windows.net/\u0022 ContainerName=\u0022$blobchangefeed\u0022\u003E\u003CPrefix\u003Eidx/segments/2020/\u003C/Prefix\u003E\u003CBlobs\u003E\u003CBlob\u003E\u003CName\u003Eidx/segments/2020/08/05/1500/meta.json\u003C/Name\u003E\u003CProperties\u003E\u003CCreation-Time\u003EWed, 05 Aug 2020 15:03:10 GMT\u003C/Creation-Time\u003E\u003CLast-Modified\u003EWed, 05 Aug 2020 16:01:00 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E0x8D83958BF973800\u003C/Etag\u003E\u003CContent-Length\u003E537\u003C/Content-Length\u003E\u003CContent-Type\u003Eapplication/json\u003C/Content-Type\u003E\u003CContent-Encoding /\u003E\u003CContent-Language /\u003E\u003CContent-CRC64 /\u003E\u003CContent-MD5\u003EB3Q/Hgdtwv54fBs/6toSgA==\u003C/Content-MD5\u003E\u003CCache-Control /\u003E\u003CContent-Disposition /\u003E\u003CBlobType\u003EBlockBlob\u003C/BlobType\u003E\u003CAccessTier\u003EHot\u003C/AccessTier\u003E\u003CAccessTierInferred\u003Etrue\u003C/AccessTierInferred\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CServerEncrypted\u003Efalse\u003C/ServerEncrypted\u003E\u003C/Properties\u003E\u003COrMetadata /\u003E\u003C/Blob\u003E\u003CBlob\u003E\u003CName\u003Eidx/segments/2020/08/05/1600/meta.json\u003C/Name\u003E\u003CProperties\u003E\u003CCreation-Time\u003EWed, 05 Aug 2020 16:01:00 GMT\u003C/Creation-Time\u003E\u003CLast-Modified\u003EWed, 05 Aug 2020 17:01:00 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E0x8D8396121446CBE\u003C/Etag\u003E\u003CContent-Length\u003E537\u003C/Content-Length\u003E\u003CContent-Type\u003Eapplication/json\u003C/Content-Type\u003E\u003CContent-Encoding /\u003E\u003CContent-Language /\u003E\u003CContent-CRC64 /\u003E\u003CContent-MD5\u003EbV6fxdNaV8JppOeH5lFHng==\u003C/Content-MD5\u003E\u003CCache-Control /\u003E\u003CContent-Disposition /\u003E\u003CBlobType\u003EBlockBlob\u003C/BlobType\u003E\u003CAccessTier\u003EHot\u003C/AccessTier\u003E\u003CAccessTierInferred\u003Etrue\u003C/AccessTierInferred\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CServerEncrypted\u003Efalse\u003C/ServerEncrypted\u003E\u003C/Properties\u003E\u003COrMetadata /\u003E\u003C/Blob\u003E\u003CBlob\u003E\u003CName\u003Eidx/segments/2020/08/05/1700/meta.json\u003C/Name\u003E\u003CProperties\u003E\u003CCreation-Time\u003EWed, 05 Aug 2020 17:01:00 GMT\u003C/Creation-Time\u003E\u003CLast-Modified\u003EWed, 05 Aug 2020 18:01:00 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E0x8D83969831BE68F\u003C/Etag\u003E\u003CContent-Length\u003E537\u003C/Content-Length\u003E\u003CContent-Type\u003Eapplication/json\u003C/Content-Type\u003E\u003CContent-Encoding /\u003E\u003CContent-Language /\u003E\u003CContent-CRC64 /\u003E\u003CContent-MD5\u003EY6L/Qw\u002B5fsR8QLto05gJPg==\u003C/Content-MD5\u003E\u003CCache-Control /\u003E\u003CContent-Disposition /\u003E\u003CBlobType\u003EBlockBlob\u003C/BlobType\u003E\u003CAccessTier\u003EHot\u003C/AccessTier\u003E\u003CAccessTierInferred\u003Etrue\u003C/AccessTierInferred\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CServerEncrypted\u003Efalse\u003C/ServerEncrypted\u003E\u003C/Properties\u003E\u003COrMetadata /\u003E\u003C/Blob\u003E\u003CBlob\u003E\u003CName\u003Eidx/segments/2020/08/05/1800/meta.json\u003C/Name\u003E\u003CProperties\u003E\u003CCreation-Time\u003EWed, 05 Aug 2020 18:01:00 GMT\u003C/Creation-Time\u003E\u003CLast-Modified\u003EWed, 05 Aug 2020 19:01:00 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E0x8D83971E4C91D83\u003C/Etag\u003E\u003CContent-Length\u003E537\u003C/Content-Length\u003E\u003CContent-Type\u003Eapplication/json\u003C/Content-Type\u003E\u003CContent-Encoding /\u003E\u003CContent-Language /\u003E\u003CContent-CRC64 /\u003E\u003CContent-MD5\u003EiAjrZTWxDjMYZ5zQllynpg==\u003C/Content-MD5\u003E\u003CCache-Control /\u003E\u003CContent-Disposition /\u003E\u003CBlobType\u003EBlockBlob\u003C/BlobType\u003E\u003CAccessTier\u003EHot\u003C/AccessTier\u003E\u003CAccessTierInferred\u003Etrue\u003C/AccessTierInferred\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CServerEncrypted\u003Efalse\u003C/ServerEncrypted\u003E\u003C/Properties\u003E\u003COrMetadata /\u003E\u003C/Blob\u003E\u003CBlob\u003E\u003CName\u003Eidx/segments/2020/08/05/1900/meta.json\u003C/Name\u003E\u003CProperties\u003E\u003CCreation-Time\u003EWed, 05 Aug 2020 19:01:00 GMT\u003C/Creation-Time\u003E\u003CLast-Modified\u003EWed, 05 Aug 2020 19:01:00 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E0x8D83971E4B658E6\u003C/Etag\u003E\u003CContent-Length\u003E538\u003C/Content-Length\u003E\u003CContent-Type\u003Eapplication/json\u003C/Content-Type\u003E\u003CContent-Encoding /\u003E\u003CContent-Language /\u003E\u003CContent-CRC64 /\u003E\u003CContent-MD5\u003EY/4O2789BaWkPGdJRLEOag==\u003C/Content-MD5\u003E\u003CCache-Control /\u003E\u003CContent-Disposition /\u003E\u003CBlobType\u003EBlockBlob\u003C/BlobType\u003E\u003CAccessTier\u003EHot\u003C/AccessTier\u003E\u003CAccessTierInferred\u003Etrue\u003C/AccessTierInferred\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CServerEncrypted\u003Efalse\u003C/ServerEncrypted\u003E\u003C/Properties\u003E\u003COrMetadata /\u003E\u003C/Blob\u003E\u003C/Blobs\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
     },
     {
-      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/idx%2Fsegments%2F2020%2F08%2F05%2F1700%2Fmeta.json",
+      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/idx/segments/2020/08/05/1700/meta.json",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-2490582a411bce43be7f75a6414da362-eaac993d80bed048-00",
         "User-Agent": [
@@ -1652,6 +1698,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container\u0026comp=list\u0026prefix=log%2F00%2F2020%2F08%2F05%2F1700%2F",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200805.1",
@@ -1675,9 +1722,10 @@
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022https://btdxscnapby3pev38a.blob.preprod.core.windows.net/\u0022 ContainerName=\u0022$blobchangefeed\u0022\u003E\u003CPrefix\u003Elog/00/2020/08/05/1700/\u003C/Prefix\u003E\u003CBlobs\u003E\u003CBlob\u003E\u003CName\u003Elog/00/2020/08/05/1700/00000.avro\u003C/Name\u003E\u003CProperties\u003E\u003CCreation-Time\u003EWed, 05 Aug 2020 17:02:00 GMT\u003C/Creation-Time\u003E\u003CLast-Modified\u003EWed, 05 Aug 2020 18:00:00 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E0x8D839695F29BDC6\u003C/Etag\u003E\u003CContent-Length\u003E329962\u003C/Content-Length\u003E\u003CContent-Type\u003Eavro/binary\u003C/Content-Type\u003E\u003CContent-Encoding /\u003E\u003CContent-Language /\u003E\u003CContent-CRC64 /\u003E\u003CContent-MD5 /\u003E\u003CCache-Control /\u003E\u003CContent-Disposition /\u003E\u003CBlobType\u003EAppendBlob\u003C/BlobType\u003E\u003CAccessTier\u003EHot\u003C/AccessTier\u003E\u003CAccessTierInferred\u003Etrue\u003C/AccessTierInferred\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CServerEncrypted\u003Efalse\u003C/ServerEncrypted\u003E\u003C/Properties\u003E\u003COrMetadata /\u003E\u003C/Blob\u003E\u003C/Blobs\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
     },
     {
-      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log%2F00%2F2020%2F08%2F05%2F1700%2F00000.avro",
+      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log/00/2020/08/05/1700/00000.avro",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-de5d596bae6a8941aeeabdb808ac77d1-e2e62f27b610e046-00",
         "User-Agent": [
@@ -1713,9 +1761,10 @@
       "ResponseBody": "T2JqAQQUYXZyby5jb2RlYwhudWxsFmF2cm8uc2NoZW1hnCV7InR5cGUiOiJyZWNvcmQiLCJuYW1lIjoiQmxvYkNoYW5nZUV2ZW50IiwibmFtZXNwYWNlIjoiTWljcm9zb2Z0LlN0b3JhZ2UiLCJmaWVsZHMiOlt7Im5hbWUiOiJzY2hlbWFWZXJzaW9uIiwidHlwZSI6ImxvbmciLCJkZWZhdWx0Ijo0fSx7Im5hbWUiOiJ0b3BpYyIsInR5cGUiOiJzdHJpbmciLCJkZWZhdWx0IjoiIn0seyJuYW1lIjoic3ViamVjdCIsInR5cGUiOiJzdHJpbmciLCJkZWZhdWx0IjoiIn0seyJuYW1lIjoiZXZlbnRUeXBlIiwidHlwZSI6eyJ0eXBlIjoiZW51bSIsIm5hbWUiOiJFdmVudFR5cGVFbnVtIiwic3ltYm9scyI6WyJVbnNwZWNpZmllZEV2ZW50VHlwZSIsIkJsb2JDcmVhdGVkIiwiQmxvYkRlbGV0ZWQiLCJCbG9iUHJvcGVydGllc1VwZGF0ZWQiLCJCbG9iU25hcHNob3RDcmVhdGVkIiwiQ29udHJvbCIsIkJsb2JUaWVyQ2hhbmdlZCIsIkJsb2JBc3luY09wZXJhdGlvbkluaXRpYXRlZCJdLCJkZWZhdWx0IjoiVW5zcGVjaWZpZWRFdmVudFR5cGUifX0seyJuYW1lIjoiZXZlbnRUaW1lIiwidHlwZSI6InN0cmluZyIsImRlZmF1bHQiOiIifSx7Im5hbWUiOiJpZCIsInR5cGUiOiJzdHJpbmciLCJkZWZhdWx0IjoiIn0seyJuYW1lIjoiZGF0YSIsInR5cGUiOnsidHlwZSI6InJlY29yZCIsIm5hbWUiOiJCbG9iQ2hhbmdlRXZlbnREYXRhIiwiZmllbGRzIjpbeyJuYW1lIjoiYXBpIiwidHlwZSI6eyJ0eXBlIjoiZW51bSIsIm5hbWUiOiJBcGlFbnVtIiwic3ltYm9scyI6WyJVbnNwZWNpZmllZEFwaSIsIlB1dEJsb2IiLCJQdXRCbG9ja0xpc3QiLCJDb3B5QmxvYiIsIkRlbGV0ZUJsb2IiLCJTZXRCbG9iTWV0YWRhdGEiLCJDb250cm9sRXZlbnQiLCJVbmRlbGV0ZUJsb2IiLCJTZXRCbG9iUHJvcGVydGllcyIsIlNuYXBzaG90QmxvYiIsIlNldEJsb2JUaWVyIiwiQWJvcnRDb3B5QmxvYiJdLCJkZWZhdWx0IjoiVW5zcGVjaWZpZWRBcGkifSwiZGVmYXVsdCI6IlVuc3BlY2lmaWVkQXBpIn0seyJuYW1lIjoiY2xpZW50UmVxdWVzdElkIiwidHlwZSI6InN0cmluZyIsImRlZmF1bHQiOiIifSx7Im5hbWUiOiJyZXF1ZXN0SWQiLCJ0eXBlIjoic3RyaW5nIiwiZGVmYXVsdCI6IiJ9LHsibmFtZSI6ImV0YWciLCJ0eXBlIjoic3RyaW5nIiwiZGVmYXVsdCI6IiJ9LHsibmFtZSI6ImNvbnRlbnRUeXBlIiwidHlwZSI6InN0cmluZyIsImRlZmF1bHQiOiIifSx7Im5hbWUiOiJjb250ZW50TGVuZ3RoIiwidHlwZSI6ImxvbmciLCJkZWZhdWx0IjowfSx7Im5hbWUiOiJibG9iVHlwZSIsInR5cGUiOnsidHlwZSI6ImVudW0iLCJuYW1lIjoiQmxvYlR5cGVFbnVtIiwic3ltYm9scyI6WyJVbnNwZWNpZmllZEJsb2JUeXBlIiwiQmxvY2tCbG9iIiwiUGFnZUJsb2IiLCJBcHBlbmRCbG9iIl0sImRlZmF1bHQiOiJVbnNwZWNpZmllZEJsb2JUeXBlIn0sImRlZmF1bHQiOiJVbnNwZWNpZmllZEJsb2JUeXBlIn0seyJuYW1lIjoiYmxvYlZlcnNpb24iLCJ0eXBlIjpbIm51bGwiLCJzdHJpbmciXSwiZGVmYXVsdCI6bnVsbH0seyJuYW1lIjoiY29udGFpbmVyVmVyc2lvbiIsInR5cGUiOlsibnVsbCIsInN0cmluZyJdLCJkZWZhdWx0IjpudWxsfSx7Im5hbWUiOiJibG9iVGllciIsInR5cGUiOlsibnVsbCIseyJ0eXBlIjoiZW51bSIsIm5hbWUiOiJCbG9iVGllckVudW0iLCJzeW1ib2xzIjpbIlVuc3BlY2lmaWVkQmxvYlRpZXIiLCJIb3QiLCJDb29sIiwiQXJjaGl2ZSJdLCJkZWZhdWx0IjoiVW5zcGVjaWZpZWRCbG9iVGllciJ9XSwiZGVmYXVsdCI6bnVsbH0seyJuYW1lIjoidXJsIiwidHlwZSI6InN0cmluZyIsImRlZmF1bHQiOiIifSx7Im5hbWUiOiJzZXF1ZW5jZXIiLCJ0eXBlIjoic3RyaW5nIiwiZGVmYXVsdCI6IiJ9LHsibmFtZSI6InByZXZpb3VzSW5mbyIsInR5cGUiOlsibnVsbCIseyJ0eXBlIjoibWFwIiwidmFsdWVzIjoic3RyaW5nIn1dLCJkZWZhdWx0IjpudWxsfSx7Im5hbWUiOiJzbmFwc2hvdCIsInR5cGUiOlsibnVsbCIsInN0cmluZyJdLCJkZWZhdWx0IjpudWxsfSx7Im5hbWUiOiJibG9iUHJvcGVydGllc1VwZGF0ZWQiLCJ0eXBlIjpbIm51bGwiLHsidHlwZSI6Im1hcCIsInZhbHVlcyI6eyJ0eXBlIjoicmVjb3JkIiwibmFtZSI6InZhbHVlcyIsImZpZWxkcyI6W3sibmFtZSI6ImN1cnJlbnQiLCJ0eXBlIjoic3RyaW5nIiwiZGVmYXVsdCI6IiJ9LHsibmFtZSI6InByZXZpb3VzIiwidHlwZSI6InN0cmluZyIsImRlZmF1bHQiOiIifV19fV0sImRlZmF1bHQiOm51bGx9LHsibmFtZSI6ImFzeW5jT3BlcmF0aW9uSW5mbyIsInR5cGUiOlsibnVsbCIseyJ0eXBlIjoibWFwIiwidmFsdWVzIjoic3RyaW5nIn1dLCJkZWZhdWx0IjpudWxsfSx7Im5hbWUiOiJzdG9yYWdlRGlhZ25vc3RpY3MiLCJ0eXBlIjp7InR5cGUiOiJtYXAiLCJ2YWx1ZXMiOiJzdHJpbmcifSwiZGVmYXVsdCI6e319XX19XX0ADQcPDAQEDAABCQEHCw8OCaSAgICAgICAgADAqYGAgICAgIAACKwCL3N1YnNjcmlwdGlvbnMvODg4ODg4ODgtMDAwMS0wMDAxLTAwMDEtOGRlZTI2MzY5MTIwL3Jlc291cmNlR3JvdXBzL2FjY291bnRwb29sc2VydmljZXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvcmFnZS9zdG9yYWdlQWNjb3VudHMvYnRkeHNjbmFwYnkzcGV2MzhhgAEvYmxvYlNlcnZpY2VzL2RlZmF1bHQvY29udGFpbmVycy9jaGFuZ2VmZWVkLXRlc3QvYmxvYnMvYmxvYi14eHh4AjgyMDIwLTA4LTA1VDE3OjAwOjAwLjYwMjYzNjVaSDg2N2IxMDY2LTEwMWUtMDAwMS0wNDQ5LTZiMDE1NTA2NTQxMwJINGE4ZDhkZmItM2Q2My00YjUyLTk0OWUtY2QyNzFlZmE5NzAwSDg2N2IxMDY2LTEwMWUtMDAwMS0wNDQ5LTZiMDE1NTAwMDAwMCIweDhEODM5NjBGRDg2NzM5RDBhcHBsaWNhdGlvbi9vY3RldC1zdHJlYW1iAgACIDAxRDY2QThFM0U2NUU4RTMAAGAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwQTAwMDAwMDAwMDAwMjMxZmYAAAAABgZiaWRIODg1NWEwYjktOTAwNi0wMDA0LTAwNGEtNmIxNGY0MDAwMDAwBnNpZEgwNTVkMzFlYS02YjQ5LTY5Y2MtNTZjNS00ODU5ZjMzNDg4ZmEGc2VxMCgxMCwyNDY4NSwxNDM4NzEsMTQzODY1KQAIrAIvc3Vic2NyaXB0aW9ucy84ODg4ODg4"
     },
     {
-      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log%2F00%2F2020%2F08%2F05%2F1700%2F00000.avro",
+      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log/00/2020/08/05/1700/00000.avro",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-8f78d6b92b4d7f468ed49f028351c22d-3fc3e7aad84cb746-00",
         "User-Agent": [
@@ -1754,6 +1803,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container\u0026comp=list\u0026prefix=log%2F01%2F2020%2F08%2F05%2F1700%2F",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200805.1",
@@ -1777,9 +1827,10 @@
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022https://btdxscnapby3pev38a.blob.preprod.core.windows.net/\u0022 ContainerName=\u0022$blobchangefeed\u0022\u003E\u003CPrefix\u003Elog/01/2020/08/05/1700/\u003C/Prefix\u003E\u003CBlobs\u003E\u003CBlob\u003E\u003CName\u003Elog/01/2020/08/05/1700/00000.avro\u003C/Name\u003E\u003CProperties\u003E\u003CCreation-Time\u003EWed, 05 Aug 2020 17:02:00 GMT\u003C/Creation-Time\u003E\u003CLast-Modified\u003EWed, 05 Aug 2020 17:02:00 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E0x8D8396145063825\u003C/Etag\u003E\u003CContent-Length\u003E2434\u003C/Content-Length\u003E\u003CContent-Type\u003Eavro/binary\u003C/Content-Type\u003E\u003CContent-Encoding /\u003E\u003CContent-Language /\u003E\u003CContent-CRC64 /\u003E\u003CContent-MD5 /\u003E\u003CCache-Control /\u003E\u003CContent-Disposition /\u003E\u003CBlobType\u003EAppendBlob\u003C/BlobType\u003E\u003CAccessTier\u003EHot\u003C/AccessTier\u003E\u003CAccessTierInferred\u003Etrue\u003C/AccessTierInferred\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CServerEncrypted\u003Efalse\u003C/ServerEncrypted\u003E\u003C/Properties\u003E\u003COrMetadata /\u003E\u003C/Blob\u003E\u003C/Blobs\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
     },
     {
-      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log%2F01%2F2020%2F08%2F05%2F1700%2F00000.avro",
+      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log/01/2020/08/05/1700/00000.avro",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-db5f2b649bc90e4fa19e8744a5da8d46-9a20458256ec9440-00",
         "User-Agent": [
@@ -1818,6 +1869,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container\u0026comp=list\u0026prefix=log%2F02%2F2020%2F08%2F05%2F1700%2F",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200805.1",
@@ -1841,9 +1893,10 @@
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022https://btdxscnapby3pev38a.blob.preprod.core.windows.net/\u0022 ContainerName=\u0022$blobchangefeed\u0022\u003E\u003CPrefix\u003Elog/02/2020/08/05/1700/\u003C/Prefix\u003E\u003CBlobs\u003E\u003CBlob\u003E\u003CName\u003Elog/02/2020/08/05/1700/00000.avro\u003C/Name\u003E\u003CProperties\u003E\u003CCreation-Time\u003EWed, 05 Aug 2020 17:02:00 GMT\u003C/Creation-Time\u003E\u003CLast-Modified\u003EWed, 05 Aug 2020 17:02:00 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E0x8D83961450B18E1\u003C/Etag\u003E\u003CContent-Length\u003E2434\u003C/Content-Length\u003E\u003CContent-Type\u003Eavro/binary\u003C/Content-Type\u003E\u003CContent-Encoding /\u003E\u003CContent-Language /\u003E\u003CContent-CRC64 /\u003E\u003CContent-MD5 /\u003E\u003CCache-Control /\u003E\u003CContent-Disposition /\u003E\u003CBlobType\u003EAppendBlob\u003C/BlobType\u003E\u003CAccessTier\u003EHot\u003C/AccessTier\u003E\u003CAccessTierInferred\u003Etrue\u003C/AccessTierInferred\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CServerEncrypted\u003Efalse\u003C/ServerEncrypted\u003E\u003C/Properties\u003E\u003COrMetadata /\u003E\u003C/Blob\u003E\u003C/Blobs\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
     },
     {
-      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log%2F02%2F2020%2F08%2F05%2F1700%2F00000.avro",
+      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log/02/2020/08/05/1700/00000.avro",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-027457440e3d3340835d8b221d16ec49-f4ceb203273d1b44-00",
         "User-Agent": [
@@ -1879,9 +1932,10 @@
       "ResponseBody": "T2JqAQQUYXZyby5jb2RlYwhudWxsFmF2cm8uc2NoZW1hnCV7InR5cGUiOiJyZWNvcmQiLCJuYW1lIjoiQmxvYkNoYW5nZUV2ZW50IiwibmFtZXNwYWNlIjoiTWljcm9zb2Z0LlN0b3JhZ2UiLCJmaWVsZHMiOlt7Im5hbWUiOiJzY2hlbWFWZXJzaW9uIiwidHlwZSI6ImxvbmciLCJkZWZhdWx0Ijo0fSx7Im5hbWUiOiJ0b3BpYyIsInR5cGUiOiJzdHJpbmciLCJkZWZhdWx0IjoiIn0seyJuYW1lIjoic3ViamVjdCIsInR5cGUiOiJzdHJpbmciLCJkZWZhdWx0IjoiIn0seyJuYW1lIjoiZXZlbnRUeXBlIiwidHlwZSI6eyJ0eXBlIjoiZW51bSIsIm5hbWUiOiJFdmVudFR5cGVFbnVtIiwic3ltYm9scyI6WyJVbnNwZWNpZmllZEV2ZW50VHlwZSIsIkJsb2JDcmVhdGVkIiwiQmxvYkRlbGV0ZWQiLCJCbG9iUHJvcGVydGllc1VwZGF0ZWQiLCJCbG9iU25hcHNob3RDcmVhdGVkIiwiQ29udHJvbCIsIkJsb2JUaWVyQ2hhbmdlZCIsIkJsb2JBc3luY09wZXJhdGlvbkluaXRpYXRlZCJdLCJkZWZhdWx0IjoiVW5zcGVjaWZpZWRFdmVudFR5cGUifX0seyJuYW1lIjoiZXZlbnRUaW1lIiwidHlwZSI6InN0cmluZyIsImRlZmF1bHQiOiIifSx7Im5hbWUiOiJpZCIsInR5cGUiOiJzdHJpbmciLCJkZWZhdWx0IjoiIn0seyJuYW1lIjoiZGF0YSIsInR5cGUiOnsidHlwZSI6InJlY29yZCIsIm5hbWUiOiJCbG9iQ2hhbmdlRXZlbnREYXRhIiwiZmllbGRzIjpbeyJuYW1lIjoiYXBpIiwidHlwZSI6eyJ0eXBlIjoiZW51bSIsIm5hbWUiOiJBcGlFbnVtIiwic3ltYm9scyI6WyJVbnNwZWNpZmllZEFwaSIsIlB1dEJsb2IiLCJQdXRCbG9ja0xpc3QiLCJDb3B5QmxvYiIsIkRlbGV0ZUJsb2IiLCJTZXRCbG9iTWV0YWRhdGEiLCJDb250cm9sRXZlbnQiLCJVbmRlbGV0ZUJsb2IiLCJTZXRCbG9iUHJvcGVydGllcyIsIlNuYXBzaG90QmxvYiIsIlNldEJsb2JUaWVyIiwiQWJvcnRDb3B5QmxvYiJdLCJkZWZhdWx0IjoiVW5zcGVjaWZpZWRBcGkifSwiZGVmYXVsdCI6IlVuc3BlY2lmaWVkQXBpIn0seyJuYW1lIjoiY2xpZW50UmVxdWVzdElkIiwidHlwZSI6InN0cmluZyIsImRlZmF1bHQiOiIifSx7Im5hbWUiOiJyZXF1ZXN0SWQiLCJ0eXBlIjoic3RyaW5nIiwiZGVmYXVsdCI6IiJ9LHsibmFtZSI6ImV0YWciLCJ0eXBlIjoic3RyaW5nIiwiZGVmYXVsdCI6IiJ9LHsibmFtZSI6ImNvbnRlbnRUeXBlIiwidHlwZSI6InN0cmluZyIsImRlZmF1bHQiOiIifSx7Im5hbWUiOiJjb250ZW50TGVuZ3RoIiwidHlwZSI6ImxvbmciLCJkZWZhdWx0IjowfSx7Im5hbWUiOiJibG9iVHlwZSIsInR5cGUiOnsidHlwZSI6ImVudW0iLCJuYW1lIjoiQmxvYlR5cGVFbnVtIiwic3ltYm9scyI6WyJVbnNwZWNpZmllZEJsb2JUeXBlIiwiQmxvY2tCbG9iIiwiUGFnZUJsb2IiLCJBcHBlbmRCbG9iIl0sImRlZmF1bHQiOiJVbnNwZWNpZmllZEJsb2JUeXBlIn0sImRlZmF1bHQiOiJVbnNwZWNpZmllZEJsb2JUeXBlIn0seyJuYW1lIjoiYmxvYlZlcnNpb24iLCJ0eXBlIjpbIm51bGwiLCJzdHJpbmciXSwiZGVmYXVsdCI6bnVsbH0seyJuYW1lIjoiY29udGFpbmVyVmVyc2lvbiIsInR5cGUiOlsibnVsbCIsInN0cmluZyJdLCJkZWZhdWx0IjpudWxsfSx7Im5hbWUiOiJibG9iVGllciIsInR5cGUiOlsibnVsbCIseyJ0eXBlIjoiZW51bSIsIm5hbWUiOiJCbG9iVGllckVudW0iLCJzeW1ib2xzIjpbIlVuc3BlY2lmaWVkQmxvYlRpZXIiLCJIb3QiLCJDb29sIiwiQXJjaGl2ZSJdLCJkZWZhdWx0IjoiVW5zcGVjaWZpZWRCbG9iVGllciJ9XSwiZGVmYXVsdCI6bnVsbH0seyJuYW1lIjoidXJsIiwidHlwZSI6InN0cmluZyIsImRlZmF1bHQiOiIifSx7Im5hbWUiOiJzZXF1ZW5jZXIiLCJ0eXBlIjoic3RyaW5nIiwiZGVmYXVsdCI6IiJ9LHsibmFtZSI6InByZXZpb3VzSW5mbyIsInR5cGUiOlsibnVsbCIseyJ0eXBlIjoibWFwIiwidmFsdWVzIjoic3RyaW5nIn1dLCJkZWZhdWx0IjpudWxsfSx7Im5hbWUiOiJzbmFwc2hvdCIsInR5cGUiOlsibnVsbCIsInN0cmluZyJdLCJkZWZhdWx0IjpudWxsfSx7Im5hbWUiOiJibG9iUHJvcGVydGllc1VwZGF0ZWQiLCJ0eXBlIjpbIm51bGwiLHsidHlwZSI6Im1hcCIsInZhbHVlcyI6eyJ0eXBlIjoicmVjb3JkIiwibmFtZSI6InZhbHVlcyIsImZpZWxkcyI6W3sibmFtZSI6ImN1cnJlbnQiLCJ0eXBlIjoic3RyaW5nIiwiZGVmYXVsdCI6IiJ9LHsibmFtZSI6InByZXZpb3VzIiwidHlwZSI6InN0cmluZyIsImRlZmF1bHQiOiIifV19fV0sImRlZmF1bHQiOm51bGx9LHsibmFtZSI6ImFzeW5jT3BlcmF0aW9uSW5mbyIsInR5cGUiOlsibnVsbCIseyJ0eXBlIjoibWFwIiwidmFsdWVzIjoic3RyaW5nIn1dLCJkZWZhdWx0IjpudWxsfSx7Im5hbWUiOiJzdG9yYWdlRGlhZ25vc3RpY3MiLCJ0eXBlIjp7InR5cGUiOiJtYXAiLCJ2YWx1ZXMiOiJzdHJpbmcifSwiZGVmYXVsdCI6e319XX19XX0ADQcPDAQEDAABCQEHCw8OCQ=="
     },
     {
-      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/idx%2Fsegments%2F2020%2F08%2F05%2F1800%2Fmeta.json",
+      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/idx/segments/2020/08/05/1800/meta.json",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-b0cb33f4917c674ebfa2f0b23392579d-bcaeda80f7d3ab4d-00",
         "User-Agent": [
@@ -1944,6 +1998,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container\u0026comp=list\u0026prefix=log%2F00%2F2020%2F08%2F05%2F1800%2F",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200805.1",
@@ -1967,9 +2022,10 @@
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022https://btdxscnapby3pev38a.blob.preprod.core.windows.net/\u0022 ContainerName=\u0022$blobchangefeed\u0022\u003E\u003CPrefix\u003Elog/00/2020/08/05/1800/\u003C/Prefix\u003E\u003CBlobs\u003E\u003CBlob\u003E\u003CName\u003Elog/00/2020/08/05/1800/00000.avro\u003C/Name\u003E\u003CProperties\u003E\u003CCreation-Time\u003EWed, 05 Aug 2020 18:02:00 GMT\u003C/Creation-Time\u003E\u003CLast-Modified\u003EWed, 05 Aug 2020 19:00:00 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E0x8D83971C0E945BD\u003C/Etag\u003E\u003CContent-Length\u003E329962\u003C/Content-Length\u003E\u003CContent-Type\u003Eavro/binary\u003C/Content-Type\u003E\u003CContent-Encoding /\u003E\u003CContent-Language /\u003E\u003CContent-CRC64 /\u003E\u003CContent-MD5 /\u003E\u003CCache-Control /\u003E\u003CContent-Disposition /\u003E\u003CBlobType\u003EAppendBlob\u003C/BlobType\u003E\u003CAccessTier\u003EHot\u003C/AccessTier\u003E\u003CAccessTierInferred\u003Etrue\u003C/AccessTierInferred\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CServerEncrypted\u003Efalse\u003C/ServerEncrypted\u003E\u003C/Properties\u003E\u003COrMetadata /\u003E\u003C/Blob\u003E\u003C/Blobs\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
     },
     {
-      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log%2F00%2F2020%2F08%2F05%2F1800%2F00000.avro",
+      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log/00/2020/08/05/1800/00000.avro",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-2b2cdf13be3a844ba26adba2a5630bc4-a4b5ec1534202d4a-00",
         "User-Agent": [
@@ -2008,6 +2064,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container\u0026comp=list\u0026prefix=log%2F01%2F2020%2F08%2F05%2F1800%2F",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200805.1",
@@ -2031,9 +2088,10 @@
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022https://btdxscnapby3pev38a.blob.preprod.core.windows.net/\u0022 ContainerName=\u0022$blobchangefeed\u0022\u003E\u003CPrefix\u003Elog/01/2020/08/05/1800/\u003C/Prefix\u003E\u003CBlobs\u003E\u003CBlob\u003E\u003CName\u003Elog/01/2020/08/05/1800/00000.avro\u003C/Name\u003E\u003CProperties\u003E\u003CCreation-Time\u003EWed, 05 Aug 2020 18:02:00 GMT\u003C/Creation-Time\u003E\u003CLast-Modified\u003EWed, 05 Aug 2020 18:02:00 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E0x8D83969A6D72229\u003C/Etag\u003E\u003CContent-Length\u003E2434\u003C/Content-Length\u003E\u003CContent-Type\u003Eavro/binary\u003C/Content-Type\u003E\u003CContent-Encoding /\u003E\u003CContent-Language /\u003E\u003CContent-CRC64 /\u003E\u003CContent-MD5 /\u003E\u003CCache-Control /\u003E\u003CContent-Disposition /\u003E\u003CBlobType\u003EAppendBlob\u003C/BlobType\u003E\u003CAccessTier\u003EHot\u003C/AccessTier\u003E\u003CAccessTierInferred\u003Etrue\u003C/AccessTierInferred\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CServerEncrypted\u003Efalse\u003C/ServerEncrypted\u003E\u003C/Properties\u003E\u003COrMetadata /\u003E\u003C/Blob\u003E\u003C/Blobs\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
     },
     {
-      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log%2F01%2F2020%2F08%2F05%2F1800%2F00000.avro",
+      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log/01/2020/08/05/1800/00000.avro",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-21a833b350a3854eb43aceacc6a02d1d-378c8abe97efae46-00",
         "User-Agent": [
@@ -2072,6 +2130,7 @@
       "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed?restype=container\u0026comp=list\u0026prefix=log%2F02%2F2020%2F08%2F05%2F1800%2F",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200805.1",
@@ -2095,9 +2154,10 @@
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022https://btdxscnapby3pev38a.blob.preprod.core.windows.net/\u0022 ContainerName=\u0022$blobchangefeed\u0022\u003E\u003CPrefix\u003Elog/02/2020/08/05/1800/\u003C/Prefix\u003E\u003CBlobs\u003E\u003CBlob\u003E\u003CName\u003Elog/02/2020/08/05/1800/00000.avro\u003C/Name\u003E\u003CProperties\u003E\u003CCreation-Time\u003EWed, 05 Aug 2020 18:02:00 GMT\u003C/Creation-Time\u003E\u003CLast-Modified\u003EWed, 05 Aug 2020 18:02:00 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E0x8D83969A6DD8930\u003C/Etag\u003E\u003CContent-Length\u003E2434\u003C/Content-Length\u003E\u003CContent-Type\u003Eavro/binary\u003C/Content-Type\u003E\u003CContent-Encoding /\u003E\u003CContent-Language /\u003E\u003CContent-CRC64 /\u003E\u003CContent-MD5 /\u003E\u003CCache-Control /\u003E\u003CContent-Disposition /\u003E\u003CBlobType\u003EAppendBlob\u003C/BlobType\u003E\u003CAccessTier\u003EHot\u003C/AccessTier\u003E\u003CAccessTierInferred\u003Etrue\u003C/AccessTierInferred\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CServerEncrypted\u003Efalse\u003C/ServerEncrypted\u003E\u003C/Properties\u003E\u003COrMetadata /\u003E\u003C/Blob\u003E\u003C/Blobs\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
     },
     {
-      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log%2F02%2F2020%2F08%2F05%2F1800%2F00000.avro",
+      "RequestUri": "https://btdxscnapby3pev38a.blob.preprod.core.windows.net/$blobchangefeed/log/02/2020/08/05/1800/00000.avro",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-1f538df14f6f83449a3f87872f16493d-e411054d663e2846-00",
         "User-Agent": [

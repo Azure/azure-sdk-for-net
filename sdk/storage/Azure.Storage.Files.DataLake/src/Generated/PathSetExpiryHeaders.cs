@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Files.DataLake
 {
-    internal class PathSetExpiryHeaders
+    internal partial class PathSetExpiryHeaders
     {
         private readonly Response _response;
         public PathSetExpiryHeaders(Response response)

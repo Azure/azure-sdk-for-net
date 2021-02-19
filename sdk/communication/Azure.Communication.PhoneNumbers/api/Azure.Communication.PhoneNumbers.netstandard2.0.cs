@@ -3,7 +3,8 @@ namespace Azure.Communication.PhoneNumbers
     public partial class PhoneNumberAdministrationClient
     {
         protected PhoneNumberAdministrationClient() { }
-        public PhoneNumberAdministrationClient(string connectionString, Azure.Communication.PhoneNumbers.PhoneNumberAdministrationClientOptions? options = null) { }
+        public PhoneNumberAdministrationClient(string connectionString) { }
+        public PhoneNumberAdministrationClient(string connectionString, Azure.Communication.PhoneNumbers.PhoneNumberAdministrationClientOptions options) { }
         public PhoneNumberAdministrationClient(System.Uri endpoint, Azure.AzureKeyCredential keyCredential, Azure.Communication.PhoneNumbers.PhoneNumberAdministrationClientOptions? options = null) { }
         public PhoneNumberAdministrationClient(System.Uri endpoint, Azure.Core.TokenCredential tokenCredential, Azure.Communication.PhoneNumbers.PhoneNumberAdministrationClientOptions? options = null) { }
         public virtual Azure.Response CancelReservation(string reservationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

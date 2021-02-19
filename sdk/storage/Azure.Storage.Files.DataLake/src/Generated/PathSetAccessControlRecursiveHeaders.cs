@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Files.DataLake
 {
-    internal class PathSetAccessControlRecursiveHeaders
+    internal partial class PathSetAccessControlRecursiveHeaders
     {
         private readonly Response _response;
         public PathSetAccessControlRecursiveHeaders(Response response)
