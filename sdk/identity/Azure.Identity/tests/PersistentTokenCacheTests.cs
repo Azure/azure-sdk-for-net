@@ -42,15 +42,6 @@ namespace Azure.Identity.Tests
             PersistentTokenCache.ResetWrapperCache();
         }
 
-        [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public void DefaultConstructorInitializesAllowUnencryptedStorage(bool allowUnencryptedStorage)
-        {
-            cache = new PersistentTokenCache(new PersistentTokenCacheOptions { AllowUnencryptedStorage = allowUnencryptedStorage });
-            Assert.That(cache._allowUnencryptedStorage, Is.EqualTo(allowUnencryptedStorage));
-        }
-
         public static IEnumerable<object[]> PersistentCacheOptions()
         {
             yield return new object[] { new PersistentTokenCacheOptions { AllowUnencryptedStorage = true, Name = "foo" }, true, "foo" };
@@ -62,11 +53,9 @@ namespace Azure.Identity.Tests
 
         [Test]
         [TestCaseSource(nameof(PersistentCacheOptions))]
-        public void DefaultConstructorInitializesAllowUnencryptedStorage(PersistentTokenCacheOptions options, bool expectedAllowUnencryptedStorage, string expectedName)
+        public void CtorAllowsAllPermutations(PersistentTokenCacheOptions options, bool expectedAllowUnencryptedStorage, string expectedName)
         {
             cache = new PersistentTokenCache(options);
-            Assert.That(cache._allowUnencryptedStorage, Is.EqualTo(expectedAllowUnencryptedStorage));
-            Assert.That(cache._name, Is.EqualTo(expectedName));
         }
 
         [Test]
@@ -104,6 +93,8 @@ namespace Azure.Identity.Tests
                     p.MacKeyChainServiceName == Constants.DefaultMsalTokenCacheKeychainService &&
                     p.KeyringCollection == Constants.DefaultMsalTokenCacheKeyringCollection),
                 null));
+
+            mockWrapper.Verify(m => m.RegisterCache(It.IsAny<ITokenCache>()), Times.AtLeastOnce);
         }
 
         [Test]
@@ -121,6 +112,8 @@ namespace Azure.Identity.Tests
                     p.MacKeyChainServiceName == Constants.DefaultMsalTokenCacheKeychainService &&
                     p.KeyringCollection == Constants.DefaultMsalTokenCacheKeyringCollection),
                 null));
+
+            mockWrapper.Verify(m => m.RegisterCache(It.IsAny<ITokenCache>()), Times.AtLeastOnce);
         }
 
         [Test]
@@ -139,6 +132,8 @@ namespace Azure.Identity.Tests
                     p.MacKeyChainServiceName == Constants.DefaultMsalTokenCacheKeychainService &&
                     p.KeyringCollection == Constants.DefaultMsalTokenCacheKeyringCollection),
                 null), Times.Once);
+
+            mockWrapper.Verify(m => m.RegisterCache(It.IsAny<ITokenCache>()), Times.Exactly(2));
         }
 
         [Test]
@@ -177,6 +172,8 @@ namespace Azure.Identity.Tests
                     p.MacKeyChainServiceName == Constants.DefaultMsalTokenCacheKeychainService &&
                     p.KeyringCollection == Constants.DefaultMsalTokenCacheKeyringCollection),
                 null));
+
+            mockWrapper.Verify(m => m.RegisterCache(It.IsAny<ITokenCache>()), Times.Exactly(2));
         }
 
         [Test]
@@ -207,6 +204,8 @@ namespace Azure.Identity.Tests
                     p.MacKeyChainServiceName == Constants.DefaultMsalTokenCacheKeychainService &&
                     p.UseLinuxUnencryptedFallback),
                 null));
+
+            mockWrapper.Verify(m => m.RegisterCache(It.IsAny<ITokenCache>()), Times.AtLeastOnce);
         }
     }
 }

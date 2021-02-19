@@ -17,8 +17,8 @@ namespace Azure.Identity
         // we are creating the MsalCacheHelper with a random guid based clientId to work around issue https://github.com/AzureAD/microsoft-authentication-extensions-for-dotnet/issues/98
         // This does not impact the functionality of the cacheHelper as the ClientId is only used to iterate accounts in the cache not for authentication purposes.
         internal static readonly string s_msalCacheClientId = Guid.NewGuid().ToString();
-        internal readonly bool _allowUnencryptedStorage;
-        internal readonly string _name;
+        private readonly bool _allowUnencryptedStorage;
+        private readonly string _name;
         private static AsyncLockWithValue<MsalCacheHelperWrapper> cacheHelperLock = new AsyncLockWithValue<MsalCacheHelperWrapper>();
         private readonly MsalCacheHelperWrapper _cacheHelperWrapper;
 
@@ -49,6 +49,10 @@ namespace Azure.Identity
             await base.RegisterCache(async, tokenCache, cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary>
+        /// Resets the <see cref="cacheHelperLock"/> so that tests can validate multiple calls to <see cref="RegisterCache"/>
+        /// This should only be used for testing.
+        /// </summary>
         internal static void ResetWrapperCache()
         {
             cacheHelperLock = new AsyncLockWithValue<MsalCacheHelperWrapper>();
