@@ -30,25 +30,24 @@ for a job matrix definition](https://docs.microsoft.com/azure/devops/pipelines/p
 
 In order to use these scripts in a pipeline, you must provide a config file and call the matrix creation script within a powershell job.
 
-For a single matrix, you can include the `eng/pipelines/templates/jobs/job-matrix.yml` template in a pipeline:
+For a single matrix, you can include the `/eng/common/pipelines/templates/jobs/archetype-sdk-tests-generate.yml` template in a pipeline (see /eng/common/scripts/job-matrix/samples/matrix-test.yml for a full working example):
 
 ```
 jobs:
-- template: /eng/pipelines/templates/jobs/job-matrix.yml
-  parameters:
-    MatrixConfigs:
-      - Name: base_product_matrix
-        Path: /eng/pipelines/matrix.json
-        Selection: sparse
-        NonSparseParameters: <csv of parameter names for which all combinations should be included>
-        GenerateVMJobs: true
-      - Name: sdk_specific_matrix
-        Path: /sdk/foobar/matrix.json
-        Selection: all
-        GenerateContainerJobs: true
-    steps:
-      - pwsh:
-          ...
+  - template: /eng/common/pipelines/templates/jobs/archetype-sdk-tests-generate.yml
+    parameters:
+      MatrixConfigs:
+        - Name: base_product_matrix
+          Path: eng/scripts/job-matrix/samples/matrix.json
+          Selection: all
+          NonSparseParameters:
+            - framework
+          GenerateVMJobs: true
+        - Name: sparse_product_matrix
+          Path: eng/scripts/job-matrix/samples/matrix.json
+          Selection: sparse
+          GenerateVMJobs: true
+      < remaining parameters ...>
 ```
 
 ## Matrix config file syntax
@@ -447,7 +446,7 @@ $ Invoke-Pester
 
 Starting discovery in 1 files.
 Discovery finished in 384ms.
-[+] /home/ben/sdk/azure-sdk-for-net/eng/scripts/job-matrix/job-matrix-functions.tests.ps1 4.09s (1.52s|2.22s)
+[+] /home/ben/sdk/azure-sdk-tools/eng/common/scripts/job-matrix/job-matrix-functions.tests.ps1 4.09s (1.52s|2.22s)
 Tests completed in 4.12s
 Tests Passed: 120, Failed: 0, Skipped: 4 NotRun: 0
 ```
