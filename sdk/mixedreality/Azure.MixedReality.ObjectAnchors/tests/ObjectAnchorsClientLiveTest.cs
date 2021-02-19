@@ -32,6 +32,7 @@ namespace Azure.MixedReality.ObjectAnchors.Tests
         [Test]
         public async Task RunIngestion()
         {
+            Recording.DisableIdReuse();
             Guid accountId = new Guid(TestEnvironment.AccountId);
             string accountDomain = TestEnvironment.AccountDomain;
             ObjectAnchorsClientOptions options = new ObjectAnchorsClientOptions();
@@ -39,7 +40,6 @@ namespace Azure.MixedReality.ObjectAnchors.Tests
             string localFilePath = TestEnvironment.AssetLocalFilePath;
             Vector3 assetGravity = new Vector3(TestEnvironment.AssetGravityX, TestEnvironment.AssetGravityY, TestEnvironment.AssetGravityZ);
             float scale = TestEnvironment.AssetScale;
-            Recording.DisableIdReuse();
 
             AzureKeyCredential credential = new AzureKeyCredential(TestEnvironment.AccountKey);
 

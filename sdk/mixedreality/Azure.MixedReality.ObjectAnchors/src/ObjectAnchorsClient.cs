@@ -17,8 +17,6 @@ namespace Azure.MixedReality.ObjectAnchors
     {
         private readonly Guid _accountId;
 
-        private readonly string _accountDomain;
-
         private readonly HttpPipeline _pipeline;
 
         private readonly BlobUploadEndpointRestClient _getBlobUploadEndpointRestClient;
@@ -91,7 +89,6 @@ namespace Azure.MixedReality.ObjectAnchors
             Uri serviceEndpoint = options.ServiceEndpoint ?? ConstructObjectAnchorsEndpointUrl(accountDomain);
 
             _accountId = accountId;
-            _accountDomain = accountDomain;
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(mrTokenCredential, GetDefaultScope(serviceEndpoint)));
             _getBlobUploadEndpointRestClient = new BlobUploadEndpointRestClient(_clientDiagnostics, _pipeline, serviceEndpoint, options.Version);
@@ -205,8 +202,12 @@ namespace Azure.MixedReality.ObjectAnchors
         private static Uri ConstructObjectAnchorsEndpointUrl(string accountDomain)
         {
             Argument.AssertNotNullOrWhiteSpace(accountDomain, nameof(accountDomain));
-
-            if (!Uri.TryCreate($"https://aoa.{accountDomain}", UriKind.Absolute, out Uri result))
+            Uri result = new Uri($"http://{accountDomain}");
+            if (result.IsLoopback)
+            {
+                return result;
+            }
+            if (!Uri.TryCreate($"https://aoa.{accountDomain}", UriKind.Absolute, out result))
             {
                 throw new ArgumentException("The value could not be used to construct a valid endpoint.", nameof(accountDomain));
             }
