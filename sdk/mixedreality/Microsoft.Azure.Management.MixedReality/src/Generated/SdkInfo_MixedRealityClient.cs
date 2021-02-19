@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.MixedReality
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/mixedreality/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=C:\\git-repositories\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "718275ac630059660cc0e9cdd0e62bffa8e3c16d";
+      public static readonly String GithubCommidId = "11a54f2a0c5e6a07ffda8c25496391e621556a15";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
