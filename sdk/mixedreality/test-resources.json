@@ -159,11 +159,11 @@
         "type": "string",
         "value": "[listKeys(resourceId('Microsoft.MixedReality/objectAnchorsAccounts', variables('aoaAccountName')), variables('aoaApiVersion')).primaryKey]"
       },
-      "MIXEDREALITY_AOA_ASSET_LOCAL_FILE_PATH": {
+      "MIXEDREALITY_AOA_ASSET_LOCAL_FILE_NAME": {
         "type": "string",
         "value": "switchgear02_obj.obj"
       },
-      "MIXEDREALITY_AOA_MODEL_DOWNLOAD_LOCAL_FILE_PATH": {
+      "MIXEDREALITY_AOA_MODEL_DOWNLOAD_LOCAL_FILE_NAME": {
         "type": "string",
         "value": "switchgear02_obj_model.ply"
       },
