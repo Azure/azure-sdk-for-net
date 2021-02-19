@@ -7,6 +7,11 @@ namespace Azure.MixedReality.ObjectAnchors
     public enum AssetLengthUnit
     {
         /// <summary>
+        /// Meters.
+        /// </summary>
+        Meters = 0,
+
+        /// <summary>
         /// Centimeters.
         /// </summary>
         Centimeters = 1,
@@ -32,18 +37,13 @@ namespace Azure.MixedReality.ObjectAnchors
         Kilometers = 5,
 
         /// <summary>
-        /// Meters.
-        /// </summary>
-        Meters = 6,
-
-        /// <summary>
         /// Millimeters.
         /// </summary>
-        Millimeters = 7,
+        Millimeters = 6,
 
         /// <summary>
         /// Yards.
         /// </summary>
-        Yards = 8
+        Yards = 7
     }
 }
