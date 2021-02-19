@@ -7,6 +7,10 @@ using System.Text.RegularExpressions;
 
 namespace Azure.Iot.ModelsRepository
 {
+    /// <summary>
+    /// <c>DtmiConventions</c> implements the core aspects of the IoT model repo conventions
+    /// which includes calculating a generic path from a DTMI.
+    /// </summary>
     internal static class DtmiConventions
     {
         private static readonly Regex s_validDtmiRegex = new Regex(@"^dtmi:[A-Za-z](?:[A-Za-z0-9_]*[A-Za-z0-9])?(?::[A-Za-z](?:[A-Za-z0-9_]*[A-Za-z0-9])?)*;[1-9][0-9]{0,8}$");

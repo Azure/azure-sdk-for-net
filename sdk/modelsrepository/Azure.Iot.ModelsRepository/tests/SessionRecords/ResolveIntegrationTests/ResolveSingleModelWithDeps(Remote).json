@@ -4,9 +4,12 @@
       "RequestUri": "https://devicemodels.azure.com/dtmi/com/example/temperaturecontroller-1.json",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "traceparent": "00-bc2800903bd360499451b6566e5c517b-ebb2056af779aa45-00",
-        "User-Agent": "azsdk-net-Iot.ModelsRepository/1.0.0-alpha.20210217.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.18363 )",
-        "x-ms-client-request-id": "8ada9e0277c2ecac952515e409cedf7a",
+        "traceparent": "00-c808e3ed8148624ebdb217cf88ed193b-f602e3ee020b2f4b-00",
+        "User-Agent": [
+          "azsdk-net-Iot.ModelsRepository/1.0.0-alpha.20210218.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "0a562db993eba4fd7f3ec479356ae408",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -16,14 +19,17 @@
         "Access-Control-Allow-Headers": "*",
         "Access-Control-Allow-Methods": "GET, HEAD, OPTIONS",
         "Access-Control-Expose-Headers": "*",
-        "Age": "95",
+        "Age": "98598",
         "Content-Length": "1762",
         "Content-MD5": "w8OrFrbCwZwtVo6WaKDWxQ==",
         "Content-Type": "application/json",
-        "Date": "Thu, 18 Feb 2021 00:12:01 GMT",
+        "Date": "Fri, 19 Feb 2021 03:33:44 GMT",
         "ETag": "\u00220x8D8A13DEABA3051\u0022",
         "Last-Modified": "Tue, 15 Dec 2020 21:10:57 GMT",
-        "Server": "ECAcc (sed/E17F)",
+        "Server": [
+          "ECAcc",
+          "(sed/E17F)"
+        ],
         "X-Cache": "HIT",
         "x-ms-error-code": "ConditionNotMet",
         "x-ms-request-id": "8ae2e233-d01e-0092-748a-058600000000",
@@ -96,9 +102,12 @@
       "RequestUri": "https://devicemodels.azure.com/dtmi/com/example/thermostat-1.json",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "traceparent": "00-bc2800903bd360499451b6566e5c517b-83070169f0ff584a-00",
-        "User-Agent": "azsdk-net-Iot.ModelsRepository/1.0.0-alpha.20210217.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.18363 )",
-        "x-ms-client-request-id": "7b0dc2556de499ee87f9b1d7c4003254",
+        "traceparent": "00-c808e3ed8148624ebdb217cf88ed193b-acef0eefef11bd46-00",
+        "User-Agent": [
+          "azsdk-net-Iot.ModelsRepository/1.0.0-alpha.20210218.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "e6fcaeb539b7edd560a27e09669d2a57",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -108,14 +117,17 @@
         "Access-Control-Allow-Headers": "*",
         "Access-Control-Allow-Methods": "GET, HEAD, OPTIONS",
         "Access-Control-Expose-Headers": "*",
-        "Age": "95",
+        "Age": "98598",
         "Content-Length": "2469",
         "Content-MD5": "U0VZgOgpfb6bwvG5UDVZuw==",
         "Content-Type": "application/json",
-        "Date": "Thu, 18 Feb 2021 00:12:01 GMT",
+        "Date": "Fri, 19 Feb 2021 03:33:44 GMT",
         "ETag": "\u00220x8D8A13DEABC53BA\u0022",
         "Last-Modified": "Tue, 15 Dec 2020 21:10:57 GMT",
-        "Server": "ECAcc (sed/E15D)",
+        "Server": [
+          "ECAcc",
+          "(sed/E15D)"
+        ],
         "X-Cache": "HIT",
         "x-ms-error-code": "ConditionNotMet",
         "x-ms-request-id": "7c45bf94-401e-006f-228a-05fc4e000000",
@@ -217,9 +229,12 @@
       "RequestUri": "https://devicemodels.azure.com/dtmi/azure/devicemanagement/deviceinformation-1.json",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "traceparent": "00-bc2800903bd360499451b6566e5c517b-6619fa4c31f3f444-00",
-        "User-Agent": "azsdk-net-Iot.ModelsRepository/1.0.0-alpha.20210217.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.18363 )",
-        "x-ms-client-request-id": "a579e02f48161643121343fe6b1c7679",
+        "traceparent": "00-c808e3ed8148624ebdb217cf88ed193b-ae4bb3f6dba28e4e-00",
+        "User-Agent": [
+          "azsdk-net-Iot.ModelsRepository/1.0.0-alpha.20210218.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "fb16089ec3463845a7d53bc1605ec631",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -229,14 +244,17 @@
         "Access-Control-Allow-Headers": "*",
         "Access-Control-Allow-Methods": "GET, HEAD, OPTIONS",
         "Access-Control-Expose-Headers": "*",
-        "Age": "95",
+        "Age": "98598",
         "Content-Length": "2212",
         "Content-MD5": "oCzHP9acH\u002B/\u002BFQOv2V56NA==",
         "Content-Type": "application/json",
-        "Date": "Thu, 18 Feb 2021 00:12:01 GMT",
+        "Date": "Fri, 19 Feb 2021 03:33:44 GMT",
         "ETag": "\u00220x8D8A13DEBC614F0\u0022",
         "Last-Modified": "Tue, 15 Dec 2020 21:10:59 GMT",
-        "Server": "ECAcc (sed/E110)",
+        "Server": [
+          "ECAcc",
+          "(sed/E110)"
+        ],
         "X-Cache": "HIT",
         "x-ms-error-code": "ConditionNotMet",
         "x-ms-request-id": "3933dec4-901e-0002-018a-056177000000",
@@ -311,6 +329,6 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1979842183"
+    "RandomSeed": "2027702720"
   }
 }

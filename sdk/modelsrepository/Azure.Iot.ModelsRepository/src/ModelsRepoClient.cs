@@ -93,7 +93,7 @@ namespace Azure.Iot.ModelsRepository
         /// An <c>IDictionary</c> containing the model definition(s) where the key is the dtmi
         /// and the value is the raw model definition string.
         /// </returns>
-        /// <exception cref="ResolverException">Thrown when a resolution failure occurs.</exception>
+        /// <exception cref="RequestFailedException">Thrown when a resolution failure occurs.</exception>
         /// <param name="dtmi">A well-formed DTDL model Id. For example 'dtmi:com:example:Thermostat;1'.</param>
         /// <param name="cancellationToken">The cancellationToken.</param>
         [SuppressMessage(
@@ -122,7 +122,7 @@ namespace Azure.Iot.ModelsRepository
         /// An <c>IDictionary</c> containing the model definition(s) where the key is the dtmi
         /// and the value is the raw model definition string.
         /// </returns>
-        /// <exception cref="ResolverException">Thrown when a resolution failure occurs.</exception>
+        /// <exception cref="RequestFailedException">Thrown when a resolution failure occurs.</exception>
         /// <param name="dtmi">A well-formed DTDL model Id. For example 'dtmi:com:example:Thermostat;1'.</param>
         /// <param name="cancellationToken">The cancellationToken.</param>
         [SuppressMessage(
@@ -152,7 +152,7 @@ namespace Azure.Iot.ModelsRepository
         /// An <c>IDictionary</c> containing the model definition(s) where the key is the dtmi
         /// and the value is the raw model definition string.
         /// </returns>
-        /// <exception cref="ResolverException">Thrown when a resolution failure occurs.</exception>
+        /// <exception cref="RequestFailedException">Thrown when a resolution failure occurs.</exception>
         /// <param name="dtmis">A collection of well-formed DTDL model Ids.</param>
         /// <param name="cancellationToken">The cancellationToken.</param>
         [SuppressMessage("Usage", "AZC0015:Unexpected client method return type.", Justification = "<Pending>")]
@@ -179,7 +179,7 @@ namespace Azure.Iot.ModelsRepository
         /// An <c>IDictionary</c> containing the model definition(s) where the key is the dtmi
         /// and the value is the raw model definition string.
         /// </returns>
-        /// <exception cref="ResolverException">Thrown when a resolution failure occurs.</exception>
+        /// <exception cref="RequestFailedException">Thrown when a resolution failure occurs.</exception>
         /// <param name="dtmis">A collection of well-formed DTDL model Ids.</param>
         /// <param name="cancellationToken">The cancellationToken.</param>
         [SuppressMessage("Usage", "AZC0015:Unexpected client method return type.", Justification = "<Pending>")]

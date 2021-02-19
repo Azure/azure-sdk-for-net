@@ -12,6 +12,10 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Iot.ModelsRepository.Fetchers
 {
+    /// <summary>
+    /// The <c>LocalModelFetcher</c> is an implementation of IModelFetcher
+    /// for supporting local filesystem based model content fetching.
+    /// </summary>
     internal class LocalModelFetcher : IModelFetcher
     {
         private readonly bool _tryExpanded;
@@ -65,7 +69,9 @@ namespace Azure.Iot.ModelsRepository.Fetchers
                     fnfError = string.Format(CultureInfo.CurrentCulture, ServiceStrings.ErrorFetchingModelContent, tryContentPath);
                 }
 
-                throw new FileNotFoundException(fnfError);
+                throw new RequestFailedException(
+                    $"{string.Format(CultureInfo.CurrentCulture, ServiceStrings.GenericResolverError, dtmi)} {fnfError}",
+                    new FileNotFoundException(fnfError));
             }
             catch (Exception ex)
             {
