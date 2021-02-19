@@ -26,9 +26,10 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
         {
             // arrange
             TimeSeriesInsightsClient client = GetClient();
+            int numOfIdProperties = 3;
 
-            ITimeSeriesId timeSeriesInstance1Id = await GetUniqueTimeSeriesInstanceIdAsync(client, 3).ConfigureAwait(false);
-            ITimeSeriesId timeSeriesInstance2Id = await GetUniqueTimeSeriesInstanceIdAsync(client, 3).ConfigureAwait(false);
+            ITimeSeriesId timeSeriesInstance1Id = await GetUniqueTimeSeriesInstanceIdAsync(client, numOfIdProperties).ConfigureAwait(false);
+            ITimeSeriesId timeSeriesInstance2Id = await GetUniqueTimeSeriesInstanceIdAsync(client, numOfIdProperties).ConfigureAwait(false);
 
             var timeSeriesInstances = new List<TimeSeriesInstance>()
             {
@@ -51,11 +52,15 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
                     .GetInstancesAsync(new List<ITimeSeriesId> { timeSeriesInstance1Id, timeSeriesInstance2Id })
                     .ConfigureAwait(false);
 
+                Assert.AreEqual(timeSeriesInstances.Count, getInstancesByIdsResult.Value.Length);
+                Assert.AreEqual(string.Join(",", timeSeriesInstance1Id.ToArray()), string.Join(",", getInstancesByIdsResult.Value[0].Instance.TimeSeriesId.ToArray()));
+                Assert.AreEqual(string.Join(",", timeSeriesInstance2Id.ToArray()), string.Join(",", getInstancesByIdsResult.Value[1].Instance.TimeSeriesId.ToArray()));
+
                 foreach (InstancesOperationResult resultItem in getInstancesByIdsResult.Value)
                 {
                     Assert.IsNotNull(resultItem.Instance);
                     Assert.IsNull(resultItem.Error);
-                    Assert.AreEqual(3, resultItem.Instance.TimeSeriesId.Count);
+                    Assert.AreEqual(numOfIdProperties, resultItem.Instance.TimeSeriesId.GetType().GenericTypeArguments.Count());
                     Assert.AreEqual(DefaultType, resultItem.Instance.TypeId);
                     Assert.AreEqual(0, resultItem.Instance.HierarchyIds.Count);
                     Assert.AreEqual(0, resultItem.Instance.InstanceFields.Count);

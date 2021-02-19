@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
 
 namespace Azure.Iot.TimeSeriesInsights
@@ -16,6 +17,56 @@ namespace Azure.Iot.TimeSeriesInsights
     [CodeGenModel("TimeSeriesInstance")]
     public partial class TimeSeriesInstance
     {
+        [CodeGenMember("TimeSeriesId")]
+        private IList<object> TimeSeriesIdInternal { get; }
+
+        /// <summary>
+        /// Foo.
+        /// </summary>
+        public ITimeSeriesId TimeSeriesId { get; }
+
+        internal TimeSeriesInstance(IEnumerable<object> timeSeriesIdInternal, string typeId)
+        {
+            if (timeSeriesIdInternal == null)
+            {
+                throw new ArgumentNullException(nameof(timeSeriesIdInternal));
+            }
+            if (typeId == null)
+            {
+                throw new ArgumentNullException(nameof(typeId));
+            }
+
+            TimeSeriesIdInternal = timeSeriesIdInternal.ToList();
+            TimeSeriesId = GenerateTimeSeriesId(timeSeriesIdInternal);
+
+            TypeId = typeId;
+            HierarchyIds = new ChangeTrackingList<string>();
+            InstanceFields = new ChangeTrackingDictionary<string, object>();
+        }
+
+        private ITimeSeriesId GenerateTimeSeriesId(IEnumerable<object> timeSeriesIdInternal)
+        {
+            return (timeSeriesIdInternal.Count()) switch
+            {
+                1 => new TimeSeriesId<object>(TimeSeriesIdInternal[0]),
+                2 => new TimeSeriesId<object, object>(TimeSeriesIdInternal[0], TimeSeriesIdInternal[1]),
+                3 => new TimeSeriesId<object, object, object>(TimeSeriesIdInternal[0], TimeSeriesIdInternal[1], TimeSeriesIdInternal[2]),
+                _ => null,
+            };
+        }
+
+        internal TimeSeriesInstance(IList<object> timeSeriesIdInternal, string typeId, string name, string description, IList<string> hierarchyIds, IDictionary<string, object> instanceFields)
+        {
+            TimeSeriesIdInternal = timeSeriesIdInternal;
+            TimeSeriesId = GenerateTimeSeriesId(TimeSeriesIdInternal);
+
+            TypeId = typeId;
+            Name = name;
+            Description = description;
+            HierarchyIds = hierarchyIds;
+            InstanceFields = instanceFields;
+        }
+
         /// <summary>Initializes a new instance of TimeSeriesInstance.</summary>
         /// <param name="timeSeriesId">
         /// Time Series Id that uniquely identifies the instance.It matches Time Series Id properties in
@@ -38,7 +89,8 @@ namespace Azure.Iot.TimeSeriesInsights
                 throw new ArgumentNullException(nameof(typeId));
             }
 
-            TimeSeriesId = timeSeriesId.ToArray();
+            TimeSeriesId = timeSeriesId;
+            TimeSeriesIdInternal = TimeSeriesId.ToArray();
             TypeId = typeId;
             HierarchyIds = new ChangeTrackingList<string>();
             InstanceFields = new ChangeTrackingDictionary<string, object>();
@@ -67,7 +119,8 @@ namespace Azure.Iot.TimeSeriesInsights
             IList<string> hierarchyIds,
             IDictionary<string, object> instanceFields)
         {
-            TimeSeriesId = timeSeriesId.ToArray();
+            TimeSeriesId = timeSeriesId;
+            TimeSeriesIdInternal = TimeSeriesId.ToArray();
             TypeId = typeId;
             Name = name;
             Description = description;
