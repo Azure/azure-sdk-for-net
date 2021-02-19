@@ -52,7 +52,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.FunctionalTests
             // TODO: Need to verify additional fields. The LogExporter is still in development.
             var telemetry = await FetchTelemetryAsync();
             Assert.AreEqual(testMessage, telemetry[0].Trace.Message);
-            Assert.AreEqual(TestEnvironment.InstrumentationKey, telemetry[0].Ai.IKey);
         }
     }
 }

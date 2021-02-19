@@ -31,10 +31,6 @@
         }
     ],
     "outputs": {
-        "INSTRUMENTATION_KEY": {
-            "value": "[reference(resourceId('Microsoft.Insights/components', parameters('baseName')), '2015-05-01').InstrumentationKey]",
-            "type": "string"
-        },
         "CONNECTION_STRING": {
             "value": "[reference(resourceId('Microsoft.Insights/components', parameters('baseName')), '2015-05-01').ConnectionString]",
             "type": "string"

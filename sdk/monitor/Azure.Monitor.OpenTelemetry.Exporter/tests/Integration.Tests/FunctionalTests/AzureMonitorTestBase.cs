@@ -161,7 +161,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.FunctionalTests
         /// </summary>
         protected static class QueryDuration
         {
-            public static string TenMinutes = "PT10M";
+            public const string TenMinutes = "PT10M";
         }
     }
 }
