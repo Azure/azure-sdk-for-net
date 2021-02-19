@@ -10,6 +10,8 @@ parameters:
 - name: MatrixFilters
   type: object
   default: []
+- name: JobTemplatePath
+  type: string
 
 jobs:
 - job: generate_matrix
@@ -51,7 +53,7 @@ jobs:
 
 - ${{ each config in parameters.MatrixConfigs }}:
   - ${{ if eq(config.GenerateVMJobs, 'true') }}:
-    - template: ./archetype-sdk-tests.yml
+    - template: ${{ parameters.JobTemplatePath }}
       parameters:
         UsePlatformContainer: false
         Matrix: dependencies.generate_matrix.outputs['generate_vm_job_matrix_${{ config.Name }}.matrix']
@@ -61,7 +63,7 @@ jobs:
           ${{ param.key }}: ${{ param.value }}
 
   - ${{ if eq(config.GenerateContainerJobs, 'true') }}:
-    - template: ./archetype-sdk-tests.yml
+    - template: ${{ parameters.JobTemplatePath }}
       parameters:
         UsePlatformContainer: true
         Matrix: dependencies.generate_matrix.outputs['generate_container_job_matrix_${{ config.Name }}.matrix']

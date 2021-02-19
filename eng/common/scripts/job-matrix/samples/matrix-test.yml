@@ -3,6 +3,7 @@ trigger: none
 jobs:
   - template: /eng/common/pipelines/templates/jobs/archetype-sdk-tests-generate.yml
     parameters:
+      JobTemplatePath: /eng/common/scripts/job-matrix/samples/matrix-job-sample.yml
       AdditionalParameters: []
       CloudConfig:
         SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
