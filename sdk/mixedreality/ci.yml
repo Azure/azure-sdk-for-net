@@ -30,3 +30,5 @@ extends:
       safeName: AzureMixedRealityAuthentication
     - name: Azure.MixedReality.RemoteRendering
       safeName: AzureMixedRealityRemoteRendering
+    - name: Azure.MixedReality.ObjectAnchors
+      safeName: AzureMixedRealityObjectAnchors

@@ -1,0 +1,451 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "AOA front end APIs",
+    "description": "Azure Object Anchors front end APIs.",
+    "version": "0.2-preview.0"
+  },
+  "paths": {
+    "/accounts/{accountId}/jobs/{jobId}": {
+      "put": {
+        "tags": [
+          "IngestionJob"
+        ],
+        "summary": "Creates a job request.",
+        "operationId": "IngestionJob_Create",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/AccountIdParameter"
+          },
+          {
+            "$ref": "#/parameters/JobIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ClientRequestCorrelationVectorParameter"
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "The Azure Object Anchors ingestion request.",
+            "schema": {
+              "$ref": "#/definitions/IngestionProperties"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/IngestionProperties"
+            },
+            "headers": {
+              "ms-cv": {
+                "description": "The service response correlation vector, which will be a new value for every response.",
+                "type": "string"
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-examples": {
+          "IngestionJob_Create": {
+            "$ref": "examples/CreateIngestionJob.json"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "IngestionJob"
+        ],
+        "summary": "Gets the status of a job request.",
+        "operationId": "IngestionJob_Get",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/AccountIdParameter"
+          },
+          {
+            "$ref": "#/parameters/JobIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ClientRequestCorrelationVectorParameter"
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/IngestionProperties"
+            },
+            "headers": {
+              "ms-cv": {
+                "description": "The service response correlation vector, which will be a new value for every response.",
+                "type": "string"
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-examples": {
+          "IngestionJob_Get": {
+            "$ref": "examples/GetIngestionJob.json"
+          }
+        }
+      }
+    },
+    "/accounts/{accountId}/blobUploadEndpoint": {
+      "get": {
+        "tags": [
+          "Storage"
+        ],
+        "summary": "Gets a blob upload uri.",
+        "operationId": "BlobUploadEndpoint_Get",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/AccountIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ClientRequestCorrelationVectorParameter"
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/UploadLocation"
+            },
+            "headers": {
+              "ms-cv": {
+                "description": "The service response correlation vector, which will be a new value for every response.",
+                "type": "string"
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-examples": {
+          "BlobUploadEndpoint_Get": {
+            "$ref": "examples/GetBlobUploadEndpoint.json"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "JobStatus": {
+      "enum": [
+        "NotStarted",
+        "Running",
+        "Succeeded",
+        "Failed",
+        "Cancelled"
+      ],
+      "type": "string",
+      "x-ms-enum": {
+        "name": "JobStatus",
+        "modelAsString": false
+      }
+    },
+    "Vector3": {
+      "required": [
+        "x",
+        "y",
+        "z"
+      ],
+      "type": "object",
+      "properties": {
+        "x": {
+          "format": "float",
+          "type": "number"
+        },
+        "y": {
+          "format": "float",
+          "type": "number"
+        },
+        "z": {
+          "format": "float",
+          "type": "number"
+        }
+      }
+    },
+    "Quaternion": {
+      "required": [
+        "x",
+        "y",
+        "z",
+        "w"
+      ],
+      "type": "object",
+      "properties": {
+        "x": {
+          "format": "float",
+          "type": "number"
+        },
+        "y": {
+          "format": "float",
+          "type": "number"
+        },
+        "z": {
+          "format": "float",
+          "type": "number"
+        },
+        "w": {
+          "format": "float",
+          "type": "number"
+        },
+        "isIdentity": {
+          "type": "boolean",
+          "readOnly": true
+        }
+      }
+    },
+    "Pose": {
+      "required": [
+        "rotation",
+        "translation"
+      ],
+      "type": "object",
+      "properties": {
+        "rotation": {
+          "$ref": "#/definitions/Quaternion"
+        },
+        "translation": {
+          "$ref": "#/definitions/Vector3"
+        }
+      }
+    },
+    "Vector4": {
+      "required": [
+        "x",
+        "y",
+        "z",
+        "w"
+      ],
+      "type": "object",
+      "properties": {
+        "x": {
+          "format": "float",
+          "type": "number"
+        },
+        "y": {
+          "format": "float",
+          "type": "number"
+        },
+        "z": {
+          "format": "float",
+          "type": "number"
+        },
+        "w": {
+          "format": "float",
+          "type": "number"
+        }
+      }
+    },
+    "IngestionConfiguration": {
+      "description": "Represents an ingestion configuration.",
+      "required": [
+        "gravity",
+        "scale"
+      ],
+      "type": "object",
+      "properties": {
+        "dimensions": {
+          "$ref": "#/definitions/Vector3",
+          "x-nullable": true
+        },
+        "boundingBoxCenter": {
+          "$ref": "#/definitions/Vector3",
+          "x-nullable": true
+        },
+        "gravity": {
+          "$ref": "#/definitions/Vector3"
+        },
+        "keyFrameIndexes": {
+          "description": "Indices of Key Frames.",
+          "type": "array",
+		  "x-nullable": true,
+          "items": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "gtTrajectory": {
+          "description": "Ground truth trajectory.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Pose"
+          }
+        },
+        "principalAxis": {
+          "$ref": "#/definitions/Quaternion",
+          "x-nullable": true
+        },
+        "scale": {
+          "format": "float",
+          "description": "Scale of transformation of asset units into meter space.",
+          "type": "number"
+        },
+        "supportingPlane": {
+          "$ref": "#/definitions/Vector4",
+          "x-nullable": true
+        },
+        "testTrajectory": {
+          "description": "Test Trajectory.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Pose"
+          }
+        }
+      }
+    },
+    "IngestionProperties": {
+      "description": "Represents the status of an AOA ingestion job.",
+      "type": "object",
+      "properties": {
+        "clientErrorDetails": {
+          "description": "Information about the cause of a ClientError JobStatus.",
+          "type": "string",
+          "readOnly": true
+        },
+        "serverErrorDetails": {
+          "description": "Information about the cause of a ServerError JobStatus.",
+          "type": "string",
+          "readOnly": true
+        },
+        "jobId": {
+          "format": "uuid",
+          "description": "Identifier for the AOA Ingestion Job.",
+          "type": "string",
+          "readOnly": true
+        },
+        "outputModelUri": {
+          "format": "uri",
+          "description": "The URI for downloading the generated AOA Model",
+          "type": "string",
+          "readOnly": true
+        },
+        "jobStatus": {
+          "$ref": "#/definitions/JobStatus"
+        },
+        "assetFileType": {
+          "description": "The file type of the original 3D asset. Examples include: \"ply\", \"obj\", \"fbx\", \"glb\", \"gltf\", etc.",
+          "type": "string"
+        },
+        "inputAssetUri": {
+          "format": "uri",
+          "description": "The Uri to the Asset to be ingested by the AOA Ingestion Service. This asset needs to have been uploaded to the service using an endpoint provided from a call to the GetUploadUri API.",
+          "type": "string"
+        },
+        "accountId": {
+          "format": "uuid",
+          "description": "Identifier for the Account owning the AOA Ingestion Job.",
+          "type": "string",
+          "readOnly": true
+        },
+        "ingestionConfiguration": {
+          "$ref": "#/definitions/IngestionConfiguration"
+        }
+      }
+    },
+    "Error": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "ErrorResponse": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "$ref": "#/definitions/Error"
+        }
+      }
+    },
+    "UploadLocation": {
+      "required": [
+        "inputAssetUri"
+      ],
+      "type": "object",
+      "properties": {
+        "inputAssetUri": {
+          "format": "uri",
+          "description": "The blob upload URI where a model should be uploaded to the service for ingestion.",
+          "type": "string"
+        }
+      }
+    }
+  },
+  "parameters": {
+    "AccountIdParameter": {
+      "in": "path",
+      "name": "accountId",
+      "description": "Identifier for the Azure Object Anchors account.",
+      "required": true,
+      "type": "string",
+      "format": "uuid",
+      "x-ms-parameter-location": "method"
+    },
+    "JobIdParameter": {
+      "in": "path",
+      "name": "jobId",
+      "description": "Identifier for the Azure Object Anchors ingestion job.",
+      "required": true,
+      "type": "string",
+      "format": "uuid",
+      "x-ms-parameter-location": "method"
+    },
+    "ClientRequestCorrelationVectorParameter": {
+      "in": "header",
+      "name": "x-mrc-cv",
+      "description": "The client request correlation vector, which should be set to a new value for each request.",
+      "type": "string",
+      "x-ms-parameter-location": "method"
+    },
+    "ApiVersionParameter": {
+      "in": "query",
+      "name": "api-version",
+      "description": "The API version.",
+      "type": "string"
+    }
+  }
+}
