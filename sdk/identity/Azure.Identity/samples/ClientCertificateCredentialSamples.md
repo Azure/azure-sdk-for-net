@@ -10,7 +10,7 @@ Applications commonly need to load a client certificate from disk. One approach 
 ```C# Snippet:Identity_CertificateCredenetial_CreateWithPath
 var credential = new ClientCertificateCredential(tenantId, clientId, "./certs/cert.pfx");
 ```
-Alternatively the application can construct the `X509Certificate2` themselves such as in this example where the certificate key is password protected.
+Alternatively, the application can construct the `X509Certificate2` themselves, such as in the following example, where the certificate key is password protected.
 
 ```C# Snippet:Identity_CertificateCredenetial_CreateWithX509Cert
 var certificate = new X509Certificate2("./certs/cert-password-protected.pfx", "password");
