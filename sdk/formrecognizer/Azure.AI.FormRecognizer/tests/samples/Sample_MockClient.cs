@@ -84,5 +84,43 @@ namespace Azure.AI.FormRecognizer.Tests
             }
         }
         #endregion
+
+        [Test]
+        public async Task GetCustomModelsAsync()
+        {
+            var fakeReadyModelId = Guid.NewGuid().ToString();
+            var fakeInvalidModelId = Guid.NewGuid().ToString();
+            var mockClient = new Mock<FormTrainingClient>();
+
+            var page = Page<CustomFormModelInfo>.FromValues(new[]
+            {
+                FormRecognizerModelFactory.CustomFormModelInfo(fakeReadyModelId,
+                    DateTimeOffset.Parse("2020-01-01T00:00:00Z"), DateTimeOffset.Parse("2020-01-01T00:00:30Z"),
+                    CustomFormModelStatus.Ready),
+                FormRecognizerModelFactory.CustomFormModelInfo(fakeInvalidModelId,
+                    DateTimeOffset.Parse("2020-03-15T00:00:00Z"), DateTimeOffset.Parse("2020-03-15T00:00:10Z"),
+                    CustomFormModelStatus.Invalid)
+            }, null, Mock.Of<Response>());
+
+            mockClient.Setup(c => c.GetCustomModelsAsync(It.IsAny<CancellationToken>()))
+                .Returns(AsyncPageable<CustomFormModelInfo>.FromPages(new[] { page }));
+
+            FormTrainingClient client = mockClient.Object;
+
+            // Get the IDs of all invalid models.
+
+            var invalidModelIds = new List<string>();
+
+            await foreach (CustomFormModelInfo modelInfo in client.GetCustomModelsAsync())
+            {
+                if (modelInfo.Status == CustomFormModelStatus.Invalid)
+                {
+                    invalidModelIds.Add(modelInfo.ModelId);
+                }
+            }
+
+            Assert.AreEqual(1, invalidModelIds.Count);
+            Assert.AreEqual(fakeInvalidModelId, invalidModelIds[0]);
+        }
     }
 }
