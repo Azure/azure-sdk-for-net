@@ -7,7 +7,7 @@ using System.Linq;
 namespace Azure.Iot.ModelsRepository
 {
     /// <summary>
-    /// <c>ModelMetadata</c> is designated to store KPI's from model parsing.
+    /// ModelMetadata is designated to store KPIs from model parsing.
     /// </summary>
     internal class ModelMetadata
     {

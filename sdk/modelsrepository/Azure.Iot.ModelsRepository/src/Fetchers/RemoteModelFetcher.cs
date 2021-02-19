@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 namespace Azure.Iot.ModelsRepository.Fetchers
 {
     /// <summary>
-    /// The <c>RemoteModelFetcher</c> is an implementation of IModelFetcher
+    /// The RemoteModelFetcher is an implementation of IModelFetcher
     /// for supporting http[s] based model content fetching.
     /// </summary>
     internal class RemoteModelFetcher : IModelFetcher

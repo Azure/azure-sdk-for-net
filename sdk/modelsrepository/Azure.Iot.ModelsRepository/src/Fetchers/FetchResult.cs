@@ -4,7 +4,7 @@
 namespace Azure.Iot.ModelsRepository.Fetchers
 {
     /// <summary>
-    /// The <c>FetchResult</c> class has the purpose of containing key elements of
+    /// The FetchResult class has the purpose of containing key elements of
     /// an IModelFetcher Fetch() operation including model definition, path and whether
     /// it was from an expanded (pre-calculated) fetch.
     /// </summary>

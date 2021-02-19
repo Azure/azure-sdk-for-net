@@ -127,9 +127,9 @@ namespace Azure.Iot.ModelsRepository
             return processedModels;
         }
 
-        private async Task<FetchResult> FetchAsync(string dtmi, CancellationToken cancellationToken)
+        private Task<FetchResult> FetchAsync(string dtmi, CancellationToken cancellationToken)
         {
-            return await _modelFetcher.FetchAsync(dtmi, _repositoryUri, cancellationToken).ConfigureAwait(false);
+            return _modelFetcher.FetchAsync(dtmi, _repositoryUri, cancellationToken);
         }
 
         private FetchResult Fetch(string dtmi, CancellationToken cancellationToken)
@@ -145,7 +145,11 @@ namespace Azure.Iot.ModelsRepository
                 if (!DtmiConventions.IsDtmi(dtmi))
                 {
                     ModelsRepoEventSource.Instance.InvalidDtmiInput(dtmi);
-                    string invalidArgMsg = string.Format(CultureInfo.CurrentCulture, ServiceStrings.InvalidDtmiFormat, dtmi);
+
+                    string invalidArgMsg =
+                        $"{string.Format(CultureInfo.CurrentCulture, ServiceStrings.GenericResolverError, dtmi)} " +
+                        string.Format(CultureInfo.CurrentCulture, ServiceStrings.InvalidDtmiFormat, dtmi);
+
                     throw new RequestFailedException(invalidArgMsg, new ArgumentException(invalidArgMsg));
                 }
 

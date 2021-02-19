@@ -13,7 +13,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Iot.ModelsRepository.Fetchers
 {
     /// <summary>
-    /// The <c>LocalModelFetcher</c> is an implementation of IModelFetcher
+    /// The LocalModelFetcher is an implementation of IModelFetcher
     /// for supporting local filesystem based model content fetching.
     /// </summary>
     internal class LocalModelFetcher : IModelFetcher

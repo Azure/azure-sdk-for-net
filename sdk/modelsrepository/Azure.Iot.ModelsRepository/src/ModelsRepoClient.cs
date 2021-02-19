@@ -12,8 +12,8 @@ using Azure.Core.Pipeline;
 namespace Azure.Iot.ModelsRepository
 {
     /// <summary>
-    /// The <c>ModelsRepoClient</c> class supports DTDL model resolution providing functionality to
-    /// resolve models by retrieving model definitions and their dependencies.
+    /// The ModelsRepoClient class supports operations against DTDL model repositories following the
+    /// conventions of the Azure IoT Plug and Play Models repository.
     /// </summary>
     public class ModelsRepoClient
     {
@@ -21,60 +21,60 @@ namespace Azure.Iot.ModelsRepository
         private readonly ClientDiagnostics _clientDiagnostics;
 
         /// <summary>
-        /// Initializes the <c>ModelsRepoClient</c> with default client options while pointing to
-        /// the Azure IoT Plug and Play Model repository https://devicemodels.azure.com for resolution.
+        /// Initializes the ModelsRepoClient with default client options while pointing to
+        /// the Azure IoT Plug and Play Models repository https://devicemodels.azure.com for resolution.
         /// </summary>
         public ModelsRepoClient() : this(new Uri(DefaultModelsRepository), new ModelsRepoClientOptions()) { }
 
         /// <summary>
-        /// Initializes the <c>ModelsRepoClient</c> with default client options while pointing to
+        /// Initializes the ModelsRepoClient with default client options while pointing to
         /// a custom <paramref name="repositoryUri"/> for resolution.
         /// </summary>
         /// <param name="repositoryUri">
-        /// The model repository <c>Uri</c> value. This can be a remote endpoint or local directory.
+        /// The model repository Uri value. This can be a remote endpoint or local directory.
         /// </param>
         public ModelsRepoClient(Uri repositoryUri) : this(repositoryUri, new ModelsRepoClientOptions()) { }
 
         /// <summary>
-        /// Initializes the <c>ModelsRepoClient</c> with custom client <paramref name="options"/> while pointing to
+        /// Initializes the ModelsRepoClient with custom client <paramref name="options"/> while pointing to
         /// the Azure IoT Plug and Play Model repository https://devicemodels.azure.com for resolution.
         /// </summary>
         /// <param name="options">
-        /// <c>ModelsRepoClientOptions</c> to configure resolution and client behavior.
+        /// ModelsRepoClientOptions to configure resolution and client behavior.
         /// </param>
         public ModelsRepoClient(ModelsRepoClientOptions options) : this(new Uri(DefaultModelsRepository), options) { }
 
         /// <summary>
-        /// Initializes the <c>ModelsRepoClient</c> with default client options while pointing to
+        /// Initializes the ModelsRepoClient with default client options while pointing to
         /// a custom <paramref name="repositoryUriStr"/> for resolution.
         /// </summary>
         /// <param name="repositoryUriStr">
-        /// The model repository <c>Uri</c> in string format. This can be a remote endpoint or local directory.
+        /// The model repository Uri in string format. This can be a remote endpoint or local directory.
         /// </param>
         public ModelsRepoClient(string repositoryUriStr) : this(repositoryUriStr, new ModelsRepoClientOptions()) { }
 
         /// <summary>
-        /// Initializes the <c>ModelsRepoClient</c> with custom client <paramref name="options"/> while pointing to
+        /// Initializes the ModelsRepoClient with custom client <paramref name="options"/> while pointing to
         /// a custom <paramref name="repositoryUriStr"/> for resolution.
         /// </summary>
         /// <param name="repositoryUriStr">
-        /// The model repository <c>Uri</c> in string format. This can be a remote endpoint or local directory.
+        /// The model repository Uri in string format. This can be a remote endpoint or local directory.
         /// </param>
         /// <param name="options">
-        /// <c>ModelsRepoClientOptions</c> to configure resolution and client behavior.
+        /// ModelsRepoClientOptions to configure resolution and client behavior.
         /// </param>
         public ModelsRepoClient(string repositoryUriStr, ModelsRepoClientOptions options)
             : this(new Uri(repositoryUriStr), options) { }
 
         /// <summary>
-        /// Initializes the <c>ModelsRepoClient</c> with custom client <paramref name="options"/> while pointing to
+        /// Initializes the ModelsRepoClient with custom client <paramref name="options"/> while pointing to
         /// a custom <paramref name="repositoryUri"/> for resolution.
         /// </summary>
         /// <param name="repositoryUri">
-        /// The model repository <c>Uri</c>. This can be a remote endpoint or local directory.
+        /// The model repository Uri. This can be a remote endpoint or local directory.
         /// </param>
         /// <param name="options">
-        /// <c>ModelsRepoClientOptions</c> to configure resolution and client behavior.
+        /// ModelsRepoClientOptions to configure resolution and client behavior.
         /// </param>
         public ModelsRepoClient(Uri repositoryUri, ModelsRepoClientOptions options)
         {
@@ -90,7 +90,7 @@ namespace Azure.Iot.ModelsRepository
         /// Resolves a model definition identified by <paramref name="dtmi"/> and optionally its dependencies.
         /// </summary>
         /// <returns>
-        /// An <c>IDictionary</c> containing the model definition(s) where the key is the dtmi
+        /// An IDictionary containing the model definition(s) where the key is the dtmi
         /// and the value is the raw model definition string.
         /// </returns>
         /// <exception cref="RequestFailedException">Thrown when a resolution failure occurs.</exception>
@@ -119,7 +119,7 @@ namespace Azure.Iot.ModelsRepository
         /// Resolves a model definition identified by <paramref name="dtmi"/> and optionally its dependencies.
         /// </summary>
         /// <returns>
-        /// An <c>IDictionary</c> containing the model definition(s) where the key is the dtmi
+        /// An IDictionary containing the model definition(s) where the key is the dtmi
         /// and the value is the raw model definition string.
         /// </returns>
         /// <exception cref="RequestFailedException">Thrown when a resolution failure occurs.</exception>
@@ -149,7 +149,7 @@ namespace Azure.Iot.ModelsRepository
         /// Resolves a collection of model definitions identified by <paramref name="dtmis"/> and optionally their dependencies.
         /// </summary>
         /// <returns>
-        /// An <c>IDictionary</c> containing the model definition(s) where the key is the dtmi
+        /// An IDictionary containing the model definition(s) where the key is the dtmi
         /// and the value is the raw model definition string.
         /// </returns>
         /// <exception cref="RequestFailedException">Thrown when a resolution failure occurs.</exception>
@@ -176,7 +176,7 @@ namespace Azure.Iot.ModelsRepository
         /// Resolves a collection of model definitions identified by <paramref name="dtmis"/> and optionally their dependencies.
         /// </summary>
         /// <returns>
-        /// An <c>IDictionary</c> containing the model definition(s) where the key is the dtmi
+        /// An IDictionary containing the model definition(s) where the key is the dtmi
         /// and the value is the raw model definition string.
         /// </returns>
         /// <exception cref="RequestFailedException">Thrown when a resolution failure occurs.</exception>
@@ -205,17 +205,17 @@ namespace Azure.Iot.ModelsRepository
         public static bool IsValidDtmi(string dtmi) => DtmiConventions.IsDtmi(dtmi);
 
         /// <summary>
-        /// Gets the <c>Uri</c> associated with the ModelsRepoClient instance.
+        /// Gets the Uri associated with the ModelsRepoClient instance.
         /// </summary>
         public Uri RepositoryUri { get; }
 
         /// <summary>
-        /// Gets the <c>ModelsRepoClientOptions</c> associated with the ModelsRepoClient instance.
+        /// Gets the ModelsRepoClientOptions associated with the ModelsRepoClient instance.
         /// </summary>
         public ModelsRepoClientOptions ClientOptions { get; }
 
         /// <summary>
-        /// Azure Device Models Repository used by default.
+        /// The global Azure IoT Models Repository endpoint used by default.
         /// </summary>
         public static string DefaultModelsRepository => ModelRepositoryConstants.DefaultModelsRepository;
     }

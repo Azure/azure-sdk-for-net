@@ -8,8 +8,8 @@ using System.Text.RegularExpressions;
 namespace Azure.Iot.ModelsRepository
 {
     /// <summary>
-    /// <c>DtmiConventions</c> implements the core aspects of the IoT model repo conventions
-    /// which includes calculating a generic path from a DTMI.
+    /// DtmiConventions implements the core aspects of the IoT model repo conventions
+    /// which includes DTMI validation and calculating a URI path from a DTMI.
     /// </summary>
     internal static class DtmiConventions
     {

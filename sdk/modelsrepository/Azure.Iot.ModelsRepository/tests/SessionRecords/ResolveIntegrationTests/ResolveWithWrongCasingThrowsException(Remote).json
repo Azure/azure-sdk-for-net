@@ -4,12 +4,12 @@
       "RequestUri": "https://devicemodels.azure.com/dtmi/com/example/thermostat-1.json",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "traceparent": "00-ccbd3c446be45b4aaa83baa48b8ff78a-9f3d528256657348-00",
+        "traceparent": "00-2a3f314388159847b0cfdfeef0de35c8-025aa9e772e73f46-00",
         "User-Agent": [
-          "azsdk-net-Iot.ModelsRepository/1.0.0-alpha.20210218.1",
+          "azsdk-net-Iot.ModelsRepository/1.0.0-alpha.20210219.1",
           "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "fb94cc54700781ab209c5d06025d32a8",
+        "x-ms-client-request-id": "7d5aeeef70b4bb000098920bf8ed424f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -19,11 +19,11 @@
         "Access-Control-Allow-Headers": "*",
         "Access-Control-Allow-Methods": "GET, HEAD, OPTIONS",
         "Access-Control-Expose-Headers": "*",
-        "Age": "98598",
+        "Age": "155664",
         "Content-Length": "2469",
         "Content-MD5": "U0VZgOgpfb6bwvG5UDVZuw==",
         "Content-Type": "application/json",
-        "Date": "Fri, 19 Feb 2021 03:33:44 GMT",
+        "Date": "Fri, 19 Feb 2021 19:24:50 GMT",
         "ETag": "\u00220x8D8A13DEABC53BA\u0022",
         "Last-Modified": "Tue, 15 Dec 2020 21:10:57 GMT",
         "Server": [
@@ -129,6 +129,6 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "882631284"
+    "RandomSeed": "1926732807"
   }
 }

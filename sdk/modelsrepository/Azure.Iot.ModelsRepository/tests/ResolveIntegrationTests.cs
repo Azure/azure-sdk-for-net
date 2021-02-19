@@ -37,7 +37,7 @@ namespace Azure.Iot.ModelsRepository.Tests
         public void ResolveInvalidDtmiFormatThrowsException(string dtmi)
         {
             ModelsRepoClient client = GetClient(ModelsRepoTestBase.ClientType.Local);
-            string expectedExMsg = string.Format(ServiceStrings.InvalidDtmiFormat, dtmi);
+            string expectedExMsg = $"{string.Format(ServiceStrings.GenericResolverError, dtmi)} {string.Format(ServiceStrings.InvalidDtmiFormat, dtmi)}";
             RequestFailedException re = Assert.ThrowsAsync<RequestFailedException>(async () => await client.ResolveAsync(dtmi));
             Assert.AreEqual(re.Message, expectedExMsg);
         }
