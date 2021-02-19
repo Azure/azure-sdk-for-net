@@ -3,11 +3,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Reflection;
-using System.Runtime.Serialization;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Microsoft.Identity.Client;
+using Microsoft.Identity.Client.Extensions.Msal;
 using Moq;
 using NUnit.Framework;
 
@@ -18,18 +18,11 @@ namespace Azure.Identity.Tests
         public PersistentTokenCacheTests(bool isAsync) : base(isAsync)
         { }
 
-        public static Random random = new Random();
         public PersistentTokenCache cache;
-        public byte[] bytes = new byte[] { 1, 0 };
-        public byte[] updatedBytes = new byte[] { 0, 2 };
-        public byte[] mergedBytes = new byte[] { 1, 2 };
         public Mock<ITokenCacheSerializer> mockSerializer1;
         public Mock<ITokenCacheSerializer> mockSerializer2;
         public Mock<ITokenCache> mockMSALCache;
-        public Func<TokenCacheNotificationArgs, Task> main_OnBeforeCacheAccessAsync = null;
-        public Func<TokenCacheNotificationArgs, Task> main_OnAfterCacheAccessAsync = null;
-        public TokenCacheCallback merge_OnBeforeCacheAccessAsync = null;
-        public TokenCacheCallback merge_OnAfterCacheAccessAsync = null;
+        internal Mock<MsalCacheHelperWrapper> mockWrapper;
 
         [SetUp]
         public void Setup()
@@ -38,6 +31,15 @@ namespace Azure.Identity.Tests
             mockSerializer1 = new Mock<ITokenCacheSerializer>();
             mockSerializer2 = new Mock<ITokenCacheSerializer>();
             mockMSALCache = new Mock<ITokenCache>();
+            mockWrapper = new Mock<MsalCacheHelperWrapper>();
+            mockWrapper.Setup(m => m.InitializeAsync(It.IsAny<StorageCreationProperties>(), null))
+                .Returns(Task.CompletedTask);
+        }
+
+        [TearDown]
+        public void Cleanup()
+        {
+            PersistentTokenCache.ResetWrapperCache();
         }
 
         [Test]
@@ -45,7 +47,7 @@ namespace Azure.Identity.Tests
         [TestCase(false)]
         public void DefaultConstructorInitializesAllowUnencryptedStorage(bool allowUnencryptedStorage)
         {
-            cache = new PersistentTokenCache(allowUnencryptedStorage);
+            cache = new PersistentTokenCache(new PersistentTokenCacheOptions { AllowUnencryptedStorage = allowUnencryptedStorage });
             Assert.That(cache._allowUnencryptedStorage, Is.EqualTo(allowUnencryptedStorage));
         }
 
@@ -53,9 +55,9 @@ namespace Azure.Identity.Tests
         {
             yield return new object[] { new PersistentTokenCacheOptions { AllowUnencryptedStorage = true, Name = "foo" }, true, "foo" };
             yield return new object[] { new PersistentTokenCacheOptions { AllowUnencryptedStorage = false, Name = "bar" }, false, "bar" };
-            yield return new object[] { new PersistentTokenCacheOptions { AllowUnencryptedStorage = false }, false, null };
+            yield return new object[] { new PersistentTokenCacheOptions { AllowUnencryptedStorage = false }, false, Constants.DefaultMsalTokenCacheName };
             yield return new object[] { new PersistentTokenCacheOptions { Name = "fizz" }, false, "fizz" };
-            yield return new object[] { new PersistentTokenCacheOptions(), false, null };
+            yield return new object[] { new PersistentTokenCacheOptions(), false, Constants.DefaultMsalTokenCacheName };
         }
 
         [Test]
@@ -87,18 +89,124 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public async Task RegisterCacheUnencryptedInitializesCache()
+        [NonParallelizable]
+        public async Task RegisterCacheInitializesCacheWithName()
         {
-            cache = new PersistentTokenCache(true);
+            string cacheName = Guid.NewGuid().ToString();
+            cache = new PersistentTokenCache(new PersistentTokenCacheOptions() { Name = cacheName }, mockWrapper.Object);
+
             await cache.RegisterCache(IsAsync, mockMSALCache.Object, default);
+
+            mockWrapper.Verify(m => m.InitializeAsync(
+                It.Is<StorageCreationProperties>(p =>
+                    p.ClientId == PersistentTokenCache.s_msalCacheClientId &&
+                    p.CacheFileName == cacheName &&
+                    p.MacKeyChainServiceName == Constants.DefaultMsalTokenCacheKeychainService &&
+                    p.KeyringCollection == Constants.DefaultMsalTokenCacheKeyringCollection),
+                null));
         }
 
-        private static TokenCacheNotificationArgs GetMockArgs(Mock<ITokenCacheSerializer> mockSerializer, bool hasStateChanged)
+        [Test]
+        [NonParallelizable]
+        public async Task RegisterCacheInitializesCache()
         {
-            TokenCacheNotificationArgs mockArgs = (TokenCacheNotificationArgs)FormatterServices.GetUninitializedObject(typeof(TokenCacheNotificationArgs));
-            var ctor = typeof(TokenCacheNotificationArgs).GetConstructors(BindingFlags.NonPublic | BindingFlags.Instance);
-            mockArgs = (TokenCacheNotificationArgs)ctor[0].Invoke(new object[] { mockSerializer.Object, "foo", null, hasStateChanged, true, true, null });
-            return mockArgs;
+            cache = new PersistentTokenCache(new PersistentTokenCacheOptions(), mockWrapper.Object);
+
+            await cache.RegisterCache(IsAsync, mockMSALCache.Object, default);
+
+            mockWrapper.Verify(m => m.InitializeAsync(
+                It.Is<StorageCreationProperties>(p =>
+                    p.ClientId == PersistentTokenCache.s_msalCacheClientId &&
+                    p.CacheFileName == Constants.DefaultMsalTokenCacheName &&
+                    p.MacKeyChainServiceName == Constants.DefaultMsalTokenCacheKeychainService &&
+                    p.KeyringCollection == Constants.DefaultMsalTokenCacheKeyringCollection),
+                null));
+        }
+
+        [Test]
+        [NonParallelizable]
+        public async Task RegisterCacheInitializesCacheOnlyOnce()
+        {
+            cache = new PersistentTokenCache(new PersistentTokenCacheOptions(), mockWrapper.Object);
+
+            await cache.RegisterCache(IsAsync, mockMSALCache.Object, default);
+            await cache.RegisterCache(IsAsync, mockMSALCache.Object, default);
+
+            mockWrapper.Verify(m => m.InitializeAsync(
+                It.Is<StorageCreationProperties>(p =>
+                    p.ClientId == PersistentTokenCache.s_msalCacheClientId &&
+                    p.CacheFileName == Constants.DefaultMsalTokenCacheName &&
+                    p.MacKeyChainServiceName == Constants.DefaultMsalTokenCacheKeychainService &&
+                    p.KeyringCollection == Constants.DefaultMsalTokenCacheKeyringCollection),
+                null), Times.Once);
+        }
+
+        [Test]
+        [NonParallelizable]
+        public void RegisterCacheInitializesCacheAndIsThreadSafe()
+        {
+            ManualResetEventSlim resetEvent2 = new ManualResetEventSlim();
+            ManualResetEventSlim resetEvent1 = new ManualResetEventSlim();
+
+            //The fist call to InitializeAsync will block. The second one will complete immediately.
+            mockWrapper.SetupSequence(m => m.InitializeAsync(It.IsAny<StorageCreationProperties>(), null))
+                .Returns(() =>
+                {
+                    resetEvent1.Wait(1);
+                    resetEvent1.Set();
+                    resetEvent2.Wait();
+                    return Task.CompletedTask;
+                })
+                .Returns(Task.CompletedTask);
+            cache = new PersistentTokenCache(new PersistentTokenCacheOptions(), mockWrapper.Object);
+            var cache2 = new PersistentTokenCache(new PersistentTokenCacheOptions(), mockWrapper.Object);
+
+            var task1 = Task.Run(() => cache.RegisterCache(IsAsync, mockMSALCache.Object, default));
+            var task2 = Task.Run(() => cache2.RegisterCache(IsAsync, mockMSALCache.Object, default));
+
+            //Ensure the two tasks are running before we release the first call to InitializeAsync.
+            resetEvent1.Wait();
+            resetEvent2.Set();
+
+            Task.WaitAll(task1, task2);
+
+            mockWrapper.Verify(m => m.InitializeAsync(
+                It.Is<StorageCreationProperties>(p =>
+                    p.ClientId == PersistentTokenCache.s_msalCacheClientId &&
+                    p.CacheFileName == Constants.DefaultMsalTokenCacheName &&
+                    p.MacKeyChainServiceName == Constants.DefaultMsalTokenCacheKeychainService &&
+                    p.KeyringCollection == Constants.DefaultMsalTokenCacheKeyringCollection),
+                null));
+        }
+
+        [Test]
+        [NonParallelizable]
+        public void RegisterCacheThrowsIfEncryptionIsUnavailableAndAllowUnencryptedStorageIsFalse()
+        {
+            mockWrapper.Setup(m => m.VerifyPersistence()).Throws<MsalCachePersistenceException>();
+            cache = new PersistentTokenCache(new PersistentTokenCacheOptions(), mockWrapper.Object);
+
+            Assert.ThrowsAsync<MsalCachePersistenceException>(() => cache.RegisterCache(IsAsync, mockMSALCache.Object, default));
+        }
+
+        [Test]
+        [NonParallelizable]
+        public async Task RegisterCacheInitializesCacheIfEncryptionIsUnavailableAndAllowUnencryptedStorageIsTrue()
+        {
+            mockWrapper.SetupSequence(m => m.VerifyPersistence())
+            .Throws<MsalCachePersistenceException>()
+            .Pass();
+            cache = new PersistentTokenCache(new PersistentTokenCacheOptions { AllowUnencryptedStorage = true }, mockWrapper.Object);
+
+            await cache.RegisterCache(IsAsync, mockMSALCache.Object, default);
+
+            mockWrapper.Verify(m => m.InitializeAsync(
+                It.Is<StorageCreationProperties>(p =>
+                    p.ClientId == PersistentTokenCache.s_msalCacheClientId &&
+                    p.CacheFileName == Constants.DefaultMsalTokenCacheName &&
+                    p.MacKeyChainServiceName == Constants.DefaultMsalTokenCacheKeychainService &&
+                    p.UseLinuxUnencryptedFallback),
+                null));
         }
     }
 }
