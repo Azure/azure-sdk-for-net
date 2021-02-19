@@ -6,23 +6,23 @@ $packagePattern = "*.nupkg"
 $MetadataUri = "https://raw.githubusercontent.com/Azure/azure-sdk/master/_data/releases/latest/dotnet-packages.csv"
 $BlobStorageUrl = "https://azuresdkdocs.blob.core.windows.net/%24web?restype=container&comp=list&prefix=dotnet%2F&delimiter=%2F"
 
-function Get-dotnet-PackageInfoFromRepo ($pkgPath, $serviceDirectory, $pkgName)
+function Get-dotnet-PackageInfoFromRepo ($pkgPath, $serviceDirectoryName, $artifactName)
 {
-  $projectPath = Join-Path $pkgPath "src" "$pkgName.csproj"
+  $projectPath = Join-Path $pkgPath "src" "$artifactName.csproj"
   if (Test-Path $projectPath)
   {
     $projectData = New-Object -TypeName XML
     $projectData.load($projectPath)
     $pkgVersion = Select-XML -Xml $projectData -XPath '/Project/PropertyGroup/Version'
     $sdkType = "client"
-    if ($pkgName -match "\.ResourceManager\." -or $pkgName -match "\.Management\.")
+    if ($artifactName -match "\.ResourceManager\." -or $artifactName -match "\.Management\.")
     {
       $sdkType = "mgmt"
     }
-    $pkgProp = [PackageProps]::new($pkgName, $pkgVersion, $pkgPath, $serviceDirectory)
+    $pkgProp = [PackageProps]::new($artifactName, $pkgVersion, $pkgPath, $serviceDirectoryName)
     $pkgProp.SdkType = $sdkType
-    $pkgProp.IsNewSdk = $pkgName.StartsWith("Azure")
-    $pkgProp.ArtifactName = $pkgName
+    $pkgProp.IsNewSdk = $artifactName.StartsWith("Azure")
+    $pkgProp.ArtifactName = $artifactName
     return $pkgProp
   }
   else
