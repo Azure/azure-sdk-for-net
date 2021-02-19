@@ -121,7 +121,7 @@ await purchaseOperation.WaitForCompletionAsync();
 You can list all phone numbers that have been acquired for your resource.
 
 ```C# Snippet:ListAcquiredPhoneNumbersAsync
-var acquiredPhoneNumbers = client.ListPhoneNumbersAsync();
+var acquiredPhoneNumbers = client.GetPhoneNumbersAsync();
 
 await foreach (var phoneNumber in acquiredPhoneNumbers)
 {

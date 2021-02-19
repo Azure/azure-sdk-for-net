@@ -51,7 +51,7 @@ while (!purchaseOperation.HasCompleted)
 You can list all phone numbers that have been acquired for your resource.
 
 ```C# Snippet:ListAcquiredPhoneNumbers
-var acquiredPhoneNumbers = client.ListPhoneNumbers();
+var acquiredPhoneNumbers = client.GetPhoneNumbers();
 
 foreach (var phoneNumber in acquiredPhoneNumbers)
 {

@@ -9,14 +9,14 @@ namespace Azure.Communication.PhoneNumbers
         public PhoneNumbersClient(System.Uri endpoint, Azure.Core.TokenCredential tokenCredential, Azure.Communication.PhoneNumbers.PhoneNumbersClientOptions options = null) { }
         public virtual Azure.Response<Azure.Communication.PhoneNumbers.Models.AcquiredPhoneNumber> GetPhoneNumber(string phoneNumber, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.PhoneNumbers.Models.AcquiredPhoneNumber>> GetPhoneNumberAsync(string phoneNumber, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.Communication.PhoneNumbers.Models.AcquiredPhoneNumber> ListPhoneNumbers(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Communication.PhoneNumbers.Models.AcquiredPhoneNumber> ListPhoneNumbersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Communication.PhoneNumbers.Models.AcquiredPhoneNumber> GetPhoneNumbers(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Communication.PhoneNumbers.Models.AcquiredPhoneNumber> GetPhoneNumbersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Communication.PhoneNumbers.Models.PurchasePhoneNumbersOperation StartPurchasePhoneNumbers(string searchId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Communication.PhoneNumbers.Models.PurchasePhoneNumbersOperation> StartPurchasePhoneNumbersAsync(string searchId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Communication.PhoneNumbers.Models.ReleasePhoneNumberOperation StartReleasePhoneNumber(string phoneNumber, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Communication.PhoneNumbers.Models.ReleasePhoneNumberOperation> StartReleasePhoneNumberAsync(string phoneNumber, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Communication.PhoneNumbers.Models.SearchAvailablePhoneNumbersOperation StartSearchAvailablePhoneNumbers(string threeLetterISOCountryName, Azure.Communication.PhoneNumbers.Models.PhoneNumberType phoneNumberType, Azure.Communication.PhoneNumbers.Models.PhoneNumberAssignmentType phoneNumberAssignmentType, Azure.Communication.PhoneNumbers.Models.PhoneNumberCapabilities capabilities, Azure.Communication.PhoneNumbers.Models.PhoneNumberSearchOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Communication.PhoneNumbers.Models.SearchAvailablePhoneNumbersOperation> StartSearchAvailablePhoneNumbersAsync(string threeLetterISOCountryName, Azure.Communication.PhoneNumbers.Models.PhoneNumberType phoneNumberType, Azure.Communication.PhoneNumbers.Models.PhoneNumberAssignmentType phoneNumberAssignmentType, Azure.Communication.PhoneNumbers.Models.PhoneNumberCapabilities capabilities, Azure.Communication.PhoneNumbers.Models.PhoneNumberSearchOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Communication.PhoneNumbers.Models.SearchAvailablePhoneNumbersOperation StartSearchAvailablePhoneNumbers(string threeLetterISOCountryName, Azure.Communication.PhoneNumbers.Models.PhoneNumberType phoneNumberType, Azure.Communication.PhoneNumbers.Models.PhoneNumberAssignmentType phoneNumberAssignmentType, Azure.Communication.PhoneNumbers.Models.PhoneNumberCapabilities capabilities, Azure.Communication.PhoneNumbers.PhoneNumberSearchOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Communication.PhoneNumbers.Models.SearchAvailablePhoneNumbersOperation> StartSearchAvailablePhoneNumbersAsync(string threeLetterISOCountryName, Azure.Communication.PhoneNumbers.Models.PhoneNumberType phoneNumberType, Azure.Communication.PhoneNumbers.Models.PhoneNumberAssignmentType phoneNumberAssignmentType, Azure.Communication.PhoneNumbers.Models.PhoneNumberCapabilities capabilities, Azure.Communication.PhoneNumbers.PhoneNumberSearchOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Communication.PhoneNumbers.Models.UpdatePhoneNumberCapabilitiesOperation StartUpdateCapabilities(string phoneNumber, Azure.Communication.PhoneNumbers.Models.PhoneNumberCapabilityValue? calling = default(Azure.Communication.PhoneNumbers.Models.PhoneNumberCapabilityValue?), Azure.Communication.PhoneNumbers.Models.PhoneNumberCapabilityValue? sms = default(Azure.Communication.PhoneNumbers.Models.PhoneNumberCapabilityValue?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Communication.PhoneNumbers.Models.UpdatePhoneNumberCapabilitiesOperation> StartUpdateCapabilitiesAsync(string phoneNumber, Azure.Communication.PhoneNumbers.Models.PhoneNumberCapabilityValue? calling = default(Azure.Communication.PhoneNumbers.Models.PhoneNumberCapabilityValue?), Azure.Communication.PhoneNumbers.Models.PhoneNumberCapabilityValue? sms = default(Azure.Communication.PhoneNumbers.Models.PhoneNumberCapabilityValue?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -28,6 +28,12 @@ namespace Azure.Communication.PhoneNumbers
         {
             V2021_03_07 = 1,
         }
+    }
+    public partial class PhoneNumberSearchOptions
+    {
+        public PhoneNumberSearchOptions() { }
+        public string AreaCode { get { throw null; } set { } }
+        public int? Quantity { get { throw null; } set { } }
     }
 }
 namespace Azure.Communication.PhoneNumbers.Models
@@ -152,12 +158,6 @@ namespace Azure.Communication.PhoneNumbers.Models
         public static bool operator !=(Azure.Communication.PhoneNumbers.Models.PhoneNumberOperationType left, Azure.Communication.PhoneNumbers.Models.PhoneNumberOperationType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class PhoneNumberSearchOptions
-    {
-        public PhoneNumberSearchOptions() { }
-        public string AreaCode { get { throw null; } set { } }
-        public int? Quantity { get { throw null; } set { } }
-    }
     public partial class PhoneNumberSearchResult
     {
         internal PhoneNumberSearchResult() { }
@@ -166,7 +166,7 @@ namespace Azure.Communication.PhoneNumbers.Models
         public Azure.Communication.PhoneNumbers.Models.PhoneNumberCost Cost { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> PhoneNumbers { get { throw null; } }
         public Azure.Communication.PhoneNumbers.Models.PhoneNumberType PhoneNumberType { get { throw null; } }
-        public System.DateTimeOffset SearchExpiresBy { get { throw null; } }
+        public System.DateTimeOffset SearchExpiresOn { get { throw null; } }
         public string SearchId { get { throw null; } }
     }
     public static partial class PhoneNumbersModelFactory

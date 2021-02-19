@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers
 {
-    internal class PhoneNumbersReleasePhoneNumberHeaders
+    internal partial class PhoneNumbersReleasePhoneNumberHeaders
     {
         private readonly Response _response;
         public PhoneNumbersReleasePhoneNumberHeaders(Response response)

@@ -28,6 +28,8 @@ namespace Azure.Communication.PhoneNumbers
     [CodeGenSuppress("ListPhoneNumbers", typeof(int?), typeof(int?), typeof(CancellationToken))]
     [CodeGenSuppress("StartSearchAvailablePhoneNumbersAsync", typeof(string), typeof(PhoneNumberSearchRequest), typeof(CancellationToken))]
     [CodeGenSuppress("StartSearchAvailablePhoneNumbers", typeof(string), typeof(PhoneNumberSearchRequest), typeof(CancellationToken))]
+    [CodeGenSuppress("ListPhoneNumbersAsync", typeof(CancellationToken))]
+    [CodeGenSuppress("ListPhoneNumbers", typeof(CancellationToken))]
     public partial class PhoneNumbersClient
     {
         #region public constructors - all arguments need null check
@@ -242,11 +244,11 @@ namespace Azure.Communication.PhoneNumbers
 
         /// <summary> Gets the list of all acquired phone numbers. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<AcquiredPhoneNumber> ListPhoneNumbersAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<AcquiredPhoneNumber> GetPhoneNumbersAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<AcquiredPhoneNumber>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("PhoneNumbersClient.ListPhoneNumbers");
+                using var scope = _clientDiagnostics.CreateScope("PhoneNumbersClient.GetPhoneNumbers");
                 scope.Start();
                 try
                 {
@@ -279,11 +281,11 @@ namespace Azure.Communication.PhoneNumbers
 
         /// <summary> Gets the list of all acquired phone numbers. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<AcquiredPhoneNumber> ListPhoneNumbers(CancellationToken cancellationToken = default)
+        public virtual Pageable<AcquiredPhoneNumber> GetPhoneNumbers(CancellationToken cancellationToken = default)
         {
             Page<AcquiredPhoneNumber> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("PhoneNumbersClient.ListPhoneNumbers");
+                using var scope = _clientDiagnostics.CreateScope("PhoneNumbersClient.GetPhoneNumbers");
                 scope.Start();
                 try
                 {

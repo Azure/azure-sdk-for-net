@@ -58,7 +58,7 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
             #endregion Snippet:StartPurchaseSearchAsync
 
             #region Snippet:ListAcquiredPhoneNumbersAsync
-            var acquiredPhoneNumbers = client.ListPhoneNumbersAsync();
+            var acquiredPhoneNumbers = client.GetPhoneNumbersAsync();
 
             await foreach (var phoneNumber in acquiredPhoneNumbers)
             {
@@ -67,7 +67,7 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
             #endregion Snippet:ListAcquiredPhoneNumbersAsync
 
             var acquiredPhoneNumber = acquiredPhoneNumbers.ToEnumerableAsync().Result.Single().PhoneNumber;
-            acquiredPhoneNumbers = client.ListPhoneNumbersAsync();
+            acquiredPhoneNumbers = client.GetPhoneNumbersAsync();
 
             var beforeReleaseNumberCount = (await acquiredPhoneNumbers.ToEnumerableAsync()).Count;
 
@@ -80,7 +80,7 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
 
             #endregion Snippet:ReleasePhoneNumbersAsync
 
-            acquiredPhoneNumbers = client.ListPhoneNumbersAsync();
+            acquiredPhoneNumbers = client.GetPhoneNumbersAsync();
             var afterReleaseNumberCount = (await acquiredPhoneNumbers.ToEnumerableAsync()).Count;
             Assert.AreEqual(1, beforeReleaseNumberCount - afterReleaseNumberCount);
         }
@@ -142,7 +142,7 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
             #endregion Snippet:StartPurchaseSearch
 
             #region Snippet:ListAcquiredPhoneNumbers
-            var acquiredPhoneNumbers = client.ListPhoneNumbers();
+            var acquiredPhoneNumbers = client.GetPhoneNumbers();
 
             foreach (var phoneNumber in acquiredPhoneNumbers)
             {
@@ -151,7 +151,7 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
             #endregion Snippet:ListAcquiredPhoneNumbers
 
             var acquiredPhoneNumber = searchOperation.Value.PhoneNumbers.Single();
-            acquiredPhoneNumbers = client.ListPhoneNumbers();
+            acquiredPhoneNumbers = client.GetPhoneNumbers();
             var beforeReleaseNumberCount = acquiredPhoneNumbers.Count();
 
             #region Snippet:ReleasePhoneNumbers
@@ -166,7 +166,7 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
             }
             #endregion Snippet:ReleasePhoneNumbers
 
-            acquiredPhoneNumbers = client.ListPhoneNumbers();
+            acquiredPhoneNumbers = client.GetPhoneNumbers();
             var afterReleaseNumberCount = acquiredPhoneNumbers.Count();
             Assert.AreEqual(1, beforeReleaseNumberCount - afterReleaseNumberCount);
         }
