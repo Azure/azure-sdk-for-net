@@ -27,13 +27,13 @@ namespace Azure.Identity.Tests
         [SetUp]
         public void Setup()
         {
-            cache = new PersistentTokenCache();
             mockSerializer1 = new Mock<ITokenCacheSerializer>();
             mockSerializer2 = new Mock<ITokenCacheSerializer>();
             mockMSALCache = new Mock<ITokenCache>();
             mockWrapper = new Mock<MsalCacheHelperWrapper>();
             mockWrapper.Setup(m => m.InitializeAsync(It.IsAny<StorageCreationProperties>(), null))
                 .Returns(Task.CompletedTask);
+            cache = new PersistentTokenCache(default, mockWrapper.Object);
         }
 
         [TearDown]
