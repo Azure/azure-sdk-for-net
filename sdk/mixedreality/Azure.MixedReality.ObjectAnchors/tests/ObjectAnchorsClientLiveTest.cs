@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
+using Azure.MixedReality.Authentication;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using NUnit.Framework;
@@ -19,10 +20,6 @@ namespace Azure.MixedReality.ObjectAnchors.Tests
 {
     public class ObjectAnchorsClientLiveTest : RecordedTestBase<ObjectAnchorsClientTestEnvironment>
     {
-        private readonly Guid accountId;
-        private readonly string accountDomain;
-        private readonly ObjectAnchorsClientOptions options;
-
         public ObjectAnchorsClientLiveTest(bool isAsync)
             : base(isAsync)
         {
@@ -30,14 +27,15 @@ namespace Azure.MixedReality.ObjectAnchors.Tests
             TestDiagnostics = false;
 
             Matcher = new MixedRealityRecordMatcher();
-            this.accountId = new Guid(TestEnvironment.AccountId);
-            this.accountDomain = TestEnvironment.AccountDomain;
-            this.options = new ObjectAnchorsClientOptions();
         }
 
         [Test]
         public async Task RunIngestion()
         {
+            Guid accountId = new Guid(TestEnvironment.AccountId);
+            string accountDomain = TestEnvironment.AccountDomain;
+            ObjectAnchorsClientOptions options = new ObjectAnchorsClientOptions();
+            options.MixedRealityAuthenticationOptions = InstrumentClientOptions(new MixedRealityStsClientOptions());
             string localFilePath = TestEnvironment.AssetLocalFilePath;
             Vector3 assetGravity = new Vector3(TestEnvironment.AssetGravityX, TestEnvironment.AssetGravityY, TestEnvironment.AssetGravityZ);
             float scale = TestEnvironment.AssetScale;

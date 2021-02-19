@@ -3,6 +3,7 @@
 
 using System;
 using Azure.Core;
+using Azure.MixedReality.Authentication;
 
 namespace Azure.MixedReality.ObjectAnchors
 {
@@ -24,6 +25,11 @@ namespace Azure.MixedReality.ObjectAnchors
         /// Gets the service endpoint.
         /// </summary>
         public Uri ServiceEndpoint { get; set; }
+
+        /// <summary>
+        /// Gets the authentication options.
+        /// </summary>
+        public MixedRealityStsClientOptions MixedRealityAuthenticationOptions { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ObjectAnchorsClientOptions"/> class.

@@ -13,7 +13,7 @@ namespace Azure.MixedReality.ObjectAnchors.Tests
         /// <remarks>
         /// Set the MIXEDREALITY_AOA_ACCOUNT_DOMAIN environment variable.
         /// </remarks>
-        public string AccountDomain => GetVariable("AOA_ACCOUNT_DOMAIN");
+        public string AccountDomain => GetRecordedVariable("AOA_ACCOUNT_DOMAIN");
 
         /// <summary>
         /// Gets the account identifier.
@@ -21,7 +21,7 @@ namespace Azure.MixedReality.ObjectAnchors.Tests
         /// <remarks>
         /// Set the MIXEDREALITY_AOA_ACCOUNT_ID environment variable.
         /// </remarks>
-        public string AccountId => GetVariable("AOA_ACCOUNT_ID");
+        public string AccountId => GetRecordedVariable("AOA_ACCOUNT_ID");
 
         /// <summary>
         /// Gets the account identifier.
@@ -29,7 +29,7 @@ namespace Azure.MixedReality.ObjectAnchors.Tests
         /// <remarks>
         /// Set the MIXEDREALITY_AOA_ACCOUNT_KEY environment variable.
         /// </remarks>
-        public string AccountKey => GetVariable("AOA_ACCOUNT_KEY");
+        public string AccountKey => GetRecordedVariable("AOA_ACCOUNT_KEY", options => options.IsSecret());
 
         /// <summary>
         /// Gets the asset's local file path
@@ -37,7 +37,7 @@ namespace Azure.MixedReality.ObjectAnchors.Tests
         /// <remarks>
         /// Set the MIXEDREALITY_AOA_ASSET_LOCAL_FILE_PATH environment variable.
         /// </remarks>
-        public string AssetLocalFilePath => GetVariable("AOA_ASSET_LOCAL_FILE_PATH");
+        public string AssetLocalFilePath => GetRecordedVariable("AOA_ASSET_LOCAL_FILE_PATH");
 
         /// <summary>
         /// Gets the asset's local file path
@@ -45,7 +45,7 @@ namespace Azure.MixedReality.ObjectAnchors.Tests
         /// <remarks>
         /// Set the MIXEDREALITY_AOA_MODEL_DOWNLOAD_LOCAL_FILE_PATH environment variable.
         /// </remarks>
-        public string ModelDownloadLocalFilePath => GetVariable("AOA_MODEL_DOWNLOAD_LOCAL_FILE_PATH");
+        public string ModelDownloadLocalFilePath => GetRecordedVariable("AOA_MODEL_DOWNLOAD_LOCAL_FILE_PATH");
 
         /// <summary>
         /// Gets the asset's gravity vector's x component
@@ -53,7 +53,7 @@ namespace Azure.MixedReality.ObjectAnchors.Tests
         /// <remarks>
         /// Set the MIXEDREALITY_AOA_ASSET_GRAVITY_X environment variable.
         /// </remarks>
-        public float AssetGravityX => float.Parse(GetVariable("AOA_ASSET_GRAVITY_X"));
+        public float AssetGravityX => float.Parse(GetRecordedVariable("AOA_ASSET_GRAVITY_X"));
 
         /// <summary>
         /// Gets the asset's gravity vector's y component
@@ -61,7 +61,7 @@ namespace Azure.MixedReality.ObjectAnchors.Tests
         /// <remarks>
         /// Set the MIXEDREALITY_AOA_ASSET_GRAVITY_Y environment variable.
         /// </remarks>
-        public float AssetGravityY => float.Parse(GetVariable("AOA_ASSET_GRAVITY_Y"));
+        public float AssetGravityY => float.Parse(GetRecordedVariable("AOA_ASSET_GRAVITY_Y"));
 
         /// <summary>
         /// Gets the asset's gravity vector's z component
@@ -69,7 +69,7 @@ namespace Azure.MixedReality.ObjectAnchors.Tests
         /// <remarks>
         /// Set the MIXEDREALITY_AOA_ASSET_GRAVITY_Z environment variable.
         /// </remarks>
-        public float AssetGravityZ => float.Parse(GetVariable("AOA_ASSET_GRAVITY_Z"));
+        public float AssetGravityZ => float.Parse(GetRecordedVariable("AOA_ASSET_GRAVITY_Z"));
 
         /// <summary>
         /// Gets the asset's scale
@@ -77,6 +77,6 @@ namespace Azure.MixedReality.ObjectAnchors.Tests
         /// <remarks>
         /// Set the MIXEDREALITY_AOA_ASSET_SCALE environment variable.
         /// </remarks>
-        public float AssetScale => float.Parse(GetVariable("AOA_ASSET_SCALE"));
+        public float AssetScale => float.Parse(GetRecordedVariable("AOA_ASSET_SCALE"));
     }
 }

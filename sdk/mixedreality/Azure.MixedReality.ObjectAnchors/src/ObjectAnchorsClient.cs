@@ -87,7 +87,7 @@ namespace Azure.MixedReality.ObjectAnchors
             Argument.AssertNotNull(credential, nameof(credential));
 
             Uri authenticationEndpoint = options.MixedRealityAuthenticationEndpoint ?? AuthenticationEndpoint.ConstructFromDomain(accountDomain);
-            TokenCredential mrTokenCredential = MixedRealityTokenCredential.GetMixedRealityCredential(accountId, authenticationEndpoint, credential);
+            TokenCredential mrTokenCredential = MixedRealityTokenCredential.GetMixedRealityCredential(accountId, authenticationEndpoint, credential, options.MixedRealityAuthenticationOptions);
             Uri serviceEndpoint = options.ServiceEndpoint ?? ConstructObjectAnchorsEndpointUrl(accountDomain);
 
             _accountId = accountId;
