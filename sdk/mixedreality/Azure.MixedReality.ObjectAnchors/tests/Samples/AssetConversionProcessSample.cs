@@ -43,7 +43,7 @@ namespace Azure.MixedReality.ObjectAnchors.Tests.Samples
                 await uploadBlobClient.UploadAsync(fs);
             }
 
-            StartAssetConversionOptions ingestionJobOptions = new StartAssetConversionOptions(uploadedInputAssetUri, AssetFileType.FromFilePath(localFilePath), assetGravity, scale);
+            AssetConversionOptions ingestionJobOptions = new AssetConversionOptions(uploadedInputAssetUri, AssetFileType.FromFilePath(localFilePath), assetGravity, scale);
 
             AssetConversionOperation operation = await client.StartAssetConversionAsync(ingestionJobOptions);
 

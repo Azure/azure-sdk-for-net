@@ -9,7 +9,7 @@ namespace Azure.MixedReality.ObjectAnchors
     /// <summary>
     /// Represents an Object Anchors asset conversion job request's options.
     /// </summary>
-    public class StartAssetConversionOptions
+    public class AssetConversionOptions
     {
         /// <summary>
         /// Gets the asset configuration values.
@@ -38,36 +38,36 @@ namespace Azure.MixedReality.ObjectAnchors
         public float Scale { get => ConversionConfiguration.Scale; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="StartAssetConversionOptions"/> class.
+        /// Initializes a new instance of the <see cref="AssetConversionOptions"/> class.
         /// </summary>
         /// <param name="inputAssetUri">The path to the Asset in storage to be ingested by the Object Anchors service.</param>
         /// <param name="assetGravity">The asset gravity.</param>
         /// <param name="assetScale">The asset scale.</param>
         /// <param name="inputAssetFileType">The model's file type.</param>
-        public StartAssetConversionOptions(Uri inputAssetUri, AssetFileType inputAssetFileType, System.Numerics.Vector3 assetGravity, float assetScale)
+        public AssetConversionOptions(Uri inputAssetUri, AssetFileType inputAssetFileType, System.Numerics.Vector3 assetGravity, float assetScale)
             : this(inputAssetUri, inputAssetFileType, new AssetConversionConfiguration(assetGravity, assetScale))
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="StartAssetConversionOptions"/> class.
+        /// Initializes a new instance of the <see cref="AssetConversionOptions"/> class.
         /// </summary>
         /// <param name="inputAssetUri">The path to the Asset to be ingested by the Object Anchors service.</param>
         /// <param name="assetGravity">The asset gravity.</param>
         /// <param name="unit">The unit of measurement, which is translated to a numeric scale for the model.</param>
         /// <param name="inputAssetFileType">The model's file type.</param>
-        public StartAssetConversionOptions(Uri inputAssetUri, AssetFileType inputAssetFileType, System.Numerics.Vector3 assetGravity, AssetLengthUnit unit)
+        public AssetConversionOptions(Uri inputAssetUri, AssetFileType inputAssetFileType, System.Numerics.Vector3 assetGravity, AssetLengthUnit unit)
             : this(inputAssetUri, inputAssetFileType, new AssetConversionConfiguration(assetGravity, AssetScaleGenerator.GetAssetScale(unit)))
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="StartAssetConversionOptions"/> class.
+        /// Initializes a new instance of the <see cref="AssetConversionOptions"/> class.
         /// </summary>
         /// <param name="inputAssetUri">The path to the Asset to be ingested by the Object Anchors service.</param>
         /// <param name="conversionConfiguration">The asset configuration.</param>
         /// <param name="inputAssetFileType">The model's file type.</param>
-        internal StartAssetConversionOptions(Uri inputAssetUri, AssetFileType inputAssetFileType, AssetConversionConfiguration conversionConfiguration)
+        internal AssetConversionOptions(Uri inputAssetUri, AssetFileType inputAssetFileType, AssetConversionConfiguration conversionConfiguration)
         {
             Argument.AssertNotNull(inputAssetUri, nameof(inputAssetUri));
             Argument.AssertNotNull(conversionConfiguration, nameof(conversionConfiguration));

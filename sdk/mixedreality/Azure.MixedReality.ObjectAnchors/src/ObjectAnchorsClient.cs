@@ -114,7 +114,7 @@ namespace Azure.MixedReality.ObjectAnchors
         /// <param name="options">The asset conversion job creation options</param>
         /// <param name="cancellationToken">The cancellation token</param>
         /// <returns>The asset conversion operation</returns>
-        public virtual AssetConversionOperation StartAssetConversion(StartAssetConversionOptions options, CancellationToken cancellationToken = default)
+        public virtual AssetConversionOperation StartAssetConversion(AssetConversionOptions options, CancellationToken cancellationToken = default)
         {
             AssetConversionProperties properties = new AssetConversionProperties
             {
@@ -133,7 +133,7 @@ namespace Azure.MixedReality.ObjectAnchors
         /// <param name="options">The asset conversion job creation options</param>
         /// <param name="cancellationToken">The cancellation toke</param>
         /// <returns>The asset conversion operation</returns>
-        public virtual async Task<AssetConversionOperation> StartAssetConversionAsync(StartAssetConversionOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<AssetConversionOperation> StartAssetConversionAsync(AssetConversionOptions options, CancellationToken cancellationToken = default)
         {
             AssetConversionProperties properties = new AssetConversionProperties
             {

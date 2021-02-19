@@ -47,7 +47,7 @@ namespace Azure.MixedReality.ObjectAnchors.Tests
             bool caught = false;
             try
             {
-                new StartAssetConversionOptions(new Uri(anyWorkingUriString), AssetFileType.Ply, v, AssetLengthUnit.Meters);
+                new AssetConversionOptions(new Uri(anyWorkingUriString), AssetFileType.Ply, v, AssetLengthUnit.Meters);
             }
             catch (ArgumentException)
             {
@@ -64,7 +64,7 @@ namespace Azure.MixedReality.ObjectAnchors.Tests
             bool caught = false;
             try
             {
-                new StartAssetConversionOptions(u, AssetFileType.Ply, v, AssetLengthUnit.Meters);
+                new AssetConversionOptions(u, AssetFileType.Ply, v, AssetLengthUnit.Meters);
             }
             catch (ArgumentException)
             {
