@@ -1,0 +1,81 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers?api-version=2021_03_07",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Date": "Thu, 11 Feb 2021 23:07:04 GMT",
+        "traceparent": "00-2f5f7dad80c08c42ade9cf8bf1c7b2c8-1cc816eec83f5c4c-00",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210211.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "20ebe858182935f80f26182a75e5b17f",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 11 Feb 2021 23:07:05 GMT",
+        "MS-CV": "9dVJz9anxEiN/YH3BSEM6g.0",
+        "Request-Context": "appId=",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0mLglYAAAAADglo4qY6JQS7LQ3VZfNy\u002BnWVZSMzBFREdFMDMxNQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Processing-Time": "970ms"
+      },
+      "ResponseBody": {
+        "phoneNumbers": [
+          {
+            "id": "Sanitized",
+            "phoneNumber": "Sanitized",
+            "countryCode": "US",
+            "phoneNumberType": "Geographic",
+            "capabilities": {
+              "calling": "outbound",
+              "sms": "none"
+            },
+            "assignmentType": "User"
+          },
+          {
+            "id": "Sanitized",
+            "phoneNumber": "Sanitized",
+            "countryCode": "US",
+            "phoneNumberType": "Geographic",
+            "capabilities": {
+              "calling": "outbound",
+              "sms": "none"
+            },
+            "assignmentType": "User"
+          },
+          {
+            "id": "Sanitized",
+            "phoneNumber": "Sanitized",
+            "countryCode": "US",
+            "phoneNumberType": "TollFree",
+            "capabilities": {
+              "calling": "inbound",
+              "sms": "inbound\u002Boutbound"
+            },
+            "assignmentType": "Application"
+          },
+          {
+            "id": "Sanitized",
+            "phoneNumber": "Sanitized",
+            "countryCode": "US",
+            "phoneNumberType": "TollFree",
+            "capabilities": {
+              "calling": "none",
+              "sms": "inbound\u002Boutbound"
+            },
+            "assignmentType": "Application"
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "COMMUNICATION_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.com/;accesskey=Kg==",
+    "RandomSeed": "1246562785"
+  }
+}
