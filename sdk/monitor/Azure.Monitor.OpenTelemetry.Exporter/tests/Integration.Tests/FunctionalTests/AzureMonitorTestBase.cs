@@ -21,7 +21,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.FunctionalTests
 
     public abstract class AzureMonitorTestBase : RecordedTestBase<AzureMonitorTestEnvironment>
     {
-        public int FlushTimeoutMilliseconds = 1000;
+        public int FlushTimeoutMilliseconds = 15000;
 
         public AzureMonitorTestBase(bool isAsync) : base(isAsync) { }
 
