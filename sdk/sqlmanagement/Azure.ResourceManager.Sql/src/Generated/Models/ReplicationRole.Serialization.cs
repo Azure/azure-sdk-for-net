@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    internal static class ReplicationRoleExtensions
+    internal static partial class ReplicationRoleExtensions
     {
         public static string ToSerialString(this ReplicationRole value) => value switch
         {

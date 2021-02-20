@@ -8,7 +8,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Storage.Cryptography;
 using Azure.Storage.Queues.Models;
 using Azure.Storage.Queues.Specialized;
 using Azure.Storage.Sas;
@@ -74,7 +73,7 @@ namespace Azure.Storage.Queues
         /// Determines whether the client is able to generate a SAS.
         /// If the client is authenticated with a <see cref="StorageSharedKeyCredential"/>.
         /// </summary>
-        public bool CanGenerateAccountSasUri => ClientConfiguration.SharedKeyCredential != null;
+        public virtual bool CanGenerateAccountSasUri => ClientConfiguration.SharedKeyCredential != null;
 
         #region ctors
         /// <summary>
@@ -132,7 +131,8 @@ namespace Azure.Storage.Queues
                 clientDiagnostics: new ClientDiagnostics(options),
                 version: options.Version,
                 clientSideEncryption: QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions),
-                messageEncoding: options.MessageEncoding);
+                messageEncoding: options.MessageEncoding,
+                queueMessageDecodingFailedHandlers: options.GetMessageDecodingFailedHandlers());
 
             _serviceRestClient = BuildServiceRestClient();
         }
@@ -258,17 +258,40 @@ namespace Azure.Storage.Queues
                 clientDiagnostics: new ClientDiagnostics(options),
                 version: options.Version,
                 clientSideEncryption: QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions),
-                messageEncoding: options.MessageEncoding);
+                messageEncoding: options.MessageEncoding,
+                queueMessageDecodingFailedHandlers: options.GetMessageDecodingFailedHandlers());
 
+            _serviceRestClient = BuildServiceRestClient();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="QueueServiceClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="serviceUri">
+        /// A <see cref="Uri"/> referencing the queue service.
+        /// This is likely to be similar to "https://{account_name}.queue.core.windows.net".
+        /// </param>
+        /// <param name="clientConfiguration">
+        /// <see cref="QueueClientConfiguration"/>.
+        /// </param>
+        internal QueueServiceClient(
+            Uri serviceUri,
+            QueueClientConfiguration clientConfiguration)
+        {
+            Argument.AssertNotNull(serviceUri, nameof(serviceUri));
+            Argument.AssertNotNull(clientConfiguration, nameof(clientConfiguration));
+            _uri = serviceUri;
+            _clientConfiguration = clientConfiguration;
             _serviceRestClient = BuildServiceRestClient();
         }
 
         private ServiceRestClient BuildServiceRestClient()
             => new ServiceRestClient(
-                ClientConfiguration.ClientDiagnostics,
-                ClientConfiguration.Pipeline,
-                Uri.ToString(),
-                ClientConfiguration.Version.ToVersionString());
+                _clientConfiguration.ClientDiagnostics,
+                _clientConfiguration.Pipeline,
+                _uri.ToString(),
+                _clientConfiguration.Version.ToVersionString());
         #endregion ctors
 
         /// <summary>

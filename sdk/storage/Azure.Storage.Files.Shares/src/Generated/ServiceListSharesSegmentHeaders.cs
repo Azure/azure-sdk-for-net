@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Files.Shares
 {
-    internal class ServiceListSharesSegmentHeaders
+    internal partial class ServiceListSharesSegmentHeaders
     {
         private readonly Response _response;
         public ServiceListSharesSegmentHeaders(Response response)

@@ -1,40 +1,40 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://seanmcccanary3.file.core.windows.net/?sv=2020-04-08\u0026ss=f\u0026srt=s\u0026se=2021-01-21T21%3A41%3A28Z\u0026sp=r\u0026sig=Sanitized",
+      "RequestUri": "https://seanmcccanary3.file.core.windows.net/?sv=2020-06-12\u0026ss=f\u0026srt=s\u0026se=2021-01-26T20%3A32%3A55Z\u0026sp=r\u0026sig=Sanitized",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/xml",
-        "traceparent": "00-fe56adede0365c4491f7a160869eb1ad-1b981e5669f61c4a-00",
+        "traceparent": "00-77f6136dcd01954489dd4958d2c35e86-edb5694c4a9ab448-00",
         "User-Agent": [
-          "azsdk-net-Storage.Files.Shares/12.7.0-alpha.20210121.1",
+          "azsdk-net-Storage.Files.Shares/12.7.0-alpha.20210126.1",
           "(.NET 5.0.2; Microsoft Windows 10.0.19042)"
         ],
-        "x-ms-client-request-id": "afecfcd1-00f1-2326-fd79-f9ce927491a1",
+        "x-ms-client-request-id": "b0eb2dfa-b194-af0f-de48-5ffbf9084fb3",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-04-08"
+        "x-ms-version": "2020-06-12"
       },
       "RequestBody": null,
       "StatusCode": 400,
       "ResponseHeaders": {
         "Content-Length": "351",
         "Content-Type": "application/xml",
-        "Date": "Thu, 21 Jan 2021 20:41:27 GMT",
+        "Date": "Tue, 26 Jan 2021 19:32:54 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
-        "x-ms-client-request-id": "afecfcd1-00f1-2326-fd79-f9ce927491a1",
+        "x-ms-client-request-id": "b0eb2dfa-b194-af0f-de48-5ffbf9084fb3",
         "x-ms-error-code": "InvalidQueryParameterValue",
-        "x-ms-request-id": "c8ab2dea-b01a-001e-6c35-f0361a000000"
+        "x-ms-request-id": "1bf6e78a-001a-000b-231a-f421a9000000"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EInvalidQueryParameterValue\u003C/Code\u003E\u003CMessage\u003EValue for one of the query parameters specified in the request URI is invalid.\n",
-        "RequestId:c8ab2dea-b01a-001e-6c35-f0361a000000\n",
-        "Time:2021-01-21T20:41:28.3340701Z\u003C/Message\u003E\u003CQueryParameterName\u003Ecomp\u003C/QueryParameterName\u003E\u003CQueryParameterValue /\u003E\u003CReason /\u003E\u003C/Error\u003E"
+        "RequestId:1bf6e78a-001a-000b-231a-f421a9000000\n",
+        "Time:2021-01-26T19:32:55.3488809Z\u003C/Message\u003E\u003CQueryParameterName\u003Ecomp\u003C/QueryParameterName\u003E\u003CQueryParameterValue /\u003E\u003CReason /\u003E\u003C/Error\u003E"
       ]
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2021-01-21T14:41:28.4031450-06:00",
-    "RandomSeed": "1124143232",
+    "DateTimeOffsetNow": "2021-01-26T13:32:55.9300858-06:00",
+    "RandomSeed": "174829425",
     "Storage_TestConfigDefault": "ProductionTenant\nseanmcccanary3\nU2FuaXRpemVk\nhttps://seanmcccanary3.blob.core.windows.net\nhttps://seanmcccanary3.file.core.windows.net\nhttps://seanmcccanary3.queue.core.windows.net\nhttps://seanmcccanary3.table.core.windows.net\n\n\n\n\nhttps://seanmcccanary3-secondary.blob.core.windows.net\nhttps://seanmcccanary3-secondary.file.core.windows.net\nhttps://seanmcccanary3-secondary.queue.core.windows.net\nhttps://seanmcccanary3-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seanmcccanary3.blob.core.windows.net/;QueueEndpoint=https://seanmcccanary3.queue.core.windows.net/;FileEndpoint=https://seanmcccanary3.file.core.windows.net/;BlobSecondaryEndpoint=https://seanmcccanary3-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seanmcccanary3-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seanmcccanary3-secondary.file.core.windows.net/;AccountName=seanmcccanary3;AccountKey=Kg==;\nseanscope1"
   }
 }

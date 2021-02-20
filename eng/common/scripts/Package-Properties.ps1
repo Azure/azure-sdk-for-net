@@ -10,6 +10,9 @@ class PackageProps
     [string]$ReadMePath
     [string]$ChangeLogPath
     [string]$Group
+    [string]$SdkType
+    [boolean]$IsNewSdk
+    [string]$ArtifactName
 
     PackageProps([string]$name, [string]$version, [string]$directoryPath, [string]$serviceDirectory)
     {

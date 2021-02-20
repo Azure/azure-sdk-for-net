@@ -1,58 +1,47 @@
 namespace Azure.Messaging.EventGrid
 {
-    public static partial class BinaryDataExtensions
-    {
-        public static Azure.Messaging.EventGrid.CloudEvent ToCloudEvent(this System.BinaryData binaryData) { throw null; }
-        public static Azure.Messaging.EventGrid.EventGridEvent ToEventGridEvent(this System.BinaryData binaryData) { throw null; }
-    }
     public partial class CloudEvent
     {
-        public CloudEvent(string source, string type, object data, string dataContentType = null, System.Type dataSerializationType = null) { }
+        public CloudEvent(string source, string type, object data, System.Type dataSerializationType = null) { }
+        public CloudEvent(string source, string type, System.ReadOnlyMemory<byte> data, string dataContentType) { }
         public string DataContentType { get { throw null; } set { } }
         public string DataSchema { get { throw null; } set { } }
         public System.Collections.Generic.Dictionary<string, object> ExtensionAttributes { get { throw null; } }
         public string Id { get { throw null; } set { } }
-        public bool IsSystemEvent { get { throw null; } }
         public string Source { get { throw null; } set { } }
         public string Subject { get { throw null; } set { } }
         public System.DateTimeOffset? Time { get { throw null; } set { } }
         public string Type { get { throw null; } set { } }
-        public object AsSystemEventData() { throw null; }
         public System.BinaryData GetData() { throw null; }
-        public System.Threading.Tasks.Task<System.BinaryData> GetDataAsync() { throw null; }
-        public System.Threading.Tasks.Task<T> GetDataAsync<T>(Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public T GetData<T>(Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public T GetData<T>(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Messaging.EventGrid.CloudEvent[] Parse(System.BinaryData requestContent) { throw null; }
         public static Azure.Messaging.EventGrid.CloudEvent[] Parse(string requestContent) { throw null; }
+        public bool TryGetSystemEventData(out object eventData) { throw null; }
     }
     public partial class EventGridEvent
     {
-        public EventGridEvent(object data, string subject, string eventType, string dataVersion, System.Type dataSerializationType = null) { }
+        public EventGridEvent(string subject, string eventType, string dataVersion, object data, System.Type dataSerializationType = null) { }
         public string DataVersion { get { throw null; } set { } }
         public System.DateTimeOffset EventTime { get { throw null; } set { } }
         public string EventType { get { throw null; } set { } }
         public string Id { get { throw null; } set { } }
-        public bool IsSystemEvent { get { throw null; } }
         public string Subject { get { throw null; } set { } }
         public string Topic { get { throw null; } set { } }
-        public object AsSystemEventData() { throw null; }
         public System.BinaryData GetData() { throw null; }
-        public System.Threading.Tasks.Task<System.BinaryData> GetDataAsync() { throw null; }
-        public System.Threading.Tasks.Task<T> GetDataAsync<T>(Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public T GetData<T>(Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public T GetData<T>(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Messaging.EventGrid.EventGridEvent[] Parse(System.BinaryData requestContent) { throw null; }
         public static Azure.Messaging.EventGrid.EventGridEvent[] Parse(string requestContent) { throw null; }
+        public bool TryGetSystemEventData(out object eventData) { throw null; }
+    }
+    public static partial class EventGridExtensions
+    {
+        public static Azure.Messaging.EventGrid.CloudEvent ToCloudEvent(this System.BinaryData binaryData) { throw null; }
+        public static Azure.Messaging.EventGrid.EventGridEvent ToEventGridEvent(this System.BinaryData binaryData) { throw null; }
     }
     public partial class EventGridPublisherClient
     {
         protected EventGridPublisherClient() { }
         public EventGridPublisherClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public EventGridPublisherClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.Messaging.EventGrid.EventGridPublisherClientOptions options) { }
-        public EventGridPublisherClient(System.Uri endpoint, Azure.AzureSasCredential credential) { }
-        public EventGridPublisherClient(System.Uri endpoint, Azure.AzureSasCredential credential, Azure.Messaging.EventGrid.EventGridPublisherClientOptions options) { }
-        public static string BuildSharedAccessSignature(System.Uri endpoint, System.DateTimeOffset expirationUtc, Azure.AzureKeyCredential key, Azure.Messaging.EventGrid.EventGridPublisherClientOptions.ServiceVersion apiVersion = Azure.Messaging.EventGrid.EventGridPublisherClientOptions.ServiceVersion.V2018_01_01) { throw null; }
+        public EventGridPublisherClient(System.Uri endpoint, Azure.AzureSasCredential credential, Azure.Messaging.EventGrid.EventGridPublisherClientOptions options = null) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response SendEncodedCloudEvents(System.ReadOnlyMemory<byte> cloudEvents, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -73,105 +62,113 @@ namespace Azure.Messaging.EventGrid
             V2018_01_01 = 1,
         }
     }
-    public static partial class SystemEventMappings
+    public partial class EventGridSasBuilder
     {
-        public const string ACSChatMemberAddedToThreadWithUserEventName = "Microsoft.Communication.ChatMemberAddedToThreadWithUser";
-        public const string ACSChatMemberRemovedFromThreadWithUserEventName = "Microsoft.Communication.ChatMemberRemovedFromThreadWithUser";
-        public const string ACSChatMessageDeletedEventName = "Microsoft.Communication.ChatMessageDeleted";
-        public const string ACSChatMessageEditedEventName = "Microsoft.Communication.ChatMessageEdited";
-        public const string ACSChatMessageReceivedEventName = "Microsoft.Communication.ChatMessageReceived";
-        public const string ACSChatThreadCreatedWithUserEventName = "Microsoft.Communication.ChatThreadCreatedWithUser";
-        public const string ACSChatThreadPropertiesUpdatedPerUserEventName = "Microsoft.Communication.ChatThreadPropertiesUpdatedPerUser";
-        public const string ACSChatThreadWithUserDeletedEventName = "Microsoft.Communication.ChatThreadWithUserDeleted";
-        public const string ACSSMSDeliveryReportReceivedEventName = "Microsoft.Communication.SMSDeliveryReportReceived";
-        public const string ACSSMSReceivedEventName = "Microsoft.Communication.SMSReceived";
-        public const string AppConfigurationKeyValueDeletedEventName = "Microsoft.AppConfiguration.KeyValueDeleted";
-        public const string AppConfigurationKeyValueModifiedEventName = "Microsoft.AppConfiguration.KeyValueModified";
-        public const string ContainerRegistryChartDeletedEventName = "Microsoft.ContainerRegistry.ChartDeleted";
-        public const string ContainerRegistryChartPushedEventName = "Microsoft.ContainerRegistry.ChartPushed";
-        public const string ContainerRegistryImageDeletedEventName = "Microsoft.ContainerRegistry.ImageDeleted";
-        public const string ContainerRegistryImagePushedEventName = "Microsoft.ContainerRegistry.ImagePushed";
-        public const string EventGridSubscriptionDeletedEventName = "Microsoft.EventGrid.SubscriptionDeletedEvent";
-        public const string EventGridSubscriptionValidationEventName = "Microsoft.EventGrid.SubscriptionValidationEvent";
-        public const string EventHubCaptureFileCreatedEventName = "Microsoft.EventHub.CaptureFileCreated";
-        public const string IoTHubDeviceConnectedEventName = "Microsoft.Devices.DeviceConnected";
-        public const string IoTHubDeviceCreatedEventName = "Microsoft.Devices.DeviceCreated";
-        public const string IoTHubDeviceDeletedEventName = "Microsoft.Devices.DeviceDeleted";
-        public const string IoTHubDeviceDisconnectedEventName = "Microsoft.Devices.DeviceDisconnected";
-        public const string IotHubDeviceTelemetryEventName = "Microsoft.Devices.DeviceTelemetry";
-        public const string KeyVaultAccessPolicyChangedEventName = "Microsoft.KeyVault.VaultAccessPolicyChanged";
-        public const string KeyVaultCertificateExpiredEventName = "Microsoft.KeyVault.CertificateExpired";
-        public const string KeyVaultCertificateNearExpiryEventName = "Microsoft.KeyVault.CertificateNearExpiry";
-        public const string KeyVaultCertificateNewVersionCreatedEventName = "Microsoft.KeyVault.CertificateNewVersionCreated";
-        public const string KeyVaultKeyExpiredEventName = "Microsoft.KeyVault.KeyExpired";
-        public const string KeyVaultKeyNearExpiryEventName = "Microsoft.KeyVault.KeyNearExpiry";
-        public const string KeyVaultKeyNewVersionCreatedEventName = "Microsoft.KeyVault.KeyNewVersionCreated";
-        public const string KeyVaultSecretExpiredEventName = "Microsoft.KeyVault.SecretExpired";
-        public const string KeyVaultSecretNearExpiryEventName = "Microsoft.KeyVault.SecretNearExpiry";
-        public const string KeyVaultSecretNewVersionCreatedEventName = "Microsoft.KeyVault.SecretNewVersionCreated";
-        public const string MachineLearningServicesDatasetDriftDetectedEventName = "Microsoft.MachineLearningServices.DatasetDriftDetected";
-        public const string MachineLearningServicesModelDeployedEventName = "Microsoft.MachineLearningServices.ModelDeployed";
-        public const string MachineLearningServicesModelRegisteredEventName = "Microsoft.MachineLearningServices.ModelRegistered";
-        public const string MachineLearningServicesRunCompletedEventName = "Microsoft.MachineLearningServices.RunCompleted";
-        public const string MachineLearningServicesRunStatusChangedEventName = "Microsoft.MachineLearningServices.RunStatusChanged";
-        public const string MapsGeofenceEnteredEventName = "Microsoft.Maps.GeofenceEntered";
-        public const string MapsGeofenceExitedEventName = "Microsoft.Maps.GeofenceExited";
-        public const string MapsGeofenceResultEventName = "Microsoft.Maps.GeofenceResult";
-        public const string MediaJobCanceledEventName = "Microsoft.Media.JobCanceled";
-        public const string MediaJobCancelingEventName = "Microsoft.Media.JobCanceling";
-        public const string MediaJobErroredEventName = "Microsoft.Media.JobErrored";
-        public const string MediaJobFinishedEventName = "Microsoft.Media.JobFinished";
-        public const string MediaJobOutputCanceledEventName = "Microsoft.Media.JobOutputCanceled";
-        public const string MediaJobOutputCancelingEventName = "Microsoft.Media.JobOutputCanceling";
-        public const string MediaJobOutputErroredEventName = "Microsoft.Media.JobOutputErrored";
-        public const string MediaJobOutputFinishedEventName = "Microsoft.Media.JobOutputFinished";
-        public const string MediaJobOutputProcessingEventName = "Microsoft.Media.JobOutputProcessing";
-        public const string MediaJobOutputProgressEventName = "Microsoft.Media.JobOutputProgress";
-        public const string MediaJobOutputScheduledEventName = "Microsoft.Media.JobOutputScheduled";
-        public const string MediaJobOutputStateChangeEventName = "Microsoft.Media.JobOutputStateChange";
-        public const string MediaJobProcessingEventName = "Microsoft.Media.JobProcessing";
-        public const string MediaJobScheduledEventName = "Microsoft.Media.JobScheduled";
-        public const string MediaJobStateChangeEventName = "Microsoft.Media.JobStateChange";
-        public const string MediaLiveEventConnectionRejectedEventName = "Microsoft.Media.LiveEventConnectionRejected";
-        public const string MediaLiveEventEncoderConnectedEventName = "Microsoft.Media.LiveEventEncoderConnected";
-        public const string MediaLiveEventEncoderDisconnectedEventName = "Microsoft.Media.LiveEventEncoderDisconnected";
-        public const string MediaLiveEventIncomingDataChunkDroppedEventName = "Microsoft.Media.LiveEventIncomingDataChunkDropped";
-        public const string MediaLiveEventIncomingStreamReceivedEventName = "Microsoft.Media.LiveEventIncomingStreamReceived";
-        public const string MediaLiveEventIncomingStreamsOutOfSyncEventName = "Microsoft.Media.LiveEventIncomingStreamsOutOfSync";
-        public const string MediaLiveEventIncomingVideoStreamsOutOfSyncEventName = "Microsoft.Media.LiveEventIncomingVideoStreamsOutOfSync";
-        public const string MediaLiveEventIngestHeartbeatEventName = "Microsoft.Media.LiveEventIngestHeartbeat";
-        public const string MediaLiveEventTrackDiscontinuityDetectedEventName = "Microsoft.Media.LiveEventTrackDiscontinuityDetected";
-        public const string ResourceActionCancelEventName = "Microsoft.Resources.ResourceActionCancel";
-        public const string ResourceActionFailureEventName = "Microsoft.Resources.ResourceActionFailure";
-        public const string ResourceActionSuccessEventName = "Microsoft.Resources.ResourceActionSuccess";
-        public const string ResourceDeleteCancelEventName = "Microsoft.Resources.ResourceDeleteCancel";
-        public const string ResourceDeleteFailureEventName = "Microsoft.Resources.ResourceDeleteFailure";
-        public const string ResourceDeleteSuccessEventName = "Microsoft.Resources.ResourceDeleteSuccess";
-        public const string ResourceWriteCancelEventName = "Microsoft.Resources.ResourceWriteCancel";
-        public const string ResourceWriteFailureEventName = "Microsoft.Resources.ResourceWriteFailure";
-        public const string ResourceWriteSuccessEventName = "Microsoft.Resources.ResourceWriteSuccess";
-        public const string ServiceBusActiveMessagesAvailableWithNoListenersEventName = "Microsoft.ServiceBus.ActiveMessagesAvailableWithNoListeners";
-        public const string ServiceBusDeadletterMessagesAvailableWithNoListenerEventName = "Microsoft.ServiceBus.DeadletterMessagesAvailableWithNoListener";
-        public const string StorageBlobCreatedEventName = "Microsoft.Storage.BlobCreated";
-        public const string StorageBlobDeletedEventName = "Microsoft.Storage.BlobDeleted";
-        public const string StorageBlobRenamedEventName = "Microsoft.Storage.BlobRenamed";
-        public const string StorageDirectoryCreatedEventName = "Microsoft.Storage.DirectoryCreated";
-        public const string StorageDirectoryDeletedEventName = "Microsoft.Storage.DirectoryDeleted";
-        public const string StorageDirectoryRenamedEventName = "Microsoft.Storage.DirectoryRenamed";
-        public const string StorageLifecyclePolicyCompletedEventName = "Microsoft.Storage.LifecyclePolicyCompleted";
-        public const string WebAppServicePlanUpdatedEventName = "Microsoft.Web.AppServicePlanUpdated";
-        public const string WebAppUpdatedEventName = "Microsoft.Web.AppUpdated";
-        public const string WebBackupOperationCompletedEventName = "Microsoft.Web.BackupOperationCompleted";
-        public const string WebBackupOperationFailedEventName = "Microsoft.Web.BackupOperationFailed";
-        public const string WebBackupOperationStartedEventName = "Microsoft.Web.BackupOperationStarted";
-        public const string WebRestoreOperationCompletedEventName = "Microsoft.Web.RestoreOperationCompleted";
-        public const string WebRestoreOperationFailedEventName = "Microsoft.Web.RestoreOperationFailed";
-        public const string WebRestoreOperationStartedEventName = "Microsoft.Web.RestoreOperationStarted";
-        public const string WebSlotSwapCompletedEventName = "Microsoft.Web.SlotSwapCompleted";
-        public const string WebSlotSwapFailedEventName = "Microsoft.Web.SlotSwapFailed";
-        public const string WebSlotSwapStartedEventName = "Microsoft.Web.SlotSwapStarted";
-        public const string WebSlotSwapWithPreviewCancelledEventName = "Microsoft.Web.SlotSwapWithPreviewCancelled";
-        public const string WebSlotSwapWithPreviewStartedEventName = "Microsoft.Web.SlotSwapWithPreviewStarted";
+        public EventGridSasBuilder(System.Uri endpoint, System.DateTimeOffset expiresOn) { }
+        public Azure.Messaging.EventGrid.EventGridPublisherClientOptions.ServiceVersion ApiVersion { get { throw null; } set { } }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public System.DateTimeOffset ExpiresOn { get { throw null; } set { } }
+        public string GenerateSas(Azure.AzureKeyCredential key) { throw null; }
+    }
+    public static partial class SystemEventNames
+    {
+        public const string ACSChatMemberAddedToThreadWithUser = "Microsoft.Communication.ChatMemberAddedToThreadWithUser";
+        public const string ACSChatMemberRemovedFromThreadWithUser = "Microsoft.Communication.ChatMemberRemovedFromThreadWithUser";
+        public const string ACSChatMessageDeleted = "Microsoft.Communication.ChatMessageDeleted";
+        public const string ACSChatMessageEdited = "Microsoft.Communication.ChatMessageEdited";
+        public const string ACSChatMessageReceived = "Microsoft.Communication.ChatMessageReceived";
+        public const string ACSChatThreadCreatedWithUser = "Microsoft.Communication.ChatThreadCreatedWithUser";
+        public const string ACSChatThreadPropertiesUpdatedPerUser = "Microsoft.Communication.ChatThreadPropertiesUpdatedPerUser";
+        public const string ACSChatThreadWithUserDeleted = "Microsoft.Communication.ChatThreadWithUserDeleted";
+        public const string ACSSMSDeliveryReportReceived = "Microsoft.Communication.SMSDeliveryReportReceived";
+        public const string ACSSMSReceived = "Microsoft.Communication.SMSReceived";
+        public const string AppConfigurationKeyValueDeleted = "Microsoft.AppConfiguration.KeyValueDeleted";
+        public const string AppConfigurationKeyValueModified = "Microsoft.AppConfiguration.KeyValueModified";
+        public const string ContainerRegistryChartDeleted = "Microsoft.ContainerRegistry.ChartDeleted";
+        public const string ContainerRegistryChartPushed = "Microsoft.ContainerRegistry.ChartPushed";
+        public const string ContainerRegistryImageDeleted = "Microsoft.ContainerRegistry.ImageDeleted";
+        public const string ContainerRegistryImagePushed = "Microsoft.ContainerRegistry.ImagePushed";
+        public const string EventGridSubscriptionDeleted = "Microsoft.EventGrid.SubscriptionDeletedEvent";
+        public const string EventGridSubscriptionValidation = "Microsoft.EventGrid.SubscriptionValidationEvent";
+        public const string EventHubCaptureFileCreated = "Microsoft.EventHub.CaptureFileCreated";
+        public const string IoTHubDeviceConnected = "Microsoft.Devices.DeviceConnected";
+        public const string IoTHubDeviceCreated = "Microsoft.Devices.DeviceCreated";
+        public const string IoTHubDeviceDeleted = "Microsoft.Devices.DeviceDeleted";
+        public const string IoTHubDeviceDisconnected = "Microsoft.Devices.DeviceDisconnected";
+        public const string IotHubDeviceTelemetry = "Microsoft.Devices.DeviceTelemetry";
+        public const string KeyVaultAccessPolicyChanged = "Microsoft.KeyVault.VaultAccessPolicyChanged";
+        public const string KeyVaultCertificateExpired = "Microsoft.KeyVault.CertificateExpired";
+        public const string KeyVaultCertificateNearExpiry = "Microsoft.KeyVault.CertificateNearExpiry";
+        public const string KeyVaultCertificateNewVersionCreated = "Microsoft.KeyVault.CertificateNewVersionCreated";
+        public const string KeyVaultKeyExpired = "Microsoft.KeyVault.KeyExpired";
+        public const string KeyVaultKeyNearExpiry = "Microsoft.KeyVault.KeyNearExpiry";
+        public const string KeyVaultKeyNewVersionCreated = "Microsoft.KeyVault.KeyNewVersionCreated";
+        public const string KeyVaultSecretExpired = "Microsoft.KeyVault.SecretExpired";
+        public const string KeyVaultSecretNearExpiry = "Microsoft.KeyVault.SecretNearExpiry";
+        public const string KeyVaultSecretNewVersionCreated = "Microsoft.KeyVault.SecretNewVersionCreated";
+        public const string MachineLearningServicesDatasetDriftDetected = "Microsoft.MachineLearningServices.DatasetDriftDetected";
+        public const string MachineLearningServicesModelDeployed = "Microsoft.MachineLearningServices.ModelDeployed";
+        public const string MachineLearningServicesModelRegistered = "Microsoft.MachineLearningServices.ModelRegistered";
+        public const string MachineLearningServicesRunCompleted = "Microsoft.MachineLearningServices.RunCompleted";
+        public const string MachineLearningServicesRunStatusChanged = "Microsoft.MachineLearningServices.RunStatusChanged";
+        public const string MapsGeofenceEntered = "Microsoft.Maps.GeofenceEntered";
+        public const string MapsGeofenceExited = "Microsoft.Maps.GeofenceExited";
+        public const string MapsGeofenceResult = "Microsoft.Maps.GeofenceResult";
+        public const string MediaJobCanceled = "Microsoft.Media.JobCanceled";
+        public const string MediaJobCanceling = "Microsoft.Media.JobCanceling";
+        public const string MediaJobErrored = "Microsoft.Media.JobErrored";
+        public const string MediaJobFinished = "Microsoft.Media.JobFinished";
+        public const string MediaJobOutputCanceled = "Microsoft.Media.JobOutputCanceled";
+        public const string MediaJobOutputCanceling = "Microsoft.Media.JobOutputCanceling";
+        public const string MediaJobOutputErrored = "Microsoft.Media.JobOutputErrored";
+        public const string MediaJobOutputFinished = "Microsoft.Media.JobOutputFinished";
+        public const string MediaJobOutputProcessing = "Microsoft.Media.JobOutputProcessing";
+        public const string MediaJobOutputProgress = "Microsoft.Media.JobOutputProgress";
+        public const string MediaJobOutputScheduled = "Microsoft.Media.JobOutputScheduled";
+        public const string MediaJobOutputStateChange = "Microsoft.Media.JobOutputStateChange";
+        public const string MediaJobProcessing = "Microsoft.Media.JobProcessing";
+        public const string MediaJobScheduled = "Microsoft.Media.JobScheduled";
+        public const string MediaJobStateChange = "Microsoft.Media.JobStateChange";
+        public const string MediaLiveEventConnectionRejected = "Microsoft.Media.LiveEventConnectionRejected";
+        public const string MediaLiveEventEncoderConnected = "Microsoft.Media.LiveEventEncoderConnected";
+        public const string MediaLiveEventEncoderDisconnected = "Microsoft.Media.LiveEventEncoderDisconnected";
+        public const string MediaLiveEventIncomingDataChunkDropped = "Microsoft.Media.LiveEventIncomingDataChunkDropped";
+        public const string MediaLiveEventIncomingStreamReceived = "Microsoft.Media.LiveEventIncomingStreamReceived";
+        public const string MediaLiveEventIncomingStreamsOutOfSync = "Microsoft.Media.LiveEventIncomingStreamsOutOfSync";
+        public const string MediaLiveEventIncomingVideoStreamsOutOfSync = "Microsoft.Media.LiveEventIncomingVideoStreamsOutOfSync";
+        public const string MediaLiveEventIngestHeartbeat = "Microsoft.Media.LiveEventIngestHeartbeat";
+        public const string MediaLiveEventTrackDiscontinuityDetected = "Microsoft.Media.LiveEventTrackDiscontinuityDetected";
+        public const string ResourceActionCancel = "Microsoft.Resources.ResourceActionCancel";
+        public const string ResourceActionFailure = "Microsoft.Resources.ResourceActionFailure";
+        public const string ResourceActionSuccess = "Microsoft.Resources.ResourceActionSuccess";
+        public const string ResourceDeleteCancel = "Microsoft.Resources.ResourceDeleteCancel";
+        public const string ResourceDeleteFailure = "Microsoft.Resources.ResourceDeleteFailure";
+        public const string ResourceDeleteSuccess = "Microsoft.Resources.ResourceDeleteSuccess";
+        public const string ResourceWriteCancel = "Microsoft.Resources.ResourceWriteCancel";
+        public const string ResourceWriteFailure = "Microsoft.Resources.ResourceWriteFailure";
+        public const string ResourceWriteSuccess = "Microsoft.Resources.ResourceWriteSuccess";
+        public const string ServiceBusActiveMessagesAvailableWithNoListeners = "Microsoft.ServiceBus.ActiveMessagesAvailableWithNoListeners";
+        public const string ServiceBusDeadletterMessagesAvailableWithNoListener = "Microsoft.ServiceBus.DeadletterMessagesAvailableWithNoListener";
+        public const string StorageBlobCreated = "Microsoft.Storage.BlobCreated";
+        public const string StorageBlobDeleted = "Microsoft.Storage.BlobDeleted";
+        public const string StorageBlobRenamed = "Microsoft.Storage.BlobRenamed";
+        public const string StorageDirectoryCreated = "Microsoft.Storage.DirectoryCreated";
+        public const string StorageDirectoryDeleted = "Microsoft.Storage.DirectoryDeleted";
+        public const string StorageDirectoryRenamed = "Microsoft.Storage.DirectoryRenamed";
+        public const string StorageLifecyclePolicyCompleted = "Microsoft.Storage.LifecyclePolicyCompleted";
+        public const string WebAppServicePlanUpdated = "Microsoft.Web.AppServicePlanUpdated";
+        public const string WebAppUpdated = "Microsoft.Web.AppUpdated";
+        public const string WebBackupOperationCompleted = "Microsoft.Web.BackupOperationCompleted";
+        public const string WebBackupOperationFailed = "Microsoft.Web.BackupOperationFailed";
+        public const string WebBackupOperationStarted = "Microsoft.Web.BackupOperationStarted";
+        public const string WebRestoreOperationCompleted = "Microsoft.Web.RestoreOperationCompleted";
+        public const string WebRestoreOperationFailed = "Microsoft.Web.RestoreOperationFailed";
+        public const string WebRestoreOperationStarted = "Microsoft.Web.RestoreOperationStarted";
+        public const string WebSlotSwapCompleted = "Microsoft.Web.SlotSwapCompleted";
+        public const string WebSlotSwapFailed = "Microsoft.Web.SlotSwapFailed";
+        public const string WebSlotSwapStarted = "Microsoft.Web.SlotSwapStarted";
+        public const string WebSlotSwapWithPreviewCancelled = "Microsoft.Web.SlotSwapWithPreviewCancelled";
+        public const string WebSlotSwapWithPreviewStarted = "Microsoft.Web.SlotSwapWithPreviewStarted";
     }
 }
 namespace Azure.Messaging.EventGrid.SystemEvents

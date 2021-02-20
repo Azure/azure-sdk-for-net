@@ -11,14 +11,8 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Request body structure for starting data flow debug session. </summary>
-    internal partial class StartDataFlowDebugSessionRequest
+    public partial class StartDataFlowDebugSessionRequest
     {
-        /// <summary> Initializes a new instance of StartDataFlowDebugSessionRequest. </summary>
-        internal StartDataFlowDebugSessionRequest()
-        {
-            Datasets = new ChangeTrackingList<DatasetResource>();
-            LinkedServices = new ChangeTrackingList<LinkedServiceResource>();
-        }
 
         /// <summary> The ID of data flow debug session. </summary>
         public string SessionId { get; }

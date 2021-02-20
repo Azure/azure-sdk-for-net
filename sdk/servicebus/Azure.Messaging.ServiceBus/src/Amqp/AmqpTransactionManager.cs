@@ -18,6 +18,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         public async Task<ArraySegment<byte>> EnlistAsync(
             Transaction transaction,
             AmqpConnectionScope connectionScope,
+            string transactionGroup,
             TimeSpan timeout)
         {
             if (transaction.IsolationLevel != IsolationLevel.Serializable)
@@ -36,6 +37,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         transaction,
                         this,
                         connectionScope,
+                        transactionGroup,
                         timeout);
                     _enlistmentMap.Add(transactionId, transactionEnlistment);
 

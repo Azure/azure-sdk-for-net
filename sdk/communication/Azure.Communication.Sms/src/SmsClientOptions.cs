@@ -22,7 +22,7 @@ namespace Azure.Communication.Sms
         /// <summary>
         /// Initializes a new instance of the <see cref="SmsClientOptions"/>.
         /// </summary>
-        public SmsClientOptions(ServiceVersion version = LatestVersion, RetryOptions? retryOptions = default, HttpPipelineTransport? transport = default)
+        public SmsClientOptions(ServiceVersion version = LatestVersion, RetryOptions retryOptions = default, HttpPipelineTransport transport = default)
         {
             ApiVersion = version switch
             {

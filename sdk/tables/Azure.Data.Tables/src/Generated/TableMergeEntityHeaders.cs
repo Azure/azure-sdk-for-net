@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Data.Tables
 {
-    internal class TableMergeEntityHeaders
+    internal partial class TableMergeEntityHeaders
     {
         private readonly Response _response;
         public TableMergeEntityHeaders(Response response)

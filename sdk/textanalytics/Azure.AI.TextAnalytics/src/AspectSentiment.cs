@@ -17,12 +17,13 @@ namespace Azure.AI.TextAnalytics
     {
         private const double _neutralValue = 0d;
 
-        internal AspectSentiment(TextSentiment sentiment, string text, double positiveScore, double negativeScore, int offset)
+        internal AspectSentiment(TextSentiment sentiment, string text, double positiveScore, double negativeScore, int offset, int length)
         {
             Sentiment = sentiment;
             Text = text;
             ConfidenceScores = new SentimentConfidenceScores(positiveScore, _neutralValue, negativeScore);
             Offset = offset;
+            Length = length;
         }
 
         internal AspectSentiment(SentenceAspect sentenceAspect)
@@ -33,6 +34,7 @@ namespace Azure.AI.TextAnalytics
             ConfidenceScores = new SentimentConfidenceScores(sentenceAspect.ConfidenceScores.Positive, _neutralValue, sentenceAspect.ConfidenceScores.Negative);
             Sentiment = (TextSentiment)Enum.Parse(typeof(TextSentiment), sentenceAspect.Sentiment, ignoreCase: true);
             Offset = sentenceAspect.Offset;
+            Length = sentenceAspect.Length;
         }
 
         /// <summary>
@@ -57,8 +59,13 @@ namespace Azure.AI.TextAnalytics
         public SentimentConfidenceScores ConfidenceScores { get; }
 
         /// <summary>
-        /// Gets the starting position (in UTF-16 code units) for the aspect text.
+        /// Gets the starting position for the aspect text.
         /// </summary>
         public int Offset { get; }
+
+        /// <summary>
+        /// Gets the length of the aspect text.
+        /// </summary>
+        public int Length { get; }
     }
 }

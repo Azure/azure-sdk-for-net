@@ -1,9 +1,14 @@
 # Release History
 
-## 12.6.0-beta.1 (Unreleased)
+## 12.6.0-beta.2 (Unreleased)
 
 
-## 12.5.0 (2020-01-12)
+## 12.6.0-beta.1 (2021-02-09)
+- Added support for service version 2020-06-12.
+- Added support for container-scoped batch requests.
+- This release contains bug fixes to improve quality.
+
+## 12.5.0 (2021-01-12)
 - Includes all features from 12.5.0-beta.1.
 - This release contains bug fixes to improve quality.
 

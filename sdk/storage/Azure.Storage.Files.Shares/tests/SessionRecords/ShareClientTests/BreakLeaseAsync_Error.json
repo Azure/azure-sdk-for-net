@@ -6,36 +6,36 @@
       "RequestHeaders": {
         "Accept": "application/xml",
         "Authorization": "Sanitized",
-        "traceparent": "00-185eadcc179554459726638265496ee4-b35490987f6f9d46-00",
+        "traceparent": "00-99c67dde62b141469959f6603ef76fbe-9fc7cadcfb749b49-00",
         "User-Agent": [
-          "azsdk-net-Storage.Files.Shares/12.7.0-alpha.20210121.1",
+          "azsdk-net-Storage.Files.Shares/12.7.0-alpha.20210126.1",
           "(.NET 5.0.2; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "e36a0a3f-d978-5358-8c21-682eb8f31003",
-        "x-ms-date": "Thu, 21 Jan 2021 20:44:33 GMT",
+        "x-ms-date": "Tue, 26 Jan 2021 19:24:33 GMT",
         "x-ms-lease-action": "break",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-04-08"
+        "x-ms-version": "2020-06-12"
       },
       "RequestBody": null,
       "StatusCode": 404,
       "ResponseHeaders": {
         "Content-Length": "217",
         "Content-Type": "application/xml",
-        "Date": "Thu, 21 Jan 2021 20:44:33 GMT",
+        "Date": "Tue, 26 Jan 2021 19:24:31 GMT",
         "Server": [
           "Windows-Azure-File/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-client-request-id": "e36a0a3f-d978-5358-8c21-682eb8f31003",
         "x-ms-error-code": "ShareNotFound",
-        "x-ms-request-id": "c37abfc6-a01a-004f-3936-f0ab96000000",
-        "x-ms-version": "2020-04-08"
+        "x-ms-request-id": "fb4aee76-301a-0086-4218-f4167b000000",
+        "x-ms-version": "2020-06-12"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EShareNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified share does not exist.\n",
-        "RequestId:c37abfc6-a01a-004f-3936-f0ab96000000\n",
-        "Time:2021-01-21T20:44:33.8889622Z\u003C/Message\u003E\u003C/Error\u003E"
+        "RequestId:fb4aee76-301a-0086-4218-f4167b000000\n",
+        "Time:2021-01-26T19:24:32.5620048Z\u003C/Message\u003E\u003C/Error\u003E"
       ]
     }
   ],

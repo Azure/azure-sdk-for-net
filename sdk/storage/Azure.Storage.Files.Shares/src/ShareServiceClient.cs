@@ -75,7 +75,7 @@ namespace Azure.Storage.Files.Shares
         /// Determines whether the client is able to generate a SAS.
         /// If the client is authenticated with a <see cref="StorageSharedKeyCredential"/>.
         /// </summary>
-        public bool CanGenerateAccountSasUri => ClientConfiguration.SharedKeyCredential != null;
+        public virtual bool CanGenerateAccountSasUri => ClientConfiguration.SharedKeyCredential != null;
 
         #region ctors
         /// <summary>
@@ -233,10 +233,10 @@ namespace Azure.Storage.Files.Shares
 
         private ServiceRestClient BuildServiceRestClient()
             => new ServiceRestClient(
-                ClientConfiguration.ClientDiagnostics,
-                ClientConfiguration.Pipeline,
-                Uri.ToString(),
-                ClientConfiguration.Version.ToVersionString());
+                _clientConfiguration.ClientDiagnostics,
+                _clientConfiguration.Pipeline,
+                _uri.ToString(),
+                _clientConfiguration.Version.ToVersionString());
         #endregion ctors
 
         /// <summary>

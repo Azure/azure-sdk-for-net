@@ -10,7 +10,7 @@ namespace Azure.AI.TextAnalytics
     /// AnalyzeTasks.
     /// </summary>
     [CodeGenModel("TasksStateTasks")]
-    public partial class AnalyzeTasks
+    internal partial class AnalyzeTasks
     {
         /// <summary> Initializes a new instance of AnalyzeTasks. </summary>
         /// <param name="tasks"></param>
@@ -41,7 +41,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Details
         /// </summary>
-        public TasksStateTasksDetails Details { get; }
+        public TasksStateTasksDetailsInternal Details { get; }
 
         /// <summary>
         /// Completed
