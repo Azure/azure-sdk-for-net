@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry.Storage.Models
@@ -16,5 +14,30 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
         internal string Digest { get; }
 
         public ManifestMediaType MediaType { get; internal set; }
+
+        public DockerManifestV1 AsDockerManifestV1()
+        {
+            throw new NotImplementedException();
+        }
+
+        public DockerManifestV2 AsDockerManifestV2()
+        {
+            throw new NotImplementedException();
+        }
+
+        public DockerManifestList AsDockerManifestList()
+        {
+            throw new NotImplementedException();
+        }
+
+        public OciIndex AsOciIndex()
+        {
+            throw new NotImplementedException();
+        }
+
+        public OciManifest AsOciManifest()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

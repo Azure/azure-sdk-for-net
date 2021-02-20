@@ -78,7 +78,7 @@ namespace Azure.Containers.ContainerRegistry.Storage
         // TODO: Confirm in FDG that IEnumerable is how to model this input collection
         /// <summary> Get the manifest identified by `name` and `reference` where `reference` can be a tag or digest. </summary>        
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CombinedManifest>> GetManifestAsync(string tagOrDigest, IEnumerable<ManifestMediaType> acceptMediaTypes = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ImageManifest>> GetManifestAsync(string tagOrDigest, IEnumerable<ManifestMediaType> acceptMediaTypes = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContainerRegistryRepositoryClient.GetManifest");
             scope.Start();
@@ -101,7 +101,7 @@ namespace Azure.Containers.ContainerRegistry.Storage
 
         /// <summary> Get the manifest identified by `name` and `reference` where `reference` can be a tag or digest. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CombinedManifest> GetManifest(string tagOrDigest, IEnumerable<ManifestMediaType> acceptMediaTypes = null, CancellationToken cancellationToken = default)
+        public virtual Response<ImageManifest> GetManifest(string tagOrDigest, IEnumerable<ManifestMediaType> acceptMediaTypes = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContainerRegistryRepositoryClient.GetManifest");
             scope.Start();
@@ -678,13 +678,14 @@ namespace Azure.Containers.ContainerRegistry.Storage
         /// <param name="digest"> Digest of a BLOB. </param>
         /// <param name="range"> Format : bytes=&lt;start&gt;-&lt;end&gt;,  HTTP Range header specifying blob chunk. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Stream>> GetChunkAsync(string digest, string range, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Stream>> GetChunkAsync(string digest, HttpRange range, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContainerRegistryBlobClient.GetChunk");
             scope.Start();
             try
             {
-                return await RestClient.GetChunkAsync(_repositoryName, digest, range, cancellationToken).ConfigureAwait(false);
+                // TODO: may need to add extension method ToString() to HttpRange
+                return await RestClient.GetChunkAsync(_repositoryName, digest, range.ToString(), cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -697,13 +698,13 @@ namespace Azure.Containers.ContainerRegistry.Storage
         /// <param name="digest"> Digest of a BLOB. </param>
         /// <param name="range"> Format : bytes=&lt;start&gt;-&lt;end&gt;,  HTTP Range header specifying blob chunk. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Stream> GetChunk(string digest, string range, CancellationToken cancellationToken = default)
+        public virtual Response<Stream> GetChunk(string digest, HttpRange range, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContainerRegistryBlobClient.GetChunk");
             scope.Start();
             try
             {
-                return RestClient.GetChunk(_repositoryName, digest, range, cancellationToken);
+                return RestClient.GetChunk(_repositoryName, digest, range.ToString(), cancellationToken);
             }
             catch (Exception e)
             {
@@ -716,13 +717,13 @@ namespace Azure.Containers.ContainerRegistry.Storage
         /// <param name="digest"> Digest of a BLOB. </param>
         /// <param name="range"> Format : bytes=&lt;start&gt;-&lt;end&gt;,  HTTP Range header specifying blob chunk. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> CheckChunkExistsAsync(string digest, string range, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> CheckChunkExistsAsync(string digest, HttpRange range, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContainerRegistryBlobClient.CheckChunkExists");
             scope.Start();
             try
             {
-                return (await RestClient.CheckChunkExistsAsync(_repositoryName, digest, range, cancellationToken).ConfigureAwait(false)).GetRawResponse();
+                return (await RestClient.CheckChunkExistsAsync(_repositoryName, digest, range.ToString(), cancellationToken).ConfigureAwait(false)).GetRawResponse();
             }
             catch (Exception e)
             {
@@ -735,13 +736,13 @@ namespace Azure.Containers.ContainerRegistry.Storage
         /// <param name="digest"> Digest of a BLOB. </param>
         /// <param name="range"> Format : bytes=&lt;start&gt;-&lt;end&gt;,  HTTP Range header specifying blob chunk. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response CheckChunkExists(string digest, string range, CancellationToken cancellationToken = default)
+        public virtual Response CheckChunkExists(string digest, HttpRange range, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContainerRegistryBlobClient.CheckChunkExists");
             scope.Start();
             try
             {
-                return RestClient.CheckChunkExists(_repositoryName, digest, range, cancellationToken).GetRawResponse();
+                return RestClient.CheckChunkExists(_repositoryName, digest, range.ToString(), cancellationToken).GetRawResponse();
             }
             catch (Exception e)
             {

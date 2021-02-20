@@ -9,7 +9,7 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry.Storage.Models
 {
     [CodeGenModel("V1Manifest")]
-    public partial class DockerManifestV1
+    public sealed partial class DockerManifestV1
     {
     }
 }

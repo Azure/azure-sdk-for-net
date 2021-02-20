@@ -9,7 +9,7 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry.Storage.Models
 {
     [CodeGenModel("JWK")]
-    public partial class DockerManifestV1Jwk
+    public sealed partial class DockerManifestV1Jwk
     {
     }
 }

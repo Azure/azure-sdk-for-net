@@ -9,7 +9,7 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry.Storage.Models
 {
     [CodeGenModel("FsLayer")]
-    public partial class DockerManifestV1FsLayer
+    public sealed partial class DockerManifestV1FsLayer
     {
     }
 }

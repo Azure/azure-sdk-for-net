@@ -9,7 +9,7 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry.Storage.Models
 {
     [CodeGenModel("History")]
-    public partial class DockerManifestV1History
+    public sealed partial class DockerManifestV1History
     {
     }
 }
