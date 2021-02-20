@@ -6,23 +6,21 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
-using Azure.Containers.ContainerRegistry.Models;
 using Azure.Containers.ContainerRegistry.Storage.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Containers.ContainerRegistry.Storage
 {
-    /// <summary> The ContainerRegistryBlob service client. </summary>
-    public partial class ContainerStorageClient
+    /// <summary> The RepositoryStorageClient service client. </summary>
+    public partial class RepositoryStorageClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
 
         internal ContainerRegistryBlobRestClient RestClient { get; }
 
-        // TODO: Update swagger to put these methods all in once place automatically through code gen
+        // TODO: Update swagger to put these methods all in once place automatically through code gen, e.g. GetManifest and CreateManifest
         internal ContainerRegistryRepositoryRestClient RepositoryRestClient { get; }
 
         // Name of the image (including the namespace).
@@ -31,38 +29,38 @@ namespace Azure.Containers.ContainerRegistry.Storage
         /// <summary>
         /// Initializes a new instance of the <see cref="ContainerRegistryClient"/>.
         /// </summary>
-        public ContainerStorageClient(Uri endpoint, string repositoryName, TokenCredential credential) : this(endpoint, repositoryName, credential, new ContainerRegistryClientOptions())
+        public RepositoryStorageClient(Uri endpoint, string repositoryName, TokenCredential credential) : this(endpoint, repositoryName, credential, new ContainerRegistryClientOptions())
         {
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ContainerRegistryClient"/>.
         /// </summary>
-        public ContainerStorageClient(Uri endpoint, string repositoryName, TokenCredential credential, ContainerRegistryClientOptions options)
+        public RepositoryStorageClient(Uri endpoint, string repositoryName, TokenCredential credential, ContainerRegistryClientOptions options)
         {
             _repositoryName = repositoryName;
         }
 
-        public ContainerStorageClient(Uri endpoint, string repositoryName, string username, string password) : this(endpoint, repositoryName, username, password, new ContainerRegistryClientOptions())
+        public RepositoryStorageClient(Uri endpoint, string repositoryName, string username, string password) : this(endpoint, repositoryName, username, password, new ContainerRegistryClientOptions())
         {
         }
 
-        public ContainerStorageClient(Uri endpoint, string repositoryName, string username, string password, ContainerRegistryClientOptions options)
+        public RepositoryStorageClient(Uri endpoint, string repositoryName, string username, string password, ContainerRegistryClientOptions options)
         {
             _repositoryName = repositoryName;
         }
 
-        public ContainerStorageClient(Uri endpoint, string repositoryName) : this(endpoint, repositoryName, new ContainerRegistryClientOptions())
+        public RepositoryStorageClient(Uri endpoint, string repositoryName) : this(endpoint, repositoryName, new ContainerRegistryClientOptions())
         {
         }
 
-        public ContainerStorageClient(Uri endpoint, string repositoryName, ContainerRegistryClientOptions options)
+        public RepositoryStorageClient(Uri endpoint, string repositoryName, ContainerRegistryClientOptions options)
         {
             _repositoryName = repositoryName;
         }
 
         /// <summary> Initializes a new instance of ContainerRegistryBlobClient for mocking. </summary>
-        protected ContainerStorageClient()
+        protected RepositoryStorageClient()
         {
         }
 
@@ -70,7 +68,7 @@ namespace Azure.Containers.ContainerRegistry.Storage
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> Registry login URL. </param>
-        internal ContainerStorageClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url)
+        internal RepositoryStorageClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url)
         {
             RestClient = new ContainerRegistryBlobRestClient(clientDiagnostics, pipeline, url);
             _clientDiagnostics = clientDiagnostics;
@@ -123,10 +121,9 @@ namespace Azure.Containers.ContainerRegistry.Storage
             }
         }
 
-        /// <summary> Put the manifest identified by `name` and `reference` where `reference` can be a tag or digest. </summary>
-
+        /// <summary> Put the manifest identified by tag. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> CreateManifestAsync(string tagOrDigest, ImageManifest manifest, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CreateManifestResult>> CreateManifestAsync(string tag, ImageManifest manifest, CancellationToken cancellationToken = default)
         {
             // TODO: How should we handle the accept header?  This feels like part of the polymorphic/strong-typing story around manifests
             ///// <param name="payload"> Manifest body, can take v1 or v2 values depending on accept header. </param>
@@ -135,7 +132,72 @@ namespace Azure.Containers.ContainerRegistry.Storage
             scope.Start();
             try
             {
-                return await RepositoryRestClient.CreateManifestAsync(_repositoryName, tagOrDigest, manifest, cancellationToken).ConfigureAwait(false);
+                ResponseWithHeaders<object, ContainerRegistryRepositoryCreateManifestHeaders> response = await RepositoryRestClient.CreateManifestAsync(_repositoryName, tag, manifest, cancellationToken).ConfigureAwait(false);
+
+                // TODO: Validate Digest here:
+                // throw new InvalidDigestException, or other "content tampered" exception here.
+
+                return Response.FromValue(
+                    new CreateManifestResult(
+                        response.Headers.DockerContentDigest,
+                        response.Headers.Location,
+                        response.Headers.ContentLength.Value), response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Put the manifest identified by tag. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<CreateManifestResult> CreateManifest(string tag, ImageManifest manifest, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContainerRegistryRepositoryClient.CreateManifest");
+            scope.Start();
+            try
+            {
+                ResponseWithHeaders<object, ContainerRegistryRepositoryCreateManifestHeaders> response = RepositoryRestClient.CreateManifest(_repositoryName, tag, manifest, cancellationToken);
+
+                // TODO: Validate Digest here:
+                // throw new InvalidDigestException, or other "content tampered" exception here.
+
+                return Response.FromValue(
+                    new CreateManifestResult(
+                        response.Headers.DockerContentDigest,
+                        response.Headers.Location,
+                        response.Headers.ContentLength.Value), response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Put the manifest identified by digest. </summary>
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<CreateManifestResult>> CreateManifestAsync(ImageManifest manifest, CancellationToken cancellationToken = default)
+        {
+            // TODO: How should we handle the accept header?  This feels like part of the polymorphic/strong-typing story around manifests
+            ///// <param name="payload"> Manifest body, can take v1 or v2 values depending on accept header. </param>
+
+            using var scope = _clientDiagnostics.CreateScope("ContainerRegistryRepositoryClient.CreateManifest");
+            scope.Start();
+            try
+            {
+                ResponseWithHeaders<object, ContainerRegistryRepositoryCreateManifestHeaders> response = await RepositoryRestClient.CreateManifestAsync(_repositoryName, manifest.Digest, manifest, cancellationToken).ConfigureAwait(false);
+
+                // TODO: Validate Digest here:
+                // throw new InvalidDigestException, or other "content tampered" exception here.
+
+                return Response.FromValue(
+                    new CreateManifestResult(
+                        response.Headers.DockerContentDigest,
+                        response.Headers.Location,
+                        response.Headers.ContentLength.Value), response);
             }
             catch (Exception e)
             {
@@ -146,13 +208,22 @@ namespace Azure.Containers.ContainerRegistry.Storage
 
         /// <summary> Put the manifest identified by `name` and `reference` where `reference` can be a tag or digest. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response CreateManifest(string tagOrDigest, ImageManifest manifest, CancellationToken cancellationToken = default)
+        public virtual Response<CreateManifestResult> CreateManifest(ImageManifest manifest, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContainerRegistryRepositoryClient.CreateManifest");
             scope.Start();
             try
             {
-                return RepositoryRestClient.CreateManifest(_repositoryName, tagOrDigest, manifest, cancellationToken);
+                ResponseWithHeaders<object, ContainerRegistryRepositoryCreateManifestHeaders> response = RepositoryRestClient.CreateManifest(_repositoryName, manifest.Digest, manifest, cancellationToken);
+
+                // TODO: Validate Digest here:
+                // throw new InvalidDigestException, or other "content tampered" exception here.
+
+                return Response.FromValue(
+                    new CreateManifestResult(
+                        response.Headers.DockerContentDigest,
+                        response.Headers.Location,
+                        response.Headers.ContentLength.Value), response);
             }
             catch (Exception e)
             {
@@ -363,7 +434,7 @@ namespace Azure.Containers.ContainerRegistry.Storage
         /// <summary> Upload a stream of data without completing the upload. </summary>
         /// <param name="value"> Raw data of blob. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ResumableBlobUpload>> UploadChunkAsync(ResumableBlobUpload uploadDetails, Stream value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<UploadChunkResult>> UploadChunkAsync(CreateUploadResult uploadDetails, Stream value, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContainerRegistryBlobClient.UploadChunk");
             scope.Start();
@@ -371,7 +442,7 @@ namespace Azure.Containers.ContainerRegistry.Storage
             {
                 ResponseWithHeaders<ContainerRegistryBlobUploadChunkHeaders> response = await RestClient.UploadChunkAsync(uploadDetails.BlobLocation.ToString(), value, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(
-                    new ResumableBlobUpload(
+                    new UploadChunkResult(
                         response.Headers.Location.ToString(),
                         ParseHttpRange(response.Headers.Range),
                         new Guid(response.Headers.DockerUploadUuid)), response);
@@ -386,7 +457,7 @@ namespace Azure.Containers.ContainerRegistry.Storage
         /// <summary> Upload a stream of data without completing the upload. </summary>
         /// <param name="value"> Raw data of blob. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ResumableBlobUpload> UploadChunk(ResumableBlobUpload uploadDetails, Stream value, CancellationToken cancellationToken = default)
+        public virtual Response<CreateUploadResult> UploadChunk(CreateUploadResult uploadDetails, Stream value, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContainerRegistryBlobClient.UploadChunk");
             scope.Start();
@@ -394,7 +465,7 @@ namespace Azure.Containers.ContainerRegistry.Storage
             {
                 ResponseWithHeaders<ContainerRegistryBlobUploadChunkHeaders> response = RestClient.UploadChunk(uploadDetails.BlobLocation.ToString(), value, cancellationToken);
                 return Response.FromValue(
-                   new ResumableBlobUpload(
+                   new CreateUploadResult(
                        response.Headers.Location.ToString(),
                        ParseHttpRange(response.Headers.Range),
                        new Guid(response.Headers.DockerUploadUuid)), response);
@@ -409,7 +480,7 @@ namespace Azure.Containers.ContainerRegistry.Storage
         /// <summary> Complete the upload, providing all the data in the body, if necessary. A request without a body will just complete the upload with previously uploaded content. </summary>
         /// <param name="digest"> Digest of a BLOB. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CompletedBlobUpload>> CompleteUploadAsync(ResumableBlobUpload uploadDetails, string digest, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CompleteUploadResult>> CompleteUploadAsync(CreateUploadResult uploadDetails, string digest, CancellationToken cancellationToken = default)
         {
             // /// <param name="location"> Link acquired from upload start or previous chunk. Note, do not include initial / (must do substring(1) ). </param>
 
@@ -419,7 +490,7 @@ namespace Azure.Containers.ContainerRegistry.Storage
             {
                 ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders> response = await RestClient.CompleteUploadAsync(digest, uploadDetails.BlobLocation.ToString(), null, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(
-                    new CompletedBlobUpload(
+                    new CompleteUploadResult(
                         response.Headers.Location.ToString(),
                         ParseHttpRange(response.Headers.Range),
                         response.Headers.DockerContentDigest), response);
@@ -434,7 +505,7 @@ namespace Azure.Containers.ContainerRegistry.Storage
         /// <summary> Complete the upload, providing all the data in the body, if necessary. A request without a body will just complete the upload with previously uploaded content. </summary>
         /// <param name="digest"> Digest of a BLOB. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CompletedBlobUpload> CompleteUpload(ResumableBlobUpload uploadDetails, string digest, CancellationToken cancellationToken = default)
+        public virtual Response<CompleteUploadResult> CompleteUpload(CreateUploadResult uploadDetails, string digest, CancellationToken cancellationToken = default)
         {
             // /// <param name="location"> Link acquired from upload start or previous chunk. Note, do not include initial / (must do substring(1) ). </param>
 
@@ -447,7 +518,7 @@ namespace Azure.Containers.ContainerRegistry.Storage
 
                 ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders> response = RestClient.CompleteUpload(digest, uploadDetails.BlobLocation.ToString(), null, cancellationToken);
                 return Response.FromValue(
-                    new CompletedBlobUpload(
+                    new CompleteUploadResult(
                         response.Headers.Location.ToString(),
                         ParseHttpRange(response.Headers.Range),
                         response.Headers.DockerContentDigest), response);
@@ -463,7 +534,7 @@ namespace Azure.Containers.ContainerRegistry.Storage
         /// <param name="digest"> Digest of a BLOB. </param>        
         /// <param name="value"> Raw data of final blob. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CompletedBlobUpload>> CompleteUploadAsync(ResumableBlobUpload uploadDetails, string digest, Stream value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CompleteUploadResult>> CompleteUploadAsync(CreateUploadResult uploadDetails, string digest, Stream value, CancellationToken cancellationToken = default)
         {
             // /// <param name="location"> Link acquired from upload start or previous chunk. Note, do not include initial / (must do substring(1) ). </param>
 
@@ -473,7 +544,7 @@ namespace Azure.Containers.ContainerRegistry.Storage
             {
                 ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders> response = await RestClient.CompleteUploadAsync(digest, uploadDetails.BlobLocation.ToString(), value, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(
-                    new CompletedBlobUpload(
+                    new CompleteUploadResult(
                         response.Headers.Location.ToString(),
                         ParseHttpRange(response.Headers.Range),
                         response.Headers.DockerContentDigest), response);
@@ -494,7 +565,7 @@ namespace Azure.Containers.ContainerRegistry.Storage
         /// <param name="digest"> Digest of a BLOB. </param>
         /// <param name="value"> Raw data of final blob. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CompletedBlobUpload> CompleteUpload(ResumableBlobUpload uploadDetails, string digest, Stream value, CancellationToken cancellationToken = default)
+        public virtual Response<CompleteUploadResult> CompleteUpload(CreateUploadResult uploadDetails, string digest, Stream value, CancellationToken cancellationToken = default)
         {
             // /// <param name="location"> Link acquired from upload start or previous chunk. Note, do not include initial / (must do substring(1) ). </param>
 
@@ -507,7 +578,7 @@ namespace Azure.Containers.ContainerRegistry.Storage
 
                 ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders> response = RestClient.CompleteUpload(digest, uploadDetails.BlobLocation.ToString(), value, cancellationToken);
                 return Response.FromValue(
-                    new CompletedBlobUpload(
+                    new CompleteUploadResult(
                         response.Headers.Location.ToString(),
                         ParseHttpRange(response.Headers.Range),
                         response.Headers.DockerContentDigest), response);
@@ -559,7 +630,7 @@ namespace Azure.Containers.ContainerRegistry.Storage
         // one for us from scratch - like getting a ticket we'll use elsewhere.  Do we have a pattern for this elsewhere?
         /// <summary> Initiate a resumable blob upload with an empty request body. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ResumableBlobUpload>> CreateResumableUploadAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CreateUploadResult>> CreateResumableUploadAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContainerRegistryBlobClient.StartUpload");
             scope.Start();
@@ -570,7 +641,7 @@ namespace Azure.Containers.ContainerRegistry.Storage
                 // in: https://docs.docker.com/registry/spec/api/#initiate-blob-upload
                 // TODO: doesn't look like we're doing this - does the service support not setting the header if the body has no content?
                 ResponseWithHeaders<ContainerRegistryBlobStartUploadHeaders> response = await RestClient.StartUploadAsync(_repositoryName, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ResumableBlobUpload(
+                return Response.FromValue(new CreateUploadResult(
                     response.Headers.Location,
                     ParseHttpRange(response.Headers.Range),
                     new Guid(response.Headers.DockerUploadUuid)), response);
@@ -584,14 +655,14 @@ namespace Azure.Containers.ContainerRegistry.Storage
 
         /// <summary> Initiate a resumable blob upload with an empty request body. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ResumableBlobUpload> CreateResumableUpload(CancellationToken cancellationToken = default)
+        public virtual Response<CreateUploadResult> CreateResumableUpload(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContainerRegistryBlobClient.StartUpload");
             scope.Start();
             try
             {
                 ResponseWithHeaders<ContainerRegistryBlobStartUploadHeaders> response = RestClient.StartUpload(_repositoryName, cancellationToken);
-                return Response.FromValue(new ResumableBlobUpload(
+                return Response.FromValue(new CreateUploadResult(
                     response.Headers.Location,
                     ParseHttpRange(response.Headers.Range),
                     new Guid(response.Headers.DockerUploadUuid)), response);

@@ -7,14 +7,15 @@ using System.Text;
 
 namespace Azure.Containers.ContainerRegistry.Storage.Models
 {
-    public class CompletedBlobUpload
+    public class CreateUploadResult
     {
-        internal CompletedBlobUpload(string blobLocation, HttpRange range, string digest)
+        internal CreateUploadResult(string blobLocation, HttpRange range, Guid dockerUploadId)
         {
             // From docstring comments: /// <param name="location"> Link acquired from upload start or previous chunk. Note, do not include initial / (must do substring(1) ). </param>
             // TODO: is there a way to rejig this in the swagger file rather than doing it in code?
             BlobLocation = new Uri(blobLocation.Substring(1));
             Range = range;
+            UploadId = dockerUploadId;
         }
 
         public Uri BlobLocation { get; }
@@ -25,6 +26,6 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
         // TODO: Not sure how customers would use this, so wonder if we need to expose it or not
         // TODO: For now, calling this DockerUploadID because of the header name, but does it work the same way
         // with OCI artifact uploads and therefore should just be called UploadId?
-        public string Digest { get; }
+        public Guid UploadId { get; }
     }
 }

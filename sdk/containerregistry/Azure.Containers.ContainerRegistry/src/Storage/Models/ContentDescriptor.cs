@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using Azure.Core;
 
@@ -26,5 +27,10 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
         public long? Size { get; }
         /// <summary> Layer digest. </summary>
         public string Digest { get; }
+
+        public static string ComputeDigest(Stream stream)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -43,7 +43,7 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
             Optional<string> mediaType = default;
             Optional<long> size = default;
             Optional<string> digest = default;
-            Optional<ImagePlatform> platform = default;
+            Optional<ManifestPlatform> platform = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mediaType"))
@@ -73,7 +73,7 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    platform = ImagePlatform.DeserializeImagePlatform(property.Value);
+                    platform = ManifestPlatform.DeserializeImagePlatform(property.Value);
                     continue;
                 }
             }

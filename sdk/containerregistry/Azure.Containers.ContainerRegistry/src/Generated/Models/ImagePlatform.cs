@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry.Storage.Models
 {
     /// <summary> The platform object describes the platform which the image in the manifest runs on. A full list of valid operating system and architecture values are listed in the Go language documentation for $GOOS and $GOARCH. </summary>
-    public partial class ImagePlatform
+    public partial class ManifestPlatform
     {
         /// <summary> Initializes a new instance of ImagePlatform. </summary>
-        public ImagePlatform()
+        public ManifestPlatform()
         {
             OsFeatures = new ChangeTrackingList<string>();
             Features = new ChangeTrackingList<string>();
@@ -27,7 +27,7 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
         /// <param name="osFeatures"> The optional os.features field specifies an array of strings, each listing a required OS feature (for example on Windows win32k. </param>
         /// <param name="variant"> The optional variant field specifies a variant of the CPU, for example armv6l to specify a particular CPU variant of the ARM CPU. </param>
         /// <param name="features"> The optional features field specifies an array of strings, each listing a required CPU feature (for example sse4 or aes. </param>
-        internal ImagePlatform(string architecture, string os, string osVersion, IList<string> osFeatures, string variant, IList<string> features)
+        internal ManifestPlatform(string architecture, string os, string osVersion, IList<string> osFeatures, string variant, IList<string> features)
         {
             Architecture = architecture;
             Os = os;

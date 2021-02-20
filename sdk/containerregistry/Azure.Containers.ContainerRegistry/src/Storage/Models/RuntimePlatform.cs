@@ -9,7 +9,7 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry.Storage.Models
 {
     [CodeGenModel("Platform")]
-    public partial class ImagePlatform
+    public partial class RuntimePlatform
     {
     }
 }

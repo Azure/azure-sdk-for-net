@@ -355,7 +355,7 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        public virtual ContainerStorageClient GetContainerStorageClient()
+        public virtual RepositoryStorageClient GetContainerStorageClient()
         {
             throw new NotImplementedException();
         }
