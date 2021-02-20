@@ -7,7 +7,7 @@
 		<PackageId>Microsoft.Azure.Management.ServiceFabricManagedClusters</PackageId>
 		<Description>Microsoft Azure Management ServiceFabricManagedClusters Library</Description>
 		<AssemblyName>Microsoft.Azure.Management.ServiceFabricManagedClusters</AssemblyName>
-		<Version>0.1.0</Version>
+		<Version>1.0.0-beta.1</Version>
 		<PackageTags>Microsoft Azure Management Library;ServiceFabricManagedClusters;ServiceFabricManagedClusters management;</PackageTags>
 		<PackageReleaseNotes>
  			<![CDATA[

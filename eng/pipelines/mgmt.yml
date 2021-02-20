@@ -132,6 +132,7 @@ pr:
     - sdk/servermanagement/Microsoft.Azure.Management.ServerManagement
     - sdk/servicebus/Microsoft.Azure.Management.ServiceBus
     - sdk/servicefabric/Microsoft.Azure.Management.ServiceFabric
+    - sdk/servicefabricmanagedclusters/Microsoft.Azure.Management.ServiceFabricManagedClusters
     - sdk/signalr/Microsoft.Azure.Management.SignalR
     - sdk/sqlmanagement/Azure.ResourceManager.Sql
     - sdk/sqlmanagement/Microsoft.Azure.Management.SqlManagement

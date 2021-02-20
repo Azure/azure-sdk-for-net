@@ -37,8 +37,7 @@ namespace ServiceFabricManagedClusters.Tests
                 var cluster = this.CreateManagedCluster(resourceClient, serviceFabricMcClient, resourceGroupName, Location, clusterName, sku: "Basic");
                 cluster = serviceFabricMcClient.ManagedClusters.Get(resourceGroupName, clusterName);
                 Assert.NotNull(cluster);
-                Assert.Equal("Succeeded", cluster.ProvisioningState);
-                Assert.Equal("WaitingForNodes", cluster.ClusterState);
+
                 var primaryNodeType = this.CreateNodeType(serviceFabricMcClient, resourceGroupName, clusterName, nodeTypeName, isPrimary: true, vmInstanceCount: 6);
 
                 this.WaitForClusterReadyState(serviceFabricMcClient, resourceGroupName, clusterName);
@@ -101,6 +100,7 @@ namespace ServiceFabricManagedClusters.Tests
                 appTypeVersionParams);
 
             Assert.Equal("Succeeded", appTypeVersionResult.ProvisioningState);
+            Assert.Equal(appPackageUrl, appTypeVersionResult.AppPackageUrl);
             return appTypeVersionResult;
         }
 
@@ -128,6 +128,9 @@ namespace ServiceFabricManagedClusters.Tests
                 applicationParams);
 
             Assert.Equal("Succeeded", applicationResult.ProvisioningState);
+            Assert.True(applicationResult.UpgradePolicy.RecreateApplication);
+            Assert.Equal(versionResourceId, applicationResult.Version);
+
         }
 
         private void CreateService(
@@ -140,6 +143,11 @@ namespace ServiceFabricManagedClusters.Tests
             string serviceName)
         {
             var serviceResourceId = $"{clusterId}/applications/{appName}/services/{serviceName}";
+            var count = 1;
+            var lowKey = 0;
+            var highKey = 25;
+            var targetReplicaSetSize = 5;
+            var minReplicaSetSize = 3;
 
             var serviceParams = new ServiceResource(
                 name: serviceName,
@@ -148,12 +156,12 @@ namespace ServiceFabricManagedClusters.Tests
                 properties: new StatefulServiceProperties(
                     serviceTypeName: serviceTypeName,
                     partitionDescription: new UniformInt64RangePartitionScheme(
-                        count: 1,
-                        lowKey: 0,
-                        highKey: 25),
+                        count: count,
+                        lowKey: lowKey,
+                        highKey: highKey),
                     hasPersistedState: true,
-                    targetReplicaSetSize: 5,
-                    minReplicaSetSize: 3));
+                    targetReplicaSetSize: targetReplicaSetSize,
+                    minReplicaSetSize: minReplicaSetSize));
 
             var serviceResult = serviceFabricMcClient.Services.CreateOrUpdate(
                 resourceGroup,
@@ -163,6 +171,23 @@ namespace ServiceFabricManagedClusters.Tests
                 serviceParams);
 
             Assert.Equal("Succeeded", serviceResult.Properties.ProvisioningState);
+            
+            Assert.IsAssignableFrom<StatefulServiceProperties>(serviceResult.Properties);
+            var serviceProperties = serviceResult.Properties as StatefulServiceProperties;
+
+            Assert.Equal("VotingDataType", serviceResult.Properties.ServiceTypeName);
+
+            Assert.IsAssignableFrom<UniformInt64RangePartitionScheme>(serviceResult.Properties.PartitionDescription);
+            var partitionDescription = serviceProperties.PartitionDescription as UniformInt64RangePartitionScheme;
+            
+            Assert.Equal(count, partitionDescription.Count);
+            Assert.Equal(lowKey, partitionDescription.LowKey);
+            Assert.Equal(highKey, partitionDescription.HighKey);
+
+            Assert.True(serviceProperties.HasPersistedState);
+            Assert.Equal(targetReplicaSetSize, serviceProperties.TargetReplicaSetSize);
+            Assert.Equal(minReplicaSetSize, serviceProperties.MinReplicaSetSize);
+
         }
 
         private void DeleteApplication(

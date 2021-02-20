@@ -12,7 +12,6 @@ namespace ServiceFabricManagedClusters.Tests
     using Microsoft.Azure.Management.ServiceFabricManagedClusters;
     using Microsoft.Azure.Management.ServiceFabricManagedClusters.Models;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-    using ServiceFabricManagedClusters.Tests.TestHelper;
     using Xunit;
 
     public class ServiceFabricManagedTestBase
@@ -21,22 +20,12 @@ namespace ServiceFabricManagedClusters.Tests
 
         protected ResourceManagementClient GetResourceManagementClient(MockContext context)
         {
-            return context.GetServiceClient<ResourceManagementClient>(
-            handlers: new RecordedDelegatingHandler()
-            {
-                StatusCodeToReturn = HttpStatusCode.OK,
-                IsPassThrough = true
-            });
+            return context.GetServiceClient<ResourceManagementClient>();
         }
 
         protected ServiceFabricManagedClustersManagementClient GetServiceFabricMcClient(MockContext context)
         {
-            return context.GetServiceClient<ServiceFabricManagedClustersManagementClient>(
-            handlers: new RecordedDelegatingHandler()
-            {
-                StatusCodeToReturn = HttpStatusCode.OK,
-                IsPassThrough = true
-            });
+            return context.GetServiceClient<ServiceFabricManagedClustersManagementClient>();
         }
 
         protected ManagedCluster CreateManagedCluster(
@@ -47,6 +36,8 @@ namespace ServiceFabricManagedClusters.Tests
             string clusterName,
             string sku)
         {
+            var testTP = "123BDACDCDFB2C7B250192C6078E47D1E1DB119B";
+            var userName = "vmadmin";
             var newCluster = new ManagedCluster(
                 location: rgLocation,
                 sku: new Sku()
@@ -55,7 +46,7 @@ namespace ServiceFabricManagedClusters.Tests
                 },
                 dnsName: clusterName,
                 adminPassword: "Password123!@#",
-                adminUserName: "vmadmin",
+                adminUserName: userName,
                 clientConnectionPort: 19000,
                 httpGatewayConnectionPort: 19080,
                 clients: new List<ClientCertificate>()
@@ -63,7 +54,7 @@ namespace ServiceFabricManagedClusters.Tests
                     new ClientCertificate()
                     {
                         IsAdmin = true,
-                        Thumbprint = "123BDACDCDFB2C7B250192C6078E47D1E1DB119B"
+                        Thumbprint = testTP
                     }
                 });
 
@@ -73,6 +64,26 @@ namespace ServiceFabricManagedClusters.Tests
 
             var cluster = serviceFabricMcClient.ManagedClusters.CreateOrUpdate(rg, clusterName, newCluster);
             Assert.NotNull(cluster);
+            
+            Assert.Equal("Succeeded", cluster.ProvisioningState);
+            Assert.Equal("WaitingForNodes", cluster.ClusterState);
+            Assert.NotNull(cluster.Sku.Name);
+            Assert.Equal(sku, cluster.Sku.Name);
+            Assert.Equal("Wave0", cluster.ClusterUpgradeCadence);
+            Assert.Equal(userName, cluster.AdminUserName);
+            Assert.Equal(clusterName, cluster.DnsName);
+            Assert.Equal($"{clusterName}.southcentralus.cloudapp.azure.com", cluster.Fqdn);
+            Assert.NotNull(cluster.ClusterCertificateThumbprints);
+            Assert.Single(cluster.ClusterCertificateThumbprints);
+            Assert.Equal(19000, cluster.ClientConnectionPort);
+            Assert.Equal(19080, cluster.HttpGatewayConnectionPort);
+            Assert.False(cluster.AllowRdpAccess);
+            Assert.NotNull(cluster.Clients);
+            Assert.Single(cluster.Clients);
+            Assert.True(cluster.Clients[0].IsAdmin);
+            Assert.Equal(testTP, cluster.Clients[0].Thumbprint);
+            Assert.False(cluster.EnableAutoOSUpgrade);
+
             return cluster;
         }
 
@@ -84,19 +95,36 @@ namespace ServiceFabricManagedClusters.Tests
             bool isPrimary,
             int vmInstanceCount)
         {
+            var vmSize = "Standard_D2";
+            var vmImagePublisher = "MicrosoftWindowsServer";
+            var vmImageOffer = "WindowsServer";
+            var vmImageSku = "2019-Datacenter";
+            var vmImageVersion = "latest";
+            var dataDiskSizeGB = 100;
+
             var newNodeType = new NodeType(
                 isPrimary: isPrimary,
                 vmInstanceCount: vmInstanceCount,
-                dataDiskSizeGB: 100,
-                vmSize: "Standard_D2",
-                vmImagePublisher: "MicrosoftWindowsServer",
-                vmImageOffer: "WindowsServer",
-                vmImageSku: "2019-Datacenter",
-                vmImageVersion: "latest"
+                dataDiskSizeGB: dataDiskSizeGB,
+                vmSize: vmSize,
+                vmImagePublisher: vmImagePublisher,
+                vmImageOffer: vmImageOffer,
+                vmImageSku: vmImageSku,
+                vmImageVersion: vmImageVersion
                 );
 
             var nodeType = serviceFabricMcClient.NodeTypes.CreateOrUpdate(rg, clusterName, nodeTypeName, newNodeType);
             Assert.NotNull(nodeType);
+            Assert.Equal("Succeeded", nodeType.ProvisioningState);
+            Assert.Equal(isPrimary, nodeType.IsPrimary);
+            Assert.Equal(vmImagePublisher, nodeType.VmImagePublisher);
+            Assert.Equal(vmImageOffer, nodeType.VmImageOffer);
+            Assert.Equal(vmImageSku, nodeType.VmImageSku);
+            Assert.Equal(vmImageVersion, nodeType.VmImageVersion);
+            Assert.Equal(vmSize, nodeType.VmSize);
+            Assert.Equal(vmInstanceCount, nodeType.VmInstanceCount);
+            Assert.Equal(dataDiskSizeGB, nodeType.DataDiskSizeGB);
+
             return nodeType;
         }
 
