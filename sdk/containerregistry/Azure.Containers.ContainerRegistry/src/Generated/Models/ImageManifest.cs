@@ -13,12 +13,9 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
 
         /// <summary> Initializes a new instance of ImageManifest. </summary>
         /// <param name="schemaVersion"> Schema version. </param>
-        internal ImageManifest(int? schemaVersion)
+        internal ImageManifest(int schemaVersion)
         {
             SchemaVersion = schemaVersion;
         }
-
-        /// <summary> Schema version. </summary>
-        public int? SchemaVersion { get; set; }
     }
 }

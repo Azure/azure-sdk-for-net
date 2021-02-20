@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -16,7 +17,7 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
         /// <summary> Initializes a new instance of ContentDescriptor. </summary>
         public ContentDescriptor()
         {
-            Urls = new ChangeTrackingList<string>();
+            Urls = new ChangeTrackingList<Uri>();
         }
 
         /// <summary> Initializes a new instance of ContentDescriptor. </summary>
@@ -25,7 +26,7 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
         /// <param name="digest"> Layer digest. </param>
         /// <param name="urls"> Specifies a list of URIs from which this object may be downloaded. </param>
         /// <param name="annotations"> Additional information provided through arbitrary metadata. </param>
-        internal ContentDescriptor(string mediaType, long? size, string digest, IList<string> urls, OciManifestAnnotations annotations)
+        internal ContentDescriptor(string mediaType, long? size, string digest, IList<Uri> urls, OciManifestAnnotations annotations)
         {
             MediaType = mediaType;
             Size = size;
@@ -33,9 +34,5 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
             Urls = urls;
             Annotations = annotations;
         }
-        /// <summary> Specifies a list of URIs from which this object may be downloaded. </summary>
-        public IList<string> Urls { get; }
-        /// <summary> Additional information provided through arbitrary metadata. </summary>
-        public OciManifestAnnotations Annotations { get; set; }
     }
 }

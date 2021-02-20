@@ -7,13 +7,16 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry.Storage.Models
 {
     [CodeGenModel("Manifest")]
-    public partial class ImageManifest
+    public abstract partial class ImageManifest
     {
         internal ImageManifest() { }
 
         internal string Digest { get; }
 
         public ManifestMediaType MediaType { get; internal set; }
+
+        /// <summary> Schema version. </summary>
+        public int SchemaVersion { get; }
 
         public DockerManifestV1 AsDockerManifestV1()
         {

@@ -39,7 +39,7 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
             if (Optional.IsDefined(SchemaVersion))
             {
                 writer.WritePropertyName("schemaVersion");
-                writer.WriteNumberValue(SchemaVersion.Value);
+                writer.WriteNumberValue(SchemaVersion);
             }
             writer.WriteEndObject();
         }
@@ -93,7 +93,7 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
                     continue;
                 }
             }
-            return new DockerManifestV2(Optional.ToNullable(schemaVersion), mediaType.Value, config.Value, Optional.ToList(layers));
+            return new DockerManifestV2(schemaVersion, mediaType.Value, config.Value, Optional.ToList(layers));
         }
     }
 }

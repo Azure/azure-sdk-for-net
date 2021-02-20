@@ -106,7 +106,7 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
             if (Optional.IsDefined(SchemaVersion))
             {
                 writer.WritePropertyName("schemaVersion");
-                writer.WriteNumberValue(SchemaVersion.Value);
+                writer.WriteNumberValue(SchemaVersion);
             }
             writer.WriteEndObject();
         }
@@ -253,7 +253,7 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
                     continue;
                 }
             }
-            return new CombinedManifest(Optional.ToNullable(schemaVersion), mediaType.Value, Optional.ToList(manifests), config.Value, Optional.ToList(layers), annotations.Value, architecture.Value, name.Value, tag.Value, Optional.ToList(fsLayers), Optional.ToList(history), Optional.ToList(signatures));
+            return new CombinedManifest(schemaVersion, mediaType.Value, Optional.ToList(manifests), config.Value, Optional.ToList(layers), annotations.Value, architecture.Value, name.Value, tag.Value, Optional.ToList(fsLayers), Optional.ToList(history), Optional.ToList(signatures));
         }
     }
 }

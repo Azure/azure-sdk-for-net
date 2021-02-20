@@ -28,6 +28,12 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
         /// <summary> Layer digest. </summary>
         public string Digest { get; }
 
+        /// <summary> Specifies a list of URIs from which this object may be downloaded. </summary>
+        public IList<Uri> Urls { get; }
+
+        /// <summary> Additional information provided through arbitrary metadata. </summary>
+        public OciManifestAnnotations Annotations { get; }
+
         public static string ComputeDigest(Stream stream)
         {
             throw new NotImplementedException();

@@ -23,7 +23,7 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
         /// <param name="schemaVersion"> Schema version. </param>
         /// <param name="mediaType"> Media type for this Manifest. </param>
         /// <param name="manifests"> List of V2 image layer information. </param>
-        internal DockerManifestList(int? schemaVersion, string mediaType, IList<ManifestListAttributes> manifests) : base(schemaVersion)
+        internal DockerManifestList(int schemaVersion, string mediaType, IList<ManifestListAttributes> manifests) : base(schemaVersion)
         {
             MediaType = mediaType;
             Manifests = manifests;

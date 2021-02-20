@@ -24,7 +24,7 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
         /// <param name="config"> V2 image config descriptor. </param>
         /// <param name="layers"> List of V2 image layer information. </param>
         /// <param name="annotations"> Additional information provided through arbitrary metadata. </param>
-        internal OciManifest(int? schemaVersion, ContentDescriptor config, IList<ContentDescriptor> layers, OciManifestAnnotations annotations) : base(schemaVersion)
+        internal OciManifest(int schemaVersion, ContentDescriptor config, IList<ContentDescriptor> layers, OciManifestAnnotations annotations) : base(schemaVersion)
         {
             Config = config;
             Layers = layers;

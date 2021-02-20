@@ -12,18 +12,18 @@ namespace Azure.Containers.ContainerRegistry.Models
     public partial class ContentPermissions
     {
         // TODO: why are these nullable?  We should figure out how to make then not nullable
-        // TODO: Should these be settable?
+        // TODO: Should these be settable? <-- Yes, should be settable, unless we wanted to handle that via constructor only
 
         [CodeGenMember("DeleteEnabled")]
-        public bool? CanDelete { get; set; }
+        public bool CanDelete { get; set; }
 
         [CodeGenMember("WriteEnabled")]
-        public bool? CanWrite { get; set; }
+        public bool CanWrite { get; set; }
 
         [CodeGenMember("ListEnabled")]
-        public bool? CanList { get; set; }
+        public bool CanList { get; set; }
 
         [CodeGenMember("ReadEnabled")]
-        public bool? CanRead { get; set; }
+        public bool CanRead { get; set; }
     }
 }

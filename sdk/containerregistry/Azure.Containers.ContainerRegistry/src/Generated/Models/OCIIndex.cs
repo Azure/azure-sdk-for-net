@@ -23,7 +23,7 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
         /// <param name="schemaVersion"> Schema version. </param>
         /// <param name="manifests"> List of OCI image layer information. </param>
         /// <param name="annotations"> Additional information provided through arbitrary metadata. </param>
-        internal OciIndex(int? schemaVersion, IList<ManifestListAttributes> manifests, OciManifestAnnotations annotations) : base(schemaVersion)
+        internal OciIndex(int schemaVersion, IList<ManifestListAttributes> manifests, OciManifestAnnotations annotations) : base(schemaVersion)
         {
             Manifests = manifests;
             Annotations = annotations;

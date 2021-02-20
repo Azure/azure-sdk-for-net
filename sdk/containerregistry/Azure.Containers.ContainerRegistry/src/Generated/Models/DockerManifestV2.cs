@@ -24,7 +24,7 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
         /// <param name="mediaType"> Media type for this Manifest. </param>
         /// <param name="config"> V2 image config descriptor. </param>
         /// <param name="layers"> List of V2 image layer information. </param>
-        internal DockerManifestV2(int? schemaVersion, string mediaType, ContentDescriptor config, IList<ContentDescriptor> layers) : base(schemaVersion)
+        internal DockerManifestV2(int schemaVersion, string mediaType, ContentDescriptor config, IList<ContentDescriptor> layers) : base(schemaVersion)
         {
             MediaType = mediaType;
             Config = config;

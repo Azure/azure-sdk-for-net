@@ -18,28 +18,28 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
             if (Optional.IsDefined(SchemaVersion))
             {
                 writer.WritePropertyName("schemaVersion");
-                writer.WriteNumberValue(SchemaVersion.Value);
+                writer.WriteNumberValue(SchemaVersion);
             }
             writer.WriteEndObject();
         }
 
-        internal static ImageManifest DeserializeImageManifest(JsonElement element)
-        {
-            Optional<int> schemaVersion = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("schemaVersion"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    schemaVersion = property.Value.GetInt32();
-                    continue;
-                }
-            }
-            return new ImageManifest(Optional.ToNullable(schemaVersion));
-        }
+        //internal static ImageManifest DeserializeImageManifest(JsonElement element)
+        //{
+        //    Optional<int> schemaVersion = default;
+        //    foreach (var property in element.EnumerateObject())
+        //    {
+        //        if (property.NameEquals("schemaVersion"))
+        //        {
+        //            if (property.Value.ValueKind == JsonValueKind.Null)
+        //            {
+        //                property.ThrowNonNullablePropertyIsNull();
+        //                continue;
+        //            }
+        //            schemaVersion = property.Value.GetInt32();
+        //            continue;
+        //        }
+        //    }
+        //    return new ImageManifest(schemaVersion);
+        //}
     }
 }

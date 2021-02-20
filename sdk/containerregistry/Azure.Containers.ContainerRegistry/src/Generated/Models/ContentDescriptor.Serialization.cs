@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -37,7 +38,7 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
                 writer.WriteStartArray();
                 foreach (var item in Urls)
                 {
-                    writer.WriteStringValue(item);
+                    writer.WriteStringValue(item.AbsoluteUri);
                 }
                 writer.WriteEndArray();
             }
@@ -61,7 +62,7 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
             Optional<string> mediaType = default;
             Optional<long> size = default;
             Optional<string> digest = default;
-            Optional<IList<string>> urls = default;
+            Optional<IList<Uri>> urls = default;
             Optional<OciManifestAnnotations> annotations = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -92,10 +93,10 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<Uri> array = new List<Uri>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new Uri(item.GetString()));
                     }
                     urls = array;
                     continue;

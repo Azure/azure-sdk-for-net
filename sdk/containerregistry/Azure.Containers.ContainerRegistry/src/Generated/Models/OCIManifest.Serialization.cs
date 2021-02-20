@@ -46,7 +46,7 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
             if (Optional.IsDefined(SchemaVersion))
             {
                 writer.WritePropertyName("schemaVersion");
-                writer.WriteNumberValue(SchemaVersion.Value);
+                writer.WriteNumberValue(SchemaVersion);
             }
             writer.WriteEndObject();
         }
@@ -105,7 +105,7 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
                     continue;
                 }
             }
-            return new OciManifest(Optional.ToNullable(schemaVersion), config.Value, Optional.ToList(layers), annotations.Value);
+            return new OciManifest(schemaVersion, config.Value, Optional.ToList(layers), annotations.Value);
         }
     }
 }

@@ -77,20 +77,24 @@ namespace Azure.Containers.ContainerRegistry
                 throw new ArgumentNullException(nameof(reference));
             }
 
-            using var message = CreateGetManifestRequest(name, reference, accept);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ImageManifest value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ImageManifest.DeserializeImageManifest(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
+            await Task.Run(() => { }).ConfigureAwait(false);
+
+            throw new NotImplementedException();
+
+            //using var message = CreateGetManifestRequest(name, reference, accept);
+            //await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            //switch (message.Response.Status)
+            //{
+            //    case 200:
+            //        {
+            //            ImageManifest value = default;
+            //            using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            //            value = ImageManifest.DeserializeImageManifest(document.RootElement);
+            //            return Response.FromValue(value, message.Response);
+            //        }
+            //    default:
+            //        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            //}
         }
 
         /// <summary> Get the manifest identified by `name` and `reference` where `reference` can be a tag or digest. </summary>
@@ -110,20 +114,22 @@ namespace Azure.Containers.ContainerRegistry
                 throw new ArgumentNullException(nameof(reference));
             }
 
-            using var message = CreateGetManifestRequest(name, reference, accept);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ImageManifest value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ImageManifest.DeserializeImageManifest(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
+            throw new NotImplementedException();
+
+            //using var message = CreateGetManifestRequest(name, reference, accept);
+            //_pipeline.Send(message, cancellationToken);
+            //switch (message.Response.Status)
+            //{
+            //    case 200:
+            //        {
+            //            ImageManifest value = default;
+            //            using var document = JsonDocument.Parse(message.Response.ContentStream);
+            //            value = ImageManifest.DeserializeImageManifest(document.RootElement);
+            //            return Response.FromValue(value, message.Response);
+            //        }
+            //    default:
+            //        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            //}
         }
 
         internal HttpMessage CreateCreateManifestRequest(string name, string reference, ImageManifest payload)

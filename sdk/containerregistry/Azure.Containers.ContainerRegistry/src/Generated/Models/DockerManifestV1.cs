@@ -29,7 +29,7 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
         /// <param name="fsLayers"> List of layer information. </param>
         /// <param name="history"> Image history. </param>
         /// <param name="signatures"> Image signature. </param>
-        internal DockerManifestV1(int? schemaVersion, string architecture, string name, string tag, IList<DockerManifestV1FsLayer> fsLayers, IList<DockerManifestV1History> history, IList<DockerManifestV1ImageSignature> signatures) : base(schemaVersion)
+        internal DockerManifestV1(int schemaVersion, string architecture, string name, string tag, IList<DockerManifestV1FsLayer> fsLayers, IList<DockerManifestV1History> history, IList<DockerManifestV1ImageSignature> signatures) : base(schemaVersion)
         {
             Architecture = architecture;
             Name = name;

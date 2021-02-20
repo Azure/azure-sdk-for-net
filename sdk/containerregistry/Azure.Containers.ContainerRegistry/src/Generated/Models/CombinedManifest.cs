@@ -36,7 +36,7 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
         /// <param name="fsLayers"> (V1) List of layer information. </param>
         /// <param name="history"> (V1) Image history. </param>
         /// <param name="signatures"> (V1) Image signature. </param>
-        internal CombinedManifest(int? schemaVersion, string mediaType, IList<ManifestListAttributes> manifests, ContentDescriptor config, IList<ContentDescriptor> layers, OciManifestAnnotations annotations, string architecture, string name, string tag, IList<DockerManifestV1FsLayer> fsLayers, IList<DockerManifestV1History> history, IList<DockerManifestV1ImageSignature> signatures) : base(schemaVersion)
+        internal CombinedManifest(int schemaVersion, string mediaType, IList<ManifestListAttributes> manifests, ContentDescriptor config, IList<ContentDescriptor> layers, OciManifestAnnotations annotations, string architecture, string name, string tag, IList<DockerManifestV1FsLayer> fsLayers, IList<DockerManifestV1History> history, IList<DockerManifestV1ImageSignature> signatures) : base(schemaVersion)
         {
             MediaType = mediaType;
             Manifests = manifests;

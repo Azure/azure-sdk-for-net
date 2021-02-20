@@ -20,7 +20,7 @@ namespace Azure.Containers.ContainerRegistry.Models
         /// <param name="canWrite"> Write enabled. </param>
         /// <param name="canList"> List enabled. </param>
         /// <param name="canRead"> Read enabled. </param>
-        internal ContentPermissions(bool? canDelete, bool? canWrite, bool? canList, bool? canRead)
+        internal ContentPermissions(bool canDelete, bool canWrite, bool canList, bool canRead)
         {
             CanDelete = canDelete;
             CanWrite = canWrite;
