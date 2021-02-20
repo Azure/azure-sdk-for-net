@@ -9,10 +9,54 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
     using System.Text;
     using System.Threading.Tasks;
     using Microsoft.Azure.ServiceBus.Core;
+    using Microsoft.Azure.ServiceBus.Management;
     using Xunit;
 
     public class MessageTests
     {
+        [Fact]
+        public async Task Unregister()
+        {
+            var qn = "unreg";
+            var connectionstr = "Endpoint=sb://lmtest.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=A4u3pkOHLEiL44aVEzo7Zz9RiL2w7XPK4IO5oxopnMQ=";
+            //"Endpoint=sb://contoso.servicebus.onebox.windows-int.net/;SharedAccessKeyName=DefaultNamespaceSasAllKeyName;SharedAccessKey=8864/auVd3qDC75iTjBL1GJ4D2oXC6bIttRd0jzDZ+g=";
+
+            var mc = new ManagementClient(connectionstr);
+            //await mc.CreateQueueAsync(qn);
+            var qc = new QueueClient(connectionstr, qn, ReceiveMode.PeekLock);
+            qc.RegisterMessageHandler(
+               async (message, token) =>
+               {
+                   TestUtility.Log($"Received message: SequenceNumber: {message.SystemProperties.SequenceNumber}");
+                   if (qc.ReceiveMode == ReceiveMode.PeekLock)
+                   {
+                       await qc.CompleteAsync(message.SystemProperties.LockToken);
+                   }
+               },
+               new MessageHandlerOptions(ExceptionReceivedHandler) { MaxConcurrentCalls = 1, AutoComplete = false });
+
+            await qc.UnregisterMessageHandlerAsync(TimeSpan.FromSeconds(2));
+            //await Task.Delay(TimeSpan.FromSeconds(20));
+
+            qc.RegisterMessageHandler(
+               async (message, token) =>
+               {
+                   TestUtility.Log($"Received message: SequenceNumber: {message.SystemProperties.SequenceNumber}");
+                   if (qc.ReceiveMode == ReceiveMode.PeekLock)
+                   {
+                       await qc.CompleteAsync(message.SystemProperties.LockToken);
+                   }
+               },
+               new MessageHandlerOptions(ExceptionReceivedHandler) { MaxConcurrentCalls = 1, AutoComplete = false });
+        }
+
+        private Task ExceptionReceivedHandler(ExceptionReceivedEventArgs eventArgs)
+        {
+            TestUtility.Log($"Exception Received: ClientId: {eventArgs.ExceptionReceivedContext.ClientId}, EntityPath: {eventArgs.ExceptionReceivedContext.EntityPath}, Exception: {eventArgs.Exception.Message}");
+            return Task.CompletedTask;
+        }
+
+
         [Fact]
         [DisplayTestMethodName]
         public void TestClone()
