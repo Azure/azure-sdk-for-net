@@ -11,16 +11,16 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry.Storage.Models
 {
     [CodeGenModel("V2Manifest")]
-    public partial class DockerV2Manifest
+    public partial class DockerManifestV2
     {
-        public static Task<DockerV2Manifest> FromStreamAsync(Stream stream)
+        public static Task<DockerManifestV2> FromStreamAsync(Stream stream)
         {
             throw new NotImplementedException();
 
             // TODO: Deserialize, and then additionally compute digest to cache for later
         }
 
-        public static DockerV2Manifest FromStream(Stream stream)
+        public static DockerManifestV2 FromStream(Stream stream)
         {
             throw new NotImplementedException();
 

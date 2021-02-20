@@ -11,6 +11,10 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
     [CodeGenModel("Manifest")]
     public partial class ImageManifest
     {
+        internal ImageManifest() { }
+
         internal string Digest { get; }
+
+        public ManifestMediaType MediaType { get; internal set; }
     }
 }

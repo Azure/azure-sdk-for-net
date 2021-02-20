@@ -8,8 +8,8 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry.Storage.Models
 {
-    [CodeGenModel("FsLayer")]
-    public partial class DockerV1ManifestFsLayer
+    [CodeGenModel("History")]
+    public partial class DockerManifestV1History
     {
     }
 }

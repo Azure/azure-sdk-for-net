@@ -12,8 +12,10 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
     {
         // TODO: Should a customer have to reason about these media types directly?
         public static readonly ManifestMediaType OciManifest = new ManifestMediaType("application/vnd.oci.image.manifest.v1+json");
-        public static readonly ManifestMediaType DockerManifestV2Schema2 = new ManifestMediaType("application/vnd.docker.distribution.manifest.v2+json");
-        public static readonly ManifestMediaType DockerManifestV2Schema1 = new ManifestMediaType("application/vnd.docker.distribution.manifest.v1+json");
+        public static readonly ManifestMediaType OciIndex = new ManifestMediaType("application/vnd.oci.image.index.v1+json");
+        public static readonly ManifestMediaType DockerManifestV1 = new ManifestMediaType("application/vnd.docker.container.image.v1+json");
+        public static readonly ManifestMediaType DockerManifestV2 = new ManifestMediaType("application/vnd.docker.distribution.manifest.v2+json");
+        public static readonly ManifestMediaType DockerManifestList = new ManifestMediaType("application/vnd.docker.distribution.manifest.list.v2+json");
 
         private readonly string _value;
 

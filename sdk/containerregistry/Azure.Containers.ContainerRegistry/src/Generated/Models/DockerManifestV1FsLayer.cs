@@ -8,16 +8,16 @@
 namespace Azure.Containers.ContainerRegistry.Storage.Models
 {
     /// <summary> Image layer information. </summary>
-    public partial class DockerV1ManifestFsLayer
+    public partial class DockerManifestV1FsLayer
     {
-        /// <summary> Initializes a new instance of DockerV1ManifestFsLayer. </summary>
-        public DockerV1ManifestFsLayer()
+        /// <summary> Initializes a new instance of DockerManifestV1FsLayer. </summary>
+        public DockerManifestV1FsLayer()
         {
         }
 
-        /// <summary> Initializes a new instance of DockerV1ManifestFsLayer. </summary>
+        /// <summary> Initializes a new instance of DockerManifestV1FsLayer. </summary>
         /// <param name="blobSum"> SHA of an image layer. </param>
-        internal DockerV1ManifestFsLayer(string blobSum)
+        internal DockerManifestV1FsLayer(string blobSum)
         {
             BlobSum = blobSum;
         }

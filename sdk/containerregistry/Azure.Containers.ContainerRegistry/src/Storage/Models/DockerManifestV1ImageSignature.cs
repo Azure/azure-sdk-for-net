@@ -8,8 +8,8 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry.Storage.Models
 {
-    [CodeGenModel("JWK")]
-    public partial class DockerV1ManifestJwk
+    [CodeGenModel("ImageSignature")]
+    public partial class DockerManifestV1ImageSignature
     {
     }
 }

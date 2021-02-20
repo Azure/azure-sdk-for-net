@@ -11,17 +11,17 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry.Storage.Models
 {
     /// <summary> Returns the requested V1 manifest file. </summary>
-    public partial class DockerV1Manifest : ImageManifest
+    public partial class DockerManifestV1 : ImageManifest
     {
-        /// <summary> Initializes a new instance of DockerV1Manifest. </summary>
-        public DockerV1Manifest()
+        /// <summary> Initializes a new instance of DockerManifestV1. </summary>
+        public DockerManifestV1()
         {
-            FsLayers = new ChangeTrackingList<DockerV1ManifestFsLayer>();
-            History = new ChangeTrackingList<DockerV1ManifestHistory>();
-            Signatures = new ChangeTrackingList<DockerV1ManifestImageSignature>();
+            FsLayers = new ChangeTrackingList<DockerManifestV1FsLayer>();
+            History = new ChangeTrackingList<DockerManifestV1History>();
+            Signatures = new ChangeTrackingList<DockerManifestV1ImageSignature>();
         }
 
-        /// <summary> Initializes a new instance of DockerV1Manifest. </summary>
+        /// <summary> Initializes a new instance of DockerManifestV1. </summary>
         /// <param name="schemaVersion"> Schema version. </param>
         /// <param name="architecture"> CPU architecture. </param>
         /// <param name="name"> Image name. </param>
@@ -29,7 +29,7 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
         /// <param name="fsLayers"> List of layer information. </param>
         /// <param name="history"> Image history. </param>
         /// <param name="signatures"> Image signature. </param>
-        internal DockerV1Manifest(int? schemaVersion, string architecture, string name, string tag, IList<DockerV1ManifestFsLayer> fsLayers, IList<DockerV1ManifestHistory> history, IList<DockerV1ManifestImageSignature> signatures) : base(schemaVersion)
+        internal DockerManifestV1(int? schemaVersion, string architecture, string name, string tag, IList<DockerManifestV1FsLayer> fsLayers, IList<DockerManifestV1History> history, IList<DockerManifestV1ImageSignature> signatures) : base(schemaVersion)
         {
             Architecture = architecture;
             Name = name;
@@ -46,10 +46,10 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
         /// <summary> Image tag. </summary>
         public string Tag { get; set; }
         /// <summary> List of layer information. </summary>
-        public IList<DockerV1ManifestFsLayer> FsLayers { get; }
+        public IList<DockerManifestV1FsLayer> FsLayers { get; }
         /// <summary> Image history. </summary>
-        public IList<DockerV1ManifestHistory> History { get; }
+        public IList<DockerManifestV1History> History { get; }
         /// <summary> Image signature. </summary>
-        public IList<DockerV1ManifestImageSignature> Signatures { get; }
+        public IList<DockerManifestV1ImageSignature> Signatures { get; }
     }
 }

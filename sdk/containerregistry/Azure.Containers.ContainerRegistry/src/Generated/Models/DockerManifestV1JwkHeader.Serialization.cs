@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry.Storage.Models
 {
-    public partial class DockerV1ManifestJwkHeader : IUtf8JsonSerializable
+    public partial class DockerManifestV1JwkHeader : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -43,7 +43,7 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
             writer.WriteEndObject();
         }
 
-        internal static DockerV1ManifestJwkHeader DeserializeDockerV1ManifestJwkHeader(JsonElement element)
+        internal static DockerManifestV1JwkHeader DeserializeDockerManifestV1JwkHeader(JsonElement element)
         {
             Optional<string> crv = default;
             Optional<string> kid = default;
@@ -78,7 +78,7 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
                     continue;
                 }
             }
-            return new DockerV1ManifestJwkHeader(crv.Value, kid.Value, kty.Value, x.Value, y.Value);
+            return new DockerManifestV1JwkHeader(crv.Value, kid.Value, kty.Value, x.Value, y.Value);
         }
     }
 }

@@ -37,10 +37,10 @@ namespace ContainerRegistrySamples
             }
 
             // _logger.LogInformation($"Reading {manifestFilePath}");
-            DockerV2Manifest manifest = null;
+            DockerManifestV2 manifest = null;
             using (var fs = File.OpenRead(manifestFilePath))
             {
-                manifest = DockerV2Manifest.FromStream(fs);
+                manifest = DockerManifestV2.FromStream(fs);
             }
 
             if (manifest == null)

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry.Storage.Models
 {
-    public partial class DockerV1ManifestHistory : IUtf8JsonSerializable
+    public partial class DockerManifestV1History : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -23,7 +23,7 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
             writer.WriteEndObject();
         }
 
-        internal static DockerV1ManifestHistory DeserializeDockerV1ManifestHistory(JsonElement element)
+        internal static DockerManifestV1History DeserializeDockerManifestV1History(JsonElement element)
         {
             Optional<string> v1Compatibility = default;
             foreach (var property in element.EnumerateObject())
@@ -34,7 +34,7 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
                     continue;
                 }
             }
-            return new DockerV1ManifestHistory(v1Compatibility.Value);
+            return new DockerManifestV1History(v1Compatibility.Value);
         }
     }
 }

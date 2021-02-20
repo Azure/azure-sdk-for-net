@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry.Storage.Models
 {
-    public partial class DockerV1Manifest : IUtf8JsonSerializable
+    public partial class DockerManifestV1 : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -69,14 +69,14 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
             writer.WriteEndObject();
         }
 
-        internal static DockerV1Manifest DeserializeDockerV1Manifest(JsonElement element)
+        internal static DockerManifestV1 DeserializeDockerManifestV1(JsonElement element)
         {
             Optional<string> architecture = default;
             Optional<string> name = default;
             Optional<string> tag = default;
-            Optional<IList<DockerV1ManifestFsLayer>> fsLayers = default;
-            Optional<IList<DockerV1ManifestHistory>> history = default;
-            Optional<IList<DockerV1ManifestImageSignature>> signatures = default;
+            Optional<IList<DockerManifestV1FsLayer>> fsLayers = default;
+            Optional<IList<DockerManifestV1History>> history = default;
+            Optional<IList<DockerManifestV1ImageSignature>> signatures = default;
             Optional<int> schemaVersion = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -102,10 +102,10 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DockerV1ManifestFsLayer> array = new List<DockerV1ManifestFsLayer>();
+                    List<DockerManifestV1FsLayer> array = new List<DockerManifestV1FsLayer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DockerV1ManifestFsLayer.DeserializeDockerV1ManifestFsLayer(item));
+                        array.Add(DockerManifestV1FsLayer.DeserializeDockerManifestV1FsLayer(item));
                     }
                     fsLayers = array;
                     continue;
@@ -117,10 +117,10 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DockerV1ManifestHistory> array = new List<DockerV1ManifestHistory>();
+                    List<DockerManifestV1History> array = new List<DockerManifestV1History>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DockerV1ManifestHistory.DeserializeDockerV1ManifestHistory(item));
+                        array.Add(DockerManifestV1History.DeserializeDockerManifestV1History(item));
                     }
                     history = array;
                     continue;
@@ -132,10 +132,10 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DockerV1ManifestImageSignature> array = new List<DockerV1ManifestImageSignature>();
+                    List<DockerManifestV1ImageSignature> array = new List<DockerManifestV1ImageSignature>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DockerV1ManifestImageSignature.DeserializeDockerV1ManifestImageSignature(item));
+                        array.Add(DockerManifestV1ImageSignature.DeserializeDockerManifestV1ImageSignature(item));
                     }
                     signatures = array;
                     continue;
@@ -151,7 +151,7 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
                     continue;
                 }
             }
-            return new DockerV1Manifest(Optional.ToNullable(schemaVersion), architecture.Value, name.Value, tag.Value, Optional.ToList(fsLayers), Optional.ToList(history), Optional.ToList(signatures));
+            return new DockerManifestV1(Optional.ToNullable(schemaVersion), architecture.Value, name.Value, tag.Value, Optional.ToList(fsLayers), Optional.ToList(history), Optional.ToList(signatures));
         }
     }
 }

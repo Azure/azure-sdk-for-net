@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry.Storage.Models
 {
-    public partial class DockerV1ManifestJwk : IUtf8JsonSerializable
+    public partial class DockerManifestV1Jwk : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,9 +28,9 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
             writer.WriteEndObject();
         }
 
-        internal static DockerV1ManifestJwk DeserializeDockerV1ManifestJwk(JsonElement element)
+        internal static DockerManifestV1Jwk DeserializeDockerManifestV1Jwk(JsonElement element)
         {
-            Optional<DockerV1ManifestJwkHeader> jwk = default;
+            Optional<DockerManifestV1JwkHeader> jwk = default;
             Optional<string> alg = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -41,7 +41,7 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    jwk = DockerV1ManifestJwkHeader.DeserializeDockerV1ManifestJwkHeader(property.Value);
+                    jwk = DockerManifestV1JwkHeader.DeserializeDockerManifestV1JwkHeader(property.Value);
                     continue;
                 }
                 if (property.NameEquals("alg"))
@@ -50,7 +50,7 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
                     continue;
                 }
             }
-            return new DockerV1ManifestJwk(jwk.Value, alg.Value);
+            return new DockerManifestV1Jwk(jwk.Value, alg.Value);
         }
     }
 }

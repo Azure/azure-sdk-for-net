@@ -28,9 +28,6 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
             MediaType = mediaType;
             Manifests = manifests;
         }
-
-        /// <summary> Media type for this Manifest. </summary>
-        public string MediaType { get; set; }
         /// <summary> List of V2 image layer information. </summary>
         public IList<ManifestListAttributes> Manifests { get; }
     }

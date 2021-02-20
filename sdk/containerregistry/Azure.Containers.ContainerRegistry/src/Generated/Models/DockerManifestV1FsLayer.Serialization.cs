@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry.Storage.Models
 {
-    public partial class DockerV1ManifestFsLayer : IUtf8JsonSerializable
+    public partial class DockerManifestV1FsLayer : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -23,7 +23,7 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
             writer.WriteEndObject();
         }
 
-        internal static DockerV1ManifestFsLayer DeserializeDockerV1ManifestFsLayer(JsonElement element)
+        internal static DockerManifestV1FsLayer DeserializeDockerManifestV1FsLayer(JsonElement element)
         {
             Optional<string> blobSum = default;
             foreach (var property in element.EnumerateObject())
@@ -34,7 +34,7 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
                     continue;
                 }
             }
-            return new DockerV1ManifestFsLayer(blobSum.Value);
+            return new DockerManifestV1FsLayer(blobSum.Value);
         }
     }
 }

@@ -10,10 +10,6 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
     /// <summary> Returns the requested manifest file. </summary>
     public partial class ImageManifest
     {
-        /// <summary> Initializes a new instance of ImageManifest. </summary>
-        public ImageManifest()
-        {
-        }
 
         /// <summary> Initializes a new instance of ImageManifest. </summary>
         /// <param name="schemaVersion"> Schema version. </param>

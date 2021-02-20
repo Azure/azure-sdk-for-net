@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry.Storage.Models
 {
-    public partial class DockerV1ManifestImageSignature : IUtf8JsonSerializable
+    public partial class DockerManifestV1ImageSignature : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,9 +33,9 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
             writer.WriteEndObject();
         }
 
-        internal static DockerV1ManifestImageSignature DeserializeDockerV1ManifestImageSignature(JsonElement element)
+        internal static DockerManifestV1ImageSignature DeserializeDockerManifestV1ImageSignature(JsonElement element)
         {
-            Optional<DockerV1ManifestJwk> header = default;
+            Optional<DockerManifestV1Jwk> header = default;
             Optional<string> signature = default;
             Optional<string> @protected = default;
             foreach (var property in element.EnumerateObject())
@@ -47,7 +47,7 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    header = DockerV1ManifestJwk.DeserializeDockerV1ManifestJwk(property.Value);
+                    header = DockerManifestV1Jwk.DeserializeDockerManifestV1Jwk(property.Value);
                     continue;
                 }
                 if (property.NameEquals("signature"))
@@ -61,7 +61,7 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
                     continue;
                 }
             }
-            return new DockerV1ManifestImageSignature(header.Value, signature.Value, @protected.Value);
+            return new DockerManifestV1ImageSignature(header.Value, signature.Value, @protected.Value);
         }
     }
 }

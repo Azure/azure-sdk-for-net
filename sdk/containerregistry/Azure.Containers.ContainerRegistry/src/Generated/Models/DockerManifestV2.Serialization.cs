@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry.Storage.Models
 {
-    public partial class DockerV2Manifest : IUtf8JsonSerializable
+    public partial class DockerManifestV2 : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -19,7 +19,7 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
             if (Optional.IsDefined(MediaType))
             {
                 writer.WritePropertyName("mediaType");
-                writer.WriteStringValue(MediaType);
+                writer.WriteStringValue((string)MediaType);
             }
             if (Optional.IsDefined(Config))
             {
@@ -44,7 +44,7 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
             writer.WriteEndObject();
         }
 
-        internal static DockerV2Manifest DeserializeDockerV2Manifest(JsonElement element)
+        internal static DockerManifestV2 DeserializeDockerManifestV2(JsonElement element)
         {
             Optional<string> mediaType = default;
             Optional<ContentDescriptor> config = default;
@@ -93,7 +93,7 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
                     continue;
                 }
             }
-            return new DockerV2Manifest(Optional.ToNullable(schemaVersion), mediaType.Value, config.Value, Optional.ToList(layers));
+            return new DockerManifestV2(Optional.ToNullable(schemaVersion), mediaType.Value, config.Value, Optional.ToList(layers));
         }
     }
 }
