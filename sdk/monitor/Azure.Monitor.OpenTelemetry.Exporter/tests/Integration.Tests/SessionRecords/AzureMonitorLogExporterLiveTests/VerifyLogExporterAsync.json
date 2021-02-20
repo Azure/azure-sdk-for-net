@@ -8,11 +8,11 @@
         "Content-Length": "268",
         "Content-Type": "application/json",
         "User-Agent": "azsdk-net-Monitor.OpenTelemetry.Exporter/1.0.0-alpha.20210218.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "086909f367a505b00e788e6e381d71d4",
+        "x-ms-client-request-id": "ab22ecf322b952181dee84b166700ca4",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": [
-        "{\u0022name\u0022:\u0022Message\u0022,\u0022time\u0022:\u002202/19/2021 22:29:13\u0022,\u0022iKey\u0022:\u0022a0151fae-78ce-447c-88fc-9020efb2091c\u0022,\u0022tags\u0022:{\u0022ai.internal.sdkVersion\u0022:\u0022dotnet4.8:otel1.0.1:ext1.0.0\u0022},\u0022data\u0022:{\u0022baseType\u0022:\u0022MessageData\u0022,\u0022baseData\u0022:{\u0022message\u0022:\u0022Hello World\u0022,\u0022severityLevel\u0022:\u0022Information\u0022,\u0022ver\u0022:2}}}\n"
+        "{\u0022name\u0022:\u0022Message\u0022,\u0022time\u0022:\u002202/20/2021 00:39:01\u0022,\u0022iKey\u0022:\u0022a0151fae-78ce-447c-88fc-9020efb2091c\u0022,\u0022tags\u0022:{\u0022ai.internal.sdkVersion\u0022:\u0022dotnet4.8:otel1.0.1:ext1.0.0\u0022},\u0022data\u0022:{\u0022baseType\u0022:\u0022MessageData\u0022,\u0022baseData\u0022:{\u0022message\u0022:\u0022Hello World\u0022,\u0022severityLevel\u0022:\u0022Information\u0022,\u0022ver\u0022:2}}}\n"
       ],
       "StatusCode": 200,
       "ResponseHeaders": {
@@ -21,10 +21,10 @@
         "Access-Control-Max-Age": "3600",
         "Content-Length": "49",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 19 Feb 2021 22:29:12 GMT",
+        "Date": "Sat, 20 Feb 2021 00:38:59 GMT",
         "Strict-Transport-Security": "max-age=31536000",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-session-id": "2CE49750-E973-4CF1-827F-74FBDED68BEC"
+        "x-ms-session-id": "DD5D6795-365E-4905-8C1A-4B37855A94FE"
       },
       "ResponseBody": {
         "itemsReceived": 1,
@@ -41,48 +41,7 @@
           "FxVersion/4.8.4300.0",
           "OSName/Windows",
           "OSVersion/10.0.19042.0",
-          "Microsoft.Azure.ApplicationInsights.Query.ApplicationInsightsDataClient/1.1.0.0"
-        ]
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
-        "Connection": "keep-alive",
-        "Content-Length": "227",
-        "Content-Type": "application/json; charset=utf-8; ieee754compatible=false; odata.metadata=none; odata.streaming=false",
-        "Date": "Fri, 19 Feb 2021 22:29:44 GMT",
-        "OData-Version": "4.0;",
-        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "Vary": [
-          "Accept",
-          "Accept-Encoding"
-        ],
-        "Via": "1.1 draft-oms-5dd9df5569-2l848",
-        "X-Content-Type-Options": "nosniff"
-      },
-      "ResponseBody": {
-        "@odata.context": "https://api.applicationinsights.io/v1/apps/cab179c4-5745-42ef-9b49-1eb443e7b760/events/$metadata#traces",
-        "@ai.messages": [
-          {
-            "code": "AddedLimitToQuery",
-            "message": "The query was limited to 500 rows"
-          }
-        ],
-        "value": []
-      }
-    },
-    {
-      "RequestUri": "https://api.applicationinsights.io/v1/apps/cab179c4-5745-42ef-9b49-1eb443e7b760/events/traces?timespan=PT10M",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "User-Agent": [
-          "FxVersion/4.8.4300.0",
-          "OSName/Windows",
-          "OSVersion/10.0.19042.0",
-          "Microsoft.Azure.ApplicationInsights.Query.ApplicationInsightsDataClient/1.1.0.0"
+          "Microsoft.Azure.ApplicationInsights.Query.ApplicationInsightsDataClient/1.0.20.51503"
         ]
       },
       "RequestBody": null,
@@ -92,133 +51,16 @@
         "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
         "Age": "30",
         "Connection": "keep-alive",
-        "Content-Length": "227",
+        "Content-Length": "987",
         "Content-Type": "application/json; charset=utf-8; ieee754compatible=false; odata.metadata=none; odata.streaming=false",
-        "Date": "Fri, 19 Feb 2021 22:30:14 GMT",
-        "OData-Version": "4.0;",
-        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "Vary": "Accept-Encoding",
-        "Via": "1.1 draft-oms-5dd9df5569-db66m",
-        "X-Content-Type-Options": "nosniff"
-      },
-      "ResponseBody": {
-        "@odata.context": "https://api.applicationinsights.io/v1/apps/cab179c4-5745-42ef-9b49-1eb443e7b760/events/$metadata#traces",
-        "@ai.messages": [
-          {
-            "code": "AddedLimitToQuery",
-            "message": "The query was limited to 500 rows"
-          }
-        ],
-        "value": []
-      }
-    },
-    {
-      "RequestUri": "https://api.applicationinsights.io/v1/apps/cab179c4-5745-42ef-9b49-1eb443e7b760/events/traces?timespan=PT10M",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "User-Agent": [
-          "FxVersion/4.8.4300.0",
-          "OSName/Windows",
-          "OSVersion/10.0.19042.0",
-          "Microsoft.Azure.ApplicationInsights.Query.ApplicationInsightsDataClient/1.1.0.0"
-        ]
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
-        "Age": "60",
-        "Connection": "keep-alive",
-        "Content-Length": "227",
-        "Content-Type": "application/json; charset=utf-8; ieee754compatible=false; odata.metadata=none; odata.streaming=false",
-        "Date": "Fri, 19 Feb 2021 22:30:44 GMT",
-        "OData-Version": "4.0;",
-        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "Vary": "Accept-Encoding",
-        "Via": "1.1 draft-oms-5dd9df5569-txwzw",
-        "X-Content-Type-Options": "nosniff"
-      },
-      "ResponseBody": {
-        "@odata.context": "https://api.applicationinsights.io/v1/apps/cab179c4-5745-42ef-9b49-1eb443e7b760/events/$metadata#traces",
-        "@ai.messages": [
-          {
-            "code": "AddedLimitToQuery",
-            "message": "The query was limited to 500 rows"
-          }
-        ],
-        "value": []
-      }
-    },
-    {
-      "RequestUri": "https://api.applicationinsights.io/v1/apps/cab179c4-5745-42ef-9b49-1eb443e7b760/events/traces?timespan=PT10M",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "User-Agent": [
-          "FxVersion/4.8.4300.0",
-          "OSName/Windows",
-          "OSVersion/10.0.19042.0",
-          "Microsoft.Azure.ApplicationInsights.Query.ApplicationInsightsDataClient/1.1.0.0"
-        ]
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
-        "Age": "90",
-        "Connection": "keep-alive",
-        "Content-Length": "227",
-        "Content-Type": "application/json; charset=utf-8; ieee754compatible=false; odata.metadata=none; odata.streaming=false",
-        "Date": "Fri, 19 Feb 2021 22:31:14 GMT",
-        "OData-Version": "4.0;",
-        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "Vary": "Accept-Encoding",
-        "Via": "1.1 draft-oms-5dd9df5569-bf28m",
-        "X-Content-Type-Options": "nosniff"
-      },
-      "ResponseBody": {
-        "@odata.context": "https://api.applicationinsights.io/v1/apps/cab179c4-5745-42ef-9b49-1eb443e7b760/events/$metadata#traces",
-        "@ai.messages": [
-          {
-            "code": "AddedLimitToQuery",
-            "message": "The query was limited to 500 rows"
-          }
-        ],
-        "value": []
-      }
-    },
-    {
-      "RequestUri": "https://api.applicationinsights.io/v1/apps/cab179c4-5745-42ef-9b49-1eb443e7b760/events/traces?timespan=PT10M",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "User-Agent": [
-          "FxVersion/4.8.4300.0",
-          "OSName/Windows",
-          "OSVersion/10.0.19042.0",
-          "Microsoft.Azure.ApplicationInsights.Query.ApplicationInsightsDataClient/1.1.0.0"
-        ]
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
-        "Connection": "keep-alive",
-        "Content-Length": "1748",
-        "Content-Type": "application/json; charset=utf-8; ieee754compatible=false; odata.metadata=none; odata.streaming=false",
-        "Date": "Fri, 19 Feb 2021 22:31:44 GMT",
+        "Date": "Sat, 20 Feb 2021 00:39:30 GMT",
         "OData-Version": "4.0;",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Vary": [
           "Accept-Encoding",
-          "Accept",
           "Accept-Encoding"
         ],
-        "Via": "1.1 draft-oms-5dd9df5569-hpl8m",
+        "Via": "1.1 draft-oms-965856f6f-z8tlk",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -231,59 +73,10 @@
         ],
         "value": [
           {
-            "id": "e47c6050-7301-11eb-b8c9-2fc76a5012f0",
+            "id": "f253c080-7313-11eb-abe7-7f07a3f5233f",
             "count": 1,
             "type": "trace",
-            "timestamp": "2021-02-19T22:29:13.000Z",
-            "trace": {
-              "message": "Hello World",
-              "severityLevel": 1
-            },
-            "customDimensions": null,
-            "customMeasurements": null,
-            "operation": {
-              "name": "",
-              "id": "",
-              "parentId": "",
-              "syntheticSource": ""
-            },
-            "session": {
-              "id": ""
-            },
-            "user": {
-              "id": "",
-              "authenticatedId": "",
-              "accountId": ""
-            },
-            "application": {
-              "version": ""
-            },
-            "client": {
-              "type": "PC",
-              "model": "Other",
-              "os": "Windows",
-              "ip": "0.0.0.0",
-              "city": "Redmond",
-              "stateOrProvince": "Washington",
-              "countryOrRegion": "United States",
-              "browser": "Other"
-            },
-            "cloud": {
-              "roleName": "",
-              "roleInstance": ""
-            },
-            "ai": {
-              "appId": "cab179c4-5745-42ef-9b49-1eb443e7b760",
-              "appName": "tileemonitor",
-              "iKey": "a0151fae-78ce-447c-88fc-9020efb2091c",
-              "sdkVersion": "dotnet4.8:otel1.0.1:ext1.0.0"
-            }
-          },
-          {
-            "id": "d2284c70-7301-11eb-959a-c9595b93b2fb",
-            "count": 1,
-            "type": "trace",
-            "timestamp": "2021-02-19T22:28:41.000Z",
+            "timestamp": "2021-02-20T00:38:27.000Z",
             "trace": {
               "message": "Hello World",
               "severityLevel": 1
@@ -334,9 +127,9 @@
   ],
   "Variables": {
     "APPLICATION_ID": "cab179c4-5745-42ef-9b49-1eb443e7b760",
-    "CLIENT_ID": "72edb0cc-3a4f-4950-b8a1-79ccb14abbff",
+    "CLIENT_ID": "1b695356-0046-4617-ab97-cf253ebfe36b",
     "CONNECTION_STRING": "InstrumentationKey=a0151fae-78ce-447c-88fc-9020efb2091c;IngestionEndpoint=https://westus2-0.in.applicationinsights.azure.com/",
-    "RandomSeed": "1836388136",
+    "RandomSeed": "777990078",
     "TENANT_ID": "118397e9-9159-4ad5-bd6f-1d9190d9406a"
   }
 }
