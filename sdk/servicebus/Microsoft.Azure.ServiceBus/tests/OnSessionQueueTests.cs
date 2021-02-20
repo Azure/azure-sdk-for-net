@@ -12,6 +12,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
     public class OnSessionQueueTests
     {
+        const int ExpectedMessageCount = TestSessionHandler.NumberOfSessions * TestSessionHandler.MessagesPerSession;
+
         public static IEnumerable<object[]> TestPermutations => new object[][]
         {
             // Expected structure: { usePartitionedQueue, useSessionQueue, maxCurrentCalls }
@@ -231,11 +233,9 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                     Assert.True(testSessionHandler.ReceivedMessageCount == maxConcurrentCalls);
 
                     // Reregister won't have any problems
-                    var expectedMessageCount = testSessionHandler.NumberOfSessions * testSessionHandler.MessagesPerSession;
-
                     testSessionHandler.RegisterSessionHandlerAndRecordReceivedMessageCount(queueClient.ReceiveMode == ReceiveMode.PeekLock, 0);
-                    await testSessionHandler.WaitForAllMessagesReceived(expectedMessageCount);
-                    Assert.True(testSessionHandler.ReceivedMessageCount == expectedMessageCount);
+                    await testSessionHandler.WaitForAllMessagesReceived(ExpectedMessageCount);
+                    Assert.True(testSessionHandler.ReceivedMessageCount == ExpectedMessageCount);
 
                     testSessionHandler.ClearData();
                 }
@@ -277,10 +277,9 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                     Assert.True(testSessionHandler.ReceivedMessageCount == 0);
 
                     // Reregister won't have any problems
-                    var expectedMessageCount = testSessionHandler.NumberOfSessions * testSessionHandler.MessagesPerSession;
                     testSessionHandler.RegisterSessionHandlerAndRecordReceivedMessageCount(queueClient.ReceiveMode == ReceiveMode.PeekLock, 0);
-                    await testSessionHandler.WaitForAllMessagesReceived(expectedMessageCount);
-                    Assert.True(testSessionHandler.ReceivedMessageCount == expectedMessageCount);
+                    await testSessionHandler.WaitForAllMessagesReceived(ExpectedMessageCount);
+                    Assert.True(testSessionHandler.ReceivedMessageCount == ExpectedMessageCount);
 
 
                     testSessionHandler.ClearData();
