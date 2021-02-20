@@ -430,7 +430,7 @@ namespace Microsoft.Azure.Management.ProviderHub
         {
             // Send Request
             AzureOperationResponse<DefaultRollout> _response = await BeginCreateOrUpdateWithHttpMessagesAsync(providerNamespace, rolloutName, customHeaders, cancellationToken).ConfigureAwait(false);
-            return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
+            return _response;
         }
 
         /// <summary>

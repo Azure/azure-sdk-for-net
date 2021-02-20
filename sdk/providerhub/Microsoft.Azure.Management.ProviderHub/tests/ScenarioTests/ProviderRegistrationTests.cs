@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.ProviderHub.Tests
     public class ProviderRegistrationTests
     {
         [Fact]
-        public void TestProviderRegistrationsCRUD()
+        public void ProviderRegistrationsCRUDTests()
         {
             using (var context = MockContext.Start(GetType()))
             {

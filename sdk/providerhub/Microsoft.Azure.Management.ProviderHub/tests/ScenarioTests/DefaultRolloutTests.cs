@@ -7,10 +7,10 @@ using Xunit;
 
 namespace Microsoft.Azure.Management.ProviderHub.Tests
 {
-    public class DefaultRolloutOperationsTests
+    public class DefaultRolloutTests
     {
         [Fact]
-        public void DefaultRolloutTests()
+        public void DefaultRolloutOperationsTests()
         {
             using (var context = MockContext.Start(GetType()))
             {

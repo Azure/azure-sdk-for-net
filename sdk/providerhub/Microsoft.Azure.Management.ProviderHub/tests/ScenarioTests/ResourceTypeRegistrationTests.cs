@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.ProviderHub.Tests
     public class ResourceTypeRegistrationTests
     {
         [Fact]
-        public void TestResourceTypeRegistrationsCRUD()
+        public void ResourceTypeRegistrationsCRUDTests()
         {
             using (var context = MockContext.Start(GetType()))
             {

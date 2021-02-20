@@ -6,7 +6,7 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.ProviderHub</PackageId>
     <Description>Microsoft Azure Management Library for ProviderHub operations.</Description>
-    <Version>1.0.0</Version>
+    <Version>1.0.0-beta.1</Version>
     <AssemblyName>Microsoft.Azure.Management.ProviderHub</AssemblyName>
     <PackageTags>management;providerHub;rpaas</PackageTags>
     <PackageReleaseNotes>

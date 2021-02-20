@@ -7,16 +7,16 @@
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"specification\": {\r\n      \"canary\": {\r\n        \"regions\": [\r\n          \"Eastus2euap\"\r\n        ]\r\n      }\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "18d213f7-2b04-4efe-b526-88a0d52c9aba"
+          "f5cc89a2-85c0-4187-adcd-b264b54d1ba7"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29518.01",
+          "FxVersion/4.6.29719.03",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.ProviderHub.ProviderhubClient/1.0.0.0"
+          "Microsoft.Azure.Management.ProviderHub.ProviderhubClient/1.0.0.1"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -36,16 +36,16 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "47f637df-021b-460f-bd95-ca0859a356b4"
+          "82527f24-0ea6-4fde-a2b5-3aa2fbd34ff1"
         ],
         "x-ms-correlation-request-id": [
-          "ad515b70-437c-4af2-ae50-f35a79930312"
+          "5ef47860-bfc9-44d8-8f92-771b40adab69"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHCENTRALUS:20210209T092141Z:ad515b70-437c-4af2-ae50-f35a79930312"
+          "WESTUS:20210219T004906Z:5ef47860-bfc9-44d8-8f92-771b40adab69"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -54,7 +54,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 09 Feb 2021 09:21:41 GMT"
+          "Fri, 19 Feb 2021 00:49:06 GMT"
         ],
         "Content-Length": [
           "203"
@@ -76,16 +76,16 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "09c5f63c-40a4-4d8e-bc2f-565b340f873a"
+          "ce4e4cf3-5c8b-403a-8c6e-201825acce47"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29518.01",
+          "FxVersion/4.6.29719.03",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.ProviderHub.ProviderhubClient/1.0.0.0"
+          "Microsoft.Azure.Management.ProviderHub.ProviderhubClient/1.0.0.1"
         ]
       },
       "ResponseHeaders": {
@@ -99,16 +99,16 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "1b802ed6-cd13-4f37-968f-ca8ea750b33b"
+          "64925ba6-2a32-4cb3-a85e-4c94ea0dcd13"
         ],
         "x-ms-correlation-request-id": [
-          "c7a494e3-910f-4543-b97b-abd73e3143a1"
+          "e896d18a-22f6-4462-b4fa-df010f4ff0f3"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHCENTRALUS:20210209T092142Z:c7a494e3-910f-4543-b97b-abd73e3143a1"
+          "WESTUS:20210219T004906Z:e896d18a-22f6-4462-b4fa-df010f4ff0f3"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -117,7 +117,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 09 Feb 2021 09:21:42 GMT"
+          "Fri, 19 Feb 2021 00:49:06 GMT"
         ],
         "Content-Length": [
           "203"
@@ -139,16 +139,16 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "03f61343-ca46-46c1-9a69-0d0174f7a7c3"
+          "9a2b61a6-b75a-4298-ac96-1f6a46005e46"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29518.01",
+          "FxVersion/4.6.29719.03",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.ProviderHub.ProviderhubClient/1.0.0.0"
+          "Microsoft.Azure.Management.ProviderHub.ProviderhubClient/1.0.0.1"
         ]
       },
       "ResponseHeaders": {
@@ -162,16 +162,16 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "7cca42de-fafa-46ad-84e1-0c789f0c7d4b"
+          "a173cf89-f93f-44f4-8d5d-73e646f23067"
         ],
         "x-ms-correlation-request-id": [
-          "ec4df37d-a045-44cb-b9c9-ed139d7db20a"
+          "17d3ac81-86c4-4a2e-a682-51024cc0eb6f"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHCENTRALUS:20210209T092143Z:ec4df37d-a045-44cb-b9c9-ed139d7db20a"
+          "WESTUS:20210219T004906Z:17d3ac81-86c4-4a2e-a682-51024cc0eb6f"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -180,7 +180,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 09 Feb 2021 09:21:42 GMT"
+          "Fri, 19 Feb 2021 00:49:06 GMT"
         ],
         "Content-Length": [
           "1984"

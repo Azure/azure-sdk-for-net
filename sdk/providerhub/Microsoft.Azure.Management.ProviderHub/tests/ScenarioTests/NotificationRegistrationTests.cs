@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.ProviderHub.Tests
     public class NotificationRegistrationTests
     {
         [Fact]
-        public void TestNotificationRegistrationsCRUD()
+        public void NotificationRegistrationsCRUDTests()
         {
             using (var context = MockContext.Start(GetType()))
             {

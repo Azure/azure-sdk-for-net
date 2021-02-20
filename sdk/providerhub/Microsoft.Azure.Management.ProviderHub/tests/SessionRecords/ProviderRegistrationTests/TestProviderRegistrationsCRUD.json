@@ -7,7 +7,7 @@
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"providerHubMetadata\": {\r\n      \"providerAuthorizations\": [\r\n        {\r\n          \"applicationId\": \"3d834152-5efa-46f7-85a4-a18c2b5d46f9\",\r\n          \"roleDefinitionId\": \"760505bf-dcfa-4311-b890-18da392a00b2\"\r\n        }\r\n      ],\r\n      \"providerAuthentication\": {\r\n        \"allowedAudiences\": [\r\n          \"https://management.core.windows.net/\"\r\n        ]\r\n      }\r\n    },\r\n    \"providerVersion\": \"2.0\",\r\n    \"providerType\": \"Internal, Hidden\",\r\n    \"management\": {\r\n      \"manifestOwners\": [\r\n        \"SPARTA-PlatformServiceAdministrator\"\r\n      ],\r\n      \"incidentRoutingService\": \"Resource Provider Service as a Service\",\r\n      \"incidentRoutingTeam\": \"RPaaS\",\r\n      \"incidentContactEmail\": \"rpaascore@microsoft.com\",\r\n      \"serviceTreeInfos\": [\r\n        {\r\n          \"serviceId\": \"d1b7d8ba-05e2-48e6-90d6-d781b99c6e69\",\r\n          \"componentId\": \"d1b7d8ba-05e2-48e6-90d6-d781b99c6e69\"\r\n        }\r\n      ]\r\n    },\r\n    \"capabilities\": [\r\n      {\r\n        \"quotaId\": \"CSP_2015-05-01\",\r\n        \"effect\": \"Allow\"\r\n      },\r\n      {\r\n        \"quotaId\": \"CSP_MG_2017-12-01\",\r\n        \"effect\": \"Allow\"\r\n      }\r\n    ]\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "2f31e7cd-14b6-4241-9f83-f517b3ebeb90"
+          "a05465f5-c518-4762-9594-db263e24d61b"
         ],
         "Accept-Language": [
           "en-US"
@@ -36,16 +36,16 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "86aa264b-4de9-4a74-9d7f-c323055db20c"
+          "5325f497-776f-4fc5-80f3-454bbc9f81b8"
         ],
         "x-ms-correlation-request-id": [
-          "830c4c2f-8c04-4994-ab20-9990119d8a67"
+          "0e9a3322-8e94-4305-a2e2-05e9029cf6ab"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20210208T075610Z:830c4c2f-8c04-4994-ab20-9990119d8a67"
+          "WESTUS:20210209T185037Z:0e9a3322-8e94-4305-a2e2-05e9029cf6ab"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -54,7 +54,7 @@
           "nosniff"
         ],
         "Date": [
-          "Mon, 08 Feb 2021 07:56:10 GMT"
+          "Tue, 09 Feb 2021 18:50:37 GMT"
         ],
         "Content-Length": [
           "885"
@@ -76,7 +76,7 @@
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"providerHubMetadata\": {\r\n      \"providerAuthorizations\": [\r\n        {\r\n          \"applicationId\": \"3d834152-5efa-46f7-85a4-a18c2b5d46f9\",\r\n          \"roleDefinitionId\": \"760505bf-dcfa-4311-b890-18da392a00b2\"\r\n        }\r\n      ],\r\n      \"providerAuthentication\": {\r\n        \"allowedAudiences\": [\r\n          \"https://management.core.windows.net/\"\r\n        ]\r\n      }\r\n    },\r\n    \"providerVersion\": \"2.0\",\r\n    \"providerType\": \"Internal, Hidden\",\r\n    \"management\": {\r\n      \"manifestOwners\": [\r\n        \"SPARTA-PlatformServiceAdministrator\"\r\n      ],\r\n      \"incidentRoutingService\": \"Resource Provider Service as a Service\",\r\n      \"incidentRoutingTeam\": \"RPaaS\",\r\n      \"incidentContactEmail\": \"rpaascore@microsoft.com\",\r\n      \"serviceTreeInfos\": [\r\n        {\r\n          \"serviceId\": \"d1b7d8ba-05e2-48e6-90d6-d781b99c6e69\",\r\n          \"componentId\": \"d1b7d8ba-05e2-48e6-90d6-d781b99c6e69\"\r\n        }\r\n      ]\r\n    },\r\n    \"capabilities\": [\r\n      {\r\n        \"quotaId\": \"CSP_2015-05-01\",\r\n        \"effect\": \"Allow\"\r\n      },\r\n      {\r\n        \"quotaId\": \"CSP_MG_2017-12-01\",\r\n        \"effect\": \"Allow\"\r\n      }\r\n    ]\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "d2d5948b-eb26-44cc-98b1-281bf0614ca5"
+          "1f5cf4b7-cca5-464d-9666-e93658c164d0"
         ],
         "Accept-Language": [
           "en-US"
@@ -105,16 +105,16 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "d530d89c-8b05-4643-b6db-694c7a25487b"
+          "5a18100a-6129-4708-b0f2-36de92b35c2e"
         ],
         "x-ms-correlation-request-id": [
-          "64660e8b-7a2d-467f-ab1a-0329c5edacf0"
+          "8ae683a9-5d76-465c-be0c-4460344eeeff"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20210208T075612Z:64660e8b-7a2d-467f-ab1a-0329c5edacf0"
+          "WESTUS:20210209T185040Z:8ae683a9-5d76-465c-be0c-4460344eeeff"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -123,7 +123,7 @@
           "nosniff"
         ],
         "Date": [
-          "Mon, 08 Feb 2021 07:56:12 GMT"
+          "Tue, 09 Feb 2021 18:50:40 GMT"
         ],
         "Content-Length": [
           "885"
@@ -145,7 +145,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e7dac84e-b6b4-4498-8c95-817ea9ae8613"
+          "2341abdd-7da8-4c21-b0f2-3f15ea817d13"
         ],
         "Accept-Language": [
           "en-US"
@@ -165,19 +165,19 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11999"
+          "11998"
         ],
         "x-ms-request-id": [
-          "0b7bf472-e1fb-4044-847c-77dc126149e6"
+          "4e08f7f1-96c6-4495-a219-a5cdf4f4010a"
         ],
         "x-ms-correlation-request-id": [
-          "0e5d79e3-617b-46ef-b9ec-fcc0253dc0d8"
+          "0c79f7b3-593c-4b33-9024-e9f6952a321b"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20210208T075611Z:0e5d79e3-617b-46ef-b9ec-fcc0253dc0d8"
+          "WESTUS:20210209T185038Z:0c79f7b3-593c-4b33-9024-e9f6952a321b"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -186,7 +186,7 @@
           "nosniff"
         ],
         "Date": [
-          "Mon, 08 Feb 2021 07:56:11 GMT"
+          "Tue, 09 Feb 2021 18:50:37 GMT"
         ],
         "Content-Length": [
           "901"
@@ -208,7 +208,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "68578120-28c1-4ebe-aadd-bfc2070be1e9"
+          "7c0b3610-516b-49eb-92e9-8bb1e1e7b102"
         ],
         "Accept-Language": [
           "en-US"
@@ -234,16 +234,16 @@
           "gateway"
         ],
         "x-ms-request-id": [
-          "765b30f0-888c-4c2f-bd1b-df984544581f"
+          "6532b230-18fc-4b76-9899-ab666c2bbdd3"
         ],
         "x-ms-correlation-request-id": [
-          "9c145a11-9e22-4018-b542-289f81f91b53"
+          "372c03cc-c75d-45e1-b505-e9cce6e5776b"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20210208T075611Z:9c145a11-9e22-4018-b542-289f81f91b53"
+          "WESTUS:20210209T185038Z:372c03cc-c75d-45e1-b505-e9cce6e5776b"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -252,7 +252,7 @@
           "nosniff"
         ],
         "Date": [
-          "Mon, 08 Feb 2021 07:56:11 GMT"
+          "Tue, 09 Feb 2021 18:50:38 GMT"
         ],
         "Content-Length": [
           "131"
@@ -274,7 +274,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "d3b600dc-1ec9-4940-b9ca-776099cbe69d"
+          "c7307a1a-b9fb-41ca-9b5f-addf18ef5ad1"
         ],
         "Accept-Language": [
           "en-US"
@@ -297,16 +297,16 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "e3753aee-bfa0-44c7-ae1f-1078de84f0ed"
+          "5a313c89-8c51-4c07-8e2d-f92e4ad141f2"
         ],
         "x-ms-correlation-request-id": [
-          "39c2396b-6ba1-483f-bd8f-8076c4e1964a"
+          "14f0f321-c75e-4d22-9d15-3284c2480447"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20210208T075611Z:39c2396b-6ba1-483f-bd8f-8076c4e1964a"
+          "WESTUS:20210209T185038Z:14f0f321-c75e-4d22-9d15-3284c2480447"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -315,10 +315,10 @@
           "nosniff"
         ],
         "Date": [
-          "Mon, 08 Feb 2021 07:56:10 GMT"
+          "Tue, 09 Feb 2021 18:50:38 GMT"
         ],
         "Content-Length": [
-          "1140"
+          "1142"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -327,7 +327,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"subscriptionId\": \"6f53185c-ea09-4fc3-9075-318dec805303\",\r\n      \"namespace\": \"Microsoft.Contoso\",\r\n      \"providerHubMetadata\": {\r\n        \"providerAuthorizations\": [\r\n          {\r\n            \"applicationId\": \"3d834152-5efa-46f7-85a4-a18c2b5d46f9\",\r\n            \"roleDefinitionId\": \"760505bf-dcfa-4311-b890-18da392a00b2\"\r\n          }\r\n        ],\r\n        \"providerAuthentication\": {\r\n          \"allowedAudiences\": [\r\n            \"https://management.core.windows.net/\"\r\n          ]\r\n        }\r\n      },\r\n      \"management\": {\r\n        \"manifestOwners\": [\r\n          \"SPARTA-PlatformServiceAdministrator\"\r\n        ],\r\n        \"incidentRoutingService\": \"Resource Provider Service as a Service\",\r\n        \"incidentRoutingTeam\": \"RPaaS\",\r\n        \"incidentContactEmail\": \"rpaascore@microsoft.com\",\r\n        \"serviceTreeInfos\": [\r\n          {\r\n            \"serviceId\": \"d1b7d8ba-05e2-48e6-90d6-d781b99c6e69\",\r\n            \"componentId\": \"d1b7d8ba-05e2-48e6-90d6-d781b99c6e69\"\r\n          }\r\n        ],\r\n        \"resourceAccessPolicy\": \"NotSpecified\"\r\n      },\r\n      \"providerType\": \"Internal, Hidden\",\r\n      \"providerVersion\": \"2.0\",\r\n      \"capabilities\": [\r\n        {\r\n          \"quotaId\": \"CSP_2015-05-01\",\r\n          \"effect\": \"Allow\"\r\n        },\r\n        {\r\n          \"quotaId\": \"CSP_MG_2017-12-01\",\r\n          \"effect\": \"Allow\"\r\n        }\r\n      ],\r\n      \"provisioningState\": \"Succeeded\",\r\n      \"metadata\": null,\r\n      \"partitionKey\": \"FIXED\",\r\n      \"id\": \"MICROSOFTCONTOSO\",\r\n      \"createdTime\": \"2021-02-08T07:56:10.688947Z\",\r\n      \"changedTime\": \"2021-02-08T07:56:10.688947Z\",\r\n      \"_ETag\": \"\\\"9005b4e2-0000-0700-0000-6020ee9a0000\\\"\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"subscriptionId\": \"6f53185c-ea09-4fc3-9075-318dec805303\",\r\n      \"namespace\": \"Microsoft.Contoso\",\r\n      \"providerHubMetadata\": {\r\n        \"providerAuthorizations\": [\r\n          {\r\n            \"applicationId\": \"3d834152-5efa-46f7-85a4-a18c2b5d46f9\",\r\n            \"roleDefinitionId\": \"760505bf-dcfa-4311-b890-18da392a00b2\"\r\n          }\r\n        ],\r\n        \"providerAuthentication\": {\r\n          \"allowedAudiences\": [\r\n            \"https://management.core.windows.net/\"\r\n          ]\r\n        }\r\n      },\r\n      \"management\": {\r\n        \"manifestOwners\": [\r\n          \"SPARTA-PlatformServiceAdministrator\"\r\n        ],\r\n        \"incidentRoutingService\": \"Resource Provider Service as a Service\",\r\n        \"incidentRoutingTeam\": \"RPaaS\",\r\n        \"incidentContactEmail\": \"rpaascore@microsoft.com\",\r\n        \"serviceTreeInfos\": [\r\n          {\r\n            \"serviceId\": \"d1b7d8ba-05e2-48e6-90d6-d781b99c6e69\",\r\n            \"componentId\": \"d1b7d8ba-05e2-48e6-90d6-d781b99c6e69\"\r\n          }\r\n        ],\r\n        \"resourceAccessPolicy\": \"NotSpecified\"\r\n      },\r\n      \"providerType\": \"Internal, Hidden\",\r\n      \"providerVersion\": \"2.0\",\r\n      \"capabilities\": [\r\n        {\r\n          \"quotaId\": \"CSP_2015-05-01\",\r\n          \"effect\": \"Allow\"\r\n        },\r\n        {\r\n          \"quotaId\": \"CSP_MG_2017-12-01\",\r\n          \"effect\": \"Allow\"\r\n        }\r\n      ],\r\n      \"provisioningState\": \"Succeeded\",\r\n      \"metadata\": null,\r\n      \"partitionKey\": \"FIXED\",\r\n      \"id\": \"MICROSOFTCONTOSO\",\r\n      \"createdTime\": \"2021-02-09T18:50:37.7972104Z\",\r\n      \"changedTime\": \"2021-02-09T18:50:37.7972104Z\",\r\n      \"_ETag\": \"\\\"a306797a-0000-0700-0000-6022d97d0000\\\"\"\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     },
     {
@@ -337,7 +337,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "206febb8-6486-469c-bd6c-bfeff890f0b1"
+          "c4fdedc7-5098-4791-b78a-0b9b28502c09"
         ],
         "Accept-Language": [
           "en-US"
@@ -366,10 +366,10 @@
           "14999"
         ],
         "x-ms-correlation-request-id": [
-          "008e1eec-06cb-42d6-abe5-4d6dfa21f11d"
+          "6dade2d5-9fbd-4cc4-975f-2c0ad72d177a"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20210208T075611Z:008e1eec-06cb-42d6-abe5-4d6dfa21f11d"
+          "WESTUS:20210209T185038Z:6dade2d5-9fbd-4cc4-975f-2c0ad72d177a"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -378,7 +378,7 @@
           "nosniff"
         ],
         "Date": [
-          "Mon, 08 Feb 2021 07:56:11 GMT"
+          "Tue, 09 Feb 2021 18:50:38 GMT"
         ],
         "Expires": [
           "-1"

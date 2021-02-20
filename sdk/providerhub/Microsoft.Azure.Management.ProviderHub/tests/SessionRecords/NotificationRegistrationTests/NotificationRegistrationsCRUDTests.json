@@ -1,0 +1,401 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/providers/Microsoft.ProviderHub/providerRegistrations/Microsoft.Contoso/notificationRegistrations/employeesNotificationRegistration?api-version=2020-11-20",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmY1MzE4NWMtZWEwOS00ZmMzLTkwNzUtMzE4ZGVjODA1MzAzL3Byb3ZpZGVycy9NaWNyb3NvZnQuUHJvdmlkZXJIdWIvcHJvdmlkZXJSZWdpc3RyYXRpb25zL01pY3Jvc29mdC5Db250b3NvL25vdGlmaWNhdGlvblJlZ2lzdHJhdGlvbnMvZW1wbG95ZWVzTm90aWZpY2F0aW9uUmVnaXN0cmF0aW9uP2FwaS12ZXJzaW9uPTIwMjAtMTEtMjA=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"notificationMode\": \"EventHub\",\r\n    \"messageScope\": \"RegisteredSubscriptions\",\r\n    \"includedEvents\": [\r\n      \"*/write\",\r\n      \"Microsoft.Contoso/employees/delete\"\r\n    ],\r\n    \"notificationEndpoints\": [\r\n      {\r\n        \"notificationDestination\": \"/subscriptions/ac6bcfb5-3dc1-491f-95a6-646b89bf3e88/resourceGroups/mgmtexp-eastus/providers/Microsoft.EventHub/namespaces/unitedstates-mgmtexpint/eventhubs/armlinkednotifications\",\r\n        \"locations\": [\r\n          \"\",\r\n          \"East US\"\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "8d8bc99b-16f9-4a34-9bf8-8ef13d02ce33"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29719.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.ProviderHub.ProviderhubClient/1.0.0.1"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "554"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "a46c7072-b575-4b72-bac7-a4208f5ea854"
+        ],
+        "x-ms-correlation-request-id": [
+          "f30706b5-7992-4803-b21a-211586f33adf"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20210219T004807Z:f30706b5-7992-4803-b21a-211586f33adf"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2021 00:48:06 GMT"
+        ],
+        "Content-Length": [
+          "458"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"employeesNotificationRegistration\",\r\n  \"properties\": {\r\n    \"notificationMode\": \"EventHub\",\r\n    \"messageScope\": \"RegisteredSubscriptions\",\r\n    \"includedEvents\": [\r\n      \"*/write\",\r\n      \"Microsoft.Contoso/employees/delete\"\r\n    ],\r\n    \"notificationEndpoints\": [\r\n      {\r\n        \"notificationDestination\": \"/subscriptions/ac6bcfb5-3dc1-491f-95a6-646b89bf3e88/resourceGroups/mgmtexp-eastus/providers/Microsoft.EventHub/namespaces/unitedstates-mgmtexpint/eventhubs/armlinkednotifications\",\r\n        \"locations\": [\r\n          \"\",\r\n          \"East US\"\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/providers/Microsoft.ProviderHub/providerRegistrations/Microsoft.Contoso/notificationRegistrations/employeesNotificationRegistration?api-version=2020-11-20",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmY1MzE4NWMtZWEwOS00ZmMzLTkwNzUtMzE4ZGVjODA1MzAzL3Byb3ZpZGVycy9NaWNyb3NvZnQuUHJvdmlkZXJIdWIvcHJvdmlkZXJSZWdpc3RyYXRpb25zL01pY3Jvc29mdC5Db250b3NvL25vdGlmaWNhdGlvblJlZ2lzdHJhdGlvbnMvZW1wbG95ZWVzTm90aWZpY2F0aW9uUmVnaXN0cmF0aW9uP2FwaS12ZXJzaW9uPTIwMjAtMTEtMjA=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"notificationMode\": \"EventHub\",\r\n    \"messageScope\": \"RegisteredSubscriptions\",\r\n    \"includedEvents\": [\r\n      \"*/write\",\r\n      \"Microsoft.Contoso/employees/delete\"\r\n    ],\r\n    \"notificationEndpoints\": [\r\n      {\r\n        \"notificationDestination\": \"/subscriptions/ac6bcfb5-3dc1-491f-95a6-646b89bf3e88/resourceGroups/mgmtexp-eastus/providers/Microsoft.EventHub/namespaces/unitedstates-mgmtexpint/eventhubs/armlinkednotifications\",\r\n        \"locations\": [\r\n          \"\",\r\n          \"East US\"\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "5143f83c-05ab-44a2-b1b4-bce2bf07a70c"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29719.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.ProviderHub.ProviderhubClient/1.0.0.1"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "554"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "b83f828b-ddce-4b6c-94c0-8006c8b48331"
+        ],
+        "x-ms-correlation-request-id": [
+          "39c36028-cfca-42c8-a7fb-9bd4d758654a"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20210219T004808Z:39c36028-cfca-42c8-a7fb-9bd4d758654a"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2021 00:48:08 GMT"
+        ],
+        "Content-Length": [
+          "458"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"employeesNotificationRegistration\",\r\n  \"properties\": {\r\n    \"notificationMode\": \"EventHub\",\r\n    \"messageScope\": \"RegisteredSubscriptions\",\r\n    \"includedEvents\": [\r\n      \"*/write\",\r\n      \"Microsoft.Contoso/employees/delete\"\r\n    ],\r\n    \"notificationEndpoints\": [\r\n      {\r\n        \"notificationDestination\": \"/subscriptions/ac6bcfb5-3dc1-491f-95a6-646b89bf3e88/resourceGroups/mgmtexp-eastus/providers/Microsoft.EventHub/namespaces/unitedstates-mgmtexpint/eventhubs/armlinkednotifications\",\r\n        \"locations\": [\r\n          \"\",\r\n          \"East US\"\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/providers/Microsoft.ProviderHub/providerRegistrations/Microsoft.Contoso/notificationRegistrations/employeesNotificationRegistration?api-version=2020-11-20",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmY1MzE4NWMtZWEwOS00ZmMzLTkwNzUtMzE4ZGVjODA1MzAzL3Byb3ZpZGVycy9NaWNyb3NvZnQuUHJvdmlkZXJIdWIvcHJvdmlkZXJSZWdpc3RyYXRpb25zL01pY3Jvc29mdC5Db250b3NvL25vdGlmaWNhdGlvblJlZ2lzdHJhdGlvbnMvZW1wbG95ZWVzTm90aWZpY2F0aW9uUmVnaXN0cmF0aW9uP2FwaS12ZXJzaW9uPTIwMjAtMTEtMjA=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "24b8d814-c6a3-447f-8b0b-6e750c505769"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29719.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.ProviderHub.ProviderhubClient/1.0.0.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-request-id": [
+          "b82195a3-0bc5-4929-a5f1-f6246f993b19"
+        ],
+        "x-ms-correlation-request-id": [
+          "d0e3376b-d0a5-4491-a26b-96fda97f8eef"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20210219T004807Z:d0e3376b-d0a5-4491-a26b-96fda97f8eef"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2021 00:48:07 GMT"
+        ],
+        "Content-Length": [
+          "458"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"employeesNotificationRegistration\",\r\n  \"properties\": {\r\n    \"notificationMode\": \"EventHub\",\r\n    \"messageScope\": \"RegisteredSubscriptions\",\r\n    \"includedEvents\": [\r\n      \"*/write\",\r\n      \"Microsoft.Contoso/employees/delete\"\r\n    ],\r\n    \"notificationEndpoints\": [\r\n      {\r\n        \"notificationDestination\": \"/subscriptions/ac6bcfb5-3dc1-491f-95a6-646b89bf3e88/resourceGroups/mgmtexp-eastus/providers/Microsoft.EventHub/namespaces/unitedstates-mgmtexpint/eventhubs/armlinkednotifications\",\r\n        \"locations\": [\r\n          \"\",\r\n          \"East US\"\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/providers/Microsoft.ProviderHub/providerRegistrations/Microsoft.Contoso/notificationRegistrations/employeesNotificationRegistration?api-version=2020-11-20",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmY1MzE4NWMtZWEwOS00ZmMzLTkwNzUtMzE4ZGVjODA1MzAzL3Byb3ZpZGVycy9NaWNyb3NvZnQuUHJvdmlkZXJIdWIvcHJvdmlkZXJSZWdpc3RyYXRpb25zL01pY3Jvc29mdC5Db250b3NvL25vdGlmaWNhdGlvblJlZ2lzdHJhdGlvbnMvZW1wbG95ZWVzTm90aWZpY2F0aW9uUmVnaXN0cmF0aW9uP2FwaS12ZXJzaW9uPTIwMjAtMTEtMjA=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "c67e992a-8c94-4438-9dfc-229a0c2092a5"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29719.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.ProviderHub.ProviderhubClient/1.0.0.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-failure-cause": [
+          "gateway"
+        ],
+        "x-ms-request-id": [
+          "ff033d2d-b5f5-4bfc-97cf-44d1f51be120"
+        ],
+        "x-ms-correlation-request-id": [
+          "24626455-64ce-4170-94a3-792796e77df3"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20210219T004808Z:24626455-64ce-4170-94a3-792796e77df3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2021 00:48:07 GMT"
+        ],
+        "Content-Length": [
+          "135"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"NotificationRegistrationNotFound\",\r\n    \"message\": \"The notification registration for 'Microsoft.Contoso' does not exist.\"\r\n  }\r\n}",
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/providers/Microsoft.ProviderHub/providerRegistrations/Microsoft.Contoso/notificationRegistrations?api-version=2020-11-20",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmY1MzE4NWMtZWEwOS00ZmMzLTkwNzUtMzE4ZGVjODA1MzAzL3Byb3ZpZGVycy9NaWNyb3NvZnQuUHJvdmlkZXJIdWIvcHJvdmlkZXJSZWdpc3RyYXRpb25zL01pY3Jvc29mdC5Db250b3NvL25vdGlmaWNhdGlvblJlZ2lzdHJhdGlvbnM/YXBpLXZlcnNpb249MjAyMC0xMS0yMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "0aba061c-e17c-4d0a-a1d8-ccf67dcb4260"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29719.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.ProviderHub.ProviderhubClient/1.0.0.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-request-id": [
+          "10db3749-aa26-4d4f-addc-150af7a204fc"
+        ],
+        "x-ms-correlation-request-id": [
+          "a09ad143-dcad-4aa5-8c80-61c004dfee23"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20210219T004807Z:a09ad143-dcad-4aa5-8c80-61c004dfee23"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2021 00:48:07 GMT"
+        ],
+        "Content-Length": [
+          "470"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": \"employeesNotificationRegistration\",\r\n      \"properties\": {\r\n        \"notificationMode\": \"EventHub\",\r\n        \"messageScope\": \"RegisteredSubscriptions\",\r\n        \"includedEvents\": [\r\n          \"*/write\",\r\n          \"Microsoft.Contoso/employees/delete\"\r\n        ],\r\n        \"notificationEndpoints\": [\r\n          {\r\n            \"notificationDestination\": \"/subscriptions/ac6bcfb5-3dc1-491f-95a6-646b89bf3e88/resourceGroups/mgmtexp-eastus/providers/Microsoft.EventHub/namespaces/unitedstates-mgmtexpint/eventhubs/armlinkednotifications\",\r\n            \"locations\": [\r\n              \"\",\r\n              \"East US\"\r\n            ]\r\n          }\r\n        ]\r\n      }\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/providers/Microsoft.ProviderHub/providerRegistrations/Microsoft.Contoso/notificationRegistrations/employeesNotificationRegistration?api-version=2020-11-20",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmY1MzE4NWMtZWEwOS00ZmMzLTkwNzUtMzE4ZGVjODA1MzAzL3Byb3ZpZGVycy9NaWNyb3NvZnQuUHJvdmlkZXJIdWIvcHJvdmlkZXJSZWdpc3RyYXRpb25zL01pY3Jvc29mdC5Db250b3NvL25vdGlmaWNhdGlvblJlZ2lzdHJhdGlvbnMvZW1wbG95ZWVzTm90aWZpY2F0aW9uUmVnaXN0cmF0aW9uP2FwaS12ZXJzaW9uPTIwMjAtMTEtMjA=",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "dd5ad0fa-5d1a-4533-8b42-ce4cbf0f64e4"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29719.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.ProviderHub.ProviderhubClient/1.0.0.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14999"
+        ],
+        "x-ms-request-id": [
+          "0eaaa39b-e24e-4959-9be8-67f85387651b"
+        ],
+        "x-ms-correlation-request-id": [
+          "c1cb5fb7-61ed-46df-a6e5-3d33b0062948"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20210219T004807Z:c1cb5fb7-61ed-46df-a6e5-3d33b0062948"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2021 00:48:07 GMT"
+        ],
+        "Content-Length": [
+          "4"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "null",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "6f53185c-ea09-4fc3-9075-318dec805303"
+  }
+}
