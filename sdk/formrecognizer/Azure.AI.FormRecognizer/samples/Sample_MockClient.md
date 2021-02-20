@@ -3,7 +3,7 @@
 This sample illustrates how to use [Moq][moq] to create a unit test that mocks the response from a `FormRecognizerClient` method. For more examples of mocking, see [Moq samples][moq_samples].
 
 ## Define a method that uses a FormRecognizerClient
-To show the usage of mocks, define a method that will be tested with mocked objects. For this case, we are going to create a method that will verify whether the total price of a groceries list is expensive or not. We're not considering it expensive if the confidence of the recognized field is too low.
+To show the usage of mocks, define a method that will be tested with mocked objects. For this case, we are going to create a method that will calculate whether the total price of a groceries list is expensive (x > $100), only if the recognized field has a confidence greater than 70%.
 
 ```C# Snippet:FormRecognizerMethodToTest
 private static async Task<bool> IsExpensiveAsync(string modelId, Uri documentUri, FormRecognizerClient client)
