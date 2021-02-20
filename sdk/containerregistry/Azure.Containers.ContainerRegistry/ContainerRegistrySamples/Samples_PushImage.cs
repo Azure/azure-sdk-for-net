@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Containers.ContainerRegistry;
+using Azure.Containers.ContainerRegistry.Authentication;
 using Azure.Containers.ContainerRegistry.Models;
 using Azure.Containers.ContainerRegistry.Storage;
 using Azure.Containers.ContainerRegistry.Storage.Models;
@@ -101,7 +103,25 @@ namespace ContainerRegistrySamples
 
             RepositoryStorageClient client = new RepositoryStorageClient(new Uri("myacr.azurecr.io"), "hello-world", new DefaultAzureCredential());
 
+            // TODO: what is the scenario for newing a Manifest up programmatically?
 
+        }
+
+        public async Task PushImageViaDockerCli()
+        {
+            // TODO: Make this look more like what our tests have
+            string userName = Environment.GetEnvironmentVariable("ADMIN_USER_NAME");
+            string password = Environment.GetEnvironmentVariable("ADMIN_PASSWORD");
+
+            ContainerRegistryStsClient stsClient = new ContainerRegistryStsClient(new Uri("myacr.azurecr.io"), new AzureAdminUserCredential(userName, password));
+
+            // TODO: validate this scenario is required, e.g.
+            // What is the scenario where the Docker daemon isn't running in your environment, but the Docker CLI is provided?
+            Process loginCmd = Process.Start("docker.exe", arguments: $"login {stsClient.Endpoint} --username 00000000-0000-0000-0000-000000000000 --password {stsClient.GetAccessToken()}");
+            loginCmd.WaitForExit();
+
+            Process pushCmd = Process.Start("docker.exe", arguments: $"push {stsClient.Endpoint}/hello-world:v1");
+            loginCmd.WaitForExit();
         }
     }
 }

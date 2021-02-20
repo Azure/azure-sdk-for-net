@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable
-
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -28,11 +26,11 @@ namespace Azure.Containers.ContainerRegistry
         {
         }
 
-        public ContainerRegistryClient(Uri endpoint, string username, string password) : this(endpoint, username, password, new ContainerRegistryClientOptions())
+        public ContainerRegistryClient(Uri endpoint, AzureAdminUserCredential credential) : this(endpoint, credential, new ContainerRegistryClientOptions())
         {
         }
 
-        public ContainerRegistryClient(Uri endpoint, string username, string password, ContainerRegistryClientOptions options)
+        public ContainerRegistryClient(Uri endpoint, AzureAdminUserCredential credential, ContainerRegistryClientOptions options)
         {
         }
 

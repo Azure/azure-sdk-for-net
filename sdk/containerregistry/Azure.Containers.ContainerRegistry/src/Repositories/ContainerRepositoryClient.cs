@@ -34,11 +34,11 @@ namespace Azure.Containers.ContainerRegistry
             _repositoryName = repositoryName;
         }
 
-        public ContainerRepositoryClient(Uri endpoint, string repositoryName, string username, string password) : this(endpoint, repositoryName, username, password, new ContainerRegistryClientOptions())
+        public ContainerRepositoryClient(Uri endpoint, string repositoryName, AzureAdminUserCredential credential) : this(endpoint, repositoryName, credential, new ContainerRegistryClientOptions())
         {
         }
 
-        public ContainerRepositoryClient(Uri endpoint, string repositoryName, string username, string password, ContainerRegistryClientOptions options)
+        public ContainerRepositoryClient(Uri endpoint, string repositoryName, AzureAdminUserCredential credential, ContainerRegistryClientOptions options)
         {
             _repositoryName = repositoryName;
         }

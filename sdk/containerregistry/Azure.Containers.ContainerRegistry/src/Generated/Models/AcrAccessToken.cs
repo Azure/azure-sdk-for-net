@@ -8,14 +8,14 @@
 namespace Azure.Containers.ContainerRegistry.Models
 {
     /// <summary> The AccessToken. </summary>
-    internal partial class AccessToken
+    internal partial class AcrAccessToken
     {
-        /// <summary> Initializes a new instance of AccessToken. </summary>
-        internal AccessToken()
+        /// <summary> Initializes a new instance of AcrAccessToken. </summary>
+        internal AcrAccessToken()
         {
         }
 
         /// <summary> The access token for performing authenticated requests. </summary>
-        public string AccessTokenValue { get; }
+        public string AccessToken { get; }
     }
 }

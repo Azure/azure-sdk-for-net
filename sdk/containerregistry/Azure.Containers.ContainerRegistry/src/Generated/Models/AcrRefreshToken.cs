@@ -8,14 +8,14 @@
 namespace Azure.Containers.ContainerRegistry.Models
 {
     /// <summary> The RefreshToken. </summary>
-    internal partial class RefreshToken
+    internal partial class AcrRefreshToken
     {
-        /// <summary> Initializes a new instance of RefreshToken. </summary>
-        internal RefreshToken()
+        /// <summary> Initializes a new instance of AcrRefreshToken. </summary>
+        internal AcrRefreshToken()
         {
         }
 
         /// <summary> The refresh token to be used for generating access tokens. </summary>
-        public string RefreshTokenValue { get; }
+        public string RefreshToken { get; }
     }
 }
