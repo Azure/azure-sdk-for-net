@@ -712,7 +712,7 @@ namespace Azure.Data.Tables
         /// <typeparam name="T">A custom model type that implements <see cref="ITableEntity" /> or an instance of <see cref="TableEntity"/>.</typeparam>
         /// <param name="filter">
         /// Returns only entities that satisfy the specified filter expression.
-        /// For example, the following expression would filter entities with a PartitionKey of 'foo': <c>x => e.PartitionKey == "foo"</c>.
+        /// For example, the following expression would filter entities with a PartitionKey of 'foo': <c>e => e.PartitionKey == "foo"</c>.
         /// </param>
         /// <param name="maxPerPage">
         /// The maximum number of entities that will be returned per page.
@@ -746,7 +746,7 @@ namespace Azure.Data.Tables
         /// <typeparam name="T">A custom model type that implements <see cref="ITableEntity" /> or an instance of <see cref="TableEntity"/>.</typeparam>
         /// <param name="filter">
         /// Returns only entities that satisfy the specified filter expression.
-        /// For example, the following expression would filter entities with a PartitionKey of 'foo': <c>x => e.PartitionKey == "foo"</c>.
+        /// For example, the following expression would filter entities with a PartitionKey of 'foo': <c>e => e.PartitionKey == "foo"</c>.
         /// </param>
         /// <param name="maxPerPage">
         /// The maximum number of entities that will be returned per page.
@@ -1084,10 +1084,10 @@ namespace Azure.Data.Tables
         /// Create a <see cref="TableTransactionalBatch" /> for the given <paramref name="partitionKey"/> value.
         /// </summary>
         /// <param name="partitionKey">The partitionKey context for the batch.</param>
-        /// <returns></returns>
+        /// <returns>An instance of <see cref="TableTransactionalBatch"/>.</returns>
         public virtual TableTransactionalBatch CreateTransactionalBatch(string partitionKey)
         {
-            return new TableTransactionalBatch(_table, _tableOperations, _defaultQueryOptions.Format.Value);
+            return new TableTransactionalBatch(_table, partitionKey, _tableOperations, _defaultQueryOptions.Format.Value);
         }
 
         internal static string Bind(Expression expression)

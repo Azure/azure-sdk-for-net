@@ -171,25 +171,20 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                     await testSessionHandler.SendSessionMessages();
 
                     // Register handler
-                    var count = 0;
-                    testSessionHandler.RegisterSessionHandler(
-                       async (session, message, token) =>
-                       {
-                           await Task.Delay(TimeSpan.FromSeconds(8));
-                           TestUtility.Log($"Received Session: {session.SessionId} message: SequenceNumber: {message.SystemProperties.SequenceNumber}");
+                    testSessionHandler.RegisterSessionHandlerAndRecordReceivedMessageCount(subscriptionClient.ReceiveMode == ReceiveMode.PeekLock, 8);
 
-                           if (subscriptionClient.ReceiveMode == ReceiveMode.PeekLock && !sessionHandlerOptions.AutoComplete)
-                           {
-                               await session.CompleteAsync(message.SystemProperties.LockToken);
-                           }
-                           Interlocked.Increment(ref count);
-                       },
-                       sessionHandlerOptions);
-
+                    // Session handler set up has greater latency than message handler. Delay here to enable some processing time of the session pump.
                     await Task.Delay(TimeSpan.FromSeconds(2));
+
                     // UnregisterSessionHandler should wait up to the provided timeout to finish the message handling tasks
                     await testSessionHandler.UnregisterSessionHandler(TimeSpan.FromSeconds(10));
-                    Assert.True(count == maxConcurrentCalls);
+                    Assert.True(testSessionHandler.ReceivedMessageCount == maxConcurrentCalls);
+
+                    // Reregister won't have any problems
+                    var expectedMessageCount = testSessionHandler.NumberOfSessions * testSessionHandler.MessagesPerSession;
+                    testSessionHandler.RegisterSessionHandlerAndRecordReceivedMessageCount(subscriptionClient.ReceiveMode == ReceiveMode.PeekLock, 0);
+                    await testSessionHandler.WaitForAllMessagesReceived(expectedMessageCount);
+                    Assert.True(testSessionHandler.ReceivedMessageCount == expectedMessageCount);
 
                     testSessionHandler.ClearData();
                 }
@@ -231,25 +226,17 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                     await testSessionHandler.SendSessionMessages();
 
                     // Register handler
-                    var count = 0;
-                    testSessionHandler.RegisterSessionHandler(
-                       async (session, message, token) =>
-                       {
-                           await Task.Delay(TimeSpan.FromSeconds(8));
-                           TestUtility.Log($"Received Session: {session.SessionId} message: SequenceNumber: {message.SystemProperties.SequenceNumber}");
+                    testSessionHandler.RegisterSessionHandlerAndRecordReceivedMessageCount(subscriptionClient.ReceiveMode == ReceiveMode.PeekLock, 8);
 
-                           if (subscriptionClient.ReceiveMode == ReceiveMode.PeekLock && !sessionHandlerOptions.AutoComplete)
-                           {
-                               await session.CompleteAsync(message.SystemProperties.LockToken);
-                           }
-                           Interlocked.Increment(ref count);
-                       },
-                       sessionHandlerOptions);
-
-                    await Task.Delay(TimeSpan.FromSeconds(2));
                     // UnregisterSessionHandler should wait up to the provided timeout to finish the message handling tasks
                     await testSessionHandler.UnregisterSessionHandler(TimeSpan.FromSeconds(2));
-                    Assert.True(count == 0);
+                    Assert.True(testSessionHandler.ReceivedMessageCount == 0);
+
+                    // Reregister won't have any problems
+                    var expectedMessageCount = testSessionHandler.NumberOfSessions * testSessionHandler.MessagesPerSession;
+                    testSessionHandler.RegisterSessionHandlerAndRecordReceivedMessageCount(subscriptionClient.ReceiveMode == ReceiveMode.PeekLock, 0);
+                    await testSessionHandler.WaitForAllMessagesReceived(expectedMessageCount);
+                    Assert.True(testSessionHandler.ReceivedMessageCount == expectedMessageCount);
 
                     testSessionHandler.ClearData();
                 }

@@ -33,11 +33,13 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
         /// <param name="targetRegion">Gets or sets the target region.</param>
         /// <param name="provisioningState">Possible values include:
         /// 'Succeeded', 'Updating', 'Creating', 'Failed'</param>
-        public MoveCollectionProperties(string sourceRegion, string targetRegion, string provisioningState = default(string))
+        /// <param name="errors">Defines the move collection errors.</param>
+        public MoveCollectionProperties(string sourceRegion, string targetRegion, string provisioningState = default(string), MoveCollectionPropertiesErrors errors = default(MoveCollectionPropertiesErrors))
         {
             SourceRegion = sourceRegion;
             TargetRegion = targetRegion;
             ProvisioningState = provisioningState;
+            Errors = errors;
             CustomInit();
         }
 
@@ -64,6 +66,12 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
         /// </summary>
         [JsonProperty(PropertyName = "provisioningState")]
         public string ProvisioningState { get; set; }
+
+        /// <summary>
+        /// Gets defines the move collection errors.
+        /// </summary>
+        [JsonProperty(PropertyName = "errors")]
+        public MoveCollectionPropertiesErrors Errors { get; private set; }
 
     }
 }

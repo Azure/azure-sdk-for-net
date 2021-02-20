@@ -10,7 +10,13 @@ namespace Azure.Communication.Pipeline
     {
         public static HttpPipeline BuildHttpPipeline(this ClientOptions options, ConnectionString connectionString)
         {
-            var authPolicy = new HMACAuthenticationPolicy(connectionString.GetRequired("accesskey"));
+            var authPolicy = new HMACAuthenticationPolicy(new AzureKeyCredential(connectionString.GetRequired("accesskey")));
+            return HttpPipelineBuilder.Build(options, authPolicy);
+        }
+
+        public static HttpPipeline BuildHttpPipeline(this ClientOptions options, AzureKeyCredential keyCredential)
+        {
+            var authPolicy = new HMACAuthenticationPolicy(keyCredential);
             return HttpPipelineBuilder.Build(options, authPolicy);
         }
 

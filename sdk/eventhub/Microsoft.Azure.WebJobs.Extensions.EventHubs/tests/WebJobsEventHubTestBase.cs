@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.Messaging.EventHubs.Processor.Tests;
 using Azure.Messaging.EventHubs.Tests;
 using Microsoft.Azure.WebJobs.EventHubs;
 using Microsoft.Azure.WebJobs.Host.TestCommon;

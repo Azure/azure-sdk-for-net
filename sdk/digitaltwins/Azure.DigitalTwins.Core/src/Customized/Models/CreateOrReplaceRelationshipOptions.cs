@@ -5,7 +5,6 @@ using Azure.Core;
 
 namespace Azure.DigitalTwins.Core
 {
-    /// <inheritdoc />
     [CodeGenModel("DigitalTwinsAddRelationshipOptions")]
     internal partial class CreateOrReplaceRelationshipOptions
     {

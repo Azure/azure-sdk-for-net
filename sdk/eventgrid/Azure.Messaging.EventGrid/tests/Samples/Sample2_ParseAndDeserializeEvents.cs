@@ -3,7 +3,6 @@
 
 using System;
 using System.Text.Json;
-using System.Threading.Tasks;
 using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
 using Azure.Messaging.EventGrid.SystemEvents;
@@ -31,10 +30,10 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
             #region Snippet:DeserializePayloadUsingAsSystemEventData
             foreach (EventGridEvent egEvent in egEvents)
             {
-                // If the event is a system event, AsSystemEventData() should return the correct system event type
-                if (egEvent.IsSystemEvent)
+                // If the event is a system event, TryGetSystemEventData() will return the deserialized system event
+                if (egEvent.TryGetSystemEventData(out object systemEvent))
                 {
-                    switch (egEvent.AsSystemEventData())
+                    switch (systemEvent)
                     {
                         case SubscriptionValidationEventData subscriptionValidated:
                             Console.WriteLine(subscriptionValidated.ValidationCode);
@@ -71,7 +70,7 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
 
         // This sample demonstrates how to parse CloudEvents from JSON and access event data using GetData<T>()
         [Test]
-        public async Task GenericReceiveAndDeserializeEventGridEvents()
+        public void GenericReceiveAndDeserializeEventGridEvents()
         {
             // Example of a custom ObjectSerializer used to deserialize the event payload
             JsonObjectSerializer myCustomSerializer = new JsonObjectSerializer(
@@ -98,10 +97,10 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
                         break;
                     case "MyApp.Models.CustomEventType":
                         // One can also specify a custom ObjectSerializer as needed to deserialize the payload correctly
-                        TestPayload testPayload = await cloudEvent.GetDataAsync<TestPayload>(myCustomSerializer);
+                        TestPayload testPayload = cloudEvent.GetData().ToObject<TestPayload>(myCustomSerializer);
                         Console.WriteLine(testPayload.Name);
                         break;
-                    case "Microsoft.Storage.BlobDeleted":
+                    case SystemEventNames.StorageBlobDeleted:
                         // Example for deserializing system events using GetData<T>
                         StorageBlobDeletedEventData blobDeleted = cloudEvent.GetData<StorageBlobDeletedEventData>();
                         Console.WriteLine(blobDeleted.BlobType);

@@ -63,31 +63,32 @@ namespace Azure.Messaging.ServiceBus
         private TimeSpan _maxAutoRenewDuration = TimeSpan.FromMinutes(5);
 
         /// <summary>
-        /// Gets or sets the maximum amount of time to wait for each Receive call using the processor's underlying
-        /// receiver.
+        /// Gets or sets the maximum amount of time to wait for a message to be received for the
+        /// currently active session. After this time has elapsed, the processor will close the session
+        /// and attempt to process another session.
         /// If not specified, the <see cref="ServiceBusRetryOptions.TryTimeout"/> will be used.
         /// </summary>
         ///
-        /// <remarks>If no message is returned for a call
-        /// to Receive, a new session will be requested by the processor.
-        /// Hence, if this value is set to be too low, it could cause new sessions to be requested
-        /// more often than necessary.
+        /// <remarks>
+        /// If <see cref="SessionIds"/> is populated and <see cref="MaxConcurrentSessions"/> is greater or equal to
+        /// the number of sessions specified in <see cref="SessionIds"/>, the session will not be closed when the idle timeout elapses.
+        /// However, it will still control the amount of time each receive call waits.
         /// </remarks>
-        internal TimeSpan? MaxReceiveWaitTime
+        public TimeSpan? SessionIdleTimeout
         {
-            get => _maxReceiveWaitTime;
+            get => _sessionIdleTimeout;
 
             set
             {
                 if (value.HasValue)
                 {
-                    Argument.AssertPositive(value.Value, nameof(MaxReceiveWaitTime));
+                    Argument.AssertPositive(value.Value, nameof(SessionIdleTimeout));
                 }
 
-                _maxReceiveWaitTime = value;
+                _sessionIdleTimeout = value;
             }
         }
-        private TimeSpan? _maxReceiveWaitTime;
+        private TimeSpan? _sessionIdleTimeout;
 
         /// <summary>
         /// Gets or sets the maximum number of sessions that can be processed concurrently by the processor.
@@ -135,6 +136,15 @@ namespace Azure.Messaging.ServiceBus
         public IList<string> SessionIds { get; } = new List<string>();
 
         /// <summary>
+        /// Gets or sets the transaction group associated with the processor. This is an
+        /// arbitrary string that is used to all senders, receivers, and processors that you
+        /// wish to use in a transaction that spans multiple different queues, topics, or subscriptions.
+        /// If your transactions only involves a single queue, topic, or subscription, this property
+        /// should not be set.
+        /// </summary>
+        public string TransactionGroup { get; set; }
+
+        /// <summary>
         /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
         /// </summary>
         ///
@@ -167,7 +177,8 @@ namespace Azure.Messaging.ServiceBus
                 PrefetchCount = PrefetchCount,
                 AutoCompleteMessages = AutoCompleteMessages,
                 MaxAutoLockRenewalDuration = MaxAutoLockRenewalDuration,
-                MaxReceiveWaitTime = MaxReceiveWaitTime
+                MaxReceiveWaitTime = SessionIdleTimeout,
+                TransactionGroup = TransactionGroup
             };
     }
 }

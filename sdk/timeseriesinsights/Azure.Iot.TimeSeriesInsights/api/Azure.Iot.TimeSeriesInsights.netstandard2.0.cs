@@ -23,8 +23,10 @@ namespace Azure.Iot.TimeSeriesInsights
         protected TimeSeriesInsightsClient() { }
         public TimeSeriesInsightsClient(string environmentFqdn, Azure.Core.TokenCredential credential) { }
         public TimeSeriesInsightsClient(string environmentFqdn, Azure.Core.TokenCredential credential, Azure.Iot.TimeSeriesInsights.TimeSeriesInsightsClientOptions options) { }
-        public virtual Azure.Response<Azure.Iot.TimeSeriesInsights.Models.ModelSettingsResponse> Get(string clientSessionId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Iot.TimeSeriesInsights.Models.ModelSettingsResponse>> GetAsync(string clientSessionId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Iot.TimeSeriesInsights.Models.TimeSeriesModelSettings> GetModelSettings(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Iot.TimeSeriesInsights.Models.TimeSeriesModelSettings>> GetModelSettingsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Iot.TimeSeriesInsights.Models.TimeSeriesModelSettings> UpdateModelSettings(Azure.Iot.TimeSeriesInsights.UpdateModelSettingsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Iot.TimeSeriesInsights.Models.TimeSeriesModelSettings>> UpdateModelSettingsAsync(Azure.Iot.TimeSeriesInsights.UpdateModelSettingsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class TimeSeriesInsightsClientOptions : Azure.Core.ClientOptions
     {
@@ -39,6 +41,12 @@ namespace Azure.Iot.TimeSeriesInsights
     {
         public TimeSeriesVariable() { }
         public Azure.Iot.TimeSeriesInsights.TimeSeriesExpression Filter { get { throw null; } set { } }
+    }
+    public partial class UpdateModelSettingsOptions
+    {
+        public UpdateModelSettingsOptions() { }
+        public string DefaultTypeId { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
     }
 }
 namespace Azure.Iot.TimeSeriesInsights.Models
@@ -546,11 +554,5 @@ namespace Azure.Iot.TimeSeriesInsights.Models
         public TypesRequestBatchGetOrDelete() { }
         public System.Collections.Generic.IList<string> Names { get { throw null; } }
         public System.Collections.Generic.IList<string> TypeIds { get { throw null; } }
-    }
-    public partial class UpdateModelSettingsRequest
-    {
-        public UpdateModelSettingsRequest() { }
-        public string DefaultTypeId { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
     }
 }

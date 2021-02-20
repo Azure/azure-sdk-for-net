@@ -43,6 +43,11 @@ namespace Compute.Tests
             return GetEntityReferenceId(subId, resourceGrpName, ApiConstants.VMScaleSets, vmssName);
         }
 
+        public static string GetCloudServiceReferenceId(string subId, string resourceGrpName, string cloudServiceName)
+        {
+            return GetEntityReferenceId(subId, resourceGrpName, ApiConstants.CloudServices, cloudServiceName);
+        }
+
         private static string GetEntityReferenceId(string subId, string resourceGrpName, string controllerName, string entityName)
         {
             return string.Format("/{0}/{1}/{2}/{3}/{4}/{5}/{6}/{7}",

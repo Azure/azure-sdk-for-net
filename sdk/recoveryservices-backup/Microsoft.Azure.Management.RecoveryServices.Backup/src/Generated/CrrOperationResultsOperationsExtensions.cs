@@ -50,34 +50,5 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                 (await operations.GetWithHttpMessagesAsync(azureRegion, operationId, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='azureRegion'>
-            /// Azure region to hit Api
-            /// </param>
-            /// <param name='operationId'>
-            /// </param>
-            public static void BeginGet(this ICrrOperationResultsOperations operations, string azureRegion, string operationId)
-            {
-                operations.BeginGetAsync(azureRegion, operationId).GetAwaiter().GetResult();
-            }
-
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='azureRegion'>
-            /// Azure region to hit Api
-            /// </param>
-            /// <param name='operationId'>
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task BeginGetAsync(this ICrrOperationResultsOperations operations, string azureRegion, string operationId, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.BeginGetWithHttpMessagesAsync(azureRegion, operationId, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
     }
 }

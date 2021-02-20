@@ -16,8 +16,6 @@ namespace Microsoft.Azure.Management.ResourceManager
     using Newtonsoft.Json;
 
     /// <summary>
-    /// To manage and control access to your resources, you can define
-    /// customized policies and assign them at a scope.
     /// </summary>
     public partial interface IPolicyClient : System.IDisposable
     {
@@ -47,11 +45,6 @@ namespace Microsoft.Azure.Management.ResourceManager
         string SubscriptionId { get; set; }
 
         /// <summary>
-        /// The API version to use for the operation.
-        /// </summary>
-        string ApiVersion { get; }
-
-        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }
@@ -71,6 +64,11 @@ namespace Microsoft.Azure.Management.ResourceManager
 
 
         /// <summary>
+        /// Gets the IDataPolicyManifestsOperations.
+        /// </summary>
+        IDataPolicyManifestsOperations DataPolicyManifests { get; }
+
+        /// <summary>
         /// Gets the IPolicyAssignmentsOperations.
         /// </summary>
         IPolicyAssignmentsOperations PolicyAssignments { get; }
@@ -84,6 +82,11 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// Gets the IPolicySetDefinitionsOperations.
         /// </summary>
         IPolicySetDefinitionsOperations PolicySetDefinitions { get; }
+
+        /// <summary>
+        /// Gets the IPolicyExemptionsOperations.
+        /// </summary>
+        IPolicyExemptionsOperations PolicyExemptions { get; }
 
     }
 }

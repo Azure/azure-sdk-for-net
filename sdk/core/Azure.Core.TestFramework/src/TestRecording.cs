@@ -299,6 +299,8 @@ namespace Azure.Core.TestFramework
             _previousSession = null;
         }
 
+        public bool HasRequests => _session?.Entries.Count > 0;
+
         public DisableRecordingScope DisableRecording()
         {
             return new DisableRecordingScope(this, EntryRecordModel.DontRecord);

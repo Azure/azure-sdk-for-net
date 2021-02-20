@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    internal static class MaintenanceOperationResultCodeTypesExtensions
+    internal static partial class MaintenanceOperationResultCodeTypesExtensions
     {
         public static string ToSerialString(this MaintenanceOperationResultCodeTypes value) => value switch
         {

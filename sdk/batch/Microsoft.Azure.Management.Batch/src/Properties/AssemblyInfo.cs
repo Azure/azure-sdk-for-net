@@ -8,8 +8,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Microsoft Azure Batch Management Library")]
 [assembly: AssemblyDescription("Provides management functions for Microsoft Azure Batch services.")]
 
-[assembly: AssemblyVersion("11.0.0.0")]
-[assembly: AssemblyFileVersion("11.0.0.0")]
+[assembly: AssemblyVersion("13.0.0.0")]
+[assembly: AssemblyFileVersion("13.0.0.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]

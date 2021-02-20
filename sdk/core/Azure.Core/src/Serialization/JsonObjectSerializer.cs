@@ -62,9 +62,9 @@ namespace Azure.Core.Serialization
         }
 
         /// <inheritdoc />
-        public override async ValueTask<object?> DeserializeAsync(Stream stream, Type returnType, CancellationToken cancellationToken)
+        public override ValueTask<object?> DeserializeAsync(Stream stream, Type returnType, CancellationToken cancellationToken)
         {
-            return await JsonSerializer.DeserializeAsync(stream, returnType, _options, cancellationToken).ConfigureAwait(false);
+            return JsonSerializer.DeserializeAsync(stream, returnType, _options, cancellationToken);
         }
 
         /// <inheritdoc/>

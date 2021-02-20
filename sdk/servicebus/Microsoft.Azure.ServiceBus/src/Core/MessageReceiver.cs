@@ -908,7 +908,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// of inflight receive and message handling operations to finish and unregisters future receives on the message handler which previously 
         /// registered. 
         /// </summary>
-        /// <param name="inflightMessageHandlerTasksWaitTimeout"> is the waitTimeout for inflight message handling tasks.</param>
+        /// <param name="inflightMessageHandlerTasksWaitTimeout"> is the maximum waitTimeout for inflight message handling tasks.</param>
         public async Task UnregisterMessageHandlerAsync(TimeSpan inflightMessageHandlerTasksWaitTimeout)
         {
             this.ThrowIfClosed();
@@ -936,6 +936,12 @@ namespace Microsoft.Azure.ServiceBus.Core
                 && stopWatch.Elapsed < inflightMessageHandlerTasksWaitTimeout
                 && this.receivePump.maxConcurrentCallsSemaphoreSlim.CurrentCount < this.receivePump.registerHandlerOptions.MaxConcurrentCalls)
             {
+                // We can proceed when the inflight tasks are done. 
+                if (this.receivePump.maxConcurrentCallsSemaphoreSlim.CurrentCount == this.receivePump.registerHandlerOptions.MaxConcurrentCalls)
+                {
+                    break;
+                }
+
                 await Task.Delay(10).ConfigureAwait(false);
             }
 
@@ -1331,11 +1337,7 @@ namespace Microsoft.Azure.ServiceBus.Core
                 }
 
                 this.receivePumpCancellationTokenSource = new CancellationTokenSource();
-
-                if (this.runningTaskCancellationTokenSource == null)
-                {
-                    this.runningTaskCancellationTokenSource = new CancellationTokenSource();
-                }
+                this.runningTaskCancellationTokenSource = new CancellationTokenSource();
 
                 this.receivePump = new MessageReceivePump(this, registerHandlerOptions, callback, this.ServiceBusConnection.Endpoint, this.receivePumpCancellationTokenSource.Token, this.runningTaskCancellationTokenSource.Token);
             }

@@ -4,38 +4,38 @@
       "RequestUri": "https://seanmcccanary3.file.core.windows.net/test-share-b068a1bc-a8f8-cc3d-a444-7506c8260aa0?comp=lease\u0026restype=share",
       "RequestMethod": "PUT",
       "RequestHeaders": {
+        "Accept": "application/xml",
         "Authorization": "Sanitized",
-        "traceparent": "00-c215705a021e5341b5ea5ad9fa2ee913-62f73f492d302941-00",
+        "traceparent": "00-99c67dde62b141469959f6603ef76fbe-9fc7cadcfb749b49-00",
         "User-Agent": [
-          "azsdk-net-Storage.Files.Shares/12.3.0-dev.20200805.1",
-          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18362 )"
+          "azsdk-net-Storage.Files.Shares/12.7.0-alpha.20210126.1",
+          "(.NET 5.0.2; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "e36a0a3f-d978-5358-8c21-682eb8f31003",
-        "x-ms-date": "Wed, 05 Aug 2020 22:26:16 GMT",
+        "x-ms-date": "Tue, 26 Jan 2021 19:24:33 GMT",
         "x-ms-lease-action": "break",
-        "x-ms-lease-id": "69c90c9c-119e-9dd5-7026-9523ccc4056a",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-04-08"
+        "x-ms-version": "2020-06-12"
       },
       "RequestBody": null,
       "StatusCode": 404,
       "ResponseHeaders": {
         "Content-Length": "217",
         "Content-Type": "application/xml",
-        "Date": "Wed, 05 Aug 2020 22:26:14 GMT",
+        "Date": "Tue, 26 Jan 2021 19:24:31 GMT",
         "Server": [
           "Windows-Azure-File/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-client-request-id": "e36a0a3f-d978-5358-8c21-682eb8f31003",
         "x-ms-error-code": "ShareNotFound",
-        "x-ms-request-id": "e3307c38-501a-005b-3f77-6be3f9000000",
-        "x-ms-version": "2020-04-08"
+        "x-ms-request-id": "fb4aee76-301a-0086-4218-f4167b000000",
+        "x-ms-version": "2020-06-12"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EShareNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified share does not exist.\n",
-        "RequestId:e3307c38-501a-005b-3f77-6be3f9000000\n",
-        "Time:2020-08-05T22:26:15.5761367Z\u003C/Message\u003E\u003C/Error\u003E"
+        "RequestId:fb4aee76-301a-0086-4218-f4167b000000\n",
+        "Time:2021-01-26T19:24:32.5620048Z\u003C/Message\u003E\u003C/Error\u003E"
       ]
     }
   ],
