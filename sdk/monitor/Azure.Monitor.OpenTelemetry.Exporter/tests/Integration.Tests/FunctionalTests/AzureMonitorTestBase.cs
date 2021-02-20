@@ -38,8 +38,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.FunctionalTests
         /// <summary>
         /// We need to have one TEST for NUnit to discover this class.
         /// </summary>
-        [Test]
-        public void Dummy() { }
+        //[Test]
+        //public void Dummy() { }
 
         /// <remarks>
         /// TODO: The <see cref="AzureMonitorLogExporter" /> is currently INTERNAL while under development.
