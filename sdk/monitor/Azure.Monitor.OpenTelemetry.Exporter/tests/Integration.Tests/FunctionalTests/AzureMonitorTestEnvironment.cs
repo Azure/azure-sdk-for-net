@@ -3,6 +3,8 @@
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.FunctionalTests
 {
+    using System;
+
     using Azure.Core.TestFramework;
 
     public class AzureMonitorTestEnvironment : TestEnvironment
@@ -10,6 +12,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.FunctionalTests
         public AzureMonitorTestEnvironment() : base()
         {
         }
+
+        /// <summary>
+        /// We depend on the ClientSecret for AAD.
+        /// This value is not included in the recorded so we must fake it during Playback.
+        /// This value comes from the New-TestResources.ps1 script.
+        /// </summary>
+        //public new string ClientSecret => this.Mode == RecordedTestMode.Playback ? Guid.Empty.ToString() : base.ClientSecret;
 
         /// <summary>
         /// Connection String is used to connect to an Application Insights resource.
