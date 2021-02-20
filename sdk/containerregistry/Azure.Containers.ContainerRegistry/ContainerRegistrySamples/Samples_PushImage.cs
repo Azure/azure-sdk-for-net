@@ -22,7 +22,7 @@ namespace ContainerRegistrySamples
             //var repositoryClient = registryClient.GetRepositoryClient("hello-world");
             //var storageClient = repositoryClient.GetContainerStorageClient();
 
-            RepositoryStorageClient client = new RepositoryStorageClient(new Uri("myacr.azurecr.io"), "hello-world", new DefaultAzureCredential());
+            ArtifactStorageClient client = new ArtifactStorageClient(new Uri("myacr.azurecr.io"), "hello-world", new DefaultAzureCredential());
 
             string directory = @"c:\src\images\hello-world";
 
@@ -101,7 +101,7 @@ namespace ContainerRegistrySamples
             //var repositoryClient = registryClient.GetRepositoryClient("hello-world");
             //var storageClient = repositoryClient.GetContainerStorageClient();
 
-            RepositoryStorageClient client = new RepositoryStorageClient(new Uri("myacr.azurecr.io"), "hello-world", new DefaultAzureCredential());
+            ArtifactStorageClient client = new ArtifactStorageClient(new Uri("myacr.azurecr.io"), "hello-world", new DefaultAzureCredential());
 
             // TODO: what is the scenario for newing a Manifest up programmatically?
 

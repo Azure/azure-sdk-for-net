@@ -7,7 +7,7 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry.Storage.Models
 {
     [CodeGenModel("Manifest")]
-    public abstract partial class ImageManifest
+    public partial class ImageManifest
     {
         internal ImageManifest() { }
 

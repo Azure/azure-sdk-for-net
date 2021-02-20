@@ -9,15 +9,15 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
 {
     public class CompleteUploadResult
     {
-        internal CompleteUploadResult(string blobLocation, HttpRange range, string digest)
+        internal CompleteUploadResult(string location, HttpRange range, string digest)
         {
             // From docstring comments: /// <param name="location"> Link acquired from upload start or previous chunk. Note, do not include initial / (must do substring(1) ). </param>
             // TODO: is there a way to rejig this in the swagger file rather than doing it in code?
-            BlobLocation = new Uri(blobLocation.Substring(1));
+            Location = new Uri(location.Substring(1));
             Range = range;
         }
 
-        public Uri BlobLocation { get; }
+        public Uri Location { get; }
 
         // TODO: what strings are returned here, and is this best modeled as a string, or a numerical type?
         public HttpRange Range { get; }

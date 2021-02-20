@@ -14,7 +14,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Containers.ContainerRegistry.Storage
 {
     /// <summary> The RepositoryStorageClient service client. </summary>
-    public partial class RepositoryStorageClient
+    public partial class ArtifactStorageClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
@@ -30,38 +30,38 @@ namespace Azure.Containers.ContainerRegistry.Storage
         /// <summary>
         /// Initializes a new instance of the <see cref="ContainerRegistryClient"/>.
         /// </summary>
-        public RepositoryStorageClient(Uri endpoint, string repositoryName, TokenCredential credential) : this(endpoint, repositoryName, credential, new ContainerRegistryClientOptions())
+        public ArtifactStorageClient(Uri endpoint, string repositoryName, TokenCredential credential) : this(endpoint, repositoryName, credential, new ContainerRegistryClientOptions())
         {
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ContainerRegistryClient"/>.
         /// </summary>
-        public RepositoryStorageClient(Uri endpoint, string repositoryName, TokenCredential credential, ContainerRegistryClientOptions options)
+        public ArtifactStorageClient(Uri endpoint, string repositoryName, TokenCredential credential, ContainerRegistryClientOptions options)
         {
             _repositoryName = repositoryName;
         }
 
-        public RepositoryStorageClient(Uri endpoint, string repositoryName, AzureAdminUserCredential credential) : this(endpoint, repositoryName, credential, new ContainerRegistryClientOptions())
+        public ArtifactStorageClient(Uri endpoint, string repositoryName, AzureAdminUserCredential credential) : this(endpoint, repositoryName, credential, new ContainerRegistryClientOptions())
         {
         }
 
-        public RepositoryStorageClient(Uri endpoint, string repositoryName, AzureAdminUserCredential credential, ContainerRegistryClientOptions options)
+        public ArtifactStorageClient(Uri endpoint, string repositoryName, AzureAdminUserCredential credential, ContainerRegistryClientOptions options)
         {
             _repositoryName = repositoryName;
         }
 
-        public RepositoryStorageClient(Uri endpoint, string repositoryName) : this(endpoint, repositoryName, new ContainerRegistryClientOptions())
+        public ArtifactStorageClient(Uri endpoint, string repositoryName) : this(endpoint, repositoryName, new ContainerRegistryClientOptions())
         {
         }
 
-        public RepositoryStorageClient(Uri endpoint, string repositoryName, ContainerRegistryClientOptions options)
+        public ArtifactStorageClient(Uri endpoint, string repositoryName, ContainerRegistryClientOptions options)
         {
             _repositoryName = repositoryName;
         }
 
         /// <summary> Initializes a new instance of ContainerRegistryBlobClient for mocking. </summary>
-        protected RepositoryStorageClient()
+        protected ArtifactStorageClient()
         {
         }
 
@@ -69,7 +69,7 @@ namespace Azure.Containers.ContainerRegistry.Storage
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> Registry login URL. </param>
-        internal RepositoryStorageClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url)
+        internal ArtifactStorageClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url)
         {
             RestClient = new ContainerRegistryBlobRestClient(clientDiagnostics, pipeline, url);
             _clientDiagnostics = clientDiagnostics;
@@ -441,7 +441,7 @@ namespace Azure.Containers.ContainerRegistry.Storage
             scope.Start();
             try
             {
-                ResponseWithHeaders<ContainerRegistryBlobUploadChunkHeaders> response = await RestClient.UploadChunkAsync(uploadDetails.BlobLocation.ToString(), value, cancellationToken).ConfigureAwait(false);
+                ResponseWithHeaders<ContainerRegistryBlobUploadChunkHeaders> response = await RestClient.UploadChunkAsync(uploadDetails.Location.ToString(), value, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(
                     new UploadChunkResult(
                         response.Headers.Location.ToString(),
@@ -464,7 +464,7 @@ namespace Azure.Containers.ContainerRegistry.Storage
             scope.Start();
             try
             {
-                ResponseWithHeaders<ContainerRegistryBlobUploadChunkHeaders> response = RestClient.UploadChunk(uploadDetails.BlobLocation.ToString(), value, cancellationToken);
+                ResponseWithHeaders<ContainerRegistryBlobUploadChunkHeaders> response = RestClient.UploadChunk(uploadDetails.Location.ToString(), value, cancellationToken);
                 return Response.FromValue(
                    new CreateUploadResult(
                        response.Headers.Location.ToString(),
@@ -489,7 +489,7 @@ namespace Azure.Containers.ContainerRegistry.Storage
             scope.Start();
             try
             {
-                ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders> response = await RestClient.CompleteUploadAsync(digest, uploadDetails.BlobLocation.ToString(), null, cancellationToken).ConfigureAwait(false);
+                ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders> response = await RestClient.CompleteUploadAsync(digest, uploadDetails.Location.ToString(), null, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(
                     new CompleteUploadResult(
                         response.Headers.Location.ToString(),
@@ -517,7 +517,7 @@ namespace Azure.Containers.ContainerRegistry.Storage
                 // TODO: in this method call, we're validating that value is not null, but it is actually an optional 
                 // parameter and should not be validated as null is a correct value.  How can we reflect this in the swagger?
 
-                ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders> response = RestClient.CompleteUpload(digest, uploadDetails.BlobLocation.ToString(), null, cancellationToken);
+                ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders> response = RestClient.CompleteUpload(digest, uploadDetails.Location.ToString(), null, cancellationToken);
                 return Response.FromValue(
                     new CompleteUploadResult(
                         response.Headers.Location.ToString(),
@@ -543,7 +543,7 @@ namespace Azure.Containers.ContainerRegistry.Storage
             scope.Start();
             try
             {
-                ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders> response = await RestClient.CompleteUploadAsync(digest, uploadDetails.BlobLocation.ToString(), value, cancellationToken).ConfigureAwait(false);
+                ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders> response = await RestClient.CompleteUploadAsync(digest, uploadDetails.Location.ToString(), value, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(
                     new CompleteUploadResult(
                         response.Headers.Location.ToString(),
@@ -577,7 +577,7 @@ namespace Azure.Containers.ContainerRegistry.Storage
                 // TODO: in this method call, we're validating that value is not null, but it is actually an optional 
                 // parameter and should not be validated as null is a correct value.  How can we reflect this in the swagger?
 
-                ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders> response = RestClient.CompleteUpload(digest, uploadDetails.BlobLocation.ToString(), value, cancellationToken);
+                ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders> response = RestClient.CompleteUpload(digest, uploadDetails.Location.ToString(), value, cancellationToken);
                 return Response.FromValue(
                     new CompleteUploadResult(
                         response.Headers.Location.ToString(),

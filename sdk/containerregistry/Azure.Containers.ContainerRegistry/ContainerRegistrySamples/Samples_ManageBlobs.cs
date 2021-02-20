@@ -21,8 +21,7 @@ namespace ContainerRegistrySamples
             // Monolithic upload
             ContainerRegistryClient registryClient = new ContainerRegistryClient(new Uri("myacr.azurecr.io"), new DefaultAzureCredential());
             ContainerRepositoryClient repositoryClient = registryClient.GetRepositoryClient("hello-world");
-            RepositoryStorageClient storageClient = repositoryClient.GetContainerStorageClient();
-
+            ArtifactStorageClient storageClient = repositoryClient.GetContainerStorageClient();
 
             //POST INITIATE BLOB UPLOAD
             // Initiate a resumable blob upload. If successful, an upload location will be provided to complete the upload.
@@ -45,7 +44,7 @@ namespace ContainerRegistrySamples
 
             ContainerRegistryClient registryClient = new ContainerRegistryClient(new Uri("myacr.azurecr.io"), new DefaultAzureCredential());
             ContainerRepositoryClient repositoryClient = registryClient.GetRepositoryClient("hello-world");
-            RepositoryStorageClient storageClient = repositoryClient.GetContainerStorageClient();
+            ArtifactStorageClient storageClient = repositoryClient.GetContainerStorageClient();
 
 
             // TODO: Will calling this "Start" name cause confusion with our LRO patterns?
@@ -64,16 +63,16 @@ namespace ContainerRegistrySamples
         {
             ContainerRegistryClient registryClient = new ContainerRegistryClient(new Uri("myacr.azurecr.io"), new DefaultAzureCredential());
             ContainerRepositoryClient repositoryClient = registryClient.GetRepositoryClient("hello-world");
-            RepositoryStorageClient storageClient = repositoryClient.GetContainerStorageClient();
+            ArtifactStorageClient storageClient = repositoryClient.GetContainerStorageClient();
 
             CreateUploadResult uploadDetails = await storageClient.CreateResumableUploadAsync();
             bool haveChunks = true;  // TODO: how do I know?  Who decides how to break things into chunks and why?
             while (haveChunks)
             {
-                uploadDetails = await storageClient.UploadChunkAsync(uploadDetails, /* this is the chunk */ new MemoryStream());
+                UploadChunkResult uploadChunk = await storageClient.UploadChunkAsync(uploadDetails, /* this is the chunk */ new MemoryStream());
 
                 // Print out upload progress
-                Console.WriteLine($"Upload {uploadDetails.UploadId} has uploaded {uploadDetails.Range} to location {uploadDetails.BlobLocation.ToString()}");
+                Console.WriteLine($"Upload {uploadDetails.UploadId} has uploaded {uploadChunk.Range} to location {uploadChunk.Location}");
             }
 
             // TODO: how to handle this multiplicity around sometimes you pass a blob here and sometimes you don't
@@ -87,7 +86,7 @@ namespace ContainerRegistrySamples
             CompleteUploadResult completedUploadDetails = await storageClient.CompleteUploadAsync(uploadDetails, "digest");
 
             // Print out upload details
-            Console.WriteLine($"Blob with digest {completedUploadDetails.Digest} has uploaded {completedUploadDetails.Range} to location {completedUploadDetails.BlobLocation.ToString()}");
+            Console.WriteLine($"Blob with digest {completedUploadDetails.Digest} has uploaded {completedUploadDetails.Range} to location {completedUploadDetails.Location.ToString()}");
             Console.WriteLine($"");
         }
 

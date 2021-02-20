@@ -9,16 +9,16 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
 {
     public class UploadChunkResult
     {
-        internal UploadChunkResult(string blobLocation, HttpRange range, Guid dockerUploadId)
+        internal UploadChunkResult(string location, HttpRange range, Guid dockerUploadId)
         {
             // From docstring comments: /// <param name="location"> Link acquired from upload start or previous chunk. Note, do not include initial / (must do substring(1) ). </param>
             // TODO: is there a way to rejig this in the swagger file rather than doing it in code?
-            BlobLocation = new Uri(blobLocation.Substring(1));
+            Location = new Uri(location.Substring(1));
             Range = range;
             DockerUploadId = dockerUploadId;
         }
 
-        public Uri BlobLocation { get; }
+        public Uri Location { get; }
 
         public HttpRange Range { get; }
 
