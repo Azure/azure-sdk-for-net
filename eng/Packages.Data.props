@@ -126,6 +126,7 @@
     <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20200929.2" PrivateAssets="All" />
     <PackageReference Update="coverlet.collector" Version="1.3.0" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.1" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="3.3.2" PrivateAssets="All" />
     <PackageReference Update="Microsoft.DotNet.ApiCompat" Version="5.0.0-beta.20467.1" PrivateAssets="All" />
     <PackageReference Update="Microsoft.DotNet.GenAPI" Version="5.0.0-beta.19552.1" PrivateAssets="All" />
     <PackageReference Update="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0" PrivateAssets="All" />
