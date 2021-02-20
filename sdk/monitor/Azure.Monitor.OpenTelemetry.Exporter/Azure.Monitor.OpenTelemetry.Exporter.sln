@@ -19,8 +19,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Monitor.OpenTelemetry
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".DependentProjects", ".DependentProjects", "{517B9D01-3911-4287-8F96-FBCB68748974}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.ApplicationInsights.Query", "..\..\applicationinsights\Microsoft.Azure.ApplicationInsights.Query\src\Microsoft.Azure.ApplicationInsights.Query.csproj", "{A4A788B6-6F1C-4208-8206-5C6B099E1D9E}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,17 +53,12 @@ Global
 		{D57D79BA-6D39-4E9E-970C-A5F73A4425BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D57D79BA-6D39-4E9E-970C-A5F73A4425BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D57D79BA-6D39-4E9E-970C-A5F73A4425BB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A4A788B6-6F1C-4208-8206-5C6B099E1D9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A4A788B6-6F1C-4208-8206-5C6B099E1D9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A4A788B6-6F1C-4208-8206-5C6B099E1D9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A4A788B6-6F1C-4208-8206-5C6B099E1D9E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{8052009B-2126-44A3-88CD-4F3B17894C64} = {517B9D01-3911-4287-8F96-FBCB68748974}
-		{A4A788B6-6F1C-4208-8206-5C6B099E1D9E} = {517B9D01-3911-4287-8F96-FBCB68748974}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A97F4B90-2591-4689-B1F8-5F21FE6D6CAE}
