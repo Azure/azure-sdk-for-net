@@ -6,29 +6,33 @@ $packagePattern = "*.nupkg"
 $MetadataUri = "https://raw.githubusercontent.com/Azure/azure-sdk/master/_data/releases/latest/dotnet-packages.csv"
 $BlobStorageUrl = "https://azuresdkdocs.blob.core.windows.net/%24web?restype=container&comp=list&prefix=dotnet%2F&delimiter=%2F"
 
-function Get-dotnet-PackageInfoFromRepo ($pkgPath, $serviceDirectoryName, $artifactName)
+function Get-dotnet-PackageInfoFromRepo ($pkgDirectoryPath, $serviceDirectoryName)
 {
-  $projectPath = Join-Path $pkgPath "src" "$artifactName.csproj"
-  if (Test-Path $projectPath)
+  $pkgProperties = @()
+  if (Test-Path (Join-Path $pkgDirectoryPath "src"))
   {
+    $projectFilePaths = Get-ChildItem (Join-Path $pkgDirectoryPath "src") "*.csproj" -File
+  }
+
+  foreach ($projectPath in $projectFilePaths)
+  {
+    $pkgName = $projectPath.BaseName
     $projectData = New-Object -TypeName XML
     $projectData.load($projectPath)
     $pkgVersion = Select-XML -Xml $projectData -XPath '/Project/PropertyGroup/Version'
     $sdkType = "client"
-    if ($artifactName -match "\.ResourceManager\." -or $artifactName -match "\.Management\.")
+    if ($pkgName -match "\.ResourceManager\." -or $pkgName -match "\.Management\.")
     {
       $sdkType = "mgmt"
     }
-    $pkgProp = [PackageProps]::new($artifactName, $pkgVersion, $pkgPath, $serviceDirectoryName)
+    $pkgProp = [PackageProps]::new($pkgName, $pkgVersion, $pkgDirectoryPath, $serviceDirectoryName)
     $pkgProp.SdkType = $sdkType
-    $pkgProp.IsNewSdk = $artifactName.StartsWith("Azure")
-    $pkgProp.ArtifactName = $artifactName
-    return $pkgProp
+    $pkgProp.IsNewSdk = $pkgName.StartsWith("Azure")
+    $pkgProp.ArtifactName = $pkgName
+    $pkgProperties += $pkgProp
   }
-  else
-  {
-    return $null
-  }
+
+  return $pkgProperties
 }
 
 # Returns the nuget publish status of a package id and version.

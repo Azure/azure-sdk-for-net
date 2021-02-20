@@ -76,90 +76,79 @@ function Get-PkgProperties
 {
     Param
     (
+        [Parameter(Mandatory = $true)]
         [string]$PackageName,
-        [string]$ArtifactName,
+        [Parameter(Mandatory = $true)]
         [string]$ServiceDirectory
     )
 
-    if (!$PackageName -and !$ArtifactName)
+    $pkgDirectoryPath = $null
+    $serviceDirectoryPath = Join-Path $RepoRoot "sdk" $ServiceDirectory
+    if (!(Test-Path $serviceDirectoryPath))
     {
-        LogError "You must PackageName or ArtifactName Argument"
+        LogError "Service Directory $ServiceDirectory does not exist"
         return $null
     }
-    
-    if ($ServiceDirectory)
-    {
-        if (Test-Path $ServiceDirectory)
-        {
-            $ServiceDirectoryName = Split-Path $ServiceDirectory -Leaf
-        }
-        else 
-        {
-            $ServiceDirectoryName = $ServiceDirectory
-        }
-        $AllPkgProps = Get-AllPkgProperties -ServiceDirectoryName $ServiceDirectoryName
-    }
-    else 
-    {
-        $AllPkgProps = Get-AllPkgProperties
-    }
 
-    foreach ($pkgProp in $AllPkgProps)
+    $directoriesPresent = Get-ChildItem $serviceDirectoryPath -Directory
+
+    foreach ($directory in $directoriesPresent)
     {
-        if($PackageName -and ($pkgProp.Name -eq $PackageName))
+        $pkgDirectoryPath = Join-Path $serviceDirectoryPath $directory.Name
+
+        if ($GetPackageInfoFromRepoFn -and (Test-Path "Function:$GetPackageInfoFromRepoFn"))
         {
-            return $pkgProp
+            $pkgProps = &$GetPackageInfoFromRepoFn -pkgPath $pkgDirectoryPath -serviceDirectory $ServiceDirectory -pkgName $PackageName
+        }
+        else
+        {
+            LogError "The function for '$GetPackageInfoFromRepoFn' was not found.`
+            Make sure it is present in eng/scripts/Language-Settings.ps1 and referenced in eng/common/scripts/common.ps1.`
+            See https://github.com/Azure/azure-sdk-tools/blob/master/doc/common/common_engsys.md#code-structure"
         }
 
-        if ($ArtifactName -and ($pkgProp.ArtifactName -eq $ArtifactName))
+        if ($pkgProps -ne $null)
         {
-            return $pkgProp
+            return $pkgProps
         }
     }
-
-    if ($PackageName) { LogWarning "Failed to retrive Properties for [ $PackageName ]" }
-    if ($ArtifactName) { LogWarning "Failed to retrive Properties for [ $ArtifactName ]" }
+    LogWarning "Failed to retrive Properties for $PackageName"
     return $null
 }
 
 # Takes ServiceName and Repo Root Directory
 # Returns important properties for each package in the specified service, or entire repo if the serviceName is not specified
 # Returns an Table of service key to array values of PS Object with properties @ { pkgName, pkgVersion, pkgDirectoryPath, pkgReadMePath, pkgChangeLogPath }
-function Get-AllPkgProperties ([string]$ServiceDirectoryName = $null)
+function Get-AllPkgProperties ([string]$ServiceDirectory = $null)
 {
     $pkgPropsResult = @()
 
-    if ([string]::IsNullOrEmpty($ServiceDirectoryName))
+    if ([string]::IsNullOrEmpty($ServiceDirectory))
     {
         $searchDir = Join-Path $RepoRoot "sdk"
         foreach ($dir in (Get-ChildItem $searchDir -Directory))
         {
-            $serviceDirPath = Join-Path $searchDir $dir.Name
-            $ciYmlFiles = Get-ChildItem $serviceDirPath -filter "ci.*yml"
+            $serviceDir = Join-Path $searchDir $dir.Name
 
-            foreach($ciYmlFile in $ciYmlFiles)
+            if (Test-Path (Join-Path $serviceDir "ci.yml"))
             {
-                $activeArtifactList = Get-ArtifactListFromYml -ciYmlPath $ciYmlFile.FullName
-                if ($null -ne $activeArtifactList)
+                $activePkgList = Get-PkgListFromYml -ciYmlPath (Join-Path $serviceDir "ci.yml")
+                if ($activePkgList -ne $null)
                 {
-                    $pkgPropsResult = Operate-OnArtifacts -activeArtifactList $activeArtifactList -serviceDirectoryPath $serviceDirPath `
-                    -ServiceDirectoryName $dir.Name -pkgPropsResult $pkgPropsResult
+                    $pkgPropsResult = Operate-OnPackages -activePkgList $activePkgList -ServiceDirectory $dir.Name -pkgPropsResult $pkgPropsResult
                 }
             }
         }
     } 
     else
     {
-        $serviceDirPath = Join-Path $RepoRoot "sdk" $ServiceDirectoryName
-        $ciYmlFiles = Get-ChildItem $serviceDirPath -filter "ci.*yml"
-
-        foreach($ciYmlFile in $ciYmlFiles)
+        $serviceDir = Join-Path $RepoRoot "sdk" $ServiceDirectory
+        if (Test-Path (Join-Path $serviceDir "ci.yml"))
         {
-            $activeArtifactList = Get-ArtifactListFromYml -ciYmlPath $ciYmlFile.FullName
-            if ($null -ne $activeArtifactList)
+            $activePkgList = Get-PkgListFromYml -ciYmlPath (Join-Path $serviceDir "ci.yml")
+            if ($activePkgList -ne $null)
             {
-                $pkgPropsResult = Operate-OnArtifacts -activeArtifactList $activeArtifactList -serviceDirectoryPath $serviceDirPath `
-                -serviceDirectoryName $ServiceDirectoryName -pkgPropsResult $pkgPropsResult
+                $pkgPropsResult = Operate-OnPackages -activePkgList $activePkgList -ServiceDirectory $ServiceDirectory -pkgPropsResult $pkgPropsResult
             }
         }
     }
@@ -175,37 +164,21 @@ function Get-CSVMetadata ([string]$MetadataUri=$MetadataUri)
     return $metadataResponse
 }
 
-function Operate-OnArtifacts ($activeArtifactList, $serviceDirectoryPath, $serviceDirectoryName, [Array]$pkgPropsResult)
+function Operate-OnPackages ($activePkgList, $ServiceDirectory, [Array]$pkgPropsResult)
 {
-    foreach ($artifact in $activeArtifactList)
+    foreach ($pkg in $activePkgList)
     {
-        $directoriesPresent = Get-ChildItem $serviceDirectoryPath -Directory
-        $artifactName = $artifact["name"]
-
-        foreach ($directory in $directoriesPresent)
+        LogDebug "Operating on $($pkg["name"])"
+        $pkgProps = Get-PkgProperties -PackageName $pkg["name"] -ServiceDirectory $ServiceDirectory
+        if ($null -ne  $pkgProps)
         {
-            $pkgDirectoryPath = Join-Path $serviceDirectoryPath $directory.Name
-
-            if ($GetPackageInfoFromRepoFn -and (Test-Path "Function:$GetPackageInfoFromRepoFn"))
-            {
-                $pkgProps = &$GetPackageInfoFromRepoFn -pkgPath $pkgDirectoryPath -serviceDirectory $serviceDirectoryName -artifactName $artifactName
-                if ($null -ne  $pkgProps)
-                {
-                    $pkgPropsResult += $pkgProps
-                }
-            }
-            else
-            {
-                LogError "The function for '$GetPackageInfoFromRepoFn' was not found.`
-                Make sure it is present in eng/scripts/Language-Settings.ps1 and referenced in eng/common/scripts/common.ps1.`
-                See https://github.com/Azure/azure-sdk-tools/blob/master/doc/common/common_engsys.md#code-structure"
-            }
+            $pkgPropsResult += $pkgProps
         }
     }
     return $pkgPropsResult
 }
 
-function Get-ArtifactListFromYml ($ciYmlPath)
+function Get-PkgListFromYml ($ciYmlPath)
 {
     $ProgressPreference = "SilentlyContinue"
     if ((Get-PSRepository | ?{$_.Name -eq "PSGallery"}).Count -eq 0)
