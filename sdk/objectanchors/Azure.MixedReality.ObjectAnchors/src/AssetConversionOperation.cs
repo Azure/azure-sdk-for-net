@@ -11,7 +11,9 @@ using Azure.Core.Pipeline;
 
 namespace Azure.MixedReality.ObjectAnchors
 {
-    /// <summary> A long running asset conversion process for Object Anchors</summary>
+    /// <summary>
+    /// A long running asset conversion process for Object Anchors
+    /// </summary>
     public class AssetConversionOperation : Operation<AssetConversionProperties>
     {
         private static readonly TimeSpan defaultPollingInterval = TimeSpan.FromSeconds(15);
@@ -29,7 +31,8 @@ namespace Azure.MixedReality.ObjectAnchors
         /// </summary>
         /// <param name="jobId">The ID of this operation.</param>
         /// <param name="objectAnchorsClient">The client used to check for completion.</param>
-        public AssetConversionOperation(Guid jobId, ObjectAnchorsClient objectAnchorsClient) : this(jobId, objectAnchorsClient, objectAnchorsClient._clientDiagnostics)
+        public AssetConversionOperation(Guid jobId, ObjectAnchorsClient objectAnchorsClient)
+            : this(jobId, objectAnchorsClient, objectAnchorsClient._clientDiagnostics)
         {
         }
 
@@ -61,7 +64,9 @@ namespace Azure.MixedReality.ObjectAnchors
         /// <inheritdoc/>
         public override bool HasValue => _conversionEnded;
 
-        /// <summary> Whether the operation has completed and has a successful final status </summary>
+        /// <summary>
+        /// Whether the operation has completed and has a successful final status
+        /// </summary>
         public bool HasCompletedSuccessfully => HasCompleted && HasValue && (this.Value.ConversionStatus == AssetConversionStatus.Succeeded);
 
         /// <inheritdoc/>

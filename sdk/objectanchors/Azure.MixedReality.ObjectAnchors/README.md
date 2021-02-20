@@ -13,7 +13,7 @@ Azure Object Anchors enables an application to detect an object in the physical 
     - [ObjectAnchorsClient](#objectanchorsclient)
   - [Examples](#examples)
     - [Upload an asset for Object Anchors asset conversion](#upload-an-asset-for-object-anchors-asset-conversion)
-    - [Begin Object Anchors asset conversion after uploading an asset](#begin-object-anchors-asset-conversion-after-uploading-an-asset)
+    - [Start 3D asset conversion](#start-3d-asset-conversion)
     - [Poll an existing ObjectAnchors asset conversion until completion and download the result](#poll-an-existing-objectanchors-asset-conversion-until-completion-and-download-the-result)
   - [Troubleshooting](#troubleshooting)
   - [Next steps](#next-steps)
@@ -79,11 +79,13 @@ The final converted model in Microsoft-hosted storage will be retained for **48 
 ### Upload an asset for Object Anchors asset conversion
 
 ```csharp
-TokenCredential credential = new DefaultAzureCredential(true);
+AzureKeyCredential credential = new AzureKeyCredential(accountKey);
 
-ObjectAnchorsClient client = new ObjectAnchorsClient(account, credential);
+ObjectAnchorsClient client = new ObjectAnchorsClient(accountId, accountDomain, credential);
 
-Uri uploadedInputAssetUri = (await client.GetAssetUploadUriAsync()).Value.InputAssetUploadUri;
+AssetUploadUriResult uploadUriResult = await client.GetAssetUploadUriAsync();
+
+Uri uploadedInputAssetUri = uploadUriResult.UploadUri
 
 BlobClient blobClient = new BlobClient(uploadedInputAssetUri);
 
@@ -93,14 +95,14 @@ using (FileStream fs = File.OpenRead(localFilePath))
 }
 ```
 
-### Begin Object Anchors asset conversion after uploading an asset
+### Start 3D asset conversion
 
 ```csharp
-StartAssetConversionOptions ingestionJobOptions = new StartAssetConversionOptions(uploadedInputAssetUri, AssetFileType.FromFilePath(localFilePath), assetGravity, scale);
+AssetConversionOptions assetConversionOptions = new AssetConversionOptions(uploadedInputAssetUri, AssetFileType.FromFilePath(localFilePath), assetGravity, scale);
 
-AssetConversionOperation operation = await client.StartAssetConversionAsync(ingestionJobOptions);
+AssetConversionOperation operation = await client.StartAssetConversionAsync(assetConversionOptions);
 
-Guid operationId = new Guid(operation.Id);
+Guid jobId = new Guid(operation.Id);
 ```
 
 ### Poll an existing ObjectAnchors asset conversion until completion and download the result
@@ -118,6 +120,12 @@ if (!operation.HasCompletedSuccessfully)
 BlobClient blobClient = new BlobClient(operation.Value.OutputModelUri);
 
 BlobDownloadInfo downloadInfo = await blobClient.DownloadAsync();
+
+using (FileStream file = File.OpenWrite(localFileDownloadPath))
+{
+    await downloadInfo.Content.CopyToAsync(file);
+    FileInfo fileInfo = new FileInfo(localFileDownloadPath);
+}
 ```
 
 ## Troubleshooting

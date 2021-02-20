@@ -8,16 +8,14 @@ using Azure.MixedReality.ObjectAnchors.Models;
 
 namespace Azure.MixedReality.ObjectAnchors
 {
-    /// <summary> Represents an asset conversion configuration. </summary>
+    /// <summary>
+    /// Represents an asset conversion configuration.
+    /// </summary>
     [CodeGenModel("IngestionConfiguration")]
     public partial class AssetConversionConfiguration
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AssetConversionConfiguration"/> class.
-        /// </summary>
-        /// <param name="gravity">The asset gravity, which must be normalized.</param>
-        /// <param name="scale">The asset scale.</param>
-        internal AssetConversionConfiguration(System.Numerics.Vector3 gravity, float scale) : this(new Vector3(gravity), scale)
+        internal AssetConversionConfiguration(System.Numerics.Vector3 gravity, float scale)
+            : this(new Vector3(gravity), scale)
         {
             if (!gravity.IsNormalized())
             {
@@ -39,26 +37,50 @@ namespace Azure.MixedReality.ObjectAnchors
             TestTrajectoryCameraPoses = new List<TrajectoryPose>();
         }
 
-        /// <summary> Scale of transformation of asset units into meter space. </summary>
+        /// <summary>
+        /// Scale of transformation of asset units into meter space.
+        /// </summary>
         public float Scale { get; internal set; }
-        /// <summary> Ground truth trajectory. </summary>
+
+        /// <summary>
+        /// Ground truth trajectory.
+        /// </summary>
         [CodeGenMember("GtTrajectory")]
         public IReadOnlyList<TrajectoryPose> GroundTruthTrajectoryCameraPoses { get; }
-        /// <summary> Dimensions of the asset. </summary>
+
+        /// <summary>
+        /// Dimensions of the asset.
+        /// </summary>
         public System.Numerics.Vector3? AssetDimensions { get => AssetDimensionsWrapper == null ? null : AssetDimensionsWrapper.data; }
-        /// <summary> BoundingBoxCenter of the asset. </summary>
+
+        /// <summary>
+        /// BoundingBoxCenter of the asset.
+        /// </summary>
         public System.Numerics.Vector3? BoundingBoxCenter { get => BoundingBoxCenterWrapper == null ? null : BoundingBoxCenterWrapper.data; }
-        /// <summary> Gravity vector with respect to object's nominal position. </summary>
+
+        /// <summary>
+        /// Gravity vector with respect to object's nominal position.
+        /// </summary>
         public System.Numerics.Vector3 Gravity { get => GravityWrapper.data; internal set => GravityWrapper.data = value; }
-        /// <summary> Orientation of model's bounding box. </summary>
+
+        /// <summary>
+        /// Orientation of model's bounding box.
+        /// </summary>
         public System.Numerics.Quaternion? PrincipalAxis { get => PrincipalAxisWrapper == null ? null : PrincipalAxisWrapper.data; }
 
-        /// <summary> Definition of supporting plane. </summary>
+        /// <summary>
+        /// Definition of supporting plane.
+        /// </summary>
         public System.Numerics.Vector4? SupportingPlane { get => SupportingPlaneWrapper == null ? null : SupportingPlaneWrapper.data; }
 
-        /// <summary> Indices of Key Frames. </summary>
+        /// <summary>
+        /// Indices of Key Frames.
+        /// </summary>
         public IReadOnlyList<int> KeyFrameIndexes { get; }
-        /// <summary> Test Trajectory. </summary>
+
+        /// <summary>
+        /// Test Trajectory.
+        /// </summary>
         [CodeGenMember("TestTrajectory")]
         public IReadOnlyList<TrajectoryPose> TestTrajectoryCameraPoses { get; }
 

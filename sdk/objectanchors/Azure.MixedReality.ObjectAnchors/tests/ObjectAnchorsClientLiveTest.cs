@@ -29,7 +29,7 @@ namespace Azure.MixedReality.ObjectAnchors.Tests
         public string modelDownloadLocalFilePath => Path.Combine(currentWorkingDirectory, modelDownloadFileName);
 
         public ObjectAnchorsClientLiveTest(bool isAsync)
-            : base(isAsync/*, RecordedTestMode.Record*/)
+            : base(isAsync)
         {
             //TODO: https://github.com/Azure/autorest.csharp/issues/689
             TestDiagnostics = false;
@@ -38,7 +38,7 @@ namespace Azure.MixedReality.ObjectAnchors.Tests
         }
 
         [RecordedTest]
-        public async Task RunIngestion()
+        public async Task RunAssetConversion()
         {
             Recording.DisableIdReuse();
             Guid accountId = new Guid(TestEnvironment.AccountId);
@@ -53,7 +53,9 @@ namespace Azure.MixedReality.ObjectAnchors.Tests
 
             ObjectAnchorsClient client = InstrumentClient(new ObjectAnchorsClient(accountId, accountDomain, credential, InstrumentClientOptions(options)));
 
-            Uri uploadedInputAssetUri = (await client.GetAssetUploadUriAsync()).Value.UploadUri;
+            AssetUploadUriResult uploadUriResult = await client.GetAssetUploadUriAsync();
+
+            Uri uploadedInputAssetUri = uploadUriResult.UploadUri;
 
             BlobClient uploadBlobClient = InstrumentClient(new BlobClient(uploadedInputAssetUri, InstrumentClientOptions(new BlobClientOptions())));
 
@@ -62,13 +64,11 @@ namespace Azure.MixedReality.ObjectAnchors.Tests
                 await uploadBlobClient.UploadAsync(fs);
             }
 
-            AssetConversionOptions ingestionJobOptions = new AssetConversionOptions(uploadedInputAssetUri, AssetFileType.FromFilePath(localFilePath), assetGravity, scale);
+            AssetConversionOptions assetConversionOptions = new AssetConversionOptions(uploadedInputAssetUri, AssetFileType.FromFilePath(localFilePath), assetGravity, scale);
 
-            ingestionJobOptions.JobId = Recording.Random.NewGuid();
+            assetConversionOptions.JobId = Recording.Random.NewGuid();
 
-            AssetConversionOperation operation = await client.StartAssetConversionAsync(ingestionJobOptions);
-
-            Guid jobId = new Guid(operation.Id);
+            AssetConversionOperation operation = await client.StartAssetConversionAsync(assetConversionOptions);
 
             await operation.WaitForCompletionAsync();
 

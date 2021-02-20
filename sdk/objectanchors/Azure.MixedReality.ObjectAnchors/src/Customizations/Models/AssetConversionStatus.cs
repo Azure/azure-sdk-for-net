@@ -5,19 +5,35 @@ using Azure.Core;
 
 namespace Azure.MixedReality.ObjectAnchors
 {
-    /// <summary> The AssetConversionStatus. </summary>
+    /// <summary>
+    /// The AssetConversionStatus.
+    /// </summary>
     [CodeGenModel("JobStatus")]
     public enum AssetConversionStatus
     {
-        /// <summary> NotStarted. </summary>
+        /// <summary>
+        /// NotStarted.
+        /// </summary>
         NotStarted,
-        /// <summary> Running. </summary>
+
+        /// <summary>
+        /// Running.
+        /// </summary>
         Running,
-        /// <summary> Succeeded. </summary>
+
+        /// <summary>
+        /// Succeeded.
+        /// </summary>
         Succeeded,
-        /// <summary> Failed. </summary>
+
+        /// <summary>
+        /// Failed.
+        /// </summary>
         Failed,
-        /// <summary> Cancelled. </summary>
+
+        /// <summary>
+        /// Cancelled.
+        /// </summary>
         Cancelled
     }
 }

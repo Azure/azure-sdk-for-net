@@ -6,7 +6,9 @@ using System.ComponentModel;
 
 namespace Azure.MixedReality.ObjectAnchors.Models
 {
-    /// <summary> The Quaternion. </summary>
+    /// <summary>
+    /// The Quaternion.
+    /// </summary>
     internal partial class Quaternion : IEquatable<Quaternion>
     {
         internal System.Numerics.Quaternion data;
@@ -16,23 +18,12 @@ namespace Azure.MixedReality.ObjectAnchors.Models
             data = quaternion;
         }
 
-        /// <summary> Initializes a new instance of Quaternion. </summary>
-        /// <param name="x"> . </param>
-        /// <param name="y"> . </param>
-        /// <param name="z"> . </param>
-        /// <param name="w"> . </param>
-        /// <param name="isIdentity"> . </param>
 #pragma warning disable CA1801 // Review unused parameters
         internal Quaternion(float x, float y, float z, float w, bool isIdentity) : this(x, y, z, w)
 #pragma warning restore CA1801 // Review unused parameters
         {
         }
 
-        /// <summary> Initializes a new instance of Quaternion. </summary>
-        /// <param name="x"> . </param>
-        /// <param name="y"> . </param>
-        /// <param name="z"> . </param>
-        /// <param name="w"> . </param>
         internal Quaternion(float x, float y, float z, float w)
         {
             data = new System.Numerics.Quaternion(x, y, z, w);

@@ -26,7 +26,7 @@ namespace Azure.MixedReality.ObjectAnchors.Tests.Samples
         private static readonly string assetLocalFilePath = Path.Combine(currentWorkingDirectory, assetsFolderName, assetsFileName);
         public string modelDownloadLocalFilePath => Path.Combine(currentWorkingDirectory, modelDownloadFileName);
 
-        public async Task<FileInfo> RunIngestion()
+        public async Task<FileInfo> RunAssetConversion()
         {
             Guid accountId = new Guid(TestEnvironment.AccountId);
             string accountDomain = TestEnvironment.AccountDomain;

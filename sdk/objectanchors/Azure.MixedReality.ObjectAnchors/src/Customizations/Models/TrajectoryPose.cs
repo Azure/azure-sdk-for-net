@@ -8,38 +8,42 @@ using Azure.MixedReality.ObjectAnchors.Models;
 
 namespace Azure.MixedReality.ObjectAnchors
 {
-    /// <summary> The Pose of a trajectory. </summary>
+    /// <summary>
+    /// The Pose of a trajectory.
+    /// </summary>
     [CodeGenModel("Pose")]
     public partial struct TrajectoryPose : IEquatable<TrajectoryPose>
     {
-        /// <summary> Initializes a new instance of TrajectoryPose. </summary>
-        /// <param name="rotation"> . </param>
-        /// <param name="translation"> . </param>
         internal TrajectoryPose(System.Numerics.Quaternion rotation, System.Numerics.Vector3 translation)
             : this(new Quaternion(rotation), new Vector3(translation))
         {
         }
 
-        /// <summary> Initializes a new instance of TrajectoryPose. </summary>
-        /// <param name="rotationWrapper"> . </param>
-        /// <param name="translationWrapper"> . </param>
         internal TrajectoryPose(Quaternion rotationWrapper, Vector3 translationWrapper)
         {
             RotationWrapper = rotationWrapper;
             TranslationWrapper = translationWrapper;
         }
 
-        /// <summary> The pose's rotation. </summary>
+        /// <summary>
+        /// The pose's rotation.
+        /// </summary>
         public System.Numerics.Quaternion Rotation { get => RotationWrapper.data; internal set => RotationWrapper.data = value; }
-        /// <summary> The pose's translation. </summary>
+
+        /// <summary>
+        /// The pose's translation.
+        /// </summary>
         public System.Numerics.Vector3 Translation { get => TranslationWrapper.data; internal set => TranslationWrapper.data = value; }
 
         [CodeGenMember("Rotation")]
         internal readonly Quaternion RotationWrapper;
+
         [CodeGenMember("Translation")]
         internal readonly Vector3 TranslationWrapper;
 
-        /// returns whether a Trajectory pose's content matches that of another
+        /// <summary>
+        /// Returns whether a Trajectory pose's content matches that of another
+        /// </summary>
         public bool Equals(TrajectoryPose other)
         {
             return this.Rotation.Equals(other.Rotation)

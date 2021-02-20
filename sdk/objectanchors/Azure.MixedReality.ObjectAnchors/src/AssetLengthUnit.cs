@@ -3,7 +3,9 @@
 
 namespace Azure.MixedReality.ObjectAnchors
 {
-    /// <summary> Represents the measurement of a single distance unit in an asset. </summary>
+    /// <summary>
+    /// Represents the measurement of a single distance unit in an asset.
+    /// </summary>
     public enum AssetLengthUnit
     {
         /// <summary>

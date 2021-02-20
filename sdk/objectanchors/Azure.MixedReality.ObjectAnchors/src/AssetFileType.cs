@@ -38,15 +38,29 @@ namespace Azure.MixedReality.ObjectAnchors
             return new AssetFileType(Path.GetExtension(assetFilePath));
         }
 
-        /// <summary> Fbx </summary>
+        /// <summary>
+        /// Fbx
+        /// </summary>
         public static AssetFileType Fbx { get; } = new AssetFileType(FbxValue);
-        /// <summary> Glb </summary>
+
+        /// <summary>
+        /// Glb
+        /// </summary>
         public static AssetFileType Glb { get; } = new AssetFileType(GlbValue);
-        /// <summary> Gltf </summary>
+
+        /// <summary>
+        /// Gltf
+        /// </summary>
         public static AssetFileType Gltf { get; } = new AssetFileType(GltfValue);
-        /// <summary> Obj </summary>
+
+        /// <summary>
+        /// Obj
+        /// </summary>
         public static AssetFileType Obj { get; } = new AssetFileType(ObjValue);
-        /// <summary> Ply </summary>
+
+        /// <summary>
+        /// Ply
+        /// </summary>
         public static AssetFileType Ply { get; } = new AssetFileType(PlyValue);
 
         /// <summary>

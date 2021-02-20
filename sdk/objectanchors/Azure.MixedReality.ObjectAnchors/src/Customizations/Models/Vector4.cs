@@ -6,7 +6,9 @@ using System.ComponentModel;
 
 namespace Azure.MixedReality.ObjectAnchors.Models
 {
-    /// <summary> The Vector4. </summary>
+    /// <summary>
+    /// The Vector4.
+    /// </summary>
     internal partial class Vector4 : IEquatable<Vector4>
     {
         internal System.Numerics.Vector4 data;
@@ -16,11 +18,6 @@ namespace Azure.MixedReality.ObjectAnchors.Models
             data = vector;
         }
 
-        /// <summary> Initializes a new instance of Vector4. </summary>
-        /// <param name="x"> . </param>
-        /// <param name="y"> . </param>
-        /// <param name="z"> . </param>
-        /// <param name="w"> . </param>
         internal Vector4(float x, float y, float z, float w)
         {
             data = new System.Numerics.Vector4(x, y, z, w);
