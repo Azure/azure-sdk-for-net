@@ -390,8 +390,7 @@ namespace Azure.Iot.TimeSeriesInsights
 
                 foreach (ITimeSeriesId timeSeriesId in timeSeriesIds)
                 {
-                    object[] timeSeriesIdProperties = timeSeriesId.ToArray();
-                    batchRequest.Get.TimeSeriesIds.Add(timeSeriesIdProperties);
+                    batchRequest.Get.TimeSeriesIds.Add(timeSeriesId);
                 }
 
                 Response<InstancesBatchResponse> executeBatchResponse = await _timeSeriesInstancesRestClient
@@ -437,8 +436,7 @@ namespace Azure.Iot.TimeSeriesInsights
 
                 foreach (ITimeSeriesId timeSeriesId in timeSeriesIds)
                 {
-                    object[] timeSeriesIdProperties = timeSeriesId.ToArray();
-                    batchRequest.Get.TimeSeriesIds.Add(timeSeriesIdProperties);
+                    batchRequest.Get.TimeSeriesIds.Add(timeSeriesId);
                 }
 
                 Response<InstancesBatchResponse> executeBatchResponse = _timeSeriesInstancesRestClient
@@ -850,8 +848,7 @@ namespace Azure.Iot.TimeSeriesInsights
 
                 foreach (ITimeSeriesId timeSeriesId in timeSeriesIds)
                 {
-                    object[] timeSeriesIdProperties = timeSeriesId.ToArray();
-                    batchRequest.Delete.TimeSeriesIds.Add(timeSeriesIdProperties);
+                    batchRequest.Delete.TimeSeriesIds.Add(timeSeriesId);
                 }
 
                 Response<InstancesBatchResponse> executeBatchResponse = await _timeSeriesInstancesRestClient
@@ -897,8 +894,7 @@ namespace Azure.Iot.TimeSeriesInsights
 
                 foreach (ITimeSeriesId timeSeriesId in timeSeriesIds)
                 {
-                    object[] timeSeriesIdProperties = timeSeriesId.ToArray();
-                    batchRequest.Delete.TimeSeriesIds.Add(timeSeriesIdProperties);
+                    batchRequest.Delete.TimeSeriesIds.Add(timeSeriesId);
                 }
 
                 Response<InstancesBatchResponse> executeBatchResponse = _timeSeriesInstancesRestClient
