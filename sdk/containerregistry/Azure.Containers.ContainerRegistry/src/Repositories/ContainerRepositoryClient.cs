@@ -157,15 +157,15 @@ namespace Azure.Containers.ContainerRegistry
 
         /// <summary> Delete the manifest identified by `name` and `reference`. Note that a manifest can _only_ be deleted by `digest`. </summary>
         /// <param name="name"> Name of the image (including the namespace). </param>
-        /// <param name="reference"> A tag or a digest, pointing to a specific image. </param>
+        /// <param name="digest"> A tag or a digest, pointing to a specific image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> DeleteManifestAsync(string name, string reference, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteManifestAsync(string name, string digest, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContainerRegistryRepositoryClient.DeleteManifest");
             scope.Start();
             try
             {
-                return await RestClient.DeleteManifestAsync(name, reference, cancellationToken).ConfigureAwait(false);
+                return await RestClient.DeleteManifestAsync(name, digest, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -176,15 +176,15 @@ namespace Azure.Containers.ContainerRegistry
 
         /// <summary> Delete the manifest identified by `name` and `reference`. Note that a manifest can _only_ be deleted by `digest`. </summary>
         /// <param name="name"> Name of the image (including the namespace). </param>
-        /// <param name="reference"> A tag or a digest, pointing to a specific image. </param>
+        /// <param name="digest"> A tag or a digest, pointing to a specific image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response DeleteManifest(string name, string reference, CancellationToken cancellationToken = default)
+        public virtual Response DeleteManifest(string name, string digest, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContainerRegistryRepositoryClient.DeleteManifest");
             scope.Start();
             try
             {
-                return RestClient.DeleteManifest(name, reference, cancellationToken);
+                return RestClient.DeleteManifest(name, digest, cancellationToken);
             }
             catch (Exception e)
             {

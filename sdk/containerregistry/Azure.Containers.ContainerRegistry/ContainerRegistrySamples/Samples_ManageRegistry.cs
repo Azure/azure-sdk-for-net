@@ -6,6 +6,7 @@ using Azure;
 using Azure.Containers.ContainerRegistry;
 using Azure.Containers.ContainerRegistry.Models;
 using Azure.Identity;
+using System.Linq;
 
 namespace ContainerRegistrySamples
 {
@@ -20,8 +21,50 @@ namespace ContainerRegistrySamples
             {
                 Console.WriteLine($"Repository name is {repository}");
             }
+        }
 
-            // TODO: Come up with a nice hero scenario to illustrate in samples
+        public async Task DeleteStaleImages()
+        {
+            // I would like to create a script that scans all my repositories on ACR, and delete all the old docker images, 
+            // while only keep the latest three images
+
+            // - list repositories
+            // - list manifests by last update time
+            // - delete manifest
+            // - delete layer (TODO: ?)
+
+            ContainerRegistryClient registryClient = new ContainerRegistryClient(new Uri("myacr.azurecr.io"), new DefaultAzureCredential());
+            
+            AsyncPageable<string> repositoryNames = registryClient.GetRepositoryNamesAsync();
+            await foreach (var repositoryName in repositoryNames)
+            {
+                Console.WriteLine($"Repository name: {repositoryName}");
+
+                ContainerRepositoryClient repositoryClient = registryClient.GetRepositoryClient(repositoryName);
+                AsyncPageable<ManifestAttributes> manifests = repositoryClient.GetManifestsAsync(
+                    new GetManifestOptions(orderBy: ManifestOrderBy.LastUpdateTimeDescending)
+                );
+
+                int manifestCount = 0;
+                int manifestsToKeep = 3;
+                await foreach (ManifestAttributes manifest in manifests)
+                {
+                    if (manifestCount >= manifestsToKeep)
+                    { 
+                        Console.WriteLine($"Deleting manifest with digest {manifest.Digest}.");
+                        Console.WriteLine($"   This corresponds to the following tagged images: ");
+                        foreach (var tagName in manifest.Tags)
+                        {
+                            Console.WriteLine($"        {manifest.ImageName}:{tagName}");
+                        }
+                        await repositoryClient.DeleteManifestAsync(repositoryName, manifest.Digest);
+                    }
+
+                    manifestCount++;
+
+                    // TODO: the service does its own garbage collection, I think, so I don't think you need to delete the blob, but confirm this
+                }
+            }
         }
 
         public async Task ViewManifestsInRepository()
