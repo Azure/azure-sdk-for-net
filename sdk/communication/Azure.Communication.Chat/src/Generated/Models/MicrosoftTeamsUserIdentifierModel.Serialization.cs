@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Communication
 {
-    internal partial class MicrosoftTeamsUserIdentifierModel : IUtf8JsonSerializable
+    public partial class MicrosoftTeamsUserIdentifierModel : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

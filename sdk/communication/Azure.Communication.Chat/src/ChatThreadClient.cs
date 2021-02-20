@@ -510,7 +510,7 @@ namespace Azure.Communication.Chat
             scope.Start();
             try
             {
-                return await _chatThreadRestClient.RemoveChatParticipantAsync(Id, user.Id, cancellationToken).ConfigureAwait(false);
+                return await _chatThreadRestClient.RemoveChatParticipantAsync(Id, null, CommunicationIdentifierSerializer.Serialize(user).CommunicationUser, null, null, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -529,7 +529,7 @@ namespace Azure.Communication.Chat
             scope.Start();
             try
             {
-                return _chatThreadRestClient.RemoveChatParticipant(Id, user.Id, cancellationToken);
+                return _chatThreadRestClient.RemoveChatParticipant(Id, null, CommunicationIdentifierSerializer.Serialize(user).CommunicationUser, null, null, cancellationToken);
             }
             catch (Exception ex)
             {

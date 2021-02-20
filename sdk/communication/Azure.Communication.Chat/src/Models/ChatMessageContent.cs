@@ -11,9 +11,9 @@ namespace Azure.Communication.Chat
     {
         internal ChatMessageContent(ChatMessageContentInternal chatMessageContentInternal)
         {
-            if (chatMessageContentInternal.Initiator != null)
+            if (chatMessageContentInternal.InitiatorCommunicationIdentifier != null)
             {
-                Initiator = new CommunicationUserIdentifier(chatMessageContentInternal.Initiator);
+                Initiator = CommunicationIdentifierSerializer.Deserialize(chatMessageContentInternal.InitiatorCommunicationIdentifier);
             }
 
             Message = chatMessageContentInternal.Message;

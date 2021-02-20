@@ -6,7 +6,7 @@ using Azure.Core;
 namespace Azure.Communication
 {
     [CodeGenModel("MicrosoftTeamsUserIdentifierModel")]
-    internal partial class MicrosoftTeamsUserIdentifierModel
+    public partial class MicrosoftTeamsUserIdentifierModel
     {
     }
 }

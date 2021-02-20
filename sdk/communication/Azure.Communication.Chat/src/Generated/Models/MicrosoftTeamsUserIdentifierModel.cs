@@ -10,7 +10,7 @@ using System;
 namespace Azure.Communication
 {
     /// <summary> A Microsoft Teams user. </summary>
-    internal partial class MicrosoftTeamsUserIdentifierModel
+    public partial class MicrosoftTeamsUserIdentifierModel
     {
         /// <summary> Initializes a new instance of MicrosoftTeamsUserIdentifierModel. </summary>
         /// <param name="userId"> The Id of the Microsoft Teams user. If not anonymous, this is the AAD object Id of the user. </param>

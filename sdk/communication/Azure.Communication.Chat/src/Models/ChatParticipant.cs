@@ -19,7 +19,7 @@ namespace Azure.Communication.Chat
 
         internal ChatParticipant(ChatParticipantInternal chatParticipantInternal)
         {
-            User = new CommunicationUserIdentifier(chatParticipantInternal.Id);
+            User = CommunicationIdentifierSerializer.Deserialize(chatParticipantInternal.CommunicationIdentifier);
             DisplayName = chatParticipantInternal.DisplayName;
             ShareHistoryTime = chatParticipantInternal.ShareHistoryTime;
         }
@@ -33,7 +33,7 @@ namespace Azure.Communication.Chat
 
         internal ChatParticipantInternal ToChatParticipantInternal()
         {
-            return new ChatParticipantInternal(((CommunicationUserIdentifier)User).Id, CommunicationIdentifierSerializer.Serialize(User), DisplayName, ShareHistoryTime);
+            return new ChatParticipantInternal(CommunicationIdentifierSerializer.Serialize(User));
         }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Text.Json;
+using Azure.Communication;
 using Azure.Core;
 
 namespace Azure.Communication.Chat
@@ -15,14 +16,14 @@ namespace Azure.Communication.Chat
     {
         internal static ChatMessageReadReceipt DeserializeChatMessageReadReceipt(JsonElement element)
         {
-            string senderId = default;
+            CommunicationIdentifierModel senderCommunicationIdentifier = default;
             string chatMessageId = default;
             DateTimeOffset readOn = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("senderId"))
+                if (property.NameEquals("senderCommunicationIdentifier"))
                 {
-                    senderId = property.Value.GetString();
+                    senderCommunicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
                     continue;
                 }
                 if (property.NameEquals("chatMessageId"))
@@ -36,7 +37,7 @@ namespace Azure.Communication.Chat
                     continue;
                 }
             }
-            return new ChatMessageReadReceipt(senderId, chatMessageId, readOn);
+            return new ChatMessageReadReceipt(senderCommunicationIdentifier, chatMessageId, readOn);
         }
     }
 }

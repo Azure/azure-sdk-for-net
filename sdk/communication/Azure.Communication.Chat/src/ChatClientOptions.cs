@@ -25,7 +25,7 @@ namespace Azure.Communication.Chat
         {
             ApiVersion = version switch
             {
-                ServiceVersion.V1 => "2020-11-01-preview3",
+                ServiceVersion.V1 => "2021-01-27-preview4",
                 _ => throw new ArgumentOutOfRangeException(nameof(version)),
             };
         }
