@@ -23,7 +23,7 @@ namespace Azure.MixedReality.ObjectAnchors
         {
             get
             {
-                return new Uri(OutputModelUriString);
+                return OutputModelUriString == null ? null : new Uri(OutputModelUriString);
             }
         }
         /// <summary>
@@ -33,7 +33,7 @@ namespace Azure.MixedReality.ObjectAnchors
         {
             get
             {
-                return new Uri(InputAssetUriString);
+                return InputAssetUriString == null ? null : new Uri(InputAssetUriString);
             }
             internal set
             {

@@ -17,10 +17,9 @@ namespace Azure.MixedReality.ObjectAnchors
     public class AssetConversionOperation : Operation<AssetConversionProperties>
     {
         private static readonly TimeSpan defaultPollingInterval = TimeSpan.FromSeconds(15);
-        private readonly ClientDiagnostics _diagnostics;
         private readonly ObjectAnchorsClient _objectAnchorsClient;
         private readonly Guid _jobId;
-        private Response _lastConversionResponse;
+        private Response<AssetConversionProperties> _lastConversionResponse;
         private Response<AssetConversionProperties> _conclusiveConversionResponse;
         private bool _conversionEnded;
         private object _updateStatusLock = new object();
@@ -32,15 +31,9 @@ namespace Azure.MixedReality.ObjectAnchors
         /// <param name="jobId">The ID of this operation.</param>
         /// <param name="objectAnchorsClient">The client used to check for completion.</param>
         public AssetConversionOperation(Guid jobId, ObjectAnchorsClient objectAnchorsClient)
-            : this(jobId, objectAnchorsClient, objectAnchorsClient._clientDiagnostics)
-        {
-        }
-
-        internal AssetConversionOperation(Guid jobId, ObjectAnchorsClient objectAnchorsClient, ClientDiagnostics diagnostics)
         {
             _objectAnchorsClient = objectAnchorsClient;
             _jobId = jobId;
-            _diagnostics = diagnostics;
         }
 
         /// <inheritdoc/>
@@ -53,7 +46,7 @@ namespace Azure.MixedReality.ObjectAnchors
             {
                 lock (_lastConversionResponse)
                 {
-                    return OperationHelpers.GetValue(ref _conclusiveConversionResponse);
+                    return OperationHelpers.GetValue(ref _lastConversionResponse);
                 }
             }
         }
@@ -62,7 +55,7 @@ namespace Azure.MixedReality.ObjectAnchors
         public override bool HasCompleted => _conversionEnded;
 
         /// <inheritdoc/>
-        public override bool HasValue => _conversionEnded;
+        public override bool HasValue => _lastConversionResponse != null;
 
         /// <summary>
         /// Whether the operation has completed and has a successful final status
@@ -70,71 +63,49 @@ namespace Azure.MixedReality.ObjectAnchors
         public bool HasCompletedSuccessfully => HasCompleted && HasValue && (this.Value.ConversionStatus == AssetConversionStatus.Succeeded);
 
         /// <inheritdoc/>
-        public override Response GetRawResponse() => _lastConversionResponse;
+        public override Response GetRawResponse() => _lastConversionResponse.GetRawResponse();
 
         /// <inheritdoc/>
         public override Response UpdateStatus(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(AssetConversionOperation)}.{nameof(UpdateStatusAsync)}");
-            scope.Start();
-
-            try
+            Response<AssetConversionProperties> updatedStatus = _objectAnchorsClient.GetAssetConversionStatus(_jobId, cancellationToken: cancellationToken);
+            lock (_updateStatusLock)
             {
-                Response<AssetConversionProperties> updatedStatus = _objectAnchorsClient.GetAssetConversionStatus(_jobId, cancellationToken: cancellationToken);
-                lock (_updateStatusLock)
+                _lastConversionResponse = updatedStatus;
+                switch (updatedStatus.Value.ConversionStatus)
                 {
-                    _lastConversionResponse = updatedStatus.GetRawResponse();
-                    switch (updatedStatus.Value.ConversionStatus)
-                    {
-                        case AssetConversionStatus.NotStarted:
-                        case AssetConversionStatus.Running:
-                            _conversionEnded = false;
-                            _conclusiveConversionResponse = null;
-                            return _lastConversionResponse;
-                    }
-
-                    _conversionEnded = true;
-                    _conclusiveConversionResponse = updatedStatus;
-                    return updatedStatus.GetRawResponse();
+                    case AssetConversionStatus.NotStarted:
+                    case AssetConversionStatus.Running:
+                        _conversionEnded = false;
+                        _conclusiveConversionResponse = null;
+                        return _lastConversionResponse.GetRawResponse();
                 }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
+
+                _conversionEnded = true;
+                _conclusiveConversionResponse = updatedStatus;
+                return updatedStatus.GetRawResponse();
             }
         }
 
         /// <inheritdoc/>
         public async override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(AssetConversionOperation)}.{nameof(UpdateStatusAsync)}");
-            scope.Start();
-
-            try
+            Response<AssetConversionProperties> updatedStatus = await _objectAnchorsClient.GetAssetConversionStatusAsync(_jobId, cancellationToken: cancellationToken).ConfigureAwait(false);
+            lock (_updateStatusLock)
             {
-                Response<AssetConversionProperties> updatedStatus = await _objectAnchorsClient.GetAssetConversionStatusAsync(_jobId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                lock (_updateStatusLock)
+                _lastConversionResponse = updatedStatus;
+                switch (updatedStatus.Value.ConversionStatus)
                 {
-                    _lastConversionResponse = updatedStatus.GetRawResponse();
-                    switch (updatedStatus.Value.ConversionStatus)
-                    {
-                        case AssetConversionStatus.NotStarted:
-                        case AssetConversionStatus.Running:
-                            _conversionEnded = false;
-                            _conclusiveConversionResponse = null;
-                            return _lastConversionResponse;
-                    }
-
-                    _conversionEnded = true;
-                    _conclusiveConversionResponse = updatedStatus;
-                    return updatedStatus.GetRawResponse();
+                    case AssetConversionStatus.NotStarted:
+                    case AssetConversionStatus.Running:
+                        _conversionEnded = false;
+                        _conclusiveConversionResponse = null;
+                        return _lastConversionResponse.GetRawResponse();
                 }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
+
+                _conversionEnded = true;
+                _conclusiveConversionResponse = updatedStatus;
+                return updatedStatus.GetRawResponse();
             }
         }
 

@@ -26,11 +26,10 @@ namespace Azure.MixedReality.ObjectAnchors.Tests.Samples
         private static readonly string assetLocalFilePath = Path.Combine(currentWorkingDirectory, assetsFolderName, assetsFileName);
         public string modelDownloadLocalFilePath => Path.Combine(currentWorkingDirectory, modelDownloadFileName);
 
-        public async Task<FileInfo> RunAssetConversion()
+        public async Task<Guid> StartAssetConversion()
         {
             Guid accountId = new Guid(TestEnvironment.AccountId);
             string accountDomain = TestEnvironment.AccountDomain;
-            ObjectAnchorsClientOptions options = new ObjectAnchorsClientOptions();
             string localFilePath = assetLocalFilePath;
             Vector3 assetGravity = new Vector3(assetGravityX, assetGravityY, assetGravityZ);
             float scale = assetScale;
@@ -52,7 +51,17 @@ namespace Azure.MixedReality.ObjectAnchors.Tests.Samples
 
             AssetConversionOperation operation = await client.StartAssetConversionAsync(ingestionJobOptions);
 
-            Guid jobId = new Guid(operation.Id);
+            return new Guid(operation.Id);
+        }
+
+        public async Task WaitForAssetConversionToComplete(Guid jobId)
+        {
+            Guid accountId = new Guid(TestEnvironment.AccountId);
+            string accountDomain = TestEnvironment.AccountDomain;
+            AzureKeyCredential credential = new AzureKeyCredential(TestEnvironment.AccountKey);
+            ObjectAnchorsClient client = new ObjectAnchorsClient(accountId, accountDomain, credential);
+
+            AssetConversionOperation operation = new AssetConversionOperation(jobId, client);
 
             await operation.WaitForCompletionAsync();
 
@@ -60,6 +69,16 @@ namespace Azure.MixedReality.ObjectAnchors.Tests.Samples
             {
                 throw new Exception("The asset conversion operation completed with an unsuccessful status");
             }
+        }
+
+        public async Task<FileInfo> DownloadConvertedAsset(Guid jobId)
+        {
+            Guid accountId = new Guid(TestEnvironment.AccountId);
+            string accountDomain = TestEnvironment.AccountDomain;
+            AzureKeyCredential credential = new AzureKeyCredential(TestEnvironment.AccountKey);
+            ObjectAnchorsClient client = new ObjectAnchorsClient(accountId, accountDomain, credential);
+
+            AssetConversionOperation operation = new AssetConversionOperation(jobId, client);
 
             string localFileDownloadPath = modelDownloadLocalFilePath;
 

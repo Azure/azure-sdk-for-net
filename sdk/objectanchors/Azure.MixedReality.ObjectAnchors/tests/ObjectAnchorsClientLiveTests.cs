@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.MixedReality.ObjectAnchors.Tests
 {
-    public class ObjectAnchorsClientLiveTest : RecordedTestBase<ObjectAnchorsClientTestEnvironment>
+    public class ObjectAnchorsClientLiveTests : RecordedTestBase<ObjectAnchorsClientTestEnvironment>
     {
         private const string assetsFolderName = "Assets";
         private const string assetsFileName = "switchgear02_obj.obj";
@@ -28,7 +28,7 @@ namespace Azure.MixedReality.ObjectAnchors.Tests
         private static readonly string assetLocalFilePath = Path.Combine(currentWorkingDirectory, assetsFolderName, assetsFileName);
         public string modelDownloadLocalFilePath => Path.Combine(currentWorkingDirectory, modelDownloadFileName);
 
-        public ObjectAnchorsClientLiveTest(bool isAsync)
+        public ObjectAnchorsClientLiveTests(bool isAsync)
             : base(isAsync)
         {
             //TODO: https://github.com/Azure/autorest.csharp/issues/689
@@ -69,6 +69,63 @@ namespace Azure.MixedReality.ObjectAnchors.Tests
             assetConversionOptions.JobId = Recording.Random.NewGuid();
 
             AssetConversionOperation operation = await client.StartAssetConversionAsync(assetConversionOptions);
+
+            await operation.WaitForCompletionAsync();
+
+            if (!operation.HasCompletedSuccessfully)
+            {
+                throw new Exception("The asset conversion operation completed with an unsuccessful status");
+            }
+
+            string localFileDownloadPath = modelDownloadLocalFilePath;
+
+            BlobClient downloadBlobClient = InstrumentClient(new BlobClient(operation.Value.OutputModelUri, InstrumentClientOptions(new BlobClientOptions())));
+
+            BlobDownloadInfo downloadInfo = await downloadBlobClient.DownloadAsync();
+
+            using (FileStream file = File.OpenWrite(localFileDownloadPath))
+            {
+                await downloadInfo.Content.CopyToAsync(file);
+                var fileInfo = new FileInfo(localFileDownloadPath);
+                Assert.Greater(fileInfo.Length, 0);
+            }
+        }
+
+        [RecordedTest]
+        public async Task ObserveExistingAssetConversion()
+        {
+            Recording.DisableIdReuse();
+            Guid accountId = new Guid(TestEnvironment.AccountId);
+            string accountDomain = TestEnvironment.AccountDomain;
+            ObjectAnchorsClientOptions options = new ObjectAnchorsClientOptions();
+            options.MixedRealityAuthenticationOptions = InstrumentClientOptions(new MixedRealityStsClientOptions());
+            string localFilePath = assetLocalFilePath;
+            Vector3 assetGravity = new Vector3(assetGravityX, assetGravityY, assetGravityZ);
+            float scale = assetScale;
+
+            AzureKeyCredential credential = new AzureKeyCredential(TestEnvironment.AccountKey);
+
+            ObjectAnchorsClient clientWithWorkingInternalMethods = new ObjectAnchorsClient(accountId, accountDomain, credential, InstrumentClientOptions(options));
+            ObjectAnchorsClient client = InstrumentClient(clientWithWorkingInternalMethods);
+
+            AssetUploadUriResult uploadUriResult = await client.GetAssetUploadUriAsync();
+
+            Uri uploadedInputAssetUri = uploadUriResult.UploadUri;
+
+            BlobClient uploadBlobClient = InstrumentClient(new BlobClient(uploadedInputAssetUri, InstrumentClientOptions(new BlobClientOptions())));
+
+            using (FileStream fs = File.OpenRead(localFilePath))
+            {
+                await uploadBlobClient.UploadAsync(fs);
+            }
+
+            AssetConversionOptions assetConversionOptions = new AssetConversionOptions(uploadedInputAssetUri, AssetFileType.FromFilePath(localFilePath), assetGravity, scale);
+
+            assetConversionOptions.JobId = Recording.Random.NewGuid();
+
+            Guid jobId = new Guid((await client.StartAssetConversionAsync(assetConversionOptions)).Id);
+
+            AssetConversionOperation operation = new AssetConversionOperation(jobId, clientWithWorkingInternalMethods);
 
             await operation.WaitForCompletionAsync();
 
