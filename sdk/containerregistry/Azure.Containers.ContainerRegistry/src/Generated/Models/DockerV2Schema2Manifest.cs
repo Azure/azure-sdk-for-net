@@ -11,32 +11,32 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry.Storage.Models
 {
-    /// <summary> Returns the requested OCI Manifest file. </summary>
-    public partial class OciManifest : Manifest
+    /// <summary> Returns the requested Docker V2 Manifest file. </summary>
+    public partial class DockerV2Manifest : Manifest
     {
-        /// <summary> Initializes a new instance of OciManifest. </summary>
-        public OciManifest()
+        /// <summary> Initializes a new instance of DockerV2Schema2Manifest. </summary>
+        public DockerV2Manifest()
         {
             Layers = new ChangeTrackingList<ContentDescriptor>();
         }
 
-        /// <summary> Initializes a new instance of OciManifest. </summary>
+        /// <summary> Initializes a new instance of DockerV2Schema2Manifest. </summary>
         /// <param name="schemaVersion"> Schema version. </param>
+        /// <param name="mediaType"> Media type for this Manifest. </param>
         /// <param name="config"> V2 image config descriptor. </param>
         /// <param name="layers"> List of V2 image layer information. </param>
-        /// <param name="annotations"> Additional information provided through arbitrary metadata. </param>
-        internal OciManifest(int? schemaVersion, ContentDescriptor config, IList<ContentDescriptor> layers, OciManifestAnnotations annotations) : base(schemaVersion)
+        internal DockerV2Manifest(int? schemaVersion, string mediaType, ContentDescriptor config, IList<ContentDescriptor> layers) : base(schemaVersion)
         {
+            MediaType = mediaType;
             Config = config;
             Layers = layers;
-            Annotations = annotations;
         }
 
+        /// <summary> Media type for this Manifest. </summary>
+        public string MediaType { get; set; }
         /// <summary> V2 image config descriptor. </summary>
         public ContentDescriptor Config { get; set; }
         /// <summary> List of V2 image layer information. </summary>
         public IList<ContentDescriptor> Layers { get; }
-        /// <summary> Additional information provided through arbitrary metadata. </summary>
-        public OciManifestAnnotations Annotations { get; set; }
     }
 }

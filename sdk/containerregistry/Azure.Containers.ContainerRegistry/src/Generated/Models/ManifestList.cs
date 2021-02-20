@@ -6,15 +6,16 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Containers.ContainerRegistry.Models;
 using Azure.Core;
 
-namespace Azure.Containers.ContainerRegistry.Models
+namespace Azure.Containers.ContainerRegistry.Storage.Models
 {
     /// <summary> Returns the requested Docker multi-arch-manifest file. </summary>
-    public partial class ManifestList : Manifest
+    public partial class DockerManifestList : Manifest
     {
         /// <summary> Initializes a new instance of ManifestList. </summary>
-        public ManifestList()
+        public DockerManifestList()
         {
             Manifests = new ChangeTrackingList<ManifestListAttributes>();
         }
@@ -23,7 +24,7 @@ namespace Azure.Containers.ContainerRegistry.Models
         /// <param name="schemaVersion"> Schema version. </param>
         /// <param name="mediaType"> Media type for this Manifest. </param>
         /// <param name="manifests"> List of V2 image layer information. </param>
-        internal ManifestList(int? schemaVersion, string mediaType, IList<ManifestListAttributes> manifests) : base(schemaVersion)
+        internal DockerManifestList(int? schemaVersion, string mediaType, IList<ManifestListAttributes> manifests) : base(schemaVersion)
         {
             MediaType = mediaType;
             Manifests = manifests;

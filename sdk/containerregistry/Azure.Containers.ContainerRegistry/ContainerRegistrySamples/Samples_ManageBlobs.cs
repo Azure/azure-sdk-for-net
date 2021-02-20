@@ -7,9 +7,10 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Containers.ContainerRegistry;
-using Azure.Containers.ContainerRegistry.Blobs;
+using Azure.Containers.ContainerRegistry.Storage;
 using Azure.Containers.ContainerRegistry.Models;
 using Azure.Identity;
+using Azure.Containers.ContainerRegistry.Storage.Models;
 
 namespace ContainerRegistrySamples
 {
@@ -19,9 +20,8 @@ namespace ContainerRegistrySamples
         {
             // Monolithic upload
             ContainerRegistryClient registryClient = new ContainerRegistryClient(new Uri("myacr.azurecr.io"), new DefaultAzureCredential());
-
-            // TODO: is this the right model for Blob Client?  To have it in a separate namespace?
-            ContainerRegistryBlobClient blobClient = registryClient.GetBlobClient("hello-world");
+            ContainerRepositoryClient repositoryClient = registryClient.GetRepositoryClient("hello-world");
+            ContainerStorageClient storageClient = repositoryClient.GetContainerStorageClient();
 
 
             //POST INITIATE BLOB UPLOAD
@@ -44,9 +44,9 @@ namespace ContainerRegistrySamples
             //return uploadedLayerEnd.DockerContentDigest == digest;
 
             ContainerRegistryClient registryClient = new ContainerRegistryClient(new Uri("myacr.azurecr.io"), new DefaultAzureCredential());
+            ContainerRepositoryClient repositoryClient = registryClient.GetRepositoryClient("hello-world");
+            ContainerStorageClient storageClient = repositoryClient.GetContainerStorageClient();
 
-            // TODO: is this the right model for Blob Client?  To have it in a separate namespace?
-            ContainerRegistryBlobClient blobClient = registryClient.GetBlobClient("hello-world");
 
             // TODO: Will calling this "Start" name cause confusion with our LRO patterns?
             // TODO: Naming here - what about Create?  usually Create takes an instance of the resource to create - we're asking the service to create 
@@ -54,23 +54,23 @@ namespace ContainerRegistrySamples
             // Other ideas: CreateUploadTicket() - problem with this is we're creating this Ticket concept where there was none in the ACR or Docker lit before...
             // What about this:
             //InitiateResumableUploadResult uploadDetails = await blobClient.InitiateResumableUploadAsync();
-            ResumableBlobUpload uploadDetails = await blobClient.CreateResumableUploadAsync();
+            ResumableBlobUpload uploadDetails = await storageClient.CreateResumableUploadAsync();
             // TODO: "digest"
             // TODO: "stream"
-            await blobClient.CompleteUploadAsync(uploadDetails, "digest", /* this is the blob */ new MemoryStream());
+            await storageClient.CompleteUploadAsync(uploadDetails, "digest", /* this is the blob */ new MemoryStream());
         }
 
         public async Task UploadBlob_ResumableUploadInSeveralChunks()
         {
             ContainerRegistryClient registryClient = new ContainerRegistryClient(new Uri("myacr.azurecr.io"), new DefaultAzureCredential());
+            ContainerRepositoryClient repositoryClient = registryClient.GetRepositoryClient("hello-world");
+            ContainerStorageClient storageClient = repositoryClient.GetContainerStorageClient();
 
-            ContainerRegistryBlobClient blobClient = registryClient.GetBlobClient("hello-world");
-
-            ResumableBlobUpload uploadDetails = await blobClient.CreateResumableUploadAsync();
+            ResumableBlobUpload uploadDetails = await storageClient.CreateResumableUploadAsync();
             bool haveChunks = true;  // TODO: how do I know?  Who decides how to break things into chunks and why?
             while (haveChunks)
             {
-                uploadDetails = await blobClient.UploadChunkAsync(uploadDetails, /* this is the chunk */ new MemoryStream());
+                uploadDetails = await storageClient.UploadChunkAsync(uploadDetails, /* this is the chunk */ new MemoryStream());
 
                 // Print out upload progress
                 Console.WriteLine($"Upload {uploadDetails.UploadId} has uploaded {uploadDetails.Range} to location {uploadDetails.BlobLocation.ToString()}");
@@ -84,7 +84,7 @@ namespace ContainerRegistrySamples
             // TODO: What should we be doing with the returned digest?  Should we verify on behalf of the customer or no?
             // TODO: 
 
-            CompletedBlobUpload completedUploadDetails = await blobClient.CompleteUploadAsync(uploadDetails, "digest");
+            CompletedBlobUpload completedUploadDetails = await storageClient.CompleteUploadAsync(uploadDetails, "digest");
 
             // Print out upload details
             Console.WriteLine($"Blob with digest {completedUploadDetails.Digest} has uploaded {completedUploadDetails.Range} to location {completedUploadDetails.BlobLocation.ToString()}");

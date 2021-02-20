@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Azure.Containers.ContainerRegistry.Storage.Models;
 using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry.Models

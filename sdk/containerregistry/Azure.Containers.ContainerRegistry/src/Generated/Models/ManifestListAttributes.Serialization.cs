@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Containers.ContainerRegistry.Models
+namespace Azure.Containers.ContainerRegistry.Storage.Models
 {
     public partial class ManifestListAttributes : IUtf8JsonSerializable
     {
@@ -43,7 +43,7 @@ namespace Azure.Containers.ContainerRegistry.Models
             Optional<string> mediaType = default;
             Optional<long> size = default;
             Optional<string> digest = default;
-            Optional<Platform> platform = default;
+            Optional<ImagePlatform> platform = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mediaType"))
@@ -73,7 +73,7 @@ namespace Azure.Containers.ContainerRegistry.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    platform = Platform.DeserializePlatform(property.Value);
+                    platform = ImagePlatform.DeserializeImagePlatform(property.Value);
                     continue;
                 }
             }

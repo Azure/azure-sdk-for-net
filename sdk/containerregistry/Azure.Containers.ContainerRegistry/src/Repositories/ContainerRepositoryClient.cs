@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Containers.ContainerRegistry.Models;
+using Azure.Containers.ContainerRegistry.Storage;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -71,93 +72,8 @@ namespace Azure.Containers.ContainerRegistry
             _pipeline = pipeline;
         }
 
-        // TODO: Confirm in FDG that IEnumerable is how to model this input collection
-        /// <summary> Get the manifest identified by `name` and `reference` where `reference` can be a tag or digest. </summary>        
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CombinedManifest>> GetManifestAsync(string tagOrDigest, IEnumerable<ManifestMediaType> acceptMediaTypes = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("ContainerRegistryRepositoryClient.GetManifest");
-            scope.Start();
-
-            // <param name="acceptMediaType"> Accept header string delimited by comma. For example, application/vnd.docker.distribution.manifest.v2+json. </param>
-            //TODO: pull media types from collection and create comma-delimited string.
-            string accept = string.Empty; // = CreateCommaDelimitedString(acceptMediaTypes)
-            // TODO: what is default behavior if accept it null/list is empty?
-
-            try
-            {
-                return await RestClient.GetManifestAsync(_repositoryName, tagOrDigest, accept, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get the manifest identified by `name` and `reference` where `reference` can be a tag or digest. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CombinedManifest> GetManifest(string tagOrDigest, IEnumerable<ManifestMediaType> acceptMediaTypes = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("ContainerRegistryRepositoryClient.GetManifest");
-            scope.Start();
-
-            // <param name="acceptMediaType"> Accept header string delimited by comma. For example, application/vnd.docker.distribution.manifest.v2+json. </param>
-            //TODO: pull media types from collection and create comma-delimited string.
-            string accept = string.Empty; // = CreateCommaDelimitedString(acceptMediaTypes)
-            // TODO: what is default behavior if accept it null/list is empty?
-            try
-            {
-                return RestClient.GetManifest(_repositoryName, tagOrDigest, accept, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Put the manifest identified by `name` and `reference` where `reference` can be a tag or digest. </summary>
-        
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> CreateManifestAsync(string tagOrDigest, Manifest manifest, CancellationToken cancellationToken = default)
-        {
-            // TODO: How should we handle the accept header?  This feels like part of the polymorphic/strong-typing story around manifests
-            ///// <param name="payload"> Manifest body, can take v1 or v2 values depending on accept header. </param>
-
-            using var scope = _clientDiagnostics.CreateScope("ContainerRegistryRepositoryClient.CreateManifest");
-            scope.Start();
-            try
-            {
-                return await RestClient.CreateManifestAsync(_repositoryName, tagOrDigest, manifest, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Put the manifest identified by `name` and `reference` where `reference` can be a tag or digest. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response CreateManifest(string tagOrDigest, Manifest manifest, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("ContainerRegistryRepositoryClient.CreateManifest");
-            scope.Start();
-            try
-            {
-                return RestClient.CreateManifest(_repositoryName, tagOrDigest, manifest, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Delete the manifest identified by `name` and `reference`. Note that a manifest can _only_ be deleted by `digest`. </summary>
         /// <param name="name"> Name of the image (including the namespace). </param>
-        /// <param name="digest"> A tag or a digest, pointing to a specific image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> DeleteManifestAsync(string name, string digest, CancellationToken cancellationToken = default)
         {
@@ -176,7 +92,6 @@ namespace Azure.Containers.ContainerRegistry
 
         /// <summary> Delete the manifest identified by `name` and `reference`. Note that a manifest can _only_ be deleted by `digest`. </summary>
         /// <param name="name"> Name of the image (including the namespace). </param>
-        /// <param name="digest"> A tag or a digest, pointing to a specific image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response DeleteManifest(string name, string digest, CancellationToken cancellationToken = default)
         {
@@ -231,7 +146,7 @@ namespace Azure.Containers.ContainerRegistry
 
         /// <summary> Get tag attributes by tag. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<TagAttributes>> GetTagAttributesAsync(string tagName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TagAttributes>> GetTagAsync(string tagName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContainerRegistryRepositoryClient.GetTagAttributes");
             scope.Start();
@@ -247,7 +162,7 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary> Get tag attributes by tag. </summary>
-        public virtual Response<TagAttributes> GetTagAttributes(string tagName, CancellationToken cancellationToken = default)
+        public virtual Response<TagAttributes> GetTag(string tagName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContainerRegistryRepositoryClient.GetTagAttributes");
             scope.Start();
@@ -376,7 +291,7 @@ namespace Azure.Containers.ContainerRegistry
 
         /// <summary> Get manifest attributes. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ManifestAttributes>> GetManifestAttributesAsync(string tagOrDigest, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManifestAttributes>> GetManifestAsync(string tagOrDigest, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContainerRegistryRepositoryClient.GetManifestAttributes");
             scope.Start();
@@ -393,7 +308,7 @@ namespace Azure.Containers.ContainerRegistry
 
         /// <summary> Get manifest attributes. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ManifestAttributes> GetManifestAttributes(string tagOrDigest, CancellationToken cancellationToken = default)
+        public virtual Response<ManifestAttributes> GetManifest(string tagOrDigest, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContainerRegistryRepositoryClient.GetManifestAttributes");
             scope.Start();
@@ -438,6 +353,11 @@ namespace Azure.Containers.ContainerRegistry
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        public virtual ContainerStorageClient GetContainerStorageClient()
+        {
+            throw new NotImplementedException();
         }
     }
 }

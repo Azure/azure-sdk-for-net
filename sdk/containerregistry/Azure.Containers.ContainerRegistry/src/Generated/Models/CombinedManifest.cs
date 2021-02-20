@@ -6,9 +6,10 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Containers.ContainerRegistry.Models;
 using Azure.Core;
 
-namespace Azure.Containers.ContainerRegistry.Models
+namespace Azure.Containers.ContainerRegistry.Storage.Models
 {
     /// <summary> Returns the requested manifest file. </summary>
     public partial class CombinedManifest : Manifest
@@ -18,9 +19,9 @@ namespace Azure.Containers.ContainerRegistry.Models
         {
             Manifests = new ChangeTrackingList<ManifestListAttributes>();
             Layers = new ChangeTrackingList<ContentDescriptor>();
-            FsLayers = new ChangeTrackingList<FsLayer>();
-            History = new ChangeTrackingList<History>();
-            Signatures = new ChangeTrackingList<ImageSignature>();
+            FsLayers = new ChangeTrackingList<DockerV1ManifestFsLayer>();
+            History = new ChangeTrackingList<DockerV1ManifestHistory>();
+            Signatures = new ChangeTrackingList<DockerV1ManifestImageSignature>();
         }
 
         /// <summary> Initializes a new instance of CombinedManifest. </summary>
@@ -36,7 +37,7 @@ namespace Azure.Containers.ContainerRegistry.Models
         /// <param name="fsLayers"> (V1) List of layer information. </param>
         /// <param name="history"> (V1) Image history. </param>
         /// <param name="signatures"> (V1) Image signature. </param>
-        internal CombinedManifest(int? schemaVersion, string mediaType, IList<ManifestListAttributes> manifests, ContentDescriptor config, IList<ContentDescriptor> layers, Annotations annotations, string architecture, string name, string tag, IList<FsLayer> fsLayers, IList<History> history, IList<ImageSignature> signatures) : base(schemaVersion)
+        internal CombinedManifest(int? schemaVersion, string mediaType, IList<ManifestListAttributes> manifests, ContentDescriptor config, IList<ContentDescriptor> layers, OciManifestAnnotations annotations, string architecture, string name, string tag, IList<DockerV1ManifestFsLayer> fsLayers, IList<DockerV1ManifestHistory> history, IList<DockerV1ManifestImageSignature> signatures) : base(schemaVersion)
         {
             MediaType = mediaType;
             Manifests = manifests;
@@ -60,7 +61,7 @@ namespace Azure.Containers.ContainerRegistry.Models
         /// <summary> (V2, OCI) List of V2 image layer information. </summary>
         public IList<ContentDescriptor> Layers { get; }
         /// <summary> (OCI, OCIIndex) Additional metadata. </summary>
-        public Annotations Annotations { get; set; }
+        public OciManifestAnnotations Annotations { get; set; }
         /// <summary> (V1) CPU architecture. </summary>
         public string Architecture { get; set; }
         /// <summary> (V1) Image name. </summary>
@@ -68,10 +69,10 @@ namespace Azure.Containers.ContainerRegistry.Models
         /// <summary> (V1) Image tag. </summary>
         public string Tag { get; set; }
         /// <summary> (V1) List of layer information. </summary>
-        public IList<FsLayer> FsLayers { get; }
+        public IList<DockerV1ManifestFsLayer> FsLayers { get; }
         /// <summary> (V1) Image history. </summary>
-        public IList<History> History { get; }
+        public IList<DockerV1ManifestHistory> History { get; }
         /// <summary> (V1) Image signature. </summary>
-        public IList<ImageSignature> Signatures { get; }
+        public IList<DockerV1ManifestImageSignature> Signatures { get; }
     }
 }

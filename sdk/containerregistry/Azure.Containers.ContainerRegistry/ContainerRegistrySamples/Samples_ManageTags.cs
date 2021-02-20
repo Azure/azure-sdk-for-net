@@ -92,7 +92,7 @@ namespace ContainerRegistrySamples
             var registryClient = new ContainerRegistryClient(new Uri("myacr.azurecr.io"), new DefaultAzureCredential());
             var repositoryClient = registryClient.GetRepositoryClient("hello-world");
 
-            TagAttributes tagAttributes = await repositoryClient.GetTagAttributesAsync("latest");
+            TagAttributes tagAttributes = await repositoryClient.GetTagAsync("latest");
 
             PrintTagAttributes(tagAttributes);
         }
@@ -112,7 +112,7 @@ namespace ContainerRegistrySamples
                 CanDelete = false
             };
 
-            await repositoryClient.SetManifestPermissionsAsync("latest", permissions);
+            await repositoryClient.SetImagePermissionsAsync("latest", permissions);
 
             // TODO: show that trying to write to this tag fails.  Also, what is the bigger story here? 
         }

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry.Storage.Models
 {
-    public partial class ContentDescriptor : IUtf8JsonSerializable
+    public partial class DockerV2Manifest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -21,48 +21,35 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
                 writer.WritePropertyName("mediaType");
                 writer.WriteStringValue(MediaType);
             }
-            if (Optional.IsDefined(Size))
+            if (Optional.IsDefined(Config))
             {
-                writer.WritePropertyName("size");
-                writer.WriteNumberValue(Size.Value);
+                writer.WritePropertyName("config");
+                writer.WriteObjectValue(Config);
             }
-            if (Optional.IsDefined(Digest))
+            if (Optional.IsCollectionDefined(Layers))
             {
-                writer.WritePropertyName("digest");
-                writer.WriteStringValue(Digest);
-            }
-            if (Optional.IsCollectionDefined(Urls))
-            {
-                writer.WritePropertyName("urls");
+                writer.WritePropertyName("layers");
                 writer.WriteStartArray();
-                foreach (var item in Urls)
+                foreach (var item in Layers)
                 {
-                    writer.WriteStringValue(item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Annotations))
+            if (Optional.IsDefined(SchemaVersion))
             {
-                if (Annotations != null)
-                {
-                    writer.WritePropertyName("annotations");
-                    writer.WriteObjectValue(Annotations);
-                }
-                else
-                {
-                    writer.WriteNull("annotations");
-                }
+                writer.WritePropertyName("schemaVersion");
+                writer.WriteNumberValue(SchemaVersion.Value);
             }
             writer.WriteEndObject();
         }
 
-        internal static ContentDescriptor DeserializeContentDescriptor(JsonElement element)
+        internal static DockerV2Manifest DeserializeDockerV2Schema2Manifest(JsonElement element)
         {
             Optional<string> mediaType = default;
-            Optional<long> size = default;
-            Optional<string> digest = default;
-            Optional<IList<string>> urls = default;
-            Optional<OciManifestAnnotations> annotations = default;
+            Optional<ContentDescriptor> config = default;
+            Optional<IList<ContentDescriptor>> layers = default;
+            Optional<int> schemaVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mediaType"))
@@ -70,48 +57,43 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
                     mediaType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("size"))
+                if (property.NameEquals("config"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    size = property.Value.GetInt64();
+                    config = ContentDescriptor.DeserializeContentDescriptor(property.Value);
                     continue;
                 }
-                if (property.NameEquals("digest"))
-                {
-                    digest = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("urls"))
+                if (property.NameEquals("layers"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<ContentDescriptor> array = new List<ContentDescriptor>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(ContentDescriptor.DeserializeContentDescriptor(item));
                     }
-                    urls = array;
+                    layers = array;
                     continue;
                 }
-                if (property.NameEquals("annotations"))
+                if (property.NameEquals("schemaVersion"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        annotations = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    annotations = OciManifestAnnotations.DeserializeManifestAnnotations(property.Value);
+                    schemaVersion = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new ContentDescriptor(mediaType.Value, Optional.ToNullable(size), digest.Value, Optional.ToList(urls), annotations.Value);
+            return new DockerV2Manifest(Optional.ToNullable(schemaVersion), mediaType.Value, config.Value, Optional.ToList(layers));
         }
     }
 }

@@ -9,9 +9,9 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Containers.ContainerRegistry.Models
+namespace Azure.Containers.ContainerRegistry.Storage.Models
 {
-    public partial class ManifestList : IUtf8JsonSerializable
+    public partial class DockerManifestList : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -39,7 +39,7 @@ namespace Azure.Containers.ContainerRegistry.Models
             writer.WriteEndObject();
         }
 
-        internal static ManifestList DeserializeManifestList(JsonElement element)
+        internal static DockerManifestList DeserializeManifestList(JsonElement element)
         {
             Optional<string> mediaType = default;
             Optional<IList<ManifestListAttributes>> manifests = default;
@@ -77,7 +77,7 @@ namespace Azure.Containers.ContainerRegistry.Models
                     continue;
                 }
             }
-            return new ManifestList(Optional.ToNullable(schemaVersion), mediaType.Value, Optional.ToList(manifests));
+            return new DockerManifestList(Optional.ToNullable(schemaVersion), mediaType.Value, Optional.ToList(manifests));
         }
     }
 }

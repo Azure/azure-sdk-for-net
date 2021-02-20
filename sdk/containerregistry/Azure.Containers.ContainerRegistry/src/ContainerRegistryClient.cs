@@ -7,7 +7,6 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Containers.ContainerRegistry.Blobs;
 using Azure.Containers.ContainerRegistry.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -222,11 +221,6 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         public virtual ContainerRepositoryClient GetRepositoryClient(string repositoryName)
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual ContainerRegistryBlobClient GetBlobClient(string repositoryName)
         {
             throw new NotImplementedException();
         }

@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.Containers.ContainerRegistry.Models
+namespace Azure.Containers.ContainerRegistry.Storage.Models
 {
     /// <summary> Docker V2 image layer descriptor including config and layers. </summary>
     public partial class ContentDescriptor
@@ -25,7 +25,7 @@ namespace Azure.Containers.ContainerRegistry.Models
         /// <param name="digest"> Layer digest. </param>
         /// <param name="urls"> Specifies a list of URIs from which this object may be downloaded. </param>
         /// <param name="annotations"> Additional information provided through arbitrary metadata. </param>
-        internal ContentDescriptor(string mediaType, long? size, string digest, IList<string> urls, Annotations annotations)
+        internal ContentDescriptor(string mediaType, long? size, string digest, IList<string> urls, OciManifestAnnotations annotations)
         {
             MediaType = mediaType;
             Size = size;
@@ -36,6 +36,6 @@ namespace Azure.Containers.ContainerRegistry.Models
         /// <summary> Specifies a list of URIs from which this object may be downloaded. </summary>
         public IList<string> Urls { get; }
         /// <summary> Additional information provided through arbitrary metadata. </summary>
-        public Annotations Annotations { get; set; }
+        public OciManifestAnnotations Annotations { get; set; }
     }
 }
