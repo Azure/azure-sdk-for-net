@@ -383,8 +383,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             }
             Assert.True(count == remainingMessageCount);
         }
-
-            internal async Task OnMessageRegistrationWithoutPendingMessagesTestCase(
+        
+        internal async Task OnMessageRegistrationWithoutPendingMessagesTestCase(
             IMessageSender messageSender,
             IMessageReceiver messageReceiver,
             int maxConcurrentCalls,
