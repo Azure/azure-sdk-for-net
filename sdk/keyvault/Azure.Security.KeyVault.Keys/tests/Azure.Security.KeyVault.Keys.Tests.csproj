@@ -8,6 +8,10 @@
   <Import Project="..\..\Azure.Security.KeyVault.Shared\tests\Azure.Security.KeyVault.Shared.Tests.projitems" Label="Shared" />
 
   <ItemGroup>
+    <None Include="C:\Users\heaths\Desktop\UpdateRsaHsmKey.json" Link="UpdateRsaHsmKey.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
