@@ -9,7 +9,13 @@ namespace Azure.MixedReality.ObjectAnchors.Tests
     {
         private const string ClientCorrelationVectorHeaderName = "X-MRC-CV";
 
-        public MixedRealityRecordMatcher()
+        public MixedRealityRecordMatcher() : base(
+#if NETCOREAPP2_1
+            compareBodies: true
+#else
+            compareBodies: false
+#endif
+            )
         {
             IgnoredHeaders.Add(ClientCorrelationVectorHeaderName);
             VolatileHeaders.Add(ClientCorrelationVectorHeaderName);

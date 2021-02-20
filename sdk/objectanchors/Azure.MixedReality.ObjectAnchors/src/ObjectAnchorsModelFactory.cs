@@ -67,10 +67,10 @@ namespace Azure.MixedReality.ObjectAnchors
             clientErrorDetails,
             serverErrorDetails,
             jobId,
-            outputModelUri.ToString(),
+            outputModelUri.AbsoluteUri,
             assetConversionStatus,
             assetFileType.ToString(),
-            uploadedInputAssetUri.ToString(),
+            uploadedInputAssetUri.AbsoluteUri,
             accountId,
             assetConversionConfiguration);
         }
@@ -93,7 +93,7 @@ namespace Azure.MixedReality.ObjectAnchors
         /// <returns> A new instance of the <see cref="GetAssetUploadUriResult"/> for mocking purposes. </returns>
         public static AssetUploadUriResult GetAssetUploadUriResult(Uri uploadedInputAssetUri)
         {
-            return new AssetUploadUriResult(uploadedInputAssetUri.ToString());
+            return new AssetUploadUriResult(uploadedInputAssetUri.AbsoluteUri);
         }
     }
 }

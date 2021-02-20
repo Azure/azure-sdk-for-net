@@ -31,7 +31,7 @@ namespace Azure.MixedReality.ObjectAnchors
             }
             internal set
             {
-                InputAssetUriString = value.ToString();
+                InputAssetUriString = value.AbsoluteUri;
             }
         }
 

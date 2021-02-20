@@ -2,15 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Numerics;
-using System.Text;
+using System.Reflection;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using Azure.MixedReality.Authentication;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
@@ -20,6 +16,18 @@ namespace Azure.MixedReality.ObjectAnchors.Tests
 {
     public class ObjectAnchorsClientLiveTest : RecordedTestBase<ObjectAnchorsClientTestEnvironment>
     {
+        private const string assetsFolderName = "Assets";
+        private const string assetsFileName = "switchgear02_obj.obj";
+        private const string modelDownloadFileName = "switchgear02_obj_model.ply";
+        private const float assetGravityX = 0;
+        private const float assetGravityY = -1;
+        private const float assetGravityZ = 0;
+        private const float assetScale = 0.001f;
+
+        private static string currentWorkingDirectory => Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        private static readonly string assetLocalFilePath = Path.Combine(currentWorkingDirectory, assetsFolderName, assetsFileName);
+        public string modelDownloadLocalFilePath => Path.Combine(currentWorkingDirectory, modelDownloadFileName);
+
         public ObjectAnchorsClientLiveTest(bool isAsync)
             : base(isAsync/*, RecordedTestMode.Record*/)
         {
@@ -37,9 +45,9 @@ namespace Azure.MixedReality.ObjectAnchors.Tests
             string accountDomain = TestEnvironment.AccountDomain;
             ObjectAnchorsClientOptions options = new ObjectAnchorsClientOptions();
             options.MixedRealityAuthenticationOptions = InstrumentClientOptions(new MixedRealityStsClientOptions());
-            string localFilePath = TestEnvironment.AssetLocalFilePath;
-            Vector3 assetGravity = new Vector3(TestEnvironment.AssetGravityX, TestEnvironment.AssetGravityY, TestEnvironment.AssetGravityZ);
-            float scale = TestEnvironment.AssetScale;
+            string localFilePath = assetLocalFilePath;
+            Vector3 assetGravity = new Vector3(assetGravityX, assetGravityY, assetGravityZ);
+            float scale = assetScale;
 
             AzureKeyCredential credential = new AzureKeyCredential(TestEnvironment.AccountKey);
 
@@ -69,7 +77,7 @@ namespace Azure.MixedReality.ObjectAnchors.Tests
                 throw new Exception("The asset conversion operation completed with an unsuccessful status");
             }
 
-            string localFileDownloadPath = TestEnvironment.ModelDownloadLocalFilePath;
+            string localFileDownloadPath = modelDownloadLocalFilePath;
 
             BlobClient downloadBlobClient = InstrumentClient(new BlobClient(operation.Value.OutputModelUri, InstrumentClientOptions(new BlobClientOptions())));
 

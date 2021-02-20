@@ -33,8 +33,6 @@
     "asaAccountName": "[concat(parameters('baseName'), '-asa-account')]",
     "arrApiVersion": "2020-04-06-preview",
     "arrAccountName": "[concat(parameters('baseName'), '-arr-account')]",
-    "aoaApiVersion": "2020-03-01-preview",
-    "aoaAccountName": "[concat(parameters('baseName'), '-aoa-account')]",
     "storageApiVersion": "2019-06-01",
     "storageAccountName": "[parameters('baseName')]",
     "blobContainerName": "test",
@@ -61,14 +59,6 @@
             "location": "[parameters('location')]",
             "properties": {},
             "identity": { "type": "systemAssigned" }
-        },
-        {
-          "type": "Microsoft.MixedReality/objectAnchorsAccounts",
-          "name": "[variables('aoaAccountName')]",
-          "apiVersion": "[variables('aoaApiVersion')]",
-          "location": "[parameters('location')]",
-          "properties": {},
-          "identity": { "type": "systemAssigned" }
         },
         {
             "type": "Microsoft.Storage/storageAccounts",
@@ -146,42 +136,6 @@
       "MIXEDREALITY_ARR_SERVICE_ENDPOINT": {
         "type": "string",
         "value": "[concat('https://remoterendering.', parameters('location'), '.mixedreality.azure.com')]"
-      },
-      "MIXEDREALITY_AOA_ACCOUNT_DOMAIN": {
-        "type": "string",
-        "value": "[reference(variables('aoaAccountName')).accountDomain]"
-      },
-      "MIXEDREALITY_AOA_ACCOUNT_ID": {
-        "type": "string",
-        "value": "[reference(variables('aoaAccountName')).accountId]"
-      },
-      "MIXEDREALITY_AOA_ACCOUNT_KEY": {
-        "type": "string",
-        "value": "[listKeys(resourceId('Microsoft.MixedReality/objectAnchorsAccounts', variables('aoaAccountName')), variables('aoaApiVersion')).primaryKey]"
-      },
-      "MIXEDREALITY_AOA_ASSET_LOCAL_FILE_NAME": {
-        "type": "string",
-        "value": "switchgear02_obj.obj"
-      },
-      "MIXEDREALITY_AOA_MODEL_DOWNLOAD_LOCAL_FILE_NAME": {
-        "type": "string",
-        "value": "switchgear02_obj_model.ply"
-      },
-      "MIXEDREALITY_AOA_ASSET_GRAVITY_X": {
-        "type": "string",
-        "value": "0"
-      },
-      "MIXEDREALITY_AOA_ASSET_GRAVITY_Y": {
-        "type": "string",
-        "value": "-1"
-      },
-      "MIXEDREALITY_AOA_ASSET_GRAVITY_Z": {
-        "type": "string",
-        "value": "0"
-      },
-      "MIXEDREALITY_AOA_ASSET_SCALE": {
-        "type": "string",
-        "value": "0.001"
       }
     }
 }

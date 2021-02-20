@@ -27,6 +27,6 @@ namespace Azure.MixedReality.ObjectAnchors
         public Uri UploadUri { get; }
 
         [CodeGenMember("InputAssetUri")]
-        internal string UploadUriString { get => UploadUri.ToString(); }
+        internal string UploadUriString { get => UploadUri.AbsoluteUri; }
     }
 }

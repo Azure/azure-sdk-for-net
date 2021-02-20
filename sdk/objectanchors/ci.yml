@@ -7,7 +7,7 @@ trigger:
     - release/*
   paths:
     include:
-    - sdk/mixedreality/
+    - sdk/objectanchors/
 
 pr:
   branches:
@@ -18,15 +18,13 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/mixedreality/
+    - sdk/objectanchors/
 
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    ServiceDirectory: mixedreality
+    ServiceDirectory: objectanchors
     ArtifactName: packages
     Artifacts:
-    - name: Azure.MixedReality.Authentication
-      safeName: AzureMixedRealityAuthentication
-    - name: Azure.MixedReality.RemoteRendering
-      safeName: AzureMixedRealityRemoteRendering
+    - name: Azure.MixedReality.ObjectAnchors
+      safeName: AzureMixedRealityObjectAnchors
