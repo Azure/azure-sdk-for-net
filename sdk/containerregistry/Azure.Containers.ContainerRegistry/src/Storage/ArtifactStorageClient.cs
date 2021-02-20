@@ -631,7 +631,7 @@ namespace Azure.Containers.ContainerRegistry.Storage
         // one for us from scratch - like getting a ticket we'll use elsewhere.  Do we have a pattern for this elsewhere?
         /// <summary> Initiate a resumable blob upload with an empty request body. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CreateUploadResult>> CreateResumableUploadAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CreateUploadResult>> CreateUploadAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContainerRegistryBlobClient.StartUpload");
             scope.Start();
@@ -656,7 +656,7 @@ namespace Azure.Containers.ContainerRegistry.Storage
 
         /// <summary> Initiate a resumable blob upload with an empty request body. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CreateUploadResult> CreateResumableUpload(CancellationToken cancellationToken = default)
+        public virtual Response<CreateUploadResult> CreateUpload(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContainerRegistryBlobClient.StartUpload");
             scope.Start();
