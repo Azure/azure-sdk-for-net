@@ -5,19 +5,19 @@
 
 #nullable disable
 
-namespace Azure.Containers.ContainerRegistry.Models
+namespace Azure.Containers.ContainerRegistry.Storage.Models
 {
     /// <summary> Returns the requested manifest file. </summary>
-    public partial class Manifest
+    public partial class ImageManifest
     {
-        /// <summary> Initializes a new instance of Manifest. </summary>
-        public Manifest()
+        /// <summary> Initializes a new instance of ImageManifest. </summary>
+        public ImageManifest()
         {
         }
 
-        /// <summary> Initializes a new instance of Manifest. </summary>
+        /// <summary> Initializes a new instance of ImageManifest. </summary>
         /// <param name="schemaVersion"> Schema version. </param>
-        internal Manifest(int? schemaVersion)
+        internal ImageManifest(int? schemaVersion)
         {
             SchemaVersion = schemaVersion;
         }

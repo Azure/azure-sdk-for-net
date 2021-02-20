@@ -57,7 +57,7 @@ namespace ContainerRegistrySamples
                         {
                             Console.WriteLine($"        {manifest.ImageName}:{tagName}");
                         }
-                        await repositoryClient.DeleteImageAsync(repositoryName, manifest.Digest);
+                        await repositoryClient.DeleteManifestAsync(repositoryName, manifest.Digest);
                     }
 
                     manifestCount++;

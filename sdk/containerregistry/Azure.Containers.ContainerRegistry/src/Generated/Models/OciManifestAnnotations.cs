@@ -15,13 +15,13 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
     /// <summary> Additional information provided through arbitrary metadata. </summary>
     public partial class OciManifestAnnotations : IDictionary<string, object>
     {
-        /// <summary> Initializes a new instance of ManifestAnnotations. </summary>
+        /// <summary> Initializes a new instance of OciManifestAnnotations. </summary>
         public OciManifestAnnotations()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of ManifestAnnotations. </summary>
+        /// <summary> Initializes a new instance of OciManifestAnnotations. </summary>
         /// <param name="created"> Date and time on which the image was built (string, date-time as defined by https://tools.ietf.org/html/rfc3339#section-5.6). </param>
         /// <param name="authors"> Contact details of the people or organization responsible for the image. </param>
         /// <param name="url"> URL to find more information on the image. </param>

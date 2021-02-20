@@ -6,23 +6,22 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Containers.ContainerRegistry.Models;
 using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry.Storage.Models
 {
     /// <summary> Returns the requested V1 manifest file. </summary>
-    public partial class DockerV2Schema1Manifest : Manifest
+    public partial class DockerV1Manifest : ImageManifest
     {
-        /// <summary> Initializes a new instance of DockerV2Schema1Manifest. </summary>
-        public DockerV2Schema1Manifest()
+        /// <summary> Initializes a new instance of DockerV1Manifest. </summary>
+        public DockerV1Manifest()
         {
             FsLayers = new ChangeTrackingList<DockerV1ManifestFsLayer>();
             History = new ChangeTrackingList<DockerV1ManifestHistory>();
             Signatures = new ChangeTrackingList<DockerV1ManifestImageSignature>();
         }
 
-        /// <summary> Initializes a new instance of DockerV2Schema1Manifest. </summary>
+        /// <summary> Initializes a new instance of DockerV1Manifest. </summary>
         /// <param name="schemaVersion"> Schema version. </param>
         /// <param name="architecture"> CPU architecture. </param>
         /// <param name="name"> Image name. </param>
@@ -30,7 +29,7 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
         /// <param name="fsLayers"> List of layer information. </param>
         /// <param name="history"> Image history. </param>
         /// <param name="signatures"> Image signature. </param>
-        internal DockerV2Schema1Manifest(int? schemaVersion, string architecture, string name, string tag, IList<DockerV1ManifestFsLayer> fsLayers, IList<DockerV1ManifestHistory> history, IList<DockerV1ManifestImageSignature> signatures) : base(schemaVersion)
+        internal DockerV1Manifest(int? schemaVersion, string architecture, string name, string tag, IList<DockerV1ManifestFsLayer> fsLayers, IList<DockerV1ManifestHistory> history, IList<DockerV1ManifestImageSignature> signatures) : base(schemaVersion)
         {
             Architecture = architecture;
             Name = name;

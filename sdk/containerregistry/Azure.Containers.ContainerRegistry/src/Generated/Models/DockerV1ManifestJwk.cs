@@ -8,17 +8,17 @@
 namespace Azure.Containers.ContainerRegistry.Storage.Models
 {
     /// <summary> A JSON web signature. </summary>
-    public partial class DockerV2ManifestJwk
+    public partial class DockerV1ManifestJwk
     {
-        /// <summary> Initializes a new instance of DockerV2ManifestJwk. </summary>
-        public DockerV2ManifestJwk()
+        /// <summary> Initializes a new instance of DockerV1ManifestJwk. </summary>
+        public DockerV1ManifestJwk()
         {
         }
 
-        /// <summary> Initializes a new instance of DockerV2ManifestJwk. </summary>
+        /// <summary> Initializes a new instance of DockerV1ManifestJwk. </summary>
         /// <param name="jwk"> JSON web key parameter. </param>
         /// <param name="alg"> The algorithm used to sign or encrypt the JWT. </param>
-        internal DockerV2ManifestJwk(DockerV1ManifestJwkHeader jwk, string alg)
+        internal DockerV1ManifestJwk(DockerV1ManifestJwkHeader jwk, string alg)
         {
             Jwk = jwk;
             Alg = alg;

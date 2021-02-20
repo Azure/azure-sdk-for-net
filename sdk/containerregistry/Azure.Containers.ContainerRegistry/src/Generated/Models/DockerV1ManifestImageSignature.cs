@@ -19,7 +19,7 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
         /// <param name="header"> A JSON web signature. </param>
         /// <param name="signature"> A signature for the image manifest, signed by a libtrust private key. </param>
         /// <param name="protected"> The signed protected header. </param>
-        internal DockerV1ManifestImageSignature(DockerV2ManifestJwk header, string signature, string @protected)
+        internal DockerV1ManifestImageSignature(DockerV1ManifestJwk header, string signature, string @protected)
         {
             Header = header;
             Signature = signature;
@@ -27,7 +27,7 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
         }
 
         /// <summary> A JSON web signature. </summary>
-        public DockerV2ManifestJwk Header { get; set; }
+        public DockerV1ManifestJwk Header { get; set; }
         /// <summary> A signature for the image manifest, signed by a libtrust private key. </summary>
         public string Signature { get; set; }
         /// <summary> The signed protected header. </summary>

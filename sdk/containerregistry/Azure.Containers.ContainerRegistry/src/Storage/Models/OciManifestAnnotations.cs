@@ -9,7 +9,7 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry.Storage.Models
 {
     [CodeGenModel("Annotations")]
-    public partial class ManifestAnnotations
+    public partial class OciManifestAnnotations
     {
     }
 }

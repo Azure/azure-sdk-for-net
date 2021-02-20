@@ -126,7 +126,7 @@ namespace Azure.Containers.ContainerRegistry.Storage
         /// <summary> Put the manifest identified by `name` and `reference` where `reference` can be a tag or digest. </summary>
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> CreateManifestAsync(string tagOrDigest, Manifest manifest, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> CreateManifestAsync(string tagOrDigest, ImageManifest manifest, CancellationToken cancellationToken = default)
         {
             // TODO: How should we handle the accept header?  This feels like part of the polymorphic/strong-typing story around manifests
             ///// <param name="payload"> Manifest body, can take v1 or v2 values depending on accept header. </param>
@@ -146,7 +146,7 @@ namespace Azure.Containers.ContainerRegistry.Storage
 
         /// <summary> Put the manifest identified by `name` and `reference` where `reference` can be a tag or digest. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response CreateManifest(string tagOrDigest, Manifest manifest, CancellationToken cancellationToken = default)
+        public virtual Response CreateManifest(string tagOrDigest, ImageManifest manifest, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContainerRegistryRepositoryClient.CreateManifest");
             scope.Start();

@@ -35,7 +35,7 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
 
         internal static DockerV1ManifestImageSignature DeserializeDockerV1ManifestImageSignature(JsonElement element)
         {
-            Optional<DockerV2ManifestJwk> header = default;
+            Optional<DockerV1ManifestJwk> header = default;
             Optional<string> signature = default;
             Optional<string> @protected = default;
             foreach (var property in element.EnumerateObject())
@@ -47,7 +47,7 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    header = DockerV2ManifestJwk.DeserializeDockerV2ManifestJwk(property.Value);
+                    header = DockerV1ManifestJwk.DeserializeDockerV1ManifestJwk(property.Value);
                     continue;
                 }
                 if (property.NameEquals("signature"))

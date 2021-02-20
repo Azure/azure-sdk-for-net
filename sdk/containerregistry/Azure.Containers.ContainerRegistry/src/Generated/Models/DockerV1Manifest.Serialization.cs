@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry.Storage.Models
 {
-    public partial class DockerV2Schema1Manifest : IUtf8JsonSerializable
+    public partial class DockerV1Manifest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -69,7 +69,7 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
             writer.WriteEndObject();
         }
 
-        internal static DockerV2Schema1Manifest DeserializeDockerV2Schema1Manifest(JsonElement element)
+        internal static DockerV1Manifest DeserializeDockerV1Manifest(JsonElement element)
         {
             Optional<string> architecture = default;
             Optional<string> name = default;
@@ -151,7 +151,7 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
                     continue;
                 }
             }
-            return new DockerV2Schema1Manifest(Optional.ToNullable(schemaVersion), architecture.Value, name.Value, tag.Value, Optional.ToList(fsLayers), Optional.ToList(history), Optional.ToList(signatures));
+            return new DockerV1Manifest(Optional.ToNullable(schemaVersion), architecture.Value, name.Value, tag.Value, Optional.ToList(fsLayers), Optional.ToList(history), Optional.ToList(signatures));
         }
     }
 }

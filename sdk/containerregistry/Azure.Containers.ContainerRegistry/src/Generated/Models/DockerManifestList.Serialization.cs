@@ -39,7 +39,7 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
             writer.WriteEndObject();
         }
 
-        internal static DockerManifestList DeserializeManifestList(JsonElement element)
+        internal static DockerManifestList DeserializeDockerManifestList(JsonElement element)
         {
             Optional<string> mediaType = default;
             Optional<IList<ManifestListAttributes>> manifests = default;

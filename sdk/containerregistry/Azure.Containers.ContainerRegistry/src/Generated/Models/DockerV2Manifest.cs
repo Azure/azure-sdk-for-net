@@ -6,21 +6,20 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Containers.ContainerRegistry.Models;
 using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry.Storage.Models
 {
     /// <summary> Returns the requested Docker V2 Manifest file. </summary>
-    public partial class DockerV2Manifest : Manifest
+    public partial class DockerV2Manifest : ImageManifest
     {
-        /// <summary> Initializes a new instance of DockerV2Schema2Manifest. </summary>
+        /// <summary> Initializes a new instance of DockerV2Manifest. </summary>
         public DockerV2Manifest()
         {
             Layers = new ChangeTrackingList<ContentDescriptor>();
         }
 
-        /// <summary> Initializes a new instance of DockerV2Schema2Manifest. </summary>
+        /// <summary> Initializes a new instance of DockerV2Manifest. </summary>
         /// <param name="schemaVersion"> Schema version. </param>
         /// <param name="mediaType"> Media type for this Manifest. </param>
         /// <param name="config"> V2 image config descriptor. </param>

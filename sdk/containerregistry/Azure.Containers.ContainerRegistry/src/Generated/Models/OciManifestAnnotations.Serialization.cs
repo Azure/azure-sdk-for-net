@@ -85,7 +85,7 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
             writer.WriteEndObject();
         }
 
-        internal static OciManifestAnnotations DeserializeManifestAnnotations(JsonElement element)
+        internal static OciManifestAnnotations DeserializeOciManifestAnnotations(JsonElement element)
         {
             Optional<DateTimeOffset> orgOpencontainersImageCreated = default;
             Optional<string> orgOpencontainersImageAuthors = default;

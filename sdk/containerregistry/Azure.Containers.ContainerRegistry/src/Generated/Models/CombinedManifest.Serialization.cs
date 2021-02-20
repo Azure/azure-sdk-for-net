@@ -179,7 +179,7 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
                         annotations = null;
                         continue;
                     }
-                    annotations = OciManifestAnnotations.DeserializeManifestAnnotations(property.Value);
+                    annotations = OciManifestAnnotations.DeserializeOciManifestAnnotations(property.Value);
                     continue;
                 }
                 if (property.NameEquals("architecture"))

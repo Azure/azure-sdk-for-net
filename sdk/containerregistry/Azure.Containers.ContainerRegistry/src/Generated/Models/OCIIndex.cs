@@ -6,13 +6,12 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Containers.ContainerRegistry.Models;
 using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry.Storage.Models
 {
     /// <summary> Returns the requested OCI index file. </summary>
-    public partial class OciIndex : Manifest
+    public partial class OciIndex : ImageManifest
     {
         /// <summary> Initializes a new instance of OciIndex. </summary>
         public OciIndex()

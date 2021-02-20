@@ -112,7 +112,7 @@ namespace ContainerRegistrySamples
                 CanDelete = false
             };
 
-            await repositoryClient.SetImagePermissionsAsync("latest", permissions);
+            await repositoryClient.SetManifestPermissionsAsync("latest", permissions);
 
             // TODO: show that trying to write to this tag fails.  Also, what is the bigger story here? 
         }

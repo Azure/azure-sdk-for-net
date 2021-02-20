@@ -8,9 +8,9 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Containers.ContainerRegistry.Models
+namespace Azure.Containers.ContainerRegistry.Storage.Models
 {
-    public partial class Manifest : IUtf8JsonSerializable
+    public partial class ImageManifest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -23,7 +23,7 @@ namespace Azure.Containers.ContainerRegistry.Models
             writer.WriteEndObject();
         }
 
-        internal static Manifest DeserializeManifest(JsonElement element)
+        internal static ImageManifest DeserializeImageManifest(JsonElement element)
         {
             Optional<int> schemaVersion = default;
             foreach (var property in element.EnumerateObject())
@@ -39,7 +39,7 @@ namespace Azure.Containers.ContainerRegistry.Models
                     continue;
                 }
             }
-            return new Manifest(Optional.ToNullable(schemaVersion));
+            return new ImageManifest(Optional.ToNullable(schemaVersion));
         }
     }
 }

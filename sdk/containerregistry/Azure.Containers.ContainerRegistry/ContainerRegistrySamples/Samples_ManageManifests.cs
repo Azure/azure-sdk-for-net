@@ -59,7 +59,7 @@ namespace ContainerRegistrySamples
                 CanDelete = false
             };
 
-            await repositoryClient.SetImagePermissionsAsync("latest", permissions);
+            await repositoryClient.SetManifestPermissionsAsync("latest", permissions);
 
             // TODO: show that trying to write to this manifest fails.  Also, what is the bigger story here?  
             // It seems like it would be a DevOps story, since this is about being able to push to a registry.

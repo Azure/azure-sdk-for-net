@@ -44,7 +44,7 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
             writer.WriteEndObject();
         }
 
-        internal static DockerV2Manifest DeserializeDockerV2Schema2Manifest(JsonElement element)
+        internal static DockerV2Manifest DeserializeDockerV2Manifest(JsonElement element)
         {
             Optional<string> mediaType = default;
             Optional<ContentDescriptor> config = default;
