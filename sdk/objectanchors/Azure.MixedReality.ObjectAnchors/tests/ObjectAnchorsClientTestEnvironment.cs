@@ -13,7 +13,7 @@ namespace Azure.MixedReality.ObjectAnchors.Tests
         /// Gets the account domain.
         /// </summary>
         /// <remarks>
-        /// Set the MIXEDREALITY_AOA_ACCOUNT_DOMAIN environment variable.
+        /// Set the OBJECTANCHORS_AOA_ACCOUNT_DOMAIN environment variable.
         /// </remarks>
         public string AccountDomain => GetRecordedVariable("AOA_ACCOUNT_DOMAIN");
 
@@ -21,7 +21,7 @@ namespace Azure.MixedReality.ObjectAnchors.Tests
         /// Gets the account identifier.
         /// </summary>
         /// <remarks>
-        /// Set the MIXEDREALITY_AOA_ACCOUNT_ID environment variable.
+        /// Set the OBJECTANCHORS_AOA_ACCOUNT_ID environment variable.
         /// </remarks>
         public string AccountId => GetRecordedVariable("AOA_ACCOUNT_ID");
 
@@ -29,7 +29,7 @@ namespace Azure.MixedReality.ObjectAnchors.Tests
         /// Gets the account identifier.
         /// </summary>
         /// <remarks>
-        /// Set the MIXEDREALITY_AOA_ACCOUNT_KEY environment variable.
+        /// Set the OBJECTANCHORS_AOA_ACCOUNT_KEY environment variable.
         /// </remarks>
         public string AccountKey => GetRecordedVariable("AOA_ACCOUNT_KEY", options => options.IsSecret());
     }
