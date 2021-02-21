@@ -3,74 +3,77 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Threading;
 using Azure.Core;
-using Azure.Core.Serialization;
 
 namespace Azure.Messaging
 {
     /// <summary>
-    /// A custom converter that attributes the CloudEvent type. This allows System.Text.Json to serialize
-    /// and deserialize CloudEvents by default.
+    /// A custom converter that attributes the <see cref="CloudEvent"/> type.
+    /// This allows System.Text.Json to serialize and deserialize CloudEvents by default.
     /// </summary>
-#pragma warning disable AZC0014 // Avoid using banned types in public API
-    public class CloudEventConverter : JsonConverter<CloudEvent>
-#pragma warning restore AZC0014 // Avoid using banned types in public API
+    internal class CloudEventConverter : JsonConverter<CloudEvent>
     {
-        private static readonly JsonObjectSerializer s_defaultSerializer = new JsonObjectSerializer();
-
         /// <summary>
-        /// Gets or sets the serializer to use for the data portion of the CloudEvent. If not specified,
+        /// Gets or sets the serializer to use for the data portion of the <see cref="CloudEvent"/>. If not specified,
         /// JsonObjectSerializer is used.
         /// </summary>
-        public ObjectSerializer DataSerializer { get; set; } = s_defaultSerializer;
-
         /// <inheritdoc cref="JsonConverter{CloudEvent}.Read(ref Utf8JsonReader, Type, JsonSerializerOptions)"/>
-#pragma warning disable AZC0014 // Avoid using banned types in public API
         public override CloudEvent Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-#pragma warning restore AZC0014 // Avoid using banned types in public API
         {
             JsonDocument requestDocument = JsonDocument.ParseValue(ref reader);
-            return DeserializeCloudEvent(requestDocument.RootElement);
+            return DeserializeCloudEvent(requestDocument.RootElement, strict: true);
         }
 
-        internal static CloudEvent DeserializeCloudEvent(JsonElement element)
+        internal static CloudEvent DeserializeCloudEvent(JsonElement element, bool strict)
         {
             var cloudEvent = new CloudEvent();
             foreach (JsonProperty property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals(CloudEventConstants.Id))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     cloudEvent.Id = property.Value.GetString()!;
                 }
-                else if (property.NameEquals("source"))
-                {
-                    cloudEvent.Source = property.Value.GetString();
-                }
-                else if (property.NameEquals("data"))
+                else if (property.NameEquals(CloudEventConstants.Source))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    cloudEvent.Data = s_defaultSerializer.Serialize(property.Value);
+                    cloudEvent.Source = property.Value.GetString()!;
                 }
-                else if (property.NameEquals("data_base64"))
+                else if (property.NameEquals(CloudEventConstants.Data))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    cloudEvent.DataBase64 = property.Value.GetBytesFromBase64();
+                    cloudEvent.Data = new BinaryData(property.Value);
+                    cloudEvent.DataFormat = CloudEventDataFormat.Json;
                 }
-                else if (property.NameEquals("type"))
+                else if (property.NameEquals(CloudEventConstants.DataBase64))
                 {
-                    cloudEvent.Type = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    cloudEvent.Data = BinaryData.FromBytes(property.Value.GetBytesFromBase64());
+                    cloudEvent.DataFormat = CloudEventDataFormat.Binary;
                 }
-                else if (property.NameEquals("time"))
+                else if (property.NameEquals(CloudEventConstants.Type))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    cloudEvent.Type = property.Value.GetString()!;
+                }
+                else if (property.NameEquals(CloudEventConstants.Time))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -78,84 +81,140 @@ namespace Azure.Messaging
                     }
                     cloudEvent.Time = property.Value.GetDateTimeOffset();
                 }
-                else if (property.NameEquals("specversion"))
+                else if (property.NameEquals(CloudEventConstants.SpecVersion))
                 {
                     cloudEvent.SpecVersion = property.Value.GetString()!;
                 }
-                else if (property.NameEquals("dataschema"))
+                else if (property.NameEquals(CloudEventConstants.DataSchema))
                 {
                     cloudEvent.DataSchema = property.Value.GetString();
                 }
-                else if (property.NameEquals("datacontenttype"))
+                else if (property.NameEquals(CloudEventConstants.DataContentType))
                 {
                     cloudEvent.DataContentType = property.Value.GetString();
                 }
-                else if (property.NameEquals("subject"))
+                else if (property.NameEquals(CloudEventConstants.Subject))
                 {
                     cloudEvent.Subject = property.Value.GetString();
                 }
                 else
                 {
-                    (cloudEvent.ExtensionAttributes as CloudEventExtensionAttributes<string, object?>)!.AddWithoutValidation(property.Name, GetObject(property.Value));
+                    if (strict)
+                    {
+                        cloudEvent.ExtensionAttributes.Add(property.Name, GetObject(property.Value));
+                    }
+                    else
+                    {
+                        // This aspect of strict = false would not be supported for converters that live in a different
+                        // package since CloudEventExtensionAttributes is internal.
+                        ((CloudEventExtensionAttributes<string, object?>)cloudEvent.ExtensionAttributes).AddWithoutValidation(property.Name, GetObject(property.Value));
+                    }
                 }
+            }
+            if (strict)
+            {
+                if (cloudEvent.Source == null)
+                {
+                    throw new ArgumentException(
+                        "The source property must be specified in each CloudEvent. " +
+                        Environment.NewLine +
+                        CloudEventConstants.ErrorStrictSuggestion);
+                }
+                if (cloudEvent.Type == null)
+                {
+                    throw new ArgumentException(
+                        "The type property must be specified in each CloudEvent. " +
+                        Environment.NewLine +
+                        CloudEventConstants.ErrorStrictSuggestion);
+                }
+                if (cloudEvent.Id == null)
+                {
+                    throw new ArgumentException(
+                        "The Id property must be specified in each CloudEvent. " +
+                        Environment.NewLine +
+                        CloudEventConstants.ErrorStrictSuggestion);
+                }
+                if (cloudEvent.SpecVersion != "1.0")
+                {
+                    if (cloudEvent.SpecVersion == null)
+                    {
+                        throw new ArgumentException(
+                            "The specverion was not set in at least one of the events in the payload. " +
+                            "This type only supports specversion '1.0', which must be set for each event. " +
+                            Environment.NewLine +
+                            CloudEventConstants.ErrorStrictSuggestion +
+                            Environment.NewLine +
+                            element,
+                            nameof(element));
+                    }
+                    else
+                    {
+                        throw new ArgumentException(
+                            $"The specverion value of '{cloudEvent.SpecVersion}' is not supported by CloudEvent. " +
+                            "This type only supports specversion '1.0'. " +
+                            Environment.NewLine +
+                            CloudEventConstants.ErrorStrictSuggestion +
+                            Environment.NewLine +
+                            element,
+                            nameof(element));
+                    }
+                };
             }
             return cloudEvent;
         }
 
         /// <inheritdoc cref="JsonConverter{CloudEvent}.Write(Utf8JsonWriter, CloudEvent, JsonSerializerOptions)"/>
-#pragma warning disable AZC0014 // Avoid using banned types in public API
         public override void Write(Utf8JsonWriter writer, CloudEvent value, JsonSerializerOptions options)
-#pragma warning restore AZC0014 // Avoid using banned types in public API
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(value.Id);
-            writer.WritePropertyName("source");
-            writer.WriteStringValue(value.Source);
-            if (value.JsonSerializableData != null)
-            {
-                writer.WritePropertyName("data");
-                using (MemoryStream stream = new MemoryStream())
-                {
-                    DataSerializer.Serialize(
-                        stream,
-                        value.JsonSerializableData,
-                        value.DataSerializationType!,
-                        CancellationToken.None);
 
-                    stream.Position = 0;
-                    using JsonDocument document = JsonDocument.Parse(stream);
-                    document.RootElement.WriteTo(writer);
-                }
-            }
-            if (value.DataBase64 != null)
-            {
-                writer.WritePropertyName("data_base64");
-                writer.WriteBase64StringValue(value.DataBase64.Value.Span);
-            }
-            writer.WritePropertyName("type");
+            // These properties are required and thus assumed to be populated.
+            // It is possible for them to be null if a CloudEvent was created by using Parse and passing
+            // strict = false. However, we still will write the properties.
+            writer.WritePropertyName(CloudEventConstants.Id);
+            writer.WriteStringValue(value.Id);
+            writer.WritePropertyName(CloudEventConstants.Source);
+            writer.WriteStringValue(value.Source);
+            writer.WritePropertyName(CloudEventConstants.Type);
             writer.WriteStringValue(value.Type);
 
+            if (value.Data != null)
+            {
+                switch (value.DataFormat)
+                {
+                    case CloudEventDataFormat.Binary:
+                        writer.WritePropertyName(CloudEventConstants.DataBase64);
+                        writer.WriteBase64StringValue(value.Data.ToArray());
+                        break;
+                    case CloudEventDataFormat.Json:
+                        using (JsonDocument doc = JsonDocument.Parse(value.Data.ToStream()))
+                        {
+                            writer.WritePropertyName(CloudEventConstants.Data);
+                            doc.RootElement.WriteTo(writer);
+                            break;
+                        }
+                }
+            }
             if (value.Time != null)
             {
-                writer.WritePropertyName("time");
+                writer.WritePropertyName(CloudEventConstants.Time);
                 writer.WriteStringValue(value.Time.Value);
             }
-            writer.WritePropertyName("specversion");
+            writer.WritePropertyName(CloudEventConstants.SpecVersion);
             writer.WriteStringValue(value.SpecVersion);
             if (value.DataSchema != null)
             {
-                writer.WritePropertyName("dataschema");
+                writer.WritePropertyName(CloudEventConstants.DataSchema);
                 writer.WriteStringValue(value.DataSchema);
             }
-            if (value.DataContentType != null )
+            if (value.DataContentType != null)
             {
-                writer.WritePropertyName("datacontenttype");
+                writer.WritePropertyName(CloudEventConstants.DataContentType);
                 writer.WriteStringValue(value.DataContentType);
             }
             if (value.Subject != null)
             {
-                writer.WritePropertyName("subject");
+                writer.WritePropertyName(CloudEventConstants.Subject);
                 writer.WriteStringValue(value.Subject);
             }
             foreach (KeyValuePair<string, object?> item in value.ExtensionAttributes)
@@ -176,20 +235,11 @@ namespace Azure.Messaging
                 case byte[] bytes:
                     writer.WriteStringValue(Convert.ToBase64String(bytes));
                     break;
+                case ReadOnlyMemory<byte> rom:
+                    writer.WriteStringValue(Convert.ToBase64String(rom.ToArray()));
+                    break;
                 case int i:
                     writer.WriteNumberValue(i);
-                    break;
-                case decimal d:
-                    writer.WriteNumberValue(d);
-                    break;
-                case double d:
-                    writer.WriteNumberValue(d);
-                    break;
-                case float f:
-                    writer.WriteNumberValue(f);
-                    break;
-                case long l:
-                    writer.WriteNumberValue(l);
                     break;
                 case string s:
                     writer.WriteStringValue(s);
@@ -199,6 +249,15 @@ namespace Azure.Messaging
                     break;
                 case Guid g:
                     writer.WriteStringValue(g);
+                    break;
+                case Uri u:
+                    writer.WriteStringValue(u.ToString());
+                    break;
+                case DateTimeOffset dateTimeOffset:
+                    writer.WriteStringValue(dateTimeOffset);
+                    break;
+                case DateTime dateTime:
+                    writer.WriteStringValue(dateTime);
                     break;
                 case IEnumerable<KeyValuePair<string, object>> enumerable:
                     writer.WriteStartObject();

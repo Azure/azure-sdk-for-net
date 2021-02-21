@@ -14,15 +14,16 @@ namespace Azure.Messaging
         private readonly Dictionary<TKey, TValue> _backingDictionary;
         private static readonly HashSet<string> s_reservedAttributes = new HashSet<string>
         {
-            "specversion",
-            "id",
-            "source",
-            "type",
-            "datacontenttype",
-            "dataschema",
-            "subject",
-            "time",
-            "data"
+            CloudEventConstants.SpecVersion,
+            CloudEventConstants.Id,
+            CloudEventConstants.Source,
+            CloudEventConstants.Type,
+            CloudEventConstants.DataContentType,
+            CloudEventConstants.DataSchema,
+            CloudEventConstants.Subject,
+            CloudEventConstants.Time,
+            CloudEventConstants.Data,
+            CloudEventConstants.DataBase64
         };
 
         public CloudEventExtensionAttributes()
@@ -38,7 +39,7 @@ namespace Azure.Messaging
             }
             set
             {
-                ValidateAttributeKey(key as string);
+                ValidateAttribute(key as string, value);
                 _backingDictionary[key] = value;
             }
         }
@@ -53,19 +54,18 @@ namespace Azure.Messaging
 
         public void Add(TKey key, TValue value)
         {
-            ValidateAttributeKey(key as string);
+            ValidateAttribute(key as string, value);
             _backingDictionary.Add(key, value);
         }
 
-        // used for deserializing
+        // used for deserializing when not in strict mode
         public void AddWithoutValidation(TKey key, TValue value)
         {
             _backingDictionary.Add(key, value);
         }
-
         public void Add(KeyValuePair<TKey, TValue> item)
         {
-            ValidateAttributeKey(item.Key as string);
+            ValidateAttribute(item.Key as string, item.Value);
             ((ICollection<KeyValuePair<TKey, TValue>>)_backingDictionary).Add(item);
         }
 
@@ -87,21 +87,45 @@ namespace Azure.Messaging
 
         IEnumerator IEnumerable.GetEnumerator() => _backingDictionary.GetEnumerator();
 
-        private static void ValidateAttributeKey(string? key)
+        private static void ValidateAttribute(string? name, object? value)
         {
-            Argument.AssertNotNullOrEmpty(key, nameof(key));
-            if (s_reservedAttributes.Contains(key))
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(value, nameof(value));
+            if (s_reservedAttributes.Contains(name))
             {
-                throw new ArgumentException($"Attribute key cannot use the reserved attribute: '{key}'", nameof(key));
+                throw new ArgumentException($"Attribute name cannot use the reserved attribute: '{name}'", nameof(name));
             }
-            for (int i = 0; i < key.Length; i++)
+
+            // https://github.com/cloudevents/spec/blob/v1.0/spec.md#attribute-naming-convention
+            for (int i = 0; i < name.Length; i++)
             {
-                char c = key[i];
+                char c = name[i];
                 bool valid = (c >= '0' && c <= '9') || (c >= 'a' && c <= 'z');
                 if (!valid)
                 {
-                    throw new ArgumentException($"Invalid character in extension attribute key: '{c}'", nameof(key));
+                    throw new ArgumentException(
+                        $"Invalid character in extension attribute name: '{c}'. " +
+                        "CloudEvent attribute names must consist of lower-case letters ('a' to 'z')" +
+                        " or digits ('0' to '9') from the ASCII character set.",
+                        nameof(name));
                 }
+            }
+
+            // https://github.com/cloudevents/spec/blob/v1.0/spec.md#type-system
+            switch (value)
+            {
+                case string:
+                case byte[]:
+                case ReadOnlyMemory<byte>:
+                case int:
+                case bool:
+                case Uri:
+                case DateTime:
+                case DateTimeOffset:
+                    return;
+                default:
+                    throw new ArgumentException($"Values of type {value.GetType()} are not supported. " +
+                        "Attribute values must be of type bool, byte, int, Uri, DateTime, or DateTimeOffset.");
             }
         }
     }

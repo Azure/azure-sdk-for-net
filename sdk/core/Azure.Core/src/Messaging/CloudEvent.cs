@@ -9,26 +9,31 @@ using Azure.Core;
 
 namespace Azure.Messaging
 {
-    /// <summary> Represents a CloudEvent using the 1.0 Schema. This type has built-in serialization using System.Text.Json.</summary>
+    /// <summary> Represents a CloudEvent conforming to the 1.0 schema. This type has built-in serialization using System.Text.Json.</summary>
     [JsonConverter(typeof(CloudEventConverter))]
     public class CloudEvent
     {
         /// <summary> Initializes a new instance of the <see cref="CloudEvent"/> class. </summary>
         /// <param name="source"> Identifies the context in which an event happened. The combination of id and source must be unique for each distinct event. </param>
         /// <param name="type"> Type of event related to the originating occurrence. For example, "Contoso.Items.ItemReceived". </param>
-        /// <param name="jsonSerializable"> Event data specific to the event type. </param>
+        /// <param name="jsonSerializableData"> Event data specific to the event type. </param>
         /// <param name="dataSerializationType">The type to use when serializing the data.
-        /// If not specified, <see cref="object.GetType()"/> will be used on <paramref name="jsonSerializable"/>.</param>
-        public CloudEvent(string source, string type, object jsonSerializable, Type? dataSerializationType = default)
+        /// If not specified, <see cref="object.GetType()"/> will be used on <paramref name="jsonSerializableData"/>.</param>
+        public CloudEvent(string source, string type, object jsonSerializableData, Type? dataSerializationType = default)
         {
-            Argument.AssertNotNull(source, nameof(source));
-            Argument.AssertNotNull(type, nameof(type));
-
+            if (jsonSerializableData is BinaryData)
+            {
+                throw new InvalidOperationException("This constructor does not support BinaryData. Use the constructor that takes a BinaryData instance.");
+            }
             Source = source;
             Type = type;
-            DataSerializationType = dataSerializationType ?? jsonSerializable?.GetType();
-            JsonSerializableData = jsonSerializable;
             Id = Guid.NewGuid().ToString();
+            DataFormat = CloudEventDataFormat.Json;
+            if (jsonSerializableData != null)
+            {
+                Data = new BinaryData(jsonSerializableData, type: dataSerializationType ?? jsonSerializableData?.GetType());
+            }
+            SpecVersion = "1.0";
         }
 
         /// <summary> Initializes a new instance of the <see cref="CloudEvent"/> class using binary event data.</summary>
@@ -36,16 +41,16 @@ namespace Azure.Messaging
         /// <param name="type"> Type of event related to the originating occurrence. For example, "Contoso.Items.ItemReceived". </param>
         /// <param name="data"> Binary event data specific to the event type. </param>
         /// <param name="dataContentType"> Content type of the payload. A content type different from "application/json" should be specified if payload is not JSON. </param>
-        public CloudEvent(string source, string type, ReadOnlyMemory<byte> data, string dataContentType)
+        /// <param name="dataFormat"></param>
+        public CloudEvent(string source, string type, BinaryData data, string dataContentType, CloudEventDataFormat dataFormat = CloudEventDataFormat.Binary)
         {
-            Argument.AssertNotNull(source, nameof(source));
-            Argument.AssertNotNull(type, nameof(type));
-
             Source = source;
             Type = type;
             DataContentType = dataContentType;
-            DataBase64 = data;
             Id = Guid.NewGuid().ToString();
+            DataFormat = dataFormat;
+            Data = data;
+            SpecVersion = "1.0";
         }
 
         internal CloudEvent() { }
@@ -54,18 +59,57 @@ namespace Azure.Messaging
         /// Gets or sets an identifier for the event. The combination of <see cref="Id"/> and <see cref="Source"/> must be unique for each distinct event.
         /// If not explicitly set, this will default to a <see cref="Guid"/>.
         /// </summary>
-        public string? Id { get; set; }
+        public string Id
+        {
+            get
+            {
+                return _id!;
+            }
+            set
+            {
+                Argument.AssertNotNull(value, nameof(value));
+                _id = value;
+            }
+        }
+        private string? _id;
 
-        /// <summary>Gets or sets the context in which an event happened. The combination of <see cref="Id"/> and <see cref="Source"/> must be unique for each distinct event.</summary>
-        public string? Source { get; set; }
+        internal CloudEventDataFormat DataFormat { get; set; }
+
+        /// <summary>Gets or sets the context in which an event happened. The combination of <see cref="Id"/>
+        /// and <see cref="Source"/> must be unique for each distinct event.</summary>
+        public string Source
+        {
+            get
+            {
+                return _source!;
+            }
+            set
+            {
+                Argument.AssertNotNull(value, nameof(value));
+                _source = value;
+            }
+        }
+        private string? _source;
 
         /// <summary>Gets or sets the type of event related to the originating occurrence.</summary>
-        public string? Type { get; set; }
+        public string Type
+        {
+            get
+            {
+                return _type!;
+            }
+            set
+            {
+                Argument.AssertNotNull(value, nameof(value));
+                _type = value;
+            }
+        }
+        private string? _type;
 
         /// <summary>
         /// The spec version of the cloud event.
         /// </summary>
-        internal string SpecVersion { get; set; } = "1.0";
+        internal string? SpecVersion { get; set; }
 
         /// <summary>
         /// Gets or sets the time (in UTC) the event was generated, in RFC3339 format.
@@ -89,59 +133,31 @@ namespace Azure.Messaging
         /// </summary>
         public IDictionary<string, object?> ExtensionAttributes { get; } = new CloudEventExtensionAttributes<string, object?>();
 
-        /// <summary>Gets or sets the deserialized event data specific to the event type.</summary>
-        internal object? JsonSerializableData
-        {
-            get
-            {
-                return _jsonSerializableData;
-            }
-            set
-            {
-                if (value != null)
-                {
-                    Data = new BinaryData(value, type: DataSerializationType);
-                }
-                _jsonSerializableData = value;
-            }
-        }
-        private object? _jsonSerializableData;
-
-        /// <summary>Gets or sets the event data specific to the event type, encoded as a base64 string.</summary>
-        internal ReadOnlyMemory<byte>? DataBase64
-        {
-            get
-            {
-                return _dataBase64;
-            }
-            set
-            {
-                if (value != null)
-                {
-                    Data = new BinaryData(value.Value);
-                    _dataBase64 = value;
-                }
-            }
-        }
-        private ReadOnlyMemory<byte>? _dataBase64;
-
         /// <summary>
         /// Given JSON-encoded events, parses the event envelope and returns an array of CloudEvents.
+        /// If the specified event is not valid JSON an exception is thrown.
+        /// By default, if the event is missing required properties, an exception is thrown though this can be relaxed
+        /// by setting the <paramref name="strict"/> parameter.
         /// </summary>
-        /// <param name="requestContent"> The JSON-encoded representation of either a single event or an array or events, in the CloudEvent schema. </param>
+        /// <param name="jsonContent"> The JSON-encoded representation of either a single event or an array or events,
+        /// in the CloudEvent schema.</param>
+        /// <param name="strict">Set to <see langword="false"/> to allow missing or invalid properties to still parse into a CloudEvent.
+        /// In particular, by setting strict to <see langword="false"/>, the source, id, specversion and type properties are no longer required
+        /// to be present in the JSON. Additionally, the casing requirements of the extension attribute names are relaxed.
+        /// </param>
         /// <returns> A list of <see cref="CloudEvent"/>. </returns>
-        public static CloudEvent[]? Parse(string requestContent)
+        public static CloudEvent[] Parse(string jsonContent, bool strict = true)
         {
-            Argument.AssertNotNull(requestContent, nameof(requestContent));
+            Argument.AssertNotNull(jsonContent, nameof(jsonContent));
 
             CloudEvent[]? cloudEvents = null;
-            JsonDocument requestDocument = JsonDocument.Parse(requestContent);
+            JsonDocument requestDocument = JsonDocument.Parse(jsonContent);
 
             // Parse JsonElement into separate events, deserialize event envelope properties
             if (requestDocument.RootElement.ValueKind == JsonValueKind.Object)
             {
                 cloudEvents = new CloudEvent[1];
-                cloudEvents[0] = CloudEventConverter.DeserializeCloudEvent(requestDocument.RootElement);
+                cloudEvents[0] = CloudEventConverter.DeserializeCloudEvent(requestDocument.RootElement, strict);
             }
             else if (requestDocument.RootElement.ValueKind == JsonValueKind.Array)
             {
@@ -149,16 +165,48 @@ namespace Azure.Messaging
                 int i = 0;
                 foreach (JsonElement property in requestDocument.RootElement.EnumerateArray())
                 {
-                    cloudEvents[i++] = CloudEventConverter.DeserializeCloudEvent(property);
+                    cloudEvents[i++] = CloudEventConverter.DeserializeCloudEvent(property, strict);
                 }
             }
             return cloudEvents ?? Array.Empty<CloudEvent>();
         }
 
         /// <summary>
+        /// Given a single JSON-encoded event, parses the event envelope and returns a <see cref="CloudEvent"/>.
+        /// If the specified event is not valid JSON an exception is thrown.
+        /// By default, if the event is missing required properties, an exception is thrown though this can be relaxed
+        /// by setting the <paramref name="strict"/> parameter.
+        /// </summary>
+        /// <param name="jsonEvent">Specifies the instance of <see cref="BinaryData"/>.</param>
+        /// <param name="strict">Set to <see langword="false"/> to allow missing or invalid properties to still parse into a CloudEvent.
+        /// In particular, by setting strict to <see langword="false"/>, the source, id, specversion and type properties are no longer required
+        /// to be present in the JSON. Additionally, the casing requirements of the extension attribute names are relaxed.
+        /// </param>
+        /// <returns> A <see cref="CloudEvent"/>. </returns>
+        public static CloudEvent? Parse(BinaryData jsonEvent, bool strict = true)
+        {
+            Argument.AssertNotNull(jsonEvent, nameof(jsonEvent));
+            CloudEvent[]? events = Parse(jsonEvent.ToString(), strict);
+            if (events.Length == 0)
+            {
+                return null;
+            }
+            if (events.Length > 1)
+            {
+                throw new ArgumentException(
+                    "The BinaryData instance contains JSON from multiple cloud events. This method " +
+                    "should only be used with BinaryData containing a single cloud event. " +
+                    Environment.NewLine +
+                    "To parse multiple events, call ToString on the BinaryData and use the " +
+                    "Parse overload that takes a string.");
+            }
+            return events[0];
+        }
+
+        /// <summary>
         /// Gets the event data as <see cref="BinaryData"/>. Using BinaryData,
         /// one can deserialize the payload into rich data, or access the raw JSON data using <see cref="BinaryData.ToString()"/>.
         /// </summary>
-        public BinaryData? Data { get; internal set; }
+        public BinaryData? Data { get; set; }
     }
 }

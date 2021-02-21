@@ -129,13 +129,13 @@ List<CloudEvent> eventsList = new List<CloudEvent>
     new CloudEvent(
         "/cloudevents/example/source",
         "Example.EventType",
-        "This is the event data"),
+        myCustomDataSerializer.Serialize("This is the event data")),
 
     // CloudEvents also supports sending binary-valued data
     new CloudEvent(
         "/cloudevents/example/binarydata",
         "Example.EventType",
-        Encoding.UTF8.GetBytes("This is binary data"),
+        new BinaryData(Encoding.UTF8.GetBytes("This is binary data")),
         "example/binary")};
 
 // Send the events
@@ -246,7 +246,7 @@ foreach (EventGridEvent egEvent in egEvents)
         switch (egEvent.EventType)
         {
             case "MyApp.Models.CustomEventType":
-                TestPayload deserializedEventData = egEvent.GetData<TestPayload>();
+                TestPayload deserializedEventData = egEvent.Data.ToObjectFromJson<TestPayload>();
                 Console.WriteLine(deserializedEventData.Name);
                 break;
             // Handle any other custom event type

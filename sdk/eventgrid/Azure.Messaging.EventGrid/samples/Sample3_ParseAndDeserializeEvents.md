@@ -84,7 +84,7 @@ foreach (EventGridEvent egEvent in egEvents)
         switch (egEvent.EventType)
         {
             case "MyApp.Models.CustomEventType":
-                TestPayload deserializedEventData = egEvent.GetData<TestPayload>();
+                TestPayload deserializedEventData = egEvent.Data.ToObjectFromJson<TestPayload>();
                 Console.WriteLine(deserializedEventData.Name);
                 break;
             // Handle any other custom event type

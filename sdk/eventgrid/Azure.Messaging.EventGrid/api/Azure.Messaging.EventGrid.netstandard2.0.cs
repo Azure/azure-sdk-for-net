@@ -2,20 +2,21 @@ namespace Azure.Messaging.EventGrid
 {
     public partial class EventGridEvent
     {
+        public EventGridEvent(string subject, string eventType, string dataVersion, System.BinaryData data) { }
         public EventGridEvent(string subject, string eventType, string dataVersion, object data, System.Type dataSerializationType = null) { }
-        public System.BinaryData Data { get { throw null; } }
+        public System.BinaryData Data { get { throw null; } set { } }
         public string DataVersion { get { throw null; } set { } }
         public System.DateTimeOffset EventTime { get { throw null; } set { } }
         public string EventType { get { throw null; } set { } }
         public string Id { get { throw null; } set { } }
         public string Subject { get { throw null; } set { } }
         public string Topic { get { throw null; } set { } }
+        public static Azure.Messaging.EventGrid.EventGridEvent Parse(System.BinaryData jsonEvent) { throw null; }
         public static Azure.Messaging.EventGrid.EventGridEvent[] Parse(string requestContent) { throw null; }
         public bool TryGetSystemEventData(out object eventData) { throw null; }
     }
     public static partial class EventGridExtensions
     {
-        public static Azure.Messaging.EventGrid.EventGridEvent ToEventGridEvent(this System.BinaryData binaryData) { throw null; }
         public static bool TryGetSystemEventData(this Azure.Messaging.CloudEvent cloudEvent, out object eventData) { throw null; }
     }
     public partial class EventGridPublisherClient
@@ -30,15 +31,14 @@ namespace Azure.Messaging.EventGrid
         public virtual System.Threading.Tasks.Task<Azure.Response> SendEncodedCloudEventsAsync(System.ReadOnlyMemory<byte> cloudEvents, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response SendEvents(System.Collections.Generic.IEnumerable<Azure.Messaging.CloudEvent> events, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response SendEvents(System.Collections.Generic.IEnumerable<Azure.Messaging.EventGrid.EventGridEvent> events, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response SendEvents(System.Collections.Generic.IEnumerable<object> events, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response SendEvents(System.Collections.Generic.IEnumerable<System.BinaryData> events, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> SendEventsAsync(System.Collections.Generic.IEnumerable<Azure.Messaging.CloudEvent> events, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> SendEventsAsync(System.Collections.Generic.IEnumerable<Azure.Messaging.EventGrid.EventGridEvent> events, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> SendEventsAsync(System.Collections.Generic.IEnumerable<object> events, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> SendEventsAsync(System.Collections.Generic.IEnumerable<System.BinaryData> events, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class EventGridPublisherClientOptions : Azure.Core.ClientOptions
     {
         public EventGridPublisherClientOptions(Azure.Messaging.EventGrid.EventGridPublisherClientOptions.ServiceVersion version = Azure.Messaging.EventGrid.EventGridPublisherClientOptions.ServiceVersion.V2018_01_01) { }
-        public Azure.Core.Serialization.ObjectSerializer Serializer { get { throw null; } set { } }
         public enum ServiceVersion
         {
             V2018_01_01 = 1,
