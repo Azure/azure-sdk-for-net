@@ -13,7 +13,7 @@ using Azure.Messaging.EventGrid;
 using Azure.Messaging.EventGrid.Tests;
 using NUnit.Framework;
 
-namespace Azure.EventGrid.Tests.Samples
+namespace Azure.Messaging.EventGrid.Tests.Samples
 {
     public partial class EventGridSamples : SamplesBase<EventGridTestEnvironment>
     {
