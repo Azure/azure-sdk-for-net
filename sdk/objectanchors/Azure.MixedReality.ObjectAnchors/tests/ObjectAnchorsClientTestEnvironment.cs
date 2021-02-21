@@ -13,24 +13,24 @@ namespace Azure.MixedReality.ObjectAnchors.Tests
         /// Gets the account domain.
         /// </summary>
         /// <remarks>
-        /// Set the OBJECTANCHORS_AOA_ACCOUNT_DOMAIN environment variable.
+        /// Set the OBJECTANCHORS_ACCOUNT_DOMAIN environment variable.
         /// </remarks>
-        public string AccountDomain => GetRecordedVariable("AOA_ACCOUNT_DOMAIN");
+        public string AccountDomain => GetRecordedVariable("ACCOUNT_DOMAIN");
 
         /// <summary>
         /// Gets the account identifier.
         /// </summary>
         /// <remarks>
-        /// Set the OBJECTANCHORS_AOA_ACCOUNT_ID environment variable.
+        /// Set the OBJECTANCHORS_ACCOUNT_ID environment variable.
         /// </remarks>
-        public string AccountId => GetRecordedVariable("AOA_ACCOUNT_ID");
+        public string AccountId => GetRecordedVariable("ACCOUNT_ID");
 
         /// <summary>
         /// Gets the account identifier.
         /// </summary>
         /// <remarks>
-        /// Set the OBJECTANCHORS_AOA_ACCOUNT_KEY environment variable.
+        /// Set the OBJECTANCHORS_ACCOUNT_KEY environment variable.
         /// </remarks>
-        public string AccountKey => GetRecordedVariable("AOA_ACCOUNT_KEY", options => options.IsSecret());
+        public string AccountKey => GetRecordedVariable("ACCOUNT_KEY", options => options.IsSecret());
     }
 }

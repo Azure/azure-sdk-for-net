@@ -295,9 +295,9 @@
     }
   ],
   "Variables": {
-    "AOA_ACCOUNT_DOMAIN": "eastus2.mixedreality.azure.com",
-    "AOA_ACCOUNT_ID": "6b3ce8f5-fe52-47f1-ae7a-f6e7513ee09b",
-    "AOA_ACCOUNT_KEY": "Sanitized",
+    "ACCOUNT_DOMAIN": "eastus2.mixedreality.azure.com",
+    "ACCOUNT_ID": "6b3ce8f5-fe52-47f1-ae7a-f6e7513ee09b",
+    "ACCOUNT_KEY": "Sanitized",
     "RandomSeed": "1445751958"
   }
 }

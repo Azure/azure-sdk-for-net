@@ -43,15 +43,15 @@
         }
     ],
     "outputs": {
-      "MIXEDREALITY_AOA_ACCOUNT_DOMAIN": {
+      "OBJECTANCHORS_ACCOUNT_DOMAIN": {
         "type": "string",
         "value": "[reference(variables('aoaAccountName')).accountDomain]"
       },
-      "MIXEDREALITY_AOA_ACCOUNT_ID": {
+      "OBJECTANCHORS_ACCOUNT_ID": {
         "type": "string",
         "value": "[reference(variables('aoaAccountName')).accountId]"
       },
-      "MIXEDREALITY_AOA_ACCOUNT_KEY": {
+      "OBJECTANCHORS_ACCOUNT_KEY": {
         "type": "string",
         "value": "[listKeys(resourceId('Microsoft.MixedReality/objectAnchorsAccounts', variables('aoaAccountName')), variables('aoaApiVersion')).primaryKey]"
     }
