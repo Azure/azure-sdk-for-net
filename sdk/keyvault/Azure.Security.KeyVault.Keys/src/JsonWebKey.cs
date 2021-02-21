@@ -506,6 +506,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             if (s_rsaFactory is null)
             {
+                // On Framework 4.7.2 and newer, to create the CNG implementation of RSA that supports RSA-OAEP-256, we need to create it with RSAParameters.
                 MethodInfo createMethod = typeof(RSA).GetMethod(nameof(RSA.Create), BindingFlags.Public | BindingFlags.Static, null, new[] { typeof(RSAParameters) }, null);
                 if (createMethod != null)
                 {
@@ -515,6 +516,7 @@ namespace Azure.Security.KeyVault.Keys
                 {
                     s_rsaFactory = p =>
                     {
+                        // On Framework, this will not support RSA-OAEP-256 padding.
                         RSA rsa = RSA.Create();
                         rsa.ImportParameters(parameters);
 
