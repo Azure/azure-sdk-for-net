@@ -1613,7 +1613,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
             Assert.NotNull(events);
             BinaryData binaryEventData = events[0].Data;
-            string eventData = binaryEventData.ToString();
+            string eventData = binaryEventData.ToObjectFromJson<string>();
             Assert.AreEqual("stringdata", eventData);
         }
         #endregion

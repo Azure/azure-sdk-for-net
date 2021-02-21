@@ -20,7 +20,7 @@ namespace Azure.Messaging.EventGrid.Tests
         {
         }
 
-        [RecordedTest]
+        [Test]
         public async Task CanPublishEvent()
         {
             EventGridPublisherClientOptions options = InstrumentClientOptions(new EventGridPublisherClientOptions());
@@ -32,7 +32,7 @@ namespace Azure.Messaging.EventGrid.Tests
             await client.SendEventsAsync(GetEventsList());
         }
 
-        [RecordedTest]
+        [Test]
         public async Task CanPublishEventWithCustomObjectPayload()
         {
             EventGridPublisherClientOptions options = InstrumentClientOptions(new EventGridPublisherClientOptions());
@@ -61,7 +61,7 @@ namespace Azure.Messaging.EventGrid.Tests
             await client.SendEventsAsync(eventsList);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task CanPublishEventWithCustomObjectPayloadAndCustomSerializer()
         {
             EventGridPublisherClientOptions options = InstrumentClientOptions(new EventGridPublisherClientOptions());
@@ -94,7 +94,7 @@ namespace Azure.Messaging.EventGrid.Tests
             await client.SendEventsAsync(eventsList);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task CanPublishEventToDomain()
         {
             EventGridPublisherClientOptions options = InstrumentClientOptions(new EventGridPublisherClientOptions());
@@ -125,7 +125,7 @@ namespace Azure.Messaging.EventGrid.Tests
             await client.SendEventsAsync(eventsList);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task CanPublishCloudEvent()
         {
             EventGridPublisherClientOptions options = InstrumentClientOptions(new EventGridPublisherClientOptions());
@@ -154,7 +154,7 @@ namespace Azure.Messaging.EventGrid.Tests
             await client.SendEventsAsync(eventsList);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task CanPublishCloudEventWithBinaryData()
         {
             EventGridPublisherClientOptions options = InstrumentClientOptions(new EventGridPublisherClientOptions());
@@ -230,7 +230,7 @@ namespace Azure.Messaging.EventGrid.Tests
             await client.SendEventsAsync(eventsList);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task CanPublishCloudEventWithRawJsonData()
         {
             EventGridPublisherClientOptions options = InstrumentClientOptions(new EventGridPublisherClientOptions());
@@ -261,7 +261,7 @@ namespace Azure.Messaging.EventGrid.Tests
             await client.SendEventsAsync(eventsList);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task CanPublishCloudEventWithCustomObjectPayload()
         {
             EventGridPublisherClientOptions options = InstrumentClientOptions(new EventGridPublisherClientOptions());
@@ -290,7 +290,7 @@ namespace Azure.Messaging.EventGrid.Tests
             await client.SendEventsAsync(eventsList);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task CanPublishCloudEventWithCustomObjectPayloadAndCustomSerializer()
         {
             EventGridPublisherClientOptions options = InstrumentClientOptions(new EventGridPublisherClientOptions());
@@ -325,7 +325,7 @@ namespace Azure.Messaging.EventGrid.Tests
             await client.SendEventsAsync(eventsList);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task CanPublishCloudEventWithExtensionAttributes()
         {
             EventGridPublisherClientOptions options = InstrumentClientOptions(new EventGridPublisherClientOptions());
@@ -355,7 +355,7 @@ namespace Azure.Messaging.EventGrid.Tests
             await client.SendEventsAsync(eventsList);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task CanPublishCustomEvent()
         {
             EventGridPublisherClientOptions options = InstrumentClientOptions(new EventGridPublisherClientOptions());
@@ -367,7 +367,7 @@ namespace Azure.Messaging.EventGrid.Tests
             await client.SendEventsAsync(GetCustomEventsList());
         }
 
-        [RecordedTest]
+        [Test]
         public async Task CanPublishEventUsingSAS()
         {
             var builder = new EventGridSasBuilder(
@@ -383,7 +383,7 @@ namespace Azure.Messaging.EventGrid.Tests
             await sasTokenClient.SendEventsAsync(GetEventsList());
         }
 
-        [RecordedTest]
+        [Test]
         public async Task CustomizeSerializedJSONPropertiesToCamelCase()
         {
             EventGridPublisherClientOptions options = InstrumentClientOptions(new EventGridPublisherClientOptions());
