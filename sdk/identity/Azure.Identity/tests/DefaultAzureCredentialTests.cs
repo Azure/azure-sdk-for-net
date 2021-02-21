@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -123,11 +124,12 @@ namespace Azure.Identity.Tests
             bool onCreateVsCalled = false;
             bool onCreateVsCodeCalled = false;
 
-            using (new TestEnvVar(new()
+            using (new TestEnvVar(new Dictionary<string, string>()
             {
                 { "AZURE_CLIENT_ID", expClientId },
                 { "AZURE_USERNAME", expUsername },
-                { "AZURE_TENANT_ID", expTenantId } }))
+                { "AZURE_TENANT_ID", expTenantId }
+            }))
             {
                 var credFactory = new MockDefaultAzureCredentialFactory(CredentialPipeline.GetInstance(null));
 
@@ -195,11 +197,12 @@ namespace Azure.Identity.Tests
             bool onCreateVsCalled = false;
             bool onCreateVsCodeCalled = false;
 
-            using (new TestEnvVar(new()
+            using (new TestEnvVar(new Dictionary<string, string>()
             {
-                    { "AZURE_CLIENT_ID", expClientId },
-                    { "AZURE_USERNAME", expUsername },
-                    { "AZURE_TENANT_ID", expTenantId } }))
+                { "AZURE_CLIENT_ID", expClientId },
+                { "AZURE_USERNAME", expUsername },
+                { "AZURE_TENANT_ID", expTenantId }
+            }))
             {
                 var credFactory = new MockDefaultAzureCredentialFactory(CredentialPipeline.GetInstance(null));
 
@@ -338,25 +341,31 @@ namespace Azure.Identity.Tests
 
             var credFactory = new MockDefaultAzureCredentialFactory(CredentialPipeline.GetInstance(null));
 
+            void SetupMockForException<T>(Mock<T> mock) where T : TokenCredential
+            {
+                mock.Setup(m => m.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
+                    .Throws(new CredentialUnavailableException($"{typeof(T).Name} Unavailable"));
+            }
+
             credFactory.OnCreateEnvironmentCredential = (c) =>
             {
-                ((MockTokenCredential)c).TokenFactory = (context, cancel) => { throw new CredentialUnavailableException("EnvironmentCredential Unavailable"); };
+                SetupMockForException(c);
             };
             credFactory.OnCreateInteractiveBrowserCredential = (_, c) =>
             {
-                ((MockTokenCredential)c).TokenFactory = (context, cancel) => { throw new CredentialUnavailableException("InteractiveBrowserCredential Unavailable"); };
+                SetupMockForException(c);
             };
             credFactory.OnCreateManagedIdentityCredential = (clientId, c) =>
             {
-                ((MockTokenCredential)c).TokenFactory = (context, cancel) => { throw new CredentialUnavailableException("ManagedIdentityCredential Unavailable"); };
+                SetupMockForException(c);
             };
             credFactory.OnCreateSharedTokenCacheCredential = (tenantId, username, c) =>
             {
-                ((MockTokenCredential)c).TokenFactory = (context, cancel) => { throw new CredentialUnavailableException("SharedTokenCacheCredential Unavailable"); };
+                SetupMockForException(c);
             };
             credFactory.OnCreateAzureCliCredential = (c) =>
             {
-                ((MockTokenCredential)c).TokenFactory = (context, cancel) => { throw new CredentialUnavailableException("CliCredential Unavailable"); };
+                SetupMockForException(c);
             };
             credFactory.OnCreateAzurePowerShellCredential = (c) =>
             {
@@ -364,11 +373,11 @@ namespace Azure.Identity.Tests
             };
             credFactory.OnCreateVisualStudioCredential = (_, c) =>
             {
-                ((MockTokenCredential)c).TokenFactory = (context, cancel) => { throw new CredentialUnavailableException("VisualStudioCredential Unavailable"); };
+                SetupMockForException(c);
             };
             credFactory.OnCreateVisualStudioCodeCredential = (_, c) =>
             {
-                ((MockTokenCredential)c).TokenFactory = (context, cancel) => { throw new CredentialUnavailableException("VisualStudioCodeCredential Unavailable"); };
+                SetupMockForException(c);
             };
 
             var options = new DefaultAzureCredentialOptions
@@ -422,93 +431,49 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public void ValidateUnhandledException([Values(0, 1, 2, 3, 4, 5, 6, 7)]int exPossition)
+        [TestCaseSource(nameof(AllCredentialTypes))]
+        public void ValidateUnhandledException(Type credentialType)
         {
             var credFactory = new MockDefaultAzureCredentialFactory(CredentialPipeline.GetInstance(null));
 
+            void SetupMockForException<T>(Mock<T> mock) where T : TokenCredential
+            {
+                Exception e;
+                if (typeof(T) != credentialType)
+                {
+                    e = new CredentialUnavailableException($"{typeof(T).Name} Unavailable");
+                }
+                else
+                {
+                    e = new MockClientException($"{typeof(T).Name} unhandled exception");
+                }
+                mock.Setup(m => m.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
+                    .Throws(e);
+            }
+
             credFactory.OnCreateEnvironmentCredential = (c) =>
             {
-                ((MockTokenCredential)c).TokenFactory = (context, cancel) =>
-                {
-                    if (exPossition > 0)
-                    {
-                        throw new CredentialUnavailableException("EnvironmentCredential Unavailable");
-                    }
-                    else
-                    {
-                        throw new MockClientException("EnvironmentCredential unhandled exception");
-                    }
-                };
+                SetupMockForException(c);
             };
             credFactory.OnCreateManagedIdentityCredential = (clientId, c) =>
             {
-                ((MockTokenCredential)c).TokenFactory = (context, cancel) =>
-                {
-                    if (exPossition > 1)
-                    {
-                        throw new CredentialUnavailableException("ManagedIdentityCredential Unavailable");
-                    }
-                    else
-                    {
-                        throw new MockClientException("ManagedIdentityCredential unhandled exception");
-                    }
-                };
+                SetupMockForException(c);
             };
             credFactory.OnCreateSharedTokenCacheCredential = (tenantId, username, c) =>
             {
-                ((MockTokenCredential)c).TokenFactory = (context, cancel) =>
-                {
-                    if (exPossition > 2)
-                    {
-                        throw new CredentialUnavailableException("SharedTokenCacheCredential Unavailable");
-                    }
-                    else
-                    {
-                        throw new MockClientException("SharedTokenCacheCredential unhandled exception");
-                    }
-                };
+                SetupMockForException(c);
             };
             credFactory.OnCreateVisualStudioCredential = (_, c) =>
             {
-                ((MockTokenCredential)c).TokenFactory = (context, cancel) =>
-                {
-                    if (exPossition > 3)
-                    {
-                        throw new CredentialUnavailableException("VisualStudioCredential Unavailable");
-                    }
-                    else
-                    {
-                        throw new MockClientException("VisualStudioCredential unhandled exception");
-                    }
-                };
+                SetupMockForException(c);
             };
             credFactory.OnCreateVisualStudioCodeCredential = (_, c) =>
             {
-                ((MockTokenCredential)c).TokenFactory = (context, cancel) =>
-                {
-                    if (exPossition > 4)
-                    {
-                        throw new CredentialUnavailableException("VisualStudioCodeCredential Unavailable");
-                    }
-                    else
-                    {
-                        throw new MockClientException("VisualStudioCodeCredential unhandled exception");
-                    }
-                };
+                SetupMockForException(c);
             };
             credFactory.OnCreateAzureCliCredential = (c) =>
             {
-                ((MockTokenCredential)c).TokenFactory = (context, cancel) =>
-                {
-                    if (exPossition > 5)
-                    {
-                        throw new CredentialUnavailableException("CliCredential Unavailable");
-                    }
-                    else
-                    {
-                        throw new MockClientException("CliCredential unhandled exception");
-                    }
-                };
+                SetupMockForException(c);
             };
             credFactory.OnCreateAzurePowerShellCredential = (c) =>
             {
@@ -527,10 +492,8 @@ namespace Azure.Identity.Tests
 
             credFactory.OnCreateInteractiveBrowserCredential = (_, c) =>
             {
-                ((MockTokenCredential)c).TokenFactory = (context, cancel) =>
-                {
-                    throw new MockClientException("InteractiveBrowserCredential unhandled exception");
-                };
+                c.Setup(m => m.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
+                    .Throws(new MockClientException("InteractiveBrowserCredential unhandled exception"));
             };
 
             var options = new DefaultAzureCredentialOptions
@@ -548,119 +511,27 @@ namespace Azure.Identity.Tests
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await cred.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
             var unhandledException = ex.InnerException is AggregateException ae ? ae.InnerExceptions.Last() : ex.InnerException;
 
-            switch (exPossition)
-            {
-                case 0:
-                    Assert.AreEqual("EnvironmentCredential unhandled exception", unhandledException.Message);
-                    break;
-                case 1:
-                    Assert.AreEqual("ManagedIdentityCredential unhandled exception", unhandledException.Message);
-                    break;
-                case 2:
-                    Assert.AreEqual("SharedTokenCacheCredential unhandled exception", unhandledException.Message);
-                    break;
-                case 3:
-                    Assert.AreEqual("VisualStudioCredential unhandled exception", unhandledException.Message);
-                    break;
-                case 4:
-                    Assert.AreEqual("VisualStudioCodeCredential unhandled exception", unhandledException.Message);
-                    break;
-                case 5:
-                    Assert.AreEqual("CliCredential unhandled exception", unhandledException.Message);
-                    break;
-                case 6:
-                    Assert.AreEqual("AzurePowerShellCredential unhandled exception", unhandledException.Message);
-                    break;
-                case 7:
-                    Assert.AreEqual("InteractiveBrowserCredential unhandled exception", unhandledException.Message);
-                    break;
-                default:
-                    Assert.Fail();
-                    break;
-            }
+            Assert.AreEqual($"{credentialType.Name} unhandled exception", unhandledException.Message);
+        }
+
+        public static IEnumerable<object[]> AllCredentialTypes()
+        {
+            yield return new object[] { typeof(EnvironmentCredential) };
+            yield return new object[] { typeof(SharedTokenCacheCredential) };
+            yield return new object[] { typeof(VisualStudioCredential) };
+            yield return new object[] { typeof(VisualStudioCodeCredential) };
+            yield return new object[] { typeof(AzureCliCredential) };
+            yield return new object[] { typeof(InteractiveBrowserCredential) };
+            yield return new object[] { typeof(ManagedIdentityCredential) };
         }
 
         [Test]
-        public async Task ValidateSelectedCredentialCaching([Values(typeof(EnvironmentCredential), typeof(ManagedIdentityCredential), typeof(SharedTokenCacheCredential), typeof(VisualStudioCredential), typeof(VisualStudioCodeCredential), typeof(AzureCliCredential), typeof(AzurePowerShellCredential),  typeof(InteractiveBrowserCredential))]Type availableCredential)
+        [TestCaseSource(nameof(AllCredentialTypes))]
+        public async Task ValidateSelectedCredentialCaching(Type availableCredential)
         {
             var expToken = new AccessToken(Guid.NewGuid().ToString(), DateTimeOffset.MaxValue);
-
-            var credFactory = new MockDefaultAzureCredentialFactory(CredentialPipeline.GetInstance(null));
-
             List<Type> calledCredentials = new List<Type>();
-
-            credFactory.OnCreateEnvironmentCredential = (c) =>
-            {
-                ((MockTokenCredential)c).TokenFactory = (context, cancel) =>
-                {
-                    calledCredentials.Add(typeof(EnvironmentCredential));
-
-                    return (availableCredential == typeof(EnvironmentCredential)) ? expToken : throw new CredentialUnavailableException("Unavailable");
-                };
-            };
-            credFactory.OnCreateManagedIdentityCredential = (clientId, c) =>
-            {
-                ((MockTokenCredential)c).TokenFactory = (context, cancel) =>
-                {
-                    calledCredentials.Add(typeof(ManagedIdentityCredential));
-
-                    return (availableCredential == typeof(ManagedIdentityCredential)) ? expToken : throw new CredentialUnavailableException("Unavailable");
-                };
-            };
-            credFactory.OnCreateSharedTokenCacheCredential = (tenantId, username, c) =>
-            {
-                ((MockTokenCredential)c).TokenFactory = (context, cancel) =>
-                {
-                    calledCredentials.Add(typeof(SharedTokenCacheCredential));
-
-                    return (availableCredential == typeof(SharedTokenCacheCredential)) ? expToken : throw new CredentialUnavailableException("Unavailable");
-                };
-            };
-            credFactory.OnCreateAzureCliCredential = (c) =>
-            {
-                ((MockTokenCredential)c).TokenFactory = (context, cancel) =>
-                {
-                    calledCredentials.Add(typeof(AzureCliCredential));
-
-                    return (availableCredential == typeof(AzureCliCredential)) ? expToken : throw new CredentialUnavailableException("Unavailable");
-                };
-            };
-            credFactory.OnCreateAzurePowerShellCredential = (c) =>
-            {
-                ((MockTokenCredential)c).TokenFactory = (context, cancel) =>
-                {
-                    calledCredentials.Add(typeof(AzurePowerShellCredential));
-
-                    return (availableCredential == typeof(AzurePowerShellCredential)) ? expToken : throw new CredentialUnavailableException("Unavailable");
-                };
-            };
-            credFactory.OnCreateInteractiveBrowserCredential = (_, c) =>
-            {
-                ((MockTokenCredential)c).TokenFactory = (context, cancel) =>
-                {
-                    calledCredentials.Add(typeof(InteractiveBrowserCredential));
-
-                    return (availableCredential == typeof(InteractiveBrowserCredential)) ? expToken : throw new CredentialUnavailableException("Unavailable");
-                };
-            };
-            credFactory.OnCreateVisualStudioCredential = (_, c) =>
-            {
-                ((MockTokenCredential)c).TokenFactory = (context, cancel) =>
-                {
-                    calledCredentials.Add(typeof(VisualStudioCredential));
-
-                    return (availableCredential == typeof(VisualStudioCredential)) ? expToken : throw new CredentialUnavailableException("Unavailable");
-                };
-            };
-            credFactory.OnCreateVisualStudioCodeCredential = (_, c) =>
-            {
-                ((MockTokenCredential)c).TokenFactory = (context, cancel) =>
-                {
-                    calledCredentials.Add(typeof(VisualStudioCodeCredential));
-
-                    return (availableCredential == typeof(VisualStudioCodeCredential)) ? expToken : throw new CredentialUnavailableException("Unavailable");
-                };
-            };
+            var credFactory = GetMockDefaultAzureCredentialFactory(availableCredential, expToken, calledCredentials);
 
             var options = new DefaultAzureCredentialOptions
             {
@@ -691,6 +562,79 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(calledCredentials.Count, 1);
 
             Assert.AreEqual(calledCredentials[0], availableCredential);
+        }
+
+        [Test]
+        [TestCaseSource(nameof(AllCredentialTypes))]
+        public async Task CredentialType(Type availableCredential)
+        {
+            var expToken = new AccessToken(Guid.NewGuid().ToString(), DateTimeOffset.MaxValue);
+            List<Type> calledCredentials = new List<Type>();
+            var credFactory = GetMockDefaultAzureCredentialFactory(availableCredential, expToken, calledCredentials);
+
+            var options = new DefaultAzureCredentialOptions
+            {
+                ExcludeEnvironmentCredential = false,
+                ExcludeManagedIdentityCredential = false,
+                ExcludeSharedTokenCacheCredential = false,
+                ExcludeAzureCliCredential = false,
+                ExcludeInteractiveBrowserCredential = false
+            };
+
+            var cred = new DefaultAzureCredential(credFactory, options);
+
+            // CredentialType is null before GetToken is called
+            Assert.That(cred.CredentialType, Is.Null);
+
+            AccessToken actToken = await cred.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
+
+            Assert.That(availableCredential.Name, Is.SubsetOf(cred.CredentialType.Name));
+        }
+
+        internal MockDefaultAzureCredentialFactory GetMockDefaultAzureCredentialFactory(Type availableCredential, AccessToken expToken, List<Type> calledCredentials)
+        {
+            var credFactory = new MockDefaultAzureCredentialFactory(CredentialPipeline.GetInstance(null));
+
+            void SetupMockForException<T>(Mock<T> mock) where T : TokenCredential
+            {
+                mock.Setup(m => m.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
+                    .Callback(() => calledCredentials.Add(typeof(T)))
+                    .ReturnsAsync(() =>
+                    {
+                        return (availableCredential == typeof(T)) ? expToken : throw new CredentialUnavailableException("Unavailable");
+                    });
+            }
+
+            credFactory.OnCreateEnvironmentCredential = (c) =>
+            {
+                SetupMockForException(c);
+            };
+            credFactory.OnCreateManagedIdentityCredential = (clientId, c) =>
+            {
+                SetupMockForException(c);
+            };
+            credFactory.OnCreateSharedTokenCacheCredential = (tenantId, username, c) =>
+            {
+                SetupMockForException(c);
+            };
+            credFactory.OnCreateAzureCliCredential = (c) =>
+            {
+                SetupMockForException(c);
+            };
+            credFactory.OnCreateInteractiveBrowserCredential = (_, c) =>
+            {
+                SetupMockForException(c);
+            };
+            credFactory.OnCreateVisualStudioCredential = (_, c) =>
+            {
+                SetupMockForException(c);
+            };
+            credFactory.OnCreateVisualStudioCodeCredential = (_, c) =>
+            {
+                SetupMockForException(c);
+            };
+
+            return credFactory;
         }
     }
 }

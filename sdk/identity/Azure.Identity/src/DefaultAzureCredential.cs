@@ -54,6 +54,7 @@ namespace Azure.Identity
         private readonly AsyncLockWithValue<TokenCredential> _credentialLock;
 
         private TokenCredential[] _sources;
+        private Type _credentialType;
 
         internal DefaultAzureCredential() : this(false) { }
 
@@ -114,6 +115,12 @@ namespace Azure.Identity
             return await GetTokenImplAsync(true, requestContext, cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary>
+        /// Gets type of the <see cref="TokenCredential"/> that last called <see cref="GetToken"/> or <see cref="GetTokenAsync"/> successfully.
+        /// </summary>
+        /// <returns>The specific <see cref="TokenCredential"/> <see cref="Type"/> or <c>null</c> if no credential has been used.</returns>
+        public Type CredentialType => _credentialType;
+
         private async ValueTask<AccessToken> GetTokenImplAsync(bool async, TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
             using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScopeGroup("DefaultAzureCredential.GetToken", requestContext);
@@ -139,7 +146,7 @@ namespace Azure.Identity
             }
             catch (Exception e)
             {
-               throw scope.FailWrapAndThrow(e);
+                throw scope.FailWrapAndThrow(e);
             }
         }
 
@@ -157,7 +164,7 @@ namespace Azure.Identity
             }
         }
 
-        private static async ValueTask<(AccessToken Token, TokenCredential Credential)> GetTokenFromSourcesAsync(TokenCredential[] sources, TokenRequestContext requestContext, bool async, CancellationToken cancellationToken)
+        private async ValueTask<(AccessToken, TokenCredential)> GetTokenFromSourcesAsync(TokenCredential[] sources, TokenRequestContext requestContext, bool async, CancellationToken cancellationToken)
         {
             List<CredentialUnavailableException> exceptions = new List<CredentialUnavailableException>();
 
@@ -168,6 +175,8 @@ namespace Azure.Identity
                     AccessToken token = async
                         ? await sources[i].GetTokenAsync(requestContext, cancellationToken).ConfigureAwait(false)
                         : sources[i].GetToken(requestContext, cancellationToken);
+
+                    _credentialType = sources[i].GetType();
 
                     return (token, sources[i]);
                 }
