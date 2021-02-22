@@ -129,7 +129,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="requestContent"> The JSON-encoded representation of either a single event or an array or events,
         /// encoded in the EventGridEvent schema. </param>
         /// <returns> A list of <see cref="EventGridEvent"/>. </returns>
-        public static EventGridEvent[] Parse(string requestContent)
+        public static EventGridEvent[] ParseEvents(string requestContent)
         {
             Argument.AssertNotNull(requestContent, nameof(requestContent));
 
@@ -164,7 +164,7 @@ namespace Azure.Messaging.EventGrid
         public static EventGridEvent Parse(BinaryData jsonEvent)
         {
             Argument.AssertNotNull(jsonEvent, nameof(jsonEvent));
-            EventGridEvent[] events = Parse(jsonEvent.ToString());
+            EventGridEvent[] events = ParseEvents(jsonEvent.ToString());
             if (events.Length == 0)
             {
                 return null;

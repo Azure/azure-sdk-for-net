@@ -14,13 +14,13 @@ Once events are delivered to the event handler, parse the JSON payload into list
 Using `EventGridEvent`:
 ```C# Snippet:EGEventParseJson
 // Parse the JSON payload into a list of events using EventGridEvent.Parse
-EventGridEvent[] egEvents = EventGridEvent.Parse(jsonPayloadSampleOne);
+EventGridEvent[] egEvents = EventGridEvent.ParseEvents(jsonPayloadSampleOne);
 ```
 
 Using `CloudEvent`:
 ```C# Snippet:CloudEventParseJson
 // Parse the JSON payload into a list of events using CloudEvent.Parse
-CloudEvent[] cloudEvents = CloudEvent.Parse(jsonPayloadSampleTwo);
+CloudEvent[] cloudEvents = CloudEvent.ParseEvents(jsonPayloadSampleTwo);
 ```
 
 ## Deserialize Event Data

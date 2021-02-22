@@ -12,7 +12,7 @@ namespace Azure.Messaging.EventGrid
         public string Subject { get { throw null; } set { } }
         public string Topic { get { throw null; } set { } }
         public static Azure.Messaging.EventGrid.EventGridEvent Parse(System.BinaryData jsonEvent) { throw null; }
-        public static Azure.Messaging.EventGrid.EventGridEvent[] Parse(string requestContent) { throw null; }
+        public static Azure.Messaging.EventGrid.EventGridEvent[] ParseEvents(string requestContent) { throw null; }
         public bool TryGetSystemEventData(out object eventData) { throw null; }
     }
     public static partial class EventGridExtensions

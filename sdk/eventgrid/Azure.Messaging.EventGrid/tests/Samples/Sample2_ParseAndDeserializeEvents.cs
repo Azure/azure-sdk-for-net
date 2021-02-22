@@ -23,7 +23,7 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
         {
             #region Snippet:EGEventParseJson
             // Parse the JSON payload into a list of events using EventGridEvent.Parse
-            EventGridEvent[] egEvents = EventGridEvent.Parse(jsonPayloadSampleOne);
+            EventGridEvent[] egEvents = EventGridEvent.ParseEvents(jsonPayloadSampleOne);
             #endregion
 
             // Iterate over each event to access event properties and data

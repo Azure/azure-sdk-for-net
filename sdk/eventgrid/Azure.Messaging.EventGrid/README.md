@@ -180,13 +180,13 @@ Once events are delivered to the event handler, parse the JSON payload into list
 Using `EventGridEvent`:
 ```C# Snippet:EGEventParseJson
 // Parse the JSON payload into a list of events using EventGridEvent.Parse
-EventGridEvent[] egEvents = EventGridEvent.Parse(jsonPayloadSampleOne);
+EventGridEvent[] egEvents = EventGridEvent.ParseEvents(jsonPayloadSampleOne);
 ```
 
 Using `CloudEvent`:
 ```C# Snippet:CloudEventParseJson
 // Parse the JSON payload into a list of events using CloudEvent.Parse
-CloudEvent[] cloudEvents = CloudEvent.Parse(jsonPayloadSampleTwo);
+CloudEvent[] cloudEvents = CloudEvent.ParseEvents(jsonPayloadSampleTwo);
 ```
 From here, one can access the event data by deserializing to a specific type using `GetData<T>()`. Calling `GetData()` will either return the event data wrapped in `BinaryData`, which represents the serialized JSON event data as bytes.
 
