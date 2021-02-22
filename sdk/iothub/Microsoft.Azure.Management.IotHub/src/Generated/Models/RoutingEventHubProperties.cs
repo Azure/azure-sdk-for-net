@@ -30,20 +30,32 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// <summary>
         /// Initializes a new instance of the RoutingEventHubProperties class.
         /// </summary>
-        /// <param name="connectionString">The connection string of the event
-        /// hub endpoint. </param>
         /// <param name="name">The name that identifies this endpoint. The name
         /// can only include alphanumeric characters, periods, underscores,
         /// hyphens and has a maximum length of 64 characters. The following
         /// names are reserved:  events, fileNotifications, $default. Endpoint
         /// names must be unique across endpoint types.</param>
+        /// <param name="id">Id of the event hub endpoint</param>
+        /// <param name="connectionString">The connection string of the event
+        /// hub endpoint. </param>
+        /// <param name="endpointUri">The url of the event hub endpoint. It
+        /// must include the protocol sb://</param>
+        /// <param name="entityPath">Event hub name on the event hub
+        /// namespace</param>
+        /// <param name="authenticationType">Method used to authenticate
+        /// against the event hub endpoint. Possible values include:
+        /// 'keyBased', 'identityBased'</param>
         /// <param name="subscriptionId">The subscription identifier of the
         /// event hub endpoint.</param>
         /// <param name="resourceGroup">The name of the resource group of the
         /// event hub endpoint.</param>
-        public RoutingEventHubProperties(string connectionString, string name, string subscriptionId = default(string), string resourceGroup = default(string))
+        public RoutingEventHubProperties(string name, string id = default(string), string connectionString = default(string), string endpointUri = default(string), string entityPath = default(string), string authenticationType = default(string), string subscriptionId = default(string), string resourceGroup = default(string))
         {
+            Id = id;
             ConnectionString = connectionString;
+            EndpointUri = endpointUri;
+            EntityPath = entityPath;
+            AuthenticationType = authenticationType;
             Name = name;
             SubscriptionId = subscriptionId;
             ResourceGroup = resourceGroup;
@@ -56,10 +68,36 @@ namespace Microsoft.Azure.Management.IotHub.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets id of the event hub endpoint
+        /// </summary>
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; set; }
+
+        /// <summary>
         /// Gets or sets the connection string of the event hub endpoint.
         /// </summary>
         [JsonProperty(PropertyName = "connectionString")]
         public string ConnectionString { get; set; }
+
+        /// <summary>
+        /// Gets or sets the url of the event hub endpoint. It must include the
+        /// protocol sb://
+        /// </summary>
+        [JsonProperty(PropertyName = "endpointUri")]
+        public string EndpointUri { get; set; }
+
+        /// <summary>
+        /// Gets or sets event hub name on the event hub namespace
+        /// </summary>
+        [JsonProperty(PropertyName = "entityPath")]
+        public string EntityPath { get; set; }
+
+        /// <summary>
+        /// Gets or sets method used to authenticate against the event hub
+        /// endpoint. Possible values include: 'keyBased', 'identityBased'
+        /// </summary>
+        [JsonProperty(PropertyName = "authenticationType")]
+        public string AuthenticationType { get; set; }
 
         /// <summary>
         /// Gets or sets the name that identifies this endpoint. The name can
@@ -92,10 +130,6 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (ConnectionString == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ConnectionString");
-            }
             if (Name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Name");

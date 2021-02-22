@@ -94,6 +94,16 @@ namespace Azure.Storage
         public const string CommaString = ",";
         public const char CommaChar = ',';
 
+        public const string ContentTypeApplicationXml = "application/xml";
+        public const string ContentTypeApplicationJson = "application/json";
+
+        public const string ErrorPropertyKey = "error";
+        public const string DetailPropertyKey = "detail";
+        public const string MessagePropertyKey = "message";
+        public const string CodePropertyKey = "code";
+
+        public const string Iso8601Format = "yyyy'-'MM'-'dd'T'HH':'mm':'ssZ";
+
         /// <summary>
         /// Storage Connection String constant values.
         /// </summary>

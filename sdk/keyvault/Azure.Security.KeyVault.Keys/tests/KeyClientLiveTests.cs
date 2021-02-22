@@ -21,7 +21,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
         }
 
-        public KeyClientLiveTests(bool isAsync, KeyClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode)
+        protected KeyClientLiveTests(bool isAsync, KeyClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode)
             : base(isAsync, serviceVersion, mode)
         {
             // TODO: https://github.com/Azure/azure-sdk-for-net/issues/11634

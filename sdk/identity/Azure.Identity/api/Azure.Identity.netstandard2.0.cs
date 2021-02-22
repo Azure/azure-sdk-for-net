@@ -199,8 +199,7 @@ namespace Azure.Identity
     }
     public partial class PersistentTokenCache : Azure.Identity.TokenCache
     {
-        public PersistentTokenCache(Azure.Identity.PersistentTokenCacheOptions options) { }
-        public PersistentTokenCache(bool allowUnencryptedStorage = true) { }
+        public PersistentTokenCache(Azure.Identity.PersistentTokenCacheOptions options = null) { }
     }
     public partial class PersistentTokenCacheOptions
     {

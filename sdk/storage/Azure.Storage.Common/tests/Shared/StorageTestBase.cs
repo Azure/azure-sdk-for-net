@@ -183,13 +183,6 @@ namespace Azure.Storage.Test.Shared
 
         public DateTimeOffset GetUtcNow() => Recording.UtcNow;
 
-        protected HttpPipelineTransport GetTransport() =>
-            new HttpClientTransport(
-                new HttpClient()
-                {
-                    Timeout = TestConstants.HttpTimeoutDuration
-                });
-
         public byte[] GetRandomBuffer(long size)
             => TestHelper.GetRandomBuffer(size, Recording.Random);
 
