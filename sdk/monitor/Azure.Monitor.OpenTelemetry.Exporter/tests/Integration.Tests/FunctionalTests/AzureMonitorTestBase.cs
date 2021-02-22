@@ -123,10 +123,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.FunctionalTests
                 }
             }
 
-            if (telemetry == null)
-            {
-                Assert.Inconclusive("Failed to query telemetry from Kusto. This is not necessarily a test failure, this could be a result of an ingestion delay.");
-            }
+            Assert.IsNotNull(telemetry, "Failed to query telemetry. This is not necessarily a test failure, this could be a result of an ingestion delay.");
 
             return telemetry;
         }
