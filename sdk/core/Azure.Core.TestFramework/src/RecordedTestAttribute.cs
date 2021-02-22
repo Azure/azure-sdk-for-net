@@ -59,9 +59,9 @@ namespace Azure.Core.TestFramework
                     else
                     {
                         context.CurrentResult.SetResult(context.CurrentResult.ResultState,
-                            "Error while trying to re-record: " + Environment.NewLine +
-                            context.CurrentResult.Message + Environment.NewLine +
-                            "Original error: " + originalResult.Message, context.CurrentResult.StackTrace);
+                            originalResult.Message, context.CurrentResult.StackTrace + Environment.NewLine + Environment.NewLine +
+                            "The [RecordedTest] attribute attempted to re-record, but failed: " + Environment.NewLine +
+                            context.CurrentResult.Message + Environment.NewLine);
                     }
 
                     // revert RecordTestMode to Playback
