@@ -2038,7 +2038,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(setMetadataResponse.Value.VersionId, blobs[1].VersionId);
         }
 
-        [PlaybackOnly("Object Replication policies is only enabled on certain storage accounts")]
+        [Ignore("Object Replication policies is only enabled on certain storage accounts")]
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task ListBlobsFlatSegmentAsync_ObjectReplication()
@@ -2367,7 +2367,7 @@ namespace Azure.Storage.Blobs.Test
                 e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
         }
 
-        [PlaybackOnly("Object Replication policies is only enabled on certain storage accounts")]
+        [Ignore("Object Replication policies is only enabled on certain storage accounts")]
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task ListBlobsHierarchySegmentAsync_ObjectReplication()
@@ -2668,6 +2668,23 @@ namespace Azure.Storage.Blobs.Test
                 tokenCredentials,
                 GetOptions()));
             Assert.IsFalse(container5.CanGenerateSasUri);
+        }
+
+        [Test]
+        public void CanGenerateSas_Mockable()
+        {
+            // Act
+            var container = new Mock<BlobContainerClient>();
+            container.Setup(x => x.CanGenerateSasUri).Returns(false);
+
+            // Assert
+            Assert.IsFalse(container.Object.CanGenerateSasUri);
+
+            // Act
+            container.Setup(x => x.CanGenerateSasUri).Returns(true);
+
+            // Assert
+            Assert.IsTrue(container.Object.CanGenerateSasUri);
         }
 
         [Test]

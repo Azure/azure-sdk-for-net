@@ -13,8 +13,12 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
     using System.Linq;
 
     /// <summary>
-    /// ARM proxy resource.
+    /// Proxy Resource
     /// </summary>
+    /// <remarks>
+    /// The resource model definition for a Azure Resource Manager proxy
+    /// resource. It will not have tags and a location
+    /// </remarks>
     public partial class ProxyResource : Resource
     {
         /// <summary>
@@ -28,9 +32,12 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
         /// <summary>
         /// Initializes a new instance of the ProxyResource class.
         /// </summary>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         public ProxyResource(string id = default(string), string name = default(string), string type = default(string))
             : base(id, name, type)
         {

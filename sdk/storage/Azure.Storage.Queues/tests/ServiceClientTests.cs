@@ -436,6 +436,23 @@ namespace Azure.Storage.Queues.Test
         }
 
         [Test]
+        public void CanGenerateAccountSas_Mockable()
+        {
+            // Act
+            var directory = new Mock<QueueServiceClient>();
+            directory.Setup(x => x.CanGenerateAccountSasUri).Returns(false);
+
+            // Assert
+            Assert.IsFalse(directory.Object.CanGenerateAccountSasUri);
+
+            // Act
+            directory.Setup(x => x.CanGenerateAccountSasUri).Returns(true);
+
+            // Assert
+            Assert.IsTrue(directory.Object.CanGenerateAccountSasUri);
+        }
+
+        [Test]
         public void GenerateAccountSas_RequiredParameters()
         {
             // Arrange

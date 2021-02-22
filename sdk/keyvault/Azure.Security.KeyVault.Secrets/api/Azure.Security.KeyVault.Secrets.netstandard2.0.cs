@@ -29,16 +29,18 @@ namespace Azure.Security.KeyVault.Secrets
         public string Value { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct KeyVaultSecretIdentifier
+    public readonly partial struct KeyVaultSecretIdentifier : System.IEquatable<Azure.Security.KeyVault.Secrets.KeyVaultSecretIdentifier>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
+        public KeyVaultSecretIdentifier(System.Uri id) { throw null; }
         public string Name { get { throw null; } }
         public System.Uri SourceId { get { throw null; } }
         public System.Uri VaultUri { get { throw null; } }
         public string Version { get { throw null; } }
-        public static Azure.Security.KeyVault.Secrets.KeyVaultSecretIdentifier Parse(System.Uri id) { throw null; }
-        public static bool TryParse(System.Uri id, out Azure.Security.KeyVault.Secrets.KeyVaultSecretIdentifier secretId) { throw null; }
+        public bool Equals(Azure.Security.KeyVault.Secrets.KeyVaultSecretIdentifier other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
     }
     public partial class RecoverDeletedSecretOperation : Azure.Operation<Azure.Security.KeyVault.Secrets.SecretProperties>
     {
@@ -88,12 +90,13 @@ namespace Azure.Security.KeyVault.Secrets
     }
     public partial class SecretClientOptions : Azure.Core.ClientOptions
     {
-        public SecretClientOptions(Azure.Security.KeyVault.Secrets.SecretClientOptions.ServiceVersion version = Azure.Security.KeyVault.Secrets.SecretClientOptions.ServiceVersion.V7_1) { }
+        public SecretClientOptions(Azure.Security.KeyVault.Secrets.SecretClientOptions.ServiceVersion version = Azure.Security.KeyVault.Secrets.SecretClientOptions.ServiceVersion.V7_2) { }
         public Azure.Security.KeyVault.Secrets.SecretClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
         {
             V7_0 = 0,
             V7_1 = 1,
+            V7_2 = 2,
         }
     }
     public static partial class SecretModelFactory

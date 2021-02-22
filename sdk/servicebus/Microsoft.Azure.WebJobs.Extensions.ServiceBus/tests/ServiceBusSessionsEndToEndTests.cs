@@ -3,13 +3,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Messaging.ServiceBus.Tests;
-using Microsoft.Azure.ServiceBus;
-using Microsoft.Azure.ServiceBus.Core;
+using Azure.Messaging.ServiceBus;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Azure.WebJobs.ServiceBus;
 using Microsoft.Extensions.DependencyInjection;
@@ -358,10 +355,9 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     b.AddServiceBus(sbOptions =>
                     {
                         // Will be disabled for drain mode validation as messages are completed by functoin code to validate draining allows completion
-                        sbOptions.SessionHandlerOptions.AutoComplete = autoComplete;
-                        sbOptions.BatchOptions.AutoComplete = autoComplete;
-                        sbOptions.SessionHandlerOptions.MaxAutoRenewDuration = TimeSpan.FromMinutes(MaxAutoRenewDurationMin);
-                        sbOptions.SessionHandlerOptions.MaxConcurrentSessions = 1;
+                        sbOptions.AutoCompleteMessages = autoComplete;
+                        sbOptions.MaxAutoLockRenewalDuration = TimeSpan.FromMinutes(MaxAutoRenewDurationMin);
+                        sbOptions.MaxConcurrentSessions = 1;
                     }))
                 .ConfigureServices(services =>
                 {
@@ -454,39 +450,30 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
         }
 
-        private async Task Cleanup()
-        {
-            var tasks = new List<Task>()
-            {
-                ServiceBusSessionsTestHelper.CleanUpQueue(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString, _firstQueueScope.QueueName),
-                ServiceBusSessionsTestHelper.CleanUpSubscription(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString, _topicScope.TopicName, _topicScope.SubscriptionNames.First())
-            };
-
-            await Task.WhenAll(tasks);
-        }
-
         public class ServiceBusSessionsTestJobs1
         {
             public static void SBQueue1Trigger(
-                [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)] Message message, int deliveryCount,
-                IMessageSession messageSession,
+                [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)] ServiceBusReceivedMessage message, int deliveryCount,
+                ServiceBusSessionReceiver messageSession,
                 ILogger log,
                 string lockToken)
             {
-                Assert.AreEqual(_firstQueueScope.QueueName, messageSession.Path);
+                Assert.AreEqual(_firstQueueScope.QueueName, messageSession.EntityPath);
                 Assert.AreEqual(1, deliveryCount);
+                Assert.AreEqual(message.LockToken, lockToken);
 
                 ServiceBusSessionsTestHelper.ProcessMessage(message, log, _waitHandle1, _waitHandle2);
             }
 
             public static void SBSub1Trigger(
-                [ServiceBusTrigger(TopicNameKey, FirstSubscriptionNameKey, IsSessionsEnabled = true)] Message message, int deliveryCount,
-                IMessageSession messageSession,
+                [ServiceBusTrigger(TopicNameKey, FirstSubscriptionNameKey, IsSessionsEnabled = true)] ServiceBusReceivedMessage message, int deliveryCount,
+                ServiceBusSessionReceiver messageSession,
                 ILogger log,
                 string lockToken)
             {
-                Assert.AreEqual(EntityNameHelper.FormatSubscriptionPath(_topicScope.TopicName, _topicScope.SubscriptionNames.First()), messageSession.Path);
+                Assert.AreEqual(EntityNameFormatter.FormatSubscriptionPath(_topicScope.TopicName, _topicScope.SubscriptionNames.First()), messageSession.EntityPath);
                 Assert.AreEqual(1, deliveryCount);
+                Assert.AreEqual(message.LockToken, lockToken);
 
                 ServiceBusSessionsTestHelper.ProcessMessage(message, log, _waitHandle1, _waitHandle2);
             }
@@ -495,14 +482,14 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         public class ServiceBusSessionsTestJobs2
         {
             public static void SBQueue2Trigger(
-                [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)] Message message,
+                [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)] ServiceBusReceivedMessage message,
                 ILogger log)
             {
                 ServiceBusSessionsTestHelper.ProcessMessage(message, log, _waitHandle1, _waitHandle2);
             }
 
             public static void SBSub2Trigger(
-                [ServiceBusTrigger(TopicNameKey, FirstSubscriptionNameKey, IsSessionsEnabled = true)] Message message,
+                [ServiceBusTrigger(TopicNameKey, FirstSubscriptionNameKey, IsSessionsEnabled = true)] ServiceBusReceivedMessage message,
                 ILogger log)
             {
                 ServiceBusSessionsTestHelper.ProcessMessage(message, log, _waitHandle1, _waitHandle2);
@@ -512,8 +499,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         public class DrainModeTestJobQueue
         {
             public static async Task QueueWithSessions(
-                [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)] Message msg,
-                IMessageSession messageSession,
+                [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)] ServiceBusReceivedMessage msg,
+                ServiceBusSessionReceiver messageSession,
                 CancellationToken cancellationToken,
                 ILogger logger)
             {
@@ -522,7 +509,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 _drainValidationPreDelay.Set();
                 await DrainModeHelper.WaitForCancellation(cancellationToken);
                 Assert.True(cancellationToken.IsCancellationRequested);
-                await messageSession.CompleteAsync(msg.SystemProperties.LockToken);
+                await messageSession.CompleteMessageAsync(msg);
                 _drainValidationPostDelay.Set();
             }
         }
@@ -530,8 +517,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         public class DrainModeTestJobTopic
         {
             public static async Task TopicWithSessions(
-                [ServiceBusTrigger(TopicNameKey, FirstSubscriptionNameKey, IsSessionsEnabled = true)] Message msg,
-                IMessageSession messageSession,
+                [ServiceBusTrigger(TopicNameKey, FirstSubscriptionNameKey, IsSessionsEnabled = true)] ServiceBusReceivedMessage msg,
+                ServiceBusSessionReceiver messageSession,
                 CancellationToken cancellationToken,
                 ILogger logger)
             {
@@ -540,7 +527,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 _drainValidationPreDelay.Set();
                 await DrainModeHelper.WaitForCancellation(cancellationToken);
                 Assert.True(cancellationToken.IsCancellationRequested);
-                await messageSession.CompleteAsync(msg.SystemProperties.LockToken);
+                await messageSession.CompleteMessageAsync(msg);
                 _drainValidationPostDelay.Set();
             }
         }
@@ -548,8 +535,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         public class DrainModeTestJobQueueBatch
         {
             public static async Task QueueWithSessionsBatch(
-                [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)] Message[] array,
-                IMessageSession messageSession,
+                [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)] ServiceBusReceivedMessage[] array,
+                ServiceBusSessionReceiver messageSession,
                 CancellationToken cancellationToken,
                 ILogger logger)
             {
@@ -559,9 +546,9 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 _drainValidationPreDelay.Set();
                 await DrainModeHelper.WaitForCancellation(cancellationToken);
                 Assert.True(cancellationToken.IsCancellationRequested);
-                foreach (Message msg in array)
+                foreach (ServiceBusReceivedMessage msg in array)
                 {
-                    await messageSession.CompleteAsync(msg.SystemProperties.LockToken);
+                    await messageSession.CompleteMessageAsync(msg);
                 }
                 _drainValidationPostDelay.Set();
             }
@@ -570,8 +557,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         public class DrainModeTestJobTopicBatch
         {
             public static async Task TopicWithSessionsBatch(
-                [ServiceBusTrigger(TopicNameKey, FirstSubscriptionNameKey, IsSessionsEnabled = true)] Message[] array,
-                MessageReceiver messageReceiver,
+                [ServiceBusTrigger(TopicNameKey, FirstSubscriptionNameKey, IsSessionsEnabled = true)] ServiceBusReceivedMessage[] array,
+                ServiceBusSessionReceiver messageSession,
                 CancellationToken cancellationToken,
                  ILogger logger)
             {
@@ -581,9 +568,9 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 _drainValidationPreDelay.Set();
                 await DrainModeHelper.WaitForCancellation(cancellationToken);
                 Assert.True(cancellationToken.IsCancellationRequested);
-                foreach (Message msg in array)
+                foreach (ServiceBusReceivedMessage msg in array)
                 {
-                    await messageReceiver.CompleteAsync(msg.SystemProperties.LockToken);
+                    await messageSession.CompleteMessageAsync(msg);
                 }
                 _drainValidationPostDelay.Set();
             }
@@ -631,11 +618,11 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         {
             public static async Task SBQueue2SBQueue(
                 [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)] string[] messages,
-                IMessageSession messageSession, CancellationToken cancellationToken)
+                ServiceBusSessionReceiver messageSession, CancellationToken cancellationToken)
             {
                 try
                 {
-                    Assert.AreEqual(_firstQueueScope.QueueName, messageSession.Path);
+                    Assert.AreEqual(_firstQueueScope.QueueName, messageSession.EntityPath);
                     ServiceBusMultipleTestJobsBase.ProcessMessages(messages);
                     await Task.Delay(0, cancellationToken);
                 }
@@ -648,18 +635,11 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         public class ServiceBusMultipleMessagesTestJob_BindToMessageArray
         {
             public static void SBQueue2SBQueue(
-                [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)] Message[] array,
-                IMessageSession messageSession)
+                [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)] ServiceBusReceivedMessage[] array,
+                ServiceBusSessionReceiver messageSession)
             {
-                Assert.AreEqual(_firstQueueScope.QueueName, messageSession.Path);
-                string[] messages = array.Select(x =>
-                {
-                    using (Stream stream = new MemoryStream(x.Body))
-                    using (TextReader reader = new StreamReader(stream))
-                    {
-                        return reader.ReadToEnd();
-                    }
-                }).ToArray();
+                Assert.AreEqual(_firstQueueScope.QueueName, messageSession.EntityPath);
+                string[] messages = array.Select(x => x.Body.ToString()).ToArray();
                 ServiceBusMultipleTestJobsBase.ProcessMessages(messages);
             }
         }
@@ -668,9 +648,9 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         {
             public static void SBQueue2SBQueue(
                 [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)] TestPoco[] array,
-                IMessageSession messageSession)
+                ServiceBusSessionReceiver messageSession)
             {
-                Assert.AreEqual(_firstQueueScope.QueueName, messageSession.Path);
+                Assert.AreEqual(_firstQueueScope.QueueName, messageSession.EntityPath);
                 string[] messages = array.Select(x => "{'Name': '" + x.Name + "', 'Value': 'Value'}").ToArray();
                 ServiceBusMultipleTestJobsBase.ProcessMessages(messages);
             }
@@ -686,50 +666,50 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 : base(serviceBusOptions)
             {
                 _options = serviceBusOptions.Value;
-                _options.SessionHandlerOptions.MessageWaitTimeout = TimeSpan.FromSeconds(90);
-                _options.SessionHandlerOptions.MaxConcurrentSessions = 1;
+                //_options.SessionProcessorOptions.MessageWaitTimeout = TimeSpan.FromSeconds(90);
+                _options.RetryOptions.TryTimeout = TimeSpan.FromSeconds(90);
+                _options.MaxConcurrentSessions = 1;
                 _logger = loggerFactory?.CreateLogger(CustomMessagingCategory);
             }
 
             public override SessionMessageProcessor CreateSessionMessageProcessor(string entityPath, string connectionString)
             {
+                var client = new ServiceBusClient(connectionString, _options.ToClientOptions());
+                ServiceBusSessionProcessor processor;
                 if (entityPath == _firstQueueScope.QueueName)
                 {
-                    return new CustomSessionMessageProcessor(new QueueClient(connectionString, entityPath), _options.SessionHandlerOptions, _logger);
+                    processor = client.CreateSessionProcessor(entityPath, _options.ToSessionProcessorOptions());
                 }
                 else
                 {
                     string[] arr = entityPath.Split('/');
-                    return new CustomSessionMessageProcessor(new SubscriptionClient(connectionString, arr[0], arr[2]), _options.SessionHandlerOptions, _logger);
+                    processor = client.CreateSessionProcessor(arr[0], arr[2], _options.ToSessionProcessorOptions());
                 }
+                processor.ProcessErrorAsync += args => Task.CompletedTask;
+                return new CustomSessionMessageProcessor(processor, _logger);
             }
 
             private class CustomSessionMessageProcessor : SessionMessageProcessor
             {
                 private readonly ILogger _logger;
 
-                public CustomSessionMessageProcessor(ClientEntity clientEntity, SessionHandlerOptions messageOptions, ILogger logger)
-                    : base(clientEntity, messageOptions)
+                public CustomSessionMessageProcessor(ServiceBusSessionProcessor sessionProcessor, ILogger logger)
+                    : base(sessionProcessor)
                 {
                     _logger = logger;
                 }
 
-                public override async Task<bool> BeginProcessingMessageAsync(IMessageSession session, Message message, CancellationToken cancellationToken)
+                public override async Task<bool> BeginProcessingMessageAsync(ServiceBusSessionReceiver receiver, ServiceBusReceivedMessage message, CancellationToken cancellationToken)
                 {
-                    _logger?.LogInformation("Custom processor Begin called!" + ServiceBusSessionsTestHelper.GetStringMessage(message));
-                    return await base.BeginProcessingMessageAsync(session, message, cancellationToken);
+                    _logger?.LogInformation("Custom processor Begin called!" + message.Body.ToString());
+                    return await base.BeginProcessingMessageAsync(receiver, message, cancellationToken);
                 }
 
-                public override async Task CompleteProcessingMessageAsync(IMessageSession session, Message message, Executors.FunctionResult result, CancellationToken cancellationToken)
+                public override async Task CompleteProcessingMessageAsync(ServiceBusSessionReceiver receiver, ServiceBusReceivedMessage message, Executors.FunctionResult result, CancellationToken cancellationToken)
                 {
-                    _logger?.LogInformation("Custom processor End called!" + ServiceBusSessionsTestHelper.GetStringMessage(message));
-                    await base.CompleteProcessingMessageAsync(session, message, result, cancellationToken);
+                    _logger?.LogInformation("Custom processor End called!" + message.Body.ToString());
+                    await base.CompleteProcessingMessageAsync(receiver, message, result, cancellationToken);
                 }
-            }
-
-            private Task ExceptionReceivedHandler(ExceptionReceivedEventArgs eventArgs)
-            {
-                return Task.CompletedTask;
             }
         }
 
@@ -743,7 +723,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 _waitHandle2.Dispose();
             }
-            Cleanup().GetAwaiter().GetResult();
         }
     }
 
@@ -751,58 +730,9 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
     internal class ServiceBusSessionsTestHelper
 #pragma warning restore SA1402 // File may only contain a single type
     {
-        private static SessionHandlerOptions sessionHandlerOptions = new SessionHandlerOptions(ExceptionReceivedHandler);
-        public static async Task CleanUpQueue(string connectionString, string queueName)
+        public static void ProcessMessage(ServiceBusReceivedMessage message, ILogger log, EventWaitHandle waitHandle1, EventWaitHandle waitHandle2)
         {
-            await CleanUpEntity(connectionString, queueName);
-        }
-
-        public static async Task CleanUpSubscription(string connectionString, string topicName, string subscriptionName)
-        {
-            await CleanUpEntity(connectionString, EntityNameHelper.FormatSubscriptionPath(topicName, subscriptionName));
-        }
-
-        private static async Task CleanUpEntity(string connectionString, string entityPath)
-        {
-            var client = new SessionClient(connectionString, entityPath, ReceiveMode.PeekLock);
-            client.OperationTimeout = TimeSpan.FromSeconds(5);
-
-            IMessageSession session = null;
-            try
-            {
-                session = await client.AcceptMessageSessionAsync();
-                var messages = await session.ReceiveAsync(1000, TimeSpan.FromSeconds(1));
-                await session.CompleteAsync(messages.Select(m => m.SystemProperties.LockToken));
-            }
-            catch (ServiceBusException)
-            {
-            }
-            finally
-            {
-                if (session != null)
-                {
-                    await session.CloseAsync();
-                }
-            }
-        }
-
-        private static async Task ProcessMessagesInSessionAsync(IMessageSession messageSession, Message message, CancellationToken token)
-        {
-            await messageSession.CompleteAsync(message.SystemProperties.LockToken);
-        }
-
-        public static string GetStringMessage(Message message)
-        {
-            using (Stream stream = new MemoryStream(message.Body))
-            using (TextReader reader = new StreamReader(stream))
-            {
-                return reader.ReadToEnd();
-            }
-        }
-
-        public static void ProcessMessage(Message message, ILogger log, EventWaitHandle waitHandle1, EventWaitHandle waitHandle2)
-        {
-            string messageString = ServiceBusSessionsTestHelper.GetStringMessage(message);
+            string messageString = message.Body.ToString();
             log.LogInformation($"{messageString}-{message.SessionId}");
 
             if (messageString == "message5" && message.SessionId == "test-session1")
@@ -828,11 +758,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 reuslt += message.FormattedMessage + System.Environment.NewLine;
             }
             return reuslt;
-        }
-
-        private static Task ExceptionReceivedHandler(ExceptionReceivedEventArgs args)
-        {
-            return Task.CompletedTask;
         }
     }
 }

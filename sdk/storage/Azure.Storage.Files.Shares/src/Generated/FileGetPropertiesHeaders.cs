@@ -13,7 +13,7 @@ using Azure.Storage.Files.Shares.Models;
 
 namespace Azure.Storage.Files.Shares
 {
-    internal class FileGetPropertiesHeaders
+    internal partial class FileGetPropertiesHeaders
     {
         private readonly Response _response;
         public FileGetPropertiesHeaders(Response response)

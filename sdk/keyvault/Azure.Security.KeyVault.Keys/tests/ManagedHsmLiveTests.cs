@@ -25,7 +25,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 : throw new IgnoreException($"Required variable 'AZURE_MANAGEDHSM_URL' is not defined");
 
         [Test]
-        [Ignore("Service issue: https://github.com/Azure/azure-sdk-for-net/issues/16789")]
         public async Task CreateRsaWithPublicExponent()
         {
             CreateRsaKeyOptions options = new CreateRsaKeyOptions(Recording.GenerateId())
@@ -43,6 +42,34 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             int publicExponent = rsaParams.Exponent.ToInt32();
             Assert.AreEqual(3, publicExponent);
+        }
+
+        [Test]
+        public async Task CreateOctHsmKey()
+        {
+            string keyName = Recording.GenerateId();
+
+            CreateOctKeyOptions options = new CreateOctKeyOptions(keyName, hardwareProtected: true);
+            KeyVaultKey ecHsmkey = await Client.CreateOctKeyAsync(options);
+            RegisterForCleanup(keyName);
+
+            KeyVaultKey keyReturned = await Client.GetKeyAsync(keyName);
+
+            AssertKeyVaultKeysEqual(ecHsmkey, keyReturned);
+        }
+
+        [Test]
+        public async Task CreateOctKey()
+        {
+            string keyName = Recording.GenerateId();
+
+            CreateOctKeyOptions ecKey = new CreateOctKeyOptions(keyName, hardwareProtected: false);
+            KeyVaultKey keyNoHsm = await Client.CreateOctKeyAsync(ecKey);
+            RegisterForCleanup(keyNoHsm.Name);
+
+            KeyVaultKey keyReturned = await Client.GetKeyAsync(keyNoHsm.Name);
+
+            AssertKeyVaultKeysEqual(keyNoHsm, keyReturned);
         }
     }
 }

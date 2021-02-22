@@ -55,7 +55,7 @@ if (!$ReleaseDate)
 }
 else
 {
-    $ParsedReleaseDate = ([datetime]$ReleaseDate, 'MM/dd/yyyy', [Globalization.CultureInfo]::InvariantCulture)
+    $ParsedReleaseDate = [datetime]$ReleaseDate
 }
 
 $releaseDateString = $ParsedReleaseDate.ToString("MM/dd/yyyy")

@@ -1,7 +1,20 @@
 # Release History
 
-## 0.1.0-preview.8 (Unreleased)
+## 0.1.0-preview.10 (Unreleased)
 
+
+## 0.1.0-preview.9 (2021-02-09)
+
+### Key Bug Fixes
+- Fixed a dependency issue with `Azure.Core`, rebinding the reference to the latest released package.
+
+## 0.1.0-preview.8 (2021-02-09)
+
+### New Features
+- Added `ProtocolClientOptions`, `DynamicRequest`, `DynamicResponse` types.
+
+### Breaking Changes
+- Methods from `SerializationExtensions` moved into `Azure.Core` package.
 
 ## 0.1.0-preview.7 (2020-10-28)
 

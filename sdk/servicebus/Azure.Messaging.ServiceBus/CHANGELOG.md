@@ -1,16 +1,22 @@
 # Release History
 
-## 7.1.0-beta.1 (Unreleased)
+## 7.2.0-beta.1 (Unreleased)
+
+
+## 7.1.0 (2021-02-09)
 
 ### Acknowledgments
 Thank you to our developer community members who helped to make the Service Bus client library better with their contributions to this release:
 
 - Aaron Dandy _([GitHub](https://github.com/aarondandy))_
 
+### Added
+- Added virtual keyword to all client properties to enable mocking scenarios.
+- Added `ServiceBusModelFactory.ServiceBusMessageBatch` to allow mocking a `ServiceBusMessageBatch`.
+
 ### Key Bug Fixes
-
 - Fixed an issue with the `ServiceBusProcessor` where closing and disposing or disposing multiple times resulted in an exception.  (A community contribution, courtesy of _[aarondandy](https://github.com/aarondandy)_)
-
+- Fixed issue with batch size calculation when using `ServiceBusMessageBatch`.
 
 ## 7.0.1 (2021-01-12)
 

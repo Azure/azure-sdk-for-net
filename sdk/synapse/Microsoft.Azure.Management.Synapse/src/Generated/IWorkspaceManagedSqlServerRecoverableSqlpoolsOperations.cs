@@ -19,9 +19,9 @@ namespace Microsoft.Azure.Management.Synapse
     using System.Threading.Tasks;
 
     /// <summary>
-    /// WorkspaceManagedSqlServerRecoverableSqlpoolsOperations operations.
+    /// WorkspaceManagedSqlServerRecoverableSqlPoolsOperations operations.
     /// </summary>
-    public partial interface IWorkspaceManagedSqlServerRecoverableSqlpoolsOperations
+    public partial interface IWorkspaceManagedSqlServerRecoverableSqlPoolsOperations
     {
         /// <summary>
         /// Get list of recoverable sql pools for the server.
@@ -63,8 +63,8 @@ namespace Microsoft.Azure.Management.Synapse
         /// <param name='workspaceName'>
         /// The name of the workspace
         /// </param>
-        /// <param name='sqlComputeName'>
-        /// The name of the sql compute
+        /// <param name='sqlPoolName'>
+        /// The name of the sql pool
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<RecoverableSqlPool>> GetWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string sqlComputeName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<RecoverableSqlPool>> GetWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string sqlPoolName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get list of recoverable sql pools for the server.
         /// </summary>

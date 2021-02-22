@@ -1,6 +1,10 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.0.0-beta.5 (Unreleased)
+### Breaking
+- CommunicationIdentityClient.IssueToken and CommunicationIdentityClient.IssueTokenAsync are renamed to GetToken and GetTokenAsync, respectively.
+
+## 1.0.0-beta.4 (2021-02-09)
 
 ### Added
 - Added CommunicationIdentityClient (originally was part of the Azure.Communication.Administration package).
@@ -10,7 +14,7 @@
 
 ### Breaking
 - CommunicationTokenScope.Pstn is removed.
-- CommunicationIdentityClient.RevokeTokens tokens now revoke all the currently issued tokens instead of revoking tokens issued prior to a given time.
+- CommunicationIdentityClient.RevokeTokens now revoke all the currently issued tokens instead of revoking tokens issued prior to a given time.
 - CommunicationIdentityClient.IssueToken returns an instance of `Azure.Core.AccessToken` instead of `CommunicationUserToken`.
 
 <!-- LINKS -->

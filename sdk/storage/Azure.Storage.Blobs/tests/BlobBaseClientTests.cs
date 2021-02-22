@@ -693,7 +693,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsNotNull(response.Value.Details.VersionId);
         }
 
-        [PlaybackOnly("Object Replication policies is only enabled on certain storage accounts")]
+        [Ignore("Object Replication policies is only enabled on certain storage accounts")]
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task DownloadAsync_ObjectReplication()
@@ -3853,7 +3853,7 @@ namespace Azure.Storage.Blobs.Test
                 e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
         }
 
-        [PlaybackOnly("Object Replication policies is only enabled on certain storage accounts")]
+        [Ignore("Object Replication policies is only enabled on certain storage accounts")]
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task GetPropertiesAsync_ObjectReplication()
@@ -3952,8 +3952,8 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await blob.SetHttpHeadersAsync(new BlobHttpHeaders
             {
-                ContentEncoding = "deflate, gzip",
-                ContentLanguage = "de-DE, en-CA",
+                ContentEncoding = "deflate,gzip",
+                ContentLanguage = "de-DE,en-CA",
             });
 
             // Assert
@@ -6049,6 +6049,23 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.IsFalse(versionBlob.CanGenerateSasUri);
+        }
+
+        [Test]
+        public void CanGenerateSas_Mockable()
+        {
+            // Act
+            var blob = new Mock<BlobBaseClient>();
+            blob.Setup(x => x.CanGenerateSasUri).Returns(false);
+
+            // Assert
+            Assert.IsFalse(blob.Object.CanGenerateSasUri);
+
+            // Act
+            blob.Setup(x => x.CanGenerateSasUri).Returns(true);
+
+            // Assert
+            Assert.IsTrue(blob.Object.CanGenerateSasUri);
         }
 
         [Test]

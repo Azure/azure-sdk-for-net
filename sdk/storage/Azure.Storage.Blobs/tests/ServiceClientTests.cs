@@ -752,7 +752,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/18257")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18257")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
         public async Task RenameBlobContainerAsync()
         {
@@ -776,7 +776,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/18257")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18257")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
         public async Task RenameBlobContainerAsync_AccountSas()
         {
@@ -802,7 +802,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/18257")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18257")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
         public async Task RenameBlobContainerAsync_Error()
         {
@@ -816,7 +816,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/18257")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18257")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
         public async Task RenameBlobContainerAsync_SourceLease()
         {
@@ -850,7 +850,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/18257")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18257")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
         public async Task RenameBlobContainerAsync_SourceLeaseFailed()
         {
@@ -970,6 +970,23 @@ namespace Azure.Storage.Blobs.Test
                 GetOptions()));
             BlobContainerClient containerClient5 = serviceClient5.GetBlobContainerClient(GetNewContainerName());
             Assert.IsFalse(containerClient5.CanGenerateSasUri);
+        }
+
+        [Test]
+        public void CanGenerateAccountSas_Mockable()
+        {
+            // Act
+            var serviceClient = new Mock<BlobServiceClient>();
+            serviceClient.Setup(x => x.CanGenerateAccountSasUri).Returns(false);
+
+            // Assert
+            Assert.IsFalse(serviceClient.Object.CanGenerateAccountSasUri);
+
+            // Act
+            serviceClient.Setup(x => x.CanGenerateAccountSasUri).Returns(true);
+
+            // Assert
+            Assert.IsTrue(serviceClient.Object.CanGenerateAccountSasUri);
         }
 
         [Test]

@@ -1014,7 +1014,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 directory.GetAccessControlAsync(),
-                e => Assert.AreEqual("404", e.ErrorCode));
+                e => Assert.AreEqual("PathNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -5085,6 +5085,23 @@ namespace Azure.Storage.Files.DataLake.Tests
                 GetOptions()));
             DataLakeDirectoryClient subdirectory3 = directory3.GetSubDirectoryClient(GetNewDirectoryName());
             Assert.IsFalse(subdirectory3.CanGenerateSasUri);
+        }
+
+        [Test]
+        public void CanGenerateSas_Mockable()
+        {
+            // Act
+            var directory = new Mock<DataLakeDirectoryClient>();
+            directory.Setup(x => x.CanGenerateSasUri).Returns(false);
+
+            // Assert
+            Assert.IsFalse(directory.Object.CanGenerateSasUri);
+
+            // Act
+            directory.Setup(x => x.CanGenerateSasUri).Returns(true);
+
+            // Assert
+            Assert.IsTrue(directory.Object.CanGenerateSasUri);
         }
 
         [Test]

@@ -4,6 +4,7 @@
       "RequestUri": "https://seanmcccanary.blob.core.windows.net/test-container-37979ee9-d552-7d98-1590-9cf48707d6e9?restype=container",
       "RequestMethod": "PUT",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-ab3ce3ce807b344bb4f46c41c58e4a63-b15c2830fb726b4a-00",
         "User-Agent": [
@@ -37,8 +38,10 @@
       "RequestUri": "https://seanmcccanary.blob.core.windows.net/test-container-37979ee9-d552-7d98-1590-9cf48707d6e9/test-blob-90c14a77-a6bc-1333-0628-f3cd09588bae",
       "RequestMethod": "PUT",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "Content-Length": "1024",
+        "Content-Type" : "application/octet-stream",
         "If-None-Match": "*",
         "traceparent": "00-d8a03fb949beb4419d83cde01f21fe05-4c41fdfcc7972a49-00",
         "User-Agent": [
@@ -76,6 +79,7 @@
       "RequestUri": "https://seanmcccanary.blob.core.windows.net/test-container-37979ee9-d552-7d98-1590-9cf48707d6e9/test-blob-90c14a77-a6bc-1333-0628-f3cd09588bae",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-ae29abac71f6c14187f12b46be8059b9-43868325c9b26b4c-00",
         "User-Agent": [
@@ -120,6 +124,7 @@
       "RequestUri": "https://seanmcccanary.blob.core.windows.net/test-container-37979ee9-d552-7d98-1590-9cf48707d6e9/test-blob-90c14a77-a6bc-1333-0628-f3cd09588bae",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-ac9d2951125b6e449407e72923c2d6fb-0507008691aaab48-00",
         "User-Agent": [
@@ -164,6 +169,7 @@
       "RequestUri": "https://seanmcccanary.blob.core.windows.net/test-container-37979ee9-d552-7d98-1590-9cf48707d6e9/test-blob-90c14a77-a6bc-1333-0628-f3cd09588bae",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-773ae73907ab234a8b10fa5dfff6d943-da45c684dc228442-00",
         "User-Agent": [
@@ -208,6 +214,7 @@
       "RequestUri": "https://seanmcccanary.blob.core.windows.net/test-container-37979ee9-d552-7d98-1590-9cf48707d6e9/test-blob-90c14a77-a6bc-1333-0628-f3cd09588bae",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-a1d1cd6f819eda48bf0a01984df68d90-8e297298295d814e-00",
         "User-Agent": [
@@ -252,6 +259,7 @@
       "RequestUri": "https://seanmcccanary.blob.core.windows.net/test-container-37979ee9-d552-7d98-1590-9cf48707d6e9/test-blob-90c14a77-a6bc-1333-0628-f3cd09588bae",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-6a755e782694a04d8a1ec8449e3118bb-9a085cd6c135f543-00",
         "User-Agent": [
@@ -296,6 +304,7 @@
       "RequestUri": "https://seanmcccanary.blob.core.windows.net/test-container-37979ee9-d552-7d98-1590-9cf48707d6e9/test-blob-90c14a77-a6bc-1333-0628-f3cd09588bae",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-34b2384957375641ba7af5a5ff753d0a-7ecdbd2fd7028041-00",
         "User-Agent": [
@@ -340,6 +349,7 @@
       "RequestUri": "https://seanmcccanary.blob.core.windows.net/test-container-37979ee9-d552-7d98-1590-9cf48707d6e9/test-blob-90c14a77-a6bc-1333-0628-f3cd09588bae",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-75be2878e805fc47b8f43ddbed4243c4-d1f6d6a46b935b4a-00",
         "User-Agent": [
@@ -384,6 +394,7 @@
       "RequestUri": "https://seanmcccanary.blob.core.windows.net/test-container-37979ee9-d552-7d98-1590-9cf48707d6e9?restype=container",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
+        "Accept" : "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-c58a271797ebe24ab7e134cf5772365d-d804b1efc6df294e-00",
         "User-Agent": [
