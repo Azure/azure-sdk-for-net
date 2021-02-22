@@ -31,7 +31,7 @@ namespace Azure.Core.Tests
             var cloudEvent = new CloudEvent("source", "type", null);
             Assert.AreEqual("source", cloudEvent.Source);
             Assert.AreEqual("type", cloudEvent.Type);
-            Assert.IsNull(cloudEvent.Data);
+            Assert.IsNull(cloudEvent.Data.ToObjectFromJson<object>());
         }
 
         [Test]
@@ -379,7 +379,7 @@ namespace Azure.Core.Tests
                 Id = "id",
                 Time = time,
             };
-            Assert.IsNull(cloudEvent.Data);
+            Assert.IsNull(cloudEvent.Data.ToObjectFromJson<object>());
             var serializer = new JsonObjectSerializer();
             BinaryData serialized = serializer.Serialize(cloudEvent);
 
@@ -392,9 +392,28 @@ namespace Azure.Core.Tests
             deserialized = CloudEvent.Parse(serialized);
             AssertCloudEvent();
 
+            cloudEvent = new CloudEvent("source", "type", new BinaryData("null"), "application/json", CloudEventDataFormat.Json)
+            {
+                Subject = "subject",
+                DataSchema = "schema",
+                Id = "id",
+                Time = time,
+            };
+            Assert.IsNull(cloudEvent.Data.ToObjectFromJson<object>());
+            serialized = serializer.Serialize(cloudEvent);
+
+            deserialized = CloudEvent.ParseEvents(serialized.ToString())[0];
+            AssertCloudEvent();
+
+            deserialized = (CloudEvent)serializer.Deserialize(serialized.ToStream(), typeof(CloudEvent), CancellationToken.None);
+            AssertCloudEvent();
+
+            deserialized = CloudEvent.Parse(serialized);
+            AssertCloudEvent();
+
             void AssertCloudEvent()
             {
-                Assert.IsNull(cloudEvent.Data);
+                Assert.IsNull(cloudEvent.Data.ToObjectFromJson<object>());
                 Assert.AreEqual("source", deserialized.Source);
                 Assert.AreEqual("type", deserialized.Type);
                 Assert.AreEqual("subject", deserialized.Subject);
@@ -420,6 +439,25 @@ namespace Azure.Core.Tests
             BinaryData serialized = serializer.Serialize(cloudEvent);
 
             CloudEvent deserialized = CloudEvent.ParseEvents(serialized.ToString())[0];
+            AssertCloudEvent();
+
+            deserialized = (CloudEvent)serializer.Deserialize(serialized.ToStream(), typeof(CloudEvent), CancellationToken.None);
+            AssertCloudEvent();
+
+            deserialized = CloudEvent.Parse(serialized);
+            AssertCloudEvent();
+
+            cloudEvent = new CloudEvent("source", "type", new BinaryData(true), "application/json", CloudEventDataFormat.Json)
+            {
+                Subject = "subject",
+                DataSchema = "schema",
+                Id = "id",
+                Time = time,
+            };
+            Assert.IsTrue(cloudEvent.Data.ToObjectFromJson<bool>());
+            serialized = serializer.Serialize(cloudEvent);
+
+            deserialized = CloudEvent.ParseEvents(serialized.ToString())[0];
             AssertCloudEvent();
 
             deserialized = (CloudEvent)serializer.Deserialize(serialized.ToStream(), typeof(CloudEvent), CancellationToken.None);
@@ -456,6 +494,25 @@ namespace Azure.Core.Tests
             BinaryData serialized = serializer.Serialize(cloudEvent);
 
             CloudEvent deserialized = CloudEvent.ParseEvents(serialized.ToString())[0];
+            AssertCloudEvent();
+
+            deserialized = (CloudEvent)serializer.Deserialize(serialized.ToStream(), typeof(CloudEvent), CancellationToken.None);
+            AssertCloudEvent();
+
+            deserialized = CloudEvent.Parse(serialized);
+            AssertCloudEvent();
+
+            cloudEvent = new CloudEvent("source", "type", new BinaryData(5), "application/json", CloudEventDataFormat.Json)
+            {
+                Subject = "subject",
+                DataSchema = "schema",
+                Id = "id",
+                Time = time,
+            };
+            Assert.AreEqual(5, cloudEvent.Data.ToObjectFromJson<int>());
+            serialized = serializer.Serialize(cloudEvent);
+
+            deserialized = CloudEvent.ParseEvents(serialized.ToString())[0];
             AssertCloudEvent();
 
             deserialized = (CloudEvent)serializer.Deserialize(serialized.ToStream(), typeof(CloudEvent), CancellationToken.None);

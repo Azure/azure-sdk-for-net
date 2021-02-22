@@ -29,10 +29,7 @@ namespace Azure.Messaging
             Type = type;
             Id = Guid.NewGuid().ToString();
             DataFormat = CloudEventDataFormat.Json;
-            if (jsonSerializableData != null)
-            {
-                Data = new BinaryData(jsonSerializableData, type: dataSerializationType ?? jsonSerializableData?.GetType());
-            }
+            Data = new BinaryData(jsonSerializableData, type: dataSerializationType ?? jsonSerializableData?.GetType());
             SpecVersion = "1.0";
         }
 
