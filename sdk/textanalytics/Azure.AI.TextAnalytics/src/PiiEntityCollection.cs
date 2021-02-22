@@ -61,6 +61,14 @@ namespace Azure.AI.TextAnalytics
                     return BaseCollection.Warnings;
                 }
             }
+
+            public string RedactedText
+            {
+                get
+                {
+                    return BaseCollection.RedactedText;
+                }
+            }
         }
     }
 }
