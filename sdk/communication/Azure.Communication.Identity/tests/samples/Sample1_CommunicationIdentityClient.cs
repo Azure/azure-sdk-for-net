@@ -51,7 +51,7 @@ namespace Azure.Communication.Identity.Samples
             #endregion Snippet:CreateCommunicationTokenAsync
 
             #region Snippet:CreateTURNTokenAsync
-            Response<CommunicationTurnCredentialsResponse> turnTokenResponse = await client.IssueTurnCredentialsAsync(user);
+            Response<CommunicationTurnCredentialsResponse> turnTokenResponse = await client.GetTurnCredentialsAsync(user);
             DateTimeOffset turnTokenExpiresOn = turnTokenResponse.Value.ExpiresOn;
             IReadOnlyList<CommunicationTurnServer> turnServers = turnTokenResponse.Value.TurnServers;
             Console.WriteLine($"Expires On: {turnTokenExpiresOn}");
@@ -99,7 +99,7 @@ namespace Azure.Communication.Identity.Samples
             #endregion Snippet:CreateCommunicationToken
 
             #region Snippet:CreateTURNToken
-            Response<CommunicationTurnCredentialsResponse> turnTokenResponse = client.IssueTurnCredentials(user);
+            Response<CommunicationTurnCredentialsResponse> turnTokenResponse = client.GetTurnCredentials(user);
             DateTimeOffset turnTokenExpiresOn = turnTokenResponse.Value.ExpiresOn;
             IReadOnlyList<CommunicationTurnServer> turnServers = turnTokenResponse.Value.TurnServers;
             Console.WriteLine($"Expires On: {turnTokenExpiresOn}");

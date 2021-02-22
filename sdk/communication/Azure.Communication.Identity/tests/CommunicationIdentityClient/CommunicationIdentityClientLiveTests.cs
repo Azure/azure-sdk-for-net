@@ -63,9 +63,9 @@ namespace Azure.Communication.Identity.Tests
         }
 
         [Test]
-        [TestCase(AuthMethod.ConnectionString, TestName = "IssuingTurnCredentialsWithConnectionString")]
-        [TestCase(AuthMethod.KeyCredential, TestName = "IssuingTurnCredentialsWithKeyCredential")]
-        public async Task IssuingTurnCredentialsGeneratesTurnCredentials(AuthMethod authMethod)
+        [TestCase(AuthMethod.ConnectionString, TestName = "GettingTurnCredentialsWithConnectionString")]
+        [TestCase(AuthMethod.KeyCredential, TestName = "GettingTurnCredentialsWithKeyCredential")]
+        public async Task GettingTurnCredentialsGeneratesTurnCredentials(AuthMethod authMethod)
         {
             CommunicationIdentityClient client = authMethod switch
             {
@@ -75,7 +75,7 @@ namespace Azure.Communication.Identity.Tests
             };
 
             Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync();
-            Response<CommunicationTurnCredentialsResponse> turnCredentialsResponse = await client.IssueTurnCredentialsAsync(userResponse.Value);
+            Response<CommunicationTurnCredentialsResponse> turnCredentialsResponse = await client.GetTurnCredentialsAsync(userResponse.Value);
 
             Assert.IsNotNull(turnCredentialsResponse.Value);
             Assert.IsNotNull(turnCredentialsResponse.Value.ExpiresOn);
