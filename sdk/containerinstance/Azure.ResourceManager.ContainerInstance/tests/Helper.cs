@@ -31,8 +31,6 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
         }
         public static async Task TryRegisterResourceGroupAsync(ResourceGroupsOperations resourceGroupsOperations, string location, string resourceGroupName)
         {
-            var response = await resourceGroupsOperations.CheckExistenceAsync(resourceGroupName);
-            if (response.Status == 404)
             await resourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new ResourceGroup(location));
         }
         public static ContainerGroup CreateTestContainerGroup(string containerGroupName, string location = "eastus", bool doNotEncrypt = false)

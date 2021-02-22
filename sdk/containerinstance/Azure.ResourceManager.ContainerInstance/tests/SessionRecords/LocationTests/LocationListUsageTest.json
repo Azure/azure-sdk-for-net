@@ -6,7 +6,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-2cf2a876641ab7479e5ecaf1feb3f7a9-ca89c70bdaf1414c-00",
+        "traceparent": "00-2f7dbdf861b83b4b808f4e3ac6983a96-9ced85c1dc14c14c-00",
         "User-Agent": [
           "azsdk-net-ResourceManager.Resources/1.0.0-preview.2",
           "(.NET Core 4.6.29518.01; Microsoft Windows 10.0.19042 )"
@@ -20,15 +20,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "5887",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 20 Jan 2021 07:41:30 GMT",
+        "Date": "Mon, 22 Feb 2021 07:33:41 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "a1f08c88-3ac8-40ac-a26a-f5c9717e553d",
-        "x-ms-ratelimit-remaining-subscription-reads": "11706",
-        "x-ms-request-id": "a1f08c88-3ac8-40ac-a26a-f5c9717e553d",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20210120T074130Z:a1f08c88-3ac8-40ac-a26a-f5c9717e553d"
+        "x-ms-correlation-request-id": "e07f3a52-cb90-41e0-b46b-69d502c32bc1",
+        "x-ms-ratelimit-remaining-subscription-reads": "11734",
+        "x-ms-request-id": "e07f3a52-cb90-41e0-b46b-69d502c32bc1",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20210222T073342Z:e07f3a52-cb90-41e0-b46b-69d502c32bc1"
       },
       "ResponseBody": {
         "id": "/subscriptions/9e223dbe-3399-4e19-88eb-0975f02ac87f/providers/Microsoft.ContainerInstance",
@@ -424,9 +424,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-82d6f165013f4544b4a71712f2c5c9d1-d566c14c3b59a24c-00",
+        "traceparent": "00-b08c7d1490cacf499341365ade6efc14-a6df1795d0cdb045-00",
         "User-Agent": [
-          "azsdk-net-ResourceManager.ContainerInstance/1.0.0-alpha.20210120.1",
+          "azsdk-net-ResourceManager.ContainerInstance/1.0.0-alpha.20210222.1",
           "(.NET Core 4.6.29518.01; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "c66d8c2be73972a8a559c8354cff5407",
@@ -438,23 +438,23 @@
         "Cache-Control": "no-cache",
         "Content-Length": "1868",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 20 Jan 2021 07:41:30 GMT",
+        "Date": "Mon, 22 Feb 2021 07:33:42 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "4e672a49-038e-4eca-981d-0b822a25740b",
-        "x-ms-ratelimit-remaining-subscription-reads": "11705",
-        "x-ms-request-id": "westcentralus:d297e536-94e6-4f28-a984-cd21e80901e0",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20210120T074130Z:4e672a49-038e-4eca-981d-0b822a25740b"
+        "x-ms-correlation-request-id": "ad416159-b2d2-417e-8a65-bff3dd72ea3e",
+        "x-ms-ratelimit-remaining-subscription-reads": "11733",
+        "x-ms-request-id": "westcentralus:cb48b0d2-cdee-4a2e-b82a-3606a4d5ad91",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20210222T073342Z:ad416159-b2d2-417e-8a65-bff3dd72ea3e"
       },
       "ResponseBody": {
         "value": [
           {
             "id": "/subscriptions/9e223dbe-3399-4e19-88eb-0975f02ac87f/providers/Microsoft.ContainerInstance/locations/West Central US/usages/ContainerGroups",
             "unit": "Count",
-            "currentValue": 3,
+            "currentValue": 1,
             "limit": 100,
             "name": {
               "value": "ContainerGroups",
@@ -464,7 +464,7 @@
           {
             "id": "/subscriptions/9e223dbe-3399-4e19-88eb-0975f02ac87f/providers/Microsoft.ContainerInstance/locations/West Central US/usages/standardCores",
             "unit": "Count",
-            "currentValue": 3,
+            "currentValue": 1,
             "limit": 100,
             "name": {
               "value": "StandardCores",
