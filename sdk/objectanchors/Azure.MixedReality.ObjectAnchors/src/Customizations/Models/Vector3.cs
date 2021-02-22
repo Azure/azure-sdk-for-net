@@ -11,7 +11,7 @@ namespace Azure.MixedReality.ObjectAnchors.Models
     /// </summary>
     internal partial class Vector3 : IEquatable<Vector3>
     {
-        internal System.Numerics.Vector3 data;
+        private System.Numerics.Vector3 data;
 
         internal Vector3(System.Numerics.Vector3 vector)
         {
@@ -50,5 +50,8 @@ namespace Azure.MixedReality.ObjectAnchors.Models
         {
             return data.IsNormalized();
         }
+
+        public static implicit operator System.Numerics.Vector3(Vector3 v) => v.data;
+        public static implicit operator Vector3(System.Numerics.Vector3 v) => new Vector3(v);
     }
 }

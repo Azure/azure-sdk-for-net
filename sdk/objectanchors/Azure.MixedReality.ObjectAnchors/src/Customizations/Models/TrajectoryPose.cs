@@ -28,12 +28,12 @@ namespace Azure.MixedReality.ObjectAnchors
         /// <summary>
         /// The pose's rotation.
         /// </summary>
-        public System.Numerics.Quaternion Rotation { get => RotationWrapper.data; internal set => RotationWrapper.data = value; }
+        public System.Numerics.Quaternion Rotation { get => RotationWrapper; }
 
         /// <summary>
         /// The pose's translation.
         /// </summary>
-        public System.Numerics.Vector3 Translation { get => TranslationWrapper.data; internal set => TranslationWrapper.data = value; }
+        public System.Numerics.Vector3 Translation { get => TranslationWrapper; }
 
         [CodeGenMember("Rotation")]
         internal readonly Quaternion RotationWrapper;

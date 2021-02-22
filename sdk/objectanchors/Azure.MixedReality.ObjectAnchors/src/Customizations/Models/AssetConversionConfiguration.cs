@@ -51,27 +51,27 @@ namespace Azure.MixedReality.ObjectAnchors
         /// <summary>
         /// Dimensions of the asset.
         /// </summary>
-        public System.Numerics.Vector3? AssetDimensions { get => AssetDimensionsWrapper == null ? null : AssetDimensionsWrapper.data; }
+        public System.Numerics.Vector3? AssetDimensions { get => AssetDimensionsWrapper == null ? null : AssetDimensionsWrapper; }
 
         /// <summary>
         /// BoundingBoxCenter of the asset.
         /// </summary>
-        public System.Numerics.Vector3? BoundingBoxCenter { get => BoundingBoxCenterWrapper == null ? null : BoundingBoxCenterWrapper.data; }
+        public System.Numerics.Vector3? BoundingBoxCenter { get => BoundingBoxCenterWrapper == null ? null : BoundingBoxCenterWrapper; }
 
         /// <summary>
         /// Gravity vector with respect to object's nominal position.
         /// </summary>
-        public System.Numerics.Vector3 Gravity { get => GravityWrapper.data; internal set => GravityWrapper.data = value; }
+        public System.Numerics.Vector3 Gravity { get => GravityWrapper; internal set => GravityWrapper = value; }
 
         /// <summary>
         /// Orientation of model's bounding box.
         /// </summary>
-        public System.Numerics.Quaternion? PrincipalAxis { get => PrincipalAxisWrapper == null ? null : PrincipalAxisWrapper.data; }
+        public System.Numerics.Quaternion? PrincipalAxis { get => PrincipalAxisWrapper == null ? null : PrincipalAxisWrapper; }
 
         /// <summary>
         /// Definition of supporting plane.
         /// </summary>
-        public System.Numerics.Vector4? SupportingPlane { get => SupportingPlaneWrapper == null ? null : SupportingPlaneWrapper.data; }
+        public System.Numerics.Vector4? SupportingPlane { get => SupportingPlaneWrapper == null ? null : SupportingPlaneWrapper; }
 
         /// <summary>
         /// Indices of Key Frames.

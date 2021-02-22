@@ -11,7 +11,7 @@ namespace Azure.MixedReality.ObjectAnchors.Models
     /// </summary>
     internal partial class Quaternion : IEquatable<Quaternion>
     {
-        internal System.Numerics.Quaternion data;
+        private System.Numerics.Quaternion data;
 
         internal Quaternion(System.Numerics.Quaternion quaternion)
         {
@@ -55,5 +55,8 @@ namespace Azure.MixedReality.ObjectAnchors.Models
         {
             return data.GetHashCode();
         }
+
+        public static implicit operator System.Numerics.Quaternion(Quaternion q) => q.data;
+        public static implicit operator Quaternion(System.Numerics.Quaternion q) => new Quaternion(q);
     }
 }
