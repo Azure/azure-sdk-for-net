@@ -183,7 +183,7 @@ namespace Azure.Messaging.EventGrid.Tests
             request.Content.WriteTo(stream, CancellationToken.None);
             stream.Position = 0;
             using var reader = new StreamReader(stream);
-            CloudEvent[] cloudEvents = CloudEvent.Parse(reader.ReadToEnd());
+            CloudEvent[] cloudEvents = CloudEvent.ParseEvents(reader.ReadToEnd());
             return cloudEvents.ToList();
         }
     }

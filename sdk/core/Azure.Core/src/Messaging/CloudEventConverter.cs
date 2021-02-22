@@ -23,10 +23,10 @@ namespace Azure.Messaging
         public override CloudEvent Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             JsonDocument requestDocument = JsonDocument.ParseValue(ref reader);
-            return DeserializeCloudEvent(requestDocument.RootElement, strict: true);
+            return DeserializeCloudEvent(requestDocument.RootElement, skipValidation: false);
         }
 
-        internal static CloudEvent DeserializeCloudEvent(JsonElement element, bool strict)
+        internal static CloudEvent DeserializeCloudEvent(JsonElement element, bool skipValidation)
         {
             var cloudEvent = new CloudEvent();
             foreach (JsonProperty property in element.EnumerateObject())
@@ -49,10 +49,6 @@ namespace Azure.Messaging
                 }
                 else if (property.NameEquals(CloudEventConstants.Data))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     cloudEvent.Data = new BinaryData(property.Value);
                     cloudEvent.DataFormat = CloudEventDataFormat.Json;
                 }
@@ -99,19 +95,19 @@ namespace Azure.Messaging
                 }
                 else
                 {
-                    if (strict)
+                    if (!skipValidation)
                     {
                         cloudEvent.ExtensionAttributes.Add(property.Name, GetObject(property.Value));
                     }
                     else
                     {
-                        // This aspect of strict = false would not be supported for converters that live in a different
+                        // This aspect of skipValidation would not be supported for converters that live in a different
                         // package since CloudEventExtensionAttributes is internal.
                         ((CloudEventExtensionAttributes<string, object?>)cloudEvent.ExtensionAttributes).AddWithoutValidation(property.Name, GetObject(property.Value));
                     }
                 }
             }
-            if (strict)
+            if (!skipValidation)
             {
                 if (cloudEvent.Source == null)
                 {
@@ -187,7 +183,7 @@ namespace Azure.Messaging
                         writer.WriteBase64StringValue(value.Data.ToArray());
                         break;
                     case CloudEventDataFormat.Json:
-                        using (JsonDocument doc = JsonDocument.Parse(value.Data.ToStream()))
+                        using (JsonDocument doc = JsonDocument.Parse(value.Data.ToMemory()))
                         {
                             writer.WritePropertyName(CloudEventConstants.Data);
                             doc.RootElement.WriteTo(writer);

@@ -56,6 +56,12 @@ namespace Azure.Messaging
         internal CloudEvent() { }
 
         /// <summary>
+        /// Gets the event data as <see cref="BinaryData"/>. Using BinaryData,
+        /// one can deserialize the payload into rich data, or access the raw JSON data using <see cref="BinaryData.ToString()"/>.
+        /// </summary>
+        public BinaryData? Data { get; set; }
+
+        /// <summary>
         /// Gets or sets an identifier for the event. The combination of <see cref="Id"/> and <see cref="Source"/> must be unique for each distinct event.
         /// If not explicitly set, this will default to a <see cref="Guid"/>.
         /// </summary>
@@ -137,16 +143,16 @@ namespace Azure.Messaging
         /// Given JSON-encoded events, parses the event envelope and returns an array of CloudEvents.
         /// If the specified event is not valid JSON an exception is thrown.
         /// By default, if the event is missing required properties, an exception is thrown though this can be relaxed
-        /// by setting the <paramref name="strict"/> parameter.
+        /// by setting the <paramref name="skipValidation"/> parameter.
         /// </summary>
         /// <param name="jsonContent"> The JSON-encoded representation of either a single event or an array or events,
         /// in the CloudEvent schema.</param>
-        /// <param name="strict">Set to <see langword="false"/> to allow missing or invalid properties to still parse into a CloudEvent.
-        /// In particular, by setting strict to <see langword="false"/>, the source, id, specversion and type properties are no longer required
+        /// <param name="skipValidation">Set to <see langword="true"/> to allow missing or invalid properties to still parse into a CloudEvent.
+        /// In particular, by setting strict to <see langword="true"/>, the source, id, specversion and type properties are no longer required
         /// to be present in the JSON. Additionally, the casing requirements of the extension attribute names are relaxed.
         /// </param>
         /// <returns> A list of <see cref="CloudEvent"/>. </returns>
-        public static CloudEvent[] Parse(string jsonContent, bool strict = true)
+        public static CloudEvent[] ParseEvents(string jsonContent, bool skipValidation = false)
         {
             Argument.AssertNotNull(jsonContent, nameof(jsonContent));
 
@@ -157,7 +163,7 @@ namespace Azure.Messaging
             if (requestDocument.RootElement.ValueKind == JsonValueKind.Object)
             {
                 cloudEvents = new CloudEvent[1];
-                cloudEvents[0] = CloudEventConverter.DeserializeCloudEvent(requestDocument.RootElement, strict);
+                cloudEvents[0] = CloudEventConverter.DeserializeCloudEvent(requestDocument.RootElement, skipValidation);
             }
             else if (requestDocument.RootElement.ValueKind == JsonValueKind.Array)
             {
@@ -165,7 +171,7 @@ namespace Azure.Messaging
                 int i = 0;
                 foreach (JsonElement property in requestDocument.RootElement.EnumerateArray())
                 {
-                    cloudEvents[i++] = CloudEventConverter.DeserializeCloudEvent(property, strict);
+                    cloudEvents[i++] = CloudEventConverter.DeserializeCloudEvent(property, skipValidation);
                 }
             }
             return cloudEvents ?? Array.Empty<CloudEvent>();
@@ -175,18 +181,18 @@ namespace Azure.Messaging
         /// Given a single JSON-encoded event, parses the event envelope and returns a <see cref="CloudEvent"/>.
         /// If the specified event is not valid JSON an exception is thrown.
         /// By default, if the event is missing required properties, an exception is thrown though this can be relaxed
-        /// by setting the <paramref name="strict"/> parameter.
+        /// by setting the <paramref name="skipValidation"/> parameter.
         /// </summary>
         /// <param name="jsonEvent">Specifies the instance of <see cref="BinaryData"/>.</param>
-        /// <param name="strict">Set to <see langword="false"/> to allow missing or invalid properties to still parse into a CloudEvent.
-        /// In particular, by setting strict to <see langword="false"/>, the source, id, specversion and type properties are no longer required
+        /// <param name="skipValidation">Set to <see langword="true"/> to allow missing or invalid properties to still parse into a CloudEvent.
+        /// In particular, by setting strict to <see langword="true"/>, the source, id, specversion and type properties are no longer required
         /// to be present in the JSON. Additionally, the casing requirements of the extension attribute names are relaxed.
         /// </param>
         /// <returns> A <see cref="CloudEvent"/>. </returns>
-        public static CloudEvent? Parse(BinaryData jsonEvent, bool strict = true)
+        public static CloudEvent? Parse(BinaryData jsonEvent, bool skipValidation = false)
         {
             Argument.AssertNotNull(jsonEvent, nameof(jsonEvent));
-            CloudEvent[]? events = Parse(jsonEvent.ToString(), strict);
+            CloudEvent[]? events = ParseEvents(jsonEvent.ToString(), skipValidation);
             if (events.Length == 0)
             {
                 return null;
@@ -202,11 +208,5 @@ namespace Azure.Messaging
             }
             return events[0];
         }
-
-        /// <summary>
-        /// Gets the event data as <see cref="BinaryData"/>. Using BinaryData,
-        /// one can deserialize the payload into rich data, or access the raw JSON data using <see cref="BinaryData.ToString()"/>.
-        /// </summary>
-        public BinaryData? Data { get; set; }
     }
 }

@@ -81,7 +81,7 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
 
             #region Snippet:CloudEventParseJson
             // Parse the JSON payload into a list of events using CloudEvent.Parse
-            CloudEvent[] cloudEvents = CloudEvent.Parse(jsonPayloadSampleTwo);
+            CloudEvent[] cloudEvents = CloudEvent.ParseEvents(jsonPayloadSampleTwo);
             #endregion
 
             // Iterate over each event to access event properties and data

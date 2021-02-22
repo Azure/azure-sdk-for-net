@@ -11,16 +11,16 @@ namespace Azure.Messaging
     public enum CloudEventDataFormat
     {
         /// <summary>
-        /// Indicates the <see cref="CloudEvent.Data"/> should be serialized as JSON.
-        /// The data will be included in the "data" field of the JSON payload.
-        /// </summary>
-        Json = 0,
-
-        /// <summary>
-        /// Indicates the CloudEvent.Data should be serialized as binary data.
+        /// Indicates the <see cref="CloudEvent.Data"/> should be serialized as binary data.
         /// This data will be included as a Base64 encoded string in the "data_base64"
         /// field of the JSON payload.
         /// </summary>
-        Binary = 1,
+        Binary = 0,
+
+        /// <summary>
+        /// Indicates the <see cref="CloudEvent.Data"/> should be serialized as JSON.
+        /// The data will be included in the "data" field of the JSON payload.
+        /// </summary>
+        Json = 1,
     }
 }

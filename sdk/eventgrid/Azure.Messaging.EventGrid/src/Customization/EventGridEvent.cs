@@ -34,7 +34,7 @@ namespace Azure.Messaging.EventGrid
 
             DataSerializationType = dataSerializationType ?? data?.GetType() ?? null;
             Subject = subject;
-            JsonSerializable = data;
+            Data = new BinaryData(data, type: dataSerializationType ?? data?.GetType());
             EventType = eventType;
             DataVersion = dataVersion;
         }
@@ -65,13 +65,19 @@ namespace Azure.Messaging.EventGrid
             Argument.AssertNotNull(eventGridEventInternal.Id, nameof(eventGridEventInternal.Id));
 
             Subject = eventGridEventInternal.Subject;
-            SerializedData = eventGridEventInternal.Data;
             EventType = eventGridEventInternal.EventType;
             DataVersion = eventGridEventInternal.DataVersion;
             EventTime = eventGridEventInternal.EventTime;
             Id = eventGridEventInternal.Id;
             Topic = eventGridEventInternal.Topic;
+            Data = new BinaryData(eventGridEventInternal.Data);
         }
+
+        /// <summary>
+        /// Gets the event payload as <see cref="BinaryData"/>. Using BinaryData,
+        /// one can deserialize the payload into rich data, or access the raw JSON data using <see cref="BinaryData.ToString()"/>.
+        /// </summary>
+        public BinaryData Data { get; set; }
 
         /// <summary> Gets or sets a unique identifier for the event. </summary>
         public string Id { get; set; } = Guid.NewGuid().ToString();
@@ -94,38 +100,6 @@ namespace Azure.Messaging.EventGrid
         /// <summary>Gets or sets the schema version of the data object.</summary>
         public string DataVersion { get; set; }
 
-        /// <summary>Gets or sets the event data specific to the event type.</summary>
-        internal object JsonSerializable
-        {
-            get
-            {
-                return _jsonSerializable;
-            }
-            set
-            {
-                _jsonSerializable = value;
-                Data = new BinaryData(_jsonSerializable, type: DataSerializationType);
-            }
-        }
-        private object _jsonSerializable;
-
-        /// <summary>Gets or sets the serialized event data specific to the event type.</summary>
-        internal JsonElement SerializedData
-        {
-            get
-            {
-                return _serializedData;
-            }
-            set
-            {
-                _serializedData = value;
-                Data = BinaryData.FromStream(SerializePayloadToStream(_serializedData));
-            }
-        }
-        private JsonElement _serializedData;
-
-        private static readonly JsonObjectSerializer s_jsonSerializer = new JsonObjectSerializer();
-
         /// <summary>
         /// Gets whether or not the event is a System defined event and returns the deserialized
         /// system event via out parameter.
@@ -135,8 +109,17 @@ namespace Azure.Messaging.EventGrid
         /// <returns> Whether or not the event is a system event.</returns>
         public bool TryGetSystemEventData(out object eventData)
         {
-            eventData = SystemEventExtensions.AsSystemEventData(EventType, SerializedData);
-            return eventData != null;
+            try
+            {
+                JsonDocument requestDocument = JsonDocument.Parse(Data.ToMemory());
+                eventData = SystemEventExtensions.AsSystemEventData(EventType, requestDocument.RootElement);
+                return eventData != null;
+            }
+            catch
+            {
+                eventData = null;
+                return false;
+            }
         }
 
         /// <summary>
@@ -190,26 +173,12 @@ namespace Azure.Messaging.EventGrid
             {
                 throw new ArgumentException(
                     "The BinaryData instance contains JSON from multiple event grid events. This method " +
-                    "should only be used with BinaryData containing a single event grid events. " +
+                    "should only be used with BinaryData containing a single event grid event. " +
                     Environment.NewLine +
                     "To parse multiple events, call ToString on the BinaryData and use the " +
                     "Parse overload that takes a string.");
             }
             return events[0];
-        }
-
-        /// <summary>
-        /// Gets the event payload as <see cref="BinaryData"/>. Using BinaryData,
-        /// one can deserialize the payload into rich data, or access the raw JSON data using <see cref="BinaryData.ToString()"/>.
-        /// </summary>
-        public BinaryData Data { get; set; }
-
-        private static MemoryStream SerializePayloadToStream(JsonElement payload, CancellationToken cancellationToken = default)
-        {
-            MemoryStream dataStream = new MemoryStream();
-            s_jsonSerializer.Serialize(dataStream, payload, payload.GetType(), cancellationToken);
-            dataStream.Position = 0;
-            return dataStream;
         }
     }
 }

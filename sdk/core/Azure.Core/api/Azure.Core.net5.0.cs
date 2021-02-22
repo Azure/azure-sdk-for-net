@@ -584,12 +584,12 @@ namespace Azure.Messaging
         public string? Subject { get { throw null; } set { } }
         public System.DateTimeOffset? Time { get { throw null; } set { } }
         public string Type { get { throw null; } set { } }
-        public static Azure.Messaging.CloudEvent? Parse(System.BinaryData jsonEvent, bool strict = true) { throw null; }
-        public static Azure.Messaging.CloudEvent[] Parse(string jsonContent, bool strict = true) { throw null; }
+        public static Azure.Messaging.CloudEvent? Parse(System.BinaryData jsonEvent, bool skipValidation = false) { throw null; }
+        public static Azure.Messaging.CloudEvent[] ParseEvents(string jsonContent, bool skipValidation = false) { throw null; }
     }
     public enum CloudEventDataFormat
     {
-        Json = 0,
-        Binary = 1,
+        Binary = 0,
+        Json = 1,
     }
 }

@@ -46,16 +46,21 @@ EventGridPublisherClient client = new EventGridPublisherClient(
     new Uri("<endpoint>"),
     new AzureKeyCredential("<access-key>"));
 ```
-You can also create a **Shared Access Signature** to authenticate the client using the same access key. The signature can be generated using the endpoint, access key, and the time at which the signature becomes invalid for authentication. Create the client using the `EventGridSharedAccessSignatureCredential` type:
-```C#
-string sasToken = EventGridPublisherClient.BuildSharedAccessSignature(
-    new Uri("<endpoint>"),
-    DateTimeOffset.UtcNow.AddMinutes(60),
-    new AzureKeyCredential("<access-key>"));
+Event Grid also supports authenticating with a shared access signature which allows for providing access to a resource that expires by a certain time without sharing your access key. 
+Generally, the workflow would be that one application would generate the SAS string and hand off the string to another application that would consume the string.
+Generate the SAS:
+```C# Snippet:GenerateSas
+var builder = new EventGridSasBuilder(new Uri(topicEndpoint), DateTimeOffset.Now.AddHours(1));
+var keyCredential = new AzureKeyCredential(topicAccessKey);
+string sasToken = builder.GenerateSas(keyCredential);
+```
 
+Here is how it would be used from the consumer's perspective:
+```C# Snippet:AuthenticateWithSas
+var sasCredential = new AzureSasCredential(sasToken);
 EventGridPublisherClient client = new EventGridPublisherClient(
-    new Uri("<endpoint>"),
-    new EventGridSharedAccessSignatureCredential(sasToken));
+    new Uri(topicEndpoint),
+    sasCredential);
 ```
 
 `EventGridPublisherClient` also accepts a set of configuring options through `EventGridPublisherClientOptions`. For example, you can specify a custom serializer that will be used to serialize the event data to JSON.
