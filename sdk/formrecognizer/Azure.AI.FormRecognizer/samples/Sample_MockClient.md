@@ -3,7 +3,7 @@
 This sample illustrates how to use [Moq][moq] to create a unit test that mocks the response from a `FormRecognizerClient` method. For more examples of mocking, see [Moq samples][moq_samples].
 
 ## Define a method that uses a FormRecognizerClient
-To show the usage of mocks, define a method that will be tested with mocked objects. For this case, we are going to create a method that will calculate whether the total price of a groceries list is expensive (x > $100), only if the recognized field has a confidence greater than 70%.
+To show the usage of mocks, define a method that will be tested with mocked objects. For this case, assume we have a pre-trained custom model that's able to recognize groceries list. We are going to create a method that will calculate whether the total price of a list is expensive (total price > $100), only if the recognized field has a confidence greater than 70%.
 
 ```C# Snippet:FormRecognizerMethodToTest
 private static async Task<bool> IsExpensiveAsync(string modelId, Uri documentUri, FormRecognizerClient client)
@@ -13,10 +13,10 @@ private static async Task<bool> IsExpensiveAsync(string modelId, Uri documentUri
     Response<RecognizedFormCollection> response =  await operation.WaitForCompletionAsync();
     RecognizedForm form = response.Value[0];
 
-    if (form.FormType == "groceries")
+    if (form.Fields.TryGetValue("totalPrice", out FormField totalPriceField)
+        && totalPriceField.Value.ValueType == FieldValueType.Float)
     {
-        FormField totalPriceField = form.Fields["totalPrice"];
-        return totalPriceField.Confidence > 0.5f && totalPriceField.Value.AsFloat() > 100f;
+        return totalPriceField.Confidence > 0.7f && totalPriceField.Value.AsFloat() > 100f;
     }
     else
     {
@@ -61,7 +61,7 @@ var formField = FormRecognizerModelFactory.FormField("totalPrice", labelData, va
 var formPage = FormRecognizerModelFactory.FormPage(1, 8.5f, 11f, 0f, LengthUnit.Inch, new List<FormLine>(), new List<FormTable>());
 
 var pageRange = FormRecognizerModelFactory.FormPageRange(1, 1);
-var recognizedForm = FormRecognizerModelFactory.RecognizedForm("groceries", pageRange,
+var recognizedForm = FormRecognizerModelFactory.RecognizedForm("custom:groceries", pageRange,
     new Dictionary<string, FormField>() { { "totalPrice", formField } },
     new List<FormPage>() { formPage });
 var recognizedFormCollection = FormRecognizerModelFactory.RecognizedFormCollection(new List<RecognizedForm>() { recognizedForm });
