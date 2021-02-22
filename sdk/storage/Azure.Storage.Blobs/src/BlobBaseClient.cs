@@ -375,6 +375,7 @@ namespace Azure.Storage.Blobs.Specialized
                 customerProvidedKey: options.CustomerProvidedKey,
                 encryptionScope: options.EncryptionScope);
 
+            _clientSideEncryption = options._clientSideEncryptionOptions.Clone();
             _blobRestClient = BuildBlobRestClient(blobUri);
 
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
