@@ -8,6 +8,7 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry.Models
 {
+    [CodeGenModel("RepositoryAttributes")]
     public partial class RepositoryAttributes
     {
         [CodeGenMember("ImageName")]

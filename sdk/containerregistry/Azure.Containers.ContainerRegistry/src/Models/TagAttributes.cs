@@ -17,7 +17,7 @@ namespace Azure.Containers.ContainerRegistry.Models
 
         // TODO: Why is this nullable?  does it need to be?
         /// <summary> Tag created time. </summary>
-        public DateTimeOffset CreatedTime { get { return Attributes.CreatedTime.Value; } }
+        public DateTimeOffset? CreatedTime { get { return Attributes.CreatedTime.Value; } }
 
         // TODO: Why is this nullable?  does it need to be?
         /// <summary> Tag last update time. </summary>

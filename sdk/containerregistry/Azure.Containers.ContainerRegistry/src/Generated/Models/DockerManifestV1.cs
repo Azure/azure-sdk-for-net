@@ -23,24 +23,21 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
 
         /// <summary> Initializes a new instance of DockerManifestV1. </summary>
         /// <param name="schemaVersion"> Schema version. </param>
-        /// <param name="architecture"> CPU architecture. </param>
+        /// <param name="cpuArchitecture"> CPU architecture. </param>
         /// <param name="name"> Image name. </param>
         /// <param name="tag"> Image tag. </param>
         /// <param name="fsLayers"> List of layer information. </param>
         /// <param name="history"> Image history. </param>
         /// <param name="signatures"> Image signature. </param>
-        internal DockerManifestV1(int schemaVersion, string architecture, string name, string tag, IList<DockerManifestV1FsLayer> fsLayers, IList<DockerManifestV1History> history, IList<DockerManifestV1ImageSignature> signatures) : base(schemaVersion)
+        internal DockerManifestV1(int schemaVersion, string cpuArchitecture, string name, string tag, IList<DockerManifestV1FsLayer> fsLayers, IList<DockerManifestV1History> history, IList<DockerManifestV1ImageSignature> signatures) : base(schemaVersion)
         {
-            Architecture = architecture;
+            CpuArchitecture = cpuArchitecture;
             Name = name;
             Tag = tag;
             FsLayers = fsLayers;
             History = history;
             Signatures = signatures;
         }
-
-        /// <summary> CPU architecture. </summary>
-        public string Architecture { get; set; }
         /// <summary> Image name. </summary>
         public string Name { get; set; }
         /// <summary> Image tag. </summary>

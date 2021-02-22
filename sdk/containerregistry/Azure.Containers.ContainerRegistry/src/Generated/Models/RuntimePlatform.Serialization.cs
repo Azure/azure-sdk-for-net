@@ -16,15 +16,15 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Architecture))
+            if (Optional.IsDefined(CpuArchitecture))
             {
                 writer.WritePropertyName("architecture");
-                writer.WriteStringValue(Architecture);
+                writer.WriteStringValue(CpuArchitecture);
             }
-            if (Optional.IsDefined(Os))
+            if (Optional.IsDefined(OperatingSystem))
             {
                 writer.WritePropertyName("os");
-                writer.WriteStringValue(Os);
+                writer.WriteStringValue(OperatingSystem);
             }
             if (Optional.IsDefined(OsVersion))
             {
@@ -46,11 +46,11 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
                 writer.WritePropertyName("variant");
                 writer.WriteStringValue(Variant);
             }
-            if (Optional.IsCollectionDefined(Features))
+            if (Optional.IsCollectionDefined(CpuFeatures))
             {
                 writer.WritePropertyName("features");
                 writer.WriteStartArray();
-                foreach (var item in Features)
+                foreach (var item in CpuFeatures)
                 {
                     writer.WriteStringValue(item);
                 }

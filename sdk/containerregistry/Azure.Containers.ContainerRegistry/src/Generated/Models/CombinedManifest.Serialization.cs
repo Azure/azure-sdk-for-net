@@ -19,7 +19,7 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
             if (Optional.IsDefined(MediaType))
             {
                 writer.WritePropertyName("mediaType");
-                writer.WriteStringValue((string)MediaType);
+                writer.WriteStringValue(MediaType);
             }
             if (Optional.IsCollectionDefined(Manifests))
             {

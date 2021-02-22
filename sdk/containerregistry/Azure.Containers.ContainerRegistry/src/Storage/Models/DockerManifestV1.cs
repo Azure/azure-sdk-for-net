@@ -11,5 +11,8 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
     [CodeGenModel("V1Manifest")]
     public sealed partial class DockerManifestV1
     {
+        /// <summary> CPU architecture. </summary>
+        [CodeGenMember("Architecture")]
+        public string CpuArchitecture { get; set; }
     }
 }

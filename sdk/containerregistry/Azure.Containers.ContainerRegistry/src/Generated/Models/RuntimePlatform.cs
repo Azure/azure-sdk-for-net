@@ -17,37 +17,30 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
         public RuntimePlatform()
         {
             OsFeatures = new ChangeTrackingList<string>();
-            Features = new ChangeTrackingList<string>();
+            CpuFeatures = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of RuntimePlatform. </summary>
-        /// <param name="architecture"> Specifies the CPU architecture, for example amd64 or ppc64le. </param>
-        /// <param name="os"> The os field specifies the operating system, for example linux or windows. </param>
+        /// <param name="cpuArchitecture"> Specifies the CPU architecture, for example amd64 or ppc64le. </param>
+        /// <param name="operatingSystem"> The os field specifies the operating system, for example linux or windows. </param>
         /// <param name="osVersion"> The optional os.version field specifies the operating system version, for example 10.0.10586. </param>
         /// <param name="osFeatures"> The optional os.features field specifies an array of strings, each listing a required OS feature (for example on Windows win32k. </param>
         /// <param name="variant"> The optional variant field specifies a variant of the CPU, for example armv6l to specify a particular CPU variant of the ARM CPU. </param>
-        /// <param name="features"> The optional features field specifies an array of strings, each listing a required CPU feature (for example sse4 or aes. </param>
-        internal RuntimePlatform(string architecture, string os, string osVersion, IList<string> osFeatures, string variant, IList<string> features)
+        /// <param name="cpuFeatures"> The optional features field specifies an array of strings, each listing a required CPU feature (for example sse4 or aes. </param>
+        internal RuntimePlatform(string cpuArchitecture, string operatingSystem, string osVersion, IList<string> osFeatures, string variant, IList<string> cpuFeatures)
         {
-            Architecture = architecture;
-            Os = os;
+            CpuArchitecture = cpuArchitecture;
+            OperatingSystem = operatingSystem;
             OsVersion = osVersion;
             OsFeatures = osFeatures;
             Variant = variant;
-            Features = features;
+            CpuFeatures = cpuFeatures;
         }
-
-        /// <summary> Specifies the CPU architecture, for example amd64 or ppc64le. </summary>
-        public string Architecture { get; set; }
-        /// <summary> The os field specifies the operating system, for example linux or windows. </summary>
-        public string Os { get; set; }
         /// <summary> The optional os.version field specifies the operating system version, for example 10.0.10586. </summary>
         public string OsVersion { get; set; }
         /// <summary> The optional os.features field specifies an array of strings, each listing a required OS feature (for example on Windows win32k. </summary>
         public IList<string> OsFeatures { get; }
         /// <summary> The optional variant field specifies a variant of the CPU, for example armv6l to specify a particular CPU variant of the ARM CPU. </summary>
         public string Variant { get; set; }
-        /// <summary> The optional features field specifies an array of strings, each listing a required CPU feature (for example sse4 or aes. </summary>
-        public IList<string> Features { get; }
     }
 }
