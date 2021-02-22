@@ -37,7 +37,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var operation = await client.StartRecognizeContentFromUriAsync(uri);
 
             var sameOperation = new RecognizeContentOperation(operation.Id, nonInstrumentedClient);
-            await sameOperation.WaitForCompletionAsync(PollingInterval);
+            await sameOperation.WaitForCompletionAsync();
 
             Assert.IsTrue(sameOperation.HasValue);
             Assert.AreEqual(1, sameOperation.Value.Count);
@@ -52,7 +52,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var operation = await client.StartRecognizeReceiptsFromUriAsync(uri);
 
             var sameOperation = new RecognizeReceiptsOperation(operation.Id, nonInstrumentedClient);
-            await sameOperation.WaitForCompletionAsync(PollingInterval);
+            await sameOperation.WaitForCompletionAsync();
 
             Assert.IsTrue(sameOperation.HasValue);
             Assert.AreEqual(1, sameOperation.Value.Count);
@@ -67,7 +67,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var operation = await client.StartRecognizeInvoicesFromUriAsync(uri);
 
             var sameOperation = new RecognizeInvoicesOperation(operation.Id, nonInstrumentedClient);
-            await sameOperation.WaitForCompletionAsync(PollingInterval);
+            await sameOperation.WaitForCompletionAsync();
 
             Assert.IsTrue(sameOperation.HasValue);
             Assert.AreEqual(1, sameOperation.Value.Count);
@@ -88,7 +88,7 @@ namespace Azure.AI.FormRecognizer.Tests
             }
 
             var sameOperation = new RecognizeCustomFormsOperation(operation.Id, nonInstrumentedClient);
-            await sameOperation.WaitForCompletionAsync(PollingInterval);
+            await sameOperation.WaitForCompletionAsync();
 
             Assert.IsTrue(sameOperation.HasValue);
             Assert.AreEqual(1, sameOperation.Value.Count);
@@ -103,7 +103,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var operation = await client.StartTrainingAsync(trainingFilesUri, useTrainingLabels: false);
 
             var sameOperation = new TrainingOperation(operation.Id, nonInstrumentedClient);
-            await sameOperation.WaitForCompletionAsync(PollingInterval);
+            await sameOperation.WaitForCompletionAsync();
 
             Assert.IsTrue(sameOperation.HasValue);
             Assert.AreEqual(CustomFormModelStatus.Ready, sameOperation.Value.Status);
@@ -120,7 +120,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var operation = await client.StartCreateComposedModelAsync(new List<string> { trainedModelA.ModelId, trainedModelB.ModelId });
 
             var sameOperation = new CreateComposedModelOperation(operation.Id, nonInstrumentedClient);
-            await sameOperation.WaitForCompletionAsync(PollingInterval);
+            await sameOperation.WaitForCompletionAsync();
 
             Assert.IsTrue(sameOperation.HasValue);
             Assert.AreEqual(CustomFormModelStatus.Ready, sameOperation.Value.Status);
@@ -139,7 +139,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var operation = await client.StartCopyModelAsync(trainedModel.ModelId, targetAuth);
 
             var sameOperation = new CopyModelOperation(operation.Id, targetAuth.ModelId, nonInstrumentedClient);
-            await sameOperation.WaitForCompletionAsync(PollingInterval);
+            await sameOperation.WaitForCompletionAsync();
 
             Assert.IsTrue(sameOperation.HasValue);
             Assert.AreEqual(targetAuth.ModelId, sameOperation.Value.ModelId);
