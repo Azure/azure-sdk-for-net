@@ -22,6 +22,9 @@ parameters:
   default: []
 - name: TestTimeoutInMinutes
   type: number
+- name: BuildInParallel
+  type: boolean
+  default: true
 
 jobs:
   - job: Build
@@ -199,6 +202,7 @@ jobs:
           --logger "trx;LogFileName=$(TestTargetFramework).trx" --logger:"console;verbosity=normal"
           /p:SDKType=${{ parameters.SDKType }}
           /p:ServiceDirectory=${{ parameters.ServiceToTest }}
+          /p:BuildInParallel=${{ parameters.BuildInParallel }}
           /p:IncludeSrc=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false
           /p:Configuration=$(BuildConfiguration) $(ConvertToProjectReferenceOption)
           /p:CollectCoverage=$(CollectCoverage) /p:CodeCoverageDirectory=${{ parameters.ServiceDirectory }}
