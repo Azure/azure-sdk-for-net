@@ -7,7 +7,7 @@
       "RequestBody": "{\r\n  \"name\": \"MixedRealityNetSdkTests\",\r\n  \"location\": \"EastUs2\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "1afad26a-3b54-4e96-816a-fec5d33ff6f0"
+          "2b2882e6-52e8-42b7-9155-bfb616c02fde"
         ],
         "Accept-Language": [
           "en-US"
@@ -15,7 +15,7 @@
         "User-Agent": [
           "FxVersion/4.6.29719.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ],
         "Content-Type": [
@@ -36,13 +36,13 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "9c6aa531-6610-40a1-8b53-2a3a8f67e991"
+          "ee97eae4-397f-4d18-821a-da7d817ffe10"
         ],
         "x-ms-correlation-request-id": [
-          "9c6aa531-6610-40a1-8b53-2a3a8f67e991"
+          "ee97eae4-397f-4d18-821a-da7d817ffe10"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210219T171220Z:9c6aa531-6610-40a1-8b53-2a3a8f67e991"
+          "WESTUS2:20210222T223729Z:ee97eae4-397f-4d18-821a-da7d817ffe10"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -51,7 +51,7 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 19 Feb 2021 17:12:19 GMT"
+          "Mon, 22 Feb 2021 22:37:28 GMT"
         ],
         "Content-Length": [
           "200"
@@ -73,7 +73,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "3646c78d-58e7-4e5b-a651-a09c1ac55b2d"
+          "617b4e6a-6cd7-45a5-966d-9757d37806bc"
         ],
         "Accept-Language": [
           "en-US"
@@ -81,8 +81,8 @@
         "User-Agent": [
           "FxVersion/4.6.29719.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19041.",
-          "Microsoft.Azure.Management.MixedReality.MixedRealityClient/1.1.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.MixedReality.MixedRealityClient/1.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -96,13 +96,13 @@
           "gateway"
         ],
         "x-ms-request-id": [
-          "0e14e6f5-ee65-4661-a0a8-76d0e388bc62"
+          "820940bf-a729-4a18-8acb-376f48415689"
         ],
         "x-ms-correlation-request-id": [
-          "0e14e6f5-ee65-4661-a0a8-76d0e388bc62"
+          "820940bf-a729-4a18-8acb-376f48415689"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210219T171220Z:0e14e6f5-ee65-4661-a0a8-76d0e388bc62"
+          "WESTUS2:20210222T223729Z:820940bf-a729-4a18-8acb-376f48415689"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -111,7 +111,7 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 19 Feb 2021 17:12:20 GMT"
+          "Mon, 22 Feb 2021 22:37:28 GMT"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -133,7 +133,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "a603cd4b-a8df-4401-91bb-6635db4f353a"
+          "6b593e6f-0f8e-4e45-858d-7e7e6f12bb5d"
         ],
         "Accept-Language": [
           "en-US"
@@ -141,8 +141,8 @@
         "User-Agent": [
           "FxVersion/4.6.29719.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19041.",
-          "Microsoft.Azure.Management.MixedReality.MixedRealityClient/1.1.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.MixedReality.MixedRealityClient/1.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -153,7 +153,7 @@
           "no-cache"
         ],
         "MS-CV": [
-          "UbcsKckhW0yKXBdgRJLbOw.0"
+          "4fP0qQ072EC/7m3giKJtTg.0"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -162,19 +162,19 @@
           "11998"
         ],
         "x-ms-request-id": [
-          "6e226b8c-a2d8-4d9b-88ff-a74f61ddc903"
+          "84bf309b-5419-41f6-847c-af1d8939c4fc"
         ],
         "x-ms-correlation-request-id": [
-          "6e226b8c-a2d8-4d9b-88ff-a74f61ddc903"
+          "84bf309b-5419-41f6-847c-af1d8939c4fc"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210219T171225Z:6e226b8c-a2d8-4d9b-88ff-a74f61ddc903"
+          "WESTUS2:20210222T223733Z:84bf309b-5419-41f6-847c-af1d8939c4fc"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "Date": [
-          "Fri, 19 Feb 2021 17:12:24 GMT"
+          "Mon, 22 Feb 2021 22:37:32 GMT"
         ],
         "Content-Length": [
           "430"
@@ -186,7 +186,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/eaa04920-46c9-488e-b765-1db1491c42fb/resourceGroups/MixedRealityNetSdkTests/providers/Microsoft.MixedReality/objectAnchorsAccounts/NetSdkTests\",\r\n  \"name\": \"NetSdkTests\",\r\n  \"type\": \"Microsoft.MixedReality/objectAnchorsAccounts\",\r\n  \"identity\": null,\r\n  \"location\": \"EastUs2\",\r\n  \"plan\": null,\r\n  \"sku\": null,\r\n  \"kind\": null,\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"accountDomain\": \"mixedreality.azure.com\",\r\n    \"accountId\": \"970593fb-3cb1-4643-9f07-30bcf29e1941\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/eaa04920-46c9-488e-b765-1db1491c42fb/resourceGroups/MixedRealityNetSdkTests/providers/Microsoft.MixedReality/objectAnchorsAccounts/NetSdkTests\",\r\n  \"name\": \"NetSdkTests\",\r\n  \"type\": \"Microsoft.MixedReality/objectAnchorsAccounts\",\r\n  \"identity\": null,\r\n  \"location\": \"EastUs2\",\r\n  \"plan\": null,\r\n  \"sku\": null,\r\n  \"kind\": null,\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"accountDomain\": \"mixedreality.azure.com\",\r\n    \"accountId\": \"e5a242b0-1974-4505-9168-e5c522107c61\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
@@ -196,7 +196,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "35af1528-a351-4991-95e9-824201a3ebaa"
+          "bd5602c2-f416-45db-9c39-137b10f3d112"
         ],
         "Accept-Language": [
           "en-US"
@@ -204,8 +204,8 @@
         "User-Agent": [
           "FxVersion/4.6.29719.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19041.",
-          "Microsoft.Azure.Management.MixedReality.MixedRealityClient/1.1.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.MixedReality.MixedRealityClient/1.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -219,13 +219,13 @@
           "gateway"
         ],
         "x-ms-request-id": [
-          "9486f11e-4866-4c9d-b1ee-3d8bbf477ffd"
+          "d2cabb48-3eae-4aad-90f5-a509029b24db"
         ],
         "x-ms-correlation-request-id": [
-          "9486f11e-4866-4c9d-b1ee-3d8bbf477ffd"
+          "d2cabb48-3eae-4aad-90f5-a509029b24db"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210219T171232Z:9486f11e-4866-4c9d-b1ee-3d8bbf477ffd"
+          "WESTUS2:20210222T223735Z:d2cabb48-3eae-4aad-90f5-a509029b24db"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -234,7 +234,7 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 19 Feb 2021 17:12:31 GMT"
+          "Mon, 22 Feb 2021 22:37:35 GMT"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -256,7 +256,7 @@
       "RequestBody": "{\r\n  \"location\": \"EastUs2\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "12da484a-2bf3-460a-84ea-66758d00b942"
+          "a897d852-1a71-428b-a929-e9f553bc7d43"
         ],
         "Accept-Language": [
           "en-US"
@@ -264,8 +264,8 @@
         "User-Agent": [
           "FxVersion/4.6.29719.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19041.",
-          "Microsoft.Azure.Management.MixedReality.MixedRealityClient/1.1.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.MixedReality.MixedRealityClient/1.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -285,7 +285,7 @@
           "subscriptions/eaa04920-46c9-488e-b765-1db1491c42fb/resourceGroups/MixedRealityNetSdkTests/providers/Microsoft.MixedReality/objectAnchorsAccounts/NetSdkTests"
         ],
         "MS-CV": [
-          "g96BQlbqN0a7I1hhtwVDeg.0"
+          "qKI66B5j/UyQ4CzZsShvRg.0"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -294,19 +294,19 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "1783d288-86dc-4615-ac07-2f50bfa4b395"
+          "be33a473-53a0-4139-890d-b2ae6a03c6b0"
         ],
         "x-ms-correlation-request-id": [
-          "1783d288-86dc-4615-ac07-2f50bfa4b395"
+          "be33a473-53a0-4139-890d-b2ae6a03c6b0"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210219T171225Z:1783d288-86dc-4615-ac07-2f50bfa4b395"
+          "WESTUS2:20210222T223733Z:be33a473-53a0-4139-890d-b2ae6a03c6b0"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "Date": [
-          "Fri, 19 Feb 2021 17:12:24 GMT"
+          "Mon, 22 Feb 2021 22:37:32 GMT"
         ],
         "Content-Length": [
           "430"
@@ -318,7 +318,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/eaa04920-46c9-488e-b765-1db1491c42fb/resourceGroups/MixedRealityNetSdkTests/providers/Microsoft.MixedReality/objectAnchorsAccounts/NetSdkTests\",\r\n  \"name\": \"NetSdkTests\",\r\n  \"type\": \"Microsoft.MixedReality/objectAnchorsAccounts\",\r\n  \"identity\": null,\r\n  \"location\": \"EastUs2\",\r\n  \"plan\": null,\r\n  \"sku\": null,\r\n  \"kind\": null,\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"accountDomain\": \"mixedreality.azure.com\",\r\n    \"accountId\": \"970593fb-3cb1-4643-9f07-30bcf29e1941\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/eaa04920-46c9-488e-b765-1db1491c42fb/resourceGroups/MixedRealityNetSdkTests/providers/Microsoft.MixedReality/objectAnchorsAccounts/NetSdkTests\",\r\n  \"name\": \"NetSdkTests\",\r\n  \"type\": \"Microsoft.MixedReality/objectAnchorsAccounts\",\r\n  \"identity\": null,\r\n  \"location\": \"EastUs2\",\r\n  \"plan\": null,\r\n  \"sku\": null,\r\n  \"kind\": null,\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"accountDomain\": \"mixedreality.azure.com\",\r\n    \"accountId\": \"e5a242b0-1974-4505-9168-e5c522107c61\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
@@ -328,7 +328,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "4ad62903-026c-472b-b98a-50b9c0e6ad49"
+          "c18b3b54-a3dd-48e9-a007-f90295840aff"
         ],
         "Accept-Language": [
           "en-US"
@@ -336,8 +336,8 @@
         "User-Agent": [
           "FxVersion/4.6.29719.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19041.",
-          "Microsoft.Azure.Management.MixedReality.MixedRealityClient/1.1.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.MixedReality.MixedRealityClient/1.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -348,7 +348,7 @@
           "no-cache"
         ],
         "MS-CV": [
-          "vavxiTib2EmCHOdFKliP1w.0"
+          "K3ktH2a4k0mY/ri6y+Gbxw.0"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -357,19 +357,19 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "c8a6805e-dd4b-45dc-8b08-e5951fd35d35"
+          "091a5c52-ce4b-4fa8-ba29-57286dc38758"
         ],
         "x-ms-correlation-request-id": [
-          "c8a6805e-dd4b-45dc-8b08-e5951fd35d35"
+          "091a5c52-ce4b-4fa8-ba29-57286dc38758"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210219T171225Z:c8a6805e-dd4b-45dc-8b08-e5951fd35d35"
+          "WESTUS2:20210222T223733Z:091a5c52-ce4b-4fa8-ba29-57286dc38758"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "Date": [
-          "Fri, 19 Feb 2021 17:12:25 GMT"
+          "Mon, 22 Feb 2021 22:37:32 GMT"
         ],
         "Content-Length": [
           "123"
@@ -381,7 +381,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"primaryKey\": \"CKp5kE+l1nllxYa49nERNP6tw6bN0D/wyc9RxDwbkl4=\",\r\n  \"secondaryKey\": \"wDuaaekBv0tsp8nK+PpdV1bh7EzMoFDEh7ABImQ6xo0=\"\r\n}",
+      "ResponseBody": "{\r\n  \"primaryKey\": \"6X379Cw33SFx2Cg6rTYpDsjWe30Cuufp92OxDiVfeDc=\",\r\n  \"secondaryKey\": \"LO8Sqb0fnG5aPWrcOH0t/I3c79Hzj4RKToLIdh8ru0k=\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -391,7 +391,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "85f5a608-c527-450c-ad0a-1c658c13ff74"
+          "eff08c10-daf7-47f1-b3ef-6aa234258fab"
         ],
         "Accept-Language": [
           "en-US"
@@ -399,8 +399,8 @@
         "User-Agent": [
           "FxVersion/4.6.29719.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19041.",
-          "Microsoft.Azure.Management.MixedReality.MixedRealityClient/1.1.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.MixedReality.MixedRealityClient/1.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -411,7 +411,7 @@
           "no-cache"
         ],
         "MS-CV": [
-          "P+O56+tLQUGSaLuf0DGLnQ.0"
+          "cK7bDQCpNUiSeBG2mtKDcQ.0"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -420,19 +420,19 @@
           "1197"
         ],
         "x-ms-request-id": [
-          "22fdc887-8d1f-4b12-a64b-90f663ee57e1"
+          "0e512006-6198-428f-a44e-f7ea373daa19"
         ],
         "x-ms-correlation-request-id": [
-          "22fdc887-8d1f-4b12-a64b-90f663ee57e1"
+          "0e512006-6198-428f-a44e-f7ea373daa19"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210219T171226Z:22fdc887-8d1f-4b12-a64b-90f663ee57e1"
+          "WESTUS2:20210222T223734Z:0e512006-6198-428f-a44e-f7ea373daa19"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "Date": [
-          "Fri, 19 Feb 2021 17:12:26 GMT"
+          "Mon, 22 Feb 2021 22:37:33 GMT"
         ],
         "Content-Length": [
           "123"
@@ -444,7 +444,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"primaryKey\": \"mu+sv4YY1P6EC+wLbD0heOawNFcJrb8PX3oqUA54YJ0=\",\r\n  \"secondaryKey\": \"wDuaaekBv0tsp8nK+PpdV1bh7EzMoFDEh7ABImQ6xo0=\"\r\n}",
+      "ResponseBody": "{\r\n  \"primaryKey\": \"2DfRw0WfMFLV99Itprpt1p0ByafsXTcNPJ3MFuNEWdU=\",\r\n  \"secondaryKey\": \"LO8Sqb0fnG5aPWrcOH0t/I3c79Hzj4RKToLIdh8ru0k=\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -454,7 +454,7 @@
       "RequestBody": "{\r\n  \"serial\": 1\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "c1e3f1e3-e9f7-46d7-853c-ae3fd0670096"
+          "bf7efec8-fac0-45e0-86da-78c197d333a1"
         ],
         "Accept-Language": [
           "en-US"
@@ -462,8 +462,8 @@
         "User-Agent": [
           "FxVersion/4.6.29719.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19041.",
-          "Microsoft.Azure.Management.MixedReality.MixedRealityClient/1.1.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.MixedReality.MixedRealityClient/1.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -480,7 +480,7 @@
           "no-cache"
         ],
         "MS-CV": [
-          "67Z7s6G4m0aDJmex70rR6Q.0"
+          "cz1JM463mkKj7mcL3mMZkQ.0"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -489,19 +489,19 @@
           "1198"
         ],
         "x-ms-request-id": [
-          "a31e2fca-713f-4f13-9a03-3c059fde2f11"
+          "c354676e-1ef4-4d47-ad0b-9573e5d97bb8"
         ],
         "x-ms-correlation-request-id": [
-          "a31e2fca-713f-4f13-9a03-3c059fde2f11"
+          "c354676e-1ef4-4d47-ad0b-9573e5d97bb8"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210219T171226Z:a31e2fca-713f-4f13-9a03-3c059fde2f11"
+          "WESTUS2:20210222T223734Z:c354676e-1ef4-4d47-ad0b-9573e5d97bb8"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "Date": [
-          "Fri, 19 Feb 2021 17:12:25 GMT"
+          "Mon, 22 Feb 2021 22:37:33 GMT"
         ],
         "Content-Length": [
           "123"
@@ -513,7 +513,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"primaryKey\": \"mu+sv4YY1P6EC+wLbD0heOawNFcJrb8PX3oqUA54YJ0=\",\r\n  \"secondaryKey\": \"wDuaaekBv0tsp8nK+PpdV1bh7EzMoFDEh7ABImQ6xo0=\"\r\n}",
+      "ResponseBody": "{\r\n  \"primaryKey\": \"2DfRw0WfMFLV99Itprpt1p0ByafsXTcNPJ3MFuNEWdU=\",\r\n  \"secondaryKey\": \"LO8Sqb0fnG5aPWrcOH0t/I3c79Hzj4RKToLIdh8ru0k=\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -523,7 +523,7 @@
       "RequestBody": "{\r\n  \"serial\": 2\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "7ec59f7b-1e2f-4b9e-ba95-008787e187c6"
+          "26d673c9-26b9-45d7-8a3e-9c19d1bac36a"
         ],
         "Accept-Language": [
           "en-US"
@@ -531,8 +531,8 @@
         "User-Agent": [
           "FxVersion/4.6.29719.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19041.",
-          "Microsoft.Azure.Management.MixedReality.MixedRealityClient/1.1.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.MixedReality.MixedRealityClient/1.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -549,7 +549,7 @@
           "no-cache"
         ],
         "MS-CV": [
-          "rADEGofXBEGi92Ogs0TwQA.0"
+          "3r+c6uiF/ka3Z3xzEXXS7w.0"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -558,19 +558,19 @@
           "1196"
         ],
         "x-ms-request-id": [
-          "cc41a177-164f-45b2-bcdc-59a4c06156f5"
+          "6805f0f2-b683-475b-be6b-76378ffaa190"
         ],
         "x-ms-correlation-request-id": [
-          "cc41a177-164f-45b2-bcdc-59a4c06156f5"
+          "6805f0f2-b683-475b-be6b-76378ffaa190"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210219T171226Z:cc41a177-164f-45b2-bcdc-59a4c06156f5"
+          "WESTUS2:20210222T223734Z:6805f0f2-b683-475b-be6b-76378ffaa190"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "Date": [
-          "Fri, 19 Feb 2021 17:12:26 GMT"
+          "Mon, 22 Feb 2021 22:37:33 GMT"
         ],
         "Content-Length": [
           "123"
@@ -582,7 +582,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"primaryKey\": \"mu+sv4YY1P6EC+wLbD0heOawNFcJrb8PX3oqUA54YJ0=\",\r\n  \"secondaryKey\": \"4INmC9faoFcsYYbBTALmeKG3gEpRAl+577rtCYsb9jI=\"\r\n}",
+      "ResponseBody": "{\r\n  \"primaryKey\": \"2DfRw0WfMFLV99Itprpt1p0ByafsXTcNPJ3MFuNEWdU=\",\r\n  \"secondaryKey\": \"qxJ149qSu4OvMvgzIrxB/c5mTqArwcGrJyFKT9cphXU=\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -592,7 +592,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e475fbbc-6437-4ecd-bba9-58393441f9ca"
+          "9de4545b-f74e-4ab4-ab6d-da9e9e1aedae"
         ],
         "Accept-Language": [
           "en-US"
@@ -600,8 +600,8 @@
         "User-Agent": [
           "FxVersion/4.6.29719.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19041.",
-          "Microsoft.Azure.Management.MixedReality.MixedRealityClient/1.1.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.MixedReality.MixedRealityClient/1.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -612,7 +612,7 @@
           "no-cache"
         ],
         "MS-CV": [
-          "Qf335tKUTEiNX8j+YrZDGg.0"
+          "pbC7I2VyFE6q2/fayDKY1w.0"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -621,19 +621,19 @@
           "14999"
         ],
         "x-ms-request-id": [
-          "02f7ef3f-0119-4e4e-ba20-1a5f17be6bc9"
+          "96e77895-fa09-4c9a-bebc-2a11e6f15a52"
         ],
         "x-ms-correlation-request-id": [
-          "02f7ef3f-0119-4e4e-ba20-1a5f17be6bc9"
+          "96e77895-fa09-4c9a-bebc-2a11e6f15a52"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210219T171232Z:02f7ef3f-0119-4e4e-ba20-1a5f17be6bc9"
+          "WESTUS2:20210222T223735Z:96e77895-fa09-4c9a-bebc-2a11e6f15a52"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "Date": [
-          "Fri, 19 Feb 2021 17:12:31 GMT"
+          "Mon, 22 Feb 2021 22:37:34 GMT"
         ],
         "Expires": [
           "-1"
@@ -652,7 +652,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "9efc7207-7692-4884-bd67-287336e5db6c"
+          "ba025eb0-0e42-4e7f-bfc3-b53874fed410"
         ],
         "Accept-Language": [
           "en-US"
@@ -660,8 +660,8 @@
         "User-Agent": [
           "FxVersion/4.6.29719.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19041.",
-          "Microsoft.Azure.Management.MixedReality.MixedRealityClient/1.1.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.MixedReality.MixedRealityClient/1.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -675,13 +675,13 @@
           "14998"
         ],
         "x-ms-request-id": [
-          "45f708e5-06a5-40e9-a6e7-b0a55aa1e98d"
+          "a41b032c-c2ff-4a56-9b80-f01a2538b963"
         ],
         "x-ms-correlation-request-id": [
-          "45f708e5-06a5-40e9-a6e7-b0a55aa1e98d"
+          "a41b032c-c2ff-4a56-9b80-f01a2538b963"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210219T171232Z:45f708e5-06a5-40e9-a6e7-b0a55aa1e98d"
+          "WESTUS2:20210222T223736Z:a41b032c-c2ff-4a56-9b80-f01a2538b963"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -690,7 +690,7 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 19 Feb 2021 17:12:32 GMT"
+          "Mon, 22 Feb 2021 22:37:35 GMT"
         ],
         "Expires": [
           "-1"
@@ -706,7 +706,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "3887acb9-6d99-4708-aa3b-3df9d42db212"
+          "bc3ebeec-a9ea-46d8-a26c-f7d5d8ebd05b"
         ],
         "Accept-Language": [
           "en-US"
@@ -714,7 +714,7 @@
         "User-Agent": [
           "FxVersion/4.6.29719.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
@@ -735,13 +735,13 @@
           "14999"
         ],
         "x-ms-request-id": [
-          "5cc98726-af4d-44ad-804f-503e5de82040"
+          "2f8009e5-6373-404d-bcbb-c852712eea5e"
         ],
         "x-ms-correlation-request-id": [
-          "5cc98726-af4d-44ad-804f-503e5de82040"
+          "2f8009e5-6373-404d-bcbb-c852712eea5e"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210219T171233Z:5cc98726-af4d-44ad-804f-503e5de82040"
+          "WESTUS2:20210222T223737Z:2f8009e5-6373-404d-bcbb-c852712eea5e"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -750,7 +750,7 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 19 Feb 2021 17:12:32 GMT"
+          "Mon, 22 Feb 2021 22:37:36 GMT"
         ],
         "Expires": [
           "-1"
@@ -771,7 +771,7 @@
         "User-Agent": [
           "FxVersion/4.6.29719.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
@@ -792,13 +792,13 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "05db13f0-d2e6-476f-880c-897cc51bc996"
+          "bfe48ce2-ec93-4f9c-8805-912043072e0b"
         ],
         "x-ms-correlation-request-id": [
-          "05db13f0-d2e6-476f-880c-897cc51bc996"
+          "bfe48ce2-ec93-4f9c-8805-912043072e0b"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210219T171248Z:05db13f0-d2e6-476f-880c-897cc51bc996"
+          "WESTUS2:20210222T223752Z:bfe48ce2-ec93-4f9c-8805-912043072e0b"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -807,7 +807,7 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 19 Feb 2021 17:12:47 GMT"
+          "Mon, 22 Feb 2021 22:37:52 GMT"
         ],
         "Expires": [
           "-1"
@@ -828,7 +828,7 @@
         "User-Agent": [
           "FxVersion/4.6.29719.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
@@ -849,13 +849,13 @@
           "11998"
         ],
         "x-ms-request-id": [
-          "0d0b2778-95c1-4dc5-a68e-a82ab8696dae"
+          "7e445e42-0987-4bca-b5c0-7bd987d7aaf9"
         ],
         "x-ms-correlation-request-id": [
-          "0d0b2778-95c1-4dc5-a68e-a82ab8696dae"
+          "7e445e42-0987-4bca-b5c0-7bd987d7aaf9"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210219T171303Z:0d0b2778-95c1-4dc5-a68e-a82ab8696dae"
+          "WESTUS2:20210222T223807Z:7e445e42-0987-4bca-b5c0-7bd987d7aaf9"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -864,7 +864,7 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 19 Feb 2021 17:13:03 GMT"
+          "Mon, 22 Feb 2021 22:38:07 GMT"
         ],
         "Expires": [
           "-1"
@@ -885,7 +885,7 @@
         "User-Agent": [
           "FxVersion/4.6.29719.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
@@ -900,13 +900,13 @@
           "11997"
         ],
         "x-ms-request-id": [
-          "5e391a7e-da7d-484f-a353-2b55e2d650b4"
+          "ce6dd30f-2157-4c1b-ba49-5ddd84a255fa"
         ],
         "x-ms-correlation-request-id": [
-          "5e391a7e-da7d-484f-a353-2b55e2d650b4"
+          "ce6dd30f-2157-4c1b-ba49-5ddd84a255fa"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210219T171319Z:5e391a7e-da7d-484f-a353-2b55e2d650b4"
+          "WESTUS2:20210222T223822Z:ce6dd30f-2157-4c1b-ba49-5ddd84a255fa"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -915,7 +915,7 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 19 Feb 2021 17:13:18 GMT"
+          "Mon, 22 Feb 2021 22:38:22 GMT"
         ],
         "Expires": [
           "-1"
@@ -936,7 +936,7 @@
         "User-Agent": [
           "FxVersion/4.6.29719.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
@@ -951,13 +951,13 @@
           "11996"
         ],
         "x-ms-request-id": [
-          "f79d1af2-a848-4aac-b744-b5f6cfebe816"
+          "6ac43da0-816d-4795-9468-d4591afc591c"
         ],
         "x-ms-correlation-request-id": [
-          "f79d1af2-a848-4aac-b744-b5f6cfebe816"
+          "6ac43da0-816d-4795-9468-d4591afc591c"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210219T171319Z:f79d1af2-a848-4aac-b744-b5f6cfebe816"
+          "WESTUS2:20210222T223822Z:6ac43da0-816d-4795-9468-d4591afc591c"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -966,7 +966,7 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 19 Feb 2021 17:13:19 GMT"
+          "Mon, 22 Feb 2021 22:38:22 GMT"
         ],
         "Expires": [
           "-1"
