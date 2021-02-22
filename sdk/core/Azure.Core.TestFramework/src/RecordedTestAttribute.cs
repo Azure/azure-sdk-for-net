@@ -43,7 +43,7 @@ namespace Azure.Core.TestFramework
                 context.CurrentResult = innerCommand.Execute(context);
 
                 // Check the result
-                if (IsTestFailedWithRecordingMismatch(context))
+                if (IsTestFailedWithRecordingMismatch(context) && !IsRunningInCI())
                 {
                     var originalResult = context.CurrentResult;
                     context.CurrentResult = context.CurrentTest.MakeTestResult();
@@ -81,6 +81,8 @@ namespace Azure.Core.TestFramework
 
                 return failed && context.CurrentResult.Message.Contains(typeof(TestRecordingMismatchException).FullName);
             }
+
+            private static bool IsRunningInCI() => Environment.GetEnvironmentVariable("TF_BUILD") != null;
         }
 
         private static void SetRecordMode(RecordedTestBase fixture, RecordedTestMode mode)
