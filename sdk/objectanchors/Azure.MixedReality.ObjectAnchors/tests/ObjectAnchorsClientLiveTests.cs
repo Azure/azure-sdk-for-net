@@ -6,6 +6,7 @@ using System.IO;
 using System.Numerics;
 using System.Reflection;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.MixedReality.Authentication;
 using Azure.Storage.Blobs;
@@ -41,17 +42,13 @@ namespace Azure.MixedReality.ObjectAnchors.Tests
         public async Task RunAssetConversion()
         {
             Recording.DisableIdReuse();
-            Guid accountId = new Guid(TestEnvironment.AccountId);
-            string accountDomain = TestEnvironment.AccountDomain;
-            ObjectAnchorsClientOptions options = new ObjectAnchorsClientOptions();
-            options.MixedRealityAuthenticationOptions = InstrumentClientOptions(new MixedRealityStsClientOptions());
+
             string localFilePath = assetLocalFilePath;
             Vector3 assetGravity = new Vector3(assetGravityX, assetGravityY, assetGravityZ);
             float scale = assetScale;
 
-            AzureKeyCredential credential = new AzureKeyCredential(TestEnvironment.AccountKey);
-
-            ObjectAnchorsClient client = InstrumentClient(new ObjectAnchorsClient(accountId, accountDomain, credential, InstrumentClientOptions(options)));
+            var clientWithWorkingInternalMethods = CreateClient();
+            ObjectAnchorsClient client = InstrumentClient(clientWithWorkingInternalMethods);
 
             AssetUploadUriResult uploadUriResult = await client.GetAssetUploadUriAsync();
 
@@ -95,17 +92,12 @@ namespace Azure.MixedReality.ObjectAnchors.Tests
         public async Task ObserveExistingAssetConversion()
         {
             Recording.DisableIdReuse();
-            Guid accountId = new Guid(TestEnvironment.AccountId);
-            string accountDomain = TestEnvironment.AccountDomain;
-            ObjectAnchorsClientOptions options = new ObjectAnchorsClientOptions();
-            options.MixedRealityAuthenticationOptions = InstrumentClientOptions(new MixedRealityStsClientOptions());
+
             string localFilePath = assetLocalFilePath;
             Vector3 assetGravity = new Vector3(assetGravityX, assetGravityY, assetGravityZ);
             float scale = assetScale;
 
-            AzureKeyCredential credential = new AzureKeyCredential(TestEnvironment.AccountKey);
-
-            ObjectAnchorsClient clientWithWorkingInternalMethods = new ObjectAnchorsClient(accountId, accountDomain, credential, InstrumentClientOptions(options));
+            var clientWithWorkingInternalMethods = CreateClient();
             ObjectAnchorsClient client = InstrumentClient(clientWithWorkingInternalMethods);
 
             AssetUploadUriResult uploadUriResult = await client.GetAssetUploadUriAsync();
@@ -146,6 +138,24 @@ namespace Azure.MixedReality.ObjectAnchors.Tests
                 var fileInfo = new FileInfo(localFileDownloadPath);
                 Assert.Greater(fileInfo.Length, 0);
             }
+        }
+
+        private ObjectAnchorsClient CreateClient()
+        {
+            Guid accountId = new Guid(TestEnvironment.AccountId);
+            string accountDomain = TestEnvironment.AccountDomain;
+            var options = InstrumentClientOptions(new ObjectAnchorsClientOptions());
+
+            // We can't use record the authentication calls because the token returned would be
+            // expired by the time we play the test back
+            if (Mode == RecordedTestMode.Playback)
+            {
+                return new ObjectAnchorsClient(accountId, accountDomain, new StaticAccessTokenCredential(new AccessToken("TOKEN", DateTimeOffset.MaxValue)), options);
+            }
+
+            AzureKeyCredential credential = new AzureKeyCredential(TestEnvironment.AccountKey);
+
+            return new ObjectAnchorsClient(accountId, accountDomain, credential, options);
         }
     }
 }
