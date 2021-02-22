@@ -202,7 +202,7 @@ namespace Azure.MixedReality.ObjectAnchors
         private static Uri ConstructObjectAnchorsEndpointUrl(string accountDomain)
         {
             Argument.AssertNotNullOrWhiteSpace(accountDomain, nameof(accountDomain));
-            Uri result = new Uri($"http://{accountDomain}");
+            Uri result = new Uri($"https://{accountDomain}");
             if (result.IsLoopback)
             {
                 return result;
