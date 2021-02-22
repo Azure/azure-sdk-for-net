@@ -7,7 +7,6 @@ Param (
     [string] $SourceBranch,
 
     [Parameter()]
-    [ValidateNotNullOrEmpty()]
     [string] $CspellConfigPath = "./.vscode/cspell.json"
 )
 
@@ -30,7 +29,7 @@ if (!(Test-Path $CspellConfigPath)) {
 }
 
 # Lists names of files that were in some way changed between the 
-# current ref and $TargetBranch. Excludes files that were deleted to
+# current $SourceBranch and $TargetBranch. Excludes files that were deleted to
 # prevent errors in Resolve-Path
 Write-Host "git diff --diff-filter=d --name-only $TargetBranch $SourceBranch"
 $changedFiles = git diff --diff-filter=d --name-only $TargetBranch $SourceBranch `
@@ -84,14 +83,15 @@ Git ref to compare changes. This is usually the "base" (GitHub) or "target"
 Git ref to use instead of changes in current repo state. Use `HEAD` here to 
 check spelling of files that have been committed and exlcude any new files or
 modified files that are not committed. This is most useful in CI scenarios where
-builds may have modified the state of the repo.
+builds may have modified the state of the repo. Leaving this parameter blank  
+includes files for whom changes have not been committed. 
 
 .PARAMETER CspellConfigPath
 Optional location to use for cspell.json path. Default value is 
 `./.vscode/cspell.json`
 
 .EXAMPLE
-./eng/common/scripts/Test-Spelling.ps1 -TargetBranch 'target_branch_name'
+./eng/common/scripts/check-spelling-in-changed-files.ps1 -TargetBranch 'target_branch_name'
 
 This will run spell check with changes in the current branch with respect to 
 `target_branch_name`
