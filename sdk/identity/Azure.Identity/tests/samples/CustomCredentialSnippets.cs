@@ -88,7 +88,7 @@ namespace Azure.Identity.Tests.samples
             #region Snippet:ConfidentialClientCredentialUsage
             IConfidentialClientApplication confidentialClient = ConfidentialClientApplicationBuilder.Create(clientId).WithClientSecret(clientSecret).Build();
 
-            var client = new SecretClient(new Uri("https://myvault.vauls.azure.net/"), new ConfidentialClientCredential(confidentialClient));
+            var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), new ConfidentialClientCredential(confidentialClient));
             #endregion
         }
 
@@ -128,7 +128,7 @@ namespace Azure.Identity.Tests.samples
             #region Snippet:OnBehalfOfCredentialUsage
             var oboCredential = new OnBehalfOfCredential(clientId, clientSecret, userAccessToken);
 
-            var client = new SecretClient(new Uri("https://myvault.vauls.azure.net/"), oboCredential);
+            var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), oboCredential);
             #endregion
         }
     }
