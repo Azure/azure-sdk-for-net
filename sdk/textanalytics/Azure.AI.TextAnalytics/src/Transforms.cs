@@ -478,49 +478,68 @@ namespace Azure.AI.TextAnalytics
             return new AnalyzeBatchActionsResult(extractKeyPhrasesActionResult, recognizeEntitiesActionResults, recognizePiiEntitiesActionResults, jobState.Statistics);
         }
 
-        internal static IReadOnlyCollection<ExtractKeyPhrasesActionResult> ConvertToExtractKeyPhrasesActionResults(AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap, IDictionary<int, TextAnalyticsErrorInternal> errors)
+        internal static IReadOnlyCollection<ExtractKeyPhrasesActionResult> ConvertToExtractKeyPhrasesActionResults(AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap, IDictionary<int, TextAnalyticsErrorInternal> tasksErrors)
         {
             var collection = new List<ExtractKeyPhrasesActionResult>();
             int index = 0;
             foreach (KeyPhraseExtractionTasksItem task in jobState.Tasks.KeyPhraseExtractionTasks)
             {
-                TextAnalyticsErrorInternal error;
-                errors.TryGetValue(index, out error);
+                tasksErrors.TryGetValue(index, out TextAnalyticsErrorInternal taskError);
 
-                collection.Add(new ExtractKeyPhrasesActionResult(ConvertToExtractKeyPhrasesResultCollection(task.ResultsInternal, idToIndexMap), task.LastUpdateDateTime, error));
-
+                if (taskError != null)
+                {
+                    collection.Add(new ExtractKeyPhrasesActionResult(null, task.LastUpdateDateTime, taskError));
+                }
+                else
+                {
+                    collection.Add(new ExtractKeyPhrasesActionResult(ConvertToExtractKeyPhrasesResultCollection(task.ResultsInternal, idToIndexMap), task.LastUpdateDateTime, null));
+                }
                 index++;
             }
 
             return collection;
         }
 
-        internal static IReadOnlyCollection<RecognizePiiEntitiesActionResult> ConvertToRecognizePiiEntitiesActionsResults(AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap, IDictionary<int, TextAnalyticsErrorInternal> errors)
+        internal static IReadOnlyCollection<RecognizePiiEntitiesActionResult> ConvertToRecognizePiiEntitiesActionsResults(AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap, IDictionary<int, TextAnalyticsErrorInternal> tasksErrors)
         {
             var collection = new List<RecognizePiiEntitiesActionResult>();
             int index = 0;
             foreach (EntityRecognitionPiiTasksItem task in jobState.Tasks.EntityRecognitionPiiTasks)
             {
-                TextAnalyticsErrorInternal error;
-                errors.TryGetValue(index, out error);
+                tasksErrors.TryGetValue(index, out TextAnalyticsErrorInternal taskError);
 
-                collection.Add(new RecognizePiiEntitiesActionResult(ConvertToRecognizePiiEntitiesResultCollection(task.ResultsInternal, idToIndexMap), task.LastUpdateDateTime, error));
+                if (taskError != null)
+                {
+                    collection.Add(new RecognizePiiEntitiesActionResult(null, task.LastUpdateDateTime, taskError));
+                }
+                else
+                {
+                    collection.Add(new RecognizePiiEntitiesActionResult(ConvertToRecognizePiiEntitiesResultCollection(task.ResultsInternal, idToIndexMap), task.LastUpdateDateTime, taskError));
+                }
                 index++;
             }
 
             return collection;
         }
 
-        internal static IReadOnlyCollection<RecognizeEntitiesActionResult> ConvertToRecognizeEntitiesActionsResults(AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap, IDictionary<int, TextAnalyticsErrorInternal> errors)
+        internal static IReadOnlyCollection<RecognizeEntitiesActionResult> ConvertToRecognizeEntitiesActionsResults(AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap, IDictionary<int, TextAnalyticsErrorInternal> tasksErrors)
         {
             var collection = new List<RecognizeEntitiesActionResult>();
             int index = 0;
             foreach (EntityRecognitionTasksItem task in jobState.Tasks.EntityRecognitionTasks)
             {
-                TextAnalyticsErrorInternal error;
-                errors.TryGetValue(index, out error);
+                tasksErrors.TryGetValue(index, out TextAnalyticsErrorInternal taskError);
 
-                collection.Add(new RecognizeEntitiesActionResult(ConvertToRecognizeEntitiesResultCollection(task.ResultsInternal, idToIndexMap), task.LastUpdateDateTime, error));
+                tasksErrors.TryGetValue(index, out taskError);
+
+                if (taskError != null)
+                {
+                    collection.Add(new RecognizeEntitiesActionResult(null, task.LastUpdateDateTime, taskError));
+                }
+                else
+                {
+                    collection.Add(new RecognizeEntitiesActionResult(ConvertToRecognizeEntitiesResultCollection(task.ResultsInternal, idToIndexMap), task.LastUpdateDateTime, taskError));
+                }
                 index++;
             }
 

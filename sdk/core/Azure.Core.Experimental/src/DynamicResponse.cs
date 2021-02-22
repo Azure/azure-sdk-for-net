@@ -13,7 +13,7 @@ namespace Azure.Core
     /// <summary>
     /// Represents a result of Azure operation with a <see cref="JsonData"/> response.
     /// </summary>
-    [DebuggerDisplay("Status: {Response.Status}, Value: {Value}")]
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class DynamicResponse : Response
     {
         private bool _disposed;
@@ -82,6 +82,11 @@ namespace Azure.Core
                 Response.Dispose();
             }
             _disposed = true;
+        }
+
+        private string DebuggerDisplay
+        {
+            get => $"{{Status: {Response.Status}, Body: {(Body == null ? "" : Body.ToJsonString())}}}";
         }
     }
 }

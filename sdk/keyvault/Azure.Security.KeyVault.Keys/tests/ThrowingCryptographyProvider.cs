@@ -12,7 +12,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
     {
         internal const int CRYPT_E_NO_PROVIDER = unchecked((int)0x80092006);
 
-        public bool ShouldRemote => true;
+        public bool CanRemote => true;
 
         public bool SupportsOperation(KeyOperation operation) => true;
 

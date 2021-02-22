@@ -16,6 +16,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// </summary>
     public static class PatchOperationStatus
     {
+        public const string Unknown = "Unknown";
         public const string InProgress = "InProgress";
         public const string Failed = "Failed";
         public const string Succeeded = "Succeeded";

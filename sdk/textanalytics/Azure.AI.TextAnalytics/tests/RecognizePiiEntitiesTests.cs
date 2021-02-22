@@ -80,7 +80,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             PiiEntityCollection entities = await client.RecognizePiiEntitiesAsync(document, "en", new RecognizePiiEntitiesOptions() { DomainFilter = PiiEntityDomainType.ProtectedHealthInformation } );
 
-            ValidateInDocumenResult(entities, new List<string>() { "atest@microsoft.com" });
+            ValidateInDocumenResult(entities, new List<string>() { "atest@microsoft.com", "Microsoft" });
         }
 
         [Test]

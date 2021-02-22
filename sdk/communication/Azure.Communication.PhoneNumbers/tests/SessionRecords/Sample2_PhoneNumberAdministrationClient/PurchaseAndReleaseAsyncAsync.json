@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/countries/US/phoneplangroups?locale=en-US\u0026api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/countries/US/phoneplangroups?locale=en-US\u0026api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -9,7 +9,7 @@
         "Date": "Tue, 01 Dec 2020 00:48:40 GMT",
         "traceparent": "00-18263f741cd4c7498a1f29311fade117-5bcbf4b275a6db43-00",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201130.1",
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
           "(.NET 5.0.0; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "0461132b607677647a38a6084c7690ff",
@@ -51,7 +51,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/countries/US/phoneplangroups?locale=en-US\u0026api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/countries/US/phoneplangroups?locale=en-US\u0026api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -59,7 +59,7 @@
         "Date": "Tue, 01 Dec 2020 00:48:41 GMT",
         "traceparent": "00-0847642f48ace347ae300a05d4439d47-c911618ec0a75e41-00",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201130.1",
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
           "(.NET 5.0.0; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "500e3a920e822f68dab35871051fde8e",
@@ -101,7 +101,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/countries/US/phoneplangroups/Sanitized/phoneplans?locale=en-US\u0026api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/countries/US/phoneplangroups/Sanitized/phoneplans?locale=en-US\u0026api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -109,7 +109,7 @@
         "Date": "Tue, 01 Dec 2020 00:48:41 GMT",
         "traceparent": "00-eb468edef0861f4eabc12e8be501a3d1-441653c55eb90548-00",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201130.1",
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
           "(.NET 5.0.0; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "68be73fe2950d18d11215e8604d9d54d",
@@ -260,7 +260,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/countries/US/phoneplangroups/Sanitized/phoneplans?locale=en-US\u0026api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/countries/US/phoneplangroups/Sanitized/phoneplans?locale=en-US\u0026api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -268,7 +268,7 @@
         "Date": "Tue, 01 Dec 2020 00:48:42 GMT",
         "traceparent": "00-8fb7fb31420f8341a198e897d89586e6-2cf5bbe369adf54f-00",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201130.1",
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
           "(.NET 5.0.0; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "785031b383901d09ab3129c207f2715a",
@@ -419,7 +419,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/searches?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/searches?api-version=2020-07-20-preview1",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -429,7 +429,7 @@
         "Date": "Tue, 01 Dec 2020 00:48:42 GMT",
         "traceparent": "00-5fabd2cb98945d4fb27b4c4bfbee5f3f-ea21d02aa497454d-00",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201130.1",
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
           "(.NET 5.0.0; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "d909185928b769afad3d3e61afe22b01",
@@ -459,7 +459,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/searches/Sanitized?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/searches/a83f9c32-d87d-4e82-ac33-409fa0803bce?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -467,7 +467,7 @@
         "Date": "Tue, 01 Dec 2020 00:48:44 GMT",
         "traceparent": "00-570f77ed7fd0de4aa1afe898399390e0-a9e71421c4de7f48-00",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201130.1",
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
           "(.NET 5.0.0; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "d4be0bdd65ce7bfe69a1bd1e00cac91f",
@@ -500,7 +500,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/searches/Sanitized?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/searches/a83f9c32-d87d-4e82-ac33-409fa0803bce?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -508,7 +508,7 @@
         "Date": "Tue, 01 Dec 2020 00:48:45 GMT",
         "traceparent": "00-aecb01bc6798a34383dcf1d2119a7b52-a4a8a330b2f95242-00",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201130.1",
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
           "(.NET 5.0.0; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "ec2c04affccf8b9582e7cb5344a86dc8",
@@ -541,7 +541,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/searches/Sanitized?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/searches/a83f9c32-d87d-4e82-ac33-409fa0803bce?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -549,7 +549,7 @@
         "Date": "Tue, 01 Dec 2020 00:48:46 GMT",
         "traceparent": "00-0bf435e5caa23a4b8539f59623d85711-2e031609823ceb41-00",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201130.1",
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
           "(.NET 5.0.0; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "fce427069d34f38b198e6f166a9068e2",
@@ -582,7 +582,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/searches/Sanitized?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/searches/a83f9c32-d87d-4e82-ac33-409fa0803bce?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -590,7 +590,7 @@
         "Date": "Tue, 01 Dec 2020 00:48:48 GMT",
         "traceparent": "00-7a407c5bb338804f8ab868c5fb5d58a9-7f58663491209848-00",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201130.1",
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
           "(.NET 5.0.0; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "abb11f733eb5e131753251e79aaa37c1",
@@ -623,7 +623,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/searches/Sanitized?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/searches/a83f9c32-d87d-4e82-ac33-409fa0803bce?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -631,7 +631,7 @@
         "Date": "Tue, 01 Dec 2020 00:48:49 GMT",
         "traceparent": "00-48d7ec8a3ba9a44a976e6ad52104abab-b696d90871c6b744-00",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201130.1",
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
           "(.NET 5.0.0; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "d818f433cde512ea7838d2418d7f20f2",
@@ -667,7 +667,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/searches/Sanitized?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/searches/a83f9c32-d87d-4e82-ac33-409fa0803bce?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -675,7 +675,7 @@
         "Date": "Tue, 01 Dec 2020 00:48:50 GMT",
         "traceparent": "00-d802d2f603e157478c95d5e31f85aa3f-dfa2de706ff1fb41-00",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201130.1",
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
           "(.NET 5.0.0; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "24e0e87fc2f7c813f60386014ba4596f",
@@ -711,7 +711,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/searches/Sanitized/purchase?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/searches/a83f9c32-d87d-4e82-ac33-409fa0803bce/purchase?api-version=2020-07-20-preview1",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -719,7 +719,7 @@
         "Date": "Tue, 01 Dec 2020 00:48:50 GMT",
         "traceparent": "00-651c28ac2d17094b88b06902b2fe54c7-17710015a6624445-00",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201130.1",
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
           "(.NET 5.0.0; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "76e3ad569077a5fc349e327c6cef54f6",
@@ -738,7 +738,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/searches/Sanitized?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/searches/a83f9c32-d87d-4e82-ac33-409fa0803bce?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -746,7 +746,7 @@
         "Date": "Tue, 01 Dec 2020 00:48:51 GMT",
         "traceparent": "00-661eff0ba9d6114c959845c0f1687565-1bdaa11c58685d49-00",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201130.1",
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
           "(.NET 5.0.0; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "b1685f1112ca70cae150e1e247e9c6d4",
@@ -782,7 +782,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/searches/Sanitized?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/searches/a83f9c32-d87d-4e82-ac33-409fa0803bce?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -790,7 +790,7 @@
         "Date": "Tue, 01 Dec 2020 00:48:52 GMT",
         "traceparent": "00-3ed0284ca4e43c4e9b550f4c0eb15c35-d32741e8f5ccbf4a-00",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201130.1",
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
           "(.NET 5.0.0; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "dfea62dfaa9bee7aec3bef588f965b06",
@@ -826,7 +826,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/searches/Sanitized?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/searches/a83f9c32-d87d-4e82-ac33-409fa0803bce?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -834,7 +834,7 @@
         "Date": "Tue, 01 Dec 2020 00:48:54 GMT",
         "traceparent": "00-38827e3ceec50b4c81216a49f4f9b80d-e41835acfc8f604c-00",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201130.1",
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
           "(.NET 5.0.0; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "ecef8fafa83c44a5e3729427ae1a5d4b",
@@ -870,7 +870,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/searches/Sanitized?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/searches/a83f9c32-d87d-4e82-ac33-409fa0803bce?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -878,7 +878,7 @@
         "Date": "Tue, 01 Dec 2020 00:48:55 GMT",
         "traceparent": "00-7fda133883d7da46a8a114181264de87-a426fc17476f9548-00",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201130.1",
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
           "(.NET 5.0.0; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "099d5ed87404665ae579c58f2272e14a",
@@ -914,7 +914,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/searches/Sanitized?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/searches/a83f9c32-d87d-4e82-ac33-409fa0803bce?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -922,7 +922,7 @@
         "Date": "Tue, 01 Dec 2020 00:48:56 GMT",
         "traceparent": "00-eff50216e2722d408d3d7f45dcd176ee-0b7635b4554d5742-00",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201130.1",
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
           "(.NET 5.0.0; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "b733daf4daf93797bda6fc29165240d1",
@@ -958,7 +958,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/searches/Sanitized?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/searches/a83f9c32-d87d-4e82-ac33-409fa0803bce?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -966,7 +966,7 @@
         "Date": "Tue, 01 Dec 2020 00:48:58 GMT",
         "traceparent": "00-0df40b4a5dce594a9c8d89633f6aa48a-b8be57940cef9547-00",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201130.1",
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
           "(.NET 5.0.0; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "317fa4dd52f83a01358806c3e2162170",
@@ -1002,7 +1002,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/searches/Sanitized?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/searches/a83f9c32-d87d-4e82-ac33-409fa0803bce?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1010,7 +1010,7 @@
         "Date": "Tue, 01 Dec 2020 00:48:59 GMT",
         "traceparent": "00-38298d60a781e448afa4f4e3e74b224e-c4e6dd4ca9ee744b-00",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201130.1",
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
           "(.NET 5.0.0; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "d3334991a5e7fe51c6664b5e78305092",
@@ -1046,7 +1046,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/searches/Sanitized?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/searches/a83f9c32-d87d-4e82-ac33-409fa0803bce?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1054,7 +1054,7 @@
         "Date": "Tue, 01 Dec 2020 00:49:01 GMT",
         "traceparent": "00-dee36419a720ac49bde1356323444c0e-e90f3a467e1dc842-00",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201130.1",
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
           "(.NET 5.0.0; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "7eb1f338b0f2a252d8f88270d3d454a7",
@@ -1090,7 +1090,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/searches/Sanitized?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/searches/a83f9c32-d87d-4e82-ac33-409fa0803bce?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1098,7 +1098,7 @@
         "Date": "Tue, 01 Dec 2020 00:49:02 GMT",
         "traceparent": "00-5c204850686d89428c03623872c64f94-cb0bbdb17e5a7f40-00",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201130.1",
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
           "(.NET 5.0.0; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "cc988b846d1f37ea52816a9206a3c204",
@@ -1134,7 +1134,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/searches/Sanitized?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/searches/a83f9c32-d87d-4e82-ac33-409fa0803bce?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1142,7 +1142,7 @@
         "Date": "Tue, 01 Dec 2020 00:49:03 GMT",
         "traceparent": "00-9d02a93afd6c5841a960aceb853be28d-ff0e9f39f189054b-00",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201130.1",
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
           "(.NET 5.0.0; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "ef8a7437a364e17ef791faee23e02af1",
@@ -1178,7 +1178,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/searches/Sanitized?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/searches/a83f9c32-d87d-4e82-ac33-409fa0803bce?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1186,7 +1186,7 @@
         "Date": "Tue, 01 Dec 2020 00:49:05 GMT",
         "traceparent": "00-c780c546dd653b4bbfe481d33d2433be-4f112900fb1c7a48-00",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201130.1",
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
           "(.NET 5.0.0; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "ecdaa4128498cb72097a2b7045bf9b35",
@@ -1222,7 +1222,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/searches/Sanitized?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/searches/a83f9c32-d87d-4e82-ac33-409fa0803bce?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1230,7 +1230,7 @@
         "Date": "Tue, 01 Dec 2020 00:49:06 GMT",
         "traceparent": "00-8b1bea397aca114faa51dfb3e8a4ffaa-cd19caf4d112cd48-00",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201130.1",
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
           "(.NET 5.0.0; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "5e387e36654ae0420db7d48e72fc1371",
@@ -1266,7 +1266,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/searches/Sanitized?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/searches/a83f9c32-d87d-4e82-ac33-409fa0803bce?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1274,7 +1274,7 @@
         "Date": "Tue, 01 Dec 2020 00:49:07 GMT",
         "traceparent": "00-9dea1242656c88418e1cc200ab878957-4a6a44a2b0f15545-00",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201130.1",
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
           "(.NET 5.0.0; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "62807957d5c9b36b02bfe5ea780d9b38",
@@ -1310,7 +1310,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/searches/Sanitized?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/searches/a83f9c32-d87d-4e82-ac33-409fa0803bce?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1318,7 +1318,7 @@
         "Date": "Tue, 01 Dec 2020 00:49:09 GMT",
         "traceparent": "00-285b7c8360148e41a57566ef5f42467e-f9c6de282c1dea46-00",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201130.1",
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
           "(.NET 5.0.0; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "a5b7c4f5cba7ada761f9dee1afe3580c",
@@ -1354,7 +1354,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/searches/Sanitized?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/searches/a83f9c32-d87d-4e82-ac33-409fa0803bce?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1362,7 +1362,7 @@
         "Date": "Tue, 01 Dec 2020 00:49:10 GMT",
         "traceparent": "00-df4120aafb479d42889d879d26485278-999e6d96c7864644-00",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201130.1",
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
           "(.NET 5.0.0; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "cc19b966383f606c12855c8b7f586800",
@@ -1398,7 +1398,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/searches/Sanitized?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/searches/a83f9c32-d87d-4e82-ac33-409fa0803bce?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1406,7 +1406,7 @@
         "Date": "Tue, 01 Dec 2020 00:49:12 GMT",
         "traceparent": "00-e3ad84dc903b794889ac7d5a49d4d4e1-2dcd665f8b502644-00",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201130.1",
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
           "(.NET 5.0.0; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "ae999c1b6e448bc9d1d301cff78a041f",
@@ -1442,7 +1442,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/searches/Sanitized?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/searches/a83f9c32-d87d-4e82-ac33-409fa0803bce?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1450,7 +1450,7 @@
         "Date": "Tue, 01 Dec 2020 00:49:13 GMT",
         "traceparent": "00-4be6058a9d76534bbb065366f564d630-f9c948f9c7f6984a-00",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201130.1",
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
           "(.NET 5.0.0; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "be83d966cff4bdf8585692226f1b2d08",
@@ -1486,7 +1486,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/searches/Sanitized?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/searches/a83f9c32-d87d-4e82-ac33-409fa0803bce?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1494,7 +1494,7 @@
         "Date": "Tue, 01 Dec 2020 00:49:14 GMT",
         "traceparent": "00-2f6f300a29f56b4ca3f1d375761b0d99-42323ac4d889594d-00",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201130.1",
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
           "(.NET 5.0.0; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "12c6de91aa4af7c7ef8efa6b379c6988",
@@ -1530,7 +1530,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/searches/Sanitized?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/searches/a83f9c32-d87d-4e82-ac33-409fa0803bce?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1538,7 +1538,7 @@
         "Date": "Tue, 01 Dec 2020 00:49:16 GMT",
         "traceparent": "00-d80ba3f5658b74498abe925daaa2abeb-7597af3d2d868743-00",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201130.1",
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
           "(.NET 5.0.0; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "a6243d80a9d44b0ca3db55eedba71bb6",
@@ -1574,7 +1574,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/searches/Sanitized?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/searches/a83f9c32-d87d-4e82-ac33-409fa0803bce?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1582,7 +1582,7 @@
         "Date": "Tue, 01 Dec 2020 00:49:17 GMT",
         "traceparent": "00-4795b76412f4fa48b1ddb7209975b728-750123c59f63bc42-00",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201130.1",
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
           "(.NET 5.0.0; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "183ef8a5f1c4bcd4118ccf65d58d86bc",
@@ -1618,7 +1618,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/phonenumbers?locale=en-US\u0026api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/phonenumbers?locale=en-US\u0026api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1626,7 +1626,7 @@
         "Date": "Tue, 01 Dec 2020 00:49:18 GMT",
         "traceparent": "00-529651c6776cbd479e2c46876e1e4eca-b770911a43180249-00",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201130.1",
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
           "(.NET 5.0.0; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "32a10aec87f6e734d27a6e6e54d91c48",
@@ -1745,7 +1745,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/phonenumbers?locale=en-US\u0026api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/phonenumbers?locale=en-US\u0026api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1753,7 +1753,7 @@
         "Date": "Tue, 01 Dec 2020 00:49:18 GMT",
         "traceparent": "00-2251462a3d2efd429550f762d2ce9657-6d60cf76b0aac140-00",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201130.1",
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
           "(.NET 5.0.0; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "3ec64472515d8fc368689448daa67616",
@@ -1872,7 +1872,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/releases?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/releases?api-version=2020-07-20-preview1",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1882,7 +1882,7 @@
         "Date": "Tue, 01 Dec 2020 00:49:19 GMT",
         "traceparent": "00-06c533a27e3d6948965e670686d2b56b-5b1de83c5127e945-00",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201130.1",
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
           "(.NET 5.0.0; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "d0029955e9051dbfc357464982666737",
@@ -1908,7 +1908,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/releases/Sanitized?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/releases/a19e6453-7580-47cb-bc6f-dd90281ee2fb?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1916,7 +1916,7 @@
         "Date": "Tue, 01 Dec 2020 00:49:20 GMT",
         "traceparent": "00-8ea3340f9643634fa7161f7b452b7be3-80f0a6c30f56db4d-00",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201130.1",
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
           "(.NET 5.0.0; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "90f3866f47c69b5e4612c98ef2eb0d2c",
@@ -1945,7 +1945,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/releases/Sanitized?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/releases/a19e6453-7580-47cb-bc6f-dd90281ee2fb?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1953,7 +1953,7 @@
         "Date": "Tue, 01 Dec 2020 00:49:21 GMT",
         "traceparent": "00-33ec4aa5941e424f82f66cd98d7a1f70-3b30e589cdf2c24f-00",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201130.1",
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
           "(.NET 5.0.0; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "bb1958034bd7884384a87a060a790c02",
@@ -1982,7 +1982,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/releases/Sanitized?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/releases/a19e6453-7580-47cb-bc6f-dd90281ee2fb?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1990,7 +1990,7 @@
         "Date": "Tue, 01 Dec 2020 00:49:22 GMT",
         "traceparent": "00-a348904d23a1284a80cbba04aa238666-66250be252252a43-00",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201130.1",
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
           "(.NET 5.0.0; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "53d85d00e6b20d4f3a668af21f302bd8",
@@ -2019,7 +2019,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/releases/Sanitized?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/releases/a19e6453-7580-47cb-bc6f-dd90281ee2fb?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -2027,7 +2027,7 @@
         "Date": "Tue, 01 Dec 2020 00:49:24 GMT",
         "traceparent": "00-1b1c729d89f8b84693305e519d81dedb-dd7271e3d275bc4d-00",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201130.1",
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
           "(.NET 5.0.0; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "2a461a49ac4c2460426a0b1ecc5890cc",
@@ -2056,7 +2056,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/releases/Sanitized?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/releases/a19e6453-7580-47cb-bc6f-dd90281ee2fb?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -2064,7 +2064,7 @@
         "Date": "Tue, 01 Dec 2020 00:49:25 GMT",
         "traceparent": "00-d6bce2d3e9555841bb7da9ca21dee651-f7f4ad296989bb47-00",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201130.1",
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
           "(.NET 5.0.0; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "958ec706ba131d79080b8170c1516854",
@@ -2093,7 +2093,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/releases/Sanitized?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/releases/a19e6453-7580-47cb-bc6f-dd90281ee2fb?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -2101,7 +2101,7 @@
         "Date": "Tue, 01 Dec 2020 00:49:26 GMT",
         "traceparent": "00-0300ac6018b3b84b908ab2a51aeba25f-608fc4bf9de99944-00",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201130.1",
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
           "(.NET 5.0.0; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "f0bda27de13354b5fcb41047da3141e1",
@@ -2130,7 +2130,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/releases/Sanitized?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/releases/a19e6453-7580-47cb-bc6f-dd90281ee2fb?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -2138,7 +2138,7 @@
         "Date": "Tue, 01 Dec 2020 00:49:27 GMT",
         "traceparent": "00-da392472815c0e4da8d0685f95d267f8-ec3038ccbe3f5a4d-00",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201130.1",
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
           "(.NET 5.0.0; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "58ecbdd595a28fc5a02922412bef63f1",
@@ -2167,7 +2167,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/releases/Sanitized?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/releases/a19e6453-7580-47cb-bc6f-dd90281ee2fb?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -2175,7 +2175,7 @@
         "Date": "Tue, 01 Dec 2020 00:49:29 GMT",
         "traceparent": "00-6f68f48500f9f64db9ef29181cc52b97-b612398794ead045-00",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201130.1",
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
           "(.NET 5.0.0; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "29a0b702a09b24991139985ea93143d6",
@@ -2204,7 +2204,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/releases/Sanitized?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/releases/a19e6453-7580-47cb-bc6f-dd90281ee2fb?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -2212,7 +2212,7 @@
         "Date": "Tue, 01 Dec 2020 00:49:30 GMT",
         "traceparent": "00-d3a0be55e78072499e1e30cca888d7b3-956a77464a293848-00",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201130.1",
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
           "(.NET 5.0.0; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "049b9fc90f64e8b1dd2d4f0abf74290c",
@@ -2241,7 +2241,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/releases/Sanitized?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/releases/a19e6453-7580-47cb-bc6f-dd90281ee2fb?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -2249,7 +2249,7 @@
         "Date": "Tue, 01 Dec 2020 00:49:31 GMT",
         "traceparent": "00-b29bba70b3b1694787b3016a4e955b77-298f19433ba3bd4b-00",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201130.1",
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
           "(.NET 5.0.0; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "22451f511791354623c74768fc66e66e",
@@ -2278,7 +2278,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/releases/Sanitized?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/releases/a19e6453-7580-47cb-bc6f-dd90281ee2fb?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -2286,7 +2286,7 @@
         "Date": "Tue, 01 Dec 2020 00:49:33 GMT",
         "traceparent": "00-7c2779430de4714ea77a15acf6c0101f-542c607bb9a4de45-00",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201130.1",
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
           "(.NET 5.0.0; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "8c774ce55f54f28c06b84c6d508f659c",
@@ -2315,7 +2315,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/releases/Sanitized?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/releases/a19e6453-7580-47cb-bc6f-dd90281ee2fb?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -2323,7 +2323,7 @@
         "Date": "Tue, 01 Dec 2020 00:49:35 GMT",
         "traceparent": "00-d880c3b234d56e4caba6d05ebe37c1de-773e172dffc30848-00",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201130.1",
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
           "(.NET 5.0.0; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "8a0d8b1021ecb2455866e09dc848eb77",
@@ -2352,7 +2352,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/releases/Sanitized?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/releases/a19e6453-7580-47cb-bc6f-dd90281ee2fb?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -2360,7 +2360,7 @@
         "Date": "Tue, 01 Dec 2020 00:49:36 GMT",
         "traceparent": "00-0fa29dccea435a42a7f4e91e4a3e6f12-f78bffd00e79ac40-00",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201130.1",
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
           "(.NET 5.0.0; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "7224e0479cfdf1b892531bd8cbd8e494",
@@ -2389,7 +2389,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/releases/Sanitized?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/releases/a19e6453-7580-47cb-bc6f-dd90281ee2fb?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -2397,7 +2397,7 @@
         "Date": "Tue, 01 Dec 2020 00:49:37 GMT",
         "traceparent": "00-6048c19ef7355f41b512b4e17346a036-ce40faed81b84642-00",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201130.1",
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
           "(.NET 5.0.0; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "7058ab625c58c48206c533ee7eef29be",
@@ -2426,7 +2426,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/releases/Sanitized?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/releases/a19e6453-7580-47cb-bc6f-dd90281ee2fb?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -2434,7 +2434,7 @@
         "Date": "Tue, 01 Dec 2020 00:49:39 GMT",
         "traceparent": "00-45639d884a43994c8ea09fcc33e4cad6-c8dcfd50b9e0b24a-00",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201130.1",
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
           "(.NET 5.0.0; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "7026d5cdf26a739fd31bf798056ce77f",
@@ -2463,7 +2463,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/releases/Sanitized?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/releases/a19e6453-7580-47cb-bc6f-dd90281ee2fb?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -2471,7 +2471,7 @@
         "Date": "Tue, 01 Dec 2020 00:49:40 GMT",
         "traceparent": "00-a14a582232c64840beba0162af112807-43aa190379aa2541-00",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201130.1",
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
           "(.NET 5.0.0; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "1d3b4b817af0eb1e5d5f6c3869ca73a2",
@@ -2500,7 +2500,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/releases/Sanitized?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/releases/a19e6453-7580-47cb-bc6f-dd90281ee2fb?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -2508,7 +2508,7 @@
         "Date": "Tue, 01 Dec 2020 00:49:41 GMT",
         "traceparent": "00-e7a5813fc05f9947b7bbd055cb5adf0b-f47cf853e56aad4f-00",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201130.1",
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
           "(.NET 5.0.0; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "f60b5d2973b26f2a0be49d3c64eabf9a",
@@ -2537,7 +2537,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/releases/Sanitized?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/releases/a19e6453-7580-47cb-bc6f-dd90281ee2fb?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -2545,7 +2545,7 @@
         "Date": "Tue, 01 Dec 2020 00:49:42 GMT",
         "traceparent": "00-3dbe670aec93384da7125bbeabca640b-6019e7e80794d245-00",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201130.1",
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
           "(.NET 5.0.0; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "326cb3dd0cb452ceb63a120a86670a09",
@@ -2574,7 +2574,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/releases/Sanitized?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/releases/a19e6453-7580-47cb-bc6f-dd90281ee2fb?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -2582,7 +2582,7 @@
         "Date": "Tue, 01 Dec 2020 00:49:44 GMT",
         "traceparent": "00-9f4c231c1cfe35489b3e264c9865b1c0-431db84706d6b941-00",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201130.1",
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
           "(.NET 5.0.0; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "a76e55a8f1610dcd21cb110bdde28773",
@@ -2611,7 +2611,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/releases/Sanitized?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/releases/a19e6453-7580-47cb-bc6f-dd90281ee2fb?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -2619,7 +2619,7 @@
         "Date": "Tue, 01 Dec 2020 00:49:45 GMT",
         "traceparent": "00-5aa6b7986ffd054dafba812bbf66a6c8-4bf7b6e7473ba345-00",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201130.1",
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
           "(.NET 5.0.0; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "b55ad1a0405d1ced8fb83f77611fe9a4",
@@ -2648,7 +2648,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/releases/Sanitized?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/releases/a19e6453-7580-47cb-bc6f-dd90281ee2fb?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -2656,7 +2656,7 @@
         "Date": "Tue, 01 Dec 2020 00:49:46 GMT",
         "traceparent": "00-ac60a38039175747af43ad8e07a4eb9d-01c6cebbe5d97644-00",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201130.1",
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
           "(.NET 5.0.0; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "0f9393da177bec38e65e11e9fbc274d4",
@@ -2685,7 +2685,7 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/phonenumbers?locale=en-US\u0026api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/phonenumbers?locale=en-US\u0026api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -2693,7 +2693,7 @@
         "Date": "Tue, 01 Dec 2020 00:49:47 GMT",
         "traceparent": "00-9eb03b928859884d96028fbe0bed4fea-7ed52aeee92a914a-00",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201130.1",
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
           "(.NET 5.0.0; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "b4699fb3540d68ab675118a8b155ac01",
@@ -2787,7 +2787,7 @@
     }
   ],
   "Variables": {
-    "COMMUNICATION_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.com/;accesskey=Kg==;",
+    "COMMUNICATION_CONNECTION_STRING": "endpoint=https://chitchat-test.communication.azure.com/;accesskey=Kg==;",
     "RandomSeed": "2023484593"
   }
 }

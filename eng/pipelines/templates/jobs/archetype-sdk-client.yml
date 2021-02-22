@@ -139,6 +139,7 @@ jobs:
         inputs:
           ignoreDirectories: "sdk/storage/Azure.Storage.Common/swagger/Generator"
         condition: and(succeededOrFailed(), ne(variables['Build.Reason'],'PullRequest'))
+      - template: /eng/common/pipelines/templates/steps/eng-common-workflow-enforcer.yml
 
   - job: "Test"
     timeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}

@@ -94,6 +94,8 @@ namespace Azure.Storage
         public const string CommaString = ",";
         public const char CommaChar = ',';
 
+        public const string Iso8601Format = "yyyy'-'MM'-'dd'T'HH':'mm':'ssZ";
+
         /// <summary>
         /// Storage Connection String constant values.
         /// </summary>

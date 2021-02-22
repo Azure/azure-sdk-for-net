@@ -41,12 +41,15 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// with platform managed keys for data at rest.</param>
         /// <param name="keyVaultProperties">Properties provided by key
         /// vault.</param>
-        public Encryption(string keySource, EncryptionServices services = default(EncryptionServices), bool? requireInfrastructureEncryption = default(bool?), KeyVaultProperties keyVaultProperties = default(KeyVaultProperties))
+        /// <param name="encryptionIdentity">The identity to be used with
+        /// service-side encryption at rest.</param>
+        public Encryption(string keySource, EncryptionServices services = default(EncryptionServices), bool? requireInfrastructureEncryption = default(bool?), KeyVaultProperties keyVaultProperties = default(KeyVaultProperties), EncryptionIdentity encryptionIdentity = default(EncryptionIdentity))
         {
             Services = services;
             KeySource = keySource;
             RequireInfrastructureEncryption = requireInfrastructureEncryption;
             KeyVaultProperties = keyVaultProperties;
+            EncryptionIdentity = encryptionIdentity;
             CustomInit();
         }
 
@@ -82,6 +85,13 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         [JsonProperty(PropertyName = "keyvaultproperties")]
         public KeyVaultProperties KeyVaultProperties { get; set; }
+
+        /// <summary>
+        /// Gets or sets the identity to be used with service-side encryption
+        /// at rest.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public EncryptionIdentity EncryptionIdentity { get; set; }
 
         /// <summary>
         /// Validate the object.

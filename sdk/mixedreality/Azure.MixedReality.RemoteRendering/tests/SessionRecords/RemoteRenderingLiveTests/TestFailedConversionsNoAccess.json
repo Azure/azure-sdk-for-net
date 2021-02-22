@@ -28,7 +28,7 @@
           }
         }
       },
-      "StatusCode": 400,
+      "StatusCode": 403,
       "ResponseHeaders": {
         "api-supported-versions": "2021-01-01-preview",
         "Content-Length": "206",
