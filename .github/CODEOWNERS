@@ -173,7 +173,7 @@
 #/<NotInRepo>/            @ms-premp @qiaozha
 
 # PRLabel: %Communication
-/sdk/communication/                             @RezaJooyandeh @DominikMe @ankitarorabit @Azure/azure-sdk-communication-code-reviewers
+/sdk/communication/                             @acsdevx-msft
 
 # ServiceLabel: %Compute %Service Attention
 # PRLabel: %Compute
@@ -294,13 +294,17 @@
 #/<NotInRepo>/            @madhurinms
 
 # PRLabel: %Iot
-/sdk/iot/                                       @drwill-ms @timtay-microsoft @abhipsaMisra @vinagesh @azabbasi @bikamani @barustum @jamdavi
+/sdk/iot/                               @drwill-ms @timtay-microsoft @abhipsaMisra @vinagesh @azabbasi @bikamani @barustum @jamdavi
 
 # ServiceLabel: %IotCentral %Service Attention
 /sdk/iotcentral/Microsoft.Azure.Management.IotCentral/           @iluican @jlian
 
 # ServiceLabel: %IotDPS %Service Attention
 #/<NotInRepo>/            @iluican @jlian
+
+# PRLabel: %IotHub
+# ServiceLabel: %IotHub %Service Attention
+/sdk/iothub/                            @drwill-ms @timtay-microsoft @abhipsaMisra @vinagesh @azabbasi @bikamani @barustum @jamdavi
 
 # ServiceLabel: %IotHub %Service Attention
 /sdk/iothub/Microsoft.Azure.Management.IotHub/            @rkmanda @chieftn

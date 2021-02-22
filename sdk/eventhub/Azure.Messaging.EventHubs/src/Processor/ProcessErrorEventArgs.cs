@@ -12,7 +12,7 @@ namespace Azure.Messaging.EventHubs.Processor
     ///   the exception that has been thrown.
     /// </summary>
     ///
-    /// <seealso href="https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor" />
+    /// <seealso href="https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor">Azure.Messaging.EventHubs.Processor (NuGet)</seealso>
     ///
     public struct ProcessErrorEventArgs
     {

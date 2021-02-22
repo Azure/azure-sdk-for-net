@@ -190,29 +190,17 @@ namespace Azure.Storage.Blobs
         /// the blob.
         /// This is likely to be similar to "https://{account_name}.blob.core.windows.net/{container_name}/{blob_name}".
         /// </param>
-        /// <param name="pipeline">
-        /// The transport pipeline used to send every request.
+        /// <param name="clientConfiguration">
+        /// <see cref="BlobClientConfiguration"/>.
         /// </param>
-        /// <param name="storageSharedKeyCredential">
-        /// The shared key credential used to sign requests.
+        /// <param name="clientSideEncryption">
+        /// Client-side encryption options.
         /// </param>
-        /// <param name="version">
-        /// The version of the service to use when sending requests.
-        /// </param>
-        /// <param name="clientDiagnostics">Client diagnostics.</param>
-        /// <param name="customerProvidedKey">Customer provided key.</param>
-        /// <param name="clientSideEncryption">Client-side encryption options.</param>
-        /// <param name="encryptionScope">Encryption scope.</param>
         internal BlobClient(
             Uri blobUri,
-            HttpPipeline pipeline,
-            StorageSharedKeyCredential storageSharedKeyCredential,
-            BlobClientOptions.ServiceVersion version,
-            ClientDiagnostics clientDiagnostics,
-            CustomerProvidedKey? customerProvidedKey,
-            ClientSideEncryptionOptions clientSideEncryption,
-            string encryptionScope)
-            : base(blobUri, pipeline, storageSharedKeyCredential, version, clientDiagnostics, customerProvidedKey, clientSideEncryption, encryptionScope)
+            BlobClientConfiguration clientConfiguration,
+            ClientSideEncryptionOptions clientSideEncryption)
+            : base(blobUri, clientConfiguration, clientSideEncryption)
         {
         }
         #endregion ctors
@@ -240,13 +228,8 @@ namespace Azure.Storage.Blobs
 
             return new BlobClient(
                 blobUriBuilder.ToUri(),
-                Pipeline,
-                SharedKeyCredential,
-                Version,
-                ClientDiagnostics,
-                CustomerProvidedKey,
-                ClientSideEncryption,
-                EncryptionScope);
+                ClientConfiguration,
+                ClientSideEncryption);
         }
 
         /// <summary>
@@ -270,13 +253,8 @@ namespace Azure.Storage.Blobs
 
             return new BlobClient(
                 blobUriBuilder.ToUri(),
-                Pipeline,
-                SharedKeyCredential,
-                Version,
-                ClientDiagnostics,
-                CustomerProvidedKey,
-                ClientSideEncryption,
-                EncryptionScope);
+                ClientConfiguration,
+                ClientSideEncryption);
         }
 
         /// <summary>
@@ -289,13 +267,8 @@ namespace Azure.Storage.Blobs
         {
             return new BlobClient(
                 Uri,
-                Pipeline,
-                SharedKeyCredential,
-                Version,
-                ClientDiagnostics,
-                CustomerProvidedKey,
-                clientSideEncryptionOptions,
-                EncryptionScope);
+                ClientConfiguration,
+                clientSideEncryptionOptions);
         }
 
         #region Upload
@@ -1284,7 +1257,7 @@ namespace Azure.Storage.Blobs
                     .ClientSideEncryptInternal(content, options.Metadata, async, cancellationToken).ConfigureAwait(false);
             }
 
-            var client = new BlockBlobClient(Uri, Pipeline, SharedKeyCredential, Version, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
+            var client = new BlockBlobClient(Uri, ClientConfiguration);
 
             var uploader = GetPartitionedUploader(
                 transferOptions: options?.TransferOptions ?? default,
@@ -1369,7 +1342,7 @@ namespace Azure.Storage.Blobs
             StorageTransferOptions transferOptions,
             ArrayPool<byte> arrayPool = null,
             string operationName = null)
-            => new BlockBlobClient(Uri, Pipeline, SharedKeyCredential, Version, ClientDiagnostics, CustomerProvidedKey, EncryptionScope)
+            => new BlockBlobClient(Uri, ClientConfiguration)
                 .GetPartitionedUploader(transferOptions, arrayPool, operationName);
     }
 }

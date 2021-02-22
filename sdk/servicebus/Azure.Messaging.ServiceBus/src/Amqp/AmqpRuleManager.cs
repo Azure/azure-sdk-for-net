@@ -162,6 +162,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     _connectionScope,
                     _managementLink,
                     amqpRequestMessage,
+                    null,
                     timeout).ConfigureAwait(false);
 
             if (response.StatusCode != AmqpResponseStatusCode.OK)
@@ -212,6 +213,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     _connectionScope,
                     _managementLink,
                     amqpRequestMessage,
+                    null,
                     timeout).ConfigureAwait(false);
 
             if (response.StatusCode != AmqpResponseStatusCode.OK)
@@ -260,6 +262,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 _connectionScope,
                 _managementLink,
                 amqpRequestMessage,
+                null,
                 timeout).ConfigureAwait(false);
             var ruleDescriptions = new List<RuleProperties>();
             if (response.StatusCode == AmqpResponseStatusCode.OK)

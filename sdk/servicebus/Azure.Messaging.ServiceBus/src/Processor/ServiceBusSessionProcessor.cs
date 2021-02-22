@@ -91,6 +91,13 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         public virtual TimeSpan? SessionIdleTimeout => _innerProcessor.MaxReceiveWaitTime;
 
+        /// <summary>
+        /// Gets the transaction group associated with the processor. This is an
+        /// arbitrary string that is used to all senders, receivers, and processors that you
+        /// wish to use in a transaction that spans multiple different queues, topics, or subscriptions.
+        /// </summary>
+        public virtual string TransactionGroup => _innerProcessor.TransactionGroup;
+
         internal ServiceBusSessionProcessor(
             ServiceBusConnection connection,
             string entityPath,

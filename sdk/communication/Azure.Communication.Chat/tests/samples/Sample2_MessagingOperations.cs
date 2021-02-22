@@ -18,13 +18,12 @@ namespace Azure.Communication.Chat.Tests.samples
         {
             CommunicationIdentityClient communicationIdentityClient = new CommunicationIdentityClient(TestEnvironment.ConnectionString);
             Response<CommunicationUserIdentifier> threadMember = await communicationIdentityClient.CreateUserAsync();
-            AccessToken communicationUserToken = await communicationIdentityClient.IssueTokenAsync(threadMember.Value, new[] { CommunicationTokenScope.Chat });
+            AccessToken communicationUserToken = await communicationIdentityClient.GetTokenAsync(threadMember.Value, new[] { CommunicationTokenScope.Chat });
             string userToken = communicationUserToken.Token;
-            string endpoint = TestEnvironment.ChatApiUrl();
             string theadCreatorMemberId = threadMember.Value.Id;
 
             ChatClient chatClient = new ChatClient(
-                new Uri(endpoint),
+                TestEnvironment.Endpoint,
                 new CommunicationTokenCredential(userToken));
 
             var chatParticipant = new ChatParticipant(new CommunicationUserIdentifier(theadCreatorMemberId))

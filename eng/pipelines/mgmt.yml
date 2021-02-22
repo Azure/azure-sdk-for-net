@@ -6,6 +6,7 @@ pr:
     - '*-preview'
   paths:
     include:
+    - eng/pipelines/mgmt.yml
     - sdk/advisor/Microsoft.Azure.Management.Advisor
     - sdk/alertsmanagement/Microsoft.Azure.Management.AlertsManagement
     - sdk/analysisservices/Microsoft.Azure.Management.AnalysisServices
@@ -72,6 +73,7 @@ pr:
     - sdk/healthcareapis/Microsoft.Azure.Management.HealthcareApis
     - sdk/hybridcompute/Microsoft.Azure.Management.HybridCompute
     - sdk/hybriddatamanager/Microsoft.Azure.Management.HybridDataManager
+    - sdk/hybridkubernetes/Microsoft.Azure.Management.Kubernetes
     - sdk/insights/Microsoft.Azure.Management.Insights
     - sdk/iotcentral/Microsoft.Azure.Management.IotCentral
     - sdk/iothub/Microsoft.Azure.Management.IotHub

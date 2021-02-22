@@ -71,6 +71,7 @@ namespace Azure.Messaging.ServiceBus
             {
                 ReceiveMode = _processorOptions.ReceiveMode,
                 PrefetchCount = _processorOptions.PrefetchCount,
+                TransactionGroup = _processorOptions.TransactionGroup
             };
             _sessionId = sessionId;
             _keepOpenOnReceiveTimeout = keepOpenOnReceiveTimeout;

@@ -59,7 +59,7 @@ namespace Azure.Identity.Samples
 
             using (var cacheStream = new FileStream(TOKEN_CACHE_PATH, FileMode.OpenOrCreate, FileAccess.Read))
             {
-                tokenCache = await TokenCache.DeserializeAsync(cacheStream);
+                tokenCache = await TokenCacheSerializer.DeserializeAsync(cacheStream);
             }
             #endregion
         }
@@ -71,7 +71,7 @@ namespace Azure.Identity.Samples
             #region Snippet:Identity_TokenCache_CustomPersistence_Write
             using (var cacheStream = new FileStream(TOKEN_CACHE_PATH, FileMode.Create, FileAccess.Write))
             {
-                await tokenCache.SerializeAsync(cacheStream);
+                await TokenCacheSerializer.SerializeAsync(tokenCache, cacheStream);
             }
             #endregion
         }
@@ -83,7 +83,7 @@ namespace Azure.Identity.Samples
 
             using (var cacheStream = new FileStream(TOKEN_CACHE_PATH, FileMode.OpenOrCreate, FileAccess.Read))
             {
-                tokenCache = await TokenCache.DeserializeAsync(cacheStream);
+                tokenCache = await TokenCacheSerializer.DeserializeAsync(cacheStream);
                 tokenCache.Updated += WriteCacheOnUpdateAsync;
             }
 
@@ -94,7 +94,7 @@ namespace Azure.Identity.Samples
         {
             using (var cacheStream = new FileStream(TOKEN_CACHE_PATH, FileMode.Create, FileAccess.Write))
             {
-                await args.Cache.SerializeAsync(cacheStream);
+                await TokenCacheSerializer.SerializeAsync(args.Cache, cacheStream);
             }
         }
 

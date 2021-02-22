@@ -41,7 +41,7 @@ namespace Azure.Communication.Identity.Samples
             #endregion Snippet:CreateCommunicationTokenAsync
 
             #region  Snippet:CreateCommunicationTokenAsync
-            Response<AccessToken> tokenResponse = await client.IssueTokenAsync(user, scopes: new[] { CommunicationTokenScope.Chat });
+            Response<AccessToken> tokenResponse = await client.GetTokenAsync(user, scopes: new[] { CommunicationTokenScope.Chat });
             string token = tokenResponse.Value.Token;
             DateTimeOffset expiresOn = tokenResponse.Value.ExpiresOn;
             Console.WriteLine($"Token: {token}");
@@ -76,7 +76,7 @@ namespace Azure.Communication.Identity.Samples
             #endregion Snippet:CreateCommunicationToken
 
             #region  Snippet:CreateCommunicationToken
-            Response<AccessToken> tokenResponse = client.IssueToken(user, scopes: new[] { CommunicationTokenScope.Chat });
+            Response<AccessToken> tokenResponse = client.GetToken(user, scopes: new[] { CommunicationTokenScope.Chat });
             string token = tokenResponse.Value.Token;
             DateTimeOffset expiresOn = tokenResponse.Value.ExpiresOn;
             Console.WriteLine($"Token: {token}");

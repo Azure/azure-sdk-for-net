@@ -88,6 +88,23 @@ To interact with these resources, one should be familiar with the following SDK 
 
 For more concepts and deeper discussion, see: [Service Bus Advanced Features](https://docs.microsoft.com/azure/service-bus-messaging/service-bus-messaging-overview#advanced-features).
 
+### Client lifetime
+
+The `ServiceBusClient`, senders, receivers, and processors are safe to cache and use as a singleton for the lifetime of the application, which is best practice when messages are being sent or received regularly. They are responsible for efficient management of network, CPU, and memory use, working to keep usage low during periods of inactivity. 
+
+These types are disposable and calling either `DisposeAsync` or `CloseAsync` is required to ensure that network resources and other unmanaged objects are properly cleaned up.  It is important to note that when a `ServiceBusClient` instance is disposed, it will automatically close and cleanup any senders, receivers, and processors that were created using it.
+
+### Thread safety
+
+We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
+
+### Additional concepts
+
+<!-- CLIENT COMMON BAR -->
+[Client options](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions) | [Handling failures](#exception-handling) | [Diagnostics](#logging-and-diagnostics) |
+[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#mocking) 
+<!-- CLIENT COMMON BAR -->
+
 ## Examples
 
 * [Send and receive a message](#send-and-receive-a-message)

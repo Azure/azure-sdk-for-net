@@ -292,8 +292,8 @@ namespace Microsoft.Azure.Management.IotHub
         /// <param name='resourceName'>
         /// Name of iot hub to update.
         /// </param>
-        /// <param name='iotHubTags'>
-        /// Updated tag information to set into the iot hub instance.
+        /// <param name='tags'>
+        /// Resource tags
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -301,10 +301,10 @@ namespace Microsoft.Azure.Management.IotHub
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IotHubDescription>> UpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, TagsResource iotHubTags, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IotHubDescription>> UpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<IotHubDescription> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, resourceName, iotHubTags, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<IotHubDescription> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, resourceName, tags, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -2698,9 +2698,8 @@ namespace Microsoft.Azure.Management.IotHub
         /// <remarks>
         /// Check if an IoT hub name is available.
         /// </remarks>
-        /// <param name='operationInputs'>
-        /// Set the name parameter in the OperationInputs structure to the name of the
-        /// IoT hub to check.
+        /// <param name='name'>
+        /// The name of the IoT hub to check.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2723,7 +2722,7 @@ namespace Microsoft.Azure.Management.IotHub
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IotHubNameAvailabilityInfo>> CheckNameAvailabilityWithHttpMessagesAsync(OperationInputs operationInputs, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IotHubNameAvailabilityInfo>> CheckNameAvailabilityWithHttpMessagesAsync(string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -2733,13 +2732,14 @@ namespace Microsoft.Azure.Management.IotHub
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (operationInputs == null)
+            if (name == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "operationInputs");
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
             }
-            if (operationInputs != null)
+            OperationInputs operationInputs = new OperationInputs();
+            if (name != null)
             {
-                operationInputs.Validate();
+                operationInputs.Name = name;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -4399,8 +4399,8 @@ namespace Microsoft.Azure.Management.IotHub
         /// <param name='resourceName'>
         /// Name of iot hub to update.
         /// </param>
-        /// <param name='iotHubTags'>
-        /// Updated tag information to set into the iot hub instance.
+        /// <param name='tags'>
+        /// Resource tags
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -4423,7 +4423,7 @@ namespace Microsoft.Azure.Management.IotHub
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IotHubDescription>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, TagsResource iotHubTags, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IotHubDescription>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -4437,13 +4437,14 @@ namespace Microsoft.Azure.Management.IotHub
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceName");
             }
-            if (iotHubTags == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "iotHubTags");
-            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            TagsResource iotHubTags = new TagsResource();
+            if (tags != null)
+            {
+                iotHubTags.Tags = tags;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;

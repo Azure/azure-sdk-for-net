@@ -157,6 +157,13 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>Indicates whether or not this instance has been closed.</summary>
         private volatile bool _closed;
 
+        /// <summary>
+        /// Gets the transaction group associated with the processor. This is an
+        /// arbitrary string that is used to all senders, receivers, and processors that you
+        /// wish to use in a transaction that spans multiple different queues, topics, or subscriptions.
+        /// </summary>
+        public virtual string TransactionGroup { get; }
+
         private readonly string[] _sessionIds;
         private readonly EntityScopeFactory _scopeFactory;
         private readonly IList<ServiceBusPlugin> _plugins;
@@ -205,6 +212,7 @@ namespace Azure.Messaging.ServiceBus
             MaxConcurrentSessions = maxConcurrentSessions;
             MaxConcurrentCallsPerSession = maxConcurrentCallsPerSession;
             _sessionIds = sessionIds ?? Array.Empty<string>();
+            TransactionGroup = _options.TransactionGroup;
 
             int maxCalls = isSessionEntity ?
                 (_sessionIds.Length > 0 ?

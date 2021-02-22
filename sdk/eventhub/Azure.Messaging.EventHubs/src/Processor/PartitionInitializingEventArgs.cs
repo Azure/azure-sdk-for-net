@@ -14,7 +14,7 @@ namespace Azure.Messaging.EventHubs.Processor
     ///   it cannot find a checkpoint.
     /// </summary>
     ///
-    /// <seealso href="https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor" />
+    /// <seealso href="https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor">Azure.Messaging.EventHubs.Processor (NuGet)</seealso>
     ///
     public class PartitionInitializingEventArgs
     {

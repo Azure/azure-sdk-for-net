@@ -21,12 +21,11 @@ namespace Azure.Communication.Chat.Tests.samples
         {
             CommunicationIdentityClient communicationIdentityClient = new CommunicationIdentityClient(TestEnvironment.ConnectionString);
             Response<CommunicationUserIdentifier> threadCreatorIdentifier = await communicationIdentityClient.CreateUserAsync();
-            AccessToken communicationUserToken = await communicationIdentityClient.IssueTokenAsync(threadCreatorIdentifier.Value, new[] { CommunicationTokenScope.Chat });
+            AccessToken communicationUserToken = await communicationIdentityClient.GetTokenAsync(threadCreatorIdentifier.Value, new[] { CommunicationTokenScope.Chat });
             string userToken = communicationUserToken.Token;
-            string endpoint = TestEnvironment.ChatApiUrl();
 
             ChatClient chatClient = new ChatClient(
-                new Uri(endpoint),
+                TestEnvironment.Endpoint,
                 new CommunicationTokenCredential(userToken));
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_CreateThread_KeyConcepts
@@ -60,12 +59,11 @@ namespace Azure.Communication.Chat.Tests.samples
         {
             CommunicationIdentityClient communicationIdentityClient = new CommunicationIdentityClient(TestEnvironment.ConnectionString);
             Response<CommunicationUserIdentifier> threadCreatorIdentifier = await communicationIdentityClient.CreateUserAsync();
-            AccessToken communicationUserToken = await communicationIdentityClient.IssueTokenAsync(threadCreatorIdentifier.Value, new[] { CommunicationTokenScope.Chat });
+            AccessToken communicationUserToken = await communicationIdentityClient.GetTokenAsync(threadCreatorIdentifier.Value, new[] { CommunicationTokenScope.Chat });
             string userToken = communicationUserToken.Token;
-            string endpoint = TestEnvironment.ChatApiUrl();
 
             ChatClient chatClient = new ChatClient(
-                new Uri(endpoint),
+                TestEnvironment.Endpoint,
                 new CommunicationTokenCredential(userToken));
 
             CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync(topic: "Hello world!", participants: new ChatParticipant[] { });
@@ -110,12 +108,11 @@ namespace Azure.Communication.Chat.Tests.samples
             CommunicationIdentityClient communicationIdentityClient = new CommunicationIdentityClient(TestEnvironment.ConnectionString);
             Response<CommunicationUserIdentifier> threadCreatorIdentifier = await communicationIdentityClient.CreateUserAsync();
             Response<CommunicationUserIdentifier> participantIdentifier = await communicationIdentityClient.CreateUserAsync();
-            AccessToken communicationUserToken = await communicationIdentityClient.IssueTokenAsync(threadCreatorIdentifier.Value, new[] { CommunicationTokenScope.Chat });
+            AccessToken communicationUserToken = await communicationIdentityClient.GetTokenAsync(threadCreatorIdentifier.Value, new[] { CommunicationTokenScope.Chat });
             string userToken = communicationUserToken.Token;
-            string endpoint = TestEnvironment.ChatApiUrl();
 
             ChatClient chatClient = new ChatClient(
-                new Uri(endpoint),
+                TestEnvironment.Endpoint,
                 new CommunicationTokenCredential(userToken));
 
             CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync(topic: "Hello world!", participants: new ChatParticipant[] { });

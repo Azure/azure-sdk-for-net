@@ -1,13 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/countries/US/phoneplangroups?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/countries/US/phoneplangroups?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Date": "Sat, 12 Dec 2020 03:12:07 GMT",
-        "User-Agent": "azsdk-net-Communication.Administration/1.0.0-alpha.20201211.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "Date": "Fri, 19 Feb 2021 02:05:53 GMT",
+        "traceparent": "00-faa586e04822df458de26c7ffda3d9b9-ab85ac80ea346a4f-00",
+        "User-Agent": [
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
+          "(.NET 5.0.3; Microsoft Windows 10.0.18363)"
+        ],
         "x-ms-client-request-id": "3ac927d16b10fce38fc85ea276793fd3",
         "x-ms-content-sha256": "Sanitized",
         "x-ms-return-client-request-id": "true"
@@ -16,44 +20,43 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sat, 12 Dec 2020 03:12:09 GMT",
-        "MS-CV": "grz7K/FwGEOGJeG8eQMLLQ.0",
+        "Date": "Fri, 19 Feb 2021 02:05:52 GMT",
+        "MS-CV": "MrTIFGsmskur/j50fP7rVQ.0",
+        "Request-Context": "appId=",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0CTXUXwAAAAB0YOMnEHY8RI1rB1jPQ1JaRVdSMzBFREdFMDYxMgA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
-        "X-Processing-Time": "920ms"
+        "X-Azure-Ref": "0AB0vYAAAAAAk2KYeNixsQbE1yxJCFZ4LWVZSMzBFREdFMDMxMwA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Processing-Time": "403ms"
       },
       "ResponseBody": {
         "phonePlanGroups": [
           {
-            "phonePlanGroupId": "Sanitized",
+            "phonePlanGroupId": "55bc1415-9fe6-42d7-9ed4-5ea28c6a17cf",
             "phoneNumberType": "Geographic",
             "localizedName": "Azure- User - Geographic",
             "localizedDescription": "These are numbers used by Azure resources."
           },
           {
-            "phonePlanGroupId": "Sanitized",
+            "phonePlanGroupId": "671ee064-662f-4c3b-82a9-af2ab200dd5c",
             "phoneNumberType": "Geographic",
             "localizedName": "Azure - Geographic",
             "localizedDescription": "These are numbers used by Azure resources."
-          },
-          {
-            "phonePlanGroupId": "Sanitized",
-            "phoneNumberType": "TollFree",
-            "localizedName": "Azure - Toll Free",
-            "localizedDescription": "These are toll free numbers used by Azure resources."
           }
         ],
         "nextLink": null
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/countries/US/phoneplangroups/Sanitized/phoneplans?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/countries/US/phoneplangroups/55bc1415-9fe6-42d7-9ed4-5ea28c6a17cf/phoneplans?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Date": "Sat, 12 Dec 2020 03:12:09 GMT",
-        "User-Agent": "azsdk-net-Communication.Administration/1.0.0-alpha.20201211.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "Date": "Fri, 19 Feb 2021 02:05:53 GMT",
+        "traceparent": "00-fe0de420de937745abe811fa73eff462-79aff88596472a4a-00",
+        "User-Agent": [
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
+          "(.NET 5.0.3; Microsoft Windows 10.0.18363)"
+        ],
         "x-ms-client-request-id": "93485fb0bef8628ff6eaab6e76d836aa",
         "x-ms-content-sha256": "Sanitized",
         "x-ms-return-client-request-id": "true"
@@ -62,16 +65,17 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sat, 12 Dec 2020 03:12:09 GMT",
-        "MS-CV": "Ee1V4YMrjEqvHpwEhFpaVQ.0",
+        "Date": "Fri, 19 Feb 2021 02:05:53 GMT",
+        "MS-CV": "N5maTROGBUK5WqOCtSG4Zg.0",
+        "Request-Context": "appId=",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0CjXUXwAAAADVuiN0Q\u002BQzQoYqvU1jEOoWRVdSMzBFREdFMDYxMgA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
-        "X-Processing-Time": "414ms"
+        "X-Azure-Ref": "0AR0vYAAAAABdCiL0U0nYQJjipvJvT3d3WVZSMzBFREdFMDMxMwA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Processing-Time": "287ms"
       },
       "ResponseBody": {
         "phonePlans": [
           {
-            "phonePlanId": "Sanitized",
+            "phonePlanId": "01432411-5169-4665-b13e-3fa56c10e1d1",
             "localizedName": "Outbound Only PSTN For User - Geographic",
             "locationType": "Selection",
             "areaCodes": [],
@@ -83,7 +87,7 @@
             "maximumSearchSize": 20
           },
           {
-            "phonePlanId": "Sanitized",
+            "phonePlanId": "b528a997-03bb-446e-af98-3d99877cf0ba",
             "localizedName": "Inbound Only PSTN For User - Geographic",
             "locationType": "Selection",
             "areaCodes": [],
@@ -99,14 +103,17 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/countries/US/phoneplangroups/Sanitized/phoneplans/Sanitized/locationoptions?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/countries/US/phoneplangroups/55bc1415-9fe6-42d7-9ed4-5ea28c6a17cf/phoneplans/01432411-5169-4665-b13e-3fa56c10e1d1/locationoptions?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Date": "Sat, 12 Dec 2020 03:12:10 GMT",
-        "traceparent": "00-40114d1ab4682740b10866fbaf9b11d8-a2f8386194bb0e46-00",
-        "User-Agent": "azsdk-net-Communication.Administration/1.0.0-alpha.20201211.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "Date": "Fri, 19 Feb 2021 02:05:54 GMT",
+        "traceparent": "00-75eb0d67cc95214f87a4fc2b3ccd51f8-d1c110200bcd9c46-00",
+        "User-Agent": [
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
+          "(.NET 5.0.3; Microsoft Windows 10.0.18363)"
+        ],
         "x-ms-client-request-id": "f06c6b3e262493dd114c67da613d659a",
         "x-ms-content-sha256": "Sanitized",
         "x-ms-return-client-request-id": "true"
@@ -115,11 +122,12 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sat, 12 Dec 2020 03:12:10 GMT",
-        "MS-CV": "e9/HP8j4ZkKV1PgZnkbXWg.0",
+        "Date": "Fri, 19 Feb 2021 02:05:53 GMT",
+        "MS-CV": "yZjQ9cK7lUCCu1mqmSGvVQ.0",
+        "Request-Context": "appId=",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0CzXUXwAAAAAo27qsNaHDS4T4Fp5MMpp8RVdSMzBFREdFMDYxMgA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
-        "X-Processing-Time": "445ms"
+        "X-Azure-Ref": "0AR0vYAAAAAB3u1xR0PgaR4Id4P\u002BPEpDpWVZSMzBFREdFMDMxMwA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Processing-Time": "299ms"
       },
       "ResponseBody": {
         "locationOptions": {
@@ -186,6 +194,23 @@
               ]
             },
             {
+              "name": "AZ",
+              "value": "AZ",
+              "locationOptions": [
+                {
+                  "labelId": "city",
+                  "labelName": "City",
+                  "options": [
+                    {
+                      "name": "Phoenix",
+                      "value": "NOAM-US-AZ-PH",
+                      "locationOptions": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
               "name": "CA",
               "value": "CA",
               "locationOptions": [
@@ -214,6 +239,11 @@
                       "locationOptions": []
                     },
                     {
+                      "name": "Irvine",
+                      "value": "NOAM-US-CA-IR",
+                      "locationOptions": []
+                    },
+                    {
                       "name": "Los Angeles",
                       "value": "NOAM-US-CA-LA",
                       "locationOptions": []
@@ -236,6 +266,11 @@
                     {
                       "name": "San Diego",
                       "value": "NOAM-US-CA-SD",
+                      "locationOptions": []
+                    },
+                    {
+                      "name": "San Francisco",
+                      "value": "NOAM-US-CA-SF",
                       "locationOptions": []
                     },
                     {
@@ -295,6 +330,11 @@
                     {
                       "name": "Denver",
                       "value": "NOAM-US-CO-DE",
+                      "locationOptions": []
+                    },
+                    {
+                      "name": "Grand Junction",
+                      "value": "NOAM-US-CO-GJ",
                       "locationOptions": []
                     },
                     {
@@ -399,8 +439,18 @@
                       "locationOptions": []
                     },
                     {
+                      "name": "St. Petersburg",
+                      "value": "NOAM-US-FL-SP",
+                      "locationOptions": []
+                    },
+                    {
                       "name": "Tallahassee",
                       "value": "NOAM-US-FL-TA",
+                      "locationOptions": []
+                    },
+                    {
+                      "name": "Tampa",
+                      "value": "NOAM-US-FL-TM",
                       "locationOptions": []
                     },
                     {
@@ -480,6 +530,11 @@
                       "locationOptions": []
                     },
                     {
+                      "name": "Davenport",
+                      "value": "NOAM-US-IA-DA",
+                      "locationOptions": []
+                    },
+                    {
                       "name": "Mason City",
                       "value": "NOAM-US-IA-MC",
                       "locationOptions": []
@@ -518,11 +573,6 @@
                   "labelId": "city",
                   "labelName": "City",
                   "options": [
-                    {
-                      "name": "Alton",
-                      "value": "NOAM-US-IL-AL",
-                      "locationOptions": []
-                    },
                     {
                       "name": "Aurora",
                       "value": "NOAM-US-IL-AU",
@@ -625,6 +675,11 @@
                   "labelName": "City",
                   "options": [
                     {
+                      "name": "Ashland",
+                      "value": "NOAM-US-KY-AS",
+                      "locationOptions": []
+                    },
+                    {
                       "name": "Lexington",
                       "value": "NOAM-US-KY-LE",
                       "locationOptions": []
@@ -632,11 +687,6 @@
                     {
                       "name": "Louisville",
                       "value": "NOAM-US-KY-LO",
-                      "locationOptions": []
-                    },
-                    {
-                      "name": "Owensboro",
-                      "value": "NOAM-US-KY-OW",
                       "locationOptions": []
                     }
                   ]
@@ -654,6 +704,11 @@
                     {
                       "name": "Baton Rouge",
                       "value": "NOAM-US-LA-BR",
+                      "locationOptions": []
+                    },
+                    {
+                      "name": "Lafayette",
+                      "value": "NOAM-US-LA-LA",
                       "locationOptions": []
                     },
                     {
@@ -694,8 +749,8 @@
                       "locationOptions": []
                     },
                     {
-                      "name": "Lynn",
-                      "value": "NOAM-US-MA-LY",
+                      "name": "Worcester",
+                      "value": "NOAM-US-MA-WO",
                       "locationOptions": []
                     }
                   ]
@@ -713,6 +768,23 @@
                     {
                       "name": "Baltimore",
                       "value": "NOAM-US-MD-BA",
+                      "locationOptions": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "ME",
+              "value": "ME",
+              "locationOptions": [
+                {
+                  "labelId": "city",
+                  "labelName": "City",
+                  "options": [
+                    {
+                      "name": "Portland",
+                      "value": "NOAM-US-ME-PO",
                       "locationOptions": []
                     }
                   ]
@@ -771,11 +843,6 @@
                       "name": "Sault Ste Marie",
                       "value": "NOAM-US-MI-SS",
                       "locationOptions": []
-                    },
-                    {
-                      "name": "Troy",
-                      "value": "NOAM-US-MI-TR",
-                      "locationOptions": []
                     }
                   ]
                 }
@@ -802,11 +869,6 @@
                     {
                       "name": "Duluth",
                       "value": "NOAM-US-MN-DU",
-                      "locationOptions": []
-                    },
-                    {
-                      "name": "Mankato",
-                      "value": "NOAM-US-MN-MA",
                       "locationOptions": []
                     },
                     {
@@ -917,11 +979,6 @@
                   "labelId": "city",
                   "labelName": "City",
                   "options": [
-                    {
-                      "name": "Asheville",
-                      "value": "NOAM-US-NC-AS",
-                      "locationOptions": []
-                    },
                     {
                       "name": "Charlotte",
                       "value": "NOAM-US-NC-CH",
@@ -1117,11 +1174,6 @@
                     {
                       "name": "Rochester",
                       "value": "NOAM-US-NY-RO",
-                      "locationOptions": []
-                    },
-                    {
-                      "name": "Syracuse",
-                      "value": "NOAM-US-NY-SY",
                       "locationOptions": []
                     },
                     {
@@ -1398,6 +1450,11 @@
                       "locationOptions": []
                     },
                     {
+                      "name": "El Paso",
+                      "value": "NOAM-US-TX-EP",
+                      "locationOptions": []
+                    },
+                    {
                       "name": "Fort Worth",
                       "value": "NOAM-US-TX-FW",
                       "locationOptions": []
@@ -1425,6 +1482,11 @@
                     {
                       "name": "Lubbock",
                       "value": "NOAM-US-TX-LU",
+                      "locationOptions": []
+                    },
+                    {
+                      "name": "Odessa",
+                      "value": "NOAM-US-TX-OD",
                       "locationOptions": []
                     },
                     {
@@ -1474,11 +1536,6 @@
                     {
                       "name": "Arlington",
                       "value": "NOAM-US-VA-AR",
-                      "locationOptions": []
-                    },
-                    {
-                      "name": "Danville",
-                      "value": "NOAM-US-VA-DA",
                       "locationOptions": []
                     },
                     {
@@ -1546,11 +1603,6 @@
                       "locationOptions": []
                     },
                     {
-                      "name": "Green Bay",
-                      "value": "NOAM-US-WI-GB",
-                      "locationOptions": []
-                    },
-                    {
                       "name": "Kenosha",
                       "value": "NOAM-US-WI-KE",
                       "locationOptions": []
@@ -1608,16 +1660,19 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/countries/US/areacodes?locationType=Selection\u0026phonePlanId=Sanitized\u0026api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/countries/US/areacodes?locationType=Selection\u0026phonePlanId=01432411-5169-4665-b13e-3fa56c10e1d1\u0026api-version=2020-07-20-preview1",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "111",
         "Content-Type": "application/json",
-        "Date": "Sat, 12 Dec 2020 03:12:10 GMT",
-        "traceparent": "00-f696238da578014a947d2c5eaabf024a-0b7946201328b342-00",
-        "User-Agent": "azsdk-net-Communication.Administration/1.0.0-alpha.20201211.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "Date": "Fri, 19 Feb 2021 02:05:54 GMT",
+        "traceparent": "00-ab3dff48ef5cdf4186e9de83d92dcca4-e127c7c8f724ad4e-00",
+        "User-Agent": [
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
+          "(.NET 5.0.3; Microsoft Windows 10.0.18363)"
+        ],
         "x-ms-client-request-id": "6cacfd4afd67131198664425bf7486b7",
         "x-ms-content-sha256": "Sanitized",
         "x-ms-return-client-request-id": "true"
@@ -1637,11 +1692,12 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sat, 12 Dec 2020 03:12:11 GMT",
-        "MS-CV": "h/\u002BtLVDIwkmGGbI7mIpx9g.0",
+        "Date": "Fri, 19 Feb 2021 02:05:53 GMT",
+        "MS-CV": "hOEER3JxmEaR8Xb\u002B0B6r\u002Bw.0",
+        "Request-Context": "appId=",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0CzXUXwAAAAAPLtmH5lb2QJm3SHy4EmkwRVdSMzBFREdFMDYxMgA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
-        "X-Processing-Time": "333ms"
+        "X-Azure-Ref": "0AR0vYAAAAAAMiRJ4Vf39QaDpaFw/DiUIWVZSMzBFREdFMDMxMwA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Processing-Time": "261ms"
       },
       "ResponseBody": {
         "primaryAreaCodes": [
@@ -1652,16 +1708,19 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/searches?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/searches?api-version=2020-07-20-preview1",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "122",
+        "Content-Length": "149",
         "Content-Type": "application/json",
-        "Date": "Sat, 12 Dec 2020 03:12:11 GMT",
-        "traceparent": "00-94ed473462d2994fbb7a4d14a9319ba6-13d764630278b941-00",
-        "User-Agent": "azsdk-net-Communication.Administration/1.0.0-alpha.20201211.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "Date": "Fri, 19 Feb 2021 02:05:54 GMT",
+        "traceparent": "00-4c99e7edbc53d94c8af772640b39e78b-ac15315118988941-00",
+        "User-Agent": [
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
+          "(.NET 5.0.3; Microsoft Windows 10.0.18363)"
+        ],
         "x-ms-client-request-id": "0b63b4924f0c89af82b481ab56b401b9",
         "x-ms-content-sha256": "Sanitized",
         "x-ms-return-client-request-id": "true"
@@ -1670,7 +1729,7 @@
         "displayName": "My reservation",
         "description": "my description",
         "phonePlanIds": [
-          "Sanitized"
+          "01432411-5169-4665-b13e-3fa56c10e1d1"
         ],
         "areaCode": "205",
         "quantity": 1
@@ -1678,24 +1737,28 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sat, 12 Dec 2020 03:12:12 GMT",
-        "MS-CV": "swzyEZkhkUGX2gwYHRua/w.0",
+        "Date": "Fri, 19 Feb 2021 02:05:55 GMT",
+        "MS-CV": "Zmah7zfojk\u002BYJaOM77\u002B8bw.0",
+        "Request-Context": "appId=",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0DDXUXwAAAADZa1I4yRrNQLE6JhBLpWwHRVdSMzBFREdFMDYxMgA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
-        "X-Processing-Time": "1032ms"
+        "X-Azure-Ref": "0Ah0vYAAAAACaRN7JOSFsQLbdCvgKw/98WVZSMzBFREdFMDMxMwA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Processing-Time": "1566ms"
       },
       "ResponseBody": {
-        "searchId": "9ad5fa59-0131-47b4-9e8d-dae68a4886dd"
+        "searchId": "7a7a8acf-d84c-42b3-8f41-35476766b44c"
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/searches/Sanitized?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/searches/7a7a8acf-d84c-42b3-8f41-35476766b44c?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Date": "Sat, 12 Dec 2020 03:12:12 GMT",
-        "User-Agent": "azsdk-net-Communication.Administration/1.0.0-alpha.20201211.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "Date": "Fri, 19 Feb 2021 02:05:56 GMT",
+        "User-Agent": [
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
+          "(.NET 5.0.3; Microsoft Windows 10.0.18363)"
+        ],
         "x-ms-client-request-id": "79241185c92b41435a5957bde2b7d39c",
         "x-ms-content-sha256": "Sanitized",
         "x-ms-return-client-request-id": "true"
@@ -1704,19 +1767,20 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sat, 12 Dec 2020 03:12:12 GMT",
-        "MS-CV": "6jAzdj1bNkuCML\u002BSmCzDrg.0",
+        "Date": "Fri, 19 Feb 2021 02:05:56 GMT",
+        "MS-CV": "hlquUf/DNkGgGayFEcwd1Q.0",
+        "Request-Context": "appId=",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0DTXUXwAAAABTD1h87fzQQo7yFAtBDYjmRVdSMzBFREdFMDYxMgA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
-        "X-Processing-Time": "457ms"
+        "X-Azure-Ref": "0Ax0vYAAAAABL\u002BhZRrjUEQLUgov1HFWXVWVZSMzBFREdFMDMxMwA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Processing-Time": "513ms"
       },
       "ResponseBody": {
-        "searchId": "9ad5fa59-0131-47b4-9e8d-dae68a4886dd",
+        "searchId": "7a7a8acf-d84c-42b3-8f41-35476766b44c",
         "displayName": "My reservation",
-        "createdAt": "2020-12-12T03:12:12.6390431\u002B00:00",
+        "createdAt": "2021-02-19T02:05:54.7183855\u002B00:00",
         "description": "my description",
         "phonePlanIds": [
-          "Sanitized"
+          "01432411-5169-4665-b13e-3fa56c10e1d1"
         ],
         "areaCode": "205",
         "quantity": 1,
@@ -1727,13 +1791,16 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/searches/Sanitized?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/searches/7a7a8acf-d84c-42b3-8f41-35476766b44c?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Date": "Sat, 12 Dec 2020 03:12:14 GMT",
-        "User-Agent": "azsdk-net-Communication.Administration/1.0.0-alpha.20201211.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "Date": "Fri, 19 Feb 2021 02:05:58 GMT",
+        "User-Agent": [
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
+          "(.NET 5.0.3; Microsoft Windows 10.0.18363)"
+        ],
         "x-ms-client-request-id": "ad48afc65ad9fa8d4d22eab27b66bce3",
         "x-ms-content-sha256": "Sanitized",
         "x-ms-return-client-request-id": "true"
@@ -1742,19 +1809,20 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sat, 12 Dec 2020 03:12:14 GMT",
-        "MS-CV": "5XLnDW1DFUyIoTGIjMranw.0",
+        "Date": "Fri, 19 Feb 2021 02:05:57 GMT",
+        "MS-CV": "nz\u002Boo6vjKU\u002BOHVVPVNzFpw.0",
+        "Request-Context": "appId=",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0DzXUXwAAAACYNRORtBXUQqilFM/29lH3RVdSMzBFREdFMDYxMgA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
-        "X-Processing-Time": "451ms"
+        "X-Azure-Ref": "0BR0vYAAAAAC2jJT3IprHQJ2iBe\u002BUKBCYWVZSMzBFREdFMDMxMwA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Processing-Time": "465ms"
       },
       "ResponseBody": {
-        "searchId": "9ad5fa59-0131-47b4-9e8d-dae68a4886dd",
+        "searchId": "7a7a8acf-d84c-42b3-8f41-35476766b44c",
         "displayName": "My reservation",
-        "createdAt": "2020-12-12T03:12:12.6390431\u002B00:00",
+        "createdAt": "2021-02-19T02:05:54.7183855\u002B00:00",
         "description": "my description",
         "phonePlanIds": [
-          "Sanitized"
+          "01432411-5169-4665-b13e-3fa56c10e1d1"
         ],
         "areaCode": "205",
         "quantity": 1,
@@ -1765,13 +1833,16 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/searches/Sanitized?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/searches/7a7a8acf-d84c-42b3-8f41-35476766b44c?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Date": "Sat, 12 Dec 2020 03:12:15 GMT",
-        "User-Agent": "azsdk-net-Communication.Administration/1.0.0-alpha.20201211.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "Date": "Fri, 19 Feb 2021 02:05:59 GMT",
+        "User-Agent": [
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
+          "(.NET 5.0.3; Microsoft Windows 10.0.18363)"
+        ],
         "x-ms-client-request-id": "aea08a650d50c98b7022b0b3f7f1a6ca",
         "x-ms-content-sha256": "Sanitized",
         "x-ms-return-client-request-id": "true"
@@ -1780,19 +1851,20 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sat, 12 Dec 2020 03:12:16 GMT",
-        "MS-CV": "j2SLhH01nUKp0NhIleSNLg.0",
+        "Date": "Fri, 19 Feb 2021 02:05:59 GMT",
+        "MS-CV": "FANBi7nijk2b7RU2bjTdeg.0",
+        "Request-Context": "appId=",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0EDXUXwAAAADgbNm6A\u002BBWQaO63p9SO6lxRVdSMzBFREdFMDYxMgA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
-        "X-Processing-Time": "448ms"
+        "X-Azure-Ref": "0Bh0vYAAAAAD192qCFu2vQarfjC6bY5MsWVZSMzBFREdFMDMxMwA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Processing-Time": "463ms"
       },
       "ResponseBody": {
-        "searchId": "9ad5fa59-0131-47b4-9e8d-dae68a4886dd",
+        "searchId": "7a7a8acf-d84c-42b3-8f41-35476766b44c",
         "displayName": "My reservation",
-        "createdAt": "2020-12-12T03:12:12.6390431\u002B00:00",
+        "createdAt": "2021-02-19T02:05:54.7183855\u002B00:00",
         "description": "my description",
         "phonePlanIds": [
-          "Sanitized"
+          "01432411-5169-4665-b13e-3fa56c10e1d1"
         ],
         "areaCode": "205",
         "quantity": 1,
@@ -1803,13 +1875,16 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/searches/Sanitized?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/searches/7a7a8acf-d84c-42b3-8f41-35476766b44c?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Date": "Sat, 12 Dec 2020 03:12:17 GMT",
-        "User-Agent": "azsdk-net-Communication.Administration/1.0.0-alpha.20201211.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "Date": "Fri, 19 Feb 2021 02:06:01 GMT",
+        "User-Agent": [
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
+          "(.NET 5.0.3; Microsoft Windows 10.0.18363)"
+        ],
         "x-ms-client-request-id": "a7e4e4e0546c2adf842a2b08de90c5f4",
         "x-ms-content-sha256": "Sanitized",
         "x-ms-return-client-request-id": "true"
@@ -1818,19 +1893,20 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sat, 12 Dec 2020 03:12:17 GMT",
-        "MS-CV": "B0UxIxdHK0qH4HVKE/RC7g.0",
+        "Date": "Fri, 19 Feb 2021 02:06:00 GMT",
+        "MS-CV": "32PxjjiWdEy72QoCYjqrxg.0",
+        "Request-Context": "appId=",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0EjXUXwAAAAC3biJbcUq9SY6GHVBT1BDDRVdSMzBFREdFMDYxMgA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
-        "X-Processing-Time": "452ms"
+        "X-Azure-Ref": "0CB0vYAAAAAA4\u002B\u002BbHAAFPRphMOvsWV0PFWVZSMzBFREdFMDMxMwA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Processing-Time": "466ms"
       },
       "ResponseBody": {
-        "searchId": "9ad5fa59-0131-47b4-9e8d-dae68a4886dd",
+        "searchId": "7a7a8acf-d84c-42b3-8f41-35476766b44c",
         "displayName": "My reservation",
-        "createdAt": "2020-12-12T03:12:12.6390431\u002B00:00",
+        "createdAt": "2021-02-19T02:05:54.7183855\u002B00:00",
         "description": "my description",
         "phonePlanIds": [
-          "Sanitized"
+          "01432411-5169-4665-b13e-3fa56c10e1d1"
         ],
         "areaCode": "205",
         "quantity": 1,
@@ -1841,13 +1917,16 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/searches/Sanitized?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/searches/7a7a8acf-d84c-42b3-8f41-35476766b44c?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Date": "Sat, 12 Dec 2020 03:12:19 GMT",
-        "User-Agent": "azsdk-net-Communication.Administration/1.0.0-alpha.20201211.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "Date": "Fri, 19 Feb 2021 02:06:02 GMT",
+        "User-Agent": [
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
+          "(.NET 5.0.3; Microsoft Windows 10.0.18363)"
+        ],
         "x-ms-client-request-id": "5858749c2517b84c247e3cb7aad9025c",
         "x-ms-content-sha256": "Sanitized",
         "x-ms-return-client-request-id": "true"
@@ -1856,19 +1935,20 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sat, 12 Dec 2020 03:12:19 GMT",
-        "MS-CV": "EqyRUbWgSk6MgXwGRjHW/w.0",
+        "Date": "Fri, 19 Feb 2021 02:06:01 GMT",
+        "MS-CV": "ZMDo9nadH0qLxmfXYpGB2Q.0",
+        "Request-Context": "appId=",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0EzXUXwAAAADfgyM4sS5zQJDUOzszXYCARVdSMzBFREdFMDYxMgA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
-        "X-Processing-Time": "448ms"
+        "X-Azure-Ref": "0CR0vYAAAAACi/c\u002B7Piw1Qaz72r6Rh5x9WVZSMzBFREdFMDMxMwA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Processing-Time": "480ms"
       },
       "ResponseBody": {
-        "searchId": "9ad5fa59-0131-47b4-9e8d-dae68a4886dd",
+        "searchId": "7a7a8acf-d84c-42b3-8f41-35476766b44c",
         "displayName": "My reservation",
-        "createdAt": "2020-12-12T03:12:12.6390431\u002B00:00",
+        "createdAt": "2021-02-19T02:05:54.7183855\u002B00:00",
         "description": "my description",
         "phonePlanIds": [
-          "Sanitized"
+          "01432411-5169-4665-b13e-3fa56c10e1d1"
         ],
         "areaCode": "205",
         "quantity": 1,
@@ -1877,19 +1957,22 @@
         "phoneNumbers": [
           "Sanitized"
         ],
-        "reservationExpiryDate": "2020-12-12T03:28:19.4042165\u002B00:00",
+        "reservationExpiryDate": "2021-02-19T02:22:00.6273542\u002B00:00",
         "error": "NoError"
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/searches/Sanitized/cancel?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/searches/7a7a8acf-d84c-42b3-8f41-35476766b44c/cancel?api-version=2020-07-20-preview1",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Date": "Sat, 12 Dec 2020 03:12:19 GMT",
-        "traceparent": "00-45c8c4cbe6779a4bb2f06b806a01663a-028995deb8fc3d49-00",
-        "User-Agent": "azsdk-net-Communication.Administration/1.0.0-alpha.20201211.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "Date": "Fri, 19 Feb 2021 02:06:03 GMT",
+        "traceparent": "00-b85af30d13b29d4cb425432a227be5ca-b18e08b68c79a94d-00",
+        "User-Agent": [
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
+          "(.NET 5.0.3; Microsoft Windows 10.0.18363)"
+        ],
         "x-ms-client-request-id": "96d2207b15811076ab752925e282eadf",
         "x-ms-content-sha256": "Sanitized",
         "x-ms-return-client-request-id": "true"
@@ -1898,16 +1981,17 @@
       "StatusCode": 202,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Sat, 12 Dec 2020 03:12:21 GMT",
-        "MS-CV": "3NG2F0yRa0m5pf8SUuKMZQ.0",
-        "X-Azure-Ref": "0FDXUXwAAAAA00myduBYUQ6Eh/q2PteNaRVdSMzBFREdFMDYxMgA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
-        "X-Processing-Time": "985ms"
+        "Date": "Fri, 19 Feb 2021 02:06:02 GMT",
+        "MS-CV": "OaADveO\u002B2km0TtDOL5K19g.0",
+        "Request-Context": "appId=",
+        "X-Azure-Ref": "0Ch0vYAAAAAA6f9qyBeDGQKdsxV8RvSHVWVZSMzBFREdFMDMxMwA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Processing-Time": "943ms"
       },
       "ResponseBody": []
     }
   ],
   "Variables": {
-    "COMMUNICATION_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.com/;accesskey=Kg==;",
+    "COMMUNICATION_CONNECTION_STRING": "endpoint=https://chitchat-test.communication.azure.com/;accesskey=Kg==",
     "RandomSeed": "1433459237"
   }
 }

@@ -37,19 +37,38 @@ namespace Azure.Storage.Blobs.Models
             bool async,
             CancellationToken cancellationToken)
         {
-            Response<BlobsHierarchySegment> response = await _client.GetBlobsByHierarchyInternal(
-                continuationToken,
-                _delimiter,
-                _traits,
-                _states,
-                _prefix,
-                pageSizeHint,
-                async,
-                cancellationToken).ConfigureAwait(false);
+            Response<ListBlobsHierarchySegmentResponse> response;
 
-            var items = new List<BlobHierarchyItem>();
-            items.AddRange(response.Value.BlobPrefixes.Select(p => new BlobHierarchyItem(p.Name, null)));
-            items.AddRange(response.Value.BlobItems.Select(b => new BlobHierarchyItem(null, b.ToBlobItem())));
+            if (async)
+            {
+                response = await _client.GetBlobsByHierarchyInternal(
+                    marker: continuationToken,
+                    delimiter: _delimiter,
+                    traits: _traits,
+                    states: _states,
+                    prefix: _prefix,
+                    pageSizeHint: pageSizeHint,
+                    async: async,
+                    cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            else
+            {
+                response = _client.GetBlobsByHierarchyInternal(
+                    marker: continuationToken,
+                    delimiter: _delimiter,
+                    traits: _traits,
+                    states: _states,
+                    prefix: _prefix,
+                    pageSizeHint: pageSizeHint,
+                    async: async,
+                    cancellationToken: cancellationToken)
+                    .EnsureCompleted();
+            }
+
+            List<BlobHierarchyItem> items = new List<BlobHierarchyItem>();
+            items.AddRange(response.Value.Segment.BlobPrefixes.Select(p => new BlobHierarchyItem(p.Name, null)));
+            items.AddRange(response.Value.Segment.BlobItems.Select(b => new BlobHierarchyItem(null, b.ToBlobItem())));
             return Page<BlobHierarchyItem>.FromValues(
                 items.ToArray(),
                 response.Value.NextMarker,

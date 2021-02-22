@@ -73,5 +73,104 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 Assert.AreEqual(state, bytes.ToArray());
             };
         }
+
+        [Test]
+        public async Task TransactionGroup()
+        {
+            await using var client = CreateClient();
+            await using var queueA = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
+            await using var queueB = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
+            await using var topicC = await ServiceBusScope.CreateWithTopic(enablePartitioning: false, enableSession: false);
+
+            #region Snippet:ServiceBusTransactionGroup
+
+            // The first sender won't be part of our transaction group.
+            ServiceBusSender senderA = client.CreateSender(queueA.QueueName);
+
+            string transactionGroup = "myTxn";
+
+            ServiceBusReceiver receiverA = client.CreateReceiver(queueA.QueueName, new ServiceBusReceiverOptions
+            {
+                TransactionGroup = transactionGroup
+            });
+            ServiceBusSender senderB = client.CreateSender(queueB.QueueName, new ServiceBusSenderOptions
+            {
+                TransactionGroup = transactionGroup
+            });
+            ServiceBusSender senderC = client.CreateSender(topicC.TopicName, new ServiceBusSenderOptions
+            {
+                TransactionGroup = transactionGroup
+            });
+
+            var message = new ServiceBusMessage();
+
+            await senderA.SendMessageAsync(message);
+
+            ServiceBusReceivedMessage receivedMessage = await receiverA.ReceiveMessageAsync();
+
+            using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                await receiverA.CompleteMessageAsync(receivedMessage);
+                await senderB.SendMessageAsync(message);
+                await senderC.SendMessageAsync(message);
+                ts.Complete();
+            }
+            #endregion
+
+            receivedMessage = await receiverA.ReceiveMessageAsync();
+            Assert.IsNull(receivedMessage);
+        }
+
+        [Test]
+        [Ignore("Only verifying that it compiles.")]
+        public async Task TransactionGroupWrongOrder()
+        {
+            await using var client = CreateClient();
+            await using var queueA = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
+            await using var queueB = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
+            await using var topicC = await ServiceBusScope.CreateWithTopic(enablePartitioning: false, enableSession: false);
+
+            #region Snippet:ServiceBusTransactionGroupWrongOrder
+            // The first sender won't be part of our transaction group.
+            ServiceBusSender senderA = client.CreateSender(queueA.QueueName);
+
+            string transactionGroup = "myTxn";
+
+            ServiceBusReceiver receiverA = client.CreateReceiver(queueA.QueueName, new ServiceBusReceiverOptions
+            {
+                TransactionGroup = transactionGroup
+            });
+            ServiceBusSender senderB = client.CreateSender(queueB.QueueName, new ServiceBusSenderOptions
+            {
+                TransactionGroup = transactionGroup
+            });
+            ServiceBusSender senderC = client.CreateSender(topicC.TopicName, new ServiceBusSenderOptions
+            {
+                TransactionGroup = transactionGroup
+            });
+
+            var message = new ServiceBusMessage();
+
+            // SenderB becomes the entity through which subsequent "sends" are routed through.
+            await senderB.SendMessageAsync(message);
+
+            await senderA.SendMessageAsync(message);
+
+            ServiceBusReceivedMessage receivedMessage = await receiverA.ReceiveMessageAsync();
+
+            using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                // This will through an InvalidOperationException because a "receive" cannot be
+                // routed through a different entity.
+                await receiverA.CompleteMessageAsync(receivedMessage);
+                await senderB.SendMessageAsync(message);
+                await senderC.SendMessageAsync(message);
+                ts.Complete();
+            }
+            #endregion
+
+            receivedMessage = await receiverA.ReceiveMessageAsync();
+            Assert.IsNull(receivedMessage);
+        }
     }
 }

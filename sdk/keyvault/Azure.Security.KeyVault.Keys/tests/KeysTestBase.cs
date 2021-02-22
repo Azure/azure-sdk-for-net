@@ -58,7 +58,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
                                 LoggedHeaderNames =
                                 {
                                     "x-ms-request-id",
-                                }
+                                },
+                                // TODO: Remove once https://github.com/Azure/azure-sdk-for-net/issues/18800 is resolved.
+                                IsLoggingContentEnabled = Mode != RecordedTestMode.Playback,
                             },
                         })),
                 interceptors);
