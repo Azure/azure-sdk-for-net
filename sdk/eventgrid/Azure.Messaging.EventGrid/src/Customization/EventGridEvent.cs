@@ -2,11 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
 using System.Text.Json;
-using System.Threading;
 using Azure.Core;
-using Azure.Core.Serialization;
 using Azure.Messaging.EventGrid.Models;
 
 namespace Azure.Messaging.EventGrid
