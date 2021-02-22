@@ -21,7 +21,7 @@ namespace ContainerRegistrySamples
             // Monolithic upload
             ContainerRegistryClient registryClient = new ContainerRegistryClient(new Uri("myacr.azurecr.io"), new DefaultAzureCredential());
             ContainerRepositoryClient repositoryClient = registryClient.GetRepositoryClient("hello-world");
-            ArtifactStorageClient storageClient = repositoryClient.GetContainerStorageClient();
+            ArtifactStorageClient storageClient = repositoryClient.GetArtifactStorageClient();
 
             //POST INITIATE BLOB UPLOAD
             // Initiate a resumable blob upload. If successful, an upload location will be provided to complete the upload.
@@ -44,7 +44,7 @@ namespace ContainerRegistrySamples
 
             ContainerRegistryClient registryClient = new ContainerRegistryClient(new Uri("myacr.azurecr.io"), new DefaultAzureCredential());
             ContainerRepositoryClient repositoryClient = registryClient.GetRepositoryClient("hello-world");
-            ArtifactStorageClient storageClient = repositoryClient.GetContainerStorageClient();
+            ArtifactStorageClient storageClient = repositoryClient.GetArtifactStorageClient();
 
 
             // TODO: Will calling this "Start" name cause confusion with our LRO patterns?
@@ -53,7 +53,7 @@ namespace ContainerRegistrySamples
             // Other ideas: CreateUploadTicket() - problem with this is we're creating this Ticket concept where there was none in the ACR or Docker lit before...
             // What about this:
             //InitiateResumableUploadResult uploadDetails = await blobClient.InitiateResumableUploadAsync();
-            CreateUploadResult uploadDetails = await storageClient.CreateResumableUploadAsync();
+            CreateUploadResult uploadDetails = await storageClient.CreateUploadAsync();
             // TODO: "digest"
             // TODO: "stream"
             await storageClient.CompleteUploadAsync(uploadDetails, "digest", /* this is the blob */ new MemoryStream());
@@ -63,9 +63,9 @@ namespace ContainerRegistrySamples
         {
             ContainerRegistryClient registryClient = new ContainerRegistryClient(new Uri("myacr.azurecr.io"), new DefaultAzureCredential());
             ContainerRepositoryClient repositoryClient = registryClient.GetRepositoryClient("hello-world");
-            ArtifactStorageClient storageClient = repositoryClient.GetContainerStorageClient();
+            ArtifactStorageClient storageClient = repositoryClient.GetArtifactStorageClient();
 
-            CreateUploadResult uploadDetails = await storageClient.CreateResumableUploadAsync();
+            CreateUploadResult uploadDetails = await storageClient.CreateUploadAsync();
             bool haveChunks = true;  // TODO: how do I know?  Who decides how to break things into chunks and why?
             while (haveChunks)
             {

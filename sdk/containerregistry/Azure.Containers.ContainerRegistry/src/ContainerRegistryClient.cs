@@ -98,6 +98,8 @@ namespace Azure.Containers.ContainerRegistry
         //    }
         //}
 
+        public Uri Endpoint { get; }
+
         public virtual Pageable<string> GetRepositoryNames(CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
@@ -111,7 +113,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Get repository attributes. </summary>
         /// <param name="respositoryName"> Name of the image (including the namespace). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RepositoryAttributes>> GetRepositoryAttributesAsync(string respositoryName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RepositoryAttributes>> GetRepositoriesAsync(string respositoryName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContainerRegistryClient.GetRepositoryAttributes");
             scope.Start();
@@ -129,7 +131,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Get repository attributes. </summary>
         /// <param name="respositoryName"> Name of the image (including the namespace). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RepositoryAttributes> GetRepositoryAttributes(string respositoryName, CancellationToken cancellationToken = default)
+        public virtual Response<RepositoryAttributes> GetRepositories(string respositoryName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContainerRegistryClient.GetRepositoryAttributes");
             scope.Start();
@@ -172,44 +174,6 @@ namespace Azure.Containers.ContainerRegistry
             try
             {
                 return RestClient.DeleteRepository(respositoryName, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Update the attribute identified by `name` where `reference` is the name of the repository. </summary>
-        /// <param name="repositoryName"> Name of the image (including the namespace). </param>
-        /// <param name="value"> Repository attribute value. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> SetRepositoryPermissionsAsync(string repositoryName, ContentPermissions value, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("ContainerRegistryClient.UpdateRepositoryAttributes");
-            scope.Start();
-            try
-            {
-                return await RestClient.UpdateRepositoryAttributesAsync(repositoryName, value, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Update the attribute identified by `name` where `reference` is the name of the repository. </summary>
-        /// <param name="repositoryName"> Name of the image (including the namespace). </param>
-        /// <param name="value"> Repository attribute value. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response SetRepositoryPermissions(string repositoryName, ContentPermissions value, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("ContainerRegistryClient.UpdateRepositoryAttributes");
-            scope.Start();
-            try
-            {
-                return RestClient.UpdateRepositoryAttributes(repositoryName, value, cancellationToken);
             }
             catch (Exception e)
             {

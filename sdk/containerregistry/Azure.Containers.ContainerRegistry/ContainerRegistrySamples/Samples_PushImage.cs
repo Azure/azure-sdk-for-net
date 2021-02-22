@@ -67,7 +67,7 @@ namespace ContainerRegistrySamples
             using (var fs = File.OpenRead(configFilePath))
             {
                 //_logger.LogInformation($"Uploading Config Blob: {configFilePath} {configFile.Digest}");
-                CreateUploadResult upload = await client.CreateResumableUploadAsync();
+                CreateUploadResult upload = await client.CreateUploadAsync();
                 UploadChunkResult uploadChunkResult = await client.UploadChunkAsync(upload, fs);
                 CompleteUploadResult completeUploadResult = await client.CompleteUploadAsync(upload, ContentDescriptor.ComputeDigest(fs));
                 // TODO: Is ComputeDigest discoverable on ContentDescriptor?  Probably not ... think this through better.
@@ -82,7 +82,7 @@ namespace ContainerRegistrySamples
                 // _logger.LogInformation($"Uploading Layer {file}");
                 using (var fs = File.OpenRead(file))
                 {
-                    CreateUploadResult upload = await client.CreateResumableUploadAsync();
+                    CreateUploadResult upload = await client.CreateUploadAsync();
                     UploadChunkResult uploadChunkResult = await client.UploadChunkAsync(upload, fs);
                     CompleteUploadResult completeUploadResult = await client.CompleteUploadAsync(upload, ContentDescriptor.ComputeDigest(fs));
                 }

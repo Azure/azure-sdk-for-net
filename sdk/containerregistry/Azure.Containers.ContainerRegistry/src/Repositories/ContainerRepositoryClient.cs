@@ -72,6 +72,74 @@ namespace Azure.Containers.ContainerRegistry
             _pipeline = pipeline;
         }
 
+        public Uri Endpoint { get; }
+
+        public string RepositoryName {  get { return _repositoryName; } }
+
+        public virtual async Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
+        {
+            await Task.Delay(0, cancellationToken).ConfigureAwait(false);
+            throw new NotImplementedException();
+            // TODO: delete the repository for this repositoryName
+        }
+
+        public virtual Response Delete(CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual async Task<Response<RepositoryAttributes>> GetAttributesAsync(CancellationToken cancellationToken = default)
+        {
+            await Task.Delay(0, cancellationToken).ConfigureAwait(false);
+            throw new NotImplementedException();
+
+            // TODO: Get Repository Attributes
+        }
+
+        public virtual Response<RepositoryAttributes> GetAttributes(CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary> Update the attribute identified by `name` where `reference` is the name of the repository. </summary>
+        /// <param name="value"> Repository attribute value. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> SetPermissionsAsync(ContentPermissions value, CancellationToken cancellationToken = default)
+        {
+            await Task.Delay(0, cancellationToken).ConfigureAwait(false);
+            throw new NotImplementedException();
+            //using var scope = _clientDiagnostics.CreateScope("ContainerRegistryClient.UpdateRepositoryAttributes");
+            //scope.Start();
+            //try
+            //{
+            //    return await RestClient.UpdateRepositoryAttributesAsync(repositoryName, value, cancellationToken).ConfigureAwait(false);
+            //}
+            //catch (Exception e)
+            //{
+            //    scope.Failed(e);
+            //    throw;
+            //}
+        }
+
+        /// <summary> Update the attribute identified by `name` where `reference` is the name of the repository. </summary>
+        /// <param name="value"> Repository attribute value. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response SetPermissions(ContentPermissions value, CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+            //using var scope = _clientDiagnostics.CreateScope("ContainerRegistryClient.UpdateRepositoryAttributes");
+            //scope.Start();
+            //try
+            //{
+            //    return RestClient.UpdateRepositoryAttributes(repositoryName, value, cancellationToken);
+            //}
+            //catch (Exception e)
+            //{
+            //    scope.Failed(e);
+            //    throw;
+            //}
+        }
+
         /// <summary> Delete the manifest identified by `name` and `reference`. Note that a manifest can _only_ be deleted by `digest`. </summary>
         /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -355,7 +423,7 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        public virtual ArtifactStorageClient GetContainerStorageClient()
+        public virtual ArtifactStorageClient GetArtifactStorageClient()
         {
             throw new NotImplementedException();
         }
