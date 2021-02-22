@@ -2,6 +2,10 @@
 
 ## 1.4.0-beta.4 (Unreleased)
 
+### Fixes and Improvements
+
+- Added the `[Serializable]` attribute to all custom exception types.
+
 ### Breaking Changes
 
 - Update the default value of `ExcludeSharedTokenCacheCredential` on `DefaultAzureCredentialsOptions` to true, to exclude the `SharedTokenCacheCredential` from the `DefaultAzureCredential` by default. See [BREAKING_CHANGES.md](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/BREAKING_CHANGES.md#140)
