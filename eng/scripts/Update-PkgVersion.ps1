@@ -68,14 +68,13 @@ if ([System.String]::IsNullOrEmpty($NewVersionString)) {
   $packageSemVer.IncrementAndSetToPrerelease()
 
   & "${PSScriptRoot}/../common/scripts/Update-ChangeLog.ps1" -Version $packageSemVer.ToString() `
-  -ServiceDirectory $ServiceDirectory -PackageName $PackageName -Unreleased $True
+  -PackageName $PackageName -Unreleased $True
 }
 else {
   $packageSemVer = [AzureEngSemanticVersion]::new($NewVersionString)
 
   & "${PSScriptRoot}/../common/scripts/Update-ChangeLog.ps1" -Version $packageSemVer.ToString() `
-  -ServiceDirectory $ServiceDirectory -PackageName $PackageName -Unreleased $False `
-  -ReplaceLatestEntryTitle $True -ReleaseDate $ReleaseDate
+  -PackageName $PackageName -Unreleased $False -ReplaceLatestEntryTitle $True -ReleaseDate $ReleaseDate
 }
 
 Write-Host "New Version: ${packageSemVer}"

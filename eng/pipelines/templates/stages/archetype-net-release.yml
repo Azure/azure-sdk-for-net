@@ -68,8 +68,7 @@ stages:
                           arguments: '-BuildID $(Build.BuildId)'
                     - template: /eng/common/pipelines/templates/steps/verify-changelog.yml
                       parameters:
-                        PackageName: ${{artifact.name}}
-                        ServiceName: ${{parameters.ServiceDirectory}}
+                        ArtifactName: ${{artifact.name}}
                         ForRelease: true
                     - template: /eng/common/pipelines/templates/steps/create-tags-and-git-release.yml
                       parameters:
