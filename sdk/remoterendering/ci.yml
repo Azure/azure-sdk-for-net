@@ -18,7 +18,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/mixedreality/
+    - sdk/remoterendering/
 
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
