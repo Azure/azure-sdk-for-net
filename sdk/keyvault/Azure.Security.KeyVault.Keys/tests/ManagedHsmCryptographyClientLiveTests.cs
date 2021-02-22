@@ -31,6 +31,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 ? uri
                 // If the AZURE_MANAGEDHSM_URL variable is not defined, we didn't provision one
                 // due to limitations: https://github.com/Azure/azure-sdk-for-net/issues/16531
+                // To provision Managed HSM: New-TestResources.ps1 -AdditionalParameters @{enableHsm=$true}
                 : throw new IgnoreException($"Required variable 'AZURE_MANAGEDHSM_URL' is not defined");
 
         [Test]

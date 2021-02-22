@@ -202,7 +202,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
             {
                 int start = 0;
                 for (; start < buf.Length && buf[start] == 0; start++)
-                    ;
+                {
+                    // The index is incremented within the for expression.
+                }
 
                 if (start != 0)
                 {
