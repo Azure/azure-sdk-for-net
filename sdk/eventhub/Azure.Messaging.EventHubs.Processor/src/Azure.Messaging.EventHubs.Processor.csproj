@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>Azure Event Hubs is a highly scalable publish-subscribe service that can ingest millions of events per second and stream them to multiple consumers.  This library extends its Event Processor with durable storage for checkpoint information using Azure Blob storage.  For more information about Event Hubs, see https://azure.microsoft.com/en-us/services/event-hubs/</Description>
-    <Version>5.3.0-beta.5</Version>
-    <ApiCompatVersion>5.2.0</ApiCompatVersion>
+    <Version>5.4.0-beta.1</Version>
+    <ApiCompatVersion>5.3.0</ApiCompatVersion>
     <PackageTags>Azure;Event Hubs;EventHubs;.NET;Event Processor;EventProcessor;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
@@ -12,10 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <!-- TEMP -->
-      <ProjectReference Include="..\..\Azure.Messaging.EventHubs\src\Azure.Messaging.EventHubs.csproj" /><!-- This will be changed to a package reference when v5.3.0 is released for GA -->
-    <!--END TEMP-->
-
+    <PackageReference Include="Azure.Messaging.EventHubs" />
     <PackageReference Include="Azure.Storage.Blobs" />
     <PackageReference Include="Microsoft.Azure.Amqp" />
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />

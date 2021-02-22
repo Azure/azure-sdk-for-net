@@ -9,8 +9,17 @@ namespace Azure.Messaging.ServiceBus
     /// The set of options that can be specified when creating a <see cref="ServiceBusSender"/>
     /// to configure its behavior.
     /// </summary>
-    internal class ServiceBusSenderOptions
+    public class ServiceBusSenderOptions
     {
+        /// <summary>
+        /// Gets or sets the transaction group associated with the processor. This is an
+        /// arbitrary string that is used to all senders, receivers, and processors that you
+        /// wish to use in a transaction that spans multiple different queues, topics, or subscriptions.
+        /// If your transactions only involves a single queue, topic, or subscription, this property
+        /// should not be set.
+        /// </summary>
+        public string TransactionGroup { get; set; }
+
         /// <summary>
         /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
         /// </summary>
@@ -44,10 +53,10 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <returns>A new copy of <see cref="ServiceBusSenderOptions" />.</returns>
-        #pragma warning disable CA1822 // Mark members as static
-
         internal ServiceBusSenderOptions Clone() =>
-            new ServiceBusSenderOptions();
-        #pragma warning restore CA1822 // Mark members as static
+            new ServiceBusSenderOptions
+            {
+                TransactionGroup = TransactionGroup
+            };
     }
 }

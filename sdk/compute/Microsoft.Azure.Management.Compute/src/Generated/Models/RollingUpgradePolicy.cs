@@ -52,12 +52,20 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// completing the update for all virtual machines in one batch and
         /// starting the next batch. The time duration should be specified in
         /// ISO 8601 format. The default value is 0 seconds (PT0S).</param>
-        public RollingUpgradePolicy(int? maxBatchInstancePercent = default(int?), int? maxUnhealthyInstancePercent = default(int?), int? maxUnhealthyUpgradedInstancePercent = default(int?), string pauseTimeBetweenBatches = default(string))
+        /// <param name="enableCrossZoneUpgrade">Allow VMSS to ignore AZ
+        /// boundaries when constructing upgrade batches. Take into
+        /// consideration the Update Domain and maxBatchInstancePercent to
+        /// determine the batch size.</param>
+        /// <param name="prioritizeUnhealthyInstances">Upgrade all unhealthy
+        /// instances in a scale set before any healthy instances.</param>
+        public RollingUpgradePolicy(int? maxBatchInstancePercent = default(int?), int? maxUnhealthyInstancePercent = default(int?), int? maxUnhealthyUpgradedInstancePercent = default(int?), string pauseTimeBetweenBatches = default(string), bool? enableCrossZoneUpgrade = default(bool?), bool? prioritizeUnhealthyInstances = default(bool?))
         {
             MaxBatchInstancePercent = maxBatchInstancePercent;
             MaxUnhealthyInstancePercent = maxUnhealthyInstancePercent;
             MaxUnhealthyUpgradedInstancePercent = maxUnhealthyUpgradedInstancePercent;
             PauseTimeBetweenBatches = pauseTimeBetweenBatches;
+            EnableCrossZoneUpgrade = enableCrossZoneUpgrade;
+            PrioritizeUnhealthyInstances = prioritizeUnhealthyInstances;
             CustomInit();
         }
 
@@ -106,6 +114,21 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "pauseTimeBetweenBatches")]
         public string PauseTimeBetweenBatches { get; set; }
+
+        /// <summary>
+        /// Gets or sets allow VMSS to ignore AZ boundaries when constructing
+        /// upgrade batches. Take into consideration the Update Domain and
+        /// maxBatchInstancePercent to determine the batch size.
+        /// </summary>
+        [JsonProperty(PropertyName = "enableCrossZoneUpgrade")]
+        public bool? EnableCrossZoneUpgrade { get; set; }
+
+        /// <summary>
+        /// Gets or sets upgrade all unhealthy instances in a scale set before
+        /// any healthy instances.
+        /// </summary>
+        [JsonProperty(PropertyName = "prioritizeUnhealthyInstances")]
+        public bool? PrioritizeUnhealthyInstances { get; set; }
 
         /// <summary>
         /// Validate the object.

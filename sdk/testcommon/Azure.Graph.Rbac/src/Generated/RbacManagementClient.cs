@@ -13,7 +13,7 @@ using Azure.Graph.Rbac;
 namespace Azure.Graph.Rbac
 {
     /// <summary> Rbac service management client. </summary>
-    public class RbacManagementClient
+    public partial class RbacManagementClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;

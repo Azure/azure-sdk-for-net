@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Media.Models
 
     /// <summary>
     /// Describes all the settings to be used when analyzing a video in order
-    /// to detect all the faces present.
+    /// to detect (and optionally redact) all the faces present.
     /// </summary>
     [Newtonsoft.Json.JsonObject("#Microsoft.Media.FaceDetectorPreset")]
     public partial class FaceDetectorPreset : Preset
@@ -47,11 +47,25 @@ namespace Microsoft.Azure.Management.Media.Models
         /// for details). However, faces that end up being too small in the
         /// resized video may not be detected. Possible values include:
         /// 'SourceResolution', 'StandardDefinition'</param>
+        /// <param name="mode">This mode provides the ability to choose between
+        /// the following settings: 1) Analyze - For detection only.This mode
+        /// generates a metadata JSON file marking appearances of faces
+        /// throughout the video.Where possible, appearances of the same person
+        /// are assigned the same ID. 2) Combined - Additionally redacts(blurs)
+        /// detected faces. 3) Redact - This enables a 2-pass process, allowing
+        /// for selective redaction of a subset of detected faces.It takes in
+        /// the metadata file from a prior analyze pass, along with the source
+        /// video, and a user-selected subset of IDs that require redaction.
+        /// Possible values include: 'Analyze', 'Redact', 'Combined'</param>
+        /// <param name="blurType">Blur type. Possible values include: 'Box',
+        /// 'Low', 'Med', 'High', 'Black'</param>
         /// <param name="experimentalOptions">Dictionary containing key value
         /// pairs for parameters not exposed in the preset itself</param>
-        public FaceDetectorPreset(AnalysisResolution? resolution = default(AnalysisResolution?), IDictionary<string, string> experimentalOptions = default(IDictionary<string, string>))
+        public FaceDetectorPreset(AnalysisResolution? resolution = default(AnalysisResolution?), FaceRedactorMode? mode = default(FaceRedactorMode?), BlurType? blurType = default(BlurType?), IDictionary<string, string> experimentalOptions = default(IDictionary<string, string>))
         {
             Resolution = resolution;
+            Mode = mode;
+            BlurType = blurType;
             ExperimentalOptions = experimentalOptions;
             CustomInit();
         }
@@ -79,6 +93,28 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </summary>
         [JsonProperty(PropertyName = "resolution")]
         public AnalysisResolution? Resolution { get; set; }
+
+        /// <summary>
+        /// Gets or sets this mode provides the ability to choose between the
+        /// following settings: 1) Analyze - For detection only.This mode
+        /// generates a metadata JSON file marking appearances of faces
+        /// throughout the video.Where possible, appearances of the same person
+        /// are assigned the same ID. 2) Combined - Additionally redacts(blurs)
+        /// detected faces. 3) Redact - This enables a 2-pass process, allowing
+        /// for selective redaction of a subset of detected faces.It takes in
+        /// the metadata file from a prior analyze pass, along with the source
+        /// video, and a user-selected subset of IDs that require redaction.
+        /// Possible values include: 'Analyze', 'Redact', 'Combined'
+        /// </summary>
+        [JsonProperty(PropertyName = "mode")]
+        public FaceRedactorMode? Mode { get; set; }
+
+        /// <summary>
+        /// Gets or sets blur type. Possible values include: 'Box', 'Low',
+        /// 'Med', 'High', 'Black'
+        /// </summary>
+        [JsonProperty(PropertyName = "blurType")]
+        public BlurType? BlurType { get; set; }
 
         /// <summary>
         /// Gets or sets dictionary containing key value pairs for parameters

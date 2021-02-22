@@ -8,12 +8,8 @@
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Request body structure for data flow preview data. </summary>
-    internal partial class DataFlowDebugPreviewDataRequest
+    public partial class DataFlowDebugPreviewDataRequest
     {
-        /// <summary> Initializes a new instance of DataFlowDebugPreviewDataRequest. </summary>
-        internal DataFlowDebugPreviewDataRequest()
-        {
-        }
 
         /// <summary> The ID of data flow debug session. </summary>
         public string SessionId { get; }

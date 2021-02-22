@@ -40,7 +40,7 @@ namespace Compute.Tests
                         var vhdContainer = "https://" + storageAccountName + ".blob.core.windows.net/" + containerName;
                         var vhduri = vhdContainer + string.Format("/{0}.vhd", HttpMockServer.GetAssetName("TestVMDataDiskScenario", TestPrefix));
 
-                        vm.HardwareProfile.VmSize = VirtualMachineSizeTypes.StandardA4;
+                        vm.HardwareProfile.VmSize = VirtualMachineSizeTypes.StandardA1V2;
                         vm.StorageProfile.DataDisks = new List<DataDisk>();
                         foreach (int index in new int[] {1, 2})
                         {

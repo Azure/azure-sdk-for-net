@@ -16,7 +16,7 @@ Azure Cognitive Services Metrics Advisor is a cloud service that uses machine le
 Install the Azure Metrics Advisor client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-dotnet add package Azure.AI.MetricsAdvisor --version 1.0.0-beta.2
+dotnet add package Azure.AI.MetricsAdvisor --version 1.0.0-beta.3
 ```
 
 ### Prerequisites
@@ -167,6 +167,19 @@ An `AnomalyAlert`, or simply "alert", is triggered when a detected [anomaly](#da
 
 A `NotificationHook`, or simply "hook", is a means of subscribing to [alerts](#anomaly-alert) notifications. You can pass a hook to an `AnomalyAlertConfiguration` and start getting notifications for every alert it creates. See the sample [Create a hook for receiving anomaly alerts](#create-a-hook-for-receiving-anomaly-alerts) below for more information.
 
+### Thread safety
+We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
+
+### Additional concepts
+<!-- CLIENT COMMON BAR -->
+[Client options](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions) |
+[Accessing the response](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#accessing-http-response-details-using-responset) |
+[Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
+[Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md) |
+[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#mocking) |
+[Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
+<!-- CLIENT COMMON BAR -->
+
 ## Examples
 
 The following section provides several code snippets illustrating common patterns used in the Metrics Advisor .NET API. The snippets below make use of asynchronous service calls, but note that the Azure.AI.MetricsAdvisor package supports both synchronous and asynchronous APIs.
@@ -203,35 +216,30 @@ dataFeed.IngestionSettings = new DataFeedIngestionSettings()
     IngestionStartTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z")
 };
 
-Response<string> response = await adminClient.CreateDataFeedAsync(dataFeed);
+Response<DataFeed> response = await adminClient.CreateDataFeedAsync(dataFeed);
 
-string dataFeedId = response.Value;
+DataFeed createdDataFeed = response.Value;
 
-Console.WriteLine($"Data feed ID: {dataFeedId}");
-```
-
-Note that only the ID of the data feed is known at this point. You can perform another service call to `GetDataFeedAsync` or `GetDataFeed` to get more information, such as status, created time, the list of administrators, or the metric IDs.
-
-```C# Snippet:GetDataFeedAsync
-string dataFeedId = "<dataFeedId>";
-
-Response<DataFeed> response = await adminClient.GetDataFeedAsync(dataFeedId);
-
-DataFeed dataFeed = response.Value;
-
-Console.WriteLine($"Data feed status: {dataFeed.Status.Value}");
-Console.WriteLine($"Data feed created time: {dataFeed.CreatedTime.Value}");
+Console.WriteLine($"Data feed ID: {createdDataFeed.Id}");
+Console.WriteLine($"Data feed status: {createdDataFeed.Status.Value}");
+Console.WriteLine($"Data feed created time: {createdDataFeed.CreatedTime.Value}");
 
 Console.WriteLine($"Data feed administrators:");
-foreach (string admin in dataFeed.Administrators)
+foreach (string admin in createdDataFeed.Administrators)
 {
     Console.WriteLine($" - {admin}");
 }
 
 Console.WriteLine($"Metric IDs:");
-foreach (DataFeedMetric metric in dataFeed.Schema.MetricColumns)
+foreach (DataFeedMetric metric in createdDataFeed.Schema.MetricColumns)
 {
     Console.WriteLine($" - {metric.MetricName}: {metric.MetricId}");
+}
+
+Console.WriteLine($"Dimension columns:");
+foreach (DataFeedDimension dimension in createdDataFeed.Schema.DimensionColumns)
+{
+    Console.WriteLine($" - {dimension.DimensionName}");
 }
 ```
 
@@ -297,11 +305,11 @@ detectCondition.SmartDetectionCondition = new SmartDetectionCondition(10.0, Anom
 
 detectCondition.CrossConditionsOperator = DetectionConditionsOperator.Or;
 
-Response<string> response = await adminClient.CreateDetectionConfigurationAsync(detectionConfiguration);
+Response<AnomalyDetectionConfiguration> response = await adminClient.CreateDetectionConfigurationAsync(detectionConfiguration);
 
-string detectionConfigurationId = response.Value;
+AnomalyDetectionConfiguration createdDetectionConfiguration = response.Value;
 
-Console.WriteLine($"Anomaly detection configuration ID: {detectionConfigurationId}");
+Console.WriteLine($"Anomaly detection configuration ID: {createdDetectionConfiguration.Id}");
 ```
 
 ### Create a hook for receiving anomaly alerts
@@ -319,11 +327,11 @@ var emailHook = new EmailNotificationHook()
 emailHook.EmailsToAlert.Add("email1@sample.com");
 emailHook.EmailsToAlert.Add("email2@sample.com");
 
-Response<string> response = await adminClient.CreateHookAsync(emailHook);
+Response<NotificationHook> response = await adminClient.CreateHookAsync(emailHook);
 
-string hookId = response.Value;
+NotificationHook createdHook = response.Value;
 
-Console.WriteLine($"Hook ID: {hookId}");
+Console.WriteLine($"Hook ID: {createdHook.Id}");
 ```
 
 ### Create an anomaly alert configuration
@@ -348,11 +356,11 @@ var metricAlertConfiguration = new MetricAnomalyAlertConfiguration(anomalyDetect
 
 alertConfiguration.MetricAlertConfigurations.Add(metricAlertConfiguration);
 
-Response<string> response = await adminClient.CreateAlertConfigurationAsync(alertConfiguration);
+Response<AnomalyAlertConfiguration> response = await adminClient.CreateAlertConfigurationAsync(alertConfiguration);
 
-string alertConfigurationId = response.Value;
+AnomalyAlertConfiguration createdAlertConfiguration = response.Value;
 
-Console.WriteLine($"Alert configuration ID: {alertConfigurationId}");
+Console.WriteLine($"Alert configuration ID: {createdAlertConfiguration.Id}");
 ```
 
 ### Query detected anomalies and triggered alerts

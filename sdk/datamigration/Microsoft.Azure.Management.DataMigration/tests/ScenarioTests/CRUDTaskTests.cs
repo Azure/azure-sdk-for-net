@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -17,7 +16,7 @@ namespace DataMigration.Tests.ScenarioTests
     public class CRUDTaskTests : CRUDDMSTestsBase
     {
         [Fact]
-        public void CreateResourceSucceeds()
+        public void CreateSqlResourceSucceeds()
         {
             var dmsClientHandler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
             var resourcesHandler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
@@ -27,8 +26,44 @@ namespace DataMigration.Tests.ScenarioTests
                 var resourceGroup = CreateResourceGroup(context, resourcesHandler, ResourceGroupName, TestConfiguration.Location);
                 var dmsClient = Utilities.GetDataMigrationManagementClient(context, dmsClientHandler);
                 var service = CreateDMSInstance(context, dmsClient, resourceGroup, DmsDeploymentName);
-                var project = CreateDMSProject(context, dmsClient, resourceGroup, service.Name, DmsProjectName);
-                var task = CreateDMSTask(context, dmsClient, resourceGroup, service, project.Name, DmsTaskName);
+                var project = CreateDMSSqlProject(context, dmsClient, resourceGroup, service.Name, DmsProjectName);
+                var task = CreateDMSSqlTask(context, dmsClient, resourceGroup, service, project.Name, DmsTaskName);
+            }
+            // Wait for resource group deletion to complete.
+            Utilities.WaitIfNotInPlaybackMode();
+        }
+
+        [Fact]
+        public void CreatePGResourceSucceeds()
+        {
+            var dmsClientHandler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
+            var resourcesHandler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var resourceGroup = CreateResourceGroup(context, resourcesHandler, ResourceGroupName, TestConfiguration.Location);
+                var dmsClient = Utilities.GetDataMigrationManagementClient(context, dmsClientHandler);
+                var service = CreateDMSInstance(context, dmsClient, resourceGroup, DmsDeploymentName);
+                var project = CreateDMSPGProject(context, dmsClient, resourceGroup, service.Name, DmsProjectName);
+                var task = CreateDMSPGSyncTask(context, dmsClient, resourceGroup, service, project.Name, DmsTaskName);
+            }
+            // Wait for resource group deletion to complete.
+            Utilities.WaitIfNotInPlaybackMode();
+        }
+
+        [Fact]
+        public void CreateMySQLResourceSucceeds()
+        {
+            var dmsClientHandler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
+            var resourcesHandler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var resourceGroup = CreateResourceGroup(context, resourcesHandler, ResourceGroupName, TestConfiguration.Location);
+                var dmsClient = Utilities.GetDataMigrationManagementClient(context, dmsClientHandler);
+                var service = CreateDMSInstance(context, dmsClient, resourceGroup, DmsDeploymentName);
+                var project = CreateDMSMySqlProject(context, dmsClient, resourceGroup, service.Name, DmsProjectName);
+                var task = CreateDMSMySqlSyncTask(context, dmsClient, resourceGroup, service, project.Name, DmsTaskName);
             }
             // Wait for resource group deletion to complete.
             Utilities.WaitIfNotInPlaybackMode();
@@ -45,8 +80,8 @@ namespace DataMigration.Tests.ScenarioTests
                 var resourceGroup = CreateResourceGroup(context, resourcesHandler, ResourceGroupName, TestConfiguration.Location);
                 var dmsClient = Utilities.GetDataMigrationManagementClient(context, dmsClientHandler);
                 var service = CreateDMSInstance(context, dmsClient, resourceGroup, DmsDeploymentName);
-                var project = CreateDMSProject(context, dmsClient, resourceGroup, service.Name, DmsProjectName);
-                var task = CreateDMSTask(context, dmsClient, resourceGroup, service, project.Name, DmsTaskName);
+                var project = CreateDMSSqlProject(context, dmsClient, resourceGroup, service.Name, DmsProjectName);
+                var task = CreateDMSSqlTask(context, dmsClient, resourceGroup, service, project.Name, DmsTaskName);
                 var getResult = dmsClient.Tasks.Get(resourceGroup.Name, service.Name, project.Name, task.Name);
             }
             // Wait for resource group deletion to complete.
@@ -64,8 +99,8 @@ namespace DataMigration.Tests.ScenarioTests
                 var resourceGroup = CreateResourceGroup(context, resourcesHandler, ResourceGroupName, TestConfiguration.Location);
                 var dmsClient = Utilities.GetDataMigrationManagementClient(context, dmsClientHandler);
                 var service = CreateDMSInstance(context, dmsClient, resourceGroup, DmsDeploymentName);
-                var project = CreateDMSProject(context, dmsClient, resourceGroup, service.Name, DmsProjectName);
-                var task = CreateDMSSyncTask(context, dmsClient, resourceGroup, service, project.Name, DmsTaskName);
+                var project = CreateDMSSqlProject(context, dmsClient, resourceGroup, service.Name, DmsProjectName);
+                var task = CreateDMSSqlSyncTask(context, dmsClient, resourceGroup, service, project.Name, DmsTaskName);
                 bool wait = true;
                 do
                 {
@@ -108,8 +143,8 @@ namespace DataMigration.Tests.ScenarioTests
                 var resourceGroup = CreateResourceGroup(context, resourcesHandler, ResourceGroupName, TestConfiguration.Location);
                 var dmsClient = Utilities.GetDataMigrationManagementClient(context, dmsClientHandler);
                 var service = CreateDMSInstance(context, dmsClient, resourceGroup, DmsDeploymentName);
-                var project = CreateDMSProject(context, dmsClient, resourceGroup, service.Name, DmsProjectName);
-                var task = CreateDMSTask(context, dmsClient, resourceGroup, service, project.Name, DmsTaskName);
+                var project = CreateDMSSqlProject(context, dmsClient, resourceGroup, service.Name, DmsProjectName);
+                var task = CreateDMSSqlTask(context, dmsClient, resourceGroup, service, project.Name, DmsTaskName);
                 var getResult = dmsClient.Tasks.Get(resourceGroup.Name, service.Name, project.Name, task.Name);
                 dmsClient.Tasks.Cancel(resourceGroup.Name, service.Name, project.Name, task.Name);
                 Utilities.WaitIfNotInPlaybackMode();
@@ -122,7 +157,7 @@ namespace DataMigration.Tests.ScenarioTests
             Utilities.WaitIfNotInPlaybackMode();
         }
 
-        private ProjectTask CreateDMSTask(MockContext context,
+        private ProjectTask CreateDMSSqlTask(MockContext context,
             DataMigrationServiceClient client,
             ResourceGroup resourceGroup,
             DataMigrationService service,
@@ -152,7 +187,7 @@ namespace DataMigration.Tests.ScenarioTests
                         dmsTaskName);
         }
 
-        private ProjectTask CreateDMSSyncTask(MockContext context,
+        private ProjectTask CreateDMSSqlSyncTask(MockContext context,
             DataMigrationServiceClient client,
             ResourceGroup resourceGroup,
             DataMigrationService service,
@@ -187,6 +222,97 @@ namespace DataMigration.Tests.ScenarioTests
                             Name = "JasmineTest",
                             TargetDatabaseName = "JasmineTest",
                             TableMap = new Dictionary<string, string> { { "dbo.TestTable1", "dbo.TestTable1" }, { "dbo.TestTable2", "dbo.TestTable2" } }
+                        }
+                    })
+            };
+
+            return client.Tasks.CreateOrUpdate(
+                        new ProjectTask(
+                            properties: taskProps),
+                        resourceGroup.Name,
+                        service.Name,
+                        dmsProjectName,
+                        dmsTaskName);
+        }
+
+        private ProjectTask CreateDMSPGSyncTask(MockContext context,
+            DataMigrationServiceClient client,
+            ResourceGroup resourceGroup,
+            DataMigrationService service,
+            string dmsProjectName,
+            string dmsTaskName)
+        {
+            var taskProps = new MigratePostgreSqlAzureDbForPostgreSqlSyncTaskProperties
+            {
+                Input = new MigratePostgreSqlAzureDbForPostgreSqlSyncTaskInput(
+                    new List<MigratePostgreSqlAzureDbForPostgreSqlSyncDatabaseInput>
+                    {
+                        new MigratePostgreSqlAzureDbForPostgreSqlSyncDatabaseInput
+                        {
+                            Name = "someSourceDatabaseName",
+                            TargetDatabaseName = "someTargetDatabaseName",
+                            SelectedTables = new List<MigratePostgreSqlAzureDbForPostgreSqlSyncDatabaseTableInput>
+                            {
+                                new MigratePostgreSqlAzureDbForPostgreSqlSyncDatabaseTableInput("public.someTableName")
+                            }
+                        }
+                    },
+                    new PostgreSqlConnectionInfo
+                    {
+                        ServerName = @"someTargetServerName",
+                        EncryptConnection = true,
+                        TrustServerCertificate = true,
+                        UserName = "someTargetUser",
+                        Password = "someTargetPassword"
+                    },
+                    new PostgreSqlConnectionInfo
+                    {
+                        ServerName = @"someSourceServerName",
+                        EncryptConnection = true,
+                        TrustServerCertificate = true,
+                        UserName = "someSourceUser",
+                        Password = "someSourcePassword"
+                    })
+            };
+
+            return client.Tasks.CreateOrUpdate(
+                        new ProjectTask(
+                            properties: taskProps),
+                        resourceGroup.Name,
+                        service.Name,
+                        dmsProjectName,
+                        dmsTaskName);
+        }
+
+        private ProjectTask CreateDMSMySqlSyncTask(MockContext context,
+            DataMigrationServiceClient client,
+            ResourceGroup resourceGroup,
+            DataMigrationService service,
+            string dmsProjectName,
+            string dmsTaskName)
+        {
+            var taskProps = new MigrateMySqlAzureDbForMySqlSyncTaskProperties
+            {
+                Input = new MigrateMySqlAzureDbForMySqlSyncTaskInput(
+                    new MySqlConnectionInfo
+                    {
+                        ServerName = @"someSourceServerName",
+                        UserName = "someSourceUser",
+                        Password = "someSourcePassword"
+                    },
+                    new MySqlConnectionInfo
+                    {
+                        ServerName = @"someTargetServerName",
+                        UserName = "someTargetUser",
+                        Password = "someTargetPassword"
+                    },
+                    new List<MigrateMySqlAzureDbForMySqlSyncDatabaseInput>
+                    {
+                        new MigrateMySqlAzureDbForMySqlSyncDatabaseInput
+                        {
+                            Name = "someSourceDatabaseName",
+                            TargetDatabaseName = "someTargetDatabaseName",
+                            TableMap = new Dictionary<string, string> { { "someTableSource", "someTableSource" } }
                         }
                     })
             };

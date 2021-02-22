@@ -36,12 +36,12 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </summary>
         /// <param name="location">The geo-location where the resource
         /// lives</param>
-        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. Ex-
-        /// Microsoft.Compute/virtualMachines or
-        /// Microsoft.Storage/storageAccounts.</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="tags">Resource tags.</param>
         /// <param name="mediaServiceId">The Media Services account ID.</param>
         /// <param name="storageAccounts">The storage accounts for this
@@ -51,7 +51,9 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <param name="encryption">The account encryption properties.</param>
         /// <param name="identity">The Managed Identity for the Media Services
         /// account.</param>
-        public MediaService(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), System.Guid mediaServiceId = default(System.Guid), IList<StorageAccount> storageAccounts = default(IList<StorageAccount>), StorageAuthentication? storageAuthentication = default(StorageAuthentication?), AccountEncryption encryption = default(AccountEncryption), MediaServiceIdentity identity = default(MediaServiceIdentity))
+        /// <param name="systemData">The system metadata relating to this
+        /// resource.</param>
+        public MediaService(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), System.Guid mediaServiceId = default(System.Guid), IList<StorageAccount> storageAccounts = default(IList<StorageAccount>), StorageAuthentication? storageAuthentication = default(StorageAuthentication?), AccountEncryption encryption = default(AccountEncryption), MediaServiceIdentity identity = default(MediaServiceIdentity), SystemData systemData = default(SystemData))
             : base(location, id, name, type, tags)
         {
             MediaServiceId = mediaServiceId;
@@ -59,6 +61,7 @@ namespace Microsoft.Azure.Management.Media.Models
             StorageAuthentication = storageAuthentication;
             Encryption = encryption;
             Identity = identity;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -96,6 +99,12 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </summary>
         [JsonProperty(PropertyName = "identity")]
         public MediaServiceIdentity Identity { get; set; }
+
+        /// <summary>
+        /// Gets the system metadata relating to this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Validate the object.

@@ -19,7 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
     /// These tests have a dependency on live Azure services and may incur costs for the associated
     /// Azure subscription.
     /// </remarks>
-    // [Ignore("This test case cannot be automated due to the inability to configure infrastructure to test against.")]
+    [Ignore("Requires upload of zip from https://github.com/Azure-Samples/Synapse/tree/main/Spark/DotNET as samples/net/wordcount/wordcount.zip to associated storage.")]
     public class SparkJobDefinitionClientLiveTests : RecordedTestBase<SynapseTestEnvironment>
     {
         internal class DisposableSparkJobDefinition : IAsyncDisposable
@@ -70,7 +70,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             ));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TestGetSparkJob()
         {
             SparkJobDefinitionClient client = CreateClient ();
@@ -87,7 +87,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TestDeleteSparkJob()
         {
             SparkJobDefinitionClient client = CreateClient();
@@ -98,7 +98,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             await deleteOperation.WaitAndAssertSuccessfulCompletion();
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TestRenameSparkJob()
         {
             SparkJobDefinitionClient client = CreateClient();
@@ -118,7 +118,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         }
 
         [Ignore ("https://github.com/Azure/azure-sdk-for-net/issues/18079 - SYNAPSE_API_ISSUE - Parameter name: ClassName")]
-        [Test]
+        [RecordedTest]
         public async Task TestExecute()
         {
             SparkJobDefinitionClient client = CreateClient();
@@ -129,7 +129,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         }
 
         [Ignore ("https://github.com/Azure/azure-sdk-for-net/issues/18079 - SYNAPSE_API_ISSUE - Causes internal error")]
-        [Test]
+        [RecordedTest]
         public async Task TestDebug()
         {
             SparkJobDefinitionClient client = CreateClient();
