@@ -71,7 +71,7 @@ namespace Azure.Messaging.EventGrid
         }
 
         /// <summary>
-        /// Gets the event payload as <see cref="BinaryData"/>. Using BinaryData,
+        /// Gets or sets the event payload as <see cref="BinaryData"/>. Using BinaryData,
         /// one can deserialize the payload into rich data, or access the raw JSON data using <see cref="BinaryData.ToString()"/>.
         /// </summary>
         public BinaryData Data { get; set; }

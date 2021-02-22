@@ -18,7 +18,8 @@ namespace Azure.Messaging
         public const string DataBase64 = "data_base64";
 
         // Error constants
-        public const string ErrorStrictSuggestion =
-            "The strict parameter can be set to 'false' in the CloudEvent.Parse method to relax this requirement.";
+        public const string ErrorSkipValidationSuggestion =
+            "The `skipValidation` parameter can be set to 'true' in the CloudEvent.Parse or CloudEvent.ParseEvents " +
+            "method to skip this validation.";
     }
 }

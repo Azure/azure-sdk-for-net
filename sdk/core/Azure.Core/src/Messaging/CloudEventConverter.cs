@@ -114,21 +114,21 @@ namespace Azure.Messaging
                     throw new ArgumentException(
                         "The source property must be specified in each CloudEvent. " +
                         Environment.NewLine +
-                        CloudEventConstants.ErrorStrictSuggestion);
+                        CloudEventConstants.ErrorSkipValidationSuggestion);
                 }
                 if (cloudEvent.Type == null)
                 {
                     throw new ArgumentException(
                         "The type property must be specified in each CloudEvent. " +
                         Environment.NewLine +
-                        CloudEventConstants.ErrorStrictSuggestion);
+                        CloudEventConstants.ErrorSkipValidationSuggestion);
                 }
                 if (cloudEvent.Id == null)
                 {
                     throw new ArgumentException(
                         "The Id property must be specified in each CloudEvent. " +
                         Environment.NewLine +
-                        CloudEventConstants.ErrorStrictSuggestion);
+                        CloudEventConstants.ErrorSkipValidationSuggestion);
                 }
                 if (cloudEvent.SpecVersion != "1.0")
                 {
@@ -138,7 +138,7 @@ namespace Azure.Messaging
                             "The specverion was not set in at least one of the events in the payload. " +
                             "This type only supports specversion '1.0', which must be set for each event. " +
                             Environment.NewLine +
-                            CloudEventConstants.ErrorStrictSuggestion +
+                            CloudEventConstants.ErrorSkipValidationSuggestion +
                             Environment.NewLine +
                             element,
                             nameof(element));
@@ -149,7 +149,7 @@ namespace Azure.Messaging
                             $"The specverion value of '{cloudEvent.SpecVersion}' is not supported by CloudEvent. " +
                             "This type only supports specversion '1.0'. " +
                             Environment.NewLine +
-                            CloudEventConstants.ErrorStrictSuggestion +
+                            CloudEventConstants.ErrorSkipValidationSuggestion +
                             Environment.NewLine +
                             element,
                             nameof(element));
