@@ -6,7 +6,7 @@ using Azure.Core;
 namespace Azure.Communication
 {
     [CodeGenModel("CommunicationIdentifierModel")]
-    public partial class CommunicationIdentifierModel
+    internal partial class CommunicationIdentifierModel
     {
     }
 }

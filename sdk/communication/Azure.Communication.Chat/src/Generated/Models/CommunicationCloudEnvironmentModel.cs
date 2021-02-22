@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Communication
 {
     /// <summary> The cloud that the identifier belongs to. </summary>
-    public readonly partial struct CommunicationCloudEnvironmentModel : IEquatable<CommunicationCloudEnvironmentModel>
+    internal readonly partial struct CommunicationCloudEnvironmentModel : IEquatable<CommunicationCloudEnvironmentModel>
     {
         private readonly string _value;
 

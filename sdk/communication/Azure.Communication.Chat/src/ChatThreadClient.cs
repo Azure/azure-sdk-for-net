@@ -501,16 +501,21 @@ namespace Azure.Communication.Chat
         }
 
         /// <summary> Remove a participant from a thread asynchronously.</summary>
-        /// <param name="user"><see cref="CommunicationUserIdentifier" /> to be removed from the chat thread participants.</param>
+        /// <param name="user"><see cref="CommunicationIdentifier" /> to be removed from the chat thread participants.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response> RemoveParticipantAsync(CommunicationUserIdentifier user, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> RemoveParticipantAsync(CommunicationIdentifier user, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatThreadClient)}.{nameof(RemoveParticipant)}");
             scope.Start();
             try
             {
-                return await _chatThreadRestClient.RemoveChatParticipantAsync(Id, null, CommunicationIdentifierSerializer.Serialize(user).CommunicationUser, null, null, cancellationToken).ConfigureAwait(false);
+                CommunicationIdentifierModel communicationIdentifierModel = CommunicationIdentifierSerializer.Serialize(user);
+                return await _chatThreadRestClient.RemoveChatParticipantAsync(Id, communicationIdentifierModel.RawId,
+                    communicationIdentifierModel.CommunicationUser,
+                    communicationIdentifierModel.PhoneNumber,
+                    communicationIdentifierModel.MicrosoftTeamsUser,
+                    cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -520,16 +525,21 @@ namespace Azure.Communication.Chat
         }
 
         /// <summary> Remove a member from a thread .</summary>
-        /// <param name="user"><see cref="CommunicationUserIdentifier" /> to be removed from the chat thread participants.</param>
+        /// <param name="user"><see cref="CommunicationIdentifier" /> to be removed from the chat thread participants.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response RemoveParticipant(CommunicationUserIdentifier user, CancellationToken cancellationToken = default)
+        public virtual Response RemoveParticipant(CommunicationIdentifier user, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatThreadClient)}.{nameof(RemoveParticipant)}");
             scope.Start();
             try
             {
-                return _chatThreadRestClient.RemoveChatParticipant(Id, null, CommunicationIdentifierSerializer.Serialize(user).CommunicationUser, null, null, cancellationToken);
+                CommunicationIdentifierModel communicationIdentifierModel = CommunicationIdentifierSerializer.Serialize(user);
+                return _chatThreadRestClient.RemoveChatParticipant(Id, communicationIdentifierModel.RawId,
+                    communicationIdentifierModel.CommunicationUser,
+                    communicationIdentifierModel.PhoneNumber,
+                    communicationIdentifierModel.MicrosoftTeamsUser,
+                    cancellationToken);
             }
             catch (Exception ex)
             {
@@ -626,7 +636,7 @@ namespace Azure.Communication.Chat
                 try
                 {
                     Response<ChatMessageReadReceiptsCollection> response = await _chatThreadRestClient.ListChatReadReceiptsAsync(Id, pageSizeHint, skip, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(x => new ChatMessageReadReceipt(x)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -643,7 +653,7 @@ namespace Azure.Communication.Chat
                 try
                 {
                     Response<ChatMessageReadReceiptsCollection> response = await _chatThreadRestClient.ListChatReadReceiptsNextPageAsync(nextLink, Id, pageSizeHint, skip, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(x => new ChatMessageReadReceipt(x)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -668,7 +678,7 @@ namespace Azure.Communication.Chat
                 try
                 {
                     Response<ChatMessageReadReceiptsCollection> response = _chatThreadRestClient.ListChatReadReceipts(Id, pageSizeHint, skip, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(x => new ChatMessageReadReceipt(x)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -685,7 +695,7 @@ namespace Azure.Communication.Chat
                 try
                 {
                     Response<ChatMessageReadReceiptsCollection> response = _chatThreadRestClient.ListChatReadReceiptsNextPage(nextLink, Id, pageSizeHint, skip, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(x => new ChatMessageReadReceipt(x)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

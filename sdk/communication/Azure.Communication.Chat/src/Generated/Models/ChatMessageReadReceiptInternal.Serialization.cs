@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
-    public partial class ChatMessageReadReceipt
+    internal partial class ChatMessageReadReceiptInternal
     {
-        internal static ChatMessageReadReceipt DeserializeChatMessageReadReceipt(JsonElement element)
+        internal static ChatMessageReadReceiptInternal DeserializeChatMessageReadReceiptInternal(JsonElement element)
         {
             CommunicationIdentifierModel senderCommunicationIdentifier = default;
             string chatMessageId = default;
@@ -37,7 +37,7 @@ namespace Azure.Communication.Chat
                     continue;
                 }
             }
-            return new ChatMessageReadReceipt(senderCommunicationIdentifier, chatMessageId, readOn);
+            return new ChatMessageReadReceiptInternal(senderCommunicationIdentifier, chatMessageId, readOn);
         }
     }
 }
