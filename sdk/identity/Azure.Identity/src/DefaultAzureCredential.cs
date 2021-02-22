@@ -139,6 +139,7 @@ namespace Azure.Identity
                     TokenCredential credential;
                     (token, credential) = await GetTokenFromSourcesAsync(_sources, requestContext, async, cancellationToken).ConfigureAwait(false);
                     _sources = default;
+                    _credentialType = credential.GetType();
                     asyncLock.SetValue(credential);
                 }
 
@@ -175,8 +176,6 @@ namespace Azure.Identity
                     AccessToken token = async
                         ? await sources[i].GetTokenAsync(requestContext, cancellationToken).ConfigureAwait(false)
                         : sources[i].GetToken(requestContext, cancellationToken);
-
-                    _credentialType = sources[i].GetType();
 
                     return (token, sources[i]);
                 }
