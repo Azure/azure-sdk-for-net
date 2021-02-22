@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Orbital.Tests.Tests
                 this.client =  GetAzureOrbitalClient(context, handler);
 
                 // create a resource group
-                Assert.True(VerifyExistenceOrCreateResourceGroup(this.rgName, this.location));
+                Assert.True(VerifyExistenceOrCreateResourceGroup(rgName, this.location));
 
                 // create a spacecraft
                 CreateSpacecraftTest(this.client);
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.Orbital.Tests.Tests
 
 
             Spacecraft actual = client.Orbital.BeginCreateOrUpdateSpacecraft(
-                this.rgName,
+                rgName,
                 this.spacecraftName,
                 "25544",
                 this.location,
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.Orbital.Tests.Tests
        
         private void GetSpacecraftTest()
         {
-            Spacecraft actual = this.client.Orbital.GetSpacecraft(this.rgName, this.spacecraftName);
+            Spacecraft actual = this.client.Orbital.GetSpacecraft(rgName, this.spacecraftName);
 
             if (!this.IsRecording)
             {
@@ -89,11 +89,11 @@ namespace Microsoft.Azure.Management.Orbital.Tests.Tests
         }
         internal void DeleteSpacecraftTest(AzureOrbitalClient client)
         {
-            client.Orbital.DeleteSpacecraft(this.rgName, this.spacecraftName);
+            client.Orbital.DeleteSpacecraft(rgName, this.spacecraftName);
         }
         private void DeleteResourceGroupTest()
         {
-            DeleteResourceGroup(this.rgName);
+            DeleteResourceGroup(rgName);
         }
     }
 }

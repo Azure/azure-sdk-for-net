@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Orbital.Tests.Tests
                 this.client =  GetAzureOrbitalClient(context, handler);
 
                 // create a resource group
-                Assert.True(VerifyExistenceOrCreateResourceGroup(this.rgName, this.location));
+                Assert.True(VerifyExistenceOrCreateResourceGroup(rgName, this.location));
 
 
                 
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.Orbital.Tests.Tests
 
 
             // get the list of available contacts 
-            AvailableContactsListResult availableContacts = this.client.Orbital.ListAvailableContacts(this.rgName, 
+            AvailableContactsListResult availableContacts = this.client.Orbital.ListAvailableContacts(rgName, 
                                                                                                         this.spacecraftName, 
                                                                                                         resourceReference, 
                                                                                                         this.gsName, 
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.Orbital.Tests.Tests
             {
                 var firstAvailableContact = availableContacts.Value[0];
 
-                Contact actual = this.client.Orbital.BeginCreateContact(this.rgName, 
+                Contact actual = this.client.Orbital.BeginCreateContact(rgName, 
                                                                         this.spacecraftName, 
                                                                         this.contactName, 
                                                                         new Contact(
@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Management.Orbital.Tests.Tests
         }
         private void GetContactTest()
         {
-            Contact actual = this.client.Orbital.GetContact(this.rgName, this.spacecraftName, this.contactName);
+            Contact actual = this.client.Orbital.GetContact(rgName, this.spacecraftName, this.contactName);
 
             if (!this.IsRecording)
             {
@@ -124,7 +124,7 @@ namespace Microsoft.Azure.Management.Orbital.Tests.Tests
         /** Delete resources **/
         private void DeleteContactTest()
         {
-            this.client.Orbital.DeleteContact(this.rgName, this.spacecraftName, this.contactName);
+            this.client.Orbital.DeleteContact(rgName, this.spacecraftName, this.contactName);
 
             //delete spacecraft
             SpacecraftTests spacecraftTests = new SpacecraftTests();
@@ -137,7 +137,7 @@ namespace Microsoft.Azure.Management.Orbital.Tests.Tests
         }
         private void DeleteResourceGroupTest()
         {
-            DeleteResourceGroup(this.rgName);
+            DeleteResourceGroup(rgName);
         }
     }
 }

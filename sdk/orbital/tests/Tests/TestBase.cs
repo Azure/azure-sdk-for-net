@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.Orbital.Tests.Tests
 
         public string contactProfileName { get; set; }
 
-        public string rgName { get; set; }
+        static public  string rgName { get; set; }
 
         public string location { get; set; }
 
@@ -42,11 +42,16 @@ namespace Microsoft.Azure.Management.Orbital.Tests.Tests
             initializeLocalVariables();
         }
 
+        static TestBase()
+        {
+            rgName = "orbital-dot-net-sdk-testing-rg" + DateTime.Now.Millisecond.ToString();
+
+        }
+
         public void initializeLocalVariables()
         {
             this.spacecraftName = "spacecraftnetsdktest";
             this.contactProfileName = "contactprofilenetsdktest";
-            this.rgName = "orbital-dot-net-sdk-testing-rg";
             this.location = "westus2";
             this.gsName = "West US 2";
             this.contactName = "contactnetsdktest";
@@ -57,7 +62,7 @@ namespace Microsoft.Azure.Management.Orbital.Tests.Tests
         }
 
 
-        public void setEnvironmentVariables()
+         public void setEnvironmentVariables()
         {
             using (var file = File.OpenText("Properties\\launchSettings.json"))
             {

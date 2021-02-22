@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Orbital.Tests.Tests
                 this.client =  GetAzureOrbitalClient(context, handler);
 
                 // create a resource group
-                Assert.True(VerifyExistenceOrCreateResourceGroup(this.rgName, this.location));
+                Assert.True(VerifyExistenceOrCreateResourceGroup(rgName, this.location));
                                
                 // create a contact profile
                 CreateContactProfileTest(this.client);
@@ -48,11 +48,11 @@ namespace Microsoft.Azure.Management.Orbital.Tests.Tests
         }
         internal void DeleteContactProfileTest(AzureOrbitalClient client)
         {
-            client.Orbital.DeleteContactProfile(this.rgName, this.contactProfileName);
+            client.Orbital.DeleteContactProfile(rgName, this.contactProfileName);
         }
         private void GetContactProfileTest()
         {
-            ContactProfile actual = this.client.Orbital.GetContactProfile(this.rgName, this.contactProfileName);
+            ContactProfile actual = this.client.Orbital.GetContactProfile(rgName, this.contactProfileName);
 
             if (!this.IsRecording)
             {
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.Orbital.Tests.Tests
                 45));
 
             ContactProfile actual = client.Orbital.BeginCreateOrUpdateContactProfile(
-                this.rgName,
+                rgName,
                 this.contactProfileName,
                 links,
                 this.location,
@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Management.Orbital.Tests.Tests
 
         private void DeleteResourceGroupTest()
         {
-            DeleteResourceGroup(this.rgName);
+            DeleteResourceGroup(rgName);
         }
     }
 }
