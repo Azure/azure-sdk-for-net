@@ -200,8 +200,8 @@ namespace Azure.Storage.Blobs.Specialized
                 message,
                 response =>
                 {
-                    BlobDeleteHeaders blobDeleteHeaders = new BlobDeleteHeaders(message.Response);
-                    return ResponseWithHeaders.FromValue(blobDeleteHeaders, message.Response);
+                    BlobDeleteHeaders blobDeleteHeaders = new BlobDeleteHeaders(response);
+                    return ResponseWithHeaders.FromValue(blobDeleteHeaders, response);
                 });
         }
 
@@ -308,8 +308,8 @@ namespace Azure.Storage.Blobs.Specialized
                 message,
                 response =>
                 {
-                    BlobSetAccessTierHeaders blobSetAccessTierHeaders = new BlobSetAccessTierHeaders(message.Response);
-                    return ResponseWithHeaders.FromValue(blobSetAccessTierHeaders, message.Response);
+                    BlobSetAccessTierHeaders blobSetAccessTierHeaders = new BlobSetAccessTierHeaders(response);
+                    return ResponseWithHeaders.FromValue(blobSetAccessTierHeaders, response);
                 });
         }
 
