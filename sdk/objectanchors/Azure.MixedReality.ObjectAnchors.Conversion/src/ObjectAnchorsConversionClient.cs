@@ -15,7 +15,15 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
     /// </summary>
     public class ObjectAnchorsConversionClient
     {
-        private readonly Guid _accountId;
+        /// <summary>
+        /// The Account ID to be used by the Client
+        /// </summary>
+        public Guid AccountId { get; }
+
+        /// <summary>
+        /// The Account Domain to be used by the Client
+        /// </summary>
+        public string AccountDomain { get; }
 
         private readonly HttpPipeline _pipeline;
 
@@ -71,7 +79,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             TokenCredential mrTokenCredential = MixedRealityTokenCredential.GetMixedRealityCredential(accountId, authenticationEndpoint, credential, options.MixedRealityAuthenticationOptions);
             Uri serviceEndpoint = options.ServiceEndpoint ?? ConstructObjectAnchorsEndpointUrl(accountDomain);
 
-            _accountId = accountId;
+            AccountId = accountId;
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(mrTokenCredential, GetDefaultScope(serviceEndpoint)));
             _getBlobUploadEndpointRestClient = new BlobUploadEndpointRestClient(_clientDiagnostics, _pipeline, serviceEndpoint, options.Version);
@@ -103,7 +111,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                 InputAssetUri = options.InputAssetUri
             };
 
-            _ingestionJobRestClient.Create(_accountId, options.JobId, body: properties, cancellationToken: cancellationToken);
+            _ingestionJobRestClient.Create(AccountId, options.JobId, body: properties, cancellationToken: cancellationToken);
             return new AssetConversionOperation(options.JobId, this);
         }
 
@@ -122,7 +130,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                 InputAssetUri = options.InputAssetUri
             };
 
-            await _ingestionJobRestClient.CreateAsync(_accountId, options.JobId, body: properties, cancellationToken: cancellationToken).ConfigureAwait(false);
+            await _ingestionJobRestClient.CreateAsync(AccountId, options.JobId, body: properties, cancellationToken: cancellationToken).ConfigureAwait(false);
             return new AssetConversionOperation(options.JobId, this);
         }
 
@@ -133,7 +141,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <returns><see cref="Response{GetAssetUploadUriResult}"/>.</returns>
         public virtual Response<AssetUploadUriResult> GetAssetUploadUri(CancellationToken cancellationToken = default)
         {
-            return _getBlobUploadEndpointRestClient.Get(_accountId, xMrcCv: GenerateCv(), cancellationToken: cancellationToken);
+            return _getBlobUploadEndpointRestClient.Get(AccountId, xMrcCv: GenerateCv(), cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -143,7 +151,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <returns><see cref="Response{GetAssetUploadUriResult}"/>.</returns>
         public virtual async Task<Response<AssetUploadUriResult>> GetAssetUploadUriAsync(CancellationToken cancellationToken = default)
         {
-            return await _getBlobUploadEndpointRestClient.GetAsync(_accountId, xMrcCv: GenerateCv(), cancellationToken: cancellationToken).ConfigureAwait(false);
+            return await _getBlobUploadEndpointRestClient.GetAsync(AccountId, xMrcCv: GenerateCv(), cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -154,7 +162,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <returns><see cref="Response{AssetConversionProperties}"/>.</returns>
         internal virtual Response<AssetConversionProperties> GetAssetConversionStatus(Guid JobId, CancellationToken cancellationToken = default)
         {
-            var accountId = _accountId;
+            var accountId = AccountId;
             var properties = _ingestionJobRestClient.Get(accountId, JobId, xMrcCv: GenerateCv(), cancellationToken: cancellationToken);
             properties.Value.JobId = JobId;
             properties.Value.AccountId = accountId;
@@ -169,7 +177,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <returns><see cref="Response{AssetConversionProperties}"/>.</returns>
         internal virtual async Task<Response<AssetConversionProperties>> GetAssetConversionStatusAsync(Guid JobId, CancellationToken cancellationToken = default)
         {
-            var accountId = _accountId;
+            var accountId = AccountId;
             var properties = await _ingestionJobRestClient.GetAsync(accountId, JobId, xMrcCv: GenerateCv(), cancellationToken: cancellationToken).ConfigureAwait(false);
             properties.Value.JobId = JobId;
             properties.Value.AccountId = accountId;
