@@ -8,8 +8,6 @@ namespace Azure.Communication.Pipeline
         public CommunicationIdentityClientRecordedTestSanitizer()
         {
             JsonPathSanitizers.Add("$..token");
-            JsonPathSanitizers.Add("$..urls");
-            JsonPathSanitizers.Add("$..username");
             JsonPathSanitizers.Add("$..credential");
         }
     }

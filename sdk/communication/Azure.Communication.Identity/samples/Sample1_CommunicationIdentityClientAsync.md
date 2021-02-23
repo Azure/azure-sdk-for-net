@@ -73,7 +73,7 @@ A set of TURN credentials are returned for the user. Each TURN credential consis
 Every set of TURN credentials is stamped with an expiry date. Once the credentials are expired, you can renew the token by calling the same method.
 
 ```C# Snippet:CreateTURNTokenAsync
-Response<CommunicationTurnCredentialsResponse> turnTokenResponse = await client.IssueTurnCredentialsAsync(user);
+Response<CommunicationTurnCredentialsResponse> turnTokenResponse = await client.GetTurnCredentialsAsync(user);
 DateTimeOffset turnTokenExpiresOn = turnTokenResponse.Value.ExpiresOn;
 IReadOnlyList<CommunicationTurnServer> turnServers = turnTokenResponse.Value.TurnServers;
 Console.WriteLine($"Expires On: {turnTokenExpiresOn}");
