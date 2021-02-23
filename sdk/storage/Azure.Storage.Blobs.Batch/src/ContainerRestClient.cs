@@ -9,6 +9,8 @@ namespace Azure.Storage.Blobs.Batch
 {
     internal partial class ContainerRestClient
     {
+        // We are overriding this method because the new generator attempts to add 2 content types to the Content-Type header,
+        // causing auth to fail.  https://github.com/Azure/autorest/issues/3914
         internal HttpMessage CreateSubmitBatchRequest(string containerName, long contentLength, string multipartContentType, Stream body, int? timeout)
         {
             var message = _pipeline.CreateMessage();
