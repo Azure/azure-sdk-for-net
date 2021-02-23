@@ -263,18 +263,7 @@ namespace Azure.Messaging.EventGrid
                 }
                 using HttpMessage message = _pipeline.CreateMessage();
                 Request request = CreateEventRequest(message, "application/cloudevents-batch+json; charset=utf-8");
-
-                BinaryData data;
-                if (async)
-                {
-                    data = await s_jsonSerializer.SerializeAsync(events, typeof(List<CloudEvent>), cancellationToken).ConfigureAwait(false);
-                }
-                else
-                {
-                    data = s_jsonSerializer.Serialize(events, typeof(List<CloudEvent>), cancellationToken);
-                }
-
-                RequestContent content = RequestContent.Create(data.ToMemory());
+                CloudEventRequestContent content = new CloudEventRequestContent(events);
                 request.Content = content;
 
                 if (async)
