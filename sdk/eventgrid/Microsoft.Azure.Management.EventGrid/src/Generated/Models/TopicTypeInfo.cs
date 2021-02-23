@@ -51,9 +51,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <param name="supportedLocations">List of locations supported by
         /// this topic type.</param>
         /// <param name="sourceResourceFormat">Source resource format.</param>
-        /// <param name="supportedScopesForSource">Supported source
-        /// scopes.</param>
-        public TopicTypeInfo(string id = default(string), string name = default(string), string type = default(string), string provider = default(string), string displayName = default(string), string description = default(string), string resourceRegionType = default(string), string provisioningState = default(string), IList<string> supportedLocations = default(IList<string>), string sourceResourceFormat = default(string), IList<string> supportedScopesForSource = default(IList<string>))
+        public TopicTypeInfo(string id = default(string), string name = default(string), string type = default(string), string provider = default(string), string displayName = default(string), string description = default(string), string resourceRegionType = default(string), string provisioningState = default(string), IList<string> supportedLocations = default(IList<string>), string sourceResourceFormat = default(string))
             : base(id, name, type)
         {
             Provider = provider;
@@ -63,7 +61,6 @@ namespace Microsoft.Azure.Management.EventGrid.Models
             ProvisioningState = provisioningState;
             SupportedLocations = supportedLocations;
             SourceResourceFormat = sourceResourceFormat;
-            SupportedScopesForSource = supportedScopesForSource;
             CustomInit();
         }
 
@@ -116,12 +113,6 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.sourceResourceFormat")]
         public string SourceResourceFormat { get; set; }
-
-        /// <summary>
-        /// Gets or sets supported source scopes.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.supportedScopesForSource")]
-        public IList<string> SupportedScopesForSource { get; set; }
 
     }
 }

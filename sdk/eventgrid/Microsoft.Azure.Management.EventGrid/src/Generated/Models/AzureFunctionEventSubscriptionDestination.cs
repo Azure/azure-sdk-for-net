@@ -13,8 +13,6 @@ namespace Microsoft.Azure.Management.EventGrid.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -45,14 +43,11 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// batch.</param>
         /// <param name="preferredBatchSizeInKilobytes">Preferred batch size in
         /// Kilobytes.</param>
-        /// <param name="deliveryAttributeMappings">Delivery attribute
-        /// details.</param>
-        public AzureFunctionEventSubscriptionDestination(string resourceId = default(string), int? maxEventsPerBatch = default(int?), int? preferredBatchSizeInKilobytes = default(int?), IList<DeliveryAttributeMapping> deliveryAttributeMappings = default(IList<DeliveryAttributeMapping>))
+        public AzureFunctionEventSubscriptionDestination(string resourceId = default(string), int? maxEventsPerBatch = default(int?), int? preferredBatchSizeInKilobytes = default(int?))
         {
             ResourceId = resourceId;
             MaxEventsPerBatch = maxEventsPerBatch;
             PreferredBatchSizeInKilobytes = preferredBatchSizeInKilobytes;
-            DeliveryAttributeMappings = deliveryAttributeMappings;
             CustomInit();
         }
 
@@ -79,12 +74,6 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.preferredBatchSizeInKilobytes")]
         public int? PreferredBatchSizeInKilobytes { get; set; }
-
-        /// <summary>
-        /// Gets or sets delivery attribute details.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.deliveryAttributeMappings")]
-        public IList<DeliveryAttributeMapping> DeliveryAttributeMappings { get; set; }
 
     }
 }

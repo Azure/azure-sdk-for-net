@@ -43,16 +43,11 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <param name="inboundIpRules">This can be used to restrict traffic
         /// from specific IPs instead of all IPs. Note: These are considered
         /// only if PublicNetworkAccess is enabled.</param>
-        /// <param name="identity">Identity information for the
-        /// resource.</param>
-        /// <param name="sku">The Sku pricing tier for the domain.</param>
-        public DomainUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), string publicNetworkAccess = default(string), IList<InboundIpRule> inboundIpRules = default(IList<InboundIpRule>), IdentityInfo identity = default(IdentityInfo), ResourceSku sku = default(ResourceSku))
+        public DomainUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), string publicNetworkAccess = default(string), IList<InboundIpRule> inboundIpRules = default(IList<InboundIpRule>))
         {
             Tags = tags;
             PublicNetworkAccess = publicNetworkAccess;
             InboundIpRules = inboundIpRules;
-            Identity = identity;
-            Sku = sku;
             CustomInit();
         }
 
@@ -85,18 +80,6 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.inboundIpRules")]
         public IList<InboundIpRule> InboundIpRules { get; set; }
-
-        /// <summary>
-        /// Gets or sets identity information for the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "identity")]
-        public IdentityInfo Identity { get; set; }
-
-        /// <summary>
-        /// Gets or sets the Sku pricing tier for the domain.
-        /// </summary>
-        [JsonProperty(PropertyName = "sku")]
-        public ResourceSku Sku { get; set; }
 
     }
 }

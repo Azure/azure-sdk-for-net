@@ -13,8 +13,6 @@ namespace Microsoft.Azure.Management.EventGrid.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -40,12 +38,9 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <param name="resourceId">The Azure Resource Id that represents the
         /// endpoint of an Event Hub destination of an event
         /// subscription.</param>
-        /// <param name="deliveryAttributeMappings">Delivery attribute
-        /// details.</param>
-        public EventHubEventSubscriptionDestination(string resourceId = default(string), IList<DeliveryAttributeMapping> deliveryAttributeMappings = default(IList<DeliveryAttributeMapping>))
+        public EventHubEventSubscriptionDestination(string resourceId = default(string))
         {
             ResourceId = resourceId;
-            DeliveryAttributeMappings = deliveryAttributeMappings;
             CustomInit();
         }
 
@@ -60,12 +55,6 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.resourceId")]
         public string ResourceId { get; set; }
-
-        /// <summary>
-        /// Gets or sets delivery attribute details.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.deliveryAttributeMappings")]
-        public IList<DeliveryAttributeMapping> DeliveryAttributeMappings { get; set; }
 
     }
 }
