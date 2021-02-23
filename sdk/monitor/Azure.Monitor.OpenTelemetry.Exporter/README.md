@@ -11,7 +11,7 @@ The [OpenTelemetry .NET](https://github.com/open-telemetry/opentelemetry-dotnet)
 
 ### Install the package
 
-Install the Azure Monitor Exporter for OpenTelemetry .NET with NuGet:
+Install the Azure Monitor Exporter for OpenTelemetry .NET with [NuGet](https://www.nuget.org/):
 
 ```shell
 dotnet add package Azure.Monitor.OpenTelemetry.Exporter
