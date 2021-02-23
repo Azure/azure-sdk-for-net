@@ -76,7 +76,9 @@ namespace Azure.Identity.Tests
 
         [NonParallelizable]
         [Test]
-        public async Task VerifyAppService2017RequestWithClientIdMockAsync()
+        [TestCase(null)]
+        [TestCase("mock-client-id")]
+        public async Task VerifyAppService2017RequestWithClientIdMockAsync(string clientId)
         {
             using (new TestEnvVar(new () { { "MSI_ENDPOINT", "https://mock.msi.endpoint/" }, { "MSI_SECRET", "mock-msi-secret" } }))
             {
@@ -84,7 +86,7 @@ namespace Azure.Identity.Tests
                 var mockTransport = new MockTransport(response);
                 var options = new TokenCredentialOptions() { Transport = mockTransport };
 
-                ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential("mock-client-id", options));
+                ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential(clientId, options));
 
                 AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
@@ -98,7 +100,10 @@ namespace Azure.Identity.Tests
 
                 Assert.IsTrue(query.Contains("api-version=2017-09-01"));
                 Assert.IsTrue(query.Contains($"resource={Uri.EscapeDataString(ScopeUtilities.ScopesToResource(MockScopes.Default))}"));
-                Assert.IsTrue(query.Contains($"clientid=mock-client-id"));
+                if (clientId != null)
+                {
+                    Assert.IsTrue(query.Contains($"clientid=mock-client-id"));
+                }
                 Assert.IsTrue(request.Headers.TryGetValue("secret", out string actSecretValue));
                 Assert.AreEqual("mock-msi-secret", actSecretValue);
             }
@@ -225,7 +230,9 @@ namespace Azure.Identity.Tests
 
         [NonParallelizable]
         [Test]
-        public async Task VerifyCloudShellMsiRequestWithClientIdMockAsync()
+        [TestCase(null)]
+        [TestCase("mock-client-id")]
+        public async Task VerifyCloudShellMsiRequestWithClientIdMockAsync(string clientId)
         {
             using (new TestEnvVar(new () { { "MSI_ENDPOINT", "https://mock.msi.endpoint/" }, { "MSI_SECRET", null } }))
             {
@@ -233,7 +240,7 @@ namespace Azure.Identity.Tests
                 var mockTransport = new MockTransport(response);
                 var options = new TokenCredentialOptions() { Transport = mockTransport };
 
-                ManagedIdentityCredential client = InstrumentClient(new ManagedIdentityCredential("mock-client-id", options));
+                ManagedIdentityCredential client = InstrumentClient(new ManagedIdentityCredential(clientId, options));
 
                 AccessToken actualToken = await client.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
@@ -250,7 +257,10 @@ namespace Azure.Identity.Tests
                 string body = Encoding.UTF8.GetString(content);
 
                 Assert.IsTrue(body.Contains($"resource={Uri.EscapeDataString(ScopeUtilities.ScopesToResource(MockScopes.Default))}"));
-                Assert.IsTrue(body.Contains($"client_id=mock-client-id"));
+                if (clientId != null)
+                {
+                    Assert.IsTrue(body.Contains($"client_id=mock-client-id"));
+                }
                 Assert.IsTrue(request.Headers.TryGetValue("Metadata", out string actMetadata));
                 Assert.AreEqual("true", actMetadata);
             }
