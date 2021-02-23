@@ -11,7 +11,7 @@ namespace Azure.Core
 {
     internal static class OperationHelpers
     {
-        public static TimeSpan DefaultPollingInterval { get; } = TimeSpan.FromSeconds(1);
+        public static TimeSpan DefaultPollingInterval { get; set; } = TimeSpan.FromSeconds(1);
 
         public static T GetValue<T>(ref T? value) where T: class
         {

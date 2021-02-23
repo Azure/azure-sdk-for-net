@@ -134,6 +134,21 @@ namespace Azure.Core.TestFramework
             Logger = null;
         }
 
+        [OneTimeSetUp]
+        public void OverrideDefaultPollingTime()
+        {
+            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                var operationHelpers = assembly.GetType("Azure.Core.OperationHelpers");
+
+                if (operationHelpers != null)
+                {
+                    operationHelpers.GetProperty("DefaultPollingInterval").SetValue(null, TimeSpan.FromSeconds(0));
+                    break;
+                }
+            }
+        }
+
         [SetUp]
         public virtual void StartTestRecording()
         {
