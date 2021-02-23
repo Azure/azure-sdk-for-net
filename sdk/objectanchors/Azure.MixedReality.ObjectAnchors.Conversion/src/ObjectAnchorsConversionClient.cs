@@ -208,9 +208,9 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             try
             {
                 var properties = _ingestionJobRestClient.Get(AccountId, JobId, xMrcCv: GenerateCv(), cancellationToken: cancellationToken);
-            properties.Value.JobId = JobId;
-            properties.Value.AccountId = AccountId;
-            return properties;
+                properties.Value.JobId = JobId;
+                properties.Value.AccountId = AccountId;
+                return properties;
             }
             catch (Exception ex)
             {
