@@ -26,10 +26,11 @@ namespace Azure.Communication.Chat.Tests.samples
                 TestEnvironment.Endpoint,
                 new CommunicationTokenCredential(userToken));
 
+            DateTime minDate = DateTime.SpecifyKind(DateTime.MinValue, DateTimeKind.Utc);
             var chatParticipant = new ChatParticipant(new CommunicationUserIdentifier(theadCreatorMemberId))
             {
                 DisplayName = "UserDisplayName",
-                ShareHistoryTime = DateTime.MinValue
+                ShareHistoryTime = minDate
             };
             CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync(topic: "Hello world!", participants: new[] { chatParticipant });
             ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient(createChatThreadResult.ChatThread.Id);
