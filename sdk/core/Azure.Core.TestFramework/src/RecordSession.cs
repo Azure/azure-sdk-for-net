@@ -114,6 +114,11 @@ namespace Azure.Core.TestFramework
                    session.Entries.SequenceEqual(Entries, new EntryEquivalentComparer(matcher));
         }
 
+        /// <summary>
+        /// Indicates whether the <see cref="RecordSession"/> has any <see cref="Entries"/> or <see cref="Variables"/>.
+        /// </summary>
+        public bool IsEmpty => Entries.Count == 0 && Variables.Count == 0;
+
         private class EntryEquivalentComparer : IEqualityComparer<RecordEntry>
         {
             private readonly RecordMatcher _matcher;
