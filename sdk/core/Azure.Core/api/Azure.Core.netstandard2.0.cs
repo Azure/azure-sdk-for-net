@@ -570,3 +570,27 @@ namespace Azure.Core.Serialization
         public virtual System.Threading.Tasks.ValueTask<System.BinaryData> SerializeAsync(object? value, System.Type? inputType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.Messaging
+{
+    public partial class CloudEvent
+    {
+        public CloudEvent(string source, string type, System.BinaryData data, string dataContentType, Azure.Messaging.CloudEventDataFormat dataFormat = Azure.Messaging.CloudEventDataFormat.Binary) { }
+        public CloudEvent(string source, string type, object jsonSerializableData, System.Type? dataSerializationType = null) { }
+        public System.BinaryData? Data { get { throw null; } set { } }
+        public string? DataContentType { get { throw null; } set { } }
+        public string? DataSchema { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, object?> ExtensionAttributes { get { throw null; } }
+        public string Id { get { throw null; } set { } }
+        public string Source { get { throw null; } set { } }
+        public string? Subject { get { throw null; } set { } }
+        public System.DateTimeOffset? Time { get { throw null; } set { } }
+        public string Type { get { throw null; } set { } }
+        public static Azure.Messaging.CloudEvent? Parse(System.BinaryData jsonEvent, bool skipValidation = false) { throw null; }
+        public static Azure.Messaging.CloudEvent[] ParseEvents(string jsonContent, bool skipValidation = false) { throw null; }
+    }
+    public enum CloudEventDataFormat
+    {
+        Binary = 0,
+        Json = 1,
+    }
+}

@@ -14,15 +14,9 @@ EventGridPublisherClient client = new EventGridPublisherClient(
 `EventGridPublisherClient` also accepts a set of configuring options through `EventGridPublisherClientOptions`. For example, specifying a custom serializer used to serialize the event data to JSON:
 
 ```C# Snippet:CreateClientWithOptions
-EventGridPublisherClientOptions clientOptions = new EventGridPublisherClientOptions()
-{
-    Serializer = myCustomDataSerializer
-};
-
 EventGridPublisherClient client = new EventGridPublisherClient(
     new Uri(topicEndpoint),
-    new AzureKeyCredential(topicAccessKey),
-    clientOptions);
+    new AzureKeyCredential(topicAccessKey));
 ```
 Event Grid also supports authenticating with a shared access signature which allows for providing access to a resource that expires by a certain time without sharing your access key. 
 Generally, the workflow would be that one application would generate the SAS string and hand off the string to another application that would consume the string.
@@ -79,13 +73,13 @@ List<CloudEvent> eventsList = new List<CloudEvent>
     new CloudEvent(
         "/cloudevents/example/source",
         "Example.EventType",
-        "This is the event data"),
+        myCustomDataSerializer.Serialize("This is the event data")),
 
     // CloudEvents also supports sending binary-valued data
     new CloudEvent(
         "/cloudevents/example/binarydata",
         "Example.EventType",
-        Encoding.UTF8.GetBytes("This is binary data"),
+        new BinaryData(Encoding.UTF8.GetBytes("This is binary data")),
         "example/binary")};
 
 // Send the events
