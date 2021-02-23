@@ -145,7 +145,11 @@ namespace Azure.Core.TestFramework
 
                     if (operationHelpers != null)
                     {
-                        operationHelpers.GetProperty("DefaultPollingInterval").SetValue(null, TimeSpan.FromSeconds(0));
+                        operationHelpers
+                            .GetProperty("DefaultPollingInterval")?
+                            .GetSetMethod()?
+                            .Invoke(null, new object[] { TimeSpan.FromSeconds(0) });
+
                         break;
                     }
                 }
