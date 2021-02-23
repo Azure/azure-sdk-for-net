@@ -30,10 +30,9 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// </summary>
         /// <param name="accountId">The Azure Object Anchors account ID.</param>
         /// <param name="accountDomain">The Azure Object Anchors account domain.</param>
-        /// <param name="token">An access token used to access the specified Azure Object Anchors account.</param>
-        /// <param name="options">The options.</param>
-        public ObjectAnchorsConversionClient(Guid accountId, string accountDomain, AccessToken token, ObjectAnchorsConversionClientOptions options = null)
-            : this(accountId, accountDomain, new StaticAccessTokenCredential(token), options) { }
+        /// <param name="keyCredential">The Azure Object Anchors account primary or secondary key credential.</param>
+        public ObjectAnchorsConversionClient(Guid accountId, string accountDomain, AzureKeyCredential keyCredential)
+            : this(accountId, accountDomain, new MixedRealityAccountKeyCredential(accountId, keyCredential), null) { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ObjectAnchorsConversionClient" /> class.
@@ -42,8 +41,18 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <param name="accountDomain">The Azure Object Anchors account domain.</param>
         /// <param name="keyCredential">The Azure Object Anchors account primary or secondary key credential.</param>
         /// <param name="options">The options.</param>
-        public ObjectAnchorsConversionClient(Guid accountId, string accountDomain, AzureKeyCredential keyCredential, ObjectAnchorsConversionClientOptions options = null)
+        public ObjectAnchorsConversionClient(Guid accountId, string accountDomain, AzureKeyCredential keyCredential, ObjectAnchorsConversionClientOptions options)
             : this(accountId, accountDomain, new MixedRealityAccountKeyCredential(accountId, keyCredential), options) { }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ObjectAnchorsConversionClient" /> class.
+        /// </summary>
+        /// <param name="accountId">The Azure Object Anchors account ID.</param>
+        /// <param name="accountDomain">The Azure Object Anchors account domain.</param>
+        /// <param name="token">An access token used to access the specified Azure Object Anchors account.</param>
+        /// <param name="options">The options.</param>
+        public ObjectAnchorsConversionClient(Guid accountId, string accountDomain, AccessToken token, ObjectAnchorsConversionClientOptions options = null)
+            : this(accountId, accountDomain, new StaticAccessTokenCredential(token), options) { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ObjectAnchorsConversionClient" /> class.
