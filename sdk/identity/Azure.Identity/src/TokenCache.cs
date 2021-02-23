@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -141,14 +142,32 @@ namespace Azure.Identity
                 _lock.Release();
             }
 
-            
-            // if (Updated != null)
-            // {
-            //     foreach (Func<TokenCacheUpdatedArgs, Task> handler in Updated.GetInvocationList())
-            //     {
-            //         await handler(new TokenCacheUpdatedArgs(this, true)).ConfigureAwait(false);
-            //     }
-            // }
+            if (Updated != null)
+            {
+                // Collect any exceptions raised by handlers
+                List<Exception> failures = null;
+
+                foreach (SyncAsyncEventHandler<TokenCacheUpdatedArgs> handler in Updated.GetInvocationList())
+                {
+                    try
+                    {
+                        await handler(new TokenCacheUpdatedArgs(this, true, default)).ConfigureAwait(false);
+                    }
+                    catch (Exception ex)
+                    {
+                        failures ??= new List<Exception>();
+                        failures.Add(ex);
+                    }
+                    await handler(new TokenCacheUpdatedArgs(this, true)).ConfigureAwait(false);
+                }
+
+                // Wrap any exceptions in an AggregateException
+                if (failures?.Count > 0)
+                {
+                    // Include the event name in the exception for easier debugging
+                    throw new AggregateException("Unhandled exception(s) thrown when raising the Updated event.", failures);
+                }
+            }
         }
 
         private async Task<byte[]> MergeCacheData(byte[] cacheA, byte[] cacheB)
