@@ -13,10 +13,12 @@ namespace Azure.Identity
     internal abstract class ManagedIdentitySource
     {
         internal const string AuthenticationResponseInvalidFormatError = "Invalid response, the authentication response was not in the expected format.";
+        private ManagedIdentityResponseClassifier _responseClassifier;
 
         protected ManagedIdentitySource(CredentialPipeline pipeline)
         {
             Pipeline = pipeline;
+            _responseClassifier = new ManagedIdentityResponseClassifier();
         }
 
         protected internal CredentialPipeline Pipeline { get; }
@@ -25,11 +27,17 @@ namespace Azure.Identity
         public virtual async ValueTask<AccessToken> AuthenticateAsync(bool async, TokenRequestContext context, CancellationToken cancellationToken)
         {
             using Request request = CreateRequest(context.Scopes);
-            Response response = async
-                ? await Pipeline.HttpPipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false)
-                : Pipeline.HttpPipeline.SendRequest(request, cancellationToken);
+            using HttpMessage message = new HttpMessage(request, _responseClassifier);
+            if (async)
+            {
+                await Pipeline.HttpPipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            }
+            else
+            {
+                Pipeline.HttpPipeline.Send(message, cancellationToken);
+            }
 
-            return await HandleResponseAsync(async, context, response, cancellationToken).ConfigureAwait(false);
+            return await HandleResponseAsync(async, context, message.Response, cancellationToken).ConfigureAwait(false);
         }
 
         protected virtual async ValueTask<AccessToken> HandleResponseAsync(bool async, TokenRequestContext context, Response response, CancellationToken cancellationToken)
@@ -89,6 +97,19 @@ namespace Azure.Identity
             }
 
             return null;
+        }
+
+        private class ManagedIdentityResponseClassifier : ResponseClassifier
+        {
+            public override bool IsRetriableResponse(HttpMessage message)
+            {
+                return message.Response.Status switch
+                {
+                    404 => true,
+                    502 => false,
+                    _ => base.IsRetriableResponse(message)
+                };
+            }
         }
     }
 }
