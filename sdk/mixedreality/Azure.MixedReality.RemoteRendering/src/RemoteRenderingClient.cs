@@ -28,10 +28,9 @@ namespace Azure.MixedReality.RemoteRendering
         /// </summary>
         /// <param name="remoteRenderingEndpoint">The rendering service endpoint. This determines the region in which the rendering VM is created.</param>
         /// <param name="account">The Azure Remote Rendering account details.</param>
-        /// <param name="accessToken">An access token used to access the specified Azure Remote Rendering account.</param>
-        /// <param name="options">The options.</param>
-        public RemoteRenderingClient(Uri remoteRenderingEndpoint, RemoteRenderingAccount account, AccessToken accessToken, RemoteRenderingClientOptions options = null)
-            : this(remoteRenderingEndpoint, account, new StaticAccessTokenCredential(accessToken), options) { }
+        /// <param name="keyCredential">The Azure Remote Rendering account primary or secondary key credential.</param>
+        public RemoteRenderingClient(Uri remoteRenderingEndpoint, RemoteRenderingAccount account, AzureKeyCredential keyCredential)
+            : this(remoteRenderingEndpoint, account, new MixedRealityAccountKeyCredential(account.AccountId, keyCredential), null) { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RemoteRenderingClient" /> class.
@@ -40,8 +39,18 @@ namespace Azure.MixedReality.RemoteRendering
         /// <param name="account">The Azure Remote Rendering account details.</param>
         /// <param name="keyCredential">The Azure Remote Rendering account primary or secondary key credential.</param>
         /// <param name="options">The options.</param>
-        public RemoteRenderingClient(Uri remoteRenderingEndpoint, RemoteRenderingAccount account, AzureKeyCredential keyCredential, RemoteRenderingClientOptions options = null)
+        public RemoteRenderingClient(Uri remoteRenderingEndpoint, RemoteRenderingAccount account, AzureKeyCredential keyCredential, RemoteRenderingClientOptions options)
             : this(remoteRenderingEndpoint, account, new MixedRealityAccountKeyCredential(account.AccountId, keyCredential), options) { }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RemoteRenderingClient" /> class.
+        /// </summary>
+        /// <param name="remoteRenderingEndpoint">The rendering service endpoint. This determines the region in which the rendering VM is created.</param>
+        /// <param name="account">The Azure Remote Rendering account details.</param>
+        /// <param name="accessToken">An access token used to access the specified Azure Remote Rendering account.</param>
+        /// <param name="options">The options.</param>
+        public RemoteRenderingClient(Uri remoteRenderingEndpoint, RemoteRenderingAccount account, AccessToken accessToken, RemoteRenderingClientOptions options = null)
+            : this(remoteRenderingEndpoint, account, new StaticAccessTokenCredential(accessToken), options) { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RemoteRenderingClient" /> class.
