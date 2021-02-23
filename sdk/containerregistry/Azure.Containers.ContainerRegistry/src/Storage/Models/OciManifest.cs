@@ -11,5 +11,8 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
     [CodeGenModel("OCIManifest")]
     public partial class OciManifest
     {
+        /// <summary> V2 image config descriptor. </summary>
+        [CodeGenMember("Config")]
+        public ContentDescriptor ConfigDescriptor { get; set; }
     }
 }

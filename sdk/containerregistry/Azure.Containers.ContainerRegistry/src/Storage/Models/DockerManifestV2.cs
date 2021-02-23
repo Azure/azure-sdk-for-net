@@ -26,5 +26,9 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
 
             // TODO: Deserialize, and then additionally compute digest to cache for later
         }
+
+        /// <summary> V2 image config descriptor. </summary>
+        [CodeGenMember("Config")]
+        public ContentDescriptor ConfigDescriptor { get; set; }
     }
 }

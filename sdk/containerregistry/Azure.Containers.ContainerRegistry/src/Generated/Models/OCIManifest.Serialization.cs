@@ -16,10 +16,10 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Config))
+            if (Optional.IsDefined(ConfigDescriptor))
             {
                 writer.WritePropertyName("config");
-                writer.WriteObjectValue(Config);
+                writer.WriteObjectValue(ConfigDescriptor);
             }
             if (Optional.IsCollectionDefined(Layers))
             {

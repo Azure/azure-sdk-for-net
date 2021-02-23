@@ -22,16 +22,14 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
         /// <summary> Initializes a new instance of DockerManifestV2. </summary>
         /// <param name="schemaVersion"> Schema version. </param>
         /// <param name="mediaType"> Media type for this Manifest. </param>
-        /// <param name="config"> V2 image config descriptor. </param>
+        /// <param name="configDescriptor"> V2 image config descriptor. </param>
         /// <param name="layers"> List of V2 image layer information. </param>
-        internal DockerManifestV2(int schemaVersion, string mediaType, ContentDescriptor config, IList<ContentDescriptor> layers) : base(schemaVersion)
+        internal DockerManifestV2(int schemaVersion, string mediaType, ContentDescriptor configDescriptor, IList<ContentDescriptor> layers) : base(schemaVersion)
         {
             MediaType = mediaType;
-            Config = config;
+            ConfigDescriptor = configDescriptor;
             Layers = layers;
         }
-        /// <summary> V2 image config descriptor. </summary>
-        public ContentDescriptor Config { get; set; }
         /// <summary> List of V2 image layer information. </summary>
         public IList<ContentDescriptor> Layers { get; }
     }

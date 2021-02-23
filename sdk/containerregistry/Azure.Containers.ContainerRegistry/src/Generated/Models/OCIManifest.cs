@@ -21,18 +21,15 @@ namespace Azure.Containers.ContainerRegistry.Storage.Models
 
         /// <summary> Initializes a new instance of OciManifest. </summary>
         /// <param name="schemaVersion"> Schema version. </param>
-        /// <param name="config"> V2 image config descriptor. </param>
+        /// <param name="configDescriptor"> V2 image config descriptor. </param>
         /// <param name="layers"> List of V2 image layer information. </param>
         /// <param name="annotations"> Additional information provided through arbitrary metadata. </param>
-        internal OciManifest(int schemaVersion, ContentDescriptor config, IList<ContentDescriptor> layers, OciManifestAnnotations annotations) : base(schemaVersion)
+        internal OciManifest(int schemaVersion, ContentDescriptor configDescriptor, IList<ContentDescriptor> layers, OciManifestAnnotations annotations) : base(schemaVersion)
         {
-            Config = config;
+            ConfigDescriptor = configDescriptor;
             Layers = layers;
             Annotations = annotations;
         }
-
-        /// <summary> V2 image config descriptor. </summary>
-        public ContentDescriptor Config { get; set; }
         /// <summary> List of V2 image layer information. </summary>
         public IList<ContentDescriptor> Layers { get; }
         /// <summary> Additional information provided through arbitrary metadata. </summary>
