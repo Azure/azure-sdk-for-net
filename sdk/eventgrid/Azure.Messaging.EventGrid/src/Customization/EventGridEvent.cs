@@ -2,14 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Pipeline;
-using Azure.Core.Serialization;
 using Azure.Messaging.EventGrid.Models;
 
 namespace Azure.Messaging.EventGrid
@@ -30,12 +24,34 @@ namespace Azure.Messaging.EventGrid
             Argument.AssertNotNull(data, nameof(data));
             Argument.AssertNotNull(eventType, nameof(eventType));
             Argument.AssertNotNull(dataVersion, nameof(dataVersion));
+            if (data is BinaryData)
+            {
+                throw new InvalidOperationException("This constructor does not support BinaryData. Use the constructor that takes a BinaryData instance.");
+            }
 
             DataSerializationType = dataSerializationType ?? data?.GetType() ?? null;
             Subject = subject;
-            Data = data;
+            Data = new BinaryData(data, type: dataSerializationType ?? data?.GetType());
             EventType = eventType;
             DataVersion = dataVersion;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EventGridEvent"/>. </summary>
+        /// <param name="subject"> A resource path relative to the topic path. </param>
+        /// <param name="eventType"> The type of the event that occurred. For example, "Contoso.Items.ItemReceived". </param>
+        /// <param name="dataVersion"> The schema version of the data object. </param>
+        /// <param name="data"> Event data specific to the event type. </param>
+        public EventGridEvent(string subject, string eventType, string dataVersion, BinaryData data)
+        {
+            Argument.AssertNotNull(subject, nameof(subject));
+            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(eventType, nameof(eventType));
+            Argument.AssertNotNull(dataVersion, nameof(dataVersion));
+
+            Subject = subject;
+            EventType = eventType;
+            DataVersion = dataVersion;
+            Data = data;
         }
 
         internal EventGridEvent(EventGridEventInternal eventGridEventInternal)
@@ -46,13 +62,19 @@ namespace Azure.Messaging.EventGrid
             Argument.AssertNotNull(eventGridEventInternal.Id, nameof(eventGridEventInternal.Id));
 
             Subject = eventGridEventInternal.Subject;
-            SerializedData = eventGridEventInternal.Data;
             EventType = eventGridEventInternal.EventType;
             DataVersion = eventGridEventInternal.DataVersion;
             EventTime = eventGridEventInternal.EventTime;
             Id = eventGridEventInternal.Id;
             Topic = eventGridEventInternal.Topic;
+            Data = new BinaryData(eventGridEventInternal.Data);
         }
+
+        /// <summary>
+        /// Gets or sets the event payload as <see cref="BinaryData"/>. Using BinaryData,
+        /// one can deserialize the payload into rich data, or access the raw JSON data using <see cref="BinaryData.ToString()"/>.
+        /// </summary>
+        public BinaryData Data { get; set; }
 
         /// <summary> Gets or sets a unique identifier for the event. </summary>
         public string Id { get; set; } = Guid.NewGuid().ToString();
@@ -75,14 +97,6 @@ namespace Azure.Messaging.EventGrid
         /// <summary>Gets or sets the schema version of the data object.</summary>
         public string DataVersion { get; set; }
 
-        /// <summary>Gets or sets the event data specific to the event type.</summary>
-        internal object Data { get; set; }
-
-        /// <summary>Gets or sets the serialized event data specific to the event type.</summary>
-        internal JsonElement SerializedData { get; set; }
-
-        private static readonly JsonObjectSerializer s_jsonSerializer = new JsonObjectSerializer();
-
         /// <summary>
         /// Gets whether or not the event is a System defined event and returns the deserialized
         /// system event via out parameter.
@@ -92,17 +106,27 @@ namespace Azure.Messaging.EventGrid
         /// <returns> Whether or not the event is a system event.</returns>
         public bool TryGetSystemEventData(out object eventData)
         {
-            eventData = SystemEventExtensions.AsSystemEventData(EventType, SerializedData);
-            return eventData != null;
+            try
+            {
+                JsonDocument requestDocument = JsonDocument.Parse(Data.ToMemory());
+                eventData = SystemEventExtensions.AsSystemEventData(EventType, requestDocument.RootElement);
+                return eventData != null;
+            }
+            catch
+            {
+                eventData = null;
+                return false;
+            }
         }
 
         /// <summary>
         /// Given JSON-encoded events, parses the event envelope and returns an array of EventGridEvents.
+        /// If the content is not valid JSON, or events are missing required properties, an exception is thrown.
         /// </summary>
         /// <param name="requestContent"> The JSON-encoded representation of either a single event or an array or events,
         /// encoded in the EventGridEvent schema. </param>
         /// <returns> A list of <see cref="EventGridEvent"/>. </returns>
-        public static EventGridEvent[] Parse(string requestContent)
+        public static EventGridEvent[] ParseEvents(string requestContent)
         {
             Argument.AssertNotNull(requestContent, nameof(requestContent));
 
@@ -128,74 +152,30 @@ namespace Azure.Messaging.EventGrid
         }
 
         /// <summary>
-        /// Deserializes the event payload into a specified event type using the default serializer, <see cref="JsonObjectSerializer"/>.
+        /// Given a single JSON-encoded event, parses the event envelope and returns an EventGridEvent.
+        /// If the specified event is not valid JSON, or the event is missing required properties, an exception is thrown.
         /// </summary>
-        /// <typeparam name="T"> Type of event to deserialize to. </typeparam>
-        /// <param name="cancellationToken"> The cancellation token to use during deserialization. </param>
-        /// <exception cref="InvalidOperationException"> Event was not created from EventGridEvent.Parse() method. </exception>
-        /// <exception cref="InvalidCastException"> Event payload cannot be cast to the specified event type. </exception>
-        /// <returns> Deserialized payload of the event, cast to the specified type. </returns>
-        public T GetData<T>(CancellationToken cancellationToken = default) =>
-            GetDataInternal<T>(s_jsonSerializer, false, cancellationToken).EnsureCompleted();
-
-        private async Task<T> GetDataInternal<T>(ObjectSerializer serializer, bool async, CancellationToken cancellationToken = default)
+        /// <param name="jsonEvent"> Specifies the instance of <see cref="BinaryData"/> containing the JSON for an
+        /// <see cref="EventGridEvent"/>.</param>
+        /// <returns> An <see cref="EventGridEvent"/>. </returns>
+        public static EventGridEvent Parse(BinaryData jsonEvent)
         {
-            Argument.AssertNotNull(serializer, nameof(serializer));
-
-            if (Data != null)
+            Argument.AssertNotNull(jsonEvent, nameof(jsonEvent));
+            EventGridEvent[] events = ParseEvents(jsonEvent.ToString());
+            if (events.Length == 0)
             {
-                return (T)Data;
+                return null;
             }
-            else if (SystemEventExtensions.SystemEventDeserializers.TryGetValue(EventType, out Func<JsonElement, object> systemDeserializationFunction))
+            if (events.Length > 1)
             {
-                return (T)systemDeserializationFunction(SerializedData);
+                throw new ArgumentException(
+                    "The BinaryData instance contains JSON from multiple event grid events. This method " +
+                    "should only be used with BinaryData containing a single event grid event. " +
+                    Environment.NewLine +
+                    "To parse multiple events, call ToString on the BinaryData and use the " +
+                    "Parse overload that takes a string.");
             }
-            else
-            {
-                using (MemoryStream dataStream = SerializePayloadToStream(SerializedData, cancellationToken))
-                {
-                    if (async)
-                    {
-                        return (T)await serializer.DeserializeAsync(dataStream, typeof(T), cancellationToken).ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        return (T)serializer.Deserialize(dataStream, typeof(T), cancellationToken);
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// Deserializes the event payload into a system event type or
-        /// returns the payload of the event wrapped as <see cref="BinaryData"/>. Using BinaryData,
-        /// one can deserialize the payload into rich data, or access the raw JSON data using <see cref="BinaryData.ToString()"/>.
-        /// </summary>
-        /// <returns>
-        /// Deserialized payload of the event.
-        /// Returns <see cref="BinaryData"/> for unknown event types.
-        /// </returns>
-        public BinaryData GetData() =>
-            GetDataInternal();
-
-        private BinaryData GetDataInternal()
-        {
-            if (Data != null)
-            {
-                return new BinaryData(Data, type: DataSerializationType);
-            }
-            else
-            {
-                return BinaryData.FromStream(SerializePayloadToStream(SerializedData));
-            }
-        }
-
-        private static MemoryStream SerializePayloadToStream(JsonElement payload, CancellationToken cancellationToken = default)
-        {
-            MemoryStream dataStream = new MemoryStream();
-            s_jsonSerializer.Serialize(dataStream, payload, payload.GetType(), cancellationToken);
-            dataStream.Position = 0;
-            return dataStream;
+            return events[0];
         }
     }
 }
