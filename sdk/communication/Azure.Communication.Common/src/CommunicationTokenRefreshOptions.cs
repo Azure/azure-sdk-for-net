@@ -15,10 +15,10 @@ namespace Azure.Communication
     {
         internal bool RefreshProactively { get; }
         internal Func<CancellationToken, string> TokenRefresher { get; }
-#nullable enable
+
         /// <summary>The initial token.</summary>
-        public string? InitialToken { get; set; }
-#nullable restore
+        public string InitialToken { get; set; }
+
         /// <summary>The token refresher.</summary>
         public Func<CancellationToken, ValueTask<string>> AsyncTokenRefresher { get; set; }
 
