@@ -44,31 +44,6 @@ namespace Azure.Storage.Blobs.Batch
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateSubmitBatchRequest(string containerName, long contentLength, string multipartContentType, Stream body, int? timeout)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(containerName, true);
-            uri.AppendQuery("restype", "container", true);
-            uri.AppendQuery("comp", "batch", true);
-            if (timeout != null)
-            {
-                uri.AppendQuery("timeout", timeout.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
-            request.Headers.Add("Accept", "application/xml");
-            request.Headers.Add("Content-Length", contentLength);
-            request.Headers.Add("Content-Type", multipartContentType);
-            request.Headers.Add("Content-Type", "application/xml");
-            request.Content = RequestContent.Create(body);
-            return message;
-        }
-
         /// <summary> The Batch operation allows multiple API calls to be embedded into a single HTTP request. </summary>
         /// <param name="containerName"> The container name. </param>
         /// <param name="contentLength"> The length of the request. </param>
