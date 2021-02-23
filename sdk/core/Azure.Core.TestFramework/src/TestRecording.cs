@@ -188,7 +188,7 @@ namespace Azure.Core.TestFramework
 
         public void Dispose(bool save)
         {
-            if (Mode == RecordedTestMode.Record && save && session.Entries.Count > 0 && session.Variables.Count > 0)
+            if (Mode == RecordedTestMode.Record && save && !session.IsEmpty)
             {
                 var directory = Path.GetDirectoryName(_sessionFile);
                 Directory.CreateDirectory(directory);
