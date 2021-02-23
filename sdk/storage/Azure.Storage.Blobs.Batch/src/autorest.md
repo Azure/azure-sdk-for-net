@@ -196,3 +196,13 @@ directive:
         "Permanent"
     ];
 ```
+
+### Don't encode BlobName or Container Name
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters
+  transform: >
+    $.Blob["x-ms-skip-url-encoding"] = true;
+    $.ContainerName["x-ms-skip-url-encoding"] = true;
+```
