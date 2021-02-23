@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Storage.Blobs.Batch.Models
 {
     /// <summary> The BatchAccessTier. </summary>
-    public readonly partial struct BatchAccessTier : IEquatable<BatchAccessTier>
+    internal readonly partial struct BatchAccessTier : IEquatable<BatchAccessTier>
     {
         private readonly string _value;
 

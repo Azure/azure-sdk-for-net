@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Storage.Blobs.Batch.Models
 {
     /// <summary> The BatchRehydratePriority. </summary>
-    public readonly partial struct BatchRehydratePriority : IEquatable<BatchRehydratePriority>
+    internal readonly partial struct BatchRehydratePriority : IEquatable<BatchRehydratePriority>
     {
         private readonly string _value;
 
