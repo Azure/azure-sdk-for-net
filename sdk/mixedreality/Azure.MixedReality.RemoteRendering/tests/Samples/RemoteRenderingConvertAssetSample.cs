@@ -20,10 +20,9 @@ namespace Azure.MixedReality.RemoteRendering.Tests.Samples
             string accountKey = TestEnvironment.AccountKey;
             Uri remoteRenderingEndpoint = new Uri(TestEnvironment.ServiceEndpoint);
 
-            RemoteRenderingAccount account = new RemoteRenderingAccount(accountId, accountDomain);
             AzureKeyCredential accountKeyCredential = new AzureKeyCredential(accountKey);
 
-            RemoteRenderingClient client = new RemoteRenderingClient(remoteRenderingEndpoint, account, accountKeyCredential);
+            RemoteRenderingClient client = new RemoteRenderingClient(remoteRenderingEndpoint, accountId, accountDomain, accountKeyCredential);
             return client;
         }
 

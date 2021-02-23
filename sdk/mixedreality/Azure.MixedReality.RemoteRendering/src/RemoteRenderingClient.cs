@@ -27,40 +27,54 @@ namespace Azure.MixedReality.RemoteRendering
         /// Initializes a new instance of the <see cref="RemoteRenderingClient" /> class.
         /// </summary>
         /// <param name="remoteRenderingEndpoint">The rendering service endpoint. This determines the region in which the rendering VM is created.</param>
-        /// <param name="account">The Azure Remote Rendering account details.</param>
-        /// <param name="accessToken">An access token used to access the specified Azure Remote Rendering account.</param>
-        /// <param name="options">The options.</param>
-        public RemoteRenderingClient(Uri remoteRenderingEndpoint, RemoteRenderingAccount account, AccessToken accessToken, RemoteRenderingClientOptions options = null)
-            : this(remoteRenderingEndpoint, account, new StaticAccessTokenCredential(accessToken), options) { }
+        /// <param name="accountId">The Azure Remote Rendering account identifier.</param>
+        /// <param name="accountDomain">The Azure Remote Rendering account domain.</param>
+        /// <param name="keyCredential">The Azure Remote Rendering account primary or secondary key credential.</param>
+        public RemoteRenderingClient(Uri remoteRenderingEndpoint, Guid accountId, string accountDomain, AzureKeyCredential keyCredential)
+            : this(remoteRenderingEndpoint, accountId, accountDomain, new MixedRealityAccountKeyCredential(accountId, keyCredential), null) { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RemoteRenderingClient" /> class.
         /// </summary>
         /// <param name="remoteRenderingEndpoint">The rendering service endpoint. This determines the region in which the rendering VM is created.</param>
-        /// <param name="account">The Azure Remote Rendering account details.</param>
+        /// <param name="accountId">The Azure Remote Rendering account identifier.</param>
+        /// <param name="accountDomain">The Azure Remote Rendering account domain.</param>
         /// <param name="keyCredential">The Azure Remote Rendering account primary or secondary key credential.</param>
         /// <param name="options">The options.</param>
-        public RemoteRenderingClient(Uri remoteRenderingEndpoint, RemoteRenderingAccount account, AzureKeyCredential keyCredential, RemoteRenderingClientOptions options = null)
-            : this(remoteRenderingEndpoint, account, new MixedRealityAccountKeyCredential(account.AccountId, keyCredential), options) { }
+        public RemoteRenderingClient(Uri remoteRenderingEndpoint, Guid accountId, string accountDomain, AzureKeyCredential keyCredential, RemoteRenderingClientOptions options)
+            : this(remoteRenderingEndpoint, accountId, accountDomain, new MixedRealityAccountKeyCredential(accountId, keyCredential), options) { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RemoteRenderingClient" /> class.
         /// </summary>
         /// <param name="remoteRenderingEndpoint">The rendering service endpoint. This determines the region in which the rendering VM is created.</param>
-        /// <param name="account">The Azure Remote Rendering account details.</param>
+        /// <param name="accountId">The Azure Remote Rendering account identifier.</param>
+        /// <param name="accountDomain">The Azure Remote Rendering account domain.</param>
+        /// <param name="accessToken">An access token used to access the specified Azure Remote Rendering account.</param>
+        /// <param name="options">The options.</param>
+        public RemoteRenderingClient(Uri remoteRenderingEndpoint, Guid accountId, string accountDomain, AccessToken accessToken, RemoteRenderingClientOptions options = null)
+            : this(remoteRenderingEndpoint, accountId, accountDomain, new StaticAccessTokenCredential(accessToken), options) { }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RemoteRenderingClient" /> class.
+        /// </summary>
+        /// <param name="remoteRenderingEndpoint">The rendering service endpoint. This determines the region in which the rendering VM is created.</param>
+        /// <param name="accountId">The Azure Remote Rendering account identifier.</param>
+        /// <param name="accountDomain">The Azure Remote Rendering account domain.</param>
         /// <param name="credential">The credential used to access the Mixed Reality service.</param>
         /// <param name="options">The options.</param>
-        public RemoteRenderingClient(Uri remoteRenderingEndpoint, RemoteRenderingAccount account, TokenCredential credential, RemoteRenderingClientOptions options = null)
+        public RemoteRenderingClient(Uri remoteRenderingEndpoint, Guid accountId, string accountDomain, TokenCredential credential, RemoteRenderingClientOptions options = null)
         {
-            Argument.AssertNotNull(account, nameof(account));
+            Argument.AssertNotDefault(ref accountId, nameof(accountId));
+            Argument.AssertNotNullOrWhiteSpace(accountDomain, nameof(accountDomain));
             Argument.AssertNotNull(credential, nameof(credential));
 
             options ??= new RemoteRenderingClientOptions();
 
-            Uri authenticationEndpoint = options.AuthenticationEndpoint ?? AuthenticationEndpoint.ConstructFromDomain(account.AccountDomain);
-            TokenCredential mrTokenCredential = MixedRealityTokenCredential.GetMixedRealityCredential(account.AccountId, authenticationEndpoint, credential);
+            Uri authenticationEndpoint = options.AuthenticationEndpoint ?? AuthenticationEndpoint.ConstructFromDomain(accountDomain);
+            TokenCredential mrTokenCredential = MixedRealityTokenCredential.GetMixedRealityCredential(accountId, authenticationEndpoint, credential);
 
-            _accountId = account.AccountId;
+            _accountId = accountId;
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(mrTokenCredential, GetDefaultScope(remoteRenderingEndpoint)));
             _restClient = new RemoteRenderingRestClient(_clientDiagnostics, _pipeline, remoteRenderingEndpoint.ToString(), options.Version);
