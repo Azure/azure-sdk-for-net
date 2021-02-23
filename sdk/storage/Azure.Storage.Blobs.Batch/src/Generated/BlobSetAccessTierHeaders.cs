@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs.Batch
 {
-    internal class BlobSetAccessTierHeaders
+    internal partial class BlobSetAccessTierHeaders
     {
         private readonly Response _response;
         public BlobSetAccessTierHeaders(Response response)

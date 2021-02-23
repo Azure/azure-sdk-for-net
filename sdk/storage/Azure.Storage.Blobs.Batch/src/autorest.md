@@ -183,3 +183,16 @@ directive:
     $.AccessTierRequired["x-ms-enum"].name = "BatchAccessTier";
     $.RehydratePriority["x-ms-enum"].name = "BatchRehydratePriority";
 ```
+
+### Fix BlobDeleteType
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters
+  transform: >
+    delete $.BlobDeleteType.enum;
+    $.BlobDeleteType.enum = [
+        "None",
+        "Permanent"
+    ];
+```

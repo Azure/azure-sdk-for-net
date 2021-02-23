@@ -190,7 +190,8 @@ namespace Azure.Storage.Blobs.Specialized
                 ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                 ifMatch: conditions?.IfMatch.ToString(),
                 ifNoneMatch: conditions?.IfNoneMatch.ToString(),
-                ifTags: conditions?.TagConditions);
+                ifTags: conditions?.TagConditions,
+                blobDeleteType: null);
 
             _messages.Add(message);
 

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs.Batch
 {
-    internal class BlobDeleteHeaders
+    internal partial class BlobDeleteHeaders
     {
         private readonly Response _response;
         public BlobDeleteHeaders(Response response)
