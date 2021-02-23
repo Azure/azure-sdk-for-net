@@ -39,11 +39,13 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// the App</param>
         /// <param name="fqdn">Fully qualified dns Name.</param>
         /// <param name="httpsOnly">Indicate if only https is allowed.</param>
+        /// <param name="enableEndToEndTLS">Indicate if end to end TLS is
+        /// enabled.</param>
         /// <param name="createdTime">Date time when the resource is
         /// created</param>
         /// <param name="temporaryDisk">Temporary disk settings</param>
         /// <param name="persistentDisk">Persistent disk settings</param>
-        public AppResourceProperties(bool? publicProperty = default(bool?), string url = default(string), string provisioningState = default(string), string activeDeploymentName = default(string), string fqdn = default(string), bool? httpsOnly = default(bool?), System.DateTime? createdTime = default(System.DateTime?), TemporaryDisk temporaryDisk = default(TemporaryDisk), PersistentDisk persistentDisk = default(PersistentDisk))
+        public AppResourceProperties(bool? publicProperty = default(bool?), string url = default(string), string provisioningState = default(string), string activeDeploymentName = default(string), string fqdn = default(string), bool? httpsOnly = default(bool?), bool? enableEndToEndTLS = default(bool?), System.DateTime? createdTime = default(System.DateTime?), TemporaryDisk temporaryDisk = default(TemporaryDisk), PersistentDisk persistentDisk = default(PersistentDisk))
         {
             PublicProperty = publicProperty;
             Url = url;
@@ -51,6 +53,7 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
             ActiveDeploymentName = activeDeploymentName;
             Fqdn = fqdn;
             HttpsOnly = httpsOnly;
+            EnableEndToEndTLS = enableEndToEndTLS;
             CreatedTime = createdTime;
             TemporaryDisk = temporaryDisk;
             PersistentDisk = persistentDisk;
@@ -98,6 +101,12 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// </summary>
         [JsonProperty(PropertyName = "httpsOnly")]
         public bool? HttpsOnly { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicate if end to end TLS is enabled.
+        /// </summary>
+        [JsonProperty(PropertyName = "enableEndToEndTLS")]
+        public bool? EnableEndToEndTLS { get; set; }
 
         /// <summary>
         /// Gets date time when the resource is created
