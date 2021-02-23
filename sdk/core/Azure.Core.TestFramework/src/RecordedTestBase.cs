@@ -135,16 +135,19 @@ namespace Azure.Core.TestFramework
         }
 
         [OneTimeSetUp]
-        public void OverrideDefaultPollingTime()
+        public void UpdateDefaultPollingTime()
         {
-            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+            if (Mode == RecordedTestMode.Playback)
             {
-                var operationHelpers = assembly.GetType("Azure.Core.OperationHelpers");
-
-                if (operationHelpers != null)
+                foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
                 {
-                    operationHelpers.GetProperty("DefaultPollingInterval").SetValue(null, TimeSpan.FromSeconds(0));
-                    break;
+                    var operationHelpers = assembly.GetType("Azure.Core.OperationHelpers");
+
+                    if (operationHelpers != null)
+                    {
+                        operationHelpers.GetProperty("DefaultPollingInterval").SetValue(null, TimeSpan.FromSeconds(0));
+                        break;
+                    }
                 }
             }
         }
