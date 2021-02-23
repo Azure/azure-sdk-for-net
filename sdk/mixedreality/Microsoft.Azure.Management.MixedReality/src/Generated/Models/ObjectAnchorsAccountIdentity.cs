@@ -10,31 +10,31 @@
 
 namespace Microsoft.Azure.Management.MixedReality.Models
 {
-    using Newtonsoft.Json;
     using System.Linq;
 
-    /// <summary>
-    /// Request for account key regeneration
-    /// </summary>
-    public partial class AccountKeyRegenerateRequest
+    public partial class ObjectAnchorsAccountIdentity : Identity
     {
         /// <summary>
-        /// Initializes a new instance of the AccountKeyRegenerateRequest
+        /// Initializes a new instance of the ObjectAnchorsAccountIdentity
         /// class.
         /// </summary>
-        public AccountKeyRegenerateRequest()
+        public ObjectAnchorsAccountIdentity()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AccountKeyRegenerateRequest
+        /// Initializes a new instance of the ObjectAnchorsAccountIdentity
         /// class.
         /// </summary>
-        /// <param name="serial">Serial of key to be regenerated</param>
-        public AccountKeyRegenerateRequest(int? serial = default(int?))
+        /// <param name="principalId">The principal ID of resource
+        /// identity.</param>
+        /// <param name="tenantId">The tenant ID of resource.</param>
+        /// <param name="type">The identity type. Possible values include:
+        /// 'SystemAssigned'</param>
+        public ObjectAnchorsAccountIdentity(string principalId = default(string), string tenantId = default(string), ResourceIdentityType? type = default(ResourceIdentityType?))
+            : base(principalId, tenantId, type)
         {
-            Serial = serial;
             CustomInit();
         }
 
@@ -42,12 +42,6 @@ namespace Microsoft.Azure.Management.MixedReality.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets serial of key to be regenerated
-        /// </summary>
-        [JsonProperty(PropertyName = "serial")]
-        public int? Serial { get; set; }
 
     }
 }

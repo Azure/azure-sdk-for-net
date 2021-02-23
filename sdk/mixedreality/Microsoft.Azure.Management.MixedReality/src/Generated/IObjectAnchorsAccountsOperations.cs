@@ -19,12 +19,12 @@ namespace Microsoft.Azure.Management.MixedReality
     using System.Threading.Tasks;
 
     /// <summary>
-    /// RemoteRenderingAccountsOperations operations.
+    /// ObjectAnchorsAccountsOperations operations.
     /// </summary>
-    public partial interface IRemoteRenderingAccountsOperations
+    public partial interface IObjectAnchorsAccountsOperations
     {
         /// <summary>
-        /// List Remote Rendering Accounts by Subscription
+        /// List Object Anchors Accounts by Subscription
         /// </summary>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.MixedReality
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<RemoteRenderingAccount>>> ListBySubscriptionWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<ObjectAnchorsAccount>>> ListBySubscriptionWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List Resources by Resource Group
         /// </summary>
@@ -63,9 +63,9 @@ namespace Microsoft.Azure.Management.MixedReality
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<RemoteRenderingAccount>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<ObjectAnchorsAccount>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Delete a Remote Rendering Account.
+        /// Delete an Object Anchors Account.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of an Azure resource group.
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Management.MixedReality
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Retrieve a Remote Rendering Account.
+        /// Retrieve an Object Anchors Account.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of an Azure resource group.
@@ -110,9 +110,9 @@ namespace Microsoft.Azure.Management.MixedReality
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<RemoteRenderingAccount>> GetWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ObjectAnchorsAccount>> GetWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updating a Remote Rendering Account
+        /// Updating an Object Anchors Account
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of an Azure resource group.
@@ -120,8 +120,8 @@ namespace Microsoft.Azure.Management.MixedReality
         /// <param name='accountName'>
         /// Name of an Mixed Reality Account.
         /// </param>
-        /// <param name='remoteRenderingAccount'>
-        /// Remote Rendering Account parameter.
+        /// <param name='objectAnchorsAccount'>
+        /// Object Anchors Account parameter.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -138,9 +138,9 @@ namespace Microsoft.Azure.Management.MixedReality
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<RemoteRenderingAccount>> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, RemoteRenderingAccount remoteRenderingAccount, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ObjectAnchorsAccount>> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, ObjectAnchorsAccount objectAnchorsAccount, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creating or Updating a Remote Rendering Account.
+        /// Creating or Updating an object anchors Account.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of an Azure resource group.
@@ -148,8 +148,8 @@ namespace Microsoft.Azure.Management.MixedReality
         /// <param name='accountName'>
         /// Name of an Mixed Reality Account.
         /// </param>
-        /// <param name='remoteRenderingAccount'>
-        /// Remote Rendering Account parameter.
+        /// <param name='objectAnchorsAccount'>
+        /// Object Anchors Account parameter.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -166,9 +166,9 @@ namespace Microsoft.Azure.Management.MixedReality
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<RemoteRenderingAccount>> CreateWithHttpMessagesAsync(string resourceGroupName, string accountName, RemoteRenderingAccount remoteRenderingAccount, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ObjectAnchorsAccount>> CreateWithHttpMessagesAsync(string resourceGroupName, string accountName, ObjectAnchorsAccount objectAnchorsAccount, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List Both of the 2 Keys of a Remote Rendering Account
+        /// List Both of the 2 Keys of an object anchors Account
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of an Azure resource group.
@@ -193,7 +193,7 @@ namespace Microsoft.Azure.Management.MixedReality
         /// </exception>
         Task<AzureOperationResponse<AccountKeys>> ListKeysWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Regenerate specified Key of a Remote Rendering Account
+        /// Regenerate specified Key of an object anchors Account
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of an Azure resource group.
@@ -221,7 +221,7 @@ namespace Microsoft.Azure.Management.MixedReality
         /// </exception>
         Task<AzureOperationResponse<AccountKeys>> RegenerateKeysWithHttpMessagesAsync(string resourceGroupName, string accountName, int? serial = 1, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List Remote Rendering Accounts by Subscription
+        /// List Object Anchors Accounts by Subscription
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -241,7 +241,7 @@ namespace Microsoft.Azure.Management.MixedReality
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<RemoteRenderingAccount>>> ListBySubscriptionNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<ObjectAnchorsAccount>>> ListBySubscriptionNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List Resources by Resource Group
         /// </summary>
@@ -263,6 +263,6 @@ namespace Microsoft.Azure.Management.MixedReality
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<RemoteRenderingAccount>>> ListByResourceGroupNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<ObjectAnchorsAccount>>> ListByResourceGroupNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
