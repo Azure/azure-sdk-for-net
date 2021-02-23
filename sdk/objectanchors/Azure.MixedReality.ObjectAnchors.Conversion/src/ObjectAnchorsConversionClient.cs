@@ -104,7 +104,11 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <returns>The asset conversion operation</returns>
         public virtual AssetConversionOperation StartAssetConversion(AssetConversionOptions options, CancellationToken cancellationToken = default)
         {
-            AssetConversionProperties properties = new AssetConversionProperties
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ObjectAnchorsConversionClient)}.{nameof(StartAssetConversion)}");
+            scope.Start();
+            try
+            {
+                AssetConversionProperties properties = new AssetConversionProperties
             {
                 InputAssetFileType = options.InputAssetFileType,
                 ConversionConfiguration = options.ConversionConfiguration,
@@ -113,6 +117,12 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
 
             _ingestionJobRestClient.Create(AccountId, options.JobId, body: properties, cancellationToken: cancellationToken);
             return new AssetConversionOperation(options.JobId, this);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -123,7 +133,11 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <returns>The asset conversion operation</returns>
         public virtual async Task<AssetConversionOperation> StartAssetConversionAsync(AssetConversionOptions options, CancellationToken cancellationToken = default)
         {
-            AssetConversionProperties properties = new AssetConversionProperties
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ObjectAnchorsConversionClient)}.{nameof(StartAssetConversion)}");
+            scope.Start();
+            try
+            {
+                AssetConversionProperties properties = new AssetConversionProperties
             {
                 InputAssetFileType = options.InputAssetFileType,
                 ConversionConfiguration = options.ConversionConfiguration,
@@ -132,6 +146,12 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
 
             await _ingestionJobRestClient.CreateAsync(AccountId, options.JobId, body: properties, cancellationToken: cancellationToken).ConfigureAwait(false);
             return new AssetConversionOperation(options.JobId, this);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -141,7 +161,17 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <returns><see cref="Response{GetAssetUploadUriResult}"/>.</returns>
         public virtual Response<AssetUploadUriResult> GetAssetUploadUri(CancellationToken cancellationToken = default)
         {
-            return _getBlobUploadEndpointRestClient.Get(AccountId, xMrcCv: GenerateCv(), cancellationToken: cancellationToken);
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ObjectAnchorsConversionClient)}.{nameof(GetAssetUploadUri)}");
+            scope.Start();
+            try
+            {
+                return _getBlobUploadEndpointRestClient.Get(AccountId, xMrcCv: GenerateCv(), cancellationToken: cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -151,7 +181,17 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <returns><see cref="Response{GetAssetUploadUriResult}"/>.</returns>
         public virtual async Task<Response<AssetUploadUriResult>> GetAssetUploadUriAsync(CancellationToken cancellationToken = default)
         {
-            return await _getBlobUploadEndpointRestClient.GetAsync(AccountId, xMrcCv: GenerateCv(), cancellationToken: cancellationToken).ConfigureAwait(false);
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ObjectAnchorsConversionClient)}.{nameof(GetAssetUploadUri)}");
+            scope.Start();
+            try
+            {
+                return await _getBlobUploadEndpointRestClient.GetAsync(AccountId, xMrcCv: GenerateCv(), cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -162,10 +202,20 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <returns><see cref="Response{AssetConversionProperties}"/>.</returns>
         internal virtual Response<AssetConversionProperties> GetAssetConversionStatus(Guid JobId, CancellationToken cancellationToken = default)
         {
-            var properties = _ingestionJobRestClient.Get(AccountId, JobId, xMrcCv: GenerateCv(), cancellationToken: cancellationToken);
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ObjectAnchorsConversionClient)}.{nameof(GetAssetConversionStatus)}");
+            scope.Start();
+            try
+            {
+                var properties = _ingestionJobRestClient.Get(AccountId, JobId, xMrcCv: GenerateCv(), cancellationToken: cancellationToken);
             properties.Value.JobId = JobId;
             properties.Value.AccountId = AccountId;
             return properties;
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
