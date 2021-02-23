@@ -613,9 +613,7 @@ namespace Azure.Storage.Blobs.Specialized
                     {
                         // We'll re-process this response as a batch result
 
-                        // TODO this probably doesn't work.
                         throw ClientDiagnostics.CreateRequestFailedException(responses[0]);
-                        //BatchRestClient.Service.SubmitBatchAsync_CreateResponse(ClientDiagnostics, responses[0]);
                     }
                     else
                     {

@@ -99,11 +99,12 @@ namespace Azure.Storage.Blobs.Specialized
             _isContainerScoped = client.IsContainerScoped;
             _clientDiagnostics = client.ClientDiagnostics;
 
-            BlobUriBuilder uriBuilder = new BlobUriBuilder(client.Uri);
-            uriBuilder.BlobContainerName = null;
-            uriBuilder.BlobName = null;
+            BlobUriBuilder uriBuilder = new BlobUriBuilder(client.Uri)
+            {
+                BlobContainerName = null,
+                BlobName = null
+            };
 
-            // TODO blob name encoding could be wrong.
             _blobRestClient = new BlobRestClient(
                 clientDiagnostics: _client.ClientDiagnostics,
                 pipeline: _client.Pipeline,
@@ -194,9 +195,7 @@ namespace Azure.Storage.Blobs.Specialized
 
             HttpMessage message = BlobRestClient.CreateDeleteRequest(
                 containerName: blobContainerName,
-                // TODO what about encoded blob names?
                 blob: blobName,
-                // TODO make timeout optional.
                 timeout: null,
                 leaseId: conditions?.LeaseId,
                 deleteSnapshots: snapshotsOption == DeleteSnapshotsOption.None ? null : (DeleteSnapshotsOptionType?)snapshotsOption,
@@ -209,7 +208,6 @@ namespace Azure.Storage.Blobs.Specialized
 
             _messages.Add(message);
 
-            // TODO no idea if this will work.
             return new DelayedResponse(
                 message,
                 async response =>
@@ -312,10 +310,8 @@ namespace Azure.Storage.Blobs.Specialized
 
             HttpMessage message = BlobRestClient.CreateSetAccessTierRequest(
                 containerName: blobContainerName,
-                // TODO what about special characters in blob name?
                 blob: blobName,
                 accessTier.ToBatchAccessTier(),
-                // TODO make timeout optional
                 timeout: null,
                 rehydratePriority: rehydratePriority.ToBatchRehydratePriority(),
                 leaseId: leaseAccessConditions?.LeaseId,
@@ -323,7 +319,6 @@ namespace Azure.Storage.Blobs.Specialized
 
             _messages.Add(message);
 
-            // TODO this probably doesn't work.
             return new DelayedResponse(
                 message,
                 async response =>
