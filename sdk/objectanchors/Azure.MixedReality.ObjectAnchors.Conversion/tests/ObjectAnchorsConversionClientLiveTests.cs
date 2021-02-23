@@ -32,9 +32,6 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Tests
         public ObjectAnchorsConversionClientLiveTests(bool isAsync)
             : base(isAsync)
         {
-            //TODO: https://github.com/Azure/autorest.csharp/issues/689
-            TestDiagnostics = false;
-
             Matcher = new MixedRealityRecordMatcher();
         }
 

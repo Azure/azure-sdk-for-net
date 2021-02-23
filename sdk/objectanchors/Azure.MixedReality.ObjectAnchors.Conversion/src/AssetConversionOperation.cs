@@ -44,7 +44,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         {
             get
             {
-                lock (_lastConversionResponse)
+                lock (_updateStatusLock)
                 {
                     return OperationHelpers.GetValue(ref _lastConversionResponse);
                 }

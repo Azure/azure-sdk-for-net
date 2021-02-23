@@ -162,10 +162,9 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <returns><see cref="Response{AssetConversionProperties}"/>.</returns>
         internal virtual Response<AssetConversionProperties> GetAssetConversionStatus(Guid JobId, CancellationToken cancellationToken = default)
         {
-            var accountId = AccountId;
-            var properties = _ingestionJobRestClient.Get(accountId, JobId, xMrcCv: GenerateCv(), cancellationToken: cancellationToken);
+            var properties = _ingestionJobRestClient.Get(AccountId, JobId, xMrcCv: GenerateCv(), cancellationToken: cancellationToken);
             properties.Value.JobId = JobId;
-            properties.Value.AccountId = accountId;
+            properties.Value.AccountId = AccountId;
             return properties;
         }
 
@@ -177,10 +176,9 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <returns><see cref="Response{AssetConversionProperties}"/>.</returns>
         internal virtual async Task<Response<AssetConversionProperties>> GetAssetConversionStatusAsync(Guid JobId, CancellationToken cancellationToken = default)
         {
-            var accountId = AccountId;
-            var properties = await _ingestionJobRestClient.GetAsync(accountId, JobId, xMrcCv: GenerateCv(), cancellationToken: cancellationToken).ConfigureAwait(false);
+            var properties = await _ingestionJobRestClient.GetAsync(AccountId, JobId, xMrcCv: GenerateCv(), cancellationToken: cancellationToken).ConfigureAwait(false);
             properties.Value.JobId = JobId;
-            properties.Value.AccountId = accountId;
+            properties.Value.AccountId = AccountId;
             return properties;
         }
 
