@@ -14,11 +14,21 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
     [CodeGenModel("Pose")]
     public partial struct TrajectoryPose : IEquatable<TrajectoryPose>
     {
+        /// <summary>
+        /// Creates the Pose of a trajectory
+        /// </summary>
+        /// <param name="rotation">The pose's rotation</param>
+        /// <param name="translation">The pose's translation</param>
         internal TrajectoryPose(System.Numerics.Quaternion rotation, System.Numerics.Vector3 translation)
             : this(new Quaternion(rotation), new Vector3(translation))
         {
         }
 
+        /// <summary>
+        /// Creates the Pose of a trajectory
+        /// </summary>
+        /// <param name="rotationWrapper">The pose's rotation</param>
+        /// <param name="translationWrapper">The pose's translation</param>
         internal TrajectoryPose(Quaternion rotationWrapper, Vector3 translationWrapper)
         {
             RotationWrapper = rotationWrapper;

@@ -31,17 +31,8 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <param name="accountId">The Azure Object Anchors account ID.</param>
         /// <param name="accountDomain">The Azure Object Anchors account domain.</param>
         /// <param name="token">An access token used to access the specified Azure Object Anchors account.</param>
-        public ObjectAnchorsConversionClient(Guid accountId, string accountDomain, AccessToken token)
-            : this(accountId, accountDomain, new StaticAccessTokenCredential(token), new ObjectAnchorsConversionClientOptions()) { }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ObjectAnchorsConversionClient" /> class.
-        /// </summary>
-        /// <param name="accountId">The Azure Object Anchors account ID.</param>
-        /// <param name="accountDomain">The Azure Object Anchors account domain.</param>
-        /// <param name="token">An access token used to access the specified Azure Object Anchors account.</param>
         /// <param name="options">The options.</param>
-        public ObjectAnchorsConversionClient(Guid accountId, string accountDomain, AccessToken token, ObjectAnchorsConversionClientOptions options)
+        public ObjectAnchorsConversionClient(Guid accountId, string accountDomain, AccessToken token, ObjectAnchorsConversionClientOptions options = null)
             : this(accountId, accountDomain, new StaticAccessTokenCredential(token), options) { }
 
         /// <summary>
@@ -50,17 +41,8 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <param name="accountId">The Azure Object Anchors account ID.</param>
         /// <param name="accountDomain">The Azure Object Anchors account domain.</param>
         /// <param name="keyCredential">The Azure Object Anchors account primary or secondary key credential.</param>
-        public ObjectAnchorsConversionClient(Guid accountId, string accountDomain, AzureKeyCredential keyCredential)
-            : this(accountId, accountDomain, new MixedRealityAccountKeyCredential(accountId, keyCredential), new ObjectAnchorsConversionClientOptions()) { }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ObjectAnchorsConversionClient" /> class.
-        /// </summary>
-        /// <param name="accountId">The Azure Object Anchors account ID.</param>
-        /// <param name="accountDomain">The Azure Object Anchors account domain.</param>
-        /// <param name="keyCredential">The Azure Object Anchors account primary or secondary key credential.</param>
         /// <param name="options">The options.</param>
-        public ObjectAnchorsConversionClient(Guid accountId, string accountDomain, AzureKeyCredential keyCredential, ObjectAnchorsConversionClientOptions options)
+        public ObjectAnchorsConversionClient(Guid accountId, string accountDomain, AzureKeyCredential keyCredential, ObjectAnchorsConversionClientOptions options = null)
             : this(accountId, accountDomain, new MixedRealityAccountKeyCredential(accountId, keyCredential), options) { }
 
         /// <summary>
@@ -69,21 +51,13 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <param name="accountId">The Azure Object Anchors account ID.</param>
         /// <param name="accountDomain">The Azure Object Anchors account domain.</param>
         /// <param name="credential">The credential used to access the Mixed Reality service.</param>
-        public ObjectAnchorsConversionClient(Guid accountId, string accountDomain, TokenCredential credential)
-         : this(accountId, accountDomain, credential, new ObjectAnchorsConversionClientOptions()) { }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ObjectAnchorsConversionClient" /> class.
-        /// </summary>
-        /// <param name="accountId">The Azure Object Anchors account ID.</param>
-        /// <param name="accountDomain">The Azure Object Anchors account domain.</param>
-        /// <param name="credential">The credential used to access the Mixed Reality service.</param>
         /// <param name="options">The options.</param>
-        public ObjectAnchorsConversionClient(Guid accountId, string accountDomain, TokenCredential credential, ObjectAnchorsConversionClientOptions options)
+        public ObjectAnchorsConversionClient(Guid accountId, string accountDomain, TokenCredential credential, ObjectAnchorsConversionClientOptions options = null)
         {
             Argument.AssertNotNull(accountDomain, nameof(accountDomain));
             Argument.AssertNotNull(credential, nameof(credential));
 
+            options = options ?? new ObjectAnchorsConversionClientOptions();
             Uri authenticationEndpoint = options.MixedRealityAuthenticationEndpoint ?? AuthenticationEndpoint.ConstructFromDomain(accountDomain);
             TokenCredential mrTokenCredential = MixedRealityTokenCredential.GetMixedRealityCredential(accountId, authenticationEndpoint, credential, options.MixedRealityAuthenticationOptions);
             Uri serviceEndpoint = options.ServiceEndpoint ?? ConstructObjectAnchorsEndpointUrl(accountDomain);

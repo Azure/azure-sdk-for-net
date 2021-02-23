@@ -10,7 +10,7 @@ Azure Object Anchors enables an application to detect an object in the physical 
     - [Prerequisites](#prerequisites)
     - [Authenticate the client](#authenticate-the-client)
   - [Key concepts](#key-concepts)
-    - [ObjectAnchorsConversionClient](#ObjectAnchorsConversionClient)
+    - [ObjectAnchorsConversionClient](#objectanchorsconversionclient)
   - [Examples](#examples)
     - [Upload an asset for Object Anchors asset conversion](#upload-an-asset-for-object-anchors-asset-conversion)
     - [Start 3D asset conversion](#start-3d-asset-conversion)

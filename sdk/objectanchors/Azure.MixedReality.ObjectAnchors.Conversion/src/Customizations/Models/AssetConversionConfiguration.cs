@@ -14,6 +14,11 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
     [CodeGenModel("IngestionConfiguration")]
     public partial class AssetConversionConfiguration
     {
+        /// <summary>
+        /// Creates an asset conversion configuration from the gravity vector and a model scale
+        /// </summary>
+        /// <param name="gravity">Gravity vector with respect to object's nominal position.</param>
+        /// <param name="scale">Scale of transformation of asset units into meter space.</param>
         internal AssetConversionConfiguration(System.Numerics.Vector3 gravity, float scale)
             : this(new Vector3(gravity), scale)
         {
@@ -23,6 +28,11 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             }
         }
 
+        /// <summary>
+        /// Creates an asset conversion configuration from the gravity vector and a model scale
+        /// </summary>
+        /// <param name="gravityWrapper">Gravity vector with respect to object's nominal position.</param>
+        /// <param name="scale">Scale of transformation of asset units into meter space.</param>
         internal AssetConversionConfiguration(Vector3 gravityWrapper, float scale)
         {
             if (gravityWrapper == null)

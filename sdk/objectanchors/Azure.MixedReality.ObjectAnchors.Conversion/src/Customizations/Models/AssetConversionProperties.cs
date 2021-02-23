@@ -7,11 +7,14 @@ using Azure.Core;
 namespace Azure.MixedReality.ObjectAnchors.Conversion
 {
     /// <summary>
-    /// Represents the status of an AOA asset conversion job.
+    /// Represents the properties of an AOA asset conversion job.
     /// </summary>
     [CodeGenModel("IngestionProperties")]
     public partial class AssetConversionProperties
     {
+        /// <summary>
+        /// Represents the properties of an AOA asset conversion job.
+        /// </summary>
         internal AssetConversionProperties()
         {
         }

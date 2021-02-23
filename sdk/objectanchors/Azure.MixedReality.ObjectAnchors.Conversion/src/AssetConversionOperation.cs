@@ -17,7 +17,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
     public class AssetConversionOperation : Operation<AssetConversionProperties>
     {
         private static readonly TimeSpan defaultPollingInterval = TimeSpan.FromSeconds(15);
-        private readonly ObjectAnchorsConversionClient _ObjectAnchorsConversionClient;
+        private readonly ObjectAnchorsConversionClient _objectAnchorsConversionClient;
         private readonly Guid _jobId;
         private Response<AssetConversionProperties> _lastConversionResponse;
         private Response<AssetConversionProperties> _conclusiveConversionResponse;
@@ -29,10 +29,10 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// You must call <see cref="UpdateStatus(CancellationToken)"/> or <see cref="UpdateStatusAsync(CancellationToken)"/> before you can get the <see cref="Value"/>.
         /// </summary>
         /// <param name="jobId">The ID of this operation.</param>
-        /// <param name="ObjectAnchorsConversionClient">The client used to check for completion.</param>
-        public AssetConversionOperation(Guid jobId, ObjectAnchorsConversionClient ObjectAnchorsConversionClient)
+        /// <param name="objectAnchorsConversionClient">The client used to check for completion.</param>
+        public AssetConversionOperation(Guid jobId, ObjectAnchorsConversionClient objectAnchorsConversionClient)
         {
-            _ObjectAnchorsConversionClient = ObjectAnchorsConversionClient;
+            _objectAnchorsConversionClient = objectAnchorsConversionClient;
             _jobId = jobId;
         }
 
@@ -68,7 +68,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <inheritdoc/>
         public override Response UpdateStatus(CancellationToken cancellationToken = default)
         {
-            Response<AssetConversionProperties> updatedStatus = _ObjectAnchorsConversionClient.GetAssetConversionStatus(_jobId, cancellationToken: cancellationToken);
+            Response<AssetConversionProperties> updatedStatus = _objectAnchorsConversionClient.GetAssetConversionStatus(_jobId, cancellationToken: cancellationToken);
             lock (_updateStatusLock)
             {
                 _lastConversionResponse = updatedStatus;
@@ -90,7 +90,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <inheritdoc/>
         public async override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default)
         {
-            Response<AssetConversionProperties> updatedStatus = await _ObjectAnchorsConversionClient.GetAssetConversionStatusAsync(_jobId, cancellationToken: cancellationToken).ConfigureAwait(false);
+            Response<AssetConversionProperties> updatedStatus = await _objectAnchorsConversionClient.GetAssetConversionStatusAsync(_jobId, cancellationToken: cancellationToken).ConfigureAwait(false);
             lock (_updateStatusLock)
             {
                 _lastConversionResponse = updatedStatus;
