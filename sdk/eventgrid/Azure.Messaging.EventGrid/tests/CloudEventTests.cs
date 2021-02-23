@@ -65,8 +65,12 @@ namespace Azure.Messaging.EventGrid.Tests
             }
             await client.SendEventsAsync(eventsList);
 
+            List<CloudEvent> cloudEvents = ExtractEventsFromRequest(mockTransport.SingleRequest);
+
+            // stop activity after extracting the events from the request as this is where the cloudEvents would actually
+            // be serialized
             activity.Stop();
-            List<CloudEvent> cloudEvents = DeserializeRequest(mockTransport.SingleRequest);
+
             IEnumerator<CloudEvent> cloudEnum = eventsList.GetEnumerator();
             foreach (CloudEvent cloudEvent in cloudEvents)
             {
@@ -137,7 +141,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
             await client.SendEventsAsync(eventsList);
 
-            cloudEvent = DeserializeRequest(mockTransport.SingleRequest).First();
+            cloudEvent = ExtractEventsFromRequest(mockTransport.SingleRequest).First();
             Assert.IsNull(cloudEvent.Data.ToObjectFromJson<DerivedTestPayload>().DerivedProperty);
         }
 
@@ -173,11 +177,11 @@ namespace Azure.Messaging.EventGrid.Tests
 
             await client.SendEventsAsync(eventsList);
 
-            cloudEvent = DeserializeRequest(mockTransport.SingleRequest).First();
+            cloudEvent = ExtractEventsFromRequest(mockTransport.SingleRequest).First();
             Assert.AreEqual(5, cloudEvent.Data.ToObjectFromJson<DerivedTestPayload>().DerivedProperty);
         }
 
-        private static List<CloudEvent> DeserializeRequest(Request request)
+        private static List<CloudEvent> ExtractEventsFromRequest(Request request)
         {
             var stream = new MemoryStream();
             request.Content.WriteTo(stream, CancellationToken.None);
