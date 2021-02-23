@@ -13,9 +13,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.FunctionalTests
 
     public class AzureMonitorTestEnvironment : TestEnvironment
     {
-        public AzureMonitorTestEnvironment() : base()
-        {
-        }
+        public AzureMonitorTestEnvironment() : base() { }
 
         /// <summary>
         /// Connection String is used to connect to an Application Insights resource.
@@ -29,6 +27,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.FunctionalTests
         /// </summary>
         public string ApplicationId => GetRecordedVariable(EnvironmentVariableNames.ApplicationId);
 
+        public bool IsTestModeLive => this.Mode != RecordedTestMode.Playback;
+
         /// <summary>
         /// Get a <see cref="ServiceClientCredentials"/> needed by <see cref="ApplicationInsightsDataClient"/> to query Kusto.
         /// - IN LIVE OR RECORD TEST MODE
@@ -39,7 +39,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.FunctionalTests
         /// </summary>
         public async Task<ServiceClientCredentials> GetServiceClientCredentialsAsync()
         {
-            if (this.Mode == RecordedTestMode.Live || this.Mode == RecordedTestMode.Record)
+            if (this.IsTestModeLive)
             {
                 var authEndpoint = "https://login.microsoftonline.com";
                 var tokenAudience = "https://api.applicationinsights.io/";
@@ -56,13 +56,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.FunctionalTests
                     secret: this.ClientSecret,
                     settings: adSettings);
             }
-            else if (this.Mode == RecordedTestMode.Playback)
-            {
-                return new TokenCredentials("testValue");
-            }
             else
             {
-                throw new Exception($"Unknown RecordedTestMode '{this.Mode}'");
+                return new TokenCredentials("testValue");
             }
         }
 

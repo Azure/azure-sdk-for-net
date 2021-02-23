@@ -89,7 +89,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.FunctionalTests
         protected async Task<IList<EventsTraceResult>> FetchTelemetryAsync()
         {
             var timeoutDuration = TimeSpan.FromMinutes(5); // timeout after 5 minutes.
-            var period = GetWaitPeriod(); // query once every 30 seconds.
+            var period = TestEnvironment.IsTestModeLive ? TimeSpan.FromSeconds(10) : TimeSpan.FromSeconds(0); // query once every 10 seconds.
 
             var client = await this.GetApplicationInsightsDataClientAsync();
             IList<EventsTraceResult> telemetry = null;
@@ -107,27 +107,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.FunctionalTests
                 }
             }
 
-            Assert.IsNotNull(telemetry, "Failed to query telemetry. This is not necessarily a test failure, this could be a result of an ingestion delay.");
+            Assert.IsNotNull(telemetry, "Failed to query telemetry. This is not necessarily a test failure and could be a result of an ingestion delay.");
 
             return telemetry;
-        }
-
-        /// <summary>
-        /// Application Insights ingestion is not immediate.
-        /// Unit tests need to consider the <see cref="RecordedTestMode"/> and wait accordingly.
-        /// </summary>
-        private TimeSpan GetWaitPeriod()
-        {
-            switch (this.Mode)
-            {
-                case RecordedTestMode.Live:
-                case RecordedTestMode.Record:
-                    return TimeSpan.FromSeconds(5);
-                case RecordedTestMode.Playback:
-                    return TimeSpan.FromSeconds(0);
-                default:
-                    throw new Exception($"Unknown RecordedTestMode '{this.Mode}'");
-            }
         }
 
         /// <summary>
