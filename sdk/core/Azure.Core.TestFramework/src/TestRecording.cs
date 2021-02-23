@@ -51,7 +51,7 @@ namespace Azure.Core.TestFramework
                     }
                     catch (Exception ex) when (ex is FileNotFoundException || ex is DirectoryNotFoundException)
                     {
-                        throw new TestRecordingMismatchException(ex.Message, ex);
+                        _mismatchException = new TestRecordingMismatchException(ex.Message, ex);
                     }
                     break;
             }
@@ -66,8 +66,24 @@ namespace Azure.Core.TestFramework
         private readonly RecordedTestSanitizer _sanitizer;
 
         private readonly RecordMatcher _matcher;
+        private RecordSession _sessionInternal;
+        private RecordSession _session
+        {
+            get
+            {
+                return _sessionInternal ?? _mismatchException switch
+                {
+                    null => _sessionInternal,
+                    _ => throw _mismatchException
+                };
+            }
+            set
+            {
+                _sessionInternal = value;
+            }
+        }
 
-        private readonly RecordSession _session;
+        private readonly TestRecordingMismatchException _mismatchException;
 
         private RecordSession _previousSession;
 
@@ -172,7 +188,7 @@ namespace Azure.Core.TestFramework
 
         public void Dispose(bool save)
         {
-            if (Mode == RecordedTestMode.Record && save)
+            if (Mode == RecordedTestMode.Record && save && _session.Entries.Count > 0 && _session.Variables.Count > 0)
             {
                 var directory = Path.GetDirectoryName(_sessionFile);
                 Directory.CreateDirectory(directory);
@@ -299,7 +315,7 @@ namespace Azure.Core.TestFramework
             _previousSession = null;
         }
 
-        public bool HasRequests => _session?.Entries.Count > 0;
+        public bool HasRequests => _sessionInternal?.Entries.Count > 0;
 
         public DisableRecordingScope DisableRecording()
         {
