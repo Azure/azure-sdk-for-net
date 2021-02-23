@@ -299,7 +299,7 @@ namespace Azure.Storage.Blobs.Specialized
                 timeout: null,
                 rehydratePriority: rehydratePriority.ToBatchRehydratePriority(),
                 leaseId: leaseAccessConditions?.LeaseId,
-                ifTags: leaseAccessConditions.TagConditions);
+                ifTags: leaseAccessConditions?.TagConditions);
 
             _messages.Add(message);
 

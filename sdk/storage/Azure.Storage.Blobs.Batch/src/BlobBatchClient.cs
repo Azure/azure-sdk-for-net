@@ -24,7 +24,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// Gets the blob service's primary <see cref="Uri"/> endpoint.
         /// </summary>
-        public virtual Uri Uri { get; }
+        private readonly Uri _uri;
+
+        /// <summary>
+        /// Gets the blob service's primary <see cref="Uri"/> endpoint.
+        /// </summary>
+        public virtual Uri Uri => _uri;
 
         /// <summary>
         /// If this BlobBatchClient is scoped to a container.
@@ -40,24 +45,47 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="HttpPipeline"/> transport pipeline used to send
         /// every request.
         /// </summary>
-        internal virtual HttpPipeline Pipeline { get; }
+        private readonly HttpPipeline _pipeline;
+
+        /// <summary>
+        /// The <see cref="HttpPipeline"/> transport pipeline used to send
+        /// every request.
+        /// </summary>
+        internal virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary>
         /// The version of the service to use when sending requests.
         /// </summary>
-        internal virtual BlobClientOptions.ServiceVersion Version { get; }
+        private readonly BlobClientOptions.ServiceVersion _version;
+
+        /// <summary>
+        /// The version of the service to use when sending requests.
+        /// </summary>
+        internal virtual BlobClientOptions.ServiceVersion Version => _version;
+
+        /// <summary>
+        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
+        /// every request.
+        /// </summary>;
+        private readonly ClientDiagnostics _clientDiagnostics;
 
         /// <summary>
         /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
         /// every request.
         /// </summary>
-        internal virtual ClientDiagnostics ClientDiagnostics { get; }
+        internal virtual ClientDiagnostics ClientDiagnostics => _clientDiagnostics;
 
         /// <summary>
         /// The <see cref="HttpPipeline"/> transport pipeline used to prepare
         /// requests for batching without actually sending them.
         /// </summary>
-        internal virtual HttpPipeline BatchOperationPipeline { get; }
+        private readonly HttpPipeline _batchOperationPipeline;
+
+        /// <summary>
+        /// The <see cref="HttpPipeline"/> transport pipeline used to prepare
+        /// requests for batching without actually sending them.
+        /// </summary>
+        internal virtual HttpPipeline BatchOperationPipeline => _batchOperationPipeline;
 
         /// <summary>
         /// <see cref="ServiceRestClient"/>.
@@ -70,14 +98,14 @@ namespace Azure.Storage.Blobs.Specialized
         internal virtual ServiceRestClient ServiceRestClient => _serviceRestClient;
 
         /// <summary>
-        /// <see cref="ContainerRestClient"/>.
+        /// <see cref="Blobs.ContainerRestClient"/>.
         /// </summary>
         private readonly ContainerRestClient _containerRestClient;
 
         /// <summary>
-        /// <see cref="ContainerRestClient"/>.
+        /// <see cref="Blobs.ContainerRestClient"/>.
         /// </summary>
-        internal virtual ContainerRestClient ContainerrestClient => _containerRestClient;
+        internal virtual ContainerRestClient ContainerRestClient => _containerRestClient;
 
         /// <summary>
         /// The name of the container associated with the BlobBatchClient,
@@ -109,15 +137,15 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="client">The <see cref="BlobServiceClient"/>.</param>
         public BlobBatchClient(BlobServiceClient client)
         {
-            Uri = client.Uri;
-            Pipeline = BlobServiceClientInternals.GetHttpPipeline(client);
+            _uri = client.Uri;
+            _pipeline = BlobServiceClientInternals.GetHttpPipeline(client);
             BlobClientOptions options = BlobServiceClientInternals.GetClientOptions(client);
-            Version = options.Version;
-            ClientDiagnostics = new ClientDiagnostics(options);
+            _version = options.Version;
+            _clientDiagnostics = new ClientDiagnostics(options);
 
             // Construct a dummy pipeline for processing batch sub-operations
             // if we don't have one cached on the service
-            BatchOperationPipeline = CreateBatchPipeline(
+            _batchOperationPipeline = CreateBatchPipeline(
                 Pipeline,
                 BlobServiceClientInternals.GetAuthenticationPolicy(client),
                 Version);
@@ -138,16 +166,16 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="client">The <see cref="BlobContainerClient"/>.</param>
         public BlobBatchClient(BlobContainerClient client)
         {
-            Uri = client.Uri;
+            _uri = client.Uri;
             BlobServiceClient blobServiceClient = client.GetParentBlobServiceClient();
-            Pipeline = BlobServiceClientInternals.GetHttpPipeline(blobServiceClient);
+            _pipeline = BlobServiceClientInternals.GetHttpPipeline(blobServiceClient);
             BlobClientOptions options = BlobServiceClientInternals.GetClientOptions(blobServiceClient);
-            Version = options.Version;
-            ClientDiagnostics = new ClientDiagnostics(options);
+            _version = options.Version;
+            _clientDiagnostics = new ClientDiagnostics(options);
 
             // Construct a dummy pipeline for processing batch sub-operations
             // if we don't have one cached on the service
-            BatchOperationPipeline = CreateBatchPipeline(
+            _batchOperationPipeline = CreateBatchPipeline(
                 Pipeline,
                 BlobServiceClientInternals.GetAuthenticationPolicy(blobServiceClient),
                 Version);
@@ -205,17 +233,17 @@ namespace Azure.Storage.Blobs.Specialized
 
             // TODO these need to reference private readonly properties, not virtul getters
             ServiceRestClient serviceRestClient = new ServiceRestClient(
-                clientDiagnostics: ClientDiagnostics,
-                pipeline: Pipeline,
+                clientDiagnostics: _clientDiagnostics,
+                pipeline: _pipeline,
                 url: uriBuilder.ToUri().ToString(),
-                version: Version.ToVersionString());
+                version: _version.ToVersionString());
 
             // TODO these need to reference private readonly properties, not virtul getters
             ContainerRestClient containerRestClient = new ContainerRestClient(
-                clientDiagnostics: ClientDiagnostics,
-                pipeline: Pipeline,
+                clientDiagnostics: _clientDiagnostics,
+                pipeline: _pipeline,
                 url: uriBuilder.ToUri().ToString(),
-                version: Version.ToVersionString());
+                version: _version.ToVersionString());
 
             return (serviceRestClient, containerRestClient);
         }
