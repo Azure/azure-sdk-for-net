@@ -27,7 +27,7 @@ Install-Package Azure.MixedReality.RemoteRendering -AllowPrereleaseVersions
 From .NET CLI
 
 ```dotnetcli
-dotnet add package Azure.MixedReality.RemoteRendering --version 1.0.0-beta.1 
+dotnet add package Azure.MixedReality.RemoteRendering --version 1.0.0-beta.1
 ```
 
 Add a package reference:
@@ -43,7 +43,6 @@ You will need an [Azure subscription](https://azure.microsoft.com/free/) and an 
 ### Authenticate the client
 
 Constructing a remote rendering client requires an authenticated account, and a remote rendering endpoint.
-A RemoteRenderingAccount object is constructed from an accountId and an account domain.
 For an account created in the eastus region, the account domain will have the form "eastus.mixedreality.azure.com".
 There are several different forms of authentication:
 
@@ -66,7 +65,7 @@ An example is `https://remoterendering.eastus2.mixedreality.azure.com`.
 
 > NOTE: For converting assets, it is preferable to pick a region close to the storage containing the assets.
 
-> NOTE: For rendering, it is strongly recommended that you pick the closest region to the devices using the service. 
+> NOTE: For rendering, it is strongly recommended that you pick the closest region to the devices using the service.
 > The time taken to communicate with the server impacts the quality of the experience.
 
 #### Authenticating with account key authentication
@@ -74,10 +73,9 @@ An example is `https://remoterendering.eastus2.mixedreality.azure.com`.
 Use the `AccountKeyCredential` object to use an account identifier and account key to authenticate:
 
 ```csharp Snippet:CreateAClient
-RemoteRenderingAccount account = new RemoteRenderingAccount(accountId, accountDomain);
 AzureKeyCredential accountKeyCredential = new AzureKeyCredential(accountKey);
 
-RemoteRenderingClient client = new RemoteRenderingClient(remoteRenderingEndpoint, account, accountKeyCredential);
+RemoteRenderingClient client = new RemoteRenderingClient(remoteRenderingEndpoint, accountId, accountDomain, accountKeyCredential);
 ```
 
 #### Authenticating with an AAD client secret
@@ -85,14 +83,12 @@ RemoteRenderingClient client = new RemoteRenderingClient(remoteRenderingEndpoint
 Use the `ClientSecretCredential` object to perform client secret authentication.
 
 ```csharp Snippet:CreateAClientWithAAD
-RemoteRenderingAccount account = new RemoteRenderingAccount(accountId, accountDomain);
-
 TokenCredential credential = new ClientSecretCredential(tenantId, clientId, clientSecret, new TokenCredentialOptions
 {
     AuthorityHost = new Uri($"https://login.microsoftonline.com/{tenantId}")
 });
 
-RemoteRenderingClient client = new RemoteRenderingClient(remoteRenderingEndpoint, account, credential);
+RemoteRenderingClient client = new RemoteRenderingClient(remoteRenderingEndpoint, accountId, accountDomain, credential);
 ```
 
 #### Authenticating a user using device code authentication
@@ -100,8 +96,6 @@ RemoteRenderingClient client = new RemoteRenderingClient(remoteRenderingEndpoint
 Use the `DeviceCodeCredential` object to perform device code authentication.
 
 ```csharp Snippet:CreateAClientWithDeviceCode
-RemoteRenderingAccount account = new RemoteRenderingAccount(accountId, accountDomain);
-
 Task deviceCodeCallback(DeviceCodeInfo deviceCodeInfo, CancellationToken cancellationToken)
 {
     Debug.WriteLine(deviceCodeInfo.Message);
@@ -114,7 +108,7 @@ TokenCredential credential = new DeviceCodeCredential(deviceCodeCallback, tenant
     AuthorityHost = new Uri($"https://login.microsoftonline.com/{tenantId}"),
 });
 
-RemoteRenderingClient client = new RemoteRenderingClient(remoteRenderingEndpoint, account, credential);
+RemoteRenderingClient client = new RemoteRenderingClient(remoteRenderingEndpoint, accountId, accountDomain, credential);
 ```
 
 See [here](https://github.com/AzureAD/microsoft-authentication-library-for-dotnet/wiki/Device-Code-Flow) for more
@@ -126,10 +120,9 @@ Use the `DefaultAzureCredential` object with `includeInteractiveCredentials: tru
 flow:
 
 ```csharp Snippet:CreateAClientWithAzureCredential
-RemoteRenderingAccount account = new RemoteRenderingAccount(accountId, accountDomain);
 TokenCredential credential = new DefaultAzureCredential(includeInteractiveCredentials: true);
 
-RemoteRenderingClient client = new RemoteRenderingClient(remoteRenderingEndpoint, account, credential);
+RemoteRenderingClient client = new RemoteRenderingClient(remoteRenderingEndpoint, accountId, accountDomain, credential);
 ```
 
 #### Authenticating with a static access token
@@ -139,15 +132,13 @@ You can pass a Mixed Reality access token as an `AccessToken` previously retriev
 to be used with a Mixed Reality client library:
 
 ```csharp Snippet:CreateAClientWithStaticAccessToken
-RemoteRenderingAccount account = new RemoteRenderingAccount(accountId, accountDomain);
-
 // GetMixedRealityAccessTokenFromWebService is a hypothetical method that retrieves
 // a Mixed Reality access token from a web service. The web service would use the
 // MixedRealityStsClient and credentials to obtain an access token to be returned
 // to the client.
 AccessToken accessToken = GetMixedRealityAccessTokenFromWebService();
 
-RemoteRenderingClient client = new RemoteRenderingClient(remoteRenderingEndpoint, account, accessToken);
+RemoteRenderingClient client = new RemoteRenderingClient(remoteRenderingEndpoint, accountId, accountDomain, accessToken);
 ```
 
 ## Key concepts

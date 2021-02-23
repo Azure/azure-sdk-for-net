@@ -27,10 +27,9 @@ namespace Azure.MixedReality.RemoteRendering.Tests.Samples
             Uri remoteRenderingEndpoint = new Uri(TestEnvironment.ServiceEndpoint);
 
             #region Snippet:CreateAClient
-            RemoteRenderingAccount account = new RemoteRenderingAccount(accountId, accountDomain);
             AzureKeyCredential accountKeyCredential = new AzureKeyCredential(accountKey);
 
-            RemoteRenderingClient client = new RemoteRenderingClient(remoteRenderingEndpoint, account, accountKeyCredential);
+            RemoteRenderingClient client = new RemoteRenderingClient(remoteRenderingEndpoint, accountId, accountDomain, accountKeyCredential);
             #endregion Snippet:CreateAClient
             return client;
         }
@@ -146,14 +145,13 @@ namespace Azure.MixedReality.RemoteRendering.Tests.Samples
             Uri remoteRenderingEndpoint = new Uri(TestEnvironment.ServiceEndpoint);
 
             #region Snippet:CreateAClientWithAAD
-            RemoteRenderingAccount account = new RemoteRenderingAccount(accountId, accountDomain);
 
             TokenCredential credential = new ClientSecretCredential(tenantId, clientId, clientSecret, new TokenCredentialOptions
             {
                 AuthorityHost = new Uri($"https://login.microsoftonline.com/{tenantId}")
             });
 
-            RemoteRenderingClient client = new RemoteRenderingClient(remoteRenderingEndpoint, account, credential);
+            RemoteRenderingClient client = new RemoteRenderingClient(remoteRenderingEndpoint, accountId, accountDomain, credential);
             #endregion Snippet:CreateAClientWithAAD
             return client;
         }
@@ -167,7 +165,6 @@ namespace Azure.MixedReality.RemoteRendering.Tests.Samples
             Uri remoteRenderingEndpoint = new Uri(TestEnvironment.ServiceEndpoint);
 
             #region Snippet:CreateAClientWithDeviceCode
-            RemoteRenderingAccount account = new RemoteRenderingAccount(accountId, accountDomain);
 
             Task deviceCodeCallback(DeviceCodeInfo deviceCodeInfo, CancellationToken cancellationToken)
             {
@@ -180,7 +177,7 @@ namespace Azure.MixedReality.RemoteRendering.Tests.Samples
                 AuthorityHost = new Uri($"https://login.microsoftonline.com/{tenantId}"),
             });
 
-            RemoteRenderingClient client = new RemoteRenderingClient(remoteRenderingEndpoint, account, credential);
+            RemoteRenderingClient client = new RemoteRenderingClient(remoteRenderingEndpoint, accountId, accountDomain, credential);
             #endregion Snippet:CreateAClientWithDeviceCode
             return client;
         }
@@ -192,10 +189,10 @@ namespace Azure.MixedReality.RemoteRendering.Tests.Samples
             Uri remoteRenderingEndpoint = new Uri(TestEnvironment.ServiceEndpoint);
 
             #region Snippet:CreateAClientWithAzureCredential
-            RemoteRenderingAccount account = new RemoteRenderingAccount(accountId, accountDomain);
+
             TokenCredential credential = new DefaultAzureCredential(includeInteractiveCredentials: true);
 
-            RemoteRenderingClient client = new RemoteRenderingClient(remoteRenderingEndpoint, account, credential);
+            RemoteRenderingClient client = new RemoteRenderingClient(remoteRenderingEndpoint, accountId, accountDomain, credential);
             #endregion Snippet:CreateAClientWithAzureCredential
 
             return client;
@@ -213,7 +210,6 @@ namespace Azure.MixedReality.RemoteRendering.Tests.Samples
             Uri remoteRenderingEndpoint = new Uri(TestEnvironment.ServiceEndpoint);
 
             #region Snippet:CreateAClientWithStaticAccessToken
-            RemoteRenderingAccount account = new RemoteRenderingAccount(accountId, accountDomain);
 
             // GetMixedRealityAccessTokenFromWebService is a hypothetical method that retrieves
             // a Mixed Reality access token from a web service. The web service would use the
@@ -221,7 +217,7 @@ namespace Azure.MixedReality.RemoteRendering.Tests.Samples
             // to the client.
             AccessToken accessToken = GetMixedRealityAccessTokenFromWebService();
 
-            RemoteRenderingClient client = new RemoteRenderingClient(remoteRenderingEndpoint, account, accessToken);
+            RemoteRenderingClient client = new RemoteRenderingClient(remoteRenderingEndpoint, accountId, accountDomain, accessToken);
             #endregion Snippet:CreateAClientWithStaticAccessToken
 
             return client;

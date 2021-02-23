@@ -188,7 +188,8 @@ namespace Azure.MixedReality.RemoteRendering.Tests
 
         private RemoteRenderingClient GetClient()
         {
-            RemoteRenderingAccount account = new RemoteRenderingAccount(new Guid(TestEnvironment.AccountId), TestEnvironment.AccountDomain);
+            Guid accountId = new Guid(TestEnvironment.AccountId);
+            string accountDomain = TestEnvironment.AccountDomain;
             Uri serviceEndpoint = new Uri(TestEnvironment.ServiceEndpoint);
 
             var options = InstrumentClientOptions(new RemoteRenderingClientOptions());
@@ -199,12 +200,12 @@ namespace Azure.MixedReality.RemoteRendering.Tests
             if (Mode != RecordedTestMode.Playback)
             {
                 AzureKeyCredential accountKeyCredential = new AzureKeyCredential(TestEnvironment.AccountKey);
-                client = new RemoteRenderingClient(serviceEndpoint, account, accountKeyCredential, options);
+                client = new RemoteRenderingClient(serviceEndpoint, accountId, accountDomain, accountKeyCredential, options);
             }
             else
             {
                 AccessToken artificialToken = new AccessToken("TestToken", DateTimeOffset.MaxValue);
-                client = new RemoteRenderingClient(serviceEndpoint, account, artificialToken, options);
+                client = new RemoteRenderingClient(serviceEndpoint, accountId, accountDomain, artificialToken, options);
             }
             return InstrumentClient(client);
         }
