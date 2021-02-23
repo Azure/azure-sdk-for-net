@@ -22,6 +22,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ExcludeFromProjectReferenceToConversion Include="Azure.Storage.Blobs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="SessionRecords\" />
   </ItemGroup>
 </Project>

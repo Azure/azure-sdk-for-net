@@ -2,7 +2,7 @@
 
 Azure Object Anchors enables an application to detect an object in the physical world using a 3D model and estimate its 6-DoF pose. This package supports the conversion of an existing 3D asset into a form that can be used by the Object Anchors runtime to detect physical objects.
 
-[Source code](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/mixedreality/Azure.MixedReality.ObjectAnchors) | NuGet
+[Source code](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/objectanchors/Azure.MixedReality.ObjectAnchors) | NuGet
 
 - [Azure Object Anchors client library for .NET](#azure-object-anchors-client-library-for-net)
   - [Getting started](#getting-started)
