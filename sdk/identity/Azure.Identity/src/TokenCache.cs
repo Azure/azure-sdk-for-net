@@ -2,11 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Pipeline;
+using Azure.Core;
 using Microsoft.Identity.Client;
 
 namespace Azure.Identity
@@ -60,13 +59,13 @@ namespace Azure.Identity
             Data = data;
             _lastUpdated = DateTimeOffset.UtcNow;
             _cacheAccessMap = new ConditionalWeakTable<object, CacheTimestamp>();
-            _publicClientApplicationFactory = publicApplicationFactory ?? new (() => PublicClientApplicationBuilder.Create(Guid.NewGuid().ToString()).Build());
+            _publicClientApplicationFactory = publicApplicationFactory ?? new Func<IPublicClientApplication>(() => PublicClientApplicationBuilder.Create(Guid.NewGuid().ToString()).Build());
         }
 
         /// <summary>
         /// An event notifying the subscriber that the underlying <see cref="TokenCache"/> has been updated. This event can be handled to persist the updated cache data.
         /// </summary>
-        public event Func<TokenCacheUpdatedArgs, Task> Updated;
+        public event SyncAsyncEventHandler<TokenCacheUpdatedArgs> Updated;
 
         internal virtual async Task RegisterCache(bool async, ITokenCache tokenCache, CancellationToken cancellationToken)
         {
@@ -142,13 +141,14 @@ namespace Azure.Identity
                 _lock.Release();
             }
 
-            if (Updated != null)
-            {
-                foreach (Func<TokenCacheUpdatedArgs, Task> handler in Updated.GetInvocationList())
-                {
-                    await handler(new TokenCacheUpdatedArgs(this)).ConfigureAwait(false);
-                }
-            }
+            
+            // if (Updated != null)
+            // {
+            //     foreach (Func<TokenCacheUpdatedArgs, Task> handler in Updated.GetInvocationList())
+            //     {
+            //         await handler(new TokenCacheUpdatedArgs(this, true)).ConfigureAwait(false);
+            //     }
+            // }
         }
 
         private async Task<byte[]> MergeCacheData(byte[] cacheA, byte[] cacheB)
