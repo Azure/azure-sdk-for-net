@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Batch;
 using Azure.Storage.Blobs.Batch.Models;
 using Azure.Storage.Blobs.Models;
@@ -68,6 +69,18 @@ namespace Azure.Storage.Blobs.Specialized
         internal virtual BlobRestClient BlobRestClient => _blobRestClient;
 
         /// <summary>
+        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
+        /// every request.
+        /// </summary>;
+        private readonly ClientDiagnostics _clientDiagnostics;
+
+        /// <summary>
+        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
+        /// every request.
+        /// </summary>
+        internal virtual ClientDiagnostics ClientDiagnostics => _clientDiagnostics;
+
+        /// <summary>
         /// Creates a new instance of the <see cref="BlobBatch"/> for mocking.
         /// </summary>
         protected BlobBatch()
@@ -84,6 +97,7 @@ namespace Azure.Storage.Blobs.Specialized
         {
             _client = client ?? throw new ArgumentNullException(nameof(client));
             _isContainerScoped = client.IsContainerScoped;
+            _clientDiagnostics = client.ClientDiagnostics;
 
             BlobUriBuilder uriBuilder = new BlobUriBuilder(client.Uri);
             uriBuilder.BlobContainerName = null;
@@ -198,10 +212,16 @@ namespace Azure.Storage.Blobs.Specialized
             // TODO no idea if this will work.
             return new DelayedResponse(
                 message,
-                response =>
+                async response =>
                 {
-                    BlobDeleteHeaders blobDeleteHeaders = new BlobDeleteHeaders(response);
-                    return ResponseWithHeaders.FromValue(blobDeleteHeaders, response);
+                    switch (response.Status)
+                    {
+                        case 202:
+                            BlobDeleteHeaders blobDeleteHeaders = new BlobDeleteHeaders(response);
+                            return ResponseWithHeaders.FromValue(blobDeleteHeaders, response);
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
+                    }
                 });
         }
 
@@ -306,10 +326,17 @@ namespace Azure.Storage.Blobs.Specialized
             // TODO this probably doesn't work.
             return new DelayedResponse(
                 message,
-                response =>
+                async response =>
                 {
-                    BlobSetAccessTierHeaders blobSetAccessTierHeaders = new BlobSetAccessTierHeaders(response);
-                    return ResponseWithHeaders.FromValue(blobSetAccessTierHeaders, response);
+                    switch (response.Status)
+                    {
+                        case 200:
+                        case 202:
+                            BlobSetAccessTierHeaders blobSetAccessTierHeaders = new BlobSetAccessTierHeaders(response);
+                            return ResponseWithHeaders.FromValue(blobSetAccessTierHeaders, response);
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
+                    }
                 });
         }
 

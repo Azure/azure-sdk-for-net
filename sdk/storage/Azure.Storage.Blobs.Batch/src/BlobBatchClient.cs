@@ -638,7 +638,9 @@ namespace Azure.Storage.Blobs.Specialized
                     if (messages[i].TryGetProperty(BatchConstants.DelayedResponsePropertyName, out object value) &&
                         value is DelayedResponse response)
                     {
-                        response.SetLiveResponse(responses[i], throwOnAnyFailure);
+#pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+                        await response.SetLiveResponse(responses[i], throwOnAnyFailure).ConfigureAwait(false);
+#pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
                     }
                 }
                 catch (Exception ex)
