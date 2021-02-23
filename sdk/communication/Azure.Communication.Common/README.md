@@ -70,26 +70,24 @@ Optionally, you can enable proactive token refreshing where a fresh token will b
 previous token approaches expiry. Using this method, your requests are less likely to be blocked to acquire a fresh token:
 
 ```C# Snippet:CommunicationTokenCredential_CreateRefreshableWithoutInitialToken
-using var tokenCredential = new CommunicationTokenCredential(
-    new CommunicationTokenRefreshOptions(
+var refreshOptions = new CommunicationTokenRefreshOptions(
         refreshProactively: true, // Indicates if the token should be proactively refreshed in the background or only on-demand
-        tokenRefresher: cancellationToken => FetchTokenForUserFromMyServer("bob@contoso.com", cancellationToken),
-        asyncTokenRefresher: cancellationToken => FetchTokenForUserFromMyServerAsync("bob@contoso.com", cancellationToken)
-        )
-    );
+        tokenRefresher: cancellationToken => FetchTokenForUserFromMyServer("bob@contoso.com", cancellationToken)
+        );
+refreshOptions.AsyncTokenRefresher = cancellationToken => FetchTokenForUserFromMyServerAsync("bob@contoso.com", cancellationToken);
+using var tokenCredential = new CommunicationTokenCredential(refreshOptions);
 ```
 
 If you already have a token, you can optimize the token refreshing even further by passing that initial token:
 
 ```C# Snippet:CommunicationTokenCredential_CreateRefreshableWithInitialToken
 string initialToken = Environment.GetEnvironmentVariable("COMMUNICATION_SERVICES_USER_TOKEN");
-using var tokenCredential = new CommunicationTokenCredential(
-    new CommunicationTokenRefreshOptions(
-        refreshProactively: true, // Indicates if the token should be proactively refreshed in the background or only on-demand
-        tokenRefresher: cancellationToken => FetchTokenForUserFromMyServer("bob@contoso.com", cancellationToken),
-        asyncTokenRefresher: cancellationToken => FetchTokenForUserFromMyServerAsync("bob@contoso.com", cancellationToken),
-        initialToken)
-    );
+var refreshOptions = new CommunicationTokenRefreshOptions(
+       refreshProactively: true, // Indicates if the token should be proactively refreshed in the background or only on-demand
+       tokenRefresher: cancellationToken => FetchTokenForUserFromMyServer("bob@contoso.com", cancellationToken));
+refreshOptions.AsyncTokenRefresher = cancellationToken => FetchTokenForUserFromMyServerAsync("bob@contoso.com", cancellationToken);
+refreshOptions.InitialToken = initialToken;
+using var tokenCredential = new CommunicationTokenCredential(refreshOptions);
 ```
 
 ## Troubleshooting
