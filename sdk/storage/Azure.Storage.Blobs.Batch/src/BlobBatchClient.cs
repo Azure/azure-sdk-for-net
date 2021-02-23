@@ -146,9 +146,9 @@ namespace Azure.Storage.Blobs.Specialized
             // Construct a dummy pipeline for processing batch sub-operations
             // if we don't have one cached on the service
             _batchOperationPipeline = CreateBatchPipeline(
-                Pipeline,
+                _pipeline,
                 BlobServiceClientInternals.GetAuthenticationPolicy(client),
-                Version);
+                _version);
 
             (ServiceRestClient serviceRestClient, ContainerRestClient containerRestClient) = BuildRestClients();
             _serviceRestClient = serviceRestClient;
@@ -176,9 +176,9 @@ namespace Azure.Storage.Blobs.Specialized
             // Construct a dummy pipeline for processing batch sub-operations
             // if we don't have one cached on the service
             _batchOperationPipeline = CreateBatchPipeline(
-                Pipeline,
+                _pipeline,
                 BlobServiceClientInternals.GetAuthenticationPolicy(blobServiceClient),
-                Version);
+                _version);
 
             (ServiceRestClient serviceRestClient, ContainerRestClient containerRestClient) = BuildRestClients();
             _serviceRestClient = serviceRestClient;
@@ -226,23 +226,22 @@ namespace Azure.Storage.Blobs.Specialized
 
         private (ServiceRestClient, ContainerRestClient) BuildRestClients()
         {
-            BlobUriBuilder uriBuilder = new BlobUriBuilder(Uri);
+            BlobUriBuilder uriBuilder = new BlobUriBuilder(_uri);
             string containerName = uriBuilder.BlobContainerName;
             uriBuilder.BlobContainerName = null;
             uriBuilder.BlobName = null;
 
-            // TODO these need to reference private readonly properties, not virtul getters
             ServiceRestClient serviceRestClient = new ServiceRestClient(
                 clientDiagnostics: _clientDiagnostics,
                 pipeline: _pipeline,
                 url: uriBuilder.ToUri().ToString(),
                 version: _version.ToVersionString());
 
-            // TODO these need to reference private readonly properties, not virtul getters
             ContainerRestClient containerRestClient = new ContainerRestClient(
                 clientDiagnostics: _clientDiagnostics,
                 pipeline: _pipeline,
                 url: uriBuilder.ToUri().ToString(),
+                containerName: containerName,
                 version: _version.ToVersionString());
 
             return (serviceRestClient, containerRestClient);
@@ -436,7 +435,6 @@ namespace Azure.Storage.Blobs.Specialized
                     if (async)
                     {
                         response = await _containerRestClient.SubmitBatchAsync(
-                            containerName: ContainerName,
                             contentLength: content.Length,
                             multipartContentType: contentType,
                             body: content,
@@ -446,7 +444,6 @@ namespace Azure.Storage.Blobs.Specialized
                     else
                     {
                         response = _containerRestClient.SubmitBatch(
-                            containerName: ContainerName,
                             contentLength: content.Length,
                             multipartContentType: contentType,
                             body: content,
