@@ -55,6 +55,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static ControlActivity DeserializeControlActivity(JsonElement element)
         {
+            if (element.TryGetProperty("type", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "AppendVariable": return AppendVariableActivity.DeserializeAppendVariableActivity(element);
+                    case "ExecutePipeline": return ExecutePipelineActivity.DeserializeExecutePipelineActivity(element);
+                    case "Filter": return FilterActivity.DeserializeFilterActivity(element);
+                    case "ForEach": return ForEachActivity.DeserializeForEachActivity(element);
+                    case "IfCondition": return IfConditionActivity.DeserializeIfConditionActivity(element);
+                    case "SetVariable": return SetVariableActivity.DeserializeSetVariableActivity(element);
+                    case "Switch": return SwitchActivity.DeserializeSwitchActivity(element);
+                    case "Until": return UntilActivity.DeserializeUntilActivity(element);
+                    case "Validation": return ValidationActivity.DeserializeValidationActivity(element);
+                    case "Wait": return WaitActivity.DeserializeWaitActivity(element);
+                    case "WebHook": return WebHookActivity.DeserializeWebHookActivity(element);
+                }
+            }
             string name = default;
             string type = default;
             Optional<string> description = default;

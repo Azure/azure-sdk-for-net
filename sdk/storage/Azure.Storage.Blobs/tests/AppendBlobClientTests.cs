@@ -15,6 +15,7 @@ using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
+using Moq;
 using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Test
@@ -338,10 +339,10 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public async Task CreateAsync_Error()
         {
-            await using DisposingContainer test = await GetTestContainerAsync();
-
             // Arrange
-            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(string.Empty));
+            BlobServiceClient blobService = GetServiceClient_SharedKey();
+            BlobContainerClient containerClient = InstrumentClient(blobService.GetBlobContainerClient(GetNewContainerName()));
+            AppendBlobClient blob = InstrumentClient(containerClient.GetAppendBlobClient(GetNewBlobName()));
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
@@ -524,10 +525,10 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public async Task CreateIfNotExistsAsync_Error()
         {
-            await using DisposingContainer test = await GetTestContainerAsync();
-
             // Arrange
-            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(string.Empty));
+            BlobServiceClient serviceClient = GetServiceClient_SharedKey();
+            BlobContainerClient containerClient = InstrumentClient(serviceClient.GetBlobContainerClient(GetNewContainerName()));
+            AppendBlobClient blob = InstrumentClient(containerClient.GetAppendBlobClient(GetNewBlobName()));
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
@@ -1833,6 +1834,18 @@ namespace Azure.Storage.Blobs.Test
                         await openWriteStream.FlushAsync();
                     });
             }
+        }
+
+        [Test]
+        public void CanMockClientConstructors()
+        {
+            // One has to call .Object to trigger constructor. It's lazy.
+            var mock = new Mock<AppendBlobClient>(TestConfigDefault.ConnectionString, "name", "name", new BlobClientOptions()).Object;
+            mock = new Mock<AppendBlobClient>(TestConfigDefault.ConnectionString, "name", "name").Object;
+            mock = new Mock<AppendBlobClient>(new Uri("https://test/test"), new BlobClientOptions()).Object;
+            mock = new Mock<AppendBlobClient>(new Uri("https://test/test"), GetNewSharedKeyCredentials(), new BlobClientOptions()).Object;
+            mock = new Mock<AppendBlobClient>(new Uri("https://test/test"), new AzureSasCredential("foo"), new BlobClientOptions()).Object;
+            mock = new Mock<AppendBlobClient>(new Uri("https://test/test"), GetOAuthCredential(TestConfigHierarchicalNamespace), new BlobClientOptions()).Object;
         }
 
         private AppendBlobRequestConditions BuildDestinationAccessConditions(

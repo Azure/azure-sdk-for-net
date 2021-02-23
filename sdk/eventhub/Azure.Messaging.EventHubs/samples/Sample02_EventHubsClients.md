@@ -24,7 +24,7 @@ The mainstream set of clients provides an approachable onboarding experience for
 
 ## Lifetime
 
-Each of the Event Hubs client types is safe to cache and use for the lifetime of the application, which is best practice when the application publishes or reads events regularly or semi-regularly. The clients are responsible for efficient resource management, working to keep resource usage low during periods of inactivity and manage health during periods of higher use. Calling either the `CloseAsync` or `DisposeAsync` method on a client as the application is shutting down will ensure that network resources and other unmanaged objects are properly cleaned up.
+Each of the Event Hubs client types is safe to cache and use as a singleton for the lifetime of the application, which is best practice when events are being published or read regularly. The clients are responsible for efficient management of network, CPU, and memory use, working to keep usage low during periods of inactivity.  Calling either `CloseAsync` or `DisposeAsync` on a client is required to ensure that network resources and other unmanaged objects are properly cleaned up.
 
 ## Configuration
 
@@ -119,6 +119,25 @@ var options = new EventHubConnectionOptions
     TransportType = EventHubsTransportType.AmqpWebSockets,
     Proxy = HttpClient.DefaultProxy
 };
+```
+
+### Specifying a custom endpoint address
+
+Connections to the Azure Event Hubs service are made using the fully qualified namespace assigned to the Event Hubs namespace as the connection endpoint address. Because the Event Hubs service uses the endpoint address to locate the corresponding resources, it isn't possible to specify another address in the connection string or as the fully qualified namespace.
+
+Some environments using unconventional proxy configurations or with certain configurations of an Express Route circuit require a custom address be used for proper routing, leaving are unable to connect from their on-premises network to the Event Hubs service using the assigned endpoint address. To support these scenarios, a custom endpoint address may be specified as part of the connection options.  This custom address will take precedence for establishing the connection to the Event Hubs service.
+
+```C# Snippet:EventHubs_Sample02_ConnectionOptionsCustomEndpoint
+var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+var eventHubName = "<< NAME OF THE EVENT HUB >>";
+
+var producerOptions = new EventHubProducerClientOptions();
+producerOptions.ConnectionOptions.CustomEndpointAddress = new Uri("amqps://app-gateway.mycompany.com");
+
+var producer = new EventHubProducerClient(
+    connectionString,
+    eventHubName,
+    producerOptions);
 ```
 
 ### Configuring the client retry thresholds

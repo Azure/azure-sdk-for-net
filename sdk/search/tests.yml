@@ -4,8 +4,9 @@ extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
     ServiceDirectory: search
-    TimeoutInMinutes: 120
+    TimeoutInMinutes: 240
     MaxParallel: 2
-    UnsupportedClouds: Canary
+    UnsupportedClouds: 'Canary'
+    SupportedClouds: 'Public,UsGov,China'
     EnvVars:
       AZURE_SEARCH_TEST_MODE: Live

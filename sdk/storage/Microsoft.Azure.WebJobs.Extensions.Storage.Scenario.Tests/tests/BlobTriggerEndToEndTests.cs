@@ -10,8 +10,10 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Queues;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Azure.WebJobs.Host;
+using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json.Linq;
@@ -37,6 +39,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
 
         private readonly BlobContainerClient _testContainer;
         private readonly BlobServiceClient _blobServiceClient;
+        private readonly QueueServiceClient _queueServiceClient;
         private readonly RandomNameResolver _nameResolver;
 
         private static object _syncLock = new object();
@@ -53,6 +56,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
                 })
                 .Build();
             _blobServiceClient = new BlobServiceClient(TestEnvironment.PrimaryStorageAccountConnectionString);
+            _queueServiceClient = new QueueServiceClient(TestEnvironment.PrimaryStorageAccountConnectionString); // No encoding
             _testContainer = _blobServiceClient.GetBlobContainerClient(_nameResolver.ResolveInString(SingleTriggerContainerName));
             Assert.False(_testContainer.ExistsAsync().Result);
             _testContainer.CreateAsync().Wait();
@@ -272,6 +276,43 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
             {
                 host.Start();
                 Assert.True(prog._completedEvent.WaitOne(TimeSpan.FromSeconds(60)));
+            }
+        }
+
+        [Test]
+        public async Task GarbageMessageDoesNotCrashHost()
+        {
+            // write the initial trigger blob to start the chain
+            var container = _blobServiceClient.GetBlobContainerClient(_nameResolver.ResolveInString(BlobChainContainerName));
+            await container.CreateIfNotExistsAsync();
+            var blob = container.GetBlockBlobClient(BlobChainTriggerBlobName);
+            await blob.UploadTextAsync("0");
+
+            var prog = new BlobChainTest_Program();
+            var host = NewBuilder(prog).Build();
+
+            var hostId = await host.Services.GetService<IHostIdProvider>().GetHostIdAsync(CancellationToken.None);
+            string hostBlobTriggerQueueName = "azure-webjobs-blobtrigger-" + hostId;
+
+            var blobTriggerQueue = _queueServiceClient.GetQueueClient(hostBlobTriggerQueueName);
+            await blobTriggerQueue.CreateIfNotExistsAsync();
+
+            // Inject garbage message, i.e. not base-64 encoded
+            await blobTriggerQueue.SendMessageAsync("KABOOM");
+
+            using (prog._completedEvent = new ManualResetEvent(initialState: false))
+            using (host)
+            {
+                host.Start();
+                Assert.True(prog._completedEvent.WaitOne(TimeSpan.FromSeconds(60)));
+
+                // make sure it was logged.
+                string invalidMessageLog = host.GetTestLoggerProvider().GetAllLogMessages()
+                    .Where(p => p.FormattedMessage != null)
+                    .SelectMany(p => p.FormattedMessage.Split(Environment.NewLine.ToCharArray(), StringSplitOptions.None))
+                    .Where(s => s.Contains("KABOOM"))
+                    .FirstOrDefault();
+                StringAssert.Contains("KABOOM", invalidMessageLog);
             }
         }
 

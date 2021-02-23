@@ -14,7 +14,7 @@
     <PackageTags>IoT;DigitalTwins;$(PackageCommonTags)</PackageTags>
     <Description>SDK for the Azure Digital Twins service</Description>
     <Version>1.3.0-beta.1</Version>
-    <ApiCompatVersion>1.2.0</ApiCompatVersion>
+    <ApiCompatVersion>1.2.1</ApiCompatVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -48,6 +48,9 @@
       <LinkBase>Shared\Azure.Core</LinkBase>
     </Compile>
     <Compile Include="$(AzureCoreSharedSources)Argument.cs">
+      <LinkBase>Shared\Azure.Core</LinkBase>
+    </Compile>
+    <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs">
       <LinkBase>Shared\Azure.Core</LinkBase>
     </Compile>
   </ItemGroup>

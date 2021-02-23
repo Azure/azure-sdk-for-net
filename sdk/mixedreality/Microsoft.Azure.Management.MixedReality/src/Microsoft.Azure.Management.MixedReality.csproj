@@ -6,9 +6,9 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.MixedReality</PackageId>
     <Description>Microsoft Azure Management Library of Mixed Reality cloud services.</Description>
-    <Version>1.0.0</Version>
+    <Version>3.0.0</Version>
     <AssemblyName>Microsoft.Azure.Management.MixedReality</AssemblyName>
-    <PackageTags>mixed reality;spatial anchors;remote rendering</PackageTags>
+    <PackageTags>mixed reality;spatial anchors;remote rendering;object anchors</PackageTags>
     <PackageReleaseNotes>
 <![CDATA[
   This is the client library of Mixed Reality Azure Resource Management API.
@@ -17,6 +17,7 @@
 
   - Spatial Anchors Account
   - Remote Rendering Account
+  - Object Anchors Account
 
   Such operations could be performed by using this client library:
   

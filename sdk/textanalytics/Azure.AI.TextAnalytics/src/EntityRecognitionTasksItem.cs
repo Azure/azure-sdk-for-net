@@ -12,7 +12,7 @@ namespace Azure.AI.TextAnalytics
     /// EntityRecognitionTasksItem.
     /// </summary>
     [CodeGenModel("TasksStateTasksEntityRecognitionTasksItem")]
-    public partial class EntityRecognitionTasksItem
+    internal partial class EntityRecognitionTasksItem
     {
         /// <summary> Initializes a new instance of EntityRecognitionTasksItem. </summary>
         internal EntityRecognitionTasksItem(EntityRecognitionTasksItem task, IDictionary<string, int> idToIndexMap) : base(task.LastUpdateDateTime, task.Name, task.Status)
@@ -29,6 +29,6 @@ namespace Azure.AI.TextAnalytics
         /// Results for EntityRecognitionTasksItem
         /// </summary>
        [CodeGenMember("Results")]
-       private EntitiesResult ResultsInternal { get; }
+       internal EntitiesResult ResultsInternal { get; }
     }
 }

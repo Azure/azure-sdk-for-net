@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.Messaging.EventHubs.Core
 {
@@ -161,9 +162,10 @@ namespace Azure.Messaging.EventHubs.Core
             {
             }
 
-            var pendingCloses = new List<Task>();
-
-            pendingCloses.Add(EventHubProducer.CloseAsync(cancellationToken));
+            var pendingCloses = new List<Task>
+            {
+                EventHubProducer.CloseAsync(cancellationToken)
+            };
 
             foreach (var poolItem in Pool.Values)
             {
@@ -171,7 +173,6 @@ namespace Azure.Messaging.EventHubs.Core
             }
 
             Pool.Clear();
-
             await Task.WhenAll(pendingCloses).ConfigureAwait(false);
         }
 
@@ -201,9 +202,9 @@ namespace Azure.Messaging.EventHubs.Core
                                 // if there was a context switch between the if conditions
                                 // and the pool item clean up kicked in.
 
-#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
-                                poolItem.PartitionProducer.CloseAsync(CancellationToken.None).GetAwaiter().GetResult();
-#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
+#pragma warning disable AZC0106 // Non-public asynchronous method needs 'async' parameter.
+                                poolItem.PartitionProducer.CloseAsync(CancellationToken.None).EnsureCompleted();
+#pragma warning restore AZC0106 // Non-public asynchronous method needs 'async' parameter.
                             }
                         }
                     }
@@ -290,7 +291,7 @@ namespace Azure.Messaging.EventHubs.Core
         ///   A class wrapping a <see cref="Core.TransportProducer" />, triggering a clean-up when the object is disposed.
         /// </summary>
         ///
-        internal class PooledProducer: IAsyncDisposable
+        internal class PooledProducer : IAsyncDisposable
         {
             /// <summary>
             ///   A function responsible of cleaning up the resources in use.

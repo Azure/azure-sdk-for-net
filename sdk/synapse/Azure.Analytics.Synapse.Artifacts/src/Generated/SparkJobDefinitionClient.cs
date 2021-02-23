@@ -37,46 +37,6 @@ namespace Azure.Analytics.Synapse.Artifacts
             _pipeline = pipeline;
         }
 
-        /// <summary> Creates or updates a Spark Job Definition. </summary>
-        /// <param name="sparkJobDefinitionName"> The spark job definition name. </param>
-        /// <param name="sparkJobDefinition"> Spark Job Definition resource definition. </param>
-        /// <param name="ifMatch"> ETag of the Spark Job Definition entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SparkJobDefinitionResource>> CreateOrUpdateSparkJobDefinitionAsync(string sparkJobDefinitionName, SparkJobDefinitionResource sparkJobDefinition, string ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SparkJobDefinitionClient.CreateOrUpdateSparkJobDefinition");
-            scope.Start();
-            try
-            {
-                return await RestClient.CreateOrUpdateSparkJobDefinitionAsync(sparkJobDefinitionName, sparkJobDefinition, ifMatch, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates a Spark Job Definition. </summary>
-        /// <param name="sparkJobDefinitionName"> The spark job definition name. </param>
-        /// <param name="sparkJobDefinition"> Spark Job Definition resource definition. </param>
-        /// <param name="ifMatch"> ETag of the Spark Job Definition entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SparkJobDefinitionResource> CreateOrUpdateSparkJobDefinition(string sparkJobDefinitionName, SparkJobDefinitionResource sparkJobDefinition, string ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SparkJobDefinitionClient.CreateOrUpdateSparkJobDefinition");
-            scope.Start();
-            try
-            {
-                return RestClient.CreateOrUpdateSparkJobDefinition(sparkJobDefinitionName, sparkJobDefinition, ifMatch, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Gets a Spark Job Definition. </summary>
         /// <param name="sparkJobDefinitionName"> The spark job definition name. </param>
         /// <param name="ifNoneMatch"> ETag of the Spark Job Definition entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
@@ -107,42 +67,6 @@ namespace Azure.Analytics.Synapse.Artifacts
             try
             {
                 return RestClient.GetSparkJobDefinition(sparkJobDefinitionName, ifNoneMatch, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes a Spark Job Definition. </summary>
-        /// <param name="sparkJobDefinitionName"> The spark job definition name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> DeleteSparkJobDefinitionAsync(string sparkJobDefinitionName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SparkJobDefinitionClient.DeleteSparkJobDefinition");
-            scope.Start();
-            try
-            {
-                return await RestClient.DeleteSparkJobDefinitionAsync(sparkJobDefinitionName, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes a Spark Job Definition. </summary>
-        /// <param name="sparkJobDefinitionName"> The spark job definition name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response DeleteSparkJobDefinition(string sparkJobDefinitionName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SparkJobDefinitionClient.DeleteSparkJobDefinition");
-            scope.Start();
-            try
-            {
-                return RestClient.DeleteSparkJobDefinition(sparkJobDefinitionName, cancellationToken);
             }
             catch (Exception e)
             {
@@ -223,6 +147,118 @@ namespace Azure.Analytics.Synapse.Artifacts
                 }
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Creates or updates a Spark Job Definition. </summary>
+        /// <param name="sparkJobDefinitionName"> The spark job definition name. </param>
+        /// <param name="sparkJobDefinition"> Spark Job Definition resource definition. </param>
+        /// <param name="ifMatch"> ETag of the Spark Job Definition entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sparkJobDefinitionName"/> or <paramref name="sparkJobDefinition"/> is null. </exception>
+        public virtual async Task<SparkJobDefinitionCreateOrUpdateSparkJobDefinitionOperation> StartCreateOrUpdateSparkJobDefinitionAsync(string sparkJobDefinitionName, SparkJobDefinitionResource sparkJobDefinition, string ifMatch = null, CancellationToken cancellationToken = default)
+        {
+            if (sparkJobDefinitionName == null)
+            {
+                throw new ArgumentNullException(nameof(sparkJobDefinitionName));
+            }
+            if (sparkJobDefinition == null)
+            {
+                throw new ArgumentNullException(nameof(sparkJobDefinition));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("SparkJobDefinitionClient.StartCreateOrUpdateSparkJobDefinition");
+            scope.Start();
+            try
+            {
+                var originalResponse = await RestClient.CreateOrUpdateSparkJobDefinitionAsync(sparkJobDefinitionName, sparkJobDefinition, ifMatch, cancellationToken).ConfigureAwait(false);
+                return new SparkJobDefinitionCreateOrUpdateSparkJobDefinitionOperation(_clientDiagnostics, _pipeline, RestClient.CreateCreateOrUpdateSparkJobDefinitionRequest(sparkJobDefinitionName, sparkJobDefinition, ifMatch).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Creates or updates a Spark Job Definition. </summary>
+        /// <param name="sparkJobDefinitionName"> The spark job definition name. </param>
+        /// <param name="sparkJobDefinition"> Spark Job Definition resource definition. </param>
+        /// <param name="ifMatch"> ETag of the Spark Job Definition entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sparkJobDefinitionName"/> or <paramref name="sparkJobDefinition"/> is null. </exception>
+        public virtual SparkJobDefinitionCreateOrUpdateSparkJobDefinitionOperation StartCreateOrUpdateSparkJobDefinition(string sparkJobDefinitionName, SparkJobDefinitionResource sparkJobDefinition, string ifMatch = null, CancellationToken cancellationToken = default)
+        {
+            if (sparkJobDefinitionName == null)
+            {
+                throw new ArgumentNullException(nameof(sparkJobDefinitionName));
+            }
+            if (sparkJobDefinition == null)
+            {
+                throw new ArgumentNullException(nameof(sparkJobDefinition));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("SparkJobDefinitionClient.StartCreateOrUpdateSparkJobDefinition");
+            scope.Start();
+            try
+            {
+                var originalResponse = RestClient.CreateOrUpdateSparkJobDefinition(sparkJobDefinitionName, sparkJobDefinition, ifMatch, cancellationToken);
+                return new SparkJobDefinitionCreateOrUpdateSparkJobDefinitionOperation(_clientDiagnostics, _pipeline, RestClient.CreateCreateOrUpdateSparkJobDefinitionRequest(sparkJobDefinitionName, sparkJobDefinition, ifMatch).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes a Spark Job Definition. </summary>
+        /// <param name="sparkJobDefinitionName"> The spark job definition name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sparkJobDefinitionName"/> is null. </exception>
+        public virtual async Task<SparkJobDefinitionDeleteSparkJobDefinitionOperation> StartDeleteSparkJobDefinitionAsync(string sparkJobDefinitionName, CancellationToken cancellationToken = default)
+        {
+            if (sparkJobDefinitionName == null)
+            {
+                throw new ArgumentNullException(nameof(sparkJobDefinitionName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("SparkJobDefinitionClient.StartDeleteSparkJobDefinition");
+            scope.Start();
+            try
+            {
+                var originalResponse = await RestClient.DeleteSparkJobDefinitionAsync(sparkJobDefinitionName, cancellationToken).ConfigureAwait(false);
+                return new SparkJobDefinitionDeleteSparkJobDefinitionOperation(_clientDiagnostics, _pipeline, RestClient.CreateDeleteSparkJobDefinitionRequest(sparkJobDefinitionName).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes a Spark Job Definition. </summary>
+        /// <param name="sparkJobDefinitionName"> The spark job definition name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sparkJobDefinitionName"/> is null. </exception>
+        public virtual SparkJobDefinitionDeleteSparkJobDefinitionOperation StartDeleteSparkJobDefinition(string sparkJobDefinitionName, CancellationToken cancellationToken = default)
+        {
+            if (sparkJobDefinitionName == null)
+            {
+                throw new ArgumentNullException(nameof(sparkJobDefinitionName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("SparkJobDefinitionClient.StartDeleteSparkJobDefinition");
+            scope.Start();
+            try
+            {
+                var originalResponse = RestClient.DeleteSparkJobDefinition(sparkJobDefinitionName, cancellationToken);
+                return new SparkJobDefinitionDeleteSparkJobDefinitionOperation(_clientDiagnostics, _pipeline, RestClient.CreateDeleteSparkJobDefinitionRequest(sparkJobDefinitionName).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Executes the spark job definition. </summary>

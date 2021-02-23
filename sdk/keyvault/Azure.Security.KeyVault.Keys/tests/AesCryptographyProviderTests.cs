@@ -29,7 +29,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 },
             };
 
-            AesCryptographyProvider provider = new AesCryptographyProvider(key.Key, key.Properties);
+            AesCryptographyProvider provider = new AesCryptographyProvider(key.Key, key.Properties, false);
 
             byte[] ek = { 0x64, 0xE8, 0xC3, 0xF9, 0xCE, 0x0F, 0x5B, 0xA2, 0x63, 0xE9, 0x77, 0x79, 0x05, 0x81, 0x8A, 0x2A, 0x93, 0xC8, 0x19, 0x1E, 0x7D, 0x6E, 0x8A, 0xE7 };
             InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => provider.WrapKey(KeyWrapAlgorithm.A128KW, ek, default));
@@ -50,7 +50,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 },
             };
 
-            AesCryptographyProvider provider = new AesCryptographyProvider(key.Key, key.Properties);
+            AesCryptographyProvider provider = new AesCryptographyProvider(key.Key, key.Properties, false);
 
             byte[] ek = { 0x64, 0xE8, 0xC3, 0xF9, 0xCE, 0x0F, 0x5B, 0xA2, 0x63, 0xE9, 0x77, 0x79, 0x05, 0x81, 0x8A, 0x2A, 0x93, 0xC8, 0x19, 0x1E, 0x7D, 0x6E, 0x8A, 0xE7 };
             InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => provider.WrapKey(KeyWrapAlgorithm.A128KW, ek, default));
@@ -71,10 +71,10 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 },
             };
 
-            AesCryptographyProvider provider = new AesCryptographyProvider(key.Key, key.Properties);
+            AesCryptographyProvider provider = new AesCryptographyProvider(key.Key, key.Properties, false);
 
             byte[] iv = { 0x3d, 0xaf, 0xba, 0x42, 0x9d, 0x9e, 0xb4, 0x30, 0xb4, 0x22, 0xda, 0x80, 0x2c, 0x9f, 0xac, 0x41 };
-            EncryptOptions options = EncryptOptions.A128CbcOptions(Encoding.UTF8.GetBytes("Single block msg"), iv);
+            EncryptParameters options = EncryptParameters.A128CbcParameters(Encoding.UTF8.GetBytes("Single block msg"), iv);
 
             InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => provider.Encrypt(options, default));
             Assert.AreEqual($"The key \"test\" is not valid before {key.Properties.NotBefore.Value:r}.", ex.Message);
@@ -94,10 +94,10 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 },
             };
 
-            AesCryptographyProvider provider = new AesCryptographyProvider(key.Key, key.Properties);
+            AesCryptographyProvider provider = new AesCryptographyProvider(key.Key, key.Properties, false);
 
             byte[] iv = { 0x3d, 0xaf, 0xba, 0x42, 0x9d, 0x9e, 0xb4, 0x30, 0xb4, 0x22, 0xda, 0x80, 0x2c, 0x9f, 0xac, 0x41 };
-            EncryptOptions options = EncryptOptions.A128CbcOptions(Encoding.UTF8.GetBytes("Single block msg"), iv);
+            EncryptParameters options = EncryptParameters.A128CbcParameters(Encoding.UTF8.GetBytes("Single block msg"), iv);
 
             InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => provider.Encrypt(options, default));
             Assert.AreEqual($"The key \"test\" is not valid after {key.Properties.ExpiresOn.Value:r}.", ex.Message);
@@ -112,8 +112,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
             using Aes aes = Aes.Create();
             JsonWebKey key = new JsonWebKey(aes);
 
-            AesCryptographyProvider provider = new AesCryptographyProvider(key, null);
-            Assert.IsNull(provider.Encrypt(new EncryptOptions(new EncryptionAlgorithm("invalid"), new byte[] { 0 })));
+            AesCryptographyProvider provider = new AesCryptographyProvider(key, null, false);
+            Assert.IsNull(provider.Encrypt(new EncryptParameters(new EncryptionAlgorithm("invalid"), new byte[] { 0 })));
 
             EventWrittenEventArgs e = listener.SingleEventById(KeysEventSource.AlgorithmNotSupportedEvent);
             Assert.AreEqual("Encrypt", e.GetProperty<string>("operation"));
@@ -129,15 +129,15 @@ namespace Azure.Security.KeyVault.Keys.Tests
             using Aes aes = Aes.Create();
             JsonWebKey key = new JsonWebKey(aes);
 
-            AesCryptographyProvider provider = new AesCryptographyProvider(key, null);
-            Assert.IsNull(provider.Decrypt(new DecryptOptions(new EncryptionAlgorithm("invalid"), new byte[] { 0 })));
+            AesCryptographyProvider provider = new AesCryptographyProvider(key, null, false);
+            Assert.IsNull(provider.Decrypt(new DecryptParameters(new EncryptionAlgorithm("invalid"), new byte[] { 0 })));
 
             EventWrittenEventArgs e = listener.SingleEventById(KeysEventSource.AlgorithmNotSupportedEvent);
             Assert.AreEqual("Decrypt", e.GetProperty<string>("operation"));
             Assert.AreEqual("invalid", e.GetProperty<string>("algorithm"));
         }
 
-        [TestCaseSource(nameof(GetEncryptionAlgorithms), methodParams: new object[] { true })]
+        [TestCaseSource(nameof(GetEncryptionAlgorithms))]
         [IgnoreOnNet5("https://github.com/Azure/azure-sdk-for-net/issues/16968")]
         public void EncryptDecryptRoundtrips(EncryptionAlgorithm algorithm)
         {
@@ -151,25 +151,13 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 K = k,
             };
 
-            AesCryptographyProvider provider = new AesCryptographyProvider(key, null);
+            AesCryptographyProvider provider = new AesCryptographyProvider(key, null, false);
 
             byte[] plaintext = Encoding.UTF8.GetBytes("plaintext");
 
-            if (algorithm.IsAesGcm())
-            {
-                iv = iv.Take(AesGcmProxy.NonceByteSize);
-            }
-
-            EncryptOptions encryptOptions = new EncryptOptions(algorithm, plaintext, iv, aad);
+            EncryptParameters encryptOptions = new EncryptParameters(algorithm, plaintext, iv, aad);
             EncryptResult encrypted = provider.Encrypt(encryptOptions, default);
 
-#if !NETCOREAPP3_1
-            if (algorithm.IsAesGcm())
-            {
-                Assert.IsNull(encrypted);
-                Assert.Ignore($"AES-GCM is not supported on {RuntimeInformation.FrameworkDescription} on {RuntimeInformation.OSDescription}");
-            }
-#endif
             Assert.IsNotNull(encrypted);
 
             switch (algorithm.ToString())
@@ -228,20 +216,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
                     Assert.IsNull(encrypted.AuthenticationTag);
                     Assert.IsNull(encrypted.AdditionalAuthenticatedData);
                     break;
-
-                case EncryptionAlgorithm.A128GcmValue:
-                case EncryptionAlgorithm.A192GcmValue:
-                case EncryptionAlgorithm.A256GcmValue:
-                    Assert.IsNotNull(encrypted.Ciphertext);
-                    Assert.IsNotNull(encrypted.Iv);
-                    Assert.IsNotNull(encrypted.AuthenticationTag);
-                    CollectionAssert.AreEqual(aad, encrypted.AdditionalAuthenticatedData);
-                    break;
             }
 
-            DecryptOptions decryptOptions = algorithm.IsAesGcm() ?
-                new DecryptOptions(algorithm, encrypted.Ciphertext, encrypted.Iv, encrypted.AuthenticationTag, encrypted.AdditionalAuthenticatedData) :
-                new DecryptOptions(algorithm, encrypted.Ciphertext, encrypted.Iv);
+            DecryptParameters decryptOptions = new DecryptParameters(algorithm, encrypted.Ciphertext, encrypted.Iv);
 
             DecryptResult decrypted = provider.Decrypt(decryptOptions, default);
             Assert.IsNotNull(decrypted);
@@ -250,7 +227,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             StringAssert.StartsWith("plaintext", Encoding.UTF8.GetString(decrypted.Plaintext));
         }
 
-        [TestCaseSource(nameof(GetEncryptionAlgorithms), methodParams: new object[] { false })]
+        [TestCaseSource(nameof(GetEncryptionAlgorithms))]
         public void InitializesIv(EncryptionAlgorithm algorithm)
         {
             // Use a 256-bit key which will be truncated based on the selected algorithm.
@@ -261,17 +238,17 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 K = k,
             };
 
-            AesCryptographyProvider provider = new AesCryptographyProvider(key, null);
+            AesCryptographyProvider provider = new AesCryptographyProvider(key, null, false);
 
             byte[] plaintext = Encoding.UTF8.GetBytes("plaintext");
 
-            EncryptOptions encryptOptions = new EncryptOptions(algorithm, plaintext, null, null);
+            EncryptParameters encryptOptions = new EncryptParameters(algorithm, plaintext, null, null);
             EncryptResult encrypted = provider.Encrypt(encryptOptions, default);
 
             Assert.IsNotNull(encryptOptions.Iv);
             CollectionAssert.AreEqual(encryptOptions.Iv, encrypted.Iv);
 
-            DecryptOptions decryptOptions = new DecryptOptions(algorithm, encrypted.Ciphertext, encrypted.Iv);
+            DecryptParameters decryptOptions = new DecryptParameters(algorithm, encrypted.Ciphertext, encrypted.Iv);
             DecryptResult decrypted = provider.Decrypt(decryptOptions, default);
 
             Assert.IsNotNull(decrypted);
@@ -280,7 +257,43 @@ namespace Azure.Security.KeyVault.Keys.Tests
             StringAssert.StartsWith("plaintext", Encoding.UTF8.GetString(decrypted.Plaintext));
         }
 
-        private static IEnumerable GetEncryptionAlgorithms(bool includeAesGcm)
+        [Test]
+        public void AesGcmEncryptNotSupported([EnumValues(nameof(EncryptionAlgorithm.A128Gcm), nameof(EncryptionAlgorithm.A192Gcm), nameof(EncryptionAlgorithm.A256Gcm))] EncryptionAlgorithm algorithm)
+        {
+            // Use a 256-bit key which will be truncated based on the selected algorithm.
+            byte[] k = new byte[] { 0xe2, 0x7e, 0xd0, 0xc8, 0x45, 0x12, 0xbb, 0xd5, 0x5b, 0x6a, 0xf4, 0x34, 0xd2, 0x37, 0xc1, 0x1f, 0xeb, 0xa3, 0x11, 0x87, 0x0f, 0x80, 0xf2, 0xc2, 0xe3, 0x36, 0x42, 0x60, 0xf3, 0x1c, 0x82, 0xc8 };
+
+            JsonWebKey key = new JsonWebKey(new[] { KeyOperation.Encrypt, KeyOperation.Decrypt })
+            {
+                K = k,
+            };
+
+            byte[] plaintext = Encoding.UTF8.GetBytes("plaintext");
+
+            AesCryptographyProvider provider = new AesCryptographyProvider(key, null, false);
+            Assert.IsNull(provider.Encrypt(new EncryptParameters(algorithm, plaintext)));
+        }
+
+        [Test]
+        public void AesGcmDecryptNotSupported([EnumValues(nameof(EncryptionAlgorithm.A128Gcm), nameof(EncryptionAlgorithm.A192Gcm), nameof(EncryptionAlgorithm.A256Gcm))] EncryptionAlgorithm algorithm)
+        {
+            // Use a 256-bit key which will be truncated based on the selected algorithm.
+            byte[] k = new byte[] { 0xe2, 0x7e, 0xd0, 0xc8, 0x45, 0x12, 0xbb, 0xd5, 0x5b, 0x6a, 0xf4, 0x34, 0xd2, 0x37, 0xc1, 0x1f, 0xeb, 0xa3, 0x11, 0x87, 0x0f, 0x80, 0xf2, 0xc2, 0xe3, 0x36, 0x42, 0x60, 0xf3, 0x1c, 0x82, 0xc8 };
+            byte[] iv = new byte[] { 0x89, 0xb8, 0xad, 0xbf, 0xb0, 0x73, 0x45, 0xe3, 0x59, 0x89, 0x32, 0xa0 };
+
+            JsonWebKey key = new JsonWebKey(new[] { KeyOperation.Encrypt, KeyOperation.Decrypt })
+            {
+                K = k,
+            };
+
+            byte[] ciphertext = new byte[] {0xed, 0x76, 0xc3, 0x94, 0xe7, 0xa3, 0xcb, 0xcc, 0x5f };
+            byte[] tag = new byte[] { 0xeb, 0x2f, 0x3a, 0xd3, 0x87, 0xb0, 0x72, 0x68, 0xba, 0xcc, 0x04, 0x91 };
+
+            AesCryptographyProvider provider = new AesCryptographyProvider(key, null, false);
+            Assert.IsNull(provider.Decrypt(new DecryptParameters(algorithm, ciphertext, iv, tag, null)));
+        }
+
+        private static IEnumerable GetEncryptionAlgorithms()
         {
             yield return EncryptionAlgorithm.A128Cbc;
             yield return EncryptionAlgorithm.A192Cbc;
@@ -289,13 +302,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
             yield return EncryptionAlgorithm.A128CbcPad;
             yield return EncryptionAlgorithm.A192CbcPad;
             yield return EncryptionAlgorithm.A256CbcPad;
-
-            if (includeAesGcm)
-            {
-                yield return EncryptionAlgorithm.A128Gcm;
-                yield return EncryptionAlgorithm.A192Gcm;
-                yield return EncryptionAlgorithm.A256Gcm;
-            }
         }
     }
 }

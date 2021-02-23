@@ -3,7 +3,6 @@
 
 using System;
 using System.Text.Json;
-using System.Threading.Tasks;
 using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
 using Azure.Messaging.EventGrid.SystemEvents;
@@ -24,17 +23,17 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
         {
             #region Snippet:EGEventParseJson
             // Parse the JSON payload into a list of events using EventGridEvent.Parse
-            EventGridEvent[] egEvents = EventGridEvent.Parse(jsonPayloadSampleOne);
+            EventGridEvent[] egEvents = EventGridEvent.ParseEvents(jsonPayloadSampleOne);
             #endregion
 
             // Iterate over each event to access event properties and data
             #region Snippet:DeserializePayloadUsingAsSystemEventData
             foreach (EventGridEvent egEvent in egEvents)
             {
-                // If the event is a system event, AsSystemEventData() should return the correct system event type
-                if (egEvent.IsSystemEvent)
+                // If the event is a system event, TryGetSystemEventData() will return the deserialized system event
+                if (egEvent.TryGetSystemEventData(out object systemEvent))
                 {
-                    switch (egEvent.AsSystemEventData())
+                    switch (systemEvent)
                     {
                         case SubscriptionValidationEventData subscriptionValidated:
                             Console.WriteLine(subscriptionValidated.ValidationCode);
@@ -45,8 +44,8 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
                         // Handle any other system event type
                         default:
                             Console.WriteLine(egEvent.EventType);
-                            // we can get the raw Json for the event using GetData()
-                            Console.WriteLine(egEvent.GetData().ToString());
+                            // we can get the raw Json for the event using Data
+                            Console.WriteLine(egEvent.Data.ToString());
                             break;
                     }
                 }
@@ -55,13 +54,13 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
                     switch (egEvent.EventType)
                     {
                         case "MyApp.Models.CustomEventType":
-                            TestPayload deserializedEventData = egEvent.GetData<TestPayload>();
+                            TestPayload deserializedEventData = egEvent.Data.ToObjectFromJson<TestPayload>();
                             Console.WriteLine(deserializedEventData.Name);
                             break;
                         // Handle any other custom event type
                         default:
                             Console.Write(egEvent.EventType);
-                            Console.WriteLine(egEvent.GetData().ToString());
+                            Console.WriteLine(egEvent.Data.ToString());
                             break;
                     }
                 }
@@ -71,7 +70,7 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
 
         // This sample demonstrates how to parse CloudEvents from JSON and access event data using GetData<T>()
         [Test]
-        public async Task GenericReceiveAndDeserializeEventGridEvents()
+        public void GenericReceiveAndDeserializeEventGridEvents()
         {
             // Example of a custom ObjectSerializer used to deserialize the event payload
             JsonObjectSerializer myCustomSerializer = new JsonObjectSerializer(
@@ -82,7 +81,7 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
 
             #region Snippet:CloudEventParseJson
             // Parse the JSON payload into a list of events using CloudEvent.Parse
-            CloudEvent[] cloudEvents = CloudEvent.Parse(jsonPayloadSampleTwo);
+            CloudEvent[] cloudEvents = CloudEvent.ParseEvents(jsonPayloadSampleTwo);
             #endregion
 
             // Iterate over each event to access event properties and data
@@ -93,17 +92,17 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
                 {
                     case "Contoso.Items.ItemReceived":
                         // By default, GetData uses JsonObjectSerializer to deserialize the payload
-                        ContosoItemReceivedEventData itemReceived = cloudEvent.GetData<ContosoItemReceivedEventData>();
+                        ContosoItemReceivedEventData itemReceived = cloudEvent.Data.ToObjectFromJson<ContosoItemReceivedEventData>();
                         Console.WriteLine(itemReceived.ItemSku);
                         break;
                     case "MyApp.Models.CustomEventType":
                         // One can also specify a custom ObjectSerializer as needed to deserialize the payload correctly
-                        TestPayload testPayload = await cloudEvent.GetDataAsync<TestPayload>(myCustomSerializer);
+                        TestPayload testPayload = cloudEvent.Data.ToObject<TestPayload>(myCustomSerializer);
                         Console.WriteLine(testPayload.Name);
                         break;
-                    case "Microsoft.Storage.BlobDeleted":
+                    case SystemEventNames.StorageBlobDeleted:
                         // Example for deserializing system events using GetData<T>
-                        StorageBlobDeletedEventData blobDeleted = cloudEvent.GetData<StorageBlobDeletedEventData>();
+                        StorageBlobDeletedEventData blobDeleted = cloudEvent.Data.ToObjectFromJson<StorageBlobDeletedEventData>();
                         Console.WriteLine(blobDeleted.BlobType);
                         break;
                 }

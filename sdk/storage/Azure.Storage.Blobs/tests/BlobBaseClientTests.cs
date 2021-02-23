@@ -693,7 +693,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsNotNull(response.Value.Details.VersionId);
         }
 
-        [PlaybackOnly("Object Replication policies is only enabled on certain storage accounts")]
+        [Ignore("Object Replication policies is only enabled on certain storage accounts")]
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task DownloadAsync_ObjectReplication()
@@ -3853,7 +3853,7 @@ namespace Azure.Storage.Blobs.Test
                 e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
         }
 
-        [PlaybackOnly("Object Replication policies is only enabled on certain storage accounts")]
+        [Ignore("Object Replication policies is only enabled on certain storage accounts")]
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task GetPropertiesAsync_ObjectReplication()
@@ -3952,8 +3952,8 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await blob.SetHttpHeadersAsync(new BlobHttpHeaders
             {
-                ContentEncoding = "deflate, gzip",
-                ContentLanguage = "de-DE, en-CA",
+                ContentEncoding = "deflate,gzip",
+                ContentLanguage = "de-DE,en-CA",
             });
 
             // Assert
@@ -6052,6 +6052,23 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public void CanGenerateSas_Mockable()
+        {
+            // Act
+            var blob = new Mock<BlobBaseClient>();
+            blob.Setup(x => x.CanGenerateSasUri).Returns(false);
+
+            // Assert
+            Assert.IsFalse(blob.Object.CanGenerateSasUri);
+
+            // Act
+            blob.Setup(x => x.CanGenerateSasUri).Returns(true);
+
+            // Assert
+            Assert.IsTrue(blob.Object.CanGenerateSasUri);
+        }
+
+        [Test]
         public void GenerateSas_RequiredParameters()
         {
             // Arrange
@@ -6494,6 +6511,18 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             Assert.IsNotNull(blobContainerClient);
             Assert.AreSame(blobContainerClientMock.Object, blobContainerClient);
+        }
+
+        [Test]
+        public void CanMockClientConstructors()
+        {
+            // One has to call .Object to trigger constructor. It's lazy.
+            var mock = new Mock<BlobBaseClient>(TestConfigDefault.ConnectionString, "name", "name", new BlobClientOptions()).Object;
+            mock = new Mock<BlobBaseClient>(TestConfigDefault.ConnectionString, "name", "name").Object;
+            mock = new Mock<BlobBaseClient>(new Uri("https://test/test"), new BlobClientOptions()).Object;
+            mock = new Mock<BlobBaseClient>(new Uri("https://test/test"), GetNewSharedKeyCredentials(), new BlobClientOptions()).Object;
+            mock = new Mock<BlobBaseClient>(new Uri("https://test/test"), new AzureSasCredential("foo"), new BlobClientOptions()).Object;
+            mock = new Mock<BlobBaseClient>(new Uri("https://test/test"), GetOAuthCredential(TestConfigHierarchicalNamespace), new BlobClientOptions()).Object;
         }
 
         public IEnumerable<AccessConditionParameters> AccessConditions_Data

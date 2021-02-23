@@ -28,10 +28,19 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         public const string LeaseContainerName = "azure-webjobs-eventhub";
         public EventHubOptions() { }
         public int BatchCheckpointFrequency { get { throw null; } set { } }
-        public Azure.Messaging.EventHubs.Primitives.EventProcessorOptions EventProcessorOptions { get { throw null; } }
+        public Azure.Messaging.EventHubs.EventHubConnectionOptions ConnectionOptions { get { throw null; } set { } }
         public Microsoft.Azure.WebJobs.EventHubs.InitialOffsetOptions InitialOffsetOptions { get { throw null; } }
-        public bool InvokeProcessorAfterReceiveTimeout { get { throw null; } set { } }
+        public bool InvokeFunctionAfterReceiveTimeout { get { throw null; } set { } }
+        public Azure.Messaging.EventHubs.Processor.LoadBalancingStrategy LoadBalancingStrategy { get { throw null; } set { } }
+        public System.TimeSpan LoadBalancingUpdateInterval { get { throw null; } set { } }
         public int MaxBatchSize { get { throw null; } set { } }
+        public System.TimeSpan MaximumWaitTime { get { throw null; } set { } }
+        public System.TimeSpan PartitionOwnershipExpirationInterval { get { throw null; } set { } }
+        public int PrefetchCount { get { throw null; } set { } }
+        public long? PrefetchSizeInBytes { get { throw null; } set { } }
+        public string ProcessorIdentifier { get { throw null; } set { } }
+        public Azure.Messaging.EventHubs.EventHubsRetryOptions RetryOptions { get { throw null; } set { } }
+        public bool TrackLastEnqueuedEventProperties { get { throw null; } set { } }
         public void AddReceiver(string eventHubName, string receiverConnectionString) { }
         public void AddReceiver(string eventHubName, string receiverConnectionString, string storageConnectionString) { }
         public void AddSender(string eventHubName, string sendConnectionString) { }

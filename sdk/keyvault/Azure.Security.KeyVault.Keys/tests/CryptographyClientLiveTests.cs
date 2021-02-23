@@ -14,10 +14,17 @@ namespace Azure.Security.KeyVault.Keys.Tests
     public class CryptographyClientLiveTests : KeysTestBase
     {
         private readonly KeyClientOptions.ServiceVersion _serviceVersion;
+
         public CryptographyClientLiveTests(bool isAsync, KeyClientOptions.ServiceVersion serviceVersion)
-            : base(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
+            : this(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
+        {
+        }
+
+        protected CryptographyClientLiveTests(bool isAsync, KeyClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode)
+            : base(isAsync, serviceVersion, mode)
         {
             _serviceVersion = serviceVersion;
+
             // TODO: https://github.com/Azure/azure-sdk-for-net/issues/11634
             Matcher = new RecordMatcher(compareBodies: false);
         }
@@ -29,11 +36,10 @@ namespace Azure.Security.KeyVault.Keys.Tests
             // is always made.  This allows tests to be replayed independently and in any order
             if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
             {
-                ChallengeBasedAuthenticationPolicy.AuthenticationChallenge.ClearCache();
+                ChallengeBasedAuthenticationPolicy.ClearCache();
             }
         }
 
-        // TODO: Record tests on Managed HSM for other EncryptionAlgorithm values.
         [Test]
         public async Task EncryptDecryptRoundTrip([EnumValues(nameof(EncryptionAlgorithm.Rsa15), nameof(EncryptionAlgorithm.RsaOaep), nameof(EncryptionAlgorithm.RsaOaep256))]EncryptionAlgorithm algorithm)
         {
@@ -332,6 +338,33 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.IsTrue(verifyResult.IsValid);
         }
 
+        [Test]
+        public async Task EncryptLocalDecryptOnKeyVault([EnumValues(nameof(EncryptionAlgorithm.Rsa15), nameof(EncryptionAlgorithm.RsaOaep), nameof(EncryptionAlgorithm.RsaOaep256))] EncryptionAlgorithm algorithm)
+        {
+            KeyVaultKey key = await CreateTestKey(algorithm);
+            RegisterForCleanup(key.Name);
+
+            CryptographyClient remoteClient = GetCryptoClient(key.Id, forceRemote: true);
+            CryptographyClient localClient = GetLocalCryptoClient(key.Key);
+
+            byte[] plaintext = new byte[32];
+            Recording.Random.NextBytes(plaintext);
+
+            EncryptResult encrypted = await localClient.EncryptAsync(algorithm, plaintext);
+
+            Assert.AreEqual(algorithm, encrypted.Algorithm);
+            Assert.AreEqual(key.Id, encrypted.KeyId);
+            Assert.IsNotNull(encrypted.Ciphertext);
+
+            DecryptResult decrypted = await remoteClient.DecryptAsync(algorithm, encrypted.Ciphertext);
+
+            Assert.AreEqual(algorithm, decrypted.Algorithm);
+            Assert.AreEqual(key.Id, decrypted.KeyId);
+            Assert.IsNotNull(decrypted.Plaintext);
+
+            CollectionAssert.AreEqual(plaintext, decrypted.Plaintext);
+        }
+
         private async Task<KeyVaultKey> CreateTestKey(EncryptionAlgorithm algorithm)
         {
             string keyName = Recording.GenerateId();
@@ -347,7 +380,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             }
         }
 
-        private async Task<KeyVaultKey> CreateTestKey(KeyWrapAlgorithm algorithm)
+        protected async Task<KeyVaultKey> CreateTestKey(KeyWrapAlgorithm algorithm)
         {
             string keyName = Recording.GenerateId();
 
@@ -357,12 +390,25 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 case KeyWrapAlgorithm.RsaOaepValue:
                 case KeyWrapAlgorithm.RsaOaep256Value:
                     return await Client.CreateKeyAsync(keyName, KeyType.Rsa);
+
+                case KeyWrapAlgorithm.A128KWValue:
+                    return await Client.CreateOctKeyAsync(
+                        new CreateOctKeyOptions(keyName) { KeySize = 128 });
+
+                case KeyWrapAlgorithm.A192KWValue:
+                    return await Client.CreateOctKeyAsync(
+                        new CreateOctKeyOptions(keyName) { KeySize = 192 });
+
+                case KeyWrapAlgorithm.A256KWValue:
+                    return await Client.CreateOctKeyAsync(
+                        new CreateOctKeyOptions(keyName) { KeySize = 256 });
+
                 default:
                     throw new ArgumentException("Invalid Algorithm", nameof(algorithm));
             }
         }
 
-        private CryptographyClient GetCryptoClient(Uri keyId, bool forceRemote = false)
+        protected CryptographyClient GetCryptoClient(Uri keyId, bool forceRemote = false)
         {
             CryptographyClientOptions options = InstrumentClientOptions(new CryptographyClientOptions((CryptographyClientOptions.ServiceVersion)_serviceVersion));
             CryptographyClient client = new CryptographyClient(keyId, TestEnvironment.Credential, options, forceRemote);
@@ -382,6 +428,12 @@ namespace Azure.Security.KeyVault.Keys.Tests
             }
 
             return (clientProxy, remoteClientProxy);
+        }
+
+        protected CryptographyClient GetLocalCryptoClient(JsonWebKey key)
+        {
+            LocalCryptographyClientOptions options = InstrumentClientOptions(new LocalCryptographyClientOptions());
+            return InstrumentClient(new CryptographyClient(key, options));
         }
 
         private async Task<KeyVaultKey> CreateTestKey(SignatureAlgorithm algorithm)

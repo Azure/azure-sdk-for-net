@@ -3,30 +3,31 @@
 
 using System;
 using System.Diagnostics;
-using System.Threading.Tasks;
-using System.Collections.Generic;
+using Azure.Core.TestFramework;
+using Azure.Analytics.Synapse.Tests;
 using Azure.Analytics.Synapse.Spark;
 using Azure.Analytics.Synapse.Spark.Models;
 using Azure.Identity;
 using NUnit.Framework;
 
-namespace Azure.Analytics.Synapse.Samples
+namespace Azure.Analytics.Synapse.Spark.Samples
 {
     /// <summary>
     /// This sample demonstrates how to submit Spark job in Azure Synapse Analytics using synchronous methods of <see cref="SparkSessionClient"/>.
     /// </summary>
-    public partial class Sample2_ExecuteSparkStatement : SampleFixture
+    public partial class Sample2_ExecuteSparkStatement : SamplesBase<SynapseTestEnvironment>
     {
         [Test]
         public void ExecuteSparkStatementSync()
         {
-            // Environment variable with the Synapse workspace endpoint.
-            string endpoint = TestEnvironment.EndpointUrl;
-
-            // Environment variable with the Synapse Spark pool name.
-            string sparkPoolName = TestEnvironment.SparkPoolName;
-
             #region Snippet:CreateSparkSessionClient
+            // Replace the strings below with the spark and endpoint information
+            string sparkPoolName = "<my-spark-pool-name>";
+            /*@@*/sparkPoolName = TestEnvironment.SparkPoolName;
+
+            string endpoint = "<my-endpoint-url>";
+            /*@@*/endpoint = TestEnvironment.EndpointUrl;
+
             SparkSessionClient client = new SparkSessionClient(new Uri(endpoint), sparkPoolName, new DefaultAzureCredential());
             #endregion
 
@@ -40,10 +41,13 @@ namespace Azure.Analytics.Synapse.Samples
                 ExecutorCount = 2
             };
 
-            SparkSession sessionCreated = client.CreateSparkSession(request);
-
-            // Waiting session creation completion
-            sessionCreated = PollSparkSession(client, sessionCreated);
+            SparkSessionOperation createSessionOperation = client.StartCreateSparkSession(request);
+            while (!createSessionOperation.HasCompleted)
+            {
+                System.Threading.Thread.Sleep(2000);
+                createSessionOperation.UpdateStatus();
+            }
+            SparkSession sessionCreated = createSessionOperation.Value;
             #endregion
 
             #region Snippet:GetSparkSession
@@ -57,10 +61,14 @@ namespace Azure.Analytics.Synapse.Samples
                 Kind = SparkStatementLanguageType.Spark,
                 Code = @"print(""Hello world\n"")"
             };
-            SparkStatement statementCreated = client.CreateSparkStatement(sessionCreated.Id, sparkStatementRequest);
 
-            // Wait operation completion
-            statementCreated = PollSparkStatement(client, sessionCreated.Id, statementCreated);
+            SparkStatementOperation createStatementOperation = client.StartCreateSparkStatement(sessionCreated.Id, sparkStatementRequest);
+            while (!createStatementOperation.HasCompleted)
+            {
+                System.Threading.Thread.Sleep(2000);
+                createStatementOperation.UpdateStatus();
+            }
+            SparkStatement statementCreated = createStatementOperation.Value;
             #endregion
 
             #region Snippet:GetSparkStatement
@@ -70,126 +78,12 @@ namespace Azure.Analytics.Synapse.Samples
 
             #region Snippet:CancelSparkStatement
             SparkStatementCancellationResult cancellationResult = client.CancelSparkStatement(sessionCreated.Id, statementCreated.Id);
-            Debug.WriteLine($"Statement is cancelled with message {cancellationResult.Msg}");
+            Debug.WriteLine($"Statement is cancelled with message {cancellationResult.Message}");
             #endregion
 
             #region Snippet:CancelSparkSession
             Response operation = client.CancelSparkSession(sessionCreated.Id);
             #endregion
         }
-
-        // https://github.com/Azure/azure-sdk-for-net/issues/17587
-        // This code is copied from SparkTestUtilities.cs and modified, as there is no current way to monitor/poll for spark completion
-        // It belongs in a helper class, likely a LRO
-        // It is being left here only temporarily.
-        #region Snippet:TemporarySparkSupportCode
-        private const string Error = "error";
-        private const string Dead = "dead";
-        private const string Success = "success";
-        private const string Killed = "killed";
-        private const string Idle = "idle";
-
-       public static List<string> SessionSubmissionFinalStates = new List<string>
-        {
-            Idle,
-            Error,
-            Dead,
-            Success,
-            Killed
-        };
-
-        public static SparkSession PollSparkSession(
-            SparkSessionClient client,
-            SparkSession session,
-            IList<string> livyReadyStates = null)
-        {
-            if (livyReadyStates == null)
-            {
-                livyReadyStates = SessionSubmissionFinalStates;
-            }
-
-            return Poll(
-                session,
-                s => s.Result.ToString(),
-                s => s.State,
-                s => client.GetSparkSession(s.Id, true),
-                livyReadyStates);
-        }
-
-        private const string Starting = "starting";
-        private const string Waiting = "waiting";
-        private const string Running = "running";
-        private const string Cancelling = "cancelling";
-
-        private static List<string> ExecutingStates = new List<string>
-        {
-            Starting,
-            Waiting,
-            Running,
-            Cancelling
-        };
-
-        private static SparkStatement PollSparkStatement(
-            SparkSessionClient client,
-            int sessionId,
-            SparkStatement statement)
-        {
-            return Poll(
-                statement,
-                s => null,
-                s => s.State,
-                s => client.GetSparkStatement(sessionId, s.Id),
-                ExecutingStates,
-                isFinalState: false);
-        }
-
-        private static T Poll<T>(
-            T job,
-            Func<T, string> getJobState,
-            Func<T, string> getLivyState,
-            Func<T, T> refresh,
-            IList<string> livyReadyStates,
-            bool isFinalState = true,
-            int pollingInMilliseconds = 0,
-            int timeoutInMilliseconds = 0,
-            Action<T> writeLog = null)
-        {
-            var timeWaitedInMilliSeconds = 0;
-            if (pollingInMilliseconds == 0)
-            {
-                pollingInMilliseconds = 5000;
-            }
-
-            while (IsJobRunning(getJobState(job), getLivyState(job), livyReadyStates, isFinalState))
-            {
-                if (timeoutInMilliseconds > 0 && timeWaitedInMilliSeconds >= timeoutInMilliseconds)
-                {
-                    throw new TimeoutException();
-                }
-
-                writeLog?.Invoke(job);
-                //TestMockSupport.Delay(pollingInMilliseconds);
-                System.Threading.Thread.Sleep(pollingInMilliseconds);
-                timeWaitedInMilliSeconds += pollingInMilliseconds;
-
-                // TODO: handle retryable excetpion
-                job = refresh(job);
-            }
-
-            return job;
-        }
-
-        private static bool IsJobRunning(string jobState, string livyState, IList<string> livyStates, bool isFinalState = true)
-        {
-            if ("Succeeded".Equals(jobState, StringComparison.OrdinalIgnoreCase)
-                || "Failed".Equals(jobState, StringComparison.OrdinalIgnoreCase)
-                || "Cancelled".Equals(jobState, StringComparison.OrdinalIgnoreCase))
-            {
-                return false;
-            }
-
-            return isFinalState ? !livyStates.Contains(livyState) : livyStates.Contains(livyState);
-        }
-        #endregion
     }
 }

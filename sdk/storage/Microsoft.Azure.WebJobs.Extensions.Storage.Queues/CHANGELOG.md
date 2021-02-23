@@ -1,7 +1,20 @@
 # Release History
 
-## 5.0.0-beta.2 (Unreleased)
+## 5.0.0-beta.3 (Unreleased)
 
+
+## 5.0.0-beta.2 (2021-02-09)
+
+### Major changes and features 
+- This version Base64-encodes/decodes queue messages by default. This reverses the breaking change in 5.0.0-beta1, and preserves compability with previous major versions. This behavior can be changed by setting `QueuesOptions.MessageEncoding`. For example, to configure Azure Functions to perform no base64 encoding/decoding, specify the following in host.json
+
+```
+  "extensions": {
+    "queues": {
+      "messageEncoding": "none"
+    }
+  }
+```
 
 ## 5.0.0-beta.1 (2020-11-10)
 

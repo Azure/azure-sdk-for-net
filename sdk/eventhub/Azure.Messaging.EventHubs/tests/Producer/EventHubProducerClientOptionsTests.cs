@@ -118,7 +118,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void GetPublishingOptionsOrDefaultForPartitionDefaultsWhenNoPartitionIsSpecified(string partitionId)
         {
             var options = new EventHubProducerClientOptions();
-            options.PartitionOptions.Add("1", new PartitionPublishingOptions{ ProducerGroupId = 1 });
+            options.PartitionOptions.Add("1", new PartitionPublishingOptions { ProducerGroupId = 1 });
 
             Assert.That(options.GetPublishingOptionsOrDefaultForPartition(partitionId), Is.EqualTo(default(PartitionPublishingOptions)));
         }
@@ -132,7 +132,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void GetPublishingOptionsOrDefaultForPartitionDefaultsWhenNoPartitionIsFound()
         {
             var options = new EventHubProducerClientOptions();
-            options.PartitionOptions.Add("1", new PartitionPublishingOptions{ ProducerGroupId = 1 });
+            options.PartitionOptions.Add("1", new PartitionPublishingOptions { ProducerGroupId = 1 });
 
             Assert.That(options.GetPublishingOptionsOrDefaultForPartition("0"), Is.EqualTo(default(PartitionPublishingOptions)));
         }
@@ -146,7 +146,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void GetPublishingOptionsOrDefaultForPartitionReturnsTheOptionsWhenThePartitionIsFound()
         {
             var partitionId = "12";
-            var expectedPartitionOptions = new PartitionPublishingOptions{ ProducerGroupId = 1 };
+            var expectedPartitionOptions = new PartitionPublishingOptions { ProducerGroupId = 1 };
 
             var options = new EventHubProducerClientOptions();
             options.PartitionOptions.Add(partitionId, expectedPartitionOptions);

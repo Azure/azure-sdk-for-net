@@ -3,10 +3,8 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
-using Azure.Messaging.EventHubs.Processor.Tests;
+using Azure.Messaging.EventHubs.Processor;
 using Azure.Storage.Blobs;
 using NUnit.Framework;
 
@@ -23,6 +21,91 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
     [SuppressMessage("Style", "IDE0059:Unnecessary assignment of a value", Justification = "Example assignments needed for snippet output content.")]
     public class Sample02_EventProcessorConfigurationLiveTests
     {
+        /// <summary>
+        ///   Performs basic smoke test validation of the contained snippet.
+        /// </summary>
+        ///
+        [Test]
+        public void ConfigureLoadBalancingStrategy()
+        {
+            #region Snippet:EventHubs_Processor_Sample02_LoadBalancingStrategy
+
+            var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
+            var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
+            /*@@*/
+            /*@@*/ storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
+            /*@@*/ blobContainerName = "not-real";
+
+            var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+            var eventHubName = "<< NAME OF THE EVENT HUB >>";
+            var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
+            /*@@*/
+            /*@@*/ eventHubsConnectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
+            /*@@*/ eventHubName = "fakeHub";
+            /*@@*/ consumerGroup = "fakeConsumer";
+
+            var processorOptions = new EventProcessorClientOptions
+            {
+                LoadBalancingStrategy = LoadBalancingStrategy.Greedy
+            };
+
+            var storageClient = new BlobContainerClient(
+                storageConnectionString,
+                blobContainerName);
+
+            var processor = new EventProcessorClient(
+                storageClient,
+                consumerGroup,
+                eventHubsConnectionString,
+                eventHubName,
+                processorOptions);
+
+            #endregion
+        }
+
+        /// <summary>
+        ///   Performs basic smoke test validation of the contained snippet.
+        /// </summary>
+        ///
+        [Test]
+        public void ConfigureLoadBalancingIntervals()
+        {
+            #region Snippet:EventHubs_Processor_Sample02_LoadBalancingIntervals
+
+            var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
+            var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
+            /*@@*/
+            /*@@*/ storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
+            /*@@*/ blobContainerName = "not-real";
+
+            var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+            var eventHubName = "<< NAME OF THE EVENT HUB >>";
+            var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
+            /*@@*/
+            /*@@*/ eventHubsConnectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
+            /*@@*/ eventHubName = "fakeHub";
+            /*@@*/ consumerGroup = "fakeConsumer";
+
+            var processorOptions = new EventProcessorClientOptions
+            {
+                LoadBalancingUpdateInterval = TimeSpan.FromSeconds(10),
+                PartitionOwnershipExpirationInterval = TimeSpan.FromSeconds(30)
+            };
+
+            var storageClient = new BlobContainerClient(
+                storageConnectionString,
+                blobContainerName);
+
+            var processor = new EventProcessorClient(
+                storageClient,
+                consumerGroup,
+                eventHubsConnectionString,
+                eventHubName,
+                processorOptions);
+
+            #endregion
+        }
+
         /// <summary>
         ///   Performs basic smoke test validation of the contained snippet.
         /// </summary>
@@ -180,6 +263,46 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var processorOptions = new EventProcessorClientOptions();
             processorOptions.ConnectionOptions.TransportType = EventHubsTransportType.AmqpWebSockets;
             processorOptions.ConnectionOptions.Proxy = new WebProxy("https://proxyserver:80", true);
+
+            var storageClient = new BlobContainerClient(
+                storageConnectionString,
+                blobContainerName);
+
+            var processor = new EventProcessorClient(
+                storageClient,
+                consumerGroup,
+                eventHubsConnectionString,
+                eventHubName,
+                processorOptions);
+
+            #endregion
+        }
+
+        /// <summary>
+        ///   Performs basic smoke test validation of the contained snippet.
+        /// </summary>
+        ///
+        [Test]
+        public void ConfigureCustomEndpointAddress()
+        {
+            #region Snippet:EventHubs_Processor_Sample02_ConnectionOptionsCustomEndpoint
+
+            var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
+            var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
+            /*@@*/
+            /*@@*/ storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
+            /*@@*/ blobContainerName = "not-real";
+
+            var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+            var eventHubName = "<< NAME OF THE EVENT HUB >>";
+            var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
+            /*@@*/
+            /*@@*/ eventHubsConnectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
+            /*@@*/ eventHubName = "fakeHub";
+            /*@@*/ consumerGroup = "fakeConsumer";
+
+            var processorOptions = new EventProcessorClientOptions();
+            processorOptions.ConnectionOptions.CustomEndpointAddress = new Uri("amqps://app-gateway.mycompany.com");
 
             var storageClient = new BlobContainerClient(
                 storageConnectionString,
