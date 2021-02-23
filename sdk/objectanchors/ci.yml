@@ -26,5 +26,5 @@ extends:
     ServiceDirectory: objectanchors
     ArtifactName: packages
     Artifacts:
-    - name: Azure.MixedReality.ObjectAnchors
+    - name: Azure.MixedReality.ObjectAnchors.Conversion
       safeName: AzureMixedRealityObjectAnchors
