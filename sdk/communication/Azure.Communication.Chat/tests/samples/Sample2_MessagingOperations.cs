@@ -64,7 +64,7 @@ namespace Azure.Communication.Chat.Tests.samples
             AsyncPageable<ChatMessageReadReceipt> allReadReceipts = chatThreadClient.GetReadReceiptsAsync();
             await foreach (ChatMessageReadReceipt readReceipt in allReadReceipts)
             {
-                Console.WriteLine($"{readReceipt.ChatMessageId}:{((CommunicationUserIdentifier)readReceipt.SenderCommunicationIdentifier).Id}:{readReceipt.ReadOn}");
+                Console.WriteLine($"{readReceipt.ChatMessageId}:{((CommunicationUserIdentifier)readReceipt.Sender).Id}:{readReceipt.ReadOn}");
             }
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_GetReadReceipts
 

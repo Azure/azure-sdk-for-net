@@ -145,7 +145,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             {
                 idCounter++;
                 Assert.AreEqual($"{idCounter}", readReceipt.ChatMessageId);
-                Assert.AreEqual($"{baseSenderId}{idCounter}", ((UnknownIdentifier)readReceipt.SenderCommunicationIdentifier).Id);
+                Assert.AreEqual($"{baseSenderId}{idCounter}", ((UnknownIdentifier)readReceipt.Sender).Id);
                 Assert.AreEqual(baseReadOnDate.AddSeconds(idCounter), readReceipt.ReadOn);
             }
             Assert.AreEqual(5, idCounter);
@@ -187,7 +187,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
                 {
                     idCounter++;
                     Assert.AreEqual($"{idCounter}", readReceipt.ChatMessageId);
-                    Assert.AreEqual($"{baseSenderId}{idCounter}", ((UnknownIdentifier)readReceipt.SenderCommunicationIdentifier).Id);
+                    Assert.AreEqual($"{baseSenderId}{idCounter}", ((UnknownIdentifier)readReceipt.Sender).Id);
                     Assert.AreEqual(baseReadOnDate.AddSeconds(idCounter), readReceipt.ReadOn);
                 }
                 //continuationToken = page.ContinuationToken;
