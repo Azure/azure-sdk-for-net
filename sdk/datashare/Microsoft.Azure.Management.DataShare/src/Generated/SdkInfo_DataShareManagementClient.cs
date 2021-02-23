@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.DataShare
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/datashare/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --tag=package-2020-09-01 --csharp-sdks-folder=C:\\Users\\ahermas\\source\\repos\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "dd9bdfc4373bd82c2528dfc8e3397eb38cb38af9";
+      public static readonly String GithubCommidId = "45c7ae94a46920c94b5e03e6a7d128d6cb7a364e";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
