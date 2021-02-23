@@ -4,8 +4,12 @@
 namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.FunctionalTests
 {
     using System;
+    using System.Threading.Tasks;
 
     using Azure.Core.TestFramework;
+
+    using Microsoft.Rest;
+    using Microsoft.Rest.Azure.Authentication;
 
     public class AzureMonitorTestEnvironment : TestEnvironment
     {
@@ -24,6 +28,43 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.FunctionalTests
         /// This value comes from the ARM Template.
         /// </summary>
         public string ApplicationId => GetRecordedVariable(EnvironmentVariableNames.ApplicationId);
+
+        /// <summary>
+        /// Get a <see cref="ServiceClientCredentials"/> needed by <see cref="ApplicationInsightsDataClient"/> to query Kusto.
+        /// - IN LIVE OR RECORD TEST MODE
+        /// Uses the TestEnvironment to log into Application Insights using a Service Principal.
+        /// These values are created when running the New-TestResources.ps1 script.
+        /// - IN PLAYBACK TEST MODE
+        /// Return an instance of <see cref="TokenCredentials"/>.
+        /// </summary>
+        public async Task<ServiceClientCredentials> GetServiceClientCredentialsAsync()
+        {
+            if (this.Mode == RecordedTestMode.Live || this.Mode == RecordedTestMode.Record)
+            {
+                var authEndpoint = "https://login.microsoftonline.com";
+                var tokenAudience = "https://api.applicationinsights.io/";
+                var adSettings = new ActiveDirectoryServiceSettings
+                {
+                    AuthenticationEndpoint = new Uri(authEndpoint),
+                    TokenAudience = new Uri(tokenAudience),
+                    ValidateAuthority = true
+                };
+
+                return await ApplicationTokenProvider.LoginSilentAsync(
+                    domain: this.TenantId,
+                    clientId: this.ClientId,
+                    secret: this.ClientSecret,
+                    settings: adSettings);
+            }
+            else if (this.Mode == RecordedTestMode.Playback)
+            {
+                return new TokenCredentials("testValue");
+            }
+            else
+            {
+                throw new Exception($"Unknown RecordedTestMode '{this.Mode}'");
+            }
+        }
 
         internal static class EnvironmentVariableNames
         {

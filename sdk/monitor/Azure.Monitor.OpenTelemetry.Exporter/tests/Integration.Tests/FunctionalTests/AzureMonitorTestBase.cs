@@ -7,9 +7,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.FunctionalTests
     using System.Collections.Generic;
     using System.Linq;
     using System.Net.Http;
-    using System.Net.Http.Headers;
-    using System.Runtime.InteropServices;
-    using System.Threading;
     using System.Threading.Tasks;
 
     using Azure.Core.Pipeline;
@@ -18,9 +15,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.FunctionalTests
 
     using Microsoft.Azure.ApplicationInsights.Query;
     using Microsoft.Azure.ApplicationInsights.Query.Models;
-    using Microsoft.IdentityModel.Clients.ActiveDirectory;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Azure.Authentication;
 
     using NUnit.Framework;
 
@@ -61,10 +55,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.FunctionalTests
         }
 
         /// <summary>
-        /// Uses the TestEnvironment to log into Application Insights using a Service Principal.
-        /// These values are created when running the New-TestResources.ps1 script.
-        /// The code here comes from the sample provided in the Application Insights REST API doc.
-        /// (https://dev.applicationinsights.io/documentation/Tools/CSharp-Sdk).
+        /// Get an instance of <see cref="ApplicationInsightsDataClient"/> which can be used to query telemetry.
+        /// See also: (https://dev.applicationinsights.io/documentation/Tools/CSharp-Sdk).
         /// </summary>
         /// <remarks>
         /// Alternatively for manual testing, can supply an Application Insights API Key.
@@ -73,41 +65,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.FunctionalTests
         /// </remarks>
         protected async Task<ApplicationInsightsDataClient> GetApplicationInsightsDataClientAsync()
         {
-            ServiceClientCredentials creds = this.Mode switch
-            {
-                RecordedTestMode.Live or RecordedTestMode.Record => await GetServiceClientCredentialsAsync(),
-                RecordedTestMode.Playback => await GetMockServiceClientCredentialsAsync(),
-                _ => throw new Exception($"Unknown RecordedTestMode '{this.Mode}'"),
-            };
-
+            var creds = await TestEnvironment.GetServiceClientCredentialsAsync();
             var handler = new HttpPipelineMessageHandler(new HttpPipeline(Recording.CreateTransport(new HttpClientTransport())));
             var httpClient = new HttpClient(handler);
 
             var client = new ApplicationInsightsDataClient(credentials: creds, httpClient: httpClient, disposeHttpClient: true);
             return client;
-        }
-
-        private async Task<ServiceClientCredentials> GetServiceClientCredentialsAsync()
-        {
-            var clientId = TestEnvironment.ClientId;
-            var clientSecret = TestEnvironment.ClientSecret;
-            var domain = TestEnvironment.TenantId;
-            var authEndpoint = "https://login.microsoftonline.com";
-            var tokenAudience = "https://api.applicationinsights.io/";
-            var adSettings = new ActiveDirectoryServiceSettings
-            {
-                AuthenticationEndpoint = new Uri(authEndpoint),
-                TokenAudience = new Uri(tokenAudience),
-                ValidateAuthority = true
-            };
-
-            return await ApplicationTokenProvider.LoginSilentAsync(domain, clientId, clientSecret, adSettings);
-        }
-
-        private async Task<ServiceClientCredentials> GetMockServiceClientCredentialsAsync()
-        {
-            await Task.Delay(0);
-            return new MockServiceClientCredentials();
         }
 
         /// <summary>
@@ -174,17 +137,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.FunctionalTests
         protected static class QueryDuration
         {
             public const string TenMinutes = "PT10M";
-        }
-
-        private class MockServiceClientCredentials : ServiceClientCredentials
-        {
-            public async override Task ProcessHttpRequestAsync(HttpRequestMessage request, CancellationToken cancellationToken)
-            {
-                AuthenticationHeaderValue value = new AuthenticationHeaderValue("Test");
-                request.Headers.Authorization = value;
-                //                await TokenProvider.GetAuthenticationHeaderAsync(cancellationToken).ConfigureAwait(false);
-                await base.ProcessHttpRequestAsync(request, cancellationToken).ConfigureAwait(false);
-            }
         }
     }
 }

@@ -7,12 +7,12 @@
         "Accept": "application/json",
         "Content-Length": "268",
         "Content-Type": "application/json",
-        "User-Agent": "azsdk-net-Monitor.OpenTelemetry.Exporter/1.0.0-alpha.20210219.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "b8af79b3f3a95cafdcabcfb610e27bcb",
+        "User-Agent": "azsdk-net-Monitor.OpenTelemetry.Exporter/1.0.0-alpha.20210222.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "886126972ee9a96278ef59f1373e1546",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": [
-        "{\u0022name\u0022:\u0022Message\u0022,\u0022time\u0022:\u002202/20/2021 01:00:31\u0022,\u0022iKey\u0022:\u0022a0151fae-78ce-447c-88fc-9020efb2091c\u0022,\u0022tags\u0022:{\u0022ai.internal.sdkVersion\u0022:\u0022dotnet4.8:otel1.0.1:ext1.0.0\u0022},\u0022data\u0022:{\u0022baseType\u0022:\u0022MessageData\u0022,\u0022baseData\u0022:{\u0022message\u0022:\u0022Hello World\u0022,\u0022severityLevel\u0022:\u0022Information\u0022,\u0022ver\u0022:2}}}\n"
+        "{\u0022name\u0022:\u0022Message\u0022,\u0022time\u0022:\u002202/23/2021 01:03:45\u0022,\u0022iKey\u0022:\u0022a0151fae-78ce-447c-88fc-9020efb2091c\u0022,\u0022tags\u0022:{\u0022ai.internal.sdkVersion\u0022:\u0022dotnet4.8:otel1.0.1:ext1.0.0\u0022},\u0022data\u0022:{\u0022baseType\u0022:\u0022MessageData\u0022,\u0022baseData\u0022:{\u0022message\u0022:\u0022Hello World\u0022,\u0022severityLevel\u0022:\u0022Information\u0022,\u0022ver\u0022:2}}}\n"
       ],
       "StatusCode": 200,
       "ResponseHeaders": {
@@ -21,10 +21,10 @@
         "Access-Control-Max-Age": "3600",
         "Content-Length": "49",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sat, 20 Feb 2021 01:00:31 GMT",
+        "Date": "Tue, 23 Feb 2021 01:03:44 GMT",
         "Strict-Transport-Security": "max-age=31536000",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-session-id": "F0F52E01-EF0B-4873-9C71-4FE42B6387C1"
+        "x-ms-session-id": "7A651808-574D-4F39-8A29-7FF546C3956D"
       },
       "ResponseBody": {
         "itemsReceived": 1,
@@ -49,18 +49,18 @@
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
-        "Age": "31",
+        "Age": "5",
         "Connection": "keep-alive",
         "Content-Length": "987",
         "Content-Type": "application/json; charset=utf-8; ieee754compatible=false; odata.metadata=none; odata.streaming=false",
-        "Date": "Sat, 20 Feb 2021 01:01:01 GMT",
+        "Date": "Tue, 23 Feb 2021 01:03:50 GMT",
         "OData-Version": "4.0;",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Vary": [
           "Accept-Encoding",
           "Accept-Encoding"
         ],
-        "Via": "1.1 draft-oms-5dd9df5569-kp8f2",
+        "Via": "1.1 draft-oms-5dd9df5569-cwdkm",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -73,10 +73,10 @@
         ],
         "value": [
           {
-            "id": "abcc4da0-7316-11eb-a2e2-05d8e6f9e647",
+            "id": "aec0e210-7572-11eb-a86a-cfd3d5c8ad02",
             "count": 1,
             "type": "trace",
-            "timestamp": "2021-02-20T00:57:57.000Z",
+            "timestamp": "2021-02-23T01:01:38.000Z",
             "trace": {
               "message": "Hello World",
               "severityLevel": 1
@@ -129,7 +129,7 @@
     "APPLICATION_ID": "cab179c4-5745-42ef-9b49-1eb443e7b760",
     "CLIENT_ID": "1b695356-0046-4617-ab97-cf253ebfe36b",
     "CONNECTION_STRING": "InstrumentationKey=a0151fae-78ce-447c-88fc-9020efb2091c;IngestionEndpoint=https://westus2-0.in.applicationinsights.azure.com/",
-    "RandomSeed": "1578816871",
+    "RandomSeed": "1021630504",
     "TENANT_ID": "118397e9-9159-4ad5-bd6f-1d9190d9406a"
   }
 }
