@@ -227,7 +227,6 @@ namespace Azure.Storage.Blobs.Specialized
         private (ServiceRestClient, ContainerRestClient) BuildRestClients()
         {
             BlobUriBuilder uriBuilder = new BlobUriBuilder(_uri);
-            string containerName = uriBuilder.BlobContainerName;
             uriBuilder.BlobContainerName = null;
             uriBuilder.BlobName = null;
 
@@ -241,7 +240,6 @@ namespace Azure.Storage.Blobs.Specialized
                 clientDiagnostics: _clientDiagnostics,
                 pipeline: _pipeline,
                 url: uriBuilder.ToUri().ToString(),
-                containerName: containerName,
                 version: _version.ToVersionString());
 
             return (serviceRestClient, containerRestClient);
@@ -435,6 +433,7 @@ namespace Azure.Storage.Blobs.Specialized
                     if (async)
                     {
                         response = await _containerRestClient.SubmitBatchAsync(
+                            containerName: ContainerName,
                             contentLength: content.Length,
                             multipartContentType: contentType,
                             body: content,
@@ -444,6 +443,7 @@ namespace Azure.Storage.Blobs.Specialized
                     else
                     {
                         response = _containerRestClient.SubmitBatch(
+                            containerName: ContainerName,
                             contentLength: content.Length,
                             multipartContentType: contentType,
                             body: content,

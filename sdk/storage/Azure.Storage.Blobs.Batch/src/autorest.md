@@ -196,12 +196,3 @@ directive:
         "Permanent"
     ];
 ```
-
-### Move path parameters to constructor.
-``` yaml
-directive:
-- from: swagger-document
-  where: $.parameters
-  transform: >
-    delete $.ContainerName["x-ms-parameter-location"];
-```
