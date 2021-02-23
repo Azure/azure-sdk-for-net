@@ -62,7 +62,6 @@ namespace Azure.Identity.Tests
                 var response = CreateMockResponse(responseCode, ExpectedToken);
                 var mockTransport = new MockTransport(response);
                 var options = new TokenCredentialOptions() { Transport = mockTransport };
-                options.Retry.MaxRetries = 0;
                 var pipeline = CredentialPipeline.GetInstance(options);
 
                 var client = new MockManagedIdentityClient(pipeline, "mock-client-id") { ManagedIdentitySourceFactory = () => new ImdsManagedIdentitySource(pipeline, "mock-client-id") };
