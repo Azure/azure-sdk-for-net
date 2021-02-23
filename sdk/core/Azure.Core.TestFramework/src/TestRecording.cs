@@ -8,7 +8,6 @@ using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text.Json;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Core.Tests.TestFramework;
 
@@ -21,12 +20,13 @@ namespace Azure.Core.TestFramework
         private const string charsLower = "abcdefghijklmnopqrstuvwxyz0123456789";
         internal const string DateTimeOffsetNowVariableKey = "DateTimeOffsetNow";
 
-        public TestRecording(RecordedTestMode mode, string sessionFile, RecordedTestSanitizer sanitizer, RecordMatcher matcher)
+        public TestRecording(RecordedTestMode mode, string sessionFile, RecordedTestSanitizer sanitizer, RecordMatcher matcher, bool skipRecordingEquivalenceCheck = false)
         {
             Mode = mode;
             _sessionFile = sessionFile;
             _sanitizer = sanitizer;
             _matcher = matcher;
+            _skipRecordingEquivalenceCheck = skipRecordingEquivalenceCheck;
 
             switch (Mode)
             {
@@ -66,6 +66,8 @@ namespace Azure.Core.TestFramework
         private readonly RecordedTestSanitizer _sanitizer;
 
         private readonly RecordMatcher _matcher;
+
+        private readonly bool _skipRecordingEquivalenceCheck;
 
         private readonly RecordSession _session;
 
@@ -178,7 +180,7 @@ namespace Azure.Core.TestFramework
                 Directory.CreateDirectory(directory);
 
                 _session.Sanitize(_sanitizer);
-                if (_session.IsEquivalent(_previousSession, _matcher))
+                if (_session.IsEquivalent(_previousSession, _matcher) && !_skipRecordingEquivalenceCheck)
                 {
                     return;
                 }
