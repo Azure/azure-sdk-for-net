@@ -14,9 +14,6 @@ namespace Azure.MixedReality.Authentication.Tests
         public MixedRealityStsClientLiveTests(bool isAsync)
             : base(isAsync)
         {
-            //TODO: https://github.com/Azure/autorest.csharp/issues/689
-            TestDiagnostics = false;
-
             Matcher = new MixedRealityRecordMatcher();
         }
 
