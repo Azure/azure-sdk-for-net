@@ -71,7 +71,8 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <param name="options">The options.</param>
         public ObjectAnchorsConversionClient(Guid accountId, string accountDomain, TokenCredential credential, ObjectAnchorsConversionClientOptions options = null)
         {
-            Argument.AssertNotNull(accountDomain, nameof(accountDomain));
+            Argument.AssertNotDefault(ref accountId, nameof(accountId));
+            Argument.AssertNotNullOrWhiteSpace(accountDomain, nameof(accountDomain));
             Argument.AssertNotNull(credential, nameof(credential));
 
             options = options ?? new ObjectAnchorsConversionClientOptions();
