@@ -51,7 +51,7 @@ var documents = new List<string>
     reviewC
 };
 
-var options = new AnalyzeSentimentOptions() { IncludeOpinionMining = true };
+var options = new AnalyzeSentimentOptions() { IncludeAssessmentMining = true };
 Response<AnalyzeSentimentResultCollection> response = client.AnalyzeSentimentBatch(documents, options: options);
 AnalyzeSentimentResultCollection reviews = response.Value;
 
@@ -88,12 +88,12 @@ private Dictionary<string, int> GetComplaints(AnalyzeSentimentResultCollection r
     {
         foreach (SentenceSentiment sentence in review.DocumentSentiment.Sentences)
         {
-            foreach (MinedOpinion minedOpinion in sentence.MinedOpinions)
+            foreach (MinedAssessment minedAssessment in sentence.MinedAssessments)
             {
-                if (minedOpinion.Aspect.Sentiment == TextSentiment.Negative)
+                if (minedAssessment.Target.Sentiment == TextSentiment.Negative)
                 {
-                    complaints.TryGetValue(minedOpinion.Aspect.Text, out var value);
-                    complaints[minedOpinion.Aspect.Text] = value + 1;
+                    complaints.TryGetValue(minedAssessment.Target.Text, out var value);
+                    complaints[minedAssessment.Target.Text] = value + 1;
                 }
             }
         }

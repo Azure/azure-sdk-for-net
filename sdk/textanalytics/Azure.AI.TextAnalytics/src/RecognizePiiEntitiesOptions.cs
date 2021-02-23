@@ -1,6 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
+using Azure.AI.TextAnalytics.Models;
+
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
@@ -25,5 +28,11 @@ namespace Azure.AI.TextAnalytics
         /// For more information see <a href="https://aka.ms/tanerpii"/>.
         /// </summary>
         public PiiEntityDomainType DomainFilter { get; set; }
+
+        /// <summary>
+        /// Filters the response entities to the ones part of the pii categories enum.
+        /// All the Pii categories are defined <see cref="PiiCategory"/> here.
+        /// </summary>
+        public IEnumerable<PiiCategory> PiiCategories { get; set; }
     }
 }

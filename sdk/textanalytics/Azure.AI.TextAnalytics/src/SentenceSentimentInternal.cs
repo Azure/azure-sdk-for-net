@@ -20,8 +20,8 @@ namespace Azure.AI.TextAnalytics.Models
         /// <summary> The length of the sentence. </summary>
         public int Length { get; }
         /// <summary> The array of aspect object for the sentence. </summary>
-        public IReadOnlyList<SentenceAspect> Aspects { get; }
+        public IReadOnlyList<SentenceTarget> Targets { get; }
         /// <summary> The array of opinion object for the sentence. </summary>
-        public IReadOnlyList<SentenceOpinion> Opinions { get; }
+        public IReadOnlyList<SentenceAssessment> Assessments { get; }
     }
 }

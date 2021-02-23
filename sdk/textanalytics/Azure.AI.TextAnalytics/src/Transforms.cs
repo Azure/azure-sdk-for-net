@@ -252,15 +252,19 @@ namespace Azure.AI.TextAnalytics
         {
             var entities = healthcareEntities.Select((entity) => new HealthcareEntity(entity)).ToList();
             foreach (HealthcareRelationInternal relation in healthcareRelations) {
-                string relationType = relation.RelationType;
-                int sourceIndex = ParseHealthcareEntityIndex(relation.Source);
-                int targetIndex = ParseHealthcareEntityIndex(relation.Target);
-                HealthcareEntity sourceEntity = entities[sourceIndex];
-                HealthcareEntity targetEntity = entities[targetIndex];
-                sourceEntity.RelatedEntities.Add(targetEntity, relationType);
-                if (relation.Bidirectional)
-                {
-                    targetEntity.RelatedEntities.Add(sourceEntity, relationType);
+                RelationType relationType = relation.RelationType;
+                var attributeEntities = new List<HealthcareEntity>();
+                var targetEntities = new List<HealthcareEntity>();
+                foreach (HealthcareRelationEntity entity in relation.Entities) {
+                    int index = ParseHealthcareEntityIndex(entity.Ref);
+                    if (entity.Role.Equals("Attribute"))
+                    {
+                        attributeEntities.Add(entities[index]);
+                    }
+                    else
+                    {
+                        targetEntities.Add(entities[index]);
+                    }
                 }
             }
             return entities;

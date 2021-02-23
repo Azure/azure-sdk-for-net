@@ -9,14 +9,14 @@ using System;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    /// <summary> The AspectRelation. </summary>
-    internal partial class AspectRelation
+    /// <summary> The TargetRelation. </summary>
+    internal partial class TargetRelation
     {
-        /// <summary> Initializes a new instance of AspectRelation. </summary>
-        /// <param name="relationType"> The type related to the aspect. </param>
+        /// <summary> Initializes a new instance of TargetRelation. </summary>
+        /// <param name="relationType"> The type related to the target. </param>
         /// <param name="ref"> The JSON pointer indicating the linked object. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ref"/> is null. </exception>
-        internal AspectRelation(AspectRelationType relationType, string @ref)
+        internal TargetRelation(TargetRelationType relationType, string @ref)
         {
             if (@ref == null)
             {
@@ -27,8 +27,8 @@ namespace Azure.AI.TextAnalytics.Models
             Ref = @ref;
         }
 
-        /// <summary> The type related to the aspect. </summary>
-        public AspectRelationType RelationType { get; }
+        /// <summary> The type related to the target. </summary>
+        public TargetRelationType RelationType { get; }
         /// <summary> The JSON pointer indicating the linked object. </summary>
         public string Ref { get; }
     }

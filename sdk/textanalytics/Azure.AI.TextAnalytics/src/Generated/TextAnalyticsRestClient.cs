@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -46,7 +47,7 @@ namespace Azure.AI.TextAnalytics
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/text/analytics/v3.1-preview.3", false);
+            uri.AppendRaw("/text/analytics/v3.1-preview.4", false);
             uri.AppendPath("/analyze", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
@@ -101,7 +102,7 @@ namespace Azure.AI.TextAnalytics
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/text/analytics/v3.1-preview.3", false);
+            uri.AppendRaw("/text/analytics/v3.1-preview.4", false);
             uri.AppendPath("/analyze/jobs/", false);
             uri.AppendPath(jobId, true);
             if (showStats != null)
@@ -188,7 +189,7 @@ namespace Azure.AI.TextAnalytics
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/text/analytics/v3.1-preview.3", false);
+            uri.AppendRaw("/text/analytics/v3.1-preview.4", false);
             uri.AppendPath("/entities/health/jobs/", false);
             uri.AppendPath(jobId, true);
             if (top != null)
@@ -263,7 +264,7 @@ namespace Azure.AI.TextAnalytics
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/text/analytics/v3.1-preview.3", false);
+            uri.AppendRaw("/text/analytics/v3.1-preview.4", false);
             uri.AppendPath("/entities/health/jobs/", false);
             uri.AppendPath(jobId, true);
             request.Uri = uri;
@@ -312,7 +313,7 @@ namespace Azure.AI.TextAnalytics
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/text/analytics/v3.1-preview.3", false);
+            uri.AppendRaw("/text/analytics/v3.1-preview.4", false);
             uri.AppendPath("/entities/health/jobs", false);
             if (modelVersion != null)
             {
@@ -388,7 +389,7 @@ namespace Azure.AI.TextAnalytics
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/text/analytics/v3.1-preview.3", false);
+            uri.AppendRaw("/text/analytics/v3.1-preview.4", false);
             uri.AppendPath("/entities/recognition/general", false);
             if (modelVersion != null)
             {
@@ -471,14 +472,14 @@ namespace Azure.AI.TextAnalytics
             }
         }
 
-        internal HttpMessage CreateEntitiesRecognitionPiiRequest(MultiLanguageBatchInput input, string modelVersion, bool? showStats, string domain, StringIndexType? stringIndexType)
+        internal HttpMessage CreateEntitiesRecognitionPiiRequest(MultiLanguageBatchInput input, string modelVersion, bool? showStats, string domain, StringIndexType? stringIndexType, IEnumerable<PiiCategory> piiCategories)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/text/analytics/v3.1-preview.3", false);
+            uri.AppendRaw("/text/analytics/v3.1-preview.4", false);
             uri.AppendPath("/entities/recognition/pii", false);
             if (modelVersion != null)
             {
@@ -495,6 +496,10 @@ namespace Azure.AI.TextAnalytics
             if (stringIndexType != null)
             {
                 uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
+            }
+            if (piiCategories != null)
+            {
+                uri.AppendQueryDelimited("piiCategories", piiCategories, ",", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
@@ -514,16 +519,17 @@ namespace Azure.AI.TextAnalytics
         /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
         /// <param name="domain"> (Optional) if specified, will set the PII domain to include only a subset of the entity categories. Possible values include: &apos;PHI&apos;, &apos;none&apos;. </param>
         /// <param name="stringIndexType"> (Optional) Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
+        /// <param name="piiCategories"> (Optional) describes the PII categories to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public async Task<Response<PiiEntitiesResult>> EntitiesRecognitionPiiAsync(MultiLanguageBatchInput input, string modelVersion = null, bool? showStats = null, string domain = null, StringIndexType? stringIndexType = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PiiEntitiesResult>> EntitiesRecognitionPiiAsync(MultiLanguageBatchInput input, string modelVersion = null, bool? showStats = null, string domain = null, StringIndexType? stringIndexType = null, IEnumerable<PiiCategory> piiCategories = null, CancellationToken cancellationToken = default)
         {
             if (input == null)
             {
                 throw new ArgumentNullException(nameof(input));
             }
 
-            using var message = CreateEntitiesRecognitionPiiRequest(input, modelVersion, showStats, domain, stringIndexType);
+            using var message = CreateEntitiesRecognitionPiiRequest(input, modelVersion, showStats, domain, stringIndexType, piiCategories);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -548,16 +554,17 @@ namespace Azure.AI.TextAnalytics
         /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
         /// <param name="domain"> (Optional) if specified, will set the PII domain to include only a subset of the entity categories. Possible values include: &apos;PHI&apos;, &apos;none&apos;. </param>
         /// <param name="stringIndexType"> (Optional) Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
+        /// <param name="piiCategories"> (Optional) describes the PII categories to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public Response<PiiEntitiesResult> EntitiesRecognitionPii(MultiLanguageBatchInput input, string modelVersion = null, bool? showStats = null, string domain = null, StringIndexType? stringIndexType = null, CancellationToken cancellationToken = default)
+        public Response<PiiEntitiesResult> EntitiesRecognitionPii(MultiLanguageBatchInput input, string modelVersion = null, bool? showStats = null, string domain = null, StringIndexType? stringIndexType = null, IEnumerable<PiiCategory> piiCategories = null, CancellationToken cancellationToken = default)
         {
             if (input == null)
             {
                 throw new ArgumentNullException(nameof(input));
             }
 
-            using var message = CreateEntitiesRecognitionPiiRequest(input, modelVersion, showStats, domain, stringIndexType);
+            using var message = CreateEntitiesRecognitionPiiRequest(input, modelVersion, showStats, domain, stringIndexType, piiCategories);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -580,7 +587,7 @@ namespace Azure.AI.TextAnalytics
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/text/analytics/v3.1-preview.3", false);
+            uri.AppendRaw("/text/analytics/v3.1-preview.4", false);
             uri.AppendPath("/entities/linking", false);
             if (modelVersion != null)
             {
@@ -603,7 +610,7 @@ namespace Azure.AI.TextAnalytics
             return message;
         }
 
-        /// <summary> The API returns a list of recognized entities with links to a well-known knowledge base. See the &lt;a href=&quot;https://aka.ms/talangs&quot;&gt;Supported languages in Text Analytics API&lt;/a&gt; for the list of enabled languages. </summary>
+        /// <summary> The API returns a list of recognized entities with links to a well known knowledge base. See the &lt;a href=&quot;https://aka.ms/talangs&quot;&gt;Supported languages in Text Analytics API&lt;/a&gt; for the list of enabled languages. </summary>
         /// <param name="input"> Collection of documents to analyze. </param>
         /// <param name="modelVersion"> (Optional) This value indicates which model will be used for scoring. If a model-version is not specified, the API should default to the latest, non-preview version. </param>
         /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
@@ -633,7 +640,7 @@ namespace Azure.AI.TextAnalytics
             }
         }
 
-        /// <summary> The API returns a list of recognized entities with links to a well-known knowledge base. See the &lt;a href=&quot;https://aka.ms/talangs&quot;&gt;Supported languages in Text Analytics API&lt;/a&gt; for the list of enabled languages. </summary>
+        /// <summary> The API returns a list of recognized entities with links to a well known knowledge base. See the &lt;a href=&quot;https://aka.ms/talangs&quot;&gt;Supported languages in Text Analytics API&lt;/a&gt; for the list of enabled languages. </summary>
         /// <param name="input"> Collection of documents to analyze. </param>
         /// <param name="modelVersion"> (Optional) This value indicates which model will be used for scoring. If a model-version is not specified, the API should default to the latest, non-preview version. </param>
         /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
@@ -670,7 +677,7 @@ namespace Azure.AI.TextAnalytics
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/text/analytics/v3.1-preview.3", false);
+            uri.AppendRaw("/text/analytics/v3.1-preview.4", false);
             uri.AppendPath("/keyPhrases", false);
             if (modelVersion != null)
             {
@@ -754,7 +761,7 @@ namespace Azure.AI.TextAnalytics
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/text/analytics/v3.1-preview.3", false);
+            uri.AppendRaw("/text/analytics/v3.1-preview.4", false);
             uri.AppendPath("/languages", false);
             if (modelVersion != null)
             {
@@ -838,7 +845,7 @@ namespace Azure.AI.TextAnalytics
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/text/analytics/v3.1-preview.3", false);
+            uri.AppendRaw("/text/analytics/v3.1-preview.4", false);
             uri.AppendPath("/sentiment", false);
             if (modelVersion != null)
             {
@@ -865,11 +872,11 @@ namespace Azure.AI.TextAnalytics
             return message;
         }
 
-        /// <summary> The API returns a detailed sentiment analysis for the input text. The analysis is done in multiple levels of granularity, start from the a document level, down to sentence and key terms (aspects) and opinions. </summary>
+        /// <summary> The API returns a detailed sentiment analysis for the input text. The analysis is done in multiple levels of granularity, start from the a document level, down to sentence and key terms (targets and assessments). </summary>
         /// <param name="input"> Collection of documents to analyze. </param>
         /// <param name="modelVersion"> (Optional) This value indicates which model will be used for scoring. If a model-version is not specified, the API should default to the latest, non-preview version. </param>
         /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
-        /// <param name="opinionMining"> (Optional) if set to true, response will contain input and document level statistics including aspect-based sentiment analysis results. </param>
+        /// <param name="opinionMining"> (Optional) if set to true, response will contain not only sentiment prediction but also opinion mining (aspect-based sentiment analysis) results. </param>
         /// <param name="stringIndexType"> (Optional) Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
@@ -896,11 +903,11 @@ namespace Azure.AI.TextAnalytics
             }
         }
 
-        /// <summary> The API returns a detailed sentiment analysis for the input text. The analysis is done in multiple levels of granularity, start from the a document level, down to sentence and key terms (aspects) and opinions. </summary>
+        /// <summary> The API returns a detailed sentiment analysis for the input text. The analysis is done in multiple levels of granularity, start from the a document level, down to sentence and key terms (targets and assessments). </summary>
         /// <param name="input"> Collection of documents to analyze. </param>
         /// <param name="modelVersion"> (Optional) This value indicates which model will be used for scoring. If a model-version is not specified, the API should default to the latest, non-preview version. </param>
         /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
-        /// <param name="opinionMining"> (Optional) if set to true, response will contain input and document level statistics including aspect-based sentiment analysis results. </param>
+        /// <param name="opinionMining"> (Optional) if set to true, response will contain not only sentiment prediction but also opinion mining (aspect-based sentiment analysis) results. </param>
         /// <param name="stringIndexType"> (Optional) Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>

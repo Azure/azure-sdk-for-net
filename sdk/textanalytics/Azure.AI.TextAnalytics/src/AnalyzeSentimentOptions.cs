@@ -5,14 +5,14 @@ namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// Options that allow callers to specify details about how the operation
-    /// is run. For example execute opinion mining, set model version, and whether to include statistics.
+    /// is run. For example execute assessment mining, set model version, and whether to include statistics.
     /// </summary>
     public class AnalyzeSentimentOptions : TextAnalyticsRequestOptions
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="AnalyzeSentimentOptions"/>
         /// class which allows callers to specify details about how the operation
-        /// is run. For example execute opinion mining, set model version, and whether to include statistics.
+        /// is run. For example execute assessment mining, set model version, and whether to include statistics.
         /// </summary>
         public AnalyzeSentimentOptions()
         {
@@ -24,12 +24,12 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Whether to mine the opinions of a sentence and conduct more granular analysis around the
-        /// aspects of a product or service (also known as Aspect-Based sentiment analysis).
-        /// If set to true, the returned <see cref="SentenceSentiment.MinedOpinions"/>
+        /// Whether to mine the assessments of a sentence and conduct more granular analysis around the
+        /// aspects of a product or service (also known as Target-Based sentiment analysis).
+        /// If set to true, the returned <see cref="SentenceSentiment.MinedAssessments"/>
         /// will contain the result of this analysis.
         /// <para>Only available for service version v3.1-preview and up.</para>
         /// </summary>
-        public bool IncludeOpinionMining { get; set; }
+        public bool IncludeAssessmentMining { get; set; }
     }
 }

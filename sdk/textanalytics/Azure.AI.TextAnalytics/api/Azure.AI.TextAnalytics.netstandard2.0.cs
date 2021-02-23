@@ -77,7 +77,7 @@ namespace Azure.AI.TextAnalytics
     public partial class AnalyzeSentimentOptions : Azure.AI.TextAnalytics.TextAnalyticsRequestOptions
     {
         public AnalyzeSentimentOptions() { }
-        public bool IncludeOpinionMining { get { throw null; } set { } }
+        public bool IncludeAssessmentMining { get { throw null; } set { } }
     }
     public partial class AnalyzeSentimentResult : Azure.AI.TextAnalytics.TextAnalyticsResult
     {
@@ -91,11 +91,12 @@ namespace Azure.AI.TextAnalytics
         public Azure.AI.TextAnalytics.TextDocumentBatchStatistics Statistics { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AspectSentiment
+    public readonly partial struct AssessmentSentiment
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public Azure.AI.TextAnalytics.SentimentConfidenceScores ConfidenceScores { get { throw null; } }
+        public bool IsNegated { get { throw null; } }
         public int Length { get { throw null; } }
         public int Offset { get { throw null; } }
         public Azure.AI.TextAnalytics.TextSentiment Sentiment { get { throw null; } }
@@ -276,24 +277,12 @@ namespace Azure.AI.TextAnalytics
         public string Text { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MinedOpinion
+    public readonly partial struct MinedAssessment
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public Azure.AI.TextAnalytics.AspectSentiment Aspect { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.OpinionSentiment> Opinions { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct OpinionSentiment
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Azure.AI.TextAnalytics.SentimentConfidenceScores ConfidenceScores { get { throw null; } }
-        public bool IsNegated { get { throw null; } }
-        public int Length { get { throw null; } }
-        public int Offset { get { throw null; } }
-        public Azure.AI.TextAnalytics.TextSentiment Sentiment { get { throw null; } }
-        public string Text { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.AssessmentSentiment> Assessments { get { throw null; } }
+        public Azure.AI.TextAnalytics.TargetSentiment Target { get { throw null; } }
     }
     public abstract partial class PageableOperation<T> : Azure.Operation<Azure.AsyncPageable<T>> where T : notnull
     {
@@ -364,6 +353,7 @@ namespace Azure.AI.TextAnalytics
     {
         public RecognizePiiEntitiesOptions() { }
         public Azure.AI.TextAnalytics.PiiEntityDomainType DomainFilter { get { throw null; } set { } }
+        public System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.Models.PiiCategory> PiiCategories { get { throw null; } set { } }
     }
     public partial class RecognizePiiEntitiesResult : Azure.AI.TextAnalytics.TextAnalyticsResult
     {
@@ -383,7 +373,7 @@ namespace Azure.AI.TextAnalytics
         private readonly int _dummyPrimitive;
         public Azure.AI.TextAnalytics.SentimentConfidenceScores ConfidenceScores { get { throw null; } }
         public int Length { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.MinedOpinion> MinedOpinions { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.MinedAssessment> MinedAssessments { get { throw null; } }
         public int Offset { get { throw null; } }
         public Azure.AI.TextAnalytics.TextSentiment Sentiment { get { throw null; } }
         public string Text { get { throw null; } }
@@ -413,6 +403,17 @@ namespace Azure.AI.TextAnalytics
         public static implicit operator Azure.AI.TextAnalytics.StringIndexType (string value) { throw null; }
         public static bool operator !=(Azure.AI.TextAnalytics.StringIndexType left, Azure.AI.TextAnalytics.StringIndexType right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct TargetSentiment
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public Azure.AI.TextAnalytics.SentimentConfidenceScores ConfidenceScores { get { throw null; } }
+        public int Length { get { throw null; } }
+        public int Offset { get { throw null; } }
+        public Azure.AI.TextAnalytics.TextSentiment Sentiment { get { throw null; } }
+        public string Text { get { throw null; } }
     }
     public partial class TextAnalyticsActionDetails
     {
@@ -560,7 +561,6 @@ namespace Azure.AI.TextAnalytics
         public static Azure.AI.TextAnalytics.AnalyzeSentimentResult AnalyzeSentimentResult(string id, Azure.AI.TextAnalytics.TextAnalyticsError error) { throw null; }
         public static Azure.AI.TextAnalytics.AnalyzeSentimentResult AnalyzeSentimentResult(string id, Azure.AI.TextAnalytics.TextDocumentStatistics statistics, Azure.AI.TextAnalytics.DocumentSentiment documentSentiment) { throw null; }
         public static Azure.AI.TextAnalytics.AnalyzeSentimentResultCollection AnalyzeSentimentResultCollection(System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.AnalyzeSentimentResult> list, Azure.AI.TextAnalytics.TextDocumentBatchStatistics statistics, string modelVersion) { throw null; }
-        public static Azure.AI.TextAnalytics.AspectSentiment AspectSentiment(Azure.AI.TextAnalytics.TextSentiment sentiment, string text, double positiveScore, double negativeScore, int offset, int length) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AI.TextAnalytics.CategorizedEntity CategorizedEntity(string text, string category, string subCategory, double score) { throw null; }
         public static Azure.AI.TextAnalytics.CategorizedEntity CategorizedEntity(string text, string category, string subCategory, double score, int offset) { throw null; }
@@ -581,8 +581,8 @@ namespace Azure.AI.TextAnalytics
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AI.TextAnalytics.LinkedEntityMatch LinkedEntityMatch(string text, double score) { throw null; }
         public static Azure.AI.TextAnalytics.LinkedEntityMatch LinkedEntityMatch(string text, double score, int offset, int length) { throw null; }
-        public static Azure.AI.TextAnalytics.MinedOpinion MinedOpinion(Azure.AI.TextAnalytics.AspectSentiment aspect, System.Collections.Generic.IReadOnlyList<Azure.AI.TextAnalytics.OpinionSentiment> opinions) { throw null; }
-        public static Azure.AI.TextAnalytics.OpinionSentiment OpinionSentiment(Azure.AI.TextAnalytics.TextSentiment sentiment, double positiveScore, double negativeScore, string text, bool isNegated, int offset, int length) { throw null; }
+        public static Azure.AI.TextAnalytics.MinedAssessment MinedOpinion(Azure.AI.TextAnalytics.TargetSentiment target, System.Collections.Generic.IReadOnlyList<Azure.AI.TextAnalytics.AssessmentSentiment> assessments) { throw null; }
+        public static Azure.AI.TextAnalytics.AssessmentSentiment OpinionSentiment(Azure.AI.TextAnalytics.TextSentiment sentiment, double positiveScore, double negativeScore, string text, bool isNegated, int offset, int length) { throw null; }
         public static Azure.AI.TextAnalytics.PiiEntity PiiEntity(string text, string category, string subCategory, double score, int offset) { throw null; }
         public static Azure.AI.TextAnalytics.PiiEntityCollection PiiEntityCollection(System.Collections.Generic.IList<Azure.AI.TextAnalytics.PiiEntity> entities, string redactedText, System.Collections.Generic.IList<Azure.AI.TextAnalytics.TextAnalyticsWarning> warnings = null) { throw null; }
         public static Azure.AI.TextAnalytics.RecognizeEntitiesResult RecognizeEntitiesResult(string id, Azure.AI.TextAnalytics.TextAnalyticsError error) { throw null; }
@@ -596,8 +596,9 @@ namespace Azure.AI.TextAnalytics
         public static Azure.AI.TextAnalytics.RecognizePiiEntitiesResultCollection RecognizePiiEntitiesResultCollection(System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.RecognizePiiEntitiesResult> list, Azure.AI.TextAnalytics.TextDocumentBatchStatistics statistics, string modelVersion) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AI.TextAnalytics.SentenceSentiment SentenceSentiment(Azure.AI.TextAnalytics.TextSentiment sentiment, string text, double positiveScore, double neutralScore, double negativeScore) { throw null; }
-        public static Azure.AI.TextAnalytics.SentenceSentiment SentenceSentiment(Azure.AI.TextAnalytics.TextSentiment sentiment, string text, double positiveScore, double neutralScore, double negativeScore, int offset, int length, System.Collections.Generic.IReadOnlyList<Azure.AI.TextAnalytics.MinedOpinion> minedOpinions) { throw null; }
+        public static Azure.AI.TextAnalytics.SentenceSentiment SentenceSentiment(Azure.AI.TextAnalytics.TextSentiment sentiment, string text, double positiveScore, double neutralScore, double negativeScore, int offset, int length, System.Collections.Generic.IReadOnlyList<Azure.AI.TextAnalytics.MinedAssessment> minedAssessments) { throw null; }
         public static Azure.AI.TextAnalytics.SentimentConfidenceScores SentimentConfidenceScores(double positiveScore, double neutralScore, double negativeScore) { throw null; }
+        public static Azure.AI.TextAnalytics.TargetSentiment TargetSentiment(Azure.AI.TextAnalytics.TextSentiment sentiment, string text, double positiveScore, double negativeScore, int offset, int length) { throw null; }
         public static Azure.AI.TextAnalytics.TextAnalyticsError TextAnalyticsError(string code, string message, string target = null) { throw null; }
         public static Azure.AI.TextAnalytics.TextAnalyticsWarning TextAnalyticsWarning(string code, string message) { throw null; }
         public static Azure.AI.TextAnalytics.TextDocumentBatchStatistics TextDocumentBatchStatistics(int documentCount, int validDocumentCount, int invalidDocumentCount, long transactionCount) { throw null; }
@@ -695,6 +696,253 @@ namespace Azure.AI.TextAnalytics
         Neutral = 1,
         Negative = 2,
         Mixed = 3,
+    }
+}
+namespace Azure.AI.TextAnalytics.Models
+{
+    public enum Association
+    {
+        Subject = 0,
+        Other = 1,
+    }
+    public enum Certainty
+    {
+        Positive = 0,
+        PositivePossible = 1,
+        NeutralPossible = 2,
+        NegativePossible = 3,
+        Negative = 4,
+    }
+    public enum Conditionality
+    {
+        Hypothetical = 0,
+        Conditional = 1,
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct PiiCategory : System.IEquatable<Azure.AI.TextAnalytics.Models.PiiCategory>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public PiiCategory(string value) { throw null; }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory ABARoutingNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory Address { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory Age { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory All { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory ARNationalIdentityNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory ATIdentityCard { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory ATTaxIdentificationNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory ATValueAddedTaxNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory AUBankAccountNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory AUBusinessNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory AUCompanyNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory AUDriversLicenseNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory AUMedicalAccountNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory AUPassportNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory AUTaxFileNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory AzureDocumentDBAuthKey { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory AzureIaasDatabaseConnectionAndSQLString { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory AzureIoTConnectionString { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory AzurePublishSettingPassword { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory AzureRedisCacheString { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory AzureSAS { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory AzureServiceBusString { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory AzureStorageAccountGeneric { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory AzureStorageAccountKey { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory BENationalNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory BENationalNumberV2 { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory BEValueAddedTaxNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory BGUniformCivilNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory BrcpfNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory BRLegalEntityNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory BRNationalIdrg { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory CABankAccountNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory CADriversLicenseNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory CAHealthServiceNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory CAPassportNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory CAPersonalHealthIdentification { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory CASocialInsuranceNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory CHSocialSecurityNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory CLIdentityCardNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory CNResidentIdentityCardNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory CreditCardNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory CYIdentityCard { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory CYTaxIdentificationNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory CZPersonalIdentityNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory CZPersonalIdentityV2 { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory Date { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory DEDriversLicenseNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory Default { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory DEIdentityCardNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory DEPassportNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory DETaxIdentificationNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory DEValueAddedNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory DKPersonalIdentificationNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory DKPersonalIdentificationV2 { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory DrugEnforcementAgencyNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory EEPersonalIdentificationCode { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory Email { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory Esdni { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory ESSocialSecurityNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory ESTaxIdentificationNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory EUDebitCardNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory EUDriversLicenseNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory EugpsCoordinates { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory EUNationalIdentificationNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory EUPassportNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory EUSocialSecurityNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory EUTaxIdentificationNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory FIEuropeanHealthNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory FINationalID { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory FINationalIDV2 { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory FIPassportNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory FRDriversLicenseNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory FRHealthInsuranceNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory FRNationalID { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory FRPassportNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory FRSocialSecurityNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory FRTaxIdentificationNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory FRValueAddedTaxNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory GRNationalIDCard { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory GRNationalIDV2 { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory GRTaxIdentificationNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory HKIdentityCardNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory HRIdentityCardNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory HRNationalIDNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory HRPersonalIdentificationNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory HRPersonalIdentificationOIBNumberV2 { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory HUPersonalIdentificationNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory HUTaxIdentificationNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory HUValueAddedNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory IDIdentityCardNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory IEPersonalPublicServiceNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory IEPersonalPublicServiceNumberV2 { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory ILBankAccountNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory ILNationalID { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory INPermanentAccount { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory InternationalBankingAccountNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory INUniqueIdentificationNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory IPAddress { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory ITDriversLicenseNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory ITFiscalCode { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory ITValueAddedTaxNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory JPBankAccountNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory JPDriversLicenseNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory JPMyNumberCorporate { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory JPMyNumberPersonal { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory JPPassportNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory JPResidenceCardNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory JPResidentRegistrationNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory JPSocialInsuranceNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory KRResidentRegistrationNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory LTPersonalCode { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory LUNationalIdentificationNumberNatural { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory LUNationalIdentificationNumberNonNatural { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory LVPersonalCode { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory MTIdentityCardNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory MTTaxIDNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory MYIdentityCardNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory NLCitizensServiceNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory NLCitizensServiceNumberV2 { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory NLTaxIdentificationNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory NLValueAddedTaxNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory NOIdentityNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory NZBankAccountNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory NZDriversLicenseNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory NZInlandRevenueNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory NZMinistryOfHealthNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory NZSocialWelfareNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory Organization { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory Person { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory PhoneNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory PHUnifiedMultiPurposeIDNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory PLIdentityCard { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory PLNationalID { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory PLNationalIDV2 { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory PLPassportNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory PlregonNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory PLTaxIdentificationNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory PTCitizenCardNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory PTCitizenCardNumberV2 { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory PTTaxIdentificationNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory ROPersonalNumericalCode { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory RUPassportNumberDomestic { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory RUPassportNumberInternational { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory SANationalID { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory SENationalID { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory SENationalIDV2 { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory SEPassportNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory SETaxIdentificationNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory SGNationalRegistrationIdentityCardNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory SITaxIdentificationNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory SIUniqueMasterCitizenNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory SKPersonalNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory SQLServerConnectionString { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory SwiftCode { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory THPopulationIdentificationCode { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory TRNationalIdentificationNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory TWNationalID { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory TWPassportNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory TWResidentCertificate { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory UAPassportNumberDomestic { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory UAPassportNumberInternational { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory UKDriversLicenseNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory UKElectoralRollNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory UKNationalHealthNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory UKNationalInsuranceNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory UKUniqueTaxpayerNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory URL { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory USBankAccountNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory USDriversLicenseNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory USIndividualTaxpayerIdentification { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory USSocialSecurityNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory UsukPassportNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.PiiCategory ZAIdentificationNumber { get { throw null; } }
+        public bool Equals(Azure.AI.TextAnalytics.Models.PiiCategory other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.TextAnalytics.Models.PiiCategory left, Azure.AI.TextAnalytics.Models.PiiCategory right) { throw null; }
+        public static implicit operator Azure.AI.TextAnalytics.Models.PiiCategory (string value) { throw null; }
+        public static bool operator !=(Azure.AI.TextAnalytics.Models.PiiCategory left, Azure.AI.TextAnalytics.Models.PiiCategory right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RelationType : System.IEquatable<Azure.AI.TextAnalytics.Models.RelationType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RelationType(string value) { throw null; }
+        public static Azure.AI.TextAnalytics.Models.RelationType Abbreviation { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.RelationType DirectionOfBodyStructure { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.RelationType DirectionOfCondition { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.RelationType DirectionOfExamination { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.RelationType DirectionOfTreatment { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.RelationType DosageOfMedication { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.RelationType FormOfMedication { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.RelationType FrequencyOfMedication { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.RelationType FrequencyOfTreatment { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.RelationType QualifierOfCondition { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.RelationType RelationOfExamination { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.RelationType RouteOfMedication { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.RelationType TimeOfCondition { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.RelationType TimeOfEvent { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.RelationType TimeOfExamination { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.RelationType TimeOfMedication { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.RelationType TimeOfTreatment { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.RelationType UnitOfCondition { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.RelationType UnitOfExamination { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.RelationType ValueOfCondition { get { throw null; } }
+        public static Azure.AI.TextAnalytics.Models.RelationType ValueOfExamination { get { throw null; } }
+        public bool Equals(Azure.AI.TextAnalytics.Models.RelationType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.TextAnalytics.Models.RelationType left, Azure.AI.TextAnalytics.Models.RelationType right) { throw null; }
+        public static implicit operator Azure.AI.TextAnalytics.Models.RelationType (string value) { throw null; }
+        public static bool operator !=(Azure.AI.TextAnalytics.Models.RelationType left, Azure.AI.TextAnalytics.Models.RelationType right) { throw null; }
+        public override string ToString() { throw null; }
     }
 }
 namespace Microsoft.Extensions.Azure

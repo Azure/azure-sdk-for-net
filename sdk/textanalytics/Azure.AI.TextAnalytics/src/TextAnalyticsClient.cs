@@ -968,6 +968,7 @@ namespace Azure.AI.TextAnalytics
                     options.IncludeStatistics,
                     options.DomainFilter.GetString(),
                     options.StringIndexType,
+                    options.PiiCategories,
                     cancellationToken).ConfigureAwait(false);
                 var response = result.GetRawResponse();
 
@@ -995,6 +996,7 @@ namespace Azure.AI.TextAnalytics
                     options.IncludeStatistics,
                     options.DomainFilter.GetString(),
                     options.StringIndexType,
+                    options.PiiCategories,
                     cancellationToken);
                 var response = result.GetRawResponse();
 
@@ -1107,7 +1109,7 @@ namespace Azure.AI.TextAnalytics
                     new MultiLanguageBatchInput(documents),
                     options.ModelVersion,
                     options.IncludeStatistics,
-                    options.IncludeOpinionMining,
+                    options.IncludeAssessmentMining,
                     options.StringIndexType,
                     cancellationToken).ConfigureAwait(false);
                 Response response = result.GetRawResponse();
@@ -1167,7 +1169,7 @@ namespace Azure.AI.TextAnalytics
                     new MultiLanguageBatchInput(documents),
                     options.ModelVersion,
                     options.IncludeStatistics,
-                    options.IncludeOpinionMining,
+                    options.IncludeAssessmentMining,
                     options.StringIndexType,
                     cancellationToken);
                 Response response = result.GetRawResponse();
@@ -1443,7 +1445,7 @@ namespace Azure.AI.TextAnalytics
                     batchInput,
                     options.ModelVersion,
                     options.IncludeStatistics,
-                    options.IncludeOpinionMining,
+                    options.IncludeAssessmentMining,
                     options.StringIndexType,
                     cancellationToken).ConfigureAwait(false);
                 var response = result.GetRawResponse();
@@ -1470,7 +1472,7 @@ namespace Azure.AI.TextAnalytics
                     batchInput,
                     options.ModelVersion,
                     options.IncludeStatistics,
-                    options.IncludeOpinionMining,
+                    options.IncludeAssessmentMining,
                     options.StringIndexType,
                     cancellationToken);
                 var response = result.GetRawResponse();
