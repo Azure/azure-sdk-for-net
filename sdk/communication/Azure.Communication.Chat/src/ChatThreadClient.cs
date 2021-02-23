@@ -501,16 +501,16 @@ namespace Azure.Communication.Chat
         }
 
         /// <summary> Remove a participant from a thread asynchronously.</summary>
-        /// <param name="user"><see cref="CommunicationIdentifier" /> to be removed from the chat thread participants.</param>
+        /// <param name="identifier"><see cref="CommunicationIdentifier" /> to be removed from the chat thread participants.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response> RemoveParticipantAsync(CommunicationIdentifier user, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> RemoveParticipantAsync(CommunicationIdentifier identifier, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatThreadClient)}.{nameof(RemoveParticipant)}");
             scope.Start();
             try
             {
-                CommunicationIdentifierModel communicationIdentifierModel = CommunicationIdentifierSerializer.Serialize(user);
+                CommunicationIdentifierModel communicationIdentifierModel = CommunicationIdentifierSerializer.Serialize(identifier);
                 return await _chatThreadRestClient.RemoveChatParticipantAsync(Id, communicationIdentifierModel.RawId,
                     communicationIdentifierModel.CommunicationUser,
                     communicationIdentifierModel.PhoneNumber,
@@ -525,16 +525,16 @@ namespace Azure.Communication.Chat
         }
 
         /// <summary> Remove a member from a thread .</summary>
-        /// <param name="user"><see cref="CommunicationIdentifier" /> to be removed from the chat thread participants.</param>
+        /// <param name="identifier"><see cref="CommunicationIdentifier" /> to be removed from the chat thread participants.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response RemoveParticipant(CommunicationIdentifier user, CancellationToken cancellationToken = default)
+        public virtual Response RemoveParticipant(CommunicationIdentifier identifier, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatThreadClient)}.{nameof(RemoveParticipant)}");
             scope.Start();
             try
             {
-                CommunicationIdentifierModel communicationIdentifierModel = CommunicationIdentifierSerializer.Serialize(user);
+                CommunicationIdentifierModel communicationIdentifierModel = CommunicationIdentifierSerializer.Serialize(identifier);
                 return _chatThreadRestClient.RemoveChatParticipant(Id, communicationIdentifierModel.RawId,
                     communicationIdentifierModel.CommunicationUser,
                     communicationIdentifierModel.PhoneNumber,
