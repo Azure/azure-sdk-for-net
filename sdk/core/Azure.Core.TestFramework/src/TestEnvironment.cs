@@ -148,6 +148,11 @@ namespace Azure.Core.TestFramework
         /// </summary>
         public string ClientSecret => GetVariable("CLIENT_SECRET");
 
+        /// <summary>
+        /// Determins if the current environment is Azure DevOps.
+        /// </summary>
+        public static bool IsRunningInCI => Environment.GetEnvironmentVariable("TF_BUILD") != null;
+
         public TokenCredential Credential
         {
             get
@@ -307,7 +312,8 @@ namespace Azure.Core.TestFramework
 
         internal static string GetSourcePath(Assembly assembly)
         {
-            if (assembly == null) throw new ArgumentNullException(nameof(assembly));
+            if (assembly == null)
+                throw new ArgumentNullException(nameof(assembly));
 
             var testProject = assembly.GetCustomAttributes<AssemblyMetadataAttribute>().Single(a => a.Key == "SourcePath").Value;
             if (string.IsNullOrEmpty(testProject))
