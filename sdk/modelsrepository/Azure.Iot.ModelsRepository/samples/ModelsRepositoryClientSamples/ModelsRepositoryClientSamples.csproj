@@ -1,13 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFrameworks>netcoreapp3.1;net5.0</TargetFrameworks>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1;net5.0</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>Azure.Iot.ModelsRepository.Samples</RootNamespace>
   </PropertyGroup>
 

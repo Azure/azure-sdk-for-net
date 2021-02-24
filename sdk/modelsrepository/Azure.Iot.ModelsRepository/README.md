@@ -2,7 +2,7 @@
 
 This library provides functionality for interacting with the [Azure IoT Models Repository][modelsrepository_iot_endpoint]. It also aims to provide a consistent experience working with digital twin model repositories following Azure IoT conventions.
 
-[Source code][source] | [Package (nuget)][package]
+[Source code][source] | Package (nuget)
 
 ## Getting started
 
@@ -18,7 +18,7 @@ Install the Azure IoT Models Repository client library for .NET with [NuGet][nug
 Install-Package Azure.Iot.ModelsRepository
 ```
 
-View the package details at [nuget.org][modelsrepository_nuget].
+View the package details at nuget.org.
 
 ### Prerequisites
 
@@ -81,16 +81,14 @@ For more information see the [Code of Conduct FAQ][code_of_conduct_faq] or conta
 [microsoft_sdk_download]: https://azure.microsoft.com/downloads/?sdk=net
 [azure_sdk_target_frameworks]: https://github.com/azure/azure-sdk-for-net#target-frameworks
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/modelsrepository/Azure.Iot.ModelsRepository/src
-[package]: https://www.nuget.org/packages/Azure.Iot.ModelsRepository
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [nuget]: https://www.nuget.org/
 [azure_core_library]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core
-[modelsrepository_nuget]: https://www.nuget.org/packages/Azure.Iot.ModelsRepository
 [modelsrepository_conventions]: https://github.com/Azure/iot-plugandplay-models-tools/wiki
 [modelsrepository_iot_endpoint]: https://devicemodels.azure.com/
 [modelsrepository_samples]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/modelsrepository/Azure.Iot.ModelsRepository/samples
 [thread_safety_guideline]: https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety
 [json_ld_reference]: https://json-ld.org
 [dtdlv2_reference]: https://github.com/Azure/opendigitaltwins-dtdl/blob/master/DTDL/v2/dtdlv2.md
-[eventsourcelistener_reference]: https://docs.microsoft.com/en-us/dotnet/api/azure.core.diagnostics.azureeventsourcelistener?view=azure-dotnet
+[eventsourcelistener_reference]: https://docs.microsoft.com/dotnet/api/azure.core.diagnostics.azureeventsourcelistener?view=azure-dotnet
