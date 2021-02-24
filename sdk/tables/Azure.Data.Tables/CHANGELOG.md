@@ -1,6 +1,10 @@
 # Release History
 
-## 3.0.0-beta.6 (Unreleased)
+## 12.0.0-beta.6 (Unreleased)
+
+### Changed
+
+- Changed major version number to 12 to indicate this is the latest Tables package across all legacy versions and for cross language consistency.
 
 ### Key Bug Fixes
 

@@ -37,8 +37,16 @@ namespace Azure.Core
         public string? GetNonRequired(string keyword) =>
             _pairs.TryGetValue(keyword, out var value) ? value : null;
 
-        public bool TryGetSegmentValue(string keyword, out string? value) =>
-            _pairs.TryGetValue(keyword, out value);
+        public bool TryGetSegmentValue(string keyword, out string? value, string?    defaultValue = null)
+        {
+            var result = _pairs.TryGetValue(keyword, out value);
+            if (!result && defaultValue != null)
+            {
+                value = defaultValue;
+                result = true;
+            }
+            return result;
+        }
 
         public bool ContainsSegmentKey(string keyword) =>
             _pairs.ContainsKey(keyword);
