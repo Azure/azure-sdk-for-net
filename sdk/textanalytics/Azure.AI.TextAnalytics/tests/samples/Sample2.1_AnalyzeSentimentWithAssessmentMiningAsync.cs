@@ -6,6 +6,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Azure.AI.TextAnalytics.Samples
 {
@@ -13,7 +14,7 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples
     {
         [Test]
-        public void AnalyzeSentimentWithOpinionMining()
+        public async Task AnalyzeSentimentWithAssessmentMiningAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
@@ -21,7 +22,6 @@ namespace Azure.AI.TextAnalytics.Samples
             // Instantiate a client that will be used to call the service.
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            #region Snippet:TAAnalyzeSentimentWithOpinionMining
             string reviewA = @"The food and service were unacceptable, but the concierge were nice.
                              After talking to them about the quality of the food and the process
                              to get room service they refunded the money we spent at the restaurant
@@ -48,10 +48,10 @@ namespace Azure.AI.TextAnalytics.Samples
             };
 
             var options = new AnalyzeSentimentOptions() { IncludeOpinionMining = true };
-            Response<AnalyzeSentimentResultCollection> response = client.AnalyzeSentimentBatch(documents, options: options);
+            Response<AnalyzeSentimentResultCollection> response = await client.AnalyzeSentimentBatchAsync(documents, options: options);
             AnalyzeSentimentResultCollection reviews = response.Value;
 
-            Dictionary<string, int> complaints = GetComplaints(reviews);
+            Dictionary<string, int> complaints = GetComplaint(reviews);
 
             var negativeAspect = complaints.Aggregate((l, r) => l.Value > r.Value ? l : r).Key;
             Console.WriteLine($"Alert! major complaint is *{negativeAspect}*");
@@ -61,11 +61,9 @@ namespace Azure.AI.TextAnalytics.Samples
             {
                 Console.WriteLine($"   {complaint.Key}, {complaint.Value}");
             }
-            #endregion
         }
 
-        #region Snippet:TAGetComplaints
-        private Dictionary<string, int> GetComplaints(AnalyzeSentimentResultCollection reviews)
+        private Dictionary<string, int> GetComplaint(AnalyzeSentimentResultCollection reviews)
         {
             var complaints = new Dictionary<string, int>();
             foreach (AnalyzeSentimentResult review in reviews)
@@ -84,6 +82,5 @@ namespace Azure.AI.TextAnalytics.Samples
             }
             return complaints;
         }
-        #endregion
     }
 }

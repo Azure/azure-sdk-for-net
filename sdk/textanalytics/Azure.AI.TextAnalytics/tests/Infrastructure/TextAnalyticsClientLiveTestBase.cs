@@ -10,7 +10,7 @@ namespace Azure.AI.TextAnalytics.Tests
     {
         protected TimeSpan PollingInterval => TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0 : 1);
 
-        public TextAnalyticsClientLiveTestBase(bool isAsync) : base(isAsync)
+        public TextAnalyticsClientLiveTestBase(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             Sanitizer = new TextAnalyticsRecordedTestSanitizer();
         }
@@ -21,7 +21,16 @@ namespace Azure.AI.TextAnalytics.Tests
             bool useTokenCredential = default)
         {
             var endpoint = new Uri(TestEnvironment.Endpoint);
-            options ??= new TextAnalyticsClientOptions();
+            options ??= new TextAnalyticsClientOptions
+            {
+                Diagnostics =
+                {
+                    LoggedHeaderNames =
+                    {
+                        "apim-request-id",
+                    }
+                }
+            };
 
             if (useTokenCredential)
             {

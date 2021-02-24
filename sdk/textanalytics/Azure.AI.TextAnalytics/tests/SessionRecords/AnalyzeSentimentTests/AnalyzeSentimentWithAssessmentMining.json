@@ -5,12 +5,12 @@
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json, text/json",
-        "Content-Length": "197",
+        "Content-Length": "127",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-7fe2a14c114a454a8c5e688c5f942fd7-bdd0673ca829054b-00",
+        "traceparent": "00-8d32d57a90effa41bfd9e169d7dd5866-d034289a19988b4c-00",
         "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210224.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "d0c9faccbe22f6229408f2811c507283",
+        "x-ms-client-request-id": "fe7f76fc6ec60c536475cf8fad51351f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -19,24 +19,19 @@
             "id": "0",
             "text": "The park was clean and pretty. The bathrooms and restaurant were not clean.",
             "language": "en"
-          },
-          {
-            "id": "1",
-            "text": "The food and service is not good.",
-            "language": "en"
           }
         ]
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "05cc9398-b7e8-4b7d-8f0f-7647d7657cce",
+        "apim-request-id": "5cc2cbe2-b864-4b85-8f04-00caf59891bb",
         "Content-Type": "application/json; charset=utf-8",
-        "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2",
-        "Date": "Wed, 24 Feb 2021 19:08:00 GMT",
+        "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1",
+        "Date": "Wed, 24 Feb 2021 19:08:07 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "117"
+        "x-envoy-upstream-service-time": "98"
       },
       "ResponseBody": {
         "documents": [
@@ -166,76 +161,6 @@
               }
             ],
             "warnings": []
-          },
-          {
-            "id": "1",
-            "sentiment": "negative",
-            "confidenceScores": {
-              "positive": 0.0,
-              "neutral": 0.0,
-              "negative": 1.0
-            },
-            "sentences": [
-              {
-                "sentiment": "negative",
-                "confidenceScores": {
-                  "positive": 0.0,
-                  "neutral": 0.0,
-                  "negative": 1.0
-                },
-                "offset": 0,
-                "length": 33,
-                "text": "The food and service is not good.",
-                "targets": [
-                  {
-                    "sentiment": "negative",
-                    "confidenceScores": {
-                      "positive": 0.01,
-                      "negative": 0.99
-                    },
-                    "offset": 4,
-                    "length": 4,
-                    "text": "food",
-                    "relations": [
-                      {
-                        "relationType": "assessment",
-                        "ref": "#/documents/1/sentences/0/assessments/0"
-                      }
-                    ]
-                  },
-                  {
-                    "sentiment": "negative",
-                    "confidenceScores": {
-                      "positive": 0.01,
-                      "negative": 0.99
-                    },
-                    "offset": 13,
-                    "length": 7,
-                    "text": "service",
-                    "relations": [
-                      {
-                        "relationType": "assessment",
-                        "ref": "#/documents/1/sentences/0/assessments/0"
-                      }
-                    ]
-                  }
-                ],
-                "assessments": [
-                  {
-                    "sentiment": "negative",
-                    "confidenceScores": {
-                      "positive": 0.01,
-                      "negative": 0.99
-                    },
-                    "offset": 28,
-                    "length": 4,
-                    "text": "good",
-                    "isNegated": true
-                  }
-                ]
-              }
-            ],
-            "warnings": []
           }
         ],
         "errors": [],
@@ -244,7 +169,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1558892529",
+    "RandomSeed": "430340117",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
     "TEXT_ANALYTICS_ENDPOINT": "https://ta-s-westeurope.cognitiveservices.azure.com"
   }

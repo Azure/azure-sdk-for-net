@@ -73,7 +73,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
-        public async Task AnalyzeSentimentWithOpinionMining()
+        public async Task AnalyzeSentimentWithAssessmentMining()
         {
             TextAnalyticsClient client = GetClient();
             string document = "The park was clean and pretty. The bathrooms and restaurant were not clean.";
@@ -85,7 +85,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
-        public async Task AnalyzeSentimentWithOpinionMiningEmpty()
+        public async Task AnalyzeSentimentWithAssessmentMiningEmpty()
         {
             TextAnalyticsClient client = GetClient();
             string document = singleEnglish;
@@ -97,7 +97,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
-        public async Task AnalyzeSentimentWithOpinionMiningNegated()
+        public async Task AnalyzeSentimentWithAssessmentMiningNegated()
         {
             TextAnalyticsClient client = GetClient();
             string document = "The bathrooms are not clean.";
