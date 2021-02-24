@@ -80,7 +80,7 @@ For more information see the [Code of Conduct FAQ][code_of_conduct_faq] or conta
 <!-- LINKS -->
 [microsoft_sdk_download]: https://azure.microsoft.com/downloads/?sdk=net
 [azure_sdk_target_frameworks]: https://github.com/azure/azure-sdk-for-net#target-frameworks
-[source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/modelsrepository
+[source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/modelsrepository/Azure.Iot.ModelsRepository/src
 [package]: https://www.nuget.org/packages/Azure.Iot.ModelsRepository
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
