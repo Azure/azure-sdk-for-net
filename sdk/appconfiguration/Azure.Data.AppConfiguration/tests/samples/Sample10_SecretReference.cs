@@ -12,6 +12,7 @@ namespace Azure.Data.AppConfiguration.Samples
 {
     public partial class ConfigurationSamples: SamplesBase<AppConfigurationTestEnvironment>
     {
+        [Test]
         public async Task CreateSecretReference()
         {
             var connectionString = TestEnvironment.ConnectionString;

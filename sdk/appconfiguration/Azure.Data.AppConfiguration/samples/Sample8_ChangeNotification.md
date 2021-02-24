@@ -1,4 +1,4 @@
-# Create, Retrieve and Delete a Configuration Setting
+# React to Settings Change Notifications
 
 The AppConfiguration service supports [EventGrid-based setting change notifications](https://docs.microsoft.com/azure/azure-app-configuration/howto-app-configuration-event). This sample shows how to use the Azure.Data.AppConfiguration library to process these notifications.
 
