@@ -304,7 +304,7 @@ Console.WriteLine(new JsonData("Hello, JsonData").ToJsonString()); // prints "He
 | `GetStudentsAsync`   | `Task<DynamicResponse>` | Returns a `Task` which represents the eventual response of the operation. |
 | `GetStudentsRequest` | `DynamicRequest`        | Returns a `DynamicRequest` which can be modified and then sent.           |
 
-When using the `<Operation>Request` method, the body of the `DynamicRequest` is initialized to the a JsonData representing the empty object. You can either modify the body directly or set your own version. For example, let's imagine a `CreateStudent` API which let us create a new student, by sending a JSON object representing that student:
+When using the `<Operation>Request` method, the body of the `DynamicRequest` is initialized to a JsonData representing the empty object. You can either modify the body directly or set your own version. For example, let's imagine a `CreateStudent` API which let us create a new student, by sending a JSON object representing that student:
 
 ```C# Snippet:DynamicRequestAndResponse
 DynamicRequest req = client.CreateStudentRequest();
