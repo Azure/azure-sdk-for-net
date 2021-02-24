@@ -421,7 +421,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
-        public async Task AnalyzeSentimentOpinionInOtherSentence()
+        public async Task AnalyzeSentimentAssessmentInOtherSentence()
         {
             using var stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
                 {
@@ -445,7 +445,7 @@ namespace Azure.AI.TextAnalytics.Tests
                                     ""offset"": 0,
                                     ""length"": 30,
                                     ""text"": ""The park was clean."",
-                                    ""aspects"": [
+                                    ""targets"": [
                                         {
                                             ""sentiment"": ""positive"",
                                             ""confidenceScores"": {
@@ -457,13 +457,13 @@ namespace Azure.AI.TextAnalytics.Tests
                                             ""text"": ""park"",
                                             ""relations"": [
                                                 {
-                                                    ""relationType"": ""opinion"",
-                                                    ""ref"": ""#/documents/0/sentences/0/opinions/0""
+                                                    ""relationType"": ""assessment"",
+                                                    ""ref"": ""#/documents/0/sentences/0/assessments/0""
                                                 }
                                             ]
                                         }
                                     ],
-                                    ""opinions"": [
+                                    ""assessments"": [
                                         {
                                             ""sentiment"": ""positive"",
                                             ""confidenceScores"": {
@@ -487,7 +487,7 @@ namespace Azure.AI.TextAnalytics.Tests
                                     ""offset"": 31,
                                     ""length"": 23,
                                     ""text"": ""It was clean."",
-                                    ""aspects"": [
+                                    ""targets"": [
                                         {
                                             ""sentiment"": ""positive"",
                                             ""confidenceScores"": {
@@ -499,13 +499,13 @@ namespace Azure.AI.TextAnalytics.Tests
                                             ""text"": ""park"",
                                             ""relations"": [
                                                 {
-                                                    ""relationType"": ""opinion"",
-                                                    ""ref"": ""#/documents/0/sentences/0/opinions/0""
+                                                    ""relationType"": ""assessment"",
+                                                    ""ref"": ""#/documents/0/sentences/0/assessments/0""
                                                 }
                                             ]
                                         }
                                     ],
-                                    ""opinions"": []
+                                    ""assessments"": []
                                 }
                             ],
                             ""warnings"": []

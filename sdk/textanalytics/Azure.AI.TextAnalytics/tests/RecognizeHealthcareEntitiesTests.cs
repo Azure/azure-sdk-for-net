@@ -85,19 +85,20 @@ namespace Azure.AI.TextAnalytics.Tests
                         Assert.IsTrue(linksList.Contains(entityDataSource.Name));
                 }
 
-                if (entity.Text == "100mg")
-                {
-                    Assert.IsTrue(entity.RelatedEntities.Count == 1);
+                // TODO - Implement HC preview.4 https://github.com/Azure/azure-sdk-for-net/issues/18984
+                //if (entity.Text == "100mg")
+                //{
+                //    Assert.IsTrue(entity.RelatedEntities.Count == 1);
 
-                    var relatedEntity = entity.RelatedEntities.FirstOrDefault().Key;
+                //    var relatedEntity = entity.RelatedEntities.FirstOrDefault().Key;
 
-                    Assert.AreEqual("ibuprofen", relatedEntity.Text);
-                    Assert.AreEqual("MedicationName", relatedEntity.Category);
-                    Assert.AreEqual(9, relatedEntity.Length);
-                    Assert.AreEqual(27, relatedEntity.Offset);
-                    Assert.AreEqual(1.0, relatedEntity.ConfidenceScore);
-                    Assert.AreEqual(HealthcareEntityRelationType.DosageOfMedication, entity.RelatedEntities.FirstOrDefault().Value);
-                }
+                //    Assert.AreEqual("ibuprofen", relatedEntity.Text);
+                //    Assert.AreEqual("MedicationName", relatedEntity.Category);
+                //    Assert.AreEqual(9, relatedEntity.Length);
+                //    Assert.AreEqual(27, relatedEntity.Offset);
+                //    Assert.AreEqual(1.0, relatedEntity.ConfidenceScore);
+                //    Assert.AreEqual(HealthcareEntityRelationType.DosageOfMedication, entity.RelatedEntities.FirstOrDefault().Value);
+                //}
             }
         }
 

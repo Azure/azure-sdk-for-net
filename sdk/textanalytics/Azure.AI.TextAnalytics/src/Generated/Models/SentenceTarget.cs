@@ -21,9 +21,13 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="length"> The length of the target. </param>
         /// <param name="text"> The target text detected. </param>
         /// <param name="relations"> The array of either assessment or target objects which is related to the target. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="confidenceScores"/>, <paramref name="text"/>, or <paramref name="relations"/> is null. </exception>
-        internal SentenceTarget(TokenSentimentValue sentiment, TargetConfidenceScoreLabel confidenceScores, int offset, int length, string text, IEnumerable<TargetRelation> relations)
+        /// <exception cref="ArgumentNullException"> <paramref name="sentiment"/>, <paramref name="confidenceScores"/>, <paramref name="text"/>, or <paramref name="relations"/> is null. </exception>
+        internal SentenceTarget(string sentiment, TargetConfidenceScoreLabel confidenceScores, int offset, int length, string text, IEnumerable<TargetRelation> relations)
         {
+            if (sentiment == null)
+            {
+                throw new ArgumentNullException(nameof(sentiment));
+            }
             if (confidenceScores == null)
             {
                 throw new ArgumentNullException(nameof(confidenceScores));
@@ -52,7 +56,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="length"> The length of the target. </param>
         /// <param name="text"> The target text detected. </param>
         /// <param name="relations"> The array of either assessment or target objects which is related to the target. </param>
-        internal SentenceTarget(TokenSentimentValue sentiment, TargetConfidenceScoreLabel confidenceScores, int offset, int length, string text, IReadOnlyList<TargetRelation> relations)
+        internal SentenceTarget(string sentiment, TargetConfidenceScoreLabel confidenceScores, int offset, int length, string text, IReadOnlyList<TargetRelation> relations)
         {
             Sentiment = sentiment;
             ConfidenceScores = confidenceScores;
@@ -61,9 +65,6 @@ namespace Azure.AI.TextAnalytics.Models
             Text = text;
             Relations = relations;
         }
-
-        /// <summary> Targeted sentiment in the sentence. </summary>
-        public TokenSentimentValue Sentiment { get; }
         /// <summary> Target sentiment confidence scores for the target in the sentence. </summary>
         public TargetConfidenceScoreLabel ConfidenceScores { get; }
         /// <summary> The target offset from the start of the sentence. </summary>
