@@ -15,31 +15,30 @@ namespace Azure.Communication
     {
         internal bool RefreshProactively { get; }
         internal Func<CancellationToken, string> TokenRefresher { get; }
-        internal Func<CancellationToken, ValueTask<string>> AsyncTokenRefresher { get; }
 
-#nullable enable
-        internal string? InitialToken { get; }
-#nullable restore
+        /// <summary>The initial token.</summary>
+        public string InitialToken { get; set; }
 
+        private Func<CancellationToken, ValueTask<string>> _asyncTokenRefresher;
+
+        /// <summary>The asynchronous token refresher.</summary>
+        public Func<CancellationToken, ValueTask<string>> AsyncTokenRefresher
+        {
+            get => _asyncTokenRefresher = _asyncTokenRefresher ?? (cancellationToken => new ValueTask<string>(TokenRefresher(cancellationToken)));
+            set => _asyncTokenRefresher = value;
+        }
         /// <summary>
         /// Initializes a new instance of <see cref="CommunicationTokenRefreshOptions"/>.
         /// </summary>
         /// <param name="refreshProactively">Indicates whether the token should be proactively renewed prior to expiry or renew on demand.</param>
         /// <param name="tokenRefresher">The function that provides the token acquired from CommunicationIdentityClient.</param>
-        /// <param name="asyncTokenRefresher">The async function that provides the token acquired from CommunicationIdentityClient, a null value defaults to <paramref name="tokenRefresher"/>.</param>
-        /// <param name="initialToken">Optional token value.</param>
         public CommunicationTokenRefreshOptions(
             bool refreshProactively,
-            Func<CancellationToken, string> tokenRefresher,
-            Func<CancellationToken, ValueTask<string>> asyncTokenRefresher = null,
-            string initialToken = null)
+            Func<CancellationToken, string> tokenRefresher)
         {
             Argument.AssertNotNull(tokenRefresher, nameof(tokenRefresher));
-
             RefreshProactively = refreshProactively;
             TokenRefresher = tokenRefresher;
-            AsyncTokenRefresher = asyncTokenRefresher ?? (cancellationToken => new ValueTask<string>(tokenRefresher(cancellationToken)));
-            InitialToken = initialToken;
         }
     }
 }
