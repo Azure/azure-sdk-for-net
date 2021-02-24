@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0-beta.3 (2021-02-24)
 - Allow the STS endpoint to be customized.
 - Changed constructors to align with guidance.
 
