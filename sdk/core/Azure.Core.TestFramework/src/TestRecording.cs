@@ -31,7 +31,7 @@ namespace Azure.Core.TestFramework
             switch (Mode)
             {
                 case RecordedTestMode.Record:
-                    session = new RecordSession();
+                    Session = new RecordSession();
                     if (File.Exists(_sessionFile))
                     {
                         try
@@ -47,7 +47,7 @@ namespace Azure.Core.TestFramework
                 case RecordedTestMode.Playback:
                     try
                     {
-                        session = Load();
+                        Session = Load();
                     }
                     catch (Exception ex) when (ex is FileNotFoundException || ex is DirectoryNotFoundException)
                     {
@@ -113,7 +113,7 @@ namespace Azure.Core.TestFramework
                                 _random = new TestRandom(Mode);
                                 seed = _random.Next();
                             }
-                            session.Variables[RandomSeedVariableKey] = seed.ToString();
+                            Session.Variables[RandomSeedVariableKey] = seed.ToString();
                             _random = new TestRandom(Mode, seed);
                             break;
                         case RecordedTestMode.Playback:
@@ -124,7 +124,7 @@ namespace Azure.Core.TestFramework
                             }
                             else
                             {
-                                _random = new TestRandom(Mode, int.Parse(session.Variables[RandomSeedVariableKey]));
+                                _random = new TestRandom(Mode, int.Parse(Session.Variables[RandomSeedVariableKey]));
                             }
                             break;
                         default:
@@ -160,10 +160,10 @@ namespace Azure.Core.TestFramework
                             // a number of auth mechanisms are time sensitive and will require
                             // values in the present when re-recording
                             _now = DateTimeOffset.Now;
-                            session.Variables[DateTimeOffsetNowVariableKey] = _now.Value.ToString("O"); // Use the "Round-Trip Format"
+                            Session.Variables[DateTimeOffsetNowVariableKey] = _now.Value.ToString("O"); // Use the "Round-Trip Format"
                             break;
                         case RecordedTestMode.Playback:
-                            _now = DateTimeOffset.Parse(session.Variables[DateTimeOffsetNowVariableKey]);
+                            _now = DateTimeOffset.Parse(Session.Variables[DateTimeOffsetNowVariableKey]);
                             break;
                         default:
                             throw new ArgumentOutOfRangeException();
@@ -188,13 +188,13 @@ namespace Azure.Core.TestFramework
 
         public void Dispose(bool save)
         {
-            if (Mode == RecordedTestMode.Record && save && !session.IsEmpty)
+            if (Mode == RecordedTestMode.Record && save && !Session.IsEmpty)
             {
                 var directory = Path.GetDirectoryName(_sessionFile);
                 Directory.CreateDirectory(directory);
 
-                session.Sanitize(_sanitizer);
-                if (session.IsEquivalent(_previousSession, _matcher))
+                Session.Sanitize(_sanitizer);
+                if (Session.IsEquivalent(_previousSession, _matcher))
                 {
                     return;
                 }
@@ -204,7 +204,7 @@ namespace Azure.Core.TestFramework
                 {
                     Indented = true
                 });
-                session.Serialize(utf8JsonWriter);
+                Session.Serialize(utf8JsonWriter);
                 utf8JsonWriter.Flush();
             }
         }
@@ -219,8 +219,8 @@ namespace Azure.Core.TestFramework
             return Mode switch
             {
                 RecordedTestMode.Live => currentTransport,
-                RecordedTestMode.Record => new RecordTransport(session, currentTransport, entry => _disableRecording.Value, Random),
-                RecordedTestMode.Playback => new PlaybackTransport(session, _matcher, _sanitizer, Random,
+                RecordedTestMode.Record => new RecordTransport(Session, currentTransport, entry => _disableRecording.Value, Random),
+                RecordedTestMode.Playback => new PlaybackTransport(Session, _matcher, _sanitizer, Random,
                     entry => _disableRecording.Value == EntryRecordModel.RecordWithoutRequestBody),
                 _ => throw new ArgumentOutOfRangeException(nameof(Mode), Mode, null),
             };
@@ -268,7 +268,7 @@ namespace Azure.Core.TestFramework
         {
             if (Mode == RecordedTestMode.Playback && IsTrack1SessionRecord())
             {
-                return session.Names[callerMethodName].Dequeue();
+                return Session.Names[callerMethodName].Dequeue();
             }
             else
             {
@@ -278,7 +278,7 @@ namespace Azure.Core.TestFramework
 
         public bool IsTrack1SessionRecord()
         {
-            return session.Entries.FirstOrDefault()?.IsTrack1Recording ?? false;
+            return Session.Entries.FirstOrDefault()?.IsTrack1Recording ?? false;
         }
 
         public string GetVariable(string variableName, string defaultValue)
@@ -286,12 +286,12 @@ namespace Azure.Core.TestFramework
             switch (Mode)
             {
                 case RecordedTestMode.Record:
-                    session.Variables[variableName] = defaultValue;
+                    Session.Variables[variableName] = defaultValue;
                     return defaultValue;
                 case RecordedTestMode.Live:
                     return defaultValue;
                 case RecordedTestMode.Playback:
-                    session.Variables.TryGetValue(variableName, out string value);
+                    Session.Variables.TryGetValue(variableName, out string value);
                     return value;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -303,7 +303,7 @@ namespace Azure.Core.TestFramework
             switch (Mode)
             {
                 case RecordedTestMode.Record:
-                    session.Variables[variableName] = value;
+                    Session.Variables[variableName] = value;
                     break;
                 default:
                     break;
