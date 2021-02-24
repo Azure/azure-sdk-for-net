@@ -54,7 +54,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-You can familiarize yourself with the client using [samples for IoT Models Repository](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/modelsrepository/Azure.Iot.ModelsRepository/samples/).
+You can familiarize yourself with the client using [samples for IoT Models Repository](modelsrepository_samples).
 
 ## Troubleshooting
 
@@ -62,7 +62,7 @@ All service operations will throw RequestFailedException on failure, with helpfu
 
 ## Next steps
 
-See implementation examples with our [code samples](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/modelsrepository/Azure.Iot.ModelsRepository/samples/).
+See implementation examples with our [code samples](modelsrepository_samples).
 
 ## Contributing
 
@@ -82,7 +82,7 @@ For more information see the Code of Conduct FAQ or contact opencode@microsoft.c
 [azure_sdk_target_frameworks]: https://github.com/azure/azure-sdk-for-net#target-frameworks
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/modelsrepository
 [package]: https://www.nuget.org/packages/Azure.Iot.ModelsRepository
-[code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
+[code_of_conduct]: https://opensource.microsoft.com/codeofconduct/faq/
 [nuget]: https://www.nuget.org/
 [azure_core_library]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core
 [modelsrepository_nuget]: https://www.nuget.org/packages/Azure.Iot.ModelsRepository
