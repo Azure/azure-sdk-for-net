@@ -148,31 +148,55 @@ try {
             LogError "Can't find path $metaData, you may need to re-run sdk\<RP_Name>\generate.ps1"
         }
 
-        if ( $metaDataContent -ne '') {
-            $commit = ''
-            $readme = ''
+        if (-not [string]::IsNullOrWhiteSpace($metaDataContent)) {
+            $commit = @()
+            $csharpVersion = @()
             [string]$path = Get-Location
-            $metaDataContent | ForEach-Object {
-                if ($_ -match 'Commit') {
-                    $commit = $_.substring($_.length - 40, 40)
-                }
-                if ($_ -match 'cmd.exe') {
-                    $_ -match 'https:[\S]*readme.md'
-                    $readme = $matches[0]
-                }
-            }
-            $readme = $readme -replace "blob/[\S]*/specification", "blob/$commit/specification"
             $path = ($path -replace "\\", "/") + "/sdk"
 
-            if ($readme -eq '') {
+            $metaDataContent | ForEach-Object {
+                if ($_ -match 'Commit') {
+                    $commit += $_.substring($_.length - 40, 40)
+                }
+                if ($_ -match 'cmd.exe') {
+                    $commandList += $_
+                }
+                if ($_ -match 'Autorest CSharp Version') {
+                    $version += $_.substring(25)
+                    if ([System.Version]$version -ge [System.Version]"2.3.82") {
+                        $csharpVersion += $version
+                    }
+                    else {
+                        LogError "Validation failed, csharp extension minimal version is 2.3.82, your current version is $version, please use another version"
+                        $exitCode ++
+                        break
+                    }
+                }
+            }
+
+            if (($commandList.length -eq 0) -or ($commit.length -eq 0) -or ($csharpVersion.length -eq 0) -or ($cmd.length -ne $commit) -or ($commit.length -ne $csharpVersion.length)) {
                 LogError "MetaData $metaData content not correct, you may need to re-run sdk\<RP_Name>\generate.ps1"
             }
             else {
-                $command = "Ready to execute: autorest $readme --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=$path"
-                Write-Output $command
-                $commandList += $command
-                Invoke-Block {
-                    & autorest $readme --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=$path
+                for ($i = 0; $i -lt $commandList.Count; $i++) {
+                    $command = "autorest" + $commandList[$i].substring(23)
+                    $command = $command -replace "\\", "/"
+                    $command = $command -replace "blob/[\S]*/specification", "blob/" + $commit[$i] + "/specification"
+                    $command = $command -replace "folder\=(.*?)\/sdk\/", "folder=$path"
+                    $commandList[$i] = $command + " --use:@microsoft.azure/autorest.csharp@" + $csharpVersion[$i]
+                }
+                foreach ($command in $commandList) {
+                    Try {
+                        Write-Output "Executing AutoRest command"
+                        Write-Output $command
+                        Invoke-Block {
+                            Invoke-Expression $command
+                        }
+                    }
+                    Catch [System.Exception] {
+                        LogError $_.Exception.ToString()
+                        throw [System.Exception] "AutoRest code generation for metadata failed. you may need to re-run sdk\<RP_Name>\generate.ps1"
+                    }
                 }
             }
         }
