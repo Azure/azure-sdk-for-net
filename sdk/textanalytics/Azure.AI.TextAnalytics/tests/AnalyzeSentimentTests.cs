@@ -446,7 +446,7 @@ namespace Azure.AI.TextAnalytics.Tests
                     Assert.Greater(sentence.MinedAssessments.Count(), 0);
                     foreach (var minedAssessments in sentence.MinedAssessments)
                     {
-                        // Aspect
+                        // target
                         Assert.IsNotNull(minedAssessments.Target);
                         Assert.IsNotNull(minedAssessments.Target.Text);
                         Assert.IsNotNull(minedAssessments.Target.ConfidenceScores.Positive);
@@ -457,7 +457,7 @@ namespace Azure.AI.TextAnalytics.Tests
                         Assert.IsNotNull(minedAssessments.Target.Offset);
                         Assert.IsNotNull(minedAssessments.Target.Length);
 
-                        // Opinions
+                        // assessment
                         Assert.IsNotNull(minedAssessments.Assessments);
                         Assert.Greater(minedAssessments.Assessments.Count(), 0);
                         foreach (var opinion in minedAssessments.Assessments)

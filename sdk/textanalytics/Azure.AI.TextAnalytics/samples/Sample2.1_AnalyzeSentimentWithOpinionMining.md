@@ -1,8 +1,8 @@
-# Analyze sentiment with Opinion Mining
+# Analyze sentiment with Assessment Mining
 
-This sample demonstrates how to analyze sentiment of documents and get more granular information about the opinions related to aspects of a product/service, also knows as Aspect-based Sentiment Analysis in Natural Language Processing (NLP). This feature is only available for clients with api version v3.1-preview.1 and higher.
+This sample demonstrates how to analyze sentiment of documents and get more granular information about the assessment related to targets of a product/service, also knows as Target-based Sentiment Analysis in Natural Language Processing (NLP). This feature is only available for clients with api version v3.1-preview.1 and higher.
 
-For example, if a customer leaves feedback about a hotel such as "The room was great, but the staff was unfriendly.", Opinion Mining will locate aspects in the text, and their associated opinions and sentiments. Sentiment Analysis might only report a negative sentiment.
+For example, if a customer leaves feedback about a hotel such as "The room was great, but the staff was unfriendly.", Assessment Mining will locate targets in the text, and their associated assessment and sentiments. Sentiment Analysis might only report a negative sentiment.
 
 ![opinion mining diagram](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/assets/opinion-mining.png)
 
@@ -23,7 +23,7 @@ var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(a
 
 ## Identify complaints
 
-To get a deeper analysis into which are the aspects that people considered good or bad, we will need to include the `AdditionalSentimentAnalyses.OpinionMining` type into the `AnalyzeSentimentOptions`.
+To get a deeper analysis into which are the targets that people considered good or bad, we will need to include the `AdditionalSentimentAnalyses.AssessmentMining` type into the `AnalyzeSentimentOptions`.
 
 ```C# Snippet:TAAnalyzeSentimentWithOpinionMining
 string reviewA = @"The food and service were unacceptable, but the concierge were nice.
@@ -104,8 +104,8 @@ private Dictionary<string, int> GetComplaints(AnalyzeSentimentResultCollection r
 
 
 To see the full example source files, see:
-* [Synchronous Analyze Sentiment with Opinion Mining](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics//tests/samples/Sample2.1_AnalyzeSentimentWithOpinionMining.cs)
-* [Asynchronous Analyze Sentiment with Opinion Mining](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics//tests/samples/Sample2.1_AnalyzeSentimentWithOpinionMiningAsync.cs)
+* [Synchronous Analyze Sentiment with Assessment Mining](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics//tests/samples/Sample2.1_AnalyzeSentimentWithOpinionMining.cs)
+* [Asynchronous Analyze Sentiment with Assessment Mining](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics//tests/samples/Sample2.1_AnalyzeSentimentWithOpinionMiningAsync.cs)
 
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md
 [README]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/README.md

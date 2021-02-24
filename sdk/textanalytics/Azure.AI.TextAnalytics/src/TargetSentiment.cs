@@ -38,33 +38,33 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Gets the predicted sentiment for the analyzed aspect.
+        /// Gets the predicted sentiment for the analyzed target.
         /// </summary>
         public TextSentiment Sentiment { get; }
 
         /// <summary>
-        /// Gets the aspect text.
-        /// <para>An aspect of a product/service is a key component of that product/service.</para>
-        /// <para>For example in "The food at Hotel Foo is good", "food" is an aspect of
+        /// Gets the target text.
+        /// <para>An target of a product/service is a key component of that product/service.</para>
+        /// <para>For example in "The food at Hotel Foo is good", "food" is an target of
         /// "Hotel Foo".</para>
         /// </summary>
         public string Text { get; }
 
         /// <summary>
         /// Gets the sentiment confidence score (Softmax score) between 0 and 1,
-        /// for the aspect for 'positive' and 'negative' labels. Its score
+        /// for the target for 'positive' and 'negative' labels. Its score
         /// for 'neutral' will always be 0.
         /// Higher values signify higher confidence.
         /// </summary>
         public SentimentConfidenceScores ConfidenceScores { get; }
 
         /// <summary>
-        /// Gets the starting position for the aspect text.
+        /// Gets the starting position for the target text.
         /// </summary>
         public int Offset { get; }
 
         /// <summary>
-        /// Gets the length of the aspect text.
+        /// Gets the length of the target text.
         /// </summary>
         public int Length { get; }
     }

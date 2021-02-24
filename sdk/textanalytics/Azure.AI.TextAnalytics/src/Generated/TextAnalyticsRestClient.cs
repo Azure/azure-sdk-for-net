@@ -876,7 +876,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="input"> Collection of documents to analyze. </param>
         /// <param name="modelVersion"> (Optional) This value indicates which model will be used for scoring. If a model-version is not specified, the API should default to the latest, non-preview version. </param>
         /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
-        /// <param name="opinionMining"> (Optional) if set to true, response will contain not only sentiment prediction but also opinion mining (aspect-based sentiment analysis) results. </param>
+        /// <param name="opinionMining"> (Optional) if set to true, response will contain not only sentiment prediction but also opinion mining (target-based sentiment analysis) results. </param>
         /// <param name="stringIndexType"> (Optional) Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
@@ -907,7 +907,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="input"> Collection of documents to analyze. </param>
         /// <param name="modelVersion"> (Optional) This value indicates which model will be used for scoring. If a model-version is not specified, the API should default to the latest, non-preview version. </param>
         /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
-        /// <param name="opinionMining"> (Optional) if set to true, response will contain not only sentiment prediction but also opinion mining (aspect-based sentiment analysis) results. </param>
+        /// <param name="opinionMining"> (Optional) if set to true, response will contain not only sentiment prediction but also assessment mining (target-based sentiment analysis) results. </param>
         /// <param name="stringIndexType"> (Optional) Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>

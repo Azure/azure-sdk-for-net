@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// A mined assessment object contains opinions extracted from a sentence.
+    /// A mined assessment object contains assessments extracted from a sentence.
     /// It consists of both the target that these assessments are about, and the actual
     /// assessment themselves.
     /// </summary>
@@ -19,15 +19,15 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Get the aspect in text, such as the attributes of products or services.
-        /// <para>For example in "The food at Hotel Foo is good", "food" is an aspect of
+        /// Get the target in text, such as the attributes of products or services.
+        /// <para>For example in "The food at Hotel Foo is good", "food" is an target of
         /// "Hotel Foo".</para>
         /// </summary>
         public TargetSentiment Target { get; }
         /// <summary>
-        /// The list of opinions that are related to the aspect.
-        /// <para>For example in "The food at Hotel Foo is good", "food" is an aspect of
-        /// "Hotel Foo" and "good" is the opinion related to the aspect.</para>
+        /// The list of assessments that are related to the target.
+        /// <para>For example in "The food at Hotel Foo is good", "food" is an target of
+        /// "Hotel Foo" and "good" is the assessment related to the target.</para>
         /// </summary>
         public IReadOnlyCollection<AssessmentSentiment> Assessments { get; }
     }

@@ -8,8 +8,8 @@ namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// Contains the predicted sentiment, confidence scores, and other information about the assessment of a target.
-    /// <para>For example, in the sentence "The food is good", the opinion of the
-    /// aspect 'food' is 'good'.</para>
+    /// <para>For example, in the sentence "The food is good", the assessment of the
+    /// target 'food' is 'good'.</para>
     /// </summary>
     public readonly struct AssessmentSentiment
     {
