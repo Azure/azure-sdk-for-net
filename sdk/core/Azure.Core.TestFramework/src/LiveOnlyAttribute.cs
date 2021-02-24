@@ -24,9 +24,8 @@ namespace Azure.Core.TestFramework
 
             if (test.RunState != RunState.NotRunnable)
             {
-                //RecordedTestMode mode = RecordedTestUtilities.GetModeFromEnvironment();
-                RecordedTestMode mode = RecordedTestMode.Record;
-                if (mode == RecordedTestMode.Live)
+                RecordedTestMode mode = RecordedTestUtilities.GetModeFromEnvironment();
+                if (mode != RecordedTestMode.Live)
                 {
                     test.RunState = RunState.Ignored;
                     test.Properties.Set("_SKIPREASON", $"Live tests will not run when AZURE_TEST_MODE is {mode}");
