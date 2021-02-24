@@ -16,24 +16,24 @@ namespace Azure.Iot.ModelsRepository.Samples
         {
             using AzureEventSourceListener listener = AzureEventSourceListener.CreateTraceLogger(EventLevel.Verbose);
 
-            await ResolveExisting();
-            await TryResolveButNotFound();
+            await ResolveExistingAsync();
+            await TryResolveButNotFoundAsync();
         }
 
-        private static async Task ResolveExisting()
+        private static async Task ResolveExistingAsync()
         {
-            string dtmi = "dtmi:com:example:TemperatureController;1";
-            ModelsRepositoryClient client = new ModelsRepositoryClient();
+            var dtmi = "dtmi:com:example:TemperatureController;1";
+            var client = new ModelsRepositoryClient();
 
             IDictionary<string, string> models = await client.ResolveAsync(dtmi).ConfigureAwait(false);
 
             Console.WriteLine($"{dtmi} resolved in {models.Count} interfaces.");
         }
 
-        private static async Task TryResolveButNotFound()
+        private static async Task TryResolveButNotFoundAsync()
         {
-            string dtmi = "dtmi:com:example:NotFound;1";
-            ModelsRepositoryClient client = new ModelsRepositoryClient();
+            var dtmi = "dtmi:com:example:NotFound;1";
+            var client = new ModelsRepositoryClient();
 
             try
             {
