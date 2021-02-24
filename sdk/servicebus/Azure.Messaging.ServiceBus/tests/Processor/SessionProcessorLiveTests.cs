@@ -1202,7 +1202,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     {
                         var message = args.Message;
                         sessions.TryRemove(message.SessionId, out bool _);
-                        await Task.Delay(lockDuration.Add(TimeSpan.FromSeconds(10)));
+                        // wait 3x lockduration since to avoid the case where
+                        // lock is renewed at the very end of the lock duration delay
+                        await Task.Delay(lockDuration.Add(lockDuration).Add(lockDuration));
                         await args.CompleteMessageAsync(message);
 
                         Assert.IsTrue(sessionId.Contains(message.SessionId));
