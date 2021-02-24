@@ -2,6 +2,7 @@
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.ResourceManager.Models;
+using Microsoft.Azure.Management.Storage.Models;
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
@@ -16,77 +17,41 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
     public class RestorePointsTest: VMTestBase
     {
         RecordedDelegatingHandler handler;
-        ResourceManagementClient resourcesClient;
-
-        ResourceGroup resourceGroup;
-
-        string subId;
-        string location;
-        const string testPrefix = TestPrefix;
-        string resourceGroupName;
-
         [Fact]
-        public void TestOperations()
+        public void CreateRpcAndRestorePoints()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 EnsureClientsInitialized(context);
+                string subId = m_CrpClient.SubscriptionId;
+                string location = ComputeManagementTestUtilities.DefaultLocation;
+                const string testPrefix = TestPrefix;
                 //Initialize(context);
                 // create the VM
                 var rgName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
                 string storageAccountName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
                 string asName = ComputeManagementTestUtilities.GenerateName("as");
+                ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
                 VirtualMachine inputVM;
+                string storageAccountForDisksName = TestUtilities.GenerateName(TestPrefix);
+                string availabilitySetName = TestUtilities.GenerateName(TestPrefix);
 
                 try
                 {
-                    // Create Storage Account
-                    var storageAccountOutput = CreateStorageAccount( rgName, storageAccountName );
+                    StorageAccount storageAccountForDisks = CreateStorageAccount(rgName, storageAccountForDisksName);
+                    
 
-                    Action<VirtualMachine> addDataDiskToVM = vm =>
-                    {
-                        string containerName = HttpMockServer.GetAssetName("TestVMDataDiskScenario", TestPrefix);
-                        var vhdContainer = "https://" + storageAccountName + ".blob.core.windows.net/" + containerName;
-                        var vhduri = vhdContainer + string.Format("/{0}.vhd", HttpMockServer.GetAssetName("TestVMDataDiskScenario", TestPrefix));
-
-                        vm.HardwareProfile.VmSize = VirtualMachineSizeTypes.StandardA4;
-                        vm.StorageProfile.DataDisks = new List<DataDisk>();
-                        foreach (int index in new int[] {1, 2})
+                    VirtualMachine createdVM = CreateVM(rgName, availabilitySetName, storageAccountForDisks, imageRef, out inputVM,
+                        (vm) =>
                         {
-                            var diskName = "dataDisk" + index;
-                            var ddUri = vhdContainer + string.Format("/{0}{1}.vhd", diskName, HttpMockServer.GetAssetName("TestVMDataDiskScenario", TestPrefix));
-                            var dd = new DataDisk
-                            {
-                                Caching = CachingTypes.None,
-                                Image = null,
-                                DiskSizeGB = 10,
-                                CreateOption = DiskCreateOptionTypes.Empty,
-                                Lun = 1 + index,
-                                Name = diskName,
-                                Vhd = new VirtualHardDisk
-                                {
-                                    Uri = ddUri
-                                }
-                            };
-                            vm.StorageProfile.DataDisks.Add(dd);
-                        }
+                            vm.DiagnosticsProfile = GetManagedDiagnosticsProfile();
+                        }, hasManagedDisks: true);
 
-                        var testStatus = new InstanceViewStatus
-                        {
-                            Code = "test",
-                            Message = "test"
-                        };
-
-                        var testStatusList = new List<InstanceViewStatus> { testStatus };
-
-                    };
-
-                    ImageReference imgageRef = GetPlatformVMImage(useWindowsImage: true);
-                    var vm1 = CreateVM(rgName, asName, storageAccountOutput, imgageRef, out inputVM, addDataDiskToVM);
-
-                    // Attempt to Create Availability Set with out of bounds FD and UD values
-                    VerifyRPCCreation(vm1.Id);
-                    VerifyRestorePointCreation();
+                    
+                    string rpcName = ComputeManagementTestUtilities.GenerateName("rpc1ClientTest");
+                    VerifyRPCCreation(createdVM.Id, rpcName, rgName, location);
+                    VerifyRestorePointCreation(rgName, rpcName, location);
+                    //VerifyRestorePointCreation(rgName, rpcName, location);
                 }
                 catch (CloudException ex)
                 {
@@ -94,39 +59,18 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
                 }
                 finally
                 {
-                    resourcesClient.ResourceGroups.Delete(resourceGroupName);
+                    m_ResourcesClient.ResourceGroups.Delete(rgName);
                 }
             }
         }
 
-        /*
-        private void Initialize(MockContext context)
-        {
-            handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
-            resourcesClient = ComputeManagementTestUtilities.GetResourceManagementClient(context, handler);
-            computeClient = ComputeManagementTestUtilities.GetComputeManagementClient(context, handler);
-
-            subId = computeClient.SubscriptionId;
-            location = ComputeManagementTestUtilities.DefaultLocation;
-
-            resourceGroupName = ComputeManagementTestUtilities.GenerateName(testPrefix);
-
-            resourceGroup = resourcesClient.ResourceGroups.CreateOrUpdate(
-                resourceGroupName,
-                new ResourceGroup
-                {
-                    Location = location,
-                    Tags = new Dictionary<string, string>() { { resourceGroupName, "RB" + DateTime.UtcNow.ToString("u") } } });
-        }
-        */
-
-        private void VerifyRestorePointCreation()
+        private void VerifyRestorePointCreation(string rgName, string rpcName, string location)
         {
             var inputRPName = ComputeManagementTestUtilities.GenerateName("rpClientTest");
-            var inputRPCName = ComputeManagementTestUtilities.GenerateName("rpcClientTest");
             ApiEntityReference diskToExclude = new ApiEntityReference() { Id = "" };
             var inputRP = new RestorePoint
             {
+                Name = inputRPName,
                 Location = location,
                 Tags = new Dictionary<string, string>()
                 {
@@ -134,15 +78,14 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
                     {"testTag", "1"},
                 },
                 // need to change model to be public setter
-                ExcludeDisks = new List<ApiEntityReference> { diskToExclude },
+                //ExcludeDisks = new List<ApiEntityReference> { diskToExclude },
             };
 
-            RestorePoint createOrUpdateResponse = null;
             try
             {
-                createOrUpdateResponse = m_CrpClient.RestorePoints.CreateOrUpdate(
-                    resourceGroupName,
-                    inputRPCName,
+                RestorePoint createOrUpdateResponse = m_CrpClient.RestorePoints.CreateOrUpdate(
+                    rgName,
+                    rpcName,
                     inputRPName,
                     inputRP);
             }
@@ -150,10 +93,11 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
             {
                 Assert.True(ex.Response.StatusCode == HttpStatusCode.BadRequest);
             }
+            // exclude an actual disk on the restore point
         }
-        private void VerifyRPCCreation(string sourceVMId)
+
+        private void VerifyRPCCreation(string sourceVMId, string rpcName, string rgName, string location)
         {
-            var inputRPCName = ComputeManagementTestUtilities.GenerateName("rpc1ClientTest");
             var inputRPC = new RestorePointCollection
             {
                 Location = location,
@@ -173,8 +117,8 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
             try
             {
                 createOrUpdateResponse = m_CrpClient.RestorePointCollections.CreateOrUpdate(
-                    resourceGroupName,
-                    inputRPCName,
+                    rgName,
+                    rpcName,
                     inputRPC);
             }
             catch (CloudException ex)
@@ -183,12 +127,25 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
                     "Expect failure when source id is not valid");
             }
 
-            // now successfully create RPC id by passing in source VM id
-            inputRPC.Source.Id = sourceVMId;
-            createOrUpdateResponse = m_CrpClient.RestorePointCollections.CreateOrUpdate(
-                    resourceGroupName,
-                    inputRPCName,
+            try
+            {
+                // now successfully create RPC id by passing in source VM id
+                inputRPC.Source.Id = sourceVMId;
+                inputRPC.Name = rpcName;
+                createOrUpdateResponse = m_CrpClient.RestorePointCollections.CreateOrUpdate(
+                    rgName,
+                    rpcName,
                     inputRPC);
+                Assert.Equal(sourceVMId, createOrUpdateResponse.Source.Id);
+                //Assert.Equal(sourceVMId, createOrUpdateResponse.Id);
+                Assert.Null(createOrUpdateResponse.RestorePoints);
+                Assert.Equal(rpcName, createOrUpdateResponse.Name);
+                Assert.Equal(location, createOrUpdateResponse.Location, ignoreCase: true);
+            }
+            catch (CloudException ex)
+            {
+                Console.WriteLine("here"); 
+            }
         }
     }
 }
