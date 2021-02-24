@@ -230,7 +230,7 @@ namespace Azure.Identity
     public partial class TokenCache
     {
         public TokenCache() { }
-        public event System.Func<Azure.Identity.TokenCacheUpdatedArgs, System.Threading.Tasks.Task> Updated { add { } remove { } }
+        public event Azure.Core.SyncAsyncEventHandler<Azure.Identity.TokenCacheUpdatedArgs> Updated { add { } remove { } }
     }
     public static partial class TokenCacheSerializer
     {
@@ -239,9 +239,9 @@ namespace Azure.Identity
         public static void Serialize(Azure.Identity.TokenCache tokenCache, System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
         public static System.Threading.Tasks.Task SerializeAsync(Azure.Identity.TokenCache tokenCache, System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class TokenCacheUpdatedArgs
+    public partial class TokenCacheUpdatedArgs : Azure.SyncAsyncEventArgs
     {
-        internal TokenCacheUpdatedArgs() { }
+        internal TokenCacheUpdatedArgs() : base (default(bool), default(System.Threading.CancellationToken)) { }
         public Azure.Identity.TokenCache Cache { get { throw null; } }
     }
     public partial class TokenCredentialOptions : Azure.Core.ClientOptions
