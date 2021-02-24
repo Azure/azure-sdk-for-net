@@ -75,14 +75,15 @@ Simply follow the instructions provided by the bot.
 You will only need to do this once across all repos using our CLA.
 
 This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct].
-For more information see the Code of Conduct FAQ or contact opencode@microsoft.com with any additional questions or comments.
+For more information see the [Code of Conduct FAQ][code_of_conduct_faq] or contact opencode@microsoft.com with any additional questions or comments.
 
 <!-- LINKS -->
 [microsoft_sdk_download]: https://azure.microsoft.com/downloads/?sdk=net
 [azure_sdk_target_frameworks]: https://github.com/azure/azure-sdk-for-net#target-frameworks
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/modelsrepository
 [package]: https://www.nuget.org/packages/Azure.Iot.ModelsRepository
-[code_of_conduct]: https://opensource.microsoft.com/codeofconduct/faq/
+[code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
+[code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [nuget]: https://www.nuget.org/
 [azure_core_library]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core
 [modelsrepository_nuget]: https://www.nuget.org/packages/Azure.Iot.ModelsRepository
