@@ -34,7 +34,7 @@ Currently no authentication mechanisms are supported in the client. The global e
 
 The Azure IoT Models Repository enables builders to manage and share digital twin models. The models are [JSON-LD][json_ld_reference] documents defined using the Digital Twins Definition Language ([DTDL][dtdlv2_reference]).
 
-The repository defines a pattern to store DTDL interfaces in a directory structure based on the Digital Twin Model Identifier (DTMI). You can locate an interface in the repository by converting the DTMI to a relative path. For example, the DTMI "dtmi:com:example:Thermostat;1" translates to /dtmi/com/example/thermostat-1.json.
+The repository defines a pattern to store DTDL interfaces in a directory structure based on the Digital Twin Model Identifier (DTMI). You can locate an interface in the repository by converting the DTMI to a relative path. For example, the DTMI "`dtmi:com:example:Thermostat;1`" translates to `/dtmi/com/example/thermostat-1.json`.
 
 ### Thread safety
 
