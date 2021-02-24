@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Net;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -82,6 +83,8 @@ namespace Azure.Iot.ModelsRepository.Fetchers
                 Queue<string> work = PrepareWork(dtmi, repositoryUri);
 
                 string remoteFetchError = string.Empty;
+                RequestFailedException requestFailedExceptionThrown = null;
+                Exception genericExceptionThrown = null;
 
                 while (work.Count != 0)
                 {
@@ -99,15 +102,34 @@ namespace Azure.Iot.ModelsRepository.Fetchers
                             Path = tryContentPath
                         };
                     }
-                    catch (Exception)
+                    catch (RequestFailedException ex)
                     {
+                        requestFailedExceptionThrown = ex;
+                        remoteFetchError =
+                            $"{string.Format(CultureInfo.CurrentCulture, ServiceStrings.GenericResolverError, dtmi)} " +
+                            string.Format(CultureInfo.CurrentCulture, StandardStrings.ErrorFetchingModelContent, tryContentPath);
+                    }
+                    catch (Exception ex)
+                    {
+                        genericExceptionThrown = ex;
                         remoteFetchError =
                             $"{string.Format(CultureInfo.CurrentCulture, ServiceStrings.GenericResolverError, dtmi)} " +
                             string.Format(CultureInfo.CurrentCulture, StandardStrings.ErrorFetchingModelContent, tryContentPath);
                     }
                 }
 
-                throw new RequestFailedException(remoteFetchError);
+                if (requestFailedExceptionThrown == null)
+                {
+                    throw new RequestFailedException((int)HttpStatusCode.BadRequest, remoteFetchError, null, genericExceptionThrown);
+                }
+                else
+                {
+                    throw new RequestFailedException(
+                        requestFailedExceptionThrown.Status,
+                        remoteFetchError,
+                        requestFailedExceptionThrown.ErrorCode,
+                        requestFailedExceptionThrown);
+                }
             }
             catch (Exception ex)
             {
