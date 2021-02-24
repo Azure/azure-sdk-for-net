@@ -1,11 +1,9 @@
 # Create, Retrieve and Delete a Secret Reference
 
 App Configuration helps you use the services together by creating keys that reference values stored in Key Vault.
-
 When App Configuration creates such keys, it stores the URIs of Key Vault values rather than the values themselves.
 
 Your application is responsible for authenticating properly to both App Configuration and Key Vault and resolving values.
-
 The two services don't communicate directly.
 
 You can use the [configuration provider](https://github.com/Azure/AppConfiguration-DotnetProvider) to do resolve Secret references automatically;
