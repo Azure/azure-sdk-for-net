@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core;
 
 namespace Azure.Security.KeyVault.Secrets
 {
@@ -9,18 +10,33 @@ namespace Azure.Security.KeyVault.Secrets
     /// Information about a <see cref="KeyVaultSecret"/> parsed from a <see cref="Uri"/>.
     /// You can use this information when calling methods of a <see cref="SecretClient"/>.
     /// </summary>
-    public readonly struct KeyVaultSecretIdentifier
+    public readonly struct KeyVaultSecretIdentifier : IEquatable<KeyVaultSecretIdentifier>
     {
-        private KeyVaultSecretIdentifier(Uri sourceId, Uri vaultUri, string name, string version)
+        /// <summary>
+        /// Creates a new instance of the <see cref="KeyVaultSecretIdentifier"/> class.
+        /// </summary>
+        /// <param name="id">The <see cref="Uri"/> to a secret or deleted secret.</param>
+        /// <exception cref="ArgumentException"><paramref name="id"/> is not a valid Key Vault secret ID.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="id"/> is null.</exception>
+        public KeyVaultSecretIdentifier(Uri id)
         {
-            SourceId = sourceId;
-            VaultUri = vaultUri;
-            Name = name;
-            Version = version;
+            Argument.AssertNotNull(id, nameof(id));
+
+            if (KeyVaultIdentifier.TryParse(id, out KeyVaultIdentifier identifier))
+            {
+                SourceId = id;
+                VaultUri = identifier.VaultUri;
+                Name = identifier.Name;
+                Version = identifier.Version;
+            }
+            else
+            {
+                throw new ArgumentException($"{id} is not a valid Key Vault secret ID", nameof(id));
+            }
         }
 
         /// <summary>
-        /// Gets the source <see cref="Uri"/> passed to <see cref="Parse(Uri)"/> or <see cref="TryParse(Uri, out KeyVaultSecretIdentifier)"/>.
+        /// Gets the source <see cref="Uri"/> passed to <see cref="KeyVaultSecretIdentifier(Uri)"/>.
         /// </summary>
         public Uri SourceId { get; }
 
@@ -39,43 +55,16 @@ namespace Azure.Security.KeyVault.Secrets
         /// </summary>
         public string Version { get; }
 
-        /// <summary>
-        /// Parses a <see cref="Uri"/> to a secret or deleted secret.
-        /// </summary>
-        /// <param name="id">The <see cref="Uri"/> to a secret or deleted secret.</param>
-        /// <returns>A <see cref="KeyVaultSecretIdentifier"/> containing information about the secret or deleted secret.</returns>
-        /// <exception cref="ArgumentException">The <paramref name="id"/> is not a valid Key Vault secret ID.</exception>
-        public static KeyVaultSecretIdentifier Parse(Uri id)
-        {
-            if (TryParse(id, out KeyVaultSecretIdentifier secretId))
-            {
-                return secretId;
-            }
+        /// <inheritdoc/>
+        public override bool Equals(object obj) =>
+            obj is KeyVaultSecretIdentifier other && Equals(other);
 
-            throw new ArgumentException($"{id} is not a valid Key Vault secret ID", nameof(id));
-        }
+        /// <inheritdoc/>
+        public bool Equals(KeyVaultSecretIdentifier other) =>
+            SourceId.Equals(other.SourceId);
 
-        /// <summary>
-        /// Tries to parse a <see cref="Uri"/> to a secret or deleted secret.
-        /// </summary>
-        /// <param name="id">The <see cref="Uri"/> to a secret or deleted secret.</param>
-        /// <param name="secretId">A <see cref="KeyVaultSecretIdentifier"/> containing information about the secret or deleted secret.</param>
-        /// <returns>True if the <paramref name="id"/> could be parsed successfully; otherwise, false.</returns>
-        public static bool TryParse(Uri id, out KeyVaultSecretIdentifier secretId)
-        {
-            if (KeyVaultIdentifier.TryParse(id, out KeyVaultIdentifier identifier))
-            {
-                secretId = new KeyVaultSecretIdentifier(
-                    id,
-                    identifier.VaultUri,
-                    identifier.Name,
-                    identifier.Version);
-
-                return true;
-            }
-
-            secretId = default;
-            return false;
-        }
+        /// <inheritdoc/>
+        public override int GetHashCode() =>
+            SourceId.GetHashCode();
     }
 }

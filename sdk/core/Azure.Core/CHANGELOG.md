@@ -2,6 +2,7 @@
 
 ## 1.10.0-beta.1 (Unreleased)
 
+- Added `CloudEvent` type based on the [CloudEvent spec](https://github.com/cloudevents/spec/blob/master/spec.md).
 
 ## 1.9.0 (2021-02-09)
 

@@ -5,7 +5,7 @@
 
 	<PropertyGroup>
 		<Description>Microsoft Azure CDN Management Library</Description>
-		<Version>6.0.0</Version>
+		<Version>6.1.0</Version>
 		<AssemblyName>Microsoft.Azure.Management.Cdn</AssemblyName>    
 		<PackageId>Microsoft.Azure.Management.Cdn</PackageId>
 		<PackageTags>Microsoft Azure CDN management;CDN;Cdn management;</PackageTags>

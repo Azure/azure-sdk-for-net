@@ -38,12 +38,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'FullAndDifferential', 'All', 'Incremental'</param>
         /// <param name="extendedInfo">In Get Recovery Point, it tells whether
         /// extended information about recovery point is asked.</param>
-        public BMSRPQueryObject(System.DateTime? startDate = default(System.DateTime?), System.DateTime? endDate = default(System.DateTime?), string restorePointQueryType = default(string), bool? extendedInfo = default(bool?))
+        /// <param name="moveReadyRPOnly">Whether the RP can be moved to
+        /// another tier</param>
+        public BMSRPQueryObject(System.DateTime? startDate = default(System.DateTime?), System.DateTime? endDate = default(System.DateTime?), string restorePointQueryType = default(string), bool? extendedInfo = default(bool?), bool? moveReadyRPOnly = default(bool?))
         {
             StartDate = startDate;
             EndDate = endDate;
             RestorePointQueryType = restorePointQueryType;
             ExtendedInfo = extendedInfo;
+            MoveReadyRPOnly = moveReadyRPOnly;
             CustomInit();
         }
 
@@ -78,6 +81,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// </summary>
         [JsonProperty(PropertyName = "extendedInfo")]
         public bool? ExtendedInfo { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether the RP can be moved to another tier
+        /// </summary>
+        [JsonProperty(PropertyName = "moveReadyRPOnly")]
+        public bool? MoveReadyRPOnly { get; set; }
 
     }
 }

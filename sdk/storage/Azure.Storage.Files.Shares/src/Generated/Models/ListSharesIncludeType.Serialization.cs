@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    internal static class ListSharesIncludeTypeExtensions
+    internal static partial class ListSharesIncludeTypeExtensions
     {
         public static string ToSerialString(this ListSharesIncludeType value) => value switch
         {

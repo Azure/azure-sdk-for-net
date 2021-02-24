@@ -25,7 +25,9 @@ namespace Azure.Test.Perf
         private static Channel<(TimeSpan, Stopwatch)> _pendingOperations;
 
         private static int CompletedOperations => _completedOperations.Sum();
-        private static double OperationsPerSecond => _completedOperations.Zip(_lastCompletionTimes, (operations, time) => (operations / time.TotalSeconds)).Sum();
+        private static double OperationsPerSecond => _completedOperations.Zip(_lastCompletionTimes,
+            (operations, time) => operations > 0 ? (operations / time.TotalSeconds) : 0)
+            .Sum();
 
         public static async Task Main(Assembly assembly, string[] args)
         {

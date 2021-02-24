@@ -75,11 +75,17 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// permitted on requests to storage. The default interpretation is TLS
         /// 1.0 for this property. Possible values include: 'TLS1_0', 'TLS1_1',
         /// 'TLS1_2'</param>
+        /// <param name="allowSharedKeyAccess">Indicates whether the storage
+        /// account permits requests to be authorized with the account access
+        /// key via Shared Key. If false, then all requests, including shared
+        /// access signatures, must be authorized with Azure Active Directory
+        /// (Azure AD). The default value is null, which is equivalent to
+        /// true.</param>
         /// <param name="kind">Optional. Indicates the type of storage account.
         /// Currently only StorageV2 value supported by server. Possible values
         /// include: 'Storage', 'StorageV2', 'BlobStorage', 'FileStorage',
         /// 'BlockBlobStorage'</param>
-        public StorageAccountUpdateParameters(Sku sku = default(Sku), IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), CustomDomain customDomain = default(CustomDomain), Encryption encryption = default(Encryption), AccessTier? accessTier = default(AccessTier?), AzureFilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = default(AzureFilesIdentityBasedAuthentication), bool? enableHttpsTrafficOnly = default(bool?), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), string largeFileSharesState = default(string), RoutingPreference routingPreference = default(RoutingPreference), bool? allowBlobPublicAccess = default(bool?), string minimumTlsVersion = default(string), string kind = default(string))
+        public StorageAccountUpdateParameters(Sku sku = default(Sku), IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), CustomDomain customDomain = default(CustomDomain), Encryption encryption = default(Encryption), AccessTier? accessTier = default(AccessTier?), AzureFilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = default(AzureFilesIdentityBasedAuthentication), bool? enableHttpsTrafficOnly = default(bool?), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), string largeFileSharesState = default(string), RoutingPreference routingPreference = default(RoutingPreference), bool? allowBlobPublicAccess = default(bool?), string minimumTlsVersion = default(string), bool? allowSharedKeyAccess = default(bool?), string kind = default(string))
         {
             Sku = sku;
             Tags = tags;
@@ -94,6 +100,7 @@ namespace Microsoft.Azure.Management.Storage.Models
             RoutingPreference = routingPreference;
             AllowBlobPublicAccess = allowBlobPublicAccess;
             MinimumTlsVersion = minimumTlsVersion;
+            AllowSharedKeyAccess = allowSharedKeyAccess;
             Kind = kind;
             CustomInit();
         }
@@ -203,6 +210,16 @@ namespace Microsoft.Azure.Management.Storage.Models
         public string MinimumTlsVersion { get; set; }
 
         /// <summary>
+        /// Gets or sets indicates whether the storage account permits requests
+        /// to be authorized with the account access key via Shared Key. If
+        /// false, then all requests, including shared access signatures, must
+        /// be authorized with Azure Active Directory (Azure AD). The default
+        /// value is null, which is equivalent to true.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.allowSharedKeyAccess")]
+        public bool? AllowSharedKeyAccess { get; set; }
+
+        /// <summary>
         /// Gets or sets optional. Indicates the type of storage account.
         /// Currently only StorageV2 value supported by server. Possible values
         /// include: 'Storage', 'StorageV2', 'BlobStorage', 'FileStorage',
@@ -222,6 +239,10 @@ namespace Microsoft.Azure.Management.Storage.Models
             if (Sku != null)
             {
                 Sku.Validate();
+            }
+            if (Identity != null)
+            {
+                Identity.Validate();
             }
             if (CustomDomain != null)
             {

@@ -211,14 +211,14 @@ namespace Azure.Communication.Identity
             }
         }
 
-        /// <summary>Issues a token for a <see cref="CommunicationUserIdentifier"/>.</summary>
-        /// <param name="communicationUser">The <see cref="CommunicationUserIdentifier"/> for whom to issue a token.</param>
+        /// <summary>Gets a token for a <see cref="CommunicationUserIdentifier"/>.</summary>
+        /// <param name="communicationUser">The <see cref="CommunicationUserIdentifier"/> for whom to get a token.</param>
         /// <param name="scopes">The scopes that the token should have.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         /// <exception cref="RequestFailedException">The server returned an error.</exception>
-        public virtual Response<AccessToken> IssueToken(CommunicationUserIdentifier communicationUser, IEnumerable<CommunicationTokenScope> scopes, CancellationToken cancellationToken = default)
+        public virtual Response<AccessToken> GetToken(CommunicationUserIdentifier communicationUser, IEnumerable<CommunicationTokenScope> scopes, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(IssueToken)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(GetToken)}");
             scope.Start();
             try
             {
@@ -232,13 +232,13 @@ namespace Azure.Communication.Identity
             }
         }
 
-        /// <summary>Asynchronously issues a token for a <see cref="CommunicationUserIdentifier"/>.</summary>
-        /// <param name="communicationUser">The <see cref="CommunicationUserIdentifier"/> for whom to issue a token.</param>
+        /// <summary>Asynchronously gets a token for a <see cref="CommunicationUserIdentifier"/>.</summary>
+        /// <param name="communicationUser">The <see cref="CommunicationUserIdentifier"/> for whom to get a token.</param>
         /// <param name="scopes">The scopes that the token should have.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
-        public virtual async Task<Response<AccessToken>> IssueTokenAsync(CommunicationUserIdentifier communicationUser, IEnumerable<CommunicationTokenScope> scopes, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AccessToken>> GetTokenAsync(CommunicationUserIdentifier communicationUser, IEnumerable<CommunicationTokenScope> scopes, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(IssueToken)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(GetToken)}");
             scope.Start();
             try
             {

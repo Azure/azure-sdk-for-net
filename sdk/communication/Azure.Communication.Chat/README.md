@@ -2,7 +2,7 @@
 
 > Server - Chat Api Version:  2020-11-01-preview3
 
-> Client - Chat SDK Version:  1.0.0-beta.3
+> Client - Chat SDK Version:  1.0.0-beta.4
 
 This package contains a C# SDK for Azure Communication Services for chat.
 
@@ -47,7 +47,7 @@ using Azure.Communication.Chat;
 This will allow you to create, get, or delete chat threads.
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_CreateChatClient
 ChatClient chatClient = new ChatClient(
-    new Uri(endpoint),
+    endpoint,
     new CommunicationTokenCredential(userToken));
 ```
 
@@ -136,6 +136,21 @@ Pageable<ChatMessageReadReceipt> readReceipts = chatThreadClient.GetReadReceipts
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_SendReadReceipt_KeyConcepts
 chatThreadClient.SendReadReceipt(messageId);
 ```
+
+### Thread safety
+We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
+
+### Additional concepts
+<!-- CLIENT COMMON BAR -->
+[Client options](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions) |
+[Accessing the response](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#accessing-http-response-details-using-responset) |
+[Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
+[Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
+[Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md) |
+[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#mocking) |
+[Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
+<!-- CLIENT COMMON BAR -->
+
 ## Examples
 
 The following sections provide several code snippets covering some of the most common tasks, including:
@@ -160,7 +175,7 @@ Use `CreateChatThread` to create a chat thread client object.
 
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_CreateChatClient
 ChatClient chatClient = new ChatClient(
-    new Uri(endpoint),
+    endpoint,
     new CommunicationTokenCredential(userToken));
 ```
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_CreateThread

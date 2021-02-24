@@ -4,4 +4,4 @@ extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
     ServiceDirectory: extensions
-    Clouds: 'Public,Preview,UsGov,China'
+    SupportedClouds: 'Public,Canary,UsGov,China'

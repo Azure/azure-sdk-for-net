@@ -40,7 +40,7 @@ namespace Azure.Storage.Blobs.Test
             MemoryStream stream = new MemoryStream();
             MockDataSource dataSource = new MockDataSource(0);
             Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
-            blockClient.SetupGet(c => c.ClientDiagnostics).CallBase();
+            blockClient.SetupGet(c => c.ClientConfiguration).CallBase();
 
             SetupDownload(blockClient, dataSource);
 
@@ -58,7 +58,7 @@ namespace Azure.Storage.Blobs.Test
             MemoryStream stream = new MemoryStream();
             MockDataSource dataSource = new MockDataSource(10);
             Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
-            blockClient.SetupGet(c => c.ClientDiagnostics).CallBase();
+            blockClient.SetupGet(c => c.ClientConfiguration).CallBase();
 
             SetupDownload(blockClient, dataSource);
 
@@ -76,7 +76,7 @@ namespace Azure.Storage.Blobs.Test
             MemoryStream stream = new MemoryStream();
             MockDataSource dataSource = new MockDataSource(100);
             Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
-            blockClient.SetupGet(c => c.ClientDiagnostics).CallBase();
+            blockClient.SetupGet(c => c.ClientConfiguration).CallBase();
             BlobProperties smallLengthProperties = new BlobProperties()
             {
                 ContentLength = 100
@@ -105,7 +105,7 @@ namespace Azure.Storage.Blobs.Test
             MemoryStream stream = new MemoryStream();
             MockDataSource dataSource = new MockDataSource(100);
             Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
-            blockClient.SetupGet(c => c.ClientDiagnostics).CallBase();
+            blockClient.SetupGet(c => c.ClientConfiguration).CallBase();
             BlobProperties smallLengthProperties = new BlobProperties()
             {
                 ContentLength = 100
@@ -134,7 +134,7 @@ namespace Azure.Storage.Blobs.Test
             MemoryStream stream = new MemoryStream();
             MockDataSource dataSource = new MockDataSource(100);
             Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
-            blockClient.SetupGet(c => c.ClientDiagnostics).CallBase();
+            blockClient.SetupGet(c => c.ClientConfiguration).CallBase();
             BlobProperties properties = new BlobProperties()
             {
                 ContentLength = 100,
@@ -182,7 +182,7 @@ namespace Azure.Storage.Blobs.Test
 
             MemoryStream stream = new MemoryStream();
             Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
-            blockClient.SetupGet(c => c.ClientDiagnostics).CallBase();
+            blockClient.SetupGet(c => c.ClientConfiguration).CallBase();
             BlobProperties smallLengthProperties = new BlobProperties()
             {
                 ContentLength = 100
@@ -284,36 +284,39 @@ namespace Azure.Storage.Blobs.Test
 
                 memoryStream.Position = 0;
 
-                return Response.FromValue(new BlobDownloadInfo(new FlattenedDownloadProperties()
+                return Response.FromValue(new BlobDownloadInfo()
                 {
-                    ContentRange = $"bytes {range.Offset}-{range.Offset + contentLength}/{_length}",
+                    BlobType = BlobType.Page,
                     ContentLength = contentLength,
                     Content = memoryStream,
-                    LastModified = DateTimeOffset.Now,
-                    Metadata = new Dictionary<string, string>() { { "meta", "data"}},
-                    BlobType = BlobType.Page,
-                    CopyStatusDescription = "test",
-                    CopyId = "test",
-                    CopyProgress = "test",
-                    CopySource = new Uri("http://example.com"),
-                    CopyStatus = CopyStatus.Failed,
-                    LeaseDuration = LeaseDurationType.Fixed,
-                    LeaseState = LeaseState.Expired,
-                    LeaseStatus = LeaseStatus.Unlocked,
                     ContentType = "test",
-                    ETag = s_etag,
-                    ContentHash = new byte[]{ 1, 2, 3},
-                    ContentEncoding = "test",
-                    ContentDisposition = "test",
-                    ContentLanguage = "test",
-                    CacheControl = "test",
-                    BlobSequenceNumber = 12,
-                    AcceptRanges = "test",
-                    BlobCommittedBlockCount = 5,
-                    IsServerEncrypted = true,
-                    EncryptionKeySha256 = "test",
-                    CopyCompletionTime =  DateTimeOffset.Now
-                }), new MockResponse(200));
+                    ContentHash = new byte[] { 1, 2, 3 },
+                    Details = new BlobDownloadDetails()
+                    {
+                        LastModified = DateTimeOffset.Now,
+                        Metadata = new Dictionary<string, string>() { { "meta", "data" } },
+                        ContentRange = $"bytes {range.Offset}-{range.Offset + contentLength}/{_length}",
+                        ETag = s_etag,
+                        ContentEncoding = "test",
+                        CacheControl = "test",
+                        ContentDisposition = "test",
+                        ContentLanguage = "test",
+                        BlobSequenceNumber = 12,
+                        CopyCompletedOn = DateTimeOffset.Now,
+                        CopyStatusDescription = "test",
+                        CopyId = "test",
+                        CopyProgress = "test",
+                        CopySource = new Uri("http://example.com"),
+                        CopyStatus = CopyStatus.Failed,
+                        LeaseDuration = LeaseDurationType.Fixed,
+                        LeaseState = LeaseState.Expired,
+                        LeaseStatus = LeaseStatus.Unlocked,
+                        AcceptRanges = "test",
+                        BlobCommittedBlockCount = 5,
+                        IsServerEncrypted = true,
+                        EncryptionKeySha256 = "test",
+                    }
+                }, new MockResponse(200));
             }
         }
     }

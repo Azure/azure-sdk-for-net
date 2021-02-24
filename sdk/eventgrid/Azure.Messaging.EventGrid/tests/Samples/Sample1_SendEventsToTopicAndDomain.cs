@@ -6,11 +6,12 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
+using Azure.Messaging;
+using Azure.Messaging.EventGrid;
+using Azure.Messaging.EventGrid.Tests;
 using NUnit.Framework;
-using NUnit.Framework.Constraints;
 
 namespace Azure.Messaging.EventGrid.Tests.Samples
 {
@@ -99,15 +100,10 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
             // Create the publisher client using an AzureKeyCredential
             // Custom topic should be configured to accept events of the CloudEvents 1.0 schema
             #region Snippet:CreateClientWithOptions
-            EventGridPublisherClientOptions clientOptions = new EventGridPublisherClientOptions()
-            {
-                Serializer = myCustomDataSerializer
-            };
 
             EventGridPublisherClient client = new EventGridPublisherClient(
                 new Uri(topicEndpoint),
-                new AzureKeyCredential(topicAccessKey),
-                clientOptions);
+                new AzureKeyCredential(topicAccessKey));
             #endregion
 
             #region Snippet:SendCloudEventsToTopic
@@ -118,13 +114,13 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
                 new CloudEvent(
                     "/cloudevents/example/source",
                     "Example.EventType",
-                    "This is the event data"),
+                    myCustomDataSerializer.Serialize("This is the event data")),
 
                 // CloudEvents also supports sending binary-valued data
                 new CloudEvent(
                     "/cloudevents/example/binarydata",
                     "Example.EventType",
-                    Encoding.UTF8.GetBytes("This is binary data"),
+                    new BinaryData(Encoding.UTF8.GetBytes("This is binary data")),
                     "example/binary")};
 
             // Send the events

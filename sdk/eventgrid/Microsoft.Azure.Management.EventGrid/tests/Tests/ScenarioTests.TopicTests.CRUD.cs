@@ -47,6 +47,8 @@ namespace EventGrid.Tests.ScenarioTests
                     Location = location,
                     Tags = originalTagsDictionary,
                     InputSchema = InputSchema.CustomEventSchema,
+                    Kind = ResourceKind.Azure,
+                    ExtendedLocation = null,
                     InputSchemaMapping = new JsonInputSchemaMapping()
                     {
                         Subject = new JsonFieldWithDefault("mySubjectField"),
@@ -77,6 +79,9 @@ namespace EventGrid.Tests.ScenarioTests
                 Assert.Equal("Succeeded", getTopicResponse.ProvisioningState, StringComparer.CurrentCultureIgnoreCase);
                 Assert.Equal(location, getTopicResponse.Location, StringComparer.CurrentCultureIgnoreCase);
                 Assert.Contains(getTopicResponse.Tags, tag => tag.Key == "originalTag1");
+                Assert.NotNull(getTopicResponse.Kind);
+                Assert.Equal(ResourceKind.Azure, getTopicResponse.Kind);
+                Assert.Null(getTopicResponse.ExtendedLocation);
 
                 //// Disable the test as Sku is not part of GA API yet.
                 //// Assert.Equal("Basic", getTopicResponse.Sku.Name, StringComparer.CurrentCultureIgnoreCase);
