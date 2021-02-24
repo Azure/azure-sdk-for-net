@@ -73,7 +73,7 @@ namespace Azure.Core.Serialization
 
         /// <inheritdoc />
         public override ValueTask<BinaryData> SerializeAsync(object? value, Type? inputType = default, CancellationToken cancellationToken = default) =>
-             new ValueTask<BinaryData>(Task.FromResult(SerializeToBinaryDataInternal(value, inputType)));
+             new ValueTask<BinaryData>(SerializeToBinaryDataInternal(value, inputType));
 
         private BinaryData SerializeToBinaryDataInternal(object? value, Type? inputType)
         {
