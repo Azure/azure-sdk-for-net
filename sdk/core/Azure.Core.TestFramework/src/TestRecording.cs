@@ -71,7 +71,7 @@ namespace Azure.Core.TestFramework
         {
             get
             {
-                return _sessionInternal ?? _mismatchException switch
+                return _mismatchException switch
                 {
                     null => _sessionInternal,
                     _ => throw _mismatchException
