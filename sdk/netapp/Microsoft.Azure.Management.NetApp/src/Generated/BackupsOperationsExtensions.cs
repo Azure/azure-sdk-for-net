@@ -417,6 +417,76 @@ namespace Microsoft.Azure.Management.NetApp
             }
 
             /// <summary>
+            /// Patch a backup
+            /// </summary>
+            /// <remarks>
+            /// Patch a backup for the volume
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the NetApp account
+            /// </param>
+            /// <param name='poolName'>
+            /// The name of the capacity pool
+            /// </param>
+            /// <param name='volumeName'>
+            /// The name of the volume
+            /// </param>
+            /// <param name='backupName'>
+            /// The name of the backup
+            /// </param>
+            /// <param name='body'>
+            /// Backup object supplied in the body of the operation.
+            /// </param>
+            public static Backup BeginUpdate(this IBackupsOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName, string backupName, BackupPatch body = default(BackupPatch))
+            {
+                return operations.BeginUpdateAsync(resourceGroupName, accountName, poolName, volumeName, backupName, body).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Patch a backup
+            /// </summary>
+            /// <remarks>
+            /// Patch a backup for the volume
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the NetApp account
+            /// </param>
+            /// <param name='poolName'>
+            /// The name of the capacity pool
+            /// </param>
+            /// <param name='volumeName'>
+            /// The name of the volume
+            /// </param>
+            /// <param name='backupName'>
+            /// The name of the backup
+            /// </param>
+            /// <param name='body'>
+            /// Backup object supplied in the body of the operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Backup> BeginUpdateAsync(this IBackupsOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName, string backupName, BackupPatch body = default(BackupPatch), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, accountName, poolName, volumeName, backupName, body, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Delete backup
             /// </summary>
             /// <remarks>
