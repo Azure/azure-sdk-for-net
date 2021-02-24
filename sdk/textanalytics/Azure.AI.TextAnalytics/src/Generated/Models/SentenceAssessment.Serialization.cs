@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class SentenceOpinion
+    internal partial class SentenceAssessment
     {
-        internal static SentenceOpinion DeserializeSentenceOpinion(JsonElement element)
+        internal static SentenceAssessment DeserializeSentenceAssessment(JsonElement element)
         {
-            string sentiment = default;
-            AspectConfidenceScoreLabel confidenceScores = default;
+            TokenSentimentValue sentiment = default;
+            TargetConfidenceScoreLabel confidenceScores = default;
             int offset = default;
             int length = default;
             string text = default;
@@ -24,12 +24,12 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 if (property.NameEquals("sentiment"))
                 {
-                    sentiment = property.Value.GetString();
+                    sentiment = property.Value.GetString().ToTokenSentimentValue();
                     continue;
                 }
                 if (property.NameEquals("confidenceScores"))
                 {
-                    confidenceScores = AspectConfidenceScoreLabel.DeserializeAspectConfidenceScoreLabel(property.Value);
+                    confidenceScores = TargetConfidenceScoreLabel.DeserializeTargetConfidenceScoreLabel(property.Value);
                     continue;
                 }
                 if (property.NameEquals("offset"))
@@ -53,7 +53,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new SentenceOpinion(sentiment, confidenceScores, offset, length, text, isNegated);
+            return new SentenceAssessment(sentiment, confidenceScores, offset, length, text, isNegated);
         }
     }
 }

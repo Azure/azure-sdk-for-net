@@ -7,15 +7,15 @@ using Azure.AI.TextAnalytics.Models;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// Contains the predicted sentiment, confidence scores, and other information about the opinion of an aspect.
+    /// Contains the predicted sentiment, confidence scores, and other information about the assessment of a target.
     /// <para>For example, in the sentence "The food is good", the opinion of the
     /// aspect 'food' is 'good'.</para>
     /// </summary>
-    public readonly struct OpinionSentiment
+    public readonly struct AssessmentSentiment
     {
         private const double _neutralValue = 0d;
 
-        internal OpinionSentiment(TextSentiment sentiment, double positiveScore, double negativeScore, string text, bool isNegated, int offset, int length)
+        internal AssessmentSentiment(TextSentiment sentiment, double positiveScore, double negativeScore, string text, bool isNegated, int offset, int length)
         {
             Sentiment = sentiment;
             ConfidenceScores = new SentimentConfidenceScores(positiveScore, _neutralValue, negativeScore);
@@ -25,13 +25,13 @@ namespace Azure.AI.TextAnalytics
             Length = length;
         }
 
-        internal OpinionSentiment(SentenceOpinion opinion)
+        internal AssessmentSentiment(SentenceAssessment opinion)
         {
             _ = opinion ?? throw new ArgumentNullException(nameof(opinion));
 
             Text = opinion.Text;
             ConfidenceScores = new SentimentConfidenceScores(opinion.ConfidenceScores.Positive, _neutralValue, opinion.ConfidenceScores.Negative);
-            Sentiment = (TextSentiment)Enum.Parse(typeof(TextSentiment), opinion.Sentiment, ignoreCase: true);
+            Sentiment = (TextSentiment)Enum.Parse(typeof(TextSentiment), opinion.Sentiment.ToString(), ignoreCase: true);
             IsNegated = opinion.IsNegated;
             Offset = opinion.Offset;
             Length = opinion.Length;

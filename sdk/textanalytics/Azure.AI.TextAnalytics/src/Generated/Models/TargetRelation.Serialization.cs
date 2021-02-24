@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class AspectRelation
+    internal partial class TargetRelation
     {
-        internal static AspectRelation DeserializeAspectRelation(JsonElement element)
+        internal static TargetRelation DeserializeTargetRelation(JsonElement element)
         {
-            AspectRelationType relationType = default;
+            TargetRelationType relationType = default;
             string @ref = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("relationType"))
                 {
-                    relationType = new AspectRelationType(property.Value.GetString());
+                    relationType = property.Value.GetString().ToTargetRelationType();
                     continue;
                 }
                 if (property.NameEquals("ref"))
@@ -29,7 +29,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new AspectRelation(relationType, @ref);
+            return new TargetRelation(relationType, @ref);
         }
     }
 }

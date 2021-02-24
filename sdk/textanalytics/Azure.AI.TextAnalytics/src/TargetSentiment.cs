@@ -7,17 +7,17 @@ using Azure.AI.TextAnalytics.Models;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// Contains the related opinions, predicted sentiment,
-    /// confidence scores and other information about an aspect of a product.
-    /// An aspect of a product/service is a key component of that product/service.
-    /// <para>For example in "The food at Hotel Foo is good", "food" is an aspect of
+    /// Contains the related assessments, predicted sentiment,
+    /// confidence scores and other information about a target of a product.
+    /// A Target of a product/service is a key component of that product/service.
+    /// <para>For example in "The food at Hotel Foo is good", "food" is a target of
     /// "Hotel Foo".</para>
     /// </summary>
-    public readonly struct AspectSentiment
+    public readonly struct TargetSentiment
     {
         private const double _neutralValue = 0d;
 
-        internal AspectSentiment(TextSentiment sentiment, string text, double positiveScore, double negativeScore, int offset, int length)
+        internal TargetSentiment(TextSentiment sentiment, string text, double positiveScore, double negativeScore, int offset, int length)
         {
             Sentiment = sentiment;
             Text = text;
@@ -26,15 +26,15 @@ namespace Azure.AI.TextAnalytics
             Length = length;
         }
 
-        internal AspectSentiment(SentenceAspect sentenceAspect)
+        internal TargetSentiment(SentenceTarget sentenceTarget)
         {
-            _ = sentenceAspect ?? throw new ArgumentNullException(nameof(sentenceAspect));
+            _ = sentenceTarget ?? throw new ArgumentNullException(nameof(sentenceTarget));
 
-            Text = sentenceAspect.Text;
-            ConfidenceScores = new SentimentConfidenceScores(sentenceAspect.ConfidenceScores.Positive, _neutralValue, sentenceAspect.ConfidenceScores.Negative);
-            Sentiment = (TextSentiment)Enum.Parse(typeof(TextSentiment), sentenceAspect.Sentiment, ignoreCase: true);
-            Offset = sentenceAspect.Offset;
-            Length = sentenceAspect.Length;
+            Text = sentenceTarget.Text;
+            ConfidenceScores = new SentimentConfidenceScores(sentenceTarget.ConfidenceScores.Positive, _neutralValue, sentenceTarget.ConfidenceScores.Negative);
+            Sentiment = (TextSentiment)Enum.Parse(typeof(TextSentiment), sentenceTarget.Sentiment.ToString(), ignoreCase: true);
+            Offset = sentenceTarget.Offset;
+            Length = sentenceTarget.Length;
         }
 
         /// <summary>

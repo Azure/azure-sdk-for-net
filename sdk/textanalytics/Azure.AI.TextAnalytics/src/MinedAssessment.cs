@@ -6,16 +6,16 @@ using System.Collections.Generic;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// A mined opinion object contains opinions extracted from a sentence.
-    /// It consists of both an aspect that these opinions are about, and the actual
-    /// opinions themselves.
+    /// A mined assessment object contains opinions extracted from a sentence.
+    /// It consists of both the target that these assessments are about, and the actual
+    /// assessment themselves.
     /// </summary>
-    public readonly struct MinedOpinion
+    public readonly struct MinedAssessment
     {
-        internal MinedOpinion(AspectSentiment aspect, IReadOnlyList<OpinionSentiment> opinions)
+        internal MinedAssessment(TargetSentiment target, IReadOnlyList<AssessmentSentiment> assessments)
         {
-            Aspect = aspect;
-            Opinions = new List<OpinionSentiment>(opinions);
+            Target = target;
+            Assessments = new List<AssessmentSentiment>(assessments);
         }
 
         /// <summary>
@@ -23,12 +23,12 @@ namespace Azure.AI.TextAnalytics
         /// <para>For example in "The food at Hotel Foo is good", "food" is an aspect of
         /// "Hotel Foo".</para>
         /// </summary>
-        public AspectSentiment Aspect { get; }
+        public TargetSentiment Target { get; }
         /// <summary>
         /// The list of opinions that are related to the aspect.
         /// <para>For example in "The food at Hotel Foo is good", "food" is an aspect of
         /// "Hotel Foo" and "good" is the opinion related to the aspect.</para>
         /// </summary>
-        public IReadOnlyCollection<OpinionSentiment> Opinions { get; }
+        public IReadOnlyCollection<AssessmentSentiment> Assessments { get; }
     }
 }

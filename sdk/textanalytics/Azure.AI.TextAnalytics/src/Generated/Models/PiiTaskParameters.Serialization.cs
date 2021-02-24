@@ -25,6 +25,16 @@ namespace Azure.AI.TextAnalytics
                 writer.WritePropertyName("model-version");
                 writer.WriteStringValue(ModelVersion);
             }
+            if (Optional.IsCollectionDefined(PiiCategories))
+            {
+                writer.WritePropertyName("pii-categories");
+                writer.WriteStartArray();
+                foreach (var item in PiiCategories)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(StringIndexType))
             {
                 writer.WritePropertyName("stringIndexType");

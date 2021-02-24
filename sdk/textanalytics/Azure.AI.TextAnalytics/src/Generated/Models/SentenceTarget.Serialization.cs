@@ -11,26 +11,26 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class SentenceAspect
+    internal partial class SentenceTarget
     {
-        internal static SentenceAspect DeserializeSentenceAspect(JsonElement element)
+        internal static SentenceTarget DeserializeSentenceTarget(JsonElement element)
         {
-            string sentiment = default;
-            AspectConfidenceScoreLabel confidenceScores = default;
+            TokenSentimentValue sentiment = default;
+            TargetConfidenceScoreLabel confidenceScores = default;
             int offset = default;
             int length = default;
             string text = default;
-            IReadOnlyList<AspectRelation> relations = default;
+            IReadOnlyList<TargetRelation> relations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sentiment"))
                 {
-                    sentiment = property.Value.GetString();
+                    sentiment = property.Value.GetString().ToTokenSentimentValue();
                     continue;
                 }
                 if (property.NameEquals("confidenceScores"))
                 {
-                    confidenceScores = AspectConfidenceScoreLabel.DeserializeAspectConfidenceScoreLabel(property.Value);
+                    confidenceScores = TargetConfidenceScoreLabel.DeserializeTargetConfidenceScoreLabel(property.Value);
                     continue;
                 }
                 if (property.NameEquals("offset"))
@@ -50,16 +50,16 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 if (property.NameEquals("relations"))
                 {
-                    List<AspectRelation> array = new List<AspectRelation>();
+                    List<TargetRelation> array = new List<TargetRelation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AspectRelation.DeserializeAspectRelation(item));
+                        array.Add(TargetRelation.DeserializeTargetRelation(item));
                     }
                     relations = array;
                     continue;
                 }
             }
-            return new SentenceAspect(sentiment, confidenceScores, offset, length, text, relations);
+            return new SentenceTarget(sentiment, confidenceScores, offset, length, text, relations);
         }
     }
 }
