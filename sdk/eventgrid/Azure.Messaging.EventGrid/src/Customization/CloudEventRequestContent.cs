@@ -4,18 +4,17 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid
 {
     internal class CloudEventRequestContent : RequestContent
     {
         private IEnumerable<CloudEvent> _cloudEvents;
-        private static readonly JsonObjectSerializer s_jsonSerializer = new JsonObjectSerializer();
         private const string TraceParentHeaderName = "traceparent";
         private const string TraceStateHeaderName = "tracestate";
         private byte[] _data;
@@ -31,63 +30,53 @@ namespace Azure.Messaging.EventGrid
 
         public override bool TryComputeLength(out long length)
         {
-            EnsureSerializedAsync(false, CancellationToken.None).EnsureCompleted();
+            EnsureSerialized();
             length = _data.Length;
             return true;
         }
 
         public override void WriteTo(Stream stream, CancellationToken cancellationToken)
         {
-            EnsureSerializedAsync(false, cancellationToken).EnsureCompleted();
+            EnsureSerialized();
             stream.Write(_data, 0, _data.Length);
         }
 
         public override async Task WriteToAsync(Stream stream, CancellationToken cancellationToken)
         {
-            await EnsureSerializedAsync(true, cancellationToken).ConfigureAwait(false);
+            EnsureSerialized();
             await stream.WriteAsync(_data, 0, _data.Length, cancellationToken).ConfigureAwait(false);
         }
 
-        private async Task EnsureSerializedAsync(bool async, CancellationToken cancellationToken)
+        private void EnsureSerialized()
         {
             if (_data != null)
             {
                 return;
             }
 
-            string activityId = null;
+            string currentActivityId = null;
             string traceState = null;
             Activity currentActivity = Activity.Current;
             if (currentActivity != null && currentActivity.IsW3CFormat())
             {
-                activityId = currentActivity.Id;
+                currentActivityId = currentActivity.Id;
                 currentActivity.TryGetTraceState(out traceState);
             }
 
             foreach (CloudEvent cloudEvent in _cloudEvents)
             {
-                // Individual events cannot be null
-                Argument.AssertNotNull(cloudEvent, nameof(cloudEvent));
-
-                if (activityId != null &&
+                if (currentActivityId != null &&
                     !cloudEvent.ExtensionAttributes.ContainsKey(TraceParentHeaderName) &&
                     !cloudEvent.ExtensionAttributes.ContainsKey(TraceStateHeaderName))
                 {
-                    cloudEvent.ExtensionAttributes.Add(TraceParentHeaderName, activityId);
+                    cloudEvent.ExtensionAttributes.Add(TraceParentHeaderName, currentActivityId);
                     if (traceState != null)
                     {
                         cloudEvent.ExtensionAttributes.Add(TraceStateHeaderName, traceState);
                     }
                 }
             }
-            if (async)
-            {
-                _data = (await s_jsonSerializer.SerializeAsync(_cloudEvents, typeof(List<CloudEvent>), cancellationToken).ConfigureAwait(false)).ToArray();
-            }
-            else
-            {
-                _data = s_jsonSerializer.Serialize(_cloudEvents, typeof(List<CloudEvent>), cancellationToken).ToArray();
-            }
+            _data = JsonSerializer.SerializeToUtf8Bytes(_cloudEvents, typeof(List<CloudEvent>));
         }
     }
 }
