@@ -14,7 +14,7 @@ namespace Azure.Iot.ModelsRepository.Tests
 
         protected static RecordedTestMode TestMode => (RecordedTestMode)Enum.Parse(
             typeof(RecordedTestMode),
-            Environment.GetEnvironmentVariable(TestModeEnvVariable));
+            Environment.GetEnvironmentVariable(TestModeEnvVariable) ?? "Playback");
 
         public ModelsRepositoryRecordedTestBase(bool isAsync) : base(isAsync, TestMode)
         {
