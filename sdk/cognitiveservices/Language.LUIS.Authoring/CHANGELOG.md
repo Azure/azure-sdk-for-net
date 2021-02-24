@@ -1,8 +1,6 @@
 # Release History
 
-## 3.2.0-preview.4 (Unreleased)
-
-## 3.2.1-preview.3 (Unreleased)
+## 3.2.0-preview.4 (2021-02-25)
 ### Fixed
 - ExampleId attribute in label APIs could not hold int values
 - ArmTokenParameter parameter name had a typo
