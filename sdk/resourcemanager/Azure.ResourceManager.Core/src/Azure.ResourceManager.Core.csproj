@@ -9,6 +9,7 @@
     </Description>
     <PackageTags>azure;management;resource</PackageTags>
     <NoWarn>$(NoWarn);AZC0008;AZC0001;AZC0107;CA2214;CA1036;CA1067;CA1065;SA1028</NoWarn>
+    <IncludeGeneratorSharedCode>true</IncludeGeneratorSharedCode>
   </PropertyGroup>
 
   <ItemGroup>
