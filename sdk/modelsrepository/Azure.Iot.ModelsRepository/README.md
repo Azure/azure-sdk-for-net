@@ -58,7 +58,7 @@ You can familiarize yourself with the client using [samples for IoT Models Repos
 
 ## Troubleshooting
 
-All service operations will throw RequestFailedException on failure, with helpful error codes and other information.
+All service operations will throw RequestFailedException on failure, with helpful error codes and other information. The client also produces diagnostic events and logging which can be listened to with an [EventListener](eventsourcelistener_reference).
 
 ## Next steps
 
@@ -93,3 +93,4 @@ For more information see the [Code of Conduct FAQ][code_of_conduct_faq] or conta
 [thread_safety_guideline]: https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety
 [json_ld_reference]: https://json-ld.org
 [dtdlv2_reference]: https://github.com/Azure/opendigitaltwins-dtdl/blob/master/DTDL/v2/dtdlv2.md
+[eventsourcelistener_reference]: https://docs.microsoft.com/en-us/dotnet/api/azure.core.diagnostics.azureeventsourcelistener?view=azure-dotnet
