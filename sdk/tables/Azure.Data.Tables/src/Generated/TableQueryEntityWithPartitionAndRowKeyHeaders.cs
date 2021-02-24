@@ -10,10 +10,10 @@ using Azure.Core;
 
 namespace Azure.Data.Tables
 {
-    internal partial class TableQueryEntitiesWithPartitionAndRowKeyHeaders
+    internal partial class TableQueryEntityWithPartitionAndRowKeyHeaders
     {
         private readonly Response _response;
-        public TableQueryEntitiesWithPartitionAndRowKeyHeaders(Response response)
+        public TableQueryEntityWithPartitionAndRowKeyHeaders(Response response)
         {
             _response = response;
         }

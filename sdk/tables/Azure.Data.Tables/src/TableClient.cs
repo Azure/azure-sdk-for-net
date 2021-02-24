@@ -430,7 +430,7 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                var response = _tableOperations.QueryEntitiesWithPartitionAndRowKey(
+                var response = _tableOperations.QueryEntityWithPartitionAndRowKey(
                     _table,
                     partitionKey,
                     rowKey,
@@ -469,7 +469,7 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                var response = await _tableOperations.QueryEntitiesWithPartitionAndRowKeyAsync(
+                var response = await _tableOperations.QueryEntityWithPartitionAndRowKeyAsync(
                     _table,
                     partitionKey,
                     rowKey,
