@@ -26,11 +26,11 @@ namespace Azure.Communication.Chat
     }
     public partial class ChatClientOptions : Azure.Core.ClientOptions
     {
-        public const Azure.Communication.Chat.ChatClientOptions.ServiceVersion LatestVersion = Azure.Communication.Chat.ChatClientOptions.ServiceVersion.V1;
-        public ChatClientOptions(Azure.Communication.Chat.ChatClientOptions.ServiceVersion version = Azure.Communication.Chat.ChatClientOptions.ServiceVersion.V1) { }
+        public const Azure.Communication.Chat.ChatClientOptions.ServiceVersion LatestVersion = Azure.Communication.Chat.ChatClientOptions.ServiceVersion.V2021_01_27_Preview4;
+        public ChatClientOptions(Azure.Communication.Chat.ChatClientOptions.ServiceVersion version = Azure.Communication.Chat.ChatClientOptions.ServiceVersion.V2021_01_27_Preview4) { }
         public enum ServiceVersion
         {
-            V1 = 1,
+            V2021_01_27_Preview4 = 1,
         }
     }
     public partial class ChatMessage
@@ -94,7 +94,7 @@ namespace Azure.Communication.Chat
     }
     public partial class ChatParticipant
     {
-        public ChatParticipant(Azure.Communication.CommunicationIdentifier communicationIdentifier) { }
+        public ChatParticipant(Azure.Communication.CommunicationIdentifier identifier) { }
         public string? DisplayName { get { throw null; } set { } }
         public System.DateTimeOffset? ShareHistoryTime { get { throw null; } set { } }
         public Azure.Communication.CommunicationIdentifier User { get { throw null; } set { } }
