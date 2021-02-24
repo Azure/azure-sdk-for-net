@@ -105,30 +105,35 @@ namespace Azure.Iot.ModelsRepository.Fetchers
                     catch (RequestFailedException ex)
                     {
                         requestFailedExceptionThrown = ex;
-                        remoteFetchError =
-                            $"{string.Format(CultureInfo.CurrentCulture, ServiceStrings.GenericResolverError, dtmi)} " +
-                            string.Format(CultureInfo.CurrentCulture, StandardStrings.ErrorFetchingModelContent, tryContentPath);
                     }
                     catch (Exception ex)
                     {
                         genericExceptionThrown = ex;
+                    }
+
+                    if (genericExceptionThrown != null || requestFailedExceptionThrown != null)
+                    {
                         remoteFetchError =
                             $"{string.Format(CultureInfo.CurrentCulture, ServiceStrings.GenericResolverError, dtmi)} " +
                             string.Format(CultureInfo.CurrentCulture, StandardStrings.ErrorFetchingModelContent, tryContentPath);
                     }
                 }
 
-                if (requestFailedExceptionThrown == null)
-                {
-                    throw new RequestFailedException((int)HttpStatusCode.BadRequest, remoteFetchError, null, genericExceptionThrown);
-                }
-                else
+                if (requestFailedExceptionThrown != null)
                 {
                     throw new RequestFailedException(
                         requestFailedExceptionThrown.Status,
                         remoteFetchError,
                         requestFailedExceptionThrown.ErrorCode,
                         requestFailedExceptionThrown);
+                }
+                else
+                {
+                    throw new RequestFailedException(
+                        (int)HttpStatusCode.BadRequest,
+                        remoteFetchError,
+                        null,
+                        genericExceptionThrown);
                 }
             }
             catch (Exception ex)
