@@ -7,7 +7,7 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Azure.MixedReality.Authentication" VersionOverride="1.0.0-beta.2" />
+    <PackageReference Include="Azure.MixedReality.Authentication" VersionOverride="1.0.0" />
   </ItemGroup>
   
   <!-- Shared source from Azure.Core and Azure.MixedReality.Authentication -->
