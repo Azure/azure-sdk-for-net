@@ -155,7 +155,7 @@ List<CloudEvent> eventsList = new List<CloudEvent>
         "/cloudevents/example/binarydata",
         "Example.EventType",
         new BinaryData(Encoding.UTF8.GetBytes("This is treated as binary data")),
-        "example/binary")};
+        "application/octet-stream")};
 
 // Send the events
 await client.SendEventsAsync(eventsList);
