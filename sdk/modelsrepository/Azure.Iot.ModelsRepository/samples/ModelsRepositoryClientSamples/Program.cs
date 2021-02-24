@@ -23,8 +23,9 @@ namespace Azure.Iot.ModelsRepository.Samples
         private static async Task ResolveExisting()
         {
             string dtmi = "dtmi:com:example:TemperatureController;1";
-            ModelsRepositoryClient rc = new ModelsRepositoryClient();
-            IDictionary<string, string> models = await rc.ResolveAsync(dtmi);
+            ModelsRepositoryClient client = new ModelsRepositoryClient();
+
+            IDictionary<string, string> models = await client.ResolveAsync(dtmi);
 
             Console.WriteLine($"{dtmi} resolved in {models.Count} interfaces.");
         }
@@ -32,11 +33,11 @@ namespace Azure.Iot.ModelsRepository.Samples
         private static async Task TryResolveButNotFound()
         {
             string dtmi = "dtmi:com:example:NotFound;1";
-            ModelsRepositoryClient rc = new ModelsRepositoryClient();
+            ModelsRepositoryClient client = new ModelsRepositoryClient();
 
             try
             {
-                IDictionary<string, string> models = await rc.ResolveAsync(dtmi);
+                IDictionary<string, string> models = await client.ResolveAsync(dtmi);
                 Console.WriteLine($"{dtmi} resolved in {models.Count} interfaces.");
             }
             catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.NotFound)
