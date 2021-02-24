@@ -3,6 +3,6 @@ trigger: none
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
-    ServiceDirectory: modelrepository
+    ServiceDirectory: modelsrepository
     Location: westus2
     Clouds: Preview
