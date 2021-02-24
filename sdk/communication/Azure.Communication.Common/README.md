@@ -54,7 +54,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ### Create a credential with a static token
 
-For a short-lived clents when refreshing token upon expiry is not needed, `CommunicationTokenCredential` can be instantited with a static token.
+For a short-lived clients when refreshing token upon expiry is not needed, `CommunicationTokenCredential` can be instantited with a static token.
 
 ```C# Snippet:CommunicationTokenCredential_CreateWithStaticToken
 string token = Environment.GetEnvironmentVariable("COMMUNICATION_SERVICES_USER_TOKEN");
