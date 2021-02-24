@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using FluentAssertions;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.IO;
@@ -26,7 +27,7 @@ namespace Azure.Iot.ModelsRepository.Tests
         {
             string modelContent = string.Format(_modelTemplate, formatId, "", "");
             ModelQuery query = new ModelQuery(modelContent);
-            Assert.AreEqual(query.ParseModel().Id, expectedId);
+            query.ParseModel().Id.Should().Be(expectedId);
         }
 
         [TestCase(
@@ -71,11 +72,11 @@ namespace Azure.Iot.ModelsRepository.Tests
             string modelContent = string.Format(_modelTemplate, "", "", contents);
             ModelQuery query = new ModelQuery(modelContent);
             IList<string> componentSchemas = query.ParseModel().ComponentSchemas;
-            Assert.AreEqual(componentSchemas.Count, expectedDtmis.Length);
+            componentSchemas.Count.Should().Be(expectedDtmis.Length);
 
             foreach (string schema in componentSchemas)
             {
-                Assert.Contains(schema, expectedDtmis);
+                expectedDtmis.Should().Contain(schema);
             }
         }
 
@@ -92,11 +93,11 @@ namespace Azure.Iot.ModelsRepository.Tests
             string modelContent = string.Format(_modelTemplate, "", extends, "");
             ModelQuery query = new ModelQuery(modelContent);
             IList<string> extendsDtmis = query.ParseModel().Extends;
-            Assert.AreEqual(extendsDtmis.Count, expectedDtmis.Length);
+            extendsDtmis.Count.Should().Be(expectedDtmis.Length);
 
             foreach (string dtmi in extendsDtmis)
             {
-                Assert.Contains(dtmi, expectedDtmis);
+                expectedDtmis.Should().Contain(dtmi);
             }
         }
 
@@ -152,12 +153,11 @@ namespace Azure.Iot.ModelsRepository.Tests
             ModelMetadata metadata = new ModelQuery(modelContent).ParseModel();
 
             IList<string> dependencies = metadata.Dependencies;
-
-            Assert.AreEqual(dependencies.Count, expectedDtmis.Length);
+            dependencies.Count.Should().Be(expectedDtmis.Length);
 
             foreach (string dtmi in dependencies)
             {
-                Assert.Contains(dtmi, expectedDtmis);
+                expectedDtmis.Should().Contain(dtmi);
             }
         }
 
@@ -177,12 +177,12 @@ namespace Azure.Iot.ModelsRepository.Tests
                 "dtmi:com:example:Thermostat;1",
                 "dtmi:com:example:TemperatureController;1" };
 
-            Assert.True(transformResult.Keys.Count == expectedIds.Length);
+            transformResult.Keys.Count.Should().Be(expectedIds.Length);
 
             foreach (string id in expectedIds)
             {
-                Assert.True(transformResult.ContainsKey(id));
-                Assert.True(ParseRootDtmiFromJson(transformResult[id]).Equals(id, System.StringComparison.Ordinal));
+                transformResult.Should().ContainKey(id);
+                ParseRootDtmiFromJson(transformResult[id]).Should().Be(id);
             }
         }
     }

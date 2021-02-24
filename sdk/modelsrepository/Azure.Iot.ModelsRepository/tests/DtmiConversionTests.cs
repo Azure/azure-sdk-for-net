@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using FluentAssertions;
 using NUnit.Framework;
 using System;
 using System.Runtime.InteropServices;
@@ -16,7 +17,7 @@ namespace Azure.Iot.ModelsRepository.Tests
         [TestCase(null, null)]
         public void DtmiToPath(string dtmi, string expectedPath)
         {
-            Assert.AreEqual(expectedPath, DtmiConventions.DtmiToPath(dtmi));
+            DtmiConventions.DtmiToPath(dtmi).Should().Be(expectedPath);
         }
 
         [TestCase("dtmi:com:example:Thermostat;1", "dtmi/com/example/thermostat-1.json", "https://localhost/repository")]
@@ -33,18 +34,18 @@ namespace Azure.Iot.ModelsRepository.Tests
 
             if (string.IsNullOrEmpty(expectedPath))
             {
-                ArgumentException re = Assert.Throws<ArgumentException>(() => DtmiConventions.DtmiToQualifiedPath(dtmi, repository));
-                Assert.AreEqual(re.Message, string.Format(StandardStrings.InvalidDtmiFormat, dtmi));
+                Action act = () => DtmiConventions.DtmiToQualifiedPath(dtmi, repository);
+                act.Should().Throw<ArgumentException>().WithMessage(string.Format(StandardStrings.InvalidDtmiFormat, dtmi));
                 return;
             }
 
             string modelPath = DtmiConventions.DtmiToQualifiedPath(dtmi, repository);
-            Assert.AreEqual($"{repository}/{expectedPath}", modelPath);
+            modelPath.Should().Be($"{repository}/{expectedPath}");
 
             string expandedModelPath = DtmiConventions.DtmiToQualifiedPath(dtmi, repository, true);
-            Assert.AreEqual(
-                $"{repository}/{expectedPath.Replace(ModelRepositoryConstants.JsonFileExtension, ModelRepositoryConstants.ExpandedJsonFileExtension)}",
-                expandedModelPath);
+            expandedModelPath
+                .Should()
+                .Be($"{repository}/{expectedPath.Replace(ModelRepositoryConstants.JsonFileExtension, ModelRepositoryConstants.ExpandedJsonFileExtension)}");
         }
     }
 }

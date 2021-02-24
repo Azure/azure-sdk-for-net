@@ -35,14 +35,14 @@ namespace Azure.Iot.ModelsRepository.Tests
 
             return
                 clientType == ModelsRepositoryTestBase.ClientType.Local
-                ? InstrumentClient(
-                    new ModelsRepositoryClient(
-                        new Uri(ModelsRepositoryTestBase.TestLocalModelRepository),
-                        InstrumentClientOptions(options)))
-                : InstrumentClient(
-                    new ModelsRepositoryClient(
-                        new Uri(ModelsRepositoryTestBase.TestRemoteModelRepository),
-                        InstrumentClientOptions(options)));
+                    ? InstrumentClient(
+                        new ModelsRepositoryClient(
+                            new Uri(ModelsRepositoryTestBase.TestLocalModelRepository),
+                            InstrumentClientOptions(options)))
+                    : InstrumentClient(
+                        new ModelsRepositoryClient(
+                            new Uri(ModelsRepositoryTestBase.TestRemoteModelRepository),
+                            InstrumentClientOptions(options)));
         }
     }
 }

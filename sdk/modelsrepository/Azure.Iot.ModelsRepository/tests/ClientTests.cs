@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using FluentAssertions;
 using NUnit.Framework;
 using System;
 using System.Diagnostics.Tracing;
@@ -16,26 +17,20 @@ namespace Azure.Iot.ModelsRepository.Tests
             string remoteUriStr = "https://dtmi.com";
             Uri remoteUri = new Uri(remoteUriStr);
 
-            ModelsRepositoryClientOptions options = new ModelsRepositoryClientOptions();
-
-            Assert.AreEqual(ModelsRepositoryClient.DefaultModelsRepository, new ModelsRepositoryClient().RepositoryUri);
-            Assert.AreEqual(ModelsRepositoryClient.DefaultModelsRepository, new ModelsRepositoryClient().RepositoryUri);
-            Assert.AreEqual(ModelsRepositoryClient.DefaultModelsRepository, new ModelsRepositoryClient(options).RepositoryUri);
-
-            Assert.AreEqual(remoteUri, new ModelsRepositoryClient(remoteUri).RepositoryUri);
-            Assert.AreEqual(remoteUri, new ModelsRepositoryClient(remoteUri, options).RepositoryUri);
+            new ModelsRepositoryClient().RepositoryUri.Should().Be(ModelsRepositoryClient.DefaultModelsRepository);
+            new ModelsRepositoryClient(remoteUri).RepositoryUri.Should().Be(remoteUri);
 
             string localUriStr = TestLocalModelRepository;
-            Uri localUri = new Uri(localUriStr);
 
-            Assert.AreEqual(localUri, new ModelsRepositoryClient(localUri).RepositoryUri);
+            var localUri = new Uri(localUriStr);
+            new ModelsRepositoryClient(localUri).RepositoryUri.Should().Be(localUri);
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 localUriStr = localUriStr.Replace("\\", "/");
             }
 
-            Assert.AreEqual(localUriStr, new ModelsRepositoryClient(localUri).RepositoryUri.AbsolutePath);
+            new ModelsRepositoryClient(localUri).RepositoryUri.AbsolutePath.Should().Be(localUriStr);
         }
 
         [TestCase("dtmi:com:example:Thermostat;1", true)]
@@ -47,7 +42,7 @@ namespace Azure.Iot.ModelsRepository.Tests
         [TestCase(null, false)]
         public void ClientIsValidDtmi(string dtmi, bool expected)
         {
-            Assert.AreEqual(expected, ModelsRepositoryClient.IsValidDtmi(dtmi));
+            ModelsRepositoryClient.IsValidDtmi(dtmi).Should().Be(expected);
         }
 
         [Test]
@@ -55,10 +50,10 @@ namespace Azure.Iot.ModelsRepository.Tests
         {
             Type eventSourceType = typeof(ModelsRepositoryEventSource);
 
-            Assert.NotNull(eventSourceType);
-            Assert.AreEqual(ModelRepositoryConstants.ModelRepositoryEventSourceName, EventSource.GetName(eventSourceType));
-            Assert.AreEqual(Guid.Parse("7678f8d4-81db-5fd2-39fc-23552d86b171"), EventSource.GetGuid(eventSourceType));
-            Assert.IsNotEmpty(EventSource.GenerateManifest(eventSourceType, "assemblyPathToIncludeInManifest"));
+            eventSourceType.Should().NotBeNull();
+            EventSource.GetName(eventSourceType).Should().Be(ModelRepositoryConstants.ModelRepositoryEventSourceName);
+            EventSource.GetGuid(eventSourceType).Should().Be(Guid.Parse("7678f8d4-81db-5fd2-39fc-23552d86b171"));
+            EventSource.GenerateManifest(eventSourceType, "assemblyPathToIncludeInManifest").Should().NotBeNullOrEmpty();
         }
     }
 }
