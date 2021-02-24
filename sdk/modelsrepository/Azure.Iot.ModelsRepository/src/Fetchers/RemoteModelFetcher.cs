@@ -60,8 +60,8 @@ namespace Azure.Iot.ModelsRepository.Fetchers
                     catch (Exception)
                     {
                         remoteFetchError =
-                            $"{string.Format(CultureInfo.CurrentCulture, ServiceStrings.GenericResolverError, dtmi)} " +
-                            string.Format(CultureInfo.CurrentCulture, StandardStrings.ErrorFetchingModelContent, tryContentPath);
+                            $"{string.Format(CultureInfo.InvariantCulture, StandardStrings.GenericResolverError, dtmi)} " +
+                            string.Format(CultureInfo.InvariantCulture, StandardStrings.ErrorFetchingModelContent, tryContentPath);
                     }
                 }
 
@@ -114,8 +114,8 @@ namespace Azure.Iot.ModelsRepository.Fetchers
                     if (genericExceptionThrown != null || requestFailedExceptionThrown != null)
                     {
                         remoteFetchError =
-                            $"{string.Format(CultureInfo.CurrentCulture, ServiceStrings.GenericResolverError, dtmi)} " +
-                            string.Format(CultureInfo.CurrentCulture, StandardStrings.ErrorFetchingModelContent, tryContentPath);
+                            $"{string.Format(CultureInfo.InvariantCulture, StandardStrings.GenericResolverError, dtmi)} " +
+                            string.Format(CultureInfo.InvariantCulture, StandardStrings.ErrorFetchingModelContent, tryContentPath);
                     }
                 }
 

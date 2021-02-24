@@ -16,7 +16,8 @@ namespace Azure.Iot.ModelsRepository.Samples
         {
             // Forward all the events written to the console output with a specific format.
             using AzureEventSourceListener listener = new AzureEventSourceListener(
-                (e, message) => Console.WriteLine("[{0:HH:mm:ss:fff}][{1}] {2}", DateTimeOffset.Now, e.Level, message),
+                (e, message) =>
+                    Console.WriteLine("[{0:HH:mm:ss:fff}][{1}] {2}", DateTimeOffset.Now, e.Level, message),
                 level: EventLevel.Verbose);
 
             await ResolveExistingAsync();

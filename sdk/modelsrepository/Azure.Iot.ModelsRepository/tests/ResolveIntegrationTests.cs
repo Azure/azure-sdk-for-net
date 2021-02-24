@@ -23,9 +23,9 @@ namespace Azure.Iot.ModelsRepository.Tests
 
             ModelsRepositoryClient client = GetClient(clientType);
             string expectedExMsg =
-                string.Format(ServiceStrings.GenericResolverError, "dtmi:com:example:thermostat;1") +
+                string.Format(StandardStrings.GenericResolverError, "dtmi:com:example:thermostat;1") +
                 " " +
-                string.Format(ServiceStrings.IncorrectDtmiCasing, "dtmi:com:example:thermostat;1", "dtmi:com:example:Thermostat;1");
+                string.Format(StandardStrings.IncorrectDtmiCasing, "dtmi:com:example:thermostat;1", "dtmi:com:example:Thermostat;1");
 
             RequestFailedException re = Assert.ThrowsAsync<RequestFailedException>(async () => await client.ResolveAsync(dtmi));
             Assert.AreEqual(re.Message, expectedExMsg);
@@ -37,7 +37,7 @@ namespace Azure.Iot.ModelsRepository.Tests
         public void ResolveInvalidDtmiFormatThrowsException(string dtmi)
         {
             ModelsRepositoryClient client = GetClient(ModelsRepositoryTestBase.ClientType.Local);
-            string expectedExMsg = $"{string.Format(ServiceStrings.GenericResolverError, dtmi)} {string.Format(ServiceStrings.InvalidDtmiFormat, dtmi)}";
+            string expectedExMsg = $"{string.Format(StandardStrings.GenericResolverError, dtmi)} {string.Format(StandardStrings.InvalidDtmiFormat, dtmi)}";
             RequestFailedException re = Assert.ThrowsAsync<RequestFailedException>(async () => await client.ResolveAsync(dtmi));
             Assert.AreEqual(re.Message, expectedExMsg);
         }
@@ -264,16 +264,6 @@ namespace Azure.Iot.ModelsRepository.Tests
                 Assert.True(result.ContainsKey(id));
                 Assert.True(ModelsRepositoryTestBase.ParseRootDtmiFromJson(result[id]) == id);
             }
-
-            // TODO: Evaluate using Azure.Core.TestFramework in future iteration.
-
-            /*
-            string expectedPath = DtmiConventions.DtmiToQualifiedPath(
-                dtmi,
-                repoType == "local" ? client.RepositoryUri.AbsolutePath : client.RepositoryUri.AbsoluteUri,
-                fromExpanded: true);
-            _logger.ValidateLog(ServiceStringss.FetchingContent(expectedPath), LogLevel.Trace, Times.Once());
-            */
         }
 
         public async Task ResolveMultipleModelsTryFromExpandedPartial()
@@ -302,20 +292,6 @@ namespace Azure.Iot.ModelsRepository.Tests
                 Assert.True(result.ContainsKey(id));
                 Assert.True(ModelsRepositoryTestBase.ParseRootDtmiFromJson(result[id]) == id);
             }
-
-            // TODO: Evaluate using Azure.Core.TestFramework in future iteration.
-
-            /*
-            string expandedModelPath = DtmiConventions.DtmiToQualifiedPath(expandedDtmis[0], localClient.RepositoryUri.AbsolutePath, fromExpanded: true);
-            _logger.ValidateLog(ServiceStrings.FetchingContent(expandedModelPath), LogLevel.Trace, Times.Once());
-
-            foreach (string dtmi in nonExpandedDtmis)
-            {
-                string expectedPath = DtmiConventions.DtmiToQualifiedPath(dtmi, localClient.RepositoryUri.AbsolutePath, fromExpanded: true);
-                _logger.ValidateLog(ServiceStrings.FetchingContent(expectedPath), LogLevel.Trace, Times.Once());
-                _logger.ValidateLog(ServiceStrings.ErrorAccessLocalRepositoryModel(expectedPath), LogLevel.Warning, Times.Once());
-            }
-            */
         }
     }
 }

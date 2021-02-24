@@ -25,7 +25,7 @@ namespace Azure.Iot.ModelsRepository
 
             if (dtmiPath == null)
             {
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, StandardStrings.InvalidDtmiFormat, dtmi));
+                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, StandardStrings.InvalidDtmiFormat, dtmi));
             }
 
             if (!basePath.EndsWith("/", StringComparison.InvariantCultureIgnoreCase))

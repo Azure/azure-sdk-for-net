@@ -66,11 +66,11 @@ namespace Azure.Iot.ModelsRepository.Fetchers
                     }
 
                     ModelsRepositoryEventSource.Instance.ErrorFetchingModelContent(tryContentPath);
-                    fnfError = string.Format(CultureInfo.CurrentCulture, ServiceStrings.ErrorFetchingModelContent, tryContentPath);
+                    fnfError = string.Format(CultureInfo.InvariantCulture, StandardStrings.ErrorFetchingModelContent, tryContentPath);
                 }
 
                 throw new RequestFailedException(
-                    $"{string.Format(CultureInfo.CurrentCulture, ServiceStrings.GenericResolverError, dtmi)} {fnfError}",
+                    $"{string.Format(CultureInfo.InvariantCulture, StandardStrings.GenericResolverError, dtmi)} {fnfError}",
                     new FileNotFoundException(fnfError));
             }
             catch (Exception ex)

@@ -115,8 +115,8 @@ namespace Azure.Iot.ModelsRepository
                 {
                     ModelsRepositoryEventSource.Instance.IncorrectDtmiCasing(targetDtmi, parsedDtmi);
                     string formatErrorMsg =
-                        $"{string.Format(CultureInfo.CurrentCulture, ServiceStrings.GenericResolverError, targetDtmi)} " +
-                        string.Format(CultureInfo.CurrentCulture, ServiceStrings.IncorrectDtmiCasing, targetDtmi, parsedDtmi);
+                        $"{string.Format(CultureInfo.InvariantCulture, StandardStrings.GenericResolverError, targetDtmi)} " +
+                        string.Format(CultureInfo.InvariantCulture, StandardStrings.IncorrectDtmiCasing, targetDtmi, parsedDtmi);
 
                     throw new RequestFailedException(formatErrorMsg, new FormatException(formatErrorMsg));
                 }
@@ -147,8 +147,8 @@ namespace Azure.Iot.ModelsRepository
                     ModelsRepositoryEventSource.Instance.InvalidDtmiInput(dtmi);
 
                     string invalidArgMsg =
-                        $"{string.Format(CultureInfo.CurrentCulture, ServiceStrings.GenericResolverError, dtmi)} " +
-                        string.Format(CultureInfo.CurrentCulture, ServiceStrings.InvalidDtmiFormat, dtmi);
+                        $"{string.Format(CultureInfo.InvariantCulture, StandardStrings.GenericResolverError, dtmi)} " +
+                        string.Format(CultureInfo.InvariantCulture, StandardStrings.InvalidDtmiFormat, dtmi);
 
                     throw new RequestFailedException(invalidArgMsg, new ArgumentException(invalidArgMsg));
                 }
