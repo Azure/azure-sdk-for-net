@@ -136,12 +136,7 @@ namespace Azure.ResourceManager.Core
         public ArmOperation<ResourceGroup> StartAddTag(string name, string value)
         {
             var resource = GetResource();
-            var patch = new ResourceGroupPatchable() { Tags = resource.Data.Tags };
-            if (object.ReferenceEquals(patch.Tags, null))
-            {
-                patch.Tags = new Dictionary<string, string>();
-            }
-
+            var patch = new ResourceGroupPatchable();
             patch.Tags[name] = value;
             return new PhArmOperation<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(Operations.Update(Id.Name, patch), g =>
             {
@@ -163,12 +158,7 @@ namespace Azure.ResourceManager.Core
         public async Task<ArmOperation<ResourceGroup>> StartAddTagAsync(string name, string value, CancellationToken cancellationToken = default)
         {
             var resource = GetResource();
-            var patch = new ResourceGroupPatchable() { Tags = resource.Data.Tags };
-            if (object.ReferenceEquals(patch.Tags, null))
-            {
-                patch.Tags = new Dictionary<string, string>();
-            }
-
+            var patch = new ResourceGroupPatchable();
             patch.Tags[name] = value;
             return new PhArmOperation<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(await Operations.UpdateAsync(Id.Name, patch, cancellationToken).ConfigureAwait(false), g =>
             {
@@ -245,12 +235,7 @@ namespace Azure.ResourceManager.Core
         public ArmResponse<ResourceGroup> SetTags(IDictionary<string, string> tags)
         {
             var resource = GetResource();
-            var patch = new ResourceGroupPatchable() { Tags = resource.Data.Tags };
-            if (object.ReferenceEquals(patch.Tags, null))
-            {
-                patch.Tags = new Dictionary<string, string>();
-            }
-
+            var patch = new ResourceGroupPatchable();
             ReplaceTags(tags, patch.Tags);
             return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(Operations.Update(Id.Name, patch), g =>
             {
@@ -262,12 +247,7 @@ namespace Azure.ResourceManager.Core
         public async Task<ArmResponse<ResourceGroup>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             var resource = GetResource();
-            var patch = new ResourceGroupPatchable() { Tags = resource.Data.Tags };
-            if (object.ReferenceEquals(patch.Tags, null))
-            {
-                patch.Tags = new Dictionary<string, string>();
-            }
-
+            var patch = new ResourceGroupPatchable();
             ReplaceTags(tags, patch.Tags);
             return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(await Operations.UpdateAsync(Id.Name, patch, cancellationToken).ConfigureAwait(false), g =>
             {
@@ -279,12 +259,7 @@ namespace Azure.ResourceManager.Core
         public ArmOperation<ResourceGroup> StartSetTags(IDictionary<string, string> tags)
         {
             var resource = GetResource();
-            var patch = new ResourceGroupPatchable() { Tags = resource.Data.Tags };
-            if (object.ReferenceEquals(patch.Tags, null))
-            {
-                patch.Tags = new Dictionary<string, string>();
-            }
-
+            var patch = new ResourceGroupPatchable();
             ReplaceTags(tags, patch.Tags);
             return new PhArmOperation<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(Operations.Update(Id.Name, patch), g =>
             {
@@ -296,12 +271,7 @@ namespace Azure.ResourceManager.Core
         public async Task<ArmOperation<ResourceGroup>> StartSetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             var resource = GetResource();
-            var patch = new ResourceGroupPatchable() { Tags = resource.Data.Tags };
-            if (object.ReferenceEquals(patch.Tags, null))
-            {
-                patch.Tags = new Dictionary<string, string>();
-            }
-
+            var patch = new ResourceGroupPatchable();
             ReplaceTags(tags, patch.Tags);
             return new PhArmOperation<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(await Operations.UpdateAsync(Id.Name, patch, cancellationToken).ConfigureAwait(false), g =>
             {
@@ -313,12 +283,7 @@ namespace Azure.ResourceManager.Core
         public ArmResponse<ResourceGroup> RemoveTag(string key)
         {
             var resource = GetResource();
-            var patch = new ResourceGroupPatchable() { Tags = resource.Data.Tags };
-            if (object.ReferenceEquals(patch.Tags, null))
-            {
-                patch.Tags = new Dictionary<string, string>();
-            }
-
+            var patch = new ResourceGroupPatchable();
             DeleteTag(key, patch.Tags);
             return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(Operations.Update(Id.Name, patch), g =>
             {
@@ -330,12 +295,7 @@ namespace Azure.ResourceManager.Core
         public async Task<ArmResponse<ResourceGroup>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             var resource = GetResource();
-            var patch = new ResourceGroupPatchable() { Tags = resource.Data.Tags };
-            if (object.ReferenceEquals(patch.Tags, null))
-            {
-                patch.Tags = new Dictionary<string, string>();
-            }
-
+            var patch = new ResourceGroupPatchable();
             DeleteTag(key, patch.Tags);
             return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(await Operations.UpdateAsync(Id.Name, patch, cancellationToken).ConfigureAwait(false), g =>
             {
@@ -347,12 +307,7 @@ namespace Azure.ResourceManager.Core
         public ArmOperation<ResourceGroup> StartRemoveTag(string key)
         {
             var resource = GetResource();
-            var patch = new ResourceGroupPatchable() { Tags = resource.Data.Tags };
-            if (object.ReferenceEquals(patch.Tags, null))
-            {
-                patch.Tags = new Dictionary<string, string>();
-            }
-
+            var patch = new ResourceGroupPatchable();
             DeleteTag(key, patch.Tags);
             return new PhArmOperation<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(Operations.Update(Id.Name, patch), g =>
             {
@@ -364,12 +319,7 @@ namespace Azure.ResourceManager.Core
         public async Task<ArmOperation<ResourceGroup>> StartRemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             var resource = GetResource();
-            var patch = new ResourceGroupPatchable() { Tags = resource.Data.Tags };
-            if (object.ReferenceEquals(patch.Tags, null))
-            {
-                patch.Tags = new Dictionary<string, string>();
-            }
-
+            var patch = new ResourceGroupPatchable();
             DeleteTag(key, patch.Tags);
             return new PhArmOperation<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(await Operations.UpdateAsync(Id.Name, patch, cancellationToken).ConfigureAwait(false), g =>
             {

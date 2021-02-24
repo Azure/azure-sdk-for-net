@@ -19,10 +19,6 @@ namespace Azure.ResourceManager.Core
         public ResourceGroupData(ResourceManager.Resources.Models.ResourceGroup rg)
             : base(rg.Id, rg.Location, rg)
         {
-            if (rg.Tags == null)
-            {
-                rg.Tags = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
-            }
         }
 
         /// <inheritdoc/>

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 namespace Azure.ResourceManager.Core.Tests
 {
     [TestFixture]
+    [Ignore("Will remove after ADO 5122")]
     public class TaggableResourceTests
     {
         private static readonly IDictionary<string, string> UpdateTags = new Dictionary<string, string> { { "UpdateKey1", "UpdateValue1" }, { "UpdateKey2", "UpdateValue2" } };

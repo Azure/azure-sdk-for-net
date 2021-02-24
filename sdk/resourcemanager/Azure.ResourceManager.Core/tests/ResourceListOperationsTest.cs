@@ -123,7 +123,13 @@ namespace Azure.ResourceManager.Core.Tests
         {
             var resource = new GenericResourceExpanded();
             resource.Location = location;
-            resource.Tags = tags ?? new Dictionary<string, string>();
+            if (!(tags is null))
+            {
+                foreach (var tag in tags)
+                {
+                    resource.Tags.Add(tag);
+                }
+            }
             resource.Sku = sku;
             resource.Plan = plan;
             resource.Kind = kind;

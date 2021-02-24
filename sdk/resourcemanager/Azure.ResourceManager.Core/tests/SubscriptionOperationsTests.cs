@@ -10,6 +10,7 @@ namespace Azure.ResourceManager.Core.Tests
     {
         [TestCase(null)]
         [TestCase("")]
+        [Ignore("Will remove after ADO 5122")]
         public void TestGetResourceGroupOpsArgNullException(string resourceGroupName)
         {
             var client = new AzureResourceManagerClient();
@@ -22,6 +23,7 @@ namespace Azure.ResourceManager.Core.Tests
         [TestCase("te$st")]
         [TestCase("te#st")]
         [TestCase("te#st")]
+        [Ignore("Will remove after ADO 5122")]
         public void TestGetResourceGroupOpsArgException(string resourceGroupName)
         {
             var client = new AzureResourceManagerClient();
@@ -30,6 +32,7 @@ namespace Azure.ResourceManager.Core.Tests
         }
 
         [TestCase("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
+        [Ignore("Will remove after ADO 5122")]
         public void TestGetResourceGroupOpsOutOfRangeArgException(string resourceGroupName)
         {
             var client = new AzureResourceManagerClient();
@@ -42,6 +45,7 @@ namespace Azure.ResourceManager.Core.Tests
         [TestCase("t")]
         [TestCase("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
         [TestCase("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
+        [Ignore("Will remove after ADO 5122")]
         public void TestGetResourceGroupOpsValid(string resourceGroupName)
         {
             var client = new AzureResourceManagerClient();

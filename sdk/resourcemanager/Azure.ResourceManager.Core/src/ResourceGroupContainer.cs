@@ -42,7 +42,13 @@ namespace Azure.ResourceManager.Core
         public ArmBuilder<ResourceGroup, ResourceGroupData> Construct(LocationData location, IDictionary<string, string> tags = default, string managedBy = default)
         {
             var model = new ResourceManager.Resources.Models.ResourceGroup(location);
-            model.Tags = tags;
+            if (!(tags is null))
+            {
+                foreach (var tag in tags)
+                {
+                    model.Tags.Add(tag);
+                }
+            }
             model.ManagedBy = managedBy;
             return new ArmBuilder<ResourceGroup, ResourceGroupData>(this, new ResourceGroupData(model));
         }
