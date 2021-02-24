@@ -25,7 +25,7 @@ var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(a
 
 To get a deeper analysis into which are the targets that people considered good or bad, we will need to include the `AdditionalSentimentAnalyses.AssessmentMining` type into the `AnalyzeSentimentOptions`.
 
-```C# Snippet:TAAnalyzeSentimentWithOpinionMining
+```C# Snippet:TAAnalyzeSentimentWithAssessmentMining
 string reviewA = @"The food and service were unacceptable, but the concierge were nice.
                  After talking to them about the quality of the food and the process
                  to get room service they refunded the money we spent at the restaurant
@@ -88,12 +88,12 @@ private Dictionary<string, int> GetComplaints(AnalyzeSentimentResultCollection r
     {
         foreach (SentenceSentiment sentence in review.DocumentSentiment.Sentences)
         {
-            foreach (MinedOpinion minedOpinion in sentence.MinedOpinions)
+            foreach (MinedAssessment minedAssessment in sentence.MinedAssessments)
             {
-                if (minedOpinion.Aspect.Sentiment == TextSentiment.Negative)
+                if (minedAssessment.Target.Sentiment == TextSentiment.Negative)
                 {
-                    complaints.TryGetValue(minedOpinion.Aspect.Text, out var value);
-                    complaints[minedOpinion.Aspect.Text] = value + 1;
+                    complaints.TryGetValue(minedAssessment.Target.Text, out var value);
+                    complaints[minedAssessment.Target.Text] = value + 1;
                 }
             }
         }
