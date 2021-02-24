@@ -71,7 +71,7 @@ namespace Azure.Iot.ModelsRepository
         [SuppressMessage(
             "Usage",
             "AZC0015:Unexpected client method return type.",
-            Justification = "<Pending>")]
+            Justification = "Item lookup is optimized with a dictionary type, we do not expect any more than ~20 items to be returned. TODO: azabbasi: discuss this issue with the review board.")]
         public virtual async Task<IDictionary<string, string>> ResolveAsync(string dtmi, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ModelsRepositoryClient)}.{nameof(Resolve)}");
@@ -100,7 +100,7 @@ namespace Azure.Iot.ModelsRepository
         [SuppressMessage(
             "Usage",
             "AZC0015:Unexpected client method return type.",
-            Justification = "<Pending>")]
+            Justification = "Item lookup is optimized with a dictionary type, we do not expect any more than ~20 items to be returned. TODO: azabbasi: discuss this issue with the review board.")]
         public virtual IDictionary<string, string> Resolve(string dtmi, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ModelsRepositoryClient)}.{nameof(Resolve)}");
@@ -127,7 +127,10 @@ namespace Azure.Iot.ModelsRepository
         /// <exception cref="RequestFailedException">Thrown when a resolution failure occurs.</exception>
         /// <param name="dtmis">A collection of well-formed DTDL model Ids.</param>
         /// <param name="cancellationToken">The cancellationToken.</param>
-        [SuppressMessage("Usage", "AZC0015:Unexpected client method return type.", Justification = "<Pending>")]
+        [SuppressMessage(
+            "Usage",
+            "AZC0015:Unexpected client method return type.",
+            Justification = "Item lookup is optimized with a dictionary type, we do not expect any more than ~20 items to be returned. TODO: azabbasi: discuss this issue with the review board.")]
         public virtual async Task<IDictionary<string, string>> ResolveAsync(IEnumerable<string> dtmis, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ModelsRepositoryClient)}.{nameof(Resolve)}");
@@ -154,7 +157,10 @@ namespace Azure.Iot.ModelsRepository
         /// <exception cref="RequestFailedException">Thrown when a resolution failure occurs.</exception>
         /// <param name="dtmis">A collection of well-formed DTDL model Ids.</param>
         /// <param name="cancellationToken">The cancellationToken.</param>
-        [SuppressMessage("Usage", "AZC0015:Unexpected client method return type.", Justification = "<Pending>")]
+        [SuppressMessage(
+            "Usage",
+            "AZC0015:Unexpected client method return type.",
+            Justification = "Item lookup is optimized with a dictionary type, we do not expect any more than ~20 items to be returned. TODO: azabbasi: discuss this issue with the review board.")]
         public virtual IDictionary<string, string> Resolve(IEnumerable<string> dtmis, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ModelsRepositoryClient)}.{nameof(Resolve)}");
