@@ -21,7 +21,7 @@ namespace Azure.Iot.ModelsRepository.Fetchers
         private readonly bool _tryExpanded;
         private readonly ClientDiagnostics _clientDiagnostics;
 
-        public LocalModelFetcher(ClientDiagnostics clientDiagnostics, ModelsRepoClientOptions clientOptions)
+        public LocalModelFetcher(ClientDiagnostics clientDiagnostics, ModelsRepositoryClientOptions clientOptions)
         {
             _clientDiagnostics = clientDiagnostics;
             _tryExpanded = clientOptions.DependencyResolution == DependencyResolutionOption.TryFromExpanded;
@@ -54,7 +54,7 @@ namespace Azure.Iot.ModelsRepository.Fetchers
                     cancellationToken.ThrowIfCancellationRequested();
 
                     string tryContentPath = work.Dequeue();
-                    ModelsRepoEventSource.Instance.FetchingModelContent(tryContentPath);
+                    ModelsRepositoryEventSource.Instance.FetchingModelContent(tryContentPath);
 
                     if (File.Exists(tryContentPath))
                     {
@@ -65,7 +65,7 @@ namespace Azure.Iot.ModelsRepository.Fetchers
                         };
                     }
 
-                    ModelsRepoEventSource.Instance.ErrorFetchingModelContent(tryContentPath);
+                    ModelsRepositoryEventSource.Instance.ErrorFetchingModelContent(tryContentPath);
                     fnfError = string.Format(CultureInfo.CurrentCulture, ServiceStrings.ErrorFetchingModelContent, tryContentPath);
                 }
 

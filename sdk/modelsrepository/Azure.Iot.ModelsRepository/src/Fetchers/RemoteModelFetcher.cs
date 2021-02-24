@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Net;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,7 +24,7 @@ namespace Azure.Iot.ModelsRepository.Fetchers
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly bool _tryExpanded;
 
-        public RemoteModelFetcher(ClientDiagnostics clientDiagnostics, ModelsRepoClientOptions clientOptions)
+        public RemoteModelFetcher(ClientDiagnostics clientDiagnostics, ModelsRepositoryClientOptions clientOptions)
         {
             _pipeline = CreatePipeline(clientOptions);
             _tryExpanded = clientOptions.DependencyResolution == DependencyResolutionOption.TryFromExpanded;
@@ -45,7 +46,7 @@ namespace Azure.Iot.ModelsRepository.Fetchers
                     cancellationToken.ThrowIfCancellationRequested();
 
                     string tryContentPath = work.Dequeue();
-                    ModelsRepoEventSource.Instance.FetchingModelContent(tryContentPath);
+                    ModelsRepositoryEventSource.Instance.FetchingModelContent(tryContentPath);
 
                     try
                     {
@@ -82,13 +83,15 @@ namespace Azure.Iot.ModelsRepository.Fetchers
                 Queue<string> work = PrepareWork(dtmi, repositoryUri);
 
                 string remoteFetchError = string.Empty;
+                RequestFailedException requestFailedExceptionThrown = null;
+                Exception genericExceptionThrown = null;
 
                 while (work.Count != 0)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
 
                     string tryContentPath = work.Dequeue();
-                    ModelsRepoEventSource.Instance.FetchingModelContent(tryContentPath);
+                    ModelsRepositoryEventSource.Instance.FetchingModelContent(tryContentPath);
 
                     try
                     {
@@ -99,7 +102,16 @@ namespace Azure.Iot.ModelsRepository.Fetchers
                             Path = tryContentPath
                         };
                     }
-                    catch (Exception)
+                    catch (RequestFailedException ex)
+                    {
+                        requestFailedExceptionThrown = ex;
+                    }
+                    catch (Exception ex)
+                    {
+                        genericExceptionThrown = ex;
+                    }
+
+                    if (genericExceptionThrown != null || requestFailedExceptionThrown != null)
                     {
                         remoteFetchError =
                             $"{string.Format(CultureInfo.CurrentCulture, ServiceStrings.GenericResolverError, dtmi)} " +
@@ -107,7 +119,22 @@ namespace Azure.Iot.ModelsRepository.Fetchers
                     }
                 }
 
-                throw new RequestFailedException(remoteFetchError);
+                if (requestFailedExceptionThrown != null)
+                {
+                    throw new RequestFailedException(
+                        requestFailedExceptionThrown.Status,
+                        remoteFetchError,
+                        requestFailedExceptionThrown.ErrorCode,
+                        requestFailedExceptionThrown);
+                }
+                else
+                {
+                    throw new RequestFailedException(
+                        (int)HttpStatusCode.BadRequest,
+                        remoteFetchError,
+                        null,
+                        genericExceptionThrown);
+                }
             }
             catch (Exception ex)
             {
@@ -219,7 +246,7 @@ namespace Azure.Iot.ModelsRepository.Fetchers
             return root.GetRawText();
         }
 
-        private static HttpPipeline CreatePipeline(ModelsRepoClientOptions options)
+        private static HttpPipeline CreatePipeline(ModelsRepositoryClientOptions options)
         {
             return HttpPipelineBuilder.Build(options);
         }

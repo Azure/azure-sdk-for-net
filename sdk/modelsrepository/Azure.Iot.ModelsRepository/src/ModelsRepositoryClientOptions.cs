@@ -9,7 +9,7 @@ namespace Azure.Iot.ModelsRepository
     /// <summary>
     /// Options that allow configuration of requests sent to the ModelRepositoryService.
     /// </summary>
-    public class ModelsRepoClientOptions : ClientOptions
+    public class ModelsRepositoryClientOptions : ClientOptions
     {
         internal const ServiceVersion LatestVersion = ServiceVersion.V2021_02_11;
 
@@ -33,14 +33,14 @@ namespace Azure.Iot.ModelsRepository
         public ServiceVersion Version { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ModelsRepoClientOptions"/> class.
+        /// Initializes a new instance of the <see cref="ModelsRepositoryClientOptions"/> class.
         /// </summary>
         /// <param name="version">
         /// The <see cref="ServiceVersion"/> of the service API used when
         /// making requests.
         /// </param>
         /// <param name="resolutionOption">The dependency processing options.</param>
-        public ModelsRepoClientOptions(
+        public ModelsRepositoryClientOptions(
             ServiceVersion version = LatestVersion,
             DependencyResolutionOption resolutionOption = DependencyResolutionOption.Enabled)
         {
