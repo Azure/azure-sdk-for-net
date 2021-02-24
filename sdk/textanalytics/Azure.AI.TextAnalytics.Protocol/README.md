@@ -20,7 +20,14 @@ TextAnalyticsClient client = new TextAnalyticsClient(new Uri("<endpoint-from-por
 
 ## Key concepts
 
-Operations on the Text Analytics client consume and produce JSON data. Instead of representing the input and output for an operation with a specific type, the general purpose `JsonData` type is used. `JsonData` makes it easy to build and consume JSON payloads.
+Operations on the Text Analytics client consume and produce JSON data. Instead of representing the input and output for an operation with a specific type, the general purpose `JsonData` type is used. `JsonData` makes it easy to build and consume JSON payloads. You can use the [service documentation](https://westus2.dev.cognitive.microsoft.com/docs/services/TextAnalytics-v3-1-preview-1/operations/Languages) to understand the contents of the JSON payloads sent as part of a request or response.  The service exposes the following operations:
+
+- [Detect Language](https://westus2.dev.cognitive.microsoft.com/docs/services/TextAnalytics-v3-1-preview-1/operations/Languages)
+- [Entities containing personal information](https://westus2.dev.cognitive.microsoft.com/docs/services/TextAnalytics-v3-1-preview-1/operations/EntitiesRecognitionPii)
+- [Key Phrases](https://westus2.dev.cognitive.microsoft.com/docs/services/TextAnalytics-v3-1-preview-1/operations/KeyPhrases)
+- [Linked entities from a well known knowledge base](https://westus2.dev.cognitive.microsoft.com/docs/services/TextAnalytics-v3-1-preview-1/operations/EntitiesLinking)
+- [Named Entity Recognition](https://westus2.dev.cognitive.microsoft.com/docs/services/TextAnalytics-v3-1-preview-1/operations/EntitiesRecognitionGeneral)
+- [Sentiment](https://westus2.dev.cognitive.microsoft.com/docs/services/TextAnalytics-v3-1-preview-1/operations/Sentiment)
 
 ### JsonData
 
