@@ -1,0 +1,1804 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Azure.ResourceManager.Authorization</name>
+    </assembly>
+    <members>
+        <member name="T:Azure.ResourceManager.Authorization.AuthorizationManagementClient">
+            <summary> Authorization service management client. </summary>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.AuthorizationManagementClient.#ctor">
+            <summary> Initializes a new instance of AuthorizationManagementClient for mocking. </summary>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.AuthorizationManagementClient.#ctor(System.String,Azure.Core.TokenCredential,Azure.ResourceManager.Authorization.AuthorizationManagementClientOptions)">
+            <summary> Initializes a new instance of AuthorizationManagementClient. </summary>
+            <param name="subscriptionId"> The ID of the target subscription. </param>
+            <param name="tokenCredential"> The OAuth token for making client requests. </param>
+            <param name="options"> The options for configuring the client. </param>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.AuthorizationManagementClient.#ctor(System.String,System.Uri,Azure.Core.TokenCredential,Azure.ResourceManager.Authorization.AuthorizationManagementClientOptions)">
+            <summary> Initializes a new instance of AuthorizationManagementClient. </summary>
+            <param name="subscriptionId"> The ID of the target subscription. </param>
+            <param name="endpoint"> server parameter. </param>
+            <param name="tokenCredential"> The OAuth token for making client requests. </param>
+            <param name="options"> The options for configuring the client. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.AuthorizationManagementClient.ClassicAdministrators">
+            <summary> Returns an instance of ClassicAdministratorsOperations. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.AuthorizationManagementClient.GlobalAdministrator">
+            <summary> Returns an instance of GlobalAdministratorOperations. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.AuthorizationManagementClient.ProviderOperationsMetadata">
+            <summary> Returns an instance of ProviderOperationsMetadataOperations. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.AuthorizationManagementClient.RoleAssignments">
+            <summary> Returns an instance of RoleAssignmentsOperations. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.AuthorizationManagementClient.Permissions">
+            <summary> Returns an instance of PermissionsOperations. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.AuthorizationManagementClient.RoleDefinitions">
+            <summary> Returns an instance of RoleDefinitionsOperations. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.AuthorizationManagementClient.DenyAssignments">
+            <summary> Returns an instance of DenyAssignmentsOperations. </summary>
+        </member>
+        <member name="T:Azure.ResourceManager.Authorization.AuthorizationManagementClientOptions">
+            <summary> Client options for Authorization. </summary>
+        </member>
+        <member name="T:Azure.ResourceManager.Authorization.ClassicAdministratorsOperations">
+            <summary> The ClassicAdministrators service client. </summary>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.ClassicAdministratorsOperations.#ctor">
+            <summary> Initializes a new instance of ClassicAdministratorsOperations for mocking. </summary>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.ClassicAdministratorsOperations.#ctor(Azure.Core.Pipeline.ClientDiagnostics,Azure.Core.Pipeline.HttpPipeline,System.String,System.Uri)">
+            <summary> Initializes a new instance of ClassicAdministratorsOperations. </summary>
+            <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+            <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+            <param name="subscriptionId"> The ID of the target subscription. </param>
+            <param name="endpoint"> server parameter. </param>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.ClassicAdministratorsOperations.ListAsync(System.Threading.CancellationToken)">
+            <summary> Gets service administrator, account administrator, and co-administrators for the subscription. </summary>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.ClassicAdministratorsOperations.List(System.Threading.CancellationToken)">
+            <summary> Gets service administrator, account administrator, and co-administrators for the subscription. </summary>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.ClassicAdministratorsRestOperations.#ctor(Azure.Core.Pipeline.ClientDiagnostics,Azure.Core.Pipeline.HttpPipeline,System.String,System.Uri)">
+            <summary> Initializes a new instance of ClassicAdministratorsRestOperations. </summary>
+            <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+            <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+            <param name="subscriptionId"> The ID of the target subscription. </param>
+            <param name="endpoint"> server parameter. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.ClassicAdministratorsRestOperations.ListAsync(System.Threading.CancellationToken)">
+            <summary> Gets service administrator, account administrator, and co-administrators for the subscription. </summary>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.ClassicAdministratorsRestOperations.List(System.Threading.CancellationToken)">
+            <summary> Gets service administrator, account administrator, and co-administrators for the subscription. </summary>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.ClassicAdministratorsRestOperations.ListNextPageAsync(System.String,System.Threading.CancellationToken)">
+            <summary> Gets service administrator, account administrator, and co-administrators for the subscription. </summary>
+            <param name="nextLink"> The URL to the next page of results. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.ClassicAdministratorsRestOperations.ListNextPage(System.String,System.Threading.CancellationToken)">
+            <summary> Gets service administrator, account administrator, and co-administrators for the subscription. </summary>
+            <param name="nextLink"> The URL to the next page of results. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        </member>
+        <member name="T:Azure.ResourceManager.Authorization.DenyAssignmentsOperations">
+            <summary> The DenyAssignments service client. </summary>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.DenyAssignmentsOperations.#ctor">
+            <summary> Initializes a new instance of DenyAssignmentsOperations for mocking. </summary>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.DenyAssignmentsOperations.#ctor(Azure.Core.Pipeline.ClientDiagnostics,Azure.Core.Pipeline.HttpPipeline,System.String,System.Uri)">
+            <summary> Initializes a new instance of DenyAssignmentsOperations. </summary>
+            <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+            <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+            <param name="subscriptionId"> The ID of the target subscription. </param>
+            <param name="endpoint"> server parameter. </param>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.DenyAssignmentsOperations.GetAsync(System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Get the specified deny assignment. </summary>
+            <param name="scope"> The scope of the deny assignment. </param>
+            <param name="denyAssignmentId"> The ID of the deny assignment to get. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.DenyAssignmentsOperations.Get(System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Get the specified deny assignment. </summary>
+            <param name="scope"> The scope of the deny assignment. </param>
+            <param name="denyAssignmentId"> The ID of the deny assignment to get. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.DenyAssignmentsOperations.GetByIdAsync(System.String,System.Threading.CancellationToken)">
+            <summary> Gets a deny assignment by ID. </summary>
+            <param name="denyAssignmentId"> The fully qualified deny assignment ID. For example, use the format, /subscriptions/{guid}/providers/Microsoft.Authorization/denyAssignments/{denyAssignmentId} for subscription level deny assignments, or /providers/Microsoft.Authorization/denyAssignments/{denyAssignmentId} for tenant level deny assignments. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.DenyAssignmentsOperations.GetById(System.String,System.Threading.CancellationToken)">
+            <summary> Gets a deny assignment by ID. </summary>
+            <param name="denyAssignmentId"> The fully qualified deny assignment ID. For example, use the format, /subscriptions/{guid}/providers/Microsoft.Authorization/denyAssignments/{denyAssignmentId} for subscription level deny assignments, or /providers/Microsoft.Authorization/denyAssignments/{denyAssignmentId} for tenant level deny assignments. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.DenyAssignmentsOperations.ListForResourceAsync(System.String,System.String,System.String,System.String,System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Gets deny assignments for a resource. </summary>
+            <param name="resourceGroupName"> The name of the resource group. </param>
+            <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
+            <param name="parentResourcePath"> The parent resource identity. </param>
+            <param name="resourceType"> The resource type of the resource. </param>
+            <param name="resourceName"> The name of the resource to get deny assignments for. </param>
+            <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all deny assignments at or above the scope. Use $filter=denyAssignmentName eq &apos;{name}&apos; to search deny assignments by name at specified scope. Use $filter=principalId eq &apos;{id}&apos; to return all deny assignments at, above and below the scope for the specified principal. Use $filter=gdprExportPrincipalId eq &apos;{id}&apos; to return all deny assignments at, above and below the scope for the specified principal. This filter is different from the principalId filter as it returns not only those deny assignments that contain the specified principal is the Principals list but also those deny assignments that contain the specified principal is the ExcludePrincipals list. Additionally, when gdprExportPrincipalId filter is used, only the deny assignment name and description properties are returned. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, or <paramref name="resourceName"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.DenyAssignmentsOperations.ListForResource(System.String,System.String,System.String,System.String,System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Gets deny assignments for a resource. </summary>
+            <param name="resourceGroupName"> The name of the resource group. </param>
+            <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
+            <param name="parentResourcePath"> The parent resource identity. </param>
+            <param name="resourceType"> The resource type of the resource. </param>
+            <param name="resourceName"> The name of the resource to get deny assignments for. </param>
+            <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all deny assignments at or above the scope. Use $filter=denyAssignmentName eq &apos;{name}&apos; to search deny assignments by name at specified scope. Use $filter=principalId eq &apos;{id}&apos; to return all deny assignments at, above and below the scope for the specified principal. Use $filter=gdprExportPrincipalId eq &apos;{id}&apos; to return all deny assignments at, above and below the scope for the specified principal. This filter is different from the principalId filter as it returns not only those deny assignments that contain the specified principal is the Principals list but also those deny assignments that contain the specified principal is the ExcludePrincipals list. Additionally, when gdprExportPrincipalId filter is used, only the deny assignment name and description properties are returned. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, or <paramref name="resourceName"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.DenyAssignmentsOperations.ListForResourceGroupAsync(System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Gets deny assignments for a resource group. </summary>
+            <param name="resourceGroupName"> The name of the resource group. </param>
+            <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all deny assignments at or above the scope. Use $filter=denyAssignmentName eq &apos;{name}&apos; to search deny assignments by name at specified scope. Use $filter=principalId eq &apos;{id}&apos; to return all deny assignments at, above and below the scope for the specified principal. Use $filter=gdprExportPrincipalId eq &apos;{id}&apos; to return all deny assignments at, above and below the scope for the specified principal. This filter is different from the principalId filter as it returns not only those deny assignments that contain the specified principal is the Principals list but also those deny assignments that contain the specified principal is the ExcludePrincipals list. Additionally, when gdprExportPrincipalId filter is used, only the deny assignment name and description properties are returned. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.DenyAssignmentsOperations.ListForResourceGroup(System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Gets deny assignments for a resource group. </summary>
+            <param name="resourceGroupName"> The name of the resource group. </param>
+            <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all deny assignments at or above the scope. Use $filter=denyAssignmentName eq &apos;{name}&apos; to search deny assignments by name at specified scope. Use $filter=principalId eq &apos;{id}&apos; to return all deny assignments at, above and below the scope for the specified principal. Use $filter=gdprExportPrincipalId eq &apos;{id}&apos; to return all deny assignments at, above and below the scope for the specified principal. This filter is different from the principalId filter as it returns not only those deny assignments that contain the specified principal is the Principals list but also those deny assignments that contain the specified principal is the ExcludePrincipals list. Additionally, when gdprExportPrincipalId filter is used, only the deny assignment name and description properties are returned. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.DenyAssignmentsOperations.ListAsync(System.String,System.Threading.CancellationToken)">
+            <summary> Gets all deny assignments for the subscription. </summary>
+            <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all deny assignments at or above the scope. Use $filter=denyAssignmentName eq &apos;{name}&apos; to search deny assignments by name at specified scope. Use $filter=principalId eq &apos;{id}&apos; to return all deny assignments at, above and below the scope for the specified principal. Use $filter=gdprExportPrincipalId eq &apos;{id}&apos; to return all deny assignments at, above and below the scope for the specified principal. This filter is different from the principalId filter as it returns not only those deny assignments that contain the specified principal is the Principals list but also those deny assignments that contain the specified principal is the ExcludePrincipals list. Additionally, when gdprExportPrincipalId filter is used, only the deny assignment name and description properties are returned. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.DenyAssignmentsOperations.List(System.String,System.Threading.CancellationToken)">
+            <summary> Gets all deny assignments for the subscription. </summary>
+            <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all deny assignments at or above the scope. Use $filter=denyAssignmentName eq &apos;{name}&apos; to search deny assignments by name at specified scope. Use $filter=principalId eq &apos;{id}&apos; to return all deny assignments at, above and below the scope for the specified principal. Use $filter=gdprExportPrincipalId eq &apos;{id}&apos; to return all deny assignments at, above and below the scope for the specified principal. This filter is different from the principalId filter as it returns not only those deny assignments that contain the specified principal is the Principals list but also those deny assignments that contain the specified principal is the ExcludePrincipals list. Additionally, when gdprExportPrincipalId filter is used, only the deny assignment name and description properties are returned. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.DenyAssignmentsOperations.ListForScopeAsync(System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Gets deny assignments for a scope. </summary>
+            <param name="scope"> The scope of the deny assignments. </param>
+            <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all deny assignments at or above the scope. Use $filter=denyAssignmentName eq &apos;{name}&apos; to search deny assignments by name at specified scope. Use $filter=principalId eq &apos;{id}&apos; to return all deny assignments at, above and below the scope for the specified principal. Use $filter=gdprExportPrincipalId eq &apos;{id}&apos; to return all deny assignments at, above and below the scope for the specified principal. This filter is different from the principalId filter as it returns not only those deny assignments that contain the specified principal is the Principals list but also those deny assignments that contain the specified principal is the ExcludePrincipals list. Additionally, when gdprExportPrincipalId filter is used, only the deny assignment name and description properties are returned. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.DenyAssignmentsOperations.ListForScope(System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Gets deny assignments for a scope. </summary>
+            <param name="scope"> The scope of the deny assignments. </param>
+            <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all deny assignments at or above the scope. Use $filter=denyAssignmentName eq &apos;{name}&apos; to search deny assignments by name at specified scope. Use $filter=principalId eq &apos;{id}&apos; to return all deny assignments at, above and below the scope for the specified principal. Use $filter=gdprExportPrincipalId eq &apos;{id}&apos; to return all deny assignments at, above and below the scope for the specified principal. This filter is different from the principalId filter as it returns not only those deny assignments that contain the specified principal is the Principals list but also those deny assignments that contain the specified principal is the ExcludePrincipals list. Additionally, when gdprExportPrincipalId filter is used, only the deny assignment name and description properties are returned. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.DenyAssignmentsRestOperations.#ctor(Azure.Core.Pipeline.ClientDiagnostics,Azure.Core.Pipeline.HttpPipeline,System.String,System.Uri)">
+            <summary> Initializes a new instance of DenyAssignmentsRestOperations. </summary>
+            <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+            <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+            <param name="subscriptionId"> The ID of the target subscription. </param>
+            <param name="endpoint"> server parameter. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.DenyAssignmentsRestOperations.ListForResourceAsync(System.String,System.String,System.String,System.String,System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Gets deny assignments for a resource. </summary>
+            <param name="resourceGroupName"> The name of the resource group. </param>
+            <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
+            <param name="parentResourcePath"> The parent resource identity. </param>
+            <param name="resourceType"> The resource type of the resource. </param>
+            <param name="resourceName"> The name of the resource to get deny assignments for. </param>
+            <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all deny assignments at or above the scope. Use $filter=denyAssignmentName eq &apos;{name}&apos; to search deny assignments by name at specified scope. Use $filter=principalId eq &apos;{id}&apos; to return all deny assignments at, above and below the scope for the specified principal. Use $filter=gdprExportPrincipalId eq &apos;{id}&apos; to return all deny assignments at, above and below the scope for the specified principal. This filter is different from the principalId filter as it returns not only those deny assignments that contain the specified principal is the Principals list but also those deny assignments that contain the specified principal is the ExcludePrincipals list. Additionally, when gdprExportPrincipalId filter is used, only the deny assignment name and description properties are returned. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, or <paramref name="resourceName"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.DenyAssignmentsRestOperations.ListForResource(System.String,System.String,System.String,System.String,System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Gets deny assignments for a resource. </summary>
+            <param name="resourceGroupName"> The name of the resource group. </param>
+            <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
+            <param name="parentResourcePath"> The parent resource identity. </param>
+            <param name="resourceType"> The resource type of the resource. </param>
+            <param name="resourceName"> The name of the resource to get deny assignments for. </param>
+            <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all deny assignments at or above the scope. Use $filter=denyAssignmentName eq &apos;{name}&apos; to search deny assignments by name at specified scope. Use $filter=principalId eq &apos;{id}&apos; to return all deny assignments at, above and below the scope for the specified principal. Use $filter=gdprExportPrincipalId eq &apos;{id}&apos; to return all deny assignments at, above and below the scope for the specified principal. This filter is different from the principalId filter as it returns not only those deny assignments that contain the specified principal is the Principals list but also those deny assignments that contain the specified principal is the ExcludePrincipals list. Additionally, when gdprExportPrincipalId filter is used, only the deny assignment name and description properties are returned. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, or <paramref name="resourceName"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.DenyAssignmentsRestOperations.ListForResourceGroupAsync(System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Gets deny assignments for a resource group. </summary>
+            <param name="resourceGroupName"> The name of the resource group. </param>
+            <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all deny assignments at or above the scope. Use $filter=denyAssignmentName eq &apos;{name}&apos; to search deny assignments by name at specified scope. Use $filter=principalId eq &apos;{id}&apos; to return all deny assignments at, above and below the scope for the specified principal. Use $filter=gdprExportPrincipalId eq &apos;{id}&apos; to return all deny assignments at, above and below the scope for the specified principal. This filter is different from the principalId filter as it returns not only those deny assignments that contain the specified principal is the Principals list but also those deny assignments that contain the specified principal is the ExcludePrincipals list. Additionally, when gdprExportPrincipalId filter is used, only the deny assignment name and description properties are returned. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.DenyAssignmentsRestOperations.ListForResourceGroup(System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Gets deny assignments for a resource group. </summary>
+            <param name="resourceGroupName"> The name of the resource group. </param>
+            <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all deny assignments at or above the scope. Use $filter=denyAssignmentName eq &apos;{name}&apos; to search deny assignments by name at specified scope. Use $filter=principalId eq &apos;{id}&apos; to return all deny assignments at, above and below the scope for the specified principal. Use $filter=gdprExportPrincipalId eq &apos;{id}&apos; to return all deny assignments at, above and below the scope for the specified principal. This filter is different from the principalId filter as it returns not only those deny assignments that contain the specified principal is the Principals list but also those deny assignments that contain the specified principal is the ExcludePrincipals list. Additionally, when gdprExportPrincipalId filter is used, only the deny assignment name and description properties are returned. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.DenyAssignmentsRestOperations.ListAsync(System.String,System.Threading.CancellationToken)">
+            <summary> Gets all deny assignments for the subscription. </summary>
+            <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all deny assignments at or above the scope. Use $filter=denyAssignmentName eq &apos;{name}&apos; to search deny assignments by name at specified scope. Use $filter=principalId eq &apos;{id}&apos; to return all deny assignments at, above and below the scope for the specified principal. Use $filter=gdprExportPrincipalId eq &apos;{id}&apos; to return all deny assignments at, above and below the scope for the specified principal. This filter is different from the principalId filter as it returns not only those deny assignments that contain the specified principal is the Principals list but also those deny assignments that contain the specified principal is the ExcludePrincipals list. Additionally, when gdprExportPrincipalId filter is used, only the deny assignment name and description properties are returned. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.DenyAssignmentsRestOperations.List(System.String,System.Threading.CancellationToken)">
+            <summary> Gets all deny assignments for the subscription. </summary>
+            <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all deny assignments at or above the scope. Use $filter=denyAssignmentName eq &apos;{name}&apos; to search deny assignments by name at specified scope. Use $filter=principalId eq &apos;{id}&apos; to return all deny assignments at, above and below the scope for the specified principal. Use $filter=gdprExportPrincipalId eq &apos;{id}&apos; to return all deny assignments at, above and below the scope for the specified principal. This filter is different from the principalId filter as it returns not only those deny assignments that contain the specified principal is the Principals list but also those deny assignments that contain the specified principal is the ExcludePrincipals list. Additionally, when gdprExportPrincipalId filter is used, only the deny assignment name and description properties are returned. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.DenyAssignmentsRestOperations.GetAsync(System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Get the specified deny assignment. </summary>
+            <param name="scope"> The scope of the deny assignment. </param>
+            <param name="denyAssignmentId"> The ID of the deny assignment to get. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="scope"/> or <paramref name="denyAssignmentId"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.DenyAssignmentsRestOperations.Get(System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Get the specified deny assignment. </summary>
+            <param name="scope"> The scope of the deny assignment. </param>
+            <param name="denyAssignmentId"> The ID of the deny assignment to get. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="scope"/> or <paramref name="denyAssignmentId"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.DenyAssignmentsRestOperations.GetByIdAsync(System.String,System.Threading.CancellationToken)">
+            <summary> Gets a deny assignment by ID. </summary>
+            <param name="denyAssignmentId"> The fully qualified deny assignment ID. For example, use the format, /subscriptions/{guid}/providers/Microsoft.Authorization/denyAssignments/{denyAssignmentId} for subscription level deny assignments, or /providers/Microsoft.Authorization/denyAssignments/{denyAssignmentId} for tenant level deny assignments. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="denyAssignmentId"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.DenyAssignmentsRestOperations.GetById(System.String,System.Threading.CancellationToken)">
+            <summary> Gets a deny assignment by ID. </summary>
+            <param name="denyAssignmentId"> The fully qualified deny assignment ID. For example, use the format, /subscriptions/{guid}/providers/Microsoft.Authorization/denyAssignments/{denyAssignmentId} for subscription level deny assignments, or /providers/Microsoft.Authorization/denyAssignments/{denyAssignmentId} for tenant level deny assignments. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="denyAssignmentId"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.DenyAssignmentsRestOperations.ListForScopeAsync(System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Gets deny assignments for a scope. </summary>
+            <param name="scope"> The scope of the deny assignments. </param>
+            <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all deny assignments at or above the scope. Use $filter=denyAssignmentName eq &apos;{name}&apos; to search deny assignments by name at specified scope. Use $filter=principalId eq &apos;{id}&apos; to return all deny assignments at, above and below the scope for the specified principal. Use $filter=gdprExportPrincipalId eq &apos;{id}&apos; to return all deny assignments at, above and below the scope for the specified principal. This filter is different from the principalId filter as it returns not only those deny assignments that contain the specified principal is the Principals list but also those deny assignments that contain the specified principal is the ExcludePrincipals list. Additionally, when gdprExportPrincipalId filter is used, only the deny assignment name and description properties are returned. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.DenyAssignmentsRestOperations.ListForScope(System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Gets deny assignments for a scope. </summary>
+            <param name="scope"> The scope of the deny assignments. </param>
+            <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all deny assignments at or above the scope. Use $filter=denyAssignmentName eq &apos;{name}&apos; to search deny assignments by name at specified scope. Use $filter=principalId eq &apos;{id}&apos; to return all deny assignments at, above and below the scope for the specified principal. Use $filter=gdprExportPrincipalId eq &apos;{id}&apos; to return all deny assignments at, above and below the scope for the specified principal. This filter is different from the principalId filter as it returns not only those deny assignments that contain the specified principal is the Principals list but also those deny assignments that contain the specified principal is the ExcludePrincipals list. Additionally, when gdprExportPrincipalId filter is used, only the deny assignment name and description properties are returned. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.DenyAssignmentsRestOperations.ListForResourceNextPageAsync(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Gets deny assignments for a resource. </summary>
+            <param name="nextLink"> The URL to the next page of results. </param>
+            <param name="resourceGroupName"> The name of the resource group. </param>
+            <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
+            <param name="parentResourcePath"> The parent resource identity. </param>
+            <param name="resourceType"> The resource type of the resource. </param>
+            <param name="resourceName"> The name of the resource to get deny assignments for. </param>
+            <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all deny assignments at or above the scope. Use $filter=denyAssignmentName eq &apos;{name}&apos; to search deny assignments by name at specified scope. Use $filter=principalId eq &apos;{id}&apos; to return all deny assignments at, above and below the scope for the specified principal. Use $filter=gdprExportPrincipalId eq &apos;{id}&apos; to return all deny assignments at, above and below the scope for the specified principal. This filter is different from the principalId filter as it returns not only those deny assignments that contain the specified principal is the Principals list but also those deny assignments that contain the specified principal is the ExcludePrincipals list. Additionally, when gdprExportPrincipalId filter is used, only the deny assignment name and description properties are returned. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, or <paramref name="resourceName"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.DenyAssignmentsRestOperations.ListForResourceNextPage(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Gets deny assignments for a resource. </summary>
+            <param name="nextLink"> The URL to the next page of results. </param>
+            <param name="resourceGroupName"> The name of the resource group. </param>
+            <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
+            <param name="parentResourcePath"> The parent resource identity. </param>
+            <param name="resourceType"> The resource type of the resource. </param>
+            <param name="resourceName"> The name of the resource to get deny assignments for. </param>
+            <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all deny assignments at or above the scope. Use $filter=denyAssignmentName eq &apos;{name}&apos; to search deny assignments by name at specified scope. Use $filter=principalId eq &apos;{id}&apos; to return all deny assignments at, above and below the scope for the specified principal. Use $filter=gdprExportPrincipalId eq &apos;{id}&apos; to return all deny assignments at, above and below the scope for the specified principal. This filter is different from the principalId filter as it returns not only those deny assignments that contain the specified principal is the Principals list but also those deny assignments that contain the specified principal is the ExcludePrincipals list. Additionally, when gdprExportPrincipalId filter is used, only the deny assignment name and description properties are returned. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, or <paramref name="resourceName"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.DenyAssignmentsRestOperations.ListForResourceGroupNextPageAsync(System.String,System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Gets deny assignments for a resource group. </summary>
+            <param name="nextLink"> The URL to the next page of results. </param>
+            <param name="resourceGroupName"> The name of the resource group. </param>
+            <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all deny assignments at or above the scope. Use $filter=denyAssignmentName eq &apos;{name}&apos; to search deny assignments by name at specified scope. Use $filter=principalId eq &apos;{id}&apos; to return all deny assignments at, above and below the scope for the specified principal. Use $filter=gdprExportPrincipalId eq &apos;{id}&apos; to return all deny assignments at, above and below the scope for the specified principal. This filter is different from the principalId filter as it returns not only those deny assignments that contain the specified principal is the Principals list but also those deny assignments that contain the specified principal is the ExcludePrincipals list. Additionally, when gdprExportPrincipalId filter is used, only the deny assignment name and description properties are returned. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.DenyAssignmentsRestOperations.ListForResourceGroupNextPage(System.String,System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Gets deny assignments for a resource group. </summary>
+            <param name="nextLink"> The URL to the next page of results. </param>
+            <param name="resourceGroupName"> The name of the resource group. </param>
+            <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all deny assignments at or above the scope. Use $filter=denyAssignmentName eq &apos;{name}&apos; to search deny assignments by name at specified scope. Use $filter=principalId eq &apos;{id}&apos; to return all deny assignments at, above and below the scope for the specified principal. Use $filter=gdprExportPrincipalId eq &apos;{id}&apos; to return all deny assignments at, above and below the scope for the specified principal. This filter is different from the principalId filter as it returns not only those deny assignments that contain the specified principal is the Principals list but also those deny assignments that contain the specified principal is the ExcludePrincipals list. Additionally, when gdprExportPrincipalId filter is used, only the deny assignment name and description properties are returned. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.DenyAssignmentsRestOperations.ListNextPageAsync(System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Gets all deny assignments for the subscription. </summary>
+            <param name="nextLink"> The URL to the next page of results. </param>
+            <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all deny assignments at or above the scope. Use $filter=denyAssignmentName eq &apos;{name}&apos; to search deny assignments by name at specified scope. Use $filter=principalId eq &apos;{id}&apos; to return all deny assignments at, above and below the scope for the specified principal. Use $filter=gdprExportPrincipalId eq &apos;{id}&apos; to return all deny assignments at, above and below the scope for the specified principal. This filter is different from the principalId filter as it returns not only those deny assignments that contain the specified principal is the Principals list but also those deny assignments that contain the specified principal is the ExcludePrincipals list. Additionally, when gdprExportPrincipalId filter is used, only the deny assignment name and description properties are returned. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.DenyAssignmentsRestOperations.ListNextPage(System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Gets all deny assignments for the subscription. </summary>
+            <param name="nextLink"> The URL to the next page of results. </param>
+            <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all deny assignments at or above the scope. Use $filter=denyAssignmentName eq &apos;{name}&apos; to search deny assignments by name at specified scope. Use $filter=principalId eq &apos;{id}&apos; to return all deny assignments at, above and below the scope for the specified principal. Use $filter=gdprExportPrincipalId eq &apos;{id}&apos; to return all deny assignments at, above and below the scope for the specified principal. This filter is different from the principalId filter as it returns not only those deny assignments that contain the specified principal is the Principals list but also those deny assignments that contain the specified principal is the ExcludePrincipals list. Additionally, when gdprExportPrincipalId filter is used, only the deny assignment name and description properties are returned. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.DenyAssignmentsRestOperations.ListForScopeNextPageAsync(System.String,System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Gets deny assignments for a scope. </summary>
+            <param name="nextLink"> The URL to the next page of results. </param>
+            <param name="scope"> The scope of the deny assignments. </param>
+            <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all deny assignments at or above the scope. Use $filter=denyAssignmentName eq &apos;{name}&apos; to search deny assignments by name at specified scope. Use $filter=principalId eq &apos;{id}&apos; to return all deny assignments at, above and below the scope for the specified principal. Use $filter=gdprExportPrincipalId eq &apos;{id}&apos; to return all deny assignments at, above and below the scope for the specified principal. This filter is different from the principalId filter as it returns not only those deny assignments that contain the specified principal is the Principals list but also those deny assignments that contain the specified principal is the ExcludePrincipals list. Additionally, when gdprExportPrincipalId filter is used, only the deny assignment name and description properties are returned. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.DenyAssignmentsRestOperations.ListForScopeNextPage(System.String,System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Gets deny assignments for a scope. </summary>
+            <param name="nextLink"> The URL to the next page of results. </param>
+            <param name="scope"> The scope of the deny assignments. </param>
+            <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all deny assignments at or above the scope. Use $filter=denyAssignmentName eq &apos;{name}&apos; to search deny assignments by name at specified scope. Use $filter=principalId eq &apos;{id}&apos; to return all deny assignments at, above and below the scope for the specified principal. Use $filter=gdprExportPrincipalId eq &apos;{id}&apos; to return all deny assignments at, above and below the scope for the specified principal. This filter is different from the principalId filter as it returns not only those deny assignments that contain the specified principal is the Principals list but also those deny assignments that contain the specified principal is the ExcludePrincipals list. Additionally, when gdprExportPrincipalId filter is used, only the deny assignment name and description properties are returned. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
+        </member>
+        <member name="T:Azure.ResourceManager.Authorization.GlobalAdministratorOperations">
+            <summary> The GlobalAdministrator service client. </summary>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.GlobalAdministratorOperations.#ctor">
+            <summary> Initializes a new instance of GlobalAdministratorOperations for mocking. </summary>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.GlobalAdministratorOperations.#ctor(Azure.Core.Pipeline.ClientDiagnostics,Azure.Core.Pipeline.HttpPipeline,System.Uri)">
+            <summary> Initializes a new instance of GlobalAdministratorOperations. </summary>
+            <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+            <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+            <param name="endpoint"> server parameter. </param>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.GlobalAdministratorOperations.ElevateAccessAsync(System.Threading.CancellationToken)">
+            <summary> Elevates access for a Global Administrator. </summary>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.GlobalAdministratorOperations.ElevateAccess(System.Threading.CancellationToken)">
+            <summary> Elevates access for a Global Administrator. </summary>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.GlobalAdministratorRestOperations.#ctor(Azure.Core.Pipeline.ClientDiagnostics,Azure.Core.Pipeline.HttpPipeline,System.Uri)">
+            <summary> Initializes a new instance of GlobalAdministratorRestOperations. </summary>
+            <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+            <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+            <param name="endpoint"> server parameter. </param>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.GlobalAdministratorRestOperations.ElevateAccessAsync(System.Threading.CancellationToken)">
+            <summary> Elevates access for a Global Administrator. </summary>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.GlobalAdministratorRestOperations.ElevateAccess(System.Threading.CancellationToken)">
+            <summary> Elevates access for a Global Administrator. </summary>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+        </member>
+        <member name="T:Azure.ResourceManager.Authorization.Models.ClassicAdministrator">
+            <summary> Classic Administrators. </summary>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.Models.ClassicAdministrator.#ctor">
+            <summary> Initializes a new instance of ClassicAdministrator. </summary>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.Models.ClassicAdministrator.#ctor(System.String,System.String,System.String,System.String,System.String)">
+            <summary> Initializes a new instance of ClassicAdministrator. </summary>
+            <param name="id"> The ID of the administrator. </param>
+            <param name="name"> The name of the administrator. </param>
+            <param name="type"> The type of the administrator. </param>
+            <param name="emailAddress"> The email address of the administrator. </param>
+            <param name="role"> The role of the administrator. </param>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.ClassicAdministrator.Id">
+            <summary> The ID of the administrator. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.ClassicAdministrator.Name">
+            <summary> The name of the administrator. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.ClassicAdministrator.Type">
+            <summary> The type of the administrator. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.ClassicAdministrator.EmailAddress">
+            <summary> The email address of the administrator. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.ClassicAdministrator.Role">
+            <summary> The role of the administrator. </summary>
+        </member>
+        <member name="T:Azure.ResourceManager.Authorization.Models.ClassicAdministratorListResult">
+            <summary> ClassicAdministrator list result information. </summary>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.Models.ClassicAdministratorListResult.#ctor">
+            <summary> Initializes a new instance of ClassicAdministratorListResult. </summary>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.Models.ClassicAdministratorListResult.#ctor(System.Collections.Generic.IReadOnlyList{Azure.ResourceManager.Authorization.Models.ClassicAdministrator},System.String)">
+            <summary> Initializes a new instance of ClassicAdministratorListResult. </summary>
+            <param name="value"> An array of administrators. </param>
+            <param name="nextLink"> The URL to use for getting the next set of results. </param>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.ClassicAdministratorListResult.Value">
+            <summary> An array of administrators. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.ClassicAdministratorListResult.NextLink">
+            <summary> The URL to use for getting the next set of results. </summary>
+        </member>
+        <member name="T:Azure.ResourceManager.Authorization.Models.DenyAssignment">
+            <summary> Deny Assignment. </summary>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.Models.DenyAssignment.#ctor">
+            <summary> Initializes a new instance of DenyAssignment. </summary>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.Models.DenyAssignment.#ctor(System.String,System.String,System.String,System.String,System.String,System.Collections.Generic.IReadOnlyList{Azure.ResourceManager.Authorization.Models.DenyAssignmentPermission},System.String,System.Nullable{System.Boolean},System.Collections.Generic.IReadOnlyList{Azure.ResourceManager.Authorization.Models.Principal},System.Collections.Generic.IReadOnlyList{Azure.ResourceManager.Authorization.Models.Principal},System.Nullable{System.Boolean})">
+            <summary> Initializes a new instance of DenyAssignment. </summary>
+            <param name="id"> The deny assignment ID. </param>
+            <param name="name"> The deny assignment name. </param>
+            <param name="type"> The deny assignment type. </param>
+            <param name="denyAssignmentName"> The display name of the deny assignment. </param>
+            <param name="description"> The description of the deny assignment. </param>
+            <param name="permissions"> An array of permissions that are denied by the deny assignment. </param>
+            <param name="scope"> The deny assignment scope. </param>
+            <param name="doNotApplyToChildScopes"> Determines if the deny assignment applies to child scopes. Default value is false. </param>
+            <param name="principals"> Array of principals to which the deny assignment applies. </param>
+            <param name="excludePrincipals"> Array of principals to which the deny assignment does not apply. </param>
+            <param name="isSystemProtected"> Specifies whether this deny assignment was created by Azure and cannot be edited or deleted. </param>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.DenyAssignment.Id">
+            <summary> The deny assignment ID. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.DenyAssignment.Name">
+            <summary> The deny assignment name. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.DenyAssignment.Type">
+            <summary> The deny assignment type. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.DenyAssignment.DenyAssignmentName">
+            <summary> The display name of the deny assignment. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.DenyAssignment.Description">
+            <summary> The description of the deny assignment. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.DenyAssignment.Permissions">
+            <summary> An array of permissions that are denied by the deny assignment. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.DenyAssignment.Scope">
+            <summary> The deny assignment scope. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.DenyAssignment.DoNotApplyToChildScopes">
+            <summary> Determines if the deny assignment applies to child scopes. Default value is false. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.DenyAssignment.Principals">
+            <summary> Array of principals to which the deny assignment applies. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.DenyAssignment.ExcludePrincipals">
+            <summary> Array of principals to which the deny assignment does not apply. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.DenyAssignment.IsSystemProtected">
+            <summary> Specifies whether this deny assignment was created by Azure and cannot be edited or deleted. </summary>
+        </member>
+        <member name="T:Azure.ResourceManager.Authorization.Models.DenyAssignmentFilter">
+            <summary> Deny Assignments filter. </summary>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.Models.DenyAssignmentFilter.#ctor">
+            <summary> Initializes a new instance of DenyAssignmentFilter. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.DenyAssignmentFilter.DenyAssignmentName">
+            <summary> Return deny assignment with specified name. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.DenyAssignmentFilter.PrincipalId">
+            <summary> Return all deny assignments where the specified principal is listed in the principals list of deny assignments. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.DenyAssignmentFilter.GdprExportPrincipalId">
+            <summary> Return all deny assignments where the specified principal is listed either in the principals list or exclude principals list of deny assignments. </summary>
+        </member>
+        <member name="T:Azure.ResourceManager.Authorization.Models.DenyAssignmentListResult">
+            <summary> Deny assignment list operation result. </summary>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.Models.DenyAssignmentListResult.#ctor">
+            <summary> Initializes a new instance of DenyAssignmentListResult. </summary>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.Models.DenyAssignmentListResult.#ctor(System.Collections.Generic.IReadOnlyList{Azure.ResourceManager.Authorization.Models.DenyAssignment},System.String)">
+            <summary> Initializes a new instance of DenyAssignmentListResult. </summary>
+            <param name="value"> Deny assignment list. </param>
+            <param name="nextLink"> The URL to use for getting the next set of results. </param>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.DenyAssignmentListResult.Value">
+            <summary> Deny assignment list. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.DenyAssignmentListResult.NextLink">
+            <summary> The URL to use for getting the next set of results. </summary>
+        </member>
+        <member name="T:Azure.ResourceManager.Authorization.Models.DenyAssignmentPermission">
+            <summary> Deny assignment permissions. </summary>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.Models.DenyAssignmentPermission.#ctor">
+            <summary> Initializes a new instance of DenyAssignmentPermission. </summary>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.Models.DenyAssignmentPermission.#ctor(System.Collections.Generic.IReadOnlyList{System.String},System.Collections.Generic.IReadOnlyList{System.String},System.Collections.Generic.IReadOnlyList{System.String},System.Collections.Generic.IReadOnlyList{System.String})">
+            <summary> Initializes a new instance of DenyAssignmentPermission. </summary>
+            <param name="actions"> Actions to which the deny assignment does not grant access. </param>
+            <param name="notActions"> Actions to exclude from that the deny assignment does not grant access. </param>
+            <param name="dataActions"> Data actions to which the deny assignment does not grant access. </param>
+            <param name="notDataActions"> Data actions to exclude from that the deny assignment does not grant access. </param>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.DenyAssignmentPermission.Actions">
+            <summary> Actions to which the deny assignment does not grant access. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.DenyAssignmentPermission.NotActions">
+            <summary> Actions to exclude from that the deny assignment does not grant access. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.DenyAssignmentPermission.DataActions">
+            <summary> Data actions to which the deny assignment does not grant access. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.DenyAssignmentPermission.NotDataActions">
+            <summary> Data actions to exclude from that the deny assignment does not grant access. </summary>
+        </member>
+        <member name="T:Azure.ResourceManager.Authorization.Models.Permission">
+            <summary> Role definition permissions. </summary>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.Models.Permission.#ctor">
+            <summary> Initializes a new instance of Permission. </summary>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.Models.Permission.#ctor(System.Collections.Generic.IList{System.String},System.Collections.Generic.IList{System.String},System.Collections.Generic.IList{System.String},System.Collections.Generic.IList{System.String})">
+            <summary> Initializes a new instance of Permission. </summary>
+            <param name="actions"> Allowed actions. </param>
+            <param name="notActions"> Denied actions. </param>
+            <param name="dataActions"> Allowed Data actions. </param>
+            <param name="notDataActions"> Denied Data actions. </param>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.Permission.Actions">
+            <summary> Allowed actions. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.Permission.NotActions">
+            <summary> Denied actions. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.Permission.DataActions">
+            <summary> Allowed Data actions. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.Permission.NotDataActions">
+            <summary> Denied Data actions. </summary>
+        </member>
+        <member name="T:Azure.ResourceManager.Authorization.Models.PermissionGetResult">
+            <summary> Permissions information. </summary>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.Models.PermissionGetResult.#ctor">
+            <summary> Initializes a new instance of PermissionGetResult. </summary>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.Models.PermissionGetResult.#ctor(System.Collections.Generic.IReadOnlyList{Azure.ResourceManager.Authorization.Models.Permission},System.String)">
+            <summary> Initializes a new instance of PermissionGetResult. </summary>
+            <param name="value"> An array of permissions. </param>
+            <param name="nextLink"> The URL to use for getting the next set of results. </param>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.PermissionGetResult.Value">
+            <summary> An array of permissions. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.PermissionGetResult.NextLink">
+            <summary> The URL to use for getting the next set of results. </summary>
+        </member>
+        <member name="T:Azure.ResourceManager.Authorization.Models.Principal">
+            <summary> Deny assignment principal. </summary>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.Models.Principal.#ctor">
+            <summary> Initializes a new instance of Principal. </summary>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.Models.Principal.#ctor(System.String,System.String)">
+            <summary> Initializes a new instance of Principal. </summary>
+            <param name="id"> Object ID of the Azure AD principal (user, group, or service principal) to which the deny assignment applies. An empty guid &apos;00000000-0000-0000-0000-000000000000&apos; as principal id and principal type as &apos;Everyone&apos; represents all users, groups and service principals. </param>
+            <param name="type"> Type of object represented by principal id (user, group, or service principal). An empty guid &apos;00000000-0000-0000-0000-000000000000&apos; as principal id and principal type as &apos;Everyone&apos; represents all users, groups and service principals. </param>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.Principal.Id">
+            <summary> Object ID of the Azure AD principal (user, group, or service principal) to which the deny assignment applies. An empty guid &apos;00000000-0000-0000-0000-000000000000&apos; as principal id and principal type as &apos;Everyone&apos; represents all users, groups and service principals. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.Principal.Type">
+            <summary> Type of object represented by principal id (user, group, or service principal). An empty guid &apos;00000000-0000-0000-0000-000000000000&apos; as principal id and principal type as &apos;Everyone&apos; represents all users, groups and service principals. </summary>
+        </member>
+        <member name="T:Azure.ResourceManager.Authorization.Models.PrincipalType">
+            <summary> The principal type of the assigned principal ID. </summary>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.Models.PrincipalType.#ctor(System.String)">
+            <summary> Determines if two <see cref="T:Azure.ResourceManager.Authorization.Models.PrincipalType"/> values are the same. </summary>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.PrincipalType.User">
+            <summary> User. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.PrincipalType.Group">
+            <summary> Group. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.PrincipalType.ServicePrincipal">
+            <summary> ServicePrincipal. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.PrincipalType.Unknown">
+            <summary> Unknown. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.PrincipalType.DirectoryRoleTemplate">
+            <summary> DirectoryRoleTemplate. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.PrincipalType.ForeignGroup">
+            <summary> ForeignGroup. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.PrincipalType.Application">
+            <summary> Application. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.PrincipalType.MSI">
+            <summary> MSI. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.PrincipalType.DirectoryObjectOrGroup">
+            <summary> DirectoryObjectOrGroup. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.PrincipalType.Everyone">
+            <summary> Everyone. </summary>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.Models.PrincipalType.op_Equality(Azure.ResourceManager.Authorization.Models.PrincipalType,Azure.ResourceManager.Authorization.Models.PrincipalType)">
+            <summary> Determines if two <see cref="T:Azure.ResourceManager.Authorization.Models.PrincipalType"/> values are the same. </summary>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.Models.PrincipalType.op_Inequality(Azure.ResourceManager.Authorization.Models.PrincipalType,Azure.ResourceManager.Authorization.Models.PrincipalType)">
+            <summary> Determines if two <see cref="T:Azure.ResourceManager.Authorization.Models.PrincipalType"/> values are not the same. </summary>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.Models.PrincipalType.op_Implicit(System.String)~Azure.ResourceManager.Authorization.Models.PrincipalType">
+            <summary> Converts a string to a <see cref="T:Azure.ResourceManager.Authorization.Models.PrincipalType"/>. </summary>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.Models.PrincipalType.Equals(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.Models.PrincipalType.Equals(Azure.ResourceManager.Authorization.Models.PrincipalType)">
+            <inheritdoc />
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.Models.PrincipalType.GetHashCode">
+            <inheritdoc />
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.Models.PrincipalType.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:Azure.ResourceManager.Authorization.Models.ProviderOperation">
+            <summary> Operation. </summary>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.Models.ProviderOperation.#ctor">
+            <summary> Initializes a new instance of ProviderOperation. </summary>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.Models.ProviderOperation.#ctor(System.String,System.String,System.String,System.String,System.Object,System.Nullable{System.Boolean})">
+            <summary> Initializes a new instance of ProviderOperation. </summary>
+            <param name="name"> The operation name. </param>
+            <param name="displayName"> The operation display name. </param>
+            <param name="description"> The operation description. </param>
+            <param name="origin"> The operation origin. </param>
+            <param name="properties"> The operation properties. </param>
+            <param name="isDataAction"> The dataAction flag to specify the operation type. </param>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.ProviderOperation.Name">
+            <summary> The operation name. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.ProviderOperation.DisplayName">
+            <summary> The operation display name. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.ProviderOperation.Description">
+            <summary> The operation description. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.ProviderOperation.Origin">
+            <summary> The operation origin. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.ProviderOperation.Properties">
+            <summary> The operation properties. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.ProviderOperation.IsDataAction">
+            <summary> The dataAction flag to specify the operation type. </summary>
+        </member>
+        <member name="T:Azure.ResourceManager.Authorization.Models.ProviderOperationsMetadata">
+            <summary> Provider Operations metadata. </summary>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.Models.ProviderOperationsMetadata.#ctor">
+            <summary> Initializes a new instance of ProviderOperationsMetadata. </summary>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.Models.ProviderOperationsMetadata.#ctor(System.String,System.String,System.String,System.String,System.Collections.Generic.IReadOnlyList{Azure.ResourceManager.Authorization.Models.ResourceType},System.Collections.Generic.IReadOnlyList{Azure.ResourceManager.Authorization.Models.ProviderOperation})">
+            <summary> Initializes a new instance of ProviderOperationsMetadata. </summary>
+            <param name="id"> The provider id. </param>
+            <param name="name"> The provider name. </param>
+            <param name="type"> The provider type. </param>
+            <param name="displayName"> The provider display name. </param>
+            <param name="resourceTypes"> The provider resource types. </param>
+            <param name="operations"> The provider operations. </param>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.ProviderOperationsMetadata.Id">
+            <summary> The provider id. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.ProviderOperationsMetadata.Name">
+            <summary> The provider name. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.ProviderOperationsMetadata.Type">
+            <summary> The provider type. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.ProviderOperationsMetadata.DisplayName">
+            <summary> The provider display name. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.ProviderOperationsMetadata.ResourceTypes">
+            <summary> The provider resource types. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.ProviderOperationsMetadata.Operations">
+            <summary> The provider operations. </summary>
+        </member>
+        <member name="T:Azure.ResourceManager.Authorization.Models.ProviderOperationsMetadataListResult">
+            <summary> Provider operations metadata list. </summary>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.Models.ProviderOperationsMetadataListResult.#ctor">
+            <summary> Initializes a new instance of ProviderOperationsMetadataListResult. </summary>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.Models.ProviderOperationsMetadataListResult.#ctor(System.Collections.Generic.IReadOnlyList{Azure.ResourceManager.Authorization.Models.ProviderOperationsMetadata},System.String)">
+            <summary> Initializes a new instance of ProviderOperationsMetadataListResult. </summary>
+            <param name="value"> The list of providers. </param>
+            <param name="nextLink"> The URL to use for getting the next set of results. </param>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.ProviderOperationsMetadataListResult.Value">
+            <summary> The list of providers. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.ProviderOperationsMetadataListResult.NextLink">
+            <summary> The URL to use for getting the next set of results. </summary>
+        </member>
+        <member name="T:Azure.ResourceManager.Authorization.Models.ResourceType">
+            <summary> Resource Type. </summary>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.Models.ResourceType.#ctor">
+            <summary> Initializes a new instance of ResourceType. </summary>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.Models.ResourceType.#ctor(System.String,System.String,System.Collections.Generic.IReadOnlyList{Azure.ResourceManager.Authorization.Models.ProviderOperation})">
+            <summary> Initializes a new instance of ResourceType. </summary>
+            <param name="name"> The resource type name. </param>
+            <param name="displayName"> The resource type display name. </param>
+            <param name="operations"> The resource type operations. </param>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.ResourceType.Name">
+            <summary> The resource type name. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.ResourceType.DisplayName">
+            <summary> The resource type display name. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.ResourceType.Operations">
+            <summary> The resource type operations. </summary>
+        </member>
+        <member name="T:Azure.ResourceManager.Authorization.Models.RoleAssignment">
+            <summary> Role Assignments. </summary>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.Models.RoleAssignment.#ctor">
+            <summary> Initializes a new instance of RoleAssignment. </summary>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.Models.RoleAssignment.#ctor(System.String,System.String,System.String,System.String,System.String,System.String,System.Nullable{Azure.ResourceManager.Authorization.Models.PrincipalType},System.Nullable{System.Boolean})">
+            <summary> Initializes a new instance of RoleAssignment. </summary>
+            <param name="id"> The role assignment ID. </param>
+            <param name="name"> The role assignment name. </param>
+            <param name="type"> The role assignment type. </param>
+            <param name="scope"> The role assignment scope. </param>
+            <param name="roleDefinitionId"> The role definition ID. </param>
+            <param name="principalId"> The principal ID. </param>
+            <param name="principalType"> The principal type of the assigned principal ID. </param>
+            <param name="canDelegate"> The Delegation flag for the role assignment. </param>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.RoleAssignment.Id">
+            <summary> The role assignment ID. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.RoleAssignment.Name">
+            <summary> The role assignment name. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.RoleAssignment.Type">
+            <summary> The role assignment type. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.RoleAssignment.Scope">
+            <summary> The role assignment scope. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.RoleAssignment.RoleDefinitionId">
+            <summary> The role definition ID. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.RoleAssignment.PrincipalId">
+            <summary> The principal ID. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.RoleAssignment.PrincipalType">
+            <summary> The principal type of the assigned principal ID. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.RoleAssignment.CanDelegate">
+            <summary> The Delegation flag for the role assignment. </summary>
+        </member>
+        <member name="T:Azure.ResourceManager.Authorization.Models.RoleAssignmentCreateParameters">
+            <summary> Role assignment create parameters. </summary>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.Models.RoleAssignmentCreateParameters.#ctor(System.String,System.String)">
+            <summary> Initializes a new instance of RoleAssignmentCreateParameters. </summary>
+            <param name="roleDefinitionId"> The role definition ID used in the role assignment. </param>
+            <param name="principalId"> The principal ID assigned to the role. This maps to the ID inside the Active Directory. It can point to a user, service principal, or security group. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="roleDefinitionId"/> or <paramref name="principalId"/> is null. </exception>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.RoleAssignmentCreateParameters.RoleDefinitionId">
+            <summary> The role definition ID used in the role assignment. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.RoleAssignmentCreateParameters.PrincipalId">
+            <summary> The principal ID assigned to the role. This maps to the ID inside the Active Directory. It can point to a user, service principal, or security group. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.RoleAssignmentCreateParameters.PrincipalType">
+            <summary> The principal type of the assigned principal ID. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.RoleAssignmentCreateParameters.CanDelegate">
+            <summary> The delegation flag used for creating a role assignment. </summary>
+        </member>
+        <member name="T:Azure.ResourceManager.Authorization.Models.RoleAssignmentFilter">
+            <summary> Role Assignments filter. </summary>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.Models.RoleAssignmentFilter.#ctor">
+            <summary> Initializes a new instance of RoleAssignmentFilter. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.RoleAssignmentFilter.PrincipalId">
+            <summary> Returns role assignment of the specific principal. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.RoleAssignmentFilter.CanDelegate">
+            <summary> The Delegation flag for the role assignment. </summary>
+        </member>
+        <member name="T:Azure.ResourceManager.Authorization.Models.RoleAssignmentListResult">
+            <summary> Role assignment list operation result. </summary>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.Models.RoleAssignmentListResult.#ctor">
+            <summary> Initializes a new instance of RoleAssignmentListResult. </summary>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.Models.RoleAssignmentListResult.#ctor(System.Collections.Generic.IReadOnlyList{Azure.ResourceManager.Authorization.Models.RoleAssignment},System.String)">
+            <summary> Initializes a new instance of RoleAssignmentListResult. </summary>
+            <param name="value"> Role assignment list. </param>
+            <param name="nextLink"> The URL to use for getting the next set of results. </param>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.RoleAssignmentListResult.Value">
+            <summary> Role assignment list. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.RoleAssignmentListResult.NextLink">
+            <summary> The URL to use for getting the next set of results. </summary>
+        </member>
+        <member name="T:Azure.ResourceManager.Authorization.Models.RoleDefinition">
+            <summary> Role definition. </summary>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.Models.RoleDefinition.#ctor">
+            <summary> Initializes a new instance of RoleDefinition. </summary>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.Models.RoleDefinition.#ctor(System.String,System.String,System.String,System.String,System.String,System.String,System.Collections.Generic.IList{Azure.ResourceManager.Authorization.Models.Permission},System.Collections.Generic.IList{System.String})">
+            <summary> Initializes a new instance of RoleDefinition. </summary>
+            <param name="id"> The role definition ID. </param>
+            <param name="name"> The role definition name. </param>
+            <param name="type"> The role definition type. </param>
+            <param name="roleName"> The role name. </param>
+            <param name="description"> The role definition description. </param>
+            <param name="roleType"> The role type. </param>
+            <param name="permissions"> Role definition permissions. </param>
+            <param name="assignableScopes"> Role definition assignable scopes. </param>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.RoleDefinition.Id">
+            <summary> The role definition ID. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.RoleDefinition.Name">
+            <summary> The role definition name. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.RoleDefinition.Type">
+            <summary> The role definition type. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.RoleDefinition.RoleName">
+            <summary> The role name. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.RoleDefinition.Description">
+            <summary> The role definition description. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.RoleDefinition.RoleType">
+            <summary> The role type. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.RoleDefinition.Permissions">
+            <summary> Role definition permissions. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.RoleDefinition.AssignableScopes">
+            <summary> Role definition assignable scopes. </summary>
+        </member>
+        <member name="T:Azure.ResourceManager.Authorization.Models.RoleDefinitionFilter">
+            <summary> Role Definitions filter. </summary>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.Models.RoleDefinitionFilter.#ctor">
+            <summary> Initializes a new instance of RoleDefinitionFilter. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.RoleDefinitionFilter.RoleName">
+            <summary> Returns role definition with the specific name. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.RoleDefinitionFilter.Type">
+            <summary> Returns role definition with the specific type. </summary>
+        </member>
+        <member name="T:Azure.ResourceManager.Authorization.Models.RoleDefinitionListResult">
+            <summary> Role definition list operation result. </summary>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.Models.RoleDefinitionListResult.#ctor">
+            <summary> Initializes a new instance of RoleDefinitionListResult. </summary>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.Models.RoleDefinitionListResult.#ctor(System.Collections.Generic.IReadOnlyList{Azure.ResourceManager.Authorization.Models.RoleDefinition},System.String)">
+            <summary> Initializes a new instance of RoleDefinitionListResult. </summary>
+            <param name="value"> Role definition list. </param>
+            <param name="nextLink"> The URL to use for getting the next set of results. </param>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.RoleDefinitionListResult.Value">
+            <summary> Role definition list. </summary>
+        </member>
+        <member name="P:Azure.ResourceManager.Authorization.Models.RoleDefinitionListResult.NextLink">
+            <summary> The URL to use for getting the next set of results. </summary>
+        </member>
+        <member name="T:Azure.ResourceManager.Authorization.PermissionsOperations">
+            <summary> The Permissions service client. </summary>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.PermissionsOperations.#ctor">
+            <summary> Initializes a new instance of PermissionsOperations for mocking. </summary>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.PermissionsOperations.#ctor(Azure.Core.Pipeline.ClientDiagnostics,Azure.Core.Pipeline.HttpPipeline,System.String,System.Uri)">
+            <summary> Initializes a new instance of PermissionsOperations. </summary>
+            <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+            <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+            <param name="subscriptionId"> The ID of the target subscription. </param>
+            <param name="endpoint"> server parameter. </param>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.PermissionsOperations.ListForResourceGroupAsync(System.String,System.Threading.CancellationToken)">
+            <summary> Gets all permissions the caller has for a resource group. </summary>
+            <param name="resourceGroupName"> The name of the resource group. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.PermissionsOperations.ListForResourceGroup(System.String,System.Threading.CancellationToken)">
+            <summary> Gets all permissions the caller has for a resource group. </summary>
+            <param name="resourceGroupName"> The name of the resource group. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.PermissionsOperations.ListForResourceAsync(System.String,System.String,System.String,System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Gets all permissions the caller has for a resource. </summary>
+            <param name="resourceGroupName"> The name of the resource group. </param>
+            <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
+            <param name="parentResourcePath"> The parent resource identity. </param>
+            <param name="resourceType"> The resource type of the resource. </param>
+            <param name="resourceName"> The name of the resource to get the permissions for. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, or <paramref name="resourceName"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.PermissionsOperations.ListForResource(System.String,System.String,System.String,System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Gets all permissions the caller has for a resource. </summary>
+            <param name="resourceGroupName"> The name of the resource group. </param>
+            <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
+            <param name="parentResourcePath"> The parent resource identity. </param>
+            <param name="resourceType"> The resource type of the resource. </param>
+            <param name="resourceName"> The name of the resource to get the permissions for. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, or <paramref name="resourceName"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.PermissionsRestOperations.#ctor(Azure.Core.Pipeline.ClientDiagnostics,Azure.Core.Pipeline.HttpPipeline,System.String,System.Uri)">
+            <summary> Initializes a new instance of PermissionsRestOperations. </summary>
+            <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+            <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+            <param name="subscriptionId"> The ID of the target subscription. </param>
+            <param name="endpoint"> server parameter. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.PermissionsRestOperations.ListForResourceGroupAsync(System.String,System.Threading.CancellationToken)">
+            <summary> Gets all permissions the caller has for a resource group. </summary>
+            <param name="resourceGroupName"> The name of the resource group. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.PermissionsRestOperations.ListForResourceGroup(System.String,System.Threading.CancellationToken)">
+            <summary> Gets all permissions the caller has for a resource group. </summary>
+            <param name="resourceGroupName"> The name of the resource group. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.PermissionsRestOperations.ListForResourceAsync(System.String,System.String,System.String,System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Gets all permissions the caller has for a resource. </summary>
+            <param name="resourceGroupName"> The name of the resource group. </param>
+            <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
+            <param name="parentResourcePath"> The parent resource identity. </param>
+            <param name="resourceType"> The resource type of the resource. </param>
+            <param name="resourceName"> The name of the resource to get the permissions for. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, or <paramref name="resourceName"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.PermissionsRestOperations.ListForResource(System.String,System.String,System.String,System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Gets all permissions the caller has for a resource. </summary>
+            <param name="resourceGroupName"> The name of the resource group. </param>
+            <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
+            <param name="parentResourcePath"> The parent resource identity. </param>
+            <param name="resourceType"> The resource type of the resource. </param>
+            <param name="resourceName"> The name of the resource to get the permissions for. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, or <paramref name="resourceName"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.PermissionsRestOperations.ListForResourceGroupNextPageAsync(System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Gets all permissions the caller has for a resource group. </summary>
+            <param name="nextLink"> The URL to the next page of results. </param>
+            <param name="resourceGroupName"> The name of the resource group. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.PermissionsRestOperations.ListForResourceGroupNextPage(System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Gets all permissions the caller has for a resource group. </summary>
+            <param name="nextLink"> The URL to the next page of results. </param>
+            <param name="resourceGroupName"> The name of the resource group. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.PermissionsRestOperations.ListForResourceNextPageAsync(System.String,System.String,System.String,System.String,System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Gets all permissions the caller has for a resource. </summary>
+            <param name="nextLink"> The URL to the next page of results. </param>
+            <param name="resourceGroupName"> The name of the resource group. </param>
+            <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
+            <param name="parentResourcePath"> The parent resource identity. </param>
+            <param name="resourceType"> The resource type of the resource. </param>
+            <param name="resourceName"> The name of the resource to get the permissions for. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, or <paramref name="resourceName"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.PermissionsRestOperations.ListForResourceNextPage(System.String,System.String,System.String,System.String,System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Gets all permissions the caller has for a resource. </summary>
+            <param name="nextLink"> The URL to the next page of results. </param>
+            <param name="resourceGroupName"> The name of the resource group. </param>
+            <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
+            <param name="parentResourcePath"> The parent resource identity. </param>
+            <param name="resourceType"> The resource type of the resource. </param>
+            <param name="resourceName"> The name of the resource to get the permissions for. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, or <paramref name="resourceName"/> is null. </exception>
+        </member>
+        <member name="T:Azure.ResourceManager.Authorization.ProviderOperationsMetadataOperations">
+            <summary> The ProviderOperationsMetadata service client. </summary>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.ProviderOperationsMetadataOperations.#ctor">
+            <summary> Initializes a new instance of ProviderOperationsMetadataOperations for mocking. </summary>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.ProviderOperationsMetadataOperations.#ctor(Azure.Core.Pipeline.ClientDiagnostics,Azure.Core.Pipeline.HttpPipeline,System.Uri)">
+            <summary> Initializes a new instance of ProviderOperationsMetadataOperations. </summary>
+            <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+            <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+            <param name="endpoint"> server parameter. </param>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.ProviderOperationsMetadataOperations.GetAsync(System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Gets provider operations metadata for the specified resource provider. </summary>
+            <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
+            <param name="expand"> Specifies whether to expand the values. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.ProviderOperationsMetadataOperations.Get(System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Gets provider operations metadata for the specified resource provider. </summary>
+            <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
+            <param name="expand"> Specifies whether to expand the values. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.ProviderOperationsMetadataOperations.ListAsync(System.String,System.Threading.CancellationToken)">
+            <summary> Gets provider operations metadata for all resource providers. </summary>
+            <param name="expand"> Specifies whether to expand the values. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.ProviderOperationsMetadataOperations.List(System.String,System.Threading.CancellationToken)">
+            <summary> Gets provider operations metadata for all resource providers. </summary>
+            <param name="expand"> Specifies whether to expand the values. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.ProviderOperationsMetadataRestOperations.#ctor(Azure.Core.Pipeline.ClientDiagnostics,Azure.Core.Pipeline.HttpPipeline,System.Uri)">
+            <summary> Initializes a new instance of ProviderOperationsMetadataRestOperations. </summary>
+            <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+            <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+            <param name="endpoint"> server parameter. </param>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.ProviderOperationsMetadataRestOperations.GetAsync(System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Gets provider operations metadata for the specified resource provider. </summary>
+            <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
+            <param name="expand"> Specifies whether to expand the values. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.ProviderOperationsMetadataRestOperations.Get(System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Gets provider operations metadata for the specified resource provider. </summary>
+            <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
+            <param name="expand"> Specifies whether to expand the values. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.ProviderOperationsMetadataRestOperations.ListAsync(System.String,System.Threading.CancellationToken)">
+            <summary> Gets provider operations metadata for all resource providers. </summary>
+            <param name="expand"> Specifies whether to expand the values. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.ProviderOperationsMetadataRestOperations.List(System.String,System.Threading.CancellationToken)">
+            <summary> Gets provider operations metadata for all resource providers. </summary>
+            <param name="expand"> Specifies whether to expand the values. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.ProviderOperationsMetadataRestOperations.ListNextPageAsync(System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Gets provider operations metadata for all resource providers. </summary>
+            <param name="nextLink"> The URL to the next page of results. </param>
+            <param name="expand"> Specifies whether to expand the values. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.ProviderOperationsMetadataRestOperations.ListNextPage(System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Gets provider operations metadata for all resource providers. </summary>
+            <param name="nextLink"> The URL to the next page of results. </param>
+            <param name="expand"> Specifies whether to expand the values. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        </member>
+        <member name="T:Azure.ResourceManager.Authorization.RoleAssignmentsOperations">
+            <summary> The RoleAssignments service client. </summary>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleAssignmentsOperations.#ctor">
+            <summary> Initializes a new instance of RoleAssignmentsOperations for mocking. </summary>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleAssignmentsOperations.#ctor(Azure.Core.Pipeline.ClientDiagnostics,Azure.Core.Pipeline.HttpPipeline,System.String,System.Uri)">
+            <summary> Initializes a new instance of RoleAssignmentsOperations. </summary>
+            <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+            <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+            <param name="subscriptionId"> The ID of the target subscription. </param>
+            <param name="endpoint"> server parameter. </param>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleAssignmentsOperations.DeleteAsync(System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Deletes a role assignment. </summary>
+            <param name="scope"> The scope of the role assignment to delete. </param>
+            <param name="roleAssignmentName"> The name of the role assignment to delete. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleAssignmentsOperations.Delete(System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Deletes a role assignment. </summary>
+            <param name="scope"> The scope of the role assignment to delete. </param>
+            <param name="roleAssignmentName"> The name of the role assignment to delete. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleAssignmentsOperations.CreateAsync(System.String,System.String,Azure.ResourceManager.Authorization.Models.RoleAssignmentCreateParameters,System.Threading.CancellationToken)">
+            <summary> Creates a role assignment. </summary>
+            <param name="scope"> The scope of the role assignment to create. The scope can be any REST resource instance. For example, use &apos;/subscriptions/{subscription-id}/&apos; for a subscription, &apos;/subscriptions/{subscription-id}/resourceGroups/{resource-group-name}&apos; for a resource group, and &apos;/subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/providers/{resource-provider}/{resource-type}/{resource-name}&apos; for a resource. </param>
+            <param name="roleAssignmentName"> The name of the role assignment to create. It can be any valid GUID. </param>
+            <param name="parameters"> Parameters for the role assignment. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleAssignmentsOperations.Create(System.String,System.String,Azure.ResourceManager.Authorization.Models.RoleAssignmentCreateParameters,System.Threading.CancellationToken)">
+            <summary> Creates a role assignment. </summary>
+            <param name="scope"> The scope of the role assignment to create. The scope can be any REST resource instance. For example, use &apos;/subscriptions/{subscription-id}/&apos; for a subscription, &apos;/subscriptions/{subscription-id}/resourceGroups/{resource-group-name}&apos; for a resource group, and &apos;/subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/providers/{resource-provider}/{resource-type}/{resource-name}&apos; for a resource. </param>
+            <param name="roleAssignmentName"> The name of the role assignment to create. It can be any valid GUID. </param>
+            <param name="parameters"> Parameters for the role assignment. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleAssignmentsOperations.GetAsync(System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Get the specified role assignment. </summary>
+            <param name="scope"> The scope of the role assignment. </param>
+            <param name="roleAssignmentName"> The name of the role assignment to get. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleAssignmentsOperations.Get(System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Get the specified role assignment. </summary>
+            <param name="scope"> The scope of the role assignment. </param>
+            <param name="roleAssignmentName"> The name of the role assignment to get. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleAssignmentsOperations.DeleteByIdAsync(System.String,System.Threading.CancellationToken)">
+            <summary> Deletes a role assignment. </summary>
+            <param name="roleId"> The ID of the role assignment to delete. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleAssignmentsOperations.DeleteById(System.String,System.Threading.CancellationToken)">
+            <summary> Deletes a role assignment. </summary>
+            <param name="roleId"> The ID of the role assignment to delete. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleAssignmentsOperations.CreateByIdAsync(System.String,Azure.ResourceManager.Authorization.Models.RoleAssignmentCreateParameters,System.Threading.CancellationToken)">
+            <summary> Creates a role assignment by ID. </summary>
+            <param name="roleId"> The ID of the role assignment to create. </param>
+            <param name="parameters"> Parameters for the role assignment. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleAssignmentsOperations.CreateById(System.String,Azure.ResourceManager.Authorization.Models.RoleAssignmentCreateParameters,System.Threading.CancellationToken)">
+            <summary> Creates a role assignment by ID. </summary>
+            <param name="roleId"> The ID of the role assignment to create. </param>
+            <param name="parameters"> Parameters for the role assignment. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleAssignmentsOperations.GetByIdAsync(System.String,System.Threading.CancellationToken)">
+            <summary> Gets a role assignment by ID. </summary>
+            <param name="roleId"> The ID of the role assignment to get. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleAssignmentsOperations.GetById(System.String,System.Threading.CancellationToken)">
+            <summary> Gets a role assignment by ID. </summary>
+            <param name="roleId"> The ID of the role assignment to get. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleAssignmentsOperations.ListForResourceAsync(System.String,System.String,System.String,System.String,System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Gets role assignments for a resource. </summary>
+            <param name="resourceGroupName"> The name of the resource group. </param>
+            <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
+            <param name="parentResourcePath"> The parent resource identity. </param>
+            <param name="resourceType"> The resource type of the resource. </param>
+            <param name="resourceName"> The name of the resource to get role assignments for. </param>
+            <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, or <paramref name="resourceName"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleAssignmentsOperations.ListForResource(System.String,System.String,System.String,System.String,System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Gets role assignments for a resource. </summary>
+            <param name="resourceGroupName"> The name of the resource group. </param>
+            <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
+            <param name="parentResourcePath"> The parent resource identity. </param>
+            <param name="resourceType"> The resource type of the resource. </param>
+            <param name="resourceName"> The name of the resource to get role assignments for. </param>
+            <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, or <paramref name="resourceName"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleAssignmentsOperations.ListForResourceGroupAsync(System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Gets role assignments for a resource group. </summary>
+            <param name="resourceGroupName"> The name of the resource group. </param>
+            <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleAssignmentsOperations.ListForResourceGroup(System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Gets role assignments for a resource group. </summary>
+            <param name="resourceGroupName"> The name of the resource group. </param>
+            <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleAssignmentsOperations.ListAsync(System.String,System.Threading.CancellationToken)">
+            <summary> Gets all role assignments for the subscription. </summary>
+            <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleAssignmentsOperations.List(System.String,System.Threading.CancellationToken)">
+            <summary> Gets all role assignments for the subscription. </summary>
+            <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleAssignmentsOperations.ListForScopeAsync(System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Gets role assignments for a scope. </summary>
+            <param name="scope"> The scope of the role assignments. </param>
+            <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleAssignmentsOperations.ListForScope(System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Gets role assignments for a scope. </summary>
+            <param name="scope"> The scope of the role assignments. </param>
+            <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleAssignmentsRestOperations.#ctor(Azure.Core.Pipeline.ClientDiagnostics,Azure.Core.Pipeline.HttpPipeline,System.String,System.Uri)">
+            <summary> Initializes a new instance of RoleAssignmentsRestOperations. </summary>
+            <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+            <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+            <param name="subscriptionId"> The ID of the target subscription. </param>
+            <param name="endpoint"> server parameter. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleAssignmentsRestOperations.ListForResourceAsync(System.String,System.String,System.String,System.String,System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Gets role assignments for a resource. </summary>
+            <param name="resourceGroupName"> The name of the resource group. </param>
+            <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
+            <param name="parentResourcePath"> The parent resource identity. </param>
+            <param name="resourceType"> The resource type of the resource. </param>
+            <param name="resourceName"> The name of the resource to get role assignments for. </param>
+            <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, or <paramref name="resourceName"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleAssignmentsRestOperations.ListForResource(System.String,System.String,System.String,System.String,System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Gets role assignments for a resource. </summary>
+            <param name="resourceGroupName"> The name of the resource group. </param>
+            <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
+            <param name="parentResourcePath"> The parent resource identity. </param>
+            <param name="resourceType"> The resource type of the resource. </param>
+            <param name="resourceName"> The name of the resource to get role assignments for. </param>
+            <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, or <paramref name="resourceName"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleAssignmentsRestOperations.ListForResourceGroupAsync(System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Gets role assignments for a resource group. </summary>
+            <param name="resourceGroupName"> The name of the resource group. </param>
+            <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleAssignmentsRestOperations.ListForResourceGroup(System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Gets role assignments for a resource group. </summary>
+            <param name="resourceGroupName"> The name of the resource group. </param>
+            <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleAssignmentsRestOperations.DeleteAsync(System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Deletes a role assignment. </summary>
+            <param name="scope"> The scope of the role assignment to delete. </param>
+            <param name="roleAssignmentName"> The name of the role assignment to delete. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="scope"/> or <paramref name="roleAssignmentName"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleAssignmentsRestOperations.Delete(System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Deletes a role assignment. </summary>
+            <param name="scope"> The scope of the role assignment to delete. </param>
+            <param name="roleAssignmentName"> The name of the role assignment to delete. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="scope"/> or <paramref name="roleAssignmentName"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleAssignmentsRestOperations.CreateAsync(System.String,System.String,Azure.ResourceManager.Authorization.Models.RoleAssignmentCreateParameters,System.Threading.CancellationToken)">
+            <summary> Creates a role assignment. </summary>
+            <param name="scope"> The scope of the role assignment to create. The scope can be any REST resource instance. For example, use &apos;/subscriptions/{subscription-id}/&apos; for a subscription, &apos;/subscriptions/{subscription-id}/resourceGroups/{resource-group-name}&apos; for a resource group, and &apos;/subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/providers/{resource-provider}/{resource-type}/{resource-name}&apos; for a resource. </param>
+            <param name="roleAssignmentName"> The name of the role assignment to create. It can be any valid GUID. </param>
+            <param name="parameters"> Parameters for the role assignment. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="scope"/>, <paramref name="roleAssignmentName"/>, or <paramref name="parameters"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleAssignmentsRestOperations.Create(System.String,System.String,Azure.ResourceManager.Authorization.Models.RoleAssignmentCreateParameters,System.Threading.CancellationToken)">
+            <summary> Creates a role assignment. </summary>
+            <param name="scope"> The scope of the role assignment to create. The scope can be any REST resource instance. For example, use &apos;/subscriptions/{subscription-id}/&apos; for a subscription, &apos;/subscriptions/{subscription-id}/resourceGroups/{resource-group-name}&apos; for a resource group, and &apos;/subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/providers/{resource-provider}/{resource-type}/{resource-name}&apos; for a resource. </param>
+            <param name="roleAssignmentName"> The name of the role assignment to create. It can be any valid GUID. </param>
+            <param name="parameters"> Parameters for the role assignment. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="scope"/>, <paramref name="roleAssignmentName"/>, or <paramref name="parameters"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleAssignmentsRestOperations.GetAsync(System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Get the specified role assignment. </summary>
+            <param name="scope"> The scope of the role assignment. </param>
+            <param name="roleAssignmentName"> The name of the role assignment to get. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="scope"/> or <paramref name="roleAssignmentName"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleAssignmentsRestOperations.Get(System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Get the specified role assignment. </summary>
+            <param name="scope"> The scope of the role assignment. </param>
+            <param name="roleAssignmentName"> The name of the role assignment to get. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="scope"/> or <paramref name="roleAssignmentName"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleAssignmentsRestOperations.DeleteByIdAsync(System.String,System.Threading.CancellationToken)">
+            <summary> Deletes a role assignment. </summary>
+            <param name="roleId"> The ID of the role assignment to delete. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="roleId"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleAssignmentsRestOperations.DeleteById(System.String,System.Threading.CancellationToken)">
+            <summary> Deletes a role assignment. </summary>
+            <param name="roleId"> The ID of the role assignment to delete. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="roleId"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleAssignmentsRestOperations.CreateByIdAsync(System.String,Azure.ResourceManager.Authorization.Models.RoleAssignmentCreateParameters,System.Threading.CancellationToken)">
+            <summary> Creates a role assignment by ID. </summary>
+            <param name="roleId"> The ID of the role assignment to create. </param>
+            <param name="parameters"> Parameters for the role assignment. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="roleId"/> or <paramref name="parameters"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleAssignmentsRestOperations.CreateById(System.String,Azure.ResourceManager.Authorization.Models.RoleAssignmentCreateParameters,System.Threading.CancellationToken)">
+            <summary> Creates a role assignment by ID. </summary>
+            <param name="roleId"> The ID of the role assignment to create. </param>
+            <param name="parameters"> Parameters for the role assignment. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="roleId"/> or <paramref name="parameters"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleAssignmentsRestOperations.GetByIdAsync(System.String,System.Threading.CancellationToken)">
+            <summary> Gets a role assignment by ID. </summary>
+            <param name="roleId"> The ID of the role assignment to get. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="roleId"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleAssignmentsRestOperations.GetById(System.String,System.Threading.CancellationToken)">
+            <summary> Gets a role assignment by ID. </summary>
+            <param name="roleId"> The ID of the role assignment to get. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="roleId"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleAssignmentsRestOperations.ListAsync(System.String,System.Threading.CancellationToken)">
+            <summary> Gets all role assignments for the subscription. </summary>
+            <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleAssignmentsRestOperations.List(System.String,System.Threading.CancellationToken)">
+            <summary> Gets all role assignments for the subscription. </summary>
+            <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleAssignmentsRestOperations.ListForScopeAsync(System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Gets role assignments for a scope. </summary>
+            <param name="scope"> The scope of the role assignments. </param>
+            <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleAssignmentsRestOperations.ListForScope(System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Gets role assignments for a scope. </summary>
+            <param name="scope"> The scope of the role assignments. </param>
+            <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleAssignmentsRestOperations.ListForResourceNextPageAsync(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Gets role assignments for a resource. </summary>
+            <param name="nextLink"> The URL to the next page of results. </param>
+            <param name="resourceGroupName"> The name of the resource group. </param>
+            <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
+            <param name="parentResourcePath"> The parent resource identity. </param>
+            <param name="resourceType"> The resource type of the resource. </param>
+            <param name="resourceName"> The name of the resource to get role assignments for. </param>
+            <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, or <paramref name="resourceName"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleAssignmentsRestOperations.ListForResourceNextPage(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Gets role assignments for a resource. </summary>
+            <param name="nextLink"> The URL to the next page of results. </param>
+            <param name="resourceGroupName"> The name of the resource group. </param>
+            <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
+            <param name="parentResourcePath"> The parent resource identity. </param>
+            <param name="resourceType"> The resource type of the resource. </param>
+            <param name="resourceName"> The name of the resource to get role assignments for. </param>
+            <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, or <paramref name="resourceName"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleAssignmentsRestOperations.ListForResourceGroupNextPageAsync(System.String,System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Gets role assignments for a resource group. </summary>
+            <param name="nextLink"> The URL to the next page of results. </param>
+            <param name="resourceGroupName"> The name of the resource group. </param>
+            <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleAssignmentsRestOperations.ListForResourceGroupNextPage(System.String,System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Gets role assignments for a resource group. </summary>
+            <param name="nextLink"> The URL to the next page of results. </param>
+            <param name="resourceGroupName"> The name of the resource group. </param>
+            <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleAssignmentsRestOperations.ListNextPageAsync(System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Gets all role assignments for the subscription. </summary>
+            <param name="nextLink"> The URL to the next page of results. </param>
+            <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleAssignmentsRestOperations.ListNextPage(System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Gets all role assignments for the subscription. </summary>
+            <param name="nextLink"> The URL to the next page of results. </param>
+            <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleAssignmentsRestOperations.ListForScopeNextPageAsync(System.String,System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Gets role assignments for a scope. </summary>
+            <param name="nextLink"> The URL to the next page of results. </param>
+            <param name="scope"> The scope of the role assignments. </param>
+            <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleAssignmentsRestOperations.ListForScopeNextPage(System.String,System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Gets role assignments for a scope. </summary>
+            <param name="nextLink"> The URL to the next page of results. </param>
+            <param name="scope"> The scope of the role assignments. </param>
+            <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
+        </member>
+        <member name="T:Azure.ResourceManager.Authorization.RoleDefinitionsOperations">
+            <summary> The RoleDefinitions service client. </summary>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleDefinitionsOperations.#ctor">
+            <summary> Initializes a new instance of RoleDefinitionsOperations for mocking. </summary>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleDefinitionsOperations.#ctor(Azure.Core.Pipeline.ClientDiagnostics,Azure.Core.Pipeline.HttpPipeline,System.Uri)">
+            <summary> Initializes a new instance of RoleDefinitionsOperations. </summary>
+            <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+            <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+            <param name="endpoint"> server parameter. </param>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleDefinitionsOperations.DeleteAsync(System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Deletes a role definition. </summary>
+            <param name="scope"> The scope of the role definition. </param>
+            <param name="roleDefinitionId"> The ID of the role definition to delete. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleDefinitionsOperations.Delete(System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Deletes a role definition. </summary>
+            <param name="scope"> The scope of the role definition. </param>
+            <param name="roleDefinitionId"> The ID of the role definition to delete. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleDefinitionsOperations.GetAsync(System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Get role definition by name (GUID). </summary>
+            <param name="scope"> The scope of the role definition. </param>
+            <param name="roleDefinitionId"> The ID of the role definition. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleDefinitionsOperations.Get(System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Get role definition by name (GUID). </summary>
+            <param name="scope"> The scope of the role definition. </param>
+            <param name="roleDefinitionId"> The ID of the role definition. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleDefinitionsOperations.CreateOrUpdateAsync(System.String,System.String,Azure.ResourceManager.Authorization.Models.RoleDefinition,System.Threading.CancellationToken)">
+            <summary> Creates or updates a role definition. </summary>
+            <param name="scope"> The scope of the role definition. </param>
+            <param name="roleDefinitionId"> The ID of the role definition. </param>
+            <param name="roleDefinition"> The values for the role definition. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleDefinitionsOperations.CreateOrUpdate(System.String,System.String,Azure.ResourceManager.Authorization.Models.RoleDefinition,System.Threading.CancellationToken)">
+            <summary> Creates or updates a role definition. </summary>
+            <param name="scope"> The scope of the role definition. </param>
+            <param name="roleDefinitionId"> The ID of the role definition. </param>
+            <param name="roleDefinition"> The values for the role definition. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleDefinitionsOperations.GetByIdAsync(System.String,System.Threading.CancellationToken)">
+            <summary> Gets a role definition by ID. </summary>
+            <param name="roleId"> The fully qualified role definition ID. Use the format, /subscriptions/{guid}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId} for subscription level role definitions, or /providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId} for tenant level role definitions. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleDefinitionsOperations.GetById(System.String,System.Threading.CancellationToken)">
+            <summary> Gets a role definition by ID. </summary>
+            <param name="roleId"> The fully qualified role definition ID. Use the format, /subscriptions/{guid}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId} for subscription level role definitions, or /providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId} for tenant level role definitions. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleDefinitionsOperations.ListAsync(System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Get all role definitions that are applicable at scope and above. </summary>
+            <param name="scope"> The scope of the role definition. </param>
+            <param name="filter"> The filter to apply on the operation. Use atScopeAndBelow filter to search below the given scope as well. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleDefinitionsOperations.List(System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Get all role definitions that are applicable at scope and above. </summary>
+            <param name="scope"> The scope of the role definition. </param>
+            <param name="filter"> The filter to apply on the operation. Use atScopeAndBelow filter to search below the given scope as well. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleDefinitionsRestOperations.#ctor(Azure.Core.Pipeline.ClientDiagnostics,Azure.Core.Pipeline.HttpPipeline,System.Uri)">
+            <summary> Initializes a new instance of RoleDefinitionsRestOperations. </summary>
+            <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+            <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+            <param name="endpoint"> server parameter. </param>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleDefinitionsRestOperations.DeleteAsync(System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Deletes a role definition. </summary>
+            <param name="scope"> The scope of the role definition. </param>
+            <param name="roleDefinitionId"> The ID of the role definition to delete. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="scope"/> or <paramref name="roleDefinitionId"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleDefinitionsRestOperations.Delete(System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Deletes a role definition. </summary>
+            <param name="scope"> The scope of the role definition. </param>
+            <param name="roleDefinitionId"> The ID of the role definition to delete. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="scope"/> or <paramref name="roleDefinitionId"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleDefinitionsRestOperations.GetAsync(System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Get role definition by name (GUID). </summary>
+            <param name="scope"> The scope of the role definition. </param>
+            <param name="roleDefinitionId"> The ID of the role definition. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="scope"/> or <paramref name="roleDefinitionId"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleDefinitionsRestOperations.Get(System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Get role definition by name (GUID). </summary>
+            <param name="scope"> The scope of the role definition. </param>
+            <param name="roleDefinitionId"> The ID of the role definition. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="scope"/> or <paramref name="roleDefinitionId"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleDefinitionsRestOperations.CreateOrUpdateAsync(System.String,System.String,Azure.ResourceManager.Authorization.Models.RoleDefinition,System.Threading.CancellationToken)">
+            <summary> Creates or updates a role definition. </summary>
+            <param name="scope"> The scope of the role definition. </param>
+            <param name="roleDefinitionId"> The ID of the role definition. </param>
+            <param name="roleDefinition"> The values for the role definition. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="scope"/>, <paramref name="roleDefinitionId"/>, or <paramref name="roleDefinition"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleDefinitionsRestOperations.CreateOrUpdate(System.String,System.String,Azure.ResourceManager.Authorization.Models.RoleDefinition,System.Threading.CancellationToken)">
+            <summary> Creates or updates a role definition. </summary>
+            <param name="scope"> The scope of the role definition. </param>
+            <param name="roleDefinitionId"> The ID of the role definition. </param>
+            <param name="roleDefinition"> The values for the role definition. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="scope"/>, <paramref name="roleDefinitionId"/>, or <paramref name="roleDefinition"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleDefinitionsRestOperations.ListAsync(System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Get all role definitions that are applicable at scope and above. </summary>
+            <param name="scope"> The scope of the role definition. </param>
+            <param name="filter"> The filter to apply on the operation. Use atScopeAndBelow filter to search below the given scope as well. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleDefinitionsRestOperations.List(System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Get all role definitions that are applicable at scope and above. </summary>
+            <param name="scope"> The scope of the role definition. </param>
+            <param name="filter"> The filter to apply on the operation. Use atScopeAndBelow filter to search below the given scope as well. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleDefinitionsRestOperations.GetByIdAsync(System.String,System.Threading.CancellationToken)">
+            <summary> Gets a role definition by ID. </summary>
+            <param name="roleId"> The fully qualified role definition ID. Use the format, /subscriptions/{guid}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId} for subscription level role definitions, or /providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId} for tenant level role definitions. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="roleId"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleDefinitionsRestOperations.GetById(System.String,System.Threading.CancellationToken)">
+            <summary> Gets a role definition by ID. </summary>
+            <param name="roleId"> The fully qualified role definition ID. Use the format, /subscriptions/{guid}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId} for subscription level role definitions, or /providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId} for tenant level role definitions. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="roleId"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleDefinitionsRestOperations.ListNextPageAsync(System.String,System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Get all role definitions that are applicable at scope and above. </summary>
+            <param name="nextLink"> The URL to the next page of results. </param>
+            <param name="scope"> The scope of the role definition. </param>
+            <param name="filter"> The filter to apply on the operation. Use atScopeAndBelow filter to search below the given scope as well. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
+        </member>
+        <member name="M:Azure.ResourceManager.Authorization.RoleDefinitionsRestOperations.ListNextPage(System.String,System.String,System.String,System.Threading.CancellationToken)">
+            <summary> Get all role definitions that are applicable at scope and above. </summary>
+            <param name="nextLink"> The URL to the next page of results. </param>
+            <param name="scope"> The scope of the role definition. </param>
+            <param name="filter"> The filter to apply on the operation. Use atScopeAndBelow filter to search below the given scope as well. </param>
+            <param name="cancellationToken"> The cancellation token to use. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
+        </member>
+        <member name="T:Azure.Core.ArmOperationHelpers`1">
+            <summary>
+            This implements the ARM scenarios for LROs. It is highly recommended to read the ARM spec prior to modifying this code:
+            https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#asynchronous-operations
+            Other reference documents include:
+            https://github.com/Azure/autorest/blob/master/docs/extensions/readme.md#x-ms-long-running-operation
+            https://github.com/Azure/adx-documentation-pr/blob/master/sdks/LRO/LRO_AzureSDK.md
+            </summary>
+            <typeparam name="T">The final result of the LRO.</typeparam>
+        </member>
+        <member name="P:Azure.Core.CodeGenModelAttribute.Usage">
+            <summary>
+            Gets or sets a coma separated list of additional model usage modes. Allowed values: model, error, intput, output.
+            </summary>
+        </member>
+        <member name="P:Azure.Core.CodeGenModelAttribute.Formats">
+            <summary>
+            Gets or sets a coma separated list of additional model serialization formats.
+            </summary>
+        </member>
+        <member name="T:Azure.Core.ArrayBufferWriter`1">
+            <summary>
+            Represents a heap-based, array-backed output sink into which <typeparam name="T"/> data can be written.
+            </summary>
+        </member>
+        <member name="M:Azure.Core.ArrayBufferWriter`1.#ctor">
+            <summary>
+            Creates an instance of an <see cref="T:Azure.Core.ArrayBufferWriter`1"/>, in which data can be written to,
+            with the default initial capacity.
+            </summary>
+        </member>
+        <member name="M:Azure.Core.ArrayBufferWriter`1.#ctor(System.Int32)">
+            <summary>
+            Creates an instance of an <see cref="T:Azure.Core.ArrayBufferWriter`1"/>, in which data can be written to,
+            with an initial capacity specified.
+            </summary>
+            <param name="initialCapacity">The minimum capacity with which to initialize the underlying buffer.</param>
+            <exception cref="T:System.ArgumentException">
+            Thrown when <paramref name="initialCapacity"/> is not positive (i.e. less than or equal to 0).
+            </exception>
+        </member>
+        <member name="P:Azure.Core.ArrayBufferWriter`1.WrittenMemory">
+            <summary>
+            Returns the data written to the underlying buffer so far, as a <see cref="T:System.ReadOnlyMemory`1"/>.
+            </summary>
+        </member>
+        <member name="P:Azure.Core.ArrayBufferWriter`1.WrittenSpan">
+            <summary>
+            Returns the data written to the underlying buffer so far, as a <see cref="T:System.ReadOnlySpan`1"/>.
+            </summary>
+        </member>
+        <member name="P:Azure.Core.ArrayBufferWriter`1.WrittenCount">
+            <summary>
+            Returns the amount of data written to the underlying buffer so far.
+            </summary>
+        </member>
+        <member name="P:Azure.Core.ArrayBufferWriter`1.Capacity">
+            <summary>
+            Returns the total amount of space within the underlying buffer.
+            </summary>
+        </member>
+        <member name="P:Azure.Core.ArrayBufferWriter`1.FreeCapacity">
+            <summary>
+            Returns the amount of space available that can still be written into without forcing the underlying buffer to grow.
+            </summary>
+        </member>
+        <member name="M:Azure.Core.ArrayBufferWriter`1.Clear">
+            <summary>
+            Clears the data written to the underlying buffer.
+            </summary>
+            <remarks>
+            You must clear the <see cref="T:Azure.Core.ArrayBufferWriter`1"/> before trying to re-use it.
+            </remarks>
+        </member>
+        <member name="M:Azure.Core.ArrayBufferWriter`1.Advance(System.Int32)">
+            <summary>
+            Notifies <see cref="T:System.Buffers.IBufferWriter`1"/> that <paramref name="count"/> amount of data was written to the output <see cref="T:System.Span`1"/>/<see cref="T:System.Memory`1"/>.
+            </summary>
+            <exception cref="T:System.ArgumentException">
+            Thrown when <paramref name="count"/> is negative.
+            </exception>
+            <exception cref="T:System.InvalidOperationException">
+            Thrown when attempting to advance past the end of the underlying buffer.
+            </exception>
+            <remarks>
+            You must request a new buffer after calling Advance to continue writing more data and cannot write to a previously acquired buffer.
+            </remarks>
+        </member>
+        <member name="M:Azure.Core.ArrayBufferWriter`1.GetMemory(System.Int32)">
+            <summary>
+            Returns a <see cref="T:System.Memory`1"/> to write to that is at least the requested length (specified by <paramref name="sizeHint"/>).
+            If no <paramref name="sizeHint"/> is provided (or it's equal to <code>0</code>), some non-empty buffer is returned.
+            </summary>
+            <exception cref="T:System.ArgumentException">
+            Thrown when <paramref name="sizeHint"/> is negative.
+            </exception>
+            <remarks>
+            This will never return an empty <see cref="T:System.Memory`1"/>.
+            </remarks>
+            <remarks>
+            There is no guarantee that successive calls will return the same buffer or the same-sized buffer.
+            </remarks>
+            <remarks>
+            You must request a new buffer after calling Advance to continue writing more data and cannot write to a previously acquired buffer.
+            </remarks>
+        </member>
+        <member name="M:Azure.Core.ArrayBufferWriter`1.GetSpan(System.Int32)">
+            <summary>
+            Returns a <see cref="T:System.Span`1"/> to write to that is at least the requested length (specified by <paramref name="sizeHint"/>).
+            If no <paramref name="sizeHint"/> is provided (or it's equal to <code>0</code>), some non-empty buffer is returned.
+            </summary>
+            <exception cref="T:System.ArgumentException">
+            Thrown when <paramref name="sizeHint"/> is negative.
+            </exception>
+            <remarks>
+            This will never return an empty <see cref="T:System.Span`1"/>.
+            </remarks>
+            <remarks>
+            There is no guarantee that successive calls will return the same buffer or the same-sized buffer.
+            </remarks>
+            <remarks>
+            You must request a new buffer after calling Advance to continue writing more data and cannot write to a previously acquired buffer.
+            </remarks>
+        </member>
+        <member name="T:Azure.Core.Pipeline.ActivityExtensions">
+            <summary>
+            HACK HACK HACK. Some runtime environments like Azure.Functions downgrade System.Diagnostic.DiagnosticSource package version causing method not found exceptions in customer apps
+            This type is a temporary workaround to avoid the issue.
+            </summary>
+        </member>
+        <member name="T:Azure.Core.Pipeline.TaskExtensions.Enumerable`1">
+            <summary>
+            Both <see cref="T:Azure.Core.Pipeline.TaskExtensions.Enumerable`1"/> and <see cref="T:Azure.Core.Pipeline.TaskExtensions.Enumerator`1"/> are defined as public structs so that foreach can use duck typing
+            to call <see cref="M:Azure.Core.Pipeline.TaskExtensions.Enumerable`1.GetEnumerator"/> and avoid heap memory allocation.
+            Please don't delete this method and don't make these types private.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="T:Azure.Core.AzureResourceProviderNamespaceAttribute">
+            <summary>
+            This attribute should be set on all client assemblies with value of one of the resource providers
+            from the https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/azure-services-resource-providers list.
+            </summary>
+        </member>
+    </members>
+</doc>

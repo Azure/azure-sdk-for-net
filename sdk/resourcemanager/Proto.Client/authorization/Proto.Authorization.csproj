@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>Proto.Authorization</RootNamespace>
+    <LangVersion>latest</LangVersion>
+    <CodeAnalysisRuleSet>..\stylecop.ruleset</CodeAnalysisRuleSet>
+    <DocumentationFile>obj\docs.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="1.1.1" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Azure.ResourceManager.Core\src\Azure.ResourceManager.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Azure.ResourceManager.Authorization">
+      <HintPath>..\lib\Azure.ResourceManager.Authorization.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+
+</Project>
