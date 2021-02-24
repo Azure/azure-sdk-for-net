@@ -15,14 +15,27 @@ namespace Azure.Iot.TimeSeriesInsights
     /// </summary>
     [CodeGenModel("TimeSeriesInstance")]
     [CodeGenSuppress("TimeSeriesInstance", typeof(IEnumerable<object>), typeof(string))]
-    [CodeGenSuppress("TimeSeriesInstance", typeof(IList<object>), typeof(string), typeof(string), typeof(string), typeof(IList<string>), typeof(IDictionary<string, object>))]
+    [CodeGenSuppress(
+        "TimeSeriesInstance",
+        typeof(IList<object>),
+        typeof(string),
+        typeof(string),
+        typeof(string),
+        typeof(IList<string>),
+        typeof(IDictionary<string, object>))]
     public partial class TimeSeriesInstance
     {
         [CodeGenMember("TimeSeriesId")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "CodeQuality",
+            "IDE0051:Remove unused private members",
+            Justification = "Autorest does not support changing type for proprties. In order to turn TimeSeriesId from" +
+            "a list of objects to a strognly typed object, TimeSeriesId has been renamed to TimeSeriesIdInternal and a" +
+            "new property, TimeSeriesId, has been created with the proper type.")]
         private IList<object> TimeSeriesIdInternal { get; }
 
         /// <summary>
-        /// Foo.
+        /// Time Series Id that uniquely identifies the instance. It matches Time Series Id properties in an environment.
         /// </summary>
         public ITimeSeriesId TimeSeriesId { get; }
 
@@ -41,17 +54,8 @@ namespace Azure.Iot.TimeSeriesInsights
         /// </exception>
         public TimeSeriesInstance(ITimeSeriesId timeSeriesId, string typeId)
         {
-            if (timeSeriesId == null)
-            {
-                throw new ArgumentNullException(nameof(timeSeriesId));
-            }
-            if (typeId == null)
-            {
-                throw new ArgumentNullException(nameof(typeId));
-            }
-
-            TimeSeriesId = timeSeriesId;
-            TypeId = typeId;
+            TimeSeriesId = timeSeriesId ?? throw new ArgumentNullException(nameof(timeSeriesId));
+            TypeId = typeId ?? throw new ArgumentNullException(nameof(typeId));
             HierarchyIds = new ChangeTrackingList<string>();
             InstanceFields = new ChangeTrackingDictionary<string, object>();
         }
@@ -60,7 +64,7 @@ namespace Azure.Iot.TimeSeriesInsights
         /// Initializes a new instance of TimeSeriesInstance.
         /// </summary>
         /// <param name="timeSeriesId">
-        /// Time Series ID that uniquely identifies the instance. It matches Time Series ID properties in
+        /// Time Series Id that uniquely identifies the instance. It matches Time Series Id properties in
         /// an environment. Immutable, never null.
         /// </param>
         /// <param name="typeId">This represents the type that this instance belongs to. Never null. </param>
@@ -69,7 +73,7 @@ namespace Azure.Iot.TimeSeriesInsights
         /// or display name of the time series instance. Mutable, may be null.
         /// </param>
         /// <param name="description">This optional field contains description about the instance. </param>
-        /// <param name="hierarchyIds">Set of time series hierarchy IDs that the instance belong to. May be null. </param>
+        /// <param name="hierarchyIds">Set of time series hierarchy Ids that the instance belong to. May be null. </param>
         /// <param name="instanceFields">
         /// Set of key-value pairs that contain user-defined instance properties.
         /// It may be null. Supported property value types are: bool, string, long, double and it cannot be nested or null.

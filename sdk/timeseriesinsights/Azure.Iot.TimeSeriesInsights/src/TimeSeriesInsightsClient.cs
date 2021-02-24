@@ -106,7 +106,10 @@ namespace Azure.Iot.TimeSeriesInsights
         /// Gets Time Series model settings asynchronously.
         /// </summary>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The model settings which includes model display name, Time Series Id properties and default type Id with the http response <see cref="Response{TimeSeriesModelSettings}"/>.</returns>
+        /// <returns>
+        /// The model settings which includes model display name, Time Series Id properties and default type Id with the
+        /// http response <see cref="Response{TimeSeriesModelSettings}"/>.
+        /// </returns>
         public virtual async Task<Response<TimeSeriesModelSettings>> GetModelSettingsAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetModelSettings)}");
@@ -128,7 +131,10 @@ namespace Azure.Iot.TimeSeriesInsights
         /// Gets Time Series model settings synchronously.
         /// </summary>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The model settings which includes model display name, Time Series Id properties and default type Id with the http response <see cref="Response{TimeSeriesModelSettings}"/>.</returns>
+        /// <returns>
+        /// The model settings which includes model display name, Time Series Id properties and default type Id with the
+        /// http response <see cref="Response{TimeSeriesModelSettings}"/>.
+        /// </returns>
         public virtual Response<TimeSeriesModelSettings> GetModelSettings(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetModelSettings)}");
@@ -210,19 +216,21 @@ namespace Azure.Iot.TimeSeriesInsights
         /// </example>
         public virtual AsyncPageable<TimeSeriesInstance> GetTimeSeriesInstancesAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetTimeSeriesInstancesAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetTimeSeriesInstances)}");
             scope.Start();
 
             try
             {
                 async Task<Page<TimeSeriesInstance>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetSearchSuggestions)}");
+                    using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetTimeSeriesInstances)}");
                     scope.Start();
 
                     try
                     {
-                        Response<GetInstancesPage> getInstancesResponse = await _timeSeriesInstancesRestClient.ListAsync(null, _clientSessionId, cancellationToken).ConfigureAwait(false);
+                        Response<GetInstancesPage> getInstancesResponse = await _timeSeriesInstancesRestClient
+                            .ListAsync(null, _clientSessionId, cancellationToken)
+                            .ConfigureAwait(false);
                         return Page.FromValues(getInstancesResponse.Value.Instances, getInstancesResponse.Value.ContinuationToken, getInstancesResponse.GetRawResponse());
                     }
                     catch (Exception ex)
@@ -234,12 +242,14 @@ namespace Azure.Iot.TimeSeriesInsights
 
                 async Task<Page<TimeSeriesInstance>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetSearchSuggestions)}");
+                    using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetTimeSeriesInstances)}");
                     scope.Start();
 
                     try
                     {
-                        Response<GetInstancesPage> getInstancesResponse = await _timeSeriesInstancesRestClient.ListAsync(nextLink, _clientSessionId, cancellationToken).ConfigureAwait(false);
+                        Response<GetInstancesPage> getInstancesResponse = await _timeSeriesInstancesRestClient
+                            .ListAsync(nextLink, _clientSessionId, cancellationToken)
+                            .ConfigureAwait(false);
                         return Page.FromValues(getInstancesResponse.Value.Instances, getInstancesResponse.Value.ContinuationToken, getInstancesResponse.GetRawResponse());
                     }
                     catch (Exception ex)
@@ -268,14 +278,14 @@ namespace Azure.Iot.TimeSeriesInsights
         /// </seealso>
         public virtual Pageable<TimeSeriesInstance> GetTimeSeriesInstances(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetTimeSeriesInstancesAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetTimeSeriesInstances)}");
             scope.Start();
 
             try
             {
                 Page<TimeSeriesInstance> FirstPageFunc(int? pageSizeHint)
                 {
-                    using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetSearchSuggestions)}");
+                    using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetTimeSeriesInstances)}");
                     scope.Start();
 
                     try
@@ -292,7 +302,7 @@ namespace Azure.Iot.TimeSeriesInsights
 
                 Page<TimeSeriesInstance> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetSearchSuggestions)}");
+                    using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetTimeSeriesInstances)}");
                     scope.Start();
 
                     try
@@ -705,7 +715,7 @@ namespace Azure.Iot.TimeSeriesInsights
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics
-                .CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(CreateOrReplaceTimeSeriesInstances)}");
+                .CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(ReplaceTimeSeriesInstances)}");
             scope.Start();
 
             try
@@ -748,7 +758,7 @@ namespace Azure.Iot.TimeSeriesInsights
             IEnumerable<TimeSeriesInstance> timeSeriesInstances,
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(CreateOrReplaceTimeSeriesInstances)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(ReplaceTimeSeriesInstances)}");
             scope.Start();
 
             try
@@ -794,7 +804,7 @@ namespace Azure.Iot.TimeSeriesInsights
             IEnumerable<string> timeSeriesNames,
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetInstances)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(DeleteInstances)}");
             scope.Start();
 
             try
@@ -840,7 +850,7 @@ namespace Azure.Iot.TimeSeriesInsights
             IEnumerable<string> timeSeriesNames,
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetInstances)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(DeleteInstances)}");
             scope.Start();
 
             try
@@ -889,7 +899,7 @@ namespace Azure.Iot.TimeSeriesInsights
             IEnumerable<ITimeSeriesId> timeSeriesIds,
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetInstances)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(DeleteInstances)}");
             scope.Start();
 
             try
@@ -935,7 +945,7 @@ namespace Azure.Iot.TimeSeriesInsights
             IEnumerable<ITimeSeriesId> timeSeriesIds,
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetInstances)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(DeleteInstances)}");
             scope.Start();
 
             try

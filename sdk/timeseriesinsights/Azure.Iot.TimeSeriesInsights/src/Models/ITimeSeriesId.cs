@@ -4,7 +4,7 @@
 namespace Azure.Iot.TimeSeriesInsights
 {
     /// <summary>
-    /// Define Time Series Id specific properties and methods to be implemented by the different implementations of Time Series Id classes
+    /// Define Time Series Id specific properties and methods to be implemented by the different implementations of Time Series Id classes.
     /// </summary>
     public interface ITimeSeriesId
     {

@@ -4,16 +4,20 @@
 namespace Azure.Iot.TimeSeriesInsights
 {
     /// <summary>
-    /// A single Time Series ID value that is composed of three primitive values that uniquely identifies a Time Series instance.
+    /// A single Time Series Id value that is composed of three primitive values that uniquely identifies a Time Series instance.
     /// </summary>
     /// <remarks>
-    /// A single Time Series ID can be composite if multiple properties are specified as Time Series ID at environment creation time.
-    /// The position and type of values must match Time Series ID properties specified on the environment and returned by Get Model Setting API.
+    /// A single Time Series Id can be composite if multiple properties are specified as Time Series Id at environment creation time.
+    /// The position and type of values must match Time Series Id properties specified on the environment and returned by Get Model Setting API.
     /// </remarks>
     /// <typeparam name="T1">The type of the first Id property.</typeparam>
     /// <typeparam name="T2">The type of the second Id property.</typeparam>
     /// <typeparam name="T3">The type of the third Id property.</typeparam>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1649:File name should match first type name", Justification = "<Pending>")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage(
+        "StyleCop.CSharp.DocumentationRules",
+        "SA1649:File name should match first type name",
+        Justification = "The mismatch between the file name and the class name is because we have other TimeSeriesId classes that accept" +
+        "other generics. So in order to make it less confusing for the user, the class name has been simplified.")]
     public class TimeSeriesId<T1, T2, T3> : ITimeSeriesId
     {
         private readonly T1 _timeSeriesIdProp1;

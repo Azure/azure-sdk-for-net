@@ -1,14 +1,22 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Iot.TimeSeriesInsights
 {
+    /// <summary>
+    /// This class definition overrides serialization and deserialization implementation in
+    /// order to turn Time Series Ids from a strongly typed object to an list of objects that
+    /// the service can understand, and vice versa.
+    /// </summary>
     public partial class TimeSeriesInstance : IUtf8JsonSerializable
     {
+        // The use of fully qualified name for IUtf8JsonSerializable is a work around until this
+        // issue is fixed: https://github.com/Azure/autorest.csharp/issues/793
         void global::Azure.Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
@@ -45,7 +53,7 @@ namespace Azure.Iot.TimeSeriesInsights
             {
                 writer.WritePropertyName("instanceFields");
                 writer.WriteStartObject();
-                foreach (var item in InstanceFields)
+                foreach (KeyValuePair<string, object> item in InstanceFields)
                 {
                     writer.WritePropertyName(item.Key);
                     writer.WriteObjectValue(item.Value);
@@ -73,18 +81,13 @@ namespace Azure.Iot.TimeSeriesInsights
                         array.Add(item.GetObject());
                     }
 
-                    switch (array.Count)
+                    timeSeriesId = array.Count switch
                     {
-                        case 1:
-                            timeSeriesId = new TimeSeriesId<object>(array[0]);
-                            break;
-                        case 2:
-                            timeSeriesId = new TimeSeriesId<object, object>(array[0], array[1]);
-                            break;
-                        case 3:
-                            timeSeriesId = new TimeSeriesId<object, object, object>(array[0], array[1], array[2]);
-                            break;
-                    }
+                        1 => new TimeSeriesId<object>(array[0]),
+                        2 => new TimeSeriesId<object, object>(array[0], array[1]),
+                        3 => new TimeSeriesId<object, object, object>(array[0], array[1], array[2]),
+                        _ => throw new Exception($"Invalid number of Time Series Insights Id properties."),
+                    };
                     continue;
                 }
                 if (property.NameEquals("typeId"))
@@ -110,7 +113,7 @@ namespace Azure.Iot.TimeSeriesInsights
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (JsonElement item in property.Value.EnumerateArray())
                     {
                         array.Add(item.GetString());
                     }
@@ -125,7 +128,7 @@ namespace Azure.Iot.TimeSeriesInsights
                         continue;
                     }
                     Dictionary<string, object> dictionary = new Dictionary<string, object>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (JsonProperty property0 in property.Value.EnumerateObject())
                     {
                         dictionary.Add(property0.Name, property0.Value.GetObject());
                     }
@@ -133,7 +136,14 @@ namespace Azure.Iot.TimeSeriesInsights
                     continue;
                 }
             }
-            return new TimeSeriesInstance(timeSeriesId, typeId, name.Value, description.Value, Optional.ToList(hierarchyIds), Optional.ToDictionary(instanceFields));
+
+            return new TimeSeriesInstance(
+                timeSeriesId,
+                typeId,
+                name.Value,
+                description.Value,
+                Optional.ToList(hierarchyIds),
+                Optional.ToDictionary(instanceFields));
         }
     }
 }

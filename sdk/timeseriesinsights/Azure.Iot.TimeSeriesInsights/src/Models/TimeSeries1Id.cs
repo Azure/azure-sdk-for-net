@@ -4,7 +4,7 @@
 namespace Azure.Iot.TimeSeriesInsights
 {
     /// <summary>
-    /// A single Time Series ID value that is an array of string values that uniquely identifies a Time Series instance.
+    /// A single Time Series Id value that is an array of 1 string value that uniquely identifies a Time Series instance.
     /// </summary>
     /// <remarks>
     /// At the moment, Time Series Id service only supports string types to represent a TSI Id. In order to reduce the confusion on the user,

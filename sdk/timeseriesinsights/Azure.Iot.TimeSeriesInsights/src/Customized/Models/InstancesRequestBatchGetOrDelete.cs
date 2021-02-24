@@ -7,7 +7,8 @@ using Azure.Core;
 namespace Azure.Iot.TimeSeriesInsights
 {
     /// <summary>
-    /// Request to get or delete instances by time series IDs or time series names. Exactly one of &quot;timeSeriesIds&quot; or &quot;names&quot; must be set.
+    /// Request to get or delete instances by time series Ids or time series names.
+    /// Exactly one of &quot;timeSeriesIds&quot; or &quot;names&quot; must be set.
     /// </summary>
     [CodeGenModel("InstancesRequestBatchGetOrDelete")]
     public partial class InstancesRequestBatchGetOrDelete
@@ -16,7 +17,7 @@ namespace Azure.Iot.TimeSeriesInsights
         private IList<IList<object>> TimeSeriesIdsInternal { get; }
 
         /// <summary>
-        /// Foo.
+        /// The list of Time Series Ids used to make the request.
         /// </summary>
         public IList<ITimeSeriesId> TimeSeriesIds { get; }
 

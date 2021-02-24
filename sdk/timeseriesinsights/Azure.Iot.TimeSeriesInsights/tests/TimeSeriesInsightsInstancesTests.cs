@@ -5,8 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.Iot.TimeSeriesInsights.Models;
-using FluentAssertions;
 using NUnit.Framework;
 
 namespace Azure.Iot.TimeSeriesInsights.Tests

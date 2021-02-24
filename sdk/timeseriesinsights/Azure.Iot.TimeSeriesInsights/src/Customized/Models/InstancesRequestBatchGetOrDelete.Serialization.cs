@@ -7,10 +7,13 @@ using Azure.Core;
 namespace Azure.Iot.TimeSeriesInsights
 {
     /// <summary>
-    /// foo.
+    /// This class definition overrides serialization implementation in order to turn Time
+    /// Series Ids from a strongly typed object to an list of objects that the service can understand.
     /// </summary>
     public partial class InstancesRequestBatchGetOrDelete : IUtf8JsonSerializable
     {
+        // The use of fully qualified name for IUtf8JsonSerializable is a work around until this
+        // issue is fixed: https://github.com/Azure/autorest.csharp/issues/793
         void global::Azure.Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
@@ -18,7 +21,7 @@ namespace Azure.Iot.TimeSeriesInsights
             {
                 writer.WritePropertyName("timeSeriesIds");
                 writer.WriteStartArray();
-                foreach (var item in TimeSeriesIds)
+                foreach (ITimeSeriesId item in TimeSeriesIds)
                 {
                     writer.WriteStartArray();
                     foreach (var item0 in item.ToArray())
