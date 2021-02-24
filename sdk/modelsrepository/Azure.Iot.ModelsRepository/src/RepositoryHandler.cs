@@ -18,9 +18,9 @@ namespace Azure.Iot.ModelsRepository
         private readonly Guid _clientId;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _repositoryUri;
-        private readonly ModelsRepoClientOptions _clientOptions;
+        private readonly ModelsRepositoryClientOptions _clientOptions;
 
-        public RepositoryHandler(Uri repositoryUri, ClientDiagnostics clientDiagnostics, ModelsRepoClientOptions options)
+        public RepositoryHandler(Uri repositoryUri, ClientDiagnostics clientDiagnostics, ModelsRepositoryClientOptions options)
         {
             Argument.AssertNotNull(options, nameof(options));
 
@@ -33,7 +33,7 @@ namespace Azure.Iot.ModelsRepository
 
             _repositoryUri = repositoryUri;
 
-            ModelsRepoEventSource.Instance.InitFetcher(_clientId, repositoryUri.Scheme);
+            ModelsRepositoryEventSource.Instance.InitFetcher(_clientId, repositoryUri.Scheme);
         }
 
         public async Task<IDictionary<string, string>> ProcessAsync(string dtmi, CancellationToken cancellationToken)
@@ -68,11 +68,11 @@ namespace Azure.Iot.ModelsRepository
                 string targetDtmi = toProcessModels.Dequeue();
                 if (processedModels.ContainsKey(targetDtmi))
                 {
-                    ModelsRepoEventSource.Instance.SkippingPreprocessedDtmi(targetDtmi);
+                    ModelsRepositoryEventSource.Instance.SkippingPreprocessedDtmi(targetDtmi);
                     continue;
                 }
 
-                ModelsRepoEventSource.Instance.ProcessingDtmi(targetDtmi);
+                ModelsRepositoryEventSource.Instance.ProcessingDtmi(targetDtmi);
 
                 FetchResult result = async
                     ? await FetchAsync(targetDtmi, cancellationToken).ConfigureAwait(false)
@@ -101,7 +101,7 @@ namespace Azure.Iot.ModelsRepository
 
                     if (dependencies.Count > 0)
                     {
-                        ModelsRepoEventSource.Instance.DiscoveredDependencies(string.Join("\", \"", dependencies));
+                        ModelsRepositoryEventSource.Instance.DiscoveredDependencies(string.Join("\", \"", dependencies));
                     }
 
                     foreach (string dep in dependencies)
@@ -113,7 +113,7 @@ namespace Azure.Iot.ModelsRepository
                 string parsedDtmi = metadata.Id;
                 if (!parsedDtmi.Equals(targetDtmi, StringComparison.Ordinal))
                 {
-                    ModelsRepoEventSource.Instance.IncorrectDtmiCasing(targetDtmi, parsedDtmi);
+                    ModelsRepositoryEventSource.Instance.IncorrectDtmiCasing(targetDtmi, parsedDtmi);
                     string formatErrorMsg =
                         $"{string.Format(CultureInfo.CurrentCulture, ServiceStrings.GenericResolverError, targetDtmi)} " +
                         string.Format(CultureInfo.CurrentCulture, ServiceStrings.IncorrectDtmiCasing, targetDtmi, parsedDtmi);
@@ -144,7 +144,7 @@ namespace Azure.Iot.ModelsRepository
             {
                 if (!DtmiConventions.IsDtmi(dtmi))
                 {
-                    ModelsRepoEventSource.Instance.InvalidDtmiInput(dtmi);
+                    ModelsRepositoryEventSource.Instance.InvalidDtmiInput(dtmi);
 
                     string invalidArgMsg =
                         $"{string.Format(CultureInfo.CurrentCulture, ServiceStrings.GenericResolverError, dtmi)} " +

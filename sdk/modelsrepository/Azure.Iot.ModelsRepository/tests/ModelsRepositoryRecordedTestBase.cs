@@ -8,7 +8,7 @@ using NUnit.Framework;
 
 namespace Azure.Iot.ModelsRepository.Tests
 {
-    public class ModelsRepoRecordedTestBase : RecordedTestBase<ModelsRepoTestEnvironment>
+    public class ModelsRepositoryRecordedTestBase : RecordedTestBase<ModelsRepositoryTestEnvironment>
     {
         protected const string TestModeEnvVariable = "AZURE_TEST_MODE";
 
@@ -16,7 +16,7 @@ namespace Azure.Iot.ModelsRepository.Tests
             typeof(RecordedTestMode),
             Environment.GetEnvironmentVariable(TestModeEnvVariable));
 
-        public ModelsRepoRecordedTestBase(bool isAsync) : base(isAsync, TestMode)
+        public ModelsRepositoryRecordedTestBase(bool isAsync) : base(isAsync, TestMode)
         {
         }
 
@@ -26,22 +26,22 @@ namespace Azure.Iot.ModelsRepository.Tests
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
         }
 
-        protected ModelsRepoClient GetClient(ModelsRepoTestBase.ClientType clientType, ModelsRepoClientOptions options = null)
+        protected ModelsRepositoryClient GetClient(ModelsRepositoryTestBase.ClientType clientType, ModelsRepositoryClientOptions options = default)
         {
             if (options == null)
             {
-                options = new ModelsRepoClientOptions();
+                options = new ModelsRepositoryClientOptions();
             }
 
             return
-                clientType == ModelsRepoTestBase.ClientType.Local
+                clientType == ModelsRepositoryTestBase.ClientType.Local
                 ? InstrumentClient(
-                    new ModelsRepoClient(
-                        new Uri(ModelsRepoTestBase.TestLocalModelRepository),
+                    new ModelsRepositoryClient(
+                        new Uri(ModelsRepositoryTestBase.TestLocalModelRepository),
                         InstrumentClientOptions(options)))
                 : InstrumentClient(
-                    new ModelsRepoClient(
-                        new Uri(ModelsRepoTestBase.TestRemoteModelRepository),
+                    new ModelsRepositoryClient(
+                        new Uri(ModelsRepositoryTestBase.TestRemoteModelRepository),
                         InstrumentClientOptions(options)));
         }
     }

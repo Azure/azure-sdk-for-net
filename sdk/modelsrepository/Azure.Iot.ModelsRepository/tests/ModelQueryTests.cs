@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Azure.Iot.ModelsRepository.Tests
 {
-    public class ModelQueryTests : ModelsRepoTestBase
+    public class ModelQueryTests : ModelsRepositoryTestBase
     {
         private readonly string _modelTemplate = @"{{
             {0}

@@ -9,19 +9,19 @@ using System.Threading.Tasks;
 
 namespace Azure.Iot.ModelsRepository.Tests
 {
-    public class ResolveIntegrationTests : ModelsRepoRecordedTestBase
+    public class ResolveIntegrationTests : ModelsRepositoryRecordedTestBase
     {
         public ResolveIntegrationTests(bool isAsync) : base(isAsync)
         {
         }
 
-        [TestCase(ModelsRepoTestBase.ClientType.Local)]
-        [TestCase(ModelsRepoTestBase.ClientType.Remote)]
-        public void ResolveWithWrongCasingThrowsException(ModelsRepoTestBase.ClientType clientType)
+        [TestCase(ModelsRepositoryTestBase.ClientType.Local)]
+        [TestCase(ModelsRepositoryTestBase.ClientType.Remote)]
+        public void ResolveWithWrongCasingThrowsException(ModelsRepositoryTestBase.ClientType clientType)
         {
             const string dtmi = "dtmi:com:example:thermostat;1";
 
-            ModelsRepoClient client = GetClient(clientType);
+            ModelsRepositoryClient client = GetClient(clientType);
             string expectedExMsg =
                 string.Format(ServiceStrings.GenericResolverError, "dtmi:com:example:thermostat;1") +
                 " " +
@@ -36,19 +36,19 @@ namespace Azure.Iot.ModelsRepository.Tests
         [TestCase("com:example:Thermostat;1")]
         public void ResolveInvalidDtmiFormatThrowsException(string dtmi)
         {
-            ModelsRepoClient client = GetClient(ModelsRepoTestBase.ClientType.Local);
+            ModelsRepositoryClient client = GetClient(ModelsRepositoryTestBase.ClientType.Local);
             string expectedExMsg = $"{string.Format(ServiceStrings.GenericResolverError, dtmi)} {string.Format(ServiceStrings.InvalidDtmiFormat, dtmi)}";
             RequestFailedException re = Assert.ThrowsAsync<RequestFailedException>(async () => await client.ResolveAsync(dtmi));
             Assert.AreEqual(re.Message, expectedExMsg);
         }
 
-        [TestCase(ModelsRepoTestBase.ClientType.Local)]
-        [TestCase(ModelsRepoTestBase.ClientType.Remote)]
-        public void ResolveNoneExistentDtmiFileThrowsException(ModelsRepoTestBase.ClientType clientType)
+        [TestCase(ModelsRepositoryTestBase.ClientType.Local)]
+        [TestCase(ModelsRepositoryTestBase.ClientType.Remote)]
+        public void ResolveNoneExistentDtmiFileThrowsException(ModelsRepositoryTestBase.ClientType clientType)
         {
             const string dtmi = "dtmi:com:example:thermojax;999";
 
-            ModelsRepoClient client = GetClient(clientType);
+            ModelsRepositoryClient client = GetClient(clientType);
             RequestFailedException re = Assert.ThrowsAsync<RequestFailedException>(async () => await client.ResolveAsync(dtmi));
             Assert.True(re.Message.StartsWith($"Unable to resolve \"{dtmi}\""));
         }
@@ -58,48 +58,48 @@ namespace Azure.Iot.ModelsRepository.Tests
             const string dtmi = "dtmi:com:example:invalidmodel;1";
             const string invalidDep = "dtmi:azure:fakeDeviceManagement:FakeDeviceInformation;2";
 
-            ModelsRepoClient client = GetClient(ModelsRepoTestBase.ClientType.Local);
+            ModelsRepositoryClient client = GetClient(ModelsRepositoryTestBase.ClientType.Local);
             RequestFailedException resolverException = Assert.ThrowsAsync<RequestFailedException>(async () => await client.ResolveAsync(dtmi));
             Assert.True(resolverException.Message.StartsWith($"Unable to resolve \"{invalidDep}\""));
         }
 
-        [TestCase(ModelsRepoTestBase.ClientType.Local)]
-        [TestCase(ModelsRepoTestBase.ClientType.Remote)]
-        public async Task ResolveSingleModelNoDeps(ModelsRepoTestBase.ClientType clientType)
+        [TestCase(ModelsRepositoryTestBase.ClientType.Local)]
+        [TestCase(ModelsRepositoryTestBase.ClientType.Remote)]
+        public async Task ResolveSingleModelNoDeps(ModelsRepositoryTestBase.ClientType clientType)
         {
             const string dtmi = "dtmi:com:example:Thermostat;1";
 
-            ModelsRepoClient client = GetClient(clientType);
+            ModelsRepositoryClient client = GetClient(clientType);
             IDictionary<string, string> result = await client.ResolveAsync(dtmi);
             Assert.True(result.Keys.Count == 1);
             Assert.True(result.ContainsKey(dtmi));
-            Assert.True(ModelsRepoTestBase.ParseRootDtmiFromJson(result[dtmi]) == dtmi);
+            Assert.True(ModelsRepositoryTestBase.ParseRootDtmiFromJson(result[dtmi]) == dtmi);
         }
 
-        [TestCase(ModelsRepoTestBase.ClientType.Local)]
-        [TestCase(ModelsRepoTestBase.ClientType.Remote)]
-        public async Task ResolveMultipleModelsNoDeps(ModelsRepoTestBase.ClientType clientType)
+        [TestCase(ModelsRepositoryTestBase.ClientType.Local)]
+        [TestCase(ModelsRepositoryTestBase.ClientType.Remote)]
+        public async Task ResolveMultipleModelsNoDeps(ModelsRepositoryTestBase.ClientType clientType)
         {
             const string dtmi1 = "dtmi:com:example:Thermostat;1";
             const string dtmi2 = "dtmi:azure:DeviceManagement:DeviceInformation;1";
 
-            ModelsRepoClient client = GetClient(clientType);
+            ModelsRepositoryClient client = GetClient(clientType);
             IDictionary<string, string> result = await client.ResolveAsync(new string[] { dtmi1, dtmi2 });
             Assert.True(result.Keys.Count == 2);
             Assert.True(result.ContainsKey(dtmi1));
             Assert.True(result.ContainsKey(dtmi2));
-            Assert.True(ModelsRepoTestBase.ParseRootDtmiFromJson(result[dtmi1]) == dtmi1);
-            Assert.True(ModelsRepoTestBase.ParseRootDtmiFromJson(result[dtmi2]) == dtmi2);
+            Assert.True(ModelsRepositoryTestBase.ParseRootDtmiFromJson(result[dtmi1]) == dtmi1);
+            Assert.True(ModelsRepositoryTestBase.ParseRootDtmiFromJson(result[dtmi2]) == dtmi2);
         }
 
-        [TestCase(ModelsRepoTestBase.ClientType.Local)]
-        [TestCase(ModelsRepoTestBase.ClientType.Remote)]
-        public async Task ResolveSingleModelWithDeps(ModelsRepoTestBase.ClientType clientType)
+        [TestCase(ModelsRepositoryTestBase.ClientType.Local)]
+        [TestCase(ModelsRepositoryTestBase.ClientType.Remote)]
+        public async Task ResolveSingleModelWithDeps(ModelsRepositoryTestBase.ClientType clientType)
         {
             const string dtmi = "dtmi:com:example:TemperatureController;1";
             const string expectedDeps = "dtmi:com:example:Thermostat;1,dtmi:azure:DeviceManagement:DeviceInformation;1";
 
-            ModelsRepoClient client = GetClient(clientType);
+            ModelsRepositoryClient client = GetClient(clientType);
             IDictionary<string, string> result = await client.ResolveAsync(dtmi);
             var expectedDtmis = $"{dtmi},{expectedDeps}".Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
 
@@ -107,7 +107,7 @@ namespace Azure.Iot.ModelsRepository.Tests
             foreach (var id in expectedDtmis)
             {
                 Assert.True(result.ContainsKey(id));
-                Assert.True(ModelsRepoTestBase.ParseRootDtmiFromJson(result[id]) == id);
+                Assert.True(ModelsRepositoryTestBase.ParseRootDtmiFromJson(result[id]) == id);
             }
 
             // TODO: Evaluate using Azure.Core.TestFramework in future iteration.
@@ -138,7 +138,7 @@ namespace Azure.Iot.ModelsRepository.Tests
                   "dtmi:azure:DeviceManagement:DeviceInformation;2," +
                   "dtmi:com:example:Camera;3";
 
-            ModelsRepoClient client = GetClient(ModelsRepoTestBase.ClientType.Local);
+            ModelsRepositoryClient client = GetClient(ModelsRepositoryTestBase.ClientType.Local);
             IDictionary<string, string> result = await client.ResolveAsync(new[] { dtmi1, dtmi2 });
             var expectedDtmis = $"{dtmi1},{dtmi2},{expectedDeps}".Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
 
@@ -146,7 +146,7 @@ namespace Azure.Iot.ModelsRepository.Tests
             foreach (var id in expectedDtmis)
             {
                 Assert.True(result.ContainsKey(id));
-                Assert.True(ModelsRepoTestBase.ParseRootDtmiFromJson(result[id]) == id);
+                Assert.True(ModelsRepositoryTestBase.ParseRootDtmiFromJson(result[id]) == id);
             }
         }
 
@@ -155,7 +155,7 @@ namespace Azure.Iot.ModelsRepository.Tests
             const string dtmi1 = "dtmi:com:example:TemperatureController;1";
             const string dtmi2 = "dtmi:com:example:ConferenceRoom;1";
             const string expectedDeps = "dtmi:com:example:Thermostat;1,dtmi:azure:DeviceManagement:DeviceInformation;1,dtmi:com:example:Room;1";
-            ModelsRepoClient client = GetClient(ModelsRepoTestBase.ClientType.Local);
+            ModelsRepositoryClient client = GetClient(ModelsRepositoryTestBase.ClientType.Local);
             IDictionary<string, string> result = await client.ResolveAsync(new[] { dtmi1, dtmi2 });
             var expectedDtmis = $"{dtmi1},{dtmi2},{expectedDeps}".Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
 
@@ -163,7 +163,7 @@ namespace Azure.Iot.ModelsRepository.Tests
             foreach (var id in expectedDtmis)
             {
                 Assert.True(result.ContainsKey(id));
-                Assert.True(ModelsRepoTestBase.ParseRootDtmiFromJson(result[id]) == id);
+                Assert.True(ModelsRepositoryTestBase.ParseRootDtmiFromJson(result[id]) == id);
             }
         }
 
@@ -176,7 +176,7 @@ namespace Azure.Iot.ModelsRepository.Tests
                   "dtmi:com:example:Room;1," +
                   "dtmi:com:example:Freezer;1";
 
-            ModelsRepoClient client = GetClient(ModelsRepoTestBase.ClientType.Local);
+            ModelsRepositoryClient client = GetClient(ModelsRepositoryTestBase.ClientType.Local);
             IDictionary<string, string> result = await client.ResolveAsync(new[] { dtmi1, dtmi2 });
             var expectedDtmis = $"{dtmi1},{dtmi2},{expectedDeps}".Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
 
@@ -184,19 +184,19 @@ namespace Azure.Iot.ModelsRepository.Tests
             foreach (var id in expectedDtmis)
             {
                 Assert.True(result.ContainsKey(id));
-                Assert.True(ModelsRepoTestBase.ParseRootDtmiFromJson(result[id]) == id);
+                Assert.True(ModelsRepositoryTestBase.ParseRootDtmiFromJson(result[id]) == id);
             }
         }
 
         public async Task ResolveSingleModelWithDepsFromExtendsInline()
         {
             const string dtmi = "dtmi:com:example:base;1";
-            ModelsRepoClient client = GetClient(ModelsRepoTestBase.ClientType.Local);
+            ModelsRepositoryClient client = GetClient(ModelsRepositoryTestBase.ClientType.Local);
             IDictionary<string, string> result = await client.ResolveAsync(dtmi);
 
             Assert.True(result.Keys.Count == 1);
             Assert.True(result.ContainsKey(dtmi));
-            Assert.True(ModelsRepoTestBase.ParseRootDtmiFromJson(result[dtmi]) == dtmi);
+            Assert.True(ModelsRepositoryTestBase.ParseRootDtmiFromJson(result[dtmi]) == dtmi);
         }
 
         public async Task ResolveSingleModelWithDepsFromExtendsInlineVariant()
@@ -205,7 +205,7 @@ namespace Azure.Iot.ModelsRepository.Tests
             const string expected = "dtmi:com:example:Freezer;1," +
                   "dtmi:com:example:Thermostat;1";
 
-            ModelsRepoClient client = GetClient(ModelsRepoTestBase.ClientType.Local);
+            ModelsRepositoryClient client = GetClient(ModelsRepositoryTestBase.ClientType.Local);
             IDictionary<string, string> result = await client.ResolveAsync(dtmi);
             var expectedDtmis = $"{dtmi},{expected}".Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
 
@@ -213,7 +213,7 @@ namespace Azure.Iot.ModelsRepository.Tests
             foreach (var id in expectedDtmis)
             {
                 Assert.True(result.ContainsKey(id));
-                Assert.True(ModelsRepoTestBase.ParseRootDtmiFromJson(result[id]) == id);
+                Assert.True(ModelsRepositoryTestBase.ParseRootDtmiFromJson(result[id]) == id);
             }
         }
 
@@ -222,39 +222,39 @@ namespace Azure.Iot.ModelsRepository.Tests
             const string dtmiDupe1 = "dtmi:azure:DeviceManagement:DeviceInformation;1";
             const string dtmiDupe2 = "dtmi:azure:DeviceManagement:DeviceInformation;1";
 
-            ModelsRepoClient client = GetClient(ModelsRepoTestBase.ClientType.Local);
+            ModelsRepositoryClient client = GetClient(ModelsRepositoryTestBase.ClientType.Local);
             IDictionary<string, string> result = await client.ResolveAsync(new[] { dtmiDupe1, dtmiDupe2 });
             Assert.True(result.Keys.Count == 1);
-            Assert.True(ModelsRepoTestBase.ParseRootDtmiFromJson(result[dtmiDupe1]) == dtmiDupe1);
+            Assert.True(ModelsRepositoryTestBase.ParseRootDtmiFromJson(result[dtmiDupe1]) == dtmiDupe1);
         }
 
-        [TestCase(ModelsRepoTestBase.ClientType.Local)]
-        [TestCase(ModelsRepoTestBase.ClientType.Remote)]
-        public async Task ResolveSingleModelWithDepsDisableDependencyResolution(ModelsRepoTestBase.ClientType clientType)
+        [TestCase(ModelsRepositoryTestBase.ClientType.Local)]
+        [TestCase(ModelsRepositoryTestBase.ClientType.Remote)]
+        public async Task ResolveSingleModelWithDepsDisableDependencyResolution(ModelsRepositoryTestBase.ClientType clientType)
         {
             const string dtmi = "dtmi:com:example:Thermostat;1";
 
-            ModelsRepoClientOptions options = new ModelsRepoClientOptions(resolutionOption: DependencyResolutionOption.Disabled);
-            ModelsRepoClient client = GetClient(clientType, options);
+            ModelsRepositoryClientOptions options = new ModelsRepositoryClientOptions(resolutionOption: DependencyResolutionOption.Disabled);
+            ModelsRepositoryClient client = GetClient(clientType, options);
 
             IDictionary<string, string> result = await client.ResolveAsync(dtmi);
 
             Assert.True(result.Keys.Count == 1);
             Assert.True(result.ContainsKey(dtmi));
-            Assert.True(ModelsRepoTestBase.ParseRootDtmiFromJson(result[dtmi]) == dtmi);
+            Assert.True(ModelsRepositoryTestBase.ParseRootDtmiFromJson(result[dtmi]) == dtmi);
         }
 
-        [TestCase(ModelsRepoTestBase.ClientType.Local)]
-        [TestCase(ModelsRepoTestBase.ClientType.Remote)]
-        public async Task ResolveSingleModelTryFromExpanded(ModelsRepoTestBase.ClientType clientType)
+        [TestCase(ModelsRepositoryTestBase.ClientType.Local)]
+        [TestCase(ModelsRepositoryTestBase.ClientType.Remote)]
+        public async Task ResolveSingleModelTryFromExpanded(ModelsRepositoryTestBase.ClientType clientType)
         {
             const string dtmi = "dtmi:com:example:TemperatureController;1";
             const string expectedDeps = "dtmi:com:example:Thermostat;1,dtmi:azure:DeviceManagement:DeviceInformation;1";
 
             var expectedDtmis = $"{dtmi},{expectedDeps}".Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
 
-            ModelsRepoClientOptions options = new ModelsRepoClientOptions(resolutionOption: DependencyResolutionOption.TryFromExpanded);
-            ModelsRepoClient client = GetClient(clientType, options);
+            ModelsRepositoryClientOptions options = new ModelsRepositoryClientOptions(resolutionOption: DependencyResolutionOption.TryFromExpanded);
+            ModelsRepositoryClient client = GetClient(clientType, options);
 
             IDictionary<string, string> result = await client.ResolveAsync(dtmi);
 
@@ -262,7 +262,7 @@ namespace Azure.Iot.ModelsRepository.Tests
             foreach (var id in expectedDtmis)
             {
                 Assert.True(result.ContainsKey(id));
-                Assert.True(ModelsRepoTestBase.ParseRootDtmiFromJson(result[id]) == id);
+                Assert.True(ModelsRepositoryTestBase.ParseRootDtmiFromJson(result[id]) == id);
             }
 
             // TODO: Evaluate using Azure.Core.TestFramework in future iteration.
@@ -290,8 +290,8 @@ namespace Azure.Iot.ModelsRepository.Tests
             string[] nonExpandedDtmis = dtmisNonExpanded.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
             string[] totalDtmis = expandedDtmis.Concat(nonExpandedDtmis).ToArray();
 
-            ModelsRepoClientOptions options = new ModelsRepoClientOptions(resolutionOption: DependencyResolutionOption.TryFromExpanded);
-            ModelsRepoClient client = GetClient(ModelsRepoTestBase.ClientType.Local, options);
+            ModelsRepositoryClientOptions options = new ModelsRepositoryClientOptions(resolutionOption: DependencyResolutionOption.TryFromExpanded);
+            ModelsRepositoryClient client = GetClient(ModelsRepositoryTestBase.ClientType.Local, options);
 
             // Multi-resolve dtmi:com:example:TemperatureController;1 + dtmi:com:example:ColdStorage;1
             IDictionary<string, string> result = await client.ResolveAsync(new[] { expandedDtmis[0], nonExpandedDtmis[0] });
@@ -300,7 +300,7 @@ namespace Azure.Iot.ModelsRepository.Tests
             foreach (string id in totalDtmis)
             {
                 Assert.True(result.ContainsKey(id));
-                Assert.True(ModelsRepoTestBase.ParseRootDtmiFromJson(result[id]) == id);
+                Assert.True(ModelsRepositoryTestBase.ParseRootDtmiFromJson(result[id]) == id);
             }
 
             // TODO: Evaluate using Azure.Core.TestFramework in future iteration.

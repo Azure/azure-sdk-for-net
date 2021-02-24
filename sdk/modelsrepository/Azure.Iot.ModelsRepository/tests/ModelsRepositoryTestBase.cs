@@ -11,9 +11,9 @@ namespace Azure.Iot.ModelsRepository.Tests
     /// <summary>
     /// This class will initialize all the settings and create and instance of the ModelsRepoClient.
     /// </summary>
-    public abstract class ModelsRepoTestBase
+    public abstract class ModelsRepositoryTestBase
     {
-        public ModelsRepoTestBase()
+        public ModelsRepositoryTestBase()
         {
         }
 
