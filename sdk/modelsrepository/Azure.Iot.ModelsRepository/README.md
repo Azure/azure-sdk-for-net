@@ -24,7 +24,7 @@ View the package details at [nuget.org][modelsrepository_nuget].
 
 - A models repository following [Azure IoT conventions][modelsrepository_conventions]
   - The models repository can be located on the local filesystem or hosted on a webserver.
-  - Azure IoT hosts the global [Azure IoT Models Repository](modelsrepository_iot_endpoint) which the client will point to by default if no URI is provided.
+  - Azure IoT hosts the global [Azure IoT Models Repository][modelsrepository_iot_endpoint] which the client will point to by default if no URI is provided.
 
 ### Authenticate the client
 
@@ -38,7 +38,7 @@ The repository defines a pattern to store DTDL interfaces in a directory structu
 
 ### Thread safety
 
-We guarantee that all client instance methods are thread-safe and independent of each other. See thread safety [guideline](thread_safety_guideline). This ensures that the recommendation of reusing client instances is always safe, even across threads.
+We guarantee that all client instance methods are thread-safe and independent of each other. See thread safety [guideline][thread_safety_guideline]. This ensures that the recommendation of reusing client instances is always safe, even across threads.
 
 ### Additional concepts
 
@@ -54,15 +54,15 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-You can familiarize yourself with the client using [samples for IoT Models Repository](modelsrepository_samples).
+You can familiarize yourself with the client using [samples for IoT Models Repository][modelsrepository_samples].
 
 ## Troubleshooting
 
-All service operations will throw RequestFailedException on failure, with helpful error codes and other information. The client also produces diagnostic events and logging which can be listened to with an [EventListener](eventsourcelistener_reference).
+All service operations will throw RequestFailedException on failure, with helpful error codes and other information. The client also produces diagnostic events and logging which can be listened to with an [EventListener][eventsourcelistener_reference].
 
 ## Next steps
 
-See implementation examples with our [code samples](modelsrepository_samples).
+See implementation examples with our [code samples][modelsrepository_samples].
 
 ## Contributing
 
