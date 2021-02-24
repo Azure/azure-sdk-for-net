@@ -4415,7 +4415,7 @@ namespace Azure.Storage.Files.Shares
                 options?.Snapshot,
                 previousSnapshot: default,
                 options?.Conditions,
-                operationName: default,
+                operationName: $"{nameof(ShareFileClient)}.{nameof(GetRangeList)}",
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -4450,7 +4450,7 @@ namespace Azure.Storage.Files.Shares
                 options?.Snapshot,
                 previousSnapshot: default,
                 options?.Conditions,
-                operationName: default,
+                operationName: $"{nameof(ShareFileClient)}.{nameof(GetRangeList)}",,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -4492,7 +4492,7 @@ namespace Azure.Storage.Files.Shares
                 snapshot: default,
                 previousSnapshot: default,
                 conditions,
-                operationName: default,
+                operationName: $"{nameof(ShareFileClient)}.{nameof(GetRangeList)}",
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -4531,7 +4531,7 @@ namespace Azure.Storage.Files.Shares
                 snapshot: default,
                 previousSnapshot: default,
                 conditions: default,
-                operationName: default,
+                operationName: $"{nameof(ShareFileClient)}.{nameof(GetRangeList)}",
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -4573,7 +4573,7 @@ namespace Azure.Storage.Files.Shares
                 snapshot: default,
                 previousSnapshot: default,
                 conditions,
-                operationName: default,
+                operationName: $"{nameof(ShareFileClient)}.{nameof(GetRangeList)}",
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -4612,7 +4612,7 @@ namespace Azure.Storage.Files.Shares
                 snapshot: default,
                 previousSnapshot: default,
                 conditions: default,
-                operationName: default,
+                operationName: $"{nameof(ShareFileClient)}.{nameof(GetRangeList)}",
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
