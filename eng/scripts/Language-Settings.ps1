@@ -6,28 +6,65 @@ $packagePattern = "*.nupkg"
 $MetadataUri = "https://raw.githubusercontent.com/Azure/azure-sdk/master/_data/releases/latest/dotnet-packages.csv"
 $BlobStorageUrl = "https://azuresdkdocs.blob.core.windows.net/%24web?restype=container&comp=list&prefix=dotnet%2F&delimiter=%2F"
 
-function Get-dotnet-PackageInfoFromRepo ($pkgPath, $serviceDirectory, $pkgName)
+function Get-dotnet-PackageInfoFromRepo
 {
-  $projectPath = Join-Path $pkgPath "src" "$pkgName.csproj"
-  if (Test-Path $projectPath)
+  [CmdletBinding()]
+  Param(
+    [Parameter(Position = 0)]
+    [string]$pkgDirectoryPath,
+    [Parameter(Position = 1)]
+    [string]$serviceDirectoryName,
+    $pkgPath,
+    $serviceDirectory,
+    $pkgName
+  )
+
+  if ($pkgName)
   {
-    $projectData = New-Object -TypeName XML
-    $projectData.load($projectPath)
-    $pkgVersion = Select-XML -Xml $projectData -XPath '/Project/PropertyGroup/Version'
-    $sdkType = "client"
-    if ($pkgName -match "\.ResourceManager\." -or $pkgName -match "\.Management\.")
+    $projectPath = Join-Path $pkgPath "src" "$pkgName.csproj"
+    if (Test-Path $projectPath)
     {
-      $sdkType = "mgmt"
+      $projectData = New-Object -TypeName XML
+      $projectData.load($projectPath)
+      $pkgVersion = Select-XML -Xml $projectData -XPath '/Project/PropertyGroup/Version'
+      $sdkType = "client"
+      if ($pkgName -match "\.ResourceManager\." -or $pkgName -match "\.Management\.")
+      {
+        $sdkType = "mgmt"
+      }
+      $pkgProp = [PackageProps]::new($pkgName, $pkgVersion, $pkgPath, $serviceDirectory)
+      $pkgProp.SdkType = $sdkType
+      $pkgProp.IsNewSdk = $pkgName.StartsWith("Azure")
+      $pkgProp.ArtifactName = $pkgName
+      return $pkgProp
     }
-    $pkgProp = [PackageProps]::new($pkgName, $pkgVersion, $pkgPath, $serviceDirectory)
-    $pkgProp.SdkType = $sdkType
-    $pkgProp.IsNewSdk = $pkgName.StartsWith("Azure")
-    $pkgProp.ArtifactName = $pkgName
-    return $pkgProp
   }
-  else
+  else 
   {
-    return $null
+    $pkgProperties = @()
+    if (Test-Path (Join-Path $pkgDirectoryPath "src"))
+    {
+      $projectFilePaths = Get-ChildItem (Join-Path $pkgDirectoryPath "src") "*.csproj" -File
+    }
+  
+    foreach ($projectPath in $projectFilePaths)
+    {
+      $pkgName = $projectPath.BaseName
+      $projectData = New-Object -TypeName XML
+      $projectData.load($projectPath)
+      $pkgVersion = Select-XML -Xml $projectData -XPath '/Project/PropertyGroup/Version'
+      $sdkType = "client"
+      if ($pkgName -match "\.ResourceManager\." -or $pkgName -match "\.Management\.")
+      {
+        $sdkType = "mgmt"
+      }
+      $pkgProp = [PackageProps]::new($pkgName, $pkgVersion, $pkgDirectoryPath, $serviceDirectoryName)
+      $pkgProp.SdkType = $sdkType
+      $pkgProp.IsNewSdk = $pkgName.StartsWith("Azure")
+      $pkgProp.ArtifactName = $pkgName
+      $pkgProperties += $pkgProp
+    }
+    return $pkgProperties
   }
 }
 
