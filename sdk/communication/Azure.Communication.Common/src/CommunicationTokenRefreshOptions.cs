@@ -19,7 +19,7 @@ namespace Azure.Communication
         /// <summary>The initial token.</summary>
         public string InitialToken { get; set; }
 
-        internal Func<CancellationToken, ValueTask<string>> _asyncTokenRefresher;
+        private Func<CancellationToken, ValueTask<string>> _asyncTokenRefresher;
 
         /// <summary>The asynchronous token refresher.</summary>
         public Func<CancellationToken, ValueTask<string>> AsyncTokenRefresher
