@@ -8,9 +8,6 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
-using Azure.Messaging;
-using Azure.Messaging.EventGrid;
-using Azure.Messaging.EventGrid.Tests;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventGrid.Tests.Samples
