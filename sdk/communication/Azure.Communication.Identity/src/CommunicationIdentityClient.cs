@@ -302,8 +302,7 @@ namespace Azure.Communication.Identity
             scope.Start();
             try
             {
-                Response<CommunicationTurnCredentialsResponse> response = TurnRestClient.IssueTurnCredentials(communicationUser.Id, cancellationToken);
-                return response;
+                return TurnRestClient.IssueTurnCredentials(communicationUser.Id, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -321,8 +320,7 @@ namespace Azure.Communication.Identity
             scope.Start();
             try
             {
-                Response<CommunicationTurnCredentialsResponse> response = await TurnRestClient.IssueTurnCredentialsAsync(communicationUser.Id, cancellationToken).ConfigureAwait(false);
-                return response;
+                return await TurnRestClient.IssueTurnCredentialsAsync(communicationUser.Id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
