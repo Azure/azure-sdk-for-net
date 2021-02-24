@@ -67,7 +67,7 @@ namespace Azure.Core.TestFramework
 
         private readonly RecordMatcher _matcher;
         private RecordSession _sessionInternal;
-        private RecordSession session
+        private RecordSession Session
         {
             get
             {
