@@ -25,7 +25,7 @@ namespace Azure.Iot.ModelsRepository.Samples
             string dtmi = "dtmi:com:example:TemperatureController;1";
             ModelsRepositoryClient client = new ModelsRepositoryClient();
 
-            IDictionary<string, string> models = await client.ResolveAsync(dtmi);
+            IDictionary<string, string> models = await client.ResolveAsync(dtmi).ConfigureAwait(false);
 
             Console.WriteLine($"{dtmi} resolved in {models.Count} interfaces.");
         }
@@ -37,7 +37,7 @@ namespace Azure.Iot.ModelsRepository.Samples
 
             try
             {
-                IDictionary<string, string> models = await client.ResolveAsync(dtmi);
+                IDictionary<string, string> models = await client.ResolveAsync(dtmi).ConfigureAwait(false);
                 Console.WriteLine($"{dtmi} resolved in {models.Count} interfaces.");
             }
             catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.NotFound)
