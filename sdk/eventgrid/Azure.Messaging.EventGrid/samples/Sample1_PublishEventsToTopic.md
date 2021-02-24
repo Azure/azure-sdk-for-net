@@ -66,21 +66,35 @@ Following that, invoke `SendEvents` or `SendEventsAsync` to publish the events t
 Note on `CloudEvent`: each `CloudEvent` has a set of required, non-nullable properties. However, `Data` is *not required*. `Time` and `SpecVersion` are required properties that are set by default, but can also be manually set if needed. `Time` is also set by default, but not required.
 
 ```C# Snippet:SendCloudEventsToTopic
+// Example of a custom ObjectSerializer used to serialize the event payload to JSON
+var myCustomDataSerializer = new JsonObjectSerializer(
+    new JsonSerializerOptions()
+    {
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+    });
+
 // Add CloudEvents to a list to publish to the topic
 List<CloudEvent> eventsList = new List<CloudEvent>
 {
-    // CloudEvent with populated data
+    // CloudEvent with custom model serialized to JSON
     new CloudEvent(
         "/cloudevents/example/source",
         "Example.EventType",
-        myCustomDataSerializer.Serialize("This is the event data")),
+        new CustomModel() { A = 5, B = true }),
+
+    // CloudEvent with custom model serialized to JSON using a custom serializer
+    new CloudEvent(
+        "/cloudevents/example/source",
+        "Example.EventType",
+        myCustomDataSerializer.Serialize(new CustomModel() { A = 5, B = true }),
+        "application/json"),
 
     // CloudEvents also supports sending binary-valued data
     new CloudEvent(
         "/cloudevents/example/binarydata",
         "Example.EventType",
-        new BinaryData(Encoding.UTF8.GetBytes("This is binary data")),
-        "example/binary")};
+        new BinaryData(Encoding.UTF8.GetBytes("This is treated as binary data")),
+        "application/octet-stream")};
 
 // Send the events
 await client.SendEventsAsync(eventsList);
