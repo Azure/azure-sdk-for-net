@@ -38,7 +38,7 @@ namespace Azure.Communication
     {
         public CommunicationTokenRefreshOptions(bool refreshProactively, System.Func<System.Threading.CancellationToken, string> tokenRefresher) { }
         public System.Func<System.Threading.CancellationToken, System.Threading.Tasks.ValueTask<string>> AsyncTokenRefresher { get { throw null; } set { } }
-        public string? InitialToken { get { throw null; } set { } }
+        public string InitialToken { get { throw null; } set { } }
     }
     public partial class CommunicationUserIdentifier : Azure.Communication.CommunicationIdentifier
     {

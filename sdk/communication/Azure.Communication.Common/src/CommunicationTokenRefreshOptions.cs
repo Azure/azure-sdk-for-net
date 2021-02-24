@@ -19,9 +19,14 @@ namespace Azure.Communication
         /// <summary>The initial token.</summary>
         public string InitialToken { get; set; }
 
-        /// <summary>The token refresher.</summary>
-        public Func<CancellationToken, ValueTask<string>> AsyncTokenRefresher { get; set; }
+        internal Func<CancellationToken, ValueTask<string>> _asyncTokenRefresher;
 
+        /// <summary>The asynchronous token refresher.</summary>
+        public Func<CancellationToken, ValueTask<string>> AsyncTokenRefresher
+        {
+            get => _asyncTokenRefresher = _asyncTokenRefresher ?? (cancellationToken => new ValueTask<string>(TokenRefresher(cancellationToken)));
+            set => _asyncTokenRefresher = value;
+        }
         /// <summary>
         /// Initializes a new instance of <see cref="CommunicationTokenRefreshOptions"/>.
         /// </summary>
@@ -32,10 +37,8 @@ namespace Azure.Communication
             Func<CancellationToken, string> tokenRefresher)
         {
             Argument.AssertNotNull(tokenRefresher, nameof(tokenRefresher));
-
             RefreshProactively = refreshProactively;
             TokenRefresher = tokenRefresher;
-            AsyncTokenRefresher = AsyncTokenRefresher ?? (cancellationToken => new ValueTask<string>(tokenRefresher(cancellationToken)));
         }
     }
 }

@@ -24,11 +24,12 @@ namespace Azure.Communication.Identity
             Func<CancellationToken, ValueTask<string>>? asyncTokenRefresher = null,
             string? initialToken = null)
         {
-            var refreshOptions = new CommunicationTokenRefreshOptions(refreshProactively, tokenRefresher);
-            refreshOptions.AsyncTokenRefresher = asyncTokenRefresher;
-            refreshOptions.InitialToken = initialToken;
             return new AutoRefreshTokenCredential(
-                refreshOptions,
+                new CommunicationTokenRefreshOptions(refreshProactively, tokenRefresher)
+                {
+                    AsyncTokenRefresher = asyncTokenRefresher,
+                    InitialToken = initialToken
+                },
                 testClock.Schedule,
                 () => testClock.UtcNow);
         }
@@ -48,13 +49,13 @@ namespace Azure.Communication.Identity
         public async Task CommunicationTokenCredential_CreateRefreshableWithoutInitialToken()
         {
             #region Snippet:CommunicationTokenCredential_CreateRefreshableWithoutInitialToken
-            var refreshOptions = new CommunicationTokenRefreshOptions(
+            using var tokenCredential = new CommunicationTokenCredential(
+                new CommunicationTokenRefreshOptions(
                     refreshProactively: true, // Indicates if the token should be proactively refreshed in the background or only on-demand
-                    tokenRefresher: cancellationToken => FetchTokenForUserFromMyServer("bob@contoso.com", cancellationToken)
-                    );
-            refreshOptions.AsyncTokenRefresher = cancellationToken => FetchTokenForUserFromMyServerAsync("bob@contoso.com", cancellationToken);
-            using var tokenCredential = new CommunicationTokenCredential(refreshOptions);
-
+                    tokenRefresher: cancellationToken => FetchTokenForUserFromMyServer("bob@contoso.com", cancellationToken))
+                {
+                    AsyncTokenRefresher = cancellationToken => FetchTokenForUserFromMyServerAsync("bob@contoso.com", cancellationToken)
+                });
             #endregion
             await tokenCredential.GetTokenAsync();
         }
@@ -65,12 +66,14 @@ namespace Azure.Communication.Identity
             var initialToken = ExpiredToken;
             #region Snippet:CommunicationTokenCredential_CreateRefreshableWithInitialToken
             //@@string initialToken = Environment.GetEnvironmentVariable("COMMUNICATION_SERVICES_USER_TOKEN");
-            var refreshOptions = new CommunicationTokenRefreshOptions(
+            using var tokenCredential = new CommunicationTokenCredential(
+                new CommunicationTokenRefreshOptions(
                    refreshProactively: true, // Indicates if the token should be proactively refreshed in the background or only on-demand
-                   tokenRefresher: cancellationToken => FetchTokenForUserFromMyServer("bob@contoso.com", cancellationToken));
-            refreshOptions.AsyncTokenRefresher = cancellationToken => FetchTokenForUserFromMyServerAsync("bob@contoso.com", cancellationToken);
-            refreshOptions.InitialToken = initialToken;
-            using var tokenCredential = new CommunicationTokenCredential(refreshOptions);
+                   tokenRefresher: cancellationToken => FetchTokenForUserFromMyServer("bob@contoso.com", cancellationToken))
+                {
+                    AsyncTokenRefresher = cancellationToken => FetchTokenForUserFromMyServerAsync("bob@contoso.com", cancellationToken),
+                    InitialToken = initialToken
+                });
             #endregion
             await tokenCredential.GetTokenAsync();
         }
@@ -123,12 +126,14 @@ namespace Azure.Communication.Identity
         {
             var cancellationToken = new CancellationToken();
             CancellationToken? actualCancellationToken = null;
-            var refreshOptions = new CommunicationTokenRefreshOptions(
+            using var tokenCredential = new CommunicationTokenCredential(
+                new CommunicationTokenRefreshOptions(
                     refreshProactively,
-                    RefreshToken);
-            refreshOptions.AsyncTokenRefresher = c => new ValueTask<string>(RefreshToken(c));
-            refreshOptions.InitialToken = ExpiredToken;
-            using var tokenCredential = new CommunicationTokenCredential(refreshOptions);
+                    RefreshToken)
+                {
+                    AsyncTokenRefresher = c => new ValueTask<string>(RefreshToken(c)),
+                    InitialToken = ExpiredToken
+                });
 
             var token = async ? await tokenCredential.GetTokenAsync(cancellationToken) : tokenCredential.GetToken(cancellationToken);
             Assert.AreEqual(cancellationToken, actualCancellationToken);
@@ -194,12 +199,13 @@ namespace Azure.Communication.Identity
         [TestCase(SampleToken, true, true)]
         public void GetTokenSeries_Throws_IfTokenRequestedWhileDisposed(string token, bool refreshProactively, bool async)
         {
-            var refreshOptions = new CommunicationTokenRefreshOptions(
+            using var tokenCredential = new CommunicationTokenCredential(
+                new CommunicationTokenRefreshOptions(
                     refreshProactively,
-                    _ => token);
-            refreshOptions.AsyncTokenRefresher = _ => new ValueTask<string>(token);
-            using var tokenCredential = new CommunicationTokenCredential(refreshOptions);
-
+                    _ => token)
+                {
+                    AsyncTokenRefresher = _ => new ValueTask<string>(token)
+                });
             tokenCredential.Dispose();
 
             if (async)
@@ -282,12 +288,14 @@ namespace Azure.Communication.Identity
         public void CurrentTokenExpired_TokenRefreshFails_Throws()
         {
             var expiredToken = GenerateTokenValidForMinutes(DateTimeOffset.UtcNow, -10);
-            var refreshToken = new CommunicationTokenRefreshOptions(
+            using var tokenCredential = new CommunicationTokenCredential(
+                new CommunicationTokenRefreshOptions(
                     refreshProactively: true,
-                    RefreshToken);
-            refreshToken.AsyncTokenRefresher = _ => throw new NotImplementedException();
-            refreshToken.InitialToken = expiredToken;
-            using var tokenCredential = new CommunicationTokenCredential(refreshToken);
+                    RefreshToken)
+                {
+                    AsyncTokenRefresher = _ => throw new NotImplementedException(),
+                    InitialToken = expiredToken
+                });
 
             Assert.Throws<ArithmeticException>(() => tokenCredential.GetToken());
 
