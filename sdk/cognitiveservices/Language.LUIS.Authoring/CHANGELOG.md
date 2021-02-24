@@ -1,6 +1,6 @@
 # Release History
 
-## 3.2.1-preview.3 (2021-03-09)
+## 3.2.0-preview.4 (Unreleased)
 
 
 ## 3.2.0-preview.3 (Unreleased)
@@ -19,5 +19,3 @@
 - Issue where AzureAccount Api are not able to be authenticated ([#8023](https://github.com/Azure/azure-sdk-for-net/issues/8023))
 
 ## 3.2.0-preview.1 (2019-10-30)
-
-
