@@ -4,7 +4,7 @@
 
 ### New features
 
-- Initial preview of Azure.IoT.ModelRepository SDK
+- Initial preview of Azure.IoT.ModelsRepository SDK
 
 ### Breaking changes
 
