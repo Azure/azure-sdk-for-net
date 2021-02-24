@@ -1,6 +1,6 @@
 # Azure Communication SMS client library for .NET
 > Server Version: 
-Chat client: 2021-03-07
+Sms client: 2021-03-07
 
 This package contains a C# SDK for Azure Communication Services for SMS and Telephony.
 
@@ -51,8 +51,8 @@ To send a SMS message, call the `Send` or `SendAsync` function from the `SmsClie
 ```C# Snippet:Azure_Communication_SmsClient_Send
 SmsSendResult result = smsClient.Send(
     from: "+18001230000", // Phone number acquired on your Azure Communication resource
-    to: "+18005670000", // recipient's phone-number
-    message: "Hello"); // message-to-send
+    to: "+18005670000",
+    message: "Hello");
 Console.WriteLine($" MessageId: {result.MessageId} Sent to: {result.To}");
 ```
 ### Send Group SMS Message
@@ -61,8 +61,8 @@ To send a SMS message to a list of recipients, call the `Send` or `SendAsync` fu
 /// send an sms to multiple recipients
 Pageable<SmsSendResult> results = smsClient.Send(
     from: "+18001230000", // Phone number acquired on your Azure Communication resource
-    to: new[] { "+18005670000", "+18005670001", "+18005670002" }, // list of recipient's phone-numbers
-    message: "Holiday Promotion", // group message to send
+    to: new[] { "+18005670000", "+18005670001", "+18005670002" },
+    message: "Holiday Promotion",
     options: new SmsSendOptions // OPTIONAL
     {
         EnableDeliveryReport = true,
@@ -81,8 +81,8 @@ try
 {
     SmsSendResult result = smsClient.Send(
         from: "+18001230000", // Phone number acquired on your Azure Communication resource
-        to: "+18005670000", // recipient's phone-number
-        message: "Hello"); // message-to-send
+        to: "+18005670000",
+        message: "Hello");
     Console.WriteLine($" MessageId: {result.MessageId} Sent to: {result.To}");
 }
 catch (RequestFailedException ex)

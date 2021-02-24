@@ -19,6 +19,38 @@ namespace Azure.Communication.Sms.Tests
             => Sanitizer = new SmsClientRecordedTestSanitizer();
 
         [Test]
+        public async Task SendingAnSmsMessage()
+        {
+            SmsClient client = InstrumentClient(
+                new SmsClient(
+                    TestEnvironment.ConnectionString,
+                    InstrumentClientOptions(new SmsClientOptions())));
+
+            #region Snippet:Azure_Communication_Sms_Tests_Troubleshooting
+            try
+            {
+                #region Snippet:Azure_Communication_Sms_Tests_SendAsync
+                SmsSendResult result = await client.SendAsync(
+                   from: TestEnvironment.PhoneNumber,
+                   to: TestEnvironment.PhoneNumber,
+                   message: "Hi");
+                Console.WriteLine($"Sms id: {result.MessageId}");
+                #endregion Snippet:Azure_Communication_Sms_Tests_SendAsync
+                /*@@*/
+                Assert.IsFalse(string.IsNullOrWhiteSpace(result.MessageId));
+            }
+            catch (RequestFailedException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            #endregion Snippet:Azure_Communication_Sms_Tests_Troubleshooting
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+        }
+
+        [Test]
         public async Task SendingAnSmsMessageUsingTokenCredential()
         {
             TokenCredential tokenCredential;

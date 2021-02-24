@@ -56,10 +56,10 @@ namespace Azure.Communication.Sms.Tests.samples
             /// Send an sms to a single recipient
             SmsSendResult sendSmsResult = smsClient.Send(
                 //@@ from: "+18001230000", // Phone number acquired on your Azure Communication resource
-                //@@ to: "+18005670000", // recipient's phone-number
+                //@@ to: "+18005670000",
                 /*@@*/ from: TestEnvironment.PhoneNumber,
                 /*@@*/ to: TestEnvironment.PhoneNumber,
-                message: "Hello", // message-to-send
+                message: "Hello 👋",
                 options: new SmsSendOptions // OPTIONAL
                 {
                     EnableDeliveryReport = true,
@@ -73,10 +73,10 @@ namespace Azure.Communication.Sms.Tests.samples
             /// send an sms to multiple recipients
             Pageable<SmsSendResult> results = smsClient.Send(
                 //@@ from: "+18001230000", // Phone number acquired on your Azure Communication resource
-                //@@ to: new[] { "+18005670000", "+18005670001", "+18005670002" }, // list of recipient's phone-numbers
+                //@@ to: new[] { "+18005670000", "+18005670001", "+18005670002" },
                 /*@@*/ from: TestEnvironment.PhoneNumber,
                 /*@@*/ to: new[] { TestEnvironment.PhoneNumber, TestEnvironment.PhoneNumber },
-                message: "Holiday Promotion", // group message to send
+                message: "Holiday Promotion",
                 options: new SmsSendOptions // OPTIONAL
                 {
                     EnableDeliveryReport = true,
@@ -100,8 +100,8 @@ namespace Azure.Communication.Sms.Tests.samples
             /// send an sms to a single recipient asynchronously
             SmsSendResult sendSmsResult = await smsClient.SendAsync(
                 from: TestEnvironment.PhoneNumber, // leased-phone-number
-                to: TestEnvironment.PhoneNumber, // recipient's phone-number
-                message: "Hello", //message-to-send
+                to: TestEnvironment.PhoneNumber,
+                message: "Hello 👋",
                 options: new SmsSendOptions // OPTIONAL
                 {
                     EnableDeliveryReport = true,
@@ -115,8 +115,8 @@ namespace Azure.Communication.Sms.Tests.samples
             /// send an sms to a multiple recipients asynchronously
             AsyncPageable<SmsSendResult> results = smsClient.SendAsync(
                 from: TestEnvironment.PhoneNumber, // leased-phone-number
-                to: new[] { TestEnvironment.PhoneNumber, TestEnvironment.PhoneNumber }, // list of phone numbers
-                message: "Holiday Promotion", // group-message-to-send
+                to: new[] { TestEnvironment.PhoneNumber, TestEnvironment.PhoneNumber },
+                message: "Holiday Promotion",
                 options: new SmsSendOptions // OPTIONAL
                 {
                     EnableDeliveryReport = true,
