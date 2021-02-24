@@ -6,13 +6,12 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "142",
+        "Content-Length": "112",
         "Content-Type": "application/json",
-        "Date": "Wed, 17 Feb 2021 08:19:44 GMT",
-        "traceparent": "00-bba024e32e6aff428fdac8ede794e9df-c2c8f245b170224b-00",
+        "Date": "Wed, 24 Feb 2021 01:03:41 GMT",
         "User-Agent": [
-          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210216.1",
-          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210222.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "a69cc59eea8a8782b0500f7f93317352",
         "x-ms-content-sha256": "Sanitized",
@@ -24,22 +23,20 @@
         "capabilities": {
           "calling": "none",
           "sms": "outbound"
-        },
-        "areaCode": "844",
-        "quantity": 1
+        }
       },
       "StatusCode": 202,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 17 Feb 2021 08:19:45 GMT",
-        "Location": "/availablePhoneNumbers/searchResults/832E028C-E064-445A-95BA-D5DF5D45CBF6?api-version=2021_03_07",
-        "MS-CV": "hWdSoyBonU\u002BJFQO0jwWyQA.0",
-        "operation-id": "search_832E028C-E064-445A-95BA-D5DF5D45CBF6",
-        "Operation-Location": "/phoneNumbers/operations/search_832E028C-E064-445A-95BA-D5DF5D45CBF6?api-version=2021_03_07",
-        "search-id": "832E028C-E064-445A-95BA-D5DF5D45CBF6",
+        "Date": "Wed, 24 Feb 2021 01:03:41 GMT",
+        "Location": "/availablePhoneNumbers/searchResults/c8525f1f-a1f6-4c8f-9dde-31953646eee4?api-version=2021_03_07",
+        "MS-CV": "pAP2ZklLlEGt1Wd5iFoskA.0",
+        "operation-id": "search_c8525f1f-a1f6-4c8f-9dde-31953646eee4",
+        "Operation-Location": "/phoneNumbers/operations/search_c8525f1f-a1f6-4c8f-9dde-31953646eee4?api-version=2021_03_07",
+        "search-id": "c8525f1f-a1f6-4c8f-9dde-31953646eee4",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=2592000",
-        "X-Processing-Time": "25ms"
+        "X-Processing-Time": "46ms"
       },
       "ResponseBody": []
     },
@@ -48,11 +45,10 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Date": "Wed, 17 Feb 2021 08:19:48 GMT",
-        "traceparent": "00-690c2b794d2f8149a1f6806a218afdac-bdd5b3d23cc76447-00",
+        "Date": "Wed, 24 Feb 2021 01:03:42 GMT",
         "User-Agent": [
-          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210216.1",
-          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210222.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "e05a873ad18c8df8c861577ab09beecd",
         "x-ms-content-sha256": "Sanitized",
@@ -62,18 +58,18 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 17 Feb 2021 08:19:50 GMT",
-        "Location": "/availablePhoneNumbers/searchResults/832E028C-E064-445A-95BA-D5DF5D45CBF6?api-version=2021_03_07",
-        "MS-CV": "umkJkrrcm0OCQv3/DLIZqw.0",
+        "Date": "Wed, 24 Feb 2021 01:03:41 GMT",
+        "Location": "/availablePhoneNumbers/searchResults/c8525f1f-a1f6-4c8f-9dde-31953646eee4?api-version=2021_03_07",
+        "MS-CV": "uUeHtbBfTUeAbmwoIJNp5w.0",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Processing-Time": "2758ms"
+        "X-Processing-Time": "32ms"
       },
       "ResponseBody": {
         "status": "NotStarted",
-        "resourceLocation": "/availablePhoneNumbers/searchResults/832E028C-E064-445A-95BA-D5DF5D45CBF6?api-version=2021_03_07",
-        "createdDateTime": "2021-02-17T08:19:50.0198924\u002B00:00",
+        "resourceLocation": "/availablePhoneNumbers/searchResults/c8525f1f-a1f6-4c8f-9dde-31953646eee4?api-version=2021_03_07",
+        "createdDateTime": "2021-02-24T01:03:42.6112539\u002B00:00",
         "id": "Sanitized",
         "operationType": "Search",
         "lastActionDateTime": "0001-01-01T00:00:00\u002B00:00"
@@ -84,11 +80,10 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Date": "Wed, 17 Feb 2021 08:19:52 GMT",
-        "traceparent": "00-46bb2d330d5bef4ca30131a57b4d9162-17d2aa95986eca4d-00",
+        "Date": "Wed, 24 Feb 2021 01:03:44 GMT",
         "User-Agent": [
-          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210216.1",
-          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210222.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "7ee84ffaea401a9c802e911aaedf5e17",
         "x-ms-content-sha256": "Sanitized",
@@ -98,18 +93,18 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 17 Feb 2021 08:19:57 GMT",
-        "Location": "/availablePhoneNumbers/searchResults/832E028C-E064-445A-95BA-D5DF5D45CBF6?api-version=2021_03_07",
-        "MS-CV": "3e6XygvYxEeVzvV6Dz\u002BDKQ.0",
+        "Date": "Wed, 24 Feb 2021 01:03:43 GMT",
+        "Location": "/availablePhoneNumbers/searchResults/c8525f1f-a1f6-4c8f-9dde-31953646eee4?api-version=2021_03_07",
+        "MS-CV": "pNbEEnrlN022yJhARetzWg.0",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Processing-Time": "4349ms"
+        "X-Processing-Time": "21ms"
       },
       "ResponseBody": {
-        "status": "Running",
-        "resourceLocation": "/availablePhoneNumbers/searchResults/832E028C-E064-445A-95BA-D5DF5D45CBF6?api-version=2021_03_07",
-        "createdDateTime": "2021-02-17T08:19:54.1535584\u002B00:00",
+        "status": "NotStarted",
+        "resourceLocation": "/availablePhoneNumbers/searchResults/c8525f1f-a1f6-4c8f-9dde-31953646eee4?api-version=2021_03_07",
+        "createdDateTime": "2021-02-24T01:03:42.6112539\u002B00:00",
         "id": "Sanitized",
         "operationType": "Search",
         "lastActionDateTime": "0001-01-01T00:00:00\u002B00:00"
@@ -120,11 +115,10 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Date": "Wed, 17 Feb 2021 08:19:59 GMT",
-        "traceparent": "00-8f1fe7c19b306047a4cd9d0af06ed055-d7ed351cbc257c41-00",
+        "Date": "Wed, 24 Feb 2021 01:03:46 GMT",
         "User-Agent": [
-          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210216.1",
-          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210222.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "0c45889c93d715c502f6cc6b2ccabe79",
         "x-ms-content-sha256": "Sanitized",
@@ -134,18 +128,18 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 17 Feb 2021 08:20:01 GMT",
-        "Location": "/availablePhoneNumbers/searchResults/832E028C-E064-445A-95BA-D5DF5D45CBF6?api-version=2021_03_07",
-        "MS-CV": "tgKnRRof0UyEO6fiiX2LAw.0",
+        "Date": "Wed, 24 Feb 2021 01:03:46 GMT",
+        "Location": "/availablePhoneNumbers/searchResults/c8525f1f-a1f6-4c8f-9dde-31953646eee4?api-version=2021_03_07",
+        "MS-CV": "IfWGG9cNcUShvG2J63aCqw.0",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Processing-Time": "1966ms"
+        "X-Processing-Time": "31ms"
       },
       "ResponseBody": {
         "status": "Running",
-        "resourceLocation": "/availablePhoneNumbers/searchResults/832E028C-E064-445A-95BA-D5DF5D45CBF6?api-version=2021_03_07",
-        "createdDateTime": "2021-02-17T08:20:00.2456051\u002B00:00",
+        "resourceLocation": "/availablePhoneNumbers/searchResults/c8525f1f-a1f6-4c8f-9dde-31953646eee4?api-version=2021_03_07",
+        "createdDateTime": "2021-02-24T01:03:42.6112539\u002B00:00",
         "id": "Sanitized",
         "operationType": "Search",
         "lastActionDateTime": "0001-01-01T00:00:00\u002B00:00"
@@ -156,11 +150,10 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Date": "Wed, 17 Feb 2021 08:20:03 GMT",
-        "traceparent": "00-bb385b4d3c44d24fa7598a98ebd35cdb-c15cddc051c1a744-00",
+        "Date": "Wed, 24 Feb 2021 01:03:48 GMT",
         "User-Agent": [
-          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210216.1",
-          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210222.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "d8a86e8134b14f46ea3f5f5e40dedee9",
         "x-ms-content-sha256": "Sanitized",
@@ -170,18 +163,53 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 17 Feb 2021 08:20:07 GMT",
-        "Location": "/availablePhoneNumbers/searchResults/832E028C-E064-445A-95BA-D5DF5D45CBF6?api-version=2021_03_07",
-        "MS-CV": "MKLaX224/0GuZZ/42FiW6g.0",
+        "Date": "Wed, 24 Feb 2021 01:03:48 GMT",
+        "Location": "/availablePhoneNumbers/searchResults/c8525f1f-a1f6-4c8f-9dde-31953646eee4?api-version=2021_03_07",
+        "MS-CV": "SlZAB3lyZkCdwg/pjwZkvA.0",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Processing-Time": "3873ms"
+        "X-Processing-Time": "22ms"
+      },
+      "ResponseBody": {
+        "status": "Running",
+        "resourceLocation": "/availablePhoneNumbers/searchResults/c8525f1f-a1f6-4c8f-9dde-31953646eee4?api-version=2021_03_07",
+        "createdDateTime": "2021-02-24T01:03:42.6112539\u002B00:00",
+        "id": "Sanitized",
+        "operationType": "Search",
+        "lastActionDateTime": "0001-01-01T00:00:00\u002B00:00"
+      }
+    },
+    {
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers/operations/search_Sanitized?api-version=2021_03_07",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Date": "Wed, 24 Feb 2021 01:03:50 GMT",
+        "User-Agent": [
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210222.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "27dd3f02e25667f589d27c491e31eeb6",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 24 Feb 2021 01:03:50 GMT",
+        "Location": "/availablePhoneNumbers/searchResults/c8525f1f-a1f6-4c8f-9dde-31953646eee4?api-version=2021_03_07",
+        "MS-CV": "mHKIM0PCCkunOZUEZWn1Xw.0",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Processing-Time": "22ms"
       },
       "ResponseBody": {
         "status": "Succeeded",
-        "resourceLocation": "/availablePhoneNumbers/searchResults/832E028C-E064-445A-95BA-D5DF5D45CBF6?api-version=2021_03_07",
-        "createdDateTime": "2021-02-17T08:20:04.3877392\u002B00:00",
+        "resourceLocation": "/availablePhoneNumbers/searchResults/c8525f1f-a1f6-4c8f-9dde-31953646eee4?api-version=2021_03_07",
+        "createdDateTime": "2021-02-24T01:03:42.6112539\u002B00:00",
         "id": "Sanitized",
         "operationType": "Search",
         "lastActionDateTime": "0001-01-01T00:00:00\u002B00:00"
@@ -192,13 +220,12 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Date": "Wed, 17 Feb 2021 08:20:07 GMT",
-        "traceparent": "00-41f3918df6c5724bad8166770cee8caf-70cd0c8c4d19004e-00",
+        "Date": "Wed, 24 Feb 2021 01:03:50 GMT",
         "User-Agent": [
-          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210216.1",
-          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210222.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "27dd3f02e25667f589d27c491e31eeb6",
+        "x-ms-client-request-id": "3f99176f8537686642f521973366d524",
         "x-ms-content-sha256": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -206,17 +233,17 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 17 Feb 2021 08:20:13 GMT",
-        "MS-CV": "r28vwa1yh0Ka34axVjF38A.0",
+        "Date": "Wed, 24 Feb 2021 01:03:50 GMT",
+        "MS-CV": "P7XQPqSjXUi2H2VnDJ5A7g.0",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Processing-Time": "5861ms"
+        "X-Processing-Time": "21ms"
       },
       "ResponseBody": {
-        "searchId": "832E028C-E064-445A-95BA-D5DF5D45CBF6",
+        "searchId": "c8525f1f-a1f6-4c8f-9dde-31953646eee4",
         "phoneNumbers": [
-          "Sanitized"
+          "\u002B8001111113"
         ],
         "phoneNumberType": "TollFree",
         "assignmentType": "Application",
@@ -229,7 +256,7 @@
           "currencyCode": "USD",
           "billingFrequency": "Monthly"
         },
-        "searchExpiresBy": "2/17/2021 8:35:13 AM"
+        "searchExpiresBy": "2021-02-24T01:18:42.6112525\u002B00:00"
       }
     },
     {
@@ -240,31 +267,29 @@
         "Authorization": "Sanitized",
         "Content-Length": "51",
         "Content-Type": "application/json",
-        "Date": "Wed, 17 Feb 2021 08:20:13 GMT",
-        "traceparent": "00-7d5abb877202a14cb6a7a3a48a1044bb-75443a803d619944-00",
+        "Date": "Wed, 24 Feb 2021 01:03:51 GMT",
         "User-Agent": [
-          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210216.1",
-          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210222.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "3f99176f8537686642f521973366d524",
+        "x-ms-client-request-id": "ec68e31796ed9f2378414fdeb7fc31b9",
         "x-ms-content-sha256": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "searchId": "832E028C-E064-445A-95BA-D5DF5D45CBF6"
+        "searchId": "c8525f1f-a1f6-4c8f-9dde-31953646eee4"
       },
       "StatusCode": 202,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 17 Feb 2021 08:20:13 GMT",
-        "Location": "/availablePhoneNumbers/searchResults/832E028C-E064-445A-95BA-D5DF5D45CBF6?api-version=2021_03_07",
-        "MS-CV": "LYOVbuQijE2pJGSiDfP4dQ.0",
-        "operation-id": "purchase_832E028C-E064-445A-95BA-D5DF5D45CBF6",
-        "Operation-Location": "/phoneNumbers/operations/purchase_832E028C-E064-445A-95BA-D5DF5D45CBF6?api-version=2021_03_07",
-        "purchase-id": "832E028C-E064-445A-95BA-D5DF5D45CBF6",
+        "Date": "Wed, 24 Feb 2021 01:03:50 GMT",
+        "MS-CV": "nB02KHAnVkCgTnCvZbbZug.0",
+        "operation-id": "purchase_c8525f1f-a1f6-4c8f-9dde-31953646eee4",
+        "Operation-Location": "/phoneNumbers/operations/purchase_c8525f1f-a1f6-4c8f-9dde-31953646eee4?api-version=2021_03_07",
+        "purchase-id": "c8525f1f-a1f6-4c8f-9dde-31953646eee4",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=2592000",
-        "X-Processing-Time": "23ms"
+        "X-Processing-Time": "38ms"
       },
       "ResponseBody": []
     },
@@ -273,47 +298,10 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Date": "Wed, 17 Feb 2021 08:20:16 GMT",
-        "traceparent": "00-145ce6b54db2b34396ae68716f43e9fb-111d468031a45d46-00",
+        "Date": "Wed, 24 Feb 2021 01:03:51 GMT",
         "User-Agent": [
-          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210216.1",
-          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
-        ],
-        "x-ms-client-request-id": "28efa9519e447cb1d975e561c05e3323",
-        "x-ms-content-sha256": "Sanitized",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 17 Feb 2021 08:20:21 GMT",
-        "Location": "/availablePhoneNumbers/searchResults/832E028C-E064-445A-95BA-D5DF5D45CBF6?api-version=2021_03_07",
-        "MS-CV": "Y98ZpW/bOUWUlS6FvVWYCw.0",
-        "Server": "Kestrel",
-        "Strict-Transport-Security": "max-age=2592000",
-        "Transfer-Encoding": "chunked",
-        "X-Processing-Time": "4670ms"
-      },
-      "ResponseBody": {
-        "status": "NotStarted",
-        "resourceLocation": "/availablePhoneNumbers/searchResults/832E028C-E064-445A-95BA-D5DF5D45CBF6?api-version=2021_03_07",
-        "createdDateTime": "2021-02-17T08:20:18.4631056\u002B00:00",
-        "id": "Sanitized",
-        "operationType": "Purchase",
-        "lastActionDateTime": "0001-01-01T00:00:00\u002B00:00"
-      }
-    },
-    {
-      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers/operations/purchase_Sanitized?api-version=2021_03_07",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "Date": "Wed, 17 Feb 2021 08:20:23 GMT",
-        "traceparent": "00-7e5deb2079fa2a4380f193d4f437c265-4c2be55d72555d4d-00",
-        "User-Agent": [
-          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210216.1",
-          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210222.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "3b3158fc01c8d9c9f4fac6f53687b045",
         "x-ms-content-sha256": "Sanitized",
@@ -323,18 +311,17 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 17 Feb 2021 08:20:26 GMT",
-        "Location": "/availablePhoneNumbers/searchResults/832E028C-E064-445A-95BA-D5DF5D45CBF6?api-version=2021_03_07",
-        "MS-CV": "WRcz9gT3CUCsugJ535sAkg.0",
+        "Date": "Wed, 24 Feb 2021 01:03:50 GMT",
+        "MS-CV": "x0a9G0zTFEGKSxtszphaZg.0",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Processing-Time": "3657ms"
+        "X-Processing-Time": "45ms"
       },
       "ResponseBody": {
-        "status": "Running",
-        "resourceLocation": "/availablePhoneNumbers/searchResults/832E028C-E064-445A-95BA-D5DF5D45CBF6?api-version=2021_03_07",
-        "createdDateTime": "2021-02-17T08:20:24.0262723\u002B00:00",
+        "status": "NotStarted",
+        "resourceLocation": null,
+        "createdDateTime": "2021-02-24T01:03:42.6112539\u002B00:00",
         "id": "Sanitized",
         "operationType": "Purchase",
         "lastActionDateTime": "0001-01-01T00:00:00\u002B00:00"
@@ -345,11 +332,10 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Date": "Wed, 17 Feb 2021 08:20:28 GMT",
-        "traceparent": "00-48b2dda43ece464ba7dc2bc57e19f36c-8607923aa346b640-00",
+        "Date": "Wed, 24 Feb 2021 01:03:53 GMT",
         "User-Agent": [
-          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210216.1",
-          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210222.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "894568c3ad7779df31eb1377b1c2de1a",
         "x-ms-content-sha256": "Sanitized",
@@ -359,18 +345,17 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 17 Feb 2021 08:20:35 GMT",
-        "Location": "/availablePhoneNumbers/searchResults/832E028C-E064-445A-95BA-D5DF5D45CBF6?api-version=2021_03_07",
-        "MS-CV": "sVj6/m\u002Ba\u002BkSlWLibnsqKww.0",
+        "Date": "Wed, 24 Feb 2021 01:03:52 GMT",
+        "MS-CV": "Ci1q4knSPEi/ncSgfxOPAA.0",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Processing-Time": "6431ms"
+        "X-Processing-Time": "22ms"
       },
       "ResponseBody": {
-        "status": "Running",
-        "resourceLocation": "/availablePhoneNumbers/searchResults/832E028C-E064-445A-95BA-D5DF5D45CBF6?api-version=2021_03_07",
-        "createdDateTime": "2021-02-17T08:20:30.2464211\u002B00:00",
+        "status": "NotStarted",
+        "resourceLocation": null,
+        "createdDateTime": "2021-02-24T01:03:42.6112539\u002B00:00",
         "id": "Sanitized",
         "operationType": "Purchase",
         "lastActionDateTime": "0001-01-01T00:00:00\u002B00:00"
@@ -381,11 +366,10 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Date": "Wed, 17 Feb 2021 08:20:37 GMT",
-        "traceparent": "00-f2348e21713c70429483ba6f42fafb13-27fe3ad0d078b545-00",
+        "Date": "Wed, 24 Feb 2021 01:03:55 GMT",
         "User-Agent": [
-          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210216.1",
-          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210222.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "5fe12b0df5cb50f0e016334ad8bc4651",
         "x-ms-content-sha256": "Sanitized",
@@ -395,33 +379,31 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 17 Feb 2021 08:20:38 GMT",
-        "Location": "/availablePhoneNumbers/searchResults/832E028C-E064-445A-95BA-D5DF5D45CBF6?api-version=2021_03_07",
-        "MS-CV": "iXP1oVA2rUu9O/vweUWAYA.0",
+        "Date": "Wed, 24 Feb 2021 01:03:54 GMT",
+        "MS-CV": "MSUK31KKOU\u002Bld9g\u002BBJTq7A.0",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Processing-Time": "1524ms"
+        "X-Processing-Time": "20ms"
       },
       "ResponseBody": {
-        "status": "Succeeded",
-        "resourceLocation": "/availablePhoneNumbers/searchResults/832E028C-E064-445A-95BA-D5DF5D45CBF6?api-version=2021_03_07",
-        "createdDateTime": "2021-02-17T08:20:37.4305153\u002B00:00",
+        "status": "Running",
+        "resourceLocation": null,
+        "createdDateTime": "2021-02-24T01:03:42.6112539\u002B00:00",
         "id": "Sanitized",
         "operationType": "Purchase",
         "lastActionDateTime": "0001-01-01T00:00:00\u002B00:00"
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/availablePhoneNumbers/searchResults/Sanitized?api-version=2021_03_07",
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers/operations/purchase_Sanitized?api-version=2021_03_07",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Date": "Wed, 17 Feb 2021 08:20:38 GMT",
-        "traceparent": "00-f0029c2772160a46978989c136e48d23-c09c47f2c9466e47-00",
+        "Date": "Wed, 24 Feb 2021 01:03:57 GMT",
         "User-Agent": [
-          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210216.1",
-          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210222.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "589d9fc4a9194fab79b80adced512732",
         "x-ms-content-sha256": "Sanitized",
@@ -431,43 +413,31 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 17 Feb 2021 08:20:43 GMT",
-        "MS-CV": "yDUlEQJ1t0uZqLkvewlg2w.0",
+        "Date": "Wed, 24 Feb 2021 01:03:56 GMT",
+        "MS-CV": "fj0Tddx1006CaCDx6XLJNw.0",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Processing-Time": "4767ms"
+        "X-Processing-Time": "33ms"
       },
       "ResponseBody": {
-        "searchId": "832E028C-E064-445A-95BA-D5DF5D45CBF6",
-        "phoneNumbers": [
-          "Sanitized"
-        ],
-        "phoneNumberType": "TollFree",
-        "assignmentType": "Application",
-        "capabilities": {
-          "calling": "none",
-          "sms": "outbound"
-        },
-        "cost": {
-          "amount": 0.0,
-          "currencyCode": "USD",
-          "billingFrequency": "Monthly"
-        },
-        "searchExpiresBy": "2/17/2021 8:35:43 AM"
+        "status": "Running",
+        "resourceLocation": null,
+        "createdDateTime": "2021-02-24T01:03:42.6112539\u002B00:00",
+        "id": "Sanitized",
+        "operationType": "Purchase",
+        "lastActionDateTime": "0001-01-01T00:00:00\u002B00:00"
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers?api-version=2021_03_07",
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers/operations/purchase_Sanitized?api-version=2021_03_07",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Date": "Wed, 17 Feb 2021 08:20:43 GMT",
-        "traceparent": "00-ab58894c07c3664d9c4ed7655f9ce772-e8712cd678c1284c-00",
+        "Date": "Wed, 24 Feb 2021 01:03:59 GMT",
         "User-Agent": [
-          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210216.1",
-          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210222.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "0ae7ac1b51a5cd7a77f5a9617994a074",
         "x-ms-content-sha256": "Sanitized",
@@ -477,27 +447,20 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 17 Feb 2021 08:20:49 GMT",
-        "MS-CV": "qQppJSHrsEa1bi\u002Bg7pZSgw.0",
+        "Date": "Wed, 24 Feb 2021 01:03:58 GMT",
+        "MS-CV": "nqt/Ysfs80WTw0IOQoxRWg.0",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Processing-Time": "5321ms"
+        "X-Processing-Time": "22ms"
       },
       "ResponseBody": {
-        "phoneNumbers": [
-          {
-            "id": "Sanitized",
-            "phoneNumber": "Sanitized",
-            "countryCode": "US",
-            "phoneNumberType": "TollFree",
-            "capabilities": {
-              "calling": "none",
-              "sms": "outbound"
-            },
-            "assignmentType": "Application"
-          }
-        ]
+        "status": "Succeeded",
+        "resourceLocation": null,
+        "createdDateTime": "2021-02-24T01:03:42.6112539\u002B00:00",
+        "id": "Sanitized",
+        "operationType": "Purchase",
+        "lastActionDateTime": "0001-01-01T00:00:00\u002B00:00"
       }
     },
     {
@@ -506,11 +469,10 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Date": "Wed, 17 Feb 2021 08:20:56 GMT",
-        "traceparent": "00-37a75964a0bca848ba7257e5146e6102-81dcaf9025c8b747-00",
+        "Date": "Wed, 24 Feb 2021 01:03:59 GMT",
         "User-Agent": [
-          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210216.1",
-          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210222.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "12b2c2a5862464018092e513eb14628f",
         "x-ms-content-sha256": "Sanitized",
@@ -520,18 +482,18 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 17 Feb 2021 08:20:59 GMT",
-        "MS-CV": "mubGGXG9/k\u002Bu/6IXzqLMyQ.0",
+        "Date": "Wed, 24 Feb 2021 01:03:58 GMT",
+        "MS-CV": "bTZ2AwZXxUyWaoRWNUkVCg.0",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Processing-Time": "3223ms"
+        "X-Processing-Time": "27ms"
       },
       "ResponseBody": {
         "phoneNumbers": [
           {
             "id": "Sanitized",
-            "phoneNumber": "Sanitized",
+            "phoneNumber": "\u002B8001111113",
             "countryCode": "US",
             "phoneNumberType": "TollFree",
             "capabilities": {
@@ -544,18 +506,52 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers?api-version=2021_03_07",
-      "RequestMethod": "GET",
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers/%2B8001111113/capabilities?api-version=2021_03_07",
+      "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Date": "Wed, 17 Feb 2021 08:20:59 GMT",
-        "traceparent": "00-6920261c6476b84985edae85437b8fca-a4b6934d5fd61d41-00",
+        "Content-Length": "47",
+        "Content-Type": "application/merge-patch\u002Bjson",
+        "Date": "Wed, 24 Feb 2021 01:03:59 GMT",
         "User-Agent": [
-          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210216.1",
-          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210222.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "2b2f01ee3bd573ab25cfe023004ad5e5",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "{\u0022calling\u0022:\u0022outbound\u0022,\u0022sms\u0022:\u0022inbound\u002Boutbound\u0022}",
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "capabilities-id": "c9f7cfe5-93ac-4dbc-ae4f-85decdfe0f80",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 24 Feb 2021 01:03:58 GMT",
+        "Location": "/phoneNumbers/\u002B8001111113?api-version=2021_03_07",
+        "MS-CV": "OM4Lviw6ZUCpIUVXVMLLzQ.0",
+        "operation-id": "capabilities_c9f7cfe5-93ac-4dbc-ae4f-85decdfe0f80",
+        "Operation-Location": "/phoneNumbers/operations/capabilities_c9f7cfe5-93ac-4dbc-ae4f-85decdfe0f80?api-version=2021_03_07",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Processing-Time": "38ms"
+      },
+      "ResponseBody": {
+        "capabilitiesUpdateId": "c9f7cfe5-93ac-4dbc-ae4f-85decdfe0f80"
+      }
+    },
+    {
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers/operations/capabilities_Sanitized?api-version=2021_03_07",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Date": "Wed, 24 Feb 2021 01:03:59 GMT",
+        "User-Agent": [
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210222.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "7872199375646a9f163eec55a5dd6335",
         "x-ms-content-sha256": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -563,70 +559,32 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 17 Feb 2021 08:21:01 GMT",
-        "MS-CV": "AXnakcK3eUyMLMeQ7Crkrg.0",
+        "Date": "Wed, 24 Feb 2021 01:03:59 GMT",
+        "Location": "/phoneNumbers/\u002B8001111113?api-version=2021_03_07",
+        "MS-CV": "/q6KKi99QkSsMOZ8Qgrn8Q.0",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Processing-Time": "1176ms"
+        "X-Processing-Time": "51ms"
       },
       "ResponseBody": {
-        "phoneNumbers": [
-          {
-            "id": "Sanitized",
-            "phoneNumber": "Sanitized",
-            "countryCode": "US",
-            "phoneNumberType": "TollFree",
-            "capabilities": {
-              "calling": "none",
-              "sms": "outbound"
-            },
-            "assignmentType": "Application"
-          }
-        ]
+        "status": "NotStarted",
+        "resourceLocation": "/phoneNumbers/\u002B8001111113?api-version=2021_03_07",
+        "createdDateTime": "2021-02-24T01:03:59.7393569\u002B00:00",
+        "id": "Sanitized",
+        "operationType": "UpdatePhoneNumberCapabilities",
+        "lastActionDateTime": "0001-01-01T00:00:00\u002B00:00"
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers/Sanitized?api-version=2021_03_07",
-      "RequestMethod": "DELETE",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Date": "Wed, 17 Feb 2021 08:21:01 GMT",
-        "traceparent": "00-35567bdacb3f244d915396e3b8fea11e-b01eadcbef4b5d47-00",
-        "User-Agent": [
-          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210216.1",
-          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
-        ],
-        "x-ms-client-request-id": "2b369517159e950dab838a136b66e263",
-        "x-ms-content-sha256": "Sanitized",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 202,
-      "ResponseHeaders": {
-        "Content-Length": "0",
-        "Date": "Wed, 17 Feb 2021 08:21:01 GMT",
-        "MS-CV": "JXSizUDptESQ2Wi7XNIzbg.0",
-        "operation-id": "release_D9928CFC-A73B-4410-AB3D-51B64628FE4B",
-        "Operation-Location": "/phoneNumbers/operations/release_D9928CFC-A73B-4410-AB3D-51B64628FE4B?api-version=2021_03_07",
-        "release-id": "D9928CFC-A73B-4410-AB3D-51B64628FE4B",
-        "Server": "Kestrel",
-        "Strict-Transport-Security": "max-age=2592000",
-        "X-Processing-Time": "24ms"
-      },
-      "ResponseBody": []
-    },
-    {
-      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers/operations/release_Sanitized?api-version=2021_03_07",
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers/operations/capabilities_Sanitized?api-version=2021_03_07",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Date": "Wed, 17 Feb 2021 08:21:01 GMT",
-        "traceparent": "00-d35547aad725e9419c144e624e36464c-073a77198d4a234a-00",
+        "Date": "Wed, 24 Feb 2021 01:04:01 GMT",
         "User-Agent": [
-          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210216.1",
-          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210222.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "55fb00bd36ddd9f0f3998051b09808be",
         "x-ms-content-sha256": "Sanitized",
@@ -636,32 +594,32 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 17 Feb 2021 08:21:05 GMT",
-        "MS-CV": "/pbWt5WE4EyF/mIOzX9KMA.0",
+        "Date": "Wed, 24 Feb 2021 01:04:01 GMT",
+        "Location": "/phoneNumbers/\u002B8001111113?api-version=2021_03_07",
+        "MS-CV": "QIkCQ2nC0ES5OTxHJqfmTg.0",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Processing-Time": "4400ms"
+        "X-Processing-Time": "24ms"
       },
       "ResponseBody": {
         "status": "NotStarted",
-        "resourceLocation": null,
-        "createdDateTime": "2021-02-17T08:21:01.2583633\u002B00:00",
+        "resourceLocation": "/phoneNumbers/\u002B8001111113?api-version=2021_03_07",
+        "createdDateTime": "2021-02-24T01:03:59.7393569\u002B00:00",
         "id": "Sanitized",
-        "operationType": "ReleasePhoneNumber",
+        "operationType": "UpdatePhoneNumberCapabilities",
         "lastActionDateTime": "0001-01-01T00:00:00\u002B00:00"
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers/operations/release_Sanitized?api-version=2021_03_07",
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers/operations/capabilities_Sanitized?api-version=2021_03_07",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Date": "Wed, 17 Feb 2021 08:21:07 GMT",
-        "traceparent": "00-50ad4fa1e687e04b853ba89287f41426-efe7b83568303b4e-00",
+        "Date": "Wed, 24 Feb 2021 01:04:03 GMT",
         "User-Agent": [
-          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210216.1",
-          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210222.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "e6907ced5cd7a280f6cc155f28b7efce",
         "x-ms-content-sha256": "Sanitized",
@@ -671,32 +629,32 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 17 Feb 2021 08:21:09 GMT",
-        "MS-CV": "0Yqk9t\u002BLdUyMFqQ3fzx5mQ.0",
+        "Date": "Wed, 24 Feb 2021 01:04:03 GMT",
+        "Location": "/phoneNumbers/\u002B8001111113?api-version=2021_03_07",
+        "MS-CV": "4E\u002B32ZhuQ0\u002BafqeODIB4nw.0",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Processing-Time": "1644ms"
+        "X-Processing-Time": "24ms"
       },
       "ResponseBody": {
         "status": "Running",
-        "resourceLocation": null,
-        "createdDateTime": "2021-02-17T08:21:07.7244558\u002B00:00",
+        "resourceLocation": "/phoneNumbers/\u002B8001111113?api-version=2021_03_07",
+        "createdDateTime": "2021-02-24T01:03:59.7393569\u002B00:00",
         "id": "Sanitized",
-        "operationType": "ReleasePhoneNumber",
+        "operationType": "UpdatePhoneNumberCapabilities",
         "lastActionDateTime": "0001-01-01T00:00:00\u002B00:00"
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers/operations/release_Sanitized?api-version=2021_03_07",
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers/operations/capabilities_Sanitized?api-version=2021_03_07",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Date": "Wed, 17 Feb 2021 08:21:11 GMT",
-        "traceparent": "00-9f4710becea13141b3af34ab4212c66d-a698f13013b7494c-00",
+        "Date": "Wed, 24 Feb 2021 01:04:06 GMT",
         "User-Agent": [
-          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210216.1",
-          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210222.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "6a5654208c6b5c86299984caf54eb97e",
         "x-ms-content-sha256": "Sanitized",
@@ -706,17 +664,161 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 17 Feb 2021 08:21:12 GMT",
-        "MS-CV": "onYvdelmkEycrTW59KJ3/g.0",
+        "Date": "Wed, 24 Feb 2021 01:04:05 GMT",
+        "Location": "/phoneNumbers/\u002B8001111113?api-version=2021_03_07",
+        "MS-CV": "ed76UqvYiU6JxaC861rFlQ.0",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Processing-Time": "1420ms"
+        "X-Processing-Time": "23ms"
       },
       "ResponseBody": {
-        "status": "Running",
+        "status": "Succeeded",
+        "resourceLocation": "/phoneNumbers/\u002B8001111113?api-version=2021_03_07",
+        "createdDateTime": "2021-02-24T01:03:59.7393569\u002B00:00",
+        "id": "Sanitized",
+        "operationType": "UpdatePhoneNumberCapabilities",
+        "lastActionDateTime": "0001-01-01T00:00:00\u002B00:00"
+      }
+    },
+    {
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers/\u002B8001111113?api-version=2021_03_07",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Date": "Wed, 24 Feb 2021 01:04:06 GMT",
+        "User-Agent": [
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210222.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "29682e367c4c605e80595f102191b03c",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 24 Feb 2021 01:04:05 GMT",
+        "MS-CV": "U2b/t0f7f0iAzEEtMSMjRA.0",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Processing-Time": "25ms"
+      },
+      "ResponseBody": {
+        "id": "Sanitized",
+        "phoneNumber": "\u002B8001111113",
+        "countryCode": "US",
+        "phoneNumberType": "TollFree",
+        "capabilities": {
+          "calling": "outbound",
+          "sms": "inbound\u002Boutbound"
+        },
+        "assignmentType": "Application"
+      }
+    },
+    {
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers?api-version=2021_03_07",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Date": "Wed, 24 Feb 2021 01:04:06 GMT",
+        "User-Agent": [
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210222.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "5b31b1aa9e416053f634bd3dd8b5ada7",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 24 Feb 2021 01:04:05 GMT",
+        "MS-CV": "Hwhgf/qAi0qLLlHXd7a7wQ.0",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Processing-Time": "26ms"
+      },
+      "ResponseBody": {
+        "phoneNumbers": [
+          {
+            "id": "Sanitized",
+            "phoneNumber": "\u002B8001111113",
+            "countryCode": "US",
+            "phoneNumberType": "TollFree",
+            "capabilities": {
+              "calling": "outbound",
+              "sms": "inbound\u002Boutbound"
+            },
+            "assignmentType": "Application"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers/%2B8001111113?api-version=2021_03_07",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Date": "Wed, 24 Feb 2021 01:04:06 GMT",
+        "User-Agent": [
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210222.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "f9299712c64fa381f6f6e9112c753b97",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Wed, 24 Feb 2021 01:04:05 GMT",
+        "MS-CV": "soEvWvMnrkGu4W6mVcPY8Q.0",
+        "operation-id": "release_43dc616a-af60-424d-949a-f87bbdd71d64",
+        "Operation-Location": "/phoneNumbers/operations/release_43dc616a-af60-424d-949a-f87bbdd71d64?api-version=2021_03_07",
+        "release-id": "43dc616a-af60-424d-949a-f87bbdd71d64",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=2592000",
+        "X-Processing-Time": "23ms"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers/operations/release_Sanitized?api-version=2021_03_07",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Date": "Wed, 24 Feb 2021 01:04:06 GMT",
+        "User-Agent": [
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210222.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "8afeb8acb668e4ed308d654bb5423480",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 24 Feb 2021 01:04:05 GMT",
+        "MS-CV": "IZy8mTUKhkWzYjR/UYeDbg.0",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Processing-Time": "25ms"
+      },
+      "ResponseBody": {
+        "status": "NotStarted",
         "resourceLocation": null,
-        "createdDateTime": "2021-02-17T08:21:11.4129704\u002B00:00",
+        "createdDateTime": "2021-02-24T01:04:06.299742\u002B00:00",
         "id": "Sanitized",
         "operationType": "ReleasePhoneNumber",
         "lastActionDateTime": "0001-01-01T00:00:00\u002B00:00"
@@ -727,13 +829,12 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Date": "Wed, 17 Feb 2021 08:21:14 GMT",
-        "traceparent": "00-bdf76ef557ae5547bae94901743dd99a-6925e0b38a3be44e-00",
+        "Date": "Wed, 24 Feb 2021 01:04:08 GMT",
         "User-Agent": [
-          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210216.1",
-          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210222.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "29682e367c4c605e80595f102191b03c",
+        "x-ms-client-request-id": "8f5526f86994b48b5a911f479368e5d5",
         "x-ms-content-sha256": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -741,17 +842,85 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 17 Feb 2021 08:21:16 GMT",
-        "MS-CV": "k2PKvqiN1kmybT/TPZpQIw.0",
+        "Date": "Wed, 24 Feb 2021 01:04:07 GMT",
+        "MS-CV": "6y/XMKwkvEa4/KLA/bLoMA.0",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Processing-Time": "1546ms"
+        "X-Processing-Time": "22ms"
+      },
+      "ResponseBody": {
+        "status": "Running",
+        "resourceLocation": null,
+        "createdDateTime": "2021-02-24T01:04:06.299742\u002B00:00",
+        "id": "Sanitized",
+        "operationType": "ReleasePhoneNumber",
+        "lastActionDateTime": "0001-01-01T00:00:00\u002B00:00"
+      }
+    },
+    {
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers/operations/release_Sanitized?api-version=2021_03_07",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Date": "Wed, 24 Feb 2021 01:04:10 GMT",
+        "User-Agent": [
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210222.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "74641e6eb177312f5b3c128ff8f0e298",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 24 Feb 2021 01:04:09 GMT",
+        "MS-CV": "viy5nCD\u002Bb0auNT4zKEZ/iw.0",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Processing-Time": "21ms"
+      },
+      "ResponseBody": {
+        "status": "Running",
+        "resourceLocation": null,
+        "createdDateTime": "2021-02-24T01:04:06.299742\u002B00:00",
+        "id": "Sanitized",
+        "operationType": "ReleasePhoneNumber",
+        "lastActionDateTime": "0001-01-01T00:00:00\u002B00:00"
+      }
+    },
+    {
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers/operations/release_Sanitized?api-version=2021_03_07",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Date": "Wed, 24 Feb 2021 01:04:12 GMT",
+        "User-Agent": [
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210222.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "9820b2d3f8cb42362c492fd697a651c8",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 24 Feb 2021 01:04:11 GMT",
+        "MS-CV": "vaVRMzgXmEKYVkyv29kdnA.0",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Processing-Time": "26ms"
       },
       "ResponseBody": {
         "status": "Succeeded",
         "resourceLocation": null,
-        "createdDateTime": "2021-02-17T08:21:14.8824779\u002B00:00",
+        "createdDateTime": "2021-02-24T01:04:06.299742\u002B00:00",
         "id": "Sanitized",
         "operationType": "ReleasePhoneNumber",
         "lastActionDateTime": "0001-01-01T00:00:00\u002B00:00"
@@ -763,13 +932,12 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Date": "Wed, 17 Feb 2021 08:21:16 GMT",
-        "traceparent": "00-e07b0cb41885ab4487336cca57812d3a-2d00adb3875d954a-00",
+        "Date": "Wed, 24 Feb 2021 01:04:12 GMT",
         "User-Agent": [
-          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210216.1",
-          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210222.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "5b31b1aa9e416053f634bd3dd8b5ada7",
+        "x-ms-client-request-id": "96dd90a8bfdd4709f623345857fcbc6a",
         "x-ms-content-sha256": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -777,12 +945,12 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 17 Feb 2021 08:21:21 GMT",
-        "MS-CV": "nmo3DpAJb0eCzrBt0EltoA.0",
+        "Date": "Wed, 24 Feb 2021 01:04:11 GMT",
+        "MS-CV": "MFRgfyVTQU2aTedadCgSbg.0",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Processing-Time": "4742ms"
+        "X-Processing-Time": "23ms"
       },
       "ResponseBody": {
         "phoneNumbers": []
@@ -790,7 +958,6 @@
     }
   ],
   "Variables": {
-    "COMMUNICATION_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.com/;accesskey=Kg==",
     "RandomSeed": "1498271171"
   }
 }

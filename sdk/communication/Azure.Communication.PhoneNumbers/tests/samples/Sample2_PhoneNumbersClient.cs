@@ -41,10 +41,9 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
             #region Snippet:SearchPhoneNumbersAsync
 
             var capabilities = new PhoneNumberCapabilities(PhoneNumberCapabilityValue.None, PhoneNumberCapabilityValue.Outbound);
-            var searchOptions = new PhoneNumberSearchOptions { AreaCode = "844", Quantity = 1 };
 
-            var searchOperation = await client.StartSearchAvailablePhoneNumbersAsync(countryCode, PhoneNumberType.TollFree, PhoneNumberAssignmentType.Application, capabilities, searchOptions);
-            //@@ await purchaseOperation.WaitForCompletionAsync();
+            var searchOperation = await client.StartSearchAvailablePhoneNumbersAsync(countryCode, PhoneNumberType.TollFree, PhoneNumberAssignmentType.Application, capabilities);
+            //@@ await searchOperation.WaitForCompletionAsync();
             /*@@*/ await WaitForCompletionAsync(searchOperation);
 
             #endregion Snippet:SearchPhoneNumbersAsync
@@ -66,16 +65,27 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
             }
             #endregion Snippet:ListAcquiredPhoneNumbersAsync
 
-            var acquiredPhoneNumber = acquiredPhoneNumbers.ToEnumerableAsync().Result.Single().PhoneNumber;
-            acquiredPhoneNumbers = client.GetPhoneNumbersAsync();
+            var acquiredPhoneNumber = searchOperation.Value.PhoneNumbers.Single();
 
+            #region Snippet:UpdateCapabilitiesNumbersAsync
+            var updateCapabilitiesOperation = client.StartUpdateCapabilities(acquiredPhoneNumber, calling:PhoneNumberCapabilityValue.Outbound, sms:PhoneNumberCapabilityValue.InboundOutbound);
+
+            //@@ await updateCapabilitiesOperation.WaitForCompletionAsync();
+            /*@@*/ await WaitForCompletionAsync(updateCapabilitiesOperation);
+
+            #endregion Snippet:UpdateCapabilitiesNumbersAsync
+
+            Assert.AreEqual(PhoneNumberCapabilityValue.Outbound, updateCapabilitiesOperation.Value.Capabilities.Calling);
+            Assert.AreEqual(PhoneNumberCapabilityValue.InboundOutbound, updateCapabilitiesOperation.Value.Capabilities.Sms);
+
+            acquiredPhoneNumbers = client.GetPhoneNumbersAsync();
             var beforeReleaseNumberCount = (await acquiredPhoneNumbers.ToEnumerableAsync()).Count;
 
             #region Snippet:ReleasePhoneNumbersAsync
 
             //@@var acquiredPhoneNumber = "<acquired_phone_number>";
             var releaseOperation = client.StartReleasePhoneNumber(acquiredPhoneNumber);
-            //@@ await purchaseOperation.WaitForCompletionAsync();
+            //@@ await releaseOperation.WaitForCompletionAsync();
             /*@@*/ await WaitForCompletionAsync(releaseOperation);
 
             #endregion Snippet:ReleasePhoneNumbersAsync
@@ -117,9 +127,8 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
             #region Snippet:SearchPhoneNumbers
 
             var capabilities = new PhoneNumberCapabilities(PhoneNumberCapabilityValue.None, PhoneNumberCapabilityValue.Outbound);
-            var searchOptions = new PhoneNumberSearchOptions { AreaCode = "844", Quantity = 1 };
 
-            var searchOperation = client.StartSearchAvailablePhoneNumbers(countryCode, PhoneNumberType.TollFree, PhoneNumberAssignmentType.Application, capabilities, searchOptions);
+            var searchOperation = client.StartSearchAvailablePhoneNumbers(countryCode, PhoneNumberType.TollFree, PhoneNumberAssignmentType.Application, capabilities);
 
             while (!searchOperation.HasCompleted)
             {
@@ -151,6 +160,22 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
             #endregion Snippet:ListAcquiredPhoneNumbers
 
             var acquiredPhoneNumber = searchOperation.Value.PhoneNumbers.Single();
+
+            #region Snippet:UpdateCapabilitiesNumbers
+            var updateCapabilitiesOperation = client.StartUpdateCapabilities(acquiredPhoneNumber, calling:PhoneNumberCapabilityValue.Outbound, sms:PhoneNumberCapabilityValue.InboundOutbound);
+
+            while (!updateCapabilitiesOperation.HasCompleted)
+            {
+                //@@ Thread.Sleep(2000);
+                /*@@*/ SleepIfNotInPlaybackMode();
+                updateCapabilitiesOperation.UpdateStatus();
+            }
+
+            #endregion Snippet:UpdateCapabilitiesNumbers
+
+            Assert.AreEqual(PhoneNumberCapabilityValue.Outbound, updateCapabilitiesOperation.Value.Capabilities.Calling);
+            Assert.AreEqual(PhoneNumberCapabilityValue.InboundOutbound, updateCapabilitiesOperation.Value.Capabilities.Sms);
+
             acquiredPhoneNumbers = client.GetPhoneNumbers();
             var beforeReleaseNumberCount = acquiredPhoneNumbers.Count();
 

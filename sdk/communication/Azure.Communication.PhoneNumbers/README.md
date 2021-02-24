@@ -101,10 +101,9 @@ Phone numbers need to be searched before they can be purchased. Search is a long
 
 ```C# Snippet:SearchPhoneNumbersAsync
 var capabilities = new PhoneNumberCapabilities(PhoneNumberCapabilityValue.None, PhoneNumberCapabilityValue.Outbound);
-var searchOptions = new PhoneNumberSearchOptions { AreaCode = "844", Quantity = 1 };
 
-var searchOperation = await client.StartSearchAvailablePhoneNumbersAsync(countryCode, PhoneNumberType.TollFree, PhoneNumberAssignmentType.Application, capabilities, searchOptions);
-await purchaseOperation.WaitForCompletionAsync();
+var searchOperation = await client.StartSearchAvailablePhoneNumbersAsync(countryCode, PhoneNumberType.TollFree, PhoneNumberAssignmentType.Application, capabilities);
+await searchOperation.WaitForCompletionAsync();
 ```
 
 ## Purchase phone numbers
@@ -136,7 +135,7 @@ If you no longer need a phone number you can release it.
 ```C# Snippet:ReleasePhoneNumbersAsync
 var acquiredPhoneNumber = "<acquired_phone_number>";
 var releaseOperation = client.StartReleasePhoneNumber(acquiredPhoneNumber);
-await purchaseOperation.WaitForCompletionAsync();
+await releaseOperation.WaitForCompletionAsync();
 ```
 
 ## Troubleshooting

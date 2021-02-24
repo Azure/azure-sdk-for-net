@@ -21,9 +21,8 @@ Phone numbers need to be searched before they can be purchased. Search is a long
 
 ```C# Snippet:SearchPhoneNumbers
 var capabilities = new PhoneNumberCapabilities(PhoneNumberCapabilityValue.None, PhoneNumberCapabilityValue.Outbound);
-var searchOptions = new PhoneNumberSearchOptions { AreaCode = "844", Quantity = 1 };
 
-var searchOperation = client.StartSearchAvailablePhoneNumbers(countryCode, PhoneNumberType.TollFree, PhoneNumberAssignmentType.Application, capabilities, searchOptions);
+var searchOperation = client.StartSearchAvailablePhoneNumbers(countryCode, PhoneNumberType.TollFree, PhoneNumberAssignmentType.Application, capabilities);
 
 while (!searchOperation.HasCompleted)
 {
@@ -56,6 +55,20 @@ var acquiredPhoneNumbers = client.GetPhoneNumbers();
 foreach (var phoneNumber in acquiredPhoneNumbers)
 {
     Console.WriteLine($"Phone number: {phoneNumber.PhoneNumber}, monthly cost: {phoneNumber.Cost}");
+}
+```
+
+## Update phone number capabilities
+
+Phone number's capabilities can be updated by started by `StartUpdateCapabilities` function.
+
+```C# Snippet:UpdateCapabilitiesNumbers
+var updateCapabilitiesOperation = client.StartUpdateCapabilities(acquiredPhoneNumber, calling:PhoneNumberCapabilityValue.Outbound, sms:PhoneNumberCapabilityValue.InboundOutbound);
+
+while (!updateCapabilitiesOperation.HasCompleted)
+{
+    Thread.Sleep(2000);
+    updateCapabilitiesOperation.UpdateStatus();
 }
 ```
 
