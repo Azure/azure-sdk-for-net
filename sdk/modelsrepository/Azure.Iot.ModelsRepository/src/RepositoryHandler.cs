@@ -26,7 +26,7 @@ namespace Azure.Iot.ModelsRepository
 
             _clientOptions = options;
             _clientDiagnostics = clientDiagnostics;
-            _modelFetcher = repositoryUri.Scheme == ModelRepositoryConstants.File
+            _modelFetcher = repositoryUri.Scheme == ModelsRepositoryConstants.File
                 ? _modelFetcher = new LocalModelFetcher(_clientDiagnostics, _clientOptions)
                 : _modelFetcher = new RemoteModelFetcher(_clientDiagnostics, _clientOptions);
             _clientId = Guid.NewGuid();
@@ -150,7 +150,7 @@ namespace Azure.Iot.ModelsRepository
                         $"{string.Format(CultureInfo.InvariantCulture, StandardStrings.GenericResolverError, dtmi)} " +
                         string.Format(CultureInfo.InvariantCulture, StandardStrings.InvalidDtmiFormat, dtmi);
 
-                    throw new RequestFailedException(invalidArgMsg, new ArgumentException(invalidArgMsg));
+                    throw new ArgumentException(invalidArgMsg);
                 }
 
                 toProcessModels.Enqueue(dtmi);

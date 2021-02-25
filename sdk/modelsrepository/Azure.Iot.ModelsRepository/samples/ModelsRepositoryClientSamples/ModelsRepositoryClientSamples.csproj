@@ -10,6 +10,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.DigitalTwins.Parser" Version="3.12.5" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\src\Azure.Iot.ModelsRepository.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Update="SampleModelsRepo\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

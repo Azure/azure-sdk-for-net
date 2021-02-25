@@ -10,7 +10,7 @@ namespace Azure.Iot.ModelsRepository
     [EventSource(Name = EventSourceName)]
     internal sealed class ModelsRepositoryEventSource : EventSource
     {
-        private const string EventSourceName = ModelRepositoryConstants.ModelRepositoryEventSourceName;
+        private const string EventSourceName = ModelsRepositoryConstants.ModelRepositoryEventSourceName;
 
         // Event ids defined as constants to makes it easy to keep track of them
         // Consider EventSource name, Guid, Event Id and parameters as public API and follow the appropriate versioning rules.

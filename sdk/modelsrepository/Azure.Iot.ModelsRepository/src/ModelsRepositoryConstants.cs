@@ -3,7 +3,7 @@
 
 namespace Azure.Iot.ModelsRepository
 {
-    internal static class ModelRepositoryConstants
+    internal static class ModelsRepositoryConstants
     {
         // Set EventSource name to package name replacing '.' with '-'
         public const string ModelRepositoryEventSourceName = "Azure-Iot-ModelsRepository";

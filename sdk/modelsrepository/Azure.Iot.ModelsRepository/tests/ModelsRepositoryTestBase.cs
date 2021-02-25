@@ -32,7 +32,7 @@ namespace Azure.Iot.ModelsRepository.Tests
             return dtmi;
         }
 
-        public static readonly string FallbackTestRemoteRepo = ModelRepositoryConstants.DefaultModelsRepository;
+        public static readonly string FallbackTestRemoteRepo = ModelsRepositoryConstants.DefaultModelsRepository;
 
         public static string TestDirectoryPath => Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 

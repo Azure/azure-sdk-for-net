@@ -41,7 +41,7 @@ namespace Azure.Iot.ModelsRepository.Tests
             string expectedExMsg = $"{string.Format(StandardStrings.GenericResolverError, dtmi)} {string.Format(StandardStrings.InvalidDtmiFormat, dtmi)}";
 
             Func<Task> act = async () => await client.ResolveAsync(dtmi);
-            act.Should().Throw<RequestFailedException>().WithMessage(expectedExMsg);
+            act.Should().Throw<ArgumentException>().WithMessage(expectedExMsg);
         }
 
         [TestCase(ModelsRepositoryTestBase.ClientType.Local)]
