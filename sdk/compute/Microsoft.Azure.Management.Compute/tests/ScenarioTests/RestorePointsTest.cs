@@ -25,7 +25,6 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
                 EnsureClientsInitialized(context);
                 string subId = m_CrpClient.SubscriptionId;
                 string location = ComputeManagementTestUtilities.DefaultLocation;
-                const string testPrefix = TestPrefix;
                 //Initialize(context);
                 // create the VM
                 var rgName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
@@ -40,17 +39,22 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
                 {
                     StorageAccount storageAccountForDisks = CreateStorageAccount(rgName, storageAccountForDisksName);
                     
-
                     VirtualMachine createdVM = CreateVM(rgName, availabilitySetName, storageAccountForDisks, imageRef, out inputVM,
                         (vm) =>
                         {
                             vm.DiagnosticsProfile = GetManagedDiagnosticsProfile();
                         }, hasManagedDisks: true);
+                    DataDisk disk = createdVM.StorageProfile.DataDisks[0];
+                    string diskId = disk.ManagedDisk.Id;
 
                     
+                    string rpName = ComputeManagementTestUtilities.GenerateName("rpClientTest");
                     string rpcName = ComputeManagementTestUtilities.GenerateName("rpc1ClientTest");
                     VerifyRPCCreation(createdVM.Id, rpcName, rgName, location);
-                    VerifyRestorePointCreation(rgName, rpcName, location);
+                    VerifyRestorePointCreation(rgName, rpcName, rpName, diskToExclude: diskId);
+                    GetRP(rgName, rpcName, rpName);
+                    GetRpc(rgName, rpcName);
+                    GetRpc(rgName, rpcName, RestorePointCollectionExpandOptions.RestorePoints);
                     //VerifyRestorePointCreation(rgName, rpcName, location);
                 }
                 catch (CloudException ex)
@@ -64,30 +68,103 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
             }
         }
 
-        private void VerifyRestorePointCreation(string rgName, string rpcName, string location)
+        private void DeleteRP(string rgName, string rpcName, string rpName)
         {
-            var inputRPName = ComputeManagementTestUtilities.GenerateName("rpClientTest");
+            try
+            {
+                m_CrpClient.RestorePoints.Delete(
+                    rgName,
+                    rpcName,
+                    rpName);
+            }
+            catch (CloudException ex)
+            {
+                Assert.True(ex.Response.StatusCode == HttpStatusCode.BadRequest);
+            }
+        }
+
+        private void GetRP(string rgName, string rpcName, string rpName)
+        {
+            try
+            {
+                RestorePoint createdRP = m_CrpClient.RestorePoints.Get(
+                    rgName,
+                    rpcName,
+                    rpName);
+                Assert.Equal(rpName, createdRP.Name);
+            }
+            catch (CloudException ex)
+            {
+                Assert.True(ex.Response.StatusCode == HttpStatusCode.BadRequest);
+            }
+        }
+
+        private void GetRpc(string rgName, string rpcName,
+            RestorePointCollectionExpandOptions? expandOptions = null)
+        {
+            try
+            {
+                RestorePointCollection createdRP = m_CrpClient.RestorePointCollections.Get(
+                    rgName,
+                    rpcName,
+                    expandOptions);
+            }
+            catch (CloudException ex)
+            {
+                Assert.True(ex.Response.StatusCode == HttpStatusCode.BadRequest);
+            }
+        }
+
+        private void VerifyRestorePointCreation(string rgName, string rpcName, 
+            string rpName, string diskToExclude = null)
+        {
+            ApiEntityReference diskToExcludeEntityRef = new ApiEntityReference() { Id = diskToExclude };
+            var inputRP = new RestorePoint
+            {
+                Name = rpName,
+                //ExcludeDisks = new List<ApiEntityReference> { diskToExclude },
+            };
+            if (diskToExclude != null)
+            {
+                inputRP.ExcludeDisks = new List<ApiEntityReference> { diskToExcludeEntityRef };
+            }
+
+            try
+            {
+                RestorePoint createdRP = m_CrpClient.RestorePoints.CreateOrUpdate(
+                    rgName,
+                    rpcName,
+                    rpName,
+                    inputRP);
+                Assert.Equal(rpName, createdRP.Name);
+                // returned rp id = "/subscriptions/0296790d-427c-48ca-b204-8b729bbd8670/resourceGroups/crptestar872/providers/Microsoft.Compute/restorePointCollections/rpc1ClientTest908/restorePoints/rpClientTest2613"
+            }
+            catch (CloudException ex)
+            {
+                Assert.True(ex.Response.StatusCode == HttpStatusCode.BadRequest);
+            }
+        }
+
+        private void GetRestorePoint(string rgName, string rpcName, string location)
+        {
+            var rpName = ComputeManagementTestUtilities.GenerateName("rpClientTest");
             ApiEntityReference diskToExclude = new ApiEntityReference() { Id = "" };
             var inputRP = new RestorePoint
             {
-                Name = inputRPName,
-                Location = location,
-                Tags = new Dictionary<string, string>()
-                {
-                    {"RG", "rg"},
-                    {"testTag", "1"},
-                },
+                Name = rpName,
                 // need to change model to be public setter
                 //ExcludeDisks = new List<ApiEntityReference> { diskToExclude },
             };
 
             try
             {
-                RestorePoint createOrUpdateResponse = m_CrpClient.RestorePoints.CreateOrUpdate(
+                RestorePoint createdRP = m_CrpClient.RestorePoints.CreateOrUpdate(
                     rgName,
                     rpcName,
-                    inputRPName,
+                    rpName,
                     inputRP);
+                Assert.Equal(rpName, createdRP.Name);
+                // returned rp id = "/subscriptions/0296790d-427c-48ca-b204-8b729bbd8670/resourceGroups/crptestar872/providers/Microsoft.Compute/restorePointCollections/rpc1ClientTest908/restorePoints/rpClientTest2613"
             }
             catch (CloudException ex)
             {
