@@ -21,10 +21,12 @@ namespace Azure.Analytics.Synapse.Artifacts
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         internal DataFlowRestClient RestClient { get; }
+
         /// <summary> Initializes a new instance of DataFlowClient for mocking. </summary>
         protected DataFlowClient()
         {
         }
+
         /// <summary> Initializes a new instance of DataFlowClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>

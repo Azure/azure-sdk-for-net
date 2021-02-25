@@ -21,10 +21,12 @@ namespace Azure.Analytics.Synapse.Artifacts
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         internal SqlScriptRestClient RestClient { get; }
+
         /// <summary> Initializes a new instance of SqlScriptClient for mocking. </summary>
         protected SqlScriptClient()
         {
         }
+
         /// <summary> Initializes a new instance of SqlScriptClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>

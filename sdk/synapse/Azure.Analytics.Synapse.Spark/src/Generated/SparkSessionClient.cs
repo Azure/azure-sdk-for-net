@@ -20,10 +20,12 @@ namespace Azure.Analytics.Synapse.Spark
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         internal SparkSessionRestClient RestClient { get; }
+
         /// <summary> Initializes a new instance of SparkSessionClient for mocking. </summary>
         protected SparkSessionClient()
         {
         }
+
         /// <summary> Initializes a new instance of SparkSessionClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>

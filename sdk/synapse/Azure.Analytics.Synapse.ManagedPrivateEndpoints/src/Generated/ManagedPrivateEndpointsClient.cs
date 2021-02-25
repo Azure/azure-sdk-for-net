@@ -21,10 +21,12 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         internal ManagedPrivateEndpointsRestClient RestClient { get; }
+
         /// <summary> Initializes a new instance of ManagedPrivateEndpointsClient for mocking. </summary>
         protected ManagedPrivateEndpointsClient()
         {
         }
+
         /// <summary> Initializes a new instance of ManagedPrivateEndpointsClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>

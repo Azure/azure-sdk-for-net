@@ -20,10 +20,12 @@ namespace Azure.AI.AnomalyDetector
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         internal AnomalyDetectorRestClient RestClient { get; }
+
         /// <summary> Initializes a new instance of AnomalyDetectorClient for mocking. </summary>
         protected AnomalyDetectorClient()
         {
         }
+
         /// <summary> Initializes a new instance of AnomalyDetectorClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>

@@ -22,10 +22,12 @@ namespace Azure.Analytics.Synapse.Artifacts
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         internal LibraryRestClient RestClient { get; }
+
         /// <summary> Initializes a new instance of LibraryClient for mocking. </summary>
         protected LibraryClient()
         {
         }
+
         /// <summary> Initializes a new instance of LibraryClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
