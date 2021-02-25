@@ -16,7 +16,6 @@
     <PackageReference Include="System.Collections.Immutable" />
     <PackageReference Include="Azure.Identity" />
     <PackageReference Include="Azure.ResourceManager.Resources" />
-    <PackageReference Include="System.Linq.Async" />
   </ItemGroup>
 
 </Project>
