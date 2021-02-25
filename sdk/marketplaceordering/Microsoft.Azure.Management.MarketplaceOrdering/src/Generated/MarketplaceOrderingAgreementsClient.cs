@@ -328,7 +328,7 @@ namespace Microsoft.Azure.Management.MarketplaceOrdering
             MarketplaceAgreements = new MarketplaceAgreementsOperations(this);
             Operations = new Operations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2015-06-01";
+            ApiVersion = "2021-01-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
