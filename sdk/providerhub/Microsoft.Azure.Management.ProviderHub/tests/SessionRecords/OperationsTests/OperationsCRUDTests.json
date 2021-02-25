@@ -7,7 +7,7 @@
       "RequestBody": "{\r\n  \"contents\": [\r\n    {\r\n      \"name\": \"Microsoft.Contoso/Operations/read\",\r\n      \"isDataAction\": false,\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Contoso\",\r\n        \"resource\": \"Operations\",\r\n        \"operation\": \"Operations_read\",\r\n        \"description\": \"read Operations\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Contoso/locations/operationstatuses/read\",\r\n      \"isDataAction\": false,\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Contoso\",\r\n        \"resource\": \"locations/operationstatuses\",\r\n        \"operation\": \"operationstatuses_read\",\r\n        \"description\": \"read operationstatuses\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Contoso/locations/operationstatuses/write\",\r\n      \"isDataAction\": false,\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Contoso\",\r\n        \"resource\": \"locations/operationstatuses\",\r\n        \"operation\": \"operationstatuses_write\",\r\n        \"description\": \"write operationstatuses\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"microsoft.contoso/employees/nestedResourceType/read\",\r\n      \"isDataAction\": false,\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Contoso/\",\r\n        \"resource\": \"employees/nestedResourceType\",\r\n        \"operation\": \"NestedResourceType_Get\",\r\n        \"description\": \"Returns nested resources for a given employee name\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"microsoft.contoso/employees/nestedResourceType/write\",\r\n      \"isDataAction\": false,\r\n      \"display\": {\r\n        \"provider\": \"microsoft.contoso/\",\r\n        \"resource\": \"employees/nestedResourceType\",\r\n        \"operation\": \"NestedResourceType_CreateAndUpdate\",\r\n        \"description\": \"Create or update nested resource type.\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"microsoft.contoso/employees/nestedResourceType/write\",\r\n      \"isDataAction\": false,\r\n      \"display\": {\r\n        \"provider\": \"microsoft.contoso/\",\r\n        \"resource\": \"employees/nestedResourceType\",\r\n        \"operation\": \"NestedResourceType_Update\",\r\n        \"description\": \"Update nested resource type details.\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"microsoft.contoso/employees/nestedResourceType/read\",\r\n      \"isDataAction\": false,\r\n      \"display\": {\r\n        \"provider\": \"microsoft.contoso/\",\r\n        \"resource\": \"employees/nestedResourceType\",\r\n        \"operation\": \"NestedResourceType_List\",\r\n        \"description\": \"Returns nested resources for a given employee name\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"microsoft.contoso/employees/read\",\r\n      \"isDataAction\": false,\r\n      \"display\": {\r\n        \"provider\": \"microsoft.contoso/\",\r\n        \"resource\": \"employees\",\r\n        \"operation\": \"Employee_ListBySubscription\",\r\n        \"description\": \"Returns list of employees.\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"microsoft.contoso/employees/read\",\r\n      \"isDataAction\": false,\r\n      \"display\": {\r\n        \"provider\": \"microsoft.contoso/\",\r\n        \"resource\": \"employees\",\r\n        \"operation\": \"Employee_List\",\r\n        \"description\": \"Returns list of employees.\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"microsoft.contoso/employees/read\",\r\n      \"isDataAction\": false,\r\n      \"display\": {\r\n        \"provider\": \"microsoft.contoso/\",\r\n        \"resource\": \"employees\",\r\n        \"operation\": \"Employee_Get\",\r\n        \"description\": \"Returns employee resource for a given name.\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"microsoft.contoso/employees/write\",\r\n      \"isDataAction\": false,\r\n      \"display\": {\r\n        \"provider\": \"microsoft.contoso/\",\r\n        \"resource\": \"employees\",\r\n        \"operation\": \"Employee_CreateAndUpdate\",\r\n        \"description\": \"Create or update employee resource.\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"microsoft.contoso/employees/delete\",\r\n      \"isDataAction\": false,\r\n      \"display\": {\r\n        \"provider\": \"microsoft.contoso/\",\r\n        \"resource\": \"employees\",\r\n        \"operation\": \"Employee_Delete\",\r\n        \"description\": \"Deletes employee resource for a given name.\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"microsoft.contoso/employees/write\",\r\n      \"isDataAction\": false,\r\n      \"display\": {\r\n        \"provider\": \"microsoft.contoso/\",\r\n        \"resource\": \"employees\",\r\n        \"operation\": \"Employees_Update\",\r\n        \"description\": \"Update employee details.\"\r\n      }\r\n    }\r\n  ]\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "b786102b-241e-4462-b472-220b3c575457"
+          "691ddba0-dd35-4670-b959-ea1b0b8944b4"
         ],
         "Accept-Language": [
           "en-US"
@@ -16,7 +16,7 @@
           "FxVersion/4.6.29719.03",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.ProviderHub.ProviderhubClient/1.0.0.1"
+          "Microsoft.Azure.Management.ProviderHub.providerhubClient/1.0.0.1"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -36,16 +36,16 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "3993806e-88de-4565-a31a-1e2dfc124477"
+          "74de6375-b19f-4fe4-bf6d-6dc24aae0a19"
         ],
         "x-ms-correlation-request-id": [
-          "8e755c59-ca0c-44c4-8c7e-7df3629cb495"
+          "9356342d-d022-4242-82f3-158121c116c4"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20210219T004815Z:8e755c59-ca0c-44c4-8c7e-7df3629cb495"
+          "WESTUS:20210225T054614Z:9356342d-d022-4242-82f3-158121c116c4"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -54,7 +54,7 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 19 Feb 2021 00:48:15 GMT"
+          "Thu, 25 Feb 2021 05:46:13 GMT"
         ],
         "Content-Length": [
           "3078"
@@ -76,7 +76,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "7d6438c6-dace-4f96-ac48-a52dcc31df54"
+          "5b7edfd4-2d71-4ba4-a992-f222bb61604a"
         ],
         "Accept-Language": [
           "en-US"
@@ -85,7 +85,7 @@
           "FxVersion/4.6.29719.03",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.ProviderHub.ProviderhubClient/1.0.0.1"
+          "Microsoft.Azure.Management.ProviderHub.providerhubClient/1.0.0.1"
         ]
       },
       "ResponseHeaders": {
@@ -99,16 +99,16 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "ee32443a-c424-491d-901a-deb12bba1bcd"
+          "95d2d7e2-2163-4ee6-8373-5cef3333aa77"
         ],
         "x-ms-correlation-request-id": [
-          "5d412afe-4409-445b-be3e-496f11116a0d"
+          "e20a6a5d-0a4f-4eb0-baa6-f6bddc4871d7"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20210219T004815Z:5d412afe-4409-445b-be3e-496f11116a0d"
+          "WESTUS:20210225T054615Z:e20a6a5d-0a4f-4eb0-baa6-f6bddc4871d7"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -117,7 +117,7 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 19 Feb 2021 00:48:15 GMT"
+          "Thu, 25 Feb 2021 05:46:14 GMT"
         ],
         "Content-Length": [
           "3299"

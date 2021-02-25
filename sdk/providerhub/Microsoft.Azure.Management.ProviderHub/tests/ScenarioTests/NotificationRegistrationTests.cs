@@ -16,28 +16,25 @@ namespace Microsoft.Azure.Management.ProviderHub.Tests
             {
                 string providerNamespace = "Microsoft.Contoso";
                 string notificationRegistrationName = "employeesNotificationRegistration";
-                var employeesResourceTypeProperties = new NotificationRegistration
+                var employeesResourceTypeProperties = new NotificationRegistrationPropertiesModel
                 {
-                    Properties = new NotificationRegistrationPropertiesModel
+                    NotificationMode = "EventHub",
+                    MessageScope = "RegisteredSubscriptions",
+                    IncludedEvents = new string[]
                     {
-                        NotificationMode = "EventHub",
-                        MessageScope = "RegisteredSubscriptions",
-                        IncludedEvents = new string[]
+                        "*/write",
+                        "Microsoft.Contoso/employees/delete"
+                    },
+                    NotificationEndpoints = new NotificationEndpoint[]
+                    {
+                        new NotificationEndpoint
                         {
-                            "*/write",
-                            "Microsoft.Contoso/employees/delete"
-                        },
-                        NotificationEndpoints = new NotificationEndpoint[]
-                        {
-                            new NotificationEndpoint
+                            Locations = new string[]
                             {
-                                Locations = new string[]
-                                {
-                                    "",
-                                    "East US"
-                                },
-                                NotificationDestination = "/subscriptions/ac6bcfb5-3dc1-491f-95a6-646b89bf3e88/resourceGroups/mgmtexp-eastus/providers/Microsoft.EventHub/namespaces/unitedstates-mgmtexpint/eventhubs/armlinkednotifications"
-                            }
+                                "",
+                                "East US"
+                            },
+                            NotificationDestination = "/subscriptions/ac6bcfb5-3dc1-491f-95a6-646b89bf3e88/resourceGroups/mgmtexp-eastus/providers/Microsoft.EventHub/namespaces/unitedstates-mgmtexpint/eventhubs/armlinkednotifications"
                         }
                     }
                 };
@@ -60,7 +57,7 @@ namespace Microsoft.Azure.Management.ProviderHub.Tests
             }
         }
 
-        private NotificationRegistration CreateNotificationRegistration(MockContext context, string providerNamespace, string notificationRegistrationName, NotificationRegistration properties)
+        private NotificationRegistration CreateNotificationRegistration(MockContext context, string providerNamespace, string notificationRegistrationName, NotificationRegistrationPropertiesModel properties)
         {
             providerhubClient client = GetProviderHubManagementClient(context);
             return client.NotificationRegistrations.CreateOrUpdate(providerNamespace, notificationRegistrationName, properties);

@@ -21,57 +21,54 @@ namespace Microsoft.Azure.Management.ProviderHub.Tests
             using (var context = MockContext.Start(GetType()))
             {
                 string providerNamespace = "Microsoft.Contoso";
-                var providerRegistrationProperties = new ProviderRegistration
+                var providerRegistrationProperties = new ProviderRegistrationPropertiesModel
                 {
-                    Properties = new ProviderRegistrationPropertiesModel
+                    ProviderHubMetadata = new ProviderRegistrationPropertiesProviderHubMetadata
                     {
-                        ProviderHubMetadata = new ProviderRegistrationPropertiesProviderHubMetadata
+                        ProviderAuthentication = new ProviderHubMetadataProviderAuthentication
                         {
-                            ProviderAuthentication = new ProviderHubMetadataProviderAuthentication
+                            AllowedAudiences = new string[]
                             {
-                                AllowedAudiences = new string[]
-                                {
-                                    "https://management.core.windows.net/"
-                                }
-                            },
-                            ProviderAuthorizations = new ResourceProviderAuthorization[]
-                            {
-                                new ResourceProviderAuthorization
-                                {
-                                    ApplicationId = "3d834152-5efa-46f7-85a4-a18c2b5d46f9",
-                                    RoleDefinitionId = "760505bf-dcfa-4311-b890-18da392a00b2"
-                                }
+                                "https://management.core.windows.net/"
                             }
                         },
-                        ProviderVersion = "2.0",
-                        ProviderType = "Internal, Hidden",
-                        Management = new ResourceProviderManifestPropertiesManagement
+                        ProviderAuthorizations = new ResourceProviderAuthorization[]
                         {
-                            ManifestOwners = new string[] { "SPARTA-PlatformServiceAdministrator" },
-                            IncidentRoutingService = "Resource Provider Service as a Service",
-                            IncidentRoutingTeam = "RPaaS",
-                            IncidentContactEmail = "rpaascore@microsoft.com",
-                            ServiceTreeInfos = new ServiceTreeInfo[]
+                            new ResourceProviderAuthorization
                             {
-                                new ServiceTreeInfo
-                                {
-                                    ServiceId = "d1b7d8ba-05e2-48e6-90d6-d781b99c6e69",
-                                    ComponentId = "d1b7d8ba-05e2-48e6-90d6-d781b99c6e69"
-                                }
+                                ApplicationId = "3d834152-5efa-46f7-85a4-a18c2b5d46f9",
+                                RoleDefinitionId = "760505bf-dcfa-4311-b890-18da392a00b2"
                             }
+                        }
+                    },
+                    ProviderVersion = "2.0",
+                    ProviderType = "Internal, Hidden",
+                    Management = new ResourceProviderManifestPropertiesManagement
+                    {
+                        ManifestOwners = new string[] { "SPARTA-PlatformServiceAdministrator" },
+                        IncidentRoutingService = "Resource Provider Service as a Service",
+                        IncidentRoutingTeam = "RPaaS",
+                        IncidentContactEmail = "rpaascore@microsoft.com",
+                        ServiceTreeInfos = new ServiceTreeInfo[]
+                        {
+                            new ServiceTreeInfo
+                            {
+                                ServiceId = "d1b7d8ba-05e2-48e6-90d6-d781b99c6e69",
+                                ComponentId = "d1b7d8ba-05e2-48e6-90d6-d781b99c6e69"
+                            }
+                        }
+                    },
+                    Capabilities = new ResourceProviderCapabilities[]
+                    {
+                        new ResourceProviderCapabilities
+                        {
+                            QuotaId = "CSP_2015-05-01",
+                            Effect = "Allow"
                         },
-                        Capabilities = new ResourceProviderCapabilities[]
+                        new ResourceProviderCapabilities
                         {
-                            new ResourceProviderCapabilities
-                            {
-                                QuotaId = "CSP_2015-05-01",
-                                Effect = "Allow"
-                            },
-                            new ResourceProviderCapabilities
-                            {
-                                QuotaId = "CSP_MG_2017-12-01",
-                                Effect = "Allow"
-                            }
+                            QuotaId = "CSP_MG_2017-12-01",
+                            Effect = "Allow"
                         }
                     }
                 };
@@ -94,7 +91,7 @@ namespace Microsoft.Azure.Management.ProviderHub.Tests
             }
         }
 
-        private ProviderRegistration CreateProviderRegistration(MockContext context, string providerNamespace, ProviderRegistration properties)
+        private ProviderRegistration CreateProviderRegistration(MockContext context, string providerNamespace, ProviderRegistrationPropertiesModel properties)
         {
             providerhubClient client = GetProviderHubManagementClient(context);
             return client.ProviderRegistrations.CreateOrUpdate(providerNamespace, properties);

@@ -16,58 +16,55 @@ namespace Microsoft.Azure.Management.ProviderHub.Tests
             {
                 string providerNamespace = "Microsoft.Contoso";
                 string resourceType = "employees";
-                var employeesResourceTypeProperties = new ResourceTypeRegistration
+                var employeesResourceTypeProperties = new ResourceTypeRegistrationProperties
                 {
-                    Properties = new ResourceTypeRegistrationProperties
+                    RoutingType = "Default",
+                    Regionality = "Regional",
+                    Endpoints = new ResourceTypeEndpoint[]
                     {
-                        RoutingType = "Default",
-                        Regionality = "Regional",
-                        Endpoints = new ResourceTypeEndpoint[]
+                        new ResourceTypeEndpoint
                         {
-                            new ResourceTypeEndpoint
+                            ApiVersions = new List<string>
                             {
-                                ApiVersions = new List<string>
-                                {
-                                    "2018-11-01-preview",
-                                    "2020-01-01-preview",
-                                    "2019-01-01"
-                                },
-                                Locations = new string[]
-                                {
-                                    "West US",
-                                    "West Central US",
-                                    "West Europe",
-                                    "Southeast Asia",
-                                    "West US 2",
-                                    "East US 2 EUAP",
-                                    "North Europe",
-                                    "East US",
-                                    "East Asia"
-                                },
-                                RequiredFeatures = new string[] { "Microsoft.Contoso/RPaaSSampleApp" }
-                            }
-                        },
-                        SwaggerSpecifications = new SwaggerSpecification[]
-                        {
-                            new SwaggerSpecification
+                                "2018-11-01-preview",
+                                "2020-01-01-preview",
+                                "2019-01-01"
+                            },
+                            Locations = new string[]
                             {
-                                ApiVersions = new List<string>
-                                {
-                                    "2018-11-01-preview",
-                                    "2020-01-01-preview",
-                                    "2019-01-01"
-                                },
-                                SwaggerSpecFolderUri = "https://github.com/Azure/azure-rest-api-specs-pr/blob/RPSaaSMaster/specification/rpsaas/resource-manager/Microsoft.Contoso/"
-                            }
-                        },
-                        EnableAsyncOperation = true,
-                        EnableThirdPartyS2S = false,
-                        ResourceMovePolicy = new ResourceTypeRegistrationPropertiesResourceMovePolicy
-                        {
-                            ValidationRequired = false,
-                            CrossResourceGroupMoveEnabled = true,
-                            CrossSubscriptionMoveEnabled = true
+                                "West US",
+                                "West Central US",
+                                "West Europe",
+                                "Southeast Asia",
+                                "West US 2",
+                                "East US 2 EUAP",
+                                "North Europe",
+                                "East US",
+                                "East Asia"
+                            },
+                            RequiredFeatures = new string[] { "Microsoft.Contoso/RPaaSSampleApp" }
                         }
+                    },
+                    SwaggerSpecifications = new SwaggerSpecification[]
+                    {
+                        new SwaggerSpecification
+                        {
+                            ApiVersions = new List<string>
+                            {
+                                "2018-11-01-preview",
+                                "2020-01-01-preview",
+                                "2019-01-01"
+                            },
+                            SwaggerSpecFolderUri = "https://github.com/Azure/azure-rest-api-specs-pr/blob/RPSaaSMaster/specification/rpsaas/resource-manager/Microsoft.Contoso/"
+                        }
+                    },
+                    EnableAsyncOperation = true,
+                    EnableThirdPartyS2S = false,
+                    ResourceMovePolicy = new ResourceTypeRegistrationPropertiesResourceMovePolicy
+                    {
+                        ValidationRequired = false,
+                        CrossResourceGroupMoveEnabled = true,
+                        CrossSubscriptionMoveEnabled = true
                     }
                 };
 
@@ -89,7 +86,7 @@ namespace Microsoft.Azure.Management.ProviderHub.Tests
             }
         }
 
-        private ResourceTypeRegistration CreateResourceTypeRegistration(MockContext context, string providerNamespace, string resourceType, ResourceTypeRegistration properties)
+        private ResourceTypeRegistration CreateResourceTypeRegistration(MockContext context, string providerNamespace, string resourceType, ResourceTypeRegistrationProperties properties)
         {
             providerhubClient client = GetProviderHubManagementClient(context);
             return client.ResourceTypeRegistrations.CreateOrUpdate(providerNamespace, resourceType, properties);
