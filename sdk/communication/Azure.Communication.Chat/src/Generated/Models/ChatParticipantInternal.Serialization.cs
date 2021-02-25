@@ -17,13 +17,8 @@ namespace Azure.Communication.Chat
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
-            if (Optional.IsDefined(Identifier))
-            {
-                writer.WritePropertyName("identifier");
-                writer.WriteObjectValue(Identifier);
-            }
+            writer.WritePropertyName("communicationIdentifier");
+            writer.WriteObjectValue(CommunicationIdentifier);
             if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName");
@@ -39,25 +34,14 @@ namespace Azure.Communication.Chat
 
         internal static ChatParticipantInternal DeserializeChatParticipantInternal(JsonElement element)
         {
-            string id = default;
-            Optional<CommunicationIdentifierModel> identifier = default;
+            CommunicationIdentifierModel communicationIdentifier = default;
             Optional<string> displayName = default;
             Optional<DateTimeOffset> shareHistoryTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("communicationIdentifier"))
                 {
-                    id = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("identifier"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    identifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
+                    communicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
                     continue;
                 }
                 if (property.NameEquals("displayName"))
@@ -76,7 +60,7 @@ namespace Azure.Communication.Chat
                     continue;
                 }
             }
-            return new ChatParticipantInternal(id, identifier.Value, displayName.Value, Optional.ToNullable(shareHistoryTime));
+            return new ChatParticipantInternal(communicationIdentifier, displayName.Value, Optional.ToNullable(shareHistoryTime));
         }
     }
 }

@@ -17,9 +17,9 @@ namespace Azure.Communication.Chat
             Content = new ChatMessageContent(chatMessageInternal.Content);
             SenderDisplayName = chatMessageInternal.SenderDisplayName;
             CreatedOn = chatMessageInternal.CreatedOn;
-            if (chatMessageInternal.SenderId != null)
+            if (chatMessageInternal.SenderCommunicationIdentifier != null)
             {
-                Sender = new CommunicationUserIdentifier(chatMessageInternal.SenderId);
+                Sender = CommunicationIdentifierSerializer.Deserialize(chatMessageInternal.SenderCommunicationIdentifier);
             }
             DeletedOn = chatMessageInternal.DeletedOn;
             EditedOn = chatMessageInternal.EditedOn;

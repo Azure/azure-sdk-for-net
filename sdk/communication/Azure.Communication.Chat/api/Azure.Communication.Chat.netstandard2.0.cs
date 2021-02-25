@@ -26,11 +26,11 @@ namespace Azure.Communication.Chat
     }
     public partial class ChatClientOptions : Azure.Core.ClientOptions
     {
-        public const Azure.Communication.Chat.ChatClientOptions.ServiceVersion LatestVersion = Azure.Communication.Chat.ChatClientOptions.ServiceVersion.V1;
-        public ChatClientOptions(Azure.Communication.Chat.ChatClientOptions.ServiceVersion version = Azure.Communication.Chat.ChatClientOptions.ServiceVersion.V1) { }
+        public const Azure.Communication.Chat.ChatClientOptions.ServiceVersion LatestVersion = Azure.Communication.Chat.ChatClientOptions.ServiceVersion.V2021_01_27_Preview4;
+        public ChatClientOptions(Azure.Communication.Chat.ChatClientOptions.ServiceVersion version = Azure.Communication.Chat.ChatClientOptions.ServiceVersion.V2021_01_27_Preview4) { }
         public enum ServiceVersion
         {
-            V1 = 1,
+            V2021_01_27_Preview4 = 1,
         }
     }
     public partial class ChatMessage
@@ -88,13 +88,13 @@ namespace Azure.Communication.Chat
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Communication.Chat.ChatMessage ChatMessage(string id, Azure.Communication.Chat.ChatMessageType type, string sequenceId, string version, Azure.Communication.Chat.ChatMessageContent content, string senderDisplayName, System.DateTimeOffset createdOn, string senderId, System.DateTimeOffset? deletedOn, System.DateTimeOffset? editedOn) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public static Azure.Communication.Chat.ChatMessageReadReceipt ChatMessageReadReceipt(string senderId, string chatMessageId, System.DateTimeOffset readOn) { throw null; }
+        public static Azure.Communication.Chat.ChatMessageReadReceipt ChatMessageReadReceipt(Azure.Communication.CommunicationIdentifier sender, string chatMessageId, System.DateTimeOffset readOn) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Communication.Chat.ChatThreadInfo ChatThreadInfo(string id, string topic, System.DateTimeOffset? deletedOn, System.DateTimeOffset? lastMessageReceivedOn) { throw null; }
     }
     public partial class ChatParticipant
     {
-        public ChatParticipant(Azure.Communication.CommunicationIdentifier communicationIdentifier) { }
+        public ChatParticipant(Azure.Communication.CommunicationIdentifier identifier) { }
         public string? DisplayName { get { throw null; } set { } }
         public System.DateTimeOffset? ShareHistoryTime { get { throw null; } set { } }
         public Azure.Communication.CommunicationIdentifier User { get { throw null; } set { } }
@@ -102,7 +102,7 @@ namespace Azure.Communication.Chat
     public partial class ChatThread
     {
         internal ChatThread() { }
-        public Azure.Communication.CommunicationUserIdentifier CreatedBy { get { throw null; } }
+        public Azure.Communication.CommunicationIdentifier CreatedBy { get { throw null; } }
         public System.DateTimeOffset CreatedOn { get { throw null; } }
         public System.DateTimeOffset? DeletedOn { get { throw null; } }
         public string Id { get { throw null; } }
@@ -126,8 +126,8 @@ namespace Azure.Communication.Chat
         public virtual Azure.AsyncPageable<Azure.Communication.Chat.ChatParticipant> GetParticipantsAsync(int? skip = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Communication.Chat.ChatMessageReadReceipt> GetReadReceipts(int? skip = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Communication.Chat.ChatMessageReadReceipt> GetReadReceiptsAsync(int? skip = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response RemoveParticipant(Azure.Communication.CommunicationUserIdentifier user, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> RemoveParticipantAsync(Azure.Communication.CommunicationUserIdentifier user, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response RemoveParticipant(Azure.Communication.CommunicationIdentifier identifier, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> RemoveParticipantAsync(Azure.Communication.CommunicationIdentifier identifier, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<string> SendMessage(string content, Azure.Communication.Chat.ChatMessageType? type = default(Azure.Communication.Chat.ChatMessageType?), string? senderDisplayName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<string>> SendMessageAsync(string content, Azure.Communication.Chat.ChatMessageType? type = default(Azure.Communication.Chat.ChatMessageType?), string? senderDisplayName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response SendReadReceipt(string messageId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

@@ -130,7 +130,7 @@ namespace Azure.Communication.Chat.Tests
             var chatParticipantsAfterTwoAddedCount = chatParticipantsAfterTwoAdded.Count();
 
             CommunicationUserIdentifier participantToBeRemoved = user4;
-            chatThreadClient.RemoveParticipant(user: participantToBeRemoved);
+            chatThreadClient.RemoveParticipant(identifier: participantToBeRemoved);
             Pageable<ChatParticipant> chatParticipantAfterOneDeleted = chatThreadClient.GetParticipants();
             var chatParticipantAfterOneDeletedCount = chatParticipantAfterOneDeleted.Count();
 
@@ -315,7 +315,7 @@ namespace Azure.Communication.Chat.Tests
             var chatParticipantsAfterTwoOneAddedCount = chatParticipantsAfterTwoOneAdded.ToEnumerableAsync().Result.Count;
 
             CommunicationUserIdentifier participantToBeRemoved = user4;
-            await chatThreadClient.RemoveParticipantAsync(user: participantToBeRemoved);
+            await chatThreadClient.RemoveParticipantAsync(identifier: participantToBeRemoved);
             AsyncPageable<ChatParticipant> chatParticipantAfterOneDeleted = chatThreadClient.GetParticipantsAsync();
             var chatParticipantAfterOneDeletedCount = chatParticipantAfterOneDeleted.ToEnumerableAsync().Result.Count;
 

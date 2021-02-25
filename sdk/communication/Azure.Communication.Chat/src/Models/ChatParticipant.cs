@@ -11,15 +11,15 @@ namespace Azure.Communication.Chat
         /// <summary>
         ///  A member of the chat thread.
         /// </summary>
-        /// <param name="communicationIdentifier">Instance of <see cref="CommunicationIdentifier"/>.</param>
-        public ChatParticipant(CommunicationIdentifier communicationIdentifier)
+        /// <param name="identifier">Instance of <see cref="CommunicationIdentifier"/>.</param>
+        public ChatParticipant(CommunicationIdentifier identifier)
         {
-            User = communicationIdentifier;
+            User = identifier;
         }
 
         internal ChatParticipant(ChatParticipantInternal chatParticipantInternal)
         {
-            User = new CommunicationUserIdentifier(chatParticipantInternal.Id);
+            User = CommunicationIdentifierSerializer.Deserialize(chatParticipantInternal.CommunicationIdentifier);
             DisplayName = chatParticipantInternal.DisplayName;
             ShareHistoryTime = chatParticipantInternal.ShareHistoryTime;
         }
@@ -33,7 +33,7 @@ namespace Azure.Communication.Chat
 
         internal ChatParticipantInternal ToChatParticipantInternal()
         {
-            return new ChatParticipantInternal(((CommunicationUserIdentifier)User).Id, CommunicationIdentifierSerializer.Serialize(User), DisplayName, ShareHistoryTime);
+            return new ChatParticipantInternal(CommunicationIdentifierSerializer.Serialize(User));
         }
     }
 }
