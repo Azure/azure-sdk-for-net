@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.RedisEnterprise
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -453,6 +455,55 @@ namespace Microsoft.Azure.Management.RedisEnterprise
             }
 
             /// <summary>
+            /// Forcibly removes the link to the specified database resource.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the RedisEnterprise cluster.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database.
+            /// </param>
+            /// <param name='ids'>
+            /// The resource IDs of the database resources to be unlinked.
+            /// </param>
+            public static void ForceUnlink(this IDatabasesOperations operations, string resourceGroupName, string clusterName, string databaseName, IList<string> ids)
+            {
+                operations.ForceUnlinkAsync(resourceGroupName, clusterName, databaseName, ids).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Forcibly removes the link to the specified database resource.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the RedisEnterprise cluster.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database.
+            /// </param>
+            /// <param name='ids'>
+            /// The resource IDs of the database resources to be unlinked.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task ForceUnlinkAsync(this IDatabasesOperations operations, string resourceGroupName, string clusterName, string databaseName, IList<string> ids, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.ForceUnlinkWithHttpMessagesAsync(resourceGroupName, clusterName, databaseName, ids, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Creates a database
             /// </summary>
             /// <param name='operations'>
@@ -749,6 +800,55 @@ namespace Microsoft.Azure.Management.RedisEnterprise
             public static async Task BeginExportAsync(this IDatabasesOperations operations, string resourceGroupName, string clusterName, string databaseName, string sasUri, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginExportWithHttpMessagesAsync(resourceGroupName, clusterName, databaseName, sasUri, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Forcibly removes the link to the specified database resource.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the RedisEnterprise cluster.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database.
+            /// </param>
+            /// <param name='ids'>
+            /// The resource IDs of the database resources to be unlinked.
+            /// </param>
+            public static void BeginForceUnlink(this IDatabasesOperations operations, string resourceGroupName, string clusterName, string databaseName, IList<string> ids)
+            {
+                operations.BeginForceUnlinkAsync(resourceGroupName, clusterName, databaseName, ids).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Forcibly removes the link to the specified database resource.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the RedisEnterprise cluster.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database.
+            /// </param>
+            /// <param name='ids'>
+            /// The resource IDs of the database resources to be unlinked.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginForceUnlinkAsync(this IDatabasesOperations operations, string resourceGroupName, string clusterName, string databaseName, IList<string> ids, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginForceUnlinkWithHttpMessagesAsync(resourceGroupName, clusterName, databaseName, ids, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

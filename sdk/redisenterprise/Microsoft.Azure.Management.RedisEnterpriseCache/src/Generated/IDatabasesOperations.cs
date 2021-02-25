@@ -280,6 +280,34 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// </exception>
         Task<AzureOperationResponse> ExportWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, string sasUri, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Forcibly removes the link to the specified database resource.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='clusterName'>
+        /// The name of the RedisEnterprise cluster.
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the database.
+        /// </param>
+        /// <param name='ids'>
+        /// The resource IDs of the database resources to be unlinked.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> ForceUnlinkWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, IList<string> ids, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Creates a database
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -454,6 +482,34 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse> BeginExportWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, string sasUri, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Forcibly removes the link to the specified database resource.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='clusterName'>
+        /// The name of the RedisEnterprise cluster.
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the database.
+        /// </param>
+        /// <param name='ids'>
+        /// The resource IDs of the database resources to be unlinked.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> BeginForceUnlinkWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, IList<string> ids, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets all databases in the specified RedisEnterprise cluster.
         /// </summary>
