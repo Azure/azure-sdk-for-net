@@ -51,18 +51,34 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
                     .ConfigureAwait(false);
 
                 Assert.AreEqual(timeSeriesInstances.Count, getInstancesByIdsResult.Value.Length);
-                Assert.AreEqual(string.Join(",", timeSeriesInstance1Id.ToArray()), string.Join(",", getInstancesByIdsResult.Value[0].Instance.TimeSeriesId.ToArray()));
-                Assert.AreEqual(string.Join(",", timeSeriesInstance2Id.ToArray()), string.Join(",", getInstancesByIdsResult.Value[1].Instance.TimeSeriesId.ToArray()));
+                Assert.IsTrue(Enumerable.SequenceEqual(timeSeriesInstance1Id.ToArray(), getInstancesByIdsResult.Value[0].Instance.TimeSeriesId.ToArray()));
+                Assert.IsTrue(Enumerable.SequenceEqual(timeSeriesInstance2Id.ToArray(), getInstancesByIdsResult.Value[1].Instance.TimeSeriesId.ToArray()));
 
                 foreach (InstancesOperationResult resultItem in getInstancesByIdsResult.Value)
                 {
-                    Assert.IsNotNull(resultItem.Instance);
+                    TimeSeriesInstance tsiInstance = resultItem.Instance;
+
+                    Assert.IsNotNull(tsiInstance);
                     Assert.IsNull(resultItem.Error);
-                    Assert.AreEqual(numOfIdProperties, resultItem.Instance.TimeSeriesId.GetType().GenericTypeArguments.Count());
-                    Assert.AreEqual(DefaultType, resultItem.Instance.TypeId);
-                    Assert.AreEqual(0, resultItem.Instance.HierarchyIds.Count);
-                    Assert.AreEqual(0, resultItem.Instance.InstanceFields.Count);
+                    Assert.AreEqual(numOfIdProperties, tsiInstance.TimeSeriesId.GetType().GenericTypeArguments.Count());
+                    Assert.AreEqual(DefaultType, tsiInstance.TypeId);
+                    Assert.AreEqual(0, tsiInstance.HierarchyIds.Count);
+                    Assert.AreEqual(0, tsiInstance.InstanceFields.Count);
                 }
+
+                // Update the two instances by adding names to them
+                var tsiInstanceNamePrefix = "instance";
+                timeSeriesInstances[0].Name = Recording.GenerateAlphaNumericId(tsiInstanceNamePrefix);
+                timeSeriesInstances[1].Name = Recording.GenerateAlphaNumericId(tsiInstanceNamePrefix);
+
+                Response<InstancesOperationResult[]> replaceInstancesResult = await client
+                    .ReplaceTimeSeriesInstancesAsync(timeSeriesInstances)
+                    .ConfigureAwait(false);
+
+                Assert.AreEqual(timeSeriesInstances.Count, replaceInstancesResult.Value.Length);
+                Assert.IsFalse(replaceInstancesResult.Value.Any((errorResult) => errorResult.Error != null));
+
+                // todo next. Get the instances by name and assert
             }
             catch (Exception ex)
             {

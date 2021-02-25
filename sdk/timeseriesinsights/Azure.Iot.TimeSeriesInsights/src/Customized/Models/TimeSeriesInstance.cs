@@ -78,7 +78,7 @@ namespace Azure.Iot.TimeSeriesInsights
         /// Set of key-value pairs that contain user-defined instance properties.
         /// It may be null. Supported property value types are: bool, string, long, double and it cannot be nested or null.
         /// </param>
-        public TimeSeriesInstance(
+        internal TimeSeriesInstance(
             ITimeSeriesId timeSeriesId,
             string typeId,
             string name,
