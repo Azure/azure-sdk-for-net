@@ -96,15 +96,9 @@ namespace Azure.Data.Tables.Tests
 
             string token = sas.Sign(credential);
 
-            // Build a SAS URI
-            UriBuilder sasUri = new UriBuilder(ServiceUri)
-            {
-                Query = token
-            };
-
             // Create the TableServiceClient using the SAS URI.
 
-            var sasAuthedService = InstrumentClient(new TableServiceClient(sasUri.Uri, InstrumentClientOptions(new TableClientOptions())));
+            var sasAuthedService = InstrumentClient(new TableServiceClient(new Uri(ServiceUri), new AzureSasCredential(token), InstrumentClientOptions(new TableClientOptions())));
             var sasTableclient = sasAuthedService.GetTableClient(tableName);
 
             // Validate that we are able to query the table from the service.
@@ -145,14 +139,8 @@ namespace Azure.Data.Tables.Tests
 
             string token = sas.Sign(credential);
 
-            // Build a SAS URI
-            UriBuilder sasUri = new UriBuilder(ServiceUri)
-            {
-                Query = token
-            };
-
             // Create the TableServiceClient using the SAS URI.
-            var sasAuthedService = InstrumentClient(new TableServiceClient(sasUri.Uri, InstrumentClientOptions(new TableClientOptions())));
+            var sasAuthedService = InstrumentClient(new TableServiceClient(new Uri(ServiceUri), new AzureSasCredential(token), InstrumentClientOptions(new TableClientOptions())));
             var sasTableclient = sasAuthedService.GetTableClient(tableName);
 
             // Insert the entities
