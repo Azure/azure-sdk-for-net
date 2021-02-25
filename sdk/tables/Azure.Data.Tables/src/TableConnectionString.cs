@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Text.Encodings.Web;
+using System.Text.RegularExpressions;
 using Azure.Core;
 using AccountSetting = System.Collections.Generic.KeyValuePair<string, System.Func<string, bool>>;
 using ConnectionStringFilter = System.Func<System.Collections.Generic.IDictionary<string, string>, System.Collections.Generic.IDictionary<string, string>>;
@@ -189,9 +191,10 @@ namespace Azure.Data.Tables
                 settings.TryGetSegmentValue(TableConstants.ConnectionStrings.SharedAccessSignatureSetting, out sasToken);
 
             var matchesAutomaticEndpointsSpec = settings.TryGetSegmentValue(TableConstants.ConnectionStrings.AccountNameSetting, out var accountName) &&
-                settings.TryGetSegmentValue(TableConstants.ConnectionStrings.AccountKeySetting, out var accountKey) &&
-                    (settings.TryGetSegmentValue(TableConstants.ConnectionStrings.TableEndpointSetting, out var primary) ||
-                    settings.TryGetSegmentValue(TableConstants.ConnectionStrings.EndpointSuffixSetting, out var endpointSuffix));
+                settings.TryGetSegmentValue(TableConstants.ConnectionStrings.AccountKeySetting, out var accountKey);
+
+            settings.TryGetSegmentValue(TableConstants.ConnectionStrings.TableEndpointSetting, out var primary);
+            var endpointSuffix = settings.GetSegmentValueOrDefault(TableConstants.ConnectionStrings.EndpointSuffixSetting, TableConstants.ConnectionStrings.DefaultEndpointSuffix);
 
             if (matchesAutomaticEndpointsSpec || matchesExplicitEndpointsSpec)
             {
@@ -269,6 +272,84 @@ namespace Azure.Data.Tables
             return false;
         }
 
+        private const string TableNameGroup = "tableName";
+        private static readonly Regex s_tableUriTableNameRegex = new Regex(@$"(Tables\('(?<{TableNameGroup}>\w+)'\))", RegexOptions.Compiled);
+
+        /// <summary>
+        /// Returns the table name given the <paramref name="uri"/>.
+        /// </summary>
+        /// <param name="uri">The primary endpoint Uri.</param>
+        /// <returns></returns>
+        internal static string GetTableNameFromUri(Uri uri)
+        {
+            var segments = uri.Segments;
+            var lastSegment = segments[segments.Length - 1];
+
+            Match match = s_tableUriTableNameRegex.Match(lastSegment);
+
+            if (match.Success)
+            {
+                return match.Groups[TableNameGroup].Value;
+            }
+            else
+            {
+                UriHostNameType hostNameType = Uri.CheckHostName(uri.Host);
+                int expectedSegments = hostNameType switch
+                {
+                    // This is a dns name such as contoso.core.windows.net/tableName
+                    UriHostNameType.Dns => 2,
+                    // This is most likely Azurite, which looks like this: https://126.0.0.1:10002/contoso/tableName
+                    UriHostNameType.IPv4 => 3,
+                    _ when uri.IsLoopback => 3,
+                    _ => 0
+                };
+
+                if (segments.Length < expectedSegments)
+                {
+                    return string.Empty;
+                }
+
+                return lastSegment.EndsWith("/", StringComparison.OrdinalIgnoreCase) ?
+                lastSegment.Substring(0, lastSegment.Length - 1) :
+                lastSegment;
+            }
+        }
+
+        /// <summary>
+        /// Returns the account name given the <paramref name="uri"/>.
+        /// </summary>
+        /// <param name="uri">The primary endpoint Uri.</param>
+        /// <returns></returns>
+        internal static string GetAccountNameFromUri(Uri uri)
+        {
+            string accountName = null;
+            var indexOfDot = uri.Host.IndexOf('.');
+            UriHostNameType hostNameType = Uri.CheckHostName(uri.Host);
+
+            if (indexOfDot >= 0 && hostNameType == UriHostNameType.Dns)
+            {
+                // This is a dns name such as contoso.core.windows.net
+                accountName = uri.Host.Substring(0, indexOfDot);
+            }
+            else if (uri.IsLoopback || hostNameType == UriHostNameType.IPv4)
+            {
+                // This is most likely Azurite, which looks like this: https://127.0.0.1:10002/contoso/
+                var segments = uri.Segments;
+
+                accountName = segments[1].EndsWith("/", StringComparison.OrdinalIgnoreCase) ?
+                    segments[1].Substring(0, segments[1].Length - 1) :
+                    segments[1];
+            }
+
+            return accountName;
+        }
+
+        /// <summary>
+        /// Generates the secondary endpoint Uri given the <paramref name="primaryUri"/>.
+        /// </summary>
+        /// <param name="primaryUri">The primary endpoint Uri.</param>
+        /// <param name="accountName">The account name.</param>
+        /// <returns></returns>
         internal static Uri GetSecondaryUriFromPrimary(Uri primaryUri, string accountName = null)
         {
             var secondaryUriBuilder = new UriBuilder(primaryUri);
@@ -282,13 +363,15 @@ namespace Azure.Data.Tables
             }
 
             var indexOfDot = secondaryUriBuilder.Host.IndexOf('.');
-            if (indexOfDot >= 0 && Uri.CheckHostName(primaryUri.Host) == UriHostNameType.Dns)
+            UriHostNameType hostNameType = Uri.CheckHostName(secondaryUriBuilder.Host);
+
+            if (indexOfDot >= 0 && hostNameType == UriHostNameType.Dns)
             {
                 // This is a dns name such as contoso.core.windows.net
                 // Insert the '-secondary' suffix after the first part of the host name
                 secondaryUriBuilder.Host = secondaryUriBuilder.Host.Insert(indexOfDot, TableConstants.ConnectionStrings.SecondaryLocationAccountSuffix);
             }
-            else if (primaryUri.IsLoopback)
+            else if (primaryUri.IsLoopback || hostNameType == UriHostNameType.IPv4)
             {
                 // This is most likely Azurite, which looks like this: https://127.0.0.1:10002/contoso/
                 // Insert the '-secondary' suffix after the 2nd segment (the first segment is '/')
@@ -344,39 +427,6 @@ namespace Azure.Data.Tables
             account.IsDevStoreAccount = true;
 
             return account;
-        }
-
-        /// <summary>
-        /// Tokenizes input and stores name value pairs.
-        /// </summary>
-        /// <param name="connectionString">The string to parse.</param>
-        /// <param name="error">Error reporting delegate.</param>
-        /// <returns>Tokenized collection.</returns>
-        private static IDictionary<string, string> ParseStringIntoSettings(string connectionString, Action<string> error)
-        {
-            IDictionary<string, string> settings = new Dictionary<string, string>();
-            var splitted = connectionString.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
-
-            foreach (var nameValue in splitted)
-            {
-                var splittedNameValue = nameValue.Split(new char[] { '=' }, 2);
-
-                if (splittedNameValue.Length != 2)
-                {
-                    error("Settings must be of the form \"name=value\".");
-                    return null;
-                }
-
-                if (settings.ContainsKey(splittedNameValue[0]))
-                {
-                    error(string.Format(CultureInfo.InvariantCulture, "Duplicate setting '{0}' found.", splittedNameValue[0]));
-                    return null;
-                }
-
-                settings.Add(splittedNameValue[0], splittedNameValue[1]);
-            }
-
-            return settings;
         }
 
         /// <summary>

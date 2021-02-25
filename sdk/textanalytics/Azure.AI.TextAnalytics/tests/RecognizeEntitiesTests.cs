@@ -81,11 +81,14 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             string document = "I had a wonderful trip to Seattle last week.";
 
-            CategorizedEntityCollection entities = await client.RecognizeEntitiesAsync(document);
+            RecognizeEntitiesResultCollection result = await client.RecognizeEntitiesBatchAsync(new List<string>() { document }, options: new TextAnalyticsRequestOptions() { ModelVersion = "2020-04-01" } );
 
-            Assert.GreaterOrEqual(entities.Count, 3);
+            var documentResult = result.FirstOrDefault();
+            Assert.IsFalse(documentResult.HasError);
 
-            foreach (CategorizedEntity entity in entities)
+            Assert.GreaterOrEqual(documentResult.Entities.Count, 3);
+
+            foreach (CategorizedEntity entity in documentResult.Entities)
             {
                 if (entity.Text == "last week")
                     Assert.AreEqual("DateRange", entity.SubCategory);
@@ -228,6 +231,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 Assert.IsNotNull(entity.Category);
                 Assert.GreaterOrEqual(entity.ConfidenceScore, 0.0);
                 Assert.GreaterOrEqual(entity.Offset, 0);
+                Assert.Greater(entity.Length, 0);
 
                 if (entity.SubCategory != null)
                 {

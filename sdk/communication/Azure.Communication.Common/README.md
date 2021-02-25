@@ -9,13 +9,13 @@ This package contains common code for Azure Communication Service libraries.
 Install the Azure Communication Common client library for .NET with [NuGet][nuget].
 
 ```Powershell
-dotnet add package Azure.Communication.Common --version 1.0.0-beta.3
+dotnet add package Azure.Communication.Common --version 1.0.0-beta.4
 ```
 
 ### Prerequisites
 You need an [Azure subscription][azure_sub] and a [Communication Service Resource][communication_resource_docs] to use this package.
 
-To create a new Communication Service, you can use the [Azure Portal][communication_resource_create_portal] or the [.NET management client library][communication_resource_create_net].
+To create a new Communication Service, you can use the [Azure Portal][communication_resource_create_portal], the [Azure PowerShell][communication_resource_create_power_shell], or the [.NET management client library][communication_resource_create_net].
 
 <!--
 Here's an example using the Azure CLI:
@@ -35,6 +35,20 @@ This module does not contain a client and instead libraries that help other Azur
 `CommunicationTokenCredential` authenticates a user with Communication Services, such as Chat or Calling. It optionally provides an auto-refresh mechanism to ensure a continuously stable authentication state during communications.
 
 It is up to you the developer to first create valid user tokens with the Communication Administration SDK. Then you use these tokens with the `CommunicationTokenCredential`.
+
+### Thread safety
+We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
+
+### Additional concepts
+<!-- CLIENT COMMON BAR -->
+[Client options](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions) |
+[Accessing the response](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#accessing-http-response-details-using-responset) |
+[Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
+[Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
+[Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md) |
+[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#mocking) |
+[Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
+<!-- CLIENT COMMON BAR -->
 
 ## Examples
 
@@ -59,10 +73,10 @@ previous token approaches expiry. Using this method, your requests are less like
 using var tokenCredential = new CommunicationTokenCredential(
     new CommunicationTokenRefreshOptions(
         refreshProactively: true, // Indicates if the token should be proactively refreshed in the background or only on-demand
-        tokenRefresher: cancellationToken => FetchTokenForUserFromMyServer("bob@contoso.com", cancellationToken),
-        asyncTokenRefresher: cancellationToken => FetchTokenForUserFromMyServerAsync("bob@contoso.com", cancellationToken)
-        )
-    );
+        tokenRefresher: cancellationToken => FetchTokenForUserFromMyServer("bob@contoso.com", cancellationToken))
+    {
+        AsyncTokenRefresher = cancellationToken => FetchTokenForUserFromMyServerAsync("bob@contoso.com", cancellationToken)
+    });
 ```
 
 If you already have a token, you can optimize the token refreshing even further by passing that initial token:
@@ -71,11 +85,12 @@ If you already have a token, you can optimize the token refreshing even further 
 string initialToken = Environment.GetEnvironmentVariable("COMMUNICATION_SERVICES_USER_TOKEN");
 using var tokenCredential = new CommunicationTokenCredential(
     new CommunicationTokenRefreshOptions(
-        refreshProactively: true, // Indicates if the token should be proactively refreshed in the background or only on-demand
-        tokenRefresher: cancellationToken => FetchTokenForUserFromMyServer("bob@contoso.com", cancellationToken),
-        asyncTokenRefresher: cancellationToken => FetchTokenForUserFromMyServerAsync("bob@contoso.com", cancellationToken),
-        initialToken)
-    );
+       refreshProactively: true, // Indicates if the token should be proactively refreshed in the background or only on-demand
+       tokenRefresher: cancellationToken => FetchTokenForUserFromMyServer("bob@contoso.com", cancellationToken))
+    {
+        AsyncTokenRefresher = cancellationToken => FetchTokenForUserFromMyServerAsync("bob@contoso.com", cancellationToken),
+        InitialToken = initialToken
+    });
 ```
 
 ## Troubleshooting
@@ -103,6 +118,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For m
 [user_access_token]: https://docs.microsoft.com/azure/communication-services/quickstarts/access-tokens?pivots=programming-language-csharp
 [communication_resource_docs]: https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp
 [communication_resource_create_portal]:  https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp
+[communication_resource_create_power_shell]: https://docs.microsoft.com/powershell/module/az.communication/new-azcommunicationservice
 [communication_resource_create_net]: https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-net
 
 

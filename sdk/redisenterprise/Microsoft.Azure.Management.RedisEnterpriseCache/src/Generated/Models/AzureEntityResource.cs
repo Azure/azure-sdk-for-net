@@ -14,9 +14,12 @@ namespace Microsoft.Azure.Management.RedisEnterprise.Models
     using System.Linq;
 
     /// <summary>
+    /// Entity Resource
+    /// </summary>
+    /// <remarks>
     /// The resource model definition for an Azure Resource Manager resource
     /// with an etag.
-    /// </summary>
+    /// </remarks>
     public partial class AzureEntityResource : Resource
     {
         /// <summary>

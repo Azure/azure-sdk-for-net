@@ -62,9 +62,23 @@ namespace Azure.Core.Serialization
         }
 
         /// <inheritdoc />
-        public override async ValueTask<object?> DeserializeAsync(Stream stream, Type returnType, CancellationToken cancellationToken)
+        public override ValueTask<object?> DeserializeAsync(Stream stream, Type returnType, CancellationToken cancellationToken)
         {
-            return await JsonSerializer.DeserializeAsync(stream, returnType, _options, cancellationToken).ConfigureAwait(false);
+            return JsonSerializer.DeserializeAsync(stream, returnType, _options, cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public override BinaryData Serialize(object? value, Type? inputType = default, CancellationToken cancellationToken = default) =>
+            SerializeToBinaryDataInternal(value, inputType);
+
+        /// <inheritdoc />
+        public override ValueTask<BinaryData> SerializeAsync(object? value, Type? inputType = default, CancellationToken cancellationToken = default) =>
+             new ValueTask<BinaryData>(SerializeToBinaryDataInternal(value, inputType));
+
+        private BinaryData SerializeToBinaryDataInternal(object? value, Type? inputType)
+        {
+            byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(value, inputType ?? value?.GetType() ?? typeof(object), _options);
+            return new BinaryData(bytes);
         }
 
         /// <inheritdoc/>

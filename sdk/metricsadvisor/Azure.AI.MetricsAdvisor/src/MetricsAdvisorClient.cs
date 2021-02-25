@@ -56,6 +56,37 @@ namespace Azure.AI.MetricsAdvisor
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="MetricsAdvisorClient"/> class.
+        /// </summary>
+        /// <param name="endpoint">The endpoint to use for connecting to the Metrics Advisor Cognitive Service.</param>
+        /// <param name="credential">A credential used to authenticate to the service.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="endpoint"/> or <paramref name="credential"/> is null.</exception>
+        public MetricsAdvisorClient(Uri endpoint, TokenCredential credential)
+            : this(endpoint, credential, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MetricsAdvisorClient"/> class.
+        /// </summary>
+        /// <param name="endpoint">The endpoint to use for connecting to the Metrics Advisor Cognitive Service.</param>
+        /// <param name="credential">A credential used to authenticate to the service.</param>
+        /// <param name="options">A set of options to apply when configuring the client.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="endpoint"/> or <paramref name="credential"/> is null.</exception>
+        public MetricsAdvisorClient(Uri endpoint, TokenCredential credential, MetricsAdvisorClientsOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            options ??= new MetricsAdvisorClientsOptions();
+
+            _clientDiagnostics = new ClientDiagnostics(options);
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, Constants.DefaultCognitiveScope));
+
+            _serviceRestClient = new AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2RestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri);
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="MetricsAdvisorClient"/> class. This constructor
         /// is intended to be used for mocking only.
         /// </summary>
@@ -639,11 +670,11 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="feedback">The <see cref="MetricFeedback"/> to be created.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <c>string</c>
-        /// containing the ID of the newly created feedback.
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="MetricFeedback"/>
+        /// containing information about the newly added feedback.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="feedback"/> is null.</exception>
-        public virtual async Task<Response<string>> AddFeedbackAsync(MetricFeedback feedback, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MetricFeedback>> AddFeedbackAsync(MetricFeedback feedback, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(feedback, nameof(feedback));
 
@@ -655,7 +686,16 @@ namespace Azure.AI.MetricsAdvisor
                 ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateMetricFeedbackHeaders> response = await _serviceRestClient.CreateMetricFeedbackAsync(feedback, cancellationToken).ConfigureAwait(false);
                 string feedbackId = ClientCommon.GetFeedbackId(response.Headers.Location);
 
-                return Response.FromValue(feedbackId, response.GetRawResponse());
+                try
+                {
+                    var addedFeedback = await GetFeedbackAsync(feedbackId, cancellationToken).ConfigureAwait(false);
+
+                    return Response.FromValue(addedFeedback, response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    throw new RequestFailedException($"The feedback has been added successfully, but the client failed to fetch its data. Feedback ID: {feedbackId}", ex);
+                }
             }
             catch (Exception e)
             {
@@ -670,11 +710,11 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="feedback">The <see cref="MetricFeedback"/> to be created.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <c>string</c>
-        /// containing the ID of the newly created feedback.
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="MetricFeedback"/>
+        /// containing information about the newly added feedback.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="feedback"/> is null.</exception>
-        public virtual Response<string> AddFeedback(MetricFeedback feedback, CancellationToken cancellationToken = default)
+        public virtual Response<MetricFeedback> AddFeedback(MetricFeedback feedback, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(feedback, nameof(feedback));
 
@@ -686,7 +726,16 @@ namespace Azure.AI.MetricsAdvisor
                 ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateMetricFeedbackHeaders> response = _serviceRestClient.CreateMetricFeedback(feedback, cancellationToken);
                 string feedbackId = ClientCommon.GetFeedbackId(response.Headers.Location);
 
-                return Response.FromValue(feedbackId, response.GetRawResponse());
+                try
+                {
+                    var addedFeedback = GetFeedback(feedbackId, cancellationToken);
+
+                    return Response.FromValue(addedFeedback, response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    throw new RequestFailedException($"The feedback has been added successfully, but the client failed to fetch its data. Feedback ID: {feedbackId}", ex);
+                }
             }
             catch (Exception e)
             {
@@ -701,7 +750,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="feedbackId">The ID of the <see cref="MetricFeedback"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response{T}"/> containing the created <see cref="MetricFeedback"/>s.
+        /// A <see cref="Response{T}"/> containing the requested <see cref="MetricFeedback"/>.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="feedbackId"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="feedbackId"/> is empty or not a valid GUID.</exception>
@@ -729,7 +778,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="feedbackId">The ID of the <see cref="MetricFeedback"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response{T}"/> containing the created <see cref="MetricFeedback"/>s.
+        /// A <see cref="Response{T}"/> containing the requested <see cref="MetricFeedback"/>.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="feedbackId"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="feedbackId"/> is empty or not a valid GUID.</exception>

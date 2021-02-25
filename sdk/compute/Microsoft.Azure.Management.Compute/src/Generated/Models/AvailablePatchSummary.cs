@@ -32,9 +32,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         /// <param name="status">The overall success or failure status of the
         /// operation. It remains "InProgress" until the operation completes.
-        /// At that point it will become "Failed", "Succeeded", or
-        /// "CompletedWithWarnings.". Possible values include: 'InProgress',
-        /// 'Failed', 'Succeeded', 'CompletedWithWarnings'</param>
+        /// At that point it will become "Unknown", "Failed", "Succeeded", or
+        /// "CompletedWithWarnings.". Possible values include: 'Unknown',
+        /// 'InProgress', 'Failed', 'Succeeded',
+        /// 'CompletedWithWarnings'</param>
         /// <param name="assessmentActivityId">The activity ID of the operation
         /// that produced this result. It is used to correlate across CRP and
         /// extension logs.</param>
@@ -74,9 +75,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets the overall success or failure status of the operation. It
         /// remains "InProgress" until the operation completes. At that point
-        /// it will become "Failed", "Succeeded", or "CompletedWithWarnings.".
-        /// Possible values include: 'InProgress', 'Failed', 'Succeeded',
-        /// 'CompletedWithWarnings'
+        /// it will become "Unknown", "Failed", "Succeeded", or
+        /// "CompletedWithWarnings.". Possible values include: 'Unknown',
+        /// 'InProgress', 'Failed', 'Succeeded', 'CompletedWithWarnings'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
         public string Status { get; private set; }

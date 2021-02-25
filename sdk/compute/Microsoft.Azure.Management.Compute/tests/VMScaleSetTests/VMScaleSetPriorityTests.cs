@@ -175,7 +175,7 @@ namespace Compute.Tests
 
             try
             {
-                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "centralus");
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus");
                 EnsureClientsInitialized(context);
                 ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
 
@@ -197,7 +197,7 @@ namespace Compute.Tests
                             vmScaleSet.VirtualMachineProfile.EvictionPolicy = evictionPolicy;
                             vmScaleSet.VirtualMachineProfile.BillingProfile = billingProfile;
 
-                            vmScaleSet.Sku.Name = VirtualMachineSizeTypes.StandardA1;
+                            vmScaleSet.Sku.Name = VirtualMachineSizeTypes.StandardA1V2;
                             vmScaleSet.Sku.Tier = "Standard";
                             vmScaleSet.Sku.Capacity = 2;
                         },

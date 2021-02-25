@@ -33,8 +33,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
-            var filter = new FeedbackDimensionFilter(new DimensionKey());
-            var feedback = new MetricCommentFeedback(FakeGuid, filter, "comment");
+            var feedback = new MetricCommentFeedback(FakeGuid, new (), "comment");
 
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();

@@ -5,6 +5,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
         protected BlobChangeFeedClient() { }
         public BlobChangeFeedClient(string connectionString) { }
         public BlobChangeFeedClient(string connectionString, Azure.Storage.Blobs.BlobClientOptions options) { }
+        public BlobChangeFeedClient(System.Uri serviceUri, Azure.AzureSasCredential credential, Azure.Storage.Blobs.BlobClientOptions options = null) { }
         public BlobChangeFeedClient(System.Uri serviceUri, Azure.Core.TokenCredential credential, Azure.Storage.Blobs.BlobClientOptions options = null) { }
         public BlobChangeFeedClient(System.Uri serviceUri, Azure.Storage.Blobs.BlobClientOptions options = null) { }
         public BlobChangeFeedClient(System.Uri serviceUri, Azure.Storage.StorageSharedKeyCredential credential, Azure.Storage.Blobs.BlobClientOptions options = null) { }

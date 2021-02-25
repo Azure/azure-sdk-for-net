@@ -13,7 +13,7 @@ using Azure.ResourceManager.Communication;
 namespace Azure.ResourceManager.Communication
 {
     /// <summary> Communication service management client. </summary>
-    public class CommunicationManagementClient
+    public partial class CommunicationManagementClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;

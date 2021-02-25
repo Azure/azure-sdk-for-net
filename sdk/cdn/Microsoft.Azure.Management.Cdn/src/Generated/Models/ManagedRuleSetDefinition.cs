@@ -46,8 +46,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// set.</param>
         /// <param name="sku">The pricing tier (defines a CDN provider, feature
         /// list and rate) of the CdnWebApplicationFirewallPolicy.</param>
-        public ManagedRuleSetDefinition(string id = default(string), string name = default(string), string type = default(string), string provisioningState = default(string), string ruleSetType = default(string), string ruleSetVersion = default(string), IList<ManagedRuleGroupDefinition> ruleGroups = default(IList<ManagedRuleGroupDefinition>), Sku sku = default(Sku))
-            : base(id, name, type)
+        public ManagedRuleSetDefinition(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string provisioningState = default(string), string ruleSetType = default(string), string ruleSetVersion = default(string), IList<ManagedRuleGroupDefinition> ruleGroups = default(IList<ManagedRuleGroupDefinition>), Sku sku = default(Sku))
+            : base(id, name, type, systemData)
         {
             ProvisioningState = provisioningState;
             RuleSetType = ruleSetType;

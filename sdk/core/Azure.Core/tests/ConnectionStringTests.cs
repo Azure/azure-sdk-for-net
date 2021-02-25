@@ -74,6 +74,15 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public void GetSegmentValueOrDefault()
+        {
+            var connectionString = ConnectionString.Parse("x=y");
+            Assert.That(connectionString.GetSegmentValueOrDefault("x", "_"), Is.EqualTo("y"));
+            var defaultValue = "foo";
+            Assert.That(connectionString.GetSegmentValueOrDefault("notpresentWithDefault", defaultValue), Is.EqualTo(defaultValue));
+        }
+
+        [Test]
         public void Add()
         {
             var connectionString = ConnectionString.Parse("x=y");

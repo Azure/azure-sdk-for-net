@@ -1,0 +1,32 @@
+# NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+trigger:
+  branches:
+    include:
+    - master
+    - main
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/quantum/
+
+pr:
+  branches:
+    include:
+    - master
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/quantum/
+
+extends:
+  template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    ServiceDirectory: quantum
+    ArtifactName: packages
+    Artifacts:
+    - name: Azure.Quantum.Jobs
+      safeName: AzureQuantumJobs

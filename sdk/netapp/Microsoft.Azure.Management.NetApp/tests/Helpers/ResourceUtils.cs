@@ -12,7 +12,7 @@ namespace NetApp.Tests.Helpers
         public const long gibibyte = 1024L * 1024L * 1024L;
 
         private const string remoteSuffix = "-R";
-        public const string vnet = "sdknettestqa2vnet464";
+        public const string vnet = "sdknettestqa2vnet464";        
         public const string backupVnet = "sdknettestqa2vnet464euap";
         public const string repVnet = "sdktestqa2vnet464";
         //public const string remoteVnet = repVnet + remoteSuffix;
@@ -21,6 +21,7 @@ namespace NetApp.Tests.Helpers
         //public const string subsId = "0661B131-4A11-479B-96BF-2F95ACCA2F73";
         public const string subsId = "69a75bda-882e-44d5-8431-63421204132a";
         public const string location = "westus2";
+        //public const string location = "eastus2euap";
         //public const string remoteLocation = "southcentralus";
         public const string remoteLocation = "eastus";
         //public const string backupLocation = "westus2";
@@ -30,21 +31,21 @@ namespace NetApp.Tests.Helpers
         //public const string resourceGroup = "ab_sdk_test_rg";
         public const string repResourceGroup = "sdk-test-qa2";
         public const string remoteResourceGroup = repResourceGroup + remoteSuffix;
-        public const string accountName1 = "sdk-net-tests-acc-208";
-        public const string accountName1Repl = "sdk-net-tests-acc-20b";
+        public const string accountName1 = "sdk-net-tests-acc-209";
+        public const string accountName1Repl = "sdk-net-tests-acc-21b";
         public const string remoteAccountName1 = accountName1Repl + remoteSuffix;
-        public const string accountName2 = "sdk-net-tests-acc-21";
-        public const string poolName1 = "sdk-net-tests-pool-201";
-        public const string poolName1Repl = "sdk-net-tests-pool-10b";
+        public const string accountName2 = "sdk-net-tests-acc-22";
+        public const string poolName1 = "sdk-net-tests-pool-202";
+        public const string poolName1Repl = "sdk-net-tests-pool-11b";
         public const string remotePoolName1 = poolName1Repl + remoteSuffix;
         public const string poolName2 = "sdk-net-tests-pool-211";
-        public const string volumeName1 = "sdk-net-tests-vol-2101";
+        public const string volumeName1 = "sdk-net-tests-vol-2102";
         
-        public const string volumeBackupAccountName1 = "sdk-net-tests-acc-211v";
-        public const string backupVolumeName1 = "sdk-net-tests-vol-2108";
+        public const string volumeBackupAccountName1 = "sdk-net-tests-acc-213v";
+        public const string backupVolumeName1 = "sdk-net-tests-vol-2109";
 
-        public const string volumeName1Repl = "sdk-net-tests-vol-1000b";
-        public const string remoteVolumeName1 = volumeName1Repl + remoteSuffix;
+        public const string volumeName1ReplSource = "sdk-net-tests-vol-1001b-source";        
+        public const string volumeName1ReplDest = volumeName1ReplSource + remoteSuffix+"dest";
         public const string volumeName2 = "sdk-net-tests-vol-1001";
         public const string snapshotName1 = "sdk-net-tests-snap-11";
         public const string snapshotName2 = "sdk-net-tests-snap-12";
@@ -195,7 +196,7 @@ namespace NetApp.Tests.Helpers
             return resource;
         }
 
-        public static Volume CreateDpVolume(AzureNetAppFilesManagementClient netAppMgmtClient, Volume sourceVolume, string volumeName = remoteVolumeName1, string poolName = remotePoolName1, string accountName = remoteAccountName1, string resourceGroup = remoteResourceGroup, string location = location, List<string> protocolTypes = null, IDictionary<string, string> tags = default(IDictionary<string, string>), VolumePropertiesExportPolicy exportPolicy = null, bool volumeOnly = false, string snapshotId = null)
+        public static Volume CreateDpVolume(AzureNetAppFilesManagementClient netAppMgmtClient, Volume sourceVolume, string volumeName = volumeName1ReplDest, string poolName = remotePoolName1, string accountName = remoteAccountName1, string resourceGroup = remoteResourceGroup, string location = location, List<string> protocolTypes = null, IDictionary<string, string> tags = default(IDictionary<string, string>), VolumePropertiesExportPolicy exportPolicy = null, bool volumeOnly = false, string snapshotId = null)
         {
             if (!volumeOnly)
             {

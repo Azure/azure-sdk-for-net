@@ -1,4 +1,4 @@
-{
+﻿{
   "Entries": [
     {
       "RequestUri": "https://seanmcccanary3.file.core.windows.net/test-share-8cdb9184-ec20-7fe0-d29b-cfe64dbcc4ee?restype=share",
@@ -13,14 +13,15 @@
         "x-ms-client-request-id": "e84df253-417d-9526-3d6a-51c5b9af96cc",
         "x-ms-date": "Wed, 05 Aug 2020 22:26:56 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-04-08"
+        "x-ms-version": "2020-06-12",
+        "Accept": "application/xml"
       },
       "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Wed, 05 Aug 2020 22:26:55 GMT",
-        "ETag": "\u00220x8D8398EA9265EE8\u0022",
+        "ETag": "\"0x8D8398EA9265EE8\"",
         "Last-Modified": "Wed, 05 Aug 2020 22:26:55 GMT",
         "Server": [
           "Windows-Azure-File/1.0",
@@ -28,12 +29,12 @@
         ],
         "x-ms-client-request-id": "e84df253-417d-9526-3d6a-51c5b9af96cc",
         "x-ms-request-id": "cc50bf75-e01a-0003-4c77-6b3ba6000000",
-        "x-ms-version": "2020-04-08"
+        "x-ms-version": "2020-06-12"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seanmcccanary3.file.core.windows.net/test-share-8cdb9184-ec20-7fe0-d29b-cfe64dbcc4ee?restype=share\u0026comp=stats",
+      "RequestUri": "https://seanmcccanary3.file.core.windows.net/test-share-8cdb9184-ec20-7fe0-d29b-cfe64dbcc4ee?restype=share&comp=stats",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -46,7 +47,8 @@
         "x-ms-date": "Wed, 05 Aug 2020 22:26:56 GMT",
         "x-ms-lease-id": "68893cd1-7343-e761-a05f-c6b7d0092ce9",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-04-08"
+        "x-ms-version": "2020-06-12",
+        "Accept": "application/xml"
       },
       "RequestBody": null,
       "StatusCode": 412,
@@ -61,12 +63,12 @@
         "x-ms-client-request-id": "16064ed3-045f-e0c9-9065-471d7a6fc434",
         "x-ms-error-code": "LeaseNotPresentWithContainerOperation",
         "x-ms-request-id": "cc50bf77-e01a-0003-4d77-6b3ba6000000",
-        "x-ms-version": "2020-04-08"
+        "x-ms-version": "2020-06-12"
       },
       "ResponseBody": [
-        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003ELeaseNotPresentWithContainerOperation\u003C/Code\u003E\u003CMessage\u003EThere is currently no lease on the file share.\n",
+        "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>LeaseNotPresentWithContainerOperation</Code><Message>There is currently no lease on the file share.\n",
         "RequestId:cc50bf77-e01a-0003-4d77-6b3ba6000000\n",
-        "Time:2020-08-05T22:26:55.9689156Z\u003C/Message\u003E\u003C/Error\u003E"
+        "Time:2020-08-05T22:26:55.9689156Z</Message></Error>"
       ]
     },
     {
@@ -83,7 +85,8 @@
         "x-ms-date": "Wed, 05 Aug 2020 22:26:57 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-04-08"
+        "x-ms-version": "2020-06-12",
+        "Accept": "application/xml"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -96,7 +99,7 @@
         ],
         "x-ms-client-request-id": "81e3b19c-1603-2a8a-f8b3-ca0994537211",
         "x-ms-request-id": "cc50bf78-e01a-0003-4e77-6b3ba6000000",
-        "x-ms-version": "2020-04-08"
+        "x-ms-version": "2020-06-12"
       },
       "ResponseBody": []
     }

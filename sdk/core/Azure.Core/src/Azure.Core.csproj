@@ -2,17 +2,17 @@
   <PropertyGroup>
     <Description>This is the implementation of the Azure Client Pipeline</Description>
     <AssemblyTitle>Microsoft Azure Client Pipeline</AssemblyTitle>
-    <Version>1.9.0-beta.1</Version>
-    <ApiCompatVersion>1.8.0</ApiCompatVersion>
+    <Version>1.10.0-beta.1</Version>
+    <ApiCompatVersion>1.9.0</ApiCompatVersion>
     <PackageTags>Microsoft Azure Client Pipeline</PackageTags>
     <Nullable>enable</Nullable>
     <DefineConstants>$(DefineConstants);AZURE_NULLABLE</DefineConstants>
     <TargetFrameworks>$(RequiredTargetFrameworks);net461;net5.0</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
+    <EnableClientSdkAnalyzers>true</EnableClientSdkAnalyzers>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' != 'net5.0'">
+  <ItemGroup>
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
     <PackageReference Include="System.Buffers" />
     <PackageReference Include="System.Diagnostics.DiagnosticSource" />
@@ -20,11 +20,13 @@
     <PackageReference Include="System.Numerics.Vectors" />
     <PackageReference Include="System.Threading.Tasks.Extensions" />
     <PackageReference Include="System.Text.Json" />
+    <PackageReference Include="System.Memory.Data" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Remove="Shared\**\*.cs" />
     <Compile Include="Shared\Argument.cs" />
+    <Compile Include="Shared\AuthorizationChallengeParser.cs" />
     <Compile Include="Shared\AzureKeyCredentialPolicy.cs" />
     <Compile Include="Shared\AzureSasCredentialSynchronousPolicy.cs" />
     <Compile Include="Shared\Base64Url.cs" />

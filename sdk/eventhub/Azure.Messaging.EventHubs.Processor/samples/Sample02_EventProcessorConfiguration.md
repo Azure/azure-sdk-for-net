@@ -4,6 +4,73 @@ The `EventProcessorClient` supports a set of options to configure many aspects o
 
 To begin, please ensure that you're familiar with the items discussed in the [Getting started](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples#getting-started) section of the README, and have the prerequisites and connection string information available.
 
+## Influencing load balancing behavior
+
+To scale event processing, you can run multiple instances of the `EventProcessorClient` and they will coordinate to balance work between them. The responsibility for processing is distributed among each of the active processors configured to read from the same Event Hub and using the same consumer group.  To balance work, each active `EventProcessorClient` instance will assume responsibility for processing a set of Event Hub partitions, referred to as "owning" the partitions.  The processors collaborate on ownership using storage as a central point of coordination.  
+
+While an `EventProcessorClient` is running, it will periodically perform a load balancing cycle in which it audits its own health and inspects the current state of collaboration with other processors. As part of that cycle, it will refresh the timestamp on an ownership record for each partition that it owns.  These ownership records help to ensure that each `EventProcessorClient` understands how to maintain its fair share of partitions.
+
+There are several configuration options that can be used together to influence the behavior of load balancing, allowing you to tune it for the specific needs of your application.
+
+### Load balancing strategy
+
+This controls the approach that the `EventProcessorClient` will use to make decisions about how aggressively to request partition ownership; this is most impactful during the initial startup or when recovering from a crash.  More information on the strategies available can be found in the [documentation](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.processor.loadbalancingstrategy).
+
+```C# Snippet:EventHubs_Processor_Sample02_LoadBalancingStrategy
+var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
+var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
+
+var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+var eventHubName = "<< NAME OF THE EVENT HUB >>";
+var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
+
+var processorOptions = new EventProcessorClientOptions
+{
+    LoadBalancingStrategy = LoadBalancingStrategy.Greedy
+};
+
+var storageClient = new BlobContainerClient(
+    storageConnectionString,
+    blobContainerName);
+
+var processor = new EventProcessorClient(
+    storageClient,
+    consumerGroup,
+    eventHubsConnectionString,
+    eventHubName,
+    processorOptions);
+```
+
+### Load balancing intervals
+
+There are two intervals considered during load balancing which can influence its behavior.  The `LoadBalancingInterval` controls how frequently a load balancing cycle is run.  During the load balancing cycle, the `EventProcessorClient` will attempt to refresh its ownership record for each partition that it owns.  The `PartitionOwnershipExpirationInterval` controls how long an ownership record is considered valid.  If the processor does not update an ownership record before this interval elapses, the partition represented by this record is considered unowned and is eligible to be claimed by another processor.  
+
+```C# Snippet:EventHubs_Processor_Sample02_LoadBalancingIntervals
+var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
+var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
+
+var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+var eventHubName = "<< NAME OF THE EVENT HUB >>";
+var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
+
+var processorOptions = new EventProcessorClientOptions
+{
+    LoadBalancingUpdateInterval = TimeSpan.FromSeconds(10),
+    PartitionOwnershipExpirationInterval = TimeSpan.FromSeconds(30)
+};
+
+var storageClient = new BlobContainerClient(
+    storageConnectionString,
+    blobContainerName);
+
+var processor = new EventProcessorClient(
+    storageClient,
+    consumerGroup,
+    eventHubsConnectionString,
+    eventHubName,
+    processorOptions);
+```
+
 ## Using web sockets 
 
 Communication with the Event Hubs service can be configured by adjusting the `EventHubConfigurationOptions` that are exposed by the `ConnectionOptions` member of a client options type.  By default, the `EventProcessorClient` communicates using the AMQP protocol over TCP.  Some application host environments prefer to restrict raw TCP socket use, especially in many enterprise or VPN scenarios.  In these environments, or when a proxy is in use, communication with the Event Hubs service can make use of web sockets by configuring the client's connection settings.
@@ -131,6 +198,35 @@ var options = new EventHubConnectionOptions
     TransportType = EventHubsTransportType.AmqpWebSockets,
     Proxy = HttpClient.DefaultProxy
 };
+```
+
+### Specifying a custom endpoint address
+
+Connections to the Azure Event Hubs service are made using the fully qualified namespace assigned to the Event Hubs namespace as the connection endpoint address. Because the Event Hubs service uses the endpoint address to locate the corresponding resources, it isn't possible to specify a custom address in the connection string or as the fully qualified namespace.
+
+However, a custom address is required for proper routing by some environments, such as those using unconventional proxy configurations or certain configurations of an Express Route circuit. To support these scenarios, a custom endpoint address may be specified as part of the connection options.  This custom address will take precedence for establishing the connection to the Event Hubs service.
+
+```C# Snippet:EventHubs_Processor_Sample02_ConnectionOptionsCustomEndpoint
+var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
+var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
+
+var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+var eventHubName = "<< NAME OF THE EVENT HUB >>";
+var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
+
+var processorOptions = new EventProcessorClientOptions();
+processorOptions.ConnectionOptions.CustomEndpointAddress = new Uri("amqps://app-gateway.mycompany.com");
+
+var storageClient = new BlobContainerClient(
+    storageConnectionString,
+    blobContainerName);
+
+var processor = new EventProcessorClient(
+    storageClient,
+    consumerGroup,
+    eventHubsConnectionString,
+    eventHubName,
+    processorOptions);
 ```
 
 ### Configuring the client retry thresholds

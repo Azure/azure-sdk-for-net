@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -50,6 +51,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("rootFolder");
                 writer.WriteStringValue(RootFolder);
             }
+            if (Optional.IsDefined(LastCommitId))
+            {
+                writer.WritePropertyName("lastCommitId");
+                writer.WriteStringValue(LastCommitId);
+            }
+            if (Optional.IsDefined(TenantId))
+            {
+                writer.WritePropertyName("tenantId");
+                writer.WriteStringValue(TenantId.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -62,6 +73,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> repositoryName = default;
             Optional<string> collaborationBranch = default;
             Optional<string> rootFolder = default;
+            Optional<string> lastCommitId = default;
+            Optional<Guid> tenantId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -99,8 +112,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     rootFolder = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("lastCommitId"))
+                {
+                    lastCommitId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("tenantId"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    tenantId = property.Value.GetGuid();
+                    continue;
+                }
             }
-            return new WorkspaceRepositoryConfiguration(type.Value, hostName.Value, accountName.Value, projectName.Value, repositoryName.Value, collaborationBranch.Value, rootFolder.Value);
+            return new WorkspaceRepositoryConfiguration(type.Value, hostName.Value, accountName.Value, projectName.Value, repositoryName.Value, collaborationBranch.Value, rootFolder.Value, lastCommitId.Value, Optional.ToNullable(tenantId));
         }
     }
 }

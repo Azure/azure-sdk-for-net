@@ -1,0 +1,61 @@
+{
+    "tool": "Credential Scanner",
+    "suppressions": [
+        {
+            "placeholder": [
+                "Sanitized",
+                "fake",
+                "Test12345",
+                "default",
+                "randompasswdcd",
+                "__CLIENT_SECRET__",
+                "userPassword7294",
+                "aabbccdd",
+                "pwd1903",
+                "newSubscriptionPK281",
+                "patchedPk8698",
+                "pwd1",
+                "pwd2",
+                "nodesdk",
+                "randompasswd",
+                "Pa$$w0rd",
+                "azure12345QWE!",
+                "Abcd223@22344",
+                "testsecretpwd1784",
+                "testuserpw",
+                "mockPassword",
+                "NewPassword1!",
+                "Password*",
+                "123",
+                "sskdjfsdasdjsd",
+                "security",
+                "abcde",
+                "BaR@123e2etests-res-f978ade9",
+                "testPassword1!",
+                "sdkpass",
+                "sdkpass1",
+                "aduser",
+                "adminPassword",
+                "p@ss9533",
+                "pasworrd",
+                "Rsmt!1234",
+                "Un53cuRE!",
+                "Yukon900!",
+                "sql@zure123!",
+                "asdsadsad",
+                "Kg=="
+            ],
+            "_justification": "Secret used by test code, it is fake."
+        },
+        {
+            "file":[
+                "sdk/identity/Azure.Identity/tests/Data/cert.pfx",
+                "sdk/identity/Azure.Identity/tests/Data/cert-invalid-data.pem",
+                "sdk/identity/Azure.Identity/tests/Data/cert.pem",
+                "sdk/identity/Azure.Identity/tests/Data/mock-arc-mi-key.key",
+                "sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Common/tests/cert.pem"
+            ],
+            "_justification": "File contains private key used by test code."
+        }    
+    ]
+}

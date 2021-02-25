@@ -144,6 +144,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             Assert.AreEqual(options.PrefetchCount, processor.PrefetchCount);
             Assert.AreEqual(options.ReceiveMode, processor.ReceiveMode);
             Assert.AreEqual(options.MaxAutoLockRenewalDuration, processor.MaxAutoLockRenewalDuration);
+            Assert.AreEqual(options.MaxReceiveWaitTime, processor.MaxReceiveWaitTime);
             Assert.AreEqual(fullyQualifiedNamespace, processor.FullyQualifiedNamespace);
             Assert.IsFalse(processor.IsClosed);
             Assert.IsFalse(processor.IsProcessing);
@@ -280,6 +281,41 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             Assert.That(async () => await args.DeferMessageAsync(msg),
                 Throws.InstanceOf<Exception>());
             Assert.IsFalse(msg.IsSettled);
+        }
+
+        [Test]
+        public async Task CanDisposeStartedProcessorMultipleTimes()
+        {
+            var processor = new ServiceBusProcessor(
+                GetMockedConnection(),
+                "entityPath",
+                false,
+                new ServiceBusPlugin[] { },
+                new ServiceBusProcessorOptions());
+            processor.ProcessMessageAsync += _ => Task.CompletedTask;
+            processor.ProcessErrorAsync += _ => Task.CompletedTask;
+            await processor.StartProcessingAsync().ConfigureAwait(false);
+
+            await processor.DisposeAsync();
+            await processor.DisposeAsync();
+        }
+
+        [Test]
+        public async Task CanDisposeClosedProcessor()
+        {
+            var processor = new ServiceBusProcessor(
+                GetMockedConnection(),
+                "entityPath",
+                false,
+                new ServiceBusPlugin[] { },
+                new ServiceBusProcessorOptions());
+
+            processor.ProcessMessageAsync += _ => Task.CompletedTask;
+            processor.ProcessErrorAsync += _ => Task.CompletedTask;
+            await processor.StartProcessingAsync().ConfigureAwait(false);
+            await processor.CloseAsync();
+
+            await processor.DisposeAsync();
         }
     }
 }
