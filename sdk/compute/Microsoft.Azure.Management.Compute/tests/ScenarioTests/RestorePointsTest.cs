@@ -44,18 +44,20 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
                         {
                             vm.DiagnosticsProfile = GetManagedDiagnosticsProfile();
                         }, hasManagedDisks: true);
-                    DataDisk disk = createdVM.StorageProfile.DataDisks[0];
-                    string diskId = disk.ManagedDisk.Id;
-
+                    DataDisk dataDisk = createdVM.StorageProfile.DataDisks[0];
+                    string dataDiskId = dataDisk.ManagedDisk.Id;
+                    OSDisk osDisk = createdVM.StorageProfile.OsDisk;
                     
                     string rpName = ComputeManagementTestUtilities.GenerateName("rpClientTest");
                     string rpcName = ComputeManagementTestUtilities.GenerateName("rpc1ClientTest");
+                    string vmId = createdVM.Id;
+                    string vmSize = createdVM.HardwareProfile.VmSize;
                     VerifyRPCCreation(createdVM.Id, rpcName, rgName, location);
-                    VerifyRestorePointCreation(rgName, rpcName, rpName, diskToExclude: diskId);
-                    GetRP(rgName, rpcName, rpName);
-                    GetRpc(rgName, rpcName);
-                    GetRpc(rgName, rpcName, RestorePointCollectionExpandOptions.RestorePoints);
-                    //VerifyRestorePointCreation(rgName, rpcName, location);
+                    VerifyRestorePointCreation(rgName, rpcName, rpName, osDisk, vmId,
+                        diskToExclude: dataDiskId);
+                    GetRP(rgName, rpcName, rpName, osDisk, vmId, vmSize, dataDiskId.ToString());
+                    GetRpc(rgName, rpcName, location, vmId, rpName);
+                    GetRpc(rgName, rpcName, location, vmId, rpName, RestorePointCollectionExpandOptions.RestorePoints);
                 }
                 catch (CloudException ex)
                 {
@@ -83,15 +85,14 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
             }
         }
 
-        private void GetRP(string rgName, string rpcName, string rpName)
+        private void GetRP(string rgName, string rpcName, 
+            string rpName, OSDisk osDisk, string vmId, string vmSize, string diskToExclude = null)
         {
             try
             {
-                RestorePoint createdRP = m_CrpClient.RestorePoints.Get(
-                    rgName,
-                    rpcName,
-                    rpName);
-                Assert.Equal(rpName, createdRP.Name);
+                RestorePoint getRestorePointResults = m_CrpClient.RestorePoints.Get(rgName, rpcName, rpName);
+                VerifyRestorePointDetails(getRestorePointResults, rpName, osDisk.Name, osDisk.ManagedDisk.Id,
+                    excludeDisksCount: 1, excludeDiskId:diskToExclude, vmId: vmId, vmSize: vmSize);
             }
             catch (CloudException ex)
             {
@@ -99,15 +100,28 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
             }
         }
 
-        private void GetRpc(string rgName, string rpcName,
+        private void GetRpc(string rgName, string rpcName, string location, string source, string rpName,
             RestorePointCollectionExpandOptions? expandOptions = null)
         {
             try
             {
-                RestorePointCollection createdRP = m_CrpClient.RestorePointCollections.Get(
+                RestorePointCollection getRpcResult = m_CrpClient.RestorePointCollections.Get(
                     rgName,
                     rpcName,
                     expandOptions);
+                Assert.Equal(rpcName, getRpcResult.Name);
+                Assert.Equal(location, getRpcResult.Location);
+                Assert.NotNull(getRpcResult.Id);
+                Assert.NotNull(getRpcResult.Type);
+                Assert.Equal(source, getRpcResult.Source.Id, ignoreCase: true);
+
+                if (expandOptions == RestorePointCollectionExpandOptions.RestorePoints)
+                {
+                    Assert.Equal(1, getRpcResult.RestorePoints.Count);
+                    RestorePoint rp = getRpcResult.RestorePoints[0];
+                    Assert.Equal(rpName, rp.Name);
+                    Assert.NotNull(rp.Id);
+                }
             }
             catch (CloudException ex)
             {
@@ -115,14 +129,18 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
             }
         }
 
+        // Create restore point and exercise 'ExcludeDisk' functionality.
+        // Verify returned restore point contains the id of the excluded disk and did not create diskRestorePoint
+        // of the excluded data disk.
         private void VerifyRestorePointCreation(string rgName, string rpcName, 
-            string rpName, string diskToExclude = null)
+            string rpName, OSDisk osDisk, string vmId, string diskToExclude = null)
         {
+            string osDiskId = osDisk.ManagedDisk.Id;
+            string osDiskName = osDisk.Name;
             ApiEntityReference diskToExcludeEntityRef = new ApiEntityReference() { Id = diskToExclude };
             var inputRP = new RestorePoint
             {
                 Name = rpName,
-                //ExcludeDisks = new List<ApiEntityReference> { diskToExclude },
             };
             if (diskToExclude != null)
             {
@@ -137,7 +155,18 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
                     rpName,
                     inputRP);
                 Assert.Equal(rpName, createdRP.Name);
-                // returned rp id = "/subscriptions/0296790d-427c-48ca-b204-8b729bbd8670/resourceGroups/crptestar872/providers/Microsoft.Compute/restorePointCollections/rpc1ClientTest908/restorePoints/rpClientTest2613"
+                Assert.NotNull(createdRP.Id);
+                Assert.NotNull(createdRP.ProvisioningDetails.CreationTime);
+                Assert.Equal(ProvisioningState.Succeeded.ToString(), createdRP.ProvisioningState);
+                Assert.Equal(ConsistencyModeTypes.ApplicationConsistent, createdRP.ConsistencyMode);
+                RestorePointSourceVMStorageProfile storageProfile = createdRP.SourceMetadata.StorageProfile;
+                Assert.Equal(osDiskName, storageProfile.OsDisk.Name, ignoreCase: true);
+                Assert.Equal(osDiskId, storageProfile.OsDisk.DiskRestorePoint.Id, ignoreCase: true);
+                Assert.Equal(1, createdRP.ExcludeDisks.Count);
+                Assert.Equal(diskToExcludeEntityRef.ToString(), createdRP.ExcludeDisks[0].Id, ignoreCase: true);
+                Assert.Equal(vmId, createdRP.SourceMetadata.VmId, ignoreCase: true);
+                Assert.NotNull(createdRP.SourceMetadata.HardwareProfile.VmSize);
+                Assert.Equal(diskToExcludeEntityRef.ToString(), createdRP.ExcludeDisks[0].Id, ignoreCase: true);
             }
             catch (CloudException ex)
             {
@@ -145,32 +174,21 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
             }
         }
 
-        private void GetRestorePoint(string rgName, string rpcName, string location)
+        void VerifyRestorePointDetails(RestorePoint rp, string rpName, string osDiskName, string osDiskId,
+            int excludeDisksCount, string excludeDiskId, string vmId, string vmSize)
         {
-            var rpName = ComputeManagementTestUtilities.GenerateName("rpClientTest");
-            ApiEntityReference diskToExclude = new ApiEntityReference() { Id = "" };
-            var inputRP = new RestorePoint
-            {
-                Name = rpName,
-                // need to change model to be public setter
-                //ExcludeDisks = new List<ApiEntityReference> { diskToExclude },
-            };
-
-            try
-            {
-                RestorePoint createdRP = m_CrpClient.RestorePoints.CreateOrUpdate(
-                    rgName,
-                    rpcName,
-                    rpName,
-                    inputRP);
-                Assert.Equal(rpName, createdRP.Name);
-                // returned rp id = "/subscriptions/0296790d-427c-48ca-b204-8b729bbd8670/resourceGroups/crptestar872/providers/Microsoft.Compute/restorePointCollections/rpc1ClientTest908/restorePoints/rpClientTest2613"
-            }
-            catch (CloudException ex)
-            {
-                Assert.True(ex.Response.StatusCode == HttpStatusCode.BadRequest);
-            }
-            // exclude an actual disk on the restore point
+            Assert.Equal(rpName, rp.Name);
+            Assert.NotNull(rp.Id);
+            Assert.NotNull(rp.ProvisioningDetails.CreationTime);
+            Assert.Equal(ProvisioningState.Succeeded.ToString(), rp.ProvisioningState);
+            Assert.Equal(ConsistencyModeTypes.ApplicationConsistent, rp.ConsistencyMode);
+            RestorePointSourceVMStorageProfile storageProfile = rp.SourceMetadata.StorageProfile;
+            Assert.Equal(osDiskName, storageProfile.OsDisk.Name, ignoreCase: true);
+            Assert.Equal(osDiskId, storageProfile.OsDisk.DiskRestorePoint.Id, ignoreCase: true);
+            Assert.Equal(1, rp.ExcludeDisks.Count);
+            Assert.Equal(excludeDiskId, rp.ExcludeDisks[0].Id, ignoreCase: true);
+            Assert.Equal(vmId, rp.SourceMetadata.VmId, ignoreCase: true);
+            Assert.Equal(vmSize, rp.SourceMetadata.HardwareProfile.VmSize);
         }
 
         private void VerifyRPCCreation(string sourceVMId, string rpcName, string rgName, string location)
