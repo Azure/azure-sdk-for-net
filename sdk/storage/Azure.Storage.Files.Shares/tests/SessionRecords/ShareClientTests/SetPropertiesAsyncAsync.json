@@ -13,7 +13,7 @@
         "x-ms-client-request-id": "583eaae9-cb3d-04a8-4559-9ed4e7bdc383",
         "x-ms-date": "Tue, 13 Oct 2020 19:28:34 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12",
+         "x-ms-version": "2020-08-04",
         "Accept": "application/xml"
       },
       "RequestBody": null,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "583eaae9-cb3d-04a8-4559-9ed4e7bdc383",
         "x-ms-request-id": "a90b2ef1-001a-000b-3b97-a121a9000000",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "ResponseBody": []
     },
@@ -48,7 +48,7 @@
         "x-ms-date": "Tue, 13 Oct 2020 19:28:34 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-share-quota": "5",
-        "x-ms-version": "2020-06-12",
+         "x-ms-version": "2020-08-04",
         "Accept": "application/xml"
       },
       "RequestBody": null,
@@ -64,7 +64,7 @@
         ],
         "x-ms-client-request-id": "8ee5541d-93a5-fc07-a821-39b518da94b0",
         "x-ms-request-id": "a90b2ef4-001a-000b-3c97-a121a9000000",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "ResponseBody": []
     },
@@ -81,7 +81,7 @@
         "x-ms-client-request-id": "93b6f068-35d7-32de-c48a-5800989bd9d0",
         "x-ms-date": "Tue, 13 Oct 2020 19:28:34 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12",
+         "x-ms-version": "2020-08-04",
         "Accept": "application/xml"
       },
       "RequestBody": null,
@@ -106,7 +106,7 @@
         "x-ms-lease-status": "unlocked",
         "x-ms-request-id": "a90b2ef6-001a-000b-3e97-a121a9000000",
         "x-ms-share-quota": "5",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "ResponseBody": []
     },
@@ -124,7 +124,7 @@
         "x-ms-date": "Tue, 13 Oct 2020 19:28:34 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12",
+         "x-ms-version": "2020-08-04",
         "Accept": "application/xml"
       },
       "RequestBody": null,
@@ -138,7 +138,7 @@
         ],
         "x-ms-client-request-id": "284d2ad2-0024-d1d8-705c-7f7061d07fbf",
         "x-ms-request-id": "a90b2ef7-001a-000b-3f97-a121a9000000",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "ResponseBody": []
     }

@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "3a07a7bc-6e62-7336-0331-cb373ec82fa2",
         "x-ms-date": "Tue, 26 Jan 2021 19:34:37 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "3a07a7bc-6e62-7336-0331-cb373ec82fa2",
         "x-ms-request-id": "eb277193-001a-008d-721a-f4ed10000000",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "ResponseBody": []
     },
@@ -47,7 +47,7 @@
         "x-ms-client-request-id": "a000fad3-b527-2225-5186-caee4f5f7e08",
         "x-ms-date": "Tue, 26 Jan 2021 19:34:37 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -60,7 +60,7 @@
         ],
         "x-ms-client-request-id": "a000fad3-b527-2225-5186-caee4f5f7e08",
         "x-ms-request-id": "eb277198-001a-008d-751a-f4ed10000000",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "ResponseBody": []
     },
@@ -78,7 +78,7 @@
         "x-ms-client-request-id": "44649d23-8ec7-a67b-fd30-e15fbd6089cc",
         "x-ms-date": "Tue, 26 Jan 2021 19:34:37 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -94,7 +94,7 @@
         "x-ms-client-request-id": "44649d23-8ec7-a67b-fd30-e15fbd6089cc",
         "x-ms-error-code": "ShareNotFound",
         "x-ms-request-id": "eb277199-001a-008d-761a-f4ed10000000",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EShareNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified share does not exist.\n",

@@ -21,7 +21,8 @@ namespace Azure.Storage.Files.Shares.Tests
         ShareClientOptions.ServiceVersion.V2019_12_12,
         ShareClientOptions.ServiceVersion.V2020_02_10,
         ShareClientOptions.ServiceVersion.V2020_04_08,
-        ShareClientOptions.ServiceVersion.V2020_06_12)]
+        ShareClientOptions.ServiceVersion.V2020_06_12,
+        ShareClientOptions.ServiceVersion.V2020_08_04)]
     public class FileTestBase : StorageTestBase
     {
         protected readonly ShareClientOptions.ServiceVersion _serviceVersion;

@@ -24,7 +24,8 @@ namespace Azure.Storage.Test.Shared
         BlobClientOptions.ServiceVersion.V2019_12_12,
         BlobClientOptions.ServiceVersion.V2020_02_10,
         BlobClientOptions.ServiceVersion.V2020_04_08,
-        BlobClientOptions.ServiceVersion.V2020_06_12)]
+        BlobClientOptions.ServiceVersion.V2020_06_12,
+        BlobClientOptions.ServiceVersion.V2020_08_04)]
     public abstract class BlobTestBase : StorageTestBase
     {
         protected readonly BlobClientOptions.ServiceVersion _serviceVersion;
@@ -497,6 +498,7 @@ namespace Azure.Storage.Test.Shared
                 BlobClientOptions.ServiceVersion.V2020_02_10 => "2020-02-10",
                 BlobClientOptions.ServiceVersion.V2020_04_08 => "2020-04-08",
                 BlobClientOptions.ServiceVersion.V2020_06_12 => "2020-06-12",
+                BlobClientOptions.ServiceVersion.V2020_08_04 => "2020-08-04",
                 _ => throw new ArgumentException("Invalid service version"),
             };
         }

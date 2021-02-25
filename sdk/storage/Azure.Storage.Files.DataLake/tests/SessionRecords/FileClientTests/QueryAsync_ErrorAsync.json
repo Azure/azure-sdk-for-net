@@ -15,7 +15,7 @@
         "x-ms-client-request-id": "481ca423-d02d-a773-fa49-dc7cb0cb1bdd",
         "x-ms-date": "Wed, 17 Feb 2021 22:34:44 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -30,7 +30,7 @@
         ],
         "x-ms-client-request-id": "481ca423-d02d-a773-fa49-dc7cb0cb1bdd",
         "x-ms-request-id": "296dd1f7-a01e-00aa-577d-055f49000000",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "ResponseBody": []
     },
@@ -50,7 +50,7 @@
         "x-ms-client-request-id": "cc9ab3bb-4f9c-2878-cee2-f21256032d4d",
         "x-ms-date": "Wed, 17 Feb 2021 22:34:45 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "RequestBody": "\uFEFF\u003CQueryRequest\u003E\u003CQueryType\u003ESQL\u003C/QueryType\u003E\u003CExpression\u003ESELECT _2 from BlobStorage WHERE _1 \u0026gt; 250;\u003C/Expression\u003E\u003C/QueryRequest\u003E",
       "StatusCode": 404,
@@ -65,7 +65,7 @@
         "x-ms-client-request-id": "cc9ab3bb-4f9c-2878-cee2-f21256032d4d",
         "x-ms-error-code": "BlobNotFound",
         "x-ms-request-id": "296dd259-a01e-00aa-347d-055f49000000",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\n",
@@ -88,7 +88,7 @@
         "x-ms-client-request-id": "c6b50c42-9112-53b1-2b90-52ed15a6715f",
         "x-ms-date": "Wed, 17 Feb 2021 22:34:45 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -101,7 +101,7 @@
         ],
         "x-ms-client-request-id": "c6b50c42-9112-53b1-2b90-52ed15a6715f",
         "x-ms-request-id": "296dd4bb-a01e-00aa-7b7d-055f49000000",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "ResponseBody": []
     }

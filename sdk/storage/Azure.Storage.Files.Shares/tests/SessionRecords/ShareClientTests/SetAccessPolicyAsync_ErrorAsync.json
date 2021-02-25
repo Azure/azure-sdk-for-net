@@ -16,7 +16,7 @@
         "x-ms-client-request-id": "b2cd582d-7e41-a6c2-c2bc-6d7c40e5727f",
         "x-ms-date": "Tue, 26 Jan 2021 19:25:44 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "RequestBody": "\uFEFF\u003CSignedIdentifiers\u003E\u003CSignedIdentifier\u003E\u003CId\u003Eukeegwrrjpbuvjepyger\u003C/Id\u003E\u003CAccessPolicy\u003E\u003CStart\u003E2021-01-26T18:25:44.2340434Z\u003C/Start\u003E\u003CExpiry\u003E2021-01-26T20:25:44.2340434Z\u003C/Expiry\u003E\u003CPermission\u003Erw\u003C/Permission\u003E\u003C/AccessPolicy\u003E\u003C/SignedIdentifier\u003E\u003C/SignedIdentifiers\u003E",
       "StatusCode": 404,
@@ -31,7 +31,7 @@
         "x-ms-client-request-id": "b2cd582d-7e41-a6c2-c2bc-6d7c40e5727f",
         "x-ms-error-code": "ShareNotFound",
         "x-ms-request-id": "08ebd42b-501a-005b-6619-f4e3f9000000",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EShareNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified share does not exist.\n",

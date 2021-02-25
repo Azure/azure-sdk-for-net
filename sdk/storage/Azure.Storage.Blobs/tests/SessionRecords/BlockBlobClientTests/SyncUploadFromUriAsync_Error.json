@@ -15,7 +15,7 @@
         "x-ms-client-request-id": "a3682854-b83c-73b5-1ec4-658bc921a481",
         "x-ms-date": "Wed, 17 Feb 2021 18:57:09 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -30,7 +30,7 @@
         ],
         "x-ms-client-request-id": "a3682854-b83c-73b5-1ec4-658bc921a481",
         "x-ms-request-id": "32bd88ae-a01e-003d-3b5e-05acd9000000",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "ResponseBody": []
     },
@@ -51,7 +51,7 @@
         "x-ms-copy-source": "https://seanmcccanary3.blob.core.windows.net/test-container-6273eaed-7653-e9b2-e3c2-d9a0c658dece/test-blob-b55bd9b0-ee07-151d-673c-8801288c3e4d",
         "x-ms-date": "Wed, 17 Feb 2021 18:57:10 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -66,7 +66,7 @@
         "x-ms-client-request-id": "43331885-06d4-7591-485a-8186ab63a36e",
         "x-ms-error-code": "CannotVerifyCopySource",
         "x-ms-request-id": "32bd88d0-a01e-003d-585e-05acd9000000",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003ECannotVerifyCopySource\u003C/Code\u003E\u003CMessage\u003EThe specified blob does not exist.\n",
@@ -88,7 +88,7 @@
         "x-ms-client-request-id": "5934b236-29c4-a7e4-3bff-88df34c5baa7",
         "x-ms-date": "Wed, 17 Feb 2021 18:57:10 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -101,7 +101,7 @@
         ],
         "x-ms-client-request-id": "5934b236-29c4-a7e4-3bff-88df34c5baa7",
         "x-ms-request-id": "32bd88e7-a01e-003d-6c5e-05acd9000000",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "ResponseBody": []
     }
