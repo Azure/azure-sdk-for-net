@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.ProviderHub
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/providerhub/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=C:\\Users\\wendychang\\repos\\misc-repos\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "bcd1d6eb21e2ad2981e8a889a51fee171cf60908";
+      public static readonly String GithubCommidId = "21159753c7a34b0347169c139cea18c5d24c8575";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
