@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
@@ -12,6 +13,20 @@ namespace Azure.Storage.Blobs.Models
     [CodeGenModel("Block")]
     public readonly partial struct BlobBlock : IEquatable<BlobBlock>
     {
+        /// <summary>
+        /// The block size in bytes.
+        /// </summary>
+        [CodeGenMember("Size")]
+        public long SizeLong { get; }
+
+        /// <summary>
+        /// This property is a backwards-compatible facade for <see cref="SizeLong"/>,
+        /// which supports long values. Use <see cref="SizeLong"/> for full access of
+        /// supported values.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public int Size => (int)SizeLong;
+
         /// <summary>
         /// Check if two BlobBlock instances are equal.
         /// </summary>
