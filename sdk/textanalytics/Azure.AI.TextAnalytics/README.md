@@ -208,7 +208,7 @@ catch (RequestFailedException exception)
 ```
 For samples on using the production recommended option `AnalyzeSentimentBatch` see [here][analyze_sentiment_sample].
 
-To get more granular information about the assessment related to targets of a product/service, also known as Target-based Sentiment Analysis in Natural Language Processing (NLP), see a sample on sentiment analysis with assessment mining [here][analyze_sentiment_assessment_mining_sample].
+To get more granular information about the opinions related to targets of a product/service, also known as Aspect-based Sentiment Analysis in Natural Language Processing (NLP), see a sample on sentiment analysis with opinion mining [here][analyze_sentiment_assessment_mining_sample].
 
 Please refer to the service documentation for a conceptual discussion of [sentiment analysis][sentiment_analysis].
 
