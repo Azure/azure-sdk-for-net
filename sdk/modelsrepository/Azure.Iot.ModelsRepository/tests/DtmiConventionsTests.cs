@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 
 namespace Azure.Iot.ModelsRepository.Tests
 {
-    public class DtmiConversionTests : ModelsRepositoryTestBase
+    public class DtmiConventionsTests : ModelsRepositoryTestBase
     {
         [TestCase("dtmi:com:Example:Model;1", "dtmi/com/example/model-1.json")]
         [TestCase("dtmi:com:example:Model;1", "dtmi/com/example/model-1.json")]
@@ -45,7 +45,19 @@ namespace Azure.Iot.ModelsRepository.Tests
             string expandedModelPath = DtmiConventions.DtmiToQualifiedPath(dtmi, repository, true);
             expandedModelPath
                 .Should()
-                .Be($"{repository}/{expectedPath.Replace(ModelRepositoryConstants.JsonFileExtension, ModelRepositoryConstants.ExpandedJsonFileExtension)}");
+                .Be($"{repository}/{expectedPath.Replace(ModelsRepositoryConstants.JsonFileExtension, ModelsRepositoryConstants.ExpandedJsonFileExtension)}");
+        }
+
+        [TestCase("dtmi:com:example:Thermostat;1", true)]
+        [TestCase("dtmi:contoso:scope:entity;2", true)]
+        [TestCase("dtmi:com:example:Thermostat:1", false)]
+        [TestCase("dtmi:com:example::Thermostat;1", false)]
+        [TestCase("com:example:Thermostat;1", false)]
+        [TestCase("", false)]
+        [TestCase(null, false)]
+        public void ClientIsValidDtmi(string dtmi, bool expected)
+        {
+            DtmiConventions.IsDtmi(dtmi).Should().Be(expected);
         }
     }
 }
