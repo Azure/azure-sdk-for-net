@@ -8,6 +8,8 @@ Azure Cognitive Services Form Recognizer is a cloud service that uses machine le
   - Business Cards - Recognize and extract common fields from business cards, using a pre-trained business cards model.
   - Invoices - Recognize and extract common fields from invoices, using a pre-trained invoice model.
 
+Please note, this package is a replacement for [Microsoft.CognitiveServices.FormRecognizer][old_package].
+
 [Source code][formreco_client_src] | [Package (NuGet)][formreco_nuget_package] | [API reference documentation][formreco_refdocs] | [Product documentation][formreco_docs] | [Samples][formreco_samples]
 
 ## Getting started
@@ -688,6 +690,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [formreco_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/README.md
 [formreco_rest_api]: https://westus2.dev.cognitive.microsoft.com/docs/services/form-recognizer-api-v2
 [cognitive_resource]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account
+[old_package]: https://www.nuget.org/packages/Microsoft.Azure.CognitiveServices.FormRecognizer/0.8.0-preview
 
 
 [form_recognizer_client_class]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/src/FormRecognizerClient.cs
