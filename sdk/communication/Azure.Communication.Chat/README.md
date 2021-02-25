@@ -122,7 +122,7 @@ chatThreadClient.AddParticipants(participants: new[] { new ChatParticipant(parti
 ```
 ### Remove a participant
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_RemoveParticipant_KeyConcepts
-chatThreadClient.RemoveParticipant(identifier: participantIdentifier);
+chatThreadClient.RemoveParticipant(user: participantIdentifier);
 ```
 ### Send a typing notification
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_SendTypingNotification_KeyConcepts
@@ -179,7 +179,7 @@ ChatClient chatClient = new ChatClient(
     new CommunicationTokenCredential(userToken));
 ```
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_CreateThread
-var chatParticipant = new ChatParticipant(identifier: kimberly)
+var chatParticipant = new ChatParticipant(communicationIdentifier: kimberly)
 {
     DisplayName = "Kim"
 };
