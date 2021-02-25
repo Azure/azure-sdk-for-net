@@ -59,7 +59,7 @@ if (res.Status != 200 /*OK*/)
 }
 else
 {
-    Console.WriteLine($"Sentiment of document is ${(string)res.Body["documents"][0]["sentiment"]}");
+    Console.WriteLine($"Sentiment of Document is ${(string)res.Body["documents"][0]["sentiment"]}");
 }
 ```
 

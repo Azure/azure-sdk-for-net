@@ -19,7 +19,7 @@ namespace Azure.AI.TextAnalytics.Protocol.Tests
 {
     public class JsonDataSnippets
     {
-        public async Task TestSnippets()
+        public void TestSnippets()
         {
             {
 #region Snippet:DefaultConstructor
@@ -252,7 +252,7 @@ namespace Azure.AI.TextAnalytics.Protocol.Tests
                 document.Set("id", "3");
                 document.Set("text", "La carretera estaba atascada. Había mucho tráfico el día de ayer.");
 
-                DynamicResponse res = await req.SendAsync();
+                DynamicResponse res = req.Send();
 
                 Console.WriteLine($"Status is {res.Status} and the body of the response is: {res.Body.ToJsonString()})");
 #endregion
