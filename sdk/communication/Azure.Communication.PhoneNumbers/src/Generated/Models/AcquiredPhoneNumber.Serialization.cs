@@ -21,8 +21,8 @@ namespace Azure.Communication.PhoneNumbers.Models
             PhoneNumberType phoneNumberType = default;
             PhoneNumberCapabilities capabilities = default;
             PhoneNumberAssignmentType assignmentType = default;
-            Optional<DateTimeOffset> purchaseDate = default;
-            Optional<PhoneNumberCost> cost = default;
+            DateTimeOffset purchaseDate = default;
+            PhoneNumberCost cost = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -57,26 +57,16 @@ namespace Azure.Communication.PhoneNumbers.Models
                 }
                 if (property.NameEquals("purchaseDate"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     purchaseDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("cost"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     cost = PhoneNumberCost.DeserializePhoneNumberCost(property.Value);
                     continue;
                 }
             }
-            return new AcquiredPhoneNumber(id, phoneNumber, countryCode, phoneNumberType, capabilities, assignmentType, Optional.ToNullable(purchaseDate), cost.Value);
+            return new AcquiredPhoneNumber(id, phoneNumber, countryCode, phoneNumberType, capabilities, assignmentType, purchaseDate, cost);
         }
     }
 }

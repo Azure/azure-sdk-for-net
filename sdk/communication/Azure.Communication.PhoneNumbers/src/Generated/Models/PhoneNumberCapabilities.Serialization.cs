@@ -24,18 +24,18 @@ namespace Azure.Communication.PhoneNumbers.Models
 
         internal static PhoneNumberCapabilities DeserializePhoneNumberCapabilities(JsonElement element)
         {
-            PhoneNumberCapabilityValue calling = default;
-            PhoneNumberCapabilityValue sms = default;
+            PhoneNumberCapabilityType calling = default;
+            PhoneNumberCapabilityType sms = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("calling"))
                 {
-                    calling = new PhoneNumberCapabilityValue(property.Value.GetString());
+                    calling = new PhoneNumberCapabilityType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("sms"))
                 {
-                    sms = new PhoneNumberCapabilityValue(property.Value.GetString());
+                    sms = new PhoneNumberCapabilityType(property.Value.GetString());
                     continue;
                 }
             }

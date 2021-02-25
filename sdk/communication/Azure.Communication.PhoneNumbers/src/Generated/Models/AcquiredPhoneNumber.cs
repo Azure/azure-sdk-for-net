@@ -19,8 +19,10 @@ namespace Azure.Communication.PhoneNumbers.Models
         /// <param name="phoneNumberType"> The phone number&apos;s type, e.g. Geographic, TollFree. </param>
         /// <param name="capabilities"> Capabilities of a phone number. </param>
         /// <param name="assignmentType"> The assignment type of the phone number. A phone number can be assigned to a person, or to an application. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="phoneNumber"/>, <paramref name="countryCode"/>, or <paramref name="capabilities"/> is null. </exception>
-        internal AcquiredPhoneNumber(string id, string phoneNumber, string countryCode, PhoneNumberType phoneNumberType, PhoneNumberCapabilities capabilities, PhoneNumberAssignmentType assignmentType)
+        /// <param name="purchaseDate"> The date and time that the phone number was purchased. </param>
+        /// <param name="cost"> The incurred cost for a single phone number. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="phoneNumber"/>, <paramref name="countryCode"/>, <paramref name="capabilities"/>, or <paramref name="cost"/> is null. </exception>
+        internal AcquiredPhoneNumber(string id, string phoneNumber, string countryCode, PhoneNumberType phoneNumberType, PhoneNumberCapabilities capabilities, PhoneNumberAssignmentType assignmentType, DateTimeOffset purchaseDate, PhoneNumberCost cost)
         {
             if (id == null)
             {
@@ -38,26 +40,11 @@ namespace Azure.Communication.PhoneNumbers.Models
             {
                 throw new ArgumentNullException(nameof(capabilities));
             }
+            if (cost == null)
+            {
+                throw new ArgumentNullException(nameof(cost));
+            }
 
-            Id = id;
-            PhoneNumber = phoneNumber;
-            CountryCode = countryCode;
-            PhoneNumberType = phoneNumberType;
-            Capabilities = capabilities;
-            AssignmentType = assignmentType;
-        }
-
-        /// <summary> Initializes a new instance of AcquiredPhoneNumber. </summary>
-        /// <param name="id"> The id of the phone number, e.g. 11234567890. </param>
-        /// <param name="phoneNumber"> String of the E.164 format of the phone number, e.g. +11234567890. </param>
-        /// <param name="countryCode"> The ISO 3166-2 code of the phone number&apos;s country, e.g. US. </param>
-        /// <param name="phoneNumberType"> The phone number&apos;s type, e.g. Geographic, TollFree. </param>
-        /// <param name="capabilities"> Capabilities of a phone number. </param>
-        /// <param name="assignmentType"> The assignment type of the phone number. A phone number can be assigned to a person, or to an application. </param>
-        /// <param name="purchaseDate"> The date and time that the phone number was purchased. </param>
-        /// <param name="cost"> The incurred cost for a single phone number. </param>
-        internal AcquiredPhoneNumber(string id, string phoneNumber, string countryCode, PhoneNumberType phoneNumberType, PhoneNumberCapabilities capabilities, PhoneNumberAssignmentType assignmentType, DateTimeOffset? purchaseDate, PhoneNumberCost cost)
-        {
             Id = id;
             PhoneNumber = phoneNumber;
             CountryCode = countryCode;
@@ -81,7 +68,7 @@ namespace Azure.Communication.PhoneNumbers.Models
         /// <summary> The assignment type of the phone number. A phone number can be assigned to a person, or to an application. </summary>
         public PhoneNumberAssignmentType AssignmentType { get; }
         /// <summary> The date and time that the phone number was purchased. </summary>
-        public DateTimeOffset? PurchaseDate { get; }
+        public DateTimeOffset PurchaseDate { get; }
         /// <summary> The incurred cost for a single phone number. </summary>
         public PhoneNumberCost Cost { get; }
     }

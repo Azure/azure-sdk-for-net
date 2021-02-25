@@ -16,8 +16,8 @@ namespace Azure.Communication.PhoneNumbers.Models
         }
 
         /// <summary> Capability value for calling. </summary>
-        public PhoneNumberCapabilityValue? Calling { get; set; }
+        public PhoneNumberCapabilityType? Calling { get; set; }
         /// <summary> Capability value for SMS. </summary>
-        public PhoneNumberCapabilityValue? Sms { get; set; }
+        public PhoneNumberCapabilityType? Sms { get; set; }
     }
 }

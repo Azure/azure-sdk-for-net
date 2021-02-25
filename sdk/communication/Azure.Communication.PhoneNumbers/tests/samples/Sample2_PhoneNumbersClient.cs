@@ -40,7 +40,7 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
 
             #region Snippet:SearchPhoneNumbersAsync
 
-            var capabilities = new PhoneNumberCapabilities(PhoneNumberCapabilityValue.None, PhoneNumberCapabilityValue.Outbound);
+            var capabilities = new PhoneNumberCapabilities(calling:PhoneNumberCapabilityType.None, sms:PhoneNumberCapabilityType.Outbound);
 
             var searchOperation = await client.StartSearchAvailablePhoneNumbersAsync(countryCode, PhoneNumberType.TollFree, PhoneNumberAssignmentType.Application, capabilities);
             //@@ await searchOperation.WaitForCompletionAsync();
@@ -68,15 +68,15 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
             var acquiredPhoneNumber = searchOperation.Value.PhoneNumbers.Single();
 
             #region Snippet:UpdateCapabilitiesNumbersAsync
-            var updateCapabilitiesOperation = client.StartUpdateCapabilities(acquiredPhoneNumber, calling:PhoneNumberCapabilityValue.Outbound, sms:PhoneNumberCapabilityValue.InboundOutbound);
+            var updateCapabilitiesOperation = client.StartUpdateCapabilities(acquiredPhoneNumber, calling: PhoneNumberCapabilityType.Outbound, sms: PhoneNumberCapabilityType.InboundOutbound);
 
             //@@ await updateCapabilitiesOperation.WaitForCompletionAsync();
             /*@@*/ await WaitForCompletionAsync(updateCapabilitiesOperation);
 
             #endregion Snippet:UpdateCapabilitiesNumbersAsync
 
-            Assert.AreEqual(PhoneNumberCapabilityValue.Outbound, updateCapabilitiesOperation.Value.Capabilities.Calling);
-            Assert.AreEqual(PhoneNumberCapabilityValue.InboundOutbound, updateCapabilitiesOperation.Value.Capabilities.Sms);
+            Assert.AreEqual(PhoneNumberCapabilityType.Outbound, updateCapabilitiesOperation.Value.Capabilities.Calling);
+            Assert.AreEqual(PhoneNumberCapabilityType.InboundOutbound, updateCapabilitiesOperation.Value.Capabilities.Sms);
 
             acquiredPhoneNumbers = client.GetPhoneNumbersAsync();
             var beforeReleaseNumberCount = (await acquiredPhoneNumbers.ToEnumerableAsync()).Count;
@@ -126,7 +126,7 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
 
             #region Snippet:SearchPhoneNumbers
 
-            var capabilities = new PhoneNumberCapabilities(PhoneNumberCapabilityValue.None, PhoneNumberCapabilityValue.Outbound);
+            var capabilities = new PhoneNumberCapabilities(calling:PhoneNumberCapabilityType.None, sms:PhoneNumberCapabilityType.Outbound);
 
             var searchOperation = client.StartSearchAvailablePhoneNumbers(countryCode, PhoneNumberType.TollFree, PhoneNumberAssignmentType.Application, capabilities);
 
@@ -162,7 +162,7 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
             var acquiredPhoneNumber = searchOperation.Value.PhoneNumbers.Single();
 
             #region Snippet:UpdateCapabilitiesNumbers
-            var updateCapabilitiesOperation = client.StartUpdateCapabilities(acquiredPhoneNumber, calling:PhoneNumberCapabilityValue.Outbound, sms:PhoneNumberCapabilityValue.InboundOutbound);
+            var updateCapabilitiesOperation = client.StartUpdateCapabilities(acquiredPhoneNumber, calling:PhoneNumberCapabilityType.Outbound, sms:PhoneNumberCapabilityType.InboundOutbound);
 
             while (!updateCapabilitiesOperation.HasCompleted)
             {
@@ -173,8 +173,8 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
 
             #endregion Snippet:UpdateCapabilitiesNumbers
 
-            Assert.AreEqual(PhoneNumberCapabilityValue.Outbound, updateCapabilitiesOperation.Value.Capabilities.Calling);
-            Assert.AreEqual(PhoneNumberCapabilityValue.InboundOutbound, updateCapabilitiesOperation.Value.Capabilities.Sms);
+            Assert.AreEqual(PhoneNumberCapabilityType.Outbound, updateCapabilitiesOperation.Value.Capabilities.Calling);
+            Assert.AreEqual(PhoneNumberCapabilityType.InboundOutbound, updateCapabilitiesOperation.Value.Capabilities.Sms);
 
             acquiredPhoneNumbers = client.GetPhoneNumbers();
             var beforeReleaseNumberCount = acquiredPhoneNumbers.Count();

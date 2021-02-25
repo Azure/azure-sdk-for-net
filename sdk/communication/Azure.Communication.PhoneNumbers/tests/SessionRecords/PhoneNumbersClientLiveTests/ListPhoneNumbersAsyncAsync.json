@@ -6,11 +6,11 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Date": "Fri, 12 Feb 2021 18:45:04 GMT",
-        "traceparent": "00-37948488bb60484b8131651aa77fb638-388475276695e74f-00",
+        "Date": "Thu, 25 Feb 2021 02:55:53 GMT",
+        "traceparent": "00-e96030f71a8ece418ab0f48a4dbfea3c-6b4bce434c3e894c-00",
         "User-Agent": [
-          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210212.1",
-          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210224.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "57914b5847fc57ab7d329f21e9d2526a",
         "x-ms-content-sha256": "Sanitized",
@@ -20,12 +20,12 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 12 Feb 2021 18:45:04 GMT",
-        "MS-CV": "sA\u002Bh4aYyKE2DMafzACX3IQ.0",
-        "Request-Context": "appId=",
+        "Date": "Thu, 25 Feb 2021 02:55:52 GMT",
+        "MS-CV": "l7xP1WzrSUi5h43diOdflQ.0",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0sMwmYAAAAABwu9xi/TJLSKEG9ZniBFxMWVZSMzBFREdFMDQwOQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
-        "X-Processing-Time": "729ms"
+        "X-Processing-Time": "13ms"
       },
       "ResponseBody": {
         "phoneNumbers": [
@@ -33,34 +33,18 @@
             "id": "Sanitized",
             "phoneNumber": "Sanitized",
             "countryCode": "US",
-            "phoneNumberType": "Geographic",
-            "capabilities": {
-              "calling": "outbound",
-              "sms": "none"
-            },
-            "assignmentType": "User"
-          },
-          {
-            "id": "Sanitized",
-            "phoneNumber": "Sanitized",
-            "countryCode": "US",
-            "phoneNumberType": "Geographic",
-            "capabilities": {
-              "calling": "outbound",
-              "sms": "none"
-            },
-            "assignmentType": "User"
-          },
-          {
-            "id": "Sanitized",
-            "phoneNumber": "Sanitized",
-            "countryCode": "US",
             "phoneNumberType": "TollFree",
             "capabilities": {
-              "calling": "inbound",
-              "sms": "inbound\u002Boutbound"
+              "calling": "none",
+              "sms": "outbound"
             },
-            "assignmentType": "Application"
+            "assignmentType": "Application",
+            "purchaseDate": "0001-01-01T00:00:00\u002B00:00",
+            "cost": {
+              "amount": 0.0,
+              "currencyCode": "USD",
+              "billingFrequency": "Monthly"
+            }
           },
           {
             "id": "Sanitized",
@@ -69,16 +53,106 @@
             "phoneNumberType": "TollFree",
             "capabilities": {
               "calling": "none",
-              "sms": "inbound\u002Boutbound"
+              "sms": "outbound"
             },
-            "assignmentType": "Application"
+            "assignmentType": "Application",
+            "purchaseDate": "0001-01-01T00:00:00\u002B00:00",
+            "cost": {
+              "amount": 0.0,
+              "currencyCode": "USD",
+              "billingFrequency": "Monthly"
+            }
+          },
+          {
+            "id": "Sanitized",
+            "phoneNumber": "Sanitized",
+            "countryCode": "US",
+            "phoneNumberType": "TollFree",
+            "capabilities": {
+              "calling": "none",
+              "sms": "outbound"
+            },
+            "assignmentType": "Application",
+            "purchaseDate": "0001-01-01T00:00:00\u002B00:00",
+            "cost": {
+              "amount": 0.0,
+              "currencyCode": "USD",
+              "billingFrequency": "Monthly"
+            }
+          },
+          {
+            "id": "Sanitized",
+            "phoneNumber": "Sanitized",
+            "countryCode": "US",
+            "phoneNumberType": "TollFree",
+            "capabilities": {
+              "calling": "none",
+              "sms": "outbound"
+            },
+            "assignmentType": "Application",
+            "purchaseDate": "0001-01-01T00:00:00\u002B00:00",
+            "cost": {
+              "amount": 0.0,
+              "currencyCode": "USD",
+              "billingFrequency": "Monthly"
+            }
+          },
+          {
+            "id": "Sanitized",
+            "phoneNumber": "Sanitized",
+            "countryCode": "US",
+            "phoneNumberType": "TollFree",
+            "capabilities": {
+              "calling": "none",
+              "sms": "outbound"
+            },
+            "assignmentType": "Application",
+            "purchaseDate": "0001-01-01T00:00:00\u002B00:00",
+            "cost": {
+              "amount": 0.0,
+              "currencyCode": "USD",
+              "billingFrequency": "Monthly"
+            }
+          },
+          {
+            "id": "Sanitized",
+            "phoneNumber": "Sanitized",
+            "countryCode": "US",
+            "phoneNumberType": "TollFree",
+            "capabilities": {
+              "calling": "none",
+              "sms": "outbound"
+            },
+            "assignmentType": "Application",
+            "purchaseDate": "0001-01-01T00:00:00\u002B00:00",
+            "cost": {
+              "amount": 0.0,
+              "currencyCode": "USD",
+              "billingFrequency": "Monthly"
+            }
+          },
+          {
+            "id": "Sanitized",
+            "phoneNumber": "Sanitized",
+            "countryCode": "US",
+            "phoneNumberType": "TollFree",
+            "capabilities": {
+              "calling": "none",
+              "sms": "outbound"
+            },
+            "assignmentType": "Application",
+            "purchaseDate": "0001-01-01T00:00:00\u002B00:00",
+            "cost": {
+              "amount": 0.0,
+              "currencyCode": "USD",
+              "billingFrequency": "Monthly"
+            }
           }
         ]
       }
     }
   ],
   "Variables": {
-    "COMMUNICATION_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.com/;accesskey=Kg==",
     "RandomSeed": "136581784"
   }
 }

@@ -54,7 +54,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             {
                 // User and toll free is an invalid combination
                 var searchOperation = await client.StartSearchAvailablePhoneNumbersAsync(countryCode, PhoneNumberType.TollFree, PhoneNumberAssignmentType.Person,
-                    new PhoneNumberCapabilities(PhoneNumberCapabilityValue.Outbound, PhoneNumberCapabilityValue.None), new PhoneNumberSearchOptions { AreaCode = "212", Quantity = 1 });
+                    new PhoneNumberCapabilities(PhoneNumberCapabilityType.Outbound, PhoneNumberCapabilityType.None), new PhoneNumberSearchOptions { AreaCode = "212", Quantity = 1 });
             }
             catch (Azure.RequestFailedException ex)
             {
