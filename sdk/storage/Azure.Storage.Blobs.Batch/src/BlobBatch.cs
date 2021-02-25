@@ -4,6 +4,9 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.Storage.Blobs.Batch;
+using Azure.Storage.Blobs.Batch.Models;
 using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.Blobs.Specialized
@@ -56,6 +59,28 @@ namespace Azure.Storage.Blobs.Specialized
         internal bool Submitted { get; private set; }
 
         /// <summary>
+        /// <see cref="BlobRestClient"/>.
+        /// </summary>
+        private readonly BlobRestClient _blobRestClient;
+
+        /// <summary>
+        /// <see cref="BlobRestClient"/>.
+        /// </summary>
+        internal virtual BlobRestClient BlobRestClient => _blobRestClient;
+
+        /// <summary>
+        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
+        /// every request.
+        /// </summary>;
+        private readonly ClientDiagnostics _clientDiagnostics;
+
+        /// <summary>
+        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
+        /// every request.
+        /// </summary>
+        internal virtual ClientDiagnostics ClientDiagnostics => _clientDiagnostics;
+
+        /// <summary>
         /// Creates a new instance of the <see cref="BlobBatch"/> for mocking.
         /// </summary>
         protected BlobBatch()
@@ -72,6 +97,19 @@ namespace Azure.Storage.Blobs.Specialized
         {
             _client = client ?? throw new ArgumentNullException(nameof(client));
             _isContainerScoped = client.IsContainerScoped;
+            _clientDiagnostics = client.ClientDiagnostics;
+
+            BlobUriBuilder uriBuilder = new BlobUriBuilder(client.Uri)
+            {
+                BlobContainerName = null,
+                BlobName = null
+            };
+
+            _blobRestClient = new BlobRestClient(
+                clientDiagnostics: _client.ClientDiagnostics,
+                pipeline: _client.Pipeline,
+                url: uriBuilder.ToUri().AbsoluteUri,
+                version: _client.Version.ToVersionString());
         }
 
         /// <summary>
@@ -153,15 +191,36 @@ namespace Azure.Storage.Blobs.Specialized
             DeleteSnapshotsOption snapshotsOption = default,
             BlobRequestConditions conditions = default)
         {
-            var blobUri = new BlobUriBuilder(_client.Uri)
-            {
-                BlobContainerName = blobContainerName,
-                BlobName = blobName
-            };
-            return DeleteBlob(
-                blobUri.ToUri(),
-                snapshotsOption,
-                conditions);
+            SetBatchOperationType(BlobBatchOperationType.Delete);
+
+            HttpMessage message = BlobRestClient.CreateDeleteRequest(
+                containerName: blobContainerName,
+                blob: blobName,
+                timeout: null,
+                leaseId: conditions?.LeaseId,
+                deleteSnapshots: snapshotsOption == DeleteSnapshotsOption.None ? null : (DeleteSnapshotsOptionType?)snapshotsOption,
+                ifModifiedSince: conditions?.IfModifiedSince,
+                ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                ifMatch: conditions?.IfMatch?.ToString(),
+                ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                ifTags: conditions?.TagConditions,
+                blobDeleteType: null);
+
+            _messages.Add(message);
+
+            return new DelayedResponse(
+                message,
+                async response =>
+                {
+                    switch (response.Status)
+                    {
+                        case 202:
+                            BlobDeleteHeaders blobDeleteHeaders = new BlobDeleteHeaders(response);
+                            return ResponseWithHeaders.FromValue(blobDeleteHeaders, response);
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
+                    }
+                });
         }
 
         /// <summary>
@@ -196,20 +255,13 @@ namespace Azure.Storage.Blobs.Specialized
             DeleteSnapshotsOption snapshotsOption = default,
             BlobRequestConditions conditions = default)
         {
-            SetBatchOperationType(BlobBatchOperationType.Delete);
+            BlobUriBuilder uriBuilder = new BlobUriBuilder(blobUri);
 
-            HttpMessage message = BatchRestClient.Blob.DeleteAsync_CreateMessage(
-                pipeline: _client.BatchOperationPipeline,
-                resourceUri: blobUri,
-                version: _client.Version.ToVersionString(),
-                deleteSnapshots: snapshotsOption == DeleteSnapshotsOption.None ? null : (DeleteSnapshotsOption?)snapshotsOption,
-                leaseId: conditions?.LeaseId,
-                ifModifiedSince: conditions?.IfModifiedSince,
-                ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                ifMatch: conditions?.IfMatch,
-                ifNoneMatch: conditions?.IfNoneMatch);
-            _messages.Add(message);
-            return new DelayedResponse(message, response => BatchRestClient.Blob.DeleteAsync_CreateResponse(_client.ClientDiagnostics, response));
+            return DeleteBlob(
+                blobContainerName: uriBuilder.BlobContainerName,
+                blobName: uriBuilder.BlobName,
+                snapshotsOption: snapshotsOption,
+                conditions: conditions);
         }
         #endregion DeleteBlob
 
@@ -254,16 +306,33 @@ namespace Azure.Storage.Blobs.Specialized
             RehydratePriority? rehydratePriority = default,
             BlobRequestConditions leaseAccessConditions = default)
         {
-            var blobUri = new BlobUriBuilder(_client.Uri)
-            {
-                BlobContainerName = blobContainerName,
-                BlobName = blobName
-            };
-            return SetBlobAccessTier(
-                blobUri.ToUri(),
-                accessTier,
-                rehydratePriority,
-                leaseAccessConditions);
+            SetBatchOperationType(BlobBatchOperationType.SetAccessTier);
+
+            HttpMessage message = BlobRestClient.CreateSetAccessTierRequest(
+                containerName: blobContainerName,
+                blob: blobName,
+                accessTier.ToBatchAccessTier(),
+                timeout: null,
+                rehydratePriority: rehydratePriority.ToBatchRehydratePriority(),
+                leaseId: leaseAccessConditions?.LeaseId,
+                ifTags: leaseAccessConditions?.TagConditions);
+
+            _messages.Add(message);
+
+            return new DelayedResponse(
+                message,
+                async response =>
+                {
+                    switch (response.Status)
+                    {
+                        case 200:
+                        case 202:
+                            BlobSetAccessTierHeaders blobSetAccessTierHeaders = new BlobSetAccessTierHeaders(response);
+                            return ResponseWithHeaders.FromValue(blobSetAccessTierHeaders, response);
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
+                    }
+                });
         }
 
         /// <summary>
@@ -303,16 +372,14 @@ namespace Azure.Storage.Blobs.Specialized
             RehydratePriority? rehydratePriority = default,
             BlobRequestConditions leaseAccessConditions = default)
         {
-            SetBatchOperationType(BlobBatchOperationType.SetAccessTier);
-            HttpMessage message = BatchRestClient.Blob.SetAccessTierAsync_CreateMessage(
-                pipeline: _client.BatchOperationPipeline,
-                resourceUri: blobUri,
-                tier: accessTier,
-                version: _client.Version.ToVersionString(),
+            BlobUriBuilder uriBuilder = new BlobUriBuilder(blobUri);
+
+            return SetBlobAccessTier(
+                blobContainerName: uriBuilder.BlobContainerName,
+                blobName: uriBuilder.BlobName,
+                accessTier: accessTier,
                 rehydratePriority: rehydratePriority,
-                leaseId: leaseAccessConditions?.LeaseId);
-            _messages.Add(message);
-            return new DelayedResponse(message, response => BatchRestClient.Blob.SetAccessTierAsync_CreateResponse(_client.ClientDiagnostics, response));
+                leaseAccessConditions: leaseAccessConditions);
         }
 
         /// <summary>
