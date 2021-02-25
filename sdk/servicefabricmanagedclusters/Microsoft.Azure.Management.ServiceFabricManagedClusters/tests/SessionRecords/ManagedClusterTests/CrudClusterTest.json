@@ -1,0 +1,1570 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/sfmc-net-sdk-rg-1876/providers/Microsoft.ServiceFabric/managedClusters/sfmcnetsdk6763?api-version=2021-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Jlc291cmNlR3JvdXBzL3NmbWMtbmV0LXNkay1yZy0xODc2L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUZhYnJpYy9tYW5hZ2VkQ2x1c3RlcnMvc2ZtY25ldHNkazY3NjM/YXBpLXZlcnNpb249MjAyMS0wMS0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "0c36c9f6-8fa2-447a-bf5d-fa4680263df8"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ServiceFabricManagedClusters.ServiceFabricManagedClustersManagementClient/0.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2021 22:35:15 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-failure-cause": [
+          "gateway"
+        ],
+        "x-ms-request-id": [
+          "6ac5f584-304c-4544-8984-11a3969ffc6e"
+        ],
+        "x-ms-correlation-request-id": [
+          "6ac5f584-304c-4544-8984-11a3969ffc6e"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTCENTRALUS:20210212T223516Z:6ac5f584-304c-4544-8984-11a3969ffc6e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "112"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceGroupNotFound\",\r\n    \"message\": \"Resource group 'sfmc-net-sdk-rg-1876' could not be found.\"\r\n  }\r\n}",
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/sfmc-net-sdk-rg-1876/providers/Microsoft.ServiceFabric/managedClusters/sfmcnetsdk6763?api-version=2021-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Jlc291cmNlR3JvdXBzL3NmbWMtbmV0LXNkay1yZy0xODc2L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUZhYnJpYy9tYW5hZ2VkQ2x1c3RlcnMvc2ZtY25ldHNkazY3NjM/YXBpLXZlcnNpb249MjAyMS0wMS0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ServiceFabricManagedClusters.ServiceFabricManagedClustersManagementClient/0.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2021 22:38:51 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11991"
+        ],
+        "x-ms-request-id": [
+          "30339150-d6bc-4e7b-9284-895820ee4885"
+        ],
+        "x-ms-correlation-request-id": [
+          "30339150-d6bc-4e7b-9284-895820ee4885"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTCENTRALUS:20210212T223852Z:30339150-d6bc-4e7b-9284-895820ee4885"
+        ],
+        "Content-Length": [
+          "1085"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourcegroups/sfmc-net-sdk-rg-1876/providers/Microsoft.ServiceFabric/managedClusters/sfmcnetsdk6763\",\r\n  \"type\": \"Microsoft.ServiceFabric/managedclusters\",\r\n  \"location\": \"South Central US\",\r\n  \"name\": \"sfmcnetsdk6763\",\r\n  \"tags\": {},\r\n  \"sku\": {\r\n    \"name\": \"Basic\"\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"clusterId\": \"0e78f2a4-dc3c-40a7-8b3e-b39fc2ac48bc\",\r\n    \"clusterState\": \"WaitingForNodes\",\r\n    \"clusterUpgradeCadence\": \"Wave0\",\r\n    \"adminUserName\": \"vmadmin\",\r\n    \"dnsName\": \"sfmcnetsdk6763\",\r\n    \"fqdn\": \"sfmcnetsdk6763.southcentralus.cloudapp.azure.com\",\r\n    \"ipv4Address\": \"23.102.158.25\",\r\n    \"clusterCertificateThumbprints\": [\r\n      \"42FE1DD778CEFD3E35F639DE9CC7BECA8189D41F\"\r\n    ],\r\n    \"clientConnectionPort\": 19000,\r\n    \"httpGatewayConnectionPort\": 19080,\r\n    \"allowRdpAccess\": false,\r\n    \"clients\": [\r\n      {\r\n        \"isAdmin\": true,\r\n        \"thumbprint\": \"123BDACDCDFB2C7B250192C6078E47D1E1DB119B\"\r\n      }\r\n    ],\r\n    \"enableAutoOSUpgrade\": false\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/sfmc-net-sdk-rg-1876/providers/Microsoft.ServiceFabric/managedClusters/sfmcnetsdk6763?api-version=2021-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Jlc291cmNlR3JvdXBzL3NmbWMtbmV0LXNkay1yZy0xODc2L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUZhYnJpYy9tYW5hZ2VkQ2x1c3RlcnMvc2ZtY25ldHNkazY3NjM/YXBpLXZlcnNpb249MjAyMS0wMS0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ServiceFabricManagedClusters.ServiceFabricManagedClustersManagementClient/0.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2021 22:39:22 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11987"
+        ],
+        "x-ms-request-id": [
+          "a99b0772-064a-4cd7-8ede-4f7954c23db8"
+        ],
+        "x-ms-correlation-request-id": [
+          "a99b0772-064a-4cd7-8ede-4f7954c23db8"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTCENTRALUS:20210212T223923Z:a99b0772-064a-4cd7-8ede-4f7954c23db8"
+        ],
+        "Content-Length": [
+          "1306"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourcegroups/sfmc-net-sdk-rg-1876/providers/Microsoft.ServiceFabric/managedClusters/sfmcnetsdk6763\",\r\n  \"type\": \"Microsoft.ServiceFabric/managedclusters\",\r\n  \"location\": \"South Central US\",\r\n  \"name\": \"sfmcnetsdk6763\",\r\n  \"tags\": {},\r\n  \"sku\": {\r\n    \"name\": \"Basic\"\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"clusterId\": \"0e78f2a4-dc3c-40a7-8b3e-b39fc2ac48bc\",\r\n    \"clusterState\": \"WaitingForNodes\",\r\n    \"clusterUpgradeCadence\": \"Wave0\",\r\n    \"adminUserName\": \"vmadmin\",\r\n    \"dnsName\": \"sfmcnetsdk6763\",\r\n    \"fqdn\": \"sfmcnetsdk6763.southcentralus.cloudapp.azure.com\",\r\n    \"ipv4Address\": \"23.102.158.25\",\r\n    \"clusterCertificateThumbprints\": [\r\n      \"42FE1DD778CEFD3E35F639DE9CC7BECA8189D41F\"\r\n    ],\r\n    \"clientConnectionPort\": 50000,\r\n    \"httpGatewayConnectionPort\": 19080,\r\n    \"allowRdpAccess\": false,\r\n    \"clients\": [\r\n      {\r\n        \"isAdmin\": true,\r\n        \"thumbprint\": \"123BDACDCDFB2C7B250192C6078E47D1E1DB119B\"\r\n      }\r\n    ],\r\n    \"fabricSettings\": [\r\n      {\r\n        \"name\": \"NamingService\",\r\n        \"parameters\": [\r\n          {\r\n            \"name\": \"MaxOperationTimeout\",\r\n            \"value\": \"10001\"\r\n          }\r\n        ]\r\n      }\r\n    ],\r\n    \"enableAutoOSUpgrade\": false\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/sfmc-net-sdk-rg-1876/providers/Microsoft.ServiceFabric/managedClusters/sfmcnetsdk6763?api-version=2021-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Jlc291cmNlR3JvdXBzL3NmbWMtbmV0LXNkay1yZy0xODc2L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUZhYnJpYy9tYW5hZ2VkQ2x1c3RlcnMvc2ZtY25ldHNkazY3NjM/YXBpLXZlcnNpb249MjAyMS0wMS0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "397ca570-1de9-40dd-b517-cec7dd2ebe4b"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ServiceFabricManagedClusters.ServiceFabricManagedClustersManagementClient/0.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2021 22:39:22 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11986"
+        ],
+        "x-ms-request-id": [
+          "eff8588f-8901-4b36-bcc3-2a40a57daa62"
+        ],
+        "x-ms-correlation-request-id": [
+          "eff8588f-8901-4b36-bcc3-2a40a57daa62"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTCENTRALUS:20210212T223923Z:eff8588f-8901-4b36-bcc3-2a40a57daa62"
+        ],
+        "Content-Length": [
+          "1306"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourcegroups/sfmc-net-sdk-rg-1876/providers/Microsoft.ServiceFabric/managedClusters/sfmcnetsdk6763\",\r\n  \"type\": \"Microsoft.ServiceFabric/managedclusters\",\r\n  \"location\": \"South Central US\",\r\n  \"name\": \"sfmcnetsdk6763\",\r\n  \"tags\": {},\r\n  \"sku\": {\r\n    \"name\": \"Basic\"\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"clusterId\": \"0e78f2a4-dc3c-40a7-8b3e-b39fc2ac48bc\",\r\n    \"clusterState\": \"WaitingForNodes\",\r\n    \"clusterUpgradeCadence\": \"Wave0\",\r\n    \"adminUserName\": \"vmadmin\",\r\n    \"dnsName\": \"sfmcnetsdk6763\",\r\n    \"fqdn\": \"sfmcnetsdk6763.southcentralus.cloudapp.azure.com\",\r\n    \"ipv4Address\": \"23.102.158.25\",\r\n    \"clusterCertificateThumbprints\": [\r\n      \"42FE1DD778CEFD3E35F639DE9CC7BECA8189D41F\"\r\n    ],\r\n    \"clientConnectionPort\": 50000,\r\n    \"httpGatewayConnectionPort\": 19080,\r\n    \"allowRdpAccess\": false,\r\n    \"clients\": [\r\n      {\r\n        \"isAdmin\": true,\r\n        \"thumbprint\": \"123BDACDCDFB2C7B250192C6078E47D1E1DB119B\"\r\n      }\r\n    ],\r\n    \"fabricSettings\": [\r\n      {\r\n        \"name\": \"NamingService\",\r\n        \"parameters\": [\r\n          {\r\n            \"name\": \"MaxOperationTimeout\",\r\n            \"value\": \"10001\"\r\n          }\r\n        ]\r\n      }\r\n    ],\r\n    \"enableAutoOSUpgrade\": false\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/sfmc-net-sdk-rg-1876/providers/Microsoft.ServiceFabric/managedClusters/sfmcnetsdk6763?api-version=2021-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Jlc291cmNlR3JvdXBzL3NmbWMtbmV0LXNkay1yZy0xODc2L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUZhYnJpYy9tYW5hZ2VkQ2x1c3RlcnMvc2ZtY25ldHNkazY3NjM/YXBpLXZlcnNpb249MjAyMS0wMS0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "0df11dce-41bf-4c2f-bc71-59f20dab0e42"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ServiceFabricManagedClusters.ServiceFabricManagedClustersManagementClient/0.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2021 22:41:54 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-failure-cause": [
+          "gateway"
+        ],
+        "x-ms-request-id": [
+          "ab2bbeba-ab68-451e-9383-588ea3c5f0e8"
+        ],
+        "x-ms-correlation-request-id": [
+          "ab2bbeba-ab68-451e-9383-588ea3c5f0e8"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTCENTRALUS:20210212T224154Z:ab2bbeba-ab68-451e-9383-588ea3c5f0e8"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "246"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The Resource 'Microsoft.ServiceFabric/managedclusters/sfmcnetsdk6763' under resource group 'sfmc-net-sdk-rg-1876' was not found. For more details please go to https://aka.ms/ARMResourceNotFoundFix\"\r\n  }\r\n}",
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourcegroups/sfmc-net-sdk-rg-1876?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Jlc291cmNlZ3JvdXBzL3NmbWMtbmV0LXNkay1yZy0xODc2P2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"South Central US\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "334be42e-2de8-4fe8-bbf6-33df84cd37fc"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "38"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2021 22:35:17 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "6c3d7802-560b-49cd-b308-29262ace549b"
+        ],
+        "x-ms-correlation-request-id": [
+          "6c3d7802-560b-49cd-b308-29262ace549b"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTCENTRALUS:20210212T223517Z:6c3d7802-560b-49cd-b308-29262ace549b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "201"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/sfmc-net-sdk-rg-1876\",\r\n  \"name\": \"sfmc-net-sdk-rg-1876\",\r\n  \"location\": \"southcentralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/sfmc-net-sdk-rg-1876/providers/Microsoft.ServiceFabric/managedClusters/sfmcnetsdk6763?api-version=2021-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Jlc291cmNlR3JvdXBzL3NmbWMtbmV0LXNkay1yZy0xODc2L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUZhYnJpYy9tYW5hZ2VkQ2x1c3RlcnMvc2ZtY25ldHNkazY3NjM/YXBpLXZlcnNpb249MjAyMS0wMS0wMS1wcmV2aWV3",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"dnsName\": \"sfmcnetsdk6763\",\r\n    \"clientConnectionPort\": 19000,\r\n    \"httpGatewayConnectionPort\": 19080,\r\n    \"adminUserName\": \"vmadmin\",\r\n    \"adminPassword\": \"Password123!@#\",\r\n    \"clients\": [\r\n      {\r\n        \"isAdmin\": true,\r\n        \"thumbprint\": \"123BDACDCDFB2C7B250192C6078E47D1E1DB119B\"\r\n      }\r\n    ]\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Basic\"\r\n  },\r\n  \"location\": \"South Central US\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "244192ac-f90a-4531-b423-981e322193b9"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ServiceFabricManagedClusters.ServiceFabricManagedClustersManagementClient/0.1.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "421"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2021 22:35:20 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Azure-AsyncOperation": [
+          "https://management.azure.com:443/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/providers/Microsoft.ServiceFabric/locations/southcentralus/managedclusteroperations/b3530004-5b42-4b95-bfb4-fa27130dcc5d?api-version=2021-01-01-preview&Experiment=local"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "3cd3adeb-7f0e-40f8-b546-4198cbaf76c1"
+        ],
+        "x-ms-correlation-request-id": [
+          "3cd3adeb-7f0e-40f8-b546-4198cbaf76c1"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTCENTRALUS:20210212T223521Z:3cd3adeb-7f0e-40f8-b546-4198cbaf76c1"
+        ],
+        "Content-Length": [
+          "904"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourcegroups/sfmc-net-sdk-rg-1876/providers/Microsoft.ServiceFabric/managedClusters/sfmcnetsdk6763\",\r\n  \"type\": \"Microsoft.ServiceFabric/managedclusters\",\r\n  \"location\": \"South Central US\",\r\n  \"name\": \"sfmcnetsdk6763\",\r\n  \"tags\": {},\r\n  \"sku\": {\r\n    \"name\": \"Basic\"\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"clusterId\": \"0e78f2a4-dc3c-40a7-8b3e-b39fc2ac48bc\",\r\n    \"clusterUpgradeCadence\": \"Wave0\",\r\n    \"adminUserName\": \"vmadmin\",\r\n    \"dnsName\": \"sfmcnetsdk6763\",\r\n    \"clusterCertificateThumbprints\": [\r\n      null\r\n    ],\r\n    \"clientConnectionPort\": 19000,\r\n    \"httpGatewayConnectionPort\": 19080,\r\n    \"allowRdpAccess\": false,\r\n    \"clients\": [\r\n      {\r\n        \"isAdmin\": true,\r\n        \"thumbprint\": \"123BDACDCDFB2C7B250192C6078E47D1E1DB119B\"\r\n      }\r\n    ],\r\n    \"enableAutoOSUpgrade\": false\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/sfmc-net-sdk-rg-1876/providers/Microsoft.ServiceFabric/managedClusters/sfmcnetsdk6763?api-version=2021-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Jlc291cmNlR3JvdXBzL3NmbWMtbmV0LXNkay1yZy0xODc2L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUZhYnJpYy9tYW5hZ2VkQ2x1c3RlcnMvc2ZtY25ldHNkazY3NjM/YXBpLXZlcnNpb249MjAyMS0wMS0wMS1wcmV2aWV3",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"dnsName\": \"sfmcnetsdk6763\",\r\n    \"clientConnectionPort\": 50000,\r\n    \"httpGatewayConnectionPort\": 19080,\r\n    \"adminUserName\": \"vmadmin\",\r\n    \"allowRdpAccess\": false,\r\n    \"clients\": [\r\n      {\r\n        \"isAdmin\": true,\r\n        \"thumbprint\": \"123BDACDCDFB2C7B250192C6078E47D1E1DB119B\"\r\n      }\r\n    ],\r\n    \"fabricSettings\": [\r\n      {\r\n        \"name\": \"NamingService\",\r\n        \"parameters\": [\r\n          {\r\n            \"name\": \"MaxOperationTimeout\",\r\n            \"value\": \"10001\"\r\n          }\r\n        ]\r\n      }\r\n    ],\r\n    \"clusterUpgradeCadence\": \"Wave0\",\r\n    \"enableAutoOSUpgrade\": false\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Basic\"\r\n  },\r\n  \"location\": \"South Central US\",\r\n  \"tags\": {}\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "6f041b74-57bc-4445-8e17-6022078a956b"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ServiceFabricManagedClusters.ServiceFabricManagedClustersManagementClient/0.1.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "721"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2021 22:38:51 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/providers/Microsoft.ServiceFabric/locations/southcentralus/managedclusteroperationresults/81470004-0a92-4dd6-aa54-f519898029f4?api-version=2021-01-01-preview&Experiment=local"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0"
+        ],
+        "Azure-AsyncOperation": [
+          "https://management.azure.com:443/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/providers/Microsoft.ServiceFabric/locations/southcentralus/managedclusteroperations/81470004-0a92-4dd6-aa54-f519898029f4?api-version=2021-01-01-preview&Experiment=local"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
+        ],
+        "x-ms-request-id": [
+          "06232104-9748-4737-b444-19f80677c807"
+        ],
+        "x-ms-correlation-request-id": [
+          "06232104-9748-4737-b444-19f80677c807"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTCENTRALUS:20210212T223852Z:06232104-9748-4737-b444-19f80677c807"
+        ],
+        "Content-Length": [
+          "1305"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourcegroups/sfmc-net-sdk-rg-1876/providers/Microsoft.ServiceFabric/managedClusters/sfmcnetsdk6763\",\r\n  \"type\": \"Microsoft.ServiceFabric/managedclusters\",\r\n  \"location\": \"South Central US\",\r\n  \"name\": \"sfmcnetsdk6763\",\r\n  \"tags\": {},\r\n  \"sku\": {\r\n    \"name\": \"Basic\"\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Updating\",\r\n    \"clusterId\": \"0e78f2a4-dc3c-40a7-8b3e-b39fc2ac48bc\",\r\n    \"clusterState\": \"WaitingForNodes\",\r\n    \"clusterUpgradeCadence\": \"Wave0\",\r\n    \"adminUserName\": \"vmadmin\",\r\n    \"dnsName\": \"sfmcnetsdk6763\",\r\n    \"fqdn\": \"sfmcnetsdk6763.southcentralus.cloudapp.azure.com\",\r\n    \"ipv4Address\": \"23.102.158.25\",\r\n    \"clusterCertificateThumbprints\": [\r\n      \"42FE1DD778CEFD3E35F639DE9CC7BECA8189D41F\"\r\n    ],\r\n    \"clientConnectionPort\": 50000,\r\n    \"httpGatewayConnectionPort\": 19080,\r\n    \"allowRdpAccess\": false,\r\n    \"clients\": [\r\n      {\r\n        \"isAdmin\": true,\r\n        \"thumbprint\": \"123BDACDCDFB2C7B250192C6078E47D1E1DB119B\"\r\n      }\r\n    ],\r\n    \"fabricSettings\": [\r\n      {\r\n        \"name\": \"NamingService\",\r\n        \"parameters\": [\r\n          {\r\n            \"name\": \"MaxOperationTimeout\",\r\n            \"value\": \"10001\"\r\n          }\r\n        ]\r\n      }\r\n    ],\r\n    \"enableAutoOSUpgrade\": false\r\n  }\r\n}",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/providers/Microsoft.ServiceFabric/locations/southcentralus/managedclusteroperations/b3530004-5b42-4b95-bfb4-fa27130dcc5d?api-version=2021-01-01-preview&Experiment=local",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUZhYnJpYy9sb2NhdGlvbnMvc291dGhjZW50cmFsdXMvbWFuYWdlZGNsdXN0ZXJvcGVyYXRpb25zL2IzNTMwMDA0LTViNDItNGI5NS1iZmI0LWZhMjcxMzBkY2M1ZD9hcGktdmVyc2lvbj0yMDIxLTAxLTAxLXByZXZpZXcmRXhwZXJpbWVudD1sb2NhbA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ServiceFabricManagedClusters.ServiceFabricManagedClustersManagementClient/0.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2021 22:35:50 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11998"
+        ],
+        "x-ms-request-id": [
+          "3e74ade3-c9d7-4d3f-a405-f16ba7efe329"
+        ],
+        "x-ms-correlation-request-id": [
+          "3e74ade3-c9d7-4d3f-a405-f16ba7efe329"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTCENTRALUS:20210212T223551Z:3e74ade3-c9d7-4d3f-a405-f16ba7efe329"
+        ],
+        "Content-Length": [
+          "282"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"b3530004-5b42-4b95-bfb4-fa27130dcc5d\",\r\n  \"startTime\": \"2021-02-12T22:35:20.8306282Z\",\r\n  \"endTime\": \"0001-01-01T00:00:00\",\r\n  \"percentComplete\": 30.0,\r\n  \"status\": \"Created\",\r\n  \"error\": {\r\n    \"code\": \"OperationFailed\",\r\n    \"message\": \"\",\r\n    \"details\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/providers/Microsoft.ServiceFabric/locations/southcentralus/managedclusteroperations/b3530004-5b42-4b95-bfb4-fa27130dcc5d?api-version=2021-01-01-preview&Experiment=local",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUZhYnJpYy9sb2NhdGlvbnMvc291dGhjZW50cmFsdXMvbWFuYWdlZGNsdXN0ZXJvcGVyYXRpb25zL2IzNTMwMDA0LTViNDItNGI5NS1iZmI0LWZhMjcxMzBkY2M1ZD9hcGktdmVyc2lvbj0yMDIxLTAxLTAxLXByZXZpZXcmRXhwZXJpbWVudD1sb2NhbA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ServiceFabricManagedClusters.ServiceFabricManagedClustersManagementClient/0.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2021 22:36:20 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11997"
+        ],
+        "x-ms-request-id": [
+          "f47d628d-dbda-4e52-bd81-45f015d53edd"
+        ],
+        "x-ms-correlation-request-id": [
+          "f47d628d-dbda-4e52-bd81-45f015d53edd"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTCENTRALUS:20210212T223621Z:f47d628d-dbda-4e52-bd81-45f015d53edd"
+        ],
+        "Content-Length": [
+          "282"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"b3530004-5b42-4b95-bfb4-fa27130dcc5d\",\r\n  \"startTime\": \"2021-02-12T22:35:20.8306282Z\",\r\n  \"endTime\": \"0001-01-01T00:00:00\",\r\n  \"percentComplete\": 30.0,\r\n  \"status\": \"Created\",\r\n  \"error\": {\r\n    \"code\": \"OperationFailed\",\r\n    \"message\": \"\",\r\n    \"details\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/providers/Microsoft.ServiceFabric/locations/southcentralus/managedclusteroperations/b3530004-5b42-4b95-bfb4-fa27130dcc5d?api-version=2021-01-01-preview&Experiment=local",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUZhYnJpYy9sb2NhdGlvbnMvc291dGhjZW50cmFsdXMvbWFuYWdlZGNsdXN0ZXJvcGVyYXRpb25zL2IzNTMwMDA0LTViNDItNGI5NS1iZmI0LWZhMjcxMzBkY2M1ZD9hcGktdmVyc2lvbj0yMDIxLTAxLTAxLXByZXZpZXcmRXhwZXJpbWVudD1sb2NhbA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ServiceFabricManagedClusters.ServiceFabricManagedClustersManagementClient/0.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2021 22:36:51 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11996"
+        ],
+        "x-ms-request-id": [
+          "6e2f81a2-3587-40f6-a4e3-8e7ed9f32ade"
+        ],
+        "x-ms-correlation-request-id": [
+          "6e2f81a2-3587-40f6-a4e3-8e7ed9f32ade"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTCENTRALUS:20210212T223651Z:6e2f81a2-3587-40f6-a4e3-8e7ed9f32ade"
+        ],
+        "Content-Length": [
+          "282"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"b3530004-5b42-4b95-bfb4-fa27130dcc5d\",\r\n  \"startTime\": \"2021-02-12T22:35:20.8306282Z\",\r\n  \"endTime\": \"0001-01-01T00:00:00\",\r\n  \"percentComplete\": 40.0,\r\n  \"status\": \"Created\",\r\n  \"error\": {\r\n    \"code\": \"OperationFailed\",\r\n    \"message\": \"\",\r\n    \"details\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/providers/Microsoft.ServiceFabric/locations/southcentralus/managedclusteroperations/b3530004-5b42-4b95-bfb4-fa27130dcc5d?api-version=2021-01-01-preview&Experiment=local",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUZhYnJpYy9sb2NhdGlvbnMvc291dGhjZW50cmFsdXMvbWFuYWdlZGNsdXN0ZXJvcGVyYXRpb25zL2IzNTMwMDA0LTViNDItNGI5NS1iZmI0LWZhMjcxMzBkY2M1ZD9hcGktdmVyc2lvbj0yMDIxLTAxLTAxLXByZXZpZXcmRXhwZXJpbWVudD1sb2NhbA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ServiceFabricManagedClusters.ServiceFabricManagedClustersManagementClient/0.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2021 22:37:21 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11995"
+        ],
+        "x-ms-request-id": [
+          "95e32f4d-db96-49be-8910-e477cefaf201"
+        ],
+        "x-ms-correlation-request-id": [
+          "95e32f4d-db96-49be-8910-e477cefaf201"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTCENTRALUS:20210212T223721Z:95e32f4d-db96-49be-8910-e477cefaf201"
+        ],
+        "Content-Length": [
+          "282"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"b3530004-5b42-4b95-bfb4-fa27130dcc5d\",\r\n  \"startTime\": \"2021-02-12T22:35:20.8306282Z\",\r\n  \"endTime\": \"0001-01-01T00:00:00\",\r\n  \"percentComplete\": 40.0,\r\n  \"status\": \"Created\",\r\n  \"error\": {\r\n    \"code\": \"OperationFailed\",\r\n    \"message\": \"\",\r\n    \"details\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/providers/Microsoft.ServiceFabric/locations/southcentralus/managedclusteroperations/b3530004-5b42-4b95-bfb4-fa27130dcc5d?api-version=2021-01-01-preview&Experiment=local",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUZhYnJpYy9sb2NhdGlvbnMvc291dGhjZW50cmFsdXMvbWFuYWdlZGNsdXN0ZXJvcGVyYXRpb25zL2IzNTMwMDA0LTViNDItNGI5NS1iZmI0LWZhMjcxMzBkY2M1ZD9hcGktdmVyc2lvbj0yMDIxLTAxLTAxLXByZXZpZXcmRXhwZXJpbWVudD1sb2NhbA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ServiceFabricManagedClusters.ServiceFabricManagedClustersManagementClient/0.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2021 22:37:51 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11994"
+        ],
+        "x-ms-request-id": [
+          "72b079a1-3bfa-45eb-aff1-d95dc755f72e"
+        ],
+        "x-ms-correlation-request-id": [
+          "72b079a1-3bfa-45eb-aff1-d95dc755f72e"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTCENTRALUS:20210212T223751Z:72b079a1-3bfa-45eb-aff1-d95dc755f72e"
+        ],
+        "Content-Length": [
+          "282"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"b3530004-5b42-4b95-bfb4-fa27130dcc5d\",\r\n  \"startTime\": \"2021-02-12T22:35:20.8306282Z\",\r\n  \"endTime\": \"0001-01-01T00:00:00\",\r\n  \"percentComplete\": 40.0,\r\n  \"status\": \"Created\",\r\n  \"error\": {\r\n    \"code\": \"OperationFailed\",\r\n    \"message\": \"\",\r\n    \"details\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/providers/Microsoft.ServiceFabric/locations/southcentralus/managedclusteroperations/b3530004-5b42-4b95-bfb4-fa27130dcc5d?api-version=2021-01-01-preview&Experiment=local",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUZhYnJpYy9sb2NhdGlvbnMvc291dGhjZW50cmFsdXMvbWFuYWdlZGNsdXN0ZXJvcGVyYXRpb25zL2IzNTMwMDA0LTViNDItNGI5NS1iZmI0LWZhMjcxMzBkY2M1ZD9hcGktdmVyc2lvbj0yMDIxLTAxLTAxLXByZXZpZXcmRXhwZXJpbWVudD1sb2NhbA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ServiceFabricManagedClusters.ServiceFabricManagedClustersManagementClient/0.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2021 22:38:21 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11993"
+        ],
+        "x-ms-request-id": [
+          "54e0a329-8de3-48c5-900f-6eeb23e82569"
+        ],
+        "x-ms-correlation-request-id": [
+          "54e0a329-8de3-48c5-900f-6eeb23e82569"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTCENTRALUS:20210212T223821Z:54e0a329-8de3-48c5-900f-6eeb23e82569"
+        ],
+        "Content-Length": [
+          "282"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"b3530004-5b42-4b95-bfb4-fa27130dcc5d\",\r\n  \"startTime\": \"2021-02-12T22:35:20.8306282Z\",\r\n  \"endTime\": \"0001-01-01T00:00:00\",\r\n  \"percentComplete\": 51.0,\r\n  \"status\": \"Created\",\r\n  \"error\": {\r\n    \"code\": \"OperationFailed\",\r\n    \"message\": \"\",\r\n    \"details\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/providers/Microsoft.ServiceFabric/locations/southcentralus/managedclusteroperations/b3530004-5b42-4b95-bfb4-fa27130dcc5d?api-version=2021-01-01-preview&Experiment=local",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUZhYnJpYy9sb2NhdGlvbnMvc291dGhjZW50cmFsdXMvbWFuYWdlZGNsdXN0ZXJvcGVyYXRpb25zL2IzNTMwMDA0LTViNDItNGI5NS1iZmI0LWZhMjcxMzBkY2M1ZD9hcGktdmVyc2lvbj0yMDIxLTAxLTAxLXByZXZpZXcmRXhwZXJpbWVudD1sb2NhbA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ServiceFabricManagedClusters.ServiceFabricManagedClustersManagementClient/0.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2021 22:38:51 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11992"
+        ],
+        "x-ms-request-id": [
+          "c346cae0-c310-4232-b2aa-605a53574e7b"
+        ],
+        "x-ms-correlation-request-id": [
+          "c346cae0-c310-4232-b2aa-605a53574e7b"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTCENTRALUS:20210212T223852Z:c346cae0-c310-4232-b2aa-605a53574e7b"
+        ],
+        "Content-Length": [
+          "293"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"b3530004-5b42-4b95-bfb4-fa27130dcc5d\",\r\n  \"startTime\": \"2021-02-12T22:35:20.8306282Z\",\r\n  \"endTime\": \"2021-02-12T22:38:49.230223Z\",\r\n  \"percentComplete\": 100.0,\r\n  \"status\": \"Succeeded\",\r\n  \"error\": {\r\n    \"code\": \"OperationFailed\",\r\n    \"message\": \"\",\r\n    \"details\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourcegroups/sfmc-net-sdk-rg-1876/providers/Microsoft.ServiceFabric/managedClusters?api-version=2021-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Jlc291cmNlZ3JvdXBzL3NmbWMtbmV0LXNkay1yZy0xODc2L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUZhYnJpYy9tYW5hZ2VkQ2x1c3RlcnM/YXBpLXZlcnNpb249MjAyMS0wMS0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "8b5e2599-3311-4a5f-a96c-923069d42461"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ServiceFabricManagedClusters.ServiceFabricManagedClustersManagementClient/0.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2021 22:38:51 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11990"
+        ],
+        "x-ms-request-id": [
+          "f0eb86e7-e8e1-41e4-b589-d8d2d6a1b09c"
+        ],
+        "x-ms-correlation-request-id": [
+          "f0eb86e7-e8e1-41e4-b589-d8d2d6a1b09c"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTCENTRALUS:20210212T223852Z:f0eb86e7-e8e1-41e4-b589-d8d2d6a1b09c"
+        ],
+        "Content-Length": [
+          "974"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourcegroups/sfmc-net-sdk-rg-1876/providers/Microsoft.ServiceFabric/managedClusters/sfmcnetsdk6763\",\r\n      \"type\": \"Microsoft.ServiceFabric/managedclusters\",\r\n      \"location\": \"South Central US\",\r\n      \"name\": \"sfmcnetsdk6763\",\r\n      \"tags\": {},\r\n      \"sku\": {\r\n        \"name\": \"Basic\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"clusterId\": \"0e78f2a4-dc3c-40a7-8b3e-b39fc2ac48bc\",\r\n        \"clusterUpgradeCadence\": \"Wave0\",\r\n        \"adminUserName\": \"vmadmin\",\r\n        \"dnsName\": \"sfmcnetsdk6763\",\r\n        \"fqdn\": \"sfmcnetsdk6763.southcentralus.cloudapp.azure.com\",\r\n        \"clientConnectionPort\": 19000,\r\n        \"httpGatewayConnectionPort\": 19080,\r\n        \"clients\": [\r\n          {\r\n            \"isAdmin\": true,\r\n            \"thumbprint\": \"123BDACDCDFB2C7B250192C6078E47D1E1DB119B\"\r\n          }\r\n        ]\r\n      }\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourcegroups/sfmc-net-sdk-rg-1876/providers/Microsoft.ServiceFabric/managedClusters?api-version=2021-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Jlc291cmNlZ3JvdXBzL3NmbWMtbmV0LXNkay1yZy0xODc2L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUZhYnJpYy9tYW5hZ2VkQ2x1c3RlcnM/YXBpLXZlcnNpb249MjAyMS0wMS0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "820ce6f9-2faf-4c7d-9a1e-9fc4d51d6943"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ServiceFabricManagedClusters.ServiceFabricManagedClustersManagementClient/0.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2021 22:38:51 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11989"
+        ],
+        "x-ms-request-id": [
+          "42a915c2-4d5d-42ae-97c9-546b405a4b20"
+        ],
+        "x-ms-correlation-request-id": [
+          "42a915c2-4d5d-42ae-97c9-546b405a4b20"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTCENTRALUS:20210212T223852Z:42a915c2-4d5d-42ae-97c9-546b405a4b20"
+        ],
+        "Content-Length": [
+          "974"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourcegroups/sfmc-net-sdk-rg-1876/providers/Microsoft.ServiceFabric/managedClusters/sfmcnetsdk6763\",\r\n      \"type\": \"Microsoft.ServiceFabric/managedclusters\",\r\n      \"location\": \"South Central US\",\r\n      \"name\": \"sfmcnetsdk6763\",\r\n      \"tags\": {},\r\n      \"sku\": {\r\n        \"name\": \"Basic\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"clusterId\": \"0e78f2a4-dc3c-40a7-8b3e-b39fc2ac48bc\",\r\n        \"clusterUpgradeCadence\": \"Wave0\",\r\n        \"adminUserName\": \"vmadmin\",\r\n        \"dnsName\": \"sfmcnetsdk6763\",\r\n        \"fqdn\": \"sfmcnetsdk6763.southcentralus.cloudapp.azure.com\",\r\n        \"clientConnectionPort\": 19000,\r\n        \"httpGatewayConnectionPort\": 19080,\r\n        \"clients\": [\r\n          {\r\n            \"isAdmin\": true,\r\n            \"thumbprint\": \"123BDACDCDFB2C7B250192C6078E47D1E1DB119B\"\r\n          }\r\n        ]\r\n      }\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourcegroups/sfmc-net-sdk-rg-1876/providers/Microsoft.ServiceFabric/managedClusters?api-version=2021-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Jlc291cmNlZ3JvdXBzL3NmbWMtbmV0LXNkay1yZy0xODc2L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUZhYnJpYy9tYW5hZ2VkQ2x1c3RlcnM/YXBpLXZlcnNpb249MjAyMS0wMS0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "b6153a9a-6794-4107-b9c1-4566869af78d"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ServiceFabricManagedClusters.ServiceFabricManagedClustersManagementClient/0.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2021 22:41:53 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-request-id": [
+          "7488c39b-7ee8-493c-8178-56aa32ed38a5"
+        ],
+        "x-ms-correlation-request-id": [
+          "7488c39b-7ee8-493c-8178-56aa32ed38a5"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTCENTRALUS:20210212T224154Z:7488c39b-7ee8-493c-8178-56aa32ed38a5"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "12"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": []\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/providers/Microsoft.ServiceFabric/locations/southcentralus/managedclusteroperations/81470004-0a92-4dd6-aa54-f519898029f4?api-version=2021-01-01-preview&Experiment=local",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUZhYnJpYy9sb2NhdGlvbnMvc291dGhjZW50cmFsdXMvbWFuYWdlZGNsdXN0ZXJvcGVyYXRpb25zLzgxNDcwMDA0LTBhOTItNGRkNi1hYTU0LWY1MTk4OTgwMjlmND9hcGktdmVyc2lvbj0yMDIxLTAxLTAxLXByZXZpZXcmRXhwZXJpbWVudD1sb2NhbA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ServiceFabricManagedClusters.ServiceFabricManagedClustersManagementClient/0.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2021 22:39:22 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11988"
+        ],
+        "x-ms-request-id": [
+          "59edb766-e8ba-4d2a-9fc5-c231c5db7b91"
+        ],
+        "x-ms-correlation-request-id": [
+          "59edb766-e8ba-4d2a-9fc5-c231c5db7b91"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTCENTRALUS:20210212T223923Z:59edb766-e8ba-4d2a-9fc5-c231c5db7b91"
+        ],
+        "Content-Length": [
+          "294"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"81470004-0a92-4dd6-aa54-f519898029f4\",\r\n  \"startTime\": \"2021-02-12T22:38:52.7147002Z\",\r\n  \"endTime\": \"2021-02-12T22:39:09.6555361Z\",\r\n  \"percentComplete\": 100.0,\r\n  \"status\": \"Succeeded\",\r\n  \"error\": {\r\n    \"code\": \"OperationFailed\",\r\n    \"message\": \"\",\r\n    \"details\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/sfmc-net-sdk-rg-1876/providers/Microsoft.ServiceFabric/managedClusters/sfmcnetsdk6763?api-version=2021-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Jlc291cmNlR3JvdXBzL3NmbWMtbmV0LXNkay1yZy0xODc2L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUZhYnJpYy9tYW5hZ2VkQ2x1c3RlcnMvc2ZtY25ldHNkazY3NjM/YXBpLXZlcnNpb249MjAyMS0wMS0wMS1wcmV2aWV3",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "0d1febe1-5f92-4757-89dc-e7bc42014684"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ServiceFabricManagedClusters.ServiceFabricManagedClustersManagementClient/0.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2021 22:39:23 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/providers/Microsoft.ServiceFabric/locations/southcentralus/managedclusteroperationresults/eeb90004-a776-4f86-9681-75db92f1ac4f?api-version=2021-01-01-preview&Experiment=local"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0"
+        ],
+        "Azure-AsyncOperation": [
+          "https://management.azure.com:443/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/providers/Microsoft.ServiceFabric/locations/southcentralus/managedclusteroperations/eeb90004-a776-4f86-9681-75db92f1ac4f?api-version=2021-01-01-preview&Experiment=local"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14999"
+        ],
+        "x-ms-request-id": [
+          "7efea7c0-1a20-4e79-a5e4-462b76fa1bf9"
+        ],
+        "x-ms-correlation-request-id": [
+          "7efea7c0-1a20-4e79-a5e4-462b76fa1bf9"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTCENTRALUS:20210212T223923Z:7efea7c0-1a20-4e79-a5e4-462b76fa1bf9"
+        ],
+        "Content-Length": [
+          "1265"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourcegroups/sfmc-net-sdk-rg-1876/providers/Microsoft.ServiceFabric/managedClusters/sfmcnetsdk6763\",\r\n  \"type\": \"Microsoft.ServiceFabric/managedclusters\",\r\n  \"location\": \"South Central US\",\r\n  \"name\": \"sfmcnetsdk6763\",\r\n  \"tags\": {},\r\n  \"sku\": {\r\n    \"name\": \"Basic\"\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Deleting\",\r\n    \"clusterId\": \"0e78f2a4-dc3c-40a7-8b3e-b39fc2ac48bc\",\r\n    \"clusterUpgradeCadence\": \"Wave0\",\r\n    \"adminUserName\": \"vmadmin\",\r\n    \"dnsName\": \"sfmcnetsdk6763\",\r\n    \"fqdn\": \"sfmcnetsdk6763.southcentralus.cloudapp.azure.com\",\r\n    \"ipv4Address\": \"23.102.158.25\",\r\n    \"clusterCertificateThumbprints\": [\r\n      \"42FE1DD778CEFD3E35F639DE9CC7BECA8189D41F\"\r\n    ],\r\n    \"clientConnectionPort\": 50000,\r\n    \"httpGatewayConnectionPort\": 19080,\r\n    \"allowRdpAccess\": false,\r\n    \"clients\": [\r\n      {\r\n        \"isAdmin\": true,\r\n        \"thumbprint\": \"123BDACDCDFB2C7B250192C6078E47D1E1DB119B\"\r\n      }\r\n    ],\r\n    \"fabricSettings\": [\r\n      {\r\n        \"name\": \"NamingService\",\r\n        \"parameters\": [\r\n          {\r\n            \"name\": \"MaxOperationTimeout\",\r\n            \"value\": \"10001\"\r\n          }\r\n        ]\r\n      }\r\n    ],\r\n    \"enableAutoOSUpgrade\": false\r\n  }\r\n}",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/providers/Microsoft.ServiceFabric/locations/southcentralus/managedclusteroperations/eeb90004-a776-4f86-9681-75db92f1ac4f?api-version=2021-01-01-preview&Experiment=local",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUZhYnJpYy9sb2NhdGlvbnMvc291dGhjZW50cmFsdXMvbWFuYWdlZGNsdXN0ZXJvcGVyYXRpb25zL2VlYjkwMDA0LWE3NzYtNGY4Ni05NjgxLTc1ZGI5MmYxYWM0Zj9hcGktdmVyc2lvbj0yMDIxLTAxLTAxLXByZXZpZXcmRXhwZXJpbWVudD1sb2NhbA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ServiceFabricManagedClusters.ServiceFabricManagedClustersManagementClient/0.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2021 22:39:53 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11985"
+        ],
+        "x-ms-request-id": [
+          "24cb876f-0eeb-4dcc-8178-2e426f8f84d2"
+        ],
+        "x-ms-correlation-request-id": [
+          "24cb876f-0eeb-4dcc-8178-2e426f8f84d2"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTCENTRALUS:20210212T223953Z:24cb876f-0eeb-4dcc-8178-2e426f8f84d2"
+        ],
+        "Content-Length": [
+          "282"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"eeb90004-a776-4f86-9681-75db92f1ac4f\",\r\n  \"startTime\": \"2021-02-12T22:39:23.4123696Z\",\r\n  \"endTime\": \"0001-01-01T00:00:00\",\r\n  \"percentComplete\": 60.0,\r\n  \"status\": \"Created\",\r\n  \"error\": {\r\n    \"code\": \"OperationFailed\",\r\n    \"message\": \"\",\r\n    \"details\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/providers/Microsoft.ServiceFabric/locations/southcentralus/managedclusteroperations/eeb90004-a776-4f86-9681-75db92f1ac4f?api-version=2021-01-01-preview&Experiment=local",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUZhYnJpYy9sb2NhdGlvbnMvc291dGhjZW50cmFsdXMvbWFuYWdlZGNsdXN0ZXJvcGVyYXRpb25zL2VlYjkwMDA0LWE3NzYtNGY4Ni05NjgxLTc1ZGI5MmYxYWM0Zj9hcGktdmVyc2lvbj0yMDIxLTAxLTAxLXByZXZpZXcmRXhwZXJpbWVudD1sb2NhbA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ServiceFabricManagedClusters.ServiceFabricManagedClustersManagementClient/0.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2021 22:40:23 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11984"
+        ],
+        "x-ms-request-id": [
+          "ff16b4f8-59f7-413f-bbce-a1f458e4b691"
+        ],
+        "x-ms-correlation-request-id": [
+          "ff16b4f8-59f7-413f-bbce-a1f458e4b691"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTCENTRALUS:20210212T224023Z:ff16b4f8-59f7-413f-bbce-a1f458e4b691"
+        ],
+        "Content-Length": [
+          "282"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"eeb90004-a776-4f86-9681-75db92f1ac4f\",\r\n  \"startTime\": \"2021-02-12T22:39:23.4123696Z\",\r\n  \"endTime\": \"0001-01-01T00:00:00\",\r\n  \"percentComplete\": 60.0,\r\n  \"status\": \"Created\",\r\n  \"error\": {\r\n    \"code\": \"OperationFailed\",\r\n    \"message\": \"\",\r\n    \"details\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/providers/Microsoft.ServiceFabric/locations/southcentralus/managedclusteroperations/eeb90004-a776-4f86-9681-75db92f1ac4f?api-version=2021-01-01-preview&Experiment=local",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUZhYnJpYy9sb2NhdGlvbnMvc291dGhjZW50cmFsdXMvbWFuYWdlZGNsdXN0ZXJvcGVyYXRpb25zL2VlYjkwMDA0LWE3NzYtNGY4Ni05NjgxLTc1ZGI5MmYxYWM0Zj9hcGktdmVyc2lvbj0yMDIxLTAxLTAxLXByZXZpZXcmRXhwZXJpbWVudD1sb2NhbA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ServiceFabricManagedClusters.ServiceFabricManagedClustersManagementClient/0.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2021 22:40:53 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11983"
+        ],
+        "x-ms-request-id": [
+          "7254bcbb-151a-488c-bbcc-ef05e5a87435"
+        ],
+        "x-ms-correlation-request-id": [
+          "7254bcbb-151a-488c-bbcc-ef05e5a87435"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTCENTRALUS:20210212T224053Z:7254bcbb-151a-488c-bbcc-ef05e5a87435"
+        ],
+        "Content-Length": [
+          "282"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"eeb90004-a776-4f86-9681-75db92f1ac4f\",\r\n  \"startTime\": \"2021-02-12T22:39:23.4123696Z\",\r\n  \"endTime\": \"0001-01-01T00:00:00\",\r\n  \"percentComplete\": 60.0,\r\n  \"status\": \"Created\",\r\n  \"error\": {\r\n    \"code\": \"OperationFailed\",\r\n    \"message\": \"\",\r\n    \"details\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/providers/Microsoft.ServiceFabric/locations/southcentralus/managedclusteroperations/eeb90004-a776-4f86-9681-75db92f1ac4f?api-version=2021-01-01-preview&Experiment=local",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUZhYnJpYy9sb2NhdGlvbnMvc291dGhjZW50cmFsdXMvbWFuYWdlZGNsdXN0ZXJvcGVyYXRpb25zL2VlYjkwMDA0LWE3NzYtNGY4Ni05NjgxLTc1ZGI5MmYxYWM0Zj9hcGktdmVyc2lvbj0yMDIxLTAxLTAxLXByZXZpZXcmRXhwZXJpbWVudD1sb2NhbA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ServiceFabricManagedClusters.ServiceFabricManagedClustersManagementClient/0.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2021 22:41:22 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11982"
+        ],
+        "x-ms-request-id": [
+          "86c95c4f-643c-4250-83a9-79920649a8ed"
+        ],
+        "x-ms-correlation-request-id": [
+          "86c95c4f-643c-4250-83a9-79920649a8ed"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTCENTRALUS:20210212T224123Z:86c95c4f-643c-4250-83a9-79920649a8ed"
+        ],
+        "Content-Length": [
+          "282"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"eeb90004-a776-4f86-9681-75db92f1ac4f\",\r\n  \"startTime\": \"2021-02-12T22:39:23.4123696Z\",\r\n  \"endTime\": \"0001-01-01T00:00:00\",\r\n  \"percentComplete\": 60.0,\r\n  \"status\": \"Created\",\r\n  \"error\": {\r\n    \"code\": \"OperationFailed\",\r\n    \"message\": \"\",\r\n    \"details\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/providers/Microsoft.ServiceFabric/locations/southcentralus/managedclusteroperations/eeb90004-a776-4f86-9681-75db92f1ac4f?api-version=2021-01-01-preview&Experiment=local",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUZhYnJpYy9sb2NhdGlvbnMvc291dGhjZW50cmFsdXMvbWFuYWdlZGNsdXN0ZXJvcGVyYXRpb25zL2VlYjkwMDA0LWE3NzYtNGY4Ni05NjgxLTc1ZGI5MmYxYWM0Zj9hcGktdmVyc2lvbj0yMDIxLTAxLTAxLXByZXZpZXcmRXhwZXJpbWVudD1sb2NhbA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ServiceFabricManagedClusters.ServiceFabricManagedClustersManagementClient/0.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2021 22:41:53 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11981"
+        ],
+        "x-ms-request-id": [
+          "b89c3f52-8c11-44f8-9fbb-f894c5ccbcab"
+        ],
+        "x-ms-correlation-request-id": [
+          "b89c3f52-8c11-44f8-9fbb-f894c5ccbcab"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTCENTRALUS:20210212T224153Z:b89c3f52-8c11-44f8-9fbb-f894c5ccbcab"
+        ],
+        "Content-Length": [
+          "294"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"eeb90004-a776-4f86-9681-75db92f1ac4f\",\r\n  \"startTime\": \"2021-02-12T22:39:23.4123696Z\",\r\n  \"endTime\": \"2021-02-12T22:41:24.2817402Z\",\r\n  \"percentComplete\": 100.0,\r\n  \"status\": \"Succeeded\",\r\n  \"error\": {\r\n    \"code\": \"OperationFailed\",\r\n    \"message\": \"\",\r\n    \"details\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/providers/Microsoft.ServiceFabric/locations/southcentralus/managedclusteroperationresults/eeb90004-a776-4f86-9681-75db92f1ac4f?api-version=2021-01-01-preview&Experiment=local",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUZhYnJpYy9sb2NhdGlvbnMvc291dGhjZW50cmFsdXMvbWFuYWdlZGNsdXN0ZXJvcGVyYXRpb25yZXN1bHRzL2VlYjkwMDA0LWE3NzYtNGY4Ni05NjgxLTc1ZGI5MmYxYWM0Zj9hcGktdmVyc2lvbj0yMDIxLTAxLTAxLXByZXZpZXcmRXhwZXJpbWVudD1sb2NhbA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ServiceFabricManagedClusters.ServiceFabricManagedClustersManagementClient/0.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2021 22:41:54 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11980"
+        ],
+        "x-ms-request-id": [
+          "45a2b589-b3cf-4be8-b8ce-f40b0f0abded"
+        ],
+        "x-ms-correlation-request-id": [
+          "45a2b589-b3cf-4be8-b8ce-f40b0f0abded"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTCENTRALUS:20210212T224154Z:45a2b589-b3cf-4be8-b8ce-f40b0f0abded"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 204
+    }
+  ],
+  "Names": {
+    "CrudClusterTest": [
+      "sfmc-net-sdk-rg-1876",
+      "sfmcnetsdk6763"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "b36cdf46-b75d-4dc2-9fe1-1296ee8c623d"
+  }
+}

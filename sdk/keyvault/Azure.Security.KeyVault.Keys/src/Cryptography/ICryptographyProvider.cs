@@ -8,7 +8,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 {
     internal interface ICryptographyProvider
     {
-        bool ShouldRemote { get; }
+        bool CanRemote { get; }
 
         bool SupportsOperation(KeyOperation operation);
 

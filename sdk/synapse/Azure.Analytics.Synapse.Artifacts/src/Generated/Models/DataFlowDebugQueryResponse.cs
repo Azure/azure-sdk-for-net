@@ -10,8 +10,5 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Response body structure of data flow query for data preview, statistics or expression preview. </summary>
     public partial class DataFlowDebugQueryResponse
     {
-
-        /// <summary> The run ID of data flow debug session. </summary>
-        public string RunId { get; }
     }
 }

@@ -2,6 +2,14 @@
 
 ## 4.2.0-beta.5 (Unreleased)
 
+### Added
+
+- `LocalCryptographyClientOptions` has been added to configure diagnostics for `CryptographyClient` when used for local-only operations.
+
+### Removed
+
+- `LocalCryptographyClient` has been removed. Use `CryptographyClient` with a `JsonWebKey` instead.
+
 ## 4.2.0-beta.4 (2021-02-10)
 
 ### Added

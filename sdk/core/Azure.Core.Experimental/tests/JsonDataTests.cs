@@ -24,7 +24,7 @@ namespace Azure.Core.Tests
         {
             var jsonData = JsonData.FromString("\"string\"");
 
-            Assert.AreEqual("\"string\"", jsonData.ToString());
+            Assert.AreEqual("\"string\"", jsonData.ToJsonString());
         }
 
         [Test]
@@ -221,6 +221,61 @@ namespace Azure.Core.Tests
             var roundtripped = new JsonData(model).To<SampleModel>();
 
             Assert.AreEqual(model, roundtripped);
+        }
+
+        [Test]
+        public void EqualsProvidesValueEqualityPrimitives()
+        {
+            Assert.AreEqual(new JsonData(1), new JsonData(1));
+            Assert.AreEqual(new JsonData(true), new JsonData(true));
+            Assert.AreEqual(new JsonData(false), new JsonData(false));
+            Assert.AreEqual(new JsonData("hello"), new JsonData("hello"));
+            Assert.AreEqual(new JsonData(null), new JsonData(null));
+        }
+
+        [Test]
+        public void EqualsHandlesStringsSpecial()
+        {
+            Assert.IsTrue((new JsonData("test").Equals("test")));
+            Assert.IsTrue((new JsonData("test").Equals(new JsonData("test"))));
+        }
+
+        [Test]
+        public void EqualsForObjectsAndArrays()
+        {
+            JsonData obj1 = new JsonData(new { foo = "bar" });
+            JsonData obj2 = new JsonData(new { foo = "bar" });
+
+            JsonData arr1 = new JsonData(new[] { "bar" });
+            JsonData arr2 = new JsonData(new[] { "bar" });
+
+            // For objects and arrays, Equals provides reference equality.
+            Assert.AreEqual(obj1, obj1);
+            Assert.AreEqual(arr1, arr1);
+
+            Assert.AreNotEqual(obj1, obj2);
+            Assert.AreNotEqual(arr1, arr2);
+        }
+
+        [Test]
+        public void EqualsAndNull()
+        {
+            Assert.AreNotEqual(new JsonData(null), null);
+            Assert.AreNotEqual(null, new JsonData(null));
+        }
+
+        [Test]
+        public void OperatorEqualsForString()
+        {
+            Assert.IsTrue(new JsonData("foo") == "foo");
+            Assert.IsTrue("foo" == new JsonData("foo"));
+            Assert.IsFalse(new JsonData("foo") != "foo");
+            Assert.IsFalse("foo" != new JsonData("foo"));
+
+            Assert.IsFalse(new JsonData("bar") == "foo");
+            Assert.IsFalse("foo" == new JsonData("bar"));
+            Assert.IsTrue(new JsonData("bar") != "foo");
+            Assert.IsTrue("foo" != new JsonData("bar"));
         }
 
         private T JsonAsType<T>(string json)

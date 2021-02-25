@@ -44,38 +44,14 @@ namespace Azure.Storage.Files.DataLake
         public virtual Uri Uri => _uri;
 
         /// <summary>
-        /// The <see cref="HttpPipeline"/> transport pipeline used to send
-        /// every request.
+        /// <see cref="DataLakeClientConfiguration"/>.
         /// </summary>
-        private readonly HttpPipeline _pipeline;
+        private readonly DataLakeClientConfiguration _clientConfiguration;
 
         /// <summary>
-        /// Gets tghe <see cref="HttpPipeline"/> transport pipeline used to
-        /// send every request.
+        /// <see cref="DataLakeClientConfiguration"/>.
         /// </summary>
-        internal virtual HttpPipeline Pipeline => _pipeline;
-
-        /// <summary>
-        /// The version of the service to use when sending requests.
-        /// </summary>
-        private readonly DataLakeClientOptions.ServiceVersion _version;
-
-        /// <summary>
-        /// The version of the service to use when sending requests.
-        /// </summary>
-        internal virtual DataLakeClientOptions.ServiceVersion Version => _version;
-
-        /// <summary>
-        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
-        /// every request.
-        /// </summary>
-        private readonly ClientDiagnostics _clientDiagnostics;
-
-        /// <summary>
-        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
-        /// every request.
-        /// </summary>
-        internal virtual ClientDiagnostics ClientDiagnostics => _clientDiagnostics;
+        internal virtual DataLakeClientConfiguration ClientConfiguration => _clientConfiguration;
 
         /// <summary>
         /// The Storage account name corresponding to the file service client.
@@ -98,20 +74,10 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS
-        /// </summary>
-        private StorageSharedKeyCredential _storageSharedKeyCredential;
-
-        /// <summary>
-        /// Gets the The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS.
-        /// </summary>
-        internal virtual StorageSharedKeyCredential SharedKeyCredential => _storageSharedKeyCredential;
-
-        /// <summary>
         /// Determines whether the client is able to generate a SAS.
         /// If the client is authenticated with a <see cref="StorageSharedKeyCredential"/>.
         /// </summary>
-        public virtual bool CanGenerateAccountSasUri => SharedKeyCredential != null;
+        public virtual bool CanGenerateAccountSasUri => ClientConfiguration.SharedKeyCredential != null;
 
         #region ctors
         /// <summary>
@@ -190,18 +156,21 @@ namespace Azure.Storage.Files.DataLake
             options ??= new DataLakeClientOptions();
             HttpPipelinePolicy authPolicy = sharedKeyCredential.AsPolicy();
 
-            _pipeline = options.Build(authPolicy);
+            _clientConfiguration = new DataLakeClientConfiguration(
+                pipeline: options.Build(authPolicy),
+                sharedKeyCredential: sharedKeyCredential,
+                clientDiagnostics: new ClientDiagnostics(options),
+                version: options.Version);
+
             _uri = conn.BlobEndpoint;
             _blobUri = new DataLakeUriBuilder(_uri).ToBlobUri();
-            _version = options.Version;
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _storageSharedKeyCredential = sharedKeyCredential;
+
             _blobServiceClient = BlobServiceClientInternals.Create(
                 _blobUri,
-                _pipeline,
+                _clientConfiguration.Pipeline,
                 authPolicy,
-                _version.AsBlobsVersion(),
-                _clientDiagnostics);
+                _clientConfiguration.Version.AsBlobsVersion(),
+                _clientConfiguration.ClientDiagnostics);
         }
 
         /// <summary>
@@ -374,18 +343,22 @@ namespace Azure.Storage.Files.DataLake
         {
             Argument.AssertNotNull(serviceUri, nameof(serviceUri));
             options ??= new DataLakeClientOptions();
-            _pipeline = options.Build(authentication);
+
             _uri = serviceUri;
             _blobUri = new DataLakeUriBuilder(serviceUri).ToBlobUri();
-            _version = options.Version;
-            _clientDiagnostics = clientDiagnostics ?? new ClientDiagnostics(options);
-            _storageSharedKeyCredential = storageSharedKeyCredential;
+
+            _clientConfiguration = new DataLakeClientConfiguration(
+                pipeline: options.Build(authentication),
+                sharedKeyCredential: storageSharedKeyCredential,
+                clientDiagnostics: clientDiagnostics ?? new ClientDiagnostics(options),
+                version: options.Version);
+
             _blobServiceClient = BlobServiceClientInternals.Create(
                 _blobUri,
-                _pipeline,
+                _clientConfiguration.Pipeline,
                 authentication,
-                _version.AsBlobsVersion(),
-                _clientDiagnostics);
+                _clientConfiguration.Version.AsBlobsVersion(),
+                _clientConfiguration.ClientDiagnostics);
         }
 
         /// <summary>
@@ -426,7 +399,9 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="DataLakeFileSystemClient"/> for the desired share.
         /// </returns>
         public virtual DataLakeFileSystemClient GetFileSystemClient(string fileSystemName)
-            => new DataLakeFileSystemClient(Uri.AppendToPath(fileSystemName), Pipeline, SharedKeyCredential, Version, ClientDiagnostics);
+            => new DataLakeFileSystemClient(
+                Uri.AppendToPath(fileSystemName),
+                ClientConfiguration);
 
         #region Get User Delegation Key
         /// <summary>
@@ -459,7 +434,7 @@ namespace Azure.Storage.Files.DataLake
             DateTimeOffset expiresOn,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(GetUserDelegationKey)}");
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(GetUserDelegationKey)}");
 
             try
             {
@@ -515,7 +490,7 @@ namespace Azure.Storage.Files.DataLake
             DateTimeOffset expiresOn,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(GetUserDelegationKey)}");
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(GetUserDelegationKey)}");
 
             try
             {
@@ -751,7 +726,7 @@ namespace Azure.Storage.Files.DataLake
             Metadata metadata = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(CreateFileSystem)}");
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(CreateFileSystem)}");
 
             try
             {
@@ -818,7 +793,7 @@ namespace Azure.Storage.Files.DataLake
             Metadata metadata = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(CreateFileSystem)}");
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(CreateFileSystem)}");
 
             try
             {
@@ -873,7 +848,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(DeleteFileSystem)}");
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(DeleteFileSystem)}");
 
             try
             {
@@ -927,7 +902,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(DeleteFileSystem)}");
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(DeleteFileSystem)}");
 
             try
             {
@@ -984,7 +959,7 @@ namespace Azure.Storage.Files.DataLake
             string destinationFileSystemName = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(UndeleteFileSystem)}");
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(UndeleteFileSystem)}");
 
             try
             {
@@ -998,10 +973,7 @@ namespace Azure.Storage.Files.DataLake
 
                 DataLakeFileSystemClient fileSystemClient = new DataLakeFileSystemClient(
                     response.Value.Uri,
-                    Pipeline,
-                    SharedKeyCredential,
-                    Version,
-                    ClientDiagnostics);
+                    ClientConfiguration);
 
                 return Response.FromValue(
                     fileSystemClient,
@@ -1050,7 +1022,7 @@ namespace Azure.Storage.Files.DataLake
             string destinationFileSystemName = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(UndeleteFileSystem)}");
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(UndeleteFileSystem)}");
 
             try
             {
@@ -1065,10 +1037,7 @@ namespace Azure.Storage.Files.DataLake
 
                 DataLakeFileSystemClient fileSystemClient = new DataLakeFileSystemClient(
                     response.Value.Uri,
-                    Pipeline,
-                    SharedKeyCredential,
-                    Version,
-                    ClientDiagnostics);
+                    ClientConfiguration);
 
                 return Response.FromValue(
                     fileSystemClient,
@@ -1119,7 +1088,7 @@ namespace Azure.Storage.Files.DataLake
         //    DataLakeRequestConditions sourceConditions = default,
         //    CancellationToken cancellationToken = default)
         //{
-        //    DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(RenameFileSystem)}");
+        //    DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(RenameFileSystem)}");
 
         //    try
         //    {
@@ -1185,7 +1154,7 @@ namespace Azure.Storage.Files.DataLake
         //    DataLakeRequestConditions sourceConditions = default,
         //    CancellationToken cancellationToken = default)
         //{
-        //    DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(RenameFileSystem)}");
+        //    DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(RenameFileSystem)}");
 
         //    try
         //    {
@@ -1298,7 +1267,7 @@ namespace Azure.Storage.Files.DataLake
                     nameof(AccountSasServices.Blobs));
             }
             DataLakeUriBuilder sasUri = new DataLakeUriBuilder(Uri);
-            sasUri.Query = builder.ToSasQueryParameters(SharedKeyCredential).ToString();
+            sasUri.Query = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential).ToString();
             return sasUri.ToUri();
         }
         #endregion

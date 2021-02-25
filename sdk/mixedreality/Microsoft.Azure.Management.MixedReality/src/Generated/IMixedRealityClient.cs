@@ -90,6 +90,11 @@ namespace Microsoft.Azure.Management.MixedReality
         IRemoteRenderingAccountsOperations RemoteRenderingAccounts { get; }
 
         /// <summary>
+        /// Gets the IObjectAnchorsAccountsOperations.
+        /// </summary>
+        IObjectAnchorsAccountsOperations ObjectAnchorsAccounts { get; }
+
+        /// <summary>
         /// Check Name Availability for local uniqueness
         /// </summary>
         /// <param name='location'>

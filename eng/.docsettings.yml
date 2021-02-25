@@ -10,6 +10,7 @@ omitted_paths:
   - common/Perf/*
   - common/SmokeTests/*
   - common/Stress/*
+  - sdk/*/*/perf/*
   - sdk/*/samples/*
   - sdk/*/*/samples/*
   - sdk/*/swagger/*
