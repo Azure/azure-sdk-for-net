@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.ProviderHub
     /// <summary>
     /// SkusOperations operations.
     /// </summary>
-    internal partial class SkusOperations : IServiceOperations<ProviderhubClient>, ISkusOperations
+    internal partial class SkusOperations : IServiceOperations<providerhubClient>, ISkusOperations
     {
         /// <summary>
         /// Initializes a new instance of the SkusOperations class.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.ProviderHub
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal SkusOperations(ProviderhubClient client)
+        internal SkusOperations(providerhubClient client)
         {
             if (client == null)
             {
@@ -46,9 +46,9 @@ namespace Microsoft.Azure.Management.ProviderHub
         }
 
         /// <summary>
-        /// Gets a reference to the ProviderhubClient
+        /// Gets a reference to the providerhubClient
         /// </summary>
-        public ProviderhubClient Client { get; private set; }
+        public providerhubClient Client { get; private set; }
 
         /// <summary>
         /// Gets the sku details for the given resource type and sku name.
@@ -285,7 +285,7 @@ namespace Microsoft.Azure.Management.ProviderHub
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<SkuResource>> CreateOrUpdateWithHttpMessagesAsync(string providerNamespace, string resourceType, string sku, SkuResource skuSettings, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SkuResource>> CreateOrUpdateWithHttpMessagesAsync(string providerNamespace, string resourceType, string sku, IList<SkuSetting> skuSettings, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -311,10 +311,10 @@ namespace Microsoft.Azure.Management.ProviderHub
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "skuSettings");
             }
-            SkuResource properties = new SkuResource();
+            ResourceTypeSku properties = new ResourceTypeSku();
             if (skuSettings != null)
             {
-                properties = skuSettings;
+                properties.SkuSettings = skuSettings;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;

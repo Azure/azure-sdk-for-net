@@ -52,8 +52,6 @@ namespace Microsoft.Azure.Management.ProviderHub
         /// The name of the resource provider hosted within ProviderHub.
         /// </param>
         /// <param name='properties'>
-        /// The provider registration properties supplied to the CreateOrUpdate
-        /// operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -70,7 +68,7 @@ namespace Microsoft.Azure.Management.ProviderHub
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ProviderRegistration>> CreateOrUpdateWithHttpMessagesAsync(string providerNamespace, ProviderRegistration properties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ProviderRegistration>> CreateOrUpdateWithHttpMessagesAsync(string providerNamespace, ProviderRegistrationPropertiesModel properties = default(ProviderRegistrationPropertiesModel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes a provider registration.
         /// </summary>
@@ -138,8 +136,6 @@ namespace Microsoft.Azure.Management.ProviderHub
         /// The name of the resource provider hosted within ProviderHub.
         /// </param>
         /// <param name='properties'>
-        /// The provider registration properties supplied to the CreateOrUpdate
-        /// operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -156,7 +152,7 @@ namespace Microsoft.Azure.Management.ProviderHub
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ProviderRegistration>> BeginCreateOrUpdateWithHttpMessagesAsync(string providerNamespace, ProviderRegistration properties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ProviderRegistration>> BeginCreateOrUpdateWithHttpMessagesAsync(string providerNamespace, ProviderRegistrationPropertiesModel properties = default(ProviderRegistrationPropertiesModel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the list of the provider registrations in the subscription.
         /// </summary>

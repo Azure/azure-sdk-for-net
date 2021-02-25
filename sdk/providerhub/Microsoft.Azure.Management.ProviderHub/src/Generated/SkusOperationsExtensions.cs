@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.ProviderHub
             /// </param>
             /// <param name='skuSettings'>
             /// </param>
-            public static SkuResource CreateOrUpdate(this ISkusOperations operations, string providerNamespace, string resourceType, string sku, SkuResource skuSettings)
+            public static SkuResource CreateOrUpdate(this ISkusOperations operations, string providerNamespace, string resourceType, string sku, IList<SkuSetting> skuSettings)
             {
                 return operations.CreateOrUpdateAsync(providerNamespace, resourceType, sku, skuSettings).GetAwaiter().GetResult();
             }
@@ -111,7 +111,7 @@ namespace Microsoft.Azure.Management.ProviderHub
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SkuResource> CreateOrUpdateAsync(this ISkusOperations operations, string providerNamespace, string resourceType, string sku, SkuResource skuSettings, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SkuResource> CreateOrUpdateAsync(this ISkusOperations operations, string providerNamespace, string resourceType, string sku, IList<SkuSetting> skuSettings, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(providerNamespace, resourceType, sku, skuSettings, null, cancellationToken).ConfigureAwait(false))
                 {

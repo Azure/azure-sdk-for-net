@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.ProviderHub
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<SkuResource>> CreateOrUpdateWithHttpMessagesAsync(string providerNamespace, string resourceType, string sku, SkuResource skuSettings, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SkuResource>> CreateOrUpdateWithHttpMessagesAsync(string providerNamespace, string resourceType, string sku, IList<SkuSetting> skuSettings, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes a resource type sku.
         /// </summary>

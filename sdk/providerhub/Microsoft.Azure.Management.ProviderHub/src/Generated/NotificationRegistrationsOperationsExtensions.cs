@@ -74,10 +74,8 @@ namespace Microsoft.Azure.Management.ProviderHub
             /// The notification registration.
             /// </param>
             /// <param name='properties'>
-            /// The required body parameters supplied to the notification registration
-            /// operation.
             /// </param>
-            public static NotificationRegistration CreateOrUpdate(this INotificationRegistrationsOperations operations, string providerNamespace, string notificationRegistrationName, NotificationRegistration properties)
+            public static NotificationRegistration CreateOrUpdate(this INotificationRegistrationsOperations operations, string providerNamespace, string notificationRegistrationName, NotificationRegistrationPropertiesModel properties = default(NotificationRegistrationPropertiesModel))
             {
                 return operations.CreateOrUpdateAsync(providerNamespace, notificationRegistrationName, properties).GetAwaiter().GetResult();
             }
@@ -95,13 +93,11 @@ namespace Microsoft.Azure.Management.ProviderHub
             /// The notification registration.
             /// </param>
             /// <param name='properties'>
-            /// The required body parameters supplied to the notification registration
-            /// operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<NotificationRegistration> CreateOrUpdateAsync(this INotificationRegistrationsOperations operations, string providerNamespace, string notificationRegistrationName, NotificationRegistration properties, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<NotificationRegistration> CreateOrUpdateAsync(this INotificationRegistrationsOperations operations, string providerNamespace, string notificationRegistrationName, NotificationRegistrationPropertiesModel properties = default(NotificationRegistrationPropertiesModel), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(providerNamespace, notificationRegistrationName, properties, null, cancellationToken).ConfigureAwait(false))
                 {

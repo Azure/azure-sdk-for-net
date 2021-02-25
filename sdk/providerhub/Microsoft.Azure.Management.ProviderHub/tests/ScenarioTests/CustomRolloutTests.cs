@@ -43,25 +43,25 @@ namespace Microsoft.Azure.Management.ProviderHub.Tests
 
         private CustomRollout CreateCustomRollout(MockContext context, string providerNamespace, string rolloutName, CustomRolloutProperties properties)
         {
-            ProviderhubClient client = GetProviderHubManagementClient(context);
+            providerhubClient client = GetProviderHubManagementClient(context);
             return client.CustomRollouts.CreateOrUpdate(providerNamespace, rolloutName, properties);
         }
 
         private CustomRollout GetCustomRollout(MockContext context, string providerNamespace, string rolloutName)
         {
-            ProviderhubClient client = GetProviderHubManagementClient(context);
+            providerhubClient client = GetProviderHubManagementClient(context);
             return client.CustomRollouts.Get(providerNamespace, rolloutName);
         }
 
         private IPage<CustomRollout> ListCustomRollouts(MockContext context, string providerNamespace)
         {
-            ProviderhubClient client = GetProviderHubManagementClient(context);
+            providerhubClient client = GetProviderHubManagementClient(context);
             return client.CustomRollouts.ListByProviderRegistration(providerNamespace);
         }
 
-        private ProviderhubClient GetProviderHubManagementClient(MockContext context)
+        private providerhubClient GetProviderHubManagementClient(MockContext context)
         {
-            return context.GetServiceClient<ProviderhubClient>();
+            return context.GetServiceClient<providerhubClient>();
         }
     }
 }

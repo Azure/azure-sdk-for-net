@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.ProviderHub
     /// <summary>
     /// ResourceTypeRegistrationsOperations operations.
     /// </summary>
-    internal partial class ResourceTypeRegistrationsOperations : IServiceOperations<ProviderhubClient>, IResourceTypeRegistrationsOperations
+    internal partial class ResourceTypeRegistrationsOperations : IServiceOperations<providerhubClient>, IResourceTypeRegistrationsOperations
     {
         /// <summary>
         /// Initializes a new instance of the ResourceTypeRegistrationsOperations class.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.ProviderHub
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal ResourceTypeRegistrationsOperations(ProviderhubClient client)
+        internal ResourceTypeRegistrationsOperations(providerhubClient client)
         {
             if (client == null)
             {
@@ -46,9 +46,9 @@ namespace Microsoft.Azure.Management.ProviderHub
         }
 
         /// <summary>
-        /// Gets a reference to the ProviderhubClient
+        /// Gets a reference to the providerhubClient
         /// </summary>
-        public ProviderhubClient Client { get; private set; }
+        public providerhubClient Client { get; private set; }
 
         /// <summary>
         /// Gets a resource type details in the given subscription and provider.
@@ -251,7 +251,6 @@ namespace Microsoft.Azure.Management.ProviderHub
         /// The resource type.
         /// </param>
         /// <param name='properties'>
-        /// The Kusto cluster parameters supplied to the CreateOrUpdate operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -259,7 +258,7 @@ namespace Microsoft.Azure.Management.ProviderHub
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<ResourceTypeRegistration>> CreateOrUpdateWithHttpMessagesAsync(string providerNamespace, string resourceType, ResourceTypeRegistration properties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ResourceTypeRegistration>> CreateOrUpdateWithHttpMessagesAsync(string providerNamespace, string resourceType, ResourceTypeRegistrationProperties properties = default(ResourceTypeRegistrationProperties), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
             AzureOperationResponse<ResourceTypeRegistration> _response = await BeginCreateOrUpdateWithHttpMessagesAsync(providerNamespace, resourceType, properties, customHeaders, cancellationToken).ConfigureAwait(false);
@@ -628,7 +627,6 @@ namespace Microsoft.Azure.Management.ProviderHub
         /// The resource type.
         /// </param>
         /// <param name='properties'>
-        /// The Kusto cluster parameters supplied to the CreateOrUpdate operation.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -651,7 +649,7 @@ namespace Microsoft.Azure.Management.ProviderHub
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ResourceTypeRegistration>> BeginCreateOrUpdateWithHttpMessagesAsync(string providerNamespace, string resourceType, ResourceTypeRegistration properties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ResourceTypeRegistration>> BeginCreateOrUpdateWithHttpMessagesAsync(string providerNamespace, string resourceType, ResourceTypeRegistrationProperties properties = default(ResourceTypeRegistrationProperties), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -665,13 +663,14 @@ namespace Microsoft.Azure.Management.ProviderHub
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceType");
             }
-            if (properties == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "properties");
-            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            ResourceTypeRegistration properties1 = new ResourceTypeRegistration();
+            if (properties != null)
+            {
+                properties1.Properties = properties;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -682,7 +681,7 @@ namespace Microsoft.Azure.Management.ProviderHub
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("providerNamespace", providerNamespace);
                 tracingParameters.Add("resourceType", resourceType);
-                tracingParameters.Add("properties", properties);
+                tracingParameters.Add("properties1", properties1);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginCreateOrUpdate", tracingParameters);
             }
@@ -735,9 +734,9 @@ namespace Microsoft.Azure.Management.ProviderHub
 
             // Serialize Request
             string _requestContent = null;
-            if(properties != null)
+            if(properties1 != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(properties, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(properties1, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }

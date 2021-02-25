@@ -67,10 +67,8 @@ namespace Microsoft.Azure.Management.ProviderHub
             /// The name of the resource provider hosted within ProviderHub.
             /// </param>
             /// <param name='properties'>
-            /// The provider registration properties supplied to the CreateOrUpdate
-            /// operation.
             /// </param>
-            public static ProviderRegistration CreateOrUpdate(this IProviderRegistrationsOperations operations, string providerNamespace, ProviderRegistration properties)
+            public static ProviderRegistration CreateOrUpdate(this IProviderRegistrationsOperations operations, string providerNamespace, ProviderRegistrationPropertiesModel properties = default(ProviderRegistrationPropertiesModel))
             {
                 return operations.CreateOrUpdateAsync(providerNamespace, properties).GetAwaiter().GetResult();
             }
@@ -85,13 +83,11 @@ namespace Microsoft.Azure.Management.ProviderHub
             /// The name of the resource provider hosted within ProviderHub.
             /// </param>
             /// <param name='properties'>
-            /// The provider registration properties supplied to the CreateOrUpdate
-            /// operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ProviderRegistration> CreateOrUpdateAsync(this IProviderRegistrationsOperations operations, string providerNamespace, ProviderRegistration properties, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ProviderRegistration> CreateOrUpdateAsync(this IProviderRegistrationsOperations operations, string providerNamespace, ProviderRegistrationPropertiesModel properties = default(ProviderRegistrationPropertiesModel), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(providerNamespace, properties, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -202,10 +198,8 @@ namespace Microsoft.Azure.Management.ProviderHub
             /// The name of the resource provider hosted within ProviderHub.
             /// </param>
             /// <param name='properties'>
-            /// The provider registration properties supplied to the CreateOrUpdate
-            /// operation.
             /// </param>
-            public static ProviderRegistration BeginCreateOrUpdate(this IProviderRegistrationsOperations operations, string providerNamespace, ProviderRegistration properties)
+            public static ProviderRegistration BeginCreateOrUpdate(this IProviderRegistrationsOperations operations, string providerNamespace, ProviderRegistrationPropertiesModel properties = default(ProviderRegistrationPropertiesModel))
             {
                 return operations.BeginCreateOrUpdateAsync(providerNamespace, properties).GetAwaiter().GetResult();
             }
@@ -220,13 +214,11 @@ namespace Microsoft.Azure.Management.ProviderHub
             /// The name of the resource provider hosted within ProviderHub.
             /// </param>
             /// <param name='properties'>
-            /// The provider registration properties supplied to the CreateOrUpdate
-            /// operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ProviderRegistration> BeginCreateOrUpdateAsync(this IProviderRegistrationsOperations operations, string providerNamespace, ProviderRegistration properties, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ProviderRegistration> BeginCreateOrUpdateAsync(this IProviderRegistrationsOperations operations, string providerNamespace, ProviderRegistrationPropertiesModel properties = default(ProviderRegistrationPropertiesModel), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(providerNamespace, properties, null, cancellationToken).ConfigureAwait(false))
                 {

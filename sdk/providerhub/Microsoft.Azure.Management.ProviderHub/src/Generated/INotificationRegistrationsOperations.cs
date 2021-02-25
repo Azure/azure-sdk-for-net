@@ -58,8 +58,6 @@ namespace Microsoft.Azure.Management.ProviderHub
         /// The notification registration.
         /// </param>
         /// <param name='properties'>
-        /// The required body parameters supplied to the notification
-        /// registration operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -76,7 +74,7 @@ namespace Microsoft.Azure.Management.ProviderHub
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<NotificationRegistration>> CreateOrUpdateWithHttpMessagesAsync(string providerNamespace, string notificationRegistrationName, NotificationRegistration properties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<NotificationRegistration>> CreateOrUpdateWithHttpMessagesAsync(string providerNamespace, string notificationRegistrationName, NotificationRegistrationPropertiesModel properties = default(NotificationRegistrationPropertiesModel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes a notification registration.
         /// </summary>

@@ -59,8 +59,6 @@ namespace Microsoft.Azure.Management.ProviderHub
         /// The resource type.
         /// </param>
         /// <param name='properties'>
-        /// The parameters supplied to the CreateOrUpdate
-        /// operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -77,7 +75,7 @@ namespace Microsoft.Azure.Management.ProviderHub
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ResourceTypeRegistration>> CreateOrUpdateWithHttpMessagesAsync(string providerNamespace, string resourceType, ResourceTypeRegistration properties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ResourceTypeRegistration>> CreateOrUpdateWithHttpMessagesAsync(string providerNamespace, string resourceType, ResourceTypeRegistrationProperties properties = default(ResourceTypeRegistrationProperties), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes a resource type
         /// </summary>
@@ -132,8 +130,6 @@ namespace Microsoft.Azure.Management.ProviderHub
         /// The resource type.
         /// </param>
         /// <param name='properties'>
-        /// The Kusto cluster parameters supplied to the CreateOrUpdate
-        /// operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -150,7 +146,7 @@ namespace Microsoft.Azure.Management.ProviderHub
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ResourceTypeRegistration>> BeginCreateOrUpdateWithHttpMessagesAsync(string providerNamespace, string resourceType, ResourceTypeRegistration properties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ResourceTypeRegistration>> BeginCreateOrUpdateWithHttpMessagesAsync(string providerNamespace, string resourceType, ResourceTypeRegistrationProperties properties = default(ResourceTypeRegistrationProperties), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the list of the resource types for the given provider.
         /// </summary>

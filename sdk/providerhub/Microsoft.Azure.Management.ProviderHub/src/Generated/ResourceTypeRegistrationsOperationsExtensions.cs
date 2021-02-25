@@ -13,7 +13,6 @@ namespace Microsoft.Azure.Management.ProviderHub
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
-    using System;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -75,9 +74,8 @@ namespace Microsoft.Azure.Management.ProviderHub
             /// The resource type.
             /// </param>
             /// <param name='properties'>
-            /// The Kusto cluster parameters supplied to the CreateOrUpdate operation.
             /// </param>
-            public static ResourceTypeRegistration CreateOrUpdate(this IResourceTypeRegistrationsOperations operations, string providerNamespace, string resourceType, ResourceTypeRegistration properties)
+            public static ResourceTypeRegistration CreateOrUpdate(this IResourceTypeRegistrationsOperations operations, string providerNamespace, string resourceType, ResourceTypeRegistrationProperties properties = default(ResourceTypeRegistrationProperties))
             {
                 return operations.CreateOrUpdateAsync(providerNamespace, resourceType, properties).GetAwaiter().GetResult();
             }
@@ -95,14 +93,12 @@ namespace Microsoft.Azure.Management.ProviderHub
             /// The resource type.
             /// </param>
             /// <param name='properties'>
-            /// The Kusto cluster parameters supplied to the CreateOrUpdate operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ResourceTypeRegistration> CreateOrUpdateAsync(this IResourceTypeRegistrationsOperations operations, string providerNamespace, string resourceType, ResourceTypeRegistration properties, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ResourceTypeRegistration> CreateOrUpdateAsync(this IResourceTypeRegistrationsOperations operations, string providerNamespace, string resourceType, ResourceTypeRegistrationProperties properties = default(ResourceTypeRegistrationProperties), CancellationToken cancellationToken = default(CancellationToken))
             {
-                
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(providerNamespace, resourceType, properties, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
@@ -193,9 +189,8 @@ namespace Microsoft.Azure.Management.ProviderHub
             /// The resource type.
             /// </param>
             /// <param name='properties'>
-            /// The Kusto cluster parameters supplied to the CreateOrUpdate operation.
             /// </param>
-            public static ResourceTypeRegistration BeginCreateOrUpdate(this IResourceTypeRegistrationsOperations operations, string providerNamespace, string resourceType, ResourceTypeRegistration properties)
+            public static ResourceTypeRegistration BeginCreateOrUpdate(this IResourceTypeRegistrationsOperations operations, string providerNamespace, string resourceType, ResourceTypeRegistrationProperties properties = default(ResourceTypeRegistrationProperties))
             {
                 return operations.BeginCreateOrUpdateAsync(providerNamespace, resourceType, properties).GetAwaiter().GetResult();
             }
@@ -213,12 +208,11 @@ namespace Microsoft.Azure.Management.ProviderHub
             /// The resource type.
             /// </param>
             /// <param name='properties'>
-            /// The Kusto cluster parameters supplied to the CreateOrUpdate operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ResourceTypeRegistration> BeginCreateOrUpdateAsync(this IResourceTypeRegistrationsOperations operations, string providerNamespace, string resourceType, ResourceTypeRegistration properties, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ResourceTypeRegistration> BeginCreateOrUpdateAsync(this IResourceTypeRegistrationsOperations operations, string providerNamespace, string resourceType, ResourceTypeRegistrationProperties properties = default(ResourceTypeRegistrationProperties), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(providerNamespace, resourceType, properties, null, cancellationToken).ConfigureAwait(false))
                 {

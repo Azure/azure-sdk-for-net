@@ -17,9 +17,9 @@ namespace Microsoft.Azure.Management.ProviderHub
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for ProviderhubClient.
+    /// Extension methods for providerhubClient.
     /// </summary>
-    public static partial class ProviderhubClientExtensions
+    public static partial class providerhubClientExtensions
     {
             /// <summary>
             /// Generates the manifest for the given provider.
@@ -30,9 +30,9 @@ namespace Microsoft.Azure.Management.ProviderHub
             /// <param name='providerNamespace'>
             /// The name of the resource provider hosted within ProviderHub.
             /// </param>
-            public static ResourceProviderManifest GenerateManifest(this IProviderhubClient operations, string providerNamespace)
+            public static ResourceProviderManifest GenerateManifest(this IproviderhubClient operations, string providerNamespace)
             {
-                return ((IProviderhubClient)operations).GenerateManifestAsync(providerNamespace).GetAwaiter().GetResult();
+                return ((IproviderhubClient)operations).GenerateManifestAsync(providerNamespace).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.ProviderHub
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ResourceProviderManifest> GenerateManifestAsync(this IProviderhubClient operations, string providerNamespace, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ResourceProviderManifest> GenerateManifestAsync(this IproviderhubClient operations, string providerNamespace, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GenerateManifestWithHttpMessagesAsync(providerNamespace, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -67,9 +67,9 @@ namespace Microsoft.Azure.Management.ProviderHub
             /// <param name='checkinManifestParams'>
             /// The required body parameters supplied to the checkin manifest operation.
             /// </param>
-            public static CheckinManifestInfo CheckinManifest(this IProviderhubClient operations, string providerNamespace, CheckinManifestParams checkinManifestParams)
+            public static CheckinManifestInfo CheckinManifest(this IproviderhubClient operations, string providerNamespace, CheckinManifestParams checkinManifestParams)
             {
-                return ((IProviderhubClient)operations).CheckinManifestAsync(providerNamespace, checkinManifestParams).GetAwaiter().GetResult();
+                return ((IproviderhubClient)operations).CheckinManifestAsync(providerNamespace, checkinManifestParams).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Management.ProviderHub
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CheckinManifestInfo> CheckinManifestAsync(this IProviderhubClient operations, string providerNamespace, CheckinManifestParams checkinManifestParams, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CheckinManifestInfo> CheckinManifestAsync(this IproviderhubClient operations, string providerNamespace, CheckinManifestParams checkinManifestParams, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CheckinManifestWithHttpMessagesAsync(providerNamespace, checkinManifestParams, null, cancellationToken).ConfigureAwait(false))
                 {

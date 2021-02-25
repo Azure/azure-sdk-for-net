@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.ProviderHub
     /// <summary>
     /// DefaultRolloutsOperations operations.
     /// </summary>
-    internal partial class DefaultRolloutsOperations : IServiceOperations<ProviderhubClient>, IDefaultRolloutsOperations
+    internal partial class DefaultRolloutsOperations : IServiceOperations<providerhubClient>, IDefaultRolloutsOperations
     {
         /// <summary>
         /// Initializes a new instance of the DefaultRolloutsOperations class.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.ProviderHub
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal DefaultRolloutsOperations(ProviderhubClient client)
+        internal DefaultRolloutsOperations(providerhubClient client)
         {
             if (client == null)
             {
@@ -46,9 +46,9 @@ namespace Microsoft.Azure.Management.ProviderHub
         }
 
         /// <summary>
-        /// Gets a reference to the ProviderhubClient
+        /// Gets a reference to the providerhubClient
         /// </summary>
-        public ProviderhubClient Client { get; private set; }
+        public providerhubClient Client { get; private set; }
 
         /// <summary>
         /// Gets the default rollout details.
@@ -430,7 +430,7 @@ namespace Microsoft.Azure.Management.ProviderHub
         {
             // Send Request
             AzureOperationResponse<DefaultRollout> _response = await BeginCreateOrUpdateWithHttpMessagesAsync(providerNamespace, rolloutName, customHeaders, cancellationToken).ConfigureAwait(false);
-            return _response;
+            return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

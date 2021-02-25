@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.ProviderHub
     /// <summary>
     /// NotificationRegistrationsOperations operations.
     /// </summary>
-    internal partial class NotificationRegistrationsOperations : IServiceOperations<ProviderhubClient>, INotificationRegistrationsOperations
+    internal partial class NotificationRegistrationsOperations : IServiceOperations<providerhubClient>, INotificationRegistrationsOperations
     {
         /// <summary>
         /// Initializes a new instance of the NotificationRegistrationsOperations class.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.ProviderHub
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal NotificationRegistrationsOperations(ProviderhubClient client)
+        internal NotificationRegistrationsOperations(providerhubClient client)
         {
             if (client == null)
             {
@@ -46,9 +46,9 @@ namespace Microsoft.Azure.Management.ProviderHub
         }
 
         /// <summary>
-        /// Gets a reference to the ProviderhubClient
+        /// Gets a reference to the providerhubClient
         /// </summary>
-        public ProviderhubClient Client { get; private set; }
+        public providerhubClient Client { get; private set; }
 
         /// <summary>
         /// Gets the notification registration details.
@@ -251,8 +251,6 @@ namespace Microsoft.Azure.Management.ProviderHub
         /// The notification registration.
         /// </param>
         /// <param name='properties'>
-        /// The required body parameters supplied to the notification registration
-        /// operation.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -275,7 +273,7 @@ namespace Microsoft.Azure.Management.ProviderHub
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<NotificationRegistration>> CreateOrUpdateWithHttpMessagesAsync(string providerNamespace, string notificationRegistrationName, NotificationRegistration properties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<NotificationRegistration>> CreateOrUpdateWithHttpMessagesAsync(string providerNamespace, string notificationRegistrationName, NotificationRegistrationPropertiesModel properties = default(NotificationRegistrationPropertiesModel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -289,13 +287,14 @@ namespace Microsoft.Azure.Management.ProviderHub
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "notificationRegistrationName");
             }
-            if (properties == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "properties");
-            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            NotificationRegistration properties1 = new NotificationRegistration();
+            if (properties != null)
+            {
+                properties1.Properties = properties;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -306,7 +305,7 @@ namespace Microsoft.Azure.Management.ProviderHub
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("providerNamespace", providerNamespace);
                 tracingParameters.Add("notificationRegistrationName", notificationRegistrationName);
-                tracingParameters.Add("properties", properties);
+                tracingParameters.Add("properties1", properties1);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdate", tracingParameters);
             }
@@ -359,9 +358,9 @@ namespace Microsoft.Azure.Management.ProviderHub
 
             // Serialize Request
             string _requestContent = null;
-            if(properties != null)
+            if(properties1 != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(properties, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(properties1, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }

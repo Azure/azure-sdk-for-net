@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.ProviderHub
     /// <summary>
     /// Microsoft Provider Hub
     /// </summary>
-    public partial interface IProviderhubClient : System.IDisposable
+    public partial interface IproviderhubClient : System.IDisposable
     {
         /// <summary>
         /// The base URI of the service.

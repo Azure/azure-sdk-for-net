@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.ProviderHub
     /// <summary>
     /// CustomRolloutsOperations operations.
     /// </summary>
-    internal partial class CustomRolloutsOperations : IServiceOperations<ProviderhubClient>, ICustomRolloutsOperations
+    internal partial class CustomRolloutsOperations : IServiceOperations<providerhubClient>, ICustomRolloutsOperations
     {
         /// <summary>
         /// Initializes a new instance of the CustomRolloutsOperations class.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.ProviderHub
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal CustomRolloutsOperations(ProviderhubClient client)
+        internal CustomRolloutsOperations(providerhubClient client)
         {
             if (client == null)
             {
@@ -46,9 +46,9 @@ namespace Microsoft.Azure.Management.ProviderHub
         }
 
         /// <summary>
-        /// Gets a reference to the ProviderhubClient
+        /// Gets a reference to the providerhubClient
         /// </summary>
-        public ProviderhubClient Client { get; private set; }
+        public providerhubClient Client { get; private set; }
 
         /// <summary>
         /// Gets the custom rollout details.
@@ -360,10 +360,7 @@ namespace Microsoft.Azure.Management.ProviderHub
             string _requestContent = null;
             if(properties != null)
             {
-                var customRolloutProperties = new Dictionary<string, object>();
-                customRolloutProperties.Add("properties", properties);
-
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(customRolloutProperties, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(properties, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }

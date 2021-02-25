@@ -38,37 +38,37 @@ namespace Microsoft.Azure.Management.ProviderHub.Tests
 
         private DefaultRollout CreateDefaultRollout(MockContext context, string providerNamespace, string rolloutName)
         {
-            ProviderhubClient client = GetProviderHubManagementClient(context);
-            return client.DefaultRollouts.CreateOrUpdate(providerNamespace, rolloutName);
+            providerhubClient client = GetProviderHubManagementClient(context);
+            return client.DefaultRollouts.BeginCreateOrUpdate(providerNamespace, rolloutName);
         }
 
         private DefaultRollout GetDefaultRollout(MockContext context, string providerNamespace, string rolloutName)
         {
-            ProviderhubClient client = GetProviderHubManagementClient(context);
+            providerhubClient client = GetProviderHubManagementClient(context);
             return client.DefaultRollouts.Get(providerNamespace, rolloutName);
         }
 
         private IPage<DefaultRollout> ListDefaultRollout(MockContext context, string providerNamespace)
         {
-            ProviderhubClient client = GetProviderHubManagementClient(context);
+            providerhubClient client = GetProviderHubManagementClient(context);
             return client.DefaultRollouts.ListByProviderRegistration(providerNamespace);
         }
 
         private void CancelDefaultRollout(MockContext context, string providerNamespace, string rolloutName)
         {
-            ProviderhubClient client = GetProviderHubManagementClient(context);
+            providerhubClient client = GetProviderHubManagementClient(context);
             client.DefaultRollouts.Stop(providerNamespace, rolloutName);
         }
 
         private void DeleteDefaultRollout(MockContext context, string providerNamespace, string rolloutName)
         {
-            ProviderhubClient client = GetProviderHubManagementClient(context);
+            providerhubClient client = GetProviderHubManagementClient(context);
             client.DefaultRollouts.Delete(providerNamespace, rolloutName);
         }
 
-        private ProviderhubClient GetProviderHubManagementClient(MockContext context)
+        private providerhubClient GetProviderHubManagementClient(MockContext context)
         {
-            return context.GetServiceClient<ProviderhubClient>();
+            return context.GetServiceClient<providerhubClient>();
         }
     }
 }

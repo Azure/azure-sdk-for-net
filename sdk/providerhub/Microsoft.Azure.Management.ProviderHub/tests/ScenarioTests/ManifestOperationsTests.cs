@@ -26,22 +26,22 @@ namespace Microsoft.Azure.Management.ProviderHub.Tests
                 Assert.NotNull(checkinManifestInfo);
             }
         }
-        
+
         private ResourceProviderManifest GenerateManifest(MockContext context, string providerNamespace)
         {
-            ProviderhubClient client = GetProviderHubManagementClient(context);
+            providerhubClient client = GetProviderHubManagementClient(context);
             return client.GenerateManifest(providerNamespace);
         }
 
         private CheckinManifestInfo CheckinManifest(MockContext context, string providerNamespace, CheckinManifestParams manifestParameters)
         {
-            ProviderhubClient client = GetProviderHubManagementClient(context);
+            providerhubClient client = GetProviderHubManagementClient(context);
             return client.CheckinManifest(providerNamespace, manifestParameters);
         }
 
-        private ProviderhubClient GetProviderHubManagementClient(MockContext context)
+        private providerhubClient GetProviderHubManagementClient(MockContext context)
         {
-            return context.GetServiceClient<ProviderhubClient>();
+            return context.GetServiceClient<providerhubClient>();
         }
     }
 }
