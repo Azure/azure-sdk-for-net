@@ -201,8 +201,8 @@ namespace Azure.Storage.Blobs.Specialized
                 deleteSnapshots: snapshotsOption == DeleteSnapshotsOption.None ? null : (DeleteSnapshotsOptionType?)snapshotsOption,
                 ifModifiedSince: conditions?.IfModifiedSince,
                 ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                ifMatch: conditions?.IfMatch.ToString(),
-                ifNoneMatch: conditions?.IfNoneMatch.ToString(),
+                ifMatch: conditions?.IfMatch?.ToString(),
+                ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                 ifTags: conditions?.TagConditions,
                 blobDeleteType: null);
 
