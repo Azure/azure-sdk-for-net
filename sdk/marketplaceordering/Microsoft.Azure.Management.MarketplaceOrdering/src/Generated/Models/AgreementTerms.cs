@@ -45,12 +45,16 @@ namespace Microsoft.Azure.Management.MarketplaceOrdering.Models
         /// Publisher terms.</param>
         /// <param name="privacyPolicyLink">Link to the privacy policy of the
         /// publisher.</param>
+        /// <param name="marketplaceTermsLink">Link to HTML with Azure
+        /// Marketplace terms.</param>
         /// <param name="retrieveDatetime">Date and time in UTC of when the
         /// terms were accepted. This is empty if Accepted is false.</param>
         /// <param name="signature">Terms signature.</param>
         /// <param name="accepted">If any version of the terms have been
         /// accepted, otherwise false.</param>
-        public AgreementTerms(string id = default(string), string name = default(string), string type = default(string), string publisher = default(string), string product = default(string), string plan = default(string), string licenseTextLink = default(string), string privacyPolicyLink = default(string), System.DateTime? retrieveDatetime = default(System.DateTime?), string signature = default(string), bool? accepted = default(bool?))
+        /// <param name="systemData">The system meta data relating to this
+        /// resource.</param>
+        public AgreementTerms(string id = default(string), string name = default(string), string type = default(string), string publisher = default(string), string product = default(string), string plan = default(string), string licenseTextLink = default(string), string privacyPolicyLink = default(string), string marketplaceTermsLink = default(string), System.DateTime? retrieveDatetime = default(System.DateTime?), string signature = default(string), bool? accepted = default(bool?), SystemData systemData = default(SystemData))
             : base(id, name, type)
         {
             Publisher = publisher;
@@ -58,9 +62,11 @@ namespace Microsoft.Azure.Management.MarketplaceOrdering.Models
             Plan = plan;
             LicenseTextLink = licenseTextLink;
             PrivacyPolicyLink = privacyPolicyLink;
+            MarketplaceTermsLink = marketplaceTermsLink;
             RetrieveDatetime = retrieveDatetime;
             Signature = signature;
             Accepted = accepted;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -100,6 +106,12 @@ namespace Microsoft.Azure.Management.MarketplaceOrdering.Models
         public string PrivacyPolicyLink { get; set; }
 
         /// <summary>
+        /// Gets or sets link to HTML with Azure Marketplace terms.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.marketplaceTermsLink")]
+        public string MarketplaceTermsLink { get; set; }
+
+        /// <summary>
         /// Gets or sets date and time in UTC of when the terms were accepted.
         /// This is empty if Accepted is false.
         /// </summary>
@@ -118,6 +130,12 @@ namespace Microsoft.Azure.Management.MarketplaceOrdering.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.accepted")]
         public bool? Accepted { get; set; }
+
+        /// <summary>
+        /// Gets the system meta data relating to this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
     }
 }
