@@ -10,7 +10,7 @@ using System.Text.RegularExpressions;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.Identity.Tests
+namespace Azure.Core.Tests
 {
     public class LightweightPcks8DecoderTests : ClientTestBase
     {
@@ -33,9 +33,10 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(pfxParams.Exponent, pemParams.Exponent);
         }
 
+        [Test]
         public void VerifyDecoderBadData()
         {
-            byte[] data = ExtractPrivateKeyBlobFromPem(File.ReadAllText(Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert-invalid.pem")));
+            byte[] data = ExtractPrivateKeyBlobFromPem(File.ReadAllText(Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert-invalid-data.pem")));
 
             Assert.Throws<InvalidDataException>(() => LightweightPkcs8Decoder.DecodeRSAPkcs8(data));
         }
