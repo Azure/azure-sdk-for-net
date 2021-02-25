@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Communication.Sms.Models;
 using Azure.Core;
 
 namespace Azure.Communication.Sms
@@ -17,7 +18,8 @@ namespace Azure.Communication.Sms
             string to = default;
             Optional<string> messageId = default;
             int httpStatusCode = default;
-            bool succeeded = default;
+            Optional<SmsSendResponseItemRepeatabilityResult> repeatabilityResult = default;
+            bool successful = default;
             Optional<string> errorMessage = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -36,9 +38,19 @@ namespace Azure.Communication.Sms
                     httpStatusCode = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("succeeded"))
+                if (property.NameEquals("repeatabilityResult"))
                 {
-                    succeeded = property.Value.GetBoolean();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    repeatabilityResult = new SmsSendResponseItemRepeatabilityResult(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("successful"))
+                {
+                    successful = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("errorMessage"))
@@ -47,7 +59,7 @@ namespace Azure.Communication.Sms
                     continue;
                 }
             }
-            return new SmsSendResult(to, messageId.Value, httpStatusCode, succeeded, errorMessage.Value);
+            return new SmsSendResult(to, messageId.Value, httpStatusCode, Optional.ToNullable(repeatabilityResult), successful, errorMessage.Value);
         }
     }
 }

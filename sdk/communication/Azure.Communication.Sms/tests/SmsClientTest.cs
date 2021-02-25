@@ -70,9 +70,9 @@ namespace Azure.Communication.Sms.Tests
         {
             SmsSendOptions?[] optionsCombinations = new[]
             {
-                new SmsSendOptions { EnableDeliveryReport = true, Tag = "custom-tag" },
-                new SmsSendOptions { EnableDeliveryReport = false, Tag = null  },
-                new SmsSendOptions { EnableDeliveryReport = null, Tag = null },
+                new SmsSendOptions(true /*EnableDeliveryReport*/) { Tag = "custom-tag" },
+                new SmsSendOptions(true /*EnableDeliveryReport*/) { Tag = null  },
+                new SmsSendOptions(true /*EnableDeliveryReport*/) { Tag = null },
                 null,
             };
 

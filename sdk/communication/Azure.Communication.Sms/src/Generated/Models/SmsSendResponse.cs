@@ -29,14 +29,11 @@ namespace Azure.Communication.Sms
 
         /// <summary> Initializes a new instance of SmsSendResponse. </summary>
         /// <param name="value"> . </param>
-        /// <param name="nextLink"> . </param>
-        internal SmsSendResponse(IReadOnlyList<SmsSendResult> value, string nextLink)
+        internal SmsSendResponse(IReadOnlyList<SmsSendResult> value)
         {
             Value = value;
-            NextLink = nextLink;
         }
 
         public IReadOnlyList<SmsSendResult> Value { get; }
-        public string NextLink { get; }
     }
 }

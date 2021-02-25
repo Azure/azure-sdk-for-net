@@ -4,9 +4,11 @@
 using System;
 using Azure.Core;
 using Azure.Identity;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using System.Collections;
 
 namespace Azure.Communication.Sms.Tests.samples
 {
@@ -60,9 +62,8 @@ namespace Azure.Communication.Sms.Tests.samples
                 /*@@*/ from: TestEnvironment.PhoneNumber,
                 /*@@*/ to: TestEnvironment.PhoneNumber,
                 message: "Hello 👋",
-                options: new SmsSendOptions // OPTIONAL
+                options: new SmsSendOptions(true /*EnableDeliveryReport*/) // OPTIONAL
                 {
-                    EnableDeliveryReport = true,
                     Tag = "customer-service", // custom tags
                 });
             Console.WriteLine($" MessageId: {sendSmsResult.MessageId} Sent to: {sendSmsResult.To}");
@@ -71,18 +72,17 @@ namespace Azure.Communication.Sms.Tests.samples
 
             #region Snippet:Azure_Communication_SmsClient_Send_GroupSmsWithOptions
             /// send an sms to multiple recipients
-            Pageable<SmsSendResult> results = smsClient.Send(
+            Response<IEnumerable<SmsSendResult>> results = smsClient.Send(
                 //@@ from: "+18001230000", // Phone number acquired on your Azure Communication resource
                 //@@ to: new[] { "+18005670000", "+18005670001", "+18005670002" },
                 /*@@*/ from: TestEnvironment.PhoneNumber,
                 /*@@*/ to: new[] { TestEnvironment.PhoneNumber, TestEnvironment.PhoneNumber },
                 message: "Holiday Promotion",
-                options: new SmsSendOptions // OPTIONAL
+                options: new SmsSendOptions(true /*EnableDeliveryReport*/) // OPTIONAL
                 {
-                    EnableDeliveryReport = true,
                     Tag = "marketing", // custom tags
                 });
-            foreach (SmsSendResult result in results)
+            foreach (SmsSendResult result in results.Value)
             {
                 Console.WriteLine($" MessageId: {result.MessageId} Sent to: {result.To}");
                 /*@@*/ Assert.IsFalse(string.IsNullOrWhiteSpace(result.MessageId));
@@ -102,9 +102,8 @@ namespace Azure.Communication.Sms.Tests.samples
                 from: TestEnvironment.PhoneNumber, // leased-phone-number
                 to: TestEnvironment.PhoneNumber,
                 message: "Hello 👋",
-                options: new SmsSendOptions // OPTIONAL
+                options: new SmsSendOptions(true /*EnableDeliveryReport*/) // OPTIONAL
                 {
-                    EnableDeliveryReport = true,
                     Tag = "customer-service", // custom tags
                 });
             Console.WriteLine($" MessageId: {sendSmsResult.MessageId} Sent to: {sendSmsResult.To}");
@@ -113,16 +112,15 @@ namespace Azure.Communication.Sms.Tests.samples
 
             #region Snippet:Azure_Communication_SmsClient_SendAsync_GroupSmsWithOptions
             /// send an sms to a multiple recipients asynchronously
-            AsyncPageable<SmsSendResult> results = smsClient.SendAsync(
+            Response<IEnumerable<SmsSendResult>> results = await smsClient.SendAsync(
                 from: TestEnvironment.PhoneNumber, // leased-phone-number
                 to: new[] { TestEnvironment.PhoneNumber, TestEnvironment.PhoneNumber },
                 message: "Holiday Promotion",
-                options: new SmsSendOptions // OPTIONAL
+                options: new SmsSendOptions(true /*EnableDeliveryReport*/) // OPTIONAL
                 {
-                    EnableDeliveryReport = true,
                     Tag = "marketing", // custom tags
                 });
-            await foreach (SmsSendResult result in results)
+            foreach (SmsSendResult result in results.Value)
             {
                 Console.WriteLine($" MessageId: {result.MessageId} Sent to: {result.To}");
                 /*@@*/ Assert.IsFalse(string.IsNullOrWhiteSpace(result.MessageId));

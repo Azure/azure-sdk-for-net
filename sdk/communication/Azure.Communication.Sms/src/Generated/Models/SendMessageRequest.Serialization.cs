@@ -17,11 +17,11 @@ namespace Azure.Communication.Sms
             writer.WriteStartObject();
             writer.WritePropertyName("from");
             writer.WriteStringValue(From);
-            writer.WritePropertyName("to");
+            writer.WritePropertyName("smsRecipients");
             writer.WriteStartArray();
-            foreach (var item in To)
+            foreach (var item in SmsRecipients)
             {
-                writer.WriteStringValue(item);
+                writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("message");

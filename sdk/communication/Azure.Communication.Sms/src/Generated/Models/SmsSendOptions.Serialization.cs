@@ -15,11 +15,8 @@ namespace Azure.Communication.Sms
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(EnableDeliveryReport))
-            {
-                writer.WritePropertyName("enableDeliveryReport");
-                writer.WriteBooleanValue(EnableDeliveryReport.Value);
-            }
+            writer.WritePropertyName("enableDeliveryReport");
+            writer.WriteBooleanValue(EnableDeliveryReport);
             if (Optional.IsDefined(Tag))
             {
                 writer.WritePropertyName("tag");

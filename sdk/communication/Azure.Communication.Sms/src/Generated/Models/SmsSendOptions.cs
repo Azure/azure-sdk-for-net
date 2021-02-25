@@ -11,12 +11,14 @@ namespace Azure.Communication.Sms
     public partial class SmsSendOptions
     {
         /// <summary> Initializes a new instance of SmsSendOptions. </summary>
-        public SmsSendOptions()
+        /// <param name="enableDeliveryReport"> Enable this flag to receive a delivery report for this message on the Azure Resource EventGrid. </param>
+        public SmsSendOptions(bool enableDeliveryReport)
         {
+            EnableDeliveryReport = enableDeliveryReport;
         }
 
         /// <summary> Enable this flag to receive a delivery report for this message on the Azure Resource EventGrid. </summary>
-        public bool? EnableDeliveryReport { get; set; }
+        public bool EnableDeliveryReport { get; }
         /// <summary> Use this field to provide metadata that will then be sent back in the corresponding Delivery Report. </summary>
         public string Tag { get; set; }
     }

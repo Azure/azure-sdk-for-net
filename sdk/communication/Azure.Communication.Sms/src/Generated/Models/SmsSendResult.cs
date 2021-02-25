@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Communication.Sms.Models;
 
 namespace Azure.Communication.Sms
 {
@@ -13,11 +14,11 @@ namespace Azure.Communication.Sms
     public partial class SmsSendResult
     {
         /// <summary> Initializes a new instance of SmsSendResult. </summary>
-        /// <param name="to"> The recipients&apos;s phone number in E.164 format. </param>
+        /// <param name="to"> The recipient&apos;s phone number in E.164 format. </param>
         /// <param name="httpStatusCode"> HTTP Status code. </param>
-        /// <param name="succeeded"> Flag to check if message processing succeeded or not. </param>
+        /// <param name="successful"> Indicates if the message is processed successfully or not. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="to"/> is null. </exception>
-        internal SmsSendResult(string to, int httpStatusCode, bool succeeded)
+        internal SmsSendResult(string to, int httpStatusCode, bool successful)
         {
             if (to == null)
             {
@@ -26,33 +27,37 @@ namespace Azure.Communication.Sms
 
             To = to;
             HttpStatusCode = httpStatusCode;
-            Succeeded = succeeded;
+            Successful = successful;
         }
 
         /// <summary> Initializes a new instance of SmsSendResult. </summary>
-        /// <param name="to"> The recipients&apos;s phone number in E.164 format. </param>
-        /// <param name="messageId"> The identifier of the outgoing SMS message. Only present if message processed. </param>
+        /// <param name="to"> The recipient&apos;s phone number in E.164 format. </param>
+        /// <param name="messageId"> The identifier of the outgoing Sms message. Only present if message processed. </param>
         /// <param name="httpStatusCode"> HTTP Status code. </param>
-        /// <param name="succeeded"> Flag to check if message processing succeeded or not. </param>
-        /// <param name="errorMessage"> Optional error message in case of 4xx or 5xx errors. </param>
-        internal SmsSendResult(string to, string messageId, int httpStatusCode, bool succeeded, string errorMessage)
+        /// <param name="repeatabilityResult"> The result of a repeatable request with one of the case-insensitive values accepted or rejected. </param>
+        /// <param name="successful"> Indicates if the message is processed successfully or not. </param>
+        /// <param name="errorMessage"> Optional error message in case of 4xx/5xx/repeatable errors. </param>
+        internal SmsSendResult(string to, string messageId, int httpStatusCode, SmsSendResponseItemRepeatabilityResult? repeatabilityResult, bool successful, string errorMessage)
         {
             To = to;
             MessageId = messageId;
             HttpStatusCode = httpStatusCode;
-            Succeeded = succeeded;
+            RepeatabilityResult = repeatabilityResult;
+            Successful = successful;
             ErrorMessage = errorMessage;
         }
 
-        /// <summary> The recipients&apos;s phone number in E.164 format. </summary>
+        /// <summary> The recipient&apos;s phone number in E.164 format. </summary>
         public string To { get; }
-        /// <summary> The identifier of the outgoing SMS message. Only present if message processed. </summary>
+        /// <summary> The identifier of the outgoing Sms message. Only present if message processed. </summary>
         public string MessageId { get; }
         /// <summary> HTTP Status code. </summary>
         public int HttpStatusCode { get; }
-        /// <summary> Flag to check if message processing succeeded or not. </summary>
-        public bool Succeeded { get; }
-        /// <summary> Optional error message in case of 4xx or 5xx errors. </summary>
+        /// <summary> The result of a repeatable request with one of the case-insensitive values accepted or rejected. </summary>
+        public SmsSendResponseItemRepeatabilityResult? RepeatabilityResult { get; }
+        /// <summary> Indicates if the message is processed successfully or not. </summary>
+        public bool Successful { get; }
+        /// <summary> Optional error message in case of 4xx/5xx/repeatable errors. </summary>
         public string ErrorMessage { get; }
     }
 }

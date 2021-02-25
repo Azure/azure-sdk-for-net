@@ -9,6 +9,8 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Communication.Pipeline;
 using System.Linq;
+using Azure.Communication.Sms.Models;
+using System.Globalization;
 
 namespace Azure.Communication.Sms
 {
@@ -108,15 +110,9 @@ namespace Azure.Communication.Sms
         {
             Argument.AssertNotNullOrEmpty(from, nameof(from));
             Argument.AssertNotNullOrEmpty(to, nameof(to));
-            AsyncPageable<SmsSendResult> allSmsSendResults = SendAsync(from, new[] { to }, message, options, cancellationToken);
-            Response response = null;
-            SmsSendResult result = null;
-            await foreach (Page<SmsSendResult> page in allSmsSendResults.AsPages(pageSizeHint: 1).ConfigureAwait(false))
-            {
-                response = page.GetRawResponse();
-                result = page.Values[0];
-            }
-            return Response.FromValue(result, response);
+            Response<IEnumerable<SmsSendResult>> allSmsSendResults = await SendAsync(from, new[] { to }, message, options, cancellationToken).ConfigureAwait(false);
+            SmsSendResult sendSMSResult = allSmsSendResults.Value.FirstOrDefault();
+            return Response.FromValue(sendSMSResult, allSmsSendResults.GetRawResponse());
         }
 
         /// <summary>
@@ -135,9 +131,9 @@ namespace Azure.Communication.Sms
         {
             Argument.AssertNotNullOrEmpty(from, nameof(from));
             Argument.AssertNotNullOrEmpty(to, nameof(to));
-            Pageable<SmsSendResult> allSmsSendResults = Send(from, new[] { to }, message, options, cancellationToken);
-            SmsSendResult sendSMSResult = allSmsSendResults.FirstOrDefault();
-            return Response.FromValue(sendSMSResult, allSmsSendResults.AsPages().First().GetRawResponse());
+            Response<IEnumerable<SmsSendResult>> allSmsSendResults = Send(from, new[] { to }, message, options, cancellationToken);
+            SmsSendResult sendSMSResult = allSmsSendResults.Value.FirstOrDefault();
+            return Response.FromValue(sendSMSResult, allSmsSendResults.GetRawResponse());
         }
 
         /// <summary> Sends an SMS message from a phone number that belongs to the authenticated account. </summary>
@@ -150,26 +146,30 @@ namespace Azure.Communication.Sms
         /// <exception cref="ArgumentNullException"><paramref name="from"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="to"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="message"/> is null.</exception>
-        public virtual AsyncPageable<SmsSendResult> SendAsync(string from, IEnumerable<string> to, string message, SmsSendOptions options = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IEnumerable<SmsSendResult>>> SendAsync(string from, IEnumerable<string> to, string message, SmsSendOptions options = default, CancellationToken cancellationToken = default)
         {
-            return PageResponseEnumerator.CreateAsyncEnumerable(async nextLink =>
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SmsClient)}.{nameof(Send)}");
+            scope.Start();
+            try
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SmsClient)}.{nameof(Send)}");
-                scope.Start();
-                try
+                Argument.AssertNotNullOrEmpty(from, nameof(from));
+                List<SmsRecipient> smsRecipients = new List<SmsRecipient>();
+                foreach (string toPhoneNumber in to)
                 {
-                    ResponseWithHeaders<SmsSendResponse, SmsSendHeaders> responseWithHeaders = nextLink is null
-                        ? await RestClient.SendAsync(from, to, message, null, null, options, cancellationToken).ConfigureAwait(false)
-                        : await RestClient.SendNextPageAsync(nextLink, from, to, message, null, null, options, cancellationToken).ConfigureAwait(false);
+                    Argument.AssertNotNullOrEmpty(toPhoneNumber, nameof(to));
+                    SmsRecipient smsRecipient = new SmsRecipient(toPhoneNumber);
+                    smsRecipient.RepeatabilityRequestId = Guid.NewGuid().ToString();
+                    smsRecipient.RepeatabilityFirstSent = DateTime.Now.ToString(CultureInfo.InvariantCulture);
+                }
 
-                    return Page.FromValues(responseWithHeaders.Value.Value, responseWithHeaders.Value.NextLink, responseWithHeaders.GetRawResponse());
-                }
-                catch (Exception ex)
-                {
-                    scope.Failed(ex);
-                    throw;
-                }
-            });
+                Response<SmsSendResponse> response = await RestClient.SendAsync(from, smsRecipients, message, options, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue((IEnumerable<SmsSendResult>)response.Value.Value, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary> Sends an SMS message from a phone number that belongs to the authenticated account. </summary>
@@ -182,26 +182,30 @@ namespace Azure.Communication.Sms
         /// <exception cref="ArgumentNullException"><paramref name="from"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="to"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="message"/> is null.</exception>
-        public virtual Pageable<SmsSendResult> Send(string from, IEnumerable<string> to, string message, SmsSendOptions options = default, CancellationToken cancellationToken = default)
+        public virtual Response<IEnumerable<SmsSendResult>> Send(string from, IEnumerable<string> to, string message, SmsSendOptions options = default, CancellationToken cancellationToken = default)
         {
-            return PageResponseEnumerator.CreateEnumerable(nextLink =>
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SmsClient)}.{nameof(Send)}");
+            scope.Start();
+            try
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SmsClient)}.{nameof(Send)}");
-                scope.Start();
-                try
+                Argument.AssertNotNullOrEmpty(from, nameof(from));
+                List<SmsRecipient> smsRecipients = new List<SmsRecipient>();
+                foreach (string toPhoneNumber in to)
                 {
-                    ResponseWithHeaders<SmsSendResponse, SmsSendHeaders> responseWithHeaders = nextLink is null
-                        ? RestClient.Send(from, to, message, null, null, options, cancellationToken)
-                        : RestClient.SendNextPage(nextLink, from, to, message, null, null, options, cancellationToken);
+                    Argument.AssertNotNullOrEmpty(toPhoneNumber, nameof(to));
+                    SmsRecipient smsRecipient = new SmsRecipient(toPhoneNumber);
+                    smsRecipient.RepeatabilityRequestId = Guid.NewGuid().ToString();
+                    smsRecipient.RepeatabilityFirstSent = DateTime.Now.ToString(CultureInfo.InvariantCulture);
+                }
 
-                    return Page.FromValues(responseWithHeaders.Value.Value, responseWithHeaders.Value.NextLink, responseWithHeaders.GetRawResponse());
-                }
-                catch (Exception ex)
-                {
-                    scope.Failed(ex);
-                    throw;
-                }
-            });
+                Response<SmsSendResponse> response = RestClient.Send(from, smsRecipients, message, options, cancellationToken);
+                return Response.FromValue((IEnumerable<SmsSendResult>)response.Value.Value, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         private static T AssertNotNull<T>(T argument, string argumentName)

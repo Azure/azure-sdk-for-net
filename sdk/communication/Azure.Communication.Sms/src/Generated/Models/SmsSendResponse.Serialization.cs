@@ -16,7 +16,6 @@ namespace Azure.Communication.Sms
         internal static SmsSendResponse DeserializeSmsSendResponse(JsonElement element)
         {
             IReadOnlyList<SmsSendResult> value = default;
-            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -29,13 +28,8 @@ namespace Azure.Communication.Sms
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
-                {
-                    nextLink = property.Value.GetString();
-                    continue;
-                }
             }
-            return new SmsSendResponse(value, nextLink.Value);
+            return new SmsSendResponse(value);
         }
     }
 }
