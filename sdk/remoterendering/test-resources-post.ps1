@@ -14,9 +14,9 @@ param (
 )
 
 # outputs from the ARM deployment passed in from New-TestResources
-$StorageAccountName = $DeploymentOutputs['MIXEDREALITY_ARR_STORAGE_ACCOUNT_NAME']
-$StorageAccountKey = $DeploymentOutputs['MIXEDREALITY_ARR_STORAGE_ACCOUNT_KEY']
-$BlobContainerName = $DeploymentOutputs['MIXEDREALITY_ARR_BLOB_CONTAINER_NAME']
+$StorageAccountName = $DeploymentOutputs['REMOTERENDERING_ARR_STORAGE_ACCOUNT_NAME']
+$StorageAccountKey = $DeploymentOutputs['REMOTERENDERING_ARR_STORAGE_ACCOUNT_KEY']
+$BlobContainerName = $DeploymentOutputs['REMOTERENDERING_ARR_BLOB_CONTAINER_NAME']
 
 $LocalFilePath = Join-Path $PSScriptRoot "TestResources\testBox.fbx"
 $TargetBlob = "Input/testBox.fbx"
