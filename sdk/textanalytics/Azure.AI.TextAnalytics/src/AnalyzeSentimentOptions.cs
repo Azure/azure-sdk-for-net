@@ -24,8 +24,8 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Whether to mine the assessments of a sentence and conduct more granular analysis around the
-        /// targets of a product or service (also known as Target-Based sentiment analysis).
+        /// Whether to mine the opinion of a sentence and conduct more granular analysis around the
+        /// targets of a product or service (also known as Aspect-Based sentiment analysis).
         /// If set to true, the returned <see cref="SentenceSentiment.MinedAssessments"/>
         /// will contain the result of this analysis.
         /// <para>Only available for service version v3.1-preview and up.</para>

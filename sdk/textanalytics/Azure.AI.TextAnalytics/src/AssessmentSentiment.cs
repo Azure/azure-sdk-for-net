@@ -31,7 +31,7 @@ namespace Azure.AI.TextAnalytics
 
             Text = opinion.Text;
             ConfidenceScores = new SentimentConfidenceScores(opinion.ConfidenceScores.Positive, _neutralValue, opinion.ConfidenceScores.Negative);
-            Sentiment = (TextSentiment)Enum.Parse(typeof(TextSentiment), opinion.Sentiment.ToString(), ignoreCase: true);
+            Sentiment = (TextSentiment)Enum.Parse(typeof(TextSentiment), opinion.Sentiment, ignoreCase: true);
             IsNegated = opinion.IsNegated;
             Offset = opinion.Offset;
             Length = opinion.Length;

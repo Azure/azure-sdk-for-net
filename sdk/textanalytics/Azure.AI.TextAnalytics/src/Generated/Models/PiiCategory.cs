@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The PiiCategory. </summary>
-    public readonly partial struct PiiCategory : IEquatable<PiiCategory>
+    internal readonly partial struct PiiCategory : IEquatable<PiiCategory>
     {
         private readonly string _value;
 

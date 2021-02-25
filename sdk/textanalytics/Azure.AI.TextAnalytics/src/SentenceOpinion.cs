@@ -6,13 +6,13 @@ using System.Collections.Generic;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// A mined assessment object contains assessments extracted from a sentence.
+    /// A mined opinion object contains assessments extracted from a sentence.
     /// It consists of both the target that these assessments are about, and the actual
     /// assessment themselves.
     /// </summary>
-    public readonly struct MinedAssessment
+    public readonly struct SentenceOpinion
     {
-        internal MinedAssessment(TargetSentiment target, IReadOnlyList<AssessmentSentiment> assessments)
+        internal SentenceOpinion(TargetSentiment target, IReadOnlyList<AssessmentSentiment> assessments)
         {
             Target = target;
             Assessments = new List<AssessmentSentiment>(assessments);

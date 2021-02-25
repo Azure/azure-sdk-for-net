@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> Type of relation. Examples include: `DosageOfMedication` or &apos;FrequencyOfMedication&apos;, etc. </summary>
-    public readonly partial struct RelationType : IEquatable<RelationType>
+    internal readonly partial struct RelationType : IEquatable<RelationType>
     {
         private readonly string _value;
 

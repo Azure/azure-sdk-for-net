@@ -105,7 +105,7 @@ namespace Azure.AI.TextAnalytics.Tests
             DocumentSentiment docSentiment = await client.AnalyzeSentimentAsync(document, options: new AnalyzeSentimentOptions() { IncludeOpinionMining = true });
 
             CheckAnalyzeSentimentProperties(docSentiment, assessmentMining: true);
-            MinedAssessment minedAssessment = docSentiment.Sentences.FirstOrDefault().MinedAssessments.FirstOrDefault();
+            SentenceOpinion minedAssessment = docSentiment.Sentences.FirstOrDefault().MinedAssessments.FirstOrDefault();
             Assert.AreEqual("bathrooms", minedAssessment.Target.Text);
             Assert.AreEqual(TextSentiment.Negative, minedAssessment.Target.Sentiment);
             Assert.AreEqual("clean", minedAssessment.Assessments.FirstOrDefault().Text);

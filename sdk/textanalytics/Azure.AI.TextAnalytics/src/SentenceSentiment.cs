@@ -17,14 +17,14 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public readonly struct SentenceSentiment
     {
-        internal SentenceSentiment(TextSentiment sentiment, string text, double positiveScore, double neutralScore, double negativeScore, int offset, int length, IReadOnlyList<MinedAssessment> minedAssessments)
+        internal SentenceSentiment(TextSentiment sentiment, string text, double positiveScore, double neutralScore, double negativeScore, int offset, int length, IReadOnlyList<SentenceOpinion> minedAssessments)
         {
             Sentiment = sentiment;
             Text = text;
             ConfidenceScores = new SentimentConfidenceScores(positiveScore, neutralScore, negativeScore);
             Offset = offset;
             Length = length;
-            MinedAssessments = new List<MinedAssessment>(minedAssessments);
+            MinedAssessments = new List<SentenceOpinion>(minedAssessments);
         }
 
         internal SentenceSentiment(SentenceSentimentInternal sentenceSentiment, IReadOnlyList<SentenceSentimentInternal> allSentences)
@@ -60,7 +60,7 @@ namespace Azure.AI.TextAnalytics
         /// Gets the mined assessment of a sentence. This is only returned if
         /// <see cref="AnalyzeSentimentOptions.IncludeOpinionMining"/> is set to True.
         /// </summary>
-        public IReadOnlyCollection<MinedAssessment> MinedAssessments { get; }
+        public IReadOnlyCollection<SentenceOpinion> MinedAssessments { get; }
 
         /// <summary>
         /// Gets the starting position for the matching text in the sentence.
@@ -72,9 +72,9 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         public int Length { get; }
 
-        private static IReadOnlyCollection<MinedAssessment> ConvertToMinedAssessments(SentenceSentimentInternal sentence, IReadOnlyList<SentenceSentimentInternal> allSentences)
+        private static IReadOnlyCollection<SentenceOpinion> ConvertToMinedAssessments(SentenceSentimentInternal sentence, IReadOnlyList<SentenceSentimentInternal> allSentences)
         {
-            var minedAssessments = new List<MinedAssessment>();
+            var minedAssessments = new List<SentenceOpinion>();
 
             foreach (SentenceTarget target in sentence.Targets)
             {
@@ -86,7 +86,7 @@ namespace Azure.AI.TextAnalytics
                         assessment.Add(ResolveAssessmentReference(allSentences, relation.Ref));
                     }
                 }
-                minedAssessments.Add(new MinedAssessment(new TargetSentiment(target), assessment));
+                minedAssessments.Add(new SentenceOpinion(new TargetSentiment(target), assessment));
             }
 
             return minedAssessments;

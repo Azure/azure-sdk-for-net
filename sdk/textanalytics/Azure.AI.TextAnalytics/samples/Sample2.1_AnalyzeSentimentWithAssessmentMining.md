@@ -1,8 +1,8 @@
-# Analyze sentiment with Assessment Mining
+# Analyze sentiment with Opinion Mining
 
-This sample demonstrates how to analyze sentiment of documents and get more granular information about the assessment related to targets of a product/service, also knows as Target-based Sentiment Analysis in Natural Language Processing (NLP). This feature is only available for clients with api version v3.1-preview.1 and higher.
+This sample demonstrates how to analyze sentiment of documents and get more granular information about the opinions related to targets of a product/service, also knows as Aspect-based Sentiment Analysis in Natural Language Processing (NLP). This feature is only available for clients with api version v3.1-preview.1 and higher.
 
-For example, if a customer leaves feedback about a hotel such as "The room was great, but the staff was unfriendly.", Assessment Mining will locate targets in the text, and their associated assessment and sentiments. Sentiment Analysis might only report a negative sentiment.
+For example, if a customer leaves feedback about a hotel such as "The room was great, but the staff was unfriendly.", Opinion Mining will locate targets in the text, and their associated opinion and sentiments. Sentiment Analysis might only report a negative sentiment.
 
 ![opinion mining diagram](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/assets/opinion-mining.png)
 
@@ -88,7 +88,7 @@ private Dictionary<string, int> GetComplaints(AnalyzeSentimentResultCollection r
     {
         foreach (SentenceSentiment sentence in review.DocumentSentiment.Sentences)
         {
-            foreach (MinedAssessment minedAssessment in sentence.MinedAssessments)
+            foreach (SentenceOpinion minedAssessment in sentence.MinedAssessments)
             {
                 if (minedAssessment.Target.Sentiment == TextSentiment.Negative)
                 {

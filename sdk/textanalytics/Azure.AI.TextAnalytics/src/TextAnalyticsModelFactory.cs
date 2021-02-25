@@ -105,7 +105,7 @@ namespace Azure.AI.TextAnalytics
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SentenceSentiment SentenceSentiment(TextSentiment sentiment, string text, double positiveScore, double neutralScore, double negativeScore)
         {
-            return new SentenceSentiment(sentiment, text, positiveScore, neutralScore, negativeScore, default, default, new List<MinedAssessment>());
+            return new SentenceSentiment(sentiment, text, positiveScore, neutralScore, negativeScore, default, default, new List<SentenceOpinion>());
         }
 
         /// <summary>
@@ -120,9 +120,9 @@ namespace Azure.AI.TextAnalytics
         /// <param name="length">Sets the <see cref="SentenceSentiment.Length"/> property.</param>
         /// <param name="minedAssessments">Sets the <see cref="SentenceSentiment.MinedAssessments"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.SentenceSentiment"/> for mocking purposes.</returns>
-        public static SentenceSentiment SentenceSentiment(TextSentiment sentiment, string text, double positiveScore, double neutralScore, double negativeScore, int offset, int length, IReadOnlyList<MinedAssessment> minedAssessments)
+        public static SentenceSentiment SentenceSentiment(TextSentiment sentiment, string text, double positiveScore, double neutralScore, double negativeScore, int offset, int length, IReadOnlyList<SentenceOpinion> minedAssessments)
         {
-            minedAssessments ??= new List<MinedAssessment>();
+            minedAssessments ??= new List<SentenceOpinion>();
             return new SentenceSentiment(sentiment, text, positiveScore, neutralScore, negativeScore, offset, length, minedAssessments);
         }
 
@@ -158,14 +158,14 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="TextAnalytics.MinedAssessment"/> for mocking purposes.
+        /// Initializes a new instance of <see cref="TextAnalytics.SentenceOpinion"/> for mocking purposes.
         /// </summary>
-        /// <param name="target">Sets the <see cref="MinedAssessment.Target"/> property.</param>
-        /// <param name="assessments">Sets the <see cref="MinedAssessment.Assessments"/> property.</param>
-        /// <returns>A new instance of <see cref="TextAnalytics.MinedAssessment"/> for mocking purposes.</returns>
-        public static MinedAssessment MinedOpinion(TargetSentiment target, IReadOnlyList<AssessmentSentiment> assessments)
+        /// <param name="target">Sets the <see cref="SentenceOpinion.Target"/> property.</param>
+        /// <param name="assessments">Sets the <see cref="SentenceOpinion.Assessments"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.SentenceOpinion"/> for mocking purposes.</returns>
+        public static SentenceOpinion MinedOpinion(TargetSentiment target, IReadOnlyList<AssessmentSentiment> assessments)
         {
-            return new MinedAssessment(target, assessments);
+            return new SentenceOpinion(target, assessments);
         }
 
         /// <summary>
