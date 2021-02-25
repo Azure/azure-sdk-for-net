@@ -7,7 +7,7 @@ using Azure.AI.TextAnalytics.Models;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// Contains the predicted sentiment, confidence scores, and other information about the assessment of a target.
+    /// Contains the predicted sentiment, confidence scores, and other information related to Opinion Mining analysis.
     /// <para>For example, in the sentence "The food is good", the assessment of the
     /// target 'food' is 'good'.</para>
     /// </summary>
