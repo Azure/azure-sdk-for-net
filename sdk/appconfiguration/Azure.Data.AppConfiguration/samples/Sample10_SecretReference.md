@@ -20,6 +20,8 @@ To create a secret reference, use the `SecretReferenceConfigurationSetting` clas
 var secretReferenceSetting = new SecretReferenceConfigurationSetting("setting", new Uri("https://<keyvault_name>.vault.azure.net/secrets/<secret_name>"));
 ```
 
+**NOTE** you can retrieve the secret identifier from the Azure Portal or using the `KeyVaultSecret.Id` property.
+
 ## Set a Secret Reference
 
 The `SecretReferenceConfigurationSetting` inherits from the `ConfigurationSetting` class and can be passed to any method that accepts the `ConfigurationSetting`.
