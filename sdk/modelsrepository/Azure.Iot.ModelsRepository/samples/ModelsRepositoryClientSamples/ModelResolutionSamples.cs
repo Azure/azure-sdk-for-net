@@ -19,25 +19,23 @@ namespace Azure.Iot.ModelsRepository.Samples
         {
             // When no Uri is provided for instantiation. The global Azure IoT Models Repository endpoint is used
             // and the dependency model resolution option is set to TryFromExpanded.
-            var globalRepoClient = new ModelsRepositoryClient();
-            Console.WriteLine($"Initialized client pointing to global endpoint: {globalRepoClient.RepositoryUri}");
+            var client = new ModelsRepositoryClient();
+            Console.WriteLine($"Initialized client pointing to global endpoint: {client.RepositoryUri}");
 
             // This form shows specifing a custom Uri for the models repository with default client options.
             // The default client options will enable model dependency resolution.
-            var remoteRepoEndpoint = "https://contoso.com/models";
-            var remoteRepoClient = new ModelsRepositoryClient(new Uri(remoteRepoEndpoint));
-            Console.WriteLine($"Initialized client pointing to custom endpoint: {remoteRepoClient.RepositoryUri}");
+            const string remoteRepoEndpoint = "https://contoso.com/models";
+            client = new ModelsRepositoryClient(new Uri(remoteRepoEndpoint));
+            Console.WriteLine($"Initialized client pointing to custom endpoint: {client.RepositoryUri}");
 
             // The client will also work with a local filesystem Uri. This example shows initalization
             // with a local Uri and disabling model dependency resolution.
-            var localRepoPath = ClientSamplesLocalModelsRepository;
-            var localRepoClient = new ModelsRepositoryClient(
-                new Uri(localRepoPath),
+            client = new ModelsRepositoryClient(new Uri(ClientSamplesLocalModelsRepository),
                 new ModelsRepositoryClientOptions(resolutionOption: DependencyResolutionOption.Disabled));
-            Console.WriteLine($"Initialized client pointing to local path: {localRepoClient.RepositoryUri}");
+            Console.WriteLine($"Initialized client pointing to local path: {client.RepositoryUri}");
         }
 
-        public static async Task ResolveExistingModelsFromEndpointAsync()
+        public static async Task ResolveExistingModelsFromGlobalRepoAsync()
         {
             var dtmi = "dtmi:com:example:TemperatureController;1";
 
@@ -54,7 +52,7 @@ namespace Azure.Iot.ModelsRepository.Samples
             Console.WriteLine($"{dtmi} resolved in {models.Count} interfaces.");
         }
 
-        public static async Task ResolveExistingModelsFromLocalAsync()
+        public static async Task ResolveExistingModelsFromLocalRepoAsync()
         {
             var dtmi = "dtmi:com:example:TemperatureController;1";
 
@@ -71,7 +69,7 @@ namespace Azure.Iot.ModelsRepository.Samples
             Console.WriteLine($"{dtmi} resolved in {models.Count} interfaces.");
         }
 
-        public static async Task TryResolveFromEndpointButNotFoundAsync()
+        public static async Task TryResolveFromGlobalRepoButNotFoundAsync()
         {
             var dtmi = "dtmi:com:example:NotFound;1";
             var client = new ModelsRepositoryClient();
@@ -87,7 +85,7 @@ namespace Azure.Iot.ModelsRepository.Samples
             }
         }
 
-        public static async Task TryResolveFromLocalButNotFoundAsync()
+        public static async Task TryResolveFromLocalRepoButNotFoundAsync()
         {
             var dtmi = "dtmi:com:example:NotFound;1";
             var client = new ModelsRepositoryClient(new Uri(ClientSamplesLocalModelsRepository));

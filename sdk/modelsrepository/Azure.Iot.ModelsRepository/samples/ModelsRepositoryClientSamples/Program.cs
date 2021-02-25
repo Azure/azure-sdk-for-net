@@ -22,10 +22,10 @@ namespace Azure.Iot.ModelsRepository.Samples
             ModelResolutionSamples.ClientInitialization();
 
             // Model Resolution samples
-            await ModelResolutionSamples.ResolveExistingModelsFromEndpointAsync();
-            await ModelResolutionSamples.ResolveExistingModelsFromLocalAsync();
-            await ModelResolutionSamples.TryResolveFromEndpointButNotFoundAsync();
-            await ModelResolutionSamples.TryResolveFromLocalButNotFoundAsync();
+            await ModelResolutionSamples.ResolveExistingModelsFromGlobalRepoAsync();
+            await ModelResolutionSamples.ResolveExistingModelsFromLocalRepoAsync();
+            await ModelResolutionSamples.TryResolveFromGlobalRepoButNotFoundAsync();
+            await ModelResolutionSamples.TryResolveFromLocalRepoButNotFoundAsync();
             await ModelResolutionSamples.TryResolveWithInvalidDtmi();
 
             // Parser integration samples

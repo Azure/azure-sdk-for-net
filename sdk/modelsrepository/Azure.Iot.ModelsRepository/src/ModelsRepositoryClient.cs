@@ -21,7 +21,8 @@ namespace Azure.Iot.ModelsRepository
         private readonly ModelsRepositoryClientOptions _clientOptions;
 
         /// <summary>
-        /// Initializes the ModelsRepositoryClient to point to the Azure IoT Models Repository https://devicemodels.azure.com
+        /// Initializes the ModelsRepositoryClient to point to the
+        /// <see href="https://devicemodels.azure.com">Azure IoT Models Repository</see> service
         /// with the model dependency resolution option of TryFromExpanded.
         /// </summary>
         public ModelsRepositoryClient() : this(DefaultModelsRepository,
@@ -29,7 +30,7 @@ namespace Azure.Iot.ModelsRepository
 
         /// <summary>
         /// Initializes the ModelsRepositoryClient with custom client <paramref name="options"/> while pointing to
-        /// the Azure IoT Models Repository https://devicemodels.azure.com.
+        /// the <see href="https://devicemodels.azure.com">Azure IoT Models Repository</see> service.
         /// </summary>
         /// <param name="options">
         /// ModelsRepositoryClientOptions to configure resolution and client behavior.
@@ -184,7 +185,7 @@ namespace Azure.Iot.ModelsRepository
         public Uri RepositoryUri { get; }
 
         /// <summary>
-        /// The global Azure IoT Models Repository endpoint used by default.
+        /// The global Azure IoT Models Repository service endpoint used by default.
         /// </summary>
         public static Uri DefaultModelsRepository => new Uri(ModelsRepositoryConstants.DefaultModelsRepository);
     }
