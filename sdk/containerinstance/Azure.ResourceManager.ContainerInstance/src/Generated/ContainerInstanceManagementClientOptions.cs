@@ -10,7 +10,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.ContainerInstance
 {
     /// <summary> Client options for ContainerInstance. </summary>
-    public class ContainerInstanceManagementClientOptions : ClientOptions
+    public partial class ContainerInstanceManagementClientOptions : ClientOptions
     {
     }
 }

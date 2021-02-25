@@ -13,7 +13,7 @@ using Azure.ResourceManager.ContainerInstance;
 namespace Azure.ResourceManager.ContainerInstance
 {
     /// <summary> ContainerInstance service management client. </summary>
-    public class ContainerInstanceManagementClient
+    public partial class ContainerInstanceManagementClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
