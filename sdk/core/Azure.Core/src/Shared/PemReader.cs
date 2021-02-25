@@ -2,12 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
-using Azure.Core;
 
-namespace Azure.Security.KeyVault.Certificates
+namespace Azure.Core
 {
     internal static class PemReader
     {
@@ -17,6 +17,7 @@ namespace Azure.Security.KeyVault.Certificates
         private const string Epilog = "-----END ";
         private const string LabelEnd = "-----";
 
+        private static bool s_initializedImportPkcs8PrivateKeyMethod;
         private static MethodInfo s_importPkcs8PrivateKeyMethod;
         private static MethodInfo s_copyWithPrivateKeyMethod;
 
@@ -28,7 +29,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <param name="allowCertificateOnly">Whether to create an <see cref="X509Certificate2"/> if no private key is read.</param>
         /// <returns>An <see cref="X509Certificate2"/> loaded from the PEM data.</returns>
         /// <exception cref="CryptographicException">A cryptographic exception occurred when trying to create the <see cref="X509Certificate2"/>.</exception>
-        /// <exception cref="InvalidOperationException"><paramref name="cer"/> is null and no CERTIFICATE field is defined in PEM, or no PRIVATE KEY is defined in PEM.</exception>
+        /// <exception cref="InvalidDataException"><paramref name="cer"/> is null and no CERTIFICATE field is defined in PEM, or no PRIVATE KEY is defined in PEM.</exception>
         /// <exception cref="PlatformNotSupportedException">Creating a <see cref="X509Certificate2"/> from PEM data is not supported on the current platform.</exception>
         public static X509Certificate2 LoadCertificate(ReadOnlySpan<char> data, byte[] cer = null, bool allowCertificateOnly = false)
         {
@@ -36,10 +37,10 @@ namespace Azure.Security.KeyVault.Certificates
 
             while (TryRead(data, out PemField field))
             {
-                if (field.Label.Equals("CERTIFICATE".AsSpan(), StringComparison.Ordinal) && cer is null)
+                // TODO: Consider building up a chain to determine the leaf certificate: https://github.com/Azure/azure-sdk-for-net/issues/19043
+                if (field.Label.Equals("CERTIFICATE".AsSpan(), StringComparison.Ordinal))
                 {
                     cer = field.FromBase64Data();
-                    data = data.Slice(field.Start + field.Length);
                 }
                 else if (field.Label.Equals("PRIVATE KEY".AsSpan(), StringComparison.Ordinal))
                 {
@@ -57,7 +58,7 @@ namespace Azure.Security.KeyVault.Certificates
 
             if (cer is null)
             {
-                throw new InvalidOperationException("Missing public key");
+                throw new InvalidDataException("The certificate is missing the public key");
             }
 
             if (priv is null)
@@ -67,13 +68,14 @@ namespace Azure.Security.KeyVault.Certificates
                     return new X509Certificate2(cer);
                 }
 
-                throw new InvalidOperationException("Missing private key");
+                throw new InvalidDataException("The certificate is missing the private key");
             }
 
-            if (s_importPkcs8PrivateKeyMethod is null)
+            if (!s_initializedImportPkcs8PrivateKeyMethod)
             {
                 // ImportPkcs8PrivateKey was added in .NET Core 3.0 and is only present on Core. We will fall back to a lightweight decoder if this method is missing from the current runtime.
                 s_importPkcs8PrivateKeyMethod = typeof(RSA).GetMethod("ImportPkcs8PrivateKey", BindingFlags.Instance | BindingFlags.Public, null, new[] { typeof(ReadOnlySpan<byte>), typeof(int).MakeByRefType() }, null);
+                s_initializedImportPkcs8PrivateKeyMethod = true;
             }
 
             if (s_copyWithPrivateKeyMethod is null)
@@ -127,7 +129,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <param name="field">The PEM first complete PEM field that was found.</param>
         /// <returns>True if a valid PEM field was parsed; otherwise, false.</returns>
         /// <remarks>
-        /// To find subsequent fields, pass a slice of <paramref name="data"/> passed the found <see cref="PemField.Length"/>.
+        /// To find subsequent fields, pass a slice of <paramref name="data"/> past the found <see cref="PemField.Length"/>.
         /// </remarks>
         public static bool TryRead(ReadOnlySpan<char> data, out PemField field)
         {

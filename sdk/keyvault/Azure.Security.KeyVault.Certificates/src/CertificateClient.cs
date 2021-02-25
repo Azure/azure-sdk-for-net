@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
@@ -170,7 +171,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns>An <see cref="X509Certificate2"/> from the specified certificate.</returns>
         /// <exception cref="ArgumentException"><paramref name="certificateName"/> is empty.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="certificateName"/> is null.</exception>
-        /// <exception cref="InvalidOperationException">The managed secret did not contain a certificate.</exception>
+        /// <exception cref="InvalidDataException">The managed secret did not contain a certificate.</exception>
         /// <exception cref="NotSupportedException">The <see cref="CertificateContentType"/> is not supported.</exception>
         /// <exception cref="PlatformNotSupportedException">Cannot create an <see cref="X509Certificate2"/> on this platform.</exception>
         /// <exception cref="RequestFailedException">The request failed. See <see cref="RequestFailedException.ErrorCode"/> and the exception message for details.</exception>
@@ -192,7 +193,7 @@ namespace Azure.Security.KeyVault.Certificates
 
                 if (string.IsNullOrEmpty(value))
                 {
-                    throw new InvalidOperationException($"Secret {certificate.SecretId} contains no value");
+                    throw new InvalidDataException($"Secret {certificate.SecretId} contains no value");
                 }
 
                 if (secret.ContentType is null || secret.ContentType == CertificateContentType.Pkcs12)
@@ -233,7 +234,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns>An <see cref="X509Certificate2"/> from the specified certificate.</returns>
         /// <exception cref="ArgumentException"><paramref name="certificateName"/> is empty.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="certificateName"/> is null.</exception>
-        /// <exception cref="InvalidOperationException">The managed secret did not contain a certificate.</exception>
+        /// <exception cref="InvalidDataException">The managed secret did not contain a certificate.</exception>
         /// <exception cref="NotSupportedException">The <see cref="CertificateContentType"/> is not supported.</exception>
         /// <exception cref="PlatformNotSupportedException">Cannot create an <see cref="X509Certificate2"/> on this platform.</exception>
         /// <exception cref="RequestFailedException">The request failed. See <see cref="RequestFailedException.ErrorCode"/> and the exception message for details.</exception>
@@ -255,7 +256,7 @@ namespace Azure.Security.KeyVault.Certificates
 
                 if (string.IsNullOrEmpty(value))
                 {
-                    throw new InvalidOperationException($"Secret {certificate.SecretId} contains no value");
+                    throw new InvalidDataException($"Secret {certificate.SecretId} contains no value");
                 }
 
                 if (secret.ContentType is null || secret.ContentType == CertificateContentType.Pkcs12)

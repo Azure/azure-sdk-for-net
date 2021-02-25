@@ -3,12 +3,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using NUnit.Framework;
 
-namespace Azure.Security.KeyVault.Certificates.Tests
+namespace Azure.Core.Tests
 {
     public class PemReaderTests
     {
@@ -202,15 +203,15 @@ pn29yMivL7r48dlo";
         [Test]
         public void LoadCertificateWithoutPublicKey()
         {
-            Exception ex = Assert.Throws<InvalidOperationException>(() => PemReader.LoadCertificate(PEMPrivateKey.AsSpan()));
-            Assert.AreEqual("Missing public key", ex.Message);
+            Exception ex = Assert.Throws<InvalidDataException>(() => PemReader.LoadCertificate(PEMPrivateKey.AsSpan()));
+            Assert.AreEqual("The certificate is missing the public key", ex.Message);
         }
 
         [Test]
         public void LoadCertificateWithoutPrivateKey()
         {
-            Exception ex = Assert.Throws<InvalidOperationException>(() => PemReader.LoadCertificate(PEMPublicKey.AsSpan()));
-            Assert.AreEqual("Missing private key", ex.Message);
+            Exception ex = Assert.Throws<InvalidDataException>(() => PemReader.LoadCertificate(PEMPublicKey.AsSpan()));
+            Assert.AreEqual("The certificate is missing the private key", ex.Message);
         }
 
         [Test]
@@ -224,8 +225,8 @@ pn29yMivL7r48dlo";
         [Test]
         public void LoadCertificateWithNoKeys()
         {
-            Exception ex = Assert.Throws<InvalidOperationException>(() => PemReader.LoadCertificate(Span<char>.Empty));
-            Assert.AreEqual("Missing public key", ex.Message);
+            Exception ex = Assert.Throws<InvalidDataException>(() => PemReader.LoadCertificate(Span<char>.Empty));
+            Assert.AreEqual("The certificate is missing the public key", ex.Message);
         }
 
         [Test]
@@ -241,6 +242,26 @@ pn29yMivL7r48dlo";
 
             byte[] decrypted = privateKey.Decrypt(ciphertext, RSAEncryptionPadding.Pkcs1);
             Assert.AreEqual(plaintext, decrypted);
+        }
+
+        [Test]
+        public void LoadCertificateReversed()
+        {
+            string pem = PEMPublicKey + "\n" + PEMPrivateKey;
+
+            using X509Certificate2 certificate = PemReader.LoadCertificate(pem.AsSpan());
+            Assert.AreEqual("CN=Azure SDK", certificate.Subject);
+            Assert.IsTrue(certificate.HasPrivateKey);
+            Assert.AreEqual(2048, certificate.PrivateKey.KeySize);
+        }
+
+        [Test]
+        public void LoadCertificatePemOverridesCer()
+        {
+            using X509Certificate2 certificate = PemReader.LoadCertificate(PEM.AsSpan(), Encoding.UTF8.GetBytes("This is not a certificate"));
+            Assert.AreEqual("CN=Azure SDK", certificate.Subject);
+            Assert.IsTrue(certificate.HasPrivateKey);
+            Assert.AreEqual(2048, certificate.PrivateKey.KeySize);
         }
 
         private const string PEM = @"
