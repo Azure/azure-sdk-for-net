@@ -38,8 +38,7 @@
           "name": "[variables('aoaAccountName')]",
           "apiVersion": "[variables('aoaApiVersion')]",
           "location": "[parameters('location')]",
-          "properties": {},
-          "identity": { "type": "systemAssigned" }
+          "properties": {}
         }
     ],
     "outputs": {
