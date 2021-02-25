@@ -39,7 +39,7 @@ Operations on the Text Analytics client consume and produce JSON data. Instead o
 | `GetSentimentAsync`   | `Task<DynamicResponse>` | Returns a task which represents the eventual response of the operation.   |
 | `GetSentimentRequest` | `DynamicRequest`        | Returns a `DynamicRequest` which can be modified and then sent.           |
 
-When using the `<Operation>Request` method, the body of the `DynamicRequest` is initialized to a `JsonData` representing the empty object. You can either modify the body directly or set your own version. For example, let's imagine a `CreateStudent` API which let us create a new student, by sending a JSON object representing that student:
+When using the `<Operation>Request` method, the body of the `DynamicRequest` is initialized to a `JsonData` representing the empty object. You can either modify the body directly or set your own version. For example, let's call the `GetSentiment` API which determines if text is positive or negative.
 
 ```C# Snippet:DynamicRequestAndResponse
 DynamicRequest req = client.GetSentimentRequest();
@@ -59,7 +59,7 @@ if (res.Status != 200 /*OK*/)
 }
 else
 {
-    Console.WriteLine($"Sentiment of Document is ${(string)res.Body["documents"][0]["sentiment"]}");
+    Console.WriteLine($"Sentiment of document is ${(string)res.Body["documents"][0]["sentiment"]}");
 }
 ```
 
