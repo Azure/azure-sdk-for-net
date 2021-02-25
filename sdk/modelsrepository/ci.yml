@@ -8,7 +8,7 @@ trigger:
     - release/*
   paths:
     include:
-    - sdk/modelsRepository/
+    - sdk/modelsrepository/
 
 pr:
   branches:
@@ -19,12 +19,12 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/modelsRepository/
+    - sdk/modelsrepository/
 
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    ServiceDirectory: modelsRepository
+    ServiceDirectory: modelsrepository
     ArtifactName: packages
     Artifacts:
     - name: Azure.IoT.ModelsRepository
