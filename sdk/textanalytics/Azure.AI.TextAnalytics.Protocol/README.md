@@ -29,6 +29,43 @@ Operations on the Text Analytics client consume and produce JSON data. Instead o
 - [Named Entity Recognition](https://westus2.dev.cognitive.microsoft.com/docs/services/TextAnalytics-v3-1-preview-1/operations/EntitiesRecognitionGeneral)
 - [Sentiment](https://westus2.dev.cognitive.microsoft.com/docs/services/TextAnalytics-v3-1-preview-1/operations/Sentiment)
 
+### DynamicRequest/DynamicResponse
+
+`DynamicRequest` and `DynamicResponse` are designed for interacting with JSON Based REST APIs. The `Body` property of a `DynamicRequest` and `DyanmicResponse` is a `JsonData` instance. Clients expose a set of *operations* with three methods per operation (for example, for an operation named GetStudents):
+
+| Name                  | Returns                 | Description                                                               |
+|-----------------------|-------------------------|---------------------------------------------------------------------------|
+| `GetSentiment`        | `DynamicResponse`       | Synchronously invokes the operation and waits for a response.             |
+| `GetSentimentAsync`   | `Task<DynamicResponse>` | Returns a task which represents the eventual response of the operation.   |
+| `GetSentimentRequest` | `DynamicRequest`        | Returns a `DynamicRequest` which can be modified and then sent.           |
+
+When using the `<Operation>Request` method, the body of the `DynamicRequest` is initialized to a `JsonData` representing the empty object. You can either modify the body directly or set your own version. For example, let's imagine a `CreateStudent` API which let us create a new student, by sending a JSON object representing that student:
+
+```C# Snippet:DynamicRequestAndResponse
+DynamicRequest req = client.GetSentimentRequest();
+
+JsonData documents = req.Body.SetEmptyArray("documents");
+JsonData document = documents.AddEmptyObject();
+document.Set("language", "en");
+document.Set("id", "1");
+document.Set("text", "Great atmosphere. Close to plenty of restaurants, hotels, and transit! Staff are friendly and helpful.");
+
+DynamicResponse res = req.Send();
+
+if (res.Status != 200 /*OK*/)
+{
+    // The call failed for some reason, log a message
+    Console.Error.WriteLine($"Requested Failed with status {res.Status}: ${res.Body.ToJsonString()}");
+}
+else
+{
+    Console.WriteLine($"Sentiment of Document is ${(string)res.Body["documents"][0]["sentiment"]}");
+}
+```
+
+**Note**: You must explicitly check the Status value on the response to understand if the operation was successful. The methods which send a request **do not** throw an exception if the service returns a non 2XX HTTP Status Code.
+
+
 ### JsonData
 
 `JsonData` is a representation of a JSON Document. It is designed to make it easy to interact with REST based services using JSON.
@@ -182,7 +219,7 @@ foreach (JsonData item in arrayDoc.Items)
 }
 ```
 
-Combined, this provides a nice way to access values.  Consider the JsonData that represents the document:
+Combined, this provides a nice way to access values.  Consider the `JsonData` that represents the document:
 
 ```json
 {
@@ -227,7 +264,7 @@ string address = (string) doc.students[1].address[1]; // address is set to the s
 
 ##### Conversions to and from POCOs
 
-As we saw earlier, `JsonData` can be constructed from an arbitrary CLR object. When this happens, the object is serialized using `System.Text.Json`. You can also convert a JsonData *to* a CLR object:
+As we saw earlier, `JsonData` can be constructed from an arbitrary CLR object. When this happens, the object is serialized using `System.Text.Json`. You can also convert a `JsonData` *to* a CLR object:
 
 Imagine we have the following class definition:
 
@@ -294,38 +331,6 @@ Console.WriteLine(new JsonData(null).ToJsonString()); // prints null
 Console.WriteLine(new JsonData("Hello, JsonData").ToJsonString()); // prints "Hello, JsonData"
 ```
 
-### DynamicRequest/DynamicResponse
-
-`DynamicRequest` and `DynamicResponse` are designed for interacting with JSON Based REST APIs. The `Body` property of a `DynamicRequest` and `DyanmicResponse` is a `JsonData` instance. Clients expose a set of *operations* with three methods per operation (for example, for an operation named GetStudents):
-
-| Name                 | Returns                 | Description                                                               |
-|----------------------|-------------------------|---------------------------------------------------------------------------|
-| `GetStudents`        | `DynamicResponse`       | Synchronously invokes the operation and waits for a response.             |
-| `GetStudentsAsync`   | `Task<DynamicResponse>` | Returns a `Task` which represents the eventual response of the operation. |
-| `GetStudentsRequest` | `DynamicRequest`        | Returns a `DynamicRequest` which can be modified and then sent.           |
-
-When using the `<Operation>Request` method, the body of the `DynamicRequest` is initialized to a JsonData representing the empty object. You can either modify the body directly or set your own version. For example, let's imagine a `CreateStudent` API which let us create a new student, by sending a JSON object representing that student:
-
-```C# Snippet:DynamicRequestAndResponse
-DynamicRequest req = client.CreateStudentRequest();
-
-req.Body.Set("name", "Matt");
-var addresses = req.Body.SetEmptyArray("address");
-addresses.Add("1 Microsoft Way");
-addresses.Add("Building 18");
-addresses.Add("Redmond, WA, 98034");
-
-DynamicResponse res = await req.SendAsync();
-
-if (res.Status != 201 /*Created*/)
-{
-    // The call failed for some reason, log a message
-    Console.Error.WriteLine($"Requested Failed with Status {res.Status}: ${res.Body.ToJsonString()}");
-}
-```
-
-**Note**: You must explicitly check the Status value on the response to understand if the operation was successful. The methods which send a request **do not** throw an exception if the service returns a non 2XX HTTP Status Code.
-
 ## Examples
 
 ### Detect Language
@@ -346,7 +351,7 @@ document = documents.AddEmptyObject();
 document.Set("id", "3");
 document.Set("text", "La carretera estaba atascada. Había mucho tráfico el día de ayer.");
 
-DynamicResponse res = await req.SendAsync();
+DynamicResponse res = req.Send();
 
 Console.WriteLine($"Status is {res.Status} and the body of the response is: {res.Body.ToJsonString()})");
 ```

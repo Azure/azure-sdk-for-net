@@ -213,20 +213,24 @@ namespace Azure.AI.TextAnalytics.Protocol.Tests
                 MockClient client = new MockClient();
 
 #region Snippet:DynamicRequestAndResponse
-                DynamicRequest req = client.CreateStudentRequest();
+                DynamicRequest req = client.GetSentimentRequest();
 
-                req.Body.Set("name", "Matt");
-                var addresses = req.Body.SetEmptyArray("address");
-                addresses.Add("1 Microsoft Way");
-                addresses.Add("Building 18");
-                addresses.Add("Redmond, WA, 98034");
+                JsonData documents = req.Body.SetEmptyArray("documents");
+                JsonData document = documents.AddEmptyObject();
+                document.Set("language", "en");
+                document.Set("id", "1");
+                document.Set("text", "Great atmosphere. Close to plenty of restaurants, hotels, and transit! Staff are friendly and helpful.");
 
-                DynamicResponse res = await req.SendAsync();
+                DynamicResponse res = req.Send();
 
-                if (res.Status != 201 /*Created*/)
+                if (res.Status != 200 /*OK*/)
                 {
                     // The call failed for some reason, log a message
-                    Console.Error.WriteLine($"Requested Failed with Status {res.Status}: ${res.Body.ToJsonString()}");
+                    Console.Error.WriteLine($"Requested Failed with status {res.Status}: ${res.Body.ToJsonString()}");
+                }
+                else
+                {
+                    Console.WriteLine($"Sentiment of Document is ${(string)res.Body["documents"][0]["sentiment"]}");
                 }
 #endregion
             }
@@ -273,7 +277,7 @@ namespace Azure.AI.TextAnalytics.Protocol.Tests
 
         public class MockClient
         {
-            public DynamicRequest CreateStudentRequest()
+            public DynamicRequest GetSentimentRequest()
             {
                 return Mock.Of<DynamicRequest>();
             }
