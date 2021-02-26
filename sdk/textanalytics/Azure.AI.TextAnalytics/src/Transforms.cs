@@ -251,17 +251,18 @@ namespace Azure.AI.TextAnalytics
         internal static List<HealthcareEntity> ConvertToHealthcareEntityCollection(IEnumerable<HealthcareEntityInternal> healthcareEntities, IEnumerable<HealthcareRelationInternal> healthcareRelations)
         {
             var entities = healthcareEntities.Select((entity) => new HealthcareEntity(entity)).ToList();
+            // TODO - Implement HC for preview.4 https://github.com/Azure/azure-sdk-for-net/issues/18984
             foreach (HealthcareRelationInternal relation in healthcareRelations) {
-                string relationType = relation.RelationType;
-                int sourceIndex = ParseHealthcareEntityIndex(relation.Source);
-                int targetIndex = ParseHealthcareEntityIndex(relation.Target);
-                HealthcareEntity sourceEntity = entities[sourceIndex];
-                HealthcareEntity targetEntity = entities[targetIndex];
-                sourceEntity.RelatedEntities.Add(targetEntity, relationType);
-                if (relation.Bidirectional)
-                {
-                    targetEntity.RelatedEntities.Add(sourceEntity, relationType);
-                }
+            //    string relationType = relation.RelationType;
+            //    int sourceIndex = ParseHealthcareEntityIndex(relation.Source);
+            //    int targetIndex = ParseHealthcareEntityIndex(relation.Target);
+            //    HealthcareEntity sourceEntity = entities[sourceIndex];
+            //    HealthcareEntity targetEntity = entities[targetIndex];
+            //    sourceEntity.RelatedEntities.Add(targetEntity, relationType);
+            //    if (relation.Bidirectional)
+            //    {
+            //        targetEntity.RelatedEntities.Add(sourceEntity, relationType);
+            //    }
             }
             return entities;
         }

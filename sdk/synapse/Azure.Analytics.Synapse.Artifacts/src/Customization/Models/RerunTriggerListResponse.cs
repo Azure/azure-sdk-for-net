@@ -22,5 +22,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
             Value = value.ToList();
         }
+
+        /// <summary> List of rerun triggers. </summary>
+        public IReadOnlyList<RerunTriggerResource> Value { get; set; }
+        /// <summary> The continuation token for getting the next page of results, if any remaining results exist, null otherwise. </summary>
+        public string NextLink { get; set; }
     }
 }

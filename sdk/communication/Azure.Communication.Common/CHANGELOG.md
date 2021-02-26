@@ -1,7 +1,9 @@
 # Release History
-
 ## 1.0.0-beta.5 (Unreleased)
 
+### Breaking Changes
+- Updated `CommunicationTokenRefreshOptions(bool refreshProactively, Func<CancellationToken, string> tokenRefresher,  Func<CancellationToken, ValueTask<string>> asyncTokenRefresher = null, string initialToken = null)`
+to `CommunicationTokenRefreshOptions(bool refreshProactively, Func<CancellationToken, string> tokenRefresher)`. `asyncTokenRefresher` and `initialToken` are updated to become public properties.
 
 ## 1.0.0-beta.4 (2021-02-09)
 

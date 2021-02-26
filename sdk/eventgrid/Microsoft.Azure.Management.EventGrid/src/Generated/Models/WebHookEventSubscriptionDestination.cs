@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.EventGrid.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -49,7 +51,9 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <param name="azureActiveDirectoryApplicationIdOrUri">The Azure
         /// Active Directory Application ID or URI to get the access token that
         /// will be included as the bearer token in delivery requests.</param>
-        public WebHookEventSubscriptionDestination(string endpointUrl = default(string), string endpointBaseUrl = default(string), int? maxEventsPerBatch = default(int?), int? preferredBatchSizeInKilobytes = default(int?), string azureActiveDirectoryTenantId = default(string), string azureActiveDirectoryApplicationIdOrUri = default(string))
+        /// <param name="deliveryAttributeMappings">Delivery attribute
+        /// details.</param>
+        public WebHookEventSubscriptionDestination(string endpointUrl = default(string), string endpointBaseUrl = default(string), int? maxEventsPerBatch = default(int?), int? preferredBatchSizeInKilobytes = default(int?), string azureActiveDirectoryTenantId = default(string), string azureActiveDirectoryApplicationIdOrUri = default(string), IList<DeliveryAttributeMapping> deliveryAttributeMappings = default(IList<DeliveryAttributeMapping>))
         {
             EndpointUrl = endpointUrl;
             EndpointBaseUrl = endpointBaseUrl;
@@ -57,6 +61,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
             PreferredBatchSizeInKilobytes = preferredBatchSizeInKilobytes;
             AzureActiveDirectoryTenantId = azureActiveDirectoryTenantId;
             AzureActiveDirectoryApplicationIdOrUri = azureActiveDirectoryApplicationIdOrUri;
+            DeliveryAttributeMappings = deliveryAttributeMappings;
             CustomInit();
         }
 
@@ -106,6 +111,12 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.azureActiveDirectoryApplicationIdOrUri")]
         public string AzureActiveDirectoryApplicationIdOrUri { get; set; }
+
+        /// <summary>
+        /// Gets or sets delivery attribute details.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.deliveryAttributeMappings")]
+        public IList<DeliveryAttributeMapping> DeliveryAttributeMappings { get; set; }
 
     }
 }

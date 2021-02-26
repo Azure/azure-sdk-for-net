@@ -14,5 +14,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             Columns = new ChangeTrackingList<string>();
         }
+
+        /// <summary> The run ID of data flow debug session. </summary>
+        public string RunId { get; set; }
     }
 }

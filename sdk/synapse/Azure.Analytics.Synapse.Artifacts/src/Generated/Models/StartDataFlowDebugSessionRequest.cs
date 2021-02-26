@@ -13,20 +13,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Request body structure for starting data flow debug session. </summary>
     public partial class StartDataFlowDebugSessionRequest
     {
-
-        /// <summary> The ID of data flow debug session. </summary>
-        public string SessionId { get; }
-        /// <summary> Data flow instance. </summary>
-        public DataFlowResource DataFlow { get; }
         /// <summary> List of datasets. </summary>
         public IReadOnlyList<DatasetResource> Datasets { get; }
         /// <summary> List of linked services. </summary>
         public IReadOnlyList<LinkedServiceResource> LinkedServices { get; }
-        /// <summary> Staging info for debug session. </summary>
-        public object Staging { get; }
-        /// <summary> Data flow debug settings. </summary>
-        public object DebugSettings { get; }
-        /// <summary> The type of new Databricks cluster. </summary>
-        public bool? IncrementalDebug { get; }
     }
 }

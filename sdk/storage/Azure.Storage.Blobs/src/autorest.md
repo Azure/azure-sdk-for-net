@@ -17,7 +17,7 @@ directive:
     delete $.Blob["x-ms-parameter-location"];
 ```
 
-### Don't encode BlobName or 
+### Don't encode BlobName or Container Name
 ``` yaml
 directive:
 - from: swagger-document
