@@ -4,8 +4,6 @@ using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Core;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -71,7 +69,7 @@ namespace Proto.Compute
         /// <summary>
         /// The operation to delete an availability set. 
         /// </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="ArmResponse{Response}"/> operation for this resource. </returns>
         public async Task<ArmResponse<Response>> DeleteAsync(CancellationToken cancellationToken = default)
         {
@@ -81,7 +79,7 @@ namespace Proto.Compute
         /// <summary>
         /// The operation to delete an availability set. 
         /// </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning"> Details on long running operation object. </see>
         /// </remarks>
@@ -94,7 +92,7 @@ namespace Proto.Compute
         /// <summary>
         /// The operation to delete an availability set. 
         /// </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning"> Details on long running operation object. </see>
         /// </remarks>
@@ -136,7 +134,7 @@ namespace Proto.Compute
         /// The operation to update an availability set.
         /// </summary>
         /// <param name="patchable">  The parameters to update. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A <see cref="Task"/> that on completion returns the operation of the updated resource. </returns>
         public async Task<ArmResponse<AvailabilitySet>> UpdateAsync(AvailabilitySetUpdate patchable, CancellationToken cancellationToken = default)
         {
@@ -161,7 +159,7 @@ namespace Proto.Compute
         /// The operation to update an availability set.
         /// </summary>
         /// <param name="patchable">  The parameters to update. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A <see cref="Task"/> that on completion returns the operation of the updated resource. </returns>
         public async Task<ArmOperation<AvailabilitySet>> StartUpdateAsync(AvailabilitySetUpdate patchable, CancellationToken cancellationToken = default)
         {
@@ -191,7 +189,7 @@ namespace Proto.Compute
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A <see cref="Task"/> that on completion returns an <see cref="ArmResponse{AvailabilitySet}"/> that allows polling for completion of the operation. </returns>
         public async Task<ArmResponse<AvailabilitySet>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
@@ -225,7 +223,7 @@ namespace Proto.Compute
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning"> Details on long running operation object. </see>
         /// </remarks>
@@ -241,36 +239,32 @@ namespace Proto.Compute
         /// <inheritdoc/>
         public ArmResponse<AvailabilitySet> SetTags(IDictionary<string, string> tags)
         {
-            var resource = GetResource();
-            var patchable = new AvailabilitySetUpdate() { Tags = resource.Data.Tags };
-            ReplaceTags(tags, patchable.Tags);
+            var patchable = new AvailabilitySetUpdate();
+            patchable.Tags.ReplaceWith(tags);
             return Update(patchable);
         }
 
         /// <inheritdoc/>
         public async Task<ArmResponse<AvailabilitySet>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            var resource = GetResource();
-            var patchable = new AvailabilitySetUpdate() { Tags = resource.Data.Tags };
-            ReplaceTags(tags, patchable.Tags);
+            var patchable = new AvailabilitySetUpdate();
+            patchable.Tags.ReplaceWith(tags);
             return await UpdateAsync(patchable);
         }
 
         /// <inheritdoc/>
         public ArmOperation<AvailabilitySet> StartSetTags(IDictionary<string, string> tags)
         {
-            var resource = GetResource();
-            var patchable = new AvailabilitySetUpdate() { Tags = resource.Data.Tags };
-            ReplaceTags(tags, patchable.Tags);
+            var patchable = new AvailabilitySetUpdate();
+            patchable.Tags.ReplaceWith(tags);
             return StartUpdate(patchable);
         }
 
         /// <inheritdoc/>
         public async Task<ArmOperation<AvailabilitySet>> StartSetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            var resource = GetResource();
-            var patchable = new AvailabilitySetUpdate() { Tags = resource.Data.Tags };
-            ReplaceTags(tags, patchable.Tags);
+            var patchable = new AvailabilitySetUpdate();
+            patchable.Tags.ReplaceWith(tags);
             return await StartUpdateAsync(patchable);
         }
 
@@ -278,8 +272,9 @@ namespace Proto.Compute
         public ArmResponse<AvailabilitySet> RemoveTag(string key)
         {
             var resource = GetResource();
-            var patchable = new AvailabilitySetUpdate() { Tags = resource.Data.Tags };
-            DeleteTag(key, patchable.Tags);
+            var patchable = new AvailabilitySetUpdate();
+            patchable.Tags.ReplaceWith(resource.Data.Tags);
+            patchable.Tags.Remove(key);
             return Update(patchable);
         }
 
@@ -287,8 +282,9 @@ namespace Proto.Compute
         public async Task<ArmResponse<AvailabilitySet>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             var resource = GetResource();
-            var patchable = new AvailabilitySetUpdate() { Tags = resource.Data.Tags };
-            DeleteTag(key, patchable.Tags);
+            var patchable = new AvailabilitySetUpdate();
+            patchable.Tags.ReplaceWith(resource.Data.Tags);
+            patchable.Tags.Remove(key);
             return await UpdateAsync(patchable);
         }
 
@@ -296,8 +292,9 @@ namespace Proto.Compute
         public ArmOperation<AvailabilitySet> StartRemoveTag(string key)
         {
             var resource = GetResource();
-            var patchable = new AvailabilitySetUpdate() { Tags = resource.Data.Tags };
-            DeleteTag(key, patchable.Tags);
+            var patchable = new AvailabilitySetUpdate();
+            patchable.Tags.ReplaceWith(resource.Data.Tags);
+            patchable.Tags.Remove(key);
             return StartUpdate(patchable);
         }
 
@@ -305,8 +302,9 @@ namespace Proto.Compute
         public async Task<ArmOperation<AvailabilitySet>> StartRemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             var resource = GetResource();
-            var patchable = new AvailabilitySetUpdate() { Tags = resource.Data.Tags };
-            DeleteTag(key, patchable.Tags);
+            var patchable = new AvailabilitySetUpdate();
+            patchable.Tags.ReplaceWith(resource.Data.Tags);
+            patchable.Tags.Remove(key);
             return await StartUpdateAsync(patchable);
         }
 
@@ -316,24 +314,18 @@ namespace Proto.Compute
         /// <returns> A collection of location that may take multiple service requests to iterate over. </returns>
         public IEnumerable<LocationData> ListAvailableLocations()
         {
-            var pageableProvider = ResourcesClient.Providers.List(expand: "metadata");
-            var availabilitySetProvider = pageableProvider.FirstOrDefault(p => string.Equals(p.Namespace, ResourceType?.Namespace, StringComparison.InvariantCultureIgnoreCase));
-            var availabilitySetResource = availabilitySetProvider.ResourceTypes.FirstOrDefault(r => ResourceType.Type.Equals(r.ResourceType));
-            return availabilitySetResource.Locations.Select(l => (LocationData)l);
+            return ListAvailableLocations(ResourceType);
         }
 
         /// <summary>
         /// Lists all available geo-locations.
         /// </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of location that may take multiple service requests to iterate over. </returns>
         /// <exception cref="InvalidOperationException"> The default subscription id is null. </exception>
         public async Task<IEnumerable<LocationData>> ListAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            var asyncpageableProvider = ResourcesClient.Providers.ListAsync(expand: "metadata", cancellationToken: cancellationToken);
-            var availabilitySetProvider = await asyncpageableProvider.FirstOrDefaultAsync(p => string.Equals(p.Namespace, ResourceType?.Namespace, StringComparison.InvariantCultureIgnoreCase));
-            var availabilitySetResource = availabilitySetProvider.ResourceTypes.FirstOrDefault(r => ResourceType.Type.Equals(r.ResourceType));
-            return availabilitySetResource.Locations.Select(l => (LocationData)l);
+            return await ListAvailableLocationsAsync(ResourceType, cancellationToken);
         }
     }
 }

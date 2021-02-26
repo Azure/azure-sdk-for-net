@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.ResourceManager.Core;
+using System;
 
 namespace Proto.Network
 {
@@ -17,8 +18,11 @@ namespace Proto.Network
         /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
         /// <param name="virtualNetwork"> The resource id of <see cref="GetVirtualNetworkOperations" /> data model. </param>
         /// <returns> An instance of <see cref="VirtualNetworkOperations" />. </returns>
+        /// <exception cref="ArgumentException"> virtualNetwork cannot be null or a whitespace. </exception>
         public static VirtualNetworkOperations GetVirtualNetworkOperations(this ResourceGroupOperations resourceGroup, string virtualNetwork)
         {
+            if (string.IsNullOrWhiteSpace(virtualNetwork))
+                throw new ArgumentException($"{nameof(virtualNetwork)} cannot be null or a whitespace.", nameof(virtualNetwork));
             return new VirtualNetworkOperations(resourceGroup, virtualNetwork);
         }
 
@@ -40,8 +44,11 @@ namespace Proto.Network
         /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
         /// <param name="publicIpAddress"> The resource id of <see cref="GetPublicIpAddressOperations" /> data model. </param>
         /// <returns> An instance of <see cref="PublicIpAddressOperations" />. </returns>
+        /// <exception cref="ArgumentException"> publicIpAddress cannot be null or a whitespace. </exception>
         public static PublicIpAddressOperations GetPublicIpAddressOperations(this ResourceGroupOperations resourceGroup, string publicIpAddress)
         {
+            if (string.IsNullOrWhiteSpace(publicIpAddress))
+                throw new ArgumentException($"{nameof(publicIpAddress)} cannot be null or a whitespace.", nameof(publicIpAddress));
             return new PublicIpAddressOperations(resourceGroup, publicIpAddress);
         }
 
@@ -63,8 +70,11 @@ namespace Proto.Network
         /// <param name="resourceGroup"> The operations over a specific resource group. </param>
         /// <param name="networkInterface"> The network interface to target for operations. </param>
         /// <returns> A <see cref="NetworkInterface"/> including the operations that can be peformed on it. </returns>
+        /// <exception cref="ArgumentException"> networkInterface cannot be null or a whitespace. </exception>
         public static NetworkInterfaceOperations GetNetworkInterfaceOperations(this ResourceGroupOperations resourceGroup, string networkInterface)
         {
+            if (string.IsNullOrWhiteSpace(networkInterface))
+                throw new ArgumentException($"{nameof(networkInterface)} cannot be null or a whitespace.", nameof(networkInterface));
             return new NetworkInterfaceOperations(resourceGroup, networkInterface);
         }
 
@@ -84,8 +94,11 @@ namespace Proto.Network
         /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
         /// <param name="networkSecurityGroup"> The resource id of <see cref="GetNetworkSecurityGroupOperations" /> data model. </param>
         /// <returns> An instance of <see cref="NetworkSecurityGroup" />. </returns>
+        /// <exception cref="ArgumentException"> networkSecurityGroup cannot be null or a whitespace. </exception>
         public static NetworkSecurityGroupOperations GetNetworkSecurityGroupOperations(this ResourceGroupOperations resourceGroup, string networkSecurityGroup)
         {
+            if (string.IsNullOrWhiteSpace(networkSecurityGroup))
+                throw new ArgumentException($"{nameof(networkSecurityGroup)} cannot be null or a whitespace.", nameof(networkSecurityGroup));
             return new NetworkSecurityGroupOperations(resourceGroup, networkSecurityGroup);
         }
 

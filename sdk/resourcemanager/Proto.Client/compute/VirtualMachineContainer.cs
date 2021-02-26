@@ -2,7 +2,6 @@
 using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Core.Adapters;
 using Azure.ResourceManager.Core.Resources;
 using Proto.Compute.Convenience;
 using System.Collections.Generic;
@@ -220,6 +219,20 @@ namespace Proto.Compute
         {
             var results = ListByNameAsync(filter, top, cancellationToken);
             return new PhWrappingAsyncPageable<GenericResource, VirtualMachine>(results, s => (new VirtualMachineOperations(s)).Get().Value);
+        }
+
+        /// <inheritdoc />
+        public override ArmResponse<VirtualMachine> Get(string virtualMachineName)
+        {
+            return new PhArmResponse<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(Operations.Get(Id.ResourceGroup, virtualMachineName), 
+                v => new VirtualMachine(Parent, new VirtualMachineData(v)));
+        }
+
+        /// <inheritdoc/>
+        public override async Task<ArmResponse<VirtualMachine>> GetAsync(string virtualMachineName, CancellationToken cancellationToken = default)
+        {
+            return new PhArmResponse<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(await Operations.GetAsync(Id.ResourceGroup, virtualMachineName, cancellationToken),
+                v => new VirtualMachine(Parent, new VirtualMachineData(v)));
         }
     }
 }

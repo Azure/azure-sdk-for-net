@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.ResourceManager.Resources.Models;
 using System;
 using System.Collections.Generic;
 
@@ -16,15 +15,17 @@ namespace Azure.ResourceManager.Core
         /// Initializes a new instance of the <see cref="GenericResourceData"/> class.
         /// </summary>
         /// <param name="genericResource"> The existing resource model to copy from. </param>
+        /// <exception cref="ArgumentNullException">
+        ///     <paramref name="genericResource"/> is null.
+        /// </exception>
         public GenericResourceData(ResourceManager.Resources.Models.GenericResource genericResource)
             : base(genericResource.Id, genericResource.Location, genericResource)
         {
+            if (genericResource is null)
+                throw new ArgumentNullException(nameof(genericResource));
+
             Tags = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
-            Tags.Clear();
-            foreach (var tag in genericResource.Tags)
-            {
-                Tags.Add(tag);
-            }
+            Tags.ReplaceWith(genericResource.Tags);
 
             if (Model.Sku != null)
                 Sku = new Sku(Model.Sku);
@@ -89,6 +90,10 @@ namespace Azure.ResourceManager.Core
         /// <param name="other"> The tracked resource convert from. </param>
         public static implicit operator ResourceManager.Resources.Models.GenericResource(GenericResourceData other)
         {
+            if (other is null)
+                return null;
+
+            // Temp code. Following block will be removed
             other.Model.Tags.Clear();
             foreach (var tag in other.Tags)
             {

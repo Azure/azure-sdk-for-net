@@ -1,9 +1,9 @@
-using Azure.Identity;
-using Azure.ResourceManager.Resources.Models;
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using Azure.Identity;
+using Azure.ResourceManager.Resources.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Core.Tests
 {
@@ -122,14 +122,11 @@ namespace Azure.ResourceManager.Core.Tests
             string location)
         {
             var resource = new GenericResourceExpanded();
+
+            // See TODO in GenericResourceOperations.Valide().
+            // resource.Id = "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup";
             resource.Location = location;
-            if (!(tags is null))
-            {
-                foreach (var tag in tags)
-                {
-                    resource.Tags.Add(tag);
-                }
-            }
+            resource.Tags.ReplaceWith(tags ?? new Dictionary<string, string>());
             resource.Sku = sku;
             resource.Plan = plan;
             resource.Kind = kind;

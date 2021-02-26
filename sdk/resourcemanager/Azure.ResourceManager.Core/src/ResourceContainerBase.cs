@@ -118,5 +118,20 @@ namespace Azure.ResourceManager.Core
 
             return _parentResource as TParent;
         }
+
+        /// <summary>
+        /// Gets details for this resource from the service.
+        /// </summary>
+        /// <param name="resourceName"> The name of the resource to get. </param>
+        /// <returns> A response with the <see cref="ArmResponse{TOperations}"/> operation for this resource. </returns>
+        public abstract ArmResponse<TOperations> Get(string resourceName);
+
+        /// <summary>
+        /// Gets details for this resource from the service.
+        /// </summary>
+        /// <param name="resourceName"> The name of the resource to get. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="ArmResponse{TOperations}"/> operation for this resource. </returns>
+        public abstract Task<ArmResponse<TOperations>> GetAsync(string resourceName, CancellationToken cancellationToken = default);
     }
 }

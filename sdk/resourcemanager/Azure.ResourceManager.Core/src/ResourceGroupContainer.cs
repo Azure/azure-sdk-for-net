@@ -1,11 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.ResourceManager.Core.Adapters;
-using Azure.ResourceManager.Resources;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Core
 {
@@ -43,12 +42,7 @@ namespace Azure.ResourceManager.Core
         {
             var model = new ResourceManager.Resources.Models.ResourceGroup(location);
             if (!(tags is null))
-            {
-                foreach (var tag in tags)
-                {
-                    model.Tags.Add(tag);
-                }
-            }
+                model.Tags.ReplaceWith(tags);
             model.ManagedBy = managedBy;
             return new ArmBuilder<ResourceGroup, ResourceGroupData>(this, new ResourceGroupData(model));
         }
@@ -109,6 +103,26 @@ namespace Azure.ResourceManager.Core
             return new PhWrappingAsyncPageable<ResourceManager.Resources.Models.ResourceGroup, ResourceGroup>(
                 Operations.ListAsync(null, null, cancellationToken),
                 s => new ResourceGroup(Parent, new ResourceGroupData(s)));
+        }
+
+        /// <inheritdoc />
+        public override ArmResponse<ResourceGroup> Get(string resourceGroupName)
+        {
+            return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(Operations.Get(resourceGroupName), g =>
+            {
+                return new ResourceGroup(Parent, new ResourceGroupData(g));
+            });
+        }
+
+        /// <inheritdoc/>
+        public override async Task<ArmResponse<ResourceGroup>> GetAsync(string resourceGroupName, CancellationToken cancellationToken = default)
+        {
+            return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
+                await Operations.GetAsync(resourceGroupName, cancellationToken).ConfigureAwait(false),
+                g =>
+                {
+                    return new ResourceGroup(Parent, new ResourceGroupData(g));
+                });
         }
     }
 }

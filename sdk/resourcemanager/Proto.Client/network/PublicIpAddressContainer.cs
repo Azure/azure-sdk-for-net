@@ -2,14 +2,13 @@
 // Licensed under the MIT License.
 
 using Azure;
+using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Core.Resources;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Core.Adapters;
-using Azure.ResourceManager.Core.Resources;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
-using System;
 
 namespace Proto.Network
 {
@@ -174,5 +173,16 @@ namespace Proto.Network
         {
             return s => new PublicIpAddress(Parent, new PublicIPAddressData(s));
         }
+                /// <inheritdoc />
+        public override ArmResponse<PublicIpAddress> Get(string publicIpAddressesName)
+        {
+            return new PhArmResponse<PublicIpAddress, PublicIPAddress>(Operations.Get(Id.ResourceGroup, publicIpAddressesName), Convertor());
+        }
+
+        /// <inheritdoc/>
+        public override async Task<ArmResponse<PublicIpAddress>> GetAsync(string publicIpAddressesName, CancellationToken cancellationToken = default)
+        {
+            return new PhArmResponse<PublicIpAddress, PublicIPAddress>(await Operations.GetAsync(Id.ResourceGroup, publicIpAddressesName), Convertor());
+        }     
     }
 }

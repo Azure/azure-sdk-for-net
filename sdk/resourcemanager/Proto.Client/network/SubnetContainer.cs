@@ -1,10 +1,9 @@
 ﻿using Azure;
-using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Core.Adapters;
+using Azure.ResourceManager.Network;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
-using System;
 
 namespace Proto.Network
 {
@@ -95,7 +94,7 @@ namespace Proto.Network
         {
             return new PhWrappingPageable<Azure.ResourceManager.Network.Models.Subnet, SubnetOperations>(
                 Operations.List(Id.ResourceGroup, Id.Name, cancellationToken),
-                this.convertor());
+                convertor());
         }
 
         /// <summary>
@@ -107,12 +106,26 @@ namespace Proto.Network
         {
             return new PhWrappingAsyncPageable<Azure.ResourceManager.Network.Models.Subnet, SubnetOperations>(
                 Operations.ListAsync(Id.ResourceGroup, Id.Name, cancellationToken),
-                this.convertor());
+                convertor());
         }
 
         private Func<Azure.ResourceManager.Network.Models.Subnet, Subnet> convertor()
         {
             return s => new Subnet(Parent, new SubnetData(s));
+        }
+
+        /// <inheritdoc/>
+        public override ArmResponse<Subnet> Get(string subnetName)
+        {
+            return new PhArmResponse<Subnet, Azure.ResourceManager.Network.Models.Subnet>(Operations.Get(Id.ResourceGroup, Id.Name, subnetName),
+                n => new Subnet(Parent, new SubnetData(n)));
+        }
+        
+        /// <inheritdoc/>
+        public override async Task<ArmResponse<Subnet>> GetAsync(string subnetName, CancellationToken cancellationToken = default)
+        {
+            return new PhArmResponse<Subnet, Azure.ResourceManager.Network.Models.Subnet>(await Operations.GetAsync(Id.ResourceGroup, Id.Name, subnetName, null, cancellationToken),
+                n => new Subnet(Parent, new SubnetData(n)));
         }
     }
 }

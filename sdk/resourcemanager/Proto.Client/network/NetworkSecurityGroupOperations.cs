@@ -2,14 +2,14 @@
 // Licensed under the MIT License.
 
 using Azure;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Core;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Collections.Generic;
-using System;
 
 namespace Proto.Network
 {
@@ -64,7 +64,7 @@ namespace Proto.Network
         /// <summary>
         /// Updates the network security group rules.
         /// </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <param name="rules"> The rules to be updated. </param>
         /// <returns> An <see cref="ArmOperation{NetworkSecurityGroup}"/> that allows polling for completion of the operation. </returns>
         public ArmOperation<NetworkSecurityGroup> UpdateRules(CancellationToken cancellationToken = default, params SecurityRule[] rules)
@@ -190,9 +190,8 @@ namespace Proto.Network
         /// <inheritdoc/>
         public ArmResponse<NetworkSecurityGroup> SetTags(IDictionary<string, string> tags)
         {
-            var resource = GetResource();
-            var patchable = new TagsObject() { Tags = resource.Data.Tags };
-            ReplaceTags(tags, resource.Data.Tags);
+            var patchable = new TagsObject();
+            patchable.Tags.ReplaceWith(tags);
             return new PhArmResponse<NetworkSecurityGroup, Azure.ResourceManager.Network.Models.NetworkSecurityGroup>(
                 Operations.UpdateTags(Id.ResourceGroup, Id.Name, patchable),
                 n => new NetworkSecurityGroup(this, new NetworkSecurityGroupData(n)));
@@ -201,9 +200,8 @@ namespace Proto.Network
         /// <inheritdoc/>
         public async Task<ArmResponse<NetworkSecurityGroup>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            var resource = GetResource();
-            var patchable = new TagsObject() { Tags = resource.Data.Tags };
-            ReplaceTags(tags, resource.Data.Tags);
+            var patchable = new TagsObject();
+            patchable.Tags.ReplaceWith(tags);
             return new PhArmResponse<NetworkSecurityGroup, Azure.ResourceManager.Network.Models.NetworkSecurityGroup>(await Operations.UpdateTagsAsync(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
                 n => new NetworkSecurityGroup(this, new NetworkSecurityGroupData(n)));
         }
@@ -211,9 +209,8 @@ namespace Proto.Network
         /// <inheritdoc/>
         public ArmOperation<NetworkSecurityGroup> StartSetTags(IDictionary<string, string> tags)
         {
-            var resource = GetResource();
-            var patchable = new TagsObject() { Tags = resource.Data.Tags };
-            ReplaceTags(tags, resource.Data.Tags);
+            var patchable = new TagsObject();
+            patchable.Tags.ReplaceWith(tags);
             return new PhArmOperation<NetworkSecurityGroup, Azure.ResourceManager.Network.Models.NetworkSecurityGroup>(
                 Operations.UpdateTags(Id.ResourceGroup, Id.Name, patchable),
                 n => new NetworkSecurityGroup(this, new NetworkSecurityGroupData(n)));
@@ -222,9 +219,8 @@ namespace Proto.Network
         /// <inheritdoc/>
         public async Task<ArmOperation<NetworkSecurityGroup>> StartSetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            var resource = GetResource();
-            var patchable = new TagsObject() { Tags = resource.Data.Tags };
-            ReplaceTags(tags, resource.Data.Tags);
+            var patchable = new TagsObject();
+            patchable.Tags.ReplaceWith(tags);
             return new PhArmOperation<NetworkSecurityGroup, Azure.ResourceManager.Network.Models.NetworkSecurityGroup>(await Operations.UpdateTagsAsync(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
                 n => new NetworkSecurityGroup(this, new NetworkSecurityGroupData(n)));
         }
@@ -233,8 +229,9 @@ namespace Proto.Network
         public ArmResponse<NetworkSecurityGroup> RemoveTag(string key)
         {
             var resource = GetResource();
-            var patchable = new TagsObject() { Tags = resource.Data.Tags };
-            DeleteTag(key, resource.Data.Tags);
+            var patchable = new TagsObject();
+            patchable.Tags.ReplaceWith(resource.Data.Tags);
+            patchable.Tags.Remove(key);
             return new PhArmResponse<NetworkSecurityGroup, Azure.ResourceManager.Network.Models.NetworkSecurityGroup>(
                 Operations.UpdateTags(Id.ResourceGroup, Id.Name, patchable),
                 n => new NetworkSecurityGroup(this, new NetworkSecurityGroupData(n)));
@@ -244,8 +241,9 @@ namespace Proto.Network
         public async Task<ArmResponse<NetworkSecurityGroup>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             var resource = GetResource();
-            var patchable = new TagsObject() { Tags = resource.Data.Tags };
-            DeleteTag(key, resource.Data.Tags);
+            var patchable = new TagsObject();
+            patchable.Tags.ReplaceWith(resource.Data.Tags);
+            patchable.Tags.Remove(key);
             return new PhArmResponse<NetworkSecurityGroup, Azure.ResourceManager.Network.Models.NetworkSecurityGroup>(await Operations.UpdateTagsAsync(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
                 n => new NetworkSecurityGroup(this, new NetworkSecurityGroupData(n)));
         }
@@ -254,8 +252,9 @@ namespace Proto.Network
         public ArmOperation<NetworkSecurityGroup> StartRemoveTag(string key)
         {
             var resource = GetResource();
-            var patchable = new TagsObject() { Tags = resource.Data.Tags };
-            DeleteTag(key, resource.Data.Tags);
+            var patchable = new TagsObject();
+            patchable.Tags.ReplaceWith(resource.Data.Tags);
+            patchable.Tags.Remove(key);
             return new PhArmOperation<NetworkSecurityGroup, Azure.ResourceManager.Network.Models.NetworkSecurityGroup>(
                 Operations.UpdateTags(Id.ResourceGroup, Id.Name, patchable),
                 n => new NetworkSecurityGroup(this, new NetworkSecurityGroupData(n)));
@@ -265,8 +264,9 @@ namespace Proto.Network
         public async Task<ArmOperation<NetworkSecurityGroup>> StartRemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             var resource = GetResource();
-            var patchable = new TagsObject() { Tags = resource.Data.Tags };
-            DeleteTag(key, resource.Data.Tags);
+            var patchable = new TagsObject();
+            patchable.Tags.ReplaceWith(resource.Data.Tags);
+            patchable.Tags.Remove(key);
             return new PhArmOperation<NetworkSecurityGroup, Azure.ResourceManager.Network.Models.NetworkSecurityGroup>(await Operations.UpdateTagsAsync(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
                 n => new NetworkSecurityGroup(this, new NetworkSecurityGroupData(n)));
         }
@@ -277,24 +277,18 @@ namespace Proto.Network
         /// <returns> A collection of location that may take multiple service requests to iterate over. </returns>
         public IEnumerable<LocationData> ListAvailableLocations()
         {
-            var pageableProvider = ResourcesClient.Providers.List(expand: "metadata");
-            var networkSecurityProvider = pageableProvider.FirstOrDefault(p => string.Equals(p.Namespace, ResourceType?.Namespace, StringComparison.InvariantCultureIgnoreCase));
-            var networkSecurityResource = networkSecurityProvider.ResourceTypes.FirstOrDefault(r => ResourceType.Type.Equals(r.ResourceType));
-            return networkSecurityResource.Locations.Select(l => (LocationData)l);
+            return ListAvailableLocations(ResourceType);
         }
 
         /// <summary>
         /// Lists all available geo-locations.
         /// </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of location that may take multiple service requests to iterate over. </returns>
         /// <exception cref="InvalidOperationException"> The default subscription id is null. </exception>
         public async Task<IEnumerable<LocationData>> ListAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            var asyncpageableProvider = ResourcesClient.Providers.ListAsync(expand: "metadata", cancellationToken: cancellationToken);
-            var networkSecurityProvider = await asyncpageableProvider.FirstOrDefaultAsync(p => string.Equals(p.Namespace, ResourceType?.Namespace, StringComparison.InvariantCultureIgnoreCase));
-            var networkSecurityResource = networkSecurityProvider.ResourceTypes.FirstOrDefault(r => ResourceType.Type.Equals(r.ResourceType));
-            return networkSecurityResource.Locations.Select(l => (LocationData)l);
+            return await ListAvailableLocationsAsync(ResourceType, cancellationToken);
         }
     }
 }

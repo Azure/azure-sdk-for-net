@@ -1,11 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Core
 {
@@ -117,48 +118,40 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// Gets new dictionary of tags after adding the key value pair or updating the existing key value pair
+        /// Lists all available geo-locations.
         /// </summary>
-        /// <param name="key"> The key to update. </param>
-        /// <param name="value"> The value to update. </param>
-        /// <param name="existingTags"> Existing tag dictionary to update. </param>
-        protected void UpdateTags(string key, string value, IDictionary<string, string> existingTags)
+        /// <param name="resourceType"> The <see cref="ResourceType"/> instance to use for the list. </param>
+        /// <returns> A collection of location that may take multiple service requests to iterate over. </returns>
+        protected IEnumerable<LocationData> ListAvailableLocations(ResourceType resourceType)
         {
-            if (existingTags.ContainsKey(key))
-            {
-                existingTags[key] = value;
-            }
-            else
-            {
-                existingTags.Add(key, value);
-            }
+            var pageableProvider = ResourcesClient.Providers.List(expand: "metadata");
+            var resourcePageableProvider = pageableProvider.FirstOrDefault(p => string.Equals(p.Namespace, resourceType?.Namespace, StringComparison.InvariantCultureIgnoreCase));
+            if (resourcePageableProvider is null)
+                throw new InvalidOperationException($"{resourceType.Type} not found for {resourceType.Namespace}");
+            var theResource = resourcePageableProvider.ResourceTypes.FirstOrDefault(r => resourceType.Type.Equals(r.ResourceType));
+            if (theResource is null)
+                throw new InvalidOperationException($"{resourceType.Type} not found for {resourceType.Type}");
+            return theResource.Locations.Select(l => (LocationData)l);
         }
 
         /// <summary>
-        /// Gets new dictionary of tags after remove the one key value pair
+        /// Lists all available geo-locations.
         /// </summary>
-        /// <param name="key"> The key to remove. </param>
-        /// <param name="existingTags"> Existing tag dictionary to update. </param>
-        protected void DeleteTag(string key, IDictionary<string, string> existingTags)
+        /// <param name="resourceType"> The <see cref="ResourceType"/> instance to use for the list. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A collection of location that may take multiple service requests to iterate over. </returns>
+        protected async Task<IEnumerable<LocationData>> ListAvailableLocationsAsync(ResourceType resourceType, CancellationToken cancellationToken = default)
         {
-            if (existingTags.ContainsKey(key))
-            {
-                existingTags.Remove(key);
-            }
-        }
-
-        /// <summary>
-        /// Replace all the tags currently on the resource
-        /// </summary>
-        /// <param name="tags"> List of tags. </param>
-        /// <param name="existingTags"> Existing tag dictionary to update. </param>
-        protected void ReplaceTags(IDictionary<string, string> tags, IDictionary<string, string> existingTags)
-        {
-            existingTags.Clear();
-            foreach (var tag in tags)
-            {
-                existingTags.Add(tag);
-            }
+            var pageableProvider = ResourcesClient.Providers.ListAsync(expand: "metadata", cancellationToken: cancellationToken);
+            var resourcePageableProvider = await pageableProvider.FirstOrDefaultAsync(
+                p => string.Equals(p.Namespace, resourceType?.Namespace, StringComparison.InvariantCultureIgnoreCase),
+                cancellationToken).ConfigureAwait(false);
+            if (resourcePageableProvider is null)
+                throw new InvalidOperationException($"{resourceType.Type} not found for {resourceType.Namespace}");
+            var theResource = resourcePageableProvider.ResourceTypes.FirstOrDefault(r => resourceType.Type.Equals(r.ResourceType));
+            if (theResource is null)
+                throw new InvalidOperationException($"{resourceType.Type} not found for {resourceType.Type}");
+            return theResource.Locations.Select(l => (LocationData)l);
         }
     }
 }

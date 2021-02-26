@@ -2,11 +2,10 @@
 // Licensed under the MIT License.
 
 using Azure;
+using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Core.Resources;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Core.Adapters;
-using Azure.ResourceManager.Core.Resources;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -221,5 +220,19 @@ namespace Proto.Network
             var results = ListByNameAsync(filter, top, cancellationToken);
             return new PhWrappingAsyncPageable<GenericResource, NetworkSecurityGroup>(results, s => new NetworkSecurityGroupOperations(s).Get().Value);
         }
+
+        /// <inheritdoc />
+        public override ArmResponse<NetworkSecurityGroup> Get(string networkSecurityGroup)
+        {
+            return new PhArmResponse<NetworkSecurityGroup, Azure.ResourceManager.Network.Models.NetworkSecurityGroup>(Operations.Get(Id.ResourceGroup, networkSecurityGroup),
+                g => new NetworkSecurityGroup(Parent, new NetworkSecurityGroupData(g)));
+        }
+
+        /// <inheritdoc/>
+        public override async Task<ArmResponse<NetworkSecurityGroup>> GetAsync(string networkSecurityGroup, CancellationToken cancellationToken = default)
+        {
+            return new PhArmResponse<NetworkSecurityGroup, Azure.ResourceManager.Network.Models.NetworkSecurityGroup>(await Operations.GetAsync(Id.ResourceGroup, networkSecurityGroup, null, cancellationToken),
+                    g => new NetworkSecurityGroup(Parent, new NetworkSecurityGroupData(g)));
+        }     
     }
 }

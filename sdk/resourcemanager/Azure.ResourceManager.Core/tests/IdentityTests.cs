@@ -1,10 +1,9 @@
-﻿using Azure.Core.TestFramework;
-using NUnit.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Core.Tests
 {
@@ -29,7 +28,10 @@ namespace Azure.ResourceManager.Core.Tests
 
             if (invalidParameter)
             {
-                Assert.Throws<System.ArgumentOutOfRangeException>(() => { dict1[resourceID] = new UserAssignedIdentity(Guid.Empty, Guid.Empty); });
+                if (resourceID is null)
+                    Assert.Throws<ArgumentNullException>(() => { dict1[resourceID] = new UserAssignedIdentity(Guid.Empty, Guid.Empty); });
+                else
+                    Assert.Throws<ArgumentOutOfRangeException>(() => { dict1[resourceID] = new UserAssignedIdentity(Guid.Empty, Guid.Empty); });
             }
             else
             {
@@ -54,7 +56,10 @@ namespace Azure.ResourceManager.Core.Tests
 
             if(invalidParameter)
             {
-                Assert.Throws<System.ArgumentOutOfRangeException>(() => { dict1[resourceID] = new UserAssignedIdentity(Guid.Empty, Guid.Empty); });
+                if (resourceID is null)
+                    Assert.Throws<ArgumentNullException>(() => { dict1[resourceID] = new UserAssignedIdentity(Guid.Empty, Guid.Empty); });
+                else
+                    Assert.Throws<ArgumentOutOfRangeException>(() => { dict1[resourceID] = new UserAssignedIdentity(Guid.Empty, Guid.Empty); });
             }
             else
             {
@@ -148,22 +153,17 @@ namespace Azure.ResourceManager.Core.Tests
 
         public JsonProperty DeserializerHelper(string filename)
         {
-            string json = GetFileText(filename);
+            var json = File.ReadAllText("./TestAssets/Identity/" + filename);
             JsonDocument document = JsonDocument.Parse(json);
             JsonElement rootElement = document.RootElement;
             return rootElement.EnumerateObject().First();
-        }
-
-        private static string GetFileText(string filename)
-        {
-            return File.ReadAllText(Path.Combine(TestContext.CurrentContext.TestDirectory, "TestAssets", "Identity", filename));
         }
 
         [TestCase]
         public void TestDeserializerInvalidNullType()
         {
             var identityJsonProperty = DeserializerHelper("InvalidTypeIsNull.json");
-            Assert.Throws<InvalidOperationException>(delegate { ResourceIdentity.Deserialize(identityJsonProperty.Value); });
+            Assert.Throws<ArgumentNullException>(delegate { ResourceIdentity.Deserialize(identityJsonProperty.Value); });
         }
 
         [TestCase]
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Core.Tests
         [TestCase]
         public void TestDeserializerValidOuterExtraField()
         {
-            var json = GetFileText("SystemAndUserAssignedOuterExtraField.json");
+            var json = File.ReadAllText("./TestAssets/Identity/SystemAndUserAssignedOuterExtraField.json");
             JsonDocument document = JsonDocument.Parse(json);
             JsonElement rootElement = document.RootElement;
             var identityJsonProperty = rootElement.EnumerateObject().ElementAt(1);

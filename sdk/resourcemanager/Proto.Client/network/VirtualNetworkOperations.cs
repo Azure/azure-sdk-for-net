@@ -1,12 +1,11 @@
 ﻿using Azure;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Core;
+using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Linq;
-using System.Collections.Generic;
-using System;
 
 namespace Proto.Network
 {
@@ -72,7 +71,7 @@ namespace Proto.Network
         /// <summary>
         /// The operation to delete a virtual nerwork. 
         /// </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="ArmResponse{Response}"/> operation for this resource. </returns>
         public async Task<ArmResponse<Response>> DeleteAsync(CancellationToken cancellationToken = default)
         {
@@ -82,7 +81,7 @@ namespace Proto.Network
         /// <summary>
         /// The operation to delete a virtual nerwork.
         /// </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning"> Details on long running operation object. </see>
         /// </remarks>
@@ -95,7 +94,7 @@ namespace Proto.Network
         /// <summary>
         /// The operation to delete a virtual nerwork.
         /// </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning"> Details on long running operation object. </see>
         /// </remarks>
@@ -144,7 +143,7 @@ namespace Proto.Network
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning"> Details on long running operation object. </see>
         /// </remarks>
@@ -183,7 +182,7 @@ namespace Proto.Network
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning"> Details on long running operation object. </see>
         /// </remarks>
@@ -219,9 +218,8 @@ namespace Proto.Network
         /// <inheritdoc/>
         public ArmResponse<VirtualNetwork> SetTags(IDictionary<string, string> tags)
         {
-            var resource = GetResource();
-            var patchable = new TagsObject() { Tags = resource.Data.Tags };
-            ReplaceTags(tags, patchable.Tags);
+            var patchable = new TagsObject();
+            patchable.Tags.ReplaceWith(tags);
             return new PhArmResponse<VirtualNetwork, Azure.ResourceManager.Network.Models.VirtualNetwork>(Operations.UpdateTags(Id.ResourceGroup, Id.Name, patchable),
                 n => new VirtualNetwork(this, new VirtualNetworkData(n)));
         }
@@ -229,9 +227,8 @@ namespace Proto.Network
         /// <inheritdoc/>
         public async Task<ArmResponse<VirtualNetwork>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            var resource = GetResource();
-            var patchable = new TagsObject() { Tags = resource.Data.Tags };
-            ReplaceTags(tags, patchable.Tags);
+            var patchable = new TagsObject();
+            patchable.Tags.ReplaceWith(tags);
             return new PhArmResponse<VirtualNetwork, Azure.ResourceManager.Network.Models.VirtualNetwork>(await Operations.UpdateTagsAsync(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
                 n => new VirtualNetwork(this, new VirtualNetworkData(n)));
         }
@@ -239,9 +236,8 @@ namespace Proto.Network
         /// <inheritdoc/>
         public ArmOperation<VirtualNetwork> StartSetTags(IDictionary<string, string> tags)
         {
-            var resource = GetResource();
-            var patchable = new TagsObject() { Tags = resource.Data.Tags };
-            ReplaceTags(tags, patchable.Tags);
+            var patchable = new TagsObject();
+            patchable.Tags.ReplaceWith(tags);
             return new PhArmOperation<VirtualNetwork, Azure.ResourceManager.Network.Models.VirtualNetwork>(Operations.UpdateTags(Id.ResourceGroup, Id.Name, patchable),
                 n => new VirtualNetwork(this, new VirtualNetworkData(n)));
         }
@@ -249,9 +245,8 @@ namespace Proto.Network
         /// <inheritdoc/>
         public async Task<ArmOperation<VirtualNetwork>> StartSetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            var resource = GetResource();
-            var patchable = new TagsObject() { Tags = resource.Data.Tags };
-            ReplaceTags(tags, patchable.Tags);
+            var patchable = new TagsObject();
+            patchable.Tags.ReplaceWith(tags);
             return new PhArmOperation<VirtualNetwork, Azure.ResourceManager.Network.Models.VirtualNetwork>(await Operations.UpdateTagsAsync(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
                 n => new VirtualNetwork(this, new VirtualNetworkData(n)));
         }
@@ -260,8 +255,9 @@ namespace Proto.Network
         public ArmResponse<VirtualNetwork> RemoveTag(string key)
         {
             var resource = GetResource();
-            var patchable = new TagsObject() { Tags = resource.Data.Tags };
-            DeleteTag(key, patchable.Tags);
+            var patchable = new TagsObject();
+            patchable.Tags.ReplaceWith(resource.Data.Tags);
+            patchable.Tags.Remove(key);
             return new PhArmResponse<VirtualNetwork, Azure.ResourceManager.Network.Models.VirtualNetwork>(Operations.UpdateTags(Id.ResourceGroup, Id.Name, patchable),
                 n => new VirtualNetwork(this, new VirtualNetworkData(n)));
         }
@@ -270,8 +266,9 @@ namespace Proto.Network
         public async Task<ArmResponse<VirtualNetwork>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             var resource = GetResource();
-            var patchable = new TagsObject() { Tags = resource.Data.Tags };
-            DeleteTag(key, patchable.Tags);
+            var patchable = new TagsObject();
+            patchable.Tags.ReplaceWith(resource.Data.Tags);
+            patchable.Tags.Remove(key);
             return new PhArmResponse<VirtualNetwork, Azure.ResourceManager.Network.Models.VirtualNetwork>(await Operations.UpdateTagsAsync(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
                 n => new VirtualNetwork(this, new VirtualNetworkData(n)));
         }
@@ -280,8 +277,9 @@ namespace Proto.Network
         public ArmOperation<VirtualNetwork> StartRemoveTag(string key)
         {
             var resource = GetResource();
-            var patchable = new TagsObject() { Tags = resource.Data.Tags };
-            DeleteTag(key, patchable.Tags);
+            var patchable = new TagsObject();
+            patchable.Tags.ReplaceWith(resource.Data.Tags);
+            patchable.Tags.Remove(key);
             return new PhArmOperation<VirtualNetwork, Azure.ResourceManager.Network.Models.VirtualNetwork>(Operations.UpdateTags(Id.ResourceGroup, Id.Name, patchable),
                 n => new VirtualNetwork(this, new VirtualNetworkData(n)));
         }
@@ -290,8 +288,9 @@ namespace Proto.Network
         public async Task<ArmOperation<VirtualNetwork>> StartRemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             var resource = GetResource();
-            var patchable = new TagsObject() { Tags = resource.Data.Tags };
-            DeleteTag(key, patchable.Tags);
+            var patchable = new TagsObject();
+            patchable.Tags.ReplaceWith(resource.Data.Tags);
+            patchable.Tags.Remove(key);
             return new PhArmOperation<VirtualNetwork, Azure.ResourceManager.Network.Models.VirtualNetwork>(await Operations.UpdateTagsAsync(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
                 n => new VirtualNetwork(this, new VirtualNetworkData(n)));
         }
@@ -302,24 +301,18 @@ namespace Proto.Network
         /// <returns> A collection of location that may take multiple service requests to iterate over. </returns>
         public IEnumerable<LocationData> ListAvailableLocations()
         {
-            var pageableProvider = ResourcesClient.Providers.List(expand: "metadata");
-            var vnProvider = pageableProvider.FirstOrDefault(p => string.Equals(p.Namespace, ResourceType?.Namespace, StringComparison.InvariantCultureIgnoreCase));
-            var vnResource = vnProvider.ResourceTypes.FirstOrDefault(r => ResourceType.Type.Equals(r.ResourceType));
-            return vnResource.Locations.Select(l => (LocationData)l);
+            return ListAvailableLocations(ResourceType);
         }
 
         /// <summary>
         /// Lists all available geo-locations.
         /// </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of location that may take multiple service requests to iterate over. </returns>
         /// <exception cref="InvalidOperationException"> The default subscription id is null. </exception>
         public async Task<IEnumerable<LocationData>> ListAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            var asyncpageableProvider = ResourcesClient.Providers.ListAsync(expand: "metadata", cancellationToken: cancellationToken);
-            var vnProvider = await asyncpageableProvider.FirstOrDefaultAsync(p => string.Equals(p.Namespace, ResourceType?.Namespace, StringComparison.InvariantCultureIgnoreCase));
-            var vnResource = vnProvider.ResourceTypes.FirstOrDefault(r => ResourceType.Type.Equals(r.ResourceType));
-            return vnResource.Locations.Select(l => (LocationData)l);
+            return await ListAvailableLocationsAsync(ResourceType, cancellationToken);
         }
     }
 }

@@ -1,10 +1,5 @@
 ﻿using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
-using Proto.Network;
 using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Text;
 
 namespace Proto.Network
 {
@@ -21,12 +16,14 @@ namespace Proto.Network
         /// <param name="resourceId"> The ResourceIdentifier of the resource that is the target of operations. </param>
         /// <returns> Returns an object representing the operations that can be performed over a specific <see cref="NetworkInterfaceOperations" />. </returns>
         /// <exception cref="ArgumentException"> ResourceIdentifier provided is not for a NetworkInterfaceOperations. </exception>
+        /// <exception cref="ArgumentNullException"> ResourceIdentifier cannot be null. </exception>
         public static NetworkInterfaceOperations GetNetworkInterfaceOperations(this AzureResourceManagerClient client, ResourceIdentifier resourceId)
         {
+            if (resourceId is null)
+                throw new ArgumentNullException(nameof(resourceId));
             if (resourceId.Type != NetworkInterfaceOperations.ResourceType)
-            {
-                throw new ArgumentException("ResourceIdentifier provided is not for a Network Interface.");
-            }
+                throw new ArgumentException($"{nameof(resourceId.Type)} provided is not for a NetworkInterface.", nameof(resourceId.Type));
+
             var subOps = client.GetSubscriptionOperations(resourceId.Subscription);
             var rgOps = subOps.GetResourceGroupOperations(resourceId.ResourceGroup);
             return rgOps.GetNetworkInterfaceOperations(resourceId.Name);
@@ -39,12 +36,14 @@ namespace Proto.Network
         /// <param name="resourceId"> The ResourceIdentifier of the resource that is the target of operations. </param>
         /// <returns> Returns an object representing the operations that can be performed over a specific <see cref="NetworkSecurityGroup" />. </returns>
         /// <exception cref="ArgumentException"> ResourceIdentifier provided is not for a NetworkSecurityGroup. </exception>
+        /// <exception cref="ArgumentNullException"> ResourceIdentifier cannot be null. </exception>
         public static NetworkSecurityGroupOperations GetNetworkSecurityGroupOperations(this AzureResourceManagerClient client, ResourceIdentifier resourceId)
         {
+            if (resourceId is null)
+                throw new ArgumentNullException(nameof(resourceId));
             if (resourceId.Type != NetworkSecurityGroupOperations.ResourceType)
-            {
-                throw new ArgumentException("ResourceIdentifier provided is not for a NetworkSecurityGroup.");
-            }
+                throw new ArgumentException($"{nameof(resourceId.Type)} provided is not for a NetworkSecurityGroup.", nameof(resourceId.Type));
+
             var subOps = client.GetSubscriptionOperations(resourceId.Subscription);
             var rgOps = subOps.GetResourceGroupOperations(resourceId.ResourceGroup);
             return rgOps.GetNetworkSecurityGroupOperations(resourceId.Name);
@@ -57,12 +56,14 @@ namespace Proto.Network
         /// <param name="resourceId"> The ResourceIdentifier of the resource that is the target of operations. </param>
         /// <returns> Returns an object representing the operations that can be performed over a specific <see cref="PublicIpAddress" />. </returns>
         /// <exception cref="ArgumentException"> ResourceIdentifier provided is not for a PublicIpAddress. </exception>
+        /// <exception cref="ArgumentNullException"> ResourceIdentifier cannot be null. </exception>
         public static PublicIpAddressOperations GetPublicIpAddressOperations(this AzureResourceManagerClient client, ResourceIdentifier resourceId)
         {
+            if (resourceId is null)
+                throw new ArgumentNullException(nameof(resourceId));
             if (resourceId.Type != PublicIpAddressOperations.ResourceType)
-            {
-                throw new ArgumentException("ResourceIdentifier provided is not for a PublicIpAddress.");
-            }
+                throw new ArgumentException($"{nameof(resourceId.Type)} provided is not for a PublicIpAddress.", nameof(resourceId.Type));
+
             var subOps = client.GetSubscriptionOperations(resourceId.Subscription);
             var rgOps = subOps.GetResourceGroupOperations(resourceId.ResourceGroup);
             return rgOps.GetPublicIpAddressOperations(resourceId.Name);
@@ -75,12 +76,13 @@ namespace Proto.Network
         /// <param name="resourceId"> The ResourceIdentifier of the resource that is the target of operations. </param>
         /// <returns> Returns an object representing the operations that can be performed over a specific <see cref="Subnet" />. </returns>
         /// <exception cref="ArgumentException"> ResourceIdentifier provided is not for a Subnet. </exception>
+        /// <exception cref="ArgumentNullException"> ResourceIdentifier cannot be null. </exception>
         public static SubnetOperations GetSubnetOperations(this AzureResourceManagerClient client, ResourceIdentifier resourceId)
         {
+            if (resourceId is null)
+                throw new ArgumentNullException(nameof(resourceId));
             if (resourceId.Type != SubnetOperations.ResourceType)
-            {
-                throw new ArgumentException("ResourceIdentifier provided is not for a Subnet.");
-            }
+                throw new ArgumentException($"{nameof(resourceId.Type)} provided is not for a Subnet.", nameof(resourceId.Type));
             var subOps = client.GetSubscriptionOperations(resourceId.Subscription);
             var rgOps = subOps.GetResourceGroupOperations(resourceId.ResourceGroup);
             var vnetOps = rgOps.GetVirtualNetworkOperations(resourceId.Parent.Name);
@@ -94,12 +96,14 @@ namespace Proto.Network
         /// <param name="resourceId"> The ResourceIdentifier of the resource that is the target of operations. </param>
         /// <returns> Returns an object representing the operations that can be performed over a specific <see cref="VirtualNetwork" />. </returns>
         /// <exception cref="ArgumentException"> ResourceIdentifier provided is not for a VirtualNetwork. </exception>
+        /// <exception cref="ArgumentNullException"> ResourceIdentifier cannot be null. </exception>
         public static VirtualNetworkOperations GetVirtualNetworkOperations(this AzureResourceManagerClient client, ResourceIdentifier resourceId)
         {
+            if (resourceId is null)
+                throw new ArgumentNullException(nameof(resourceId));
             if (resourceId.Type != VirtualNetworkOperations.ResourceType)
-            {
-                throw new ArgumentException("ResourceIdentifier provided is not for a VirtualNetwork.");
-            }
+                throw new ArgumentException($"{nameof(resourceId.Type)} provided is not for a VirtualNetwork.", nameof(resourceId.Type));
+
             var subOps = client.GetSubscriptionOperations(resourceId.Subscription);
             var rgOps = subOps.GetResourceGroupOperations(resourceId.ResourceGroup);
             return rgOps.GetVirtualNetworkOperations(resourceId.Parent.Name);

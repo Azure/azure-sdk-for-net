@@ -35,6 +35,9 @@ namespace Proto.Client
         DefaultSubscription,
         SubscriptionExists,
         UseParentLocation,
+        GetByContainers,
+        GetByContainersAsync,
+        CheckResourceGroupOpsAsync
     }
 
     class ScenarioFactory

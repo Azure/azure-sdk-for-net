@@ -2,15 +2,14 @@
 // Licensed under the MIT License.
 
 using Azure;
+using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Core.Resources;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Core.Adapters;
-using Azure.ResourceManager.Core.Resources;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using System;
 
 namespace Proto.Network
 {
@@ -173,5 +172,20 @@ namespace Proto.Network
         {
             return s => new VirtualNetwork(Parent, new VirtualNetworkData(s));
         }
+
+        /// <inheritdoc/>
+        public override ArmResponse<VirtualNetwork> Get(string virtualNetworkName)
+        {
+            return new PhArmResponse<VirtualNetwork, Azure.ResourceManager.Network.Models.VirtualNetwork>(Operations.Get(Id.ResourceGroup, virtualNetworkName),
+               Convertor());
+        }
+
+        /// <inheritdoc/>
+        public override async Task<ArmResponse<VirtualNetwork>> GetAsync(string virtualNetworkName, CancellationToken cancellationToken = default)
+        {
+            return new PhArmResponse<VirtualNetwork, Azure.ResourceManager.Network.Models.VirtualNetwork>(await Operations.GetAsync(Id.ResourceGroup, virtualNetworkName, null, cancellationToken),
+                Convertor());
+        }
+
     }
 }

@@ -2,15 +2,14 @@
 // Licensed under the MIT License.
 
 using Azure;
+using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Core.Resources;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Core.Adapters;
-using Azure.ResourceManager.Core.Resources;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using System;
 
 namespace Proto.Network
 {
@@ -27,7 +26,7 @@ namespace Proto.Network
         internal NetworkInterfacesOperations Operations => new NetworkManagementClient(
             Id.Subscription,
             BaseUri,
-            Credential, 
+            Credential,
             ClientOptions.Convert<NetworkManagementClientOptions>()).NetworkInterfaces;
 
         /// <inheritdoc/>
@@ -184,10 +183,24 @@ namespace Proto.Network
             var results = ListByNameAsync(filter, top, cancellationToken);
             return new PhWrappingAsyncPageable<GenericResource, NetworkInterface>(results, s => new NetworkInterfaceOperations(s).Get().Value);
         }
-        
+
         private Func<Azure.ResourceManager.Network.Models.NetworkInterface, NetworkInterface> convertor()
         {
             return s => new NetworkInterface(Parent, new NetworkInterfaceData(s));
+        }
+
+        /// <inheritdoc />
+        public override ArmResponse<NetworkInterface> Get(string networkInterfaceName)
+        {
+            return new PhArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(Operations.Get(Id.ResourceGroup, networkInterfaceName),
+                g => new NetworkInterface(Parent, new NetworkInterfaceData(g)));
+        }
+
+        /// <inheritdoc/>
+        public override async Task<ArmResponse<NetworkInterface>> GetAsync(string networkInterfaceName, CancellationToken cancellationToken = default)
+        {
+            return new PhArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(await Operations.GetAsync(Id.ResourceGroup, networkInterfaceName, null, cancellationToken),
+                    g => new NetworkInterface(Parent, new NetworkInterfaceData(g)));
         }
     }
 }

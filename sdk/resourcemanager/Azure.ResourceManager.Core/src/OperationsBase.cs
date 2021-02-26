@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Core
         protected virtual void Validate(ResourceIdentifier identifier)
         {
             if (identifier?.Type != ValidResourceType)
-                throw new InvalidOperationException($"Invalid resource type {identifier?.Type} expected {ValidResourceType}");
+                throw new ArgumentException($"Invalid resource type {identifier?.Type} expected {ValidResourceType}");
         }
     }
 }

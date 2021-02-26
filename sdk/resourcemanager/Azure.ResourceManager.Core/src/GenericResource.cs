@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading.Tasks;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Core
 {
@@ -15,6 +17,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="operations"> The operations object to copy the client parameters from. </param>
         /// <param name="resource"> The data model representing the generic azure resource. </param>
+        /// <exception cref="ArgumentNullException"> If <see cref="AzureResourceManagerClientOptions"/> or <see cref="TokenCredential"/> is null. </exception>
         internal GenericResource(ResourceOperationsBase operations, GenericResourceData resource)
             : base(operations, resource.Id)
         {
