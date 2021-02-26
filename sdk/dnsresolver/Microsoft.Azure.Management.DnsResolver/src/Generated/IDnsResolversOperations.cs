@@ -69,13 +69,13 @@ namespace Microsoft.Azure.Management.DnsResolver
         /// <param name='dnsResolverName'>
         /// The name of the DNS resolver.
         /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the Update operation.
-        /// </param>
         /// <param name='ifMatch'>
         /// ETag of the resource. Omit this value to always overwrite the
         /// current resource. Specify the last-seen ETag value to prevent
         /// accidentally overwriting any concurrent changes.
+        /// </param>
+        /// <param name='tags'>
+        /// Tags for DNS Resolver.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Management.DnsResolver
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<DnsResolverModel>> UpdateWithHttpMessagesAsync(string resourceGroupName, string dnsResolverName, DnsResolverModel parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DnsResolverModel>> UpdateWithHttpMessagesAsync(string resourceGroupName, string dnsResolverName, string ifMatch = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes a DNS resolver. WARNING: This operation cannot be undone.
         /// </summary>
@@ -269,13 +269,13 @@ namespace Microsoft.Azure.Management.DnsResolver
         /// <param name='dnsResolverName'>
         /// The name of the DNS resolver.
         /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the Update operation.
-        /// </param>
         /// <param name='ifMatch'>
         /// ETag of the resource. Omit this value to always overwrite the
         /// current resource. Specify the last-seen ETag value to prevent
         /// accidentally overwriting any concurrent changes.
+        /// </param>
+        /// <param name='tags'>
+        /// Tags for DNS Resolver.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -292,7 +292,7 @@ namespace Microsoft.Azure.Management.DnsResolver
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<DnsResolverModel>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string dnsResolverName, DnsResolverModel parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DnsResolverModel>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string dnsResolverName, string ifMatch = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes a DNS resolver. WARNING: This operation cannot be undone.
         /// </summary>

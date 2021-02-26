@@ -93,13 +93,13 @@ namespace Microsoft.Azure.Management.DnsResolver
         /// <param name='dnsResolverName'>
         /// The name of the DNS resolver.
         /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the Update operation.
-        /// </param>
         /// <param name='ifMatch'>
         /// ETag of the resource. Omit this value to always overwrite the current
         /// resource. Specify the last-seen ETag value to prevent accidentally
         /// overwriting any concurrent changes.
+        /// </param>
+        /// <param name='tags'>
+        /// Tags for DNS Resolver.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -107,10 +107,10 @@ namespace Microsoft.Azure.Management.DnsResolver
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<DnsResolverModel>> UpdateWithHttpMessagesAsync(string resourceGroupName, string dnsResolverName, DnsResolverModel parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DnsResolverModel>> UpdateWithHttpMessagesAsync(string resourceGroupName, string dnsResolverName, string ifMatch = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<DnsResolverModel> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, dnsResolverName, parameters, ifMatch, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<DnsResolverModel> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, dnsResolverName, ifMatch, tags, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -1108,6 +1108,10 @@ namespace Microsoft.Azure.Management.DnsResolver
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
+            if (parameters != null)
+            {
+                parameters.Validate();
+            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
@@ -1319,13 +1323,13 @@ namespace Microsoft.Azure.Management.DnsResolver
         /// <param name='dnsResolverName'>
         /// The name of the DNS resolver.
         /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the Update operation.
-        /// </param>
         /// <param name='ifMatch'>
         /// ETag of the resource. Omit this value to always overwrite the current
         /// resource. Specify the last-seen ETag value to prevent accidentally
         /// overwriting any concurrent changes.
+        /// </param>
+        /// <param name='tags'>
+        /// Tags for DNS Resolver.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1348,7 +1352,7 @@ namespace Microsoft.Azure.Management.DnsResolver
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<DnsResolverModel>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string dnsResolverName, DnsResolverModel parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DnsResolverModel>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string dnsResolverName, string ifMatch = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -1384,10 +1388,6 @@ namespace Microsoft.Azure.Management.DnsResolver
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "dnsResolverName");
             }
-            if (parameters == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
-            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
@@ -1399,6 +1399,11 @@ namespace Microsoft.Azure.Management.DnsResolver
                     throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
                 }
             }
+            DnsResolverPatch parameters = new DnsResolverPatch();
+            if (tags != null)
+            {
+                parameters.Tags = tags;
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1408,8 +1413,8 @@ namespace Microsoft.Azure.Management.DnsResolver
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("dnsResolverName", dnsResolverName);
-                tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("ifMatch", ifMatch);
+                tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginUpdate", tracingParameters);
             }

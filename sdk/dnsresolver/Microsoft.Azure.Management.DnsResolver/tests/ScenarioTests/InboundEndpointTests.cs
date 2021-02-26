@@ -28,7 +28,7 @@ namespace DnsResolver.Tests.ScenarioTests
             var resourceGroupName = this.CreateResourceGroup().Name;
             var createdDnsResolver = this.CreateDnsResolver(resourceGroupName: resourceGroupName);
             var inboundEndpointName = TestDataGenerator.GenerateInboundEndpointName();
-            var ipConfigurations = TestDataGenerator.GenerateRandomIpConfigurations(subscriptionId: this.SubscriptionId, resourceGroupName: resourceGroupName, virtualNetworkName: ExtractArmResourceName(createdDnsResolver.VirtualNetwork.Id));
+            var ipConfigurations = GenerateIpConfigurationWithNewlyCreatedSubnet(resourceGroupName: resourceGroupName, virtualNetworkName: ExtractArmResourceName(createdDnsResolver.VirtualNetwork.Id));
 
             var createdInboundEndpoint = this.DnsResolverManagementClient.InboundEndpoints.CreateOrUpdate(resourceGroupName: resourceGroupName, dnsResolverName: createdDnsResolver.Name, inboundEndpointName: inboundEndpointName, ipConfigurations: ipConfigurations);
 
@@ -43,13 +43,14 @@ namespace DnsResolver.Tests.ScenarioTests
             var resourceGroupName = this.CreateResourceGroup().Name;
             var dnsResolverName = TestDataGenerator.GenerateDnsResolverName();
             var inboundEndpointName = TestDataGenerator.GenerateInboundEndpointName();
-            var virtualNetworkName = TestDataGenerator.GenerateVirtualNetworkName();
-            var ipConfigurations = TestDataGenerator.GenerateRandomIpConfigurations(subscriptionId: this.SubscriptionId, resourceGroupName: resourceGroupName, virtualNetworkName: virtualNetworkName);
+
+            var virtualNetworkName = ExtractArmResourceName(CreateVirtualNetwork(resourceGroupName: resourceGroupName).Id);
+            var ipConfigurations = GenerateIpConfigurationWithNewlyCreatedSubnet(resourceGroupName: resourceGroupName, virtualNetworkName: virtualNetworkName);
 
             Action putInboundEndpointAction = () => this.DnsResolverManagementClient.InboundEndpoints.CreateOrUpdate(resourceGroupName: resourceGroupName, dnsResolverName: dnsResolverName, inboundEndpointName: inboundEndpointName, ipConfigurations: ipConfigurations);
 
             putInboundEndpointAction.Should().NotBeNull();
-            putInboundEndpointAction.Should().Throw<CloudException>().Which.Response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+            putInboundEndpointAction.Should().Throw<CloudException>().Which.Response.StatusCode.Should().Be(HttpStatusCode.NotFound); ;
         }
 
         [Fact]
@@ -58,7 +59,7 @@ namespace DnsResolver.Tests.ScenarioTests
             var resourceGroupName = this.CreateResourceGroup().Name;
             var createdDnsResolver = this.CreateDnsResolver(resourceGroupName: resourceGroupName);
             var inboundEndpointName = TestDataGenerator.GenerateInboundEndpointName();
-            var ipConfigurations = TestDataGenerator.GenerateRandomIpConfigurations(subscriptionId: this.SubscriptionId, resourceGroupName: resourceGroupName, virtualNetworkName: ExtractArmResourceName(createdDnsResolver.VirtualNetwork.Id));
+            var ipConfigurations = GenerateIpConfigurationWithNewlyCreatedSubnet(resourceGroupName: resourceGroupName, virtualNetworkName: ExtractArmResourceName(createdDnsResolver.VirtualNetwork.Id));
             var metadata = TestDataGenerator.GenerateTags();
 
             var createdInboundEndpoint = this.DnsResolverManagementClient.InboundEndpoints.CreateOrUpdate(resourceGroupName: resourceGroupName, dnsResolverName: createdDnsResolver.Name, inboundEndpointName: inboundEndpointName, ipConfigurations: ipConfigurations, metadata: metadata);
@@ -76,7 +77,7 @@ namespace DnsResolver.Tests.ScenarioTests
             var resourceGroupName = this.CreateResourceGroup().Name;
             var createdDnsResolver = this.CreateDnsResolver(resourceGroupName: resourceGroupName);
             var inboundEndpointName = TestDataGenerator.GenerateInboundEndpointName();
-            var ipConfigurations = TestDataGenerator.GenerateRandomIpConfigurations(count: 2, subscriptionId: this.SubscriptionId, resourceGroupName: resourceGroupName, virtualNetworkName: ExtractArmResourceName(createdDnsResolver.VirtualNetwork.Id));
+            var ipConfigurations = GenerateIpConfigurationWithNewlyCreatedSubnet(resourceGroupName: resourceGroupName, virtualNetworkName: ExtractArmResourceName(createdDnsResolver.VirtualNetwork.Id));
             var metadata = TestDataGenerator.GenerateTags();
 
             var createdInboundEndpoint = this.DnsResolverManagementClient.InboundEndpoints.CreateOrUpdate(resourceGroupName: resourceGroupName, dnsResolverName: createdDnsResolver.Name, inboundEndpointName: inboundEndpointName, ipConfigurations: ipConfigurations, metadata: metadata);
@@ -89,28 +90,12 @@ namespace DnsResolver.Tests.ScenarioTests
         }
 
         [Fact]
-        public void PutInboundEndpoint_EndpointNotExistsNoIpConfigurations_ExpectFailure()
-        {
-            var resourceGroupName = this.CreateResourceGroup().Name;
-            var createdDnsResolver = this.CreateDnsResolver(resourceGroupName: resourceGroupName);
-            var inboundEndpointName = TestDataGenerator.GenerateInboundEndpointName();
-
-            Action putInboundEndpointAction = () => this.DnsResolverManagementClient.InboundEndpoints.CreateOrUpdate(
-                resourceGroupName: resourceGroupName,
-                dnsResolverName: createdDnsResolver.Name,
-                inboundEndpointName: inboundEndpointName);
-
-            putInboundEndpointAction.Should().NotBeNull();
-            putInboundEndpointAction.Should().Throw<CloudException>().Which.Response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        }
-
-        [Fact]
         public void PutInboundEndpoint_EndpointExistsUpdateIpConfigurations_ExpectSuccess()
         {
             var resourceGroupName = this.CreateResourceGroup().Name;
             var createdDnsResolver = this.CreateDnsResolver(resourceGroupName: resourceGroupName);
             var createdInboundEndpoint = this.CreateInboundEndpoint(createdDnsResolver: createdDnsResolver, resourceGroupName: resourceGroupName);
-            var ipConfigurationsForUpdate = TestDataGenerator.GenerateRandomIpConfigurations(subscriptionId: this.SubscriptionId, resourceGroupName: resourceGroupName, virtualNetworkName: ExtractArmResourceName(createdDnsResolver.VirtualNetwork.Id));
+            var ipConfigurationsForUpdate = GenerateIpConfigurationWithNewlyCreatedSubnet(subscriptionId: this.SubscriptionId, resourceGroupName: resourceGroupName, virtualNetworkName: ExtractArmResourceName(createdDnsResolver.VirtualNetwork.Id));
 
             var updatedInboundEndpoint = this.DnsResolverManagementClient.InboundEndpoints.CreateOrUpdate(
                 resourceGroupName: resourceGroupName,
@@ -132,7 +117,7 @@ namespace DnsResolver.Tests.ScenarioTests
             var resourceGroupName = this.CreateResourceGroup().Name;
             var createdDnsResolver = this.CreateDnsResolver(resourceGroupName: resourceGroupName);
             var inboundEndpointName = TestDataGenerator.GenerateInboundEndpointName();
-            var ipConfigurations = TestDataGenerator.GenerateRandomIpConfigurations(subscriptionId: this.SubscriptionId, resourceGroupName: resourceGroupName, virtualNetworkName: ExtractArmResourceName(createdDnsResolver.VirtualNetwork.Id));
+            var ipConfigurations = GenerateIpConfigurationWithNewlyCreatedSubnet(subscriptionId: this.SubscriptionId, resourceGroupName: resourceGroupName, virtualNetworkName: ExtractArmResourceName(createdDnsResolver.VirtualNetwork.Id));
 
             var createdInboundEndpoint = this.DnsResolverManagementClient.InboundEndpoints.CreateOrUpdate(
                 resourceGroupName: resourceGroupName,
@@ -152,7 +137,7 @@ namespace DnsResolver.Tests.ScenarioTests
             var resourceGroupName = this.CreateResourceGroup().Name;
             var createdDnsResolver = this.CreateDnsResolver(resourceGroupName: resourceGroupName);
             var inboundEndpointName = TestDataGenerator.GenerateInboundEndpointName();
-            var ipConfigurations = TestDataGenerator.GenerateRandomIpConfigurations(count: 2, subscriptionId: this.SubscriptionId, resourceGroupName: resourceGroupName, virtualNetworkName: ExtractArmResourceName(createdDnsResolver.VirtualNetwork.Id));
+            var ipConfigurations = GenerateIpConfigurationWithNewlyCreatedSubnet(count: 2, subscriptionId: this.SubscriptionId, resourceGroupName: resourceGroupName, virtualNetworkName: ExtractArmResourceName(createdDnsResolver.VirtualNetwork.Id));
             var createdInboundEndpoint = this.DnsResolverManagementClient.InboundEndpoints.CreateOrUpdate(
                 resourceGroupName: resourceGroupName,
                 dnsResolverName: createdDnsResolver.Name,
@@ -180,7 +165,7 @@ namespace DnsResolver.Tests.ScenarioTests
             var createdDnsResolver = this.CreateDnsResolver(resourceGroupName: resourceGroupName);
             var inboundEndpointName = TestDataGenerator.GenerateInboundEndpointName();
             var metadata = TestDataGenerator.GenerateTags();
-            var ipConfigurations = TestDataGenerator.GenerateRandomIpConfigurations(count: 2, subscriptionId: this.SubscriptionId, resourceGroupName: resourceGroupName, virtualNetworkName: ExtractArmResourceName(createdDnsResolver.VirtualNetwork.Id));
+            var ipConfigurations = GenerateIpConfigurationWithNewlyCreatedSubnet(resourceGroupName: resourceGroupName, virtualNetworkName: ExtractArmResourceName(createdDnsResolver.VirtualNetwork.Id));
             var createdInboundEndpoint = this.DnsResolverManagementClient.InboundEndpoints.CreateOrUpdate(
                 resourceGroupName: resourceGroupName,
                 dnsResolverName: createdDnsResolver.Name,
@@ -209,7 +194,7 @@ namespace DnsResolver.Tests.ScenarioTests
             var createdDnsResolver = this.CreateDnsResolver(resourceGroupName: resourceGroupName);
             var inboundEndpointName = TestDataGenerator.GenerateInboundEndpointName();
             var metadata = TestDataGenerator.GenerateTags();
-            var ipConfigurations = TestDataGenerator.GenerateRandomIpConfigurations(count: 2, subscriptionId: this.SubscriptionId, resourceGroupName: resourceGroupName, virtualNetworkName: ExtractArmResourceName(createdDnsResolver.VirtualNetwork.Id));
+            var ipConfigurations = GenerateIpConfigurationWithNewlyCreatedSubnet(resourceGroupName: resourceGroupName, virtualNetworkName: ExtractArmResourceName(createdDnsResolver.VirtualNetwork.Id));
             var createdInboundEndpoint = this.DnsResolverManagementClient.InboundEndpoints.CreateOrUpdate(
                 resourceGroupName: resourceGroupName,
                 dnsResolverName: createdDnsResolver.Name,
@@ -235,7 +220,7 @@ namespace DnsResolver.Tests.ScenarioTests
             var resourceGroupName = this.CreateResourceGroup().Name;
             var createdDnsResolver = this.CreateDnsResolver(resourceGroupName: resourceGroupName);
             var inboundEndpointName = TestDataGenerator.GenerateInboundEndpointName();
-            var ipConfigurations = TestDataGenerator.GenerateRandomIpConfigurations(count: 2, subscriptionId: this.SubscriptionId, resourceGroupName: resourceGroupName, virtualNetworkName: ExtractArmResourceName(createdDnsResolver.VirtualNetwork.Id));
+            var ipConfigurations = GenerateIpConfigurationWithNewlyCreatedSubnet(resourceGroupName: resourceGroupName, virtualNetworkName: ExtractArmResourceName(createdDnsResolver.VirtualNetwork.Id));
             var createdInboundEndpoint = this.DnsResolverManagementClient.InboundEndpoints.CreateOrUpdate(
                 resourceGroupName: resourceGroupName,
                 dnsResolverName: createdDnsResolver.Name,
@@ -263,7 +248,7 @@ namespace DnsResolver.Tests.ScenarioTests
             var createdDnsResolver = this.CreateDnsResolver(resourceGroupName: resourceGroupName);
             var inboundEndpointName = TestDataGenerator.GenerateInboundEndpointName();
             var metadata = TestDataGenerator.GenerateTags();
-            var ipConfigurations = TestDataGenerator.GenerateRandomIpConfigurations(count: 2, subscriptionId: this.SubscriptionId, resourceGroupName: resourceGroupName, virtualNetworkName: ExtractArmResourceName(createdDnsResolver.VirtualNetwork.Id));
+            var ipConfigurations = GenerateIpConfigurationWithNewlyCreatedSubnet(resourceGroupName: resourceGroupName, virtualNetworkName: ExtractArmResourceName(createdDnsResolver.VirtualNetwork.Id));
             var createdInboundEndpoint = this.DnsResolverManagementClient.InboundEndpoints.CreateOrUpdate(
                 resourceGroupName: resourceGroupName,
                 dnsResolverName: createdDnsResolver.Name,
@@ -308,7 +293,7 @@ namespace DnsResolver.Tests.ScenarioTests
             var createdDnsResolver = this.CreateDnsResolver(resourceGroupName: resourceGroupName);
             var inboundEndpointName = TestDataGenerator.GenerateInboundEndpointName();
             var metadata = TestDataGenerator.GenerateTags();
-            var ipConfigurations = TestDataGenerator.GenerateRandomIpConfigurations(count: 2, subscriptionId: this.SubscriptionId, resourceGroupName: resourceGroupName, virtualNetworkName: ExtractArmResourceName(createdDnsResolver.VirtualNetwork.Id));
+            var ipConfigurations = GenerateIpConfigurationWithNewlyCreatedSubnet(resourceGroupName: resourceGroupName, virtualNetworkName: ExtractArmResourceName(createdDnsResolver.VirtualNetwork.Id));
             var createdInboundEndpoint = this.DnsResolverManagementClient.InboundEndpoints.CreateOrUpdate(
                 resourceGroupName: resourceGroupName,
                 dnsResolverName: createdDnsResolver.Name,
@@ -542,7 +527,6 @@ namespace DnsResolver.Tests.ScenarioTests
             listResult.Count().Should().Be(1);
             listResult.All(inboundEndpoint => ValidateInboundEndpointIsExpected(inboundEndpoint, expectedInboundEndpoints));
         }
-
 
         private static bool ValidateIpConfigurationIsExpected(IpConfiguration ipConfigurationForValidation, IEnumerable<IpConfiguration> expectedIpConfigurations)
         {
