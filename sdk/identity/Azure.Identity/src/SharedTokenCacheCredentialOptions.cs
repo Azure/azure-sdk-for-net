@@ -59,7 +59,7 @@ namespace Azure.Identity
         /// <param name="tokenCache"></param>
         public SharedTokenCacheCredentialOptions(TokenCache tokenCache)
         {
-            TokenCache = tokenCache ?? new TokenCache(new TokenCacheOptions { PersistCacheToDisk = true });
+            TokenCache = tokenCache ?? new TokenCache(new SuperAdvancedDontUseTokenCacheOptions());
         }
     }
 }

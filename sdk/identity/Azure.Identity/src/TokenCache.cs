@@ -61,22 +61,38 @@ namespace Azure.Identity
         public TokenCache(TokenCacheOptions options = null)
             : this(Array.Empty<byte>())
         {
-            _allowUnencryptedStorage = options?.AllowUnencryptedStorage ?? false;
-            _name = options?.Name ?? Constants.DefaultMsalTokenCacheName;
-            _persistToDisk = options?.PersistCacheToDisk ?? false;
-
-            if (_persistToDisk)
+            if (options is SuperAdvancedDontUseTokenCacheOptions inMemoryOptions)
             {
                 _cacheHelperWrapper = new MsalCacheHelperWrapper();
+                if (inMemoryOptions.UpdatedDelegate != null)
+                {
+                    Updated += inMemoryOptions.UpdatedDelegate;
+                }
+            }
+            else
+            {
+                _allowUnencryptedStorage = options?.AllowUnencryptedStorage ?? false;
+                _name = options?.Name ?? Constants.DefaultMsalTokenCacheName;
+                _persistToDisk = true;
             }
         }
 
         internal TokenCache(TokenCacheOptions options, MsalCacheHelperWrapper cacheHelperWrapper)
         {
-            _allowUnencryptedStorage = options?.AllowUnencryptedStorage ?? false;
-            _name = options?.Name ?? Constants.DefaultMsalTokenCacheName;
-            _persistToDisk = options?.PersistCacheToDisk ?? false;
             _cacheHelperWrapper = cacheHelperWrapper;
+            if (options is SuperAdvancedDontUseTokenCacheOptions inMemoryOptions)
+            {
+                if (inMemoryOptions.UpdatedDelegate != null)
+                {
+                    Updated += inMemoryOptions.UpdatedDelegate;
+                }
+            }
+            else
+            {
+                _allowUnencryptedStorage = options?.AllowUnencryptedStorage ?? false;
+                _name = options?.Name ?? Constants.DefaultMsalTokenCacheName;
+                _persistToDisk = true;
+            }
         }
 
         internal TokenCache(byte[] data, Func<IPublicClientApplication> publicApplicationFactory = null)
@@ -90,7 +106,7 @@ namespace Azure.Identity
         /// <summary>
         /// An event notifying the subscriber that the underlying <see cref="TokenCache"/> has been updated. This event can be handled to persist the updated cache data.
         /// </summary>
-        public event Func<TokenCacheUpdatedArgs, Task> Updated;
+        internal event Func<TokenCacheUpdatedArgs, Task> Updated;
 
         internal virtual async Task RegisterCache(bool async, ITokenCache tokenCache, CancellationToken cancellationToken)
         {

@@ -217,17 +217,20 @@ namespace Azure.Identity
         public Azure.Identity.TokenCache TokenCache { get { throw null; } }
         public string Username { get { throw null; } set { } }
     }
+    public partial class SuperAdvancedDontUseTokenCacheOptions : Azure.Identity.TokenCacheOptions
+    {
+        public SuperAdvancedDontUseTokenCacheOptions() { }
+        public System.Func<Azure.Identity.TokenCacheUpdatedArgs, System.Threading.Tasks.Task> UpdatedDelegate { get { throw null; } set { } }
+    }
     public partial class TokenCache
     {
         public TokenCache(Azure.Identity.TokenCacheOptions options = null) { }
-        public event System.Func<Azure.Identity.TokenCacheUpdatedArgs, System.Threading.Tasks.Task> Updated { add { } remove { } }
     }
     public partial class TokenCacheOptions
     {
         public TokenCacheOptions() { }
         public bool AllowUnencryptedStorage { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
-        public bool PersistCacheToDisk { get { throw null; } set { } }
     }
     public static partial class TokenCacheSerializer
     {

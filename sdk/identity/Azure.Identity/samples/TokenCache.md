@@ -12,7 +12,7 @@ The simplest way to persist the `TokenCache` of a credential is to to use the de
 var credential = new InteractiveBrowserCredential(
     new InteractiveBrowserCredentialOptions
     {
-        TokenCache = new TokenCache(new TokenCacheOptions { PersistCacheToDisk = true })
+        TokenCache = new TokenCache(new SuperAdvancedDontUseTokenCacheOptions())
     });
 ```
 
@@ -22,7 +22,7 @@ Some applications may prefer to isolate the `TokenCache` they user rather than u
 
 ```C# Snippet:Identity_TokenCache_PersistentNamed
 var tokenCache = new TokenCache(
-    new TokenCacheOptions { Name = "my_application_name", PersistCacheToDisk = true }
+    new SuperAdvancedDontUseTokenCacheOptions { Name = "my_application_name" }
 );
 
 var credential = new InteractiveBrowserCredential(
@@ -36,7 +36,7 @@ By default the `TokenCache` will protect any data which is persisted using the u
 
 ```C# Snippet:Identity_TokenCache_PersistentUnencrypted
 var tokenCache = new TokenCache(
-    new TokenCacheOptions { AllowUnencryptedStorage = true, PersistCacheToDisk = true }
+    new SuperAdvancedDontUseTokenCacheOptions { AllowUnencryptedStorage = true }
 );
 
 var credential = new InteractiveBrowserCredential(

@@ -9,11 +9,6 @@ namespace Azure.Identity
     public class TokenCacheOptions
     {
         /// <summary>
-        /// Sets whether the cache should be persisted to disk. The default is false.
-        /// </summary>
-        public bool PersistCacheToDisk { get; set; }
-
-        /// <summary>
         /// Name uniquely identifying the <see cref="TokenCache"/>.
         /// </summary>
         public string Name { get; set; }

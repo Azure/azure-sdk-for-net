@@ -43,7 +43,7 @@ namespace Azure.Identity.Tests
             mockWrapper = new Mock<MsalCacheHelperWrapper>();
             mockWrapper.Setup(m => m.InitializeAsync(It.IsAny<StorageCreationProperties>(), null))
                 .Returns(Task.CompletedTask);
-            cache = new TokenCache(new TokenCacheOptions { PersistCacheToDisk = true }, mockWrapper.Object);
+            cache = new TokenCache(new TokenCacheOptions(), mockWrapper.Object);
         }
 
         [TearDown]
@@ -96,7 +96,7 @@ namespace Azure.Identity.Tests
         public async Task RegisterCacheInitializesCacheWithName()
         {
             string cacheName = Guid.NewGuid().ToString();
-            cache = new TokenCache(new TokenCacheOptions() { Name = cacheName, PersistCacheToDisk = true }, mockWrapper.Object);
+            cache = new TokenCache(new TokenCacheOptions() { Name = cacheName }, mockWrapper.Object);
 
             await cache.RegisterCache(IsAsync, mockMSALCache.Object, default);
 
@@ -163,7 +163,7 @@ namespace Azure.Identity.Tests
                     return Task.CompletedTask;
                 })
                 .Returns(Task.CompletedTask);
-            var cache2 = new TokenCache(new TokenCacheOptions { PersistCacheToDisk = true }, mockWrapper.Object);
+            var cache2 = new TokenCache(new TokenCacheOptions(), mockWrapper.Object);
 
             var task1 = Task.Run(() => cache.RegisterCache(IsAsync, mockMSALCache.Object, default));
             var task2 = Task.Run(() => cache2.RegisterCache(IsAsync, mockMSALCache.Object, default));
@@ -201,7 +201,7 @@ namespace Azure.Identity.Tests
             mockWrapper.SetupSequence(m => m.VerifyPersistence())
             .Throws<MsalCachePersistenceException>()
             .Pass();
-            cache = new TokenCache(new TokenCacheOptions { AllowUnencryptedStorage = true, PersistCacheToDisk = true }, mockWrapper.Object);
+            cache = new TokenCache(new TokenCacheOptions { AllowUnencryptedStorage = true }, mockWrapper.Object);
 
             await cache.RegisterCache(IsAsync, mockMSALCache.Object, default);
 

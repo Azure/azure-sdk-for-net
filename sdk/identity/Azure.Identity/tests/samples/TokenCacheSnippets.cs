@@ -22,7 +22,7 @@ namespace Azure.Identity.Samples
             var credential = new InteractiveBrowserCredential(
                 new InteractiveBrowserCredentialOptions
                 {
-                    TokenCache = new TokenCache(new TokenCacheOptions { PersistCacheToDisk = true })
+                    TokenCache = new TokenCache(new SuperAdvancedDontUseTokenCacheOptions())
                 });
             #endregion
         }
@@ -31,7 +31,7 @@ namespace Azure.Identity.Samples
         {
             #region Snippet:Identity_TokenCache_PersistentNamed
             var tokenCache = new TokenCache(
-                new TokenCacheOptions { Name = "my_application_name", PersistCacheToDisk = true }
+                new SuperAdvancedDontUseTokenCacheOptions { Name = "my_application_name" }
             );
 
             var credential = new InteractiveBrowserCredential(
@@ -44,7 +44,7 @@ namespace Azure.Identity.Samples
         {
             #region Snippet:Identity_TokenCache_PersistentUnencrypted
             var tokenCache = new TokenCache(
-                new TokenCacheOptions { AllowUnencryptedStorage = true, PersistCacheToDisk = true }
+                new SuperAdvancedDontUseTokenCacheOptions { AllowUnencryptedStorage = true }
             );
 
             var credential = new InteractiveBrowserCredential(
@@ -67,7 +67,7 @@ namespace Azure.Identity.Samples
 
         public async Task Identity_TokenCache_CustomPersistence_Write()
         {
-            var tokenCache = new TokenCache(new TokenCacheOptions { PersistCacheToDisk = true });
+            var tokenCache = new TokenCache(new SuperAdvancedDontUseTokenCacheOptions());
 
             #region Snippet:Identity_TokenCache_CustomPersistence_Write
             using (var cacheStream = new FileStream(TOKEN_CACHE_PATH, FileMode.Create, FileAccess.Write))
