@@ -1514,6 +1514,8 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [Explicit]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/12312")]
         public async Task GetBlockListAsync_LongBlock()
         {
             const long bigBlockSize = int.MaxValue + 1024L;
