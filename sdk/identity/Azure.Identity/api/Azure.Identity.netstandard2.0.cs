@@ -197,16 +197,6 @@ namespace Azure.Identity
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class PersistentTokenCache : Azure.Identity.TokenCache
-    {
-        public PersistentTokenCache(Azure.Identity.PersistentTokenCacheOptions options = null) { }
-    }
-    public partial class PersistentTokenCacheOptions
-    {
-        public PersistentTokenCacheOptions() { }
-        public bool AllowUnencryptedStorage { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-    }
     public partial class SharedTokenCacheCredential : Azure.Core.TokenCredential
     {
         public SharedTokenCacheCredential() { }
@@ -229,8 +219,15 @@ namespace Azure.Identity
     }
     public partial class TokenCache
     {
-        public TokenCache() { }
+        public TokenCache(Azure.Identity.TokenCacheOptions options = null) { }
         public event System.Func<Azure.Identity.TokenCacheUpdatedArgs, System.Threading.Tasks.Task> Updated { add { } remove { } }
+    }
+    public partial class TokenCacheOptions
+    {
+        public TokenCacheOptions() { }
+        public bool AllowUnencryptedStorage { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        public bool PersistCacheToDisk { get { throw null; } set { } }
     }
     public static partial class TokenCacheSerializer
     {

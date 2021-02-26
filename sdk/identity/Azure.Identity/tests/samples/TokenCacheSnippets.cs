@@ -21,7 +21,7 @@ namespace Azure.Identity.Samples
             #region Snippet:Identity_TokenCache_PersistentDefault
             var credential = new InteractiveBrowserCredential(
                 new InteractiveBrowserCredentialOptions {
-                    TokenCache = new PersistentTokenCache()
+                    TokenCache = new TokenCache()
                 });
             #endregion
         }
@@ -29,8 +29,8 @@ namespace Azure.Identity.Samples
         public void Identity_TokenCache_PersistentNamed()
         {
             #region Snippet:Identity_TokenCache_PersistentNamed
-            var tokenCache = new PersistentTokenCache(
-                new PersistentTokenCacheOptions { Name = "my_application_name" }
+            var tokenCache = new TokenCache(
+                new TokenCacheOptions { Name = "my_application_name" }
             );
 
             var credential = new InteractiveBrowserCredential(
@@ -42,8 +42,8 @@ namespace Azure.Identity.Samples
         public void Identity_TokenCache_PersistentUnencrypted()
         {
             #region Snippet:Identity_TokenCache_PersistentUnencrypted
-            var tokenCache = new PersistentTokenCache(
-                new PersistentTokenCacheOptions { AllowUnencryptedStorage = true }
+            var tokenCache = new TokenCache(
+                new TokenCacheOptions { AllowUnencryptedStorage = true }
             );
 
             var credential = new InteractiveBrowserCredential(

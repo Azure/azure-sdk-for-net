@@ -76,14 +76,14 @@ Quite often applications desire the ability to be run multiple times without hav
 
 ### Persisting the TokenCache
 
-The `TokenCache` contains all the data needed to silently authenticate, one or many accounts. It contains sensitive data such as refresh tokens, and access tokens and must be protected to prevent compromising the accounts it houses tokens for. The `Azure.Identity` library provides the `PersistentTokenCache` class which by default will protect and persist the cache using available platform data protection.
+The `TokenCache` contains all the data needed to silently authenticate, one or many accounts. It contains sensitive data such as refresh tokens, and access tokens and must be protected to prevent compromising the accounts it houses tokens for. The `Azure.Identity` library provides the `TokenCache` class which by default will protect and persist the cache using available platform data protection.
 
-To use the `PersistentTokenCache` to persist the cache of any credential simply set the `TokenCache` option.
+To use the `TokenCache` to persist the cache of any credential simply set the `TokenCache` option.
 
 ```C# Snippet:Identity_ClientSideUserAuthentication_Persist_TokenCache
 var credential = new InteractiveBrowserCredential(
     new InteractiveBrowserCredentialOptions {
-        TokenCache = new PersistentTokenCache()
+        TokenCache = new TokenCache()
     });
 ```
 
@@ -106,9 +106,9 @@ using (var authRecordStream = new FileStream(AUTH_RECORD_PATH, FileMode.Create, 
 }
 ```
 
-### Silent authentication with AuthenticationRecord and PersistentTokenCache
+### Silent authentication with AuthenticationRecord and TokenCache
 
-Once an application has persisted both the `TokenCache` and the `AuthenticationRecord` this data can be used to silently authenticate. This example demonstrates an application using the `PersistentTokenCache` and retrieving an `AuthenticationRecord` from the local file system to create an `InteractiveBrowserCredential` capable of silent authentication.
+Once an application has persisted both the `TokenCache` and the `AuthenticationRecord` this data can be used to silently authenticate. This example demonstrates an application using the `TokenCache` and retrieving an `AuthenticationRecord` from the local file system to create an `InteractiveBrowserCredential` capable of silent authentication.
 
 ```C# Snippet:Identity_ClientSideUserAuthentication_Persist_SilentAuth
 AuthenticationRecord authRecord;
@@ -120,7 +120,7 @@ using (var authRecordStream = new FileStream(AUTH_RECORD_PATH, FileMode.Open, Fi
 
 var credential = new InteractiveBrowserCredential(
     new InteractiveBrowserCredentialOptions {
-        TokenCache = new PersistentTokenCache(),
+        TokenCache = new TokenCache(),
         AuthenticationRecord = authRecord
     });
 ```

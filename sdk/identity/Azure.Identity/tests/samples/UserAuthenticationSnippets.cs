@@ -78,7 +78,7 @@ namespace Azure.Identity.Samples
                 #region Snippet:Identity_ClientSideUserAuthentication_Persist_TokenCache
                 var credential = new InteractiveBrowserCredential(
                     new InteractiveBrowserCredentialOptions {
-                        TokenCache = new PersistentTokenCache()
+                        TokenCache = new TokenCache()
                     });
                 #endregion
 
@@ -106,7 +106,7 @@ namespace Azure.Identity.Samples
 
                 var credential = new InteractiveBrowserCredential(
                     new InteractiveBrowserCredentialOptions {
-                        TokenCache = new PersistentTokenCache(),
+                        TokenCache = new TokenCache(),
                         AuthenticationRecord = authRecord
                     });
                 #endregion
@@ -123,7 +123,7 @@ namespace Azure.Identity.Samples
             {
                 credential = new InteractiveBrowserCredential(
                     new InteractiveBrowserCredentialOptions {
-                        TokenCache = new PersistentTokenCache()
+                        TokenCache = new TokenCache()
                     });
 
                 AuthenticationRecord authRecord = await credential.AuthenticateAsync();
@@ -144,7 +144,7 @@ namespace Azure.Identity.Samples
 
                 credential = new InteractiveBrowserCredential(
                     new InteractiveBrowserCredentialOptions {
-                        TokenCache = new PersistentTokenCache(),
+                        TokenCache = new TokenCache(),
                         AuthenticationRecord = authRecord
                     });
             }
