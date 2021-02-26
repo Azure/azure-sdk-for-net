@@ -154,7 +154,7 @@ try {
             $commit = @()
             $csharpVersion = @()
             [string]$path = Get-Location
-            $path = ($path -replace "\\", "/") + "/sdk"
+            $path = ($path -replace "\\", "/") + "/sdk/"
 
             $metaDataContent | ForEach-Object {
                 if ($_ -match 'Commit') {
@@ -183,7 +183,7 @@ try {
                 for ($i = 0; $i -lt $commandList.Count; $i++) {
                     $command = "autorest" + $commandList[$i].substring(23)
                     $command = $command -replace "\\", "/"
-                    $command = $command -replace "blob/[\S]*/specification", "blob/" + $commit[$i] + "/specification"
+                    $command = $command -replace "blob/[\S]*/specification", ("blob/" + $commit[$i] + "/specification")
                     $command = $command -replace "folder\=(.*?)\/sdk\/", "folder=$path"
                     $commandList[$i] = $command + " --use:@microsoft.azure/autorest.csharp@" + $csharpVersion[$i]
                 }
