@@ -40,7 +40,8 @@ In many cases applications require tight control over user interaction. In these
 
 ```C# Snippet:Identity_ClientSideUserAuthentication_DisableAutomaticAuthentication
 var credential = new InteractiveBrowserCredential(
-    new InteractiveBrowserCredentialOptions {
+    new InteractiveBrowserCredentialOptions
+    {
         DisableAutomaticAuthentication = true
     });
 
@@ -82,8 +83,9 @@ To use the `TokenCache` to persist the cache of any credential simply set the `T
 
 ```C# Snippet:Identity_ClientSideUserAuthentication_Persist_TokenCache
 var credential = new InteractiveBrowserCredential(
-    new InteractiveBrowserCredentialOptions {
-        TokenCache = new TokenCache()
+    new InteractiveBrowserCredentialOptions
+    {
+        TokenCache = new TokenCache(new TokenCacheOptions { PersistCacheToDisk = true })
     });
 ```
 
@@ -119,8 +121,9 @@ using (var authRecordStream = new FileStream(AUTH_RECORD_PATH, FileMode.Open, Fi
 }
 
 var credential = new InteractiveBrowserCredential(
-    new InteractiveBrowserCredentialOptions {
-        TokenCache = new TokenCache(),
+    new InteractiveBrowserCredentialOptions
+    {
+        TokenCache = new TokenCache(new TokenCacheOptions { PersistCacheToDisk = true }),
         AuthenticationRecord = authRecord
     });
 ```

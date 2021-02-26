@@ -20,8 +20,9 @@ namespace Azure.Identity.Samples
         {
             #region Snippet:Identity_TokenCache_PersistentDefault
             var credential = new InteractiveBrowserCredential(
-                new InteractiveBrowserCredentialOptions {
-                    TokenCache = new TokenCache()
+                new InteractiveBrowserCredentialOptions
+                {
+                    TokenCache = new TokenCache(new TokenCacheOptions { PersistCacheToDisk = true })
                 });
             #endregion
         }
@@ -30,7 +31,7 @@ namespace Azure.Identity.Samples
         {
             #region Snippet:Identity_TokenCache_PersistentNamed
             var tokenCache = new TokenCache(
-                new TokenCacheOptions { Name = "my_application_name" }
+                new TokenCacheOptions { Name = "my_application_name", PersistCacheToDisk = true }
             );
 
             var credential = new InteractiveBrowserCredential(
@@ -43,11 +44,11 @@ namespace Azure.Identity.Samples
         {
             #region Snippet:Identity_TokenCache_PersistentUnencrypted
             var tokenCache = new TokenCache(
-                new TokenCacheOptions { AllowUnencryptedStorage = true }
+                new TokenCacheOptions { AllowUnencryptedStorage = true, PersistCacheToDisk = true }
             );
 
             var credential = new InteractiveBrowserCredential(
-                new InteractiveBrowserCredentialOptions { TokenCache =  tokenCache}
+                new InteractiveBrowserCredentialOptions { TokenCache = tokenCache }
             );
             #endregion
         }
@@ -66,7 +67,7 @@ namespace Azure.Identity.Samples
 
         public async Task Identity_TokenCache_CustomPersistence_Write()
         {
-            var tokenCache = new TokenCache();
+            var tokenCache = new TokenCache(new TokenCacheOptions { PersistCacheToDisk = true });
 
             #region Snippet:Identity_TokenCache_CustomPersistence_Write
             using (var cacheStream = new FileStream(TOKEN_CACHE_PATH, FileMode.Create, FileAccess.Write))
