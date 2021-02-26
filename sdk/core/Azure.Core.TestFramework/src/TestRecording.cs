@@ -20,13 +20,12 @@ namespace Azure.Core.TestFramework
         private const string charsLower = "abcdefghijklmnopqrstuvwxyz0123456789";
         internal const string DateTimeOffsetNowVariableKey = "DateTimeOffsetNow";
 
-        public TestRecording(RecordedTestMode mode, string sessionFile, RecordedTestSanitizer sanitizer, RecordMatcher matcher, bool skipRecordingEquivalenceCheck = false)
+        public TestRecording(RecordedTestMode mode, string sessionFile, RecordedTestSanitizer sanitizer, RecordMatcher matcher)
         {
             Mode = mode;
             _sessionFile = sessionFile;
             _sanitizer = sanitizer;
             _matcher = matcher;
-            _skipRecordingEquivalenceCheck = skipRecordingEquivalenceCheck;
 
             switch (Mode)
             {
@@ -66,8 +65,6 @@ namespace Azure.Core.TestFramework
         private readonly RecordedTestSanitizer _sanitizer;
 
         private readonly RecordMatcher _matcher;
-
-        private readonly bool _skipRecordingEquivalenceCheck;
 
         private readonly RecordSession _session;
 
@@ -180,10 +177,6 @@ namespace Azure.Core.TestFramework
                 Directory.CreateDirectory(directory);
 
                 _session.Sanitize(_sanitizer);
-                if (_session.IsEquivalent(_previousSession, _matcher) && !_skipRecordingEquivalenceCheck)
-                {
-                    return;
-                }
 
                 using FileStream fileStream = File.Create(_sessionFile);
                 var utf8JsonWriter = new Utf8JsonWriter(fileStream, new JsonWriterOptions()

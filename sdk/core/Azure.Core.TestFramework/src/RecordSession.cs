@@ -99,21 +99,6 @@ namespace Azure.Core.TestFramework
             }
         }
 
-        public bool IsEquivalent(RecordSession session, RecordMatcher matcher)
-        {
-            if (session == null)
-            {
-                return false;
-            }
-
-            // The DateTimeOffsetNow variable is updated any time it's used so
-            // we only care that both sessions use it or both sessions don't.
-            var now = TestRecording.DateTimeOffsetNowVariableKey;
-            return session.Variables.TryGetValue(now, out string _) == Variables.TryGetValue(now, out string _) &&
-                   session.Variables.Where(v => v.Key != now).SequenceEqual(Variables.Where(v => v.Key != now)) &&
-                   session.Entries.SequenceEqual(Entries, new EntryEquivalentComparer(matcher));
-        }
-
         private class EntryEquivalentComparer : IEqualityComparer<RecordEntry>
         {
             private readonly RecordMatcher _matcher;

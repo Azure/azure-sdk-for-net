@@ -86,7 +86,6 @@ namespace Azure.Core.TestFramework
         private static void SetRecordMode(RecordedTestBase fixture, RecordedTestMode mode)
         {
             fixture.Mode = mode;
-            fixture.AlwaysUpdateRecordingFileInRecordMode = true;
         }
     }
 }

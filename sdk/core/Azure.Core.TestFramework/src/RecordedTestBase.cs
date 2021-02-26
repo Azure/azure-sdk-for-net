@@ -23,8 +23,6 @@ namespace Azure.Core.TestFramework
 
         public RecordedTestMode Mode { get; set; }
 
-        public bool AlwaysUpdateRecordingFileInRecordMode {get;set;} = false;
-
         // copied the Windows version https://github.com/dotnet/runtime/blob/master/src/libraries/System.Private.CoreLib/src/System/IO/Path.Windows.cs
         // as it is the most restrictive of all platforms
         private static readonly HashSet<char> s_invalidChars = new HashSet<char>(new char[]
@@ -145,7 +143,7 @@ namespace Azure.Core.TestFramework
             {
                 throw new IgnoreException((string) test.Properties.Get("SkipRecordings"));
             }
-            Recording = new TestRecording(Mode, GetSessionFilePath(), Sanitizer, Matcher, AlwaysUpdateRecordingFileInRecordMode);
+            Recording = new TestRecording(Mode, GetSessionFilePath(), Sanitizer, Matcher);
             ValidateClientInstrumentation = Recording.HasRequests;
         }
 
