@@ -70,7 +70,7 @@ namespace Compute.Tests
             string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
             try
             {
-                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "centralus");
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2");
                 using (MockContext context = MockContext.Start(this.GetType()))
                 {
                     TestScaleSetOperationsInternal(context, hasManagedDisks: true, useVmssExtension: false, zones: new List<string> { "1" });
@@ -92,7 +92,7 @@ namespace Compute.Tests
             string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
             try
             {
-                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "northeurope");
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus");
                 using (MockContext context = MockContext.Start(this.GetType()))
                 {
                     TestScaleSetOperationsInternal(context, vmSize: VirtualMachineSizeTypes.StandardDS5V2, hasManagedDisks: true,
@@ -183,7 +183,7 @@ namespace Compute.Tests
             string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
             try
             {
-                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "centralus");
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2");
                 using (MockContext context = MockContext.Start(this.GetType()))
                 {
                     TestScaleSetOperationsInternal(
@@ -229,21 +229,27 @@ namespace Compute.Tests
             string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
             try
             {
-                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "westus");
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2");
                 // This test was recorded in WestUSValidation, where the platform image typically used for recording is not available.
                 // Hence the following custom image was used.
-                ImageReference imageReference = new ImageReference
-                {
-                    Publisher = "AzureRT.PIRCore.TestWAStage",
-                    Offer = "TestUbuntuServer",
-                    Sku = "16.04",
-                    Version = "latest"
-                };
+                //ImageReference imageReference = new ImageReference
+                //{
+                //    Publisher = "AzureRT.PIRCore.TestWAStage",
+                //    Offer = "TestUbuntuServer",
+                //    Sku = "16.04",
+                //    Version = "latest"
+                //};
+                //using (MockContext context = MockContext.Start(this.GetType()))
+                //{
+                //    TestScaleSetOperationsInternal(context, hasManagedDisks: true, useVmssExtension: false, isAutomaticPlacementOnDedicatedHostGroupScenario: true,
+                //        vmSize: VirtualMachineSizeTypes.StandardD2sV3, faultDomainCount: 1, capacity: 1, shouldOverProvision: false,
+                //        validateVmssVMInstanceView: true, imageReference: imageReference, validateListSku: false, deleteAsPartOfTest: false);
+                //}
                 using (MockContext context = MockContext.Start(this.GetType()))
                 {
                     TestScaleSetOperationsInternal(context, hasManagedDisks: true, useVmssExtension: false, isAutomaticPlacementOnDedicatedHostGroupScenario: true,
                         vmSize: VirtualMachineSizeTypes.StandardD2sV3, faultDomainCount: 1, capacity: 1, shouldOverProvision: false,
-                        validateVmssVMInstanceView: true, imageReference: imageReference, validateListSku: false, deleteAsPartOfTest: false);
+                        validateVmssVMInstanceView: true, validateListSku: false, deleteAsPartOfTest: false);
                 }
             }
             finally
@@ -293,7 +299,7 @@ namespace Compute.Tests
         public void TestVMScaleSetScenarioOperations_AutomaticRepairsPolicyTest()
         {
             string environmentVariable = "AZURE_VM_TEST_LOCATION";
-            string region = "centraluseuap";
+            string region = "eastus";
             string originalTestLocation = Environment.GetEnvironmentVariable(environmentVariable);
 
             try
@@ -399,7 +405,7 @@ namespace Compute.Tests
         public void TestVMScaleSetScenarioOperations_OrchestrationService()
         {
             string environmentVariable = "AZURE_VM_TEST_LOCATION";
-            string region = "northeurope";
+            string region = "eastus";
             string originalTestLocation = Environment.GetEnvironmentVariable(environmentVariable);
 
             try
@@ -466,7 +472,7 @@ namespace Compute.Tests
                         getInstanceViewResponse = m_CrpClient.VirtualMachineScaleSets.GetInstanceView(rgName, vmssName);
                         Assert.Equal(OrchestrationServiceState.Running.ToString(), getInstanceViewResponse.OrchestrationServices[0].ServiceState);
 
-                        m_CrpClient.VirtualMachineScaleSets.Delete(rgName, vmssName);
+                        //m_CrpClient.VirtualMachineScaleSets.Delete(rgName, vmssName);
                     }
                     finally
                     {

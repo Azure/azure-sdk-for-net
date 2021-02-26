@@ -14,7 +14,16 @@ function Get-dotnet-PackageInfoFromRepo ($pkgPath, $serviceDirectory, $pkgName)
     $projectData = New-Object -TypeName XML
     $projectData.load($projectPath)
     $pkgVersion = Select-XML -Xml $projectData -XPath '/Project/PropertyGroup/Version'
-    return [PackageProps]::new($pkgName, $pkgVersion, $pkgPath, $serviceDirectory)
+    $sdkType = "client"
+    if ($pkgName -match "\.ResourceManager\." -or $pkgName -match "\.Management\.")
+    {
+      $sdkType = "mgmt"
+    }
+    $pkgProp = [PackageProps]::new($pkgName, $pkgVersion, $pkgPath, $serviceDirectory)
+    $pkgProp.SdkType = $sdkType
+    $pkgProp.IsNewSdk = $pkgName.StartsWith("Azure")
+    $pkgProp.ArtifactName = $pkgName
+    return $pkgProp
   }
   else
   {
@@ -64,6 +73,7 @@ function Get-dotnet-PackageInfoFromPackageFile ($pkg, $workingDirectory)
   Expand-Archive -Path $zipFileLocation -DestinationPath $workFolder
   [xml] $packageXML = Get-ChildItem -Path "$workFolder/*.nuspec" | Get-Content
   $pkgId = $packageXML.package.metadata.id
+  $docsReadMeName = $pkgId -replace "^Azure." , ""
   $pkgVersion = $packageXML.package.metadata.version
 
   $changeLogLoc = @(Get-ChildItem -Path $workFolder -Recurse -Include "CHANGELOG.md")[0]
@@ -87,6 +97,7 @@ function Get-dotnet-PackageInfoFromPackageFile ($pkg, $workingDirectory)
     Deployable     = $forceCreate -or !(IsNugetPackageVersionPublished -pkgId $pkgId -pkgVersion $pkgVersion)
     ReleaseNotes   = $releaseNotes
     ReadmeContent  = $readmeContent
+    DocsReadMeName = $docsReadMeName
   }
 }
 
@@ -146,7 +157,7 @@ function Publish-dotnet-GithubIODocs ($DocLocation, $PublicArtifactLocation)
 function Get-dotnet-GithubIoDocIndex()
 {
   # Update the main.js and docfx.json language content
-  UpdateDocIndexFiles -appTitleLang ".NET"
+  UpdateDocIndexFiles -appTitleLang $LanguageDisplayName
   # Fetch out all package metadata from csv file.
   $metadata = Get-CSVMetadata -MetadataUri $MetadataUri
   # Get the artifacts name from blob storage
@@ -154,7 +165,7 @@ function Get-dotnet-GithubIoDocIndex()
   # Build up the artifact to service name mapping for GithubIo toc.
   $tocContent = Get-TocMapping -metadata $metadata -artifacts $artifacts
   # Generate yml/md toc files and build site.
-  GenerateDocfxTocContent -tocContent $tocContent -lang "NET"
+  GenerateDocfxTocContent -tocContent $tocContent -lang $LanguageDisplayName
 }
 
 # details on CSV schema can be found here
@@ -202,13 +213,14 @@ function Update-dotnet-CIConfig($pkgs, $ciRepo, $locationInDocRepo, $monikerId=$
 }
 
 # function is used to auto generate API View
-function Find-dotnet-Artifacts-For-Apireview($artifactDir, $packageName = "")
+function Find-dotnet-Artifacts-For-Apireview($artifactDir, $packageName)
 {
   # Find all nupkg files in given artifact directory
-  $pkg = Get-dotnet-Package-Artifacts $artifactDir
+  $PackageArtifactPath = Join-Path $artifactDir $packageName
+  $pkg = Get-dotnet-Package-Artifacts $PackageArtifactPath
   if (!$pkg)
   {
-    Write-Host "Package is not available in artifact path $($artifactDir)"
+    Write-Host "Package is not available in artifact path $($PackageArtifactPath)"
     return $null
   }
   $packages = @{ $pkg.Name = $pkg.FullName }

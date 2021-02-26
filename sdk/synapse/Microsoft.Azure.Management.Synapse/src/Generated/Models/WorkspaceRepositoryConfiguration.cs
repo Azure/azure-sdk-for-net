@@ -42,7 +42,9 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// <param name="collaborationBranch">Collaboration branch</param>
         /// <param name="rootFolder">Root folder to use in the
         /// repository</param>
-        public WorkspaceRepositoryConfiguration(string type = default(string), string hostName = default(string), string accountName = default(string), string projectName = default(string), string repositoryName = default(string), string collaborationBranch = default(string), string rootFolder = default(string))
+        /// <param name="lastCommitId">The last commit ID</param>
+        /// <param name="tenantId">The VSTS tenant ID</param>
+        public WorkspaceRepositoryConfiguration(string type = default(string), string hostName = default(string), string accountName = default(string), string projectName = default(string), string repositoryName = default(string), string collaborationBranch = default(string), string rootFolder = default(string), string lastCommitId = default(string), System.Guid? tenantId = default(System.Guid?))
         {
             Type = type;
             HostName = hostName;
@@ -51,6 +53,8 @@ namespace Microsoft.Azure.Management.Synapse.Models
             RepositoryName = repositoryName;
             CollaborationBranch = collaborationBranch;
             RootFolder = rootFolder;
+            LastCommitId = lastCommitId;
+            TenantId = tenantId;
             CustomInit();
         }
 
@@ -102,6 +106,18 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// </summary>
         [JsonProperty(PropertyName = "rootFolder")]
         public string RootFolder { get; set; }
+
+        /// <summary>
+        /// Gets or sets the last commit ID
+        /// </summary>
+        [JsonProperty(PropertyName = "lastCommitId")]
+        public string LastCommitId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the VSTS tenant ID
+        /// </summary>
+        [JsonProperty(PropertyName = "tenantId")]
+        public System.Guid? TenantId { get; set; }
 
     }
 }

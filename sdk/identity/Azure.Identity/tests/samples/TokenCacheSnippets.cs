@@ -12,37 +12,55 @@ namespace Azure.Identity.Samples
 {
     public class TokenCacheSnippets
     {
+        #region Snippet:Identity_TokenCache_CustomPersistence_Usage_TokenCachePath
+        private const string TOKEN_CACHE_PATH = "./tokencache.bin";
+        #endregion
+
         public void Identity_TokenCache_PersistentDefault()
         {
             #region Snippet:Identity_TokenCache_PersistentDefault
-            var credential = new InteractiveBrowserCredential(new InteractiveBrowserCredentialOptions { TokenCache = new PersistentTokenCache() });
+            var credential = new InteractiveBrowserCredential(
+                new InteractiveBrowserCredentialOptions {
+                    TokenCache = new PersistentTokenCache()
+                });
             #endregion
         }
 
         public void Identity_TokenCache_PersistentNamed()
         {
             #region Snippet:Identity_TokenCache_PersistentNamed
-            var tokenCache = new PersistentTokenCache(new PersistentTokenCacheOptions { Name = "my_application_name" });
+            var tokenCache = new PersistentTokenCache(
+                new PersistentTokenCacheOptions { Name = "my_application_name" }
+            );
 
-            var credential = new InteractiveBrowserCredential(new InteractiveBrowserCredentialOptions { TokenCache = tokenCache });
+            var credential = new InteractiveBrowserCredential(
+                new InteractiveBrowserCredentialOptions { TokenCache = tokenCache }
+            );
             #endregion
         }
 
         public void Identity_TokenCache_PersistentUnencrypted()
         {
             #region Snippet:Identity_TokenCache_PersistentUnencrypted
-            var tokenCache = new PersistentTokenCache(new PersistentTokenCacheOptions { AllowUnencryptedStorage = true });
+            var tokenCache = new PersistentTokenCache(
+                new PersistentTokenCacheOptions { AllowUnencryptedStorage = true }
+            );
 
-            var credential = new InteractiveBrowserCredential(new InteractiveBrowserCredentialOptions { TokenCache =  tokenCache});
+            var credential = new InteractiveBrowserCredential(
+                new InteractiveBrowserCredentialOptions { TokenCache =  tokenCache}
+            );
             #endregion
         }
 
         public async Task Identity_TokenCache_CustomPersistence_Read()
         {
             #region Snippet:Identity_TokenCache_CustomPersistence_Read
-            using var cacheStream = new FileStream(TokenCachePath, FileMode.OpenOrCreate, FileAccess.Read);
+            TokenCache tokenCache;
 
-            var tokenCache = await TokenCache.DeserializeAsync(cacheStream);
+            using (var cacheStream = new FileStream(TOKEN_CACHE_PATH, FileMode.OpenOrCreate, FileAccess.Read))
+            {
+                tokenCache = await TokenCacheSerializer.DeserializeAsync(cacheStream);
+            }
             #endregion
         }
 
@@ -51,38 +69,42 @@ namespace Azure.Identity.Samples
             var tokenCache = new TokenCache();
 
             #region Snippet:Identity_TokenCache_CustomPersistence_Write
-            using var cacheStream = new FileStream(TokenCachePath, FileMode.Create, FileAccess.Write);
-
-            await tokenCache.SerializeAsync(cacheStream);
+            using (var cacheStream = new FileStream(TOKEN_CACHE_PATH, FileMode.Create, FileAccess.Write))
+            {
+                await TokenCacheSerializer.SerializeAsync(tokenCache, cacheStream);
+            }
             #endregion
         }
-
-        private const string TokenCachePath = "./tokencache.bin";
 
         #region Snippet:Identity_TokenCache_CustomPersistence_Usage
         public static async Task<TokenCache> ReadTokenCacheAsync()
         {
-            using var cacheStream = new FileStream(TokenCachePath, FileMode.OpenOrCreate, FileAccess.Read);
+            TokenCache tokenCache;
 
-            var tokenCache = await TokenCache.DeserializeAsync(cacheStream);
-
-            tokenCache.Updated += WriteCacheOnUpdateAsync;
+            using (var cacheStream = new FileStream(TOKEN_CACHE_PATH, FileMode.OpenOrCreate, FileAccess.Read))
+            {
+                tokenCache = await TokenCacheSerializer.DeserializeAsync(cacheStream);
+                tokenCache.Updated += WriteCacheOnUpdateAsync;
+            }
 
             return tokenCache;
         }
 
         public static async Task WriteCacheOnUpdateAsync(TokenCacheUpdatedArgs args)
         {
-            using var cacheStream = new FileStream(TokenCachePath, FileMode.Create, FileAccess.Write);
-
-            await args.Cache.SerializeAsync(cacheStream);
+            using (var cacheStream = new FileStream(TOKEN_CACHE_PATH, FileMode.Create, FileAccess.Write))
+            {
+                await TokenCacheSerializer.SerializeAsync(args.Cache, cacheStream);
+            }
         }
 
         public static async Task Main()
         {
             var tokenCache = await ReadTokenCacheAsync();
 
-            var credential = new InteractiveBrowserCredential(new InteractiveBrowserCredentialOptions { TokenCache = tokenCache });
+            var credential = new InteractiveBrowserCredential(
+                new InteractiveBrowserCredentialOptions { TokenCache = tokenCache }
+            );
         }
         #endregion
     }

@@ -46,10 +46,13 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// 'bigint', 'hierarchyid', 'geometry', 'geography', 'varbinary',
         /// 'varchar', 'binary', 'char', 'timestamp', 'nvarchar', 'nchar',
         /// 'xml', 'sysname'</param>
-        public SqlPoolColumn(string id = default(string), string name = default(string), string type = default(string), string columnType = default(string))
+        /// <param name="isComputed">Indicates whether column value is computed
+        /// or not</param>
+        public SqlPoolColumn(string id = default(string), string name = default(string), string type = default(string), string columnType = default(string), bool? isComputed = default(bool?))
             : base(id, name, type)
         {
             ColumnType = columnType;
+            IsComputed = isComputed;
             CustomInit();
         }
 
@@ -69,6 +72,12 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.columnType")]
         public string ColumnType { get; set; }
+
+        /// <summary>
+        /// Gets indicates whether column value is computed or not
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.isComputed")]
+        public bool? IsComputed { get; private set; }
 
     }
 }

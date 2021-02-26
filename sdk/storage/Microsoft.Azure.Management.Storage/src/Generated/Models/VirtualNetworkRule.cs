@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <param name="state">Gets the state of virtual network rule.
         /// Possible values include: 'provisioning', 'deprovisioning',
         /// 'succeeded', 'failed', 'networkSourceDeleted'</param>
-        public VirtualNetworkRule(string virtualNetworkResourceId, Action? action = default(Action?), State? state = default(State?))
+        public VirtualNetworkRule(string virtualNetworkResourceId, Action? action = default(Action?), string state = default(string))
         {
             VirtualNetworkResourceId = virtualNetworkResourceId;
             Action = action;
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// 'networkSourceDeleted'
         /// </summary>
         [JsonProperty(PropertyName = "state")]
-        public State? State { get; set; }
+        public string State { get; set; }
 
         /// <summary>
         /// Validate the object.

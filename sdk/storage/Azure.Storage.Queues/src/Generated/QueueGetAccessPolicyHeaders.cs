@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Queues
 {
-    internal class QueueGetAccessPolicyHeaders
+    internal partial class QueueGetAccessPolicyHeaders
     {
         private readonly Response _response;
         public QueueGetAccessPolicyHeaders(Response response)

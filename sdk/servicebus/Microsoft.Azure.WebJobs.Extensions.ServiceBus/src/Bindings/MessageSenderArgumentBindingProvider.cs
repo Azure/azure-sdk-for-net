@@ -5,7 +5,7 @@ using System;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.ServiceBus.Core;
+using Azure.Messaging.ServiceBus;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
@@ -14,7 +14,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
     {
         public IArgumentBinding<ServiceBusEntity> TryCreate(ParameterInfo parameter)
         {
-            if (parameter.ParameterType != typeof(MessageSender))
+            if (parameter.ParameterType != typeof(ServiceBusSender))
             {
                 return null;
             }
@@ -26,7 +26,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
         {
             public Type ValueType
             {
-                get { return typeof(MessageSender); }
+                get { return typeof(ServiceBusSender); }
             }
 
             public Task<IValueProvider> BindAsync(ServiceBusEntity value, ValueBindingContext context)
@@ -43,9 +43,9 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
 
             private class MessageSenderValueBinder : IValueBinder
             {
-                private readonly MessageSender _messageSender;
+                private readonly ServiceBusSender _messageSender;
 
-                public MessageSenderValueBinder(MessageSender messageSender)
+                public MessageSenderValueBinder(ServiceBusSender messageSender)
                 {
                     _messageSender = messageSender;
                 }
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
 
                 public Type Type
                 {
-                    get { return typeof(MessageSender); }
+                    get { return typeof(ServiceBusSender); }
                 }
 
                 public Task<object> GetValueAsync()
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
 
                 public string ToInvokeString()
                 {
-                    return _messageSender.Path;
+                    return _messageSender.EntityPath;
                 }
 
                 public Task SetValueAsync(object value, CancellationToken cancellationToken)

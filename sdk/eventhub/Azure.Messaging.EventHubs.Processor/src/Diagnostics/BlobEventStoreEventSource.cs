@@ -341,10 +341,10 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
         ///
         [Event(33, Level = EventLevel.Informational, Message = "Completed the attempt to create/update a checkpoint for partition: `{0}` of FullyQualifiedNamespace: '{1}'; EventHubName: '{2}'; ConsumerGroup: '{3}'.")]
-        public virtual void  UpdateCheckpointComplete(string partitionId,
-                                                      string fullyQualifiedNamespace,
-                                                      string eventHubName,
-                                                      string consumerGroup)
+        public virtual void UpdateCheckpointComplete(string partitionId,
+                                                     string fullyQualifiedNamespace,
+                                                     string eventHubName,
+                                                     string consumerGroup)
         {
             if (IsEnabled())
             {
@@ -363,11 +363,11 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         /// <param name="errorMessage">The message for the exception that occurred.</param>
         ///
         [Event(34, Level = EventLevel.Error, Message = "An exception occurred when creating/updating a checkpoint for  partition: `{0}` of FullyQualifiedNamespace: '{1}'; EventHubName: '{2}'; ConsumerGroup: '{3}'.  ErrorMessage: '{4}'.")]
-        public virtual void  UpdateCheckpointError(string partitionId,
-                                                   string fullyQualifiedNamespace,
-                                                   string eventHubName,
-                                                   string consumerGroup,
-                                                   string errorMessage)
+        public virtual void UpdateCheckpointError(string partitionId,
+                                                  string fullyQualifiedNamespace,
+                                                  string eventHubName,
+                                                  string consumerGroup,
+                                                  string errorMessage)
         {
             if (IsEnabled())
             {

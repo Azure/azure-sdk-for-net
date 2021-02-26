@@ -35,6 +35,8 @@ namespace Azure.Tables.Tests
         {
             yield return new object[] { $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret};EndpointSuffix=core.windows.net" };
             yield return new object[] { $"AccountName={AccountName};AccountKey={Secret};EndpointSuffix=core.windows.net" };
+            yield return new object[] { $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret}" };
+            yield return new object[] { $"AccountName={AccountName};AccountKey={Secret}" };
         }
 
         public static IEnumerable<object[]> InvalidStorageConnStrings()
@@ -132,7 +134,6 @@ namespace Azure.Tables.Tests
         {
             yield return new object[] { "UseDevelopmentStorage=false" };
             yield return new object[] { $"BlobEndpoint=https://{AccountName}.blob.core.windows.net/;QueueEndpoint=https://{AccountName}.queue.core.windows.net/;FileEndpoint=https://{AccountName}.file.core.windows.net/;TableEndpoint=https://{AccountName}.table.core.windows.net/" };
-            yield return new object[] { $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret}" };
             yield return new object[] { $"DefaultEndpointsProtocol=https;AccountName={AccountName};EndpointSuffix=core.windows.net" };
             yield return new object[] { $"DefaultEndpointsProtocol=https;AccountKey={Secret};EndpointSuffix=core.windows.net" };
         }

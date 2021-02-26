@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Reflection;
@@ -1966,7 +1966,7 @@ namespace Azure.Messaging.EventHubs.Tests
             }
             catch
             {
-               // Ignore any other exception; the assertions will fail with better context.
+                // Ignore any other exception; the assertions will fail with better context.
             }
 
             Assert.That(observedException, Is.Not.Null, "An Event Hubs exception should have been thrown when requesting authorization.");
@@ -2001,6 +2001,45 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(calculatedExpire, Is.LessThan(expireTime), "The refresh should be account for the buffer and be earlier than expiration.");
             Assert.That(calculatedExpire, Is.EqualTo(expireTime.Subtract(buffer)).Within(TimeSpan.FromSeconds(2)), "The authorization buffer should have been used for buffering.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpConnectionScope.CalculateLinkAuthorizationRefreshInterval" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void CalculateLinkAuthorizationRefreshIntervalRespectsTheMinimumDuration()
+        {
+            var endPoint = new Uri("sb://mine.hubs.com");
+            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var mockScope = new MockConnectionMockScope(endPoint, endPoint, "test", credential.Object, EventHubsTransportType.AmqpTcp, null);
+            var currentTime = new DateTime(2015, 10, 27, 00, 00, 00);
+            var minimumRefresh = GetMinimumAuthorizationRefresh();
+            var expireTime = currentTime.Add(minimumRefresh.Subtract(TimeSpan.FromMilliseconds(500)));
+            var calculatedRefresh = mockScope.InvokeCalculateLinkAuthorizationRefreshInterval(expireTime, currentTime);
+
+            Assert.That(calculatedRefresh, Is.EqualTo(minimumRefresh), "The minimum refresh duration should have been used.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpConnectionScope.CalculateLinkAuthorizationRefreshInterval" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void CalculateLinkAuthorizationRefreshIntervalRespectsTheMaximumDuration()
+        {
+            var endPoint = new Uri("sb://mine.hubs.com");
+            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var mockScope = new MockConnectionMockScope(endPoint, endPoint, "test", credential.Object, EventHubsTransportType.AmqpTcp, null);
+            var currentTime = new DateTime(2015, 10, 27, 00, 00, 00);
+            var refreshBuffer = GetAuthorizationRefreshBuffer();
+            var maximumRefresh = GetMaximumAuthorizationRefresh();
+            var expireTime = currentTime.Add(maximumRefresh.Add(refreshBuffer).Add(TimeSpan.FromMilliseconds(500)));
+            var calculatedRefresh = mockScope.InvokeCalculateLinkAuthorizationRefreshInterval(expireTime, currentTime);
+
+            Assert.That(calculatedRefresh, Is.EqualTo(maximumRefresh), "The maximum refresh duration should have been used.");
         }
 
         /// <summary>
@@ -2045,6 +2084,28 @@ namespace Azure.Messaging.EventHubs.Tests
             (TimeSpan)
                 typeof(AmqpConnectionScope)
                     .GetProperty("AuthorizationRefreshBuffer", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.GetProperty)
+                    .GetValue(null);
+
+        /// <summary>
+        ///   Gets the minimum authorization refresh interval, using the
+        ///   private property accessor.
+        /// </summary>
+        ///
+        private static TimeSpan GetMinimumAuthorizationRefresh() =>
+            (TimeSpan)
+                typeof(AmqpConnectionScope)
+                    .GetProperty("MinimumAuthorizationRefresh", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.GetProperty)
+                    .GetValue(null);
+
+        /// <summary>
+        ///   Gets the maximum authorization refresh interval, using the
+        ///   private property accessor.
+        /// </summary>
+        ///
+        private static TimeSpan GetMaximumAuthorizationRefresh() =>
+            (TimeSpan)
+                typeof(AmqpConnectionScope)
+                    .GetProperty("MaximumAuthorizationRefresh", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.GetProperty)
                     .GetValue(null);
 
         /// <summary>

@@ -2,6 +2,7 @@ namespace Azure.Identity
 {
     public partial class AuthenticationFailedException : System.Exception
     {
+        protected AuthenticationFailedException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
         public AuthenticationFailedException(string message) { }
         public AuthenticationFailedException(string message, System.Exception innerException) { }
     }
@@ -20,6 +21,7 @@ namespace Azure.Identity
     }
     public partial class AuthenticationRequiredException : Azure.Identity.CredentialUnavailableException
     {
+        protected AuthenticationRequiredException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) : base (default(string)) { }
         public AuthenticationRequiredException(string message, Azure.Core.TokenRequestContext context) : base (default(string)) { }
         public AuthenticationRequiredException(string message, Azure.Core.TokenRequestContext context, System.Exception innerException) : base (default(string)) { }
         public Azure.Core.TokenRequestContext TokenRequestContext { get { throw null; } }
@@ -85,6 +87,7 @@ namespace Azure.Identity
     }
     public partial class CredentialUnavailableException : Azure.Identity.AuthenticationFailedException
     {
+        protected CredentialUnavailableException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) : base (default(string)) { }
         public CredentialUnavailableException(string message) : base (default(string)) { }
         public CredentialUnavailableException(string message, System.Exception innerException) : base (default(string)) { }
     }
@@ -196,8 +199,7 @@ namespace Azure.Identity
     }
     public partial class PersistentTokenCache : Azure.Identity.TokenCache
     {
-        public PersistentTokenCache(Azure.Identity.PersistentTokenCacheOptions options) { }
-        public PersistentTokenCache(bool allowUnencryptedStorage = true) { }
+        public PersistentTokenCache(Azure.Identity.PersistentTokenCacheOptions options = null) { }
     }
     public partial class PersistentTokenCacheOptions
     {
@@ -225,16 +227,17 @@ namespace Azure.Identity
         public Azure.Identity.TokenCache TokenCache { get { throw null; } }
         public string Username { get { throw null; } set { } }
     }
-    public partial class TokenCache : System.IDisposable
+    public partial class TokenCache
     {
         public TokenCache() { }
         public event System.Func<Azure.Identity.TokenCacheUpdatedArgs, System.Threading.Tasks.Task> Updated { add { } remove { } }
+    }
+    public static partial class TokenCacheSerializer
+    {
         public static Azure.Identity.TokenCache Deserialize(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Identity.TokenCache> DeserializeAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public void Dispose() { }
-        protected virtual void Dispose(bool disposing) { }
-        public void Serialize(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
-        public System.Threading.Tasks.Task SerializeAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static void Serialize(Azure.Identity.TokenCache tokenCache, System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
+        public static System.Threading.Tasks.Task SerializeAsync(Azure.Identity.TokenCache tokenCache, System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class TokenCacheUpdatedArgs
     {

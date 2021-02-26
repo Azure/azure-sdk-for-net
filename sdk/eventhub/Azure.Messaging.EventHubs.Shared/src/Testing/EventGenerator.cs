@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Producer;
@@ -25,6 +24,23 @@ namespace Azure.Messaging.EventHubs.Tests
 
         /// <summary>The random number generator to use for a specific thread.</summary>
         private static readonly ThreadLocal<Random> RandomNumberGenerator = new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref s_randomSeed)), false);
+
+        /// <summary>
+        ///   Creates a buffer of read-only memory with random values to serve
+        ///   as the body of an event.
+        /// </summary>
+        ///
+        /// <param name="bodySizeBytes">The size of the body, in bytes.</param>
+        ///
+        /// <returns>A memory buffer of the requested size range containing randomized data.</returns>
+        ///
+        public static ReadOnlyMemory<byte> CreateRandomBody(long bodySizeBytes)
+        {
+            var buffer = new byte[bodySizeBytes];
+            RandomNumberGenerator.Value.NextBytes(buffer);
+
+            return buffer;
+        }
 
         /// <summary>
         ///   Creates a set of events with random data and random body size.
@@ -88,6 +104,25 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Creates and configures an <see cref="EventData" /> instance using the
+        ///   provided <paramref name="eventBody" /> as the embedded data.
+        /// </summary>
+        ///
+        /// <param name="numberOfEvents">The number of events to create.</param>
+        /// <param name="eventBody">The set of bytes to use as the data body of the event.</param>
+        ///
+        /// <returns>The requested set of events.</returns>
+        ///
+        public static IEnumerable<EventData> CreateEventsFromBody(int numberOfEvents,
+                                                                  ReadOnlyMemory<byte> eventBody)
+        {
+            for (var index = 0; index < numberOfEvents; ++index)
+            {
+                yield return CreateEventFromBody(eventBody);
+            }
+        }
+
+        /// <summary>
         ///   Builds a set of batches from the provided events.
         /// </summary>
         ///
@@ -134,7 +169,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
                 else
                 {
-                   queuedEvents.Dequeue();
+                    queuedEvents.Dequeue();
                 }
             }
 

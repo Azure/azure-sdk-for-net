@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System.Reflection;
-using Microsoft.Azure.ServiceBus;
+using Azure.Messaging.ServiceBus;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
@@ -11,7 +11,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
     {
         public IArgumentBinding<ServiceBusEntity> TryCreate(ParameterInfo parameter)
         {
-            if (!parameter.IsOut || parameter.ParameterType != typeof(Message).MakeByRefType())
+            if (!parameter.IsOut || parameter.ParameterType != typeof(ServiceBusMessage).MakeByRefType())
             {
                 return null;
             }

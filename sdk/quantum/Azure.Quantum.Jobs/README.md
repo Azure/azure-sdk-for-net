@@ -1,24 +1,10 @@
 # Azure Quantum Jobs client library for .NET
 
-Use the guidelines in each section of this template to ensure consistency and readability of your README. The README resides in your package's GitHub repository at the root of its directory within the repo. It's also used as the package distribution page (NuGet, PyPi, npm, etc.) and as a Quickstart on docs.microsoft.com. See [Azure.Quantum.Jobs/README.md](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/template/Azure.Template/README.md) for an example following this template.
+Azure Quantum is a Microsoft Azure service that you can use to run quantum computing programs or solve optimization problems in the cloud.  Using the Azure Quantum tools and SDKs, you can create quantum programs and run them against different quantum simulators and machines.  You can use the Azure.Quantum.Jobs client library t
+- Create, enumerate, and cancel quantum jobs
+- Enumerate provider status and quotas
 
-**Title**: The H1 of your README should be in the format: `# [Product Name] client library for [Language]`
-
-* All headings, including the H1, should use **sentence-style capitalization**. Refer to the [Microsoft Style Guide][style-guide-msft] and [Microsoft Cloud Style Guide][style-guide-cloud] for more information.
-* Example: `# Azure Batch client library for Python`
-
-# Azure Template client library for .NET
-
-**Introduction**: The introduction appears directly under the title (H1) of your README.
-
-* **DO NOT** use an "Introduction" or "Overview" heading (H2) for this section.
-* First sentence: **Describe the service** briefly. You can usually use the first line of the service's docs landing page for this (Example: [Cosmos DB docs landing page](https://docs.microsoft.com/azure/cosmos-db/)).
-* Next, add a **bulleted list** of the **most common tasks** supported by the package or library, prefaced with "Use the client library for [Product Name] to:". Then, provide code snippets for these tasks in the [Examples](#examples) section later in the document. Keep the task list short but include those tasks most developers need to perform with your package.
-* Include this single line of links targeting your product's content at the bottom of the introduction, making any adjustments as necessary (for example, NuGet instead of PyPi):
-
-  [Source code](https://github.com/Azure/azure-sdk-for-python/tree/master/sdk/batch/azure-batch) | [Package (PyPi)](https://pypi.org/project/azure-batch/) | [API reference documentation](https://docs.microsoft.com/python/api/overview/azure/batch?view=azure-python) | [Product documentation](https://docs.microsoft.com/azure/batch/)
-
-> TIP: Your README should be as **brief** as possible but **no more brief** than necessary to get a developer new to Azure, the service, or the package up and running quickly. Keep it brief, but include everything a developer needs to make their first API call successfully.
+  [Source code][source] | [API reference documentation](https://docs.microsoft.com/qsharp/api/) | [Product documentation](https://docs.microsoft.com/azure/quantum/)
 
 ## Getting started
 
@@ -26,7 +12,11 @@ This section should include everything a developer needs to do to install and cr
 
 ### Install the package
 
-First, provide instruction for obtaining and installing the package or library. This section might include only a single line of code, like `pip install package-name`, but should enable a developer to successfully install the package from NuGet, pip, npm, Maven, or even cloning a GitHub repository.
+Install the Azure Quantum Jobs client library for .NET with [NuGet][nuget]:
+
+```Powershell
+dotnet add package Azure.Quantum.Jobs --prerelease -v 1.0.0-beta.1
+```
 
 ### Prerequisites
 
@@ -36,25 +26,53 @@ Include a section after the install command that details any requirements that m
 
 ### Authenticate the client
 
-If your library requires authentication for use, such as for Azure services, include instructions and example code needed for initializing and authenticating.
+To authenticate with the service, the workspace will use [DefaultAzureCredential](https://docs.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet) internally. This will try different authentication mechanisms based on the environment (e.g. Environment Variables, ManagedIdentity, CachedTokens) and finally it will fallback to [InteractiveBrowserCredential](https://docs.microsoft.com/dotnet/api/azure.identity.interactivebrowsercredential?view=azure-dotnet).
 
-For example, include details on obtaining an account key and endpoint URI, setting environment variables for each, and initializing the client object.
+Workspace will also allow the user to override the above behavior by passing their own [TokenCredential](https://docs.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet).
+
+`TokenCredential` is the default Authentication mechanism used by Azure SDKs.
 
 ## Key concepts
 
-The *Key concepts* section should describe the functionality of the main classes. Point out the most important and useful classes in the package (with links to their reference pages) and explain how those classes work together. Feel free to use bulleted lists, tables, code blocks, or even diagrams for clarity.
+`QuantumJobClient` is the root class to be used to authenticate and create, enumerate, and cancel jobs.
+
+`JobDetails` contains all the properties of a job.
+
+`ProviderStatus` contains status information for a provider.
+
+`QuantumJobQuota` contains quota properties.
+
+### Thread safety
+We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
+
+### Additional concepts
+<!-- CLIENT COMMON BAR -->
+[Client options](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions) |
+[Accessing the response](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#accessing-http-response-details-using-responset) |
+[Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
+[Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
+[Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md) |
+[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#mocking) |
+[Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
+<!-- CLIENT COMMON BAR -->
 
 ## Examples
 
-Include code snippets and short descriptions for each task you listed in the [Introduction](#introduction) (the bulleted list). Briefly explain each operation, but include enough clarity to explain complex or otherwise tricky operations.
+* [Get Container SAS URI](#get-container-sas-uri)
+* [Upload Input Data](#upload-input-data)
+* [Create The Job](#create-the-job)
+* [Get Job](#get-job)
+* [Get Jobs](#get-jobs)
 
-If possible, use the same example snippets that your in-code documentation uses. For example, use the snippets in your `examples.py` that Sphinx ingests via its [literalinclude](https://www.sphinx-doc.org/en/1.5/markup/code.html?highlight=code%20examples#includes) directive. The `examples.py` file containing the snippets should reside alongside your package's code, and should be tested in an automated fashion.
+### Create the client
 
-Each example in the *Examples* section starts with an H3 that describes the example. At the top of this section, just under the *Examples* H2, add a bulleted list linking to each example H3. Each example should deep-link to the types and/or members used in the example.
-
-### Get the thing
-
-The `get_thing` method retrieves a Thing from the service. The `id` parameter is the unique ID of the Thing, not its "name" property.
+Create an instance of the QuantumJobClient by passing in these parameters:
+- [Subscription][subscriptions] - looks like XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX and can be found in your list of subscriptions on azure
+- [Resource Group][resource-groups] - a container that holds related resources for an Azure solution 
+- [Workspace][workspaces] - a collection of assets associated with running quantum or optimization applications
+- [Location][location] - choose the best data center by geographical region 
+- [StorageContainerName][blob-storage] - your blob storage 
+- [Credential][credentials] - used to authenticate 
 
 ```C# Snippet:Azure_Quantum_Jobs_CreateClient
 // Create a QuantumJobClient
@@ -74,11 +92,20 @@ var quantumJobClient =
         credential);
 ```
 
+### Get Container SAS URI
+
+Create a storage container where to put your data.
+
 ```C# Snippet:Azure_Quantum_Jobs_GetContainerSasUri
 // Get container Uri with SAS key
 var containerUri = (quantumJobClient.GetStorageSasUri(
     new BlobDetails(storageContainerName))).Value.SasUri;
 ```
+
+### Upload Input Data
+
+Using the SAS URI, upload the json input data to the blob client.
+This contains the parameters to be used with [Quantum Inspired Optimizations](https://docs.microsoft.com/azure/quantum/optimization-overview-introduction)
 
 ```C# Snippet:Azure_Quantum_Jobs_UploadInputData
 // Get input data blob Uri with SAS key
@@ -94,6 +121,10 @@ var blobClient = new BlobClient(new Uri(inputDataUri));
 var problemFilename = "problem.json";
 blobClient.Upload(problemFilename, overwrite: true);
 ```
+
+### Create The Job
+
+Now that you've uploaded your problem definition to Azure Storage, you can use `CreateJob` to define an Azure Quantum job.
 
 ```C# Snippet:Azure_Quantum_Jobs_CreateJob
 // Submit job
@@ -113,35 +144,59 @@ var createJobDetails = new JobDetails(containerUri, inputDataFormat, providerId,
 JobDetails createdJob = (quantumJobClient.CreateJob(jobId, createJobDetails)).Value;
 ```
 
+### Get Job
+
+`GetJob` retrieves a specific job by its id.
+
 ```C# Snippet:Azure_Quantum_Jobs_GetJob
 // Get the job that we've just created based on its jobId
 JobDetails myJob = (quantumJobClient.GetJob(jobId)).Value;
 ```
 
+### Get Jobs
+
+To enumerate all the jobs in the workspace, use the `GetJobs` method.
+
 ```C# Snippet:Azure_Quantum_Jobs_GetJobs
-// Get all jobs from the workspace (.ToList() will force all pages to be fetched)
-var allJobs = quantumJobClient.GetJobs().ToList();
+foreach (JobDetails job in quantumJobClient.GetJobs())
+{
+    Console.WriteLine($"{job.Name}");
+}
 ```
+
 
 ## Troubleshooting
 
-Describe common errors and exceptions, how to "unpack" them if necessary, and include guidance for graceful handling and recovery.
-
-Provide information to help developers avoid throttling or other service-enforced errors they might encounter. For example, provide guidance and examples for using retry or connection policies in the API.
-
-If the package or a related package supports it, include tips for logging or enabling instrumentation to help them debug their code.
+All Quantum Jobs service operations will throw a RequestFailedException on failure with helpful ErrorCodes. Many of these errors are recoverable.
 
 ## Next steps
 
-* Provide a link to additional code examples, ideally to those sitting alongside the README in the package's `/samples` directory.
-* If appropriate, point users to other packages that might be useful.
-* If you think there's a good chance that developers might stumble across your package in error (because they're searching for specific functionality and mistakenly think the package provides that functionality), point them to the packages they might be looking for.
-
+*  Visit our [Product documentation](https://docs.microsoft.com/azure/quantum/) to learn more about Azure Quantum.
 ## Contributing
 
-This is a template, but your SDK readme should include details on how to contribute code to the repo/package.
+See the [CONTRIBUTING.md][contributing] for details on building,
+testing, and contributing to this library.
+
+This project welcomes contributions and suggestions.  Most contributions require
+you to agree to a Contributor License Agreement (CLA) declaring that you have
+the right to, and actually do, grant us the rights to use your contribution. For
+details, visit [cla.microsoft.com][cla].
+
+This project has adopted the [Microsoft Open Source Code of Conduct][coc].
+For more information see the [Code of Conduct FAQ][coc_faq]
+or contact [opencode@microsoft.com][coc_contact] with any
+additional questions or comments.
+
 
 <!-- LINKS -->
+[source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/quantum/Azure.Quantum.Jobs/src
+[resource-groups]: https://docs.microsoft.com/azure/azure-resource-manager/management/manage-resource-groups-portal
+[workspaces]: https://docs.microsoft.com/azure/quantum/how-to-create-quantum-workspaces-with-the-azure-portal
+[location]: https://azure.microsoft.com/global-infrastructure/services/?products=quantum
+[blob-storage]: https://docs.microsoft.com/azure/storage/blobs/storage-blobs-introduction
+[contributing]: https://github.com/Azure/azure-sdk-for-net/tree/master/CONTRIBUTING.md
+[subscriptions]: https://ms.portal.azure.com/#blade/Microsoft_Azure_Billing/SubscriptionsBlade
+[credentials]: https://docs.microsoft.com/dotnet/api/overview/azure/identity-readme#credentials
 [style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
 [style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
 

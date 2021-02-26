@@ -225,12 +225,15 @@ namespace Azure.Messaging.EventHubs
                 return new EventHubsException(eventHubsResource, description, EventHubsException.FailureReason.QuotaExceeded, innerException);
             }
 
-            // The link was closed, generally this exception would be thrown for partition specific producers and would be caused by race conditions
-            // between an operation and a request to close a client.
+            // The link was closed; generally this exception would be thrown for partition specific producers and would be caused by race conditions
+            // between an operation and a request to close a client.  It may also occur due to a race condition where the service closes a link or
+            // connection while an operation is being prepared.
+            //
+            // Consider this scenario to be transient so that the operation can be retried if the client itself has not been closed.
 
             if (string.Equals(condition, AmqpErrorCode.IllegalState.Value, StringComparison.InvariantCultureIgnoreCase))
             {
-                return new EventHubsException(eventHubsResource, description, EventHubsException.FailureReason.ClientClosed, innerException);
+                return new EventHubsException(true, eventHubsResource, description, EventHubsException.FailureReason.ClientClosed, innerException);
             }
 
             // The service does not understand how to process the request.

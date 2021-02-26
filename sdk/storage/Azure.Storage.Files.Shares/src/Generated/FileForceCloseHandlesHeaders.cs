@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Files.Shares
 {
-    internal class FileForceCloseHandlesHeaders
+    internal partial class FileForceCloseHandlesHeaders
     {
         private readonly Response _response;
         public FileForceCloseHandlesHeaders(Response response)

@@ -7,22 +7,27 @@ namespace Azure.Communication
 {
     public class CommunicationIdentifierTest
     {
+        private const string TestUserId = "User Id";
+        private const string TestRawId = "Raw Id";
+        private const string TestPhoneNumber = "+12223334444";
+        private const string TestTeamsUserId = "Microsoft Teams User Id";
+
         [Test]
         public void IfIdIsOptional_EqualityOnlyTestIfPresentOnBothSide()
         {
-            Assert.AreEqual(new MicrosoftTeamsUserIdentifier("user id", true, "some id"), new MicrosoftTeamsUserIdentifier("user id", true));
-            Assert.AreEqual(new MicrosoftTeamsUserIdentifier("user id", true), new MicrosoftTeamsUserIdentifier("user id", true));
-            Assert.AreEqual(new MicrosoftTeamsUserIdentifier("user id", true), new MicrosoftTeamsUserIdentifier("user id", true, "some id"));
-            Assert.AreNotEqual(new MicrosoftTeamsUserIdentifier("user id", true, "some id"), new MicrosoftTeamsUserIdentifier("user id", true, "another id"));
+            Assert.AreEqual(new MicrosoftTeamsUserIdentifier(TestUserId, isAnonymous: true, rawId: TestRawId), new MicrosoftTeamsUserIdentifier(TestUserId, isAnonymous: true));
+            Assert.AreEqual(new MicrosoftTeamsUserIdentifier(TestUserId, isAnonymous: true), new MicrosoftTeamsUserIdentifier(TestUserId, isAnonymous: true));
+            Assert.AreEqual(new MicrosoftTeamsUserIdentifier(TestUserId, isAnonymous: true), new MicrosoftTeamsUserIdentifier(TestUserId, isAnonymous: true, rawId: TestRawId));
+            Assert.AreNotEqual(new MicrosoftTeamsUserIdentifier(TestUserId, isAnonymous: true, rawId: TestRawId), new MicrosoftTeamsUserIdentifier(TestUserId, isAnonymous: true, rawId: "Another Raw Id"));
 
-            Assert.AreEqual(new PhoneNumberIdentifier("+12223334444", "some id"), new PhoneNumberIdentifier("+12223334444"));
-            Assert.AreEqual(new PhoneNumberIdentifier("+12223334444"), new PhoneNumberIdentifier("+12223334444"));
-            Assert.AreEqual(new PhoneNumberIdentifier("+12223334444"), new PhoneNumberIdentifier("+12223334444", "some id"));
-            Assert.AreNotEqual(new PhoneNumberIdentifier("+12223334444", "some id"), new PhoneNumberIdentifier("+12223334444", "another id"));
+            Assert.AreEqual(new PhoneNumberIdentifier(TestPhoneNumber, TestRawId), new PhoneNumberIdentifier(TestPhoneNumber));
+            Assert.AreEqual(new PhoneNumberIdentifier(TestPhoneNumber), new PhoneNumberIdentifier(TestPhoneNumber));
+            Assert.AreEqual(new PhoneNumberIdentifier(TestPhoneNumber), new PhoneNumberIdentifier(TestPhoneNumber, TestRawId));
+            Assert.AreNotEqual(new PhoneNumberIdentifier(TestPhoneNumber, TestRawId), new PhoneNumberIdentifier(TestPhoneNumber, "Another Raw Id"));
         }
 
         [Test]
         public void MicrosoftTeamsUserIdentifier_DefaultCloudIsPublic()
-            => Assert.AreEqual(CommunicationCloudEnvironment.Public, new MicrosoftTeamsUserIdentifier("user id", true, "some id").Cloud);
+            => Assert.AreEqual(CommunicationCloudEnvironment.Public, new MicrosoftTeamsUserIdentifier(TestTeamsUserId, isAnonymous: true, rawId: TestRawId).Cloud);
     }
 }

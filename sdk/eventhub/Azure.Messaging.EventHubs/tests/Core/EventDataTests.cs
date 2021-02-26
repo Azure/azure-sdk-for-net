@@ -87,8 +87,8 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var sourceEvent = new EventData(
                 new byte[] { 0x21, 0x22 },
-                new Dictionary<string, object> { {"Test", 123 } },
-                new Dictionary<string, object> { { "System", "Hello" }},
+                new Dictionary<string, object> { { "Test", 123 } },
+                new Dictionary<string, object> { { "System", "Hello" } },
                 33334444,
                 666777,
                 DateTimeOffset.Parse("2015-10-27T00:00:00Z"),
@@ -117,8 +117,8 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var sourceEvent = new EventData(
                 new byte[] { 0x21, 0x22 },
-                new Dictionary<string, object> { {"Test", 123 } },
-                new Dictionary<string, object> { { "System", "Hello" }},
+                new Dictionary<string, object> { { "Test", 123 } },
+                new Dictionary<string, object> { { "System", "Hello" } },
                 33334444,
                 666777,
                 DateTimeOffset.Parse("2015-10-27T00:00:00Z"),

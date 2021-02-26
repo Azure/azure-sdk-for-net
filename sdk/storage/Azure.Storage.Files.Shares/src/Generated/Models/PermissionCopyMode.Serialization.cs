@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    internal static class PermissionCopyModeExtensions
+    internal static partial class PermissionCopyModeExtensions
     {
         public static string ToSerialString(this PermissionCopyMode value) => value switch
         {

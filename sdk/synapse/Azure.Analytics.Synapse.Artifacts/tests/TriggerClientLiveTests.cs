@@ -43,7 +43,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             ));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TestGetTrigger()
         {
             TriggerClient client = CreateClient();
@@ -57,7 +57,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TestDeleteSparkJob()
         {
             TriggerClient client = CreateClient();
@@ -69,7 +69,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         }
 
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18079 - Missing or invalid pipeline references for trigger but no obvious place to put pipeline?")]
-        [Test]
+        [RecordedTest]
         public async Task TestStartStop()
         {
             TriggerClient client = CreateClient();
@@ -88,7 +88,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             stopResponse.AssertSuccess();
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TestSubscribeUnsubscribe()
         {
             TriggerClient client = CreateClient();
@@ -103,7 +103,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             Assert.AreEqual (EventSubscriptionStatus.Disabled, unsubResponse.Status);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TestEventStatus()
         {
             TriggerClient client = CreateClient();

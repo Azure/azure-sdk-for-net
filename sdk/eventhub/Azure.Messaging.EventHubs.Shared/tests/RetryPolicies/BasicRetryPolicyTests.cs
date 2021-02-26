@@ -27,6 +27,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             yield return new object[] { new TimeoutException() };
             yield return new object[] { new SocketException(500) };
+            yield return new object[] { new UnauthorizedAccessException() };
 
             // Task/Operation Canceled should use the inner exception as the decision point.
 

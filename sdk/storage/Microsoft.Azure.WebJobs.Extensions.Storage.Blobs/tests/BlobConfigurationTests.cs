@@ -56,7 +56,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
         }
 
         [Test]
-        public async Task BlobClient_CanConnect_EndPoint()
+        public async Task BlobClient_CanConnect_ServiceUri()
         {
             var account = azuriteFixture.GetAzureAccount();
             var prog = new BindToCloudBlockBlobProgram();
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
                 {
                     cb.AddInMemoryCollection(new Dictionary<string, string>()
                     {
-                        {"CustomConnection:endpoint", account.Endpoint },
+                        {"CustomConnection:serviceUri", account.Endpoint },
                         {"blobPath", "endpointcontainer/endpointblob" }
                     });
                 })
