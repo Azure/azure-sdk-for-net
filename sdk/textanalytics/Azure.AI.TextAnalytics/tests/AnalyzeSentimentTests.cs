@@ -105,12 +105,12 @@ namespace Azure.AI.TextAnalytics.Tests
             DocumentSentiment docSentiment = await client.AnalyzeSentimentAsync(document, options: new AnalyzeSentimentOptions() { IncludeOpinionMining = true });
 
             CheckAnalyzeSentimentProperties(docSentiment, opinionMining: true);
-            SentenceOpinion minedAssessment = docSentiment.Sentences.FirstOrDefault().Opinions.FirstOrDefault();
-            Assert.AreEqual("bathrooms", minedAssessment.Target.Text);
-            Assert.AreEqual(TextSentiment.Negative, minedAssessment.Target.Sentiment);
-            Assert.AreEqual("clean", minedAssessment.Assessments.FirstOrDefault().Text);
-            Assert.AreEqual(TextSentiment.Negative, minedAssessment.Assessments.FirstOrDefault().Sentiment);
-            Assert.IsTrue(minedAssessment.Assessments.FirstOrDefault().IsNegated);
+            SentenceOpinion opinion = docSentiment.Sentences.FirstOrDefault().Opinions.FirstOrDefault();
+            Assert.AreEqual("bathrooms", opinion.Target.Text);
+            Assert.AreEqual(TextSentiment.Negative, opinion.Target.Sentiment);
+            Assert.AreEqual("clean", opinion.Assessments.FirstOrDefault().Text);
+            Assert.AreEqual(TextSentiment.Negative, opinion.Assessments.FirstOrDefault().Sentiment);
+            Assert.IsTrue(opinion.Assessments.FirstOrDefault().IsNegated);
         }
 
         [Test]
@@ -444,23 +444,23 @@ namespace Azure.AI.TextAnalytics.Tests
                 if (opinionMining)
                 {
                     Assert.Greater(sentence.Opinions.Count(), 0);
-                    foreach (var minedAssessments in sentence.Opinions)
+                    foreach (var opinions in sentence.Opinions)
                     {
                         // target
-                        Assert.IsNotNull(minedAssessments.Target);
-                        Assert.IsNotNull(minedAssessments.Target.Text);
-                        Assert.IsNotNull(minedAssessments.Target.ConfidenceScores.Positive);
-                        Assert.IsNotNull(minedAssessments.Target.ConfidenceScores.Negative);
+                        Assert.IsNotNull(opinions.Target);
+                        Assert.IsNotNull(opinions.Target.Text);
+                        Assert.IsNotNull(opinions.Target.ConfidenceScores.Positive);
+                        Assert.IsNotNull(opinions.Target.ConfidenceScores.Negative);
                         // Neutral should always be 0
-                        Assert.AreEqual(0, minedAssessments.Target.ConfidenceScores.Neutral);
-                        Assert.IsTrue(CheckTotalConfidenceScoreValue(minedAssessments.Target.ConfidenceScores));
-                        Assert.IsNotNull(minedAssessments.Target.Offset);
-                        Assert.IsNotNull(minedAssessments.Target.Length);
+                        Assert.AreEqual(0, opinions.Target.ConfidenceScores.Neutral);
+                        Assert.IsTrue(CheckTotalConfidenceScoreValue(opinions.Target.ConfidenceScores));
+                        Assert.IsNotNull(opinions.Target.Offset);
+                        Assert.IsNotNull(opinions.Target.Length);
 
                         // assessment
-                        Assert.IsNotNull(minedAssessments.Assessments);
-                        Assert.Greater(minedAssessments.Assessments.Count(), 0);
-                        foreach (var opinion in minedAssessments.Assessments)
+                        Assert.IsNotNull(opinions.Assessments);
+                        Assert.Greater(opinions.Assessments.Count(), 0);
+                        foreach (var opinion in opinions.Assessments)
                         {
                             Assert.IsNotNull(opinion.Text);
                             Assert.IsNotNull(opinion.ConfidenceScores.Positive);

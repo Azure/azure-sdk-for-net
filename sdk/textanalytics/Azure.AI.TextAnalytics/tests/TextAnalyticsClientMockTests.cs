@@ -523,15 +523,15 @@ namespace Azure.AI.TextAnalytics.Tests
 
             DocumentSentiment response = await client.AnalyzeSentimentAsync("The park was clean. It was clean.");
 
-            SentenceOpinion minedAssessmentS1 = response.Sentences.ElementAt(0).Opinions.FirstOrDefault();
-            Assert.AreEqual("park", minedAssessmentS1.Target.Text);
-            Assert.AreEqual(TextSentiment.Positive, minedAssessmentS1.Target.Sentiment);
-            Assert.AreEqual("clean", minedAssessmentS1.Assessments.FirstOrDefault().Text);
+            SentenceOpinion opinionS1 = response.Sentences.ElementAt(0).Opinions.FirstOrDefault();
+            Assert.AreEqual("park", opinionS1.Target.Text);
+            Assert.AreEqual(TextSentiment.Positive, opinionS1.Target.Sentiment);
+            Assert.AreEqual("clean", opinionS1.Assessments.FirstOrDefault().Text);
 
-            SentenceOpinion minedAssessmentS2 = response.Sentences.ElementAt(1).Opinions.FirstOrDefault();
-            Assert.AreEqual("park", minedAssessmentS2.Target.Text);
-            Assert.AreEqual(TextSentiment.Positive, minedAssessmentS2.Target.Sentiment);
-            Assert.AreEqual("clean", minedAssessmentS2.Assessments.FirstOrDefault().Text);
+            SentenceOpinion opinionS2 = response.Sentences.ElementAt(1).Opinions.FirstOrDefault();
+            Assert.AreEqual("park", opinionS2.Target.Text);
+            Assert.AreEqual(TextSentiment.Positive, opinionS2.Target.Sentiment);
+            Assert.AreEqual("clean", opinionS2.Assessments.FirstOrDefault().Text);
         }
 
         [Test]
