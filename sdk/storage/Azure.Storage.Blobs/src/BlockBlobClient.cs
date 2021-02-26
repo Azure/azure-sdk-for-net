@@ -2363,7 +2363,7 @@ namespace Azure.Storage.Blobs.Specialized
                     conditions: options?.OpenConditions,
                     accessTier: default,
                     progressHandler: default,
-                    operationName: default,
+                    operationName: "BlockBlobClient.OpenWriteInternal",
                     async: async,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
