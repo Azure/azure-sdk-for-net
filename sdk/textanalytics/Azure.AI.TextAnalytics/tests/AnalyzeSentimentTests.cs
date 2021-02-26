@@ -73,19 +73,19 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
-        public async Task AnalyzeSentimentWithAssessmentMining()
+        public async Task AnalyzeSentimentWithOpinionMining()
         {
             TextAnalyticsClient client = GetClient();
             string document = "The park was clean and pretty. The bathrooms and restaurant were not clean.";
 
             DocumentSentiment docSentiment = await client.AnalyzeSentimentAsync(document, options: new AnalyzeSentimentOptions() { IncludeOpinionMining = true });
 
-            CheckAnalyzeSentimentProperties(docSentiment, assessmentMining: true);
+            CheckAnalyzeSentimentProperties(docSentiment, opinionMining: true);
             Assert.AreEqual("Mixed", docSentiment.Sentiment.ToString());
         }
 
         [Test]
-        public async Task AnalyzeSentimentWithAssessmentMiningEmpty()
+        public async Task AnalyzeSentimentWithOpinionMiningEmpty()
         {
             TextAnalyticsClient client = GetClient();
             string document = singleEnglish;
@@ -97,14 +97,14 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
-        public async Task AnalyzeSentimentWithAssessmentMiningNegated()
+        public async Task AnalyzeSentimentWithOpinionMiningNegated()
         {
             TextAnalyticsClient client = GetClient();
             string document = "The bathrooms are not clean.";
 
             DocumentSentiment docSentiment = await client.AnalyzeSentimentAsync(document, options: new AnalyzeSentimentOptions() { IncludeOpinionMining = true });
 
-            CheckAnalyzeSentimentProperties(docSentiment, assessmentMining: true);
+            CheckAnalyzeSentimentProperties(docSentiment, opinionMining: true);
             SentenceOpinion minedAssessment = docSentiment.Sentences.FirstOrDefault().Opinions.FirstOrDefault();
             Assert.AreEqual("bathrooms", minedAssessment.Target.Text);
             Assert.AreEqual(TextSentiment.Negative, minedAssessment.Target.Sentiment);
@@ -168,7 +168,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             foreach (AnalyzeSentimentResult docs in results)
             {
-                CheckAnalyzeSentimentProperties(docs.DocumentSentiment, assessmentMining: true);
+                CheckAnalyzeSentimentProperties(docs.DocumentSentiment, opinionMining: true);
             }
 
             Assert.AreEqual("Mixed", results[0].DocumentSentiment.Sentiment.ToString());
@@ -351,7 +351,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             foreach (AnalyzeSentimentResult docs in results)
             {
-                CheckAnalyzeSentimentProperties(docs.DocumentSentiment, assessmentMining: true);
+                CheckAnalyzeSentimentProperties(docs.DocumentSentiment, opinionMining: true);
             }
 
             Assert.AreEqual("Mixed", results[0].DocumentSentiment.Sentiment.ToString());
@@ -425,7 +425,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(exceptionMessage, ex.Message);
         }
 
-        private void CheckAnalyzeSentimentProperties(DocumentSentiment doc, bool assessmentMining = false)
+        private void CheckAnalyzeSentimentProperties(DocumentSentiment doc, bool opinionMining = false)
         {
             Assert.IsNotNull(doc.ConfidenceScores.Positive);
             Assert.IsNotNull(doc.ConfidenceScores.Neutral);
@@ -441,7 +441,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 Assert.IsTrue(CheckTotalConfidenceScoreValue(sentence.ConfidenceScores));
 
                 Assert.IsNotNull(sentence.Opinions);
-                if (assessmentMining)
+                if (opinionMining)
                 {
                     Assert.Greater(sentence.Opinions.Count(), 0);
                     foreach (var minedAssessments in sentence.Opinions)

@@ -25,20 +25,20 @@ namespace Azure.AI.TextAnalytics
             Length = length;
         }
 
-        internal AssessmentSentiment(SentenceAssessment opinion)
+        internal AssessmentSentiment(SentenceAssessment assessment)
         {
-            _ = opinion ?? throw new ArgumentNullException(nameof(opinion));
+            _ = assessment ?? throw new ArgumentNullException(nameof(assessment));
 
-            Text = opinion.Text;
-            ConfidenceScores = new SentimentConfidenceScores(opinion.ConfidenceScores.Positive, _neutralValue, opinion.ConfidenceScores.Negative);
-            Sentiment = (TextSentiment)Enum.Parse(typeof(TextSentiment), opinion.Sentiment, ignoreCase: true);
-            IsNegated = opinion.IsNegated;
-            Offset = opinion.Offset;
-            Length = opinion.Length;
+            Text = assessment.Text;
+            ConfidenceScores = new SentimentConfidenceScores(assessment.ConfidenceScores.Positive, _neutralValue, assessment.ConfidenceScores.Negative);
+            Sentiment = (TextSentiment)Enum.Parse(typeof(TextSentiment), assessment.Sentiment, ignoreCase: true);
+            IsNegated = assessment.IsNegated;
+            Offset = assessment.Offset;
+            Length = assessment.Length;
         }
 
         /// <summary>
-        /// Gets the predicted Sentiment for the opinion taking into account the
+        /// Gets the predicted Sentiment for the assessment taking into account the
         /// value of <see cref="IsNegated"/>. Possible values
         /// include 'positive', 'mixed', and 'negative'.
         /// </summary>
@@ -46,31 +46,31 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Gets the sentiment confidence score (Softmax score) between 0 and 1,
-        /// for the opinion for 'positive' and 'negative' labels. Its score
+        /// for the assessment for 'positive' and 'negative' labels. Its score
         /// for 'neutral' will always be 0.
         /// Higher values signify higher confidence.
         /// </summary>
         public SentimentConfidenceScores ConfidenceScores { get; }
 
         /// <summary>
-        /// Gets the opinion text.
+        /// Gets the assessment text.
         /// </summary>
         public string Text { get; }
 
         /// <summary>
-        /// Whether the opinion is negated.
+        /// Whether the assessment is negated.
         /// <para>For example, in "The food is not good",
-        /// the opinion "good" is negated.</para>
+        /// the assessment "good" is negated.</para>
         /// </summary>
         public bool IsNegated { get; }
 
         /// <summary>
-        /// Gets the starting position for the opinion text.
+        /// Gets the starting position for the assessment text.
         /// </summary>
         public int Offset { get; }
 
         /// <summary>
-        /// Gets the length of the opinion text.
+        /// Gets the length of the assessment text.
         /// </summary>
         public int Length { get; }
     }

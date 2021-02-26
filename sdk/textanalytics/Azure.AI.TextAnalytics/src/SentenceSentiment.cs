@@ -17,14 +17,14 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public readonly struct SentenceSentiment
     {
-        internal SentenceSentiment(TextSentiment sentiment, string text, double positiveScore, double neutralScore, double negativeScore, int offset, int length, IReadOnlyList<SentenceOpinion> minedAssessments)
+        internal SentenceSentiment(TextSentiment sentiment, string text, double positiveScore, double neutralScore, double negativeScore, int offset, int length, IReadOnlyList<SentenceOpinion> opinions)
         {
             Sentiment = sentiment;
             Text = text;
             ConfidenceScores = new SentimentConfidenceScores(positiveScore, neutralScore, negativeScore);
             Offset = offset;
             Length = length;
-            Opinions = new List<SentenceOpinion>(minedAssessments);
+            Opinions = new List<SentenceOpinion>(opinions);
         }
 
         internal SentenceSentiment(SentenceSentimentInternal sentenceSentiment, IReadOnlyList<SentenceSentimentInternal> allSentences)
@@ -35,7 +35,7 @@ namespace Azure.AI.TextAnalytics
 
             ConfidenceScores = sentenceSentiment.ConfidenceScores;
             Sentiment = (TextSentiment)Enum.Parse(typeof(TextSentiment), sentenceSentiment.Sentiment, ignoreCase: true);
-            Opinions = ConvertToMinedAssessments(sentenceSentiment, allSentences);
+            Opinions = ConvertToOpinion(sentenceSentiment, allSentences);
             Offset = sentenceSentiment.Offset;
             Length = sentenceSentiment.Length;
         }
@@ -57,7 +57,7 @@ namespace Azure.AI.TextAnalytics
         public SentimentConfidenceScores ConfidenceScores { get; }
 
         /// <summary>
-        /// Gets the mined opinion of a sentence. This is only returned if
+        /// Gets the opinion of a sentence. This is only returned if
         /// <see cref="AnalyzeSentimentOptions.IncludeOpinionMining"/> is set to True.
         /// </summary>
         public IReadOnlyCollection<SentenceOpinion> Opinions { get; }
@@ -72,9 +72,9 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         public int Length { get; }
 
-        private static IReadOnlyCollection<SentenceOpinion> ConvertToMinedAssessments(SentenceSentimentInternal sentence, IReadOnlyList<SentenceSentimentInternal> allSentences)
+        private static IReadOnlyCollection<SentenceOpinion> ConvertToOpinion(SentenceSentimentInternal sentence, IReadOnlyList<SentenceSentimentInternal> allSentences)
         {
-            var minedAssessments = new List<SentenceOpinion>();
+            var opinions = new List<SentenceOpinion>();
 
             foreach (SentenceTarget target in sentence.Targets)
             {
@@ -86,10 +86,10 @@ namespace Azure.AI.TextAnalytics
                         assessment.Add(ResolveAssessmentReference(allSentences, relation.Ref));
                     }
                 }
-                minedAssessments.Add(new SentenceOpinion(new TargetSentiment(target), assessment));
+                opinions.Add(new SentenceOpinion(new TargetSentiment(target), assessment));
             }
 
-            return minedAssessments;
+            return opinions;
         }
 
         private static Regex _assessmentRegex = new Regex(@"/documents/(?<documentIndex>\d*)/sentences/(?<sentenceIndex>\d*)/assessments/(?<assessmentIndex>\d*)$", RegexOptions.Compiled, TimeSpan.FromSeconds(2));

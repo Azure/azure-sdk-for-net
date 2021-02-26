@@ -20,13 +20,13 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Get the target in text, such as the attributes of products or services.
-        /// <para>For example in "The food at Hotel Foo is good", "food" is an target of
+        /// <para>For example in "The food at Hotel Foo is good", "food" is a target of
         /// "Hotel Foo".</para>
         /// </summary>
         public TargetSentiment Target { get; }
         /// <summary>
         /// The list of assessments that are related to the target.
-        /// <para>For example in "The food at Hotel Foo is good", "food" is an target of
+        /// <para>For example in "The food at Hotel Foo is good", "food" is a target of
         /// "Hotel Foo" and "good" is the assessment related to the target.</para>
         /// </summary>
         public IReadOnlyCollection<AssessmentSentiment> Assessments { get; }

@@ -14,7 +14,7 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples
     {
         [Test]
-        public async Task AnalyzeSentimentWithAssessmentMiningAsync()
+        public async Task AnalyzeSentimentWithOpinionMiningAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
@@ -70,12 +70,12 @@ namespace Azure.AI.TextAnalytics.Samples
             {
                 foreach (SentenceSentiment sentence in review.DocumentSentiment.Sentences)
                 {
-                    foreach (SentenceOpinion minedAssessment in sentence.Opinions)
+                    foreach (SentenceOpinion opinion in sentence.Opinions)
                     {
-                        if (minedAssessment.Target.Sentiment == TextSentiment.Negative)
+                        if (opinion.Target.Sentiment == TextSentiment.Negative)
                         {
-                            complaints.TryGetValue(minedAssessment.Target.Text, out var value);
-                            complaints[minedAssessment.Target.Text] = value + 1;
+                            complaints.TryGetValue(opinion.Target.Text, out var value);
+                            complaints[opinion.Target.Text] = value + 1;
                         }
                     }
                 }

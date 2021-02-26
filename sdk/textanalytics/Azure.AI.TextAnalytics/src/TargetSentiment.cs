@@ -44,8 +44,8 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Gets the target text.
-        /// <para>An target of a product/service is a key component of that product/service.</para>
-        /// <para>For example in "The food at Hotel Foo is good", "food" is an target of
+        /// <para>A target of a product/service is a key component of that product/service.</para>
+        /// <para>For example in "The food at Hotel Foo is good", "food" is a target of
         /// "Hotel Foo".</para>
         /// </summary>
         public string Text { get; }
