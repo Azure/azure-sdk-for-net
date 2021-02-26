@@ -2,6 +2,8 @@
 $Env:NODE_OPTIONS = "--max-old-space-size=8192"
 Set-StrictMode -Version 1
 $exitCode = 0
+$Env:REPOSITORY_NAME = "Azure/azure-sdk-for-net"
+$Env:PULLREQUEST_ID = 19013
 
 [string[]] $errors = @()
 
@@ -149,7 +151,7 @@ try {
         }
 
         if (-not [string]::IsNullOrWhiteSpace($metaDataContent)) {
-            $commit = ''
+            $commit = @()
             $csharpVersion = @()
             [string]$path = Get-Location
             $path = ($path -replace "\\", "/") + "/sdk"
@@ -174,7 +176,7 @@ try {
                 }
             }
 
-            if (($commandList.length -eq 0) -or ($commit.length -eq 0) -or ($csharpVersion.length -eq 0) -or ($commandList.length -ne $commit) -or ($commit.length -ne $csharpVersion.length) -or (($commit -eq $commit[0]).Count -eq $commit.Count)) {
+            if (($commandList.length -eq 0) -or ($commit.length -eq 0) -or ($csharpVersion.length -eq 0) -or ($commandList.length -ne $commit.length) -or ($commit.length -ne $csharpVersion.length) -or (($commit -eq $commit[0]).Count -ne $commit.Count)) {
                 LogError "MetaData $metaData content not correct, you may need to re-run sdk\<RP_Name>\generate.ps1"
             }
             else {
