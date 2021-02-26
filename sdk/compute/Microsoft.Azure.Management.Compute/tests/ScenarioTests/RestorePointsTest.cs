@@ -27,7 +27,6 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
                 EnsureClientsInitialized(context);
                 string subId = m_CrpClient.SubscriptionId;
                 string location = ComputeManagementTestUtilities.DefaultLocation;
-                //Initialize(context);
                 // create the VM
                 var rgName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
                 string storageAccountName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
@@ -65,8 +64,16 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
                     RestorePointCollection createdRpc = CreateRpc(createdVM.Id, rpcName, rgName, location, tags);
                     VerifyRpc(createdRpc, rgName, rpcName, location, vmId, rpName, false);
 
+                    // patch RPC. Only tags are allowed to be updated
+                    Dictionary<string, string> newTags = new Dictionary<string, string>()
+                    {
+                        {"newTag", "newValue"},
+                        {"newtestTag", "newValue"},
+                    };
+                    UpdateRpc(rgName, rpcName, createdRpc, tags);
+
                     // format JRaw so that we can validate the JRaw returned in the restore point
-                    string expectedJRaw = RemoveWhiteSpaces(optionalProperties.ToString());
+                    string expectedJRaw = RemovePunctuation(optionalProperties.ToString());
 
                     // create RP in the RPC
                     RestorePoint createdRP = CreateRestorePoint(rgName, rpcName, rpName, optionalProperties, osDisk, vmSize, diskToExclude: dataDiskId);
@@ -78,12 +85,14 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
 
                     // get RPC without dollar expand
                     RestorePointCollection returnedRpc = GetRpc(rgName, rpcName);
-                    VerifyRpc(returnedRpc, rgName, rpcName, location, vmId, rpName, false);
+                    VerifyRpc(returnedRpc, rgName, rpcName, location, vmId, rpName);
 
                     // get RPC with dollar expand
                     returnedRpc = GetRpc(rgName, rpcName,  
                         RestorePointCollectionExpandOptions.RestorePoints);
-                    VerifyRpc(returnedRpc, rgName, rpcName, location, vmId, rpName, false);
+                    VerifyRpc(returnedRpc, rgName, rpcName, location, vmId, rpName,
+                        verifyRpcContainsRestorePoints: true);
+
                     // verify the restore point returned from GET RPC with $expand
                     RestorePoint rpInRpc = returnedRpc.RestorePoints[0];
                     VerifyRestorePointDetails(rpInRpc, rpName, osDisk, 1, expectedJRaw,
@@ -115,9 +124,9 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
                         Assert.True(ex.Response.StatusCode == HttpStatusCode.NotFound);
                     }
                 }
-                catch (CloudException ex)
+                catch (Exception e)
                 {
-                    Console.WriteLine("Here");
+                    throw e;
                 }
                 finally
                 {
@@ -136,6 +145,14 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
             m_CrpClient.RestorePointCollections.Delete(rgName, rpcName);
         }
 
+        // for update of RPC, only update of tags are permitted
+        private void UpdateRpc(string rgName, string rpcName, RestorePointCollection rpc,
+            Dictionary<string,string> tags)
+        {
+            rpc.Tags = tags;
+            m_CrpClient.RestorePointCollections.Update(rgName, rpcName, rpc);
+        }
+
         private RestorePoint GetRP(string rgName, string rpcName, 
             string rpName)
         {
@@ -144,7 +161,7 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
 
         // if verify result of GET RPC with $expand, verify that the returned rpc contains restore points
         private void VerifyRpc(RestorePointCollection rpc, string rgName, string rpcName,
-            string location, string source, string rpName, bool verifyRpcContainsRestorePoints)
+            string location, string source, string rpName, bool verifyRpcContainsRestorePoints = false)
         {
             Assert.Equal(rpcName, rpc.Name);
             Assert.Equal(location, rpc.Location, ignoreCase: true);
@@ -194,15 +211,19 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
             return m_CrpClient.RestorePoints.CreateOrUpdate(rgName, rpcName, rpName, inputRP);
         }
 
-        public static string RemoveWhiteSpaces(string str)
+        // remove white space, single quotes, and double quotes from a string
+        public static string RemovePunctuation(string str)
         {
-            return Regex.Replace(str, @"\s+", String.Empty);
+            string removedWhiteSpace = Regex.Replace(str, @"\s+", String.Empty);
+            string removedDoubleQuotes = Regex.Replace(removedWhiteSpace, "\"", String.Empty);
+            string removedSingleQuotes = Regex.Replace(removedWhiteSpace, "'", String.Empty);
+            return removedSingleQuotes;
         }
 
         void VerifyRestorePointDetails(RestorePoint rp, string rpName, OSDisk osDisk,
             int excludeDisksCount, string expectedJRaw, string excludeDiskId, string vmId, string vmSize)
         {
-            string returnedJRaw = RemoveWhiteSpaces(rp.OptionalProperties.ToString());
+            string returnedJRaw = RemovePunctuation(rp.OptionalProperties.ToString());
             bool equal = expectedJRaw == returnedJRaw;
 
             Assert.Equal(rpName, rp.Name);
