@@ -17,9 +17,7 @@ namespace Sql.Tests
 {
     public class DatabaseLongTermRetentionBackupsTests
     {
-        //[Fact(Skip = "Manual test due to long setup time required (over 18 hours).")]
-        [Fact]
-        public void TestUpdateLongTermRetentionBackup()
+        [Fact(Skip = "Manual test due to long setup time required (over 18 hours).")]        public void TestUpdateLongTermRetentionBackup()
         {
             // MANUAL TEST INSTRUCTIONS
             // PlayBack Mode: 
@@ -56,8 +54,7 @@ namespace Sql.Tests
             }
         }
 
-        //[Fact(Skip = "Manual test due to long setup time required (over 18 hours).")]
-        [Fact]
+        [Fact(Skip = "Manual test due to long setup time required (over 18 hours).")]
         public void TestCopyLongTermRetentionBackup()
         {
             // MANUAL TEST INSTRUCTIONS
