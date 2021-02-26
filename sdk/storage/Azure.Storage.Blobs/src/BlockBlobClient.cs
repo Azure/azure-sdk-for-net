@@ -2137,7 +2137,8 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(BlockBlobClient)}.{nameof(OpenWrite)}");
+            string operationName = $"{nameof(BlockBlobClient)}.{nameof(OpenWrite)}";
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
 
             try
             {
@@ -2159,7 +2160,7 @@ namespace Azure.Storage.Blobs.Specialized
                     conditions: options?.OpenConditions,
                     accessTier: default,
                     progressHandler: default,
-                    operationName: default,
+                    operationName: operationName,
                     async: async,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
