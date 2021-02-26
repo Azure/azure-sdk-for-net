@@ -1,0 +1,59 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://smstestapp.communication.azure.com/sms?api-version=2021-03-07",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "183",
+        "Content-Type": "application/json",
+        "Date": "Fri, 26 Feb 2021 18:32:34 GMT",
+        "traceparent": "00-d2022d1c9aa167488fcfc62968cb80bf-5a1f85beb13c7a4b-00",
+        "User-Agent": "azsdk-net-Communication.Sms/1.0.0-alpha.20210226.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "d94de0ec3b168e8a70f9894f483cef21",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "from": "Sanitized",
+        "smsRecipients": [
+          {
+            "to": "Sanitized",
+            "repeatabilityRequestId": "c5b6e712-7e50-4e11-aaa6-910a6547adaf",
+            "repeatabilityFirstSent": "02/26/2021 10:32:34"
+          }
+        ],
+        "message": "Hi"
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-07-20-preview1, 2020-08-20-preview, 2021-03-07",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 26 Feb 2021 18:32:36 GMT",
+        "MS-CV": "8HqYOZA7lUyXuDAX3CzRGw.0",
+        "Request-Context": "appId=",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0xD45YAAAAADebgRsOFCrRZPNkJM8bh1lRVdSMzBFREdFMDYxOAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Processing-Time": "385ms"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "to": "Sanitized",
+            "messageId": "Outgoing_202102261832369964eb76-4443-45f3-933a-8975a8fd39ed_noam",
+            "httpStatusCode": 202,
+            "errorMessage": null,
+            "repeatabilityResult": "accepted",
+            "successful": true
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_PHONE_NUMBER": "\u002B18005555555",
+    "COMMUNICATION_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
+    "RandomSeed": "780012571"
+  }
+}

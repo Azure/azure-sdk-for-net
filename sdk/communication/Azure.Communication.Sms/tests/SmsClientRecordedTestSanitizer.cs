@@ -16,7 +16,7 @@ namespace Azure.Communication.Sms.Tests
         public override string SanitizeVariable(string variableName, string environmentVariableValue)
             => variableName switch
             {
-                SmsClientTestEnvironment.PhoneNumberEnvironmentVariableName => "+18005555555",
+                SmsClientTestEnvironment.FromPhoneNumberEnvironmentVariableName => "+18005555555",
                 _ => base.SanitizeVariable(variableName, environmentVariableValue)
             };
     }

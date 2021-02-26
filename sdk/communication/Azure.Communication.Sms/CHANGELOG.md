@@ -5,7 +5,13 @@
 ### Added
 - Added support to create SmsClient with AzureKeyCredential.
 - Support for creating SmsClient with TokenCredential
+- Added support for 1:N SMS messaging
+- Added support for SMS idempotency
 
+### Breaking
+- Updated `Task<Response<SendSmsResponse>> SendAsync(PhoneNumberIdentifier from, PhoneNumberIdentifier to, string message, SendSmsOptions sendSmsOptions = null, CancellationToken cancellationToken = default)`
+to `Task<Response<SmsSendResult>> SendAsync(string from, string to, string message, Models.SmsSendOptions options = default)`
+- Replaced `SendSmsResponse` with `SmsSendResult`
 
 ## 1.0.0-beta.3 (2020-11-16)
 

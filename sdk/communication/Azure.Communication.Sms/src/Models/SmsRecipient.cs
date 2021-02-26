@@ -1,12 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
+
 namespace Azure.Communication.Sms.Models
 {
-    /// <summary>
-    /// Model factory that enables mocking for the Sms library.
-    /// </summary>
-    public static class SmsModelFactory
+    /// <summary> Sms Recipient. </summary>
+
+    [CodeGenModel("SmsRecipient")]
+    internal partial class SmsRecipient
     {
     }
 }
