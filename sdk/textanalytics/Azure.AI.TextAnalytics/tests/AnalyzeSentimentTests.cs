@@ -105,7 +105,7 @@ namespace Azure.AI.TextAnalytics.Tests
             DocumentSentiment docSentiment = await client.AnalyzeSentimentAsync(document, options: new AnalyzeSentimentOptions() { IncludeOpinionMining = true });
 
             CheckAnalyzeSentimentProperties(docSentiment, assessmentMining: true);
-            SentenceOpinion minedAssessment = docSentiment.Sentences.FirstOrDefault().MinedAssessments.FirstOrDefault();
+            SentenceOpinion minedAssessment = docSentiment.Sentences.FirstOrDefault().Opinions.FirstOrDefault();
             Assert.AreEqual("bathrooms", minedAssessment.Target.Text);
             Assert.AreEqual(TextSentiment.Negative, minedAssessment.Target.Sentiment);
             Assert.AreEqual("clean", minedAssessment.Assessments.FirstOrDefault().Text);
@@ -440,11 +440,11 @@ namespace Azure.AI.TextAnalytics.Tests
                 Assert.IsNotNull(sentence.ConfidenceScores.Negative);
                 Assert.IsTrue(CheckTotalConfidenceScoreValue(sentence.ConfidenceScores));
 
-                Assert.IsNotNull(sentence.MinedAssessments);
+                Assert.IsNotNull(sentence.Opinions);
                 if (assessmentMining)
                 {
-                    Assert.Greater(sentence.MinedAssessments.Count(), 0);
-                    foreach (var minedAssessments in sentence.MinedAssessments)
+                    Assert.Greater(sentence.Opinions.Count(), 0);
+                    foreach (var minedAssessments in sentence.Opinions)
                     {
                         // target
                         Assert.IsNotNull(minedAssessments.Target);

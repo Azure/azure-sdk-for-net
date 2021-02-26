@@ -13,7 +13,7 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples
     {
         [Test]
-        public void AnalyzeSentimentWithAssessmentMining()
+        public void AnalyzeSentimentWithOpinionMining()
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
@@ -21,7 +21,7 @@ namespace Azure.AI.TextAnalytics.Samples
             // Instantiate a client that will be used to call the service.
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            #region Snippet:TAAnalyzeSentimentWithAssessmentMining
+            #region Snippet:TAAnalyzeSentimentWithOpinionMining
             string reviewA = @"The food and service were unacceptable, but the concierge were nice.
                              After talking to them about the quality of the food and the process
                              to get room service they refunded the money we spent at the restaurant
@@ -72,7 +72,7 @@ namespace Azure.AI.TextAnalytics.Samples
             {
                 foreach (SentenceSentiment sentence in review.DocumentSentiment.Sentences)
                 {
-                    foreach (SentenceOpinion minedAssessment in sentence.MinedAssessments)
+                    foreach (SentenceOpinion minedAssessment in sentence.Opinions)
                     {
                         if (minedAssessment.Target.Sentiment == TextSentiment.Negative)
                         {

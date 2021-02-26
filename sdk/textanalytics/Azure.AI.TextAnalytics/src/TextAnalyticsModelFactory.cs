@@ -118,7 +118,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="negativeScore">Sets the <see cref="SentimentConfidenceScores.Negative"/> property.</param>
         /// <param name="offset">Sets the <see cref="SentenceSentiment.Offset"/> property.</param>
         /// <param name="length">Sets the <see cref="SentenceSentiment.Length"/> property.</param>
-        /// <param name="minedAssessments">Sets the <see cref="SentenceSentiment.MinedAssessments"/> property.</param>
+        /// <param name="minedAssessments">Sets the <see cref="SentenceSentiment.Opinions"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.SentenceSentiment"/> for mocking purposes.</returns>
         public static SentenceSentiment SentenceSentiment(TextSentiment sentiment, string text, double positiveScore, double neutralScore, double negativeScore, int offset, int length, IReadOnlyList<SentenceOpinion> minedAssessments)
         {

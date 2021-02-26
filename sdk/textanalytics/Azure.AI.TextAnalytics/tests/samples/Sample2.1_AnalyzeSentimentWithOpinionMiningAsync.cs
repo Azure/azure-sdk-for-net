@@ -70,7 +70,7 @@ namespace Azure.AI.TextAnalytics.Samples
             {
                 foreach (SentenceSentiment sentence in review.DocumentSentiment.Sentences)
                 {
-                    foreach (SentenceOpinion minedAssessment in sentence.MinedAssessments)
+                    foreach (SentenceOpinion minedAssessment in sentence.Opinions)
                     {
                         if (minedAssessment.Target.Sentiment == TextSentiment.Negative)
                         {

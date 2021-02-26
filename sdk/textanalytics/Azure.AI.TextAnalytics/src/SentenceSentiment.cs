@@ -24,7 +24,7 @@ namespace Azure.AI.TextAnalytics
             ConfidenceScores = new SentimentConfidenceScores(positiveScore, neutralScore, negativeScore);
             Offset = offset;
             Length = length;
-            MinedAssessments = new List<SentenceOpinion>(minedAssessments);
+            Opinions = new List<SentenceOpinion>(minedAssessments);
         }
 
         internal SentenceSentiment(SentenceSentimentInternal sentenceSentiment, IReadOnlyList<SentenceSentimentInternal> allSentences)
@@ -35,7 +35,7 @@ namespace Azure.AI.TextAnalytics
 
             ConfidenceScores = sentenceSentiment.ConfidenceScores;
             Sentiment = (TextSentiment)Enum.Parse(typeof(TextSentiment), sentenceSentiment.Sentiment, ignoreCase: true);
-            MinedAssessments = ConvertToMinedAssessments(sentenceSentiment, allSentences);
+            Opinions = ConvertToMinedAssessments(sentenceSentiment, allSentences);
             Offset = sentenceSentiment.Offset;
             Length = sentenceSentiment.Length;
         }
@@ -57,10 +57,10 @@ namespace Azure.AI.TextAnalytics
         public SentimentConfidenceScores ConfidenceScores { get; }
 
         /// <summary>
-        /// Gets the mined assessment of a sentence. This is only returned if
+        /// Gets the mined opinion of a sentence. This is only returned if
         /// <see cref="AnalyzeSentimentOptions.IncludeOpinionMining"/> is set to True.
         /// </summary>
-        public IReadOnlyCollection<SentenceOpinion> MinedAssessments { get; }
+        public IReadOnlyCollection<SentenceOpinion> Opinions { get; }
 
         /// <summary>
         /// Gets the starting position for the matching text in the sentence.

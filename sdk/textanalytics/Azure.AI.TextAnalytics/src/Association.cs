@@ -8,7 +8,7 @@ namespace Azure.AI.TextAnalytics.Models
     [CodeGenModel("Association")]
     internal enum Association
     {
-				/// <summary> subject. </summary>
+        /// <summary> subject. </summary>
         Subject,
         /// <summary> other. </summary>
         Other
