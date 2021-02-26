@@ -186,31 +186,31 @@ namespace Microsoft.Azure.Management.ProviderHub.Tests
 
         private OperationsContent CreateResourceProviderOperations(MockContext context, string providerNamespace, List<OperationsDefinition> content)
         {
-            providerhubClient client = GetProviderHubManagementClient(context);
+            ProviderHubClient client = GetProviderHubManagementClient(context);
             return client.Operations.CreateOrUpdate(providerNamespace, content);
         }
 
         private IPage<OperationsDefinition> ListOperations(MockContext context)
         {
-            providerhubClient client = GetProviderHubManagementClient(context);
+            ProviderHubClient client = GetProviderHubManagementClient(context);
             return client.Operations.List();
         }
 
         private IList<OperationsDefinition> ListOperationsByProviderRegistration(MockContext context, string providerNamespace)
         {
-            providerhubClient client = GetProviderHubManagementClient(context);
+            ProviderHubClient client = GetProviderHubManagementClient(context);
             return client.Operations.ListByProviderRegistration(providerNamespace);
         }
 
         private void DeleteResourceProviderOperations(MockContext context, string providerNamespace)
         {
-            providerhubClient client = GetProviderHubManagementClient(context);
+            ProviderHubClient client = GetProviderHubManagementClient(context);
             client.Operations.Delete(providerNamespace);
         }
 
-        private providerhubClient GetProviderHubManagementClient(MockContext context)
+        private ProviderHubClient GetProviderHubManagementClient(MockContext context)
         {
-            return context.GetServiceClient<providerhubClient>();
+            return context.GetServiceClient<ProviderHubClient>();
         }
     }
 }

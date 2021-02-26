@@ -59,31 +59,31 @@ namespace Microsoft.Azure.Management.ProviderHub.Tests
 
         private NotificationRegistration CreateNotificationRegistration(MockContext context, string providerNamespace, string notificationRegistrationName, NotificationRegistrationPropertiesModel properties)
         {
-            providerhubClient client = GetProviderHubManagementClient(context);
+            ProviderHubClient client = GetProviderHubManagementClient(context);
             return client.NotificationRegistrations.CreateOrUpdate(providerNamespace, notificationRegistrationName, properties);
         }
 
         private NotificationRegistration GetNotificationRegistration(MockContext context, string providerNamespace, string notificationRegistrationName)
         {
-            providerhubClient client = GetProviderHubManagementClient(context);
+            ProviderHubClient client = GetProviderHubManagementClient(context);
             return client.NotificationRegistrations.Get(providerNamespace, notificationRegistrationName);
         }
 
         private IPage<NotificationRegistration> ListNotificationRegistration(MockContext context, string providerNamespace)
         {
-            providerhubClient client = GetProviderHubManagementClient(context);
+            ProviderHubClient client = GetProviderHubManagementClient(context);
             return client.NotificationRegistrations.ListByProviderRegistration(providerNamespace);
         }
 
         private void DeleteNotificationRegistration(MockContext context, string providerNamespace, string notificationRegistrationName)
         {
-            providerhubClient client = GetProviderHubManagementClient(context);
+            ProviderHubClient client = GetProviderHubManagementClient(context);
             client.NotificationRegistrations.Delete(providerNamespace, notificationRegistrationName);
         }
 
-        private providerhubClient GetProviderHubManagementClient(MockContext context)
+        private ProviderHubClient GetProviderHubManagementClient(MockContext context)
         {
-            return context.GetServiceClient<providerhubClient>();
+            return context.GetServiceClient<ProviderHubClient>();
         }
     }
 }

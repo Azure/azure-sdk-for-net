@@ -93,31 +93,31 @@ namespace Microsoft.Azure.Management.ProviderHub.Tests
 
         private ProviderRegistration CreateProviderRegistration(MockContext context, string providerNamespace, ProviderRegistrationPropertiesModel properties)
         {
-            providerhubClient client = GetProviderHubManagementClient(context);
+            ProviderHubClient client = GetProviderHubManagementClient(context);
             return client.ProviderRegistrations.CreateOrUpdate(providerNamespace, properties);
         }
 
         private ProviderRegistration GetProviderRegistration(MockContext context, string providerNamespace)
         {
-            providerhubClient client = GetProviderHubManagementClient(context);
+            ProviderHubClient client = GetProviderHubManagementClient(context);
             return client.ProviderRegistrations.Get(providerNamespace);
         }
 
         private IPage<ProviderRegistration> ListProviderRegistration(MockContext context)
         {
-            providerhubClient client = GetProviderHubManagementClient(context);
+            ProviderHubClient client = GetProviderHubManagementClient(context);
             return client.ProviderRegistrations.List();
         }
 
         private void DeleteProviderRegistration(MockContext context, string providerNamespace)
         {
-            providerhubClient client = GetProviderHubManagementClient(context);
+            ProviderHubClient client = GetProviderHubManagementClient(context);
             client.ProviderRegistrations.Delete(providerNamespace);
         }
 
-        private providerhubClient GetProviderHubManagementClient(MockContext context)
+        private ProviderHubClient GetProviderHubManagementClient(MockContext context)
         {
-            return context.GetServiceClient<providerhubClient>();
+            return context.GetServiceClient<ProviderHubClient>();
         }
     }
 }

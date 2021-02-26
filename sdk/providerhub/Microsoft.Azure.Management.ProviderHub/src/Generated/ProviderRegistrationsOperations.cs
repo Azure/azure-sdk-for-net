@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.ProviderHub
     /// <summary>
     /// ProviderRegistrationsOperations operations.
     /// </summary>
-    internal partial class ProviderRegistrationsOperations : IServiceOperations<providerhubClient>, IProviderRegistrationsOperations
+    internal partial class ProviderRegistrationsOperations : IServiceOperations<ProviderHubClient>, IProviderRegistrationsOperations
     {
         /// <summary>
         /// Initializes a new instance of the ProviderRegistrationsOperations class.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.ProviderHub
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal ProviderRegistrationsOperations(providerhubClient client)
+        internal ProviderRegistrationsOperations(ProviderHubClient client)
         {
             if (client == null)
             {
@@ -46,9 +46,9 @@ namespace Microsoft.Azure.Management.ProviderHub
         }
 
         /// <summary>
-        /// Gets a reference to the providerhubClient
+        /// Gets a reference to the ProviderHubClient
         /// </summary>
-        public providerhubClient Client { get; private set; }
+        public ProviderHubClient Client { get; private set; }
 
         /// <summary>
         /// Gets the provider registration details.

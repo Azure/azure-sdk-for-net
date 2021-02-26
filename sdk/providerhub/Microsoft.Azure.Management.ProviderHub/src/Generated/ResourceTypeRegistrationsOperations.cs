@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.ProviderHub
     /// <summary>
     /// ResourceTypeRegistrationsOperations operations.
     /// </summary>
-    internal partial class ResourceTypeRegistrationsOperations : IServiceOperations<providerhubClient>, IResourceTypeRegistrationsOperations
+    internal partial class ResourceTypeRegistrationsOperations : IServiceOperations<ProviderHubClient>, IResourceTypeRegistrationsOperations
     {
         /// <summary>
         /// Initializes a new instance of the ResourceTypeRegistrationsOperations class.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.ProviderHub
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal ResourceTypeRegistrationsOperations(providerhubClient client)
+        internal ResourceTypeRegistrationsOperations(ProviderHubClient client)
         {
             if (client == null)
             {
@@ -46,9 +46,9 @@ namespace Microsoft.Azure.Management.ProviderHub
         }
 
         /// <summary>
-        /// Gets a reference to the providerhubClient
+        /// Gets a reference to the ProviderHubClient
         /// </summary>
-        public providerhubClient Client { get; private set; }
+        public ProviderHubClient Client { get; private set; }
 
         /// <summary>
         /// Gets a resource type details in the given subscription and provider.

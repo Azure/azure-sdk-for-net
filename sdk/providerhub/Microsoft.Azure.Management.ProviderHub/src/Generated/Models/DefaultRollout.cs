@@ -12,14 +12,12 @@ namespace Microsoft.Azure.Management.ProviderHub.Models
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Default rollout definition.
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
     public partial class DefaultRollout : IResource
     {
         /// <summary>
@@ -33,15 +31,10 @@ namespace Microsoft.Azure.Management.ProviderHub.Models
         /// <summary>
         /// Initializes a new instance of the DefaultRollout class.
         /// </summary>
-        /// <param name="provisioningState">Possible values include:
-        /// 'NotSpecified', 'Accepted', 'Running', 'Creating', 'Created',
-        /// 'Deleting', 'Deleted', 'Canceled', 'Failed', 'Succeeded',
-        /// 'MovingResources', 'TransientFailure', 'RolloutInProgress'</param>
-        public DefaultRollout(string provisioningState = default(string), DefaultRolloutPropertiesSpecification specification = default(DefaultRolloutPropertiesSpecification), DefaultRolloutPropertiesStatus status = default(DefaultRolloutPropertiesStatus))
+        /// <param name="properties">Properties of the rollout.</param>
+        public DefaultRollout(DefaultRolloutPropertiesModel properties = default(DefaultRolloutPropertiesModel))
         {
-            ProvisioningState = provisioningState;
-            Specification = specification;
-            Status = status;
+            Properties = properties;
             CustomInit();
         }
 
@@ -51,23 +44,10 @@ namespace Microsoft.Azure.Management.ProviderHub.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets possible values include: 'NotSpecified', 'Accepted',
-        /// 'Running', 'Creating', 'Created', 'Deleting', 'Deleted',
-        /// 'Canceled', 'Failed', 'Succeeded', 'MovingResources',
-        /// 'TransientFailure', 'RolloutInProgress'
+        /// Gets or sets properties of the rollout.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.specification")]
-        public DefaultRolloutPropertiesSpecification Specification { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.status")]
-        public DefaultRolloutPropertiesStatus Status { get; set; }
+        [JsonProperty(PropertyName = "properties")]
+        public DefaultRolloutPropertiesModel Properties { get; set; }
 
     }
 }

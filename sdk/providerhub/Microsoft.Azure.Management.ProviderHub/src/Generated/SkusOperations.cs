@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.ProviderHub
     /// <summary>
     /// SkusOperations operations.
     /// </summary>
-    internal partial class SkusOperations : IServiceOperations<providerhubClient>, ISkusOperations
+    internal partial class SkusOperations : IServiceOperations<ProviderHubClient>, ISkusOperations
     {
         /// <summary>
         /// Initializes a new instance of the SkusOperations class.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.ProviderHub
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal SkusOperations(providerhubClient client)
+        internal SkusOperations(ProviderHubClient client)
         {
             if (client == null)
             {
@@ -46,9 +46,9 @@ namespace Microsoft.Azure.Management.ProviderHub
         }
 
         /// <summary>
-        /// Gets a reference to the providerhubClient
+        /// Gets a reference to the ProviderHubClient
         /// </summary>
-        public providerhubClient Client { get; private set; }
+        public ProviderHubClient Client { get; private set; }
 
         /// <summary>
         /// Gets the sku details for the given resource type and sku name.

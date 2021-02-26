@@ -7,7 +7,7 @@
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"notificationMode\": \"EventHub\",\r\n    \"messageScope\": \"RegisteredSubscriptions\",\r\n    \"includedEvents\": [\r\n      \"*/write\",\r\n      \"Microsoft.Contoso/employees/delete\"\r\n    ],\r\n    \"notificationEndpoints\": [\r\n      {\r\n        \"notificationDestination\": \"/subscriptions/ac6bcfb5-3dc1-491f-95a6-646b89bf3e88/resourceGroups/mgmtexp-eastus/providers/Microsoft.EventHub/namespaces/unitedstates-mgmtexpint/eventhubs/armlinkednotifications\",\r\n        \"locations\": [\r\n          \"\",\r\n          \"East US\"\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e68dd7dd-9558-43de-ba6f-611072886edc"
+          "107351d3-8bbf-4e09-a77d-a61199289d69"
         ],
         "Accept-Language": [
           "en-US"
@@ -16,7 +16,7 @@
           "FxVersion/4.6.29719.03",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.ProviderHub.providerhubClient/1.0.0.1"
+          "Microsoft.Azure.Management.ProviderHub.ProviderHubClient/1.0.0.1"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -36,16 +36,16 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "6a4dd918-a728-4d34-9027-5fe492ec0ae6"
+          "529be846-20ce-442a-affb-4ae5b00fb5e7"
         ],
         "x-ms-correlation-request-id": [
-          "d8abc167-e32f-4fe5-9c00-ea90f71a12a4"
+          "1a3c83e9-082c-4c87-b53e-be1bd322a7ce"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20210225T054626Z:d8abc167-e32f-4fe5-9c00-ea90f71a12a4"
+          "WESTUS:20210226T042656Z:1a3c83e9-082c-4c87-b53e-be1bd322a7ce"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -54,7 +54,7 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 25 Feb 2021 05:46:26 GMT"
+          "Fri, 26 Feb 2021 04:26:56 GMT"
         ],
         "Content-Length": [
           "458"
@@ -76,7 +76,7 @@
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"notificationMode\": \"EventHub\",\r\n    \"messageScope\": \"RegisteredSubscriptions\",\r\n    \"includedEvents\": [\r\n      \"*/write\",\r\n      \"Microsoft.Contoso/employees/delete\"\r\n    ],\r\n    \"notificationEndpoints\": [\r\n      {\r\n        \"notificationDestination\": \"/subscriptions/ac6bcfb5-3dc1-491f-95a6-646b89bf3e88/resourceGroups/mgmtexp-eastus/providers/Microsoft.EventHub/namespaces/unitedstates-mgmtexpint/eventhubs/armlinkednotifications\",\r\n        \"locations\": [\r\n          \"\",\r\n          \"East US\"\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "8341ab98-82d9-4d82-859f-4d080a2132d9"
+          "7714dd61-b577-4638-8fe8-cb7c36995f47"
         ],
         "Accept-Language": [
           "en-US"
@@ -85,7 +85,7 @@
           "FxVersion/4.6.29719.03",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.ProviderHub.providerhubClient/1.0.0.1"
+          "Microsoft.Azure.Management.ProviderHub.ProviderHubClient/1.0.0.1"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -105,16 +105,16 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "1888b49e-10ed-4b99-942a-30399bf2f191"
+          "46ebb627-7604-4e9b-b31c-41c3a988363a"
         ],
         "x-ms-correlation-request-id": [
-          "16c6ee1d-a2d2-4765-8c5c-98b210a203ac"
+          "e92b8390-bcff-48c0-b5bb-71dd3457300d"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20210225T054629Z:16c6ee1d-a2d2-4765-8c5c-98b210a203ac"
+          "WESTUS:20210226T042658Z:e92b8390-bcff-48c0-b5bb-71dd3457300d"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -123,7 +123,7 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 25 Feb 2021 05:46:28 GMT"
+          "Fri, 26 Feb 2021 04:26:58 GMT"
         ],
         "Content-Length": [
           "458"
@@ -145,7 +145,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "425dba6d-44da-4ff8-8355-816d06ad8e85"
+          "69a9dfa2-c8b7-4daa-92f7-0d5742356632"
         ],
         "Accept-Language": [
           "en-US"
@@ -154,7 +154,7 @@
           "FxVersion/4.6.29719.03",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.ProviderHub.providerhubClient/1.0.0.1"
+          "Microsoft.Azure.Management.ProviderHub.ProviderHubClient/1.0.0.1"
         ]
       },
       "ResponseHeaders": {
@@ -168,16 +168,16 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "f4cf2fd7-404d-448a-a561-ed3fe46eb03d"
+          "c9e1323e-0d90-446e-a71d-857c33df2264"
         ],
         "x-ms-correlation-request-id": [
-          "c0b1a3ec-a0fd-4ea9-a73b-9aef02e2fed7"
+          "bb94b561-521b-4d1f-8795-b2a6ec1458a7"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20210225T054627Z:c0b1a3ec-a0fd-4ea9-a73b-9aef02e2fed7"
+          "WESTUS:20210226T042657Z:bb94b561-521b-4d1f-8795-b2a6ec1458a7"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -186,7 +186,7 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 25 Feb 2021 05:46:26 GMT"
+          "Fri, 26 Feb 2021 04:26:57 GMT"
         ],
         "Content-Length": [
           "458"
@@ -208,7 +208,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "27a5a10d-9948-4d63-bd9f-f91fc2c00352"
+          "a5207653-84c7-4d8d-9052-a7a49989f6b0"
         ],
         "Accept-Language": [
           "en-US"
@@ -217,7 +217,7 @@
           "FxVersion/4.6.29719.03",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.ProviderHub.providerhubClient/1.0.0.1"
+          "Microsoft.Azure.Management.ProviderHub.ProviderHubClient/1.0.0.1"
         ]
       },
       "ResponseHeaders": {
@@ -234,16 +234,16 @@
           "gateway"
         ],
         "x-ms-request-id": [
-          "0019b0d8-e43a-4ccb-a7a2-3e45feddc8fe"
+          "0cb0f7a0-621c-4733-82a9-a27dedb0f2b9"
         ],
         "x-ms-correlation-request-id": [
-          "ef888704-486c-4ebf-8398-b509f296fd9c"
+          "c16bd4d5-d2ba-4bee-b5cb-d95236a1e0b9"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20210225T054628Z:ef888704-486c-4ebf-8398-b509f296fd9c"
+          "WESTUS:20210226T042658Z:c16bd4d5-d2ba-4bee-b5cb-d95236a1e0b9"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -252,7 +252,7 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 25 Feb 2021 05:46:28 GMT"
+          "Fri, 26 Feb 2021 04:26:57 GMT"
         ],
         "Content-Length": [
           "135"
@@ -274,7 +274,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "2190c8ad-e92a-43fa-a581-61627f219539"
+          "16e1cd34-9a91-4af2-af13-48deaf3f1faa"
         ],
         "Accept-Language": [
           "en-US"
@@ -283,7 +283,7 @@
           "FxVersion/4.6.29719.03",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.ProviderHub.providerhubClient/1.0.0.1"
+          "Microsoft.Azure.Management.ProviderHub.ProviderHubClient/1.0.0.1"
         ]
       },
       "ResponseHeaders": {
@@ -297,16 +297,16 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "6fdf6271-9cf7-49ec-ab85-223c89ecbf1e"
+          "04440044-bb87-4781-9516-974a299e029f"
         ],
         "x-ms-correlation-request-id": [
-          "6a96b695-0840-4afc-8be2-180be8911074"
+          "b4038584-aefe-4f93-ae57-4b458c2c7714"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20210225T054627Z:6a96b695-0840-4afc-8be2-180be8911074"
+          "WESTUS:20210226T042657Z:b4038584-aefe-4f93-ae57-4b458c2c7714"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -315,7 +315,7 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 25 Feb 2021 05:46:27 GMT"
+          "Fri, 26 Feb 2021 04:26:56 GMT"
         ],
         "Content-Length": [
           "470"
@@ -337,7 +337,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "2b17429d-dd94-45c1-a834-1fc85c2ec662"
+          "163c9e6b-d0bb-4cf2-a87f-d1b03d84707f"
         ],
         "Accept-Language": [
           "en-US"
@@ -346,7 +346,7 @@
           "FxVersion/4.6.29719.03",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.ProviderHub.providerhubClient/1.0.0.1"
+          "Microsoft.Azure.Management.ProviderHub.ProviderHubClient/1.0.0.1"
         ]
       },
       "ResponseHeaders": {
@@ -360,16 +360,16 @@
           "14999"
         ],
         "x-ms-request-id": [
-          "58894fc6-8ff4-4d46-abd7-af3c9fe794c3"
+          "ee335c57-daf9-4331-8e9f-8dd3f4c9916b"
         ],
         "x-ms-correlation-request-id": [
-          "8cc02039-9a07-4a53-8d11-9be95679b39c"
+          "267661ae-576f-40b4-9c43-57b4ada46891"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20210225T054628Z:8cc02039-9a07-4a53-8d11-9be95679b39c"
+          "WESTUS:20210226T042657Z:267661ae-576f-40b4-9c43-57b4ada46891"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -378,7 +378,7 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 25 Feb 2021 05:46:28 GMT"
+          "Fri, 26 Feb 2021 04:26:57 GMT"
         ],
         "Content-Length": [
           "4"

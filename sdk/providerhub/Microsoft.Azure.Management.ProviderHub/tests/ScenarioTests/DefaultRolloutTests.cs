@@ -14,10 +14,23 @@ namespace Microsoft.Azure.Management.ProviderHub.Tests
         {
             using (var context = MockContext.Start(GetType()))
             {
-                string providerNamespace = "Microsoft.Contoso";
-                string rolloutName = "defaultRolloutSDK";
+                var providerNamespace = "Microsoft.Contoso";
+                var rolloutName = "defaultRolloutSDK";
+                var properties = new DefaultRolloutPropertiesModel
+                {
+                    Specification = new DefaultRolloutPropertiesSpecification
+                    {
+                        Canary = new DefaultRolloutSpecificationCanary
+                        {
+                            SkipRegions = new List<string>
+                            {
+                                "BrazilUS"
+                            }
+                        }
+                    }
+                };
 
-                var defaultRollout = CreateDefaultRollout(context, providerNamespace, rolloutName);
+                var defaultRollout = CreateDefaultRollout(context, providerNamespace, rolloutName, properties);
                 Assert.NotNull(defaultRollout);
 
                 defaultRollout = GetDefaultRollout(context, providerNamespace, rolloutName);
@@ -28,7 +41,7 @@ namespace Microsoft.Azure.Management.ProviderHub.Tests
 
                 CancelDefaultRollout(context, providerNamespace, rolloutName);
                 defaultRollout = GetDefaultRollout(context, providerNamespace, rolloutName);
-                Assert.True(defaultRollout.ProvisioningState == "Canceled");
+                Assert.True(defaultRollout.Properties.ProvisioningState == "Canceled");
 
                 DeleteDefaultRollout(context, providerNamespace, rolloutName);
                 var exception = Assert.Throws<ErrorResponseException>(() => GetDefaultRollout(context, providerNamespace, rolloutName));
@@ -36,39 +49,39 @@ namespace Microsoft.Azure.Management.ProviderHub.Tests
             }
         }
 
-        private DefaultRollout CreateDefaultRollout(MockContext context, string providerNamespace, string rolloutName)
+        private DefaultRollout CreateDefaultRollout(MockContext context, string providerNamespace, string rolloutName, DefaultRolloutPropertiesModel properties)
         {
-            providerhubClient client = GetProviderHubManagementClient(context);
-            return client.DefaultRollouts.BeginCreateOrUpdate(providerNamespace, rolloutName);
+            ProviderHubClient client = GetProviderHubManagementClient(context);
+            return client.DefaultRollouts.BeginCreateOrUpdate(providerNamespace, rolloutName, properties);
         }
 
         private DefaultRollout GetDefaultRollout(MockContext context, string providerNamespace, string rolloutName)
         {
-            providerhubClient client = GetProviderHubManagementClient(context);
+            ProviderHubClient client = GetProviderHubManagementClient(context);
             return client.DefaultRollouts.Get(providerNamespace, rolloutName);
         }
 
         private IPage<DefaultRollout> ListDefaultRollout(MockContext context, string providerNamespace)
         {
-            providerhubClient client = GetProviderHubManagementClient(context);
+            ProviderHubClient client = GetProviderHubManagementClient(context);
             return client.DefaultRollouts.ListByProviderRegistration(providerNamespace);
         }
 
         private void CancelDefaultRollout(MockContext context, string providerNamespace, string rolloutName)
         {
-            providerhubClient client = GetProviderHubManagementClient(context);
+            ProviderHubClient client = GetProviderHubManagementClient(context);
             client.DefaultRollouts.Stop(providerNamespace, rolloutName);
         }
 
         private void DeleteDefaultRollout(MockContext context, string providerNamespace, string rolloutName)
         {
-            providerhubClient client = GetProviderHubManagementClient(context);
+            ProviderHubClient client = GetProviderHubManagementClient(context);
             client.DefaultRollouts.Delete(providerNamespace, rolloutName);
         }
 
-        private providerhubClient GetProviderHubManagementClient(MockContext context)
+        private ProviderHubClient GetProviderHubManagementClient(MockContext context)
         {
-            return context.GetServiceClient<providerhubClient>();
+            return context.GetServiceClient<ProviderHubClient>();
         }
     }
 }

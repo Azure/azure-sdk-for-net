@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.ProviderHub
     /// <summary>
     /// CustomRolloutsOperations operations.
     /// </summary>
-    internal partial class CustomRolloutsOperations : IServiceOperations<providerhubClient>, ICustomRolloutsOperations
+    internal partial class CustomRolloutsOperations : IServiceOperations<ProviderHubClient>, ICustomRolloutsOperations
     {
         /// <summary>
         /// Initializes a new instance of the CustomRolloutsOperations class.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.ProviderHub
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal CustomRolloutsOperations(providerhubClient client)
+        internal CustomRolloutsOperations(ProviderHubClient client)
         {
             if (client == null)
             {
@@ -46,9 +46,9 @@ namespace Microsoft.Azure.Management.ProviderHub
         }
 
         /// <summary>
-        /// Gets a reference to the providerhubClient
+        /// Gets a reference to the ProviderHubClient
         /// </summary>
-        public providerhubClient Client { get; private set; }
+        public ProviderHubClient Client { get; private set; }
 
         /// <summary>
         /// Gets the custom rollout details.
@@ -251,7 +251,7 @@ namespace Microsoft.Azure.Management.ProviderHub
         /// The rollout name.
         /// </param>
         /// <param name='properties'>
-        /// The custom rollout properties supplied to the CreateOrUpdate operation.
+        /// Properties of the rollout.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -274,7 +274,7 @@ namespace Microsoft.Azure.Management.ProviderHub
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<CustomRollout>> CreateOrUpdateWithHttpMessagesAsync(string providerNamespace, string rolloutName, CustomRolloutProperties properties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<CustomRollout>> CreateOrUpdateWithHttpMessagesAsync(string providerNamespace, string rolloutName, CustomRolloutPropertiesModel properties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -288,13 +288,18 @@ namespace Microsoft.Azure.Management.ProviderHub
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "rolloutName");
             }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             if (properties == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "properties");
             }
-            if (Client.ApiVersion == null)
+            CustomRollout properties1 = new CustomRollout();
+            if (properties != null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+                properties1.Properties = properties;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -305,7 +310,7 @@ namespace Microsoft.Azure.Management.ProviderHub
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("providerNamespace", providerNamespace);
                 tracingParameters.Add("rolloutName", rolloutName);
-                tracingParameters.Add("properties", properties);
+                tracingParameters.Add("properties1", properties1);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdate", tracingParameters);
             }
@@ -358,9 +363,9 @@ namespace Microsoft.Azure.Management.ProviderHub
 
             // Serialize Request
             string _requestContent = null;
-            if(properties != null)
+            if(properties1 != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(properties, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(properties1, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }

@@ -74,9 +74,9 @@ namespace Microsoft.Azure.Management.ProviderHub
             /// The rollout name.
             /// </param>
             /// <param name='properties'>
-            /// The custom rollout properties supplied to the CreateOrUpdate operation.
+            /// Properties of the rollout.
             /// </param>
-            public static CustomRollout CreateOrUpdate(this ICustomRolloutsOperations operations, string providerNamespace, string rolloutName, CustomRolloutProperties properties)
+            public static CustomRollout CreateOrUpdate(this ICustomRolloutsOperations operations, string providerNamespace, string rolloutName, CustomRolloutPropertiesModel properties)
             {
                 return operations.CreateOrUpdateAsync(providerNamespace, rolloutName, properties).GetAwaiter().GetResult();
             }
@@ -94,12 +94,12 @@ namespace Microsoft.Azure.Management.ProviderHub
             /// The rollout name.
             /// </param>
             /// <param name='properties'>
-            /// The custom rollout properties supplied to the CreateOrUpdate operation.
+            /// Properties of the rollout.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CustomRollout> CreateOrUpdateAsync(this ICustomRolloutsOperations operations, string providerNamespace, string rolloutName, CustomRolloutProperties properties, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CustomRollout> CreateOrUpdateAsync(this ICustomRolloutsOperations operations, string providerNamespace, string rolloutName, CustomRolloutPropertiesModel properties, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(providerNamespace, rolloutName, properties, null, cancellationToken).ConfigureAwait(false))
                 {

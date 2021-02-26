@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.ProviderHub
     /// <summary>
     /// Operations operations.
     /// </summary>
-    internal partial class Operations : IServiceOperations<providerhubClient>, IOperations
+    internal partial class Operations : IServiceOperations<ProviderHubClient>, IOperations
     {
         /// <summary>
         /// Initializes a new instance of the Operations class.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.ProviderHub
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal Operations(providerhubClient client)
+        internal Operations(ProviderHubClient client)
         {
             if (client == null)
             {
@@ -46,9 +46,9 @@ namespace Microsoft.Azure.Management.ProviderHub
         }
 
         /// <summary>
-        /// Gets a reference to the providerhubClient
+        /// Gets a reference to the ProviderHubClient
         /// </summary>
-        public providerhubClient Client { get; private set; }
+        public ProviderHubClient Client { get; private set; }
 
         /// <summary>
         /// Lists all the operations supported by Microsoft.ProviderHub.

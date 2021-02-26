@@ -20,9 +20,9 @@ namespace Microsoft.Azure.Management.ProviderHub
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Microsoft Provider Hub
+    /// Microsoft ProviderHub
     /// </summary>
-    public partial interface IproviderhubClient : System.IDisposable
+    public partial interface IProviderHubClient : System.IDisposable
     {
         /// <summary>
         /// The base URI of the service.

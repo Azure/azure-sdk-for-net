@@ -7,7 +7,7 @@
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"routingType\": \"Default\",\r\n    \"regionality\": \"Regional\",\r\n    \"endpoints\": [\r\n      {\r\n        \"apiVersions\": [\r\n          \"2018-11-01-preview\",\r\n          \"2020-01-01-preview\",\r\n          \"2019-01-01\"\r\n        ],\r\n        \"locations\": [\r\n          \"West US\",\r\n          \"West Central US\",\r\n          \"West Europe\",\r\n          \"Southeast Asia\",\r\n          \"West US 2\",\r\n          \"East US 2 EUAP\",\r\n          \"North Europe\",\r\n          \"East US\",\r\n          \"East Asia\"\r\n        ],\r\n        \"requiredFeatures\": [\r\n          \"Microsoft.Contoso/RPaaSSampleApp\"\r\n        ]\r\n      }\r\n    ],\r\n    \"swaggerSpecifications\": [\r\n      {\r\n        \"apiVersions\": [\r\n          \"2018-11-01-preview\",\r\n          \"2020-01-01-preview\",\r\n          \"2019-01-01\"\r\n        ],\r\n        \"swaggerSpecFolderUri\": \"https://github.com/Azure/azure-rest-api-specs-pr/blob/RPSaaSMaster/specification/rpsaas/resource-manager/Microsoft.Contoso/\"\r\n      }\r\n    ],\r\n    \"enableAsyncOperation\": true,\r\n    \"enableThirdPartyS2S\": false,\r\n    \"resourceMovePolicy\": {\r\n      \"validationRequired\": false,\r\n      \"crossResourceGroupMoveEnabled\": true,\r\n      \"crossSubscriptionMoveEnabled\": true\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "b6e84ea2-b967-47c9-9fad-e3fbe0217697"
+          "3fd8687c-52dd-4746-a5a5-a41c9aa24758"
         ],
         "Accept-Language": [
           "en-US"
@@ -16,7 +16,7 @@
           "FxVersion/4.6.29719.03",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.ProviderHub.providerhubClient/1.0.0.1"
+          "Microsoft.Azure.Management.ProviderHub.ProviderHubClient/1.0.0.1"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -36,16 +36,16 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "df99c907-dab2-4afa-9e9d-6c3590f97f72"
+          "1ccfe2d9-7b53-4fef-b9cb-8bcd77390b9e"
         ],
         "x-ms-correlation-request-id": [
-          "6fe1ec56-06d6-43e8-af6f-077b364136f1"
+          "a1231203-71c0-4279-a0d9-f9fa20f912cb"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20210225T054827Z:6fe1ec56-06d6-43e8-af6f-077b364136f1"
+          "WESTUS:20210226T042737Z:a1231203-71c0-4279-a0d9-f9fa20f912cb"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -54,7 +54,7 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 25 Feb 2021 05:48:27 GMT"
+          "Fri, 26 Feb 2021 04:27:37 GMT"
         ],
         "Content-Length": [
           "945"
@@ -76,7 +76,7 @@
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"routingType\": \"Default\",\r\n    \"regionality\": \"Regional\",\r\n    \"endpoints\": [\r\n      {\r\n        \"apiVersions\": [\r\n          \"2018-11-01-preview\",\r\n          \"2020-01-01-preview\",\r\n          \"2019-01-01\"\r\n        ],\r\n        \"locations\": [\r\n          \"West US\",\r\n          \"West Central US\",\r\n          \"West Europe\",\r\n          \"Southeast Asia\",\r\n          \"West US 2\",\r\n          \"East US 2 EUAP\",\r\n          \"North Europe\",\r\n          \"East US\",\r\n          \"East Asia\"\r\n        ],\r\n        \"requiredFeatures\": [\r\n          \"Microsoft.Contoso/RPaaSSampleApp\"\r\n        ]\r\n      }\r\n    ],\r\n    \"swaggerSpecifications\": [\r\n      {\r\n        \"apiVersions\": [\r\n          \"2018-11-01-preview\",\r\n          \"2020-01-01-preview\",\r\n          \"2019-01-01\"\r\n        ],\r\n        \"swaggerSpecFolderUri\": \"https://github.com/Azure/azure-rest-api-specs-pr/blob/RPSaaSMaster/specification/rpsaas/resource-manager/Microsoft.Contoso/\"\r\n      }\r\n    ],\r\n    \"enableAsyncOperation\": true,\r\n    \"enableThirdPartyS2S\": false,\r\n    \"resourceMovePolicy\": {\r\n      \"validationRequired\": false,\r\n      \"crossResourceGroupMoveEnabled\": true,\r\n      \"crossSubscriptionMoveEnabled\": true\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "48be5ae2-0891-4fa5-bd3a-9385f125ce48"
+          "0389b12f-51e2-4866-9733-16e317470221"
         ],
         "Accept-Language": [
           "en-US"
@@ -85,7 +85,7 @@
           "FxVersion/4.6.29719.03",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.ProviderHub.providerhubClient/1.0.0.1"
+          "Microsoft.Azure.Management.ProviderHub.ProviderHubClient/1.0.0.1"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -105,16 +105,16 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "20f3155f-0651-45a7-aab1-84ed288927a2"
+          "50a60d67-7d07-456f-8982-6f61bdfea1e3"
         ],
         "x-ms-correlation-request-id": [
-          "bbd7cdfb-02be-426b-94ab-ca3c78d981f5"
+          "bd4345ff-34c8-44b2-97f7-89550d284d08"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20210225T054847Z:bbd7cdfb-02be-426b-94ab-ca3c78d981f5"
+          "WESTUS:20210226T042751Z:bd4345ff-34c8-44b2-97f7-89550d284d08"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -123,7 +123,7 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 25 Feb 2021 05:48:47 GMT"
+          "Fri, 26 Feb 2021 04:27:51 GMT"
         ],
         "Content-Length": [
           "945"
@@ -145,7 +145,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "416fabbe-d823-4bcb-8e18-44dca28ebb64"
+          "972f6a7c-de23-4947-a588-4e6eb36162ef"
         ],
         "Accept-Language": [
           "en-US"
@@ -154,7 +154,7 @@
           "FxVersion/4.6.29719.03",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.ProviderHub.providerhubClient/1.0.0.1"
+          "Microsoft.Azure.Management.ProviderHub.ProviderHubClient/1.0.0.1"
         ]
       },
       "ResponseHeaders": {
@@ -168,16 +168,16 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "93e60cb9-49a3-474f-9f98-ea5f1f856346"
+          "9aac2b76-28a4-4484-83c1-8595ff14c647"
         ],
         "x-ms-correlation-request-id": [
-          "980fa1a7-6850-43ac-a6e8-73963bc95e51"
+          "553fdadd-8304-433c-933f-0a3357302501"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20210225T054827Z:980fa1a7-6850-43ac-a6e8-73963bc95e51"
+          "WESTUS:20210226T042738Z:553fdadd-8304-433c-933f-0a3357302501"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -186,7 +186,7 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 25 Feb 2021 05:48:27 GMT"
+          "Fri, 26 Feb 2021 04:27:37 GMT"
         ],
         "Content-Length": [
           "945"
@@ -208,7 +208,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "4d83e3e2-54fe-4015-bacc-42097072a523"
+          "24c560ab-cf2b-453c-8795-8d770e234add"
         ],
         "Accept-Language": [
           "en-US"
@@ -217,7 +217,7 @@
           "FxVersion/4.6.29719.03",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.ProviderHub.providerhubClient/1.0.0.1"
+          "Microsoft.Azure.Management.ProviderHub.ProviderHubClient/1.0.0.1"
         ]
       },
       "ResponseHeaders": {
@@ -234,16 +234,16 @@
           "gateway"
         ],
         "x-ms-request-id": [
-          "53a15fdc-4b5d-4157-84ed-07d6b2c4ca17"
+          "7f2f8d6e-c62d-4403-a5c3-5fb0dec08908"
         ],
         "x-ms-correlation-request-id": [
-          "c562987a-ee0a-4fd7-8f7d-e1688234b878"
+          "d0b133be-2bfd-44c5-9b8e-4eccdb1e2d13"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20210225T054829Z:c562987a-ee0a-4fd7-8f7d-e1688234b878"
+          "WESTUS:20210226T042738Z:d0b133be-2bfd-44c5-9b8e-4eccdb1e2d13"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -252,7 +252,7 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 25 Feb 2021 05:48:28 GMT"
+          "Fri, 26 Feb 2021 04:27:38 GMT"
         ],
         "Content-Length": [
           "146"
@@ -274,7 +274,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "02d1a54f-d36f-4d57-ab12-0b4cf3ce5d13"
+          "25962fde-fe20-42eb-b651-d71ad493bdba"
         ],
         "Accept-Language": [
           "en-US"
@@ -283,7 +283,7 @@
           "FxVersion/4.6.29719.03",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.ProviderHub.providerhubClient/1.0.0.1"
+          "Microsoft.Azure.Management.ProviderHub.ProviderHubClient/1.0.0.1"
         ]
       },
       "ResponseHeaders": {
@@ -297,16 +297,16 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "ee05d5ae-6541-4a71-872f-54ad37c8b5a5"
+          "a76a6c8f-1194-4be7-9f0f-510a2e5931e4"
         ],
         "x-ms-correlation-request-id": [
-          "b76cc514-86ac-4600-9b01-5cceb998b145"
+          "b96c7667-14b3-4741-9d88-05015d72a3ba"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20210225T054828Z:b76cc514-86ac-4600-9b01-5cceb998b145"
+          "WESTUS:20210226T042738Z:b96c7667-14b3-4741-9d88-05015d72a3ba"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -315,7 +315,7 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 25 Feb 2021 05:48:27 GMT"
+          "Fri, 26 Feb 2021 04:27:37 GMT"
         ],
         "Content-Length": [
           "6323"
@@ -337,7 +337,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "a80dcba9-ab75-421d-9cc1-b39972cfbf6f"
+          "a43c08e0-98bc-401b-b53d-10f0f51825d1"
         ],
         "Accept-Language": [
           "en-US"
@@ -346,7 +346,7 @@
           "FxVersion/4.6.29719.03",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.ProviderHub.providerhubClient/1.0.0.1"
+          "Microsoft.Azure.Management.ProviderHub.ProviderHubClient/1.0.0.1"
         ]
       },
       "ResponseHeaders": {
@@ -366,10 +366,10 @@
           "14999"
         ],
         "x-ms-correlation-request-id": [
-          "cea02a32-820a-44a2-bdbb-25470be07837"
+          "cc7272f7-474f-4700-8c85-b4439d2b6b03"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20210225T054828Z:cea02a32-820a-44a2-bdbb-25470be07837"
+          "WESTUS:20210226T042738Z:cc7272f7-474f-4700-8c85-b4439d2b6b03"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -378,7 +378,7 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 25 Feb 2021 05:48:28 GMT"
+          "Fri, 26 Feb 2021 04:27:38 GMT"
         ],
         "Expires": [
           "-1"

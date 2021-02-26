@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.ProviderHub.Tests
             {
                 var providerNamespace = "Microsoft.Contoso";
                 var rolloutName = "customRolloutSDK";
-                var customRolloutProperties = new CustomRolloutProperties
+                var customRolloutProperties = new CustomRolloutPropertiesModel
                 {
                     Specification = new CustomRolloutPropertiesSpecification
                     {
@@ -41,27 +41,27 @@ namespace Microsoft.Azure.Management.ProviderHub.Tests
             }
         }
 
-        private CustomRollout CreateCustomRollout(MockContext context, string providerNamespace, string rolloutName, CustomRolloutProperties properties)
+        private CustomRollout CreateCustomRollout(MockContext context, string providerNamespace, string rolloutName, CustomRolloutPropertiesModel properties)
         {
-            providerhubClient client = GetProviderHubManagementClient(context);
+            ProviderHubClient client = GetProviderHubManagementClient(context);
             return client.CustomRollouts.CreateOrUpdate(providerNamespace, rolloutName, properties);
         }
 
         private CustomRollout GetCustomRollout(MockContext context, string providerNamespace, string rolloutName)
         {
-            providerhubClient client = GetProviderHubManagementClient(context);
+            ProviderHubClient client = GetProviderHubManagementClient(context);
             return client.CustomRollouts.Get(providerNamespace, rolloutName);
         }
 
         private IPage<CustomRollout> ListCustomRollouts(MockContext context, string providerNamespace)
         {
-            providerhubClient client = GetProviderHubManagementClient(context);
+            ProviderHubClient client = GetProviderHubManagementClient(context);
             return client.CustomRollouts.ListByProviderRegistration(providerNamespace);
         }
 
-        private providerhubClient GetProviderHubManagementClient(MockContext context)
+        private ProviderHubClient GetProviderHubManagementClient(MockContext context)
         {
-            return context.GetServiceClient<providerhubClient>();
+            return context.GetServiceClient<ProviderHubClient>();
         }
     }
 }

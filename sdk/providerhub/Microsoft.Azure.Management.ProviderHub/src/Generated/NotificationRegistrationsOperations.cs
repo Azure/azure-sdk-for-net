@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.ProviderHub
     /// <summary>
     /// NotificationRegistrationsOperations operations.
     /// </summary>
-    internal partial class NotificationRegistrationsOperations : IServiceOperations<providerhubClient>, INotificationRegistrationsOperations
+    internal partial class NotificationRegistrationsOperations : IServiceOperations<ProviderHubClient>, INotificationRegistrationsOperations
     {
         /// <summary>
         /// Initializes a new instance of the NotificationRegistrationsOperations class.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.ProviderHub
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal NotificationRegistrationsOperations(providerhubClient client)
+        internal NotificationRegistrationsOperations(ProviderHubClient client)
         {
             if (client == null)
             {
@@ -46,9 +46,9 @@ namespace Microsoft.Azure.Management.ProviderHub
         }
 
         /// <summary>
-        /// Gets a reference to the providerhubClient
+        /// Gets a reference to the ProviderHubClient
         /// </summary>
-        public providerhubClient Client { get; private set; }
+        public ProviderHubClient Client { get; private set; }
 
         /// <summary>
         /// Gets the notification registration details.

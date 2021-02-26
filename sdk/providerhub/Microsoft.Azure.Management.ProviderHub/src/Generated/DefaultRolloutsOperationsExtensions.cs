@@ -110,9 +110,12 @@ namespace Microsoft.Azure.Management.ProviderHub
             /// <param name='rolloutName'>
             /// The rollout name.
             /// </param>
-            public static DefaultRollout CreateOrUpdate(this IDefaultRolloutsOperations operations, string providerNamespace, string rolloutName)
+            /// <param name='properties'>
+            /// Properties of the rollout.
+            /// </param>
+            public static DefaultRollout CreateOrUpdate(this IDefaultRolloutsOperations operations, string providerNamespace, string rolloutName, DefaultRolloutPropertiesModel properties = default(DefaultRolloutPropertiesModel))
             {
-                return operations.CreateOrUpdateAsync(providerNamespace, rolloutName).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(providerNamespace, rolloutName, properties).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -127,12 +130,15 @@ namespace Microsoft.Azure.Management.ProviderHub
             /// <param name='rolloutName'>
             /// The rollout name.
             /// </param>
+            /// <param name='properties'>
+            /// Properties of the rollout.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DefaultRollout> CreateOrUpdateAsync(this IDefaultRolloutsOperations operations, string providerNamespace, string rolloutName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DefaultRollout> CreateOrUpdateAsync(this IDefaultRolloutsOperations operations, string providerNamespace, string rolloutName, DefaultRolloutPropertiesModel properties = default(DefaultRolloutPropertiesModel), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(providerNamespace, rolloutName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(providerNamespace, rolloutName, properties, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -221,9 +227,12 @@ namespace Microsoft.Azure.Management.ProviderHub
             /// <param name='rolloutName'>
             /// The rollout name.
             /// </param>
-            public static DefaultRollout BeginCreateOrUpdate(this IDefaultRolloutsOperations operations, string providerNamespace, string rolloutName)
+            /// <param name='properties'>
+            /// Properties of the rollout.
+            /// </param>
+            public static DefaultRollout BeginCreateOrUpdate(this IDefaultRolloutsOperations operations, string providerNamespace, string rolloutName, DefaultRolloutPropertiesModel properties = default(DefaultRolloutPropertiesModel))
             {
-                return operations.BeginCreateOrUpdateAsync(providerNamespace, rolloutName).GetAwaiter().GetResult();
+                return operations.BeginCreateOrUpdateAsync(providerNamespace, rolloutName, properties).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -238,12 +247,15 @@ namespace Microsoft.Azure.Management.ProviderHub
             /// <param name='rolloutName'>
             /// The rollout name.
             /// </param>
+            /// <param name='properties'>
+            /// Properties of the rollout.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DefaultRollout> BeginCreateOrUpdateAsync(this IDefaultRolloutsOperations operations, string providerNamespace, string rolloutName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DefaultRollout> BeginCreateOrUpdateAsync(this IDefaultRolloutsOperations operations, string providerNamespace, string rolloutName, DefaultRolloutPropertiesModel properties = default(DefaultRolloutPropertiesModel), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(providerNamespace, rolloutName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(providerNamespace, rolloutName, properties, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

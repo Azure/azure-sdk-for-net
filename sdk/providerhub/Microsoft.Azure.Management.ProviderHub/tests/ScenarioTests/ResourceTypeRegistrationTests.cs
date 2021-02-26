@@ -88,31 +88,31 @@ namespace Microsoft.Azure.Management.ProviderHub.Tests
 
         private ResourceTypeRegistration CreateResourceTypeRegistration(MockContext context, string providerNamespace, string resourceType, ResourceTypeRegistrationProperties properties)
         {
-            providerhubClient client = GetProviderHubManagementClient(context);
+            ProviderHubClient client = GetProviderHubManagementClient(context);
             return client.ResourceTypeRegistrations.CreateOrUpdate(providerNamespace, resourceType, properties);
         }
 
         private ResourceTypeRegistration GetResourceTypeRegistration(MockContext context, string providerNamespace, string resourceType)
         {
-            providerhubClient client = GetProviderHubManagementClient(context);
+            ProviderHubClient client = GetProviderHubManagementClient(context);
             return client.ResourceTypeRegistrations.Get(providerNamespace, resourceType);
         }
 
         private IPage<ResourceTypeRegistration> ListResourceTypeRegistration(MockContext context, string providerNamespace)
         {
-            providerhubClient client = GetProviderHubManagementClient(context);
+            ProviderHubClient client = GetProviderHubManagementClient(context);
             return client.ResourceTypeRegistrations.ListByProviderRegistration(providerNamespace);
         }
 
         private void DeleteResourceTypeRegistration(MockContext context, string providerNamespace, string resourceType)
         {
-            providerhubClient client = GetProviderHubManagementClient(context);
+            ProviderHubClient client = GetProviderHubManagementClient(context);
             client.ResourceTypeRegistrations.Delete(providerNamespace, resourceType);
         }
 
-        private providerhubClient GetProviderHubManagementClient(MockContext context)
+        private ProviderHubClient GetProviderHubManagementClient(MockContext context)
         {
-            return context.GetServiceClient<providerhubClient>();
+            return context.GetServiceClient<ProviderHubClient>();
         }
     }
 }

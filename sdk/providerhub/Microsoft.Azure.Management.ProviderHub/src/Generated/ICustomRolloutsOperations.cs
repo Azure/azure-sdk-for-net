@@ -58,8 +58,7 @@ namespace Microsoft.Azure.Management.ProviderHub
         /// The rollout name.
         /// </param>
         /// <param name='properties'>
-        /// The custom rollout properties supplied to the CreateOrUpdate
-        /// operation.
+        /// Properties of the rollout.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -76,7 +75,7 @@ namespace Microsoft.Azure.Management.ProviderHub
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<CustomRollout>> CreateOrUpdateWithHttpMessagesAsync(string providerNamespace, string rolloutName, CustomRolloutProperties properties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<CustomRollout>> CreateOrUpdateWithHttpMessagesAsync(string providerNamespace, string rolloutName, CustomRolloutPropertiesModel properties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the list of the custom rollouts for the given provider.
         /// </summary>

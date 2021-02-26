@@ -79,6 +79,9 @@ namespace Microsoft.Azure.Management.ProviderHub
         /// <param name='rolloutName'>
         /// The rollout name.
         /// </param>
+        /// <param name='properties'>
+        /// Properties of the rollout.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -94,7 +97,7 @@ namespace Microsoft.Azure.Management.ProviderHub
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<DefaultRollout>> CreateOrUpdateWithHttpMessagesAsync(string providerNamespace, string rolloutName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DefaultRollout>> CreateOrUpdateWithHttpMessagesAsync(string providerNamespace, string rolloutName, DefaultRolloutPropertiesModel properties = default(DefaultRolloutPropertiesModel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the list of the rollouts for the given provider.
         /// </summary>
@@ -148,6 +151,9 @@ namespace Microsoft.Azure.Management.ProviderHub
         /// <param name='rolloutName'>
         /// The rollout name.
         /// </param>
+        /// <param name='properties'>
+        /// Properties of the rollout.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -163,7 +169,7 @@ namespace Microsoft.Azure.Management.ProviderHub
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<DefaultRollout>> BeginCreateOrUpdateWithHttpMessagesAsync(string providerNamespace, string rolloutName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DefaultRollout>> BeginCreateOrUpdateWithHttpMessagesAsync(string providerNamespace, string rolloutName, DefaultRolloutPropertiesModel properties = default(DefaultRolloutPropertiesModel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the list of the rollouts for the given provider.
         /// </summary>
