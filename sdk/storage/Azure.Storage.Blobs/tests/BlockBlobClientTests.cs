@@ -2379,6 +2379,36 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public async Task OpenWriteAsync_WithIntermediateFlushes()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+
+            // Act
+            using (Stream stream = await blob.OpenWriteAsync(true))
+            {
+                using (var writer = new StreamWriter(stream, Encoding.ASCII))
+                {
+                    writer.Write(new string('A', 100));
+                    writer.Flush();
+
+                    writer.Write(new string('B', 50));
+                    writer.Flush();
+
+                    writer.Write(new string('C', 25));
+                    writer.Flush();
+                }
+            }
+
+            // Assert
+            Response<BlobDownloadInfo> result = await blob.DownloadAsync();
+            MemoryStream dataResult = new MemoryStream();
+            await result.Value.Content.CopyToAsync(dataResult);
+            Assert.AreEqual(new string('A', 100) + new string('B', 50) + new string('C', 25), Encoding.ASCII.GetString(dataResult.ToArray()));
+        }
+
+        [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task OpenWriteAsync_NewBlob_WithTags()
         {
