@@ -2210,7 +2210,7 @@ namespace Azure.AI.TextAnalytics
 
                 var _idToIndexMap = CreateIdToIndexMap(batchInput.Documents);
 
-                return new AnalyzeHealthcareEntitiesOperation(_serviceRestClient, _clientDiagnostics, _options.GetVersionString(),  location, _idToIndexMap, options.IncludeStatistics);
+                return new AnalyzeHealthcareEntitiesOperation(_serviceRestClient, _clientDiagnostics, location, _idToIndexMap, options.IncludeStatistics);
             }
             catch (Exception e)
             {
@@ -2233,7 +2233,7 @@ namespace Azure.AI.TextAnalytics
 
                 var _idToIndexMap = CreateIdToIndexMap(batchInput.Documents);
 
-                return new AnalyzeHealthcareEntitiesOperation(_serviceRestClient, _clientDiagnostics, _options.GetVersionString(), location, _idToIndexMap, options.IncludeStatistics);
+                return new AnalyzeHealthcareEntitiesOperation(_serviceRestClient, _clientDiagnostics, location, _idToIndexMap, options.IncludeStatistics);
             }
             catch (Exception e)
             {
