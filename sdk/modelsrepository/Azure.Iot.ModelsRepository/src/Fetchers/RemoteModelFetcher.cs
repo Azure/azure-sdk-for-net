@@ -22,12 +22,10 @@ namespace Azure.Iot.ModelsRepository.Fetchers
     {
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ModelsRepositoryClientOptions _clientOptions;
 
         public RemoteModelFetcher(ClientDiagnostics clientDiagnostics, ModelsRepositoryClientOptions clientOptions)
         {
-            _clientOptions = clientOptions;
-            _pipeline = CreatePipeline(_clientOptions);
+            _pipeline = CreatePipeline(clientOptions);
             _clientDiagnostics = clientDiagnostics;
         }
 
