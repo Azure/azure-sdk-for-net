@@ -26,8 +26,5 @@ namespace Azure.Storage.Blobs.Models
             Name = name;
             SizeLong = sizeLong;
         }
-
-        /// <summary> The base64 encoded block ID. </summary>
-        public string Name { get; }
     }
 }

@@ -13,6 +13,8 @@ namespace Azure.Storage.Blobs.Models
     [CodeGenModel("Block")]
     public readonly partial struct BlobBlock : IEquatable<BlobBlock>
     {
+        // All properties are rebuilt by hand in this class to avoid compile error CS0282
+
         /// <summary>
         /// The block size in bytes.
         /// </summary>
@@ -26,6 +28,12 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public int Size => (int)SizeLong;
+
+        /// <summary>
+        /// The base64 encoded block ID.
+        /// </summary>
+        [CodeGenMember("Name")]
+        public string Name { get; }
 
         /// <summary>
         /// Check if two BlobBlock instances are equal.
