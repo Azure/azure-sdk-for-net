@@ -2,8 +2,6 @@
 $Env:NODE_OPTIONS = "--max-old-space-size=8192"
 Set-StrictMode -Version 1
 $exitCode = 0
-$Env:REPOSITORY_NAME = "Azure/azure-sdk-for-net"
-$Env:PULLREQUEST_ID = 19013
 
 [string[]] $errors = @()
 
@@ -153,6 +151,7 @@ try {
         if (-not [string]::IsNullOrWhiteSpace($metaDataContent)) {
             $commit = @()
             $csharpVersion = @()
+            $cmds = @()
             [string]$path = Get-Location
             $path = ($path -replace "\\", "/") + "/sdk/"
 
@@ -161,7 +160,7 @@ try {
                     $commit += $_.substring($_.length - 40, 40)
                 }
                 if ($_ -match 'cmd.exe') {
-                    $commandList += $_
+                    $cmds += $_
                 }
                 if ($_ -match 'Autorest CSharp Version') {
                     $version = $_.substring(25)
@@ -176,31 +175,34 @@ try {
                 }
             }
 
-            if (($commandList.length -eq 0) -or ($commit.length -eq 0) -or ($csharpVersion.length -eq 0) -or ($commandList.length -ne $commit.length) -or ($commit.length -ne $csharpVersion.length) -or (($commit -eq $commit[0]).Count -ne $commit.Count)) {
+            if (($cmds.length -eq 0) -or ($commit.length -eq 0) -or ($csharpVersion.length -eq 0) -or ($cmds.length -ne $commit.length) -or ($commit.length -ne $csharpVersion.length) -or (($commit -eq $commit[0]).Count -ne $commit.Count)) {
                 LogError "MetaData $metaData content not correct, you may need to re-run sdk\<RP_Name>\generate.ps1"
+                break
             }
             else {
-                for ($i = 0; $i -lt $commandList.Count; $i++) {
-                    $command = "autorest" + $commandList[$i].substring(23)
+                for ($i = 0; $i -lt $cmds.Count; $i++) {
+                    $command = "autorest" + $cmds[$i].substring(23)
                     $command = $command -replace "\\", "/"
                     $command = $command -replace "blob/[\S]*/specification", ("blob/" + $commit[$i] + "/specification")
                     $command = $command -replace "folder\=(.*?)\/sdk\/", "folder=$path"
-                    $commandList[$i] = $command + " --use:@microsoft.azure/autorest.csharp@" + $csharpVersion[$i]
+                    $cmds[$i] = $command + " --use:@microsoft.azure/autorest.csharp@" + $csharpVersion[$i]
                 }
-                foreach ($command in $commandList) {
-                    Try {
-                        Write-Output "Executing AutoRest command"
-                        Write-Output $command
-                        Invoke-Block {
-                            Invoke-Expression $command
-                        }
-                    }
-                    Catch [System.Exception] {
-                        LogError $_.Exception.ToString()
-                        throw [System.Exception] "AutoRest code generation for metadata failed. you may need to re-run sdk\<RP_Name>\generate.ps1"
-                    }
-                }
+               $commandList += $cmds
             }
+        }
+    }
+
+    foreach ($command in $commandList) {
+        Try {
+            Write-Output "Executing AutoRest command"
+            Write-Output $command
+            Invoke-Block {
+                Invoke-Expression $command
+            }
+        }
+        Catch [System.Exception] {
+            LogError $_.Exception.ToString()
+            throw [System.Exception] "AutoRest code generation for metadata failed. you may need to re-run sdk\<RP_Name>\generate.ps1"
         }
     }
     
