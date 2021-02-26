@@ -29,10 +29,10 @@ namespace Sql.Tests
             //     Set the weekly retention on the database so that the first backup gets picked up
             //     Wait about 18 hours until it gets properly copied and you see the backup when run get backups
             //
-            string locationName = "southeastasia";
+            string locationName = "Southeast Asia";
             string resourceGroupName = "testrg";
             string serverName = "ayang-stage-seas";
-            string databaseName = "ltr1";
+            string databaseName = "ltr3";
 
             using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
@@ -51,7 +51,7 @@ namespace Sql.Tests
 
                 // Update the Backup Storage Redundancy of the backup
                 //
-                UpdateLongTermRetentionBackupParameters updateParameters = new UpdateLongTermRetentionBackupParameters(requestedBackupStorageRedundancy: "Local");
+                UpdateLongTermRetentionBackupParameters updateParameters = new UpdateLongTermRetentionBackupParameters(requestedBackupStorageRedundancy: "Geo");
                 LongTermRetentionBackupOperationResult restoredDatabase = sqlClient.LongTermRetentionBackups.Update(locationName, serverName, databaseName, backup.Name, updateParameters); 
             }
         }
@@ -74,9 +74,9 @@ namespace Sql.Tests
             string subscriptionId = "01c4ec88-e179-44f7-9eb0-e9719a5087ab"; 
             string resourceGroupName = "testrg";
             string sourceServerName = "ayang-stage-seas";
-            string sourceDatabaseName = "ltr1";
+            string sourceDatabaseName = "ltr3";
             string targetServerName = "ayang-stage-seas-1";
-            string targetDatabaseName = "target-ltr1";
+            string targetDatabaseName = "ltr1";
 
 
             using (SqlManagementTestContext context = new SqlManagementTestContext(this))
