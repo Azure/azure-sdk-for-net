@@ -5,22 +5,21 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class SentenceAspect
+    internal partial class SentenceAssessment
     {
-        internal static SentenceAspect DeserializeSentenceAspect(JsonElement element)
+        internal static SentenceAssessment DeserializeSentenceAssessment(JsonElement element)
         {
             string sentiment = default;
-            AspectConfidenceScoreLabel confidenceScores = default;
+            TargetConfidenceScoreLabel confidenceScores = default;
             int offset = default;
             int length = default;
             string text = default;
-            IReadOnlyList<AspectRelation> relations = default;
+            bool isNegated = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sentiment"))
@@ -30,7 +29,7 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 if (property.NameEquals("confidenceScores"))
                 {
-                    confidenceScores = AspectConfidenceScoreLabel.DeserializeAspectConfidenceScoreLabel(property.Value);
+                    confidenceScores = TargetConfidenceScoreLabel.DeserializeTargetConfidenceScoreLabel(property.Value);
                     continue;
                 }
                 if (property.NameEquals("offset"))
@@ -48,18 +47,13 @@ namespace Azure.AI.TextAnalytics.Models
                     text = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("relations"))
+                if (property.NameEquals("isNegated"))
                 {
-                    List<AspectRelation> array = new List<AspectRelation>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(AspectRelation.DeserializeAspectRelation(item));
-                    }
-                    relations = array;
+                    isNegated = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return new SentenceAspect(sentiment, confidenceScores, offset, length, text, relations);
+            return new SentenceAssessment(sentiment, confidenceScores, offset, length, text, isNegated);
         }
     }
 }

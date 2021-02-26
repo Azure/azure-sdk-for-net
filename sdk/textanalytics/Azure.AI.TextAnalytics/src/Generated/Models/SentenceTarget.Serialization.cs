@@ -5,21 +5,22 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class SentenceOpinion
+    internal partial class SentenceTarget
     {
-        internal static SentenceOpinion DeserializeSentenceOpinion(JsonElement element)
+        internal static SentenceTarget DeserializeSentenceTarget(JsonElement element)
         {
             string sentiment = default;
-            AspectConfidenceScoreLabel confidenceScores = default;
+            TargetConfidenceScoreLabel confidenceScores = default;
             int offset = default;
             int length = default;
             string text = default;
-            bool isNegated = default;
+            IReadOnlyList<TargetRelation> relations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sentiment"))
@@ -29,7 +30,7 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 if (property.NameEquals("confidenceScores"))
                 {
-                    confidenceScores = AspectConfidenceScoreLabel.DeserializeAspectConfidenceScoreLabel(property.Value);
+                    confidenceScores = TargetConfidenceScoreLabel.DeserializeTargetConfidenceScoreLabel(property.Value);
                     continue;
                 }
                 if (property.NameEquals("offset"))
@@ -47,13 +48,18 @@ namespace Azure.AI.TextAnalytics.Models
                     text = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isNegated"))
+                if (property.NameEquals("relations"))
                 {
-                    isNegated = property.Value.GetBoolean();
+                    List<TargetRelation> array = new List<TargetRelation>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(TargetRelation.DeserializeTargetRelation(item));
+                    }
+                    relations = array;
                     continue;
                 }
             }
-            return new SentenceOpinion(sentiment, confidenceScores, offset, length, text, isNegated);
+            return new SentenceTarget(sentiment, confidenceScores, offset, length, text, relations);
         }
     }
 }

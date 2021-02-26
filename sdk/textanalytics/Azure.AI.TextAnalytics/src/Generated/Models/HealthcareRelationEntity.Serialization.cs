@@ -10,26 +10,26 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class AspectRelation
+    internal partial class HealthcareRelationEntity
     {
-        internal static AspectRelation DeserializeAspectRelation(JsonElement element)
+        internal static HealthcareRelationEntity DeserializeHealthcareRelationEntity(JsonElement element)
         {
-            AspectRelationType relationType = default;
             string @ref = default;
+            string role = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("relationType"))
-                {
-                    relationType = new AspectRelationType(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("ref"))
                 {
                     @ref = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("role"))
+                {
+                    role = property.Value.GetString();
+                    continue;
+                }
             }
-            return new AspectRelation(relationType, @ref);
+            return new HealthcareRelationEntity(@ref, role);
         }
     }
 }

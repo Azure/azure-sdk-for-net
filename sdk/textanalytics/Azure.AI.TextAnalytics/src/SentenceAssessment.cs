@@ -5,8 +5,8 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    [CodeGenModel("SentenceAspect")]
-    internal partial class SentenceAspect
+    [CodeGenModel("SentenceAssessment")]
+    internal partial class SentenceAssessment
     {
         // Transform from enum TokenSentimentValue to string so we can parse it into a TextSentiment
         public string Sentiment { get; }

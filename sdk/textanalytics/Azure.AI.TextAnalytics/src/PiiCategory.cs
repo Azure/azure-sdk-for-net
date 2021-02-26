@@ -5,8 +5,8 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    [CodeGenModel("AspectRelationType")]
-    internal partial struct AspectRelationType
+    [CodeGenModel("PiiCategory")]
+    internal readonly partial struct PiiCategory
     {
     }
 }

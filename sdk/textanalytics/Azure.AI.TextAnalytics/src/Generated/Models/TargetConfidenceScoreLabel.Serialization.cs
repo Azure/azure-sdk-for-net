@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class AspectConfidenceScoreLabel
+    internal partial class TargetConfidenceScoreLabel
     {
-        internal static AspectConfidenceScoreLabel DeserializeAspectConfidenceScoreLabel(JsonElement element)
+        internal static TargetConfidenceScoreLabel DeserializeTargetConfidenceScoreLabel(JsonElement element)
         {
             double positive = default;
             double negative = default;
@@ -29,7 +29,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new AspectConfidenceScoreLabel(positive, negative);
+            return new TargetConfidenceScoreLabel(positive, negative);
         }
     }
 }
