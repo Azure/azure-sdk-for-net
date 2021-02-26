@@ -103,25 +103,5 @@ namespace Azure.Core.TestFramework
         /// Indicates whether the <see cref="RecordSession"/> has any <see cref="Entries"/> or <see cref="Variables"/>.
         /// </summary>
         public bool IsEmpty => Entries.Count == 0 && Variables.Count == 0;
-
-        private class EntryEquivalentComparer : IEqualityComparer<RecordEntry>
-        {
-            private readonly RecordMatcher _matcher;
-
-            public EntryEquivalentComparer(RecordMatcher matcher)
-            {
-                _matcher = matcher;
-            }
-
-            public bool Equals(RecordEntry x, RecordEntry y)
-            {
-                return _matcher.IsEquivalentRecord(x, y);
-            }
-
-            public int GetHashCode(RecordEntry obj)
-            {
-                return obj.GetHashCode();
-            }
-        }
     }
 }
