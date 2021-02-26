@@ -21,9 +21,9 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
     /// <summary>
     /// Basic Azure Communication Phone Numbers samples.
     /// </summary>
-    public class Sample2_PhoneNumbersClient : PhoneNumbersClientLiveTestBase
+    public class Sample_PhoneNumbersClient : PhoneNumbersClientLiveTestBase
     {
-        public Sample2_PhoneNumbersClient(bool isAsync) : base(isAsync)
+        public Sample_PhoneNumbersClient(bool isAsync) : base(isAsync)
         {
         }
 
