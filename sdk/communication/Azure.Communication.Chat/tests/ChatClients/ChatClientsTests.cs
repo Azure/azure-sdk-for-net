@@ -25,6 +25,27 @@ namespace Azure.Communication.Chat.Tests.ChatClients
         private const string CreateChatThreadWithErrorsApiResponsePayload = "{\"chatThread\":{\"id\":\"19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2\",\"topic\":\"Topic for testing errors\",\"createdOn\":\"2020-12-18T18:14:33Z\",\"createdByCommunicationIdentifier\":{\"rawId\":\"8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c\"}},\"errors\":{\"invalidParticipants\":[{\"code\":\"404\",\"message\":\"Not found\",\"target\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345677\"},{\"code\":\"401\",\"message\":\"Authentication failed\",\"target\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345678\"},{\"code\":\"403\",\"message\":\"Permissions check failed\",\"target\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345679\"}]}}";
         private const string AddParticipantsdWithErrorsApiResponsePayload = "{\"errors\":{\"invalidParticipants\":[{\"code\":\"404\",\"message\":\"Not found\",\"target\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345677\"},{\"code\":\"401\",\"message\":\"Authentication failed\",\"target\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345678\"},{\"code\":\"403\",\"message\":\"Permissions check failed\",\"target\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345679\"}]}}";
 
+        private const string CreateChatThreadSuccessApiResponsePayload = "{\"chatThread\":{\"id\":\"19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2\",\"topic\":\"Topic for testing success\",\"createdOn\":\"2021-02-25T22:34:48Z\",\"createdByCommunicationIdentifier\":{\"rawId\":\"8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c\",\"communicationUser\":{\"id\":\"8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c\"}}}}";
+
+        // TODO:
+        private const string CreateChatThreadWithExpiredTokenFailureApiResponsePayload = "";
+
+        private const string GetThreadApiResponsePayload = "{\"id\":\"19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2\",\"topic\":\"Test Thread\",\"createdOn\":\"2021-02-26T00:46:08Z\",\"createdByCommunicationIdentifier\":{\"rawId\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7\",\"communicationUser\":{\"id\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7\"}}}";
+
+        private const string SendMessageApiResponsePayload = "{\"id\":\"1\"}";
+
+        // TODO:
+        private const string SendMessageToDeletedThreadApiResponsePayload = "{}";
+        private const string UpdateTopicOfDeletedThreadApiResponsePayload = "{}";
+
+        private const string GetMessageApiResponsePayload = "{\"id\":\"1\",\"type\":\"text\",\"sequenceId\":\"1\",\"version\":\"1\",\"content\":{\"message\":\"Test Message\"},\"senderDisplayName\":\"DisplayName for Test Message\",\"createdOn\":\"2021-02-26T00:30:19Z\",\"senderCommunicationIdentifier\":{\"rawId\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7\",\"communicationUser\":{\"id\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7\"}}}";
+
+        private const string GetParticipantsApiResponsePayload = "{\"value\":[{\"communicationIdentifier\":{\"rawId\":\"1\",\"communicationUser\":{\"id\":\"1\"}},\"displayName\":\"Display Name 1\",\"shareHistoryTime\":\"1970-01-01T00:00:00Z\"},{\"communicationIdentifier\":{\"rawId\":\"2\",\"communicationUser\":{\"id\":\"2\"}},\"displayName\":\"Display Name 2\",\"shareHistoryTime\":\"1970-01-01T00:00:00Z\"}]}";
+
+        private const string AddParticipantApiResponsePayload = "{}";
+        private const string AddParticipantsApiResponsePayload = "{}";
+        private const string GetThreadsApiResponsePayload = "{\"value\":[{\"id\":\"1\",\"topic\":\"Test Thread 1\",\"lastMessageReceivedOn\":\"2021-02-26T00:46:09Z\"},{\"id\":\"2\",\"topic\":\"Test Thread 2\",\"lastMessageReceivedOn\":\"2021-02-25T23:38:20Z\"},{\"id\":\"3\",\"topic\":\"Test Thread 3\",\"lastMessageReceivedOn\":\"2021-02-25T23:33:29Z\"}]}";
+
         public ChatClientsTests(bool isAsync) : base(isAsync)
         {
         }
@@ -194,6 +215,387 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             }
             Assert.AreEqual(2, pages);
             Assert.AreEqual(5, idCounter);
+        }
+
+        [Test]
+        public async Task CreateChatThreadShouldSucceed()
+        {
+            //arrange
+            var uri = new Uri("https://localHostTest");
+            var communicationTokenCredential = new CommunicationTokenCredential(ChatRecordedTestSanitizer.SanitizedUnsignedUserTokenValue);
+            var mockResponse = new MockResponse(201);
+            mockResponse.SetContent(CreateChatThreadSuccessApiResponsePayload);
+
+            var chatClientOptions = new ChatClientOptions
+            {
+                Transport = new MockTransport(mockResponse)
+            };
+
+            //act
+            var chatClient = new ChatClient(uri, communicationTokenCredential, chatClientOptions);
+            var chatParticipant = new ChatParticipant(new CommunicationUserIdentifier("8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c"));
+            CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync("", new List<ChatParticipant>() { chatParticipant });
+
+            //assert
+            Assert.AreEqual("8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c", CommunicationIdentifierSerializer.Serialize(createChatThreadResult.ChatThread.CreatedBy).CommunicationUser.Id);
+            Assert.AreEqual("Topic for testing success", createChatThreadResult.ChatThread.Topic);
+            Assert.AreEqual("19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2", createChatThreadResult.ChatThread.Id);
+        }
+
+        [Test]
+        public async Task SendMessageShouldSucceed()
+        {
+            //arrange
+            var threadId = "19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2";
+            var uri = new Uri("https://localHostTest");
+            var communicationTokenCredential = new CommunicationTokenCredential(ChatRecordedTestSanitizer.SanitizedUnsignedUserTokenValue);
+            var mockResponse = new MockResponse(201);
+            mockResponse.SetContent(SendMessageApiResponsePayload);
+
+            var chatClientOptions = new ChatClientOptions
+            {
+                Transport = new MockTransport(mockResponse)
+            };
+
+            //act
+            var chatClient = new ChatClient(uri, communicationTokenCredential, chatClientOptions);
+            ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient(threadId);
+            string messageId = await chatThreadClient.SendMessageAsync("Send Message Test");
+
+            //assert
+            Assert.AreEqual("1", messageId);
+        }
+
+        [Test]
+        public async Task SendTypingIndicatorShouldSucceed()
+        {
+            //arrange
+            var threadId = "19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2";
+            var uri = new Uri("https://localHostTest");
+            var communicationTokenCredential = new CommunicationTokenCredential(ChatRecordedTestSanitizer.SanitizedUnsignedUserTokenValue);
+            var mockResponse = new MockResponse(200);
+
+            var chatClientOptions = new ChatClientOptions
+            {
+                Transport = new MockTransport(mockResponse)
+            };
+
+            //act
+            var chatClient = new ChatClient(uri, communicationTokenCredential, chatClientOptions);
+            ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient(threadId);
+            Response typingNotificationResponse = await chatThreadClient.SendTypingNotificationAsync();
+
+            //assert
+            Assert.AreEqual(200, typingNotificationResponse.Status);
+        }
+
+        [Test]
+        public async Task SendReadReceiptShouldSucceed()
+        {
+            //arrange
+            var messageId = "1";
+            var threadId = "19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2";
+            var uri = new Uri("https://localHostTest");
+            var communicationTokenCredential = new CommunicationTokenCredential(ChatRecordedTestSanitizer.SanitizedUnsignedUserTokenValue);
+            var mockResponse = new MockResponse(200);
+
+            var chatClientOptions = new ChatClientOptions
+            {
+                Transport = new MockTransport(mockResponse)
+            };
+
+            //act
+            var chatClient = new ChatClient(uri, communicationTokenCredential, chatClientOptions);
+            ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient(threadId);
+            Response readReceiptResponse = await chatThreadClient.SendReadReceiptAsync(messageId);
+
+            //assert
+            Assert.AreEqual(200, readReceiptResponse.Status);
+        }
+
+        [Test]
+        public async Task DeleteMessagShouldSucceed()
+        {
+            //arrange
+            var messageId = "1";
+            var threadId = "19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2";
+            var uri = new Uri("https://localHostTest");
+            var communicationTokenCredential = new CommunicationTokenCredential(ChatRecordedTestSanitizer.SanitizedUnsignedUserTokenValue);
+            var mockResponse = new MockResponse(204);
+
+            var chatClientOptions = new ChatClientOptions
+            {
+                Transport = new MockTransport(mockResponse)
+            };
+
+            //act
+            var chatClient = new ChatClient(uri, communicationTokenCredential, chatClientOptions);
+            ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient(threadId);
+            Response readReceiptResponse = await chatThreadClient.DeleteMessageAsync(messageId);
+
+            //assert
+            Assert.AreEqual(204, readReceiptResponse.Status);
+        }
+
+        [Test]
+        public async Task UpdateMessagShouldSucceed()
+        {
+            //arrange
+            var messageId = "1";
+            var content = "Update Message Test";
+            var threadId = "19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2";
+            var uri = new Uri("https://localHostTest");
+            var communicationTokenCredential = new CommunicationTokenCredential(ChatRecordedTestSanitizer.SanitizedUnsignedUserTokenValue);
+            var mockResponse = new MockResponse(204);
+
+            var chatClientOptions = new ChatClientOptions
+            {
+                Transport = new MockTransport(mockResponse)
+            };
+
+            //act
+            var chatClient = new ChatClient(uri, communicationTokenCredential, chatClientOptions);
+            ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient(threadId);
+            Response updateMessageResponse = await chatThreadClient.UpdateMessageAsync(messageId, content);
+
+            //assert
+            Assert.AreEqual(204, updateMessageResponse.Status);
+        }
+
+        [Test]
+        public async Task GetMessagShouldSucceed()
+        {
+            //arrange
+            var messageId = "1";
+            var threadId = "19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2";
+            var uri = new Uri("https://localHostTest");
+            var communicationTokenCredential = new CommunicationTokenCredential(ChatRecordedTestSanitizer.SanitizedUnsignedUserTokenValue);
+            var mockResponse = new MockResponse(200);
+            mockResponse.SetContent(GetMessageApiResponsePayload);
+
+            var chatClientOptions = new ChatClientOptions
+            {
+                Transport = new MockTransport(mockResponse)
+            };
+
+            //act
+            var chatClient = new ChatClient(uri, communicationTokenCredential, chatClientOptions);
+            ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient(threadId);
+            ChatMessage message = await chatThreadClient.GetMessageAsync(messageId);
+
+            //assert
+            Assert.AreEqual("1", message.Id);
+            Assert.AreEqual("Test Message", message.Content.Message);
+            Assert.AreEqual("DisplayName for Test Message", message.SenderDisplayName);
+            Assert.NotNull(message.Sender);
+            Assert.AreEqual("8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7", CommunicationIdentifierSerializer.Serialize(message.Sender!).CommunicationUser.Id);
+        }
+
+        [Test]
+        public async Task GetThreadShouldSucceed()
+        {
+            //arrange
+            var threadId = "19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2";
+            var uri = new Uri("https://localHostTest");
+            var communicationTokenCredential = new CommunicationTokenCredential(ChatRecordedTestSanitizer.SanitizedUnsignedUserTokenValue);
+            var mockResponse = new MockResponse(200);
+            mockResponse.SetContent(GetThreadApiResponsePayload);
+
+            var chatClientOptions = new ChatClientOptions
+            {
+                Transport = new MockTransport(mockResponse)
+            };
+
+            //act
+            var chatClient = new ChatClient(uri, communicationTokenCredential, chatClientOptions);
+            ChatThread chatThread = await chatClient.GetChatThreadAsync(threadId);
+
+            //assert
+            Assert.AreEqual(threadId, chatThread.Id);
+            Assert.AreEqual("Test Thread", chatThread.Topic);
+            Assert.AreEqual("8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7", CommunicationIdentifierSerializer.Serialize(chatThread.CreatedBy).CommunicationUser.Id);
+        }
+
+        [Test]
+        public async Task UpdateThreadTopicShouldSucceed()
+        {
+            //arrange
+            var topic = "Update Thread Topic";
+            var threadId = "19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2";
+            var uri = new Uri("https://localHostTest");
+            var communicationTokenCredential = new CommunicationTokenCredential(ChatRecordedTestSanitizer.SanitizedUnsignedUserTokenValue);
+            var mockResponse = new MockResponse(204);
+
+            var chatClientOptions = new ChatClientOptions
+            {
+                Transport = new MockTransport(mockResponse)
+            };
+
+            //act
+            var chatClient = new ChatClient(uri, communicationTokenCredential, chatClientOptions);
+            ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient(threadId);
+            Response UpdateTopiceResponse = await chatThreadClient.UpdateTopicAsync(topic);
+
+            //assert
+            Assert.AreEqual(204, UpdateTopiceResponse.Status);
+        }
+
+        [Test]
+        public async Task GetThreadsShouldSucceed()
+        {
+            //arrange
+            var uri = new Uri("https://localHostTest");
+            var communicationTokenCredential = new CommunicationTokenCredential(ChatRecordedTestSanitizer.SanitizedUnsignedUserTokenValue);
+            var mockResponse = new MockResponse(200);
+            mockResponse.SetContent(GetThreadsApiResponsePayload);
+
+            var chatClientOptions = new ChatClientOptions
+            {
+                Transport = new MockTransport(mockResponse)
+            };
+
+            //act
+            var chatClient = new ChatClient(uri, communicationTokenCredential, chatClientOptions);
+            AsyncPageable<ChatThreadInfo> chatThreadsInfo = chatClient.GetChatThreadsInfoAsync();
+
+            //assert
+
+            int idCounter = 0;
+            await foreach (ChatThreadInfo chatThread in chatThreadsInfo)
+            {
+                idCounter++;
+                Assert.AreEqual($"{idCounter}", chatThread.Id);
+                Assert.AreEqual($"Test Thread {idCounter}", chatThread.Topic);
+            }
+            Assert.AreEqual(3, idCounter);
+        }
+
+        [Test]
+        public async Task GetParticipantsShouldSucceed()
+        {
+            //arrange
+            var threadId = "19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2";
+            var uri = new Uri("https://localHostTest");
+            var communicationTokenCredential = new CommunicationTokenCredential(ChatRecordedTestSanitizer.SanitizedUnsignedUserTokenValue);
+            var mockResponse = new MockResponse(200);
+            mockResponse.SetContent(GetParticipantsApiResponsePayload);
+
+            var chatClientOptions = new ChatClientOptions
+            {
+                Transport = new MockTransport(mockResponse)
+            };
+
+            //act
+            var chatClient = new ChatClient(uri, communicationTokenCredential, chatClientOptions);
+            ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient(threadId);
+            AsyncPageable<ChatParticipant> chatParticipants = chatThreadClient.GetParticipantsAsync();
+
+            //assert
+            int idCounter = 0;
+            await foreach (ChatParticipant chatParticipant in chatParticipants)
+            {
+                idCounter++;
+                Assert.AreEqual($"{idCounter}", CommunicationIdentifierSerializer.Serialize(chatParticipant.User).CommunicationUser.Id);
+                Assert.AreEqual($"Display Name {idCounter}", chatParticipant.DisplayName);
+            }
+            Assert.AreEqual(2, idCounter);
+        }
+
+        [Test]
+        public async Task RemoveParticipantShouldSucceed()
+        {
+            //arrange
+            var threadId = "19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2";
+            var id = "8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-0464-274b-b274-5a3a0d000101";
+            CommunicationUserIdentifier identifier = new CommunicationUserIdentifier(id);
+            var uri = new Uri("https://localHostTest");
+            var communicationTokenCredential = new CommunicationTokenCredential(ChatRecordedTestSanitizer.SanitizedUnsignedUserTokenValue);
+            var mockResponse = new MockResponse(204);
+
+            var chatClientOptions = new ChatClientOptions
+            {
+                Transport = new MockTransport(mockResponse)
+            };
+
+            //act
+            var chatClient = new ChatClient(uri, communicationTokenCredential, chatClientOptions);
+            ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient(threadId);
+            Response RemoveParticipantResponse = await chatThreadClient.RemoveParticipantAsync(identifier);
+
+            //assert
+            Assert.AreEqual(204, RemoveParticipantResponse.Status);
+        }
+
+        [Test]
+        public async Task AddParticipantShouldSucceed()
+        {
+            //arrange
+            var threadId = "19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2";
+            var id = "8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-0464-274b-b274-5a3a0d000101";
+            ChatParticipant chatParticipant = new ChatParticipant(new CommunicationUserIdentifier(id));
+            var uri = new Uri("https://localHostTest");
+            var communicationTokenCredential = new CommunicationTokenCredential(ChatRecordedTestSanitizer.SanitizedUnsignedUserTokenValue);
+            var mockResponse = new MockResponse(201);
+            mockResponse.SetContent(AddParticipantApiResponsePayload);
+
+            var chatClientOptions = new ChatClientOptions
+            {
+                Transport = new MockTransport(mockResponse)
+            };
+
+            //act
+            var chatClient = new ChatClient(uri, communicationTokenCredential, chatClientOptions);
+            ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient(threadId);
+            AddChatParticipantsResult AddParticipantResponse = await chatThreadClient.AddParticipantAsync(chatParticipant);
+
+            //assert
+            Assert.IsNull(AddParticipantResponse.Errors);
+        }
+
+        [Test]
+        public async Task AddParticipantsShouldSucceed()
+        {
+            //arrange
+            var threadId = "19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2";
+            var uri = new Uri("https://localHostTest");
+            var communicationTokenCredential = new CommunicationTokenCredential(ChatRecordedTestSanitizer.SanitizedUnsignedUserTokenValue);
+            var mockResponse = new MockResponse(201);
+            mockResponse.SetContent(AddParticipantsApiResponsePayload);
+
+            var chatClientOptions = new ChatClientOptions
+            {
+                Transport = new MockTransport(mockResponse)
+            };
+
+            //act
+            var chatClient = new ChatClient(uri, communicationTokenCredential, chatClientOptions);
+            ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient(threadId);
+            AddChatParticipantsResult AddParticipantsResponse = await chatThreadClient.AddParticipantsAsync(new List<ChatParticipant>());
+
+            //assert
+            Assert.IsNull(AddParticipantsResponse.Errors);
+        }
+
+        [Test]
+        public async Task DeleteChatThreadShouldSucceed()
+        {
+            //arrange
+            var threadId = "19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2";
+            var uri = new Uri("https://localHostTest");
+            var communicationTokenCredential = new CommunicationTokenCredential(ChatRecordedTestSanitizer.SanitizedUnsignedUserTokenValue);
+            var mockResponse = new MockResponse(204);
+
+            var chatClientOptions = new ChatClientOptions
+            {
+                Transport = new MockTransport(mockResponse)
+            };
+
+            //act
+            var chatClient = new ChatClient(uri, communicationTokenCredential, chatClientOptions);
+            Response deleteChatThreadResponse = await chatClient.DeleteChatThreadAsync(threadId);
+
+            //assert
+            Assert.AreEqual(204, deleteChatThreadResponse.Status);
         }
 
         [Test]
