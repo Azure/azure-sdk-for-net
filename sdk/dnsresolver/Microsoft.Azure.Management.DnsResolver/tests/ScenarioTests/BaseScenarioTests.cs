@@ -72,7 +72,7 @@ namespace DnsResolver.Tests.ScenarioTests
         {
             resourceGroupName = resourceGroupName ?? TestDataGenerator.GenerateResourceGroup().Name;
             inboundEndpointName = inboundEndpointName ?? TestDataGenerator.GenerateInboundEndpointName();
-            var ipConfigurations = TestDataGenerator.GenerateRandomIpConfigurations(subscriptionId: this.SubscriptionId, resourceGroupName: resourceGroupName, virtualNetworkName: ExtractArmResourceName(createdDnsResolver.VirtualNetwork.Id));
+            var ipConfigurations = GenerateIpConfigurationWithNewlyCreatedSubnet(resourceGroupName: resourceGroupName, virtualNetworkName: ExtractArmResourceName(createdDnsResolver.VirtualNetwork.Id));
             var metadata = TestDataGenerator.GenerateTags();
 
             return this.DnsResolverManagementClient.InboundEndpoints.CreateOrUpdate(
@@ -131,12 +131,47 @@ namespace DnsResolver.Tests.ScenarioTests
             return derivedVirtualNetworkSubResource;
         }
 
+        protected SubResource CreateSubnet(string resourceGroupName, string virtualNetworkName, string subnetName = null)
+        {
+            subnetName = subnetName ?? TestDataGenerator.GenerateSubnetName();
+            var createdSubnet = this.NetworkManagementClient.CreateSubnet(resourceGroupName: resourceGroupName, virtualNetworkName: virtualNetworkName, subnetName: subnetName);
+
+            createdSubnet.Should().NotBeNull();
+
+            var derivedsubnetSubResource = new SubResource()
+            {
+                Id = createdSubnet.Id
+            };
+
+            return derivedsubnetSubResource;
+        }
+
         protected DnsResolverModel GenerateDnsResolverWithNewlyCreatedVirtualNetwork(string location = null, string resourceGroupName = null, IDictionary<string, string> tags = null)
         {
             var dnsResolver = TestDataGenerator.GenerateDnsResolverWithoutVirtualNetwork(location: location, tags: tags);
             dnsResolver.VirtualNetwork = CreateVirtualNetwork(resourceGroupName: resourceGroupName);
             //dnsResolver.VirtualNetwork = TestDataGenerator.GenerateNonExistentVirtualNetwork(subscriptionId: this.SubscriptionId, resourceGroupName: resourceGroupName);
             return dnsResolver;
+        }
+
+        protected List<IpConfiguration> GenerateIpConfigurationWithNewlyCreatedSubnet(int count = 1, string subscriptionId = null, string resourceGroupName = null, string virtualNetworkName = null)
+        {
+            subscriptionId = subscriptionId ?? TestDataGenerator.GenerateSubscriptionId();
+            resourceGroupName = resourceGroupName ?? TestDataGenerator.GenerateResourceGroupName();
+            virtualNetworkName = virtualNetworkName ?? TestDataGenerator.GenerateVirtualNetworkName();
+            var ipConfigurations = new List<IpConfiguration>();
+
+            for (var i = 0; i < count; i++)
+            {
+                ipConfigurations.Add(new IpConfiguration
+                {
+                    Subnet = CreateSubnet(resourceGroupName: resourceGroupName, virtualNetworkName: virtualNetworkName),
+                    PrivateIpAddress = null,
+                    PrivateIpAllocationMethod = Constants.StaticPrivateIpAllocationMethod,
+                });
+            }
+
+            return ipConfigurations;
         }
 
         private static string GetTestName(ITestOutputHelper output)

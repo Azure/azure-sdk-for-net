@@ -34,11 +34,12 @@ namespace Microsoft.Azure.Management.DnsResolver.Models
         /// <summary>
         /// Initializes a new instance of the InboundEndpoint class.
         /// </summary>
-        /// <param name="id">Fully qualified ID for the resource. Example -
-        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}'.</param>
-        /// <param name="name">The name of the resource.</param>
-        /// <param name="type">The type of the resource. Example -
-        /// 'Microsoft.Network/dnsResolvers'.</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="etag">ETag of the inbound endpoint.</param>
         /// <param name="ipConfigurations">IP configurations for the inbound
         /// endpoint.</param>

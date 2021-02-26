@@ -34,31 +34,18 @@ namespace Microsoft.Azure.Management.DnsResolver.Models
         /// <summary>
         /// Initializes a new instance of the DnsResolverModel class.
         /// </summary>
-        /// <param name="id">Fully qualified ID for the resource. Example -
-        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}'.</param>
-        /// <param name="name">The name of the resource.</param>
-        /// <param name="type">The type of the resource. Example -
-        /// 'Microsoft.Network/dnsResolvers'.</param>
+        /// <param name="location">The geo-location where the resource
+        /// lives</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="tags">Resource tags.</param>
-        /// <param name="location">The Azure Region where the resource
-        /// lives.</param>
         /// <param name="etag">ETag of the DNS resolver.</param>
         /// <param name="virtualNetwork">The reference to the virtual network.
         /// This cannot be changed after creation.</param>
-        /// <param name="maxNumberOfInboundEndpoints">The maximum number of
-        /// inbound endpoints that can be created for the DNS resolver. This is
-        /// a read-only property and any attempt to set this value will be
-        /// ignored.</param>
-        /// <param name="numberOfInboundEndpoints">The current number of
-        /// inbound endpoints for the DNS resolver. This is a read-only
-        /// property and any attempt to set this value will be ignored.</param>
-        /// <param name="maxNumberOfOutboundEndpoints">The maximum number of
-        /// outbound endpoints that can be created for the DNS resolver. This
-        /// is a read-only property and any attempt to set this value will be
-        /// ignored.</param>
-        /// <param name="numberOfOutboundEndpoints">The current number of
-        /// outbound endpoints for the DNS resolver. This is a read-only
-        /// property and any attempt to set this value will be ignored.</param>
         /// <param name="dnsResolverState">The current status of the DNS
         /// resolver. This is a read-only property and any attempt to set this
         /// value will be ignored. Possible values include: 'Connected',
@@ -70,15 +57,11 @@ namespace Microsoft.Azure.Management.DnsResolver.Models
         /// 'Canceled'</param>
         /// <param name="resourceGuid">The resourceGuid property of the DNS
         /// resolver resource.</param>
-        public DnsResolverModel(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), string etag = default(string), SubResource virtualNetwork = default(SubResource), long? maxNumberOfInboundEndpoints = default(long?), long? numberOfInboundEndpoints = default(long?), long? maxNumberOfOutboundEndpoints = default(long?), long? numberOfOutboundEndpoints = default(long?), string dnsResolverState = default(string), string provisioningState = default(string), string resourceGuid = default(string))
-            : base(id, name, type, tags, location)
+        public DnsResolverModel(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), SubResource virtualNetwork = default(SubResource), string dnsResolverState = default(string), string provisioningState = default(string), string resourceGuid = default(string))
+            : base(location, id, name, type, tags)
         {
             Etag = etag;
             VirtualNetwork = virtualNetwork;
-            MaxNumberOfInboundEndpoints = maxNumberOfInboundEndpoints;
-            NumberOfInboundEndpoints = numberOfInboundEndpoints;
-            MaxNumberOfOutboundEndpoints = maxNumberOfOutboundEndpoints;
-            NumberOfOutboundEndpoints = numberOfOutboundEndpoints;
             DnsResolverState = dnsResolverState;
             ProvisioningState = provisioningState;
             ResourceGuid = resourceGuid;
@@ -104,38 +87,6 @@ namespace Microsoft.Azure.Management.DnsResolver.Models
         public SubResource VirtualNetwork { get; set; }
 
         /// <summary>
-        /// Gets the maximum number of inbound endpoints that can be created
-        /// for the DNS resolver. This is a read-only property and any attempt
-        /// to set this value will be ignored.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.maxNumberOfInboundEndpoints")]
-        public long? MaxNumberOfInboundEndpoints { get; private set; }
-
-        /// <summary>
-        /// Gets the current number of inbound endpoints for the DNS resolver.
-        /// This is a read-only property and any attempt to set this value will
-        /// be ignored.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.numberOfInboundEndpoints")]
-        public long? NumberOfInboundEndpoints { get; private set; }
-
-        /// <summary>
-        /// Gets the maximum number of outbound endpoints that can be created
-        /// for the DNS resolver. This is a read-only property and any attempt
-        /// to set this value will be ignored.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.maxNumberOfOutboundEndpoints")]
-        public long? MaxNumberOfOutboundEndpoints { get; private set; }
-
-        /// <summary>
-        /// Gets the current number of outbound endpoints for the DNS resolver.
-        /// This is a read-only property and any attempt to set this value will
-        /// be ignored.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.numberOfOutboundEndpoints")]
-        public long? NumberOfOutboundEndpoints { get; private set; }
-
-        /// <summary>
         /// Gets the current status of the DNS resolver. This is a read-only
         /// property and any attempt to set this value will be ignored.
         /// Possible values include: 'Connected', 'Disconnected'
@@ -158,5 +109,15 @@ namespace Microsoft.Azure.Management.DnsResolver.Models
         [JsonProperty(PropertyName = "properties.resourceGuid")]
         public string ResourceGuid { get; private set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public override void Validate()
+        {
+            base.Validate();
+        }
     }
 }

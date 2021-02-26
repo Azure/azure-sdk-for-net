@@ -101,11 +101,21 @@ namespace DnsResolver.Tests
             };
         }
 
+        public static Subnet GenerateSubnet(
+            string subnetName = "Default",
+            string subnetAddressSpaceCidr = "10.0.0.0/24"
+            )
+        {
+            return new Subnet
+            {
+                Name = subnetName,
+                AddressPrefix = subnetAddressSpaceCidr
+            };
+        }
+
         public static VirtualNetwork GenerateVirtualNetwork(
             string location = null,
-            string addressSpaceCidr = "10.0.0.0/16",
-            string subnetName = "Default",
-            string subnetAddressSpaceCidr = "10.0.0.0/24")
+            string addressSpaceCidr = "10.0.0.0/16")
         {
             return new VirtualNetwork
             {
@@ -118,34 +128,10 @@ namespace DnsResolver.Tests
                 },
                 Subnets = new List<Subnet>
                 {
-                    new Subnet
-                    {
-                        Name = subnetName,
-                        AddressPrefix = subnetAddressSpaceCidr
-                    }
+                    GenerateSubnet()
                 },
                 Location = location ?? DefaultResourceLocation,
             };
-        }
-
-        public static List<IpConfiguration> GenerateRandomIpConfigurations(int count = 1, string subscriptionId = null, string resourceGroupName = null,  string virtualNetworkName = null) 
-        {
-            subscriptionId = subscriptionId ?? GenerateSubscriptionId();
-            resourceGroupName = resourceGroupName ?? GenerateResourceGroupName();
-            virtualNetworkName = virtualNetworkName ?? GenerateVirtualNetworkName();
-            var ipConfigurations = new List<IpConfiguration>();
-
-            for (var i = 0; i < count; i++)
-            {
-                ipConfigurations.Add(new IpConfiguration
-                {
-                    Subnet = GenerateRandomSubnetSubResource(subscriptionId: subscriptionId, resourceGroupName: resourceGroupName, virtualNetworkName: virtualNetworkName),
-                    PrivateIpAddress = null, 
-                    PrivateIpAllocationMethod = Constants.StaticPrivateIpAllocationMethod,
-                });
-            }
-
-            return ipConfigurations;
         }
 
         public static DnsResolverModel GenerateDnsResolverWithoutVirtualNetwork(string location = null, IDictionary<string, string> tags = null)
