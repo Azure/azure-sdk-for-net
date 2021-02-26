@@ -923,27 +923,22 @@ namespace Azure.Storage.Blobs
             };
         }
 
-        private const string MetadataHeaderPrefix = "x-ms-meta-";
-        private const string ObjectReplicationRulesHeaderPrefix = "x-ms-or-";
-
-        private static bool ExtractMultiHeaderDownloadProperties(this ResponseHeaders headers, out IDictionary<string, string> metadata, out IDictionary<string, string> objectReplicationRules)
+        private static void ExtractMultiHeaderDownloadProperties(this ResponseHeaders headers, out IDictionary<string, string> metadata, out IDictionary<string, string> objectReplicationRules)
         {
             metadata = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
             objectReplicationRules = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
             foreach (HttpHeader item in headers)
             {
-                if (item.Name.StartsWith(MetadataHeaderPrefix, StringComparison.OrdinalIgnoreCase))
+                if (item.Name.StartsWith(Constants.Blob.MetadataHeaderPrefix, StringComparison.OrdinalIgnoreCase))
                 {
-                    metadata.Add(item.Name.Substring(MetadataHeaderPrefix.Length), item.Value);
+                    metadata.Add(item.Name.Substring(Constants.Blob.MetadataHeaderPrefix.Length), item.Value);
                 }
-                else if (item.Name.StartsWith(ObjectReplicationRulesHeaderPrefix, StringComparison.OrdinalIgnoreCase))
+                else if (item.Name.StartsWith(Constants.Blob.ObjectReplicationRulesHeaderPrefix, StringComparison.OrdinalIgnoreCase))
                 {
-                    objectReplicationRules.Add(item.Name.Substring(MetadataHeaderPrefix.Length), item.Value);
+                    objectReplicationRules.Add(item.Name.Substring(Constants.Blob.ObjectReplicationRulesHeaderPrefix.Length), item.Value);
                 }
             }
-
-            return true;
         }
         #endregion
 
