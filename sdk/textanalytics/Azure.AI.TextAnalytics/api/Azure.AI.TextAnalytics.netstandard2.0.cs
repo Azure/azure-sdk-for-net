@@ -560,6 +560,7 @@ namespace Azure.AI.TextAnalytics
         public static Azure.AI.TextAnalytics.AnalyzeSentimentResult AnalyzeSentimentResult(string id, Azure.AI.TextAnalytics.TextAnalyticsError error) { throw null; }
         public static Azure.AI.TextAnalytics.AnalyzeSentimentResult AnalyzeSentimentResult(string id, Azure.AI.TextAnalytics.TextDocumentStatistics statistics, Azure.AI.TextAnalytics.DocumentSentiment documentSentiment) { throw null; }
         public static Azure.AI.TextAnalytics.AnalyzeSentimentResultCollection AnalyzeSentimentResultCollection(System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.AnalyzeSentimentResult> list, Azure.AI.TextAnalytics.TextDocumentBatchStatistics statistics, string modelVersion) { throw null; }
+        public static Azure.AI.TextAnalytics.AssessmentSentiment AssessmentSentiment(Azure.AI.TextAnalytics.TextSentiment sentiment, double positiveScore, double negativeScore, string text, bool isNegated, int offset, int length) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AI.TextAnalytics.CategorizedEntity CategorizedEntity(string text, string category, string subCategory, double score) { throw null; }
         public static Azure.AI.TextAnalytics.CategorizedEntity CategorizedEntity(string text, string category, string subCategory, double score, int offset) { throw null; }
@@ -580,8 +581,6 @@ namespace Azure.AI.TextAnalytics
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AI.TextAnalytics.LinkedEntityMatch LinkedEntityMatch(string text, double score) { throw null; }
         public static Azure.AI.TextAnalytics.LinkedEntityMatch LinkedEntityMatch(string text, double score, int offset, int length) { throw null; }
-        public static Azure.AI.TextAnalytics.SentenceOpinion MinedOpinion(Azure.AI.TextAnalytics.TargetSentiment target, System.Collections.Generic.IReadOnlyList<Azure.AI.TextAnalytics.AssessmentSentiment> assessments) { throw null; }
-        public static Azure.AI.TextAnalytics.AssessmentSentiment OpinionSentiment(Azure.AI.TextAnalytics.TextSentiment sentiment, double positiveScore, double negativeScore, string text, bool isNegated, int offset, int length) { throw null; }
         public static Azure.AI.TextAnalytics.PiiEntity PiiEntity(string text, string category, string subCategory, double score, int offset) { throw null; }
         public static Azure.AI.TextAnalytics.PiiEntityCollection PiiEntityCollection(System.Collections.Generic.IList<Azure.AI.TextAnalytics.PiiEntity> entities, string redactedText, System.Collections.Generic.IList<Azure.AI.TextAnalytics.TextAnalyticsWarning> warnings = null) { throw null; }
         public static Azure.AI.TextAnalytics.RecognizeEntitiesResult RecognizeEntitiesResult(string id, Azure.AI.TextAnalytics.TextAnalyticsError error) { throw null; }
@@ -593,9 +592,10 @@ namespace Azure.AI.TextAnalytics
         public static Azure.AI.TextAnalytics.RecognizePiiEntitiesResult RecognizePiiEntitiesResult(string id, Azure.AI.TextAnalytics.TextAnalyticsError error) { throw null; }
         public static Azure.AI.TextAnalytics.RecognizePiiEntitiesResult RecognizePiiEntitiesResult(string id, Azure.AI.TextAnalytics.TextDocumentStatistics statistics, Azure.AI.TextAnalytics.PiiEntityCollection entities) { throw null; }
         public static Azure.AI.TextAnalytics.RecognizePiiEntitiesResultCollection RecognizePiiEntitiesResultCollection(System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.RecognizePiiEntitiesResult> list, Azure.AI.TextAnalytics.TextDocumentBatchStatistics statistics, string modelVersion) { throw null; }
+        public static Azure.AI.TextAnalytics.SentenceOpinion SentenceOpinion(Azure.AI.TextAnalytics.TargetSentiment target, System.Collections.Generic.IReadOnlyList<Azure.AI.TextAnalytics.AssessmentSentiment> assessments) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AI.TextAnalytics.SentenceSentiment SentenceSentiment(Azure.AI.TextAnalytics.TextSentiment sentiment, string text, double positiveScore, double neutralScore, double negativeScore) { throw null; }
-        public static Azure.AI.TextAnalytics.SentenceSentiment SentenceSentiment(Azure.AI.TextAnalytics.TextSentiment sentiment, string text, double positiveScore, double neutralScore, double negativeScore, int offset, int length, System.Collections.Generic.IReadOnlyList<Azure.AI.TextAnalytics.SentenceOpinion> minedAssessments) { throw null; }
+        public static Azure.AI.TextAnalytics.SentenceSentiment SentenceSentiment(Azure.AI.TextAnalytics.TextSentiment sentiment, string text, double positiveScore, double neutralScore, double negativeScore, int offset, int length, System.Collections.Generic.IReadOnlyList<Azure.AI.TextAnalytics.SentenceOpinion> opinions) { throw null; }
         public static Azure.AI.TextAnalytics.SentimentConfidenceScores SentimentConfidenceScores(double positiveScore, double neutralScore, double negativeScore) { throw null; }
         public static Azure.AI.TextAnalytics.TargetSentiment TargetSentiment(Azure.AI.TextAnalytics.TextSentiment sentiment, string text, double positiveScore, double negativeScore, int offset, int length) { throw null; }
         public static Azure.AI.TextAnalytics.TextAnalyticsError TextAnalyticsError(string code, string message, string target = null) { throw null; }
