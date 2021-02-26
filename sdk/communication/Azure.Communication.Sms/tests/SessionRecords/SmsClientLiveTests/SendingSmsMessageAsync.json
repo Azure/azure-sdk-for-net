@@ -6,11 +6,14 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "183",
+        "Content-Length": "146",
         "Content-Type": "application/json",
-        "Date": "Fri, 26 Feb 2021 18:32:44 GMT",
-        "traceparent": "00-d67342d29a72a248bf05427eb9899db3-c0b8c0774acbae49-00",
-        "User-Agent": "azsdk-net-Communication.Sms/1.0.0-alpha.20210226.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "Date": "Fri, 26 Feb 2021 21:13:28 GMT",
+        "traceparent": "00-a49a72ed6976e543ae75234347398084-89e644c97a5c2a4e-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Sms/1.0.0-alpha.20210226.1",
+          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
+        ],
         "x-ms-client-request-id": "d2da5067b9e869b758c535d03946972b",
         "x-ms-content-sha256": "Sanitized",
         "x-ms-return-client-request-id": "true"
@@ -20,8 +23,8 @@
         "smsRecipients": [
           {
             "to": "Sanitized",
-            "repeatabilityRequestId": "16676f32-87b9-4c78-9cde-2d8e5ee5e78d",
-            "repeatabilityFirstSent": "02/26/2021 10:32:44"
+            "repeatabilityRequestId": "Sanitized",
+            "repeatabilityFirstSent": "Sanitized"
           }
         ],
         "message": "Hi"
@@ -30,18 +33,18 @@
       "ResponseHeaders": {
         "api-supported-versions": "2020-07-20-preview1, 2020-08-20-preview, 2021-03-07",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 26 Feb 2021 18:32:44 GMT",
-        "MS-CV": "JFQRwXzdh0qIqIJPbXSaKw.0",
+        "Date": "Fri, 26 Feb 2021 21:13:29 GMT",
+        "MS-CV": "5DRJLgp2bE\u002BEnEeNxT9SCw.0",
         "Request-Context": "appId=",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0zD45YAAAAAA\u002B61MFmb3cQaM8E2DvhXxIRVdSMzBFREdFMDYxOAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
-        "X-Processing-Time": "288ms"
+        "X-Azure-Ref": "0eWQ5YAAAAAAy0WmIYTzPQa2KOLZCOBXQQ0hHRURHRTE2MTEAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Processing-Time": "296ms"
       },
       "ResponseBody": {
         "value": [
           {
             "to": "Sanitized",
-            "messageId": "Outgoing_2021022618324416f84ae8-6b0e-4ada-bafc-18f17aa71c29_noam",
+            "messageId": "Outgoing_20210226211329370d9dde-60d4-4ee5-bd27-2ecdc0fcdd09_noam",
             "httpStatusCode": 202,
             "errorMessage": null,
             "repeatabilityResult": "accepted",

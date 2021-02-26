@@ -11,6 +11,8 @@ namespace Azure.Communication.Sms.Tests
         {
             JsonPathSanitizers.Add("$..from");
             JsonPathSanitizers.Add("$..to");
+            JsonPathSanitizers.Add("$..repeatabilityRequestId");
+            JsonPathSanitizers.Add("$..repeatabilityFirstSent");
         }
 
         public override string SanitizeVariable(string variableName, string environmentVariableValue)
