@@ -72,6 +72,52 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
+            /// The operation to update the restore point collection.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='restorePointCollectionName'>
+            /// The name of the restore point collection.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the Update restore point collection operation.
+            /// </param>
+            public static RestorePointCollection Update(this IRestorePointCollectionsOperations operations, string resourceGroupName, string restorePointCollectionName, RestorePointCollection parameters)
+            {
+                return operations.UpdateAsync(resourceGroupName, restorePointCollectionName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// The operation to update the restore point collection.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='restorePointCollectionName'>
+            /// The name of the restore point collection.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the Update restore point collection operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<RestorePointCollection> UpdateAsync(this IRestorePointCollectionsOperations operations, string resourceGroupName, string restorePointCollectionName, RestorePointCollection parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, restorePointCollectionName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// The operation to delete the restore point collection. This operation will
             /// also delete all the contained restore points.
             /// </summary>

@@ -36,18 +36,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// point operation.</param>
         /// <param name="statusMessage">Gets the status message of the Create
         /// restore point operation.</param>
-        /// <param name="statusBlobSasUri">Read only SAS Uri of the status
-        /// blob.</param>
-        /// <param name="loggingBlobSasUri">Read only SAS Uri of the logging
-        /// blob.</param>
-        public RestorePointProvisioningDetails(System.DateTime? creationTime = default(System.DateTime?), long? totalUsedSizeInBytes = default(long?), int? statusCode = default(int?), string statusMessage = default(string), string statusBlobSasUri = default(string), string loggingBlobSasUri = default(string))
+        public RestorePointProvisioningDetails(System.DateTime? creationTime = default(System.DateTime?), long? totalUsedSizeInBytes = default(long?), int? statusCode = default(int?), string statusMessage = default(string))
         {
             CreationTime = creationTime;
             TotalUsedSizeInBytes = totalUsedSizeInBytes;
             StatusCode = statusCode;
             StatusMessage = statusMessage;
-            StatusBlobSasUri = statusBlobSasUri;
-            LoggingBlobSasUri = loggingBlobSasUri;
             CustomInit();
         }
 
@@ -80,18 +74,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "statusMessage")]
         public string StatusMessage { get; set; }
-
-        /// <summary>
-        /// Gets or sets read only SAS Uri of the status blob.
-        /// </summary>
-        [JsonProperty(PropertyName = "statusBlobSasUri")]
-        public string StatusBlobSasUri { get; set; }
-
-        /// <summary>
-        /// Gets or sets read only SAS Uri of the logging blob.
-        /// </summary>
-        [JsonProperty(PropertyName = "loggingBlobSasUri")]
-        public string LoggingBlobSasUri { get; set; }
 
     }
 }
