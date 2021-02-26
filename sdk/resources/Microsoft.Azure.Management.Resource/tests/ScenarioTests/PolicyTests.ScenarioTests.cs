@@ -1149,6 +1149,28 @@ namespace Policy.Tests
             }
         }
 
+        [Fact]
+        public void CanListAndGetDataPolicyManifests()
+        {
+            using (var context = MockContext.Start(this.GetType()))
+            {
+                var client = context.GetServiceClient<PolicyClient>();
+
+                // ensure a data policy manifest can be retrieved by policy mode
+                var policyMode = "Microsoft.Kubernetes.Data";
+                var dataPolicyManifestResult = client.DataPolicyManifests.GetByPolicyMode(policyMode: policyMode);
+                Assert.Equal(dataPolicyManifestResult.PolicyMode, policyMode);
+                this.AssertValid(dataPolicyManifestResult);
+
+                // ensure all retrieved data policy manifests are valid
+                var dataManifests = client.DataPolicyManifests.List();
+                foreach (var dataManifest in dataManifests)
+                {
+                    this.AssertValid(dataManifest);
+                }
+            }
+        }
+
         // test values
         private const string NameTag = "[Auto Test]";
         private const string BasicDescription = "Description text";
@@ -1618,7 +1640,19 @@ namespace Policy.Tests
             }
         }
 
-        private void AssertSystemDataValid(SystemData systemData)
+        // validate that the given result data policy manifest is valid and matches the given name and model
+        private void AssertValid(DataPolicyManifest result)
+        {
+            Assert.NotNull(result);
+            Assert.NotNull(result.Id);
+            Assert.NotNull(result.Name);
+            Assert.NotNull(result.PolicyMode);
+            Assert.NotEmpty(result.PolicyMode);
+            Assert.NotNull(result.Type);
+            Assert.NotNull(result.Effects);
+        }
+
+            private void AssertSystemDataValid(SystemData systemData)
         {
             Assert.NotNull(systemData);
             Assert.NotNull(systemData.CreatedAt);
