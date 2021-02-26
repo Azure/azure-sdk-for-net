@@ -11,5 +11,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             Type = "SystemAssigned";
         }
+
+        /// <summary> The principal id of the identity. </summary>
+        public string PrincipalId { get; set; }
+        /// <summary> The client tenant id of the identity. </summary>
+        public string TenantId { get; set; }
     }
 }

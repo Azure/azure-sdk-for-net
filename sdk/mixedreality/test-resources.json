@@ -22,27 +22,11 @@
       "metadata": {
         "description": "The location of the resource. By default, this is the same as the resource group."
       }
-    },
-    "baseTime": {
-      "type": "string",
-      "defaultValue": "[utcNow('u')]"
     }
   },
   "variables": {
     "apiVersion": "2020-05-01",
-    "asaAccountName": "[concat(parameters('baseName'), '-asa-account')]",
-    "arrApiVersion": "2020-04-06-preview",
-    "arrAccountName": "[concat(parameters('baseName'), '-arr-account')]",
-    "storageApiVersion": "2019-06-01",
-    "storageAccountName": "[parameters('baseName')]",
-    "blobContainerName": "test",
-    "blobContainerResourceName": "[concat(variables('storageAccountName'), '/default/', variables('blobContainerName'))]",
-    "sasProperties": {
-      "signedPermission": "rwl",
-      "signedExpiry": "[dateTimeAdd(parameters('baseTime'), 'P1D')]",
-      "signedResource": "c",
-      "canonicalizedResource": "[concat('/blob/', variables('storageAccountName'), '/', variables('blobContainerName'))]"
-    }
+    "asaAccountName": "[concat(parameters('baseName'), '-asa-account')]"
   },
     "resources": [
         {
@@ -51,45 +35,6 @@
             "apiVersion": "[variables('apiVersion')]",
             "location": "[parameters('location')]",
             "properties": {}
-        },
-        {
-            "type": "Microsoft.MixedReality/remoteRenderingAccounts",
-            "name": "[variables('arrAccountName')]",
-            "apiVersion": "[variables('arrApiVersion')]",
-            "location": "[parameters('location')]",
-            "properties": {},
-            "identity": { "type": "systemAssigned" }
-        },
-        {
-            "type": "Microsoft.Storage/storageAccounts",
-            "apiVersion": "[variables('storageApiVersion')]",
-            "name": "[variables('storageAccountName')]",
-            "location": "[parameters('location')]",
-            "sku": {
-                "name": "Standard_RAGRS",
-                "tier": "Standard"
-            },
-            "kind": "StorageV2",
-            "properties": { 
-                "supportsHttpsTrafficOnly": true,
-                "encryption": {
-                    "keySource": "Microsoft.Storage",
-                    "services": {
-                        "blob": {
-                            "enabled": true
-                        }
-                    },
-                },
-                "accessTier": "Hot" 
-            }
-        },
-        {
-          "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
-          "apiVersion": "[variables('storageApiVersion')]",
-          "name": "[variables('blobContainerResourceName')]",
-          "dependsOn": [
-            "[variables('storageAccountName')]"
-          ]
         }
     ],
     "outputs": {
@@ -104,38 +49,6 @@
         "MIXEDREALITY_ACCOUNT_KEY": {
             "type": "string",
             "value": "[listKeys(resourceId('Microsoft.MixedReality/spatialAnchorsAccounts', variables('asaAccountName')), variables('apiVersion')).primaryKey]"
-        },
-        "MIXEDREALITY_ARR_ACCOUNT_ID": {
-            "type": "string",
-            "value": "[reference(variables('arrAccountName')).accountId]"
-        },
-        "MIXEDREALITY_ARR_ACCOUNT_DOMAIN": {
-          "type": "string",
-          "value": "[reference(variables('arrAccountName')).accountDomain]"
-        },
-        "MIXEDREALITY_ARR_ACCOUNT_KEY": {
-          "type": "string",
-          "value": "[listKeys(resourceId('Microsoft.MixedReality/remoteRenderingAccounts', variables('arrAccountName')), variables('arrApiVersion')).primaryKey]"
-        },
-        "MIXEDREALITY_ARR_STORAGE_ACCOUNT_NAME": {
-          "type": "string",
-          "value": "[variables('storageAccountName')]"
-        },
-        "MIXEDREALITY_ARR_STORAGE_ACCOUNT_KEY": {
-          "type": "string",
-          "value": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), variables('storageApiVersion')).keys[0].value]"
-        },
-      "MIXEDREALITY_ARR_BLOB_CONTAINER_NAME": {
-        "type": "string",
-        "value": "[variables('blobContainerName')]"
-      },
-      "MIXEDREALITY_ARR_SAS_TOKEN": {
-        "type": "string",
-        "value": "[listServiceSas(variables('storageAccountName'), variables('storageApiVersion'), variables('sasProperties')).serviceSasToken]"
-      },
-      "MIXEDREALITY_ARR_SERVICE_ENDPOINT": {
-        "type": "string",
-        "value": "[concat('https://remoterendering.', parameters('location'), '.mixedreality.azure.com')]"
-      }
+        }
     }
 }

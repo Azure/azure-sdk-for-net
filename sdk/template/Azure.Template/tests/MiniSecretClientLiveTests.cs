@@ -12,8 +12,6 @@ namespace Azure.Template.Tests
     {
         public MiniSecretClientLiveTests(bool isAsync) : base(isAsync)
         {
-            //TODO: https://github.com/Azure/autorest.csharp/issues/689
-            TestDiagnostics = false;
         }
 
         private MiniSecretClient CreateClient()
