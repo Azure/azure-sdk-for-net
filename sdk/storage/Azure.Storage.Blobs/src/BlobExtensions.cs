@@ -936,7 +936,8 @@ namespace Azure.Storage.Blobs
                 if (item.Name.StartsWith(MetadataHeaderPrefix, StringComparison.OrdinalIgnoreCase))
                 {
                     metadata.Add(item.Name.Substring(MetadataHeaderPrefix.Length), item.Value);
-                } else if (item.Name.StartsWith(ObjectReplicationRulesHeaderPrefix, StringComparison.OrdinalIgnoreCase))
+                }
+                else if (item.Name.StartsWith(ObjectReplicationRulesHeaderPrefix, StringComparison.OrdinalIgnoreCase))
                 {
                     objectReplicationRules.Add(item.Name.Substring(MetadataHeaderPrefix.Length), item.Value);
                 }
