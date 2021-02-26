@@ -23,7 +23,7 @@ namespace Azure.Template.Tests
             ));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CanGetSecret()
         {
             var client = CreateClient();
