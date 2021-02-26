@@ -93,6 +93,30 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
+        public async Task EventHub_SingleDispatch_ConsumerGroup()
+        {
+            var (jobHost, host) = BuildHost<EventHubTestSingleDispatchWithConsumerGroupJobs>(builder =>
+            {
+                ConfigureTestEventHub(builder);
+                builder
+                    .ConfigureAppConfiguration(builder =>
+                    {
+                        builder.AddInMemoryCollection(new Dictionary<string, string>()
+                        {
+                            {"consumerGroup", "$Default"}
+                        });
+                    });
+            });
+            using (jobHost)
+            {
+                await jobHost.CallAsync(nameof(EventHubTestSingleDispatchWithConsumerGroupJobs.SendEvent_TestHub));
+
+                bool result = _eventWait.WaitOne(Timeout);
+                Assert.True(result);
+            }
+        }
+
+        [Test]
         public async Task EventHub_SingleDispatch_BinaryData()
         {
             var (jobHost, host) = BuildHost<EventHubTestSingleDispatchJobsBinaryData>();
@@ -350,13 +374,28 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
 
             public static void ProcessSingleEvent([EventHubTrigger(TestHubName, Connection = TestHubName)] string evt,
-                       string partitionKey, DateTime enqueuedTimeUtc, IDictionary<string, object> properties,
-                       IDictionary<string, object> systemProperties)
+                string partitionKey, DateTime enqueuedTimeUtc, IDictionary<string, object> properties,
+                IDictionary<string, object> systemProperties)
             {
                 Assert.True((DateTime.Now - enqueuedTimeUtc).TotalSeconds < 30);
 
                 Assert.AreEqual("value1", properties["TestProp1"]);
                 Assert.AreEqual("value2", properties["TestProp2"]);
+
+                _eventWait.Set();
+            }
+        }
+
+        public class EventHubTestSingleDispatchWithConsumerGroupJobs
+        {
+            public static void SendEvent_TestHub([EventHub(TestHubName, Connection = TestHubName)] out string evt)
+            {
+                evt = nameof(EventHubTestSingleDispatchWithConsumerGroupJobs);
+            }
+
+            public static void ProcessSingleEvent([EventHubTrigger(TestHubName, Connection = TestHubName, ConsumerGroup = "%consumerGroup%")] string evt)
+            {
+                Assert.AreEqual(evt, nameof(EventHubTestSingleDispatchWithConsumerGroupJobs));
 
                 _eventWait.Set();
             }
