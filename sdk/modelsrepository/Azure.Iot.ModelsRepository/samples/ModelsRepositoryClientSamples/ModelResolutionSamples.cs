@@ -35,48 +35,48 @@ namespace Azure.Iot.ModelsRepository.Samples
             Console.WriteLine($"Initialized client pointing to local path: {client.RepositoryUri}");
         }
 
-        public static async Task ResolveExistingModelsFromGlobalRepoAsync()
+        public static async Task GetModelsFromGlobalRepoAsync()
         {
             var dtmi = "dtmi:com:example:TemperatureController;1";
 
             // Global endpoint client
             var client = new ModelsRepositoryClient();
 
-            // The output of ResolveAsync() will include at least the definition for the target dtmi.
+            // The output of GetModelsAsync() will include at least the definition for the target dtmi.
             // If the dependency model resolution option is not disabled, then models in which the
             // target dtmi depends on will also be included in the returned IDictionary<string, string>.
-            IDictionary<string, string> models = await client.ResolveAsync(dtmi).ConfigureAwait(false);
+            IDictionary<string, string> models = await client.GetModelsAsync(dtmi).ConfigureAwait(false);
 
             // In this case the above dtmi has 2 model dependencies.
             // dtmi:com:example:Thermostat;1 and dtmi:azure:DeviceManagement:DeviceInformation;1
             Console.WriteLine($"{dtmi} resolved in {models.Count} interfaces.");
         }
 
-        public static async Task ResolveExistingModelsFromLocalRepoAsync()
+        public static async Task GetModelsFromLocalRepoAsync()
         {
             var dtmi = "dtmi:com:example:TemperatureController;1";
 
             // Local sample repository client
             var client = new ModelsRepositoryClient(new Uri(ClientSamplesLocalModelsRepository));
 
-            // The output of ResolveAsync() will include at least the definition for the target dtmi.
+            // The output of GetModelsAsync() will include at least the definition for the target dtmi.
             // If the dependency model resolution option is not disabled, then models in which the
             // target dtmi depends on will also be included in the returned IDictionary<string, string>.
-            IDictionary<string, string> models = await client.ResolveAsync(dtmi).ConfigureAwait(false);
+            IDictionary<string, string> models = await client.GetModelsAsync(dtmi).ConfigureAwait(false);
 
             // In this case the above dtmi has 2 model dependencies.
             // dtmi:com:example:Thermostat;1 and dtmi:azure:DeviceManagement:DeviceInformation;1
             Console.WriteLine($"{dtmi} resolved in {models.Count} interfaces.");
         }
 
-        public static async Task TryResolveFromGlobalRepoButNotFoundAsync()
+        public static async Task TryGetModelsFromGlobalRepoButNotFoundAsync()
         {
             var dtmi = "dtmi:com:example:NotFound;1";
             var client = new ModelsRepositoryClient();
 
             try
             {
-                IDictionary<string, string> models = await client.ResolveAsync(dtmi).ConfigureAwait(false);
+                IDictionary<string, string> models = await client.GetModelsAsync(dtmi).ConfigureAwait(false);
                 Console.WriteLine($"{dtmi} resolved in {models.Count} interfaces.");
             }
             catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.NotFound)
@@ -85,14 +85,14 @@ namespace Azure.Iot.ModelsRepository.Samples
             }
         }
 
-        public static async Task TryResolveFromLocalRepoButNotFoundAsync()
+        public static async Task TryGetModelsFromLocalRepoButNotFoundAsync()
         {
             var dtmi = "dtmi:com:example:NotFound;1";
             var client = new ModelsRepositoryClient(new Uri(ClientSamplesLocalModelsRepository));
 
             try
             {
-                IDictionary<string, string> models = await client.ResolveAsync(dtmi).ConfigureAwait(false);
+                IDictionary<string, string> models = await client.GetModelsAsync(dtmi).ConfigureAwait(false);
                 Console.WriteLine($"{dtmi} resolved in {models.Count} interfaces.");
             }
             catch (RequestFailedException ex) when (ex.InnerException is FileNotFoundException)
@@ -101,7 +101,7 @@ namespace Azure.Iot.ModelsRepository.Samples
             }
         }
 
-        public static async Task TryResolveWithInvalidDtmi()
+        public static async Task TryGetModelsWithInvalidDtmiAsync()
         {
             var invalidDtmi = "dtmi:com:example:InvalidDtmi";
 
@@ -109,7 +109,7 @@ namespace Azure.Iot.ModelsRepository.Samples
             var client = new ModelsRepositoryClient();
             try
             {
-                await client.ResolveAsync(invalidDtmi);
+                await client.GetModelsAsync(invalidDtmi);
             }
             catch (ArgumentException ex)
             {

@@ -18,21 +18,21 @@ namespace Azure.Iot.ModelsRepository.Fetchers
     /// </summary>
     internal class LocalModelFetcher : IModelFetcher
     {
-        private readonly bool _tryExpanded;
         private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly ModelsRepositoryClientOptions _clientOptions;
 
         public LocalModelFetcher(ClientDiagnostics clientDiagnostics, ModelsRepositoryClientOptions clientOptions)
         {
             _clientDiagnostics = clientDiagnostics;
-            _tryExpanded = clientOptions.DependencyResolution == DependencyResolutionOption.TryFromExpanded;
+            _clientOptions = clientOptions;
         }
 
-        public Task<FetchResult> FetchAsync(string dtmi, Uri repositoryUri, CancellationToken cancellationToken = default)
+        public Task<FetchResult> FetchAsync(string dtmi, Uri repositoryUri, DependencyResolutionOption? resolutionOption, CancellationToken cancellationToken = default)
         {
-            return Task.FromResult(Fetch(dtmi, repositoryUri, cancellationToken));
+            return Task.FromResult(Fetch(dtmi, repositoryUri, resolutionOption, cancellationToken));
         }
 
-        public FetchResult Fetch(string dtmi, Uri repositoryUri, CancellationToken cancellationToken = default)
+        public FetchResult Fetch(string dtmi, Uri repositoryUri, DependencyResolutionOption? resolutionOption, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("LocalModelFetcher.Fetch");
             scope.Start();
@@ -40,8 +40,8 @@ namespace Azure.Iot.ModelsRepository.Fetchers
             try
             {
                 var work = new Queue<string>();
-
-                if (_tryExpanded)
+                DependencyResolutionOption targetResolutionOption = resolutionOption ?? _clientOptions.DependencyResolution;
+                if (targetResolutionOption == DependencyResolutionOption.TryFromExpanded)
                 {
                     work.Enqueue(GetPath(dtmi, repositoryUri, true));
                 }
@@ -70,7 +70,7 @@ namespace Azure.Iot.ModelsRepository.Fetchers
                 }
 
                 throw new RequestFailedException(
-                    $"{string.Format(CultureInfo.InvariantCulture, StandardStrings.GenericResolverError, dtmi)} {fnfError}",
+                    $"{string.Format(CultureInfo.InvariantCulture, StandardStrings.GenericGetModelsError, dtmi)} {fnfError}",
                     new FileNotFoundException(fnfError));
             }
             catch (Exception ex)
