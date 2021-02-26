@@ -55,25 +55,65 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
                     JRaw optionalProperties = new JRaw("{ 'property' : [ { 'name' : 'dummyProperty' } ] }");
                     string vmId = createdVM.Id;
                     string vmSize = createdVM.HardwareProfile.VmSize;
-                    VerifyRPCCreation(createdVM.Id, rpcName, rgName, location);
+
+                    // create RPC
+                    Dictionary<string, string> tags = new Dictionary<string, string>()
+                    {
+                        {"RG", "rg"},
+                        {"testTag", "1"},
+                    };
+                    RestorePointCollection createdRpc = CreateRpc(createdVM.Id, rpcName, rgName, location, tags);
+                    VerifyRpc(createdRpc, rgName, rpcName, location, vmId, rpName, false);
+
+                    // format JRaw so that we can validate the JRaw returned in the restore point
+                    string expectedJRaw = RemoveWhiteSpaces(optionalProperties.ToString());
+
+                    // create RP in the RPC
                     RestorePoint createdRP = CreateRestorePoint(rgName, rpcName, rpName, optionalProperties, osDisk, vmSize, diskToExclude: dataDiskId);
-                    VerifyRestorePointDetails(createdRP, rpName, osDisk, 1, optionalProperties,
+                    VerifyRestorePointDetails(createdRP, rpName, osDisk, 1, expectedJRaw,
                         excludeDiskId: dataDiskId, vmId: vmId, vmSize: vmSize);
                     RestorePoint getRP = GetRP(rgName, rpcName, rpName);
-                    VerifyRestorePointDetails(createdRP, rpName, osDisk, 1, optionalProperties,
+                    VerifyRestorePointDetails(createdRP, rpName, osDisk, 1, expectedJRaw,
                         excludeDiskId: dataDiskId, vmId: vmId, vmSize: vmSize);
+
                     // get RPC without dollar expand
-                    RestorePointCollection returnedRpc = GetRpc(rgName, rpcName, location, vmId, rpName);
+                    RestorePointCollection returnedRpc = GetRpc(rgName, rpcName);
                     VerifyRpc(returnedRpc, rgName, rpcName, location, vmId, rpName, false);
+
                     // get RPC with dollar expand
-                    returnedRpc = GetRpc(rgName, rpcName, location, vmId, rpName, RestorePointCollectionExpandOptions.RestorePoints);
+                    returnedRpc = GetRpc(rgName, rpcName,  
+                        RestorePointCollectionExpandOptions.RestorePoints);
                     VerifyRpc(returnedRpc, rgName, rpcName, location, vmId, rpName, false);
                     // verify the restore point returned from GET RPC with $expand
                     RestorePoint rpInRpc = returnedRpc.RestorePoints[0];
-                    VerifyRestorePointDetails(rpInRpc, rpName, osDisk, 1, optionalProperties,
+                    VerifyRestorePointDetails(rpInRpc, rpName, osDisk, 1, expectedJRaw,
                         excludeDiskId: dataDiskId, vmId: vmId, vmSize: vmSize);
+
                     // delete the restore point
+                    DeleteRP(rgName, rpcName, rpName);
+                    // GET of deleted restore point should return 404 not found
+                    try
+                    {
+                        GetRP(rgName, rpcName, rpName);
+                        Assert.False(true);
+                    }
+                    catch (CloudException ex)
+                    {
+                        Assert.True(ex.Response.StatusCode == HttpStatusCode.NotFound);
+                    }
+
                     // delete the restore point collection
+                    DeleteRpc(rgName, rpcName);
+                    // GET of deleted RPC should return 404 not found
+                    try
+                    {
+                        GetRpc(rgName, rpcName);
+                        Assert.False(true);
+                    }
+                    catch (CloudException ex)
+                    {
+                        Assert.True(ex.Response.StatusCode == HttpStatusCode.NotFound);
+                    }
                 }
                 catch (CloudException ex)
                 {
@@ -88,26 +128,12 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
 
         private void DeleteRP(string rgName, string rpcName, string rpName)
         {
-            try
-            {
-                m_CrpClient.RestorePoints.Delete(rgName, rpcName, rpName);
-            }
-            catch (CloudException ex)
-            {
-                Assert.True(ex.Response.StatusCode == HttpStatusCode.BadRequest);
-            }
+            m_CrpClient.RestorePoints.Delete(rgName, rpcName, rpName);
         }
 
         private void DeleteRpc(string rgName, string rpcName)
         {
-            try
-            {
-                m_CrpClient.RestorePointCollections.Delete(rgName, rpcName);
-            }
-            catch (CloudException ex)
-            {
-                Assert.True(ex.Response.StatusCode == HttpStatusCode.BadRequest);
-            }
+            m_CrpClient.RestorePointCollections.Delete(rgName, rpcName);
         }
 
         private RestorePoint GetRP(string rgName, string rpcName, 
@@ -117,7 +143,8 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
         }
 
         // if verify result of GET RPC with $expand, verify that the returned rpc contains restore points
-        private void VerifyRpc(RestorePointCollection rpc, string rgName, string rpcName, string location, string source, string rpName, bool verifyRP)
+        private void VerifyRpc(RestorePointCollection rpc, string rgName, string rpcName,
+            string location, string source, string rpName, bool verifyRpcContainsRestorePoints)
         {
             Assert.Equal(rpcName, rpc.Name);
             Assert.Equal(location, rpc.Location, ignoreCase: true);
@@ -125,15 +152,21 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
             Assert.Equal("Microsoft.Compute/restorePointCollections", rpc.Type);
             Assert.Equal(source, rpc.Source.Id, ignoreCase: true);
             Assert.NotNull(rpc.Id);
+            IDictionary<string, string> tagsOnRestorePoint = rpc.Tags;
 
-            if (verifyRP)
+            // RPC contains restore points only if request contains $expand
+            if (verifyRpcContainsRestorePoints)
             {
                 Assert.NotNull(rpc.RestorePoints);
                 Assert.Equal(1, rpc.RestorePoints.Count);
             }
+            else
+            {
+                Assert.Null(rpc.RestorePoints);
+            }
         }
 
-        private RestorePointCollection GetRpc(string rgName, string rpcName, string location, string source, string rpName,
+        private RestorePointCollection GetRpc(string rgName, string rpcName,
             RestorePointCollectionExpandOptions? expandOptions = null)
         {
             return m_CrpClient.RestorePointCollections.Get(
@@ -167,9 +200,8 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
         }
 
         void VerifyRestorePointDetails(RestorePoint rp, string rpName, OSDisk osDisk,
-            int excludeDisksCount, JRaw optionalProperties, string excludeDiskId, string vmId, string vmSize)
+            int excludeDisksCount, string expectedJRaw, string excludeDiskId, string vmId, string vmSize)
         {
-            string expectedJRaw = RemoveWhiteSpaces(optionalProperties.ToString());
             string returnedJRaw = RemoveWhiteSpaces(rp.OptionalProperties.ToString());
             bool equal = expectedJRaw == returnedJRaw;
 
@@ -190,46 +222,24 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
             Assert.Equal(vmSize, rp.SourceMetadata.HardwareProfile.VmSize);
         }
 
-        private void VerifyRPCCreation(string sourceVMId, string rpcName, string rgName, string location)
+        private RestorePointCollection CreateRpc(string sourceVMId, string rpcName,
+            string rgName, string location, Dictionary<string, string> tags)
         {
-            Dictionary<string, string> tags = new Dictionary<string, string>()
-            {
-                {"RG", "rg"},
-                {"testTag", "1"},
-            };
-            var inputRPC = new RestorePointCollection(location, id: "", name: rpcName, tags: tags);
-
-            RestorePointCollection createOrUpdateResponse = null;
-            try
-            {
-                createOrUpdateResponse = m_CrpClient.RestorePointCollections.CreateOrUpdate(
-                    rgName,
-                    rpcName,
-                    inputRPC);
-            }
-            catch (CloudException ex)
-            {
-                Assert.True(ex.Response.StatusCode == HttpStatusCode.BadRequest,
-                    "Expect failure when source id is not valid");
-            }
+            Models.SubResource sourceVM = new Models.SubResource(id: sourceVMId);
+            var inputRpc = new RestorePointCollection(location, source: sourceVM, name: rpcName, tags: tags);
 
             try
             {
-                // now successfully create RPC id by passing in source VM id
-                inputRPC.Source.Id = sourceVMId;
-                createOrUpdateResponse = m_CrpClient.RestorePointCollections.CreateOrUpdate(
-                    rgName,
-                    rpcName,
-                    inputRPC);
-                Assert.Equal(sourceVMId, createOrUpdateResponse.Source.Id);
-                //Assert.Equal(sourceVMId, createOrUpdateResponse.Id);
-                Assert.Null(createOrUpdateResponse.RestorePoints);
-                Assert.Equal(rpcName, createOrUpdateResponse.Name);
-                Assert.Equal(location, createOrUpdateResponse.Location, ignoreCase: true);
+                RestorePointCollection restorePointCollection =
+                    m_CrpClient.RestorePointCollections.CreateOrUpdate(rgName, rpcName,
+                    inputRpc);
+
+                return restorePointCollection;
             }
-            catch (CloudException ex)
+            catch(CloudException ex)
             {
-                Console.WriteLine("here"); 
+                Console.WriteLine("here");
+                return null;
             }
         }
     }
