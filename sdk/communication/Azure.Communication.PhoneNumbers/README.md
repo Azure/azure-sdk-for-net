@@ -58,13 +58,12 @@ TokenCredential tokenCredential = new DefaultAzureCredential();
 client = new PhoneNumbersClient(endpoint, tokenCredential);
 ```
 
-### Reserving and acquiring numbers
+### Phone Number Types overview
+Phone numbers come in two types: Geographic and Toll-Free. Geographic phone plans are phone plans associated with a location, whose phone numbers' area codes are associated with the area code of a geographic location. Toll-Free phone plans are phone plans not associated location. For example, in the US, toll-free numbers can come with area codes such as 800 or 888.
 
-Phone numbers reservation can be performed through the reservation creation API by providing a phone plan id, an area code and quantity of phone numbers. The provided quantity of phone numbers will be reserved for ten minutes. This reservation of phone numbers can either be cancelled or purchased. If the reservation is cancelled, then the phone numbers will become available to others. If the reservation is purchased, then the phone numbers are acquired for the Azure resources.
+### Searching and Purchasing and Releasing numbers
 
-### Configuring / Assigning numbers
-
-Phone numbers can be assigned to a callback URL via the configure number API. As part of the configuration, you will need an acquired phone number, callback URL and application id.
+Phone numbers can be searched through the search creation API by providing an area code, quantity of phone numbers, application type, phone number type, and capabilities. The provided quantity of phone numbers will be reserved for ten minutes and can be purchased within this time. If the search is not purchased, the phone numbers will become available to others after ten minutes. If the search is purchased, then the phone numbers are acquired for the Azure resources.
 
 ### Thread safety
 We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
@@ -108,7 +107,7 @@ await searchOperation.WaitForCompletionAsync();
 
 ## Purchase phone numbers
 
-Phone numbers can be acquired through purchasing a reservation.
+Phone numbers can be acquired through purchasing a search.
 
 ```C# Snippet:StartPurchaseSearchAsync
 var purchaseOperation = await client.StartPurchasePhoneNumbersAsync(searchOperation.Value.SearchId);

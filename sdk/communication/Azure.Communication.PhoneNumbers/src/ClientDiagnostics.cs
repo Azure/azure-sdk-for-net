@@ -8,8 +8,6 @@ using System.Text.Json;
 using Azure.Communication.PhoneNumbers.Models;
 using Azure.Core;
 
-#nullable enable
-
 namespace Azure.Core.Pipeline
 {
     internal partial class ClientDiagnostics
@@ -26,12 +24,12 @@ namespace Azure.Core.Pipeline
 #pragma warning disable CA1822 // Mark members as static
         partial void ExtractFailureContent(
 #pragma warning restore CA1822 // Mark members as static
-            string? content,
+            string content,
 #pragma warning disable CA1801 // Review unused parameters
             ResponseHeaders responseHeaders,
-            ref string? message,
-            ref string? errorCode,
-            ref IDictionary<string, string>? additionalInfo
+            ref string message,
+            ref string errorCode,
+            ref IDictionary<string, string> additionalInfo
 #pragma warning restore CA1801 // Review unused parameters
             )
         {
@@ -51,7 +49,7 @@ namespace Azure.Core.Pipeline
                         var communicationError = CommunicationError.DeserializeCommunicationError(property.Value);
                         errorCode = communicationError.Code;
                         message = communicationError.Message;
-                        additionalInfo = new Dictionary<string, string>() { { "target", communicationError.Target } };
+                        additionalInfo = new Dictionary<string, string>() { ["target"] = communicationError.Target };
                         break;
                     }
                 }
