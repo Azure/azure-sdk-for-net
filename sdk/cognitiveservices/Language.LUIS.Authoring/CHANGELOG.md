@@ -2,7 +2,6 @@
 
 ## 3.2.0-preview.5 (Unreleased)
 
-
 ## 3.2.0-preview.4 (2021-02-25)
 ### Fixed
 - ExampleId attribute in label APIs could not hold int values

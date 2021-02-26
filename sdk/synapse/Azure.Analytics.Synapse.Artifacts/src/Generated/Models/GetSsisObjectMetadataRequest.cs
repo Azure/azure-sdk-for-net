@@ -10,8 +10,5 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The request payload of get SSIS object metadata. </summary>
     public partial class GetSsisObjectMetadataRequest
     {
-
-        /// <summary> Metadata path. </summary>
-        public string MetadataPath { get; }
     }
 }

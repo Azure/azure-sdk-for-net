@@ -18,3 +18,6 @@ description: Samples for the Azure.Data.AppConfiguration client library
  - [Get a Configuration Setting](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/appconfiguration/Azure.Data.AppConfiguration/samples/Sample5_GetSettingIfChanged.md)
  - [Update a Configuration If Unchanged](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/appconfiguration/Azure.Data.AppConfiguration/samples/Sample6_UpdateSettingIfUnchanged.md)
  - [Mock a client for testing using the Moq library](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/appconfiguration/Azure.Data.AppConfiguration/samples/Sample7_MockClient.md)
+ - [Reacting to setting change notification](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/appconfiguration/Azure.Data.AppConfiguration/samples/Sample8_ChangeNotification.md)
+ - [Create, Retrieve and Delete a Feature Flag](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/appconfiguration/Azure.Data.AppConfiguration/samples/Sample9_FeatureFlags.md)
+ - [Create, Retrieve and Delete a Secret Reference](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/appconfiguration/Azure.Data.AppConfiguration/samples/Sample10_SecretReference.md)

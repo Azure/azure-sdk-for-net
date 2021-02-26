@@ -44,11 +44,8 @@ namespace Azure.Messaging.EventGrid.Tests
                     },
                     typeof(TestPayload));
 
-            // since the data has not yet been serialized (CloudEvent not constructed from Parse method), GetData returns the passed in instance.
-            Assert.AreEqual(5, egEvent.GetData<DerivedTestPayload>().DerivedProperty);
-
-            // GetData returns as BinaryData so it will always serialize first even if cloudEvent was not constructed by calling Parse.
-            Assert.IsNull(egEvent.GetData().ToObjectFromJson<DerivedTestPayload>().DerivedProperty);
+            // Data is a BinaryData so it will always serialize first even if cloudEvent was not constructed by calling Parse.
+            Assert.IsNull(egEvent.Data.ToObjectFromJson<DerivedTestPayload>().DerivedProperty);
 
             List<EventGridEvent> eventsList = new List<EventGridEvent>()
             {
@@ -58,8 +55,7 @@ namespace Azure.Messaging.EventGrid.Tests
             await client.SendEventsAsync(eventsList);
 
             egEvent = DeserializeRequest(mockTransport.SingleRequest).First();
-            Assert.IsNull(egEvent.GetData<DerivedTestPayload>().DerivedProperty);
-            Assert.IsNull(egEvent.GetData().ToObjectFromJson<DerivedTestPayload>().DerivedProperty);
+            Assert.IsNull(egEvent.Data.ToObjectFromJson<DerivedTestPayload>().DerivedProperty);
         }
 
         [Test]
@@ -86,8 +82,7 @@ namespace Azure.Messaging.EventGrid.Tests
                         DerivedProperty = 5
                     });
 
-            Assert.AreEqual(5, egEvent.GetData<DerivedTestPayload>().DerivedProperty);
-            Assert.AreEqual(5, egEvent.GetData().ToObjectFromJson<DerivedTestPayload>().DerivedProperty);
+            Assert.AreEqual(5, egEvent.Data.ToObjectFromJson<DerivedTestPayload>().DerivedProperty);
 
             List<EventGridEvent> eventsList = new List<EventGridEvent>()
             {
@@ -97,8 +92,15 @@ namespace Azure.Messaging.EventGrid.Tests
             await client.SendEventsAsync(eventsList);
 
             egEvent = DeserializeRequest(mockTransport.SingleRequest).First();
-            Assert.AreEqual(5, egEvent.GetData<DerivedTestPayload>().DerivedProperty);
-            Assert.AreEqual(5, egEvent.GetData().ToObjectFromJson<DerivedTestPayload>().DerivedProperty);
+            Assert.AreEqual(5, egEvent.Data.ToObjectFromJson<DerivedTestPayload>().DerivedProperty);
+        }
+
+        [Test]
+        public void PassingBinaryDataToWrongConstructorThrows()
+        {
+            Assert.That(
+                () => new EventGridEvent("subject", "type", "version", (object) new BinaryData("data")),
+                Throws.InstanceOf<InvalidOperationException>());
         }
 
         private static List<EventGridEvent> DeserializeRequest(Request request)
