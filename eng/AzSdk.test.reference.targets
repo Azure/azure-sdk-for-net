@@ -12,7 +12,4 @@
     <!-- This is needed for discovering tests in test explorer -->
     <PackageReference Include="System.Runtime.InteropServices" />
   </ItemGroup>
-  <ItemGroup> 
-    <Compile Include="$(RepoEngPath)\mgmt\DisableTestRunParallel.cs" Link="DisableTestRunParallel.cs" /> 
-  </ItemGroup>
 </Project>
