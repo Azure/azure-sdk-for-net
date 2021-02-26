@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://live-testing.communication.azure.com.127.0.0.1.xip.io:9998/phoneNumbers?api-version=2021_03_07",
+      "RequestUri": "https://live-testing.communication.azure.com/phoneNumbers?api-version=2021_03_07",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -119,7 +119,7 @@
     }
   ],
   "Variables": {
-    "COMMUNICATION_CONNECTION_STRING": "endpoint=https://live-testing.communication.azure.com.127.0.0.1.xip.io:9998/;accesskey=Kg==",
+    "COMMUNICATION_CONNECTION_STRING": "endpoint=https://live-testing.communication.azure.com/;accesskey=Kg==",
     "RandomSeed": "1246562785"
   }
 }
