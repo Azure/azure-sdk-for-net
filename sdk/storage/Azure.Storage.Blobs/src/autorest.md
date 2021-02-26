@@ -4,7 +4,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 input-file:
-    - https://github.com/Azure/azure-rest-api-specs/blob/8c1f9b739165035d9ced32761cebb19125bce233/specification/storage/data-plane/Microsoft.BlobStorage/preview/2020-06-12/blob.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/blob/8c1f9b739165035d9ced32761cebb19125bce233/specification/storage/data-plane/Microsoft.BlobStorage/preview/2020-06-12/blob.json
 ```
 
 ### Move path parameters to constructor.
