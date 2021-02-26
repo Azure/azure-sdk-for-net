@@ -3,7 +3,7 @@
 ## 5.1.0-beta.5 (Unreleased)
 ### Breaking changes
 - Renamed `AspectSentiment` to `TargetSentiment`.
-- Renamed `MinedOpinion` to `MinedAssessment`.
+- Renamed `MinedOpinion` to `SentenceOpinion`.
 - Renamed `OpinionSentiment` to `AssessmentSentiment`.
  
 ## 5.1.0-beta.4 (2021-02-10)
