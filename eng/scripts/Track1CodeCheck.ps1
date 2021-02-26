@@ -162,7 +162,7 @@ try {
                     $commandList += $_
                 }
                 if ($_ -match 'Autorest CSharp Version') {
-                    $version += $_.substring(25)
+                    $version = $_.substring(25)
                     if ([System.Version]$version -ge [System.Version]"2.3.82") {
                         $csharpVersion += $version
                     }
