@@ -142,7 +142,7 @@ foreach(var locationOption in locationOprions.Options)
 
 ### Get area codes
 
-Fetching area codes for geographic phone plans will require the the location options queries set. You must include the chain of geographic locations traversing down the location options object returned by the GetLocationOptions API.
+Fetching area codes for geographic phone plans will require that the location options queries be set. You must include the chain of geographic locations which traverse down the location options returned by the `GetLocationOptions` API.
 
 ```C#
 var areaCodesResponse = client.GetAllAreaCodes(locationType, countryCode, planId, locationOptionsQueries);
