@@ -44,11 +44,11 @@ When using the `<Operation>Request` method, the body of the `DynamicRequest` is 
 ```C# Snippet:DynamicRequestAndResponse
 DynamicRequest req = client.GetSentimentRequest();
 
-JsonData documents = req.Body.SetEmptyArray("documents");
-JsonData document = documents.AddEmptyObject();
-document.Set("language", "en");
-document.Set("id", "1");
-document.Set("text", "Great atmosphere. Close to plenty of restaurants, hotels, and transit! Staff are friendly and helpful.");
+req.DynamicBody.documents = new JsonData[1];
+req.DynamicBody.documents[0] = new JsonData();
+req.DynamicBody.documents[0].language = "en";
+req.DynamicBody.documents[0].id = "1";
+req.DynamicBody.documents[0].text = "Great atmosphere. Close to plenty of restaurants, hotels, and transit! Staff are friendly and helpful.";
 
 DynamicResponse res = req.Send();
 
@@ -59,7 +59,7 @@ if (res.Status != 200 /*OK*/)
 }
 else
 {
-    Console.WriteLine($"Sentiment of Document is ${(string)res.Body["documents"][0]["sentiment"]}");
+    Console.WriteLine($"Sentiment of document is {(string)res.DynamicBody.documents[0].sentiment}");
 }
 ```
 
@@ -338,22 +338,23 @@ Console.WriteLine(new JsonData("Hello, JsonData").ToJsonString()); // prints "He
 ```C# Snippet:DetectLanguagesSample
 TextAnalyticsClient client = new TextAnalyticsClient(new Uri("<endpoint-from-portal>"), new AzureKeyCredential("<api-key-from-portal>"));
 DynamicRequest req = client.GetLanguagesRequest();
+req.DynamicBody.documents = new JsonData[3];
+req.DynamicBody.documents[0] = new JsonData();
+req.DynamicBody.documents[0].countryHint = "US";
+req.DynamicBody.documents[0].id = "1";
+req.DynamicBody.documents[0].text = "Hello world";
 
-var documents = req.Body.SetEmptyArray("documents");
-var document = documents.AddEmptyObject();
-document.Set("countryHint", "US");
-document.Set("id", "1");
-document.Set("text", "Hello world");
-document = documents.AddEmptyObject();
-document.Set("id", "2");
-document.Set("text", "Bonjour tout le monde");
-document = documents.AddEmptyObject();
-document.Set("id", "3");
-document.Set("text", "La carretera estaba atascada. Había mucho tráfico el día de ayer.");
+req.DynamicBody.documents[1] = new JsonData();
+req.DynamicBody.documents[1].id = "2";
+req.DynamicBody.documents[1].text = "Bonjour tout le monde";
+
+req.DynamicBody.documents[2] = new JsonData();
+req.DynamicBody.documents[2].id = "3";
+req.DynamicBody.documents[2].text = "La carretera estaba atascada. Había mucho tráfico el día de ayer.";
 
 DynamicResponse res = req.Send();
 
-Console.WriteLine($"Status is {res.Status} and the body of the response is: {res.Body.ToJsonString()})");
+Console.WriteLine($"Status is {res.Status} and the body of the response is: {res.DynamicBody.ToJsonString()})");
 ```
 
 ## Troubleshooting
