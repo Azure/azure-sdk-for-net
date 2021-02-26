@@ -3,7 +3,7 @@
     "@context": "dtmi:dtdl:context;2",
     "@id": "dtmi:com:example:IncompleteExpanded;1",
     "@type": "Interface",
-    "displayName": "Incomplete Expanded Temperature Controller",
+    "displayName": "Incomplete expanded Temperature Controller",
     "description": "Device with two thermostats and remote reboot.",
     "contents": [
       {

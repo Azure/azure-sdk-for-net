@@ -22,22 +22,21 @@ namespace Azure.Iot.ModelsRepository.Fetchers
     {
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly bool _tryExpanded;
 
         public RemoteModelFetcher(ClientDiagnostics clientDiagnostics, ModelsRepositoryClientOptions clientOptions)
         {
             _pipeline = CreatePipeline(clientOptions);
-            _tryExpanded = clientOptions.DependencyResolution == DependencyResolutionOption.TryFromExpanded;
             _clientDiagnostics = clientDiagnostics;
         }
 
-        public FetchResult Fetch(string dtmi, Uri repositoryUri, CancellationToken cancellationToken = default)
+        public FetchResult Fetch(
+            string dtmi, Uri repositoryUri, DependencyResolutionOption resolutionOption, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("RemoteModelFetcher.Fetch");
             scope.Start();
             try
             {
-                Queue<string> work = PrepareWork(dtmi, repositoryUri);
+                Queue<string> work = PrepareWork(dtmi, repositoryUri, resolutionOption == DependencyResolutionOption.TryFromExpanded);
 
                 string remoteFetchError = string.Empty;
 
@@ -60,7 +59,7 @@ namespace Azure.Iot.ModelsRepository.Fetchers
                     catch (Exception)
                     {
                         remoteFetchError =
-                            $"{string.Format(CultureInfo.InvariantCulture, StandardStrings.GenericResolverError, dtmi)} " +
+                            $"{string.Format(CultureInfo.InvariantCulture, StandardStrings.GenericGetModelsError, dtmi)} " +
                             string.Format(CultureInfo.InvariantCulture, StandardStrings.ErrorFetchingModelContent, tryContentPath);
                     }
                 }
@@ -74,13 +73,14 @@ namespace Azure.Iot.ModelsRepository.Fetchers
             }
         }
 
-        public async Task<FetchResult> FetchAsync(string dtmi, Uri repositoryUri, CancellationToken cancellationToken = default)
+        public async Task<FetchResult> FetchAsync(
+            string dtmi, Uri repositoryUri, DependencyResolutionOption resolutionOption, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("RemoteModelFetcher.Fetch");
             scope.Start();
             try
             {
-                Queue<string> work = PrepareWork(dtmi, repositoryUri);
+                Queue<string> work = PrepareWork(dtmi, repositoryUri, resolutionOption == DependencyResolutionOption.TryFromExpanded);
 
                 string remoteFetchError = string.Empty;
                 RequestFailedException requestFailedExceptionThrown = null;
@@ -114,7 +114,7 @@ namespace Azure.Iot.ModelsRepository.Fetchers
                     if (genericExceptionThrown != null || requestFailedExceptionThrown != null)
                     {
                         remoteFetchError =
-                            $"{string.Format(CultureInfo.InvariantCulture, StandardStrings.GenericResolverError, dtmi)} " +
+                            $"{string.Format(CultureInfo.InvariantCulture, StandardStrings.GenericGetModelsError, dtmi)} " +
                             string.Format(CultureInfo.InvariantCulture, StandardStrings.ErrorFetchingModelContent, tryContentPath);
                     }
                 }
@@ -143,11 +143,11 @@ namespace Azure.Iot.ModelsRepository.Fetchers
             }
         }
 
-        private Queue<string> PrepareWork(string dtmi, Uri repositoryUri)
+        private static Queue<string> PrepareWork(string dtmi, Uri repositoryUri, bool tryExpanded)
         {
             Queue<string> work = new Queue<string>();
 
-            if (_tryExpanded)
+            if (tryExpanded)
             {
                 work.Enqueue(GetPath(dtmi, repositoryUri, true));
             }
