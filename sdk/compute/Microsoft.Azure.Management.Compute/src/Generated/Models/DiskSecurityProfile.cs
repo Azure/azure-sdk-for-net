@@ -27,11 +27,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Static constructor for DiskSecurityProfile class.
+        /// Initializes a new instance of the DiskSecurityProfile class.
         /// </summary>
-        static DiskSecurityProfile()
+        /// <param name="securityType">Possible values include:
+        /// 'TrustedLaunch'</param>
+        public DiskSecurityProfile(string securityType = default(string))
         {
-            SecurityType = "TrustedLaunch";
+            SecurityType = securityType;
+            CustomInit();
         }
 
         /// <summary>
@@ -40,9 +43,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets possible values include: 'TrustedLaunch'
         /// </summary>
         [JsonProperty(PropertyName = "securityType")]
-        public static string SecurityType { get; private set; }
+        public string SecurityType { get; set; }
 
     }
 }
