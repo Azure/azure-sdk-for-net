@@ -192,7 +192,7 @@ namespace Azure.Core.TestFramework
                 var directory = Path.GetDirectoryName(_sessionFile);
                 Directory.CreateDirectory(directory);
 
-                _session.Sanitize(_sanitizer);
+                Session.Sanitize(_sanitizer);
 
                 using FileStream fileStream = File.Create(_sessionFile);
                 var utf8JsonWriter = new Utf8JsonWriter(fileStream, new JsonWriterOptions()
