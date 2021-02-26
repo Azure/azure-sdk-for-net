@@ -7,7 +7,7 @@ namespace Azure.Identity
     {
         public TokenCredentialOptions Options { get; set; }
 
-        public string ClientId { get; set; }
+        public string ClientId { get; set; } = EnvironmentVariables.GetNonEmptyStringOrNull(EnvironmentVariables.ClientId);
 
         public bool PreserveTransport { get; set; }
 

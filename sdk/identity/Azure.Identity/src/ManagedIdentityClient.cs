@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -27,13 +26,13 @@ namespace Azure.Identity
         public ManagedIdentityClient(ManagedIdentityClientOptions options)
         {
             _options = options;
-            ClientId = options.ClientId;
+            ClientId = options.ClientId ?? EnvironmentVariables.GetNonEmptyStringOrNull(EnvironmentVariables.ClientId);
             Pipeline = options.Pipeline;
         }
 
         internal CredentialPipeline Pipeline { get; }
 
-        protected string ClientId { get; }
+        protected internal string ClientId { get; }
 
         public virtual async ValueTask<AccessToken> AuthenticateAsync(bool async, TokenRequestContext context, CancellationToken cancellationToken)
         {
