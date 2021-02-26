@@ -9,6 +9,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Azure.ResourceManager.Authorization\**" />
+    <EmbeddedResource Remove="Azure.ResourceManager.Authorization\**" />
+    <None Remove="Azure.ResourceManager.Authorization\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="1.1.1" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>
@@ -18,13 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Azure.ResourceManager.Core\src\Azure.ResourceManager.Core.csproj" />
+    <ProjectReference Include="Azure.ResourceManager.Authorization\Azure.ResourceManager.Authorization.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Azure.ResourceManager.Authorization">
-      <HintPath>..\lib\Azure.ResourceManager.Authorization.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
 
 </Project>
