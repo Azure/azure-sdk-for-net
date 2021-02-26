@@ -30,5 +30,3 @@ extends:
     Artifacts:
     - name: Azure.MixedReality.Authentication
       safeName: AzureMixedRealityAuthentication
-    - name: Azure.MixedReality.RemoteRendering
-      safeName: AzureMixedRealityRemoteRendering

@@ -127,21 +127,35 @@ await client.SendEventsAsync(eventsList);
 ### Publish CloudEvents to an Event Grid Topic
 Publishing events to Event Grid is performed using the `EventGridPublisherClient`. Use the provided `SendEvents`/`SendEventsAsync` method to publish events to the topic.
 ```C# Snippet:SendCloudEventsToTopic
+// Example of a custom ObjectSerializer used to serialize the event payload to JSON
+var myCustomDataSerializer = new JsonObjectSerializer(
+    new JsonSerializerOptions()
+    {
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+    });
+
 // Add CloudEvents to a list to publish to the topic
 List<CloudEvent> eventsList = new List<CloudEvent>
 {
-    // CloudEvent with populated data
+    // CloudEvent with custom model serialized to JSON
     new CloudEvent(
         "/cloudevents/example/source",
         "Example.EventType",
-        myCustomDataSerializer.Serialize("This is the event data")),
+        new CustomModel() { A = 5, B = true }),
+
+    // CloudEvent with custom model serialized to JSON using a custom serializer
+    new CloudEvent(
+        "/cloudevents/example/source",
+        "Example.EventType",
+        myCustomDataSerializer.Serialize(new CustomModel() { A = 5, B = true }),
+        "application/json"),
 
     // CloudEvents also supports sending binary-valued data
     new CloudEvent(
         "/cloudevents/example/binarydata",
         "Example.EventType",
-        new BinaryData(Encoding.UTF8.GetBytes("This is binary data")),
-        "example/binary")};
+        new BinaryData(Encoding.UTF8.GetBytes("This is treated as binary data")),
+        "application/octet-stream")};
 
 // Send the events
 await client.SendEventsAsync(eventsList);

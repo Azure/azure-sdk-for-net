@@ -91,9 +91,15 @@ if ($packageSemVer.HasValidPrereleaseLabel() -ne $true){
 }
 
 if (!$packageOldSemVer.IsPrerelease -and ($packageVersion -ne $NewVersionString)) {
+  $whitespace = $propertyGroup["Version"].PreviousSibling
   if (!$propertyGroup.ApiCompatVersion) {
     $propertyGroup.InsertAfter($csproj.CreateElement("ApiCompatVersion"), $propertyGroup["Version"]) | Out-Null
-    $whitespace = $propertyGroup["Version"].PreviousSibling
+    $propertyGroup.InsertAfter($whitespace.Clone(), $propertyGroup["Version"]) | Out-Null
+  }
+  $ApiCompatVersionComment = "The ApiCompatVersion is managed automatically and should not generally be modified manually."
+  if (!($propertyGroup.InnerXml -Match $ApiCompatVersionComment)){
+    $comment = $csproj.CreateComment($ApiCompatVersionComment);
+    $propertyGroup.InsertAfter($comment, $propertyGroup["Version"]) | Out-Null
     $propertyGroup.InsertAfter($whitespace.Clone(), $propertyGroup["Version"]) | Out-Null
   }
   $propertyGroup.ApiCompatVersion = $packageOldSemVer.ToString()

@@ -9,9 +9,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.FunctionalTests
     using System.Net.Http;
     using System.Threading.Tasks;
 
+    using Azure.Core;
     using Azure.Core.Pipeline;
     using Azure.Core.TestFramework;
-    using Azure.Identity;
 
     using Microsoft.Azure.ApplicationInsights.Query;
     using Microsoft.Azure.ApplicationInsights.Query.Models;

@@ -34,13 +34,15 @@
     <Compile Include="$(AzureCoreSharedSources)PageResponseEnumerator.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)LightweightPkcs8Decoder.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)PemReader.cs" LinkBase="Shared" />
   </ItemGroup>
 
   <!-- Import the Azure.Core project
   TODO: revert this when Azure.Core ships the TokenCredential updates
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
   -->
-  <ItemGroup>  
+  <ItemGroup>
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
   </ItemGroup>
 </Project>

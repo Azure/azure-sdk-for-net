@@ -62,6 +62,18 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private static TimeSpan MinimumAuthorizationRefresh { get; } = TimeSpan.FromMinutes(2);
 
         /// <summary>
+        ///   The maximum amount of time to allow before authorization is refreshed; any calculations
+        ///   that call for refreshing less frequently will be substituted with this value.
+        /// </summary>
+        ///
+        /// <remarks>
+        ///   This value must be less than 49 days, 17 hours, 2 minutes, 47 seconds, 294 milliseconds
+        ///   in order to not overflow the Timer used to track authorization refresh.
+        /// </remarks>
+        ///
+        private static TimeSpan MaximumAuthorizationRefresh { get; } = TimeSpan.FromDays(49);
+
+        /// <summary>
         ///   The amount time to allow to refresh authorization of an AMQP link.
         /// </summary>
         private static TimeSpan AuthorizationRefreshTimeout { get; } = TimeSpan.FromMinutes(3);
@@ -893,7 +905,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
             currentTimeUtc ??= DateTime.UtcNow;
 
             var refreshDueInterval = (expirationTimeUtc.Subtract(AuthorizationRefreshBuffer)).Subtract(currentTimeUtc.Value);
-            return (refreshDueInterval < MinimumAuthorizationRefresh) ? MinimumAuthorizationRefresh : refreshDueInterval;
+
+            return refreshDueInterval switch
+            {
+                _ when (refreshDueInterval < MinimumAuthorizationRefresh) => MinimumAuthorizationRefresh,
+                _ when (refreshDueInterval > MaximumAuthorizationRefresh) => MaximumAuthorizationRefresh,
+                _ => refreshDueInterval
+            };
         }
 
         /// <summary>
