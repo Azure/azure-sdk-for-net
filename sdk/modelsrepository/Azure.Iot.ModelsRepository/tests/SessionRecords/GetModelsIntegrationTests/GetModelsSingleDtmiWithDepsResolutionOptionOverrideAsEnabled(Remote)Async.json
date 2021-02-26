@@ -4,12 +4,12 @@
       "RequestUri": "https://devicemodels.azure.com/dtmi/com/example/temperaturecontroller-1.json",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "traceparent": "00-1762c38b984f144e93f7f63af018835b-ab594c32c218ac49-00",
+        "traceparent": "00-d9972c3ca5ad23469c85564bf2588a37-e57913eab917694f-00",
         "User-Agent": [
           "azsdk-net-Iot.ModelsRepository/1.0.0-alpha.20210226.1",
           "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "7c713b661314b15957fd2d4a89cc84ba",
+        "x-ms-client-request-id": "fded581de13cc25893ff3412434b8bde",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -19,11 +19,11 @@
         "Access-Control-Allow-Headers": "*",
         "Access-Control-Allow-Methods": "GET, HEAD, OPTIONS",
         "Access-Control-Expose-Headers": "*",
-        "Age": "128226",
+        "Age": "137105",
         "Content-Length": "1762",
         "Content-MD5": "w8OrFrbCwZwtVo6WaKDWxQ==",
         "Content-Type": "application/json",
-        "Date": "Fri, 26 Feb 2021 19:15:12 GMT",
+        "Date": "Fri, 26 Feb 2021 21:43:11 GMT",
         "ETag": "\u00220x8D8A13DEABA3051\u0022",
         "Last-Modified": "Tue, 15 Dec 2020 21:10:57 GMT",
         "Server": [
@@ -102,12 +102,12 @@
       "RequestUri": "https://devicemodels.azure.com/dtmi/com/example/thermostat-1.json",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "traceparent": "00-1762c38b984f144e93f7f63af018835b-18e4b2f1a7bceb4b-00",
+        "traceparent": "00-d9972c3ca5ad23469c85564bf2588a37-5d53f8fa98f92e47-00",
         "User-Agent": [
           "azsdk-net-Iot.ModelsRepository/1.0.0-alpha.20210226.1",
           "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "8d960c79dab216ecc2b7182f08a93064",
+        "x-ms-client-request-id": "7f526465451650416c561e6bd4c11112",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -117,11 +117,11 @@
         "Access-Control-Allow-Headers": "*",
         "Access-Control-Allow-Methods": "GET, HEAD, OPTIONS",
         "Access-Control-Expose-Headers": "*",
-        "Age": "148894",
+        "Age": "157773",
         "Content-Length": "2469",
         "Content-MD5": "U0VZgOgpfb6bwvG5UDVZuw==",
         "Content-Type": "application/json",
-        "Date": "Fri, 26 Feb 2021 19:15:12 GMT",
+        "Date": "Fri, 26 Feb 2021 21:43:11 GMT",
         "ETag": "\u00220x8D8A13DEABC53BA\u0022",
         "Last-Modified": "Tue, 15 Dec 2020 21:10:57 GMT",
         "Server": [
@@ -229,12 +229,12 @@
       "RequestUri": "https://devicemodels.azure.com/dtmi/azure/devicemanagement/deviceinformation-1.json",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "traceparent": "00-1762c38b984f144e93f7f63af018835b-90b65f57ec0a1745-00",
+        "traceparent": "00-d9972c3ca5ad23469c85564bf2588a37-6dd5302d40fbc042-00",
         "User-Agent": [
           "azsdk-net-Iot.ModelsRepository/1.0.0-alpha.20210226.1",
           "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "6d04bcb3c8dd42711b225d7993b16c68",
+        "x-ms-client-request-id": "f7efee1d81e7f308d1f189d881bb6835",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -244,11 +244,11 @@
         "Access-Control-Allow-Headers": "*",
         "Access-Control-Allow-Methods": "GET, HEAD, OPTIONS",
         "Access-Control-Expose-Headers": "*",
-        "Age": "128226",
+        "Age": "137105",
         "Content-Length": "2212",
         "Content-MD5": "oCzHP9acH\u002B/\u002BFQOv2V56NA==",
         "Content-Type": "application/json",
-        "Date": "Fri, 26 Feb 2021 19:15:12 GMT",
+        "Date": "Fri, 26 Feb 2021 21:43:11 GMT",
         "ETag": "\u00220x8D8A13DEBC614F0\u0022",
         "Last-Modified": "Tue, 15 Dec 2020 21:10:59 GMT",
         "Server": [
@@ -329,6 +329,6 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1936860063"
+    "RandomSeed": "433185618"
   }
 }

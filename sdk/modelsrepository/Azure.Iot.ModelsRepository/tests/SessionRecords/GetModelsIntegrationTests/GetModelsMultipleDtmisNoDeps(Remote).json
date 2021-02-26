@@ -4,12 +4,12 @@
       "RequestUri": "https://devicemodels.azure.com/dtmi/com/example/thermostat-1.json",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "traceparent": "00-939cd6fde56edd44b1e4719044218aad-63ec0895f2a36d42-00",
+        "traceparent": "00-ab4f47d9df7ade4681d70c375d352aac-af3800c78294bc44-00",
         "User-Agent": [
           "azsdk-net-Iot.ModelsRepository/1.0.0-alpha.20210226.1",
           "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "0c9f7db5c26a596c453d7985a7944b3e",
+        "x-ms-client-request-id": "d59c39d95f9071c9fb36c311ddf28369",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -19,11 +19,11 @@
         "Access-Control-Allow-Headers": "*",
         "Access-Control-Allow-Methods": "GET, HEAD, OPTIONS",
         "Access-Control-Expose-Headers": "*",
-        "Age": "148894",
+        "Age": "157772",
         "Content-Length": "2469",
         "Content-MD5": "U0VZgOgpfb6bwvG5UDVZuw==",
         "Content-Type": "application/json",
-        "Date": "Fri, 26 Feb 2021 19:15:12 GMT",
+        "Date": "Fri, 26 Feb 2021 21:43:10 GMT",
         "ETag": "\u00220x8D8A13DEABC53BA\u0022",
         "Last-Modified": "Tue, 15 Dec 2020 21:10:57 GMT",
         "Server": [
@@ -131,12 +131,12 @@
       "RequestUri": "https://devicemodels.azure.com/dtmi/azure/devicemanagement/deviceinformation-1.json",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "traceparent": "00-939cd6fde56edd44b1e4719044218aad-419495de9ebd3c44-00",
+        "traceparent": "00-ab4f47d9df7ade4681d70c375d352aac-3b94c2cd46237243-00",
         "User-Agent": [
           "azsdk-net-Iot.ModelsRepository/1.0.0-alpha.20210226.1",
           "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "aa359c233f0682093b8b55d190cad14e",
+        "x-ms-client-request-id": "0f0bac77fe7035e01c21e364e29e0fe3",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -146,11 +146,11 @@
         "Access-Control-Allow-Headers": "*",
         "Access-Control-Allow-Methods": "GET, HEAD, OPTIONS",
         "Access-Control-Expose-Headers": "*",
-        "Age": "128226",
+        "Age": "137104",
         "Content-Length": "2212",
         "Content-MD5": "oCzHP9acH\u002B/\u002BFQOv2V56NA==",
         "Content-Type": "application/json",
-        "Date": "Fri, 26 Feb 2021 19:15:12 GMT",
+        "Date": "Fri, 26 Feb 2021 21:43:10 GMT",
         "ETag": "\u00220x8D8A13DEBC614F0\u0022",
         "Last-Modified": "Tue, 15 Dec 2020 21:10:59 GMT",
         "Server": [
@@ -231,6 +231,6 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "738897214"
+    "RandomSeed": "709514317"
   }
 }

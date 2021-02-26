@@ -32,14 +32,13 @@ namespace Azure.Iot.ModelsRepository.Fetchers
         }
 
         public FetchResult Fetch(
-            string dtmi, Uri repositoryUri, DependencyResolutionOption? resolutionOption, CancellationToken cancellationToken = default)
+            string dtmi, Uri repositoryUri, DependencyResolutionOption resolutionOption, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("RemoteModelFetcher.Fetch");
             scope.Start();
             try
             {
-                DependencyResolutionOption targetResolutionOption = resolutionOption ?? _clientOptions.DependencyResolution;
-                Queue<string> work = PrepareWork(dtmi, repositoryUri, targetResolutionOption == DependencyResolutionOption.TryFromExpanded);
+                Queue<string> work = PrepareWork(dtmi, repositoryUri, resolutionOption == DependencyResolutionOption.TryFromExpanded);
 
                 string remoteFetchError = string.Empty;
 
@@ -77,14 +76,13 @@ namespace Azure.Iot.ModelsRepository.Fetchers
         }
 
         public async Task<FetchResult> FetchAsync(
-            string dtmi, Uri repositoryUri, DependencyResolutionOption? resolutionOption, CancellationToken cancellationToken = default)
+            string dtmi, Uri repositoryUri, DependencyResolutionOption resolutionOption, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("RemoteModelFetcher.Fetch");
             scope.Start();
             try
             {
-                DependencyResolutionOption targetResolutionOption = resolutionOption ?? _clientOptions.DependencyResolution;
-                Queue<string> work = PrepareWork(dtmi, repositoryUri, targetResolutionOption == DependencyResolutionOption.TryFromExpanded);
+                Queue<string> work = PrepareWork(dtmi, repositoryUri, resolutionOption == DependencyResolutionOption.TryFromExpanded);
 
                 string remoteFetchError = string.Empty;
                 RequestFailedException requestFailedExceptionThrown = null;

@@ -19,20 +19,18 @@ namespace Azure.Iot.ModelsRepository.Fetchers
     internal class LocalModelFetcher : IModelFetcher
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ModelsRepositoryClientOptions _clientOptions;
 
-        public LocalModelFetcher(ClientDiagnostics clientDiagnostics, ModelsRepositoryClientOptions clientOptions)
+        public LocalModelFetcher(ClientDiagnostics clientDiagnostics)
         {
             _clientDiagnostics = clientDiagnostics;
-            _clientOptions = clientOptions;
         }
 
-        public Task<FetchResult> FetchAsync(string dtmi, Uri repositoryUri, DependencyResolutionOption? resolutionOption, CancellationToken cancellationToken = default)
+        public Task<FetchResult> FetchAsync(string dtmi, Uri repositoryUri, DependencyResolutionOption resolutionOption, CancellationToken cancellationToken = default)
         {
             return Task.FromResult(Fetch(dtmi, repositoryUri, resolutionOption, cancellationToken));
         }
 
-        public FetchResult Fetch(string dtmi, Uri repositoryUri, DependencyResolutionOption? resolutionOption, CancellationToken cancellationToken = default)
+        public FetchResult Fetch(string dtmi, Uri repositoryUri, DependencyResolutionOption resolutionOption, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("LocalModelFetcher.Fetch");
             scope.Start();
@@ -40,8 +38,7 @@ namespace Azure.Iot.ModelsRepository.Fetchers
             try
             {
                 var work = new Queue<string>();
-                DependencyResolutionOption targetResolutionOption = resolutionOption ?? _clientOptions.DependencyResolution;
-                if (targetResolutionOption == DependencyResolutionOption.TryFromExpanded)
+                if (resolutionOption == DependencyResolutionOption.TryFromExpanded)
                 {
                     work.Enqueue(GetPath(dtmi, repositoryUri, true));
                 }

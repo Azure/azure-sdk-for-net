@@ -27,7 +27,7 @@ namespace Azure.Iot.ModelsRepository
             _clientOptions = options;
             _clientDiagnostics = clientDiagnostics;
             _modelFetcher = repositoryUri.Scheme == ModelsRepositoryConstants.File
-                ? _modelFetcher = new LocalModelFetcher(_clientDiagnostics, _clientOptions)
+                ? _modelFetcher = new LocalModelFetcher(_clientDiagnostics)
                 : _modelFetcher = new RemoteModelFetcher(_clientDiagnostics, _clientOptions);
             _clientId = Guid.NewGuid();
 
@@ -36,32 +36,31 @@ namespace Azure.Iot.ModelsRepository
             ModelsRepositoryEventSource.Instance.InitFetcher(_clientId, repositoryUri.Scheme);
         }
 
-        public async Task<IDictionary<string, string>> ProcessAsync(string dtmi, DependencyResolutionOption? resolutionOption, CancellationToken cancellationToken)
+        public async Task<IDictionary<string, string>> ProcessAsync(string dtmi, DependencyResolutionOption resolutionOption, CancellationToken cancellationToken)
         {
             return await ProcessAsync(new List<string> { dtmi }, true, resolutionOption, cancellationToken).ConfigureAwait(false);
         }
 
-        public IDictionary<string, string> Process(string dtmi, DependencyResolutionOption? resolutionOption, CancellationToken cancellationToken)
+        public IDictionary<string, string> Process(string dtmi, DependencyResolutionOption resolutionOption, CancellationToken cancellationToken)
         {
             return ProcessAsync(new List<string> { dtmi }, false, resolutionOption, cancellationToken).EnsureCompleted();
         }
 
-        public Task<IDictionary<string, string>> ProcessAsync(IEnumerable<string> dtmis, DependencyResolutionOption? resolutionOption, CancellationToken cancellationToken)
+        public Task<IDictionary<string, string>> ProcessAsync(IEnumerable<string> dtmis, DependencyResolutionOption resolutionOption, CancellationToken cancellationToken)
         {
             return ProcessAsync(dtmis, true, resolutionOption, cancellationToken);
         }
 
-        public IDictionary<string, string> Process(IEnumerable<string> dtmis, DependencyResolutionOption? resolutionOption, CancellationToken cancellationToken)
+        public IDictionary<string, string> Process(IEnumerable<string> dtmis, DependencyResolutionOption resolutionOption, CancellationToken cancellationToken)
         {
             return ProcessAsync(dtmis, false, resolutionOption, cancellationToken).EnsureCompleted();
         }
 
         private async Task<IDictionary<string, string>> ProcessAsync(
-            IEnumerable<string> dtmis, bool async, DependencyResolutionOption? resolutionOption, CancellationToken cancellationToken)
+            IEnumerable<string> dtmis, bool async, DependencyResolutionOption resolutionOption, CancellationToken cancellationToken)
         {
             var processedModels = new Dictionary<string, string>();
             Queue<string> toProcessModels = PrepareWork(dtmis);
-            DependencyResolutionOption targetResolutionOption = resolutionOption ?? _clientOptions.DependencyResolution;
 
             while (toProcessModels.Count != 0)
             {
@@ -77,8 +76,8 @@ namespace Azure.Iot.ModelsRepository
                 ModelsRepositoryEventSource.Instance.ProcessingDtmi(targetDtmi);
 
                 FetchResult result = async
-                    ? await FetchAsync(targetDtmi, targetResolutionOption, cancellationToken).ConfigureAwait(false)
-                    : Fetch(targetDtmi, targetResolutionOption, cancellationToken);
+                    ? await FetchAsync(targetDtmi, resolutionOption, cancellationToken).ConfigureAwait(false)
+                    : Fetch(targetDtmi, resolutionOption, cancellationToken);
 
                 if (result.FromExpanded)
                 {
@@ -97,7 +96,7 @@ namespace Azure.Iot.ModelsRepository
 
                 ModelMetadata metadata = new ModelQuery(result.Definition).ParseModel();
 
-                if (targetResolutionOption >= DependencyResolutionOption.Enabled)
+                if (resolutionOption >= DependencyResolutionOption.Enabled)
                 {
                     IList<string> dependencies = metadata.Dependencies;
 

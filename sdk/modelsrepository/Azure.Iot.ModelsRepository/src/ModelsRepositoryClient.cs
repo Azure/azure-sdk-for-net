@@ -82,7 +82,7 @@ namespace Azure.Iot.ModelsRepository
             scope.Start();
             try
             {
-                return await _repositoryHandler.ProcessAsync(dtmi, resolutionOption, cancellationToken).ConfigureAwait(false);
+                return await _repositoryHandler.ProcessAsync(dtmi, resolutionOption ?? _clientOptions.DependencyResolution, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -114,7 +114,7 @@ namespace Azure.Iot.ModelsRepository
 
             try
             {
-                return _repositoryHandler.Process(dtmi, resolutionOption, cancellationToken);
+                return _repositoryHandler.Process(dtmi, resolutionOption ?? _clientOptions.DependencyResolution, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -146,7 +146,7 @@ namespace Azure.Iot.ModelsRepository
 
             try
             {
-                return await _repositoryHandler.ProcessAsync(dtmis, resolutionOption, cancellationToken).ConfigureAwait(false);
+                return await _repositoryHandler.ProcessAsync(dtmis, resolutionOption ?? _clientOptions.DependencyResolution, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -178,7 +178,7 @@ namespace Azure.Iot.ModelsRepository
 
             try
             {
-                return _repositoryHandler.Process(dtmis, resolutionOption, cancellationToken);
+                return _repositoryHandler.Process(dtmis, resolutionOption ?? _clientOptions.DependencyResolution, cancellationToken);
             }
             catch (Exception ex)
             {
