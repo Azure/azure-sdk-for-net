@@ -16,6 +16,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Remove="C:\src\azure-sdk-for-net\sdk\storage\Azure.Storage.Blobs.Batch\samples\..\..\Azure.Storage.Common\tests\Shared\StorageRecordMatcher.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <!-- Required Shared Source for testing -->
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)NoBodyResponseOfT.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />

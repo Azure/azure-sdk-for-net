@@ -14,7 +14,6 @@ namespace Azure.MixedReality.Authentication.Tests
         public MixedRealityStsClientLiveTests(bool isAsync)
             : base(isAsync)
         {
-            Matcher = new MixedRealityRecordMatcher();
         }
 
         private MixedRealityStsClient CreateClient()
