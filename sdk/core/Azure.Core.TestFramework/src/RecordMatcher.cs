@@ -54,30 +54,6 @@ namespace Azure.Core.TestFramework
             "traceparent"
         };
 
-        // Headers that don't indicate meaningful changes between updated recordings
-        public HashSet<string> VolatileHeaders = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
-        {
-            "Date",
-            "x-ms-date",
-            "x-ms-client-request-id",
-            "User-Agent",
-            "Request-Id",
-            "If-Match",
-            "If-None-Match",
-            "If-Modified-Since",
-            "If-Unmodified-Since"
-        };
-
-        // Headers that don't indicate meaningful changes between updated recordings
-        public HashSet<string> VolatileResponseHeaders = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
-        {
-            "Date",
-            "ETag",
-            "Last-Modified",
-            "x-ms-request-id",
-            "x-ms-correlation-request-id"
-        };
-
         /// <summary>
         /// Query parameters whose values can change between recording and playback without causing URI matching
         /// to fail. The presence or absence of the query parameter itself is still respected in matching.
@@ -192,15 +168,6 @@ namespace Azure.Core.TestFramework
             return 0;
         }
 
-        public virtual bool IsEquivalentRecord(RecordEntry entry, RecordEntry otherEntry) =>
-            IsEquivalentRequest(entry, otherEntry) &&
-            IsEquivalentResponse(entry, otherEntry);
-
-        protected virtual bool IsEquivalentRequest(RecordEntry entry, RecordEntry otherEntry) =>
-            entry.RequestMethod == otherEntry.RequestMethod &&
-            IsEquivalentUri(entry.RequestUri, otherEntry.RequestUri) &&
-            CompareHeaderDictionaries(entry.Request.Headers, otherEntry.Request.Headers, VolatileHeaders) == 0;
-
         private bool AreUrisSame(string entryUri, string otherEntryUri) =>
             NormalizeUri(entryUri) == NormalizeUri(otherEntryUri);
 
@@ -218,26 +185,6 @@ namespace Azure.Core.TestFramework
                     IgnoredQueryParameters.Contains(param) ? IgnoredValue : queryParams[param]);
             }
             return req.ToUri().ToString();
-        }
-
-        protected virtual bool IsEquivalentUri(string entryUri, string otherEntryUri) =>
-            AreUrisSame(entryUri, otherEntryUri);
-
-        protected virtual bool IsEquivalentResponse(RecordEntry entry, RecordEntry otherEntry)
-        {
-            IEnumerable<KeyValuePair<string, string[]>> entryHeaders = entry.Response.Headers.Where(h => !VolatileResponseHeaders.Contains(h.Key));
-            IEnumerable<KeyValuePair<string, string[]>> otherEntryHeaders = otherEntry.Response.Headers.Where(h => !VolatileResponseHeaders.Contains(h.Key));
-
-            return
-                entry.StatusCode == otherEntry.StatusCode &&
-                entryHeaders.SequenceEqual(otherEntryHeaders, new HeaderComparer()) &&
-                IsBodyEquivalent(entry, otherEntry);
-        }
-
-        protected virtual bool IsBodyEquivalent(RecordEntry record, RecordEntry otherRecord)
-        {
-            return (record.Response.Body ?? Array.Empty<byte>()).AsSpan()
-                .SequenceEqual((otherRecord.Response.Body ?? Array.Empty<byte>()));
         }
 
         private string GenerateException(RecordEntry request, RecordEntry bestScoreEntry)
@@ -339,20 +286,6 @@ namespace Azure.Core.TestFramework
             }
 
             return difference;
-        }
-
-        private class HeaderComparer : IEqualityComparer<KeyValuePair<string, string[]>>
-        {
-            public bool Equals(KeyValuePair<string, string[]> x, KeyValuePair<string, string[]> y)
-            {
-                return x.Key.Equals(y.Key, StringComparison.OrdinalIgnoreCase) &&
-                       x.Value.SequenceEqual(y.Value);
-            }
-
-            public int GetHashCode(KeyValuePair<string, string[]> obj)
-            {
-                return obj.GetHashCode();
-            }
         }
     }
 }

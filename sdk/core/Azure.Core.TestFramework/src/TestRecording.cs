@@ -8,7 +8,6 @@ using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text.Json;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Core.Tests.TestFramework;
 
@@ -194,10 +193,6 @@ namespace Azure.Core.TestFramework
                 Directory.CreateDirectory(directory);
 
                 Session.Sanitize(_sanitizer);
-                if (Session.IsEquivalent(_previousSession, _matcher))
-                {
-                    return;
-                }
 
                 using FileStream fileStream = File.Create(_sessionFile);
                 var utf8JsonWriter = new Utf8JsonWriter(fileStream, new JsonWriterOptions()
