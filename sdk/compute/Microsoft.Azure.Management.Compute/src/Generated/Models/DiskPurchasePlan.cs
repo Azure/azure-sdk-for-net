@@ -18,29 +18,31 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// Used for establishing the purchase context of any 3rd Party artifact
     /// through MarketPlace.
     /// </summary>
-    public partial class PurchasePlan
+    public partial class DiskPurchasePlan
     {
         /// <summary>
-        /// Initializes a new instance of the PurchasePlan class.
+        /// Initializes a new instance of the DiskPurchasePlan class.
         /// </summary>
-        public PurchasePlan()
+        public DiskPurchasePlan()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the PurchasePlan class.
+        /// Initializes a new instance of the DiskPurchasePlan class.
         /// </summary>
-        /// <param name="publisher">The publisher ID.</param>
         /// <param name="name">The plan ID.</param>
+        /// <param name="publisher">The publisher ID.</param>
         /// <param name="product">Specifies the product of the image from the
         /// marketplace. This is the same value as Offer under the
         /// imageReference element.</param>
-        public PurchasePlan(string publisher, string name, string product)
+        /// <param name="promotionCode">The Offer Promotion Code.</param>
+        public DiskPurchasePlan(string name, string publisher, string product, string promotionCode = default(string))
         {
-            Publisher = publisher;
             Name = name;
+            Publisher = publisher;
             Product = product;
+            PromotionCode = promotionCode;
             CustomInit();
         }
 
@@ -50,16 +52,16 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the publisher ID.
-        /// </summary>
-        [JsonProperty(PropertyName = "publisher")]
-        public string Publisher { get; set; }
-
-        /// <summary>
         /// Gets or sets the plan ID.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the publisher ID.
+        /// </summary>
+        [JsonProperty(PropertyName = "publisher")]
+        public string Publisher { get; set; }
 
         /// <summary>
         /// Gets or sets specifies the product of the image from the
@@ -70,6 +72,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         public string Product { get; set; }
 
         /// <summary>
+        /// Gets or sets the Offer Promotion Code.
+        /// </summary>
+        [JsonProperty(PropertyName = "promotionCode")]
+        public string PromotionCode { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -77,13 +85,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Publisher == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Publisher");
-            }
             if (Name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+            }
+            if (Publisher == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Publisher");
             }
             if (Product == null)
             {

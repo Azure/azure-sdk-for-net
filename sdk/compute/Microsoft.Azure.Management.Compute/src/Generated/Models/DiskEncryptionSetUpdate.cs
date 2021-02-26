@@ -37,11 +37,16 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="encryptionType">Possible values include:
         /// 'EncryptionAtRestWithCustomerKey',
         /// 'EncryptionAtRestWithPlatformAndCustomerKeys'</param>
+        /// <param name="rotationToLatestKeyVersionEnabled">Set this flag to
+        /// true to enable auto-updating of this disk encryption set to the
+        /// latest key version.</param>
         /// <param name="tags">Resource tags</param>
-        public DiskEncryptionSetUpdate(string encryptionType = default(string), KeyForDiskEncryptionSet activeKey = default(KeyForDiskEncryptionSet), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public DiskEncryptionSetUpdate(string encryptionType = default(string), KeyForDiskEncryptionSet activeKey = default(KeyForDiskEncryptionSet), bool? rotationToLatestKeyVersionEnabled = default(bool?), EncryptionSetIdentity identity = default(EncryptionSetIdentity), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             EncryptionType = encryptionType;
             ActiveKey = activeKey;
+            RotationToLatestKeyVersionEnabled = rotationToLatestKeyVersionEnabled;
+            Identity = identity;
             Tags = tags;
             CustomInit();
         }
@@ -63,6 +68,18 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.activeKey")]
         public KeyForDiskEncryptionSet ActiveKey { get; set; }
+
+        /// <summary>
+        /// Gets or sets set this flag to true to enable auto-updating of this
+        /// disk encryption set to the latest key version.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.rotationToLatestKeyVersionEnabled")]
+        public bool? RotationToLatestKeyVersionEnabled { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public EncryptionSetIdentity Identity { get; set; }
 
         /// <summary>
         /// Gets or sets resource tags
