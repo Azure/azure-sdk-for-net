@@ -41,6 +41,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         internal EventHubProducerClient GetEventHubProducerClient(string eventHubName, string connection)
         {
             eventHubName = _nameResolver.ResolveWholeString(eventHubName);
+            connection = _nameResolver.ResolveWholeString(connection);
 
             return _producerCache.GetOrAdd(eventHubName, key =>
             {
@@ -77,8 +78,11 @@ namespace Microsoft.Azure.WebJobs.EventHubs
 
         internal EventProcessorHost GetEventProcessorHost(string eventHubName, string connection, string consumerGroup)
         {
-            eventHubName = _nameResolver.ResolveWholeString(eventHubName);
             consumerGroup ??= EventHubConsumerClient.DefaultConsumerGroupName;
+
+            eventHubName = _nameResolver.ResolveWholeString(eventHubName);
+            connection = _nameResolver.ResolveWholeString(connection);
+            consumerGroup = _nameResolver.ResolveWholeString(consumerGroup);
 
             if (!string.IsNullOrEmpty(connection))
             {
@@ -111,8 +115,10 @@ namespace Microsoft.Azure.WebJobs.EventHubs
 
         internal IEventHubConsumerClient GetEventHubConsumerClient(string eventHubName, string connection, string consumerGroup)
         {
-            eventHubName = _nameResolver.ResolveWholeString(eventHubName);
             consumerGroup ??= EventHubConsumerClient.DefaultConsumerGroupName;
+            eventHubName = _nameResolver.ResolveWholeString(eventHubName);
+            connection = _nameResolver.ResolveWholeString(connection);
+            consumerGroup = _nameResolver.ResolveWholeString(consumerGroup);
 
             return _consumerCache.GetOrAdd(eventHubName, name =>
             {
