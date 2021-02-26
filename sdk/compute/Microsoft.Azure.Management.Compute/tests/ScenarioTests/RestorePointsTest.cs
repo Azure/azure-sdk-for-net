@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
                         {"newTag", "newValue"},
                         {"newtestTag", "newValue"},
                     };
-                    UpdateRpc(rgName, rpcName, createdRpc, tags);
+                    UpdateRpc(rgName, rpcName, createdRpc, newTags);
 
                     // format JRaw so that we can validate the JRaw returned in the restore point
                     string expectedJRaw = RemovePunctuation(optionalProperties.ToString());
@@ -211,22 +211,27 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
             return m_CrpClient.RestorePoints.CreateOrUpdate(rgName, rpcName, rpName, inputRP);
         }
 
-        // remove white space, single quotes, and double quotes from a string
+        // Remove white space, single quotes, and double quotes from a string.
+        // Use this helper for sanitizing JRaw to an output that is friendlier
+        // for string comparisons
         public static string RemovePunctuation(string str)
         {
             string removedWhiteSpace = Regex.Replace(str, @"\s+", String.Empty);
             string removedDoubleQuotes = Regex.Replace(removedWhiteSpace, "\"", String.Empty);
-            string removedSingleQuotes = Regex.Replace(removedWhiteSpace, "'", String.Empty);
+            string removedSingleQuotes = Regex.Replace(removedDoubleQuotes, "'", String.Empty);
             return removedSingleQuotes;
         }
 
+        // Verify the created restore point contains properties such as:
+        // 1. source metadata
+        // 2. storage profile
+        // 3. provisioning state
+        // 4. id(s) of the exclude disk(s)
         void VerifyRestorePointDetails(RestorePoint rp, string rpName, OSDisk osDisk,
             int excludeDisksCount, string expectedJRaw, string excludeDiskId, string vmId, string vmSize)
         {
             string returnedJRaw = RemovePunctuation(rp.OptionalProperties.ToString());
-            bool equal = expectedJRaw == returnedJRaw;
-
-            Assert.Equal(rpName, rp.Name);
+            Assert.Equal(expectedJRaw, returnedJRaw);
             Assert.NotNull(rp.Id);
             Assert.NotNull(rp.ProvisioningDetails.CreationTime);
             Assert.NotNull(rp.ProvisioningDetails.StatusCode);
