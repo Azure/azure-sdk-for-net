@@ -10,7 +10,7 @@ using Azure.AI.TextAnalytics.Models;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// The predicted sentiment and other analysis like Assessment mining
+    /// The predicted sentiment and other analysis like Opinion mining
     /// for each sentence in the corresponding document.
     /// <para>For more information regarding text sentiment, see
     /// <a href="https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/how-tos/text-analytics-how-to-sentiment-analysis"/>.</para>
