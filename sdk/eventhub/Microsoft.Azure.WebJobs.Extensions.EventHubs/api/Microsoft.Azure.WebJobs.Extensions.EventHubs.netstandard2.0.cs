@@ -5,7 +5,6 @@ namespace Microsoft.Azure.WebJobs
     public sealed partial class EventHubAttribute : System.Attribute
     {
         public EventHubAttribute(string eventHubName) { }
-        [Microsoft.Azure.WebJobs.Description.AutoResolveAttribute]
         public string Connection { get { throw null; } set { } }
         public string EventHubName { get { throw null; } }
     }
@@ -14,9 +13,7 @@ namespace Microsoft.Azure.WebJobs
     public sealed partial class EventHubTriggerAttribute : System.Attribute
     {
         public EventHubTriggerAttribute(string eventHubName) { }
-        [Microsoft.Azure.WebJobs.Description.AutoResolveAttribute]
         public string Connection { get { throw null; } set { } }
-        [Microsoft.Azure.WebJobs.Description.AutoResolveAttribute]
         public string ConsumerGroup { get { throw null; } set { } }
         public string EventHubName { get { throw null; } }
     }
