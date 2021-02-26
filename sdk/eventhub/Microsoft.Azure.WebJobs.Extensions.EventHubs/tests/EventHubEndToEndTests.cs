@@ -130,18 +130,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
-        public async Task CanSendAndReceive_ConnectionStringUsingAddMethods()
-        {
-            await AssertCanSendReceiveMessage(host =>
-                host.ConfigureServices(services =>
-                    services.Configure<EventHubOptions>(options =>
-                    {
-                        options.AddSender(_eventHubScope.EventHubName, EventHubsTestEnvironment.Instance.EventHubsConnectionString);
-                        options.AddReceiver(_eventHubScope.EventHubName, EventHubsTestEnvironment.Instance.EventHubsConnectionString);
-                    })));
-        }
-
-        [Test]
         public async Task CanSendAndReceive_ConnectionStringInConfiguration()
         {
             await AssertCanSendReceiveMessage(host =>

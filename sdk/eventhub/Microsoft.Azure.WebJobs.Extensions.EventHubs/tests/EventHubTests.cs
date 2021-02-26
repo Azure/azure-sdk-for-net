@@ -157,17 +157,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.Null(contract["partitioncontext"]); // case insensitive
         }
 
-        [TestCase("e", "n1", "n1/e/")]
-        [TestCase("e--1", "host_.path.foo", "host_.path.foo/e--1/")]
-        [TestCase("Ab", "Cd", "cd/ab/")]
-        [TestCase("A=", "Cd", "cd/a:3D/")]
-        [TestCase("A:", "Cd", "cd/a:3A/")]
-        public void EventHubBlobPrefix(string eventHubName, string serviceBusNamespace, string expected)
-        {
-            string actual = EventHubOptions.GetBlobPrefix(eventHubName, serviceBusNamespace);
-            Assert.AreEqual(expected, actual);
-        }
-
         [TestCase(1)]
         [TestCase(5)]
         [TestCase(200)]

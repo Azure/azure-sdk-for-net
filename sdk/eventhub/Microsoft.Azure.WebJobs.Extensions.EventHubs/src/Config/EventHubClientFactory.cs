@@ -35,7 +35,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             _componentFactory = componentFactory;
             _options = options.Value;
             _nameResolver = nameResolver;
-            _producerCache = new ConcurrentDictionary<string, EventHubProducerClient>(_options.RegisteredProducers);
+            _producerCache = new ConcurrentDictionary<string, EventHubProducerClient>();
         }
 
         internal EventHubProducerClient GetEventHubProducerClient(string eventHubName, string connection)
@@ -80,17 +80,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             eventHubName = _nameResolver.ResolveWholeString(eventHubName);
             consumerGroup ??= EventHubConsumerClient.DefaultConsumerGroupName;
 
-            if (_options.RegisteredConsumerCredentials.TryGetValue(eventHubName, out var creds))
-            {
-                return new EventProcessorHost(consumerGroup: consumerGroup,
-                    connectionString: creds.EventHubConnectionString,
-                    eventHubName: eventHubName,
-                    options: _options.EventProcessorOptions,
-                    eventBatchMaximumCount: _options.MaxBatchSize,
-                    invokeProcessorAfterReceiveTimeout: _options.InvokeFunctionAfterReceiveTimeout,
-                    exceptionHandler: _options.ExceptionHandler);
-            }
-            else if (!string.IsNullOrEmpty(connection))
+            if (!string.IsNullOrEmpty(connection))
             {
                 var info = ResolveConnectionInformation(connection);
 
@@ -127,19 +117,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             return _consumerCache.GetOrAdd(eventHubName, name =>
             {
                 EventHubConsumerClient client = null;
-                if (_options.RegisteredConsumerCredentials.TryGetValue(eventHubName, out var creds))
-                {
-                    client = new EventHubConsumerClient(
-                        consumerGroup,
-                        creds.EventHubConnectionString,
-                        eventHubName,
-                        new EventHubConsumerClientOptions
-                        {
-                            RetryOptions = _options.RetryOptions,
-                            ConnectionOptions = _options.ConnectionOptions
-                        });
-                }
-                else if (!string.IsNullOrEmpty(connection))
+
+                if (!string.IsNullOrEmpty(connection))
                 {
                     var info = ResolveConnectionInformation(connection);
 
@@ -179,16 +158,10 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             });
         }
 
-        internal BlobContainerClient GetCheckpointStoreClient(string eventHubName)
+        internal BlobContainerClient GetCheckpointStoreClient()
         {
-            string storageConnectionString = null;
-            if (_options.RegisteredConsumerCredentials.TryGetValue(eventHubName, out var creds))
-            {
-                storageConnectionString = creds.StorageConnectionString;
-            }
-
             // Fall back to default if not explicitly registered
-            return new BlobContainerClient(storageConnectionString ?? _configuration.GetWebJobsConnectionString(ConnectionStringNames.Storage), _options.CheckpointContainer);
+            return new BlobContainerClient(_configuration.GetWebJobsConnectionString(ConnectionStringNames.Storage), _options.CheckpointContainer);
         }
 
         internal static string NormalizeConnectionString(string originalConnectionString, string eventHubName)
