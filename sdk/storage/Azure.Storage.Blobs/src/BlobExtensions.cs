@@ -834,6 +834,7 @@ namespace Azure.Storage.Blobs
                 return null;
             }
 
+            response.GetRawResponse().Headers.ExtractMultiHeaderDownloadProperties(out var metadata, out var objectReplicationRules);
             return new BlobDownloadInfo
             {
                 BlobType = response.Headers.BlobType.GetValueOrDefault(),
@@ -844,7 +845,7 @@ namespace Azure.Storage.Blobs
                 Details = new BlobDownloadDetails
                 {
                     LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                    Metadata = response.Headers.Metadata.ToMetadata(),
+                    Metadata = metadata,
                     ContentRange = response.Headers.ContentRange,
                     ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
                     ContentEncoding = response.Headers.ContentEncoding,
@@ -870,8 +871,8 @@ namespace Azure.Storage.Blobs
                     VersionId = response.Headers.VersionId,
                     IsSealed = response.Headers.IsSealed.GetValueOrDefault(),
                     ObjectReplicationSourceProperties
-                        = response.Headers.ObjectReplicationRules?.Count > 0
-                        ? ParseObjectReplicationIds(response.Headers.ObjectReplicationRules)
+                        = objectReplicationRules?.Count > 0
+                        ? ParseObjectReplicationIds(objectReplicationRules)
                         : null,
                     ObjectReplicationDestinationPolicyId = response.Headers.ObjectReplicationPolicyId,
                     LastAccessed = response.Headers.LastAccessed.GetValueOrDefault()
@@ -920,6 +921,28 @@ namespace Azure.Storage.Blobs
                     BlobContentHash = response.Headers.BlobContentMD5
                 }
             };
+        }
+
+        private const string MetadataHeaderPrefix = "x-ms-meta-";
+        private const string ObjectReplicationRulesHeaderPrefix = "x-ms-or-";
+
+        private static bool ExtractMultiHeaderDownloadProperties(this ResponseHeaders headers, out IDictionary<string, string> metadata, out IDictionary<string, string> objectReplicationRules)
+        {
+            metadata = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            objectReplicationRules = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+
+            foreach (HttpHeader item in headers)
+            {
+                if (item.Name.StartsWith(MetadataHeaderPrefix, StringComparison.OrdinalIgnoreCase))
+                {
+                    metadata.Add(item.Name.Substring(MetadataHeaderPrefix.Length), item.Value);
+                } else if (item.Name.StartsWith(ObjectReplicationRulesHeaderPrefix, StringComparison.OrdinalIgnoreCase))
+                {
+                    objectReplicationRules.Add(item.Name.Substring(MetadataHeaderPrefix.Length), item.Value);
+                }
+            }
+
+            return true;
         }
         #endregion
 
