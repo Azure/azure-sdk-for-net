@@ -42,11 +42,8 @@ namespace Azure.Iot.TimeSeriesInsights.Samples
 
                 #region Snippet:TimeSeriesInsightsUpdateModelSettings
 
-                var options = new UpdateModelSettingsOptions
-                {
-                    Name = "sampleModel"
-                };
-                Response<TimeSeriesModelSettings> updatedSettings = await client.UpdateModelSettingsAsync(options);
+                string name = "sampleModel";
+                Response<TimeSeriesModelSettings> updatedSettings = await client.UpdateModelSettingsNameAsync(name);
                 Console.WriteLine($"Updated model name to {updatedSettings.Value.Name} ");
 
                 #endregion Snippet:TimeSeriesInsightsUpdateModelSettings
