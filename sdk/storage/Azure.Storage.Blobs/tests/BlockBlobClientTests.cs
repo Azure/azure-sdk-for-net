@@ -16,6 +16,7 @@ using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using Moq;
 using NUnit.Framework;
+using static Azure.Storage.Blobs.BlobClientOptions;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
 
@@ -1514,8 +1515,8 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Explicit]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/12312")]
+        [LiveOnly]
+        [ServiceVersion(Min = ServiceVersion.V2019_12_12)]
         public async Task GetBlockListAsync_LongBlock()
         {
             const long bigBlockSize = int.MaxValue + 1024L;

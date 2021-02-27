@@ -27,7 +27,7 @@ namespace Azure.Storage.Blobs.Models
         /// supported values.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public int Size => (int)SizeLong;
+        public int Size => checked((int)SizeLong);
 
         /// <summary>
         /// The base64 encoded block ID.
