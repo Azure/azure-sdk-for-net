@@ -8,8 +8,8 @@
         "Authorization": "Sanitized",
         "Content-Length": "304",
         "Content-Type": "application/json",
-        "Date": "Fri, 26 Feb 2021 21:13:26 GMT",
-        "traceparent": "00-0c42426f11c6a24eae66feacc341d04f-64c359e597c66d45-00",
+        "Date": "Fri, 26 Feb 2021 23:37:33 GMT",
+        "traceparent": "00-d8916ed0ec20584987ce61f85a0eef45-7eb994150b41e14b-00",
         "User-Agent": [
           "azsdk-net-Communication.Sms/1.0.0-alpha.20210226.1",
           "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
@@ -42,18 +42,18 @@
       "ResponseHeaders": {
         "api-supported-versions": "2020-07-20-preview1, 2020-08-20-preview, 2021-03-07",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 26 Feb 2021 21:13:27 GMT",
-        "MS-CV": "ZQ1\u002BMqsXpUek/rYbK0w5zQ.0",
+        "Date": "Fri, 26 Feb 2021 23:37:33 GMT",
+        "MS-CV": "/6wbX18SDkC48iKcZtOPGw.0",
         "Request-Context": "appId=",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0d2Q5YAAAAAA8L7kRWD\u002BURYHieYY\u002B7boZQ0hHRURHRTE2MTEAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
-        "X-Processing-Time": "480ms"
+        "X-Azure-Ref": "0PoY5YAAAAADxKDr4GFiYS6CUTI6D5CkeRVdSMzBFREdFMDUwOAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Processing-Time": "482ms"
       },
       "ResponseBody": {
         "value": [
           {
             "to": "Sanitized",
-            "messageId": "Outgoing_202102262113271bb03599-870e-4d50-94d7-caf0382b9064_noam",
+            "messageId": "Outgoing_20210226233734be357206-5462-4b6d-bb0f-598d771817b9_noam",
             "httpStatusCode": 202,
             "errorMessage": null,
             "repeatabilityResult": "accepted",
@@ -61,7 +61,7 @@
           },
           {
             "to": "Sanitized",
-            "messageId": "Outgoing_20210226211327fe68b4ce-0a7a-4780-b15c-22a02f64006a_noam",
+            "messageId": "Outgoing_20210226233734a8ac9387-b3ab-4af8-acec-807c8eabb755_noam",
             "httpStatusCode": 202,
             "errorMessage": null,
             "repeatabilityResult": "accepted",

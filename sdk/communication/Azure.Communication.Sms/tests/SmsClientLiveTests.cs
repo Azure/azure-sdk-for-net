@@ -35,8 +35,8 @@ namespace Azure.Communication.Sms.Tests
                 SmsSendResult result = await client.SendAsync(
                    //@@ from: "+18001230000" // Phone number acquired on your Azure Communication resource
                    //@@ to: "+18005670000",
-                   /*@@*/ from: TestEnvironment.ToPhoneNumber,
-                   /*@@*/ to: TestEnvironment.FromPhoneNumber,
+                   /*@@*/ from: TestEnvironment.FromPhoneNumber,
+                   /*@@*/ to: TestEnvironment.ToPhoneNumber,
                    message: "Hi");
                 Console.WriteLine($"Sms id: {result.MessageId}");
                 #endregion Snippet:Azure_Communication_Sms_Tests_SendAsync
@@ -76,8 +76,8 @@ namespace Azure.Communication.Sms.Tests
             try
             {
                 SmsSendResult result = await client.SendAsync(
-                   from: TestEnvironment.ToPhoneNumber,
-                   to: TestEnvironment.FromPhoneNumber,
+                   from: TestEnvironment.FromPhoneNumber,
+                   to: TestEnvironment.ToPhoneNumber,
                    message: "Hi");
                 Console.WriteLine($"Sms id: {result.MessageId}");
                 Assert.IsFalse(string.IsNullOrWhiteSpace(result.MessageId));
@@ -139,7 +139,7 @@ namespace Azure.Communication.Sms.Tests
                    /*@@*/ from: TestEnvironment.FromPhoneNumber,
                    /*@@*/ to: new string[] { TestEnvironment.ToPhoneNumber, TestEnvironment.ToPhoneNumber },
                    message: "Hi",
-                   options: new SmsSendOptions(true) // OPTIONAL
+                   options: new SmsSendOptions(enableDeliveryReport: true) // OPTIONAL
                    {
                        Tag = "marketing", // custom tags
                    });

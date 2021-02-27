@@ -100,18 +100,18 @@ namespace Azure.Communication.Sms
         /// <param name="from">The sender's phone number that is owned by the authenticated account.</param>
         /// <param name="to">The recipient's phone number.</param>
         /// <param name="message">The contents of the message that will be sent to the recipient. The allowable content is defined by RFC 5724. If the message has more than 160 characters, the server will split it into multiple SMSs automatically.</param>
-        /// <param name="options">Optional configuration for sending SMS messages.</param>
+        /// <param name="smsSendOptions">Optional configuration for sending SMS messages.</param>
         /// <param name="cancellationToken">The cancellation token for the task.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="from"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="to"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="message"/> is null.</exception>
-        public virtual async Task<Response<SmsSendResult>> SendAsync(string from, string to, string message, SmsSendOptions options = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SmsSendResult>> SendAsync(string from, string to, string message, SmsSendOptions smsSendOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(from, nameof(from));
             Argument.AssertNotNullOrEmpty(to, nameof(to));
-            Response<IEnumerable<SmsSendResult>> allSmsSendResults = await SendAsync(from, new[] { to }, message, options, cancellationToken).ConfigureAwait(false);
-            SmsSendResult sendSMSResult = allSmsSendResults.Value.FirstOrDefault();
+            Response<IEnumerable<SmsSendResult>> allSmsSendResults = await SendAsync(from, new[] { to }, message, smsSendOptions, cancellationToken).ConfigureAwait(false);
+            SmsSendResult sendSMSResult = allSmsSendResults.Value.First();
             return Response.FromValue(sendSMSResult, allSmsSendResults.GetRawResponse());
         }
 
@@ -121,18 +121,18 @@ namespace Azure.Communication.Sms
         /// <param name="from">The sender's phone number that is owned by the authenticated account.</param>
         /// <param name="to">The recipient's phone number.</param>
         /// <param name="message">The contents of the message that will be sent to the recipient. The allowable content is defined by RFC 5724. If the message has more than 160 characters, the server will split it into multiple SMSs automatically.</param>
-        /// <param name="options">Optional configuration for sending SMS messages.</param>
+        /// <param name="smsSendOptions">Optional configuration for sending SMS messages.</param>
         /// <param name="cancellationToken">The cancellation token for the underlying request.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="from"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="to"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="message"/> is null.</exception>
-        public virtual Response<SmsSendResult> Send(string from, string to, string message, SmsSendOptions options = default, CancellationToken cancellationToken = default)
+        public virtual Response<SmsSendResult> Send(string from, string to, string message, SmsSendOptions smsSendOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(from, nameof(from));
             Argument.AssertNotNullOrEmpty(to, nameof(to));
-            Response<IEnumerable<SmsSendResult>> allSmsSendResults = Send(from, new[] { to }, message, options, cancellationToken);
-            SmsSendResult sendSMSResult = allSmsSendResults.Value.FirstOrDefault();
+            Response<IEnumerable<SmsSendResult>> allSmsSendResults = Send(from, new[] { to }, message, smsSendOptions, cancellationToken);
+            SmsSendResult sendSMSResult = allSmsSendResults.Value.First();
             return Response.FromValue(sendSMSResult, allSmsSendResults.GetRawResponse());
         }
 
@@ -140,30 +140,28 @@ namespace Azure.Communication.Sms
         /// <param name="from"> The sender&apos;s phone number in E.164 format that is owned by the authenticated account. </param>
         /// <param name="to"> The recipient&apos;s phone number in E.164 format. In this version, up to 100 recipients in the list is supported. </param>
         /// <param name="message"> The contents of the message that will be sent to the recipient. The allowable content is defined by RFC 5724. </param>
-        /// <param name="options"> Optional configuration for sending SMS messages. </param>
+        /// <param name="smsSendOptions"> Optional configuration for sending SMS messages. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="from"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="to"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="message"/> is null.</exception>
-        public virtual async Task<Response<IEnumerable<SmsSendResult>>> SendAsync(string from, IEnumerable<string> to, string message, SmsSendOptions options = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IEnumerable<SmsSendResult>>> SendAsync(string from, IEnumerable<string> to, string message, SmsSendOptions smsSendOptions = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SmsClient)}.{nameof(Send)}");
             scope.Start();
             try
             {
                 Argument.AssertNotNullOrEmpty(from, nameof(from));
-                List<SmsRecipient> smsRecipients = new List<SmsRecipient>();
-                foreach (string toPhoneNumber in to)
-                {
-                    Argument.AssertNotNullOrEmpty(toPhoneNumber, nameof(to));
-                    SmsRecipient smsRecipient = new SmsRecipient(toPhoneNumber);
-                    smsRecipient.RepeatabilityRequestId = Guid.NewGuid().ToString();
-                    smsRecipient.RepeatabilityFirstSent = DateTime.Now.ToString(CultureInfo.InvariantCulture);
-                    smsRecipients.Add(smsRecipient);
-                }
+                Argument.AssertNotNullOrEmpty(to, nameof(to));
+                IEnumerable<SmsRecipient> smsRecipients = to.Select(x =>
+                    new SmsRecipient(AssertNotNullOrEmpty(x, nameof(to)))
+                    {
+                        RepeatabilityRequestId = Guid.NewGuid().ToString(),
+                        RepeatabilityFirstSent = DateTime.UtcNow.ToString(CultureInfo.InvariantCulture),
+                    });
 
-                Response<SmsSendResponse> response = await RestClient.SendAsync(from, smsRecipients, message, options, cancellationToken).ConfigureAwait(false);
+                Response<SmsSendResponse> response = await RestClient.SendAsync(from, smsRecipients, message, smsSendOptions, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue((IEnumerable<SmsSendResult>)response.Value.Value, response.GetRawResponse());
             }
             catch (Exception ex)
@@ -177,30 +175,29 @@ namespace Azure.Communication.Sms
         /// <param name="from"> The sender&apos;s phone number in E.164 format that is owned by the authenticated account. </param>
         /// <param name="to"> The recipient&apos;s phone number in E.164 format. In this version, up to 100 recipients in the list is supported. </param>
         /// <param name="message"> The contents of the message that will be sent to the recipient. The allowable content is defined by RFC 5724. </param>
-        /// <param name="options"> Optional configuration for sending SMS messages. </param>
+        /// <param name="smsSendOptions"> Optional configuration for sending SMS messages. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="from"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="to"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="message"/> is null.</exception>
-        public virtual Response<IEnumerable<SmsSendResult>> Send(string from, IEnumerable<string> to, string message, SmsSendOptions options = default, CancellationToken cancellationToken = default)
+        public virtual Response<IEnumerable<SmsSendResult>> Send(string from, IEnumerable<string> to, string message, SmsSendOptions smsSendOptions = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SmsClient)}.{nameof(Send)}");
             scope.Start();
             try
             {
                 Argument.AssertNotNullOrEmpty(from, nameof(from));
-                List<SmsRecipient> smsRecipients = new List<SmsRecipient>();
-                foreach (string toPhoneNumber in to)
-                {
-                    Argument.AssertNotNullOrEmpty(toPhoneNumber, nameof(to));
-                    SmsRecipient smsRecipient = new SmsRecipient(toPhoneNumber);
-                    smsRecipient.RepeatabilityRequestId = Guid.NewGuid().ToString();
-                    smsRecipient.RepeatabilityFirstSent = DateTime.Now.ToString(CultureInfo.InvariantCulture);
-                    smsRecipients.Add(smsRecipient);
-                }
+                Argument.AssertNotNullOrEmpty(to, nameof(to));
 
-                Response<SmsSendResponse> response = RestClient.Send(from, smsRecipients, message, options, cancellationToken);
+                IEnumerable<SmsRecipient> smsRecipients = to.Select(x =>
+                    new SmsRecipient(AssertNotNullOrEmpty(x, nameof(to)))
+                    {
+                        RepeatabilityRequestId = Guid.NewGuid().ToString(),
+                        RepeatabilityFirstSent = DateTime.UtcNow.ToString(CultureInfo.InvariantCulture),
+                    });
+
+                Response<SmsSendResponse> response = RestClient.Send(from, smsRecipients, message, smsSendOptions, cancellationToken);
                 return Response.FromValue((IEnumerable<SmsSendResult>)response.Value.Value, response.GetRawResponse());
             }
             catch (Exception ex)

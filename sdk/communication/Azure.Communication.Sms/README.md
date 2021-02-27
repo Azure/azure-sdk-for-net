@@ -48,7 +48,7 @@ SmsClient client = new SmsClient(new Uri(endpoint), tokenCredential);
 ```
 
 ## Examples
-### Send SMS Message
+### Send a SMS Message
 To send a SMS message, call the `Send` or `SendAsync` function from the `SmsClient`.
 ```C# Snippet:Azure_Communication_Sms_Tests_SendAsync
 SmsSendResult result = await client.SendAsync(
@@ -57,7 +57,7 @@ SmsSendResult result = await client.SendAsync(
    message: "Hi");
 Console.WriteLine($"Sms id: {result.MessageId}");
 ```
-### Send Group SMS Message
+### Send a Group SMS Message
 To send a SMS message to a list of recipients, call the `Send` or `SendAsync` function from the `SmsClient` with a list of recipient's phone numbers.
 You may also add pass in an options object to specify whether the delivery report should be enabled and set custom tags.
 ```C# Snippet:Azure_Communication_SmsClient_Send_GroupSmsWithOptions

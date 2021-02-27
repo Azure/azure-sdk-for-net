@@ -8,8 +8,8 @@
         "Authorization": "Sanitized",
         "Content-Length": "146",
         "Content-Type": "application/json",
-        "Date": "Fri, 26 Feb 2021 21:13:28 GMT",
-        "traceparent": "00-a49a72ed6976e543ae75234347398084-89e644c97a5c2a4e-00",
+        "Date": "Fri, 26 Feb 2021 23:37:36 GMT",
+        "traceparent": "00-7b1097d1cc237247b3bac9fd07d6cfcb-e8210ebf57e7e941-00",
         "User-Agent": [
           "azsdk-net-Communication.Sms/1.0.0-alpha.20210226.1",
           "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
@@ -33,18 +33,18 @@
       "ResponseHeaders": {
         "api-supported-versions": "2020-07-20-preview1, 2020-08-20-preview, 2021-03-07",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 26 Feb 2021 21:13:29 GMT",
-        "MS-CV": "5DRJLgp2bE\u002BEnEeNxT9SCw.0",
+        "Date": "Fri, 26 Feb 2021 23:37:36 GMT",
+        "MS-CV": "C21j\u002BpEqUEyBi470S5eXSw.0",
         "Request-Context": "appId=",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0eWQ5YAAAAAAy0WmIYTzPQa2KOLZCOBXQQ0hHRURHRTE2MTEAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
-        "X-Processing-Time": "296ms"
+        "X-Azure-Ref": "0QIY5YAAAAAAU\u002BldqsrELQ7ZweMFZRU\u002BMRVdSMzBFREdFMDUwOAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Processing-Time": "294ms"
       },
       "ResponseBody": {
         "value": [
           {
             "to": "Sanitized",
-            "messageId": "Outgoing_20210226211329370d9dde-60d4-4ee5-bd27-2ecdc0fcdd09_noam",
+            "messageId": "Outgoing_20210226233736aef53947-b6f0-4856-a641-9f4505055d21_noam",
             "httpStatusCode": 202,
             "errorMessage": null,
             "repeatabilityResult": "accepted",
