@@ -19,11 +19,8 @@ namespace Proto.Client
             var vnet = resourceGroup.GetVirtualNetworkOperations(Context.VmName + "_vnet").Get().Value;
             _ = vnet.GetSubnetOperations(Context.SubnetName).Get().Value;
             _ = resourceGroup.GetNetworkSecurityGroupOperations(Context.NsgName).Get().Value;
-            _ = resourceGroup.GetPublicIpAddressOperations($"{Context.VmName}_ip").Get().Value;
             _ = resourceGroup.GetNetworkInterfaceOperations($"{Context.VmName}_nic").Get().Value;
             _ = resourceGroup.GetVirtualMachineOperations(Context.VmName).Get().Value;
-
-            
         }
     }
 }
