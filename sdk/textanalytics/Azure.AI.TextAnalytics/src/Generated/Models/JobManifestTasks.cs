@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.AI.TextAnalytics.Models;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
@@ -19,6 +20,8 @@ namespace Azure.AI.TextAnalytics
             EntityRecognitionTasks = new ChangeTrackingList<EntitiesTask>();
             EntityRecognitionPiiTasks = new ChangeTrackingList<PiiTask>();
             KeyPhraseExtractionTasks = new ChangeTrackingList<KeyPhrasesTask>();
+            EntityLinkingTasks = new ChangeTrackingList<EntityLinkingTask>();
         }
+        public IList<EntityLinkingTask> EntityLinkingTasks { get; }
     }
 }

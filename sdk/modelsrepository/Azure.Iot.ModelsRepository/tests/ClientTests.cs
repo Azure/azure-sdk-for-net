@@ -33,25 +33,13 @@ namespace Azure.Iot.ModelsRepository.Tests
             new ModelsRepositoryClient(localUri).RepositoryUri.AbsolutePath.Should().Be(localUriStr);
         }
 
-        [TestCase("dtmi:com:example:Thermostat;1", true)]
-        [TestCase("dtmi:contoso:scope:entity;2", true)]
-        [TestCase("dtmi:com:example:Thermostat:1", false)]
-        [TestCase("dtmi:com:example::Thermostat;1", false)]
-        [TestCase("com:example:Thermostat;1", false)]
-        [TestCase("", false)]
-        [TestCase(null, false)]
-        public void ClientIsValidDtmi(string dtmi, bool expected)
-        {
-            ModelsRepositoryClient.IsValidDtmi(dtmi).Should().Be(expected);
-        }
-
         [Test]
         public void EvaluateEventSourceKPIs()
         {
             Type eventSourceType = typeof(ModelsRepositoryEventSource);
 
             eventSourceType.Should().NotBeNull();
-            EventSource.GetName(eventSourceType).Should().Be(ModelRepositoryConstants.ModelRepositoryEventSourceName);
+            EventSource.GetName(eventSourceType).Should().Be(ModelsRepositoryConstants.ModelRepositoryEventSourceName);
             EventSource.GetGuid(eventSourceType).Should().Be(Guid.Parse("7678f8d4-81db-5fd2-39fc-23552d86b171"));
             EventSource.GenerateManifest(eventSourceType, "assemblyPathToIncludeInManifest").Should().NotBeNullOrEmpty();
         }

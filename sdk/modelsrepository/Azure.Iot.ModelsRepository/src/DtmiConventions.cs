@@ -45,8 +45,8 @@ namespace Azure.Iot.ModelsRepository
             if (fromExpanded)
             {
                 fullyQualifiedPath = fullyQualifiedPath.Replace(
-                    ModelRepositoryConstants.JsonFileExtension,
-                    ModelRepositoryConstants.ExpandedJsonFileExtension);
+                    ModelsRepositoryConstants.JsonFileExtension,
+                    ModelsRepositoryConstants.ExpandedJsonFileExtension);
             }
 
             return fullyQualifiedPath;

@@ -1,8 +1,11 @@
 # Release History
 
 ## 5.1.0-beta.5 (Unreleased)
-
-
+### Breaking changes
+- Renamed `AspectSentiment` to `TargetSentiment`.
+- Renamed `MinedOpinion` to `SentenceOpinion`.
+- Renamed `OpinionSentiment` to `AssessmentSentiment`.
+ 
 ## 5.1.0-beta.4 (2021-02-10)
 ### New features
 - Added property `Length` to `CategorizedEntity`, `SentenceSentiment`, `LinkedEntityMatch`, `AspectSentiment`, `OpinionSentiment`, and `PiiEntity`.

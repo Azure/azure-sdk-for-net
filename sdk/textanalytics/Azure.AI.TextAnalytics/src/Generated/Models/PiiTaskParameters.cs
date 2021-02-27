@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+using Azure.AI.TextAnalytics.Models;
+using Azure.Core;
+
 namespace Azure.AI.TextAnalytics
 {
     /// <summary> The PiiTaskParameters. </summary>
@@ -13,6 +17,9 @@ namespace Azure.AI.TextAnalytics
         /// <summary> Initializes a new instance of PiiTaskParameters. </summary>
         public PiiTaskParameters()
         {
+            PiiCategories = new ChangeTrackingList<PiiCategory>();
         }
+        /// <summary> (Optional) describes the PII categories to return. </summary>
+        public IList<PiiCategory> PiiCategories { get; }
     }
 }

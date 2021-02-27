@@ -1426,9 +1426,7 @@ namespace Azure.Storage.Blobs.Specialized
             bool async = true,
             CancellationToken cancellationToken = default)
         {
-            var client = new BlobBaseClient(Uri, ClientConfiguration, ClientSideEncryption);
-
-            PartitionedDownloader downloader = new PartitionedDownloader(client, transferOptions);
+            PartitionedDownloader downloader = new PartitionedDownloader(this, transferOptions);
 
             if (async)
             {
