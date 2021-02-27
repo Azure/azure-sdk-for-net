@@ -146,8 +146,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
 
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var mockTransportBatch = new Mock<TransportMessageBatch>();
-            var mockScope = new Mock<EntityScopeFactory>();
-            var batch = new ServiceBusMessageBatch(mockTransportBatch.Object, mockScope.Object);
+            var mockScope = new EntityScopeFactory("mock", "mock");
+            var batch = new ServiceBusMessageBatch(mockTransportBatch.Object, mockScope);
             var mockTransportSender = new Mock<TransportSender>();
             var mockConnection = new Mock<ServiceBusConnection>();
 

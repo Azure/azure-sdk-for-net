@@ -39,8 +39,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         public void ConstructorUpdatesState()
         {
             var mockBatch = new MockTransportBatch();
-            var mockScope = new Mock<EntityScopeFactory>();
-            var batch = new ServiceBusMessageBatch(mockBatch, mockScope.Object);
+            var mockScope = new EntityScopeFactory("mock", "mock");
+
+            var batch = new ServiceBusMessageBatch(mockBatch, mockScope);
 
             Assert.That(GetInnerBatch(batch), Is.SameAs(mockBatch), "The inner transport batch should have been set.");
         }
@@ -54,8 +55,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         public void PropertyAccessIsDelegatedToTheTransportClient()
         {
             var mockBatch = new MockTransportBatch();
-            var mockScope = new Mock<EntityScopeFactory>();
-            var batch = new ServiceBusMessageBatch(mockBatch, mockScope.Object);
+            var mockScope = new EntityScopeFactory("mock", "mock");
+
+            var batch = new ServiceBusMessageBatch(mockBatch, mockScope);
 
             Assert.That(batch.MaxSizeInBytes, Is.EqualTo(mockBatch.MaxSizeInBytes), "The maximum size should have been delegated.");
             Assert.That(batch.SizeInBytes, Is.EqualTo(mockBatch.SizeInBytes), "The size should have been delegated.");
@@ -71,8 +73,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         public void TryAddIsDelegatedToTheTransportClient()
         {
             var mockBatch = new MockTransportBatch();
-            var mockScope = new Mock<EntityScopeFactory>();
-            var batch = new ServiceBusMessageBatch(mockBatch, mockScope.Object);
+            var mockScope = new EntityScopeFactory("mock", "mock");
+
+            var batch = new ServiceBusMessageBatch(mockBatch, mockScope);
             var message = new ServiceBusMessage(new byte[] { 0x21 });
 
             Assert.That(batch.TryAddMessage(message), Is.True, "The message should have been accepted.");
@@ -88,9 +91,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         public void AsEnumerableIsDelegatedToTheTransportClient()
         {
             var mockBatch = new MockTransportBatch();
-            var mockScope = new Mock<EntityScopeFactory>();
+            var mockScope = new EntityScopeFactory("mock", "mock");
 
-            var batch = new ServiceBusMessageBatch(mockBatch, mockScope.Object);
+            var batch = new ServiceBusMessageBatch(mockBatch, mockScope);
 
             batch.AsEnumerable<string>();
             Assert.That(mockBatch.AsEnumerableCalledWith, Is.EqualTo(typeof(string)), "The enumerable should delegated the requested type parameter.");
@@ -105,9 +108,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         public void DisposeIsDelegatedToTheTransportClient()
         {
             var mockBatch = new MockTransportBatch();
-            var mockScope = new Mock<EntityScopeFactory>();
+            var mockScope = new EntityScopeFactory("mock", "mock");
 
-            var batch = new ServiceBusMessageBatch(mockBatch, mockScope.Object);
+            var batch = new ServiceBusMessageBatch(mockBatch, mockScope);
 
             batch.Dispose();
             Assert.That(mockBatch.DisposeInvoked, Is.True);
@@ -122,9 +125,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         public void TryAddRespectsTheBatchLock()
         {
             var mockBatch = new MockTransportBatch();
-            var mockScope = new Mock<EntityScopeFactory>();
+            var mockScope = new EntityScopeFactory("mock", "mock");
 
-            var batch = new ServiceBusMessageBatch(mockBatch, mockScope.Object);
+            var batch = new ServiceBusMessageBatch(mockBatch, mockScope);
             var message = new ServiceBusMessage(new byte[] { 0x21 });
 
             Assert.That(batch.TryAddMessage(new ServiceBusMessage(new byte[] { 0x21 })), Is.True, "The message should have been accepted before locking.");
@@ -145,9 +148,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         public void ClearRespectsTheBatchLock()
         {
             var mockBatch = new MockTransportBatch();
-            var mockScope = new Mock<EntityScopeFactory>();
+            var mockScope = new EntityScopeFactory("mock", "mock");
 
-            var batch = new ServiceBusMessageBatch(mockBatch, mockScope.Object);
+            var batch = new ServiceBusMessageBatch(mockBatch, mockScope);
             var messageData = new ServiceBusMessage(new byte[] { 0x21 });
 
             Assert.That(batch.TryAddMessage(new ServiceBusMessage(new byte[] { 0x21 })), Is.True, "The message should have been accepted before locking.");
@@ -170,9 +173,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         public void DisposeRespectsTheBatchLock()
         {
             var mockBatch = new MockTransportBatch();
-            var mockScope = new Mock<EntityScopeFactory>();
+            var mockScope = new EntityScopeFactory("mock", "mock");
 
-            var batch = new ServiceBusMessageBatch(mockBatch, mockScope.Object);
+            var batch = new ServiceBusMessageBatch(mockBatch, mockScope);
 
             Assert.That(batch.TryAddMessage(new ServiceBusMessage(new byte[] { 0x21 })), Is.True, "The message should have been accepted before locking.");
 
@@ -197,7 +200,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         private static TransportMessageBatch GetInnerBatch(ServiceBusMessageBatch batch) =>
             (TransportMessageBatch)
                 typeof(ServiceBusMessageBatch)
-                    .GetProperty("InnerBatch", BindingFlags.Instance | BindingFlags.NonPublic)
+                    .GetField("_innerBatch", BindingFlags.Instance | BindingFlags.NonPublic)
                     .GetValue(batch);
 
         /// <summary>
