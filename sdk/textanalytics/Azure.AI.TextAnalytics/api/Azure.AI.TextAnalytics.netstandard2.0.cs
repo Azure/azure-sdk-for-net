@@ -288,12 +288,201 @@ namespace Azure.AI.TextAnalytics
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public Azure.AI.TextAnalytics.EntityCategory Category { get { throw null; } }
+        public Azure.AI.TextAnalytics.PiiEntityCategory Category { get { throw null; } }
         public double ConfidenceScore { get { throw null; } }
         public int Length { get { throw null; } }
         public int Offset { get { throw null; } }
         public string SubCategory { get { throw null; } }
         public string Text { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct PiiEntityCategory : System.IEquatable<Azure.AI.TextAnalytics.PiiEntityCategory>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public PiiEntityCategory(string value) { throw null; }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory ABARoutingNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory Address { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory Age { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory All { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory ARNationalIdentityNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory ATIdentityCard { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory ATTaxIdentificationNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory ATValueAddedTaxNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory AUBankAccountNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory AUBusinessNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory AUCompanyNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory AUDriversLicenseNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory AUMedicalAccountNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory AUPassportNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory AUTaxFileNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory AzureDocumentDBAuthKey { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory AzureIaasDatabaseConnectionAndSQLString { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory AzureIoTConnectionString { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory AzurePublishSettingPassword { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory AzureRedisCacheString { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory AzureSAS { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory AzureServiceBusString { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory AzureStorageAccountGeneric { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory AzureStorageAccountKey { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory BENationalNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory BENationalNumberV2 { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory BEValueAddedTaxNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory BGUniformCivilNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory BrcpfNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory BRLegalEntityNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory BRNationalIdrg { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory CABankAccountNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory CADriversLicenseNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory CAHealthServiceNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory CAPassportNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory CAPersonalHealthIdentification { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory CASocialInsuranceNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory CHSocialSecurityNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory CLIdentityCardNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory CNResidentIdentityCardNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory CreditCardNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory CYIdentityCard { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory CYTaxIdentificationNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory CZPersonalIdentityNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory CZPersonalIdentityV2 { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory Date { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory DEDriversLicenseNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory Default { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory DEIdentityCardNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory DEPassportNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory DETaxIdentificationNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory DEValueAddedNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory DKPersonalIdentificationNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory DKPersonalIdentificationV2 { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory DrugEnforcementAgencyNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory EEPersonalIdentificationCode { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory Email { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory Esdni { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory ESSocialSecurityNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory ESTaxIdentificationNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory EUDebitCardNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory EUDriversLicenseNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory EugpsCoordinates { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory EUNationalIdentificationNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory EUPassportNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory EUSocialSecurityNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory EUTaxIdentificationNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory FIEuropeanHealthNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory FINationalID { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory FINationalIDV2 { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory FIPassportNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory FRDriversLicenseNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory FRHealthInsuranceNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory FRNationalID { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory FRPassportNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory FRSocialSecurityNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory FRTaxIdentificationNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory FRValueAddedTaxNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory GRNationalIDCard { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory GRNationalIDV2 { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory GRTaxIdentificationNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory HKIdentityCardNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory HRIdentityCardNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory HRNationalIDNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory HRPersonalIdentificationNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory HRPersonalIdentificationOIBNumberV2 { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory HUPersonalIdentificationNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory HUTaxIdentificationNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory HUValueAddedNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory IDIdentityCardNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory IEPersonalPublicServiceNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory IEPersonalPublicServiceNumberV2 { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory ILBankAccountNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory ILNationalID { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory INPermanentAccount { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory InternationalBankingAccountNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory INUniqueIdentificationNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory IPAddress { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory ITDriversLicenseNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory ITFiscalCode { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory ITValueAddedTaxNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory JPBankAccountNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory JPDriversLicenseNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory JPMyNumberCorporate { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory JPMyNumberPersonal { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory JPPassportNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory JPResidenceCardNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory JPResidentRegistrationNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory JPSocialInsuranceNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory KRResidentRegistrationNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory LTPersonalCode { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory LUNationalIdentificationNumberNatural { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory LUNationalIdentificationNumberNonNatural { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory LVPersonalCode { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory MTIdentityCardNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory MTTaxIDNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory MYIdentityCardNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory NLCitizensServiceNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory NLCitizensServiceNumberV2 { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory NLTaxIdentificationNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory NLValueAddedTaxNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory NOIdentityNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory NZBankAccountNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory NZDriversLicenseNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory NZInlandRevenueNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory NZMinistryOfHealthNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory NZSocialWelfareNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory Organization { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory Person { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory PhoneNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory PHUnifiedMultiPurposeIDNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory PLIdentityCard { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory PLNationalID { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory PLNationalIDV2 { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory PLPassportNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory PlregonNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory PLTaxIdentificationNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory PTCitizenCardNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory PTCitizenCardNumberV2 { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory PTTaxIdentificationNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory ROPersonalNumericalCode { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory RUPassportNumberDomestic { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory RUPassportNumberInternational { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory SANationalID { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory SENationalID { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory SENationalIDV2 { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory SEPassportNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory SETaxIdentificationNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory SGNationalRegistrationIdentityCardNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory SITaxIdentificationNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory SIUniqueMasterCitizenNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory SKPersonalNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory SQLServerConnectionString { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory SwiftCode { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory THPopulationIdentificationCode { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory TRNationalIdentificationNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory TWNationalID { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory TWPassportNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory TWResidentCertificate { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory UAPassportNumberDomestic { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory UAPassportNumberInternational { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory UKDriversLicenseNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory UKElectoralRollNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory UKNationalHealthNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory UKNationalInsuranceNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory UKUniqueTaxpayerNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory URL { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory USBankAccountNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory USDriversLicenseNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory USIndividualTaxpayerIdentification { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory USSocialSecurityNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory UsukPassportNumber { get { throw null; } }
+        public static Azure.AI.TextAnalytics.PiiEntityCategory ZAIdentificationNumber { get { throw null; } }
+        public bool Equals(Azure.AI.TextAnalytics.PiiEntityCategory other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.TextAnalytics.PiiEntityCategory left, Azure.AI.TextAnalytics.PiiEntityCategory right) { throw null; }
+        public static implicit operator Azure.AI.TextAnalytics.PiiEntityCategory (string value) { throw null; }
+        public static bool operator !=(Azure.AI.TextAnalytics.PiiEntityCategory left, Azure.AI.TextAnalytics.PiiEntityCategory right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class PiiEntityCollection : System.Collections.ObjectModel.ReadOnlyCollection<Azure.AI.TextAnalytics.PiiEntity>
     {
@@ -344,6 +533,7 @@ namespace Azure.AI.TextAnalytics
     public partial class RecognizePiiEntitiesOptions : Azure.AI.TextAnalytics.TextAnalyticsRequestOptions
     {
         public RecognizePiiEntitiesOptions() { }
+        public System.Collections.Generic.IList<Azure.AI.TextAnalytics.PiiEntityCategory> CategoriesFilter { get { throw null; } }
         public Azure.AI.TextAnalytics.PiiEntityDomainType DomainFilter { get { throw null; } set { } }
     }
     public partial class RecognizePiiEntitiesResult : Azure.AI.TextAnalytics.TextAnalyticsResult

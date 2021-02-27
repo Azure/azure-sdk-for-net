@@ -472,7 +472,7 @@ namespace Azure.AI.TextAnalytics
             }
         }
 
-        internal HttpMessage CreateEntitiesRecognitionPiiRequest(MultiLanguageBatchInput input, string modelVersion, bool? showStats, string domain, StringIndexType? stringIndexType, IEnumerable<PiiCategory> piiCategories)
+        internal HttpMessage CreateEntitiesRecognitionPiiRequest(MultiLanguageBatchInput input, string modelVersion, bool? showStats, string domain, StringIndexType? stringIndexType, IEnumerable<PiiEntityCategory> piiCategories)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -522,7 +522,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="piiCategories"> (Optional) describes the PII categories to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public async Task<Response<PiiEntitiesResult>> EntitiesRecognitionPiiAsync(MultiLanguageBatchInput input, string modelVersion = null, bool? showStats = null, string domain = null, StringIndexType? stringIndexType = null, IEnumerable<PiiCategory> piiCategories = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PiiEntitiesResult>> EntitiesRecognitionPiiAsync(MultiLanguageBatchInput input, string modelVersion = null, bool? showStats = null, string domain = null, StringIndexType? stringIndexType = null, IEnumerable<PiiEntityCategory> piiCategories = null, CancellationToken cancellationToken = default)
         {
             if (input == null)
             {
@@ -557,7 +557,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="piiCategories"> (Optional) describes the PII categories to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public Response<PiiEntitiesResult> EntitiesRecognitionPii(MultiLanguageBatchInput input, string modelVersion = null, bool? showStats = null, string domain = null, StringIndexType? stringIndexType = null, IEnumerable<PiiCategory> piiCategories = null, CancellationToken cancellationToken = default)
+        public Response<PiiEntitiesResult> EntitiesRecognitionPii(MultiLanguageBatchInput input, string modelVersion = null, bool? showStats = null, string domain = null, StringIndexType? stringIndexType = null, IEnumerable<PiiEntityCategory> piiCategories = null, CancellationToken cancellationToken = default)
         {
             if (input == null)
             {
