@@ -44,12 +44,6 @@ namespace Azure.Iot.TimeSeriesInsights
         public TimeSeriesVariable() { }
         public Azure.Iot.TimeSeriesInsights.TimeSeriesExpression Filter { get { throw null; } set { } }
     }
-    public partial class UpdateModelSettingsOptions
-    {
-        public UpdateModelSettingsOptions() { }
-        public string DefaultTypeId { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-    }
 }
 namespace Azure.Iot.TimeSeriesInsights.Models
 {
@@ -556,5 +550,11 @@ namespace Azure.Iot.TimeSeriesInsights.Models
         public TypesRequestBatchGetOrDelete() { }
         public System.Collections.Generic.IList<string> Names { get { throw null; } }
         public System.Collections.Generic.IList<string> TypeIds { get { throw null; } }
+    }
+    public partial class UpdateModelSettingsRequest
+    {
+        public UpdateModelSettingsRequest() { }
+        public string DefaultTypeId { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
     }
 }
