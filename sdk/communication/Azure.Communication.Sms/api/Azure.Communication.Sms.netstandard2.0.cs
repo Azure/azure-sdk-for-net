@@ -40,5 +40,6 @@ namespace Azure.Communication.Sms.Models
 {
     public static partial class SmsModelFactory
     {
+        public static Azure.Communication.Sms.SmsSendResult SmsSendResult(string to, int httpStatusCode, bool successful) { throw null; }
     }
 }
