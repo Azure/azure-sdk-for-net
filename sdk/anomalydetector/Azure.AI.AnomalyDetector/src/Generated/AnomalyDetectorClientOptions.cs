@@ -21,5 +21,17 @@ namespace Azure.AI.AnomalyDetector
             /// <summary> Service version "1.0". </summary>
             V1_0 = 1,
         }
+
+        internal string Version { get; }
+
+        /// <summary> Initializes new instance of AnomalyDetectorClientOptions. </summary>
+        public AnomalyDetectorClientOptions(ServiceVersion version = LatestVersion)
+        {
+            Version = version switch
+            {
+                ServiceVersion.V1_0 => "1.0",
+                _ => throw new NotSupportedException()
+            };
+        }
     }
 }
