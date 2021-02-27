@@ -19,12 +19,9 @@ namespace Proto.Compute
         /// Initializes a new instance of the <see cref="AvailabilitySetData"/> class.
         /// </summary>
         /// <param name="aset"> The availability set to initialize. </param>
-        public AvailabilitySetData(Azure.ResourceManager.Compute.Models.AvailabilitySet aset) : base(aset.Id, aset.Location, aset)
+        public AvailabilitySetData(Azure.ResourceManager.Compute.Models.AvailabilitySet aset)
+            : base(aset.Id, aset.Location, aset)
         {
-            if (null == aset.Tags)
-            {
-                aset.Tags = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
-            }
         }
 
         /// <summary> Resource tags. </summary>
@@ -58,7 +55,6 @@ namespace Proto.Compute
         public IList<SubResource> VirtualMachines
         {
             get => Model.VirtualMachines;
-            set => Model.VirtualMachines = value;
         }
 
         /// <summary> Specifies information about the proximity placement group that the availability set should be assigned to. &lt;br&gt;&lt;br&gt;Minimum api-version: 2018-04-01. </summary>
@@ -69,6 +65,6 @@ namespace Proto.Compute
         }
 
         /// <summary> The resource status information. </summary>
-        public IList<InstanceViewStatus> Statuses => Model.Statuses;
+        public IReadOnlyList<InstanceViewStatus> Statuses => Model.Statuses;
     }
 }

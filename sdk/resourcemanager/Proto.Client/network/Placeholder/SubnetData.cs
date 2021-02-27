@@ -35,27 +35,25 @@ namespace Proto.Network
         public IList<Delegation> Delegations
         {
             get => Model.Delegations;
-            set => Model.Delegations = value;
         }
 
         /// <summary> An array of references to services injecting into this subnet. </summary>
-        public IList<ServiceAssociationLink> ServiceAssociationLinks => Model.ServiceAssociationLinks;
+        public IReadOnlyList<ServiceAssociationLink> ServiceAssociationLinks => Model.ServiceAssociationLinks;
 
         /// <summary> An array of references to the external resources using subnet. </summary>
-        public IList<ResourceNavigationLink> ResourceNavigationLinks => Model.ResourceNavigationLinks;
+        public IReadOnlyList<ResourceNavigationLink> ResourceNavigationLinks => Model.ResourceNavigationLinks;
 
         /// <summary> Array of IpAllocation which reference this subnet. </summary>
         public IList<SubResource> IpAllocations
         {
             get => Model.IpAllocations;
-            set => Model.IpAllocations = value;
         }
 
         /// <summary> Array of IP configuration profiles which reference this subnet. </summary>
-        public IList<IPConfigurationProfile> IpConfigurationProfiles => Model.IpConfigurationProfiles;
+        public IReadOnlyList<IPConfigurationProfile> IpConfigurationProfiles => Model.IpConfigurationProfiles;
 
         /// <summary> An array of references to the network interface IP configurations using subnet. </summary>
-        public IList<IPConfiguration> IpConfigurations => Model.IpConfigurations;
+        public IReadOnlyList<IPConfiguration> IpConfigurations => Model.IpConfigurations;
 
         /// <summary> Enable or Disable apply network policies on private end point in the subnet. </summary>
         public string PrivateEndpointNetworkPolicies
@@ -65,13 +63,12 @@ namespace Proto.Network
         }
 
         /// <summary> An array of references to private endpoints. </summary>
-        public IList<PrivateEndpoint> PrivateEndpoints => Model.PrivateEndpoints;
+        public IReadOnlyList<PrivateEndpoint> PrivateEndpoints => Model.PrivateEndpoints;
 
         /// <summary> An array of service endpoints. </summary>
         public IList<ServiceEndpointPropertiesFormat> ServiceEndpoints
         {
             get => Model.ServiceEndpoints;
-            set => Model.ServiceEndpoints = value;
         }
         
         /// <summary> Nat gateway associated with this subnet. </summary>
@@ -99,7 +96,6 @@ namespace Proto.Network
         public IList<string> AddressPrefixes
         {
             get => Model.AddressPrefixes;
-            set => Model.AddressPrefixes = value;
         }
 
         /// <summary> The address prefix for the subnet. </summary>
@@ -116,7 +112,6 @@ namespace Proto.Network
         public IList<ServiceEndpointPolicy> ServiceEndpointPolicies
         {
             get => Model.ServiceEndpointPolicies;
-            set => Model.ServiceEndpointPolicies = value;
         }
 
         /// <summary> Enable or Disable apply network policies on private link service in the subnet. </summary>

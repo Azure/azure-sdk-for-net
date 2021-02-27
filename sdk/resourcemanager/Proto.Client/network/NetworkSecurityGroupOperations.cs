@@ -79,16 +79,16 @@ namespace Proto.Network
                     matchingRule.Access = rule.Access;
                     matchingRule.Description = rule.Description;
                     matchingRule.DestinationAddressPrefix = rule.DestinationAddressPrefix;
-                    matchingRule.DestinationAddressPrefixes = rule.DestinationAddressPrefixes;
+                    //matchingRule.DestinationAddressPrefixes = rule.DestinationAddressPrefixes;
                     matchingRule.DestinationPortRange = rule.DestinationPortRange;
-                    matchingRule.DestinationPortRanges = rule.DestinationPortRanges;
+                    //matchingRule.DestinationPortRanges = rule.DestinationPortRanges;
                     matchingRule.Direction = rule.Direction;
                     matchingRule.Priority = rule.Priority;
                     matchingRule.Protocol = rule.Protocol;
                     matchingRule.SourceAddressPrefix = rule.SourceAddressPrefix;
-                    matchingRule.SourceAddressPrefixes = rule.SourceAddressPrefixes;
+                    //matchingRule.SourceAddressPrefixes = rule.SourceAddressPrefixes;
                     matchingRule.SourcePortRange = rule.SourcePortRange;
-                    matchingRule.SourcePortRanges = rule.SourcePortRanges;
+                    //matchingRule.SourcePortRanges = rule.SourcePortRanges;
                 }
                 else
                 {
@@ -119,7 +119,8 @@ namespace Proto.Network
         public ArmResponse<NetworkSecurityGroup> AddTag(string key, string value)
         {
             var resource = GetResource();
-            var patchable = new TagsObject() { Tags = resource.Data.Tags };
+            var patchable = new TagsObject();
+            patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags[key] = value;
             return new PhArmResponse<NetworkSecurityGroup, Azure.ResourceManager.Network.Models.NetworkSecurityGroup>(
                 Operations.UpdateTags(Id.ResourceGroup, Id.Name, patchable),
@@ -130,7 +131,8 @@ namespace Proto.Network
         public async Task<ArmResponse<NetworkSecurityGroup>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             var resource = GetResource();
-            var patchable = new TagsObject() { Tags = resource.Data.Tags };
+            var patchable = new TagsObject();
+            patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags[key] = value;
             return new PhArmResponse<NetworkSecurityGroup, Azure.ResourceManager.Network.Models.NetworkSecurityGroup>(await Operations.UpdateTagsAsync(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
                 n => new NetworkSecurityGroup(this, new NetworkSecurityGroupData(n)));
@@ -140,7 +142,8 @@ namespace Proto.Network
         public ArmOperation<NetworkSecurityGroup> StartAddTag(string key, string value)
         {
             var resource = GetResource();
-            var patchable = new TagsObject() { Tags = resource.Data.Tags };
+            var patchable = new TagsObject();
+            patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags[key] = value;
             return new PhArmOperation<NetworkSecurityGroup, Azure.ResourceManager.Network.Models.NetworkSecurityGroup>(
                 Operations.UpdateTags(Id.ResourceGroup, Id.Name, patchable),
@@ -151,7 +154,8 @@ namespace Proto.Network
         public async Task<ArmOperation<NetworkSecurityGroup>> StartAddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             var resource = GetResource();
-            var patchable = new TagsObject() { Tags = resource.Data.Tags };
+            var patchable = new TagsObject();
+            patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags[key] = value;
             return new PhArmOperation<NetworkSecurityGroup, Azure.ResourceManager.Network.Models.NetworkSecurityGroup>(await Operations.UpdateTagsAsync(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
                 n => new NetworkSecurityGroup(this, new NetworkSecurityGroupData(n)));

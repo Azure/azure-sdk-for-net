@@ -21,10 +21,6 @@ namespace Proto.Network
         /// <param name="nic"> The low level network interace model. </param>
         public NetworkInterfaceData(Azure.ResourceManager.Network.Models.NetworkInterface nic) : base(nic.Id, nic.Location, nic)
         {
-            if (null == nic.Tags)
-            {
-                nic.Tags = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
-            }
         }
 
         /// <summary>
@@ -67,13 +63,12 @@ namespace Proto.Network
         public IList<NetworkInterfaceIPConfiguration> IpConfigurations
         {
             get => Model.IpConfigurations;
-            set => Model.IpConfigurations = value;
         }
 
         /// <summary>
         /// Gets a list of TapConfigurations of the newtork interface.
         /// </summary>
-        public IList<NetworkInterfaceTapConfiguration> TapConfigurations=> Model.TapConfigurations;
+        public IReadOnlyList<NetworkInterfaceTapConfiguration> TapConfigurations=> Model.TapConfigurations;
 
         /// <summary>
         /// Gets or sets the DNS settings in network interface.
@@ -115,7 +110,7 @@ namespace Proto.Network
         /// <summary>
         /// Gets a list of references to linked BareMetal resources.
         /// </summary>
-        public IList<string> HostedWorkloads => Model.HostedWorkloads;
+        public IReadOnlyList<string> HostedWorkloads => Model.HostedWorkloads;
 
         /// <summary>
         /// Gets the resource GUID property of the network interface resource.

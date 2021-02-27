@@ -79,17 +79,15 @@ namespace Proto.Network
             var nic = new Azure.ResourceManager.Network.Models.NetworkInterface()
             {
                 Location = location ?? parent.Data.Location,
-                IpConfigurations = new List<NetworkInterfaceIPConfiguration>()
-                {
-                    new NetworkInterfaceIPConfiguration()
-                    {
-                        Name = "Primary",
-                        Primary = true,
-                        Subnet = new Azure.ResourceManager.Network.Models.Subnet() { Id = subnetId },
-                        PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
-                    }
-                }
             };
+
+            nic.IpConfigurations.Add(new NetworkInterfaceIPConfiguration()
+            {
+                Name = "Primary",
+                Primary = true,
+                Subnet = new Azure.ResourceManager.Network.Models.Subnet() { Id = subnetId },
+                PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+            });
 
             if (ip != null)
                 nic.IpConfigurations[0].PublicIPAddress = new PublicIPAddress() { Id = ip.Id };

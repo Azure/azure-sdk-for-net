@@ -21,10 +21,6 @@ namespace Proto.Network
         /// <param name="vnet"> The virtual nerwork to initialize. </param>
         public VirtualNetworkData(Azure.ResourceManager.Network.Models.VirtualNetwork vnet) : base(vnet.Id, vnet.Location, vnet)
         {
-            if (null == vnet.Tags)
-            {
-                vnet.Tags = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
-            }
         }
 
         /// <inheritdoc/>
@@ -54,14 +50,12 @@ namespace Proto.Network
         public IList<Azure.ResourceManager.Network.Models.Subnet> Subnets
         {
             get => Model.Subnets;
-            set => Model.Subnets = value;
         }
 
         /// <summary> A list of peering in a Virtual Network. </summary>
         public IList<VirtualNetworkPeering> VirtualNetworkPeerings
         {
             get => Model.VirtualNetworkPeerings;
-            set => Model.VirtualNetworkPeerings = value;
         }
 
         /// <summary> The resourceGuid property of the Virtual Network resource. </summary>
@@ -103,7 +97,6 @@ namespace Proto.Network
         public IList<SubResource> IpAllocations
         {
             get => Model.IpAllocations;
-            set => Model.IpAllocations = value;
         }
     }
 }

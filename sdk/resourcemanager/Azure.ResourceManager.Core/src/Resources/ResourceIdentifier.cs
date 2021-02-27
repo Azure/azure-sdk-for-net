@@ -9,7 +9,7 @@ using System.Linq;
 namespace Azure.ResourceManager.Core
 {
     /// <summary>
-    /// Canonical Representation of a Resource Identity
+    /// Canonical Representation of a Resource Identity.
     /// </summary>
     public sealed class ResourceIdentifier :
         IEquatable<ResourceIdentifier>,
@@ -71,7 +71,10 @@ namespace Azure.ResourceManager.Core
         /// <param name="other"> String to be implicit converted into a <see cref="ResourceIdentifier"/> object. </param>
         public static implicit operator ResourceIdentifier(string other)
         {
-            return new ResourceIdentifier(other); // will null check in PR #119
+            if (other is null)
+                return null;
+
+            return new ResourceIdentifier(other);
         }
 
         /// <summary>
@@ -80,6 +83,9 @@ namespace Azure.ResourceManager.Core
         /// <param name="other"> <see cref="ResourceIdentifier"/> object to be implicit converted into an string. </param>
         public static implicit operator string(ResourceIdentifier other)
         {
+            if (other is null)
+                return null;
+
             return other.Id;
         }
 

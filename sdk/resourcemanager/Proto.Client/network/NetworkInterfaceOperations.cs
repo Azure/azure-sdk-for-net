@@ -124,7 +124,8 @@ namespace Proto.Network
         public ArmResponse<NetworkInterface> AddTag(string key, string value)
         {
             var resource = GetResource();
-            var patchable = new TagsObject() { Tags = resource.Data.Tags };
+            var patchable = new TagsObject();
+            patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags[key] = value;
             return new PhArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(Operations.UpdateTags(Id.ResourceGroup, Id.Name, patchable),
                 n => new NetworkInterface(this, new NetworkInterfaceData(n)));
@@ -141,7 +142,8 @@ namespace Proto.Network
         public async Task<ArmResponse<NetworkInterface>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             var resource = GetResource();
-            var patchable = new TagsObject() { Tags = resource.Data.Tags };
+            var patchable = new TagsObject();
+            patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags[key] = value;
             return new PhArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
                 await Operations.UpdateTagsAsync(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
@@ -160,7 +162,8 @@ namespace Proto.Network
         public ArmOperation<NetworkInterface> StartAddTag(string key, string value)
         {
             var resource = GetResource();
-            var patchable = new TagsObject() { Tags = resource.Data.Tags };
+            var patchable = new TagsObject();
+            patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags[key] = value;
             return new PhArmOperation<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(Operations.UpdateTags(Id.ResourceGroup, Id.Name, patchable),
                 n => new NetworkInterface(this, new NetworkInterfaceData(n)));
@@ -180,7 +183,8 @@ namespace Proto.Network
         public async Task<ArmOperation<NetworkInterface>> StartAddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             var resource = GetResource();
-            var patchable = new TagsObject() { Tags = resource.Data.Tags };
+            var patchable = new TagsObject();
+            patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags[key] = value;
             return new PhArmOperation<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
                 await Operations.UpdateTagsAsync(Id.ResourceGroup, Id.Name, patchable, cancellationToken),

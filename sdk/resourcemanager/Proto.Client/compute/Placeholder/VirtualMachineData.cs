@@ -16,10 +16,6 @@ namespace Proto.Compute
         /// <param name="vm"> The virtual machine to initialize. </param>
         public VirtualMachineData(Azure.ResourceManager.Compute.Models.VirtualMachine vm) : base(vm.Id, vm.Location, vm)
         {
-            if (null == vm.Tags)
-            {
-                vm.Tags = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
-            }
         }
 
         /// <summary> Resource tags. </summary>
@@ -129,7 +125,6 @@ namespace Proto.Compute
         public IList<string> Zones
         {
             get => Model.Zones;
-            set => Model.Zones = value;
         }
 
         /// <summary> The identity of the virtual machine, if configured. </summary>
@@ -158,7 +153,7 @@ namespace Proto.Compute
         /// <summary>
         /// Gets the virtual machine extensions.
         /// </summary>
-        public IList<VirtualMachineExtension> Resources => Model.Resources;
+        public IReadOnlyList<VirtualMachineExtension> Resources => Model.Resources;
 
         /// <summary> Specifies information about the marketplace image used to create the virtual machine. This element is only used for marketplace images. Before you can use a marketplace image from an API, you must enable the image for programmatic use.  In the Azure portal, find the marketplace image that you want to use and then click **Want to deploy programmatically, Get Started -&gt;**. Enter any required information and then click **Save**. </summary>
         public Azure.ResourceManager.Compute.Models.Plan Plan

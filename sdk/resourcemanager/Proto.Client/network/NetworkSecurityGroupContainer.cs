@@ -94,19 +94,23 @@ namespace Proto.Network
                 Location = locationData ?? parent.Data.Location
             };
             var index = 0;
-            nsg.SecurityRules = openPorts.Select(openPort => new SecurityRule
+            foreach(int port in openPorts)
             {
-                Name = $"Port{openPort}",
-                Priority = 1000 + (++index),
-                Protocol = SecurityRuleProtocol.Tcp,
-                Access = SecurityRuleAccess.Allow,
-                Direction = SecurityRuleDirection.Inbound,
-                SourcePortRange = "*",
-                SourceAddressPrefix = "*",
-                DestinationPortRange = $"{openPort}",
-                DestinationAddressPrefix = "*",
-                Description = $"Port_{openPort}"
-            }).ToList();
+                var securityRule = new SecurityRule
+                {
+                    Name = $"Port{port}",
+                    Priority = 1000 + (++index),
+                    Protocol = SecurityRuleProtocol.Tcp,
+                    Access = SecurityRuleAccess.Allow,
+                    Direction = SecurityRuleDirection.Inbound,
+                    SourcePortRange = "*",
+                    SourceAddressPrefix = "*",
+                    DestinationPortRange = $"{port}",
+                    DestinationAddressPrefix = "*",
+                    Description = $"Port_{port}"
+                };
+                nsg.SecurityRules.Add(securityRule);
+            }
 
             return new ArmBuilder<NetworkSecurityGroup, NetworkSecurityGroupData>(this, new NetworkSecurityGroupData(nsg));
         }
@@ -124,19 +128,23 @@ namespace Proto.Network
                 Location = parent.Data.Location,
             };
             var index = 0;
-            nsg.SecurityRules = openPorts.Select(openPort => new SecurityRule
+            foreach (int port in openPorts)
             {
-                Name = $"Port{openPort}",
-                Priority = 1000 + (++index),
-                Protocol = SecurityRuleProtocol.Tcp,
-                Access = SecurityRuleAccess.Allow,
-                Direction = SecurityRuleDirection.Inbound,
-                SourcePortRange = "*",
-                SourceAddressPrefix = "*",
-                DestinationPortRange = $"{openPort}",
-                DestinationAddressPrefix = "*",
-                Description = $"Port_{openPort}"
-            }).ToList();
+                var securityRule = new SecurityRule
+                {
+                    Name = $"Port{port}",
+                    Priority = 1000 + (++index),
+                    Protocol = SecurityRuleProtocol.Tcp,
+                    Access = SecurityRuleAccess.Allow,
+                    Direction = SecurityRuleDirection.Inbound,
+                    SourcePortRange = "*",
+                    SourceAddressPrefix = "*",
+                    DestinationPortRange = $"{port}",
+                    DestinationAddressPrefix = "*",
+                    Description = $"Port_{port}"
+                };
+                nsg.SecurityRules.Add(securityRule);
+            }
 
             return new ArmBuilder<NetworkSecurityGroup, NetworkSecurityGroupData>(this, new NetworkSecurityGroupData(nsg));
         }

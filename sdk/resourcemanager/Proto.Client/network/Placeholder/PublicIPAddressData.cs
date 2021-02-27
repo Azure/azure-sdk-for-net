@@ -24,10 +24,6 @@ namespace Proto.Network
         /// <param name="ip"> The public IP address to initialize. </param>
         public PublicIPAddressData(PublicIPAddress ip) : base(ip.Id, ip.Location, ip)
         {
-            if (null == ip.Tags)
-            {
-                ip.Tags = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
-            }
         }
 
         /// <summary> Resource tags. </summary>
@@ -50,7 +46,6 @@ namespace Proto.Network
         public IList<string> Zones
         {
             get => Model.Zones;
-            set => Model.Zones = value;
         }
 
         /// <summary> The public IP address allocation method. </summary>
@@ -88,7 +83,6 @@ namespace Proto.Network
         public IList<IpTag> IpTags
         {
             get => Model.IpTags;
-            set => Model.IpTags = value;
         }
 
         /// <summary> The IP address associated with the public IP address resource. </summary>

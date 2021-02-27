@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.ResourceManager.Network" Version="1.0.0-preview.1" />
+    <PackageReference Include="Azure.ResourceManager.Network" Version="1.0.0-preview.2" />
   </ItemGroup>
 
   <ItemGroup>

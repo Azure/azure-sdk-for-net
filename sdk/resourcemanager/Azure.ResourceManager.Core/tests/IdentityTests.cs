@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Core.Tests
 
         public JsonProperty DeserializerHelper(string filename)
         {
-            var json = File.ReadAllText("./TestAssets/Identity/" + filename);
+            var json = File.ReadAllText(Path.Combine(TestContext.CurrentContext.TestDirectory, "TestAssets", "Identity", filename));
             JsonDocument document = JsonDocument.Parse(json);
             JsonElement rootElement = document.RootElement;
             return rootElement.EnumerateObject().First();
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Core.Tests
         public void TestDeserializerInvalidNullType()
         {
             var identityJsonProperty = DeserializerHelper("InvalidTypeIsNull.json");
-            Assert.Throws<ArgumentNullException>(delegate { ResourceIdentity.Deserialize(identityJsonProperty.Value); });
+            Assert.Throws<InvalidOperationException>(delegate { ResourceIdentity.Deserialize(identityJsonProperty.Value); });
         }
 
         [TestCase]
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Core.Tests
         [TestCase]
         public void TestDeserializerValidOuterExtraField()
         {
-            var json = File.ReadAllText("./TestAssets/Identity/SystemAndUserAssignedOuterExtraField.json");
+            var json = File.ReadAllText(Path.Combine(TestContext.CurrentContext.TestDirectory, "TestAssets", "Identity", "SystemAndUserAssignedOuterExtraField.json"));
             JsonDocument document = JsonDocument.Parse(json);
             JsonElement rootElement = document.RootElement;
             var identityJsonProperty = rootElement.EnumerateObject().ElementAt(1);

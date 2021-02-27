@@ -113,7 +113,7 @@ namespace Proto.Compute
             var parent = GetParentResource<ResourceGroup, ResourceGroupOperations>();
             var vm = new Azure.ResourceManager.Compute.Models.VirtualMachine(location ?? parent.Data.Location)
             {
-                NetworkProfile = new NetworkProfile { NetworkInterfaces = new[] { new NetworkInterfaceReference() { Id = networkInterfaceId } } },
+                NetworkProfile = new NetworkProfile(),
                 OsProfile = new OSProfile
                 {
                     ComputerName = hostName,
@@ -130,11 +130,11 @@ namespace Proto.Compute
                         Sku = "2019-Datacenter",
                         Version = "latest"
                     },
-                    DataDisks = new List<DataDisk>()
                 },
                 HardwareProfile = new HardwareProfile() { VmSize = VirtualMachineSizeTypes.StandardB1Ms },
                 AvailabilitySet = new SubResource() { Id = availabilitySetId }
             };
+            vm.NetworkProfile.NetworkInterfaces.Add(new NetworkInterfaceReference() { Id = networkInterfaceId });
 
             return new VirtualMachineModelBuilder(this, new VirtualMachineData(vm));
         }

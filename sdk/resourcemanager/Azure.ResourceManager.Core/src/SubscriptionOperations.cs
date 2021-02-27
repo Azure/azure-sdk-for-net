@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.Core
         /// <inheritdoc/>
         public override ArmResponse<Subscription> Get()
         {
-            return new PhArmResponse<Subscription, ResourceManager.Resources.Models.Subscription>(
+            return new PhArmResponse<Subscription, Azure.ResourceManager.Resources.Models.Subscription>(
                 SubscriptionsClient.Get(Id.Name),
                 Converter());
         }
@@ -93,12 +94,12 @@ namespace Azure.ResourceManager.Core
         /// <inheritdoc/>
         public override async Task<ArmResponse<Subscription>> GetAsync(CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<Subscription, ResourceManager.Resources.Models.Subscription>(
+            return new PhArmResponse<Subscription, Azure.ResourceManager.Resources.Models.Subscription>(
                 await SubscriptionsClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false),
                 Converter());
         }
 
-        private Func<ResourceManager.Resources.Models.Subscription, Subscription> Converter()
+        private Func<Azure.ResourceManager.Resources.Models.Subscription, Subscription> Converter()
         {
             return s => new Subscription(this, new SubscriptionData(s));
         }

@@ -1,9 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Core;
-using System;
+using Azure.ResourceManager.Network.Models;
 using System.Collections.Generic;
 
 namespace Proto.Network
@@ -21,10 +20,6 @@ namespace Proto.Network
         public NetworkSecurityGroupData(Azure.ResourceManager.Network.Models.NetworkSecurityGroup nsg)
             : base(nsg.Id, nsg.Location, nsg) 
         {
-            if (null == nsg.Tags)
-            {
-                nsg.Tags = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
-            }
         }
 
         /// <summary> Resource tags. </summary>
@@ -40,21 +35,20 @@ namespace Proto.Network
         public IList<SecurityRule> SecurityRules
         {
             get => Model.SecurityRules;
-            set => Model.SecurityRules = value;
         }
 
         /// <summary> The default security rules of network security group. </summary>
-        public IList<SecurityRule> DefaultSecurityRules => Model.DefaultSecurityRules;
+        public IReadOnlyList<SecurityRule> DefaultSecurityRules => Model.DefaultSecurityRules;
 
         /// <summary> A collection of references to network interfaces. </summary>
-        public IList<Azure.ResourceManager.Network.Models.NetworkInterface> NetworkInterfaces => Model.NetworkInterfaces;
+        public IReadOnlyList<Azure.ResourceManager.Network.Models.NetworkInterface> NetworkInterfaces => Model.NetworkInterfaces;
 
         /// <summary> A collection of references to subnets. </summary>
-        public IList<Azure.ResourceManager.Network.Models.Subnet> Subnets => Model.Subnets;
+        public IReadOnlyList<Azure.ResourceManager.Network.Models.Subnet> Subnets => Model.Subnets;
 
         /// <summary> A collection of references to flow log resources. </summary>
 
-        public IList<FlowLog> FlowLogs => Model.FlowLogs;
+        public IReadOnlyList<FlowLog> FlowLogs => Model.FlowLogs;
 
         /// <summary> The resource GUID property of the network security group resource. </summary>
         public string ResourceGuid => Model.ResourceGuid;

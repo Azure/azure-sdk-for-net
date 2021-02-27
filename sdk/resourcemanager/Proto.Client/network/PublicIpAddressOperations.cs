@@ -129,7 +129,8 @@ namespace Proto.Network
         public ArmResponse<PublicIpAddress> AddTag(string key, string value)
         {
             var resource = GetResource();
-            var patchable = new TagsObject() { Tags = resource.Data.Tags };
+            var patchable = new TagsObject();
+            patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags[key] = value;
             return new PhArmResponse<PublicIpAddress, PublicIPAddress>(Operations.UpdateTags(Id.ResourceGroup, Id.Name, patchable),
                 n => new PublicIpAddress(this, new PublicIPAddressData(n)));
@@ -146,7 +147,8 @@ namespace Proto.Network
         public async Task<ArmResponse<PublicIpAddress>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             var resource = GetResource();
-            var patchable = new TagsObject() { Tags = resource.Data.Tags };
+            var patchable = new TagsObject();
+            patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags[key] = value;
             return new PhArmResponse<PublicIpAddress, PublicIPAddress>(await Operations.UpdateTagsAsync(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
                 n => new PublicIpAddress(this, new PublicIPAddressData(n)));
@@ -162,7 +164,8 @@ namespace Proto.Network
         public ArmOperation<PublicIpAddress> StartAddTag(string key, string value)
         {
             var resource = GetResource();
-            var patchable = new TagsObject() { Tags = resource.Data.Tags };
+            var patchable = new TagsObject();
+            patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags[key] = value;
             return new PhArmOperation<PublicIpAddress, PublicIPAddress>(Operations.UpdateTags(Id.ResourceGroup, Id.Name, patchable),
                 n => new PublicIpAddress(this, new PublicIPAddressData(n)));
@@ -179,7 +182,8 @@ namespace Proto.Network
         public async Task<ArmOperation<PublicIpAddress>> StartAddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             var resource = GetResource();
-            var patchable = new TagsObject() { Tags = resource.Data.Tags };
+            var patchable = new TagsObject();
+            patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags[key] = value;
             return new PhArmOperation<PublicIpAddress, PublicIPAddress>(await Operations.UpdateTagsAsync(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
                 n => new PublicIpAddress(this, new PublicIPAddressData(n)));

@@ -1,16 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Identity;
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Core.Tests
 {
-    [TestFixture]
     [Ignore("Will remove after ADO 5122")]
+    [TestFixture]
     public class TaggableResourceTests
     {
         private static readonly IDictionary<string, string> UpdateTags = new Dictionary<string, string> { { "UpdateKey1", "UpdateValue1" }, { "UpdateKey2", "UpdateValue2" } };
@@ -19,13 +18,13 @@ namespace Azure.ResourceManager.Core.Tests
         private ResourceGroup _rg;
 
         [SetUp]
-        public async Task GlobalSetUp()
+        public void GlobalSetUp()
         {
             var armClient = new AzureResourceManagerClient();
             _rg = armClient.DefaultSubscription.GetResourceGroupContainer().Construct(LocationData.WestUS2).CreateOrUpdate($"{Environment.UserName}-rg-{Environment.TickCount}").Value;
 
-            await _rg.StartAddTag("key1", "value1").WaitForCompletionAsync();
-            await _rg.StartAddTag("key2", "value2").WaitForCompletionAsync();
+            _rg = _rg.AddTag("key1", "value1");
+            _rg = _rg.AddTag("key2", "value2");
         }
 
         [TearDown]

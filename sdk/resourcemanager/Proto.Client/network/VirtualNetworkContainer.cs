@@ -82,8 +82,9 @@ namespace Proto.Network
             var vnet = new Azure.ResourceManager.Network.Models.VirtualNetwork()
             {
                 Location = location ?? parent.Data.Location,
-                AddressSpace = new AddressSpace() { AddressPrefixes = new List<string>() { vnetCidr } },
+                AddressSpace = new AddressSpace(),
             };
+            vnet.AddressSpace.AddressPrefixes.Add(vnetCidr);
 
             return new ArmBuilder<VirtualNetwork, VirtualNetworkData>(this, new VirtualNetworkData(vnet));
         }

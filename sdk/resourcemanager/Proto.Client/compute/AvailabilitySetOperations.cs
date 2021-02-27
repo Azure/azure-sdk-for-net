@@ -178,7 +178,8 @@ namespace Proto.Compute
         public ArmResponse<AvailabilitySet> AddTag(string key, string value)
         {
             var resource = GetResource();
-            var patchable = new AvailabilitySetUpdate() { Tags = resource.Data.Tags };
+            var patchable = new AvailabilitySetUpdate();
+            patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags[key] = value;
             return Update(patchable);
         }
@@ -194,7 +195,8 @@ namespace Proto.Compute
         public async Task<ArmResponse<AvailabilitySet>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             var resource = GetResource();
-            var patchable = new AvailabilitySetUpdate() { Tags = resource.Data.Tags };
+            var patchable = new AvailabilitySetUpdate();
+            patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags[key] = value;
             return await UpdateAsync(patchable);
         }
@@ -212,7 +214,8 @@ namespace Proto.Compute
         public ArmOperation<AvailabilitySet> StartAddTag(string key, string value)
         {
             var resource = GetResource();
-            var patchable = new AvailabilitySetUpdate() { Tags = resource.Data.Tags };
+            var patchable = new AvailabilitySetUpdate();
+            patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags[key] = value;
             return StartUpdate(patchable);
         }
@@ -231,7 +234,8 @@ namespace Proto.Compute
         public async Task<ArmOperation<AvailabilitySet>> StartAddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             var resource = GetResource();
-            var patchable = new AvailabilitySetUpdate() { Tags = resource.Data.Tags };
+            var patchable = new AvailabilitySetUpdate();
+            patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags[key] = value;
             return await StartUpdateAsync(patchable);
         }

@@ -18,6 +18,64 @@ namespace Azure.ResourceManager.Core.Tests
         {
         }
 
+        [TestCase("")]
+        [TestCase(" ")]
+        [TestCase("asdfghj")]
+        [TestCase("123456")]
+        [TestCase("!@#$%^&*/")]
+        [TestCase("/subscriptions/")]
+        [TestCase("/0c2f6471-1bf0-4dda-aec3-cb9272f09575/myRg/")]
+        public void InvalidRPIds(string invalidID)
+        {
+            Assert.Throws<ArgumentOutOfRangeException>(() => { ResourceIdentifier subject = invalidID; });
+            Assert.Throws<ArgumentOutOfRangeException>(() => { ResourceIdentifier subject = new ResourceIdentifier(invalidID); });
+        }
+
+        [TestCase (null)]
+        [TestCase (TrackedResourceId)]
+        [TestCase(ChildResourceId)]
+        [TestCase(ResourceGroupResourceId)]
+        [TestCase(LocationResourceId)]
+        [TestCase(SubscriptionResourceId)]
+        public void ImplicitConstructor(string resourceProviderID)
+        {
+            string x = resourceProviderID;
+            string y;
+            ResourceIdentifier z;
+
+            z = x;
+            y = z;
+
+            if (resourceProviderID is null)
+            {
+                Assert.IsNull(z);
+                Assert.IsNull(y);
+            }
+            else
+            {
+                Assert.AreEqual(resourceProviderID, y);
+            }
+        }
+
+        [TestCase (TrackedResourceId)]
+        [TestCase (ChildResourceId)]
+        [TestCase (ResourceGroupResourceId)]
+        [TestCase (LocationResourceId)]
+        [TestCase (SubscriptionResourceId)]
+        [TestCase(null)]
+        public void PublicConstructor(string resourceProviderID)
+        {
+            if (resourceProviderID is null)
+            {
+                Assert.Throws<ArgumentOutOfRangeException>(() => { ResourceIdentifier myResource = new ResourceIdentifier(resourceProviderID); });
+            }
+            else
+            {
+                ResourceIdentifier myResource = new ResourceIdentifier(resourceProviderID);
+                Assert.AreEqual(myResource.ToString(), resourceProviderID);
+            }
+        }
+
         [TestCase("0c2f6471-1bf0-4dda-aec3-cb9272f09575", "myRg", "Microsoft.Compute", "virtualMachines", "myVM")]
         [TestCase("0c2f6471-1bf0-4dda-aec3-cb9272f09575", "!@#$%^&*()-_+=;:'\",<.>/?", "Microsoft.Network", "virtualNetworks", "MvVM_vnet")]
         [TestCase("0c2f6471-1bf0-4dda-aec3-cb9272f09575", "myRg", "Microsoft.Network", "publicIpAddresses", "!@#$%^&*()-_+=;:'\",<.>/?")]
@@ -47,6 +105,17 @@ namespace Azure.ResourceManager.Core.Tests
             Assert.AreEqual(expectedType, subject.Type);
             Assert.NotNull(subject.Parent);
             Assert.AreEqual(targetResourceId, subject.Parent);
+        }
+
+        [TestCase ("0c2f6471-1bf0-4dda-aec3-cb9272f09575", "myRg", "Microsoft.Web","appServices/myApp/config", "appServices/config")]
+        public void CanParseProxyResource(string subscription, string rg, string resourceNamespace, string resource, string type)
+        {
+            string id = $"/subscriptions/{subscription}/resourceGroups/{rg}/providers/{resourceNamespace}/{resource}";
+            ResourceIdentifier subject = id;
+            Assert.AreEqual(subject.ToString(), id);
+            Assert.AreEqual(subject.Subscription, subscription);
+            Assert.AreEqual(subject.Type.Namespace, resourceNamespace);
+            Assert.AreEqual(subject.Type.Type, type);
         }
 
         [Test]
@@ -118,6 +187,54 @@ namespace Azure.ResourceManager.Core.Tests
             ResourceIdentifier resourceIdentifier1 = new ResourceIdentifier(resourceId1);
             ResourceIdentifier resourceIdentifier2 = new ResourceIdentifier(resourceId2);
             Assert.AreEqual(expected, resourceIdentifier1.GetHashCode() == resourceIdentifier2.GetHashCode());
+        }
+
+        [TestCase(TrackedResourceId, TrackedResourceId, true)]
+        [TestCase(ChildResourceId, ChildResourceId, true)]
+        [TestCase(null, null, true)]
+        [TestCase(TrackedResourceId, ChildResourceId, false)]
+        [TestCase(ChildResourceId, TrackedResourceId, false)]
+        [TestCase(null, TrackedResourceId, false)]
+        public void Equals(string resourceProviderID1, string resourceProviderID2, bool expected)
+        {
+            ResourceIdentifier a = resourceProviderID1;
+            ResourceIdentifier b = resourceProviderID2;
+            if(a != null)
+                Assert.AreEqual(expected, a.Equals(b));
+
+            Assert.AreEqual(expected, ResourceIdentifier.Equals(a,b));
+        }
+
+        [TestCase(TrackedResourceId, TrackedResourceId, 0)]
+        [TestCase(TrackedResourceId, ChildResourceId, -1)]
+        [TestCase(ChildResourceId, TrackedResourceId, 1)]
+        [TestCase(TrackedResourceId, null, 1)]
+        [TestCase(null, TrackedResourceId, -1)]
+        [TestCase(null, null, 0)]
+        public void CompareToResourceProvider(string resourceProviderID1, string resourceProviderID2, int expected)
+        {
+            ResourceIdentifier a = resourceProviderID1;
+            ResourceIdentifier b = resourceProviderID2;
+            if (a != null)
+                Assert.AreEqual(expected, a.CompareTo(b));
+
+            Assert.AreEqual(expected, ResourceIdentifier.CompareTo(a, b));
+        }
+
+        [TestCase(TrackedResourceId, TrackedResourceId, 0)]
+        [TestCase(TrackedResourceId, ChildResourceId, -1)]
+        [TestCase(ChildResourceId, TrackedResourceId, 1)]
+        [TestCase(TrackedResourceId, null, 1)]
+        [TestCase(null, TrackedResourceId, -1)]
+        [TestCase(null, null, 0)]
+        public void CompareToString(string resourceProviderID1, string resourceProviderID2, int expected)
+        {
+            ResourceIdentifier a = resourceProviderID1;
+            string b = resourceProviderID2;
+            if (a != null)
+                Assert.AreEqual(expected, a.CompareTo(b));
+
+            Assert.AreEqual(expected, ResourceIdentifier.CompareTo(a, b));
         }
     }
 }
