@@ -9,6 +9,7 @@ using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -71,6 +72,13 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
                         {"newtestTag", "newValue"},
                     };
                     UpdateRpc(rgName, rpcName, createdRpc, newTags);
+
+                    // GET list of all rpc in resource group.
+                    IEnumerable<RestorePointCollection> rpcs = ListRpcInResourceGroup(rgName);
+                    // only one rpc is returned because the RG has only one rpc
+                    Assert.Single(rpcs);
+                    RestorePointCollection rpc = rpcs.First();
+                    VerifyRpc(rpc, rgName, rpcName, location, vmId, rpName);
 
                     // format JRaw so that we can validate the JRaw returned in the restore point
                     string expectedJRaw = RemovePunctuation(optionalProperties.ToString());
@@ -145,12 +153,19 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
             m_CrpClient.RestorePointCollections.Delete(rgName, rpcName);
         }
 
+        private IEnumerable<RestorePointCollection> ListRpcInResourceGroup(string rgName)
+        {
+            return m_CrpClient.RestorePointCollections.List(rgName);
+        }
+
         // for update of RPC, only update of tags are permitted
         private void UpdateRpc(string rgName, string rpcName, RestorePointCollection rpc,
             Dictionary<string,string> tags)
         {
             rpc.Tags = tags;
-            m_CrpClient.RestorePointCollections.Update(rgName, rpcName, rpc);
+            RestorePointCollectionUpdate updateRpc = new RestorePointCollectionUpdate(
+                tags, rpc.Source, new List<RestorePoint>());
+            m_CrpClient.RestorePointCollections.Update(rgName, rpcName, updateRpc);
         }
 
         private RestorePoint GetRP(string rgName, string rpcName, 
