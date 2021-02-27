@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Azure.ResourceManager.Core\src\Azure.ResourceManager.Core.csproj" />
+    <ProjectReference Include="..\authorization\Proto.Authorization.csproj" />
+    <ProjectReference Include="..\compute\Proto.Compute.csproj" />
+    <ProjectReference Include="..\network\Proto.Network.csproj" />
+  </ItemGroup>
+
+</Project>
