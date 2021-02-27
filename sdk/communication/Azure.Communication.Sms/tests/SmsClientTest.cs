@@ -25,13 +25,13 @@ namespace Azure.Communication.Sms.Tests
 
             mockClient
                 .Setup(callExpression)
-                .ReturnsAsync((string from, string to, string message, SmsSendOptions options, CancellationToken token) =>
+                .ReturnsAsync((string from, string to, string message, SmsSendOptions smsSendOptions, CancellationToken token) =>
                 {
                     Assert.AreEqual(expectedFrom, from);
                     Assert.AreEqual(expectedTo, to);
                     Assert.AreEqual(expectedMessage, message);
                     Assert.AreEqual(cancellationToken, token);
-                    Assert.AreEqual(expectedOptions, options);
+                    Assert.AreEqual(expectedOptions, smsSendOptions);
                     return expectedResponse = new Mock<Response<SmsSendResult>>().Object;
                 });
 
@@ -51,13 +51,13 @@ namespace Azure.Communication.Sms.Tests
 
             mockClient
                 .Setup(callExpression)
-                .Returns((string from, string to, string message, SmsSendOptions options, CancellationToken token) =>
+                .Returns((string from, string to, string message, SmsSendOptions smsSendOptions, CancellationToken token) =>
                 {
                     Assert.AreEqual(expectedFrom, from);
                     Assert.AreEqual(expectedTo, to);
                     Assert.AreEqual(expectedMessage, message);
                     Assert.AreEqual(cancellationToken, token);
-                    Assert.AreEqual(expectedOptions, options);
+                    Assert.AreEqual(expectedOptions, smsSendOptions);
                     return expectedResponse = new Mock<Response<SmsSendResult>>().Object;
                 });
 

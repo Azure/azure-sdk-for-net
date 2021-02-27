@@ -139,7 +139,7 @@ namespace Azure.Communication.Sms.Tests
                    /*@@*/ from: TestEnvironment.FromPhoneNumber,
                    /*@@*/ to: new string[] { TestEnvironment.ToPhoneNumber, TestEnvironment.ToPhoneNumber },
                    message: "Hi",
-                   options: new SmsSendOptions(enableDeliveryReport: true) // OPTIONAL
+                   smsSendOptions: new SmsSendOptions(enableDeliveryReport: true) // OPTIONAL
                    {
                        Tag = "marketing", // custom tags
                    });

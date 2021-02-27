@@ -65,7 +65,7 @@ Response<IEnumerable<SmsSendResult>> response = await client.SendAsync(
    from: "+18001230000" // Phone number acquired on your Azure Communication resource
    to: new string[] {"+18005670000", "+18008900000}",
    message: "Hi",
-   options: new SmsSendOptions(true) // OPTIONAL
+   smsSendOptions: new SmsSendOptions(enableDeliveryReport: true) // OPTIONAL
    {
        Tag = "marketing", // custom tags
    });

@@ -8,8 +8,8 @@
         "Authorization": "Sanitized",
         "Content-Length": "304",
         "Content-Type": "application/json",
-        "Date": "Fri, 26 Feb 2021 23:37:36 GMT",
-        "traceparent": "00-73630771c212b84cb1b3b89dfab323fb-d35a0435510f684a-00",
+        "Date": "Sat, 27 Feb 2021 00:22:56 GMT",
+        "traceparent": "00-aa15423e5f77e14caa415ae2106bf5f7-615c4b0693359649-00",
         "User-Agent": [
           "azsdk-net-Communication.Sms/1.0.0-alpha.20210226.1",
           "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
@@ -42,18 +42,18 @@
       "ResponseHeaders": {
         "api-supported-versions": "2020-07-20-preview1, 2020-08-20-preview, 2021-03-07",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 26 Feb 2021 23:37:36 GMT",
-        "MS-CV": "UvniQWFBGU2mApcvoOXvug.0",
+        "Date": "Sat, 27 Feb 2021 00:22:56 GMT",
+        "MS-CV": "Ey6Dj4SNVUuhy3PwqFWyIQ.0",
         "Request-Context": "appId=",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0QYY5YAAAAAD3Be38qRv5S4uz7CX96nI7RVdSMzBFREdFMDUwOAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
-        "X-Processing-Time": "305ms"
+        "X-Azure-Ref": "04ZA5YAAAAABP\u002BaRaEHTXRIQvLgPLxWBKRVdSMzBFREdFMDUxMwA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Processing-Time": "426ms"
       },
       "ResponseBody": {
         "value": [
           {
             "to": "Sanitized",
-            "messageId": "Outgoing_2021022623373738529b8a-693c-4359-ad08-86c919eb9646_noam",
+            "messageId": "Outgoing_202102270022576f8a624e-c2ca-4425-a8dc-1e29a2928d33_noam",
             "httpStatusCode": 202,
             "errorMessage": null,
             "repeatabilityResult": "accepted",
@@ -61,7 +61,7 @@
           },
           {
             "to": "Sanitized",
-            "messageId": "Outgoing_20210226233737e9d8a0d5-32e0-4557-9606-583add864ff0_noam",
+            "messageId": "Outgoing_202102270022571231a9f7-a04a-4c59-8390-1499f66f1abd_noam",
             "httpStatusCode": 202,
             "errorMessage": null,
             "repeatabilityResult": "accepted",
