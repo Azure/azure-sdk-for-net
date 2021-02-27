@@ -11,8 +11,41 @@ require:
     - https://github.com/Azure/azure-rest-api-specs/blob/788507c386197b1ba7878fa00fe30871b8b01f22/specification/cognitiveservices/data-plane/FormRecognizer/readme.md
 ```
 
+### Change host template to support old service versions
+
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-parameterized-host"]
+  transform: >
+    $["hostTemplate"] = "{endpoint}/formrecognizer/{serviceVersion}";
+    $["parameters"] = [
+      {
+        "$ref": "#/parameters/Endpoint"
+      },
+      {
+        "$ref": "#/parameters/ServiceVersion"
+      }
+    ]
+```
+
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters
+  transform: >
+    $["ServiceVersion"] = {
+      "name": "serviceVersion",
+      "in": "path",
+      "x-ms-parameter-location": "client",
+      "required": true,
+      "type": "string",
+      "x-ms-skip-url-encoding": true
+    }
+```
 
 ### Make AnalyzeResult.readResult optional
+
 This is a temporary work-around
 ``` yaml
 directive:

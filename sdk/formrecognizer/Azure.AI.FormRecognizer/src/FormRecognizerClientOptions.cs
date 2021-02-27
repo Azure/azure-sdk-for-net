@@ -49,13 +49,13 @@ namespace Azure.AI.FormRecognizer
         /// </summary>
         public ServiceVersion Version { get; }
 
-        internal static string GetVersionString(ServiceVersion version)
+        internal string GetVersionString()
         {
-            return version switch
+            return Version switch
             {
                 ServiceVersion.V2_0 => "v2.0",
                 ServiceVersion.V2_1_Preview_2 => "v2.1-preview.2",
-                _ => throw new NotSupportedException($"The service version {version} is not supported."),
+                _ => throw new NotSupportedException($"The service version {Version} is not supported."),
             };
         }
 
