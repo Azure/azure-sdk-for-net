@@ -46,6 +46,7 @@ function Submit-APIReview($packagename, $filePath, $uri, $apiKey, $apiLabel)
     }
     catch
     {
+        Write-Error "Exception details: $($_.Exception.Response)"
         $StatusCode = $_.Exception.Response.StatusCode
     }
 
@@ -101,6 +102,9 @@ foreach ($pkgName in $responses.Keys)
         {
             $pkgInfo = Get-Content $pkgPropPath | ConvertFrom-Json
             $version = [AzureEngSemanticVersion]::ParseVersionString($pkgInfo.Version)
+            Write-Host "Package name: $($PackageName)"
+            Write-Host "Version: $($version)"
+            Write-Host "SDK Type: $($pkgInfo.SdkType)"
             if ($version.IsPrerelease)
             {
                 Write-Host "Package version is not GA. Ignoring API view approval status"
@@ -110,11 +114,15 @@ foreach ($pkgName in $responses.Keys)
                 $FoundFailure = $True
                 if ($respCode -eq '201')
                 {
-                    Write-Error "Automatic API Review approval is pending for package $($PackageName)"
+                    Write-Host "Package version $($version) is GA and automatic API Review is not yet approved for package $($PackageName)."
+                    Write-Host "Build and release is not allowed for GA package without API review approval."
+                    Write-Host "Please reach out to API review approvers and share above link to review for approval."
+                    Write-Host "You will need to queue another build to proceed further after API review is approved"
+                    Write-Host "You can reach out to Azure SDK engineering systems on teams channel if review is in approved status"
                 }
                 else
                 {
-                    Write-Error "Failed to create API Review for package $($PackageName)"
+                    Write-Error "Failed to create API Review for package $($PackageName). Please reach out to Azure SDK engineering systems on teams channel and share this build details."
                 }                
             }
             else
@@ -126,6 +134,6 @@ foreach ($pkgName in $responses.Keys)
 }
 if ($FoundFailure)
 {
-    Write-Error "Automatic API review is not yet approved for package $($PackageName)"
+    # Deailed log for each scenario is mentioned above
     exit 1
 }
