@@ -79,7 +79,9 @@ namespace CosmosDB.Tests
                 {
                     var statusCode = StatusCodeToReturn;
                     if (counter > 1)
+                    {
                         statusCode = SubsequentStatusCodeToReturn;
+                    }
                     HttpResponseMessage response = new HttpResponseMessage(statusCode);
                     response.Content = new StringContent("");
                     return response;

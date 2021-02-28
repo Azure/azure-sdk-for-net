@@ -28,11 +28,14 @@ namespace CosmosDB.Tests
                 Location = LOCATION
             };
 
-            if(!(bool)resourcesClient.ResourceGroups.CheckExistenceAsync(rgname).GetAwaiter().GetResult())
+            if (!(bool) resourcesClient.ResourceGroups.CheckExistenceAsync(rgname).GetAwaiter().GetResult())
+            {
                 resourcesClient.ResourceGroups.CreateOrUpdate(rgname, resourceGroupDefinition);
+            }
+
             return rgname;
         }
-    
+
         public static ResourceManagementClient GetResourceManagementClient(MockContext context, RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
