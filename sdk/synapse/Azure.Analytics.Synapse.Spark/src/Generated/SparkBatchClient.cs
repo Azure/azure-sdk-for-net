@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Analytics.Synapse.Spark.Models;
+using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Synapse.Spark
@@ -24,6 +25,38 @@ namespace Azure.Analytics.Synapse.Spark
         /// <summary> Initializes a new instance of SparkBatchClient for mocking. </summary>
         protected SparkBatchClient()
         {
+        }
+
+        /// <summary> Initializes a new instance of SparkBatchClient. </summary>
+        /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
+        /// <param name="sparkPoolName"> Name of the spark pool. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="livyApiVersion"> Valid api-version for the request. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        public SparkBatchClient(string endpoint, string sparkPoolName, TokenCredential credential, string livyApiVersion = "2019-11-01-preview", SparkClientOptions options = null)
+        {
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (sparkPoolName == null)
+            {
+                throw new ArgumentNullException(nameof(sparkPoolName));
+            }
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
+            if (livyApiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(livyApiVersion));
+            }
+
+            options ??= new SparkClientOptions();
+            _clientDiagnostics = new ClientDiagnostics(options);
+            string[] scopes = { "https://dev.azuresynapse.net/.default" };
+            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
+            RestClient = new SparkBatchRestClient(_clientDiagnostics, _pipeline, endpoint, sparkPoolName, livyApiVersion);
         }
 
         /// <summary> Initializes a new instance of SparkBatchClient. </summary>

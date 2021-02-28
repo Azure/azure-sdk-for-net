@@ -23,5 +23,15 @@ namespace Azure.Analytics.Synapse.Monitoring
         }
 
         internal string Version { get; }
+
+        /// <summary> Initializes new instance of MonitoringClientOptions. </summary>
+        public MonitoringClientOptions(ServiceVersion version = LatestVersion)
+        {
+            Version = version switch
+            {
+                ServiceVersion.V2019_11_01_preview => "2019-11-01-preview",
+                _ => throw new NotSupportedException()
+            };
+        }
     }
 }

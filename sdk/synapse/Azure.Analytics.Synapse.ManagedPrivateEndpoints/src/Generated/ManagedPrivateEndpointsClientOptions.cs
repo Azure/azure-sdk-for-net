@@ -23,5 +23,15 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
         }
 
         internal string Version { get; }
+
+        /// <summary> Initializes new instance of ManagedPrivateEndpointsClientOptions. </summary>
+        public ManagedPrivateEndpointsClientOptions(ServiceVersion version = LatestVersion)
+        {
+            Version = version switch
+            {
+                ServiceVersion.V2019_06_01_preview => "2019-06-01-preview",
+                _ => throw new NotSupportedException()
+            };
+        }
     }
 }
