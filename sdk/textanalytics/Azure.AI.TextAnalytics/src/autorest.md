@@ -7,7 +7,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 input-file:
-    -  https://github.com/Azure/azure-rest-api-specs/blob/078a9e22115a7de4afb8eecc13f6d8a7674243c8/specification/cognitiveservices/data-plane/TextAnalytics/preview/v3.1-preview.4/TextAnalytics.json
+    -  https://github.com/Azure/azure-rest-api-specs/blob/d2982a8962885e8506b5ebc0b33cb8caf1dc7551/specification/cognitiveservices/data-plane/TextAnalytics/preview/v3.1-preview.4/TextAnalytics.json
 ```
 
 ### Make generated models internal by default
@@ -47,12 +47,4 @@ directive:
   transform: >
     $.properties.id["x-nullable"] = true;
     $.properties.text["x-nullable"] = true;
-```
-
-### Rename StringIndexType enum
-``` yaml
-directive:
-  from: swagger-document
-  where: $.definitions.StringIndexType
-  transform: $["x-ms-enum"].name = "StringIndexType";
 ```
