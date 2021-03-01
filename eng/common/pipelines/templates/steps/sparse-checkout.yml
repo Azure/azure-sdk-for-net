@@ -1,0 +1,20 @@
+parameters:
+  - name: Paths
+    type: object
+    default: []
+
+steps:
+  - checkout: none
+
+  - pwsh: |
+      git clone --no-checkout --filter=tree:0 git://github.com/$(Build.Repository.Name) .
+      git sparse-checkout init
+      git sparse-checkout set eng
+    displayName: Initialize sparse checkout repository
+
+  - ${{ each path in parameters.Paths }}:
+    - pwsh: git sparse-checkout add ${{ path }}
+      displayName: Add sparse checkout path ${{ path }}
+
+  - pwsh: git checkout $(Build.SourceVersion)
+    displayName: Sparse checkout repository paths
