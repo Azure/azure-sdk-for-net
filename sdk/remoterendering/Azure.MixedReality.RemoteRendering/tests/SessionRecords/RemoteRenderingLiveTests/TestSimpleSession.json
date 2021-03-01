@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://remoterendering.westeurope.mixedreality.azure.com/accounts/1b405859-8af9-47e6-941d-9205163c0f63/sessions/a2b38ff2-fbf4-78e5-6702-b52fc9f12a1d?api-version=2021-01-01-preview",
+      "RequestUri": "https://remoterendering.westeurope.mixedreality.azure.com/accounts/1b405859-8af9-47e6-941d-9205163c0f63/sessions/a2b38ff2-fbf4-78e5-6702-b52fc9f12a1d?api-version=2021-01-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -21,7 +21,7 @@
       },
       "StatusCode": 201,
       "ResponseHeaders": {
-        "api-supported-versions": "2021-01-01-preview",
+        "api-supported-versions": "2021-01-01-preview, 2021-01-01",
         "Content-Length": "265",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Fri, 29 Jan 2021 16:04:29 GMT",
@@ -43,7 +43,7 @@
       }
     },
     {
-      "RequestUri": "https://remoterendering.westeurope.mixedreality.azure.com/accounts/1b405859-8af9-47e6-941d-9205163c0f63/sessions/a2b38ff2-fbf4-78e5-6702-b52fc9f12a1d?api-version=2021-01-01-preview",
+      "RequestUri": "https://remoterendering.westeurope.mixedreality.azure.com/accounts/1b405859-8af9-47e6-941d-9205163c0f63/sessions/a2b38ff2-fbf4-78e5-6702-b52fc9f12a1d?api-version=2021-01-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -58,7 +58,7 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "api-supported-versions": "2021-01-01-preview",
+        "api-supported-versions": "2021-01-01-preview, 2021-01-01",
         "Content-Length": "265",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Fri, 29 Jan 2021 16:04:29 GMT",
@@ -80,7 +80,7 @@
       }
     },
     {
-      "RequestUri": "https://remoterendering.westeurope.mixedreality.azure.com/accounts/1b405859-8af9-47e6-941d-9205163c0f63/sessions/a2b38ff2-fbf4-78e5-6702-b52fc9f12a1d?api-version=2021-01-01-preview",
+      "RequestUri": "https://remoterendering.westeurope.mixedreality.azure.com/accounts/1b405859-8af9-47e6-941d-9205163c0f63/sessions/a2b38ff2-fbf4-78e5-6702-b52fc9f12a1d?api-version=2021-01-01",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -99,7 +99,7 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "api-supported-versions": "2021-01-01-preview",
+        "api-supported-versions": "2021-01-01-preview, 2021-01-01",
         "Content-Length": "265",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Fri, 29 Jan 2021 16:04:29 GMT",
@@ -121,7 +121,7 @@
       }
     },
     {
-      "RequestUri": "https://remoterendering.westeurope.mixedreality.azure.com/accounts/1b405859-8af9-47e6-941d-9205163c0f63/sessions/a2b38ff2-fbf4-78e5-6702-b52fc9f12a1d?api-version=2021-01-01-preview",
+      "RequestUri": "https://remoterendering.westeurope.mixedreality.azure.com/accounts/1b405859-8af9-47e6-941d-9205163c0f63/sessions/a2b38ff2-fbf4-78e5-6702-b52fc9f12a1d?api-version=2021-01-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -136,7 +136,7 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "api-supported-versions": "2021-01-01-preview",
+        "api-supported-versions": "2021-01-01-preview, 2021-01-01",
         "Content-Length": "265",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Fri, 29 Jan 2021 16:04:29 GMT",
@@ -158,7 +158,7 @@
       }
     },
     {
-      "RequestUri": "https://remoterendering.westeurope.mixedreality.azure.com/accounts/1b405859-8af9-47e6-941d-9205163c0f63/sessions/a2b38ff2-fbf4-78e5-6702-b52fc9f12a1d?api-version=2021-01-01-preview",
+      "RequestUri": "https://remoterendering.westeurope.mixedreality.azure.com/accounts/1b405859-8af9-47e6-941d-9205163c0f63/sessions/a2b38ff2-fbf4-78e5-6702-b52fc9f12a1d?api-version=2021-01-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -173,7 +173,7 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "api-supported-versions": "2021-01-01-preview",
+        "api-supported-versions": "2021-01-01-preview, 2021-01-01",
         "Content-Length": "265",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Fri, 29 Jan 2021 16:04:39 GMT",
@@ -195,7 +195,7 @@
       }
     },
     {
-      "RequestUri": "https://remoterendering.westeurope.mixedreality.azure.com/accounts/1b405859-8af9-47e6-941d-9205163c0f63/sessions/a2b38ff2-fbf4-78e5-6702-b52fc9f12a1d?api-version=2021-01-01-preview",
+      "RequestUri": "https://remoterendering.westeurope.mixedreality.azure.com/accounts/1b405859-8af9-47e6-941d-9205163c0f63/sessions/a2b38ff2-fbf4-78e5-6702-b52fc9f12a1d?api-version=2021-01-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -210,7 +210,7 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "api-supported-versions": "2021-01-01-preview",
+        "api-supported-versions": "2021-01-01-preview, 2021-01-01",
         "Content-Length": "265",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Fri, 29 Jan 2021 16:04:50 GMT",
@@ -232,7 +232,7 @@
       }
     },
     {
-      "RequestUri": "https://remoterendering.westeurope.mixedreality.azure.com/accounts/1b405859-8af9-47e6-941d-9205163c0f63/sessions/a2b38ff2-fbf4-78e5-6702-b52fc9f12a1d?api-version=2021-01-01-preview",
+      "RequestUri": "https://remoterendering.westeurope.mixedreality.azure.com/accounts/1b405859-8af9-47e6-941d-9205163c0f63/sessions/a2b38ff2-fbf4-78e5-6702-b52fc9f12a1d?api-version=2021-01-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -247,7 +247,7 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "api-supported-versions": "2021-01-01-preview",
+        "api-supported-versions": "2021-01-01-preview, 2021-01-01",
         "Content-Length": "265",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Fri, 29 Jan 2021 16:05:00 GMT",
@@ -269,7 +269,7 @@
       }
     },
     {
-      "RequestUri": "https://remoterendering.westeurope.mixedreality.azure.com/accounts/1b405859-8af9-47e6-941d-9205163c0f63/sessions/a2b38ff2-fbf4-78e5-6702-b52fc9f12a1d?api-version=2021-01-01-preview",
+      "RequestUri": "https://remoterendering.westeurope.mixedreality.azure.com/accounts/1b405859-8af9-47e6-941d-9205163c0f63/sessions/a2b38ff2-fbf4-78e5-6702-b52fc9f12a1d?api-version=2021-01-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -284,7 +284,7 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "api-supported-versions": "2021-01-01-preview",
+        "api-supported-versions": "2021-01-01-preview, 2021-01-01",
         "Content-Length": "265",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Fri, 29 Jan 2021 16:05:10 GMT",
@@ -306,7 +306,7 @@
       }
     },
     {
-      "RequestUri": "https://remoterendering.westeurope.mixedreality.azure.com/accounts/1b405859-8af9-47e6-941d-9205163c0f63/sessions/a2b38ff2-fbf4-78e5-6702-b52fc9f12a1d?api-version=2021-01-01-preview",
+      "RequestUri": "https://remoterendering.westeurope.mixedreality.azure.com/accounts/1b405859-8af9-47e6-941d-9205163c0f63/sessions/a2b38ff2-fbf4-78e5-6702-b52fc9f12a1d?api-version=2021-01-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -321,7 +321,7 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "api-supported-versions": "2021-01-01-preview",
+        "api-supported-versions": "2021-01-01-preview, 2021-01-01",
         "Content-Length": "265",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Fri, 29 Jan 2021 16:05:20 GMT",
@@ -343,7 +343,7 @@
       }
     },
     {
-      "RequestUri": "https://remoterendering.westeurope.mixedreality.azure.com/accounts/1b405859-8af9-47e6-941d-9205163c0f63/sessions/a2b38ff2-fbf4-78e5-6702-b52fc9f12a1d?api-version=2021-01-01-preview",
+      "RequestUri": "https://remoterendering.westeurope.mixedreality.azure.com/accounts/1b405859-8af9-47e6-941d-9205163c0f63/sessions/a2b38ff2-fbf4-78e5-6702-b52fc9f12a1d?api-version=2021-01-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -358,7 +358,7 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "api-supported-versions": "2021-01-01-preview",
+        "api-supported-versions": "2021-01-01-preview, 2021-01-01",
         "Content-Length": "265",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Fri, 29 Jan 2021 16:05:31 GMT",
@@ -380,7 +380,7 @@
       }
     },
     {
-      "RequestUri": "https://remoterendering.westeurope.mixedreality.azure.com/accounts/1b405859-8af9-47e6-941d-9205163c0f63/sessions/a2b38ff2-fbf4-78e5-6702-b52fc9f12a1d?api-version=2021-01-01-preview",
+      "RequestUri": "https://remoterendering.westeurope.mixedreality.azure.com/accounts/1b405859-8af9-47e6-941d-9205163c0f63/sessions/a2b38ff2-fbf4-78e5-6702-b52fc9f12a1d?api-version=2021-01-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -395,7 +395,7 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "api-supported-versions": "2021-01-01-preview",
+        "api-supported-versions": "2021-01-01-preview, 2021-01-01",
         "Content-Length": "265",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Fri, 29 Jan 2021 16:05:41 GMT",
@@ -417,7 +417,7 @@
       }
     },
     {
-      "RequestUri": "https://remoterendering.westeurope.mixedreality.azure.com/accounts/1b405859-8af9-47e6-941d-9205163c0f63/sessions/a2b38ff2-fbf4-78e5-6702-b52fc9f12a1d?api-version=2021-01-01-preview",
+      "RequestUri": "https://remoterendering.westeurope.mixedreality.azure.com/accounts/1b405859-8af9-47e6-941d-9205163c0f63/sessions/a2b38ff2-fbf4-78e5-6702-b52fc9f12a1d?api-version=2021-01-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -432,7 +432,7 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "api-supported-versions": "2021-01-01-preview",
+        "api-supported-versions": "2021-01-01-preview, 2021-01-01",
         "Content-Length": "265",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Fri, 29 Jan 2021 16:05:51 GMT",
@@ -454,7 +454,7 @@
       }
     },
     {
-      "RequestUri": "https://remoterendering.westeurope.mixedreality.azure.com/accounts/1b405859-8af9-47e6-941d-9205163c0f63/sessions/a2b38ff2-fbf4-78e5-6702-b52fc9f12a1d?api-version=2021-01-01-preview",
+      "RequestUri": "https://remoterendering.westeurope.mixedreality.azure.com/accounts/1b405859-8af9-47e6-941d-9205163c0f63/sessions/a2b38ff2-fbf4-78e5-6702-b52fc9f12a1d?api-version=2021-01-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -469,7 +469,7 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "api-supported-versions": "2021-01-01-preview",
+        "api-supported-versions": "2021-01-01-preview, 2021-01-01",
         "Content-Length": "265",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Fri, 29 Jan 2021 16:06:01 GMT",
@@ -491,7 +491,7 @@
       }
     },
     {
-      "RequestUri": "https://remoterendering.westeurope.mixedreality.azure.com/accounts/1b405859-8af9-47e6-941d-9205163c0f63/sessions/a2b38ff2-fbf4-78e5-6702-b52fc9f12a1d?api-version=2021-01-01-preview",
+      "RequestUri": "https://remoterendering.westeurope.mixedreality.azure.com/accounts/1b405859-8af9-47e6-941d-9205163c0f63/sessions/a2b38ff2-fbf4-78e5-6702-b52fc9f12a1d?api-version=2021-01-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -506,7 +506,7 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "api-supported-versions": "2021-01-01-preview",
+        "api-supported-versions": "2021-01-01-preview, 2021-01-01",
         "Content-Length": "265",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Fri, 29 Jan 2021 16:06:11 GMT",
@@ -528,7 +528,7 @@
       }
     },
     {
-      "RequestUri": "https://remoterendering.westeurope.mixedreality.azure.com/accounts/1b405859-8af9-47e6-941d-9205163c0f63/sessions/a2b38ff2-fbf4-78e5-6702-b52fc9f12a1d?api-version=2021-01-01-preview",
+      "RequestUri": "https://remoterendering.westeurope.mixedreality.azure.com/accounts/1b405859-8af9-47e6-941d-9205163c0f63/sessions/a2b38ff2-fbf4-78e5-6702-b52fc9f12a1d?api-version=2021-01-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -543,7 +543,7 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "api-supported-versions": "2021-01-01-preview",
+        "api-supported-versions": "2021-01-01-preview, 2021-01-01",
         "Content-Length": "265",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Fri, 29 Jan 2021 16:06:22 GMT",
@@ -565,7 +565,7 @@
       }
     },
     {
-      "RequestUri": "https://remoterendering.westeurope.mixedreality.azure.com/accounts/1b405859-8af9-47e6-941d-9205163c0f63/sessions/a2b38ff2-fbf4-78e5-6702-b52fc9f12a1d?api-version=2021-01-01-preview",
+      "RequestUri": "https://remoterendering.westeurope.mixedreality.azure.com/accounts/1b405859-8af9-47e6-941d-9205163c0f63/sessions/a2b38ff2-fbf4-78e5-6702-b52fc9f12a1d?api-version=2021-01-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -580,7 +580,7 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "api-supported-versions": "2021-01-01-preview",
+        "api-supported-versions": "2021-01-01-preview, 2021-01-01",
         "Content-Length": "265",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Fri, 29 Jan 2021 16:06:32 GMT",
@@ -602,7 +602,7 @@
       }
     },
     {
-      "RequestUri": "https://remoterendering.westeurope.mixedreality.azure.com/accounts/1b405859-8af9-47e6-941d-9205163c0f63/sessions/a2b38ff2-fbf4-78e5-6702-b52fc9f12a1d?api-version=2021-01-01-preview",
+      "RequestUri": "https://remoterendering.westeurope.mixedreality.azure.com/accounts/1b405859-8af9-47e6-941d-9205163c0f63/sessions/a2b38ff2-fbf4-78e5-6702-b52fc9f12a1d?api-version=2021-01-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -617,7 +617,7 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "api-supported-versions": "2021-01-01-preview",
+        "api-supported-versions": "2021-01-01-preview, 2021-01-01",
         "Content-Length": "265",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Fri, 29 Jan 2021 16:06:42 GMT",
@@ -639,7 +639,7 @@
       }
     },
     {
-      "RequestUri": "https://remoterendering.westeurope.mixedreality.azure.com/accounts/1b405859-8af9-47e6-941d-9205163c0f63/sessions/a2b38ff2-fbf4-78e5-6702-b52fc9f12a1d?api-version=2021-01-01-preview",
+      "RequestUri": "https://remoterendering.westeurope.mixedreality.azure.com/accounts/1b405859-8af9-47e6-941d-9205163c0f63/sessions/a2b38ff2-fbf4-78e5-6702-b52fc9f12a1d?api-version=2021-01-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -654,7 +654,7 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "api-supported-versions": "2021-01-01-preview",
+        "api-supported-versions": "2021-01-01-preview, 2021-01-01",
         "Content-Length": "265",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Fri, 29 Jan 2021 16:06:52 GMT",
@@ -676,7 +676,7 @@
       }
     },
     {
-      "RequestUri": "https://remoterendering.westeurope.mixedreality.azure.com/accounts/1b405859-8af9-47e6-941d-9205163c0f63/sessions/a2b38ff2-fbf4-78e5-6702-b52fc9f12a1d?api-version=2021-01-01-preview",
+      "RequestUri": "https://remoterendering.westeurope.mixedreality.azure.com/accounts/1b405859-8af9-47e6-941d-9205163c0f63/sessions/a2b38ff2-fbf4-78e5-6702-b52fc9f12a1d?api-version=2021-01-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -691,7 +691,7 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "api-supported-versions": "2021-01-01-preview",
+        "api-supported-versions": "2021-01-01-preview, 2021-01-01",
         "Content-Length": "368",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Fri, 29 Jan 2021 16:07:02 GMT",
@@ -713,7 +713,7 @@
       }
     },
     {
-      "RequestUri": "https://remoterendering.westeurope.mixedreality.azure.com/accounts/1b405859-8af9-47e6-941d-9205163c0f63/sessions?api-version=2021-01-01-preview",
+      "RequestUri": "https://remoterendering.westeurope.mixedreality.azure.com/accounts/1b405859-8af9-47e6-941d-9205163c0f63/sessions?api-version=2021-01-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -728,7 +728,7 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "api-supported-versions": "2021-01-01-preview",
+        "api-supported-versions": "2021-01-01-preview, 2021-01-01",
         "Cache-Control": "no-store, no-cache",
         "Content-Length": "383",
         "Content-Type": "application/json; charset=utf-8",
@@ -756,7 +756,7 @@
       }
     },
     {
-      "RequestUri": "https://remoterendering.westeurope.mixedreality.azure.com/accounts/1b405859-8af9-47e6-941d-9205163c0f63/sessions/a2b38ff2-fbf4-78e5-6702-b52fc9f12a1d/:stop?api-version=2021-01-01-preview",
+      "RequestUri": "https://remoterendering.westeurope.mixedreality.azure.com/accounts/1b405859-8af9-47e6-941d-9205163c0f63/sessions/a2b38ff2-fbf4-78e5-6702-b52fc9f12a1d/:stop?api-version=2021-01-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -771,7 +771,7 @@
       "RequestBody": null,
       "StatusCode": 204,
       "ResponseHeaders": {
-        "api-supported-versions": "2021-01-01-preview",
+        "api-supported-versions": "2021-01-01-preview, 2021-01-01",
         "Date": "Fri, 29 Jan 2021 16:07:03 GMT",
         "MS-CV": "wj8FR62lhk6h1ut1QboSgw.0",
         "X-Content-Type-Options": "nosniff"
@@ -779,7 +779,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://remoterendering.westeurope.mixedreality.azure.com/accounts/1b405859-8af9-47e6-941d-9205163c0f63/sessions/a2b38ff2-fbf4-78e5-6702-b52fc9f12a1d?api-version=2021-01-01-preview",
+      "RequestUri": "https://remoterendering.westeurope.mixedreality.azure.com/accounts/1b405859-8af9-47e6-941d-9205163c0f63/sessions/a2b38ff2-fbf4-78e5-6702-b52fc9f12a1d?api-version=2021-01-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -794,7 +794,7 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "api-supported-versions": "2021-01-01-preview",
+        "api-supported-versions": "2021-01-01-preview, 2021-01-01",
         "Content-Length": "265",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Fri, 29 Jan 2021 16:07:03 GMT",
