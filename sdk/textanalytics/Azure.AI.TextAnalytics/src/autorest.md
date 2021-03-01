@@ -48,3 +48,11 @@ directive:
     $.properties.id["x-nullable"] = true;
     $.properties.text["x-nullable"] = true;
 ```
+
+### Rename StringIndexType enum
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.StringIndexType
+  transform: $["x-ms-enum"].name = "StringIndexType";
+```

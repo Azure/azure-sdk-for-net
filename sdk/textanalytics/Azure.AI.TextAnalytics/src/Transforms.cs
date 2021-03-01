@@ -315,7 +315,7 @@ namespace Azure.AI.TextAnalytics
             {
                 Parameters = new PiiTaskParameters()
                 {
-                    Domain = option.DomainFilter.GetString(),
+                    Domain = option.DomainFilter.HasValue ? option.DomainFilter.Value.GetString() : (PiiTaskParametersDomain?)null,
                     ModelVersion = !string.IsNullOrEmpty(option.ModelVersion) ? option.ModelVersion : "latest",
                     StringIndexType = option.StringIndexType
                 }
