@@ -95,7 +95,12 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// <param name="seedNodes">List of IP addresses of seed nodes in the
         /// managed data centers. These should be added to the seed node lists
         /// of all unmanaged nodes.</param>
-        public ClusterResourceProperties(string provisioningState = default(string), string restoreFromBackupId = default(string), string delegatedManagementSubnetId = default(string), string cassandraVersion = default(string), string clusterNameOverride = default(string), string authenticationMethod = default(string), string initialCassandraAdminPassword = default(string), int? hoursBetweenBackups = default(int?), string prometheusEndpoint = default(string), bool? repairEnabled = default(bool?), IList<Certificate> clientCertificates = default(IList<Certificate>), IList<Certificate> externalGossipCertificates = default(IList<Certificate>), IList<Certificate> gossipCertificates = default(IList<Certificate>), IList<SeedNode> externalSeedNodes = default(IList<SeedNode>), IList<SeedNode> seedNodes = default(IList<SeedNode>))
+        public ClusterResourceProperties(string provisioningState = default(string), string restoreFromBackupId =
+        default(string), string delegatedManagementSubnetId = default(string), string cassandraVersion = default
+        (string), string clusterNameOverride = default(string), string authenticationMethod = default(string), string
+         initialCassandraAdminPassword = default(string), int? hoursBetweenBackups = default(int?), SeedNode
+         prometheusEndpoint = default(SeedNode), bool? repairEnabled = default(bool?), IList<Certificate>
+         clientCertificates = default(IList<Certificate>), IList<Certificate> externalGossipCertificates = default(IList<Certificate>), IList<Certificate> gossipCertificates = default(IList<Certificate>), IList<SeedNode> externalSeedNodes = default(IList<SeedNode>), IList<SeedNode> seedNodes = default(IList<SeedNode>))
         {
             ProvisioningState = provisioningState;
             RestoreFromBackupId = restoreFromBackupId;
@@ -195,7 +200,7 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// containing data about the managed Cassandra nodes can be reached.
         /// </summary>
         [JsonProperty(PropertyName = "prometheusEndpoint")]
-        public string PrometheusEndpoint { get; set; }
+        public SeedNode PrometheusEndpoint { get; set; }
 
         /// <summary>
         /// Gets or sets should automatic repairs run on this cluster? If

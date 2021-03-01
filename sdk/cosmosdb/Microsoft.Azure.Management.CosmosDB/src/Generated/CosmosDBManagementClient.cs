@@ -21,9 +21,6 @@ namespace Microsoft.Azure.Management.CosmosDB
     using System.Net;
     using System.Net.Http;
 
-    /// <summary>
-    /// Azure Cosmos DB Database Service Resource Provider REST API
-    /// </summary>
     public partial class CosmosDBManagementClient : ServiceClient<CosmosDBManagementClient>, ICosmosDBManagementClient, IAzureClient
     {
         /// <summary>
@@ -164,10 +161,22 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// </summary>
         public virtual IGremlinResourcesOperations GremlinResources { get; private set; }
 
+
         /// <summary>
         /// Gets the INotebookWorkspacesOperations.
         /// </summary>
         public virtual INotebookWorkspacesOperations NotebookWorkspaces { get; private set; }
+
+
+        /// <summary>
+        /// Gets the ICassandraClustersOperations.
+        /// </summary>
+        public virtual ICassandraClustersOperations CassandraClusters { get; private set; }
+
+        /// <summary>
+        /// Gets the ICassandraDataCentersOperations.
+        /// </summary>
+        public virtual ICassandraDataCentersOperations CassandraDataCenters { get; private set; }
 
         /// <summary>
         /// Gets the IPrivateLinkResourcesOperations.
@@ -439,10 +448,12 @@ namespace Microsoft.Azure.Management.CosmosDB
             CassandraResources = new CassandraResourcesOperations(this);
             GremlinResources = new GremlinResourcesOperations(this);
             NotebookWorkspaces = new NotebookWorkspacesOperations(this);
+            CassandraClusters = new CassandraClustersOperations(this);
+            CassandraDataCenters = new CassandraDataCentersOperations(this);
             PrivateLinkResources = new PrivateLinkResourcesOperations(this);
             PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2021-01-15";
+            ApiVersion = "2021-03-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

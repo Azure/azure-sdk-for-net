@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
     /// <summary>
     /// Representation of a managed Cassandra cluster.
     /// </summary>
-    public partial class ClusterResource : IResource
+    public partial class ClusterResource : ARMResourceProperties
     {
         /// <summary>
         /// Initializes a new instance of the ClusterResource class.
