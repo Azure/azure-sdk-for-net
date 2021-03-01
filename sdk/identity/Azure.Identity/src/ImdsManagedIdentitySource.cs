@@ -4,8 +4,6 @@
 using System;
 using System.Net;
 using System.Net.Sockets;
-using System.Runtime.CompilerServices;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -104,7 +102,8 @@ namespace Azure.Identity
 
         protected override async ValueTask<AccessToken> HandleResponseAsync(bool async, TokenRequestContext context, Response response, CancellationToken cancellationToken)
         {
-            if (response.Status == 400)
+            // 502 is typically due to the client dealing with a proxy configuration, which is not supported.
+            if (response.Status == 400 || response.Status == 502)
             {
                 string message = _identityUnavailableErrorMessage ?? await Pipeline.Diagnostics
                     .CreateRequestFailedMessageAsync(response, IdentityUnavailableError, null, null, async)

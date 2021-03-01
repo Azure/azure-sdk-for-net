@@ -28,13 +28,13 @@ namespace Azure.Analytics.Synapse.Monitoring.Tests
         private MonitoringClient CreateClient()
         {
             return InstrumentClient(new MonitoringClient(
-                new Uri(TestEnvironment.EndpointUrl),
+                TestEnvironment.EndpointUrl,
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new MonitoringClientOptions())
             ));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TestListSparkApplications()
         {
             MonitoringClient client = CreateClient();
@@ -43,7 +43,7 @@ namespace Azure.Analytics.Synapse.Monitoring.Tests
             CollectionAssert.IsNotEmpty(sparkJobList.SparkJobs);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TestSqlQuery()
         {
             MonitoringClient client = CreateClient();

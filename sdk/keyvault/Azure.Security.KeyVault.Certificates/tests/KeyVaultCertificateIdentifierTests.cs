@@ -9,12 +9,19 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 {
     public class KeyVaultCertificateIdentifierTests
     {
+        [Test]
+        public void KeyVaultCertificateIdentifierNullThrows()
+        {
+            ArgumentException ex = Assert.Throws<ArgumentNullException>(() => new KeyVaultCertificateIdentifier(null));
+            Assert.AreEqual("id", ex.ParamName);
+        }
+
         [TestCaseSource(nameof(Data))]
         public bool Parse(Uri id, Uri vaultUri, string name, string version)
         {
             try
             {
-                KeyVaultCertificateIdentifier identifier = KeyVaultCertificateIdentifier.Parse(id);
+                KeyVaultCertificateIdentifier identifier = new KeyVaultCertificateIdentifier(id);
 
                 Assert.AreEqual(id, identifier.SourceId);
                 Assert.AreEqual(vaultUri, identifier.VaultUri);
@@ -29,25 +36,35 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             }
         }
 
-        [TestCaseSource(nameof(Data))]
-        public bool TryParse(Uri id, Uri vaultUri, string name, string version)
+        [Test]
+        public void Equals()
         {
-            if (KeyVaultCertificateIdentifier.TryParse(id, out KeyVaultCertificateIdentifier identifier))
-            {
-                Assert.AreEqual(id, identifier.SourceId);
-                Assert.AreEqual(vaultUri, identifier.VaultUri);
-                Assert.AreEqual(name, identifier.Name);
-                Assert.AreEqual(version, identifier.Version);
+            KeyVaultCertificateIdentifier a = new KeyVaultCertificateIdentifier(new Uri("https://test.vault.azure.net/deletedcertificates/test-name/test-version"));
+            KeyVaultCertificateIdentifier b = new KeyVaultCertificateIdentifier(new Uri("https://test.vault.azure.net/deletedcertificates/test-name/test-version"));
 
-                return true;
-            }
+            Assert.AreEqual(a, b);
+        }
 
-            return false;
+        [Test]
+        public void NotEquals()
+        {
+            KeyVaultCertificateIdentifier a = new KeyVaultCertificateIdentifier(new Uri("https://test.vault.azure.net/deletedcertificates/test-name/test-version?api-version=7.0"));
+            KeyVaultCertificateIdentifier b = new KeyVaultCertificateIdentifier(new Uri("https://test.vault.azure.net/deletedcertificates/test-name/test-version?api-version=7.1"));
+
+            Assert.AreNotEqual(a, b);
+        }
+
+        [Test]
+        public void TestGetHashCode()
+        {
+            Uri uri = new Uri("https://test.vault.azure.net/keys/test-name/test-version");
+            KeyVaultCertificateIdentifier keyId = new KeyVaultCertificateIdentifier(uri);
+
+            Assert.AreEqual(uri.GetHashCode(), keyId.GetHashCode());
         }
 
         private static IEnumerable<IdentifierTestData> Data => new[]
         {
-            new IdentifierTestData(null).Returns(false),
             new IdentifierTestData("https://test.vault.azure.net").Returns(false),
             new IdentifierTestData("https://test.vault.azure.net/certificates").Returns(false),
             new IdentifierTestData("https://test.vault.azure.net/certificates/test-name", "https://test.vault.azure.net", "test-name").Returns(true),

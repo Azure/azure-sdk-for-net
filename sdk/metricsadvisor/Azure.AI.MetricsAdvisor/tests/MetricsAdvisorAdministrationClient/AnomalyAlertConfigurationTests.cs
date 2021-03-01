@@ -24,9 +24,17 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
-            Assert.That(() => adminClient.CreateAlertConfigurationAsync(null), Throws.InstanceOf<ArgumentNullException>());
+            var config = new AnomalyAlertConfiguration() { Name = null };
 
+            Assert.That(() => adminClient.CreateAlertConfigurationAsync(null), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => adminClient.CreateAlertConfiguration(null), Throws.InstanceOf<ArgumentNullException>());
+
+            Assert.That(() => adminClient.CreateAlertConfigurationAsync(config), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => adminClient.CreateAlertConfiguration(config), Throws.InstanceOf<ArgumentNullException>());
+
+            config.Name = "";
+            Assert.That(() => adminClient.CreateAlertConfigurationAsync(config), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => adminClient.CreateAlertConfiguration(config), Throws.InstanceOf<ArgumentException>());
         }
 
         [Test]
@@ -34,11 +42,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
-            var metricConfigs = new List<MetricAnomalyAlertConfiguration>()
-            {
-                new MetricAnomalyAlertConfiguration(FakeGuid, MetricAnomalyAlertScope.GetScopeForWholeSeries())
-            };
-            var config = new AnomalyAlertConfiguration("configName", new List<string>(), metricConfigs);
+            var config = new AnomalyAlertConfiguration() { Name = "configName" };
 
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
@@ -52,11 +56,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
-            var metricConfigs = new List<MetricAnomalyAlertConfiguration>()
-            {
-                new MetricAnomalyAlertConfiguration(FakeGuid, MetricAnomalyAlertScope.GetScopeForWholeSeries())
-            };
-            var config = new AnomalyAlertConfiguration("configName", new List<string>(), metricConfigs);
+            var config = new AnomalyAlertConfiguration();
 
             Assert.That(() => adminClient.UpdateAlertConfigurationAsync(null, config), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => adminClient.UpdateAlertConfigurationAsync("", config), Throws.InstanceOf<ArgumentException>());
@@ -74,11 +74,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
-            var metricConfigs = new List<MetricAnomalyAlertConfiguration>()
-            {
-                new MetricAnomalyAlertConfiguration(FakeGuid, MetricAnomalyAlertScope.GetScopeForWholeSeries())
-            };
-            var config = new AnomalyAlertConfiguration("configName", new List<string>(), metricConfigs);
+            var config = new AnomalyAlertConfiguration();
 
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();

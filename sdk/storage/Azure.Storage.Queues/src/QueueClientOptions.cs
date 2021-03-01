@@ -151,7 +151,7 @@ namespace Azure.Storage.Queues
         ///     {
         ///         Console.WriteLine($&quot;Invalid message has been received, message id={args.ReceivedMessage.MessageId} body={args.ReceivedMessage.Body}&quot;);
         ///
-        ///         if (args.RunSynchronously)
+        ///         if (args.IsRunningSynchronously)
         ///         {
         ///             args.Queue.DeleteMessage(args.ReceivedMessage.MessageId, args.ReceivedMessage.PopReceipt);
         ///         }

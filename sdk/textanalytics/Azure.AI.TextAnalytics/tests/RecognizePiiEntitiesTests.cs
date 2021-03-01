@@ -80,7 +80,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             PiiEntityCollection entities = await client.RecognizePiiEntitiesAsync(document, "en", new RecognizePiiEntitiesOptions() { DomainFilter = PiiEntityDomainType.ProtectedHealthInformation } );
 
-            ValidateInDocumenResult(entities, new List<string>() { "atest@microsoft.com" });
+            ValidateInDocumenResult(entities, new List<string>() { "atest@microsoft.com", "Microsoft" });
         }
 
         [Test]
@@ -177,6 +177,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 Assert.IsNotNull(entity.Category);
                 Assert.GreaterOrEqual(entity.ConfidenceScore, 0.0);
                 Assert.GreaterOrEqual(entity.Offset, 0);
+                Assert.Greater(entity.Length, 0);
 
                 if (entity.SubCategory != null)
                 {

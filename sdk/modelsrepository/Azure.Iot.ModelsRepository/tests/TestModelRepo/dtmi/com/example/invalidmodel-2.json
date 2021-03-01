@@ -1,0 +1,23 @@
+﻿{
+  "@id": "dtmi:com:example:Phone;2",
+  "@type": "Interfacez",
+  "displayName": "Phone",
+  "contentsz": [
+    {
+      "@type": "Component",
+      "name": "frontCamera",
+      "schema": "dtmi:com:example:Camera;3"
+    },
+    {
+      "@type": "Component",
+      "name": "backCamera",
+      "schema": "dtmi:com:example:Camera;3"
+    },
+    {
+      "@type": "Component",
+      "name": "deviceInfo",
+      "schema": "dtmi:azure:deviceManagement:DeviceInformation;2"
+    }
+  ],
+  "@context": "dtmi:dtdl:context;2"
+}

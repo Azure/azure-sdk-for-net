@@ -21,10 +21,12 @@ namespace Azure.ResourceManager.Network
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         internal P2SVpnGatewaysRestOperations RestClient { get; }
+
         /// <summary> Initializes a new instance of P2SVpnGatewaysOperations for mocking. </summary>
         protected P2SVpnGatewaysOperations()
         {
         }
+
         /// <summary> Initializes a new instance of P2SVpnGatewaysOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>

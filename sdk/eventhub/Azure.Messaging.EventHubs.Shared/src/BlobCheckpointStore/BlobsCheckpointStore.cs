@@ -7,7 +7,6 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -31,9 +30,6 @@ namespace Azure.Messaging.EventHubs.Processor
         private static readonly string BlobsResourceDoesNotExist = "The Azure Storage Blobs container or blob used by the Event Processor Client does not exist.";
 #pragma warning restore CA1810
 
-        /// <summary>A regular expression used to capture strings enclosed in double quotes.</summary>
-        private static readonly Regex DoubleQuotesExpression = new Regex("\"(.*)\"", RegexOptions.Compiled);
-
         /// <summary>An ETag value to be used for permissive matching when querying Storage.</summary>
         private static readonly ETag IfNoneMatchAllTag = new ETag("*");
 
@@ -52,7 +48,7 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <remarks>
         ///   This pattern is specific to the prefix used by the Azure Functions extension.  The legacy
         ///   <c>EventProcessorHost</c> allowed this value to be specified as an option, defaulting to
-        ///   an empty prefix.  <see href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Microsoft.Azure.EventHubs.Processor/src/EventProcessorHost.cs#L64" />
+        ///   an empty prefix.  <see href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Microsoft.Azure.EventHubs.Processor/src/EventProcessorHost.cs#L64">EventProcessorHost constructor</see>
         ///
         ///   For this to be general-purpose, it will need to be refactored into an option with this
         ///   pattern passed by the Functions extension.
@@ -126,7 +122,7 @@ namespace Azure.Messaging.EventHubs.Processor
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             ListOwnershipStart(fullyQualifiedNamespace, eventHubName, consumerGroup);
 
-            List<EventProcessorPartitionOwnership> result = new List<EventProcessorPartitionOwnership>();
+            var result = new List<EventProcessorPartitionOwnership>();
 
             try
             {
@@ -156,7 +152,7 @@ namespace Azure.Messaging.EventHubs.Processor
             catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ContainerNotFound)
             {
                 ListOwnershipError(fullyQualifiedNamespace, eventHubName, consumerGroup, ex);
-                throw new RequestFailedException(BlobsResourceDoesNotExist);
+                throw new RequestFailedException(BlobsResourceDoesNotExist, ex);
             }
             finally
             {
@@ -231,14 +227,9 @@ namespace Azure.Messaging.EventHubs.Processor
                     }
 
                     // Small workaround to retrieve the eTag.  The current storage SDK returns it enclosed in
-                    // double quotes ('"ETAG_VALUE"' instead of 'ETAG_VALUE').
+                    // double quotes ("ETAG_VALUE" instead of ETAG_VALUE).
 
-                    var match = DoubleQuotesExpression.Match(ownership.Version);
-
-                    if (match.Success)
-                    {
-                        ownership.Version = match.Groups[1].ToString();
-                    }
+                    ownership.Version = ownership.Version?.Trim('"');
 
                     claimedOwnership.Add(ownership);
                     OwnershipClaimed(ownership.PartitionId, ownership.FullyQualifiedNamespace, ownership.EventHubName, ownership.ConsumerGroup, ownership.OwnerIdentifier);
@@ -250,7 +241,7 @@ namespace Azure.Messaging.EventHubs.Processor
                 catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ContainerNotFound || ex.ErrorCode == BlobErrorCode.BlobNotFound)
                 {
                     ClaimOwnershipError(ownership.PartitionId, ownership.FullyQualifiedNamespace, ownership.EventHubName, ownership.ConsumerGroup, ownership.OwnerIdentifier, ex);
-                    throw new RequestFailedException(BlobsResourceDoesNotExist);
+                    throw new RequestFailedException(BlobsResourceDoesNotExist, ex);
                 }
                 catch (Exception ex)
                 {
@@ -303,12 +294,14 @@ namespace Azure.Messaging.EventHubs.Processor
 
                 if (InitializeWithLegacyCheckpoints)
                 {
-                    // Legacy checkpoints are not normalized to lowercase
+                    // Legacy checkpoints are not normalized to lowercase.
+
                     var legacyPrefix = string.Format(CultureInfo.InvariantCulture, FunctionsLegacyCheckpointPrefix, fullyQualifiedNamespace, eventHubName, consumerGroup);
 
                     await foreach (BlobItem blob in ContainerClient.GetBlobsAsync(prefix: legacyPrefix, cancellationToken: cancellationToken).ConfigureAwait(false))
                     {
-                        // Skip new checkpoints and empty blobs
+                        // Skip new checkpoints and empty blobs.
+
                         if (blob.Properties.ContentLength == 0)
                         {
                             continue;
@@ -316,7 +309,8 @@ namespace Azure.Messaging.EventHubs.Processor
 
                         var partitionId = blob.Name.Substring(legacyPrefix.Length);
 
-                        // Check whether there is already a checkpoint for this partition id
+                        // Check whether there is already a checkpoint for this partition id.
+
                         if (checkpoints.Any(existingCheckpoint => string.Equals(existingCheckpoint.PartitionId, partitionId, StringComparison.Ordinal)))
                         {
                             continue;
@@ -335,7 +329,7 @@ namespace Azure.Messaging.EventHubs.Processor
             catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ContainerNotFound)
             {
                 ListCheckpointsError(fullyQualifiedNamespace, eventHubName, consumerGroup, ex);
-                throw new RequestFailedException(BlobsResourceDoesNotExist);
+                throw new RequestFailedException(BlobsResourceDoesNotExist, ex);
             }
             catch (Exception ex)
             {
@@ -502,7 +496,8 @@ namespace Azure.Messaging.EventHubs.Processor
                 }
                 else
                 {
-                    // Skip checkpoints without an offset without logging an error
+                    // Skip checkpoints without an offset without logging an error.
+
                     return null;
                 }
             }
@@ -563,6 +558,7 @@ namespace Azure.Messaging.EventHubs.Processor
                 catch (RequestFailedException ex) when ((ex.ErrorCode == BlobErrorCode.BlobNotFound) || (ex.ErrorCode == BlobErrorCode.ContainerNotFound))
                 {
                     // If the blob wasn't present, fall-back to trying to create a new one.
+
                     using var blobContent = new MemoryStream(Array.Empty<byte>());
                     await blobClient.UploadAsync(blobContent, metadata: metadata, cancellationToken: cancellationToken).ConfigureAwait(false);
                 }
@@ -570,7 +566,7 @@ namespace Azure.Messaging.EventHubs.Processor
             catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ContainerNotFound)
             {
                 UpdateCheckpointError(checkpoint.PartitionId, checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, ex);
-                throw new RequestFailedException(BlobsResourceDoesNotExist);
+                throw new RequestFailedException(BlobsResourceDoesNotExist, ex);
             }
             catch (Exception ex)
             {

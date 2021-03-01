@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://heathskv.vault.azure.net/keys/1370449546?api-version=7.1",
+      "RequestUri": "https://heathskeyvault.vault.azure.net/keys/1370449546?api-version=7.2",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Type": "application/json",
-        "traceparent": "00-7353459e148d7e4187a3f522ecb6ecbd-8e34a4d1e4d31143-00",
+        "traceparent": "00-4dddb29192cf544280a6eb4549985c21-936e2787ea774041-00",
         "User-Agent": [
-          "azsdk-net-Security.KeyVault.Keys/4.1.0-dev.20200729.1",
-          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Security.KeyVault.Keys/4.2.0-alpha.20210219.1",
+          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "f1913ecb6fb63c9c929f46d2bb7fa645",
         "x-ms-return-client-request-id": "true"
@@ -21,16 +21,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "298",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 29 Jul 2020 22:52:16 GMT",
+        "Date": "Sat, 20 Feb 2021 01:46:58 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
-        "X-AspNet-Version": "4.0.30319",
         "X-Content-Type-Options": "nosniff",
         "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=67.171.12.239;act_addr_fam=InterNetwork;",
         "x-ms-keyvault-region": "westus2",
-        "x-ms-keyvault-service-version": "1.1.10.0",
-        "x-ms-request-id": "4e642349-a3f1-4bf3-99b8-0b22fd937bcf",
+        "x-ms-keyvault-service-version": "1.2.164.2",
+        "x-ms-request-id": "7f75c221-a459-4e78-a7cd-bdf57b73c028",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
@@ -42,7 +41,7 @@
     }
   ],
   "Variables": {
-    "AZURE_KEYVAULT_URL": "https://heathskv.vault.azure.net",
+    "AZURE_KEYVAULT_URL": "https://heathskeyvault.vault.azure.net/",
     "RandomSeed": "432911924"
   }
 }

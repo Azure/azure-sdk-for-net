@@ -2051,7 +2051,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             try
             {
-                dataFeedId = await adminClient.CreateDataFeedAsync(dataFeedToCreate);
+                DataFeed createdDataFeed = await adminClient.CreateDataFeedAsync(dataFeedToCreate);
+                dataFeedId = createdDataFeed.Id;
 
                 Assert.That(dataFeedId, Is.Not.Null.And.Not.Empty);
             }
