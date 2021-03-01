@@ -66,20 +66,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="toBeDetached">Specifies whether the data disk is in
         /// process of detachment from the
         /// VirtualMachine/VirtualMachineScaleset</param>
-        /// <param name="detachOption">Specifies the detach behavior to be used
-        /// while detaching a disk or which is already in the process of
-        /// detachment from the virtual machine. Supported values:
-        /// **ForceDetach**. &lt;br&gt;&lt;br&gt; detachOption: **ForceDetach**
-        /// is applicable only for managed data disks. If a previous detachment
-        /// attempt of the data disk did not complete due to an unexpected
-        /// failure from the virtual machine and the disk is still not released
-        /// then use force-detach as a last resort option to detach the disk
-        /// forcibly from the VM. All writes might not have been flushed when
-        /// using this detach behavior. &lt;br&gt;&lt;br&gt; This feature is
-        /// still in preview mode and is not supported for
-        /// VirtualMachineScaleSet. To force-detach a data disk update
-        /// toBeDetached to 'true' along with setting detachOption:
-        /// 'ForceDetach'. Possible values include: 'ForceDetach'</param>
         /// <param name="diskIOPSReadWrite">Specifies the Read-Write IOPS for
         /// the managed disk when StorageAccountType is UltraSSD_LRS. Returned
         /// only for VirtualMachine ScaleSet VM disks. Can be updated only via
@@ -115,7 +101,6 @@ namespace Microsoft.Azure.Management.Compute.Models
             DiskSizeGB = diskSizeGB;
             ManagedDisk = managedDisk;
             ToBeDetached = toBeDetached;
-            DetachOption = detachOption;
             DiskIOPSReadWrite = diskIOPSReadWrite;
             DiskMBpsReadWrite = diskMBpsReadWrite;
             DetachOption = detachOption;
