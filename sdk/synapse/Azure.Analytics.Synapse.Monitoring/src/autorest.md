@@ -5,12 +5,12 @@ Run `dotnet msbuild /t:GenerateCode` to generate code.
 ### AutoRest Configuration
 > see https://aka.ms/autorest
 
-```yaml
-repo: https://github.com/Azure/azure-rest-api-specs/blob/b9fbfae938a0ec0e8a696b450a917b47bea1f2e3
-```
-
 ``` yaml
+tag: package-monitoring-2019-11-01-preview
+require:
+    - https://github.com/Azure/azure-rest-api-specs/blob/aa19725fe79aea2a9dc580f3c66f77f89cc34563/specification/synapse/data-plane/readme.md
+namespace: Azure.Analytics.Synapse.Monitoring
 public-clients: true
-input-file:
-    - $(repo)/specification/synapse/data-plane/Microsoft.Synapse/preview/2019-11-01-preview/monitoring.json
+credential-types: TokenCredential
+credential-scopes: https://dev.azuresynapse.net/.default
 ```

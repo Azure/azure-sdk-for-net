@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Data.SchemaRegistry
 {
-    internal class SchemaQueryIdByContentHeaders
+    internal partial class SchemaQueryIdByContentHeaders
     {
         private readonly Response _response;
         public SchemaQueryIdByContentHeaders(Response response)

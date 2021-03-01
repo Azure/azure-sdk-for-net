@@ -19,12 +19,13 @@ namespace Azure.Analytics.Synapse.Monitoring.Samples
     /// </summary>
     public partial class Sample1_PipelineMonitoring : SamplesBase<SynapseTestEnvironment>
     {
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18832 - Fails on nightly lane due to unreproducable NRE")]
         [Test]
         public void MonitorPipelineRuns()
         {
             #region Snippet:CreateMonitoringClient
             string endpoint = TestEnvironment.EndpointUrl;
-            MonitoringClient client = new MonitoringClient(new Uri(endpoint), new DefaultAzureCredential());
+            MonitoringClient client = new MonitoringClient(endpoint, new DefaultAzureCredential());
             #endregion
 
             #region Snippet:GetSparkJobList

@@ -55,7 +55,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
              (factoryContext, singleDispatch) =>
              {
                  var checkpointStore = new BlobsCheckpointStore(
-                     _clientFactory.GetCheckpointStoreClient(attribute.EventHubName),
+                     _clientFactory.GetCheckpointStoreClient(),
                      _options.Value.EventProcessorOptions.RetryOptions.ToRetryPolicy(),
                      factoryContext.Descriptor.Id,
                      _logger);

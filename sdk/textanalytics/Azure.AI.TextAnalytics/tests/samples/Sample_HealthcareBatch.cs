@@ -47,41 +47,41 @@ namespace Azure.AI.TextAnalytics.Samples
 
             await healthOperation.WaitForCompletionAsync();
 
-            AnalyzeHealthcareEntitiesResultCollection results = healthOperation.Value;
-
-            Console.WriteLine($"Results of Azure Text Analytics \"Healthcare\" Model, version: \"{results.ModelVersion}\"");
-            Console.WriteLine("");
-
-            foreach (AnalyzeHealthcareEntitiesResult result in results)
+            foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in healthOperation.GetValues())
             {
-                Console.WriteLine($"    Recognized the following {result.Entities.Count} healthcare entities:");
+                Console.WriteLine($"Results of Azure Text Analytics \"Healthcare\" Model, version: \"{documentsInPage.ModelVersion}\"");
+                Console.WriteLine("");
 
-                foreach (HealthcareEntity entity in result.Entities)
+                foreach (AnalyzeHealthcareEntitiesResult result in documentsInPage)
                 {
-                    Console.WriteLine($"    Entity: {entity.Text}");
-                    Console.WriteLine($"    Category: {entity.Category}");
-                    Console.WriteLine($"    Offset: {entity.Offset}");
-                    Console.WriteLine($"    Length: {entity.Length}");
-                    Console.WriteLine($"    Links:");
+                    Console.WriteLine($"    Recognized the following {result.Entities.Count} healthcare entities:");
 
-                    foreach (EntityDataSource entityDataSource in entity.DataSources)
+                    foreach (HealthcareEntity entity in result.Entities)
                     {
-                        Console.WriteLine($"        Entity ID in Data Source: {entityDataSource.EntityId}");
-                        Console.WriteLine($"        DataSource: {entityDataSource.Name}");
-                    }
-                }
+                        Console.WriteLine($"    Entity: {entity.Text}");
+                        Console.WriteLine($"    Category: {entity.Category}");
+                        Console.WriteLine($"    Offset: {entity.Offset}");
+                        Console.WriteLine($"    Length: {entity.Length}");
+                        Console.WriteLine($"    Links:");
 
-                Console.WriteLine($"    Document statistics:");
-                Console.WriteLine($"        Character count (in Unicode graphemes): {result.Statistics.CharacterCount}");
-                Console.WriteLine($"        Transaction count: {result.Statistics.TransactionCount}");
+                        foreach (EntityDataSource entityDataSource in entity.DataSources)
+                        {
+                            Console.WriteLine($"        Entity ID in Data Source: {entityDataSource.EntityId}");
+                            Console.WriteLine($"        DataSource: {entityDataSource.Name}");
+                        }
+                    }
+                    Console.WriteLine($"    Document statistics:");
+                    Console.WriteLine($"        Character count (in Unicode graphemes): {result.Statistics.CharacterCount}");
+                    Console.WriteLine($"        Transaction count: {result.Statistics.TransactionCount}");
+                    Console.WriteLine("");
+                }
+                Console.WriteLine($"Request statistics:");
+                Console.WriteLine($"    Document Count: {documentsInPage.Statistics.DocumentCount}");
+                Console.WriteLine($"    Valid Document Count: {documentsInPage.Statistics.ValidDocumentCount}");
+                Console.WriteLine($"    Transaction Count: {documentsInPage.Statistics.TransactionCount}");
+                Console.WriteLine($"    Invalid Document Count: {documentsInPage.Statistics.InvalidDocumentCount}");
                 Console.WriteLine("");
             }
-            Console.WriteLine($"Request statistics:");
-            Console.WriteLine($"    Document Count: {results.Statistics.DocumentCount}");
-            Console.WriteLine($"    Valid Document Count: {results.Statistics.ValidDocumentCount}");
-            Console.WriteLine($"    Transaction Count: {results.Statistics.TransactionCount}");
-            Console.WriteLine($"    Invalid Document Count: {results.Statistics.InvalidDocumentCount}");
-            Console.WriteLine("");
         }
 
         #endregion

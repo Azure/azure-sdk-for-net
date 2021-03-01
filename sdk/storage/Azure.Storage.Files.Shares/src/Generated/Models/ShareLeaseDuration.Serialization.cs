@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    internal static class ShareLeaseDurationExtensions
+    internal static partial class ShareLeaseDurationExtensions
     {
         public static string ToSerialString(this ShareLeaseDuration value) => value switch
         {

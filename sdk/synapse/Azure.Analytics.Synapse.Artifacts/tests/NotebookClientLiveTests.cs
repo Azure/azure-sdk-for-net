@@ -65,13 +65,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         private NotebookClient CreateClient()
         {
             return InstrumentClient(new NotebookClient(
-                new Uri(TestEnvironment.EndpointUrl),
+                TestEnvironment.EndpointUrl,
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new ArtifactsClientOptions())
             ));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TestGetNotebook()
         {
             NotebookClient client = CreateClient ();
@@ -89,7 +89,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TestDeleteNotebook()
         {
             NotebookClient client = CreateClient();
@@ -100,7 +100,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             await operation.WaitAndAssertSuccessfulCompletion();
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TestRenameLinkedService()
         {
             NotebookClient client = CreateClient();
@@ -120,7 +120,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         }
 
         [Ignore ("https://github.com/Azure/azure-sdk-for-net/issues/18080 - Notebook summary appears to require Synapse.Spark execution first")]
-        [Test]
+        [RecordedTest]
         public async Task TestGetSummary()
         {
             NotebookClient client = CreateClient();

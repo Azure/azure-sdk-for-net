@@ -8,20 +8,7 @@
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The status of the operation. </summary>
-    internal partial class SsisObjectMetadataStatusResponse
+    public partial class SsisObjectMetadataStatusResponse
     {
-        /// <summary> Initializes a new instance of SsisObjectMetadataStatusResponse. </summary>
-        internal SsisObjectMetadataStatusResponse()
-        {
-        }
-
-        /// <summary> The status of the operation. </summary>
-        public string Status { get; }
-        /// <summary> The operation name. </summary>
-        public string Name { get; }
-        /// <summary> The operation properties. </summary>
-        public string Properties { get; }
-        /// <summary> The operation error message. </summary>
-        public string Error { get; }
     }
 }
