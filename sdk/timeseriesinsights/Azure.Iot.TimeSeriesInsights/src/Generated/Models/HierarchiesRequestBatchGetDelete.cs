@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.Iot.TimeSeriesInsights.Models
+namespace Azure.Iot.TimeSeriesInsights
 {
     /// <summary> Request to get or delete multiple time series hierarchies. Exactly one of &quot;hierarchyIds&quot; or &quot;names&quot; must be set. </summary>
     public partial class HierarchiesRequestBatchGetDelete

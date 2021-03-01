@@ -28,10 +28,10 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
             string testName = "testModel";
 
             // UPDATE model settings
-            Response<TimeSeriesModelSettings> updatedSettingsName = await client.UpdateModelSettingsNameAsync(testName);
+            Response<TimeSeriesModelSettings> updatedSettingsName = await client.UpdateModelSettingsNameAsync(testName).ConfigureAwait(false);
             updatedSettingsName.GetRawResponse().Status.Should().Be((int)HttpStatusCode.OK);
             updatedSettingsName.Value.Name.Should().Be(testName);
-            // To do: Add a test for updating default Type Id. Need existing Model type to update with associated type Id.
+            // TODO 9430977: Add a test for updating default Type Id. Need existing Model type to update with associated type Id.
         }
 
         [Test]

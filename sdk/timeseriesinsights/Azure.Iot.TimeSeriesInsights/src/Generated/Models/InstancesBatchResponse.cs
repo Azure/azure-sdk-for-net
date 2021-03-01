@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.Iot.TimeSeriesInsights.Models
+namespace Azure.Iot.TimeSeriesInsights
 {
     /// <summary> Response of a single operation on a batch of instances. Only one of &quot;get&quot;, &quot;put&quot;, &quot;update&quot; or &quot;delete&quot; will be set based on the request. </summary>
     public partial class InstancesBatchResponse

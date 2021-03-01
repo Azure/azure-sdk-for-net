@@ -147,7 +147,7 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <summary>
         /// Updates model name on Time Series model settings asynchronously.
         /// </summary>
-        /// <param name="name">Model display name which is shown in the UX and mutable by the user. Initial value is &quot;DefaultModel&quot;.</param>
+        /// <param name="name">Model display name which is mutable by the user. Initial value is &quot;DefaultModel&quot;.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The updated model settings with the http response <see cref="Response{TimeSeriesModelSettings}"/>.</returns>
         public virtual async Task<Response<TimeSeriesModelSettings>> UpdateModelSettingsNameAsync(string name, CancellationToken cancellationToken = default)
@@ -171,7 +171,7 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <summary>
         /// Updates model default type Id on Time Series model settings asynchronously.
         /// </summary>
-        /// <param name="defaultTypeId">Default type id of the model that new instances will automatically belong to.</param>
+        /// <param name="defaultTypeId">Default type Id of the model that new instances will automatically belong to.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The updated model settings with the http response <see cref="Response{TimeSeriesModelSettings}"/>.</returns>
         public virtual async Task<Response<TimeSeriesModelSettings>> UpdateModelSettingsDefaultTypeIdAsync(string defaultTypeId, CancellationToken cancellationToken = default)
@@ -195,7 +195,7 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <summary>
         /// Updates model name on Time Series model settings synchronously.
         /// </summary>
-        /// <param name="name">Model display name which is shown in the UX and mutable by the user. Initial value is &quot;DefaultModel&quot;.</param>
+        /// <param name="name">Model display name which is mutable by the user. Initial value is &quot;DefaultModel&quot;.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The updated model settings with the http response <see cref="Response{TimeSeriesModelSettings}"/>.</returns>
         public virtual Response<TimeSeriesModelSettings> UpdateModelSettingsName(string name, CancellationToken cancellationToken = default)
@@ -219,7 +219,7 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <summary>
         /// Updates default type Id on Time Series model settings synchronously.
         /// </summary>
-        /// <param name="defaultTypeId">Default type id of the model that new instances will automatically belong to.</param>
+        /// <param name="defaultTypeId">Default type Id of the model that new instances will automatically belong to.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The updated model settings with the http response <see cref="Response{TimeSeriesModelSettings}"/>.</returns>
         public virtual Response<TimeSeriesModelSettings> UpdateModelSettingsDefaultTypeId(string defaultTypeId, CancellationToken cancellationToken = default)

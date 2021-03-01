@@ -40,13 +40,13 @@ namespace Azure.Iot.TimeSeriesInsights.Samples
 
                 #endregion Snippet:TimeSeriesInsightsGetModelSettings
 
-                #region Snippet:TimeSeriesInsightsUpdateModelSettings
+                #region Snippet:TimeSeriesInsightsUpdateModelSettingsModelName
 
                 string name = "sampleModel";
                 Response<TimeSeriesModelSettings> updatedSettings = await client.UpdateModelSettingsNameAsync(name);
                 Console.WriteLine($"Updated model name to {updatedSettings.Value.Name} ");
 
-                #endregion Snippet:TimeSeriesInsightsUpdateModelSettings
+                #endregion Snippet:TimeSeriesInsightsUpdateModelSettingsModelName
 
             }
             catch (Exception ex)
