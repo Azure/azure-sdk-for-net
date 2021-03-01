@@ -5,6 +5,14 @@
 - Renamed `AspectSentiment` to `TargetSentiment`.
 - Renamed `MinedOpinion` to `SentenceOpinion`.
 - Renamed `OpinionSentiment` to `AssessmentSentiment`.
+- Removed `RelatedEntities`.
+
+### New Features
+- `AnalyzeHealthcareEntitiesResult`, now exposes the property `EntitiesRelation`of type `HealthcareEntityRelation`.
+- Introduced `HealthcareEntityRelation` class which will determine all the different relations between the entities as `Roles`.
+- Added `HealthcareEntityRelationRole`, which exposes `Name` and `Entity` of type `string` and `HealthcareEntity` respectively.
+- `HealthcareEntityAssertion` is added `HealthcareEntity` which further exposes `Association`, `Certainity` and `Conditionality`.
+- Added new types under `HealthcareRelationType` class.
  
 ## 5.1.0-beta.4 (2021-02-10)
 ### New features
