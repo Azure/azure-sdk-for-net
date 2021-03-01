@@ -153,7 +153,7 @@ try {
             $csharpVersion = @()
             $cmds = @()
             [string]$path = Get-Location
-            $path = ($path -replace "\\", "/") + "/sdk/"
+            $path = ($path -replace "\\", "/") + "/sdk"
 
             $metaDataContent | ForEach-Object {
                 if ($_ -match 'Commit') {
@@ -180,6 +180,7 @@ try {
 
             if (($cmds.length -eq 0) -or ($commit.length -eq 0) -or ($csharpVersion.length -eq 0) -or ($cmds.length -ne $commit.length) -or ($commit.length -ne $csharpVersion.length) -or (($commit -eq $commit[0]).Count -ne $commit.Count)) {
                 LogError "MetaData $metaData content not correct, you may need to re-run sdk\<RP_Name>\generate.ps1"
+                LogError "Make sure you have installed the latest `Start-AutoRestCodeGeneration` module, run command: `msbuild mgmt.proj /p:InstallModeule` to get update"
                 break
             }
             else {
@@ -187,7 +188,7 @@ try {
                     $command = "autorest" + $cmds[$i].substring(23)
                     $command = $command -replace "\\", "/"
                     $command = $command -replace "blob/[\S]*/specification", ("blob/" + $commit[$i] + "/specification")
-                    $command = $command -replace "folder\=(.*?)\/sdk\/", "folder=$path"
+                    $command = $command -replace "folder\=(.*?)\/sdk", "folder=$path"
                     $cmds[$i] = $command + " --use:@microsoft.azure/autorest.csharp@" + $csharpVersion[$i]
                 }
                $commandList += $cmds
