@@ -90,9 +90,9 @@ namespace Proto.Network
         /// </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public Pageable<SubnetOperations> List(CancellationToken cancellationToken = default)
+        public Pageable<Subnet> List(CancellationToken cancellationToken = default)
         {
-            return new PhWrappingPageable<Azure.ResourceManager.Network.Models.Subnet, SubnetOperations>(
+            return new PhWrappingPageable<Azure.ResourceManager.Network.Models.Subnet, Subnet>(
                 Operations.List(Id.ResourceGroup, Id.Name, cancellationToken),
                 convertor());
         }
@@ -102,9 +102,9 @@ namespace Proto.Network
         /// </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
         /// <returns> An async collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<SubnetOperations> ListAsync(CancellationToken cancellationToken = default)
+        public AsyncPageable<Subnet> ListAsync(CancellationToken cancellationToken = default)
         {
-            return new PhWrappingAsyncPageable<Azure.ResourceManager.Network.Models.Subnet, SubnetOperations>(
+            return new PhWrappingAsyncPageable<Azure.ResourceManager.Network.Models.Subnet, Subnet>(
                 Operations.ListAsync(Id.ResourceGroup, Id.Name, cancellationToken),
                 convertor());
         }
