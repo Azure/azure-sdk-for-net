@@ -26,7 +26,6 @@ To create a new Communication Service, you can use the [Azure Portal][communicat
 ```C# Snippet:Azure_Communication_Sms_Tests_UsingStatements
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Communication.Sms;
 ```
 
@@ -65,7 +64,7 @@ Response<IEnumerable<SmsSendResult>> response = await client.SendAsync(
    from: "+18001230000" // Phone number acquired on your Azure Communication resource
    to: new string[] {"+18005670000", "+18008900000}",
    message: "Hi",
-   smsSendOptions: new SmsSendOptions(enableDeliveryReport: true) // OPTIONAL
+   options: new SmsSendOptions(enableDeliveryReport: true) // OPTIONAL
    {
        Tag = "marketing", // custom tags
    });

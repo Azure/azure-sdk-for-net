@@ -5,7 +5,6 @@ using Azure.Core;
 
 namespace Azure.Communication.Sms
 {
-    /// <summary> Send SMS options. </summary>
     [CodeGenModel("SmsSendOptions")]
     public partial class SmsSendOptions
     {

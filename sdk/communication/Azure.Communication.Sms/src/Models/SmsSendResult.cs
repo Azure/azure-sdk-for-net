@@ -5,7 +5,6 @@ using Azure.Core;
 
 namespace Azure.Communication.Sms
 {
-    /// <summary> Response for a single recipient. </summary>
     [CodeGenModel("SmsSendResponseItem")]
     public partial class SmsSendResult
     {

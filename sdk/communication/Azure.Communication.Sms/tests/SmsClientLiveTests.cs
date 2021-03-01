@@ -4,7 +4,6 @@
 #region Snippet:Azure_Communication_Sms_Tests_UsingStatements
 using System;
 using System.Collections.Generic;
-using System.Linq;
 //@@ using Azure.Communication.Sms;
 #endregion Snippet:Azure_Communication_Sms_Tests_UsingStatements
 using System.Threading.Tasks;
@@ -107,9 +106,6 @@ namespace Azure.Communication.Sms.Tests
                    from: "+18001234567",
                    to: TestEnvironment.ToPhoneNumber,
                    message: "Hi");
-                Assert.IsFalse(string.IsNullOrWhiteSpace(result.MessageId));
-                Assert.AreEqual(400, result.HttpStatusCode);
-                Assert.IsFalse(result.Successful);
             }
             catch (RequestFailedException ex)
             {
@@ -139,7 +135,7 @@ namespace Azure.Communication.Sms.Tests
                    /*@@*/ from: TestEnvironment.FromPhoneNumber,
                    /*@@*/ to: new string[] { TestEnvironment.ToPhoneNumber, TestEnvironment.ToPhoneNumber },
                    message: "Hi",
-                   smsSendOptions: new SmsSendOptions(enableDeliveryReport: true) // OPTIONAL
+                   options: new SmsSendOptions(enableDeliveryReport: true) // OPTIONAL
                    {
                        Tag = "marketing", // custom tags
                    });

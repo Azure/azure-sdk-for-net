@@ -5,7 +5,6 @@ using Azure.Core;
 
 namespace Azure.Communication.Sms.Models
 {
-    /// <summary> Sms Recipient. </summary>
     [CodeGenModel("SmsRecipient")]
     internal partial class SmsRecipient
     {
