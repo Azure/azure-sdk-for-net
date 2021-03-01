@@ -2,7 +2,7 @@
 
 ## 5.1.0-beta.5 (Unreleased)
 ### New features
-- Added ability to filter the categories returned in a Personally Identifiable Information recognition wiht the parameter `CatgoriesFilter` in `RecognizePiiEntitiesOptions`.
+- Added ability to filter the categories returned in a Personally Identifiable Information recognition with the optional parameter `CategoriesFilter` in `RecognizePiiEntitiesOptions`.
 
 ### Breaking changes
 - Renamed `AspectSentiment` to `TargetSentiment`.
