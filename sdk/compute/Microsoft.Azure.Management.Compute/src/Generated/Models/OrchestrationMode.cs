@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// </summary>
     public static class OrchestrationMode
     {
-        public const string Uniform = "Uniform";
+        public const string Uniform = "Uniform" ;
         public const string Flexible = "Flexible";
     }
 }
