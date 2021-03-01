@@ -88,18 +88,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// the proximity placement group that the virtual machine should be
         /// assigned to. &lt;br&gt;&lt;br&gt;Minimum api-version:
         /// 2018-04-01.</param>
-        /// <param name="platformFaultDomain">Specifies the scale set logical
-        /// fault domain into which the Virtual Machine will be created. By
-        /// default, the Virtual Machine will by automatically assigned to a
-        /// fault domain that best maintains balance across available fault
-        /// domains.&lt;br&gt;&lt;li&gt;This is applicable only if the
-        /// 'virtualMachineScaleSet' property of this Virtual Machine is
-        /// set.&lt;li&gt;The Virtual Machine Scale Set that is referenced,
-        /// must have 'platformFaultDomainCount' &amp;gt; 1.&lt;li&gt;This
-        /// property cannot be updated once the Virtual Machine is
-        /// created.&lt;li&gt;Fault domain assignment can be viewed in the
-        /// Virtual Machine Instance View.&lt;br&gt;&lt;br&gt;Minimum
-        /// api‐version: 2020‐12‐01</param>
         /// <param name="priority">Specifies the priority for the virtual
         /// machine. &lt;br&gt;&lt;br&gt;Minimum api-version: 2019-03-01.
         /// Possible values include: 'Regular', 'Low', 'Spot'</param>
@@ -176,7 +164,6 @@ namespace Microsoft.Azure.Management.Compute.Models
             AvailabilitySet = availabilitySet;
             VirtualMachineScaleSet = virtualMachineScaleSet;
             ProximityPlacementGroup = proximityPlacementGroup;
-            PlatformFaultDomain = platformFaultDomain;
             Priority = priority;
             EvictionPolicy = evictionPolicy;
             BillingProfile = billingProfile;
@@ -305,24 +292,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.proximityPlacementGroup")]
         public SubResource ProximityPlacementGroup { get; set; }
-
-        /// <summary>
-        /// Gets or sets specifies the scale set logical fault domain into
-        /// which the Virtual Machine will be created. By default, the Virtual
-        /// Machine will by automatically assigned to a fault domain that best
-        /// maintains balance across available fault
-        /// domains.&amp;lt;br&amp;gt;&amp;lt;li&amp;gt;This is applicable only
-        /// if the 'virtualMachineScaleSet' property of this Virtual Machine is
-        /// set.&amp;lt;li&amp;gt;The Virtual Machine Scale Set that is
-        /// referenced, must have 'platformFaultDomainCount' &amp;amp;gt;
-        /// 1.&amp;lt;li&amp;gt;This property cannot be updated once the
-        /// Virtual Machine is created.&amp;lt;li&amp;gt;Fault domain
-        /// assignment can be viewed in the Virtual Machine Instance
-        /// View.&amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api‐version:
-        /// 2020‐12‐01
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.platformFaultDomain")]
-        public int? PlatformFaultDomain { get; set; }
 
         /// <summary>
         /// Gets or sets specifies the priority for the virtual machine.
