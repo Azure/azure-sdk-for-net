@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.DnsResolver
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -97,17 +99,17 @@ namespace Microsoft.Azure.Management.DnsResolver
             /// <param name='dnsResolverName'>
             /// The name of the DNS resolver.
             /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the Update operation.
-            /// </param>
             /// <param name='ifMatch'>
             /// ETag of the resource. Omit this value to always overwrite the current
             /// resource. Specify the last-seen ETag value to prevent accidentally
             /// overwriting any concurrent changes.
             /// </param>
-            public static DnsResolverModel Update(this IDnsResolversOperations operations, string resourceGroupName, string dnsResolverName, DnsResolverModel parameters, string ifMatch = default(string))
+            /// <param name='tags'>
+            /// Tags for DNS Resolver.
+            /// </param>
+            public static DnsResolverModel Update(this IDnsResolversOperations operations, string resourceGroupName, string dnsResolverName, string ifMatch = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
             {
-                return operations.UpdateAsync(resourceGroupName, dnsResolverName, parameters, ifMatch).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, dnsResolverName, ifMatch, tags).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -122,20 +124,20 @@ namespace Microsoft.Azure.Management.DnsResolver
             /// <param name='dnsResolverName'>
             /// The name of the DNS resolver.
             /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the Update operation.
-            /// </param>
             /// <param name='ifMatch'>
             /// ETag of the resource. Omit this value to always overwrite the current
             /// resource. Specify the last-seen ETag value to prevent accidentally
             /// overwriting any concurrent changes.
             /// </param>
+            /// <param name='tags'>
+            /// Tags for DNS Resolver.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DnsResolverModel> UpdateAsync(this IDnsResolversOperations operations, string resourceGroupName, string dnsResolverName, DnsResolverModel parameters, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DnsResolverModel> UpdateAsync(this IDnsResolversOperations operations, string resourceGroupName, string dnsResolverName, string ifMatch = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, dnsResolverName, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, dnsResolverName, ifMatch, tags, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -430,17 +432,17 @@ namespace Microsoft.Azure.Management.DnsResolver
             /// <param name='dnsResolverName'>
             /// The name of the DNS resolver.
             /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the Update operation.
-            /// </param>
             /// <param name='ifMatch'>
             /// ETag of the resource. Omit this value to always overwrite the current
             /// resource. Specify the last-seen ETag value to prevent accidentally
             /// overwriting any concurrent changes.
             /// </param>
-            public static DnsResolverModel BeginUpdate(this IDnsResolversOperations operations, string resourceGroupName, string dnsResolverName, DnsResolverModel parameters, string ifMatch = default(string))
+            /// <param name='tags'>
+            /// Tags for DNS Resolver.
+            /// </param>
+            public static DnsResolverModel BeginUpdate(this IDnsResolversOperations operations, string resourceGroupName, string dnsResolverName, string ifMatch = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
             {
-                return operations.BeginUpdateAsync(resourceGroupName, dnsResolverName, parameters, ifMatch).GetAwaiter().GetResult();
+                return operations.BeginUpdateAsync(resourceGroupName, dnsResolverName, ifMatch, tags).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -455,20 +457,20 @@ namespace Microsoft.Azure.Management.DnsResolver
             /// <param name='dnsResolverName'>
             /// The name of the DNS resolver.
             /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the Update operation.
-            /// </param>
             /// <param name='ifMatch'>
             /// ETag of the resource. Omit this value to always overwrite the current
             /// resource. Specify the last-seen ETag value to prevent accidentally
             /// overwriting any concurrent changes.
             /// </param>
+            /// <param name='tags'>
+            /// Tags for DNS Resolver.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DnsResolverModel> BeginUpdateAsync(this IDnsResolversOperations operations, string resourceGroupName, string dnsResolverName, DnsResolverModel parameters, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DnsResolverModel> BeginUpdateAsync(this IDnsResolversOperations operations, string resourceGroupName, string dnsResolverName, string ifMatch = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, dnsResolverName, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, dnsResolverName, ifMatch, tags, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

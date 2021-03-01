@@ -26,5 +26,22 @@ namespace DnsResolver.Tests.Extensions
             var virtualNetwork = TestDataGenerator.GenerateVirtualNetwork(location: virtualNetworkLocation);
             return client.VirtualNetworks.CreateOrUpdate(resourceGroupName, virtualNetworkName, virtualNetwork);
         }
+
+        public static Subnet CreateSubnet(
+            this NetworkManagementClient client,
+            string resourceGroupName = null,
+            string virtualNetworkName = null,
+            string subnetName = null)
+        {
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
+
+            subnetName = subnetName ?? TestDataGenerator.GenerateSubnetName();
+
+            var subnet = TestDataGenerator.GenerateSubnet();
+            return client.Subnets.CreateOrUpdate(resourceGroupName: resourceGroupName, virtualNetworkName: virtualNetworkName, subnetName: subnetName, subnet);
+        }
     }
 }
