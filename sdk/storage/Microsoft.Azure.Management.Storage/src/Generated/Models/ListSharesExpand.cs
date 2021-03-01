@@ -10,13 +10,51 @@
 
 namespace Microsoft.Azure.Management.Storage.Models
 {
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for ListSharesExpand.
     /// </summary>
-    public static class ListSharesExpand
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum ListSharesExpand
     {
-        public const string Deleted = "deleted";
-        public const string Snapshots = "snapshots";
+        [EnumMember(Value = "deleted")]
+        Deleted,
+        [EnumMember(Value = "snapshots")]
+        Snapshots
+    }
+    internal static class ListSharesExpandEnumExtension
+    {
+        internal static string ToSerializedValue(this ListSharesExpand? value)
+        {
+            return value == null ? null : ((ListSharesExpand)value).ToSerializedValue();
+        }
+
+        internal static string ToSerializedValue(this ListSharesExpand value)
+        {
+            switch( value )
+            {
+                case ListSharesExpand.Deleted:
+                    return "deleted";
+                case ListSharesExpand.Snapshots:
+                    return "snapshots";
+            }
+            return null;
+        }
+
+        internal static ListSharesExpand? ParseListSharesExpand(this string value)
+        {
+            switch( value )
+            {
+                case "deleted":
+                    return ListSharesExpand.Deleted;
+                case "snapshots":
+                    return ListSharesExpand.Snapshots;
+            }
+            return null;
+        }
     }
 }

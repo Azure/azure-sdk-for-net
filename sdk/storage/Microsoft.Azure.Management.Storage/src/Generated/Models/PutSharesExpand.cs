@@ -10,12 +10,45 @@
 
 namespace Microsoft.Azure.Management.Storage.Models
 {
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for PutSharesExpand.
     /// </summary>
-    public static class PutSharesExpand
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum PutSharesExpand
     {
-        public const string Snapshots = "snapshots";
+        [EnumMember(Value = "snapshots")]
+        Snapshots
+    }
+    internal static class PutSharesExpandEnumExtension
+    {
+        internal static string ToSerializedValue(this PutSharesExpand? value)
+        {
+            return value == null ? null : ((PutSharesExpand)value).ToSerializedValue();
+        }
+
+        internal static string ToSerializedValue(this PutSharesExpand value)
+        {
+            switch( value )
+            {
+                case PutSharesExpand.Snapshots:
+                    return "snapshots";
+            }
+            return null;
+        }
+
+        internal static PutSharesExpand? ParsePutSharesExpand(this string value)
+        {
+            switch( value )
+            {
+                case "snapshots":
+                    return PutSharesExpand.Snapshots;
+            }
+            return null;
+        }
     }
 }
