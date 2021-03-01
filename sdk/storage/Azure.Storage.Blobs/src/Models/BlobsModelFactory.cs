@@ -1416,9 +1416,20 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Creates a new BlobBlock instance for mocking.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static BlobBlock BlobBlock(
             string name,
             int size)
+        {
+            return new BlobBlock(name, size);
+        }
+
+        /// <summary>
+        /// Creates a new BlobBlock instance for mocking.
+        /// </summary>
+        public static BlobBlock BlobBlock(
+            string name,
+            long size)
         {
             return new BlobBlock(name, size);
         }
