@@ -25,7 +25,7 @@ namespace DemoApp
             int i = 0;
             foreach (string review in ReadReviewsFromJson().Take(10))
             {
-                var document = documents.AddEmptyObjet();
+                var document = documents.AddEmptyObject();
                 document["id"] = (++i).ToString();
                 document["text"] = review;
             }
@@ -36,7 +36,6 @@ namespace DemoApp
             {
                 foreach (var document in response.Body["documents"].Items)
                 {
-                    // NOTE(ellismg): There are quotes around these values in the output because ToString() JSON Serializes the value.
                     Console.WriteLine($"{document["id"]} is {document["sentiment"]}");
                 }
             }
@@ -59,7 +58,7 @@ namespace DemoApp
             int i = 0;
             foreach (string review in ReadReviewsFromJson().Take(5))
             {
-                var document = documents.AddEmptyObjet();
+                var document = documents.AddEmptyObject();
                 document["id"] = (++i).ToString();
                 document["text"] = review;
             }
@@ -72,9 +71,7 @@ namespace DemoApp
                 {
                     foreach (var entity in document["entities"].Items)
                     {
-                        // NOTE(ellismg): The cast here is subtle, note that ".ToString()" would do the wrong thing
-                        // and wrap the value in quotes (since it returns a stringified JSON document).
-                        switch ((string)entity["category"])
+                        switch (entity["category"].ToString())
                         {
                             case "Person":
                             case "Location":
@@ -97,18 +94,94 @@ namespace DemoApp
         /// <returns></returns>
         static async Task Task3()
         {
-            var request = client.GetLinkedEntitiesRequest();
-            var documents = request.Body.SetEmptyArray("documents");
+            // Build the body (shared across calls)
+            var body = new JsonData();
+            var documents = body.SetEmptyArray("documents");
 
             int i = 0;
             foreach (string review in ReadReviewsFromJson().Take(5))
             {
-                var document = documents.AddEmptyObjet();
+                var document = documents.AddEmptyObject();
                 document["id"] = (++i).ToString();
                 document["text"] = review;
             }
 
-            DynamicResponse response = await request.SendAsync();
+            // Get all the persons:
+            var response = await client.GetEntitiesAsync(body);
+            if (response.Status != 200)
+            {
+                Console.Error.WriteLine(response.Body["error"]);
+                return;
+            }
+
+            var people = response.Body["documents"].Items.SelectMany(x => x["entities"].Items.Where(e => e["category"] == "Person").Select(e => e["text"])).Distinct();
+
+            // Now, get the links
+            response = await client.GetLinkedEntitiesAsync(body);
+
+            // For any links, if they are about people in our list, print them.
+            if (response.Status == 200)
+            {
+                foreach (var document in response.Body["documents"].Items)
+                {
+                    foreach (var entity in document["entities"].Items)
+                    {
+                        if (people.Contains(entity["name"]) && entity["dataSource"] == "Wikipedia")
+                        {
+                            Console.WriteLine($"Learn more about {entity["name"]} on {entity["dataSource"]} ({entity["url"]})");
+                        }
+                    }
+                }
+            }
+            else
+            {
+                Console.Error.WriteLine(response.Body["error"]);
+            }
+        }
+
+        /// <summary>
+        ///  You are provided with a set of reviews in multiple languages. (reviews_mixed.json). 
+        ///  Use text analytics API to detect the language for each review and see if the review contains any Personal Identifiable Information. Print review numbers that contains PII.
+        /// </summary>
+        /// <remarks>
+        ///  Seems like this endpoint also returns information about things which aren't PII from time to time? Anyway, the behavior of the SDK matches that of a hand authored REST request
+        /// </remarks>
+        static async Task Task4()
+        {
+            // The body we can share across our two calls.
+            var body = new JsonData();
+            var documents = body.SetEmptyArray("documents");
+
+            int i = 0;
+            foreach (string review in ReadReviewsFromJson("reviews_mixed.json").Take(5))
+            {
+                var document = documents.AddEmptyObject();
+                document["id"] = (++i).ToString();
+                document["text"] = review;
+            }
+
+            // Get languages.
+            var response = await client.GetLanguagesAsync(body);
+
+            if (response.Status != 200)
+            {
+                Console.Error.WriteLine(response.Body["error"]);
+                return;
+            }
+
+            // Build a map of DocumentID -> Language Name from the response.
+            var languageMap = new Dictionary<JsonData, JsonData>(response.Body["documents"].Items.Select(e =>
+            {
+                return new KeyValuePair<JsonData, JsonData>(e["id"], e["detectedLanguage"]["iso6391Name"]);
+            }));
+                
+            // Go back over the body object and augment each document with a language
+            foreach (JsonData document in body["documents"].Items)
+            {
+                document["language"] = languageMap[document["id"]];
+            }
+
+            response = await client.GetEntitiesPiiAsync(body);
 
             if (response.Status == 200)
             {
@@ -116,11 +189,7 @@ namespace DemoApp
                 {
                     foreach (var entity in document["entities"].Items)
                     {
-                        // NOTE(ellismg): Would be nice if we overloaded == against a string here.
-                        if ((string)entity["dataSource"] == "Wikipedia")
-                        {
-                            Console.WriteLine($"Learn more about {entity["text"]} on ${entity["dataSource"]} ({entity["url"]})");
-                        }
+                        Console.WriteLine($"Document {document["id"]} has PII of type: {entity["category"]}");
                     }
                 }
             }
@@ -141,6 +210,7 @@ namespace DemoApp
             Task1().GetAwaiter().GetResult();
             Task2().GetAwaiter().GetResult();
             Task3().GetAwaiter().GetResult();
+            Task4().GetAwaiter().GetResult();
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Cdn.Tests.ScenarioTests
 {
     public class AFDLogAnalyticsTest
     {
-        [Fact(Skip = "Not Ready")]
+        [Fact]
         public void GetLogAnalyticsMetricsTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -60,14 +60,20 @@ namespace Cdn.Tests.ScenarioTests
                         }
                     };
                     var endpoint = cdnMgmtClient.AFDEndpoints.Create(resourceGroupName, profileName, endpointName, endpointCreateParameters);
+                    var domain = $"{endpointName}.z01.azurefd.net";
 
-
-                    IList<string> metrics = new List<string>();
+                    IList<string> metrics = new List<string>() {
+                        LogMetric.ClientRequestCount
+                    };
                     DateTime dateTimeBegin = new DateTime(2021, 1, 27, 0, 0, 0);
                     DateTime dateTimeEnd = new DateTime(2021, 1, 27, 0, 0, 1);
-                    string granularity = "PT5M";
-                    IList<string> customDomains = new List<string>();
-                    IList< string > protocols = new List<string>();
+                    string granularity = LogMetricsGranularity.PT5M;
+                    IList<string> customDomains = new List<string>(){
+                        domain
+                    };
+                    IList<string> protocols = new List<string>(){
+                        "http"
+                    };
                     MetricsResponse response = cdnMgmtClient.LogAnalytics.GetLogAnalyticsMetrics(resourceGroupName, profileName, metrics, dateTimeBegin, dateTimeEnd, granularity, customDomains, protocols);
                     Assert.NotNull(response);
                     Assert.Equal(dateTimeBegin, response.DateTimeBegin);
@@ -130,10 +136,10 @@ namespace Cdn.Tests.ScenarioTests
 
 
                     IList<string> rankings = new List<string>() {
-                        "url"
+                        LogRanking.Url
                     };
                     IList<string> metrics = new List<string>() {
-                        "clientRequestCount"
+                        LogRankingMetric.ClientRequestCount
                     };
                     int maxRanking = 50;
                     DateTime dateTimeBegin = new DateTime(2021, 1, 27, 0, 0, 0);
@@ -267,7 +273,7 @@ namespace Cdn.Tests.ScenarioTests
             }
         }
 
-        [Fact(Skip = "Not Ready")]
+        [Fact]
         public void GetWafLogAnalyticsMetricsTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -284,12 +290,12 @@ namespace Cdn.Tests.ScenarioTests
 
                 try
                 {
-                    // Create a standard Azure frontdoor profile
+                    // Create a premium Azure frontdoor profile
                     string profileName = TestUtilities.GenerateName("profile");
                     Profile createParameters = new Profile
                     {
                         Location = "WestUs",
-                        Sku = new Sku { Name = SkuName.StandardAzureFrontDoor },
+                        Sku = new Sku { Name = SkuName.PremiumAzureFrontDoor },
                         Tags = new Dictionary<string, string>
                         {
                             {"key1","value1"},
@@ -311,12 +317,14 @@ namespace Cdn.Tests.ScenarioTests
                         }
                     };
                     var endpoint = cdnMgmtClient.AFDEndpoints.Create(resourceGroupName, profileName, endpointName, endpointCreateParameters);
+                    var domain = $"{endpointName}.z01.azurefd.net";
 
-
-                    IList<string> metrics = new List<string>();
+                    IList<string> metrics = new List<string>() {
+                        LogMetric.ClientRequestCount
+                    };
                     DateTime dateTimeBegin = new DateTime(2021, 1, 27, 0, 0, 0);
                     DateTime dateTimeEnd = new DateTime(2021, 1, 27, 0, 0, 1);
-                    string granularity = "PT5M";
+                    string granularity = LogMetricsGranularity.PT5M;
 
                     WafMetricsResponse response = cdnMgmtClient.LogAnalytics.GetWafLogAnalyticsMetrics(resourceGroupName, profileName, metrics, dateTimeBegin, dateTimeEnd, granularity);
                     Assert.NotNull(response);
@@ -380,10 +388,10 @@ namespace Cdn.Tests.ScenarioTests
                     var endpoint = cdnMgmtClient.AFDEndpoints.Create(resourceGroupName, profileName, endpointName, endpointCreateParameters);
 
                     IList<string> rankings = new List<string>() {
-                        "url"
+                        LogRanking.Url
                     };
                     IList<string> metrics = new List<string>() {
-                        "clientRequestCount"
+                        LogRankingMetric.ClientRequestCount
                     };
                     int maxRanking = 50;
                     DateTime dateTimeBegin = new DateTime(2021, 1, 27, 0, 0, 0);

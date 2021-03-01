@@ -453,6 +453,10 @@ namespace Microsoft.Azure.Management.Media
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Codec>("@odata.type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<Layer>("@odata.type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Layer>("@odata.type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<TrackDescriptor>("@odata.type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<TrackDescriptor>("@odata.type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<InputDefinition>("@odata.type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<InputDefinition>("@odata.type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<Overlay>("@odata.type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Overlay>("@odata.type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<Format>("@odata.type"));

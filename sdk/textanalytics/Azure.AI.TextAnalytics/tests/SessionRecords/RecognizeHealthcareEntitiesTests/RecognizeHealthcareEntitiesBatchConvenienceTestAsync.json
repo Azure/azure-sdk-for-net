@@ -1,15 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/entities/health/jobs?stringIndexType=Utf16CodeUnit",
+      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.4/entities/health/jobs?stringIndexType=Utf16CodeUnit",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json, text/json",
         "Content-Length": "223",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-eaf9a99894ab1f4da1847519785675b4-b03068ed02157048-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210205.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-ee8ef5f70ef33a4da73573c586826a9a-eeedb6417b9ec743-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210224.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "99aaf08b1c844fb2d7a9025199ec97e4",
         "x-ms-return-client-request-id": "true"
       },
@@ -29,102 +29,102 @@
       },
       "StatusCode": 202,
       "ResponseHeaders": {
-        "apim-request-id": "a34c7159-c4de-43d0-a805-4583ed3f7b62",
-        "Date": "Sat, 06 Feb 2021 03:49:48 GMT",
-        "operation-location": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/entities/health/jobs/35780f0f-b8d3-49cc-b485-8c41592f32a4",
+        "apim-request-id": "6fef18ba-a70b-4a9b-bf93-f9a3dbdc117d",
+        "Date": "Wed, 24 Feb 2021 16:57:11 GMT",
+        "operation-location": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.4/entities/health/jobs/07d9548d-ed94-4817-b93a-21aa5468d05f",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "170"
+        "x-envoy-upstream-service-time": "120"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/entities/health/jobs/35780f0f-b8d3-49cc-b485-8c41592f32a4?showStats=false",
+      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.4/entities/health/jobs/07d9548d-ed94-4817-b93a-21aa5468d05f?showStats=false",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json, text/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210205.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210224.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "a6eb27012d3e0231e64179d6488bf525",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "96f63cb4-df2c-461f-aecc-eb1b2d277aa2",
+        "apim-request-id": "ce6d8946-bbfc-4bf0-9291-b196d81f3d9b",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sat, 06 Feb 2021 03:49:49 GMT",
+        "Date": "Wed, 24 Feb 2021 16:57:11 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "7"
+        "x-envoy-upstream-service-time": "10"
       },
       "ResponseBody": {
-        "jobId": "35780f0f-b8d3-49cc-b485-8c41592f32a4",
-        "lastUpdateDateTime": "2021-02-06T03:49:49Z",
-        "createdDateTime": "2021-02-06T03:49:49Z",
-        "expirationDateTime": "2021-02-07T03:49:49Z",
+        "jobId": "07d9548d-ed94-4817-b93a-21aa5468d05f",
+        "lastUpdateDateTime": "2021-02-24T16:57:11Z",
+        "createdDateTime": "2021-02-24T16:57:11Z",
+        "expirationDateTime": "2021-02-25T16:57:11Z",
         "status": "notStarted",
         "errors": []
       }
     },
     {
-      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/entities/health/jobs/35780f0f-b8d3-49cc-b485-8c41592f32a4?showStats=false",
+      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.4/entities/health/jobs/07d9548d-ed94-4817-b93a-21aa5468d05f?showStats=false",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json, text/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210205.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210224.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "4d12280124119b66ed27d10225884cad",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "1d5d6fe5-ce5c-4332-b156-988b9333dd64",
+        "apim-request-id": "0fbcddaf-aef3-43bb-bc27-5a8f9710e5d7",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sat, 06 Feb 2021 03:49:50 GMT",
+        "Date": "Wed, 24 Feb 2021 16:57:12 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
         "x-envoy-upstream-service-time": "8"
       },
       "ResponseBody": {
-        "jobId": "35780f0f-b8d3-49cc-b485-8c41592f32a4",
-        "lastUpdateDateTime": "2021-02-06T03:49:49Z",
-        "createdDateTime": "2021-02-06T03:49:49Z",
-        "expirationDateTime": "2021-02-07T03:49:49Z",
+        "jobId": "07d9548d-ed94-4817-b93a-21aa5468d05f",
+        "lastUpdateDateTime": "2021-02-24T16:57:11Z",
+        "createdDateTime": "2021-02-24T16:57:11Z",
+        "expirationDateTime": "2021-02-25T16:57:11Z",
         "status": "notStarted",
         "errors": []
       }
     },
     {
-      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/entities/health/jobs/35780f0f-b8d3-49cc-b485-8c41592f32a4?showStats=false",
+      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.4/entities/health/jobs/07d9548d-ed94-4817-b93a-21aa5468d05f?showStats=false",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json, text/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210205.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210224.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "c1281b11742f5d97bfa8b242a2dc074b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "5e3c477a-5ac4-4586-8b0b-835efee46c0c",
+        "apim-request-id": "3124af27-1f0e-499a-abc8-c8431bc3ae7a",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sat, 06 Feb 2021 03:49:52 GMT",
+        "Date": "Wed, 24 Feb 2021 16:57:13 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "47"
+        "x-envoy-upstream-service-time": "46"
       },
       "ResponseBody": {
-        "jobId": "35780f0f-b8d3-49cc-b485-8c41592f32a4",
-        "lastUpdateDateTime": "2021-02-06T03:49:51Z",
-        "createdDateTime": "2021-02-06T03:49:49Z",
-        "expirationDateTime": "2021-02-07T03:49:49Z",
+        "jobId": "07d9548d-ed94-4817-b93a-21aa5468d05f",
+        "lastUpdateDateTime": "2021-02-24T16:57:13Z",
+        "createdDateTime": "2021-02-24T16:57:11Z",
+        "expirationDateTime": "2021-02-25T16:57:11Z",
         "status": "succeeded",
         "errors": [],
         "results": {
@@ -137,8 +137,7 @@
                   "length": 5,
                   "text": "100mg",
                   "category": "Dosage",
-                  "confidenceScore": 1.0,
-                  "isNegated": false
+                  "confidenceScore": 0.99
                 },
                 {
                   "offset": 27,
@@ -146,7 +145,6 @@
                   "text": "ibuprofen",
                   "category": "MedicationName",
                   "confidenceScore": 1.0,
-                  "isNegated": false,
                   "links": [
                     {
                       "dataSource": "UMLS",
@@ -275,22 +273,35 @@
                   "length": 11,
                   "text": "twice daily",
                   "category": "Frequency",
-                  "confidenceScore": 1.0,
-                  "isNegated": false
+                  "confidenceScore": 1.0
                 }
               ],
               "relations": [
                 {
                   "relationType": "DosageOfMedication",
-                  "bidirectional": false,
-                  "source": "#/results/documents/0/entities/0",
-                  "target": "#/results/documents/0/entities/1"
+                  "entities": [
+                    {
+                      "ref": "#/results/documents/0/entities/0",
+                      "role": "Attribute"
+                    },
+                    {
+                      "ref": "#/results/documents/0/entities/1",
+                      "role": "Entity"
+                    }
+                  ]
                 },
                 {
                   "relationType": "FrequencyOfMedication",
-                  "bidirectional": false,
-                  "source": "#/results/documents/0/entities/2",
-                  "target": "#/results/documents/0/entities/1"
+                  "entities": [
+                    {
+                      "ref": "#/results/documents/0/entities/1",
+                      "role": "Entity"
+                    },
+                    {
+                      "ref": "#/results/documents/0/entities/2",
+                      "role": "Attribute"
+                    }
+                  ]
                 }
               ],
               "warnings": []
@@ -299,50 +310,25 @@
               "id": "1",
               "entities": [
                 {
+                  "offset": 0,
+                  "length": 9,
+                  "text": "Can cause",
+                  "category": "Diagnosis",
+                  "confidenceScore": 0.92
+                },
+                {
                   "offset": 10,
                   "length": 5,
                   "text": "rapid",
-                  "category": "SymptomOrSign",
-                  "confidenceScore": 0.98,
-                  "isNegated": false,
-                  "links": [
-                    {
-                      "dataSource": "UMLS",
-                      "id": "C0456962"
-                    },
-                    {
-                      "dataSource": "AOD",
-                      "id": "0000002744"
-                    },
-                    {
-                      "dataSource": "CHV",
-                      "id": "0000034666"
-                    },
-                    {
-                      "dataSource": "LNC",
-                      "id": "LA24868-4"
-                    },
-                    {
-                      "dataSource": "NCI",
-                      "id": "C65069"
-                    },
-                    {
-                      "dataSource": "RCD",
-                      "id": "X78xZ"
-                    },
-                    {
-                      "dataSource": "SNOMEDCT_US",
-                      "id": "255358001"
-                    }
-                  ]
+                  "category": "ConditionQualifier",
+                  "confidenceScore": 0.82
                 },
                 {
                   "offset": 19,
                   "length": 19,
                   "text": "irregular heartbeat",
                   "category": "SymptomOrSign",
-                  "confidenceScore": 1.0,
-                  "isNegated": false,
+                  "confidenceScore": 0.89,
                   "links": [
                     {
                       "dataSource": "UMLS",
@@ -469,6 +455,10 @@
                       "id": "1721"
                     },
                     {
+                      "dataSource": "NCI_GDC",
+                      "id": "C2881"
+                    },
+                    {
                       "dataSource": "NCI_NICHD",
                       "id": "C2881"
                     },
@@ -511,8 +501,7 @@
                   "length": 8,
                   "text": "delirium",
                   "category": "Diagnosis",
-                  "confidenceScore": 0.99,
-                  "isNegated": false,
+                  "confidenceScore": 1.0,
                   "links": [
                     {
                       "dataSource": "UMLS",
@@ -673,8 +662,7 @@
                   "length": 5,
                   "text": "panic",
                   "category": "Diagnosis",
-                  "confidenceScore": 0.89,
-                  "isNegated": false,
+                  "confidenceScore": 0.98,
                   "links": [
                     {
                       "dataSource": "UMLS",
@@ -767,8 +755,7 @@
                   "length": 9,
                   "text": "psychosis",
                   "category": "Diagnosis",
-                  "confidenceScore": 1.0,
-                  "isNegated": false,
+                  "confidenceScore": 0.97,
                   "links": [
                     {
                       "dataSource": "UMLS",
@@ -867,6 +854,10 @@
                       "id": "C78576"
                     },
                     {
+                      "dataSource": "NCI_CELLOSAURUS",
+                      "id": "C78576"
+                    },
+                    {
                       "dataSource": "NCI_CTCAE",
                       "id": "E12954"
                     },
@@ -921,8 +912,7 @@
                   "length": 13,
                   "text": "heart failure",
                   "category": "Diagnosis",
-                  "confidenceScore": 0.99,
-                  "isNegated": false,
+                  "confidenceScore": 1.0,
                   "links": [
                     {
                       "dataSource": "UMLS",
@@ -1075,12 +1065,26 @@
                   ]
                 }
               ],
-              "relations": [],
+              "relations": [
+                {
+                  "relationType": "QualifierOfCondition",
+                  "entities": [
+                    {
+                      "ref": "#/results/documents/1/entities/0",
+                      "role": "Entity"
+                    },
+                    {
+                      "ref": "#/results/documents/1/entities/1",
+                      "role": "Attribute"
+                    }
+                  ]
+                }
+              ],
               "warnings": []
             }
           ],
           "errors": [],
-          "modelVersion": "2020-09-03"
+          "modelVersion": "2021-01-11"
         }
       }
     }

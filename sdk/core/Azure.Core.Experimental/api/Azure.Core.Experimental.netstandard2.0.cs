@@ -10,7 +10,7 @@ namespace Azure.Core
         public override void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellation) { }
         public override System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellation) { throw null; }
     }
-    [System.Diagnostics.DebuggerDisplayAttribute("Body: {Body}")]
+    [System.Diagnostics.DebuggerDisplayAttribute("{DebuggerDisplay,nq}")]
     public partial class DynamicRequest : Azure.Core.Request
     {
         public DynamicRequest(Azure.Core.Request request, Azure.Core.Pipeline.HttpPipeline pipeline) { }
@@ -29,7 +29,7 @@ namespace Azure.Core
         protected override bool TryGetHeader(string name, out string? value) { throw null; }
         protected override bool TryGetHeaderValues(string name, out System.Collections.Generic.IEnumerable<string>? values) { throw null; }
     }
-    [System.Diagnostics.DebuggerDisplayAttribute("Status: {Response.Status}, Value: {Value}")]
+    [System.Diagnostics.DebuggerDisplayAttribute("{DebuggerDisplay,nq}")]
     public partial class DynamicResponse : Azure.Response
     {
         public DynamicResponse(Azure.Response response, Azure.Core.JsonData? body) { }
@@ -47,7 +47,7 @@ namespace Azure.Core
         protected override bool TryGetHeaderValues(string name, out System.Collections.Generic.IEnumerable<string>? values) { throw null; }
     }
     [System.Diagnostics.DebuggerDisplayAttribute("{DebuggerDisplay,nq}")]
-    public partial class JsonData : System.Dynamic.IDynamicMetaObjectProvider
+    public partial class JsonData : System.Dynamic.IDynamicMetaObjectProvider, System.IEquatable<Azure.Core.JsonData>
     {
         public JsonData() { }
         public JsonData(object? value) { }
@@ -68,11 +68,13 @@ namespace Azure.Core
         public void Add(float value) { }
         public void Add(string? value) { }
         public Azure.Core.JsonData AddEmptyArray() { throw null; }
-        public Azure.Core.JsonData AddEmptyObjet() { throw null; }
+        public Azure.Core.JsonData AddEmptyObject() { throw null; }
         public Azure.Core.JsonData Add<T>(T[] serializable) { throw null; }
         public Azure.Core.JsonData Add<T>(T[] serializable, System.Text.Json.JsonSerializerOptions options) { throw null; }
         public static Azure.Core.JsonData EmptyArray() { throw null; }
         public static Azure.Core.JsonData EmptyObject() { throw null; }
+        public bool Equals(Azure.Core.JsonData other) { throw null; }
+        public override bool Equals(object? obj) { throw null; }
         public static Azure.Core.JsonData FromBytes(byte[] utf8Json) { throw null; }
         public static Azure.Core.JsonData FromBytes(System.ReadOnlyMemory<byte> utf8Json) { throw null; }
         public static Azure.Core.JsonData FromObject<T>(T value, System.Text.Json.JsonSerializerOptions? options = null) { throw null; }
@@ -80,8 +82,11 @@ namespace Azure.Core
         public static System.Threading.Tasks.Task<Azure.Core.JsonData> FromStreamAsync(System.IO.Stream utf8JsonStream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.JsonData FromString(string json) { throw null; }
         public Azure.Core.JsonData? Get(string propertyName) { throw null; }
+        public override int GetHashCode() { throw null; }
         public T Get<T>(string propertyName) { throw null; }
         public T Get<T>(string propertyName, System.Text.Json.JsonSerializerOptions options) { throw null; }
+        public static bool operator ==(Azure.Core.JsonData? left, string? right) { throw null; }
+        public static bool operator ==(string? left, Azure.Core.JsonData? right) { throw null; }
         public static explicit operator bool (Azure.Core.JsonData json) { throw null; }
         public static explicit operator double (Azure.Core.JsonData json) { throw null; }
         public static explicit operator int (Azure.Core.JsonData json) { throw null; }
@@ -104,6 +109,8 @@ namespace Azure.Core
         public static implicit operator Azure.Core.JsonData (float? value) { throw null; }
         public static implicit operator Azure.Core.JsonData (float value) { throw null; }
         public static implicit operator Azure.Core.JsonData (string? value) { throw null; }
+        public static bool operator !=(Azure.Core.JsonData? left, string? right) { throw null; }
+        public static bool operator !=(string? left, Azure.Core.JsonData? right) { throw null; }
         public void Set(string propertyName, bool value) { }
         public void Set(string propertyName, double value) { }
         public void Set(string propertyName, int value) { }
@@ -117,6 +124,7 @@ namespace Azure.Core
         public Azure.Core.JsonData Set<T>(string propertyName, T[] serializable) { throw null; }
         public Azure.Core.JsonData Set<T>(string propertyName, T[] serializable, System.Text.Json.JsonSerializerOptions options) { throw null; }
         System.Dynamic.DynamicMetaObject System.Dynamic.IDynamicMetaObjectProvider.GetMetaObject(System.Linq.Expressions.Expression parameter) { throw null; }
+        public string ToJsonString() { throw null; }
         public override string ToString() { throw null; }
         public T To<T>() { throw null; }
         public T To<T>(System.Text.Json.JsonSerializerOptions options) { throw null; }

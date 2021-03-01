@@ -11,6 +11,8 @@ require:
     - https://github.com/Azure/azure-rest-api-specs/blob/aa19725fe79aea2a9dc580f3c66f77f89cc34563/specification/synapse/data-plane/readme.md
 namespace: Azure.Analytics.Synapse.Artifacts
 public-clients: true
+credential-types: TokenCredential
+credential-scopes: https://dev.azuresynapse.net/.default
 modelerfour:
   lenient-model-deduplication: true
 ```

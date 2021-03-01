@@ -40,12 +40,12 @@ namespace Microsoft.Azure.Management.Media.Models
         /// maximum content length for the rewind window. For example, use
         /// PT1H30M to indicate 1 hour and 30 minutes of archive
         /// window.</param>
-        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. Ex-
-        /// Microsoft.Compute/virtualMachines or
-        /// Microsoft.Storage/storageAccounts.</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="description">The description of the live
         /// output.</param>
         /// <param name="manifestName">The manifest file name. If not provided,

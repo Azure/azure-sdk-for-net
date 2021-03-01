@@ -75,8 +75,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
                 .AddConverter<JToken, string>((jtoken) => jtoken.ToString(Formatting.Indented))
                 .AddConverter<JToken, string[]>((jarray) => jarray.Select(ar => ar.ToString(Formatting.Indented)).ToArray())
                 .AddConverter<JToken, DirectInvokeString>((jtoken) => new DirectInvokeString(null))
-                .AddConverter<JToken, EventGridEvent>((jobject) => jobject.ToObject<EventGridEvent>()) // surface the type to function runtime
-                .AddConverter<JToken, EventGridEvent[]>((jobject) => jobject.ToObject<EventGridEvent[]>()) // surface the type to function runtime
+                .AddConverter<JToken, EventGridEvent>((jobject) => EventGridEvent.ParseEvents(jobject.ToString()).Single()) // surface the type to function runtime
+                .AddConverter<JToken, EventGridEvent[]>((jobject) => EventGridEvent.ParseEvents(jobject.ToString())) // surface the type to function runtime
                 .AddOpenConverter<JToken, OpenType.Poco>(typeof(JTokenToPocoConverter<>))
                 .AddOpenConverter<JToken, OpenType.Poco[]>(typeof(JTokenToPocoConverter<>))
                 .BindToTrigger<JToken>(new EventGridTriggerAttributeBindingProvider(this));
@@ -84,8 +84,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
             // Register the output binding
             var rule = context
                 .AddBindingRule<EventGridAttribute>()
-                .AddConverter<string, EventGridEvent>((str) => EventGridEvent.Parse(str).Single())
-                .AddConverter<JObject, EventGridEvent>((jobject) =>  EventGridEvent.Parse(jobject.ToString()).Single());
+                .AddConverter<string, EventGridEvent>((str) => EventGridEvent.ParseEvents(str).Single())
+                .AddConverter<JObject, EventGridEvent>((jobject) =>  EventGridEvent.ParseEvents(jobject.ToString()).Single());
             rule.BindToCollector(_converter);
             rule.AddValidator((a, t) =>
             {

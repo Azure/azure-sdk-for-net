@@ -116,8 +116,9 @@ pr:
     - sdk/postgresql/Microsoft.Azure.Management.PostgreSQL
     - sdk/powerbidedicated/Microsoft.Azure.Management.PowerBIDedicated
     - sdk/privatedns/Microsoft.Azure.Management.PrivateDns
+    - sdk/providerhub/Microsoft.Azure.Management.ProviderHub
     - sdk/purview/Microsoft.Azure.Management.Purview
-    - sdk/quantum/Microsoft.Azure.Management.Quantum 
+    - sdk/quantum/Microsoft.Azure.Management.Quantum
     - sdk/recoveryservices/Microsoft.Azure.Management.RecoveryServices
     - sdk/recoveryservices-backup/Microsoft.Azure.Management.RecoveryServices.Backup
     - sdk/recoveryservices-siterecovery/Microsoft.Azure.Management.RecoveryServices.SiteRecovery
@@ -135,6 +136,7 @@ pr:
     - sdk/servermanagement/Microsoft.Azure.Management.ServerManagement
     - sdk/servicebus/Microsoft.Azure.Management.ServiceBus
     - sdk/servicefabric/Microsoft.Azure.Management.ServiceFabric
+    - sdk/servicefabricmanagedclusters/Microsoft.Azure.Management.ServiceFabricManagedClusters
     - sdk/signalr/Microsoft.Azure.Management.SignalR
     - sdk/sqlmanagement/Azure.ResourceManager.Sql
     - sdk/sqlmanagement/Microsoft.Azure.Management.SqlManagement

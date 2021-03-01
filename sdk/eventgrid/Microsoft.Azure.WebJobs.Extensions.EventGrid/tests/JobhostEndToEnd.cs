@@ -221,7 +221,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             var expectedEvents = new HashSet<string>(expectedCollection.Split(' '));
             foreach (EventGridEvent eve in output)
             {
-                Assert.True(expectedEvents.Remove(eve.GetData<string>()));
+                Assert.True(expectedEvents.Remove(eve.Data.ToObjectFromJson<string>()));
             }
             Assert.True(expectedEvents.Count == 0);
         }
@@ -253,6 +253,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             public void TestEventGridToNuget_Single([EventGridTrigger] EventGridEvent value)
             {
                 _functionOut = value.Subject;
+                Assert.IsNotNull(value.Data);
             }
 
             public void TestEventGridToCollection_Batch([EventGridTrigger] EventGridEvent[] values)

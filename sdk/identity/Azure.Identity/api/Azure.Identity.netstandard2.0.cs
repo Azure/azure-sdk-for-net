@@ -2,6 +2,7 @@ namespace Azure.Identity
 {
     public partial class AuthenticationFailedException : System.Exception
     {
+        protected AuthenticationFailedException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
         public AuthenticationFailedException(string message) { }
         public AuthenticationFailedException(string message, System.Exception innerException) { }
     }
@@ -20,6 +21,7 @@ namespace Azure.Identity
     }
     public partial class AuthenticationRequiredException : Azure.Identity.CredentialUnavailableException
     {
+        protected AuthenticationRequiredException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) : base (default(string)) { }
         public AuthenticationRequiredException(string message, Azure.Core.TokenRequestContext context) : base (default(string)) { }
         public AuthenticationRequiredException(string message, Azure.Core.TokenRequestContext context, System.Exception innerException) : base (default(string)) { }
         public Azure.Core.TokenRequestContext TokenRequestContext { get { throw null; } }
@@ -85,6 +87,7 @@ namespace Azure.Identity
     }
     public partial class CredentialUnavailableException : Azure.Identity.AuthenticationFailedException
     {
+        protected CredentialUnavailableException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) : base (default(string)) { }
         public CredentialUnavailableException(string message) : base (default(string)) { }
         public CredentialUnavailableException(string message, System.Exception innerException) : base (default(string)) { }
     }
@@ -196,8 +199,7 @@ namespace Azure.Identity
     }
     public partial class PersistentTokenCache : Azure.Identity.TokenCache
     {
-        public PersistentTokenCache(Azure.Identity.PersistentTokenCacheOptions options) { }
-        public PersistentTokenCache(bool allowUnencryptedStorage = true) { }
+        public PersistentTokenCache(Azure.Identity.PersistentTokenCacheOptions options = null) { }
     }
     public partial class PersistentTokenCacheOptions
     {
