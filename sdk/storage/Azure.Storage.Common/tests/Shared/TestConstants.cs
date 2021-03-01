@@ -31,8 +31,6 @@ namespace Azure.Storage.Test
         public byte[] ContentMD5 { get; private set; }
         public SasConstants Sas { get; private set; }
 
-        public static TimeSpan HttpTimeoutDuration => TimeSpan.FromSeconds(1000);
-
         public class SasConstants
         {
             public string KeyObjectId { get; } = "KeyOid";

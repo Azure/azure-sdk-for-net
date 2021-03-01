@@ -42,7 +42,8 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="tags">Resource tags</param>
         /// <param name="provisioningState">Azure lifecycle management</param>
         /// <param name="activeDirectories">Active Directories</param>
-        public NetAppAccountPatch(string location = default(string), string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), IList<ActiveDirectory> activeDirectories = default(IList<ActiveDirectory>))
+        /// <param name="encryption">Encryption settings</param>
+        public NetAppAccountPatch(string location = default(string), string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), IList<ActiveDirectory> activeDirectories = default(IList<ActiveDirectory>), AccountEncryption encryption = default(AccountEncryption))
         {
             Location = location;
             Id = id;
@@ -51,6 +52,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
             Tags = tags;
             ProvisioningState = provisioningState;
             ActiveDirectories = activeDirectories;
+            Encryption = encryption;
             CustomInit();
         }
 
@@ -100,6 +102,12 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.activeDirectories")]
         public IList<ActiveDirectory> ActiveDirectories { get; set; }
+
+        /// <summary>
+        /// Gets or sets encryption settings
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.encryption")]
+        public AccountEncryption Encryption { get; set; }
 
     }
 }

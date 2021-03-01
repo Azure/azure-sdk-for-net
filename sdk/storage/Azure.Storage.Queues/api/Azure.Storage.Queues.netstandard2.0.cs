@@ -37,7 +37,7 @@ namespace Azure.Storage.Queues
         protected internal virtual Azure.Storage.Queues.QueueServiceClient GetParentQueueServiceClientCore() { throw null; }
         public virtual Azure.Response<Azure.Storage.Queues.Models.QueueProperties> GetProperties(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Queues.Models.QueueProperties>> GetPropertiesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        protected virtual System.Threading.Tasks.Task OnMessageDecodingFailedAsync(Azure.Storage.Queues.Models.QueueMessage receivedMessage, Azure.Storage.Queues.Models.PeekedMessage peekedMessage, bool runSynchronously, System.Threading.CancellationToken cancellationToken) { throw null; }
+        protected virtual System.Threading.Tasks.Task OnMessageDecodingFailedAsync(Azure.Storage.Queues.Models.QueueMessage receivedMessage, Azure.Storage.Queues.Models.PeekedMessage peekedMessage, bool isRunningSynchronously, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Response<Azure.Storage.Queues.Models.PeekedMessage> PeekMessage(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Queues.Models.PeekedMessage>> PeekMessageAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Queues.Models.PeekedMessage[]> PeekMessages(int? maxMessages = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -87,7 +87,7 @@ namespace Azure.Storage.Queues
     }
     public partial class QueueMessageDecodingFailedEventArgs : Azure.SyncAsyncEventArgs
     {
-        public QueueMessageDecodingFailedEventArgs(Azure.Storage.Queues.QueueClient queueClient, Azure.Storage.Queues.Models.QueueMessage receivedMessage, Azure.Storage.Queues.Models.PeekedMessage peekedMessage, bool runSynchronously, System.Threading.CancellationToken cancellationToken) : base (default(bool), default(System.Threading.CancellationToken)) { }
+        public QueueMessageDecodingFailedEventArgs(Azure.Storage.Queues.QueueClient queueClient, Azure.Storage.Queues.Models.QueueMessage receivedMessage, Azure.Storage.Queues.Models.PeekedMessage peekedMessage, bool isRunningSynchronously, System.Threading.CancellationToken cancellationToken) : base (default(bool), default(System.Threading.CancellationToken)) { }
         public Azure.Storage.Queues.Models.PeekedMessage PeekedMessage { get { throw null; } }
         public Azure.Storage.Queues.QueueClient Queue { get { throw null; } }
         public Azure.Storage.Queues.Models.QueueMessage ReceivedMessage { get { throw null; } }

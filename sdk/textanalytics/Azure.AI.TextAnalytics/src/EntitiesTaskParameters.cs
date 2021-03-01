@@ -10,7 +10,7 @@ namespace Azure.AI.TextAnalytics
     /// EntitiesTaskParameters class.
     /// </summary>
     [CodeGenModel("EntitiesTaskParameters")]
-    public partial class EntitiesTaskParameters
+    internal partial class EntitiesTaskParameters
     {
         /// <summary>
         /// ModelVersion

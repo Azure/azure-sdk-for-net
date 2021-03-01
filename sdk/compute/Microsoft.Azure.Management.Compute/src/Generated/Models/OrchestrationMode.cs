@@ -10,51 +10,14 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for OrchestrationMode.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum OrchestrationMode
+    public static class OrchestrationMode
     {
-        [EnumMember(Value = "Uniform")]
-        Uniform,
-        [EnumMember(Value = "Flexible")]
-        Flexible
-    }
-    internal static class OrchestrationModeEnumExtension
-    {
-        internal static string ToSerializedValue(this OrchestrationMode? value)
-        {
-            return value == null ? null : ((OrchestrationMode)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this OrchestrationMode value)
-        {
-            switch( value )
-            {
-                case OrchestrationMode.Uniform:
-                    return "Uniform";
-                case OrchestrationMode.Flexible:
-                    return "Flexible";
-            }
-            return null;
-        }
-
-        internal static OrchestrationMode? ParseOrchestrationMode(this string value)
-        {
-            switch( value )
-            {
-                case "Uniform":
-                    return OrchestrationMode.Uniform;
-                case "Flexible":
-                    return OrchestrationMode.Flexible;
-            }
-            return null;
-        }
+        public const string Uniform = "Uniform";
+        public const string Flexible = "Flexible";
     }
 }
+

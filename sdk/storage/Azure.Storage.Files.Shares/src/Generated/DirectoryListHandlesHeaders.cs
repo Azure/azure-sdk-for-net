@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Files.Shares
 {
-    internal class DirectoryListHandlesHeaders
+    internal partial class DirectoryListHandlesHeaders
     {
         private readonly Response _response;
         public DirectoryListHandlesHeaders(Response response)

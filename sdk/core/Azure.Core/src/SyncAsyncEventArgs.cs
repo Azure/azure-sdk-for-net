@@ -31,7 +31,7 @@ namespace Azure
         /// and serious performance problems.
         /// </para>
         /// <para>
-        /// You can use this <see cref="RunSynchronously"/> property to check
+        /// You can use this <see cref="IsRunningSynchronously"/> property to check
         /// how the event is being raised and implement your handler
         /// accordingly.  Here's an example handler that's safe to invoke from
         /// both sync and async code paths.
@@ -39,7 +39,7 @@ namespace Azure
         /// var client = new AlarmClient();
         /// client.Ring += async (SyncAsyncEventArgs e) =&gt;
         /// {
-        ///     if (e.RunSynchronously)
+        ///     if (e.IsRunningSynchronously)
         ///     {
         ///         Console.WriteLine(&quot;Wake up!&quot;);
         ///     }
@@ -54,7 +54,7 @@ namespace Azure
         /// </code>
         /// </para>
         /// </remarks>
-        public bool RunSynchronously { get; }
+        public bool IsRunningSynchronously { get; }
 
         /// <summary>
         /// Gets a cancellation token related to the original operation that
@@ -72,7 +72,7 @@ namespace Azure
         /// Initializes a new instance of the <see cref="SyncAsyncEventArgs"/>
         /// class.
         /// </summary>
-        /// <param name="runSynchronously">
+        /// <param name="isRunningSynchronously">
         /// A value indicating whether the event handler was invoked
         /// synchronously or asynchronously.  Please see
         /// <see cref="Azure.Core.SyncAsyncEventHandler{T}"/> for more details.
@@ -84,10 +84,10 @@ namespace Azure
         /// that take a token so cancellation will correctly propagate.  The
         /// default value is <see cref="CancellationToken.None"/>.
         /// </param>
-        public SyncAsyncEventArgs(bool runSynchronously, CancellationToken cancellationToken = default)
+        public SyncAsyncEventArgs(bool isRunningSynchronously, CancellationToken cancellationToken = default)
             : base()
         {
-            RunSynchronously = runSynchronously;
+            IsRunningSynchronously = isRunningSynchronously;
             CancellationToken = cancellationToken;
         }
     }

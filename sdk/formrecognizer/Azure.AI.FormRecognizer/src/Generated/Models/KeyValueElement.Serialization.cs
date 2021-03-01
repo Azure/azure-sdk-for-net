@@ -15,7 +15,7 @@ namespace Azure.AI.FormRecognizer.Models
     {
         internal static KeyValueElement DeserializeKeyValueElement(JsonElement element)
         {
-            Optional<KeyValueType> type = default;
+            Optional<KeyValueType?> type = default;
             string text = default;
             Optional<IReadOnlyList<float>> boundingBox = default;
             Optional<IReadOnlyList<string>> elements = default;
@@ -25,7 +25,7 @@ namespace Azure.AI.FormRecognizer.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        type = null;
                         continue;
                     }
                     type = new KeyValueType(property.Value.GetString());

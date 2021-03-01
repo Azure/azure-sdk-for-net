@@ -16,7 +16,7 @@ Azure Cognitive Services Metrics Advisor is a cloud service that uses machine le
 Install the Azure Metrics Advisor client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-dotnet add package Azure.AI.MetricsAdvisor --version 1.0.0-beta.2
+dotnet add package Azure.AI.MetricsAdvisor --version 1.0.0-beta.3
 ```
 
 ### Prerequisites
@@ -167,6 +167,19 @@ An `AnomalyAlert`, or simply "alert", is triggered when a detected [anomaly](#da
 
 A `NotificationHook`, or simply "hook", is a means of subscribing to [alerts](#anomaly-alert) notifications. You can pass a hook to an `AnomalyAlertConfiguration` and start getting notifications for every alert it creates. See the sample [Create a hook for receiving anomaly alerts](#create-a-hook-for-receiving-anomaly-alerts) below for more information.
 
+### Thread safety
+We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
+
+### Additional concepts
+<!-- CLIENT COMMON BAR -->
+[Client options](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions) |
+[Accessing the response](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#accessing-http-response-details-using-responset) |
+[Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
+[Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md) |
+[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#mocking) |
+[Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
+<!-- CLIENT COMMON BAR -->
+
 ## Examples
 
 The following section provides several code snippets illustrating common patterns used in the Metrics Advisor .NET API. The snippets below make use of asynchronous service calls, but note that the Azure.AI.MetricsAdvisor package supports both synchronous and asynchronous APIs.
@@ -203,35 +216,30 @@ dataFeed.IngestionSettings = new DataFeedIngestionSettings()
     IngestionStartTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z")
 };
 
-Response<string> response = await adminClient.CreateDataFeedAsync(dataFeed);
+Response<DataFeed> response = await adminClient.CreateDataFeedAsync(dataFeed);
 
-string dataFeedId = response.Value;
+DataFeed createdDataFeed = response.Value;
 
-Console.WriteLine($"Data feed ID: {dataFeedId}");
-```
-
-Note that only the ID of the data feed is known at this point. You can perform another service call to `GetDataFeedAsync` or `GetDataFeed` to get more information, such as status, created time, the list of administrators, or the metric IDs.
-
-```C# Snippet:GetDataFeedAsync
-string dataFeedId = "<dataFeedId>";
-
-Response<DataFeed> response = await adminClient.GetDataFeedAsync(dataFeedId);
-
-DataFeed dataFeed = response.Value;
-
-Console.WriteLine($"Data feed status: {dataFeed.Status.Value}");
-Console.WriteLine($"Data feed created time: {dataFeed.CreatedTime.Value}");
+Console.WriteLine($"Data feed ID: {createdDataFeed.Id}");
+Console.WriteLine($"Data feed status: {createdDataFeed.Status.Value}");
+Console.WriteLine($"Data feed created time: {createdDataFeed.CreatedTime.Value}");
 
 Console.WriteLine($"Data feed administrators:");
-foreach (string admin in dataFeed.Administrators)
+foreach (string admin in createdDataFeed.Administrators)
 {
     Console.WriteLine($" - {admin}");
 }
 
 Console.WriteLine($"Metric IDs:");
-foreach (DataFeedMetric metric in dataFeed.Schema.MetricColumns)
+foreach (DataFeedMetric metric in createdDataFeed.Schema.MetricColumns)
 {
     Console.WriteLine($" - {metric.MetricName}: {metric.MetricId}");
+}
+
+Console.WriteLine($"Dimension columns:");
+foreach (DataFeedDimension dimension in createdDataFeed.Schema.DimensionColumns)
+{
+    Console.WriteLine($" - {dimension.DimensionName}");
 }
 ```
 
@@ -277,29 +285,31 @@ Create an [`AnomalyDetectionConfiguration`](#data-point-anomaly) to tell the ser
 string metricId = "<metricId>";
 string configurationName = "Sample anomaly detection configuration";
 
-var hardThresholdSuppressCondition = new SuppressCondition(1, 100);
-var hardThresholdCondition = new HardThresholdCondition(AnomalyDetectorDirection.Down, hardThresholdSuppressCondition)
+var detectionConfiguration = new AnomalyDetectionConfiguration()
+{
+    MetricId = metricId,
+    Name = configurationName,
+    WholeSeriesDetectionConditions = new MetricWholeSeriesDetectionCondition()
+};
+
+var detectCondition = detectionConfiguration.WholeSeriesDetectionConditions;
+
+var hardSuppress = new SuppressCondition(1, 100);
+detectCondition.HardThresholdCondition = new HardThresholdCondition(AnomalyDetectorDirection.Down, hardSuppress)
 {
     LowerBound = 5.0
 };
 
-var smartDetectionSuppressCondition = new SuppressCondition(4, 50);
-var smartDetectionCondition = new SmartDetectionCondition(10.0, AnomalyDetectorDirection.Up, smartDetectionSuppressCondition);
+var smartSuppress = new SuppressCondition(4, 50);
+detectCondition.SmartDetectionCondition = new SmartDetectionCondition(10.0, AnomalyDetectorDirection.Up, smartSuppress);
 
-var detectionCondition = new MetricWholeSeriesDetectionCondition()
-{
-    HardThresholdCondition = hardThresholdCondition,
-    SmartDetectionCondition = smartDetectionCondition,
-    CrossConditionsOperator = DetectionConditionsOperator.Or
-};
+detectCondition.CrossConditionsOperator = DetectionConditionsOperator.Or;
 
-var detectionConfiguration = new AnomalyDetectionConfiguration(metricId, configurationName, detectionCondition);
+Response<AnomalyDetectionConfiguration> response = await adminClient.CreateDetectionConfigurationAsync(detectionConfiguration);
 
-Response<string> response = await adminClient.CreateDetectionConfigurationAsync(detectionConfiguration);
+AnomalyDetectionConfiguration createdDetectionConfiguration = response.Value;
 
-string detectionConfigurationId = response.Value;
-
-Console.WriteLine($"Anomaly detection configuration ID: {detectionConfigurationId}");
+Console.WriteLine($"Anomaly detection configuration ID: {createdDetectionConfiguration.Id}");
 ```
 
 ### Create a hook for receiving anomaly alerts
@@ -308,19 +318,20 @@ Metrics Advisor supports the [`EmailNotificationHook`](#notification-hook) and t
 
 ```C# Snippet:CreateHookAsync
 string hookName = "Sample hook";
-var emailsToAlert = new List<string>()
+
+var emailHook = new EmailNotificationHook()
 {
-    "email1@sample.com",
-    "email2@sample.com"
+    Name = hookName
 };
 
-var emailHook = new EmailNotificationHook(hookName, emailsToAlert);
+emailHook.EmailsToAlert.Add("email1@sample.com");
+emailHook.EmailsToAlert.Add("email2@sample.com");
 
-Response<string> response = await adminClient.CreateHookAsync(emailHook);
+Response<NotificationHook> response = await adminClient.CreateHookAsync(emailHook);
 
-string hookId = response.Value;
+NotificationHook createdHook = response.Value;
 
-Console.WriteLine($"Hook ID: {hookId}");
+Console.WriteLine($"Hook ID: {createdHook.Id}");
 ```
 
 ### Create an anomaly alert configuration
@@ -332,21 +343,24 @@ string hookId = "<hookId>";
 string anomalyDetectionConfigurationId = "<anomalyDetectionConfigurationId>";
 
 string configurationName = "Sample anomaly alert configuration";
-var idsOfHooksToAlert = new List<string>() { hookId };
 
-var scope = MetricAnomalyAlertScope.GetScopeForWholeSeries();
-var metricAlertConfigurations = new List<MetricAnomalyAlertConfiguration>()
+AnomalyAlertConfiguration alertConfiguration = new AnomalyAlertConfiguration()
 {
-    new MetricAnomalyAlertConfiguration(anomalyDetectionConfigurationId, scope)
+    Name = configurationName
 };
 
-AnomalyAlertConfiguration alertConfiguration = new AnomalyAlertConfiguration(configurationName, idsOfHooksToAlert, metricAlertConfigurations);
+alertConfiguration.IdsOfHooksToAlert.Add(hookId);
 
-Response<string> response = await adminClient.CreateAlertConfigurationAsync(alertConfiguration);
+var scope = MetricAnomalyAlertScope.GetScopeForWholeSeries();
+var metricAlertConfiguration = new MetricAnomalyAlertConfiguration(anomalyDetectionConfigurationId, scope);
 
-string alertConfigurationId = response.Value;
+alertConfiguration.MetricAlertConfigurations.Add(metricAlertConfiguration);
 
-Console.WriteLine($"Alert configuration ID: {alertConfigurationId}");
+Response<AnomalyAlertConfiguration> response = await adminClient.CreateAlertConfigurationAsync(alertConfiguration);
+
+AnomalyAlertConfiguration createdAlertConfiguration = response.Value;
+
+Console.WriteLine($"Alert configuration ID: {createdAlertConfiguration.Id}");
 ```
 
 ### Query detected anomalies and triggered alerts
@@ -518,9 +532,10 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [metricsadv-sample10]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample10_FeedbackCrudOperations.cs
 
 [aad_grant_access]: https://docs.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
+[azure_identity]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md
 [cognitive_resource_cli]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account-cli
 [cognitive_resource_portal]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account
-[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity/README.md
+[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md#defaultazurecredential
 [register_aad_app]: https://docs.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
 
 [logging]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core/samples/Diagnostics.md

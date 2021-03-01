@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Files.Shares
 {
-    internal class ShareCreatePermissionHeaders
+    internal partial class ShareCreatePermissionHeaders
     {
         private readonly Response _response;
         public ShareCreatePermissionHeaders(Response response)

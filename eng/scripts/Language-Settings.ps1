@@ -22,6 +22,7 @@ function Get-dotnet-PackageInfoFromRepo ($pkgPath, $serviceDirectory, $pkgName)
     $pkgProp = [PackageProps]::new($pkgName, $pkgVersion, $pkgPath, $serviceDirectory)
     $pkgProp.SdkType = $sdkType
     $pkgProp.IsNewSdk = $pkgName.StartsWith("Azure")
+    $pkgProp.ArtifactName = $pkgName
     return $pkgProp
   }
   else
@@ -156,7 +157,7 @@ function Publish-dotnet-GithubIODocs ($DocLocation, $PublicArtifactLocation)
 function Get-dotnet-GithubIoDocIndex()
 {
   # Update the main.js and docfx.json language content
-  UpdateDocIndexFiles -appTitleLang ".NET"
+  UpdateDocIndexFiles -appTitleLang $LanguageDisplayName
   # Fetch out all package metadata from csv file.
   $metadata = Get-CSVMetadata -MetadataUri $MetadataUri
   # Get the artifacts name from blob storage
@@ -164,7 +165,7 @@ function Get-dotnet-GithubIoDocIndex()
   # Build up the artifact to service name mapping for GithubIo toc.
   $tocContent = Get-TocMapping -metadata $metadata -artifacts $artifacts
   # Generate yml/md toc files and build site.
-  GenerateDocfxTocContent -tocContent $tocContent -lang "NET"
+  GenerateDocfxTocContent -tocContent $tocContent -lang $LanguageDisplayName
 }
 
 # details on CSV schema can be found here

@@ -110,6 +110,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <value>The maximum number of concurrent calls to the message handler.</value>
         public virtual int MaxConcurrentCalls { get; }
+        internal TimeSpan? MaxReceiveWaitTime { get; }
 
         /// <summary>
         /// Gets a value that indicates whether the processor should automatically
@@ -156,6 +157,13 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>Indicates whether or not this instance has been closed.</summary>
         private volatile bool _closed;
 
+        /// <summary>
+        /// Gets the transaction group associated with the processor. This is an
+        /// arbitrary string that is used to all senders, receivers, and processors that you
+        /// wish to use in a transaction that spans multiple different queues, topics, or subscriptions.
+        /// </summary>
+        public virtual string TransactionGroup { get; }
+
         private readonly string[] _sessionIds;
         private readonly EntityScopeFactory _scopeFactory;
         private readonly IList<ServiceBusPlugin> _plugins;
@@ -200,9 +208,11 @@ namespace Azure.Messaging.ServiceBus
             PrefetchCount = _options.PrefetchCount;
             MaxAutoLockRenewalDuration = _options.MaxAutoLockRenewalDuration;
             MaxConcurrentCalls = _options.MaxConcurrentCalls;
+            MaxReceiveWaitTime = _options.MaxReceiveWaitTime;
             MaxConcurrentSessions = maxConcurrentSessions;
             MaxConcurrentCallsPerSession = maxConcurrentCallsPerSession;
             _sessionIds = sessionIds ?? Array.Empty<string>();
+            TransactionGroup = _options.TransactionGroup;
 
             int maxCalls = isSessionEntity ?
                 (_sessionIds.Length > 0 ?

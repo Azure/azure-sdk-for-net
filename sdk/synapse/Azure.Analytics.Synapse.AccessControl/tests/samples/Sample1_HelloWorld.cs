@@ -27,40 +27,46 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
             string endpoint = "<my-endpoint-url>";
             /*@@*/endpoint = TestEnvironment.EndpointUrl;
 
-            AccessControlClient client = new AccessControlClient(new Uri(endpoint), new DefaultAzureCredential());
+            RoleAssignmentsClient roleAssignmentsClient = new RoleAssignmentsClient(endpoint, new DefaultAzureCredential());
+            RoleDefinitionsClient definitionsClient = new RoleDefinitionsClient(endpoint, new DefaultAzureCredential());
             #endregion
 
             #region Snippet:PrepCreateRoleAssignment
-            Pageable<SynapseRole> roles = client.GetRoleDefinitions();
-            SynapseRole role = roles.Single(role => role.Name == "Workspace Admin");
-            string roleID = role.Id;
+            Response<IReadOnlyList<SynapseRoleDefinition>> roles = definitionsClient.ListRoleDefinitions();
+            SynapseRoleDefinition role = roles.Value.Single(role => role.Name == "Synapse Administrator");
+            Guid roleId = role.Id.Value;
+
+            string assignedScope = "workspaces/<my-workspace-name>";
+            /*@@*/assignedScope = "workspaces/" + TestEnvironment.WorkspaceName;
 
             // Replace the string below with the ID you'd like to assign the role.
-            string principalId = "<my-principal-id>";
-            /*@@*/principalId = Guid.NewGuid().ToString();
+            Guid principalId = /*<my-principal-id>"*/ Guid.NewGuid();
+
+            // Replace the string below with the ID of the assignment you'd like to use.
+            string assignmentId = "<my-assignment-id>";
+            /*@@*/assignmentId = Guid.NewGuid().ToString();
             #endregion
 
             #region Snippet:CreateRoleAssignment
-            RoleAssignmentOptions request = new RoleAssignmentOptions(roleID, principalId);
-            Response<RoleAssignmentDetails> response = client.CreateRoleAssignment(request);
+            Response<RoleAssignmentDetails> response = roleAssignmentsClient.CreateRoleAssignment (assignmentId, roleId, principalId, assignedScope);
             RoleAssignmentDetails roleAssignmentAdded = response.Value;
             #endregion
 
             #region Snippet:RetrieveRoleAssignment
-            RoleAssignmentDetails roleAssignment = client.GetRoleAssignmentById(roleAssignmentAdded.Id);
-            Console.WriteLine($"Role {roleAssignment.RoleId} is assigned to {roleAssignment.PrincipalId}.");
+            RoleAssignmentDetails roleAssignment = roleAssignmentsClient.GetRoleAssignmentById(roleAssignmentAdded.Id);
+            Console.WriteLine($"Role {roleAssignment.RoleDefinitionId} is assigned to {roleAssignment.PrincipalId}.");
             #endregion
 
             #region Snippet:ListRoleAssignments
-            Response<IReadOnlyList<RoleAssignmentDetails>> roleAssignments = client.GetRoleAssignments();
-            foreach (RoleAssignmentDetails assignment in roleAssignments.Value)
+            Response<IReadOnlyList<SynapseRoleDefinition>> roleAssignments = definitionsClient.ListRoleDefinitions();
+            foreach (SynapseRoleDefinition assignment in roleAssignments.Value)
             {
                 Console.WriteLine(assignment.Id);
             }
             #endregion
 
             #region Snippet:DeleteRoleAssignment
-            client.DeleteRoleAssignmentById(roleAssignment.Id);
+            roleAssignmentsClient.DeleteRoleAssignmentById(roleAssignment.Id);
             #endregion
         }
     }
