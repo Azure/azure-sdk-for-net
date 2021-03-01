@@ -180,7 +180,7 @@ try {
 
             if (($cmds.length -eq 0) -or ($commit.length -eq 0) -or ($csharpVersion.length -eq 0) -or ($cmds.length -ne $commit.length) -or ($commit.length -ne $csharpVersion.length) -or (($commit -eq $commit[0]).Count -ne $commit.Count)) {
                 LogError "MetaData $metaData content not correct, you may need to re-run sdk\<RP_Name>\generate.ps1"
-                LogError "Make sure you have installed the latest `Start-AutoRestCodeGeneration` module, run command: `msbuild mgmt.proj /p:InstallModeule` to get update"
+                LogError "Make sure you have installed the latest `Start-AutoRestCodeGeneration` module, run command: `msbuild mgmt.proj /t:Util /p:UtilityName=InstallPsModules` to get update"
                 break
             }
             else {
