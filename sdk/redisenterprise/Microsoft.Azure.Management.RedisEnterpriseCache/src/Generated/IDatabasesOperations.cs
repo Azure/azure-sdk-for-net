@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// Gets all databases in the specified RedisEnterprise cluster.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='clusterName'>
         /// The name of the RedisEnterprise cluster.
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// Creates a database
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='clusterName'>
         /// The name of the RedisEnterprise cluster.
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// Updates a database
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='clusterName'>
         /// The name of the RedisEnterprise cluster.
@@ -114,7 +114,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// Gets information about a database in a RedisEnterprise cluster.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='clusterName'>
         /// The name of the RedisEnterprise cluster.
@@ -137,12 +137,12 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Database>> GetMethodWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Database>> GetWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes a single database
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='clusterName'>
         /// The name of the RedisEnterprise cluster.
@@ -167,7 +167,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// Retrieves the access keys for the RedisEnterprise database.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='clusterName'>
         /// The name of the RedisEnterprise cluster.
@@ -195,7 +195,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// Regenerates the RedisEnterprise database's access keys.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='clusterName'>
         /// The name of the RedisEnterprise cluster.
@@ -227,7 +227,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// Imports a database file to target database.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='clusterName'>
         /// The name of the RedisEnterprise cluster.
@@ -236,7 +236,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// The name of the database.
         /// </param>
         /// <param name='sasUri'>
-        /// SAS Uri for the target blob to import from
+        /// SAS URI for the target blob to import from
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -255,7 +255,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// Exports a database file from target database.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='clusterName'>
         /// The name of the RedisEnterprise cluster.
@@ -264,7 +264,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// The name of the database.
         /// </param>
         /// <param name='sasUri'>
-        /// SAS Uri for the target directory to export to
+        /// SAS URI for the target directory to export to
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -283,7 +283,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// Creates a database
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='clusterName'>
         /// The name of the RedisEnterprise cluster.
@@ -314,7 +314,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// Updates a database
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='clusterName'>
         /// The name of the RedisEnterprise cluster.
@@ -345,7 +345,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// Deletes a single database
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='clusterName'>
         /// The name of the RedisEnterprise cluster.
@@ -370,7 +370,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// Regenerates the RedisEnterprise database's access keys.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='clusterName'>
         /// The name of the RedisEnterprise cluster.
@@ -402,7 +402,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// Imports a database file to target database.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='clusterName'>
         /// The name of the RedisEnterprise cluster.
@@ -411,7 +411,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// The name of the database.
         /// </param>
         /// <param name='sasUri'>
-        /// SAS Uri for the target blob to import from
+        /// SAS URI for the target blob to import from
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -430,7 +430,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// Exports a database file from target database.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='clusterName'>
         /// The name of the RedisEnterprise cluster.
@@ -439,7 +439,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// The name of the database.
         /// </param>
         /// <param name='sasUri'>
-        /// SAS Uri for the target directory to export to
+        /// SAS URI for the target directory to export to
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

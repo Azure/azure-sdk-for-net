@@ -2,7 +2,7 @@ param (
   # The root repo we scaned with.
   [string] $RootRepo = '$PSScriptRoot/../../..',
   # The target branch to compare with.
-  [string] $targetBranch = "origin/${env:SYSTEM_PULLREQUEST_TARGETBRANCH}"
+  [string] $targetBranch = ("origin/${env:SYSTEM_PULLREQUEST_TARGETBRANCH}" -replace "/refs/heads/")
 )
 $deletedFiles = (git diff $targetBranch HEAD --name-only --diff-filter=D)
 $renamedFiles = (git diff $targetBranch HEAD --diff-filter=R)

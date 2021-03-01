@@ -61,13 +61,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         private SqlScriptClient CreateClient()
         {
             return InstrumentClient(new SqlScriptClient(
-                new Uri(TestEnvironment.EndpointUrl),
+                TestEnvironment.EndpointUrl,
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new ArtifactsClientOptions())
             ));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TestGetScripts()
         {
             SqlScriptClient client = CreateClient ();
@@ -85,7 +85,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TestDeleteSparkJob()
         {
             SqlScriptClient client = CreateClient();
@@ -96,7 +96,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             await deleteOperation.WaitAndAssertSuccessfulCompletion();
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TestRenameSparkJob()
         {
             SqlScriptClient client = CreateClient();

@@ -8,7 +8,8 @@ Param (
   [string] $APIKey,
   [Parameter(Mandatory=$True)]
   [string] $APILabel,
-  [string] $PackageName = ""
+  [string] $PackageName,
+  [string] $ConfigFileDir = ""
 )
 
 
@@ -82,17 +83,19 @@ else
 }
 
 $FoundFailure = $False
-$pkgInfoPath = Join-Path -Path $ArtifactPath "PackageInfo"
+if (-not $ConfigFileDir)
+{
+    $ConfigFileDir = Join-Path -Path $ArtifactPath "PackageInfo"
+}
 foreach ($pkgName in $responses.Keys)
 {    
     $respCode = $responses[$pkgName]
     if ($respCode -ne '200')
     {
-        $pkgPropPath = Join-Path -Path $pkgInfoPath ($PackageName + ".json")
+        $pkgPropPath = Join-Path -Path $ConfigFileDir "$PackageName.json"
         if (-Not (Test-Path $pkgPropPath))
         {
             Write-Host " Package property file path $($pkgPropPath) is invalid."
-            $FoundFailure = $True
         }
         else
         {

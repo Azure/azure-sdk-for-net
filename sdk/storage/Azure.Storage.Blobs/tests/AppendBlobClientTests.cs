@@ -339,10 +339,10 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public async Task CreateAsync_Error()
         {
-            await using DisposingContainer test = await GetTestContainerAsync();
-
             // Arrange
-            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(string.Empty));
+            BlobServiceClient blobService = GetServiceClient_SharedKey();
+            BlobContainerClient containerClient = InstrumentClient(blobService.GetBlobContainerClient(GetNewContainerName()));
+            AppendBlobClient blob = InstrumentClient(containerClient.GetAppendBlobClient(GetNewBlobName()));
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
@@ -525,10 +525,10 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public async Task CreateIfNotExistsAsync_Error()
         {
-            await using DisposingContainer test = await GetTestContainerAsync();
-
             // Arrange
-            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(string.Empty));
+            BlobServiceClient serviceClient = GetServiceClient_SharedKey();
+            BlobContainerClient containerClient = InstrumentClient(serviceClient.GetBlobContainerClient(GetNewContainerName()));
+            AppendBlobClient blob = InstrumentClient(containerClient.GetAppendBlobClient(GetNewBlobName()));
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(

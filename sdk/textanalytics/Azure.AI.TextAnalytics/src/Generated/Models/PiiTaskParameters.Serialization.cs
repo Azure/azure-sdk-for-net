@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
 {
-    public partial class PiiTaskParameters : IUtf8JsonSerializable
+    internal partial class PiiTaskParameters : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -24,6 +24,16 @@ namespace Azure.AI.TextAnalytics
             {
                 writer.WritePropertyName("model-version");
                 writer.WriteStringValue(ModelVersion);
+            }
+            if (Optional.IsCollectionDefined(PiiCategories))
+            {
+                writer.WritePropertyName("pii-categories");
+                writer.WriteStartArray();
+                foreach (var item in PiiCategories)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(StringIndexType))
             {

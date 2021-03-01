@@ -26,7 +26,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         [EnumMember(Value = "InstantRP")]
         InstantRP,
         [EnumMember(Value = "HardenedRP")]
-        HardenedRP
+        HardenedRP,
+        [EnumMember(Value = "ArchivedRP")]
+        ArchivedRP
     }
     internal static class RecoveryPointTierTypeEnumExtension
     {
@@ -45,6 +47,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
                     return "InstantRP";
                 case RecoveryPointTierType.HardenedRP:
                     return "HardenedRP";
+                case RecoveryPointTierType.ArchivedRP:
+                    return "ArchivedRP";
             }
             return null;
         }
@@ -59,6 +63,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
                     return RecoveryPointTierType.InstantRP;
                 case "HardenedRP":
                     return RecoveryPointTierType.HardenedRP;
+                case "ArchivedRP":
+                    return RecoveryPointTierType.ArchivedRP;
             }
             return null;
         }

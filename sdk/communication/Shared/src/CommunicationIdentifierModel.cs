@@ -7,27 +7,41 @@
 
 namespace Azure.Communication
 {
-    /// <summary> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. </summary>
+    /// <summary> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model must be interpreted as a union: Apart from rawId, at most one further property may be set. </summary>
     internal partial class CommunicationIdentifierModel
     {
-        /// <summary> Initializes a new instance of CommunicationIdentifierModel. </summary>
-        /// <param name="kind"> Kind of the communication identifier. </param>
-        internal CommunicationIdentifierModel(CommunicationIdentifierKind kind)
-        {
-            Kind = kind;
-        }
+        /// <summary> Raw Id of the identifier. Optional in requests, required in responses. </summary>
+        public string RawId { get; set; }
+        /// <summary> The communication user. </summary>
+        public CommunicationUserIdentifierModel CommunicationUser { get; set; }
+        /// <summary> The phone number. </summary>
+        public PhoneNumberIdentifierModel PhoneNumber { get; set; }
+        /// <summary> The Microsoft Teams user. </summary>
+        public MicrosoftTeamsUserIdentifierModel MicrosoftTeamsUser { get; set; }
+    }
 
-        /// <summary> Kind of the communication identifier. </summary>
-        public CommunicationIdentifierKind Kind { get; }
-        /// <summary> Full Id of the identifier. </summary>
+    /// <summary> A user that got created with an Azure Communication Services resource. </summary>
+    internal partial class CommunicationUserIdentifierModel
+    {
+        /// <summary> Id of the communication user. </summary>
         public string Id { get; set; }
+    }
+
+    /// <summary> A phone number. </summary>
+    internal partial class PhoneNumberIdentifierModel
+    {
         /// <summary> The phone number in E.164 format. </summary>
-        public string PhoneNumber { get; set; }
-        /// <summary> The AAD object Id of the Microsoft Teams user. </summary>
-        public string MicrosoftTeamsUserId { get; set; }
-        /// <summary> True if the identifier is anonymous. </summary>
+        public string Value { get; set; }
+    }
+
+    /// <summary> A Microsoft Teams user. </summary>
+    internal partial class MicrosoftTeamsUserIdentifierModel
+    {
+        /// <summary> The Id of the Microsoft Teams user. If not anonymous, this is the AAD object Id of the user. </summary>
+        public string UserId { get; set; }
+        /// <summary> True if the Microsoft Teams user is anonymous. By default false if missing. </summary>
         public bool? IsAnonymous { get; set; }
-        /// <summary> The cloud that the identifier belongs to. </summary>
+        /// <summary> The cloud that the Microsoft Teams user belongs to. By default 'public' if missing. </summary>
         public CommunicationCloudEnvironmentModel? Cloud { get; set; }
     }
 }

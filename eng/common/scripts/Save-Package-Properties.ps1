@@ -10,15 +10,24 @@ Param (
 $allPackageProperties = Get-AllPkgProperties $serviceDirectory
 if ($allPackageProperties)
 {
-    New-Item -ItemType Directory -Force -Path $outDirectory
+    if (-not (Test-Path -Path $outDirectory))
+    {
+      New-Item -ItemType Directory -Force -Path $outDirectory
+    }
     foreach($pkg in $allPackageProperties)
     {
-        if ($pkg.IsNewSDK)
+        if ($pkg.IsNewSdk)
         {
             Write-Host "Package Name: $($pkg.Name)"
             Write-Host "Package Version: $($pkg.Version)"
             Write-Host "Package SDK Type: $($pkg.SdkType)"
-            $outputPath = Join-Path -Path $outDirectory ($pkg.Name + ".json")
+            Write-Host "Artifact Name: $($pkg.ArtifactName)"
+            $configFilePrefix = $pkg.Name
+            if ($pkg.ArtifactName)
+            {
+              $configFilePrefix = $pkg.ArtifactName
+            }
+            $outputPath = Join-Path -Path $outDirectory "$configFilePrefix.json"
             $outputObject = $pkg | ConvertTo-Json
             Set-Content -Path $outputPath -Value $outputObject
         }        
@@ -31,4 +40,3 @@ else
     Write-Error "Package properties are not available for service directory $($serviceDirectory)"
     exit 1
 }
-

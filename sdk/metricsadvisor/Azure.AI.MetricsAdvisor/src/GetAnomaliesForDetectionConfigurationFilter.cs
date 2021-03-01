@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Threading;
 using Azure.AI.MetricsAdvisor.Models;
@@ -15,8 +14,6 @@ namespace Azure.AI.MetricsAdvisor
     /// </summary>
     public class GetAnomaliesForDetectionConfigurationFilter
     {
-        private IList<DimensionKey> _seriesGroupKeys;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="GetAnomaliesForDetectionConfigurationFilter"/> class.
         /// </summary>
@@ -41,18 +38,7 @@ namespace Azure.AI.MetricsAdvisor
         /// Filters the result by series. Only anomalies detected in the time series groups specified will
         /// be returned.
         /// </summary>
-        /// <exception cref="ArgumentNullException">The value assigned to <see cref="SeriesGroupKeys"/> is null.</exception>
-#pragma warning disable CA2227 // Collection properties should be readonly
-        public IList<DimensionKey> SeriesGroupKeys
-        {
-            get => _seriesGroupKeys;
-            set
-            {
-                Argument.AssertNotNull(value, nameof(SeriesGroupKeys));
-                _seriesGroupKeys = value;
-            }
-        }
-#pragma warning restore CA2227 // Collection properties should be readonly
+        public IList<DimensionKey> SeriesGroupKeys { get; }
 
         /// <summary>
         /// The minimum severity level an anomaly must have to be returned.

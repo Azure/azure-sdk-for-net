@@ -10,7 +10,7 @@ namespace Azure.AI.TextAnalytics
     /// <summary>
     /// HealthcareEntityRelationType
     /// </summary>
-    public class HealthcareEntityRelationType : IEquatable<HealthcareEntityRelationType>
+    public readonly struct HealthcareEntityRelationType : IEquatable<HealthcareEntityRelationType>
     {
         /// <summary>
         /// Specifies the relation type DirectionOfBodyStructure.
@@ -31,6 +31,11 @@ namespace Azure.AI.TextAnalytics
         /// Specifies the relation type TimeOfExamination.
         /// </summary>
         public static readonly HealthcareEntityRelationType TimeOfExamination = new HealthcareEntityRelationType("TimeOfExamination");
+
+        /// <summary>
+        /// Specifies the relation type DosageOfMedication.
+        /// </summary>
+        public static readonly HealthcareEntityRelationType DosageOfMedication = new HealthcareEntityRelationType("DosageOfMedication");
 
         private readonly string _value;
 

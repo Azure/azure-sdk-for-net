@@ -83,6 +83,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         }
 
         [Test]
+        [PlaybackOnly("TollFreeNumbersAreDisabledTemporarily")]
         public async Task GetAllReservations()
         {
             // Arrange
@@ -208,6 +209,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         [Test]
         [TestCase(null)]
         [TestCase("en-US")]
+        [PlaybackOnly("TollFreeNumbersAreDisabledTemporarily")]
         public async Task CreateReservationErrorState(string? locale)
         {
             var client = CreateClient();
@@ -247,6 +249,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         [Test]
         [TestCase(null)]
         [TestCase("en-US")]
+        [PlaybackOnly("TollFreeNumbersAreDisabledTemporarily")]
         public async Task CreateReservation(string? locale)
         {
             var client = CreateClient();

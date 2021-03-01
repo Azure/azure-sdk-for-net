@@ -68,7 +68,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         ///
         private readonly AmqpConnectionScope _connectionScope;
-
+        private readonly string _transactionGroup;
         private readonly FaultTolerantAmqpObject<SendingAmqpLink> _sendLink;
 
         private readonly FaultTolerantAmqpObject<RequestResponseAmqpLink> _managementLink;
@@ -90,6 +90,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="connectionScope">The AMQP connection context for operations.</param>
         /// <param name="retryPolicy">The retry policy to consider when an operation fails.</param>
         /// <param name="identifier">The identifier for the sender.</param>
+        /// <param name="transactionGroup"></param>
         ///
         /// <remarks>
         ///   As an internal type, this class performs only basic sanity checks against its arguments.  It
@@ -104,7 +105,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
             string entityPath,
             AmqpConnectionScope connectionScope,
             ServiceBusRetryPolicy retryPolicy,
-            string identifier)
+            string identifier,
+            string transactionGroup)
         {
             Argument.AssertNotNullOrEmpty(entityPath, nameof(entityPath));
             Argument.AssertNotNull(connectionScope, nameof(connectionScope));
@@ -114,9 +116,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
             _identifier = identifier;
             _retryPolicy = retryPolicy;
             _connectionScope = connectionScope;
+            _transactionGroup = transactionGroup;
 
             _sendLink = new FaultTolerantAmqpObject<SendingAmqpLink>(
-                timeout => CreateLinkAndEnsureSenderStateAsync(timeout, CancellationToken.None),
+                timeout => CreateLinkAndEnsureSenderStateAsync(timeout, transactionGroup, CancellationToken.None),
                 link =>
                 {
                     link.Session?.SafeClose();
@@ -250,6 +253,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         transactionId = await AmqpTransactionManager.Instance.EnlistAsync(
                             ambientTransaction,
                             _connectionScope,
+                            _transactionGroup,
                             timeout).ConfigureAwait(false);
                     }
 
@@ -450,6 +454,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     _connectionScope,
                     _managementLink,
                     request,
+                    _transactionGroup,
                     timeout).ConfigureAwait(false);
 
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -535,6 +540,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         _connectionScope,
                         _managementLink,
                         request,
+                        _transactionGroup,
                         timeout).ConfigureAwait(false);
 
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -564,6 +570,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         ///
         /// <param name="timeout">The timeout to apply when creating the link.</param>
+        /// <param name="transactionGroup"></param>
         /// <param name="cancellationToken">The cancellation token to consider when creating the link.</param>
         ///
         /// <returns>The AMQP link to use for sender-related operations.</returns>
@@ -577,6 +584,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         protected virtual async Task<SendingAmqpLink> CreateLinkAndEnsureSenderStateAsync(
             TimeSpan timeout,
+            string transactionGroup,
             CancellationToken cancellationToken)
         {
             ServiceBusEventSource.Log.CreateSendLinkStart(_identifier);
@@ -586,6 +594,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     entityPath: _entityPath,
                     identifier: _identifier,
                     timeout: timeout,
+                    transactionGroup: transactionGroup,
                     cancellationToken: cancellationToken).ConfigureAwait(false);
 
                 if (!MaxMessageSize.HasValue)

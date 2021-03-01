@@ -44,52 +44,62 @@ jobs:
     strategy:
       matrix:
         Linux (AzureCloud):
+          Pool: Azure Pipelines
           OSVmImage: "ubuntu-18.04"
           TestTargetFramework: netcoreapp2.1
           SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
           ArmTemplateParameters: $(azureCloudArmParameters)
         Linux (AzureCloud Canary):
+          Pool: Azure Pipelines
           OSVmImage: "ubuntu-18.04"
           TestTargetFramework: netcoreapp2.1
           SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)
           ArmTemplateParameters: $(azureCloudArmParameters)
           Location: "eastus2euap"
         Windows_NetCoreApp (AzureCloud):
+          Pool: Azure Pipelines
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
           SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
           ArmTemplateParameters: $(azureCloudArmParameters)
         Windows_NetFramework (AzureCloud):
+          Pool: Azure Pipelines
           OSVmImage: "windows-2019"
           TestTargetFramework: net461
           SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
           ArmTemplateParameters: $(azureCloudArmParameters)
         MacOs (AzureCloud):
+          Pool: Azure Pipelines
           OSVmImage: "macOS-10.15"
           TestTargetFramework: netcoreapp2.1
           SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
           ArmTemplateParameters: $(azureCloudArmParameters)
         Windows_Net50 (AzureCloud):
+          Pool: Azure Pipelines
           OSVmImage: "windows-2019"
           TestTargetFramework: net5.0
           SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
           ArmTemplateParameters: $(azureCloudArmParameters)
         Windows_NetCoreApp (AzureUSGovernment):
+          Pool: Azure Pipelines
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
           SubscriptionConfiguration: $(sub-config-gov-test-resources)
           ArmTemplateParameters: $(azureUSGovernmentArmParameters)
         Windows_NetFramework (AzureUSGovernment):
+          Pool: Azure Pipelines
           OSVmImage: "windows-2019"
           TestTargetFramework: net461
           SubscriptionConfiguration: $(sub-config-gov-test-resources)
           ArmTemplateParameters: $(azureUSGovernmentArmParameters)
         Windows_NetCoreApp (AzureChinaCloud):
+          Pool: Azure Pipelines
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
           SubscriptionConfiguration: $(sub-config-cn-test-resources)
           ArmTemplateParameters: $(azureChinaCloudArmParameters)
         Windows_NetFramework (AzureChinaCloud):
+          Pool: Azure Pipelines
           OSVmImage: "windows-2019"
           TestTargetFramework: net461
           SubscriptionConfiguration: $(sub-config-cn-test-resources)
@@ -101,10 +111,13 @@ jobs:
       azureChinaCloudArmParameters: "@{ storageEndpointSuffix = 'core.chinacloudapi.cn'; azureCloud = 'AzureChinaCloud'; }"
 
     pool:
+      name: $(Pool)
       vmImage: $(OSVmImage)
 
     steps:
       - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
+        parameters:
+          AgentImage: $(OSVmImage)
 
       - ${{ if eq(parameters.Daily, true) }}:
         - task: PowerShell@2

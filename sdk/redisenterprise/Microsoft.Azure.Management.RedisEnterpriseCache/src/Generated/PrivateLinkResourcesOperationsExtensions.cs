@@ -31,14 +31,14 @@ namespace Microsoft.Azure.Management.RedisEnterprise
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='clusterName'>
             /// The name of the RedisEnterprise cluster.
             /// </param>
-            public static IEnumerable<PrivateLinkResource> ListByRedisEnterpriseCache(this IPrivateLinkResourcesOperations operations, string resourceGroupName, string clusterName)
+            public static IEnumerable<PrivateLinkResource> ListByCluster(this IPrivateLinkResourcesOperations operations, string resourceGroupName, string clusterName)
             {
-                return operations.ListByRedisEnterpriseCacheAsync(resourceGroupName, clusterName).GetAwaiter().GetResult();
+                return operations.ListByClusterAsync(resourceGroupName, clusterName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='clusterName'>
             /// The name of the RedisEnterprise cluster.
@@ -57,9 +57,9 @@ namespace Microsoft.Azure.Management.RedisEnterprise
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<PrivateLinkResource>> ListByRedisEnterpriseCacheAsync(this IPrivateLinkResourcesOperations operations, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<PrivateLinkResource>> ListByClusterAsync(this IPrivateLinkResourcesOperations operations, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByRedisEnterpriseCacheWithHttpMessagesAsync(resourceGroupName, clusterName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByClusterWithHttpMessagesAsync(resourceGroupName, clusterName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

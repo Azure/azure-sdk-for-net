@@ -38,30 +38,31 @@ namespace Azure.AI.TextAnalytics.Samples
 
             await healthOperation.WaitForCompletionAsync(pollingInterval);
 
-            AnalyzeHealthcareEntitiesResultCollection results = healthOperation.Value;
-
-            Console.WriteLine($"Results of Azure Text Analytics \"Healthcare Async\" Model, version: \"{results.ModelVersion}\"");
-            Console.WriteLine("");
-
-            foreach (AnalyzeHealthcareEntitiesResult result in results)
+            await foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in healthOperation.Value)
             {
-                Console.WriteLine($"    Recognized the following {result.Entities.Count} healthcare entities:");
-
-                foreach (HealthcareEntity entity in result.Entities)
-                {
-                    Console.WriteLine($"    Entity: {entity.Text}");
-                    Console.WriteLine($"    Category: {entity.Category}");
-                    Console.WriteLine($"    Offset: {entity.Offset}");
-                    Console.WriteLine($"    Length: {entity.Length}");
-                    Console.WriteLine($"    Links:");
-
-                    foreach (EntityDataSource entityDataSource in entity.DataSources)
-                    {
-                        Console.WriteLine($"        Entity ID in Data Source: {entityDataSource.EntityId}");
-                        Console.WriteLine($"        DataSource: {entityDataSource.Name}");
-                    }
-                }
+                Console.WriteLine($"Results of Azure Text Analytics \"Healthcare Async\" Model, version: \"{documentsInPage.ModelVersion}\"");
                 Console.WriteLine("");
+
+                foreach (AnalyzeHealthcareEntitiesResult result in documentsInPage)
+                {
+                    Console.WriteLine($"    Recognized the following {result.Entities.Count} healthcare entities:");
+
+                    foreach (HealthcareEntity entity in result.Entities)
+                    {
+                        Console.WriteLine($"    Entity: {entity.Text}");
+                        Console.WriteLine($"    Category: {entity.Category}");
+                        Console.WriteLine($"    Offset: {entity.Offset}");
+                        Console.WriteLine($"    Length: {entity.Length}");
+                        Console.WriteLine($"    Links:");
+
+                        foreach (EntityDataSource entityDataSource in entity.DataSources)
+                        {
+                            Console.WriteLine($"        Entity ID in Data Source: {entityDataSource.EntityId}");
+                            Console.WriteLine($"        DataSource: {entityDataSource.Name}");
+                        }
+                    }
+                    Console.WriteLine("");
+                }
             }
         }
 

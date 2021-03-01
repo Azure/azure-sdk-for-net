@@ -9,8 +9,9 @@
   -->
   <PropertyGroup Condition="$(MSBuildProjectName.Contains('.Samples'))">
     <IsSamplesProject>true</IsSamplesProject>
+    <IsTestSupportProject>true</IsTestSupportProject>
   </PropertyGroup>
 
   <!-- Import the common SDK build properties. -->
-  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.props))\Directory.Build.props" />
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory)..\.., Directory.Build.props))\Directory.Build.props" />
 </Project>

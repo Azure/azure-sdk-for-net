@@ -21,10 +21,12 @@ namespace Azure.Graph.Rbac
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         internal ServicePrincipalsRestOperations RestClient { get; }
+
         /// <summary> Initializes a new instance of ServicePrincipalsOperations for mocking. </summary>
         protected ServicePrincipalsOperations()
         {
         }
+
         /// <summary> Initializes a new instance of ServicePrincipalsOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>

@@ -109,6 +109,15 @@ namespace Azure.Messaging.ServiceBus
         private int _maxConcurrentCalls = 1;
 
         /// <summary>
+        /// Gets or sets the transaction group associated with the processor. This is an
+        /// arbitrary string that is used to all senders, receivers, and processors that you
+        /// wish to use in a transaction that spans multiple different queues, topics, or subscriptions.
+        /// If your transactions only involves a single queue, topic, or subscription, this property
+        /// should not be set.
+        /// </summary>
+        public string TransactionGroup { get; set; }
+
+        /// <summary>
         /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
         /// </summary>
         ///
@@ -150,7 +159,8 @@ namespace Azure.Messaging.ServiceBus
                 AutoCompleteMessages = AutoCompleteMessages,
                 MaxAutoLockRenewalDuration = MaxAutoLockRenewalDuration,
                 MaxReceiveWaitTime = MaxReceiveWaitTime,
-                MaxConcurrentCalls = MaxConcurrentCalls
+                MaxConcurrentCalls = MaxConcurrentCalls,
+                TransactionGroup = TransactionGroup
             };
         }
     }
