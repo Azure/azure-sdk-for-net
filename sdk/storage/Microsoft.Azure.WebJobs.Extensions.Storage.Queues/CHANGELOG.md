@@ -2,6 +2,37 @@
 
 ## 5.0.0-beta.3 (Unreleased)
 
+### Breaking Changes
+
+- The configuration section name for URI configuration was changed from `endpoint` to `serviceUri` to be consistent with other clients.
+
+In case of JSON, from:
+```json
+{
+    "MyConnection": {
+        "endpoint": "https://<my_account>.blob.core.windows.net"
+    }
+}
+```
+
+To
+```json
+{
+    "MyConnection": {
+        "serviceUri": "https://<my_account>.blob.core.windows.net"
+    }
+}
+```
+
+Or using environment variables, from:
+```
+MyConnection__endpoint=https://<my_account>.blob.core.windows.net
+```
+To
+```
+MyConnection__serviceUri=https://<my_account>.blob.core.windows.net
+```
+
 
 ## 5.0.0-beta.2 (2021-02-09)
 

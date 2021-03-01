@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+
 namespace Azure.Iot.ModelsRepository.Fetchers
 {
     /// <summary>
@@ -15,7 +17,7 @@ namespace Azure.Iot.ModelsRepository.Fetchers
         public string Path { get; set; }
 
         public bool FromExpanded => Path.EndsWith(
-            ModelRepositoryConstants.ExpandedJsonFileExtension,
-            System.StringComparison.InvariantCultureIgnoreCase);
+            ModelsRepositoryConstants.ExpandedJsonFileExtension,
+            StringComparison.InvariantCultureIgnoreCase);
     }
 }

@@ -16,16 +16,8 @@ namespace Azure.AI.TextAnalytics
         /// <summary> Initializes a new instance of KeyPhraseExtractionTasksItem. </summary>
         /// <param name="lastUpdateDateTime"> . </param>
         /// <param name="status"> . </param>
-        /// <param name="resultsInternal"> . </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resultsInternal"/> is null. </exception>
-        internal KeyPhraseExtractionTasksItem(DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status, KeyPhraseResult resultsInternal) : base(lastUpdateDateTime, status)
+        internal KeyPhraseExtractionTasksItem(DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status) : base(lastUpdateDateTime, status)
         {
-            if (resultsInternal == null)
-            {
-                throw new ArgumentNullException(nameof(resultsInternal));
-            }
-
-            ResultsInternal = resultsInternal;
         }
 
         /// <summary> Initializes a new instance of KeyPhraseExtractionTasksItem. </summary>

@@ -37,7 +37,7 @@ az synapse workspace create \
 ```
 
 ### Authenticate the client
-In order to interact with the Azure Synapse Analytics service, you'll need to create an instance of a [RoleAssignmentsClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.AccessControl/src/Customization/RoleAssignmentsClient.cs) and/or a [RoleDefinitionsClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.AccessControl/src/Customization/RoleDefinitionsClient.cs) class.
+In order to interact with the Azure Synapse Analytics service, you'll need to create an instance of a [RoleAssignmentsClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.AccessControl/src/Generated/RoleAssignmentsClient.cs) and/or a [RoleDefinitionsClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.AccessControl/src/Generated/RoleDefinitionsClient.cs) class.
 
 You will also  need a **workspace endpoint**, which you may see as "Development endpoint" in the portal, and **client secret credentials (client id, client secret, tenant id)** to instantiate a client object.
 
@@ -89,8 +89,8 @@ To interact with Azure Synapse, you need to instantiate a `RoleAssignmentsClient
 // Replace the string below with your actual endpoint url.
 string endpoint = "<my-endpoint-url>";
 
-RoleAssignmentsClient roleAssignmentsClient = new RoleAssignmentsClient(new Uri(endpoint), new DefaultAzureCredential());
-RoleDefinitionsClient definitionsClient = new RoleDefinitionsClient(new Uri(endpoint), new DefaultAzureCredential());
+RoleAssignmentsClient roleAssignmentsClient = new RoleAssignmentsClient(endpoint, new DefaultAzureCredential());
+RoleDefinitionsClient definitionsClient = new RoleDefinitionsClient(endpoint, new DefaultAzureCredential());
 ```
 
 ### Create a role assignment

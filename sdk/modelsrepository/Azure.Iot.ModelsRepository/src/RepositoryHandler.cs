@@ -26,8 +26,8 @@ namespace Azure.Iot.ModelsRepository
 
             _clientOptions = options;
             _clientDiagnostics = clientDiagnostics;
-            _modelFetcher = repositoryUri.Scheme == ModelRepositoryConstants.File
-                ? _modelFetcher = new LocalModelFetcher(_clientDiagnostics, _clientOptions)
+            _modelFetcher = repositoryUri.Scheme == ModelsRepositoryConstants.File
+                ? _modelFetcher = new LocalModelFetcher(_clientDiagnostics)
                 : _modelFetcher = new RemoteModelFetcher(_clientDiagnostics, _clientOptions);
             _clientId = Guid.NewGuid();
 
@@ -36,27 +36,28 @@ namespace Azure.Iot.ModelsRepository
             ModelsRepositoryEventSource.Instance.InitFetcher(_clientId, repositoryUri.Scheme);
         }
 
-        public async Task<IDictionary<string, string>> ProcessAsync(string dtmi, CancellationToken cancellationToken)
+        public async Task<IDictionary<string, string>> ProcessAsync(string dtmi, DependencyResolutionOption resolutionOption, CancellationToken cancellationToken)
         {
-            return await ProcessAsync(new List<string> { dtmi }, true, cancellationToken).ConfigureAwait(false);
+            return await ProcessAsync(new List<string> { dtmi }, true, resolutionOption, cancellationToken).ConfigureAwait(false);
         }
 
-        public IDictionary<string, string> Process(string dtmi, CancellationToken cancellationToken)
+        public IDictionary<string, string> Process(string dtmi, DependencyResolutionOption resolutionOption, CancellationToken cancellationToken)
         {
-            return ProcessAsync(new List<string> { dtmi }, false, cancellationToken).EnsureCompleted();
+            return ProcessAsync(new List<string> { dtmi }, false, resolutionOption, cancellationToken).EnsureCompleted();
         }
 
-        public Task<IDictionary<string, string>> ProcessAsync(IEnumerable<string> dtmis, CancellationToken cancellationToken)
+        public Task<IDictionary<string, string>> ProcessAsync(IEnumerable<string> dtmis, DependencyResolutionOption resolutionOption, CancellationToken cancellationToken)
         {
-            return ProcessAsync(dtmis, true, cancellationToken);
+            return ProcessAsync(dtmis, true, resolutionOption, cancellationToken);
         }
 
-        public IDictionary<string, string> Process(IEnumerable<string> dtmis, CancellationToken cancellationToken)
+        public IDictionary<string, string> Process(IEnumerable<string> dtmis, DependencyResolutionOption resolutionOption, CancellationToken cancellationToken)
         {
-            return ProcessAsync(dtmis, false, cancellationToken).EnsureCompleted();
+            return ProcessAsync(dtmis, false, resolutionOption, cancellationToken).EnsureCompleted();
         }
 
-        private async Task<IDictionary<string, string>> ProcessAsync(IEnumerable<string> dtmis, bool async, CancellationToken cancellationToken)
+        private async Task<IDictionary<string, string>> ProcessAsync(
+            IEnumerable<string> dtmis, bool async, DependencyResolutionOption resolutionOption, CancellationToken cancellationToken)
         {
             var processedModels = new Dictionary<string, string>();
             Queue<string> toProcessModels = PrepareWork(dtmis);
@@ -75,8 +76,8 @@ namespace Azure.Iot.ModelsRepository
                 ModelsRepositoryEventSource.Instance.ProcessingDtmi(targetDtmi);
 
                 FetchResult result = async
-                    ? await FetchAsync(targetDtmi, cancellationToken).ConfigureAwait(false)
-                    : Fetch(targetDtmi, cancellationToken);
+                    ? await FetchAsync(targetDtmi, resolutionOption, cancellationToken).ConfigureAwait(false)
+                    : Fetch(targetDtmi, resolutionOption, cancellationToken);
 
                 if (result.FromExpanded)
                 {
@@ -95,7 +96,7 @@ namespace Azure.Iot.ModelsRepository
 
                 ModelMetadata metadata = new ModelQuery(result.Definition).ParseModel();
 
-                if (_clientOptions.DependencyResolution >= DependencyResolutionOption.Enabled)
+                if (resolutionOption >= DependencyResolutionOption.Enabled)
                 {
                     IList<string> dependencies = metadata.Dependencies;
 
@@ -115,7 +116,7 @@ namespace Azure.Iot.ModelsRepository
                 {
                     ModelsRepositoryEventSource.Instance.IncorrectDtmiCasing(targetDtmi, parsedDtmi);
                     string formatErrorMsg =
-                        $"{string.Format(CultureInfo.InvariantCulture, StandardStrings.GenericResolverError, targetDtmi)} " +
+                        $"{string.Format(CultureInfo.InvariantCulture, StandardStrings.GenericGetModelsError, targetDtmi)} " +
                         string.Format(CultureInfo.InvariantCulture, StandardStrings.IncorrectDtmiCasing, targetDtmi, parsedDtmi);
 
                     throw new RequestFailedException(formatErrorMsg, new FormatException(formatErrorMsg));
@@ -127,14 +128,14 @@ namespace Azure.Iot.ModelsRepository
             return processedModels;
         }
 
-        private Task<FetchResult> FetchAsync(string dtmi, CancellationToken cancellationToken)
+        private Task<FetchResult> FetchAsync(string dtmi, DependencyResolutionOption resolutionOption, CancellationToken cancellationToken)
         {
-            return _modelFetcher.FetchAsync(dtmi, _repositoryUri, cancellationToken);
+            return _modelFetcher.FetchAsync(dtmi, _repositoryUri, resolutionOption, cancellationToken);
         }
 
-        private FetchResult Fetch(string dtmi, CancellationToken cancellationToken)
+        private FetchResult Fetch(string dtmi, DependencyResolutionOption resolutionOption, CancellationToken cancellationToken)
         {
-            return _modelFetcher.Fetch(dtmi, _repositoryUri, cancellationToken);
+            return _modelFetcher.Fetch(dtmi, _repositoryUri, resolutionOption, cancellationToken);
         }
 
         private static Queue<string> PrepareWork(IEnumerable<string> dtmis)
@@ -147,10 +148,10 @@ namespace Azure.Iot.ModelsRepository
                     ModelsRepositoryEventSource.Instance.InvalidDtmiInput(dtmi);
 
                     string invalidArgMsg =
-                        $"{string.Format(CultureInfo.InvariantCulture, StandardStrings.GenericResolverError, dtmi)} " +
+                        $"{string.Format(CultureInfo.InvariantCulture, StandardStrings.GenericGetModelsError, dtmi)} " +
                         string.Format(CultureInfo.InvariantCulture, StandardStrings.InvalidDtmiFormat, dtmi);
 
-                    throw new RequestFailedException(invalidArgMsg, new ArgumentException(invalidArgMsg));
+                    throw new ArgumentException(invalidArgMsg);
                 }
 
                 toProcessModels.Enqueue(dtmi);

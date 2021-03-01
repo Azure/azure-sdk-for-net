@@ -58,6 +58,8 @@ namespace Azure.Storage.Blobs.Samples
                 // build SAS URI for sample
                 BlobSasBuilder sas = new BlobSasBuilder
                 {
+                    BlobContainerName = containerName,
+                    BlobName = blobName,
                     ExpiresOn = DateTimeOffset.UtcNow.AddHours(1)
                 };
                 sas.SetPermissions(BlobSasPermissions.All);
@@ -589,6 +591,8 @@ namespace Azure.Storage.Blobs.Samples
                 // Create BlobSasBuilder and specify parameters
                 BlobSasBuilder sasBuilder = new BlobSasBuilder()
                 {
+                    BlobContainerName = containerName,
+                    BlobName = blobName,
                     Identifier = "mysignedidentifier"
                 };
                 #endregion

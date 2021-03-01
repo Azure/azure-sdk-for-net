@@ -726,7 +726,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         }
 
         [TestCase("application/x-pkcs12")]
-        [TestCase("application/x-pem-file", Ignore = "Investigate downlevel creation with PEM: https://github.com/Azure/azure-sdk-for-net/issues/16897")]
+        [TestCase("application/x-pem-file")]
         public async Task DownloadLatestCertificate(string contentType)
         {
             string name = Recording.GenerateId();
@@ -748,7 +748,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             CertificateOperation operation = await Client.StartCreateCertificateAsync(name, policy);
             RegisterForCleanup(name);
 
-            await operation.WaitForCompletionAsync();
+            await WaitForCompletion(operation);
 
             KeyVaultCertificate certificate = await Client.GetCertificateAsync(name);
 
@@ -768,7 +768,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         }
 
         [TestCase("application/x-pkcs12")]
-        [TestCase("application/x-pem-file", Ignore = "Investigate downlevel creation with PEM: https://github.com/Azure/azure-sdk-for-net/issues/16897")]
+        [TestCase("application/x-pem-file")]
         public async Task DownloadVersionedCertificate(string contentType)
         {
             string name = Recording.GenerateId();
@@ -790,7 +790,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             CertificateOperation operation = await Client.StartCreateCertificateAsync(name, policy);
             RegisterForCleanup(name);
 
-            await operation.WaitForCompletionAsync();
+            await WaitForCompletion(operation);
 
             KeyVaultCertificate certificate = await Client.GetCertificateAsync(name);
             string version = certificate.Properties.Version;
@@ -805,7 +805,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             policy.Exportable = false;
             operation = await Client.StartCreateCertificateAsync(name, policy);
 
-            await operation.WaitForCompletionAsync();
+            await WaitForCompletion(operation);
 
             certificate = await Client.GetCertificateAsync(name);
             Assert.AreNotEqual(version, certificate.Properties.Version);
@@ -821,7 +821,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         }
 
         [TestCase("application/x-pkcs12")]
-        [TestCase("application/x-pem-file", Ignore = "Investigate downlevel creation with PEM: https://github.com/Azure/azure-sdk-for-net/issues/16897")]
+        [TestCase("application/x-pem-file")]
         public async Task DownloadNonExportableCertificate(string contentType)
         {
             string name = Recording.GenerateId();
@@ -843,7 +843,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             CertificateOperation operation = await Client.StartCreateCertificateAsync(name, policy);
             RegisterForCleanup(name);
 
-            await operation.WaitForCompletionAsync();
+            await WaitForCompletion(operation);
 
             using X509Certificate2 x509certificate = await Client.DownloadCertificateAsync(name);
             Assert.IsFalse(x509certificate.HasPrivateKey);

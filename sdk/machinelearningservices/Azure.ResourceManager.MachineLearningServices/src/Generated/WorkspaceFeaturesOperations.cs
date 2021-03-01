@@ -21,10 +21,12 @@ namespace Azure.ResourceManager.MachineLearningServices
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         internal WorkspaceFeaturesRestOperations RestClient { get; }
+
         /// <summary> Initializes a new instance of WorkspaceFeaturesOperations for mocking. </summary>
         protected WorkspaceFeaturesOperations()
         {
         }
+
         /// <summary> Initializes a new instance of WorkspaceFeaturesOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>

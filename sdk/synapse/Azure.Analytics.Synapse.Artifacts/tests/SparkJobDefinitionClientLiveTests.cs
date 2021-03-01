@@ -64,7 +64,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         private SparkJobDefinitionClient CreateClient()
         {
             return InstrumentClient(new SparkJobDefinitionClient(
-                new Uri(TestEnvironment.EndpointUrl),
+                TestEnvironment.EndpointUrl,
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new ArtifactsClientOptions())
             ));
