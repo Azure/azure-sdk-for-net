@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Iot.TimeSeriesInsights
 {
-    public partial class UpdateModelSettingsOptions : IUtf8JsonSerializable
+    public partial class UpdateModelSettingsRequest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
