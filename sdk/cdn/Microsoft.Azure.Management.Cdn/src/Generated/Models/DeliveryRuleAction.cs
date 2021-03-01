@@ -10,13 +10,11 @@
 
 namespace Microsoft.Azure.Management.Cdn.Models
 {
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// An action for the delivery rule.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("DeliveryRuleAction")]
     public partial class DeliveryRuleAction
     {
         /// <summary>

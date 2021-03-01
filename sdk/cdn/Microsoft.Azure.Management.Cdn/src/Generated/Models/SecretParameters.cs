@@ -10,13 +10,11 @@
 
 namespace Microsoft.Azure.Management.Cdn.Models
 {
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// The json object containing secret parameters
     /// </summary>
-    [Newtonsoft.Json.JsonObject("SecretParameters")]
     public partial class SecretParameters
     {
         /// <summary>
