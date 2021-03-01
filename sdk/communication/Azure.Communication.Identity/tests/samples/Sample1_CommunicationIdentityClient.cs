@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Communication.Identity.Models;
 using Azure.Communication.Identity.Tests;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -34,11 +36,11 @@ namespace Azure.Communication.Identity.Samples
 
             client = CreateClientWithConnectionString();
 
-            #region  Snippet:CreateCommunicationUserAsync
+            #region Snippet:CreateCommunicationUserAsync
             Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync();
             CommunicationUserIdentifier user = userResponse.Value;
             Console.WriteLine($"User id: {user.Id}");
-            #endregion Snippet:CreateCommunicationTokenAsync
+            #endregion Snippet:CreateCommunicationUserAsync
 
             #region  Snippet:CreateCommunicationTokenAsync
             Response<AccessToken> tokenResponse = await client.GetTokenAsync(user, scopes: new[] { CommunicationTokenScope.Chat });
@@ -47,6 +49,19 @@ namespace Azure.Communication.Identity.Samples
             Console.WriteLine($"Token: {token}");
             Console.WriteLine($"Expires On: {expiresOn}");
             #endregion Snippet:CreateCommunicationTokenAsync
+
+            #region Snippet:CreateTURNTokenAsync
+            Response<CommunicationTurnCredentialsResponse> turnTokenResponse = await client.GetTurnCredentialsAsync(user);
+            DateTimeOffset turnTokenExpiresOn = turnTokenResponse.Value.ExpiresOn;
+            IReadOnlyList<CommunicationTurnServer> turnServers = turnTokenResponse.Value.TurnServers;
+            Console.WriteLine($"Expires On: {turnTokenExpiresOn}");
+            foreach (CommunicationTurnServer turnServer in turnServers)
+            {
+                Console.WriteLine($"TURN Url: {turnServer.Urls}");
+                Console.WriteLine($"TURN Username: {turnServer.Username}");
+                Console.WriteLine($"TURN Credential: {turnServer.Credential}");
+            }
+            #endregion Snippet:CreateTURNTokenAsync
 
             #region Snippet:RevokeCommunicationUserTokenAsync
             Response revokeResponse = await client.RevokeTokensAsync(user);
@@ -69,11 +84,11 @@ namespace Azure.Communication.Identity.Samples
             #endregion Snippet:CreateCommunicationIdentityClient
             client = CreateClientWithConnectionString();
 
-            #region  Snippet:CreateCommunicationUser
+            #region Snippet:CreateCommunicationUser
             Response<CommunicationUserIdentifier> userResponse = client.CreateUser();
             CommunicationUserIdentifier user = userResponse.Value;
             Console.WriteLine($"User id: {user.Id}");
-            #endregion Snippet:CreateCommunicationToken
+            #endregion Snippet:CreateCommunicationUser
 
             #region  Snippet:CreateCommunicationToken
             Response<AccessToken> tokenResponse = client.GetToken(user, scopes: new[] { CommunicationTokenScope.Chat });
@@ -82,6 +97,19 @@ namespace Azure.Communication.Identity.Samples
             Console.WriteLine($"Token: {token}");
             Console.WriteLine($"Expires On: {expiresOn}");
             #endregion Snippet:CreateCommunicationToken
+
+            #region Snippet:CreateTURNToken
+            Response<CommunicationTurnCredentialsResponse> turnTokenResponse = client.GetTurnCredentials(user);
+            DateTimeOffset turnTokenExpiresOn = turnTokenResponse.Value.ExpiresOn;
+            IReadOnlyList<CommunicationTurnServer> turnServers = turnTokenResponse.Value.TurnServers;
+            Console.WriteLine($"Expires On: {turnTokenExpiresOn}");
+            foreach (CommunicationTurnServer turnServer in turnServers)
+            {
+                Console.WriteLine($"TURN Url: {turnServer.Urls}");
+                Console.WriteLine($"TURN Username: {turnServer.Username}");
+                Console.WriteLine($"TURN Credential: {turnServer.Credential}");
+            }
+            #endregion Snippet:CreateTURNToken
 
             #region Snippet:RevokeCommunicationUserToken
             Response revokeResponse = client.RevokeTokens(user);

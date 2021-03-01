@@ -15,6 +15,8 @@ namespace Azure.Communication.Identity
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteUserAsync(Azure.Communication.CommunicationUserIdentifier communicationUser, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Core.AccessToken> GetToken(Azure.Communication.CommunicationUserIdentifier communicationUser, System.Collections.Generic.IEnumerable<Azure.Communication.Identity.CommunicationTokenScope> scopes, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Core.AccessToken>> GetTokenAsync(Azure.Communication.CommunicationUserIdentifier communicationUser, System.Collections.Generic.IEnumerable<Azure.Communication.Identity.CommunicationTokenScope> scopes, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Communication.Identity.Models.CommunicationTurnCredentialsResponse> GetTurnCredentials(Azure.Communication.CommunicationUserIdentifier communicationUser, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.Identity.Models.CommunicationTurnCredentialsResponse>> GetTurnCredentialsAsync(Azure.Communication.CommunicationUserIdentifier communicationUser, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response RevokeTokens(Azure.Communication.CommunicationUserIdentifier communicationUser, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RevokeTokensAsync(Azure.Communication.CommunicationUserIdentifier communicationUser, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -43,5 +45,21 @@ namespace Azure.Communication.Identity
         public static implicit operator Azure.Communication.Identity.CommunicationTokenScope (string value) { throw null; }
         public static bool operator !=(Azure.Communication.Identity.CommunicationTokenScope left, Azure.Communication.Identity.CommunicationTokenScope right) { throw null; }
         public override string ToString() { throw null; }
+    }
+}
+namespace Azure.Communication.Identity.Models
+{
+    public partial class CommunicationTurnCredentialsResponse
+    {
+        internal CommunicationTurnCredentialsResponse() { }
+        public System.DateTimeOffset ExpiresOn { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Communication.Identity.Models.CommunicationTurnServer> TurnServers { get { throw null; } }
+    }
+    public partial class CommunicationTurnServer
+    {
+        internal CommunicationTurnServer() { }
+        public string Credential { get { throw null; } }
+        public string Urls { get { throw null; } }
+        public string Username { get { throw null; } }
     }
 }

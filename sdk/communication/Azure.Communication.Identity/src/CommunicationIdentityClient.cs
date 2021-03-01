@@ -19,6 +19,7 @@ namespace Azure.Communication.Identity
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         internal CommunicationIdentityRestClient RestClient { get; }
+        internal CommunicationIdentityRestClient TurnRestClient { get; }
 
         #region public constructors - all argument need null check
 
@@ -81,6 +82,7 @@ namespace Azure.Communication.Identity
         {
             _clientDiagnostics = new ClientDiagnostics(options);
             RestClient = new CommunicationIdentityRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
+            TurnRestClient = new CommunicationIdentityRestClient(_clientDiagnostics, httpPipeline, endpoint, "2021-12-12");
         }
 
         #endregion
@@ -90,6 +92,7 @@ namespace Azure.Communication.Identity
         {
             _clientDiagnostics = null;
             RestClient = null;
+            TurnRestClient = null;
         }
 
         /// <summary>Creates a new <see cref="CommunicationUserIdentifier"/>.</summary>
@@ -281,6 +284,43 @@ namespace Azure.Communication.Identity
             try
             {
                 return await RestClient.RevokeAccessTokensAsync(communicationUser.Id, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>Gets a TURN credential for a <see cref="CommunicationUserIdentifier"/>.</summary>
+        /// <param name="communicationUser">The <see cref="CommunicationUserIdentifier"/> for whom to issue a token.</param>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
+        /// <exception cref="RequestFailedException">The server returned an error.</exception>
+        public virtual Response<CommunicationTurnCredentialsResponse> GetTurnCredentials(CommunicationUserIdentifier communicationUser, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(GetTurnCredentials)}");
+            scope.Start();
+            try
+            {
+                return TurnRestClient.IssueTurnCredentials(communicationUser.Id, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>Asynchronously gets a TURN credential for a <see cref="CommunicationUserIdentifier"/>.</summary>
+        /// <param name="communicationUser">The <see cref="CommunicationUserIdentifier"/> for whom to issue a token.</param>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
+        public virtual async Task<Response<CommunicationTurnCredentialsResponse>> GetTurnCredentialsAsync(CommunicationUserIdentifier communicationUser, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(GetTurnCredentials)}");
+            scope.Start();
+            try
+            {
+                return await TurnRestClient.IssueTurnCredentialsAsync(communicationUser.Id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
