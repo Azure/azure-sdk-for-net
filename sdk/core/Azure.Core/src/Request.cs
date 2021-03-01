@@ -15,10 +15,23 @@ namespace Azure.Core
     public abstract class Request : IDisposable
 #pragma warning restore AZC0012 // Avoid single word type names
     {
+        private RequestUriBuilder? _uri;
+
         /// <summary>
         /// Gets or sets and instance of <see cref="RequestUriBuilder"/> used to create the Uri.
         /// </summary>
-        public virtual RequestUriBuilder Uri { get; set; } = new RequestUriBuilder();
+        public virtual RequestUriBuilder Uri
+        {
+            get
+            {
+                return _uri ??= new RequestUriBuilder();
+            }
+            set
+            {
+                Argument.AssertNotNull(value, nameof(value));
+                _uri = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the request HTTP method.
