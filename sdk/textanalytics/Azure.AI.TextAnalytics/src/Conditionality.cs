@@ -5,10 +5,13 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
+    /// <summary>
+    /// Determines the condition of the <see cref="HealthcareEntityAssertion"/>
+    /// </summary>
     [CodeGenModel("Conditionality")]
-    internal enum Conditionality
+    public enum Conditionality
     {
-				/// <summary> Hypothetical. </summary>
+        /// <summary> Hypothetical. </summary>
         Hypothetical,
         /// <summary> Conditional. </summary>
         Conditional

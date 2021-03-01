@@ -85,20 +85,28 @@ namespace Azure.AI.TextAnalytics.Tests
                         Assert.IsTrue(linksList.Contains(entityDataSource.Name));
                 }
 
-                // TODO - Implement HC preview.4 https://github.com/Azure/azure-sdk-for-net/issues/18984
-                //if (entity.Text == "100mg")
-                //{
-                //    Assert.IsTrue(entity.RelatedEntities.Count == 1);
+                if (entity.Text == "100mg")
+                {
+                    Assert.AreEqual(18, entity.Offset);
+                    Assert.AreEqual("Dosage", entity.Category);
+                    Assert.AreEqual(5, entity.Length);
+                }
+            }
 
-                //    var relatedEntity = entity.RelatedEntities.FirstOrDefault().Key;
-
-                //    Assert.AreEqual("ibuprofen", relatedEntity.Text);
-                //    Assert.AreEqual("MedicationName", relatedEntity.Category);
-                //    Assert.AreEqual(9, relatedEntity.Length);
-                //    Assert.AreEqual(27, relatedEntity.Offset);
-                //    Assert.AreEqual(1.0, relatedEntity.ConfidenceScore);
-                //    Assert.AreEqual(HealthcareEntityRelationType.DosageOfMedication, entity.RelatedEntities.FirstOrDefault().Value);
-                //}
+            Assert.AreEqual(2, result1.EntitiesRelations.Count());
+            foreach (HealthcareEntityRelation relation in result1.EntitiesRelations)
+            {
+                if (relation.RelationType == "DosageOfMedication")
+                {
+                    var role = relation.Roles.ElementAt(0);
+                    Assert.IsNotNull(relation.Roles);
+                    Assert.AreEqual(2, relation.Roles.Count());
+                    Assert.AreEqual("Attribute", role.Name);
+                    Assert.AreEqual("100mg", role.Entity.Text);
+                    Assert.AreEqual(18, role.Entity.Offset);
+                    Assert.AreEqual("Dosage", role.Entity.Category);
+                    Assert.AreEqual(5, role.Entity.Length);
+                }
             }
         }
 
