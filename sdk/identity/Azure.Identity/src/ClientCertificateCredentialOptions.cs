@@ -9,9 +9,9 @@ namespace Azure.Identity
     public class ClientCertificateCredentialOptions : TokenCredentialOptions, ITokenCacheOptions
     {
         /// <summary>
-        /// Specifies the <see cref="TokenCache"/> to be used by the credential.
+        /// Specifies the <see cref="TokenCacheOptions"/> to be used by the credential.
         /// </summary>
-        public TokenCache TokenCache { get; set; }
+        public TokenCacheOptions TokenCacheOptions { get; set; }
 
         /// <summary>
         /// Will include x5c header in client claims when acquiring a token to enable subject name / issuer based authentication for the <see cref="ClientCertificateCredential"/>.

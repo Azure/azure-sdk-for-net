@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ namespace Azure.Identity
     /// </summary>
 #pragma warning disable CA1001 // Types that own disposable fields should be disposable
     // SemaphoreSlim only needs to be disposed when AvailableWaitHandle is called.
-    public class TokenCache
+    internal class TokenCache
 #pragma warning restore CA1001 // Types that own disposable fields should be disposable
     {
         private readonly SemaphoreSlim _lock = new SemaphoreSlim(1, 1);
@@ -59,48 +60,30 @@ namespace Azure.Identity
         /// </summary>
         /// <param name="options">Options controlling the storage of the <see cref="TokenCache"/>.</param>
         public TokenCache(TokenCacheOptions options = null)
-            : this(Array.Empty<byte>())
-        {
-            if (options is SuperAdvancedDontUseTokenCacheOptions inMemoryOptions)
-            {
-                _cacheHelperWrapper = new MsalCacheHelperWrapper();
-                if (inMemoryOptions.UpdatedDelegate != null)
-                {
-                    Updated += inMemoryOptions.UpdatedDelegate;
-                }
-            }
-            else
-            {
-                _allowUnencryptedStorage = options?.AllowUnencryptedStorage ?? false;
-                _name = options?.Name ?? Constants.DefaultMsalTokenCacheName;
-                _persistToDisk = true;
-            }
-        }
+            :this(options, default, default)
+        { }
 
-        internal TokenCache(TokenCacheOptions options, MsalCacheHelperWrapper cacheHelperWrapper)
+        internal TokenCache(TokenCacheOptions options, MsalCacheHelperWrapper cacheHelperWrapper, Func<IPublicClientApplication> publicApplicationFactory = null)
         {
-            _cacheHelperWrapper = cacheHelperWrapper;
-            if (options is SuperAdvancedDontUseTokenCacheOptions inMemoryOptions)
-            {
-                if (inMemoryOptions.UpdatedDelegate != null)
-                {
-                    Updated += inMemoryOptions.UpdatedDelegate;
-                }
-            }
-            else
-            {
-                _allowUnencryptedStorage = options?.AllowUnencryptedStorage ?? false;
-                _name = options?.Name ?? Constants.DefaultMsalTokenCacheName;
-                _persistToDisk = true;
-            }
-        }
-
-        internal TokenCache(byte[] data, Func<IPublicClientApplication> publicApplicationFactory = null)
-        {
-            Data = data;
-            _lastUpdated = DateTimeOffset.UtcNow;
-            _cacheAccessMap = new ConditionalWeakTable<object, CacheTimestamp>();
+            _cacheHelperWrapper = cacheHelperWrapper ?? new MsalCacheHelperWrapper();
             _publicClientApplicationFactory = publicApplicationFactory ?? new Func<IPublicClientApplication>(() => PublicClientApplicationBuilder.Create(Guid.NewGuid().ToString()).Build());
+            if (options is UnsafeTokenCacheOptions inMemoryOptions)
+            {
+                if (inMemoryOptions.UpdatedDelegate != null)
+                {
+                    Updated += inMemoryOptions.UpdatedDelegate;
+                }
+
+                Data = inMemoryOptions.InitialBytes;
+                _lastUpdated = DateTimeOffset.UtcNow;
+                _cacheAccessMap = new ConditionalWeakTable<object, CacheTimestamp>();
+            }
+            else
+            {
+                _allowUnencryptedStorage = options?.AllowUnencryptedStorage ?? false;
+                _name = options?.Name ?? Constants.DefaultMsalTokenCacheName;
+                _persistToDisk = true;
+            }
         }
 
         /// <summary>
@@ -201,9 +184,10 @@ namespace Azure.Identity
 
             if (Updated != null)
             {
+                var eventBytes = Data.ToArray();
                 foreach (Func<TokenCacheUpdatedArgs, Task> handler in Updated.GetInvocationList())
                 {
-                    await handler(new TokenCacheUpdatedArgs(this)).ConfigureAwait(false);
+                    await handler(new TokenCacheUpdatedArgs(eventBytes)).ConfigureAwait(false);
                 }
             }
         }

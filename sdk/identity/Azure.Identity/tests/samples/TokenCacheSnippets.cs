@@ -12,6 +12,8 @@ namespace Azure.Identity.Samples
 {
     public class TokenCacheSnippets
     {
+        //TODO: Fix
+        /*
         #region Snippet:Identity_TokenCache_CustomPersistence_Usage_TokenCachePath
         private const string TOKEN_CACHE_PATH = "./tokencache.bin";
         #endregion
@@ -22,7 +24,7 @@ namespace Azure.Identity.Samples
             var credential = new InteractiveBrowserCredential(
                 new InteractiveBrowserCredentialOptions
                 {
-                    TokenCache = new TokenCache(new SuperAdvancedDontUseTokenCacheOptions())
+                    TokenCacheOptions = new TokenCacheOptions()
                 });
             #endregion
         }
@@ -30,12 +32,10 @@ namespace Azure.Identity.Samples
         public void Identity_TokenCache_PersistentNamed()
         {
             #region Snippet:Identity_TokenCache_PersistentNamed
-            var tokenCache = new TokenCache(
-                new SuperAdvancedDontUseTokenCacheOptions { Name = "my_application_name" }
-            );
+            var tokenCache = new TokenCacheOptions { Name = "my_application_name" };
 
             var credential = new InteractiveBrowserCredential(
-                new InteractiveBrowserCredentialOptions { TokenCache = tokenCache }
+                new InteractiveBrowserCredentialOptions { TokenCacheOptions = tokenCache }
             );
             #endregion
         }
@@ -43,12 +43,10 @@ namespace Azure.Identity.Samples
         public void Identity_TokenCache_PersistentUnencrypted()
         {
             #region Snippet:Identity_TokenCache_PersistentUnencrypted
-            var tokenCache = new TokenCache(
-                new SuperAdvancedDontUseTokenCacheOptions { AllowUnencryptedStorage = true }
-            );
+            var tokenCache = new TokenCacheOptions { AllowUnencryptedStorage = true };
 
             var credential = new InteractiveBrowserCredential(
-                new InteractiveBrowserCredentialOptions { TokenCache = tokenCache }
+                new InteractiveBrowserCredentialOptions { TokenCacheOptions = tokenCache }
             );
             #endregion
         }
@@ -56,18 +54,18 @@ namespace Azure.Identity.Samples
         public async Task Identity_TokenCache_CustomPersistence_Read()
         {
             #region Snippet:Identity_TokenCache_CustomPersistence_Read
-            TokenCache tokenCache;
+            TokenCacheOptions tokenCache;
 
             using (var cacheStream = new FileStream(TOKEN_CACHE_PATH, FileMode.OpenOrCreate, FileAccess.Read))
             {
-                tokenCache = await TokenCacheSerializer.DeserializeAsync(cacheStream);
+                //TODO: tokenCache = await TokenCacheSerializer.DeserializeAsync(cacheStream);
             }
             #endregion
         }
 
         public async Task Identity_TokenCache_CustomPersistence_Write()
         {
-            var tokenCache = new TokenCache(new SuperAdvancedDontUseTokenCacheOptions());
+            var tokenCache = new TokenCacheOptions(new UnsafeTokenCacheOptions());
 
             #region Snippet:Identity_TokenCache_CustomPersistence_Write
             using (var cacheStream = new FileStream(TOKEN_CACHE_PATH, FileMode.Create, FileAccess.Write))
@@ -78,9 +76,9 @@ namespace Azure.Identity.Samples
         }
 
         #region Snippet:Identity_TokenCache_CustomPersistence_Usage
-        public static async Task<TokenCache> ReadTokenCacheAsync()
+        public static async Task<TokenCacheOptions> ReadTokenCacheAsync()
         {
-            TokenCache tokenCache;
+            TokenCacheOptions tokenCache;
 
             using (var cacheStream = new FileStream(TOKEN_CACHE_PATH, FileMode.OpenOrCreate, FileAccess.Read))
             {
@@ -104,9 +102,10 @@ namespace Azure.Identity.Samples
             var tokenCache = await ReadTokenCacheAsync();
 
             var credential = new InteractiveBrowserCredential(
-                new InteractiveBrowserCredentialOptions { TokenCache = tokenCache }
+                new InteractiveBrowserCredentialOptions { TokenCacheOptions = tokenCache }
             );
         }
         #endregion
+        */
     }
 }

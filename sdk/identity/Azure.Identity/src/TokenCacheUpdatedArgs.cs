@@ -4,18 +4,18 @@
 namespace Azure.Identity
 {
     /// <summary>
-    /// Data regarding an update of a <see cref="TokenCache"/>.
+    /// Data regarding an update of a token cache.
     /// </summary>
     public class TokenCacheUpdatedArgs
     {
-        internal TokenCacheUpdatedArgs(TokenCache cache)
+        internal TokenCacheUpdatedArgs(byte[] cacheData)
         {
-            Cache = cache;
+            Data = cacheData;
         }
 
         /// <summary>
-        /// The <see cref="TokenCache"/> instance which was updated.
+        /// The <see cref="TokenCacheOptions"/> instance which was updated.
         /// </summary>
-        public TokenCache Cache { get; }
+        public byte[] Data { get; }
     }
 }

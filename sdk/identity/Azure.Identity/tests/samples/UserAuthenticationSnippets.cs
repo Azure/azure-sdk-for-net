@@ -80,7 +80,7 @@ namespace Azure.Identity.Samples
                 var credential = new InteractiveBrowserCredential(
                     new InteractiveBrowserCredentialOptions
                     {
-                        TokenCache = new TokenCache(new SuperAdvancedDontUseTokenCacheOptions())
+                        TokenCacheOptions = new UnsafeTokenCacheOptions()
                     });
                 #endregion
 
@@ -109,7 +109,7 @@ namespace Azure.Identity.Samples
                 var credential = new InteractiveBrowserCredential(
                     new InteractiveBrowserCredentialOptions
                     {
-                        TokenCache = new TokenCache(new SuperAdvancedDontUseTokenCacheOptions()),
+                        TokenCacheOptions = new UnsafeTokenCacheOptions(),
                         AuthenticationRecord = authRecord
                     });
                 #endregion
@@ -127,7 +127,7 @@ namespace Azure.Identity.Samples
                 credential = new InteractiveBrowserCredential(
                     new InteractiveBrowserCredentialOptions
                     {
-                        TokenCache = new TokenCache(new SuperAdvancedDontUseTokenCacheOptions())
+                        TokenCacheOptions = new UnsafeTokenCacheOptions()
                     });
 
                 AuthenticationRecord authRecord = await credential.AuthenticateAsync();
@@ -149,7 +149,7 @@ namespace Azure.Identity.Samples
                 credential = new InteractiveBrowserCredential(
                     new InteractiveBrowserCredentialOptions
                     {
-                        TokenCache = new TokenCache(new SuperAdvancedDontUseTokenCacheOptions()),
+                        TokenCacheOptions = new UnsafeTokenCacheOptions(),
                         AuthenticationRecord = authRecord
                     });
             }

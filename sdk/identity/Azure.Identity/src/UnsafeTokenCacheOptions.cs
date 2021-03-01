@@ -7,14 +7,20 @@ using System.Threading.Tasks;
 namespace Azure.Identity
 {
     /// <summary>
-    /// Options controlling the storage of the <see cref="TokenCache"/>.
+    /// Options controlling the storage of the token cache.
     /// </summary>
-    public class SuperAdvancedDontUseTokenCacheOptions : TokenCacheOptions
+    public class UnsafeTokenCacheOptions : TokenCacheOptions
     {
         /// <summary>
         /// The delegate to be called when the Updated event fires.
         /// </summary>
         /// <value></value>
         public Func<TokenCacheUpdatedArgs, Task> UpdatedDelegate { get; set; }
+
+        /// <summary>
+        /// The bytes used to initialize the token cache. This would most likely have come from the <see cref="TokenCacheUpdatedArgs"/>.
+        /// </summary>
+        /// <value></value>
+        public byte[] InitialBytes { get; set; }
     }
 }

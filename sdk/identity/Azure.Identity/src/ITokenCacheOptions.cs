@@ -9,6 +9,6 @@ namespace Azure.Identity
 {
     internal interface ITokenCacheOptions
     {
-        TokenCache TokenCache { get; }
+        TokenCacheOptions TokenCacheOptions { get; }
     }
 }

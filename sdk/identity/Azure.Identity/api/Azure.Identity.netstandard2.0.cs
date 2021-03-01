@@ -69,7 +69,7 @@ namespace Azure.Identity
     {
         public ClientCertificateCredentialOptions() { }
         public bool SendCertificateChain { get { throw null; } set { } }
-        public Azure.Identity.TokenCache TokenCache { get { throw null; } set { } }
+        public Azure.Identity.TokenCacheOptions TokenCacheOptions { get { throw null; } set { } }
     }
     public partial class ClientSecretCredential : Azure.Core.TokenCredential
     {
@@ -83,7 +83,7 @@ namespace Azure.Identity
     public partial class ClientSecretCredentialOptions : Azure.Identity.TokenCredentialOptions
     {
         public ClientSecretCredentialOptions() { }
-        public Azure.Identity.TokenCache TokenCache { get { throw null; } set { } }
+        public Azure.Identity.TokenCacheOptions TokenCacheOptions { get { throw null; } set { } }
     }
     public partial class CredentialUnavailableException : Azure.Identity.AuthenticationFailedException
     {
@@ -138,7 +138,7 @@ namespace Azure.Identity
         public System.Func<Azure.Identity.DeviceCodeInfo, System.Threading.CancellationToken, System.Threading.Tasks.Task> DeviceCodeCallback { get { throw null; } set { } }
         public bool DisableAutomaticAuthentication { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
-        public Azure.Identity.TokenCache TokenCache { get { throw null; } set { } }
+        public Azure.Identity.TokenCacheOptions TokenCacheOptions { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public partial struct DeviceCodeInfo
@@ -188,7 +188,7 @@ namespace Azure.Identity
         public bool DisableAutomaticAuthentication { get { throw null; } set { } }
         public System.Uri RedirectUri { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
-        public Azure.Identity.TokenCache TokenCache { get { throw null; } set { } }
+        public Azure.Identity.TokenCacheOptions TokenCacheOptions { get { throw null; } set { } }
     }
     public partial class ManagedIdentityCredential : Azure.Core.TokenCredential
     {
@@ -209,22 +209,13 @@ namespace Azure.Identity
     public partial class SharedTokenCacheCredentialOptions : Azure.Identity.TokenCredentialOptions
     {
         public SharedTokenCacheCredentialOptions() { }
-        public SharedTokenCacheCredentialOptions(Azure.Identity.TokenCache tokenCache) { }
+        public SharedTokenCacheCredentialOptions(Azure.Identity.TokenCacheOptions tokenCacheOptions) { }
         public Azure.Identity.AuthenticationRecord AuthenticationRecord { get { throw null; } set { } }
         public string ClientId { get { throw null; } set { } }
         public bool EnableGuestTenantAuthentication { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
-        public Azure.Identity.TokenCache TokenCache { get { throw null; } }
+        public Azure.Identity.TokenCacheOptions TokenCacheOptions { get { throw null; } }
         public string Username { get { throw null; } set { } }
-    }
-    public partial class SuperAdvancedDontUseTokenCacheOptions : Azure.Identity.TokenCacheOptions
-    {
-        public SuperAdvancedDontUseTokenCacheOptions() { }
-        public System.Func<Azure.Identity.TokenCacheUpdatedArgs, System.Threading.Tasks.Task> UpdatedDelegate { get { throw null; } set { } }
-    }
-    public partial class TokenCache
-    {
-        public TokenCache(Azure.Identity.TokenCacheOptions options = null) { }
     }
     public partial class TokenCacheOptions
     {
@@ -232,22 +223,21 @@ namespace Azure.Identity
         public bool AllowUnencryptedStorage { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
     }
-    public static partial class TokenCacheSerializer
-    {
-        public static Azure.Identity.TokenCache Deserialize(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Identity.TokenCache> DeserializeAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static void Serialize(Azure.Identity.TokenCache tokenCache, System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
-        public static System.Threading.Tasks.Task SerializeAsync(Azure.Identity.TokenCache tokenCache, System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
     public partial class TokenCacheUpdatedArgs
     {
         internal TokenCacheUpdatedArgs() { }
-        public Azure.Identity.TokenCache Cache { get { throw null; } }
+        public byte[] Data { get { throw null; } }
     }
     public partial class TokenCredentialOptions : Azure.Core.ClientOptions
     {
         public TokenCredentialOptions() { }
         public System.Uri AuthorityHost { get { throw null; } set { } }
+    }
+    public partial class UnsafeTokenCacheOptions : Azure.Identity.TokenCacheOptions
+    {
+        public UnsafeTokenCacheOptions() { }
+        public byte[] InitialBytes { get { throw null; } set { } }
+        public System.Func<Azure.Identity.TokenCacheUpdatedArgs, System.Threading.Tasks.Task> UpdatedDelegate { get { throw null; } set { } }
     }
     public partial class UsernamePasswordCredential : Azure.Core.TokenCredential
     {
@@ -265,7 +255,7 @@ namespace Azure.Identity
     public partial class UsernamePasswordCredentialOptions : Azure.Identity.TokenCredentialOptions
     {
         public UsernamePasswordCredentialOptions() { }
-        public Azure.Identity.TokenCache TokenCache { get { throw null; } set { } }
+        public Azure.Identity.TokenCacheOptions TokenCacheOptions { get { throw null; } set { } }
     }
     public partial class VisualStudioCodeCredential : Azure.Core.TokenCredential
     {

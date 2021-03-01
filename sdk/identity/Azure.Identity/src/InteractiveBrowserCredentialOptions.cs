@@ -34,9 +34,9 @@ namespace Azure.Identity
         public string ClientId { get; set; } = Constants.DeveloperSignOnClientId;
 
         /// <summary>
-        /// Specifies the <see cref="TokenCache"/> to be used by the credential.
+        /// Specifies the <see cref="TokenCacheOptions"/> to be used by the credential.
         /// </summary>
-        public TokenCache TokenCache { get; set; }
+        public TokenCacheOptions TokenCacheOptions { get; set; }
 
         /// <summary>
         /// Uri where the STS will call back the application with the security token. This parameter is not required if the caller is not using a custom <see cref="ClientId"/>. In
