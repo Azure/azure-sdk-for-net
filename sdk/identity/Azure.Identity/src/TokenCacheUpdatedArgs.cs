@@ -14,7 +14,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// The <see cref="TokenCacheOptions"/> instance which was updated.
+        /// The <see cref="TokenCachePersistenceOptions"/> instance which was updated.
         /// </summary>
         public byte[] Data { get; }
     }

@@ -34,7 +34,7 @@ namespace Azure.Identity
 
         public virtual TokenCredential CreateInteractiveBrowserCredential(string tenantId)
         {
-            return new InteractiveBrowserCredential(tenantId, Constants.DeveloperSignOnClientId, new InteractiveBrowserCredentialOptions { TokenCacheOptions = new UnsafeTokenCacheOptions() }, Pipeline);
+            return new InteractiveBrowserCredential(tenantId, Constants.DeveloperSignOnClientId, new InteractiveBrowserCredentialOptions { TokenCachePersistenceOptions = new UnsafeTokenCacheOptions() }, Pipeline);
         }
 
         public virtual TokenCredential CreateAzureCliCredential()

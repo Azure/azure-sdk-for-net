@@ -73,12 +73,12 @@ namespace Azure.Identity.Tests
         [Ignore("This test is an integration test which can only be run with user interaction")]
         public async Task AuthenticateWithSharedTokenCacheAsync()
         {
-            var cred = new InteractiveBrowserCredential(new InteractiveBrowserCredentialOptions { TokenCacheOptions = new UnsafeTokenCacheOptions() });
+            var cred = new InteractiveBrowserCredential(new InteractiveBrowserCredentialOptions { TokenCachePersistenceOptions = new UnsafeTokenCacheOptions() });
 
             // this should pop browser
             AuthenticationRecord record = await cred.AuthenticateAsync();
 
-            var cred2 = new InteractiveBrowserCredential(new InteractiveBrowserCredentialOptions { TokenCacheOptions = new UnsafeTokenCacheOptions(), AuthenticationRecord = record });
+            var cred2 = new InteractiveBrowserCredential(new InteractiveBrowserCredentialOptions { TokenCachePersistenceOptions = new UnsafeTokenCacheOptions(), AuthenticationRecord = record });
 
             // this should not pop browser
             AccessToken token = await cred2.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" })).ConfigureAwait(false);
@@ -92,12 +92,12 @@ namespace Azure.Identity.Tests
         {
             var options = new UnsafeTokenCacheOptions();
 
-            var cred = new InteractiveBrowserCredential(new InteractiveBrowserCredentialOptions { TokenCacheOptions = options });
+            var cred = new InteractiveBrowserCredential(new InteractiveBrowserCredentialOptions { TokenCachePersistenceOptions = options });
 
             // this should pop browser
             AuthenticationRecord record = await cred.AuthenticateAsync();
 
-            var cred2 = new InteractiveBrowserCredential(new InteractiveBrowserCredentialOptions { TokenCacheOptions = options, AuthenticationRecord = record });
+            var cred2 = new InteractiveBrowserCredential(new InteractiveBrowserCredentialOptions { TokenCachePersistenceOptions = options, AuthenticationRecord = record });
 
             // this should not pop browser
             AccessToken token = await cred2.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" })).ConfigureAwait(false);

@@ -42,9 +42,9 @@ namespace Azure.Identity
         public AuthenticationRecord AuthenticationRecord { get; set; }
 
         /// <summary>
-        /// Specifies the <see cref="TokenCacheOptions"/> to be used by the credential.
+        /// Specifies the <see cref="TokenCachePersistenceOptions"/> to be used by the credential.
         /// </summary>
-        public TokenCacheOptions TokenCacheOptions { get; }
+        public TokenCachePersistenceOptions TokenCachePersistenceOptions { get; }
 
         /// <summary>
         /// Initializes a new instance of <see cref="SharedTokenCacheCredentialOptions"/>.
@@ -56,10 +56,10 @@ namespace Azure.Identity
         /// <summary>
         /// Initializes a new instance of <see cref="SharedTokenCacheCredentialOptions"/>.
         /// </summary>
-        /// <param name="tokenCacheOptions">The <see cref="TokenCacheOptions"/> that will apply to the token cache used by this credential.</param>
-        public SharedTokenCacheCredentialOptions(TokenCacheOptions tokenCacheOptions)
+        /// <param name="tokenCacheOptions">The <see cref="TokenCachePersistenceOptions"/> that will apply to the token cache used by this credential.</param>
+        public SharedTokenCacheCredentialOptions(TokenCachePersistenceOptions tokenCacheOptions)
         {
-            TokenCacheOptions = tokenCacheOptions;
+            TokenCachePersistenceOptions = tokenCacheOptions;
         }
     }
 }

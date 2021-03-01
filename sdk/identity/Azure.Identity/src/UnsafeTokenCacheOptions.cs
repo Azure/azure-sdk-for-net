@@ -9,7 +9,7 @@ namespace Azure.Identity
     /// <summary>
     /// Options controlling the storage of the token cache.
     /// </summary>
-    public class UnsafeTokenCacheOptions : TokenCacheOptions
+    public class UnsafeTokenCacheOptions : TokenCachePersistenceOptions
     {
         /// <summary>
         /// The delegate to be called when the Updated event fires.

@@ -41,7 +41,7 @@ namespace Azure.Identity.Tests
                 TenantId = Guid.NewGuid().ToString(),
                 AuthorityHost = new Uri("https://login.myauthority.com/"),
                 DisableAutomaticAuthentication = true,
-                TokenCacheOptions = new TokenCacheOptions(),
+                TokenCachePersistenceOptions = new TokenCachePersistenceOptions(),
                 AuthenticationRecord = new AuthenticationRecord(),
                 DeviceCodeCallback = DummyCallback,
             };

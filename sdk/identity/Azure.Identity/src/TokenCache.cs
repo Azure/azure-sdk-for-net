@@ -59,11 +59,11 @@ namespace Azure.Identity
         /// Creates a new instance of <see cref="TokenCache"/> with the specified options.
         /// </summary>
         /// <param name="options">Options controlling the storage of the <see cref="TokenCache"/>.</param>
-        public TokenCache(TokenCacheOptions options = null)
+        public TokenCache(TokenCachePersistenceOptions options = null)
             :this(options, default, default)
         { }
 
-        internal TokenCache(TokenCacheOptions options, MsalCacheHelperWrapper cacheHelperWrapper, Func<IPublicClientApplication> publicApplicationFactory = null)
+        internal TokenCache(TokenCachePersistenceOptions options, MsalCacheHelperWrapper cacheHelperWrapper, Func<IPublicClientApplication> publicApplicationFactory = null)
         {
             _cacheHelperWrapper = cacheHelperWrapper ?? new MsalCacheHelperWrapper();
             _publicClientApplicationFactory = publicApplicationFactory ?? new Func<IPublicClientApplication>(() => PublicClientApplicationBuilder.Create(Guid.NewGuid().ToString()).Build());

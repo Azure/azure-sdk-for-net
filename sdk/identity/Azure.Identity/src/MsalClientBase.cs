@@ -34,7 +34,7 @@ namespace Azure.Identity
 
             ClientId = clientId;
 
-            TokenCache = new TokenCache(cacheOptions?.TokenCacheOptions);
+            TokenCache = new TokenCache(cacheOptions?.TokenCachePersistenceOptions);
 
             _clientAsyncLock = new AsyncLockWithValue<TClient>();
         }

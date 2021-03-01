@@ -6,10 +6,10 @@ namespace Azure.Identity
     /// <summary>
     /// Options controlling the storage of the token cache.
     /// </summary>
-    public class TokenCacheOptions
+    public class TokenCachePersistenceOptions
     {
         /// <summary>
-        /// Name uniquely identifying the <see cref="TokenCacheOptions"/>.
+        /// Name uniquely identifying the <see cref="TokenCachePersistenceOptions"/>.
         /// </summary>
         public string Name { get; set; }
 

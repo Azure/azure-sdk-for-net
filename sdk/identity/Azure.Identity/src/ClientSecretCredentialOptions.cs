@@ -9,8 +9,8 @@ namespace Azure.Identity
     public class ClientSecretCredentialOptions : TokenCredentialOptions, ITokenCacheOptions
     {
         /// <summary>
-        /// Specifies the <see cref="TokenCacheOptions"/> to be used by the credential.
+        /// Specifies the <see cref="TokenCachePersistenceOptions"/> to be used by the credential.
         /// </summary>
-        public TokenCacheOptions TokenCacheOptions { get; set; }
+        public TokenCachePersistenceOptions TokenCachePersistenceOptions { get; set; }
     }
 }
