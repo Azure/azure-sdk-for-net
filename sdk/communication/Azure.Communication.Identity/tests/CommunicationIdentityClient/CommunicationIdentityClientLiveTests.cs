@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Communication.Tests;
+using Azure.Communication.Identity.Models;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
@@ -60,6 +61,39 @@ namespace Azure.Communication.Identity.Tests
                     CollectionAssert.AreEquivalent(scopes, payload.Scopes);
                 }
             }
+        }
+
+        [Test]
+        [TestCase(AuthMethod.ConnectionString, TestName = "GettingTurnCredentialsWithConnectionString")]
+        [TestCase(AuthMethod.KeyCredential, TestName = "GettingTurnCredentialsWithKeyCredential")]
+        public async Task GettingTurnCredentialsGeneratesTurnCredentials(AuthMethod authMethod)
+        {
+            CommunicationIdentityClient client = authMethod switch
+            {
+                AuthMethod.ConnectionString => CreateClientWithConnectionString(),
+                AuthMethod.KeyCredential => CreateClientWithAzureKeyCredential(),
+                _ => throw new ArgumentOutOfRangeException(nameof(authMethod)),
+            };
+
+            Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync();
+            Response<CommunicationTurnCredentialsResponse> turnCredentialsResponse = await client.GetTurnCredentialsAsync(userResponse.Value);
+
+            Assert.IsNotNull(turnCredentialsResponse.Value);
+            Assert.IsNotNull(turnCredentialsResponse.Value.ExpiresOn);
+            Assert.IsNotNull(turnCredentialsResponse.Value.TurnServers);
+            foreach (CommunicationTurnServer serverCredential in turnCredentialsResponse.Value.TurnServers)
+            {
+                Assert.IsFalse(string.IsNullOrWhiteSpace(serverCredential.Urls));
+                Assert.IsFalse(string.IsNullOrWhiteSpace(serverCredential.Username));
+                Assert.IsFalse(string.IsNullOrWhiteSpace(serverCredential.Credential));
+            }
+        }
+
+        public enum AuthMethod
+        {
+            ConnectionString,
+            KeyCredential,
+            TokenCredential,
         }
     }
 }
