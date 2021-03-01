@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    internal static class StorageKeyTypeExtensions
+    internal static partial class StorageKeyTypeExtensions
     {
         public static string ToSerialString(this StorageKeyType value) => value switch
         {

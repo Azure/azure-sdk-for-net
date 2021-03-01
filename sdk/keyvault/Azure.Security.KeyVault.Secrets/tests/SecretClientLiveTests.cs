@@ -30,7 +30,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             {
                 Client = GetClient();
 
-                ChallengeBasedAuthenticationPolicy.AuthenticationChallenge.ClearCache();
+                ChallengeBasedAuthenticationPolicy.ClearCache();
             }
         }
 
@@ -53,7 +53,9 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         public async Task SetSecretWithExtendedProps()
         {
             string secretName = Recording.GenerateId();
-            IResolveConstraint createdUpdatedConstraint = Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1596061817));
+
+            // TODO: Update this value whenever you re-record tests. Both the sync and async JSON recordings need to use the same value.
+            IResolveConstraint createdUpdatedConstraint = Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1613782963));
 
             KeyVaultSecret setResult = null;
 

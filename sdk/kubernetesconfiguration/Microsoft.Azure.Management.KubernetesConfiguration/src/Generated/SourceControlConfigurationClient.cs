@@ -54,6 +54,11 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         public string SubscriptionId { get; set; }
 
         /// <summary>
+        /// The API version to be used with the HTTP request.
+        /// </summary>
+        public string ApiVersion { get; private set; }
+
+        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
@@ -325,6 +330,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
             SourceControlConfigurations = new SourceControlConfigurationsOperations(this);
             Operations = new Operations(this);
             BaseUri = new System.Uri("https://management.azure.com");
+            ApiVersion = "2021-03-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

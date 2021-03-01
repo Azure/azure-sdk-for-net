@@ -30,10 +30,10 @@ namespace Azure.Analytics.Synapse.Spark.Tests
         private SparkSessionClient CreateClient()
         {
             return InstrumentClient(new SparkSessionClient(
-                new Uri(TestEnvironment.EndpointUrl),
+                TestEnvironment.EndpointUrl,
                 TestEnvironment.SparkPoolName,
                 TestEnvironment.Credential,
-                InstrumentClientOptions(new SparkClientOptions())
+                options: InstrumentClientOptions(new SparkClientOptions())
             ));
         }
 
@@ -41,7 +41,7 @@ namespace Azure.Analytics.Synapse.Spark.Tests
         /// Verifies that the <see cref="SparkSessionClient" /> is able to connect to the
         /// Azure Synapse Analytics service and perform operations.
         /// </summary>
-        [Test]
+        [RecordedTest]
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18080 - This test case cannot pass due to backend limitations for service principals.")]
         public async Task TestSparkSessionJob()
         {
@@ -98,7 +98,7 @@ namespace Azure.Analytics.Synapse.Spark.Tests
             Assert.IsTrue(listSessionResponse.Any(session => session.Id == sessionCreateResponse.Id));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TestGetSparkSession()
         {
             SparkSessionClient client = CreateClient();

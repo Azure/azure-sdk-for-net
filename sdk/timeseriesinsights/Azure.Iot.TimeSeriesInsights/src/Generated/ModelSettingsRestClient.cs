@@ -107,7 +107,7 @@ namespace Azure.Iot.TimeSeriesInsights
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(UpdateModelSettingsRequest parameters, string clientSessionId)
+        internal HttpMessage CreateUpdateRequest(UpdateModelSettingsOptions parameters, string clientSessionId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -135,7 +135,7 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <param name="clientSessionId"> Optional client session ID. Service records this value. Allows the service to trace a group of related operations across services, and allows the customer to contact support regarding a particular group of requests. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<ModelSettingsResponse>> UpdateAsync(UpdateModelSettingsRequest parameters, string clientSessionId = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ModelSettingsResponse>> UpdateAsync(UpdateModelSettingsOptions parameters, string clientSessionId = null, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -163,7 +163,7 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <param name="clientSessionId"> Optional client session ID. Service records this value. Allows the service to trace a group of related operations across services, and allows the customer to contact support regarding a particular group of requests. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public Response<ModelSettingsResponse> Update(UpdateModelSettingsRequest parameters, string clientSessionId = null, CancellationToken cancellationToken = default)
+        public Response<ModelSettingsResponse> Update(UpdateModelSettingsOptions parameters, string clientSessionId = null, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {

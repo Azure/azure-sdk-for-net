@@ -82,9 +82,24 @@ namespace Microsoft.Azure.Management.EventGrid
         IDomainTopicsOperations DomainTopics { get; }
 
         /// <summary>
+        /// Gets the IEventChannelsOperations.
+        /// </summary>
+        IEventChannelsOperations EventChannels { get; }
+
+        /// <summary>
         /// Gets the IEventSubscriptionsOperations.
         /// </summary>
         IEventSubscriptionsOperations EventSubscriptions { get; }
+
+        /// <summary>
+        /// Gets the ISystemTopicEventSubscriptionsOperations.
+        /// </summary>
+        ISystemTopicEventSubscriptionsOperations SystemTopicEventSubscriptions { get; }
+
+        /// <summary>
+        /// Gets the IPartnerTopicEventSubscriptionsOperations.
+        /// </summary>
+        IPartnerTopicEventSubscriptionsOperations PartnerTopicEventSubscriptions { get; }
 
         /// <summary>
         /// Gets the IOperations.
@@ -92,9 +107,19 @@ namespace Microsoft.Azure.Management.EventGrid
         IOperations Operations { get; }
 
         /// <summary>
-        /// Gets the ITopicsOperations.
+        /// Gets the IPartnerNamespacesOperations.
         /// </summary>
-        ITopicsOperations Topics { get; }
+        IPartnerNamespacesOperations PartnerNamespaces { get; }
+
+        /// <summary>
+        /// Gets the IPartnerRegistrationsOperations.
+        /// </summary>
+        IPartnerRegistrationsOperations PartnerRegistrations { get; }
+
+        /// <summary>
+        /// Gets the IPartnerTopicsOperations.
+        /// </summary>
+        IPartnerTopicsOperations PartnerTopics { get; }
 
         /// <summary>
         /// Gets the IPrivateEndpointConnectionsOperations.
@@ -105,6 +130,21 @@ namespace Microsoft.Azure.Management.EventGrid
         /// Gets the IPrivateLinkResourcesOperations.
         /// </summary>
         IPrivateLinkResourcesOperations PrivateLinkResources { get; }
+
+        /// <summary>
+        /// Gets the ISystemTopicsOperations.
+        /// </summary>
+        ISystemTopicsOperations SystemTopics { get; }
+
+        /// <summary>
+        /// Gets the ITopicsOperations.
+        /// </summary>
+        ITopicsOperations Topics { get; }
+
+        /// <summary>
+        /// Gets the IExtensionTopicsOperations.
+        /// </summary>
+        IExtensionTopicsOperations ExtensionTopics { get; }
 
         /// <summary>
         /// Gets the ITopicTypesOperations.

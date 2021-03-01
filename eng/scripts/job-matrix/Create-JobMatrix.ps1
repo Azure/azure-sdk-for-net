@@ -12,14 +12,23 @@ param (
     [Parameter(Mandatory=$True)][string] $ConfigPath,
     [Parameter(Mandatory=$True)][string] $Selection,
     [Parameter(Mandatory=$False)][string] $DisplayNameFilter,
-    [Parameter(Mandatory=$False)][array] $Filters
+    [Parameter(Mandatory=$False)][array] $Filters,
+    [Parameter(Mandatory=$False)][array] $NonSparseParameters
 )
 
 . $PSScriptRoot/job-matrix-functions.ps1
 
 $config = GetMatrixConfigFromJson (Get-Content $ConfigPath)
+# Strip empty string filters in order to be able to use azure pipelines yaml join()
+$Filters = $Filters | Where-Object { $_ }
 
-[array]$matrix = GenerateMatrix $config $Selection $DisplayNameFilter $Filters
+[array]$matrix = GenerateMatrix `
+    -config $config `
+    -selectFromMatrixType $Selection `
+    -displayNameFilter $DisplayNameFilter `
+    -filters $Filters `
+    -nonSparseParameters $NonSparseParameters
+
 $serialized = SerializePipelineMatrix $matrix
 
 Write-Output $serialized.pretty

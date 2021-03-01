@@ -4,25 +4,25 @@
 using System;
 using System.Collections;
 using Microsoft.Azure.WebJobs.Host.Converters;
-using Microsoft.Azure.ServiceBus;
+using Azure.Messaging.ServiceBus;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
 {
     internal static class MessageConverterFactory
     {
-        internal static IConverter<TInput, Message> Create<TInput>()
+        internal static IConverter<TInput, ServiceBusMessage> Create<TInput>()
         {
-            if (typeof(TInput) == typeof(Message))
+            if (typeof(TInput) == typeof(ServiceBusMessage))
             {
-                return (IConverter<TInput, Message>)new IdentityConverter<TInput>();
+                return (IConverter<TInput, ServiceBusMessage>)new IdentityConverter<TInput>();
             }
             else if (typeof(TInput) == typeof(string))
             {
-                return (IConverter<TInput, Message>)new StringToBrokeredMessageConverter();
+                return (IConverter<TInput, ServiceBusMessage>)new StringToBrokeredMessageConverter();
             }
             else if (typeof(TInput) == typeof(byte[]))
             {
-                return (IConverter<TInput, Message>)new ByteArrayToBrokeredMessageConverter();
+                return (IConverter<TInput, ServiceBusMessage>)new ByteArrayToMessageConverter();
             }
             else
             {

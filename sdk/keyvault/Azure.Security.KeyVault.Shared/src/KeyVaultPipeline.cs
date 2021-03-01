@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Security.KeyVault
 {
-    internal class KeyVaultPipeline
+    internal partial class KeyVaultPipeline
     {
         private readonly HttpPipeline _pipeline;
         public ClientDiagnostics Diagnostics { get; }

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Files.Shares
 {
-    internal class DirectorySetMetadataHeaders
+    internal partial class DirectorySetMetadataHeaders
     {
         private readonly Response _response;
         public DirectorySetMetadataHeaders(Response response)

@@ -77,6 +77,13 @@ namespace Azure.Messaging.ServiceBus
         private readonly ServiceBusRetryPolicy _retryPolicy;
 
         /// <summary>
+        /// Gets the transaction group associated with the sender. This is an
+        /// arbitrary string that is used to all senders, receivers, and processors that you
+        /// wish to use in a transaction that spans multiple different queues, topics, or subscriptions.
+        /// </summary>
+        public virtual string TransactionGroup { get; }
+
+        /// <summary>
         ///   The active connection to the Azure Service Bus service, enabling client communications for metadata
         ///   about the associated Service Bus entity and access to transport-aware consumers.
         /// </summary>
@@ -120,10 +127,12 @@ namespace Azure.Messaging.ServiceBus
                 Identifier = DiagnosticUtilities.GenerateIdentifier(EntityPath);
                 _connection = connection;
                 _retryPolicy = _connection.RetryOptions.ToRetryPolicy();
+                TransactionGroup = options.TransactionGroup;
                 _innerSender = _connection.CreateTransportSender(
                     entityPath,
                     _retryPolicy,
-                    Identifier);
+                    Identifier,
+                    TransactionGroup);
                 _scopeFactory = new EntityScopeFactory(EntityPath, FullyQualifiedNamespace);
                 _plugins = plugins;
             }
@@ -237,7 +246,10 @@ namespace Azure.Messaging.ServiceBus
 
         private DiagnosticScope CreateDiagnosticScope(IEnumerable<ServiceBusMessage> messages, string activityName)
         {
-            InstrumentMessages(messages);
+            foreach (ServiceBusMessage message in messages)
+            {
+                _scopeFactory.InstrumentMessage(message);
+            }
 
             // create a new scope for the specified operation
             DiagnosticScope scope = _scopeFactory.CreateScope(
@@ -246,32 +258,6 @@ namespace Azure.Messaging.ServiceBus
 
             scope.SetMessageData(messages);
             return scope;
-        }
-
-        /// <summary>
-        ///   Performs the actions needed to instrument a set of messages.
-        /// </summary>
-        ///
-        /// <param name="messages">The messages to instrument.</param>
-        ///
-        private void InstrumentMessages(IEnumerable<ServiceBusMessage> messages)
-        {
-            foreach (ServiceBusMessage message in messages)
-            {
-                if (!message.ApplicationProperties.ContainsKey(DiagnosticProperty.DiagnosticIdAttribute))
-                {
-                    using DiagnosticScope messageScope = _scopeFactory.CreateScope(
-                        DiagnosticProperty.MessageActivityName,
-                        DiagnosticProperty.ProducerKind);
-                    messageScope.Start();
-
-                    Activity activity = Activity.Current;
-                    if (activity != null)
-                    {
-                        message.ApplicationProperties[DiagnosticProperty.DiagnosticIdAttribute] = activity.Id;
-                    }
-                }
-            }
         }
 
         /// <summary>
@@ -320,7 +306,7 @@ namespace Azure.Messaging.ServiceBus
             try
             {
                 TransportMessageBatch transportBatch = await _innerSender.CreateMessageBatchAsync(options, cancellationToken).ConfigureAwait(false);
-                batch = new ServiceBusMessageBatch(transportBatch);
+                batch = new ServiceBusMessageBatch(transportBatch, _scopeFactory);
             }
             catch (Exception ex)
             {

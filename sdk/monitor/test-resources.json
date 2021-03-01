@@ -1,0 +1,43 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "baseName": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().name]",
+            "metadata": {
+                "description": "The base resource name."
+            }
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().location]",
+            "metadata": {
+                "description": "The location of the resource. By default, this is the same as the resource group."
+            }
+        }
+    },
+    "variables": {
+    },
+    "resources": [
+        {
+            "name": "[parameters('baseName')]",
+            "type": "Microsoft.Insights/components",
+            "location": "[parameters('location')]",
+            "apiVersion": "2015-05-01",
+            "properties": {
+                "Application_Type": "other"
+            }
+        }
+    ],
+    "outputs": {
+        "CONNECTION_STRING": {
+            "value": "[reference(resourceId('Microsoft.Insights/components', parameters('baseName')), '2015-05-01').ConnectionString]",
+            "type": "string"
+        },
+        "APPLICATION_ID": {
+            "value": "[reference(resourceId('Microsoft.Insights/components', parameters('baseName')), '2015-05-01').AppId]",
+            "type": "string"
+        }
+    }
+}

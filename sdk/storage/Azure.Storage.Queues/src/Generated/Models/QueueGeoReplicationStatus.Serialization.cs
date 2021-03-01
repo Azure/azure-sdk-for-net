@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Storage.Queues.Models
 {
-    internal static class QueueGeoReplicationStatusExtensions
+    internal static partial class QueueGeoReplicationStatusExtensions
     {
         public static string ToSerialString(this QueueGeoReplicationStatus value) => value switch
         {

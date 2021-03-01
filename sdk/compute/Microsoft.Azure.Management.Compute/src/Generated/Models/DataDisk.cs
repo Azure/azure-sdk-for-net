@@ -89,7 +89,21 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// UltraSSD_LRS. Returned only for VirtualMachine ScaleSet VM disks.
         /// Can be updated only via updates to the VirtualMachine Scale
         /// Set.</param>
-        public DataDisk(int lun, string createOption, string name = default(string), VirtualHardDisk vhd = default(VirtualHardDisk), VirtualHardDisk image = default(VirtualHardDisk), CachingTypes? caching = default(CachingTypes?), bool? writeAcceleratorEnabled = default(bool?), int? diskSizeGB = default(int?), ManagedDiskParameters managedDisk = default(ManagedDiskParameters), bool? toBeDetached = default(bool?), string detachOption = default(string), long? diskIOPSReadWrite = default(long?), long? diskMBpsReadWrite = default(long?))
+        /// <param name="detachOption">Specifies the detach behavior to be used
+        /// while detaching a disk or which is already in the process of
+        /// detachment from the virtual machine. Supported values:
+        /// **ForceDetach**. &lt;br&gt;&lt;br&gt; detachOption: **ForceDetach**
+        /// is applicable only for managed data disks. If a previous detachment
+        /// attempt of the data disk did not complete due to an unexpected
+        /// failure from the virtual machine and the disk is still not released
+        /// then use force-detach as a last resort option to detach the disk
+        /// forcibly from the VM. All writes might not have been flushed when
+        /// using this detach behavior. &lt;br&gt;&lt;br&gt; This feature is
+        /// still in preview mode and is not supported for
+        /// VirtualMachineScaleSet. To force-detach a data disk update
+        /// toBeDetached to 'true' along with setting detachOption:
+        /// 'ForceDetach'. Possible values include: 'ForceDetach'</param>
+        public DataDisk(int lun, string createOption, string name = default(string), VirtualHardDisk vhd = default(VirtualHardDisk), VirtualHardDisk image = default(VirtualHardDisk), CachingTypes? caching = default(CachingTypes?), bool? writeAcceleratorEnabled = default(bool?), int? diskSizeGB = default(int?), ManagedDiskParameters managedDisk = default(ManagedDiskParameters), bool? toBeDetached = default(bool?), long? diskIOPSReadWrite = default(long?), long? diskMBpsReadWrite = default(long?), string detachOption = default(string))
         {
             Lun = lun;
             Name = name;
@@ -104,6 +118,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             DetachOption = detachOption;
             DiskIOPSReadWrite = diskIOPSReadWrite;
             DiskMBpsReadWrite = diskMBpsReadWrite;
+            DetachOption = detachOption;
             CustomInit();
         }
 
@@ -234,6 +249,25 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "diskMBpsReadWrite")]
         public long? DiskMBpsReadWrite { get; private set; }
+
+        /// <summary>
+        /// Gets or sets specifies the detach behavior to be used while
+        /// detaching a disk or which is already in the process of detachment
+        /// from the virtual machine. Supported values: **ForceDetach**.
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; detachOption: **ForceDetach**
+        /// is applicable only for managed data disks. If a previous detachment
+        /// attempt of the data disk did not complete due to an unexpected
+        /// failure from the virtual machine and the disk is still not released
+        /// then use force-detach as a last resort option to detach the disk
+        /// forcibly from the VM. All writes might not have been flushed when
+        /// using this detach behavior. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;
+        /// This feature is still in preview mode and is not supported for
+        /// VirtualMachineScaleSet. To force-detach a data disk update
+        /// toBeDetached to 'true' along with setting detachOption:
+        /// 'ForceDetach'. Possible values include: 'ForceDetach'
+        /// </summary>
+        [JsonProperty(PropertyName = "detachOption")]
+        public string DetachOption { get; set; }
 
         /// <summary>
         /// Validate the object.

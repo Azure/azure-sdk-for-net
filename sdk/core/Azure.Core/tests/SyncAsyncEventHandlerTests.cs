@@ -28,8 +28,8 @@ namespace Azure.Core.Tests
         {
             public TestClient Client { get; }
             public int Result { get; }
-            public TestSyncAsyncEventArgs(TestClient client, int result, bool runSynchronously, CancellationToken cancellationToken = default)
-                : base(runSynchronously, cancellationToken)
+            public TestSyncAsyncEventArgs(TestClient client, int result, bool isRunningSynchronously, CancellationToken cancellationToken = default)
+                : base(isRunningSynchronously, cancellationToken)
             {
                 Client = client;
                 Result = result;
@@ -46,17 +46,17 @@ namespace Azure.Core.Tests
             public virtual event SyncAsyncEventHandler<SyncAsyncEventArgs> Working;
             public virtual event SyncAsyncEventHandler<TestSyncAsyncEventArgs> WorkCompleted;
 
-            protected virtual async Task OnWorkingAsync(bool runSynchronously, CancellationToken cancellationToken) =>
+            protected virtual async Task OnWorkingAsync(bool isRunningSynchronously, CancellationToken cancellationToken) =>
                 await Working.RaiseAsync(
-                    new SyncAsyncEventArgs(runSynchronously, cancellationToken),
+                    new SyncAsyncEventArgs(isRunningSynchronously, cancellationToken),
                     nameof(TestClient),
                     nameof(Working),
                     ClientDiagnostics)
                     .ConfigureAwait(false);
 
-            protected virtual async Task OnWorkCompletedAsync(int result, bool runSynchronously, CancellationToken cancellationToken) =>
+            protected virtual async Task OnWorkCompletedAsync(int result, bool isRunningSynchronously, CancellationToken cancellationToken) =>
                 await WorkCompleted.RaiseAsync(
-                    new TestSyncAsyncEventArgs(this, result, runSynchronously, cancellationToken),
+                    new TestSyncAsyncEventArgs(this, result, isRunningSynchronously, cancellationToken),
                     nameof(TestClient),
                     nameof(Working),
                     ClientDiagnostics)
@@ -121,7 +121,7 @@ namespace Azure.Core.Tests
 
                 if (Delay != null)
                 {
-                    if (e.RunSynchronously)
+                    if (e.IsRunningSynchronously)
                     {
                         e.CancellationToken.WaitHandle.WaitOne(Delay.Value);
                     }
@@ -134,7 +134,7 @@ namespace Azure.Core.Tests
                 Func<bool, CancellationToken, Task> callback = Callback;
                 if (callback != null)
                 {
-                    await callback(e.RunSynchronously, e.CancellationToken);
+                    await callback(e.IsRunningSynchronously, e.CancellationToken);
                 }
 
                 if (Throws != null)
@@ -453,7 +453,7 @@ namespace Azure.Core.Tests
                     {
                         text.Append(before);
                         TimeSpan delay = TimeSpan.FromMilliseconds(50);
-                        if (e.RunSynchronously)
+                        if (e.IsRunningSynchronously)
                         {
                             e.CancellationToken.WaitHandle.WaitOne(delay);
                         }

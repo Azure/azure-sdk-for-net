@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Core;
+using Azure.Messaging.ServiceBus.Diagnostics;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -29,32 +30,35 @@ namespace Azure.Messaging.ServiceBus
         ///   well as any overhead for the batch itself when sent to the Queue/Topic.
         /// </summary>
         ///
-        public long MaxSizeInBytes => InnerBatch.MaxSizeInBytes;
+        public long MaxSizeInBytes => _innerBatch.MaxSizeInBytes;
 
         /// <summary>
         ///   The size of the batch, in bytes, as it will be sent to the Queue/Topic.
         /// </summary>
         ///
-        public long SizeInBytes => InnerBatch.SizeInBytes;
+        public long SizeInBytes => _innerBatch.SizeInBytes;
 
         /// <summary>
         ///   The count of messages contained in the batch.
         /// </summary>
         ///
-        public int Count => InnerBatch.Count;
+        public int Count => _innerBatch.Count;
 
         /// <summary>
         ///   The transport-specific batch responsible for performing the batch operations
         ///   in a manner compatible with the associated <see cref="TransportSender" />.
         /// </summary>
         ///
-        private TransportMessageBatch InnerBatch { get; }
+        private readonly TransportMessageBatch _innerBatch;
+
+        private readonly EntityScopeFactory _scopeFactory;
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="ServiceBusMessageBatch"/> class.
         /// </summary>
         ///
         /// <param name="transportBatch">The  transport-specific batch responsible for performing the batch operations.</param>
+        /// <param name="entityScope">The entity scope used for instrumentation.</param>
         ///
         /// <remarks>
         ///   As an internal type, this class performs only basic sanity checks against its arguments.  It
@@ -65,15 +69,19 @@ namespace Azure.Messaging.ServiceBus
         ///   caller.
         /// </remarks>
         ///
-        internal ServiceBusMessageBatch(TransportMessageBatch transportBatch)
+        internal ServiceBusMessageBatch(TransportMessageBatch transportBatch, EntityScopeFactory entityScope)
         {
             Argument.AssertNotNull(transportBatch, nameof(transportBatch));
-            InnerBatch = transportBatch;
+            _innerBatch = transportBatch;
+            _scopeFactory = entityScope;
         }
 
         /// <summary>
         ///   Attempts to add a message to the batch, ensuring that the size
-        ///   of the batch does not exceed its maximum.
+        ///   of the batch does not exceed its maximum. If the message is modified
+        ///   after being added to the batch, the batch will fail to send if the modification
+        ///   caused the batch to exceed the maximum allowable size. Therefore it is best
+        ///   to not modify a message after adding it to the batch.
         /// </summary>
         ///
         /// <param name="message">The message to attempt to add to the batch.</param>
@@ -91,7 +99,9 @@ namespace Azure.Messaging.ServiceBus
             lock (_syncGuard)
             {
                 AssertNotLocked();
-                return InnerBatch.TryAddMessage(message);
+
+                _scopeFactory.InstrumentMessage(message);
+                return _innerBatch.TryAddMessage(message);
             }
         }
 
@@ -104,7 +114,7 @@ namespace Azure.Messaging.ServiceBus
             lock (_syncGuard)
             {
                 AssertNotLocked();
-                InnerBatch.Dispose();
+                _innerBatch.Dispose();
             }
         }
 
@@ -118,7 +128,7 @@ namespace Azure.Messaging.ServiceBus
             lock (_syncGuard)
             {
                 AssertNotLocked();
-                InnerBatch.Clear();
+                _innerBatch.Clear();
             }
         }
 
@@ -130,7 +140,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <returns>The set of messages as an enumerable of the requested type.</returns>
         ///
-        internal IEnumerable<T> AsEnumerable<T>() => InnerBatch.AsEnumerable<T>();
+        internal IEnumerable<T> AsEnumerable<T>() => _innerBatch.AsEnumerable<T>();
 
         /// <summary>
         ///   Locks the batch to prevent new messages from being added while a service

@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using Castle.DynamicProxy;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
