@@ -473,7 +473,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// The <see cref="Upload(Stream, BlobUploadOptions, CancellationToken)"/>
         /// operation overwrites the contents of the blob, creating a new block
-        /// blob if none exists.  Overwriting an existing block blob overwrites
+        /// blob if none exists.  Overwriting an existing block blob replaces
         /// any existing metadata on the blob.
         ///
         /// Set <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations">
@@ -528,7 +528,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// The <see cref="UploadAsync(Stream, BlobUploadOptions, CancellationToken)"/>
         /// operation overwrites the contents of the blob, creating a new block
-        /// blob if none exists.  Overwriting an existing block blob overwrites
+        /// blob if none exists.  Overwriting an existing block blob replaces
         /// any existing metadata on the blob.
         ///
         /// Set <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations">
@@ -584,7 +584,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// The <see cref="Upload(Stream, BlobHttpHeaders, Metadata, BlobRequestConditions, AccessTier?, IProgress{long}, CancellationToken)"/>
         /// operation overwrites the contents of the blob, creating a new block
-        /// blob if none exists.  Overwriting an existing block blob overwrites
+        /// blob if none exists.  Overwriting an existing block blob replaces
         /// any existing metadata on the blob.
         ///
         /// Set <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations">
@@ -659,7 +659,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// The <see cref="UploadAsync(Stream, BlobHttpHeaders, Metadata, BlobRequestConditions, AccessTier?, IProgress{long}, CancellationToken)"/>
         /// operation overwrites the contents of the blob, creating a new block
-        /// blob if none exists.  Overwriting an existing block blob overwrites
+        /// blob if none exists.  Overwriting an existing block blob replaces
         /// any existing metadata on the blob.
         ///
         /// Set <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations">
@@ -734,7 +734,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// The <see cref="UploadInternal"/>
         /// operation overwrites the contents of the blob, creating a new block
-        /// blob if none exists.  Overwriting an existing block blob overwrites
+        /// blob if none exists.  Overwriting an existing block blob replaces
         /// any existing metadata on the blob.
         ///
         /// Set <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations">
