@@ -79,7 +79,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var bindingData = strategy.GetBindingData(input);
 
             Assert.AreEqual(7, bindingData.Count);
-            Assert.AreSame(input.ProcessorPartition, bindingData["PartitionContext"]);
+            Assert.AreSame(input.ProcessorPartition.PartitionContext, bindingData["PartitionContext"]);
             Assert.AreEqual(evt.PartitionKey, bindingData["PartitionKey"]);
             Assert.AreEqual(evt.Offset, bindingData["Offset"]);
             Assert.AreEqual(evt.SequenceNumber, bindingData["SequenceNumber"]);
@@ -124,7 +124,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var bindingData = strategy.GetBindingData(input);
 
             Assert.AreEqual(7, bindingData.Count);
-            Assert.AreSame(input.ProcessorPartition, bindingData["PartitionContext"]);
+            Assert.AreSame(input.ProcessorPartition.PartitionContext, bindingData["PartitionContext"]);
 
             // verify an array was created for each binding data type
             Assert.AreEqual(events.Length, ((string[])bindingData["PartitionKeyArray"]).Length);
@@ -145,8 +145,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             string data = "123";
 
             var strategy = new EventHubTriggerBindingStrategy();
-            EventHubTriggerInput triggerInput = strategy.ConvertFromString(data);
 
+            EventHubTriggerInput triggerInput = strategy.ConvertFromString(data);
             var contract = strategy.GetBindingData(triggerInput);
 
             EventData single = strategy.BindSingle(triggerInput, null);
