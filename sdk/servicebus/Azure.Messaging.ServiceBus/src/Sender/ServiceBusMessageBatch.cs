@@ -78,7 +78,10 @@ namespace Azure.Messaging.ServiceBus
 
         /// <summary>
         ///   Attempts to add a message to the batch, ensuring that the size
-        ///   of the batch does not exceed its maximum.
+        ///   of the batch does not exceed its maximum. If the message is modified
+        ///   after being added to the batch, the batch will fail to send if the modification
+        ///   caused the batch to exceed the maximum allowable size. Therefore it is best
+        ///   to not modify a message after adding it to the batch.
         /// </summary>
         ///
         /// <param name="message">The message to attempt to add to the batch.</param>
