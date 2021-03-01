@@ -28,13 +28,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         private IntegrationRuntimesClient CreateClient()
         {
             return InstrumentClient(new IntegrationRuntimesClient(
-                new Uri(TestEnvironment.EndpointUrl),
+                TestEnvironment.EndpointUrl,
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new ArtifactsClientOptions())
             ));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TestGet()
         {
             IntegrationRuntimesClient client = CreateClient();
@@ -48,7 +48,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TestList()
         {
             IntegrationRuntimesClient client = CreateClient();

@@ -1,6 +1,11 @@
 # Release History
 
-## 3.0.0-beta.6 (Unreleased)
+## 12.0.0-beta.6 (Unreleased)
+
+### Changed
+
+- Changed major version number to 12 to indicate this is the latest Tables package across all legacy versions and for cross language consistency.
+- `TableClient` and `TableServiceClient` now accept `AzureSasCredential` for SAS token scenarios rather than requiring developers to build the URI manually.
 
 ### Key Bug Fixes
 
@@ -9,7 +14,7 @@
 ### Added
 
 - Added TableUriBuilder
-- Added a constructor to TableSasBuilder and TableAccountSasBuilder that accepts a Uri with a Sas token
+- Added a constructor to `TableSasBuilder` and `TableAccountSasBuilder` that accepts a Uri with a Sas token
 
 ## 3.0.0-beta.5 (2021-01-12)
 
@@ -21,7 +26,7 @@
 
 ### Key Bug Fixes
 
-- Fixed an issue with custom entity model serialization of the ETag property
+- Fixed an issue with custom entity model serialization of the `ETag` property
 - Properly create secondary endpoint Uri for Azurite endpoints
 
 ## 3.0.0-beta.3 (2020-11-12)
@@ -29,8 +34,8 @@
 ### Added
 
 - Added support for Upsert batch operations.
-- Added support for some numeric type coercion for TableEntity properties.
-- Added TryGetFailedEntityFromException method on TablesTransactionalBatch to extract the entity that caused a batch failure from a RequestFailedException.
+- Added support for some numeric type coercion for `TableEntity` properties.
+- Added TryGetFailedEntityFromException method on `TablesTransactionalBatch` to extract the entity that caused a batch failure from a `RequestFailedException`.
 
 ## 3.0.0-beta.2 (2020-10-06)
 

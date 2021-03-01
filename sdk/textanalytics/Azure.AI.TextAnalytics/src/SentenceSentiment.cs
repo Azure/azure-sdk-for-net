@@ -17,13 +17,14 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public readonly struct SentenceSentiment
     {
-        internal SentenceSentiment(TextSentiment sentiment, string text, double positiveScore, double neutralScore, double negativeScore, int offset, IReadOnlyList<MinedOpinion> minedOpinions)
+        internal SentenceSentiment(TextSentiment sentiment, string text, double positiveScore, double neutralScore, double negativeScore, int offset, int length, IReadOnlyList<SentenceOpinion> opinions)
         {
             Sentiment = sentiment;
             Text = text;
             ConfidenceScores = new SentimentConfidenceScores(positiveScore, neutralScore, negativeScore);
             Offset = offset;
-            MinedOpinions = new List<MinedOpinion>(minedOpinions);
+            Length = length;
+            Opinions = new List<SentenceOpinion>(opinions);
         }
 
         internal SentenceSentiment(SentenceSentimentInternal sentenceSentiment, IReadOnlyList<SentenceSentimentInternal> allSentences)
@@ -34,8 +35,9 @@ namespace Azure.AI.TextAnalytics
 
             ConfidenceScores = sentenceSentiment.ConfidenceScores;
             Sentiment = (TextSentiment)Enum.Parse(typeof(TextSentiment), sentenceSentiment.Sentiment, ignoreCase: true);
-            MinedOpinions = ConvertToMinedOpinions(sentenceSentiment, allSentences);
+            Opinions = ConvertToOpinion(sentenceSentiment, allSentences);
             Offset = sentenceSentiment.Offset;
+            Length = sentenceSentiment.Length;
         }
 
         /// <summary>
@@ -55,53 +57,58 @@ namespace Azure.AI.TextAnalytics
         public SentimentConfidenceScores ConfidenceScores { get; }
 
         /// <summary>
-        /// Gets the mined opinions of a sentence. This is only returned if
+        /// Gets the opinion of a sentence. This is only returned if
         /// <see cref="AnalyzeSentimentOptions.IncludeOpinionMining"/> is set to True.
         /// </summary>
-        public IReadOnlyCollection<MinedOpinion> MinedOpinions { get; }
+        public IReadOnlyCollection<SentenceOpinion> Opinions { get; }
 
         /// <summary>
-        /// Gets the starting position (in UTF-16 code units) for the matching text in the sentence.
+        /// Gets the starting position for the matching text in the sentence.
         /// </summary>
         public int Offset { get; }
 
-        private static IReadOnlyCollection<MinedOpinion> ConvertToMinedOpinions(SentenceSentimentInternal sentence, IReadOnlyList<SentenceSentimentInternal> allSentences)
-        {
-            var minedOpinions = new List<MinedOpinion>();
+        /// <summary>
+        /// Gets the length the matching text in the sentence.
+        /// </summary>
+        public int Length { get; }
 
-            foreach (SentenceAspect aspects in sentence.Aspects)
+        private static IReadOnlyCollection<SentenceOpinion> ConvertToOpinion(SentenceSentimentInternal sentence, IReadOnlyList<SentenceSentimentInternal> allSentences)
+        {
+            var opinions = new List<SentenceOpinion>();
+
+            foreach (SentenceTarget target in sentence.Targets)
             {
-                var opinions = new List<OpinionSentiment>();
-                foreach (AspectRelation relation in aspects.Relations)
+                var assessment = new List<AssessmentSentiment>();
+                foreach (TargetRelation relation in target.Relations)
                 {
-                    if (relation.RelationType == AspectRelationType.Opinion)
+                    if (relation.RelationType == TargetRelationType.Assessment)
                     {
-                        opinions.Add(ResolveOpinionReference(allSentences, relation.Ref));
+                        assessment.Add(ResolveAssessmentReference(allSentences, relation.Ref));
                     }
                 }
-                minedOpinions.Add(new MinedOpinion(new AspectSentiment(aspects), opinions));
+                opinions.Add(new SentenceOpinion(new TargetSentiment(target), assessment));
             }
 
-            return minedOpinions;
+            return opinions;
         }
 
-        private static Regex _opinionRegex = new Regex(@"/documents/(?<documentIndex>\d*)/sentences/(?<sentenceIndex>\d*)/opinions/(?<opinionIndex>\d*)$", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
-        internal static OpinionSentiment ResolveOpinionReference(IReadOnlyList<SentenceSentimentInternal> sentences, string reference)
+        private static Regex _assessmentRegex = new Regex(@"/documents/(?<documentIndex>\d*)/sentences/(?<sentenceIndex>\d*)/assessments/(?<assessmentIndex>\d*)$", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
+        internal static AssessmentSentiment ResolveAssessmentReference(IReadOnlyList<SentenceSentimentInternal> sentences, string reference)
         {
-            // Example: the following should result in sentenceIndex = 2, opinionIndex = 1. There will not be cases where sentences from other documents are referenced.
-            // "#/documents/0/sentences/2/opinions/1"
+            // Example: the following should result in sentenceIndex = 2, assessmentIndex = 1. There will not be cases where sentences from other documents are referenced.
+            // "#/documents/0/sentences/2/assessments/1"
 
-            var opinionMatch = _opinionRegex.Match(reference);
-            if (opinionMatch.Success && opinionMatch.Groups.Count == 4)
+            var assessmentMatch = _assessmentRegex.Match(reference);
+            if (assessmentMatch.Success && assessmentMatch.Groups.Count == 4)
             {
-                int sentenceIndex = int.Parse(opinionMatch.Groups["sentenceIndex"].Value, CultureInfo.InvariantCulture);
-                int opinionIndex = int.Parse(opinionMatch.Groups["opinionIndex"].Value, CultureInfo.InvariantCulture);
+                int sentenceIndex = int.Parse(assessmentMatch.Groups["sentenceIndex"].Value, CultureInfo.InvariantCulture);
+                int assessmentIndex = int.Parse(assessmentMatch.Groups["assessmentIndex"].Value, CultureInfo.InvariantCulture);
 
                 if (sentenceIndex < sentences.Count)
                 {
-                    if (opinionIndex < sentences[sentenceIndex].Opinions.Count)
+                    if (assessmentIndex < sentences[sentenceIndex].Assessments.Count)
                     {
-                        return new OpinionSentiment(sentences[sentenceIndex].Opinions[opinionIndex]);
+                        return new AssessmentSentiment(sentences[sentenceIndex].Assessments[assessmentIndex]);
                     }
                 }
             }

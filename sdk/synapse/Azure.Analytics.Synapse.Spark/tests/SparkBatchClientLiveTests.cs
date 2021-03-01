@@ -29,14 +29,14 @@ namespace Azure.Analytics.Synapse.Spark.Tests
         private SparkBatchClient CreateClient()
         {
             return InstrumentClient(new SparkBatchClient(
-                new Uri(TestEnvironment.EndpointUrl),
+                TestEnvironment.EndpointUrl,
                 TestEnvironment.SparkPoolName,
                 TestEnvironment.Credential,
-                InstrumentClientOptions(new SparkClientOptions())
+                options: InstrumentClientOptions(new SparkClientOptions())
             ));
         }
 
-        [Test]
+        [RecordedTest]
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18080 - This test case cannot pass due to backend limitations for service principals.")]
         public async Task TestSparkBatchJob()
         {
@@ -64,7 +64,7 @@ namespace Azure.Analytics.Synapse.Spark.Tests
             Assert.IsTrue(listJobResponse.Any(job => job.Id == jobCreateResponse.Id));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TestGetSparkBatchJob()
         {
             SparkBatchClient client = CreateClient();

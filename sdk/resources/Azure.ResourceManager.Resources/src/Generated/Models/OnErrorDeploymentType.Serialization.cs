@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    internal static class OnErrorDeploymentTypeExtensions
+    internal static partial class OnErrorDeploymentTypeExtensions
     {
         public static string ToSerialString(this OnErrorDeploymentType value) => value switch
         {

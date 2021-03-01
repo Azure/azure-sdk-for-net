@@ -59,7 +59,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         private DataFlowClient CreateFlowClient()
         {
             return InstrumentClient(new DataFlowClient(
-                new Uri(TestEnvironment.EndpointUrl),
+                TestEnvironment.EndpointUrl,
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new ArtifactsClientOptions())
             ));
@@ -68,14 +68,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         private DataFlowDebugSessionClient CreateDebugClient()
         {
             return InstrumentClient(new DataFlowDebugSessionClient(
-                new Uri(TestEnvironment.EndpointUrl),
+                TestEnvironment.EndpointUrl,
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new ArtifactsClientOptions())
             ));
         }
 
         [Ignore ("https://github.com/Azure/azure-sdk-for-net/issues/18079 prevents test from working")]
-        [Test]
+        [RecordedTest]
         public async Task AddDataFlow()
         {
             DataFlowClient flowClient = CreateFlowClient();
@@ -90,7 +90,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             Assert.NotNull (response.JobVersion);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task QuerySessions()
         {
             DataFlowClient flowClient = CreateFlowClient();
@@ -104,7 +104,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         }
 
         [Ignore ("https://github.com/Azure/azure-sdk-for-net/issues/18079 prevents test from working")]
-        [Test]
+        [RecordedTest]
         public async Task ExecuteCommand()
         {
             DataFlowClient flowClient = CreateFlowClient();

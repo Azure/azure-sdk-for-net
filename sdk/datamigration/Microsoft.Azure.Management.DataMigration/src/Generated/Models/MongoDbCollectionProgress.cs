@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.DataMigration.Models
 {
+    using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
@@ -17,6 +18,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
     /// <summary>
     /// Describes the progress of a collection
     /// </summary>
+    [Newtonsoft.Json.JsonObject("Collection")]
     public partial class MongoDbCollectionProgress : MongoDbProgress
     {
         /// <summary>
@@ -42,8 +44,6 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// replay</param>
         /// <param name="eventsReplayed">The number of oplog events replayed so
         /// far</param>
-        /// <param name="resultType">The type of progress object. Possible
-        /// values include: 'Migration', 'Database', 'Collection'</param>
         /// <param name="state">Possible values include: 'NotStarted',
         /// 'ValidatingInput', 'Initializing', 'Restarting', 'Copying',
         /// 'InitialReplay', 'Replaying', 'Finalizing', 'Complete', 'Canceled',
@@ -66,8 +66,8 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// object. For a collection, this is the database-qualified name. For
         /// a database, this is the database name. For the overall migration,
         /// this is null.</param>
-        public MongoDbCollectionProgress(long bytesCopied, long documentsCopied, string elapsedTime, IDictionary<string, MongoDbError> errors, long eventsPending, long eventsReplayed, string resultType, string state, long totalBytes, long totalDocuments, System.DateTimeOffset? lastEventTime = default(System.DateTimeOffset?), System.DateTimeOffset? lastReplayTime = default(System.DateTimeOffset?), string name = default(string), string qualifiedName = default(string))
-            : base(bytesCopied, documentsCopied, elapsedTime, errors, eventsPending, eventsReplayed, resultType, state, totalBytes, totalDocuments, lastEventTime, lastReplayTime, name, qualifiedName)
+        public MongoDbCollectionProgress(long bytesCopied, long documentsCopied, string elapsedTime, IDictionary<string, MongoDbError> errors, long eventsPending, long eventsReplayed, string state, long totalBytes, long totalDocuments, System.DateTimeOffset? lastEventTime = default(System.DateTimeOffset?), System.DateTimeOffset? lastReplayTime = default(System.DateTimeOffset?), string name = default(string), string qualifiedName = default(string))
+            : base(bytesCopied, documentsCopied, elapsedTime, errors, eventsPending, eventsReplayed, state, totalBytes, totalDocuments, lastEventTime, lastReplayTime, name, qualifiedName)
         {
             CustomInit();
         }

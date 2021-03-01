@@ -6,17 +6,26 @@
     <Version>5.0.0-beta.1</Version>
     <NoWarn>$(NoWarn);AZC0001;CS1591;SA1636;CA1507</NoWarn>
     <SignAssembly>true</SignAssembly>
+    <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Azure.ServiceBus" VersionOverride="4.2.0" />
     <PackageReference Include="Microsoft.Azure.WebJobs.Sources" VersionOverride="3.0.19" />
-    <PackageReference Include="Microsoft.Azure.WebJobs" VersionOverride="3.0.19" />
-    <!-- TODO: Switch to centralized versions when Microsoft.Extensions.Azure GA -->
-    <PackageReference Include="Microsoft.Extensions.Azure" VersionOverride="1.1.0-beta.1" />
+    <PackageReference Include="Microsoft.Azure.WebJobs" />
+    <PackageReference Include="Microsoft.Extensions.Azure" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="SharedSource" />
+    <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="Shared" />
+    <Compile Include="..\..\Azure.Messaging.ServiceBus\src\Administration\AdministrationClientConstants.cs" LinkBase="Shared" />
+    <Compile Include="..\..\Azure.Messaging.ServiceBus\src\Constants.cs" LinkBase="Shared" />
+    <Compile Include="..\..\Azure.Messaging.ServiceBus\src\Core\Argument.cs" LinkBase="Shared" />
+    <Compile Include="..\..\Azure.Messaging.ServiceBus\src\EntityNameFormatter.cs" LinkBase="Shared" />
+    <Compile Include="..\..\Azure.Messaging.ServiceBus\src\Resources.Designer.cs" LinkBase="Shared" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Azure.Messaging.ServiceBus\src\Azure.Messaging.ServiceBus.csproj" />
   </ItemGroup>
 </Project>

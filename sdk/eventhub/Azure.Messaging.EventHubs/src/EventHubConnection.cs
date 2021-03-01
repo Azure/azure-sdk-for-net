@@ -23,7 +23,7 @@ namespace Azure.Messaging.EventHubs
     ///   producer or consumer client.
     /// </summary>
     ///
-    /// <seealso href="https://docs.microsoft.com/en-us/Azure/event-hubs/event-hubs-about" />
+    /// <seealso href="https://docs.microsoft.com/en-us/Azure/event-hubs/event-hubs-about">About Azure Event Hubs</seealso>
     ///
     public class EventHubConnection : IAsyncDisposable
     {

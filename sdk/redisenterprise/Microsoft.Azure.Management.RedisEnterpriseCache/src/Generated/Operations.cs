@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
     /// <summary>
     /// Operations operations.
     /// </summary>
-    internal partial class Operations : IServiceOperations<redisenterpriseClient>, IOperations
+    internal partial class Operations : IServiceOperations<RedisEnterpriseManagementClient>, IOperations
     {
         /// <summary>
         /// Initializes a new instance of the Operations class.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal Operations(redisenterpriseClient client)
+        internal Operations(RedisEnterpriseManagementClient client)
         {
             if (client == null)
             {
@@ -46,9 +46,9 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         }
 
         /// <summary>
-        /// Gets a reference to the redisenterpriseClient
+        /// Gets a reference to the RedisEnterpriseManagementClient
         /// </summary>
-        public redisenterpriseClient Client { get; private set; }
+        public RedisEnterpriseManagementClient Client { get; private set; }
 
         /// <summary>
         /// Lists all of the available REST API operations of the Microsoft.Cache

@@ -155,6 +155,7 @@ namespace Azure.Messaging.EventHubs.Core
 
                 case TimeoutException _:
                 case SocketException _:
+                case UnauthorizedAccessException _:
                     return true;
 
                 default:

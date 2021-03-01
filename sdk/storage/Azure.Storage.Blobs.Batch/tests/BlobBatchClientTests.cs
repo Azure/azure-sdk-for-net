@@ -8,6 +8,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Storage.Blobs.Batch.Tests;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Sas;
@@ -25,6 +26,7 @@ namespace Azure.Storage.Blobs.Test
         {
             // Batch delimiters are random so disable body comparison
             Matcher = new RecordMatcher(compareBodies: false);
+            Sanitizer = new BatchStorageRecordedTestSanitizer();
         }
 
         [SetUp]

@@ -145,6 +145,14 @@ namespace Azure.AI.FormRecognizer.Training
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="CopyModelOperation"/> class. This constructor
+        /// is intended to be used for mocking only.
+        /// </summary>
+        protected CopyModelOperation()
+        {
+        }
+
+        /// <summary>
         /// The last HTTP response received from the server.
         /// </summary>
         /// <remarks>

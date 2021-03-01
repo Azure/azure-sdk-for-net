@@ -467,6 +467,7 @@ namespace Azure.Communication.PhoneNumbers.Samples
 
         [Test]
         [SyncOnly]
+        [PlaybackOnly("TollFreeNumbersAreDisabledTemporarily")]
         public void TollFreePlanAreaCodes()
         {
             var client = CreateClient(false);
@@ -491,6 +492,7 @@ namespace Azure.Communication.PhoneNumbers.Samples
 
         [Test]
         [AsyncOnly]
+        [PlaybackOnly("TollFreeNumbersAreDisabledTemporarily")]
         public async Task TollFreePlanAreaCodesAsync()
         {
             var client = CreateClient(false);

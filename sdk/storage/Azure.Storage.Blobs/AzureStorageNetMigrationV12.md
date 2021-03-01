@@ -467,6 +467,8 @@ If using a stored access policy, construct your `BlobSasBuilder` from the exampl
 // Create BlobSasBuilder and specify parameters
 BlobSasBuilder sasBuilder = new BlobSasBuilder()
 {
+    BlobContainerName = containerName,
+    BlobName = blobName,
     Identifier = "mysignedidentifier"
 };
 ```

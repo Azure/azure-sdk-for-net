@@ -28,13 +28,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         private WorkspaceClient CreateClient()
         {
             return InstrumentClient(new WorkspaceClient(
-                new Uri(TestEnvironment.EndpointUrl),
+                TestEnvironment.EndpointUrl,
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new ArtifactsClientOptions())
             ));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TestGetWorkspace()
         {
             WorkspaceClient client = CreateClient();
