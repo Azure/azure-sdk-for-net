@@ -171,24 +171,33 @@ namespace Azure.Test.Perf
 
             // I would prefer to print assembly versions at the start of testing, but they cannot be determined until
             // code in each assembly has been executed, so this must wait until after testing is complete.
-            PrintAssemblyVersions();
+            PrintAssemblyVersions(testType);
         }
 
-        private static void PrintAssemblyVersions()
+        private static void PrintAssemblyVersions(Type testType)
         {
             Console.WriteLine("=== Versions ===");
+
             Console.WriteLine($"Runtime: {Environment.Version}");
 
             var azureAssemblies = AppDomain.CurrentDomain.GetAssemblies()
+                // Include all Track1 and Track2 assemblies
                 .Where(a => a.GetName().Name.StartsWith("Azure", StringComparison.OrdinalIgnoreCase) ||
                             a.GetName().Name.StartsWith("Microsoft.Azure", StringComparison.OrdinalIgnoreCase))
-                .Where(a => !a.GetName().Name.Equals("Azure.Test.Perf", StringComparison.OrdinalIgnoreCase))
+                // Exclude this perf framework
+                .Where(a => a != typeof(PerfProgram).Assembly)
+                // Exclude assembly containing the perf test itself
+                .Where(a => a != testType.Assembly)
+                // Exclude Azure.Core.TestFramework since it is only used to setup environment and should not impact results
+                .Where(a => !a.GetName().Name.Equals("Azure.Core.TestFramework", StringComparison.OrdinalIgnoreCase))
                 .OrderBy(a => a.GetName().Name);
+
             foreach (var a in azureAssemblies)
             {
                 var informationalVersion = FileVersionInfo.GetVersionInfo(a.Location).ProductVersion;
                 Console.WriteLine($"{a.GetName().Name}: {a.GetName().Version} ({informationalVersion})");
             }
+
             Console.WriteLine();
         }
 
