@@ -100,10 +100,40 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         /// </summary>
         ///
         [Test]
+        public void TryAddDoesNotAcceptAMessageBiggerThanTheMaximumSizeInNumberOfItems()
+        {
+            var options = new CreateMessageBatchOptions { MaxSizeInNumberOfItems = 1, MaxSizeInBytes = 50000 };
+            var batch = new AmqpMessageBatch(options);
+
+            Assert.That(batch.TryAddMessage(new ServiceBusMessage(new byte[50])), Is.True, "A message of the maximum size is too large due to the maximum size in number of items restrictions.");
+            Assert.That(batch.TryAddMessage(new ServiceBusMessage(new byte[50])), Is.False, "A message of the maximum size is too large due to the maximum size in number of items restrictions.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpMessageBatch.TryAddMessage" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
         public void TryAddAcceptsAMessageSmallerThanTheMaximumSize()
         {
             var maximumSize = 50;
             var options = new CreateMessageBatchOptions { MaxSizeInBytes = maximumSize };
+
+            var batch = new AmqpMessageBatch(options);
+
+            Assert.That(batch.TryAddMessage(new ServiceBusMessage(new byte[0])), Is.True);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpMessageBatch.TryAddMessage" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void TryAddAcceptsAMessageSmallerThanTheMaximumSizeInNumberOfItems()
+        {
+            var options = new CreateMessageBatchOptions { MaxSizeInNumberOfItems = 1, MaxSizeInBytes = 50000};
 
             var batch = new AmqpMessageBatch(options);
 
@@ -133,6 +163,32 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                 else
                 {
                     Assert.That(batch.TryAddMessage(new ServiceBusMessage(new byte[10])), Is.True, $"The addition for index: { index } should fit and be accepted.");
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpMessageBatch.TryAddMessage" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void TryAddAcceptMessagesUntilTheMaximumSizeInNumberOfItemsIsReached()
+        {
+            var options = new CreateMessageBatchOptions { MaxSizeInNumberOfItems = 100, MaxSizeInBytes = 50000 };
+            var messages = new AmqpMessage[101];
+
+            var batch = new AmqpMessageBatch(options);
+
+            for (var index = 0; index < messages.Length; ++index)
+            {
+                if (index == messages.Length - 1)
+                {
+                    Assert.That(batch.TryAddMessage(new ServiceBusMessage(new byte[0])), Is.False, "The final addition should not fit in the available space.");
+                }
+                else
+                {
+                    Assert.That(batch.TryAddMessage(new ServiceBusMessage(new byte[0])), Is.True, $"The addition for index: { index } should fit and be accepted.");
                 }
             }
         }

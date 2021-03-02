@@ -118,7 +118,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         ? OverheadBytesSmallMessage
                         : OverheadBytesLargeMessage);
 
-                if (size > MaxSizeInBytes)
+                if (size > MaxSizeInBytes || BatchMessages.Count >= Options.MaxSizeInNumberOfItems.Value)
                 {
                     return false;
                 }
@@ -126,7 +126,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 _sizeBytes = size;
                 BatchMessages.Add(message);
 
-            return true;
+                return true;
             }
             finally
             {

@@ -16,6 +16,9 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>The requested maximum size to allow for the batch, in bytes.</summary>
         private long? _maxSizeInBytes;
 
+        /// <summary>The requested maximum size to allow for the batch, in number of items.</summary>
+        private int? _maxSizeInNumberOfItems = 4500;
+
         /// <summary>
         ///   The maximum size to allow for a single batch of messages, in bytes.
         /// </summary>
@@ -37,6 +40,30 @@ namespace Azure.Messaging.ServiceBus
                 }
 
                 _maxSizeInBytes = value;
+            }
+        }
+
+        /// <summary>
+        ///   The maximum size to allow for a single batch of messages, in number of items.
+        /// </summary>
+        ///
+        /// <value>
+        ///   The desired limit, in number of items, for the size of the associated service bus message batch.  If <c>null</c>,
+        ///   the maximum size allowed by the active transport will be used.
+        /// </value>
+        ///
+        internal int? MaxSizeInNumberOfItems
+        {
+            get => _maxSizeInNumberOfItems;
+
+            set
+            {
+                if (value.HasValue)
+                {
+                    Argument.AssertInRange(value.Value, 1, 4500, nameof(MaxSizeInNumberOfItems));
+                }
+
+                _maxSizeInNumberOfItems = value;
             }
         }
 
