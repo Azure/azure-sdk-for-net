@@ -2,14 +2,9 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Text;
 using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Primitives;
-using Azure.Messaging.EventHubs.Processor;
-using Azure.Messaging.EventHubs.Producer;
 using Microsoft.Azure.WebJobs.EventHubs.Processor;
 using Microsoft.Azure.WebJobs.Hosting;
 using Newtonsoft.Json;
