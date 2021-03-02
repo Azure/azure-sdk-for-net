@@ -20,4 +20,3 @@ namespace Microsoft.Azure.Management.Compute.Models
         public const string Flexible = "Flexible";
     }
 }
-
