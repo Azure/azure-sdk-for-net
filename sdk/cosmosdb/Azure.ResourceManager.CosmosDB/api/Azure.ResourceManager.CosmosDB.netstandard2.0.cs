@@ -1280,11 +1280,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ResourceManager.CosmosDB.Models.CassandraKeyspaceGetPropertiesOptions Options { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CassandraKeyspaceGetPropertiesResource Resource { get { throw null; } set { } }
     }
-    public partial class CassandraKeyspaceListResult
-    {
-        internal CassandraKeyspaceListResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.CassandraKeyspaceGetResults> Value { get { throw null; } }
-    }
     public partial class CassandraKeyspaceResource
     {
         public CassandraKeyspaceResource(string id) { }
@@ -1324,11 +1319,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public CassandraTableGetResults() { }
         public Azure.ResourceManager.CosmosDB.Models.CassandraTableGetPropertiesOptions Options { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CassandraTableGetPropertiesResource Resource { get { throw null; } set { } }
-    }
-    public partial class CassandraTableListResult
-    {
-        internal CassandraTableListResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.CassandraTableGetResults> Value { get { throw null; } }
     }
     public partial class CassandraTableResource
     {
@@ -1544,11 +1534,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public DatabaseAccountRegenerateKeyParameters(Azure.ResourceManager.CosmosDB.Models.KeyKind keyKind) { }
         public Azure.ResourceManager.CosmosDB.Models.KeyKind KeyKind { get { throw null; } }
     }
-    public partial class DatabaseAccountsListResult
-    {
-        internal DatabaseAccountsListResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.DatabaseAccountGetResults> Value { get { throw null; } }
-    }
     public partial class DatabaseAccountUpdateParameters
     {
         public DatabaseAccountUpdateParameters() { }
@@ -1649,11 +1634,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ResourceManager.CosmosDB.Models.GremlinDatabaseGetPropertiesOptions Options { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.GremlinDatabaseGetPropertiesResource Resource { get { throw null; } set { } }
     }
-    public partial class GremlinDatabaseListResult
-    {
-        internal GremlinDatabaseListResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.GremlinDatabaseGetResults> Value { get { throw null; } }
-    }
     public partial class GremlinDatabaseResource
     {
         public GremlinDatabaseResource(string id) { }
@@ -1681,11 +1661,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public GremlinGraphGetResults() { }
         public Azure.ResourceManager.CosmosDB.Models.GremlinGraphGetPropertiesOptions Options { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.GremlinGraphGetPropertiesResource Resource { get { throw null; } set { } }
-    }
-    public partial class GremlinGraphListResult
-    {
-        internal GremlinGraphListResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.GremlinGraphGetResults> Value { get { throw null; } }
     }
     public partial class GremlinGraphResource
     {
@@ -1818,16 +1793,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string ResourceUri { get { throw null; } }
         public Azure.ResourceManager.CosmosDB.Models.UnitType? Unit { get { throw null; } }
     }
-    public partial class MetricDefinitionsListResult
-    {
-        internal MetricDefinitionsListResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.MetricDefinition> Value { get { throw null; } }
-    }
-    public partial class MetricListResult
-    {
-        internal MetricListResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.Metric> Value { get { throw null; } }
-    }
     public partial class MetricName
     {
         internal MetricName() { }
@@ -1867,11 +1832,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ResourceManager.CosmosDB.Models.MongoDBCollectionGetPropertiesOptions Options { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.MongoDBCollectionGetPropertiesResource Resource { get { throw null; } set { } }
     }
-    public partial class MongoDBCollectionListResult
-    {
-        internal MongoDBCollectionListResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.MongoDBCollectionGetResults> Value { get { throw null; } }
-    }
     public partial class MongoDBCollectionResource
     {
         public MongoDBCollectionResource(string id) { }
@@ -1902,11 +1862,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public MongoDBDatabaseGetResults() { }
         public Azure.ResourceManager.CosmosDB.Models.MongoDBDatabaseGetPropertiesOptions Options { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.MongoDBDatabaseGetPropertiesResource Resource { get { throw null; } set { } }
-    }
-    public partial class MongoDBDatabaseListResult
-    {
-        internal MongoDBDatabaseListResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.MongoDBDatabaseGetResults> Value { get { throw null; } }
     }
     public partial class MongoDBDatabaseResource
     {
@@ -1946,11 +1901,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         public NotebookWorkspaceCreateUpdateParameters() { }
     }
-    public partial class NotebookWorkspaceListResult
-    {
-        internal NotebookWorkspaceListResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.NotebookWorkspace> Value { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct NotebookWorkspaceName : System.IEquatable<Azure.ResourceManager.CosmosDB.Models.NotebookWorkspaceName>
     {
@@ -1982,12 +1932,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string Provider { get { throw null; } }
         public string Resource { get { throw null; } }
     }
-    public partial class OperationListResult
-    {
-        internal OperationListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.Operation> Value { get { throw null; } }
-    }
     public partial class OptionsResource
     {
         public OptionsResource() { }
@@ -2018,21 +1962,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string PartitionId { get { throw null; } }
         public string PartitionKeyRangeId { get { throw null; } }
     }
-    public partial class PartitionMetricListResult
-    {
-        internal PartitionMetricListResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.PartitionMetric> Value { get { throw null; } }
-    }
     public partial class PartitionUsage : Azure.ResourceManager.CosmosDB.Models.Usage
     {
         internal PartitionUsage() { }
         public string PartitionId { get { throw null; } }
         public string PartitionKeyRangeId { get { throw null; } }
-    }
-    public partial class PartitionUsagesResult
-    {
-        internal PartitionUsagesResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.PartitionUsage> Value { get { throw null; } }
     }
     public partial class PercentileMetric
     {
@@ -2043,11 +1977,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public System.DateTimeOffset? StartTime { get { throw null; } }
         public string TimeGrain { get { throw null; } }
         public Azure.ResourceManager.CosmosDB.Models.UnitType? Unit { get { throw null; } }
-    }
-    public partial class PercentileMetricListResult
-    {
-        internal PercentileMetricListResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.PercentileMetric> Value { get { throw null; } }
     }
     public partial class PercentileMetricValue : Azure.ResourceManager.CosmosDB.Models.MetricValue
     {
@@ -2096,11 +2025,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ResourceManager.CosmosDB.Models.PrivateLinkServiceConnectionStatePropertyAutoGenerated PrivateLinkServiceConnectionState { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } set { } }
     }
-    public partial class PrivateEndpointConnectionListResult
-    {
-        internal PrivateEndpointConnectionListResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.PrivateEndpointConnectionAutoGenerated> Value { get { throw null; } }
-    }
     public partial class PrivateEndpointProperty
     {
         public PrivateEndpointProperty() { }
@@ -2112,11 +2036,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string GroupId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredZoneNames { get { throw null; } }
-    }
-    public partial class PrivateLinkResourceListResult
-    {
-        internal PrivateLinkResourceListResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.PrivateLinkResource> Value { get { throw null; } }
     }
     public partial class PrivateLinkServiceConnectionStateProperty
     {
@@ -2232,11 +2151,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ResourceManager.CosmosDB.Models.SqlContainerGetPropertiesOptions Options { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.SqlContainerGetPropertiesResource Resource { get { throw null; } set { } }
     }
-    public partial class SqlContainerListResult
-    {
-        internal SqlContainerListResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.SqlContainerGetResults> Value { get { throw null; } }
-    }
     public partial class SqlContainerResource
     {
         public SqlContainerResource(string id) { }
@@ -2273,11 +2187,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ResourceManager.CosmosDB.Models.SqlDatabaseGetPropertiesOptions Options { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.SqlDatabaseGetPropertiesResource Resource { get { throw null; } set { } }
     }
-    public partial class SqlDatabaseListResult
-    {
-        internal SqlDatabaseListResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.SqlDatabaseGetResults> Value { get { throw null; } }
-    }
     public partial class SqlDatabaseResource
     {
         public SqlDatabaseResource(string id) { }
@@ -2300,11 +2209,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         public SqlStoredProcedureGetResults() { }
         public Azure.ResourceManager.CosmosDB.Models.SqlStoredProcedureGetPropertiesResource Resource { get { throw null; } set { } }
-    }
-    public partial class SqlStoredProcedureListResult
-    {
-        internal SqlStoredProcedureListResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.SqlStoredProcedureGetResults> Value { get { throw null; } }
     }
     public partial class SqlStoredProcedureResource
     {
@@ -2329,11 +2233,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         public SqlTriggerGetResults() { }
         public Azure.ResourceManager.CosmosDB.Models.SqlTriggerGetPropertiesResource Resource { get { throw null; } set { } }
-    }
-    public partial class SqlTriggerListResult
-    {
-        internal SqlTriggerListResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.SqlTriggerGetResults> Value { get { throw null; } }
     }
     public partial class SqlTriggerResource
     {
@@ -2360,11 +2259,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         public SqlUserDefinedFunctionGetResults() { }
         public Azure.ResourceManager.CosmosDB.Models.SqlUserDefinedFunctionGetPropertiesResource Resource { get { throw null; } set { } }
-    }
-    public partial class SqlUserDefinedFunctionListResult
-    {
-        internal SqlUserDefinedFunctionListResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.SqlUserDefinedFunctionGetResults> Value { get { throw null; } }
     }
     public partial class SqlUserDefinedFunctionResource
     {
@@ -2394,11 +2288,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public TableGetResults() { }
         public Azure.ResourceManager.CosmosDB.Models.TableGetPropertiesOptions Options { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.TableGetPropertiesResource Resource { get { throw null; } set { } }
-    }
-    public partial class TableListResult
-    {
-        internal TableListResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.TableGetResults> Value { get { throw null; } }
     }
     public partial class TableResource
     {
@@ -2516,11 +2405,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ResourceManager.CosmosDB.Models.MetricName Name { get { throw null; } }
         public string QuotaPeriod { get { throw null; } }
         public Azure.ResourceManager.CosmosDB.Models.UnitType? Unit { get { throw null; } }
-    }
-    public partial class UsagesResult
-    {
-        internal UsagesResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.Usage> Value { get { throw null; } }
     }
     public partial class VirtualNetworkRule
     {
