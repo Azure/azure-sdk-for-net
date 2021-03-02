@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Test.Shared;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;

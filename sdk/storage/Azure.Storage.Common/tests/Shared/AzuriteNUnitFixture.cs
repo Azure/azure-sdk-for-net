@@ -3,7 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
+using Azure.Storage.Test.Shared;
 using NUnit.Framework;
 
 // This class is without namespace on purpose, to make sure it runs once per test assembly regardless of how tests are packaged.

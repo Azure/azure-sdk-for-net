@@ -1515,50 +1515,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [LiveOnly]
-        [ServiceVersion(Min = ServiceVersion.V2019_12_12)]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/12312")]
-        public async Task GetBlockListAsync_LongBlock()
-        {
-            const long bigBlockSize = int.MaxValue + 1024L;
-            await using DisposingContainer test = await GetTestContainerAsync();
-
-            // Arrange
-            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
-            var data = GetRandomBuffer(Size);
-
-            // Upload to blockBlobUri, so it exists
-            using (var stream = new MemoryStream(data))
-            {
-                await blob.UploadAsync(stream);
-            }
-
-            var blockId0 = ToBase64(GetNewBlockName());
-            using (var stream = new Storage.Tests.Shared.PredictableStream(length: bigBlockSize))
-            {
-                await blob.StageBlockAsync(blockId0, stream);
-            }
-            await blob.CommitBlockListAsync(new string[] { blockId0 });
-
-            var blockId1 = ToBase64(GetNewBlobName());
-            using (var stream = new MemoryStream(data))
-            {
-                await blob.StageBlockAsync(blockId1, stream);
-            }
-
-            // Act
-            Response<BlockList> response = await blob.GetBlockListAsync();
-
-            // Assert
-            Assert.AreEqual(1, response.Value.CommittedBlocks.Count());
-            Assert.AreEqual(blockId0, response.Value.CommittedBlocks.First().Name);
-            Assert.AreEqual(1, response.Value.UncommittedBlocks.Count());
-            Assert.AreEqual(blockId1, response.Value.UncommittedBlocks.First().Name);
-            Assert.AreEqual(bigBlockSize, response.Value.CommittedBlocks.First().SizeLong);
-            Assert.Throws<OverflowException>(() => _ = response.Value.CommittedBlocks.First().Size); // if no overflow then we didn't actually test handling of long lengths
-        }
-
-        [Test]
         public async Task GetBlockListAsync_Type()
         {
             GetBlockListParameters[] testCases = new[]
