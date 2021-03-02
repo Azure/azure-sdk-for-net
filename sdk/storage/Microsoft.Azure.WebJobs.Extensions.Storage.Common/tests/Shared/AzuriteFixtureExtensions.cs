@@ -5,28 +5,31 @@ using Azure.Storage.Blobs;
 using Azure.Storage.Queues;
 using Azure.Storage.Test.Shared;
 
-public static class AzuriteFixtureExtensions
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests
 {
-    public static BlobServiceClient GetBlobServiceClient(this AzuriteFixture azuriteFixture)
+    public static class AzuriteFixtureExtensions
     {
-        var transport = azuriteFixture.GetTransport();
-        return new BlobServiceClient(azuriteFixture.GetAzureAccount().ConnectionString, new BlobClientOptions()
+        public static BlobServiceClient GetBlobServiceClient(this AzuriteFixture azuriteFixture)
         {
-            Transport = transport
-        });
-    }
-
-    public static QueueServiceClient GetQueueServiceClient(this AzuriteFixture azuriteFixture, QueueClientOptions queueClientOptions = default)
-    {
-        if (queueClientOptions == default)
-        {
-            queueClientOptions = new QueueClientOptions()
+            var transport = azuriteFixture.GetTransport();
+            return new BlobServiceClient(azuriteFixture.GetAzureAccount().ConnectionString, new BlobClientOptions()
             {
-                MessageEncoding = QueueMessageEncoding.Base64
-            };
+                Transport = transport
+            });
         }
 
-        queueClientOptions.Transport = azuriteFixture.GetTransport();
-        return new QueueServiceClient(azuriteFixture.GetAzureAccount().ConnectionString, queueClientOptions);
+        public static QueueServiceClient GetQueueServiceClient(this AzuriteFixture azuriteFixture, QueueClientOptions queueClientOptions = default)
+        {
+            if (queueClientOptions == default)
+            {
+                queueClientOptions = new QueueClientOptions()
+                {
+                    MessageEncoding = QueueMessageEncoding.Base64
+                };
+            }
+
+            queueClientOptions.Transport = azuriteFixture.GetTransport();
+            return new QueueServiceClient(azuriteFixture.GetAzureAccount().ConnectionString, queueClientOptions);
+        }
     }
 }
