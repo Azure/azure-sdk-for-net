@@ -1,10 +1,14 @@
 # Release History
 
 ## 5.1.0-beta.5 (Unreleased)
+### New features
+- Added ability to filter the categories returned in a Personally Identifiable Information recognition with the optional parameter `CategoriesFilter` in `RecognizePiiEntitiesOptions`.
+
 ### Breaking changes
 - Renamed `AspectSentiment` to `TargetSentiment`.
 - Renamed `MinedOpinion` to `SentenceOpinion`.
 - Renamed `OpinionSentiment` to `AssessmentSentiment`.
+- For `PiiEntity.Category` the type of the property is now `PiiEntityCategory` instead of `EntityCategory`.
  
 ## 5.1.0-beta.4 (2021-02-10)
 ### New features

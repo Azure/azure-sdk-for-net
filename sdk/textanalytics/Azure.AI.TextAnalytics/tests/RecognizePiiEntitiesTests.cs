@@ -13,7 +13,7 @@ namespace Azure.AI.TextAnalytics.Tests
     {
         public RecognizePiiEntitiesTests(bool isAsync) : base(isAsync) { }
 
-        private const string EnglishDocument1 = "A developer with SSN 859-98-0987 whose phone number is 800-102-1100 is building tools with our APIs.";
+        private const string EnglishDocument1 = "A developer with SSN 859-98-0987 whose phone number is 800-102-1100 is building tools with our APIs. They work at Microsoft";
         private const string EnglishDocument2 = "Your ABA number - 111000025 - is the first 9 digits in the lower left hand corner of your personal check";
 
         private static readonly List<string> s_batchConvenienceDocuments = new List<string>
@@ -37,7 +37,8 @@ namespace Azure.AI.TextAnalytics.Tests
         private static readonly List<string> s_document1ExpectedOutput = new List<string>
         {
             "859-98-0987",
-            "800-102-1100"
+            "800-102-1100",
+            "Microsoft"
         };
 
         private static readonly List<string> s_document2ExpectedOutput = new List<string>
@@ -81,6 +82,42 @@ namespace Azure.AI.TextAnalytics.Tests
             PiiEntityCollection entities = await client.RecognizePiiEntitiesAsync(document, "en", new RecognizePiiEntitiesOptions() { DomainFilter = PiiEntityDomainType.ProtectedHealthInformation } );
 
             ValidateInDocumenResult(entities, new List<string>() { "atest@microsoft.com", "Microsoft" });
+        }
+
+        [Test]
+        public async Task RecognizePiiEntitiesWithCategoriesTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            PiiEntityCollection entities;
+
+            entities = await client.RecognizePiiEntitiesAsync(EnglishDocument1, "en", new RecognizePiiEntitiesOptions() { CategoriesFilter = { PiiEntityCategory.PhoneNumber} });
+            ValidateInDocumenResult(entities, new List<string>() { "800-102-1100" });
+
+            entities = await client.RecognizePiiEntitiesAsync(EnglishDocument1, "en", new RecognizePiiEntitiesOptions() { CategoriesFilter = { PiiEntityCategory.PhoneNumber, PiiEntityCategory.Organization } });
+            ValidateInDocumenResult(entities, new List<string>() { "800-102-1100", "Microsoft" });
+
+            entities = await client.RecognizePiiEntitiesAsync(EnglishDocument1, "en", new RecognizePiiEntitiesOptions() { CategoriesFilter = { PiiEntityCategory.PhoneNumber, PiiEntityCategory.Organization, PiiEntityCategory.USSocialSecurityNumber } });
+            ValidateInDocumenResult(entities, s_document1ExpectedOutput);
+
+            entities = await client.RecognizePiiEntitiesAsync(EnglishDocument1, "en", new RecognizePiiEntitiesOptions() { CategoriesFilter = { PiiEntityCategory.ABARoutingNumber } });
+            Assert.AreEqual(0, entities.Count);
+        }
+
+        [Test]
+        public async Task RecognizePiiEntitiesWithResultCategoriesTest()
+        {
+            TextAnalyticsClient client = GetClient();
+
+            PiiEntityCollection originalEntities = await client.RecognizePiiEntitiesAsync(EnglishDocument1);
+
+            List<PiiEntityCategory> piiCategories = new ();
+            foreach (var entity in originalEntities)
+            {
+                piiCategories.Add(entity.Category);
+            }
+
+            PiiEntityCollection newEntities = await client.RecognizePiiEntitiesAsync(EnglishDocument1, "en", new RecognizePiiEntitiesOptions() { CategoriesFilter = piiCategories });
+            ValidateInDocumenResult(newEntities, s_document1ExpectedOutput);
         }
 
         [Test]
@@ -163,6 +200,38 @@ namespace Azure.AI.TextAnalytics.Tests
             };
 
             ValidateBatchDocumentsResult(results, expectedOutput, includeStatistics: true);
+        }
+
+        [Test]
+        public async Task RecognizePiiEntitiesBatchWithDomainTest()
+        {
+            TextAnalyticsClient client = GetClient();
+
+            RecognizePiiEntitiesResultCollection results = await client.RecognizePiiEntitiesBatchAsync(s_batchDocuments, new RecognizePiiEntitiesOptions() { DomainFilter = PiiEntityDomainType.ProtectedHealthInformation });
+
+            var expectedOutput = new Dictionary<string, List<string>>()
+            {
+                { "1", s_document1ExpectedOutput },
+                { "2", s_document2ExpectedOutput },
+            };
+
+            ValidateBatchDocumentsResult(results, expectedOutput);
+        }
+
+        [Test]
+        public async Task RecognizePiiEntitiesBatchWitCategoryTest()
+        {
+            TextAnalyticsClient client = GetClient();
+
+            RecognizePiiEntitiesResultCollection results = await client.RecognizePiiEntitiesBatchAsync(s_batchDocuments, new RecognizePiiEntitiesOptions() { CategoriesFilter = { PiiEntityCategory.PhoneNumber } });
+
+            var expectedOutput = new Dictionary<string, List<string>>()
+            {
+                { "1", new List<string>() { "800-102-1100" } },
+                { "2", new List<string>() { "111000025" } },
+            };
+
+            ValidateBatchDocumentsResult(results, expectedOutput);
         }
 
         private void ValidateInDocumenResult(PiiEntityCollection entities, List<string> minimumExpectedOutput)

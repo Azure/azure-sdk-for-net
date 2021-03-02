@@ -8,20 +8,20 @@
         "Content-Length": "316",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-62bfde9758cf57438532f21be362693b-9f04daf443bb7b42-00",
+        "traceparent": "00-c24f57dcefee7d4888a3a9b1ab2ac703-df9336a0de0eb14a-00",
         "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210226.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "c173c94341dba618c4f393086e026774",
+        "x-ms-client-request-id": "ad760dfb47a56942a81a4fab59b3d969",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "documents": [
           {
-            "id": "0",
+            "id": "1",
             "text": "A developer with SSN 859-98-0987 whose phone number is 800-102-1100 is building tools with our APIs. They work at Microsoft",
             "language": "en"
           },
           {
-            "id": "1",
+            "id": "2",
             "text": "Your ABA number - 111000025 - is the first 9 digits in the lower left hand corner of your personal check",
             "language": "en"
           }
@@ -29,20 +29,20 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "a5cc9db0-cf2b-474f-8c8b-5424b59ebcf7",
+        "apim-request-id": "7e56e877-8f9b-45a3-8d78-c76dca0ea4a3",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2",
-        "Date": "Sat, 27 Feb 2021 00:03:56 GMT",
+        "Date": "Sat, 27 Feb 2021 00:04:01 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "51"
+        "x-envoy-upstream-service-time": "45"
       },
       "ResponseBody": {
         "documents": [
           {
             "redactedText": "A developer with SSN *********** whose phone number is ************ is building tools with our APIs. They work at *********",
-            "id": "0",
+            "id": "1",
             "entities": [
               {
                 "text": "859-98-0987",
@@ -70,7 +70,7 @@
           },
           {
             "redactedText": "Your ABA number - ********* - is the first 9 digits in the lower left hand corner of your personal check",
-            "id": "1",
+            "id": "2",
             "entities": [
               {
                 "text": "111000025",
@@ -103,7 +103,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "820182005",
+    "RandomSeed": "946759567",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
     "TEXT_ANALYTICS_ENDPOINT": "https://mariari-westus2-s.cognitiveservices.azure.com/"
   }

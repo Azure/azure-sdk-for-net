@@ -8,16 +8,16 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics
 {
     /// <summary> The PiiCategory. </summary>
-    internal readonly partial struct PiiCategory : IEquatable<PiiCategory>
+    public readonly partial struct PiiEntityCategory : IEquatable<PiiEntityCategory>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="PiiCategory"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="PiiEntityCategory"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PiiCategory(string value)
+        public PiiEntityCategory(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -197,363 +197,363 @@ namespace Azure.AI.TextAnalytics.Models
         private const string DefaultValue = "Default";
 
         /// <summary> ABARoutingNumber. </summary>
-        public static PiiCategory ABARoutingNumber { get; } = new PiiCategory(ABARoutingNumberValue);
+        public static PiiEntityCategory ABARoutingNumber { get; } = new PiiEntityCategory(ABARoutingNumberValue);
         /// <summary> ARNationalIdentityNumber. </summary>
-        public static PiiCategory ARNationalIdentityNumber { get; } = new PiiCategory(ARNationalIdentityNumberValue);
+        public static PiiEntityCategory ARNationalIdentityNumber { get; } = new PiiEntityCategory(ARNationalIdentityNumberValue);
         /// <summary> AUBankAccountNumber. </summary>
-        public static PiiCategory AUBankAccountNumber { get; } = new PiiCategory(AUBankAccountNumberValue);
+        public static PiiEntityCategory AUBankAccountNumber { get; } = new PiiEntityCategory(AUBankAccountNumberValue);
         /// <summary> AUDriversLicenseNumber. </summary>
-        public static PiiCategory AUDriversLicenseNumber { get; } = new PiiCategory(AUDriversLicenseNumberValue);
+        public static PiiEntityCategory AUDriversLicenseNumber { get; } = new PiiEntityCategory(AUDriversLicenseNumberValue);
         /// <summary> AUMedicalAccountNumber. </summary>
-        public static PiiCategory AUMedicalAccountNumber { get; } = new PiiCategory(AUMedicalAccountNumberValue);
+        public static PiiEntityCategory AUMedicalAccountNumber { get; } = new PiiEntityCategory(AUMedicalAccountNumberValue);
         /// <summary> AUPassportNumber. </summary>
-        public static PiiCategory AUPassportNumber { get; } = new PiiCategory(AUPassportNumberValue);
+        public static PiiEntityCategory AUPassportNumber { get; } = new PiiEntityCategory(AUPassportNumberValue);
         /// <summary> AUTaxFileNumber. </summary>
-        public static PiiCategory AUTaxFileNumber { get; } = new PiiCategory(AUTaxFileNumberValue);
+        public static PiiEntityCategory AUTaxFileNumber { get; } = new PiiEntityCategory(AUTaxFileNumberValue);
         /// <summary> AUBusinessNumber. </summary>
-        public static PiiCategory AUBusinessNumber { get; } = new PiiCategory(AUBusinessNumberValue);
+        public static PiiEntityCategory AUBusinessNumber { get; } = new PiiEntityCategory(AUBusinessNumberValue);
         /// <summary> AUCompanyNumber. </summary>
-        public static PiiCategory AUCompanyNumber { get; } = new PiiCategory(AUCompanyNumberValue);
+        public static PiiEntityCategory AUCompanyNumber { get; } = new PiiEntityCategory(AUCompanyNumberValue);
         /// <summary> ATIdentityCard. </summary>
-        public static PiiCategory ATIdentityCard { get; } = new PiiCategory(ATIdentityCardValue);
+        public static PiiEntityCategory ATIdentityCard { get; } = new PiiEntityCategory(ATIdentityCardValue);
         /// <summary> ATTaxIdentificationNumber. </summary>
-        public static PiiCategory ATTaxIdentificationNumber { get; } = new PiiCategory(ATTaxIdentificationNumberValue);
+        public static PiiEntityCategory ATTaxIdentificationNumber { get; } = new PiiEntityCategory(ATTaxIdentificationNumberValue);
         /// <summary> ATValueAddedTaxNumber. </summary>
-        public static PiiCategory ATValueAddedTaxNumber { get; } = new PiiCategory(ATValueAddedTaxNumberValue);
+        public static PiiEntityCategory ATValueAddedTaxNumber { get; } = new PiiEntityCategory(ATValueAddedTaxNumberValue);
         /// <summary> AzureDocumentDBAuthKey. </summary>
-        public static PiiCategory AzureDocumentDBAuthKey { get; } = new PiiCategory(AzureDocumentDBAuthKeyValue);
+        public static PiiEntityCategory AzureDocumentDBAuthKey { get; } = new PiiEntityCategory(AzureDocumentDBAuthKeyValue);
         /// <summary> AzureIAASDatabaseConnectionAndSQLString. </summary>
-        public static PiiCategory AzureIaasDatabaseConnectionAndSQLString { get; } = new PiiCategory(AzureIaasDatabaseConnectionAndSQLStringValue);
+        public static PiiEntityCategory AzureIaasDatabaseConnectionAndSQLString { get; } = new PiiEntityCategory(AzureIaasDatabaseConnectionAndSQLStringValue);
         /// <summary> AzureIoTConnectionString. </summary>
-        public static PiiCategory AzureIoTConnectionString { get; } = new PiiCategory(AzureIoTConnectionStringValue);
+        public static PiiEntityCategory AzureIoTConnectionString { get; } = new PiiEntityCategory(AzureIoTConnectionStringValue);
         /// <summary> AzurePublishSettingPassword. </summary>
-        public static PiiCategory AzurePublishSettingPassword { get; } = new PiiCategory(AzurePublishSettingPasswordValue);
+        public static PiiEntityCategory AzurePublishSettingPassword { get; } = new PiiEntityCategory(AzurePublishSettingPasswordValue);
         /// <summary> AzureRedisCacheString. </summary>
-        public static PiiCategory AzureRedisCacheString { get; } = new PiiCategory(AzureRedisCacheStringValue);
+        public static PiiEntityCategory AzureRedisCacheString { get; } = new PiiEntityCategory(AzureRedisCacheStringValue);
         /// <summary> AzureSAS. </summary>
-        public static PiiCategory AzureSAS { get; } = new PiiCategory(AzureSASValue);
+        public static PiiEntityCategory AzureSAS { get; } = new PiiEntityCategory(AzureSASValue);
         /// <summary> AzureServiceBusString. </summary>
-        public static PiiCategory AzureServiceBusString { get; } = new PiiCategory(AzureServiceBusStringValue);
+        public static PiiEntityCategory AzureServiceBusString { get; } = new PiiEntityCategory(AzureServiceBusStringValue);
         /// <summary> AzureStorageAccountKey. </summary>
-        public static PiiCategory AzureStorageAccountKey { get; } = new PiiCategory(AzureStorageAccountKeyValue);
+        public static PiiEntityCategory AzureStorageAccountKey { get; } = new PiiEntityCategory(AzureStorageAccountKeyValue);
         /// <summary> AzureStorageAccountGeneric. </summary>
-        public static PiiCategory AzureStorageAccountGeneric { get; } = new PiiCategory(AzureStorageAccountGenericValue);
+        public static PiiEntityCategory AzureStorageAccountGeneric { get; } = new PiiEntityCategory(AzureStorageAccountGenericValue);
         /// <summary> BENationalNumber. </summary>
-        public static PiiCategory BENationalNumber { get; } = new PiiCategory(BENationalNumberValue);
+        public static PiiEntityCategory BENationalNumber { get; } = new PiiEntityCategory(BENationalNumberValue);
         /// <summary> BENationalNumberV2. </summary>
-        public static PiiCategory BENationalNumberV2 { get; } = new PiiCategory(BENationalNumberV2Value);
+        public static PiiEntityCategory BENationalNumberV2 { get; } = new PiiEntityCategory(BENationalNumberV2Value);
         /// <summary> BEValueAddedTaxNumber. </summary>
-        public static PiiCategory BEValueAddedTaxNumber { get; } = new PiiCategory(BEValueAddedTaxNumberValue);
+        public static PiiEntityCategory BEValueAddedTaxNumber { get; } = new PiiEntityCategory(BEValueAddedTaxNumberValue);
         /// <summary> BRCPFNumber. </summary>
-        public static PiiCategory BrcpfNumber { get; } = new PiiCategory(BrcpfNumberValue);
+        public static PiiEntityCategory BrcpfNumber { get; } = new PiiEntityCategory(BrcpfNumberValue);
         /// <summary> BRLegalEntityNumber. </summary>
-        public static PiiCategory BRLegalEntityNumber { get; } = new PiiCategory(BRLegalEntityNumberValue);
+        public static PiiEntityCategory BRLegalEntityNumber { get; } = new PiiEntityCategory(BRLegalEntityNumberValue);
         /// <summary> BRNationalIDRG. </summary>
-        public static PiiCategory BRNationalIdrg { get; } = new PiiCategory(BRNationalIdrgValue);
+        public static PiiEntityCategory BRNationalIdrg { get; } = new PiiEntityCategory(BRNationalIdrgValue);
         /// <summary> BGUniformCivilNumber. </summary>
-        public static PiiCategory BGUniformCivilNumber { get; } = new PiiCategory(BGUniformCivilNumberValue);
+        public static PiiEntityCategory BGUniformCivilNumber { get; } = new PiiEntityCategory(BGUniformCivilNumberValue);
         /// <summary> CABankAccountNumber. </summary>
-        public static PiiCategory CABankAccountNumber { get; } = new PiiCategory(CABankAccountNumberValue);
+        public static PiiEntityCategory CABankAccountNumber { get; } = new PiiEntityCategory(CABankAccountNumberValue);
         /// <summary> CADriversLicenseNumber. </summary>
-        public static PiiCategory CADriversLicenseNumber { get; } = new PiiCategory(CADriversLicenseNumberValue);
+        public static PiiEntityCategory CADriversLicenseNumber { get; } = new PiiEntityCategory(CADriversLicenseNumberValue);
         /// <summary> CAHealthServiceNumber. </summary>
-        public static PiiCategory CAHealthServiceNumber { get; } = new PiiCategory(CAHealthServiceNumberValue);
+        public static PiiEntityCategory CAHealthServiceNumber { get; } = new PiiEntityCategory(CAHealthServiceNumberValue);
         /// <summary> CAPassportNumber. </summary>
-        public static PiiCategory CAPassportNumber { get; } = new PiiCategory(CAPassportNumberValue);
+        public static PiiEntityCategory CAPassportNumber { get; } = new PiiEntityCategory(CAPassportNumberValue);
         /// <summary> CAPersonalHealthIdentification. </summary>
-        public static PiiCategory CAPersonalHealthIdentification { get; } = new PiiCategory(CAPersonalHealthIdentificationValue);
+        public static PiiEntityCategory CAPersonalHealthIdentification { get; } = new PiiEntityCategory(CAPersonalHealthIdentificationValue);
         /// <summary> CASocialInsuranceNumber. </summary>
-        public static PiiCategory CASocialInsuranceNumber { get; } = new PiiCategory(CASocialInsuranceNumberValue);
+        public static PiiEntityCategory CASocialInsuranceNumber { get; } = new PiiEntityCategory(CASocialInsuranceNumberValue);
         /// <summary> CLIdentityCardNumber. </summary>
-        public static PiiCategory CLIdentityCardNumber { get; } = new PiiCategory(CLIdentityCardNumberValue);
+        public static PiiEntityCategory CLIdentityCardNumber { get; } = new PiiEntityCategory(CLIdentityCardNumberValue);
         /// <summary> CNResidentIdentityCardNumber. </summary>
-        public static PiiCategory CNResidentIdentityCardNumber { get; } = new PiiCategory(CNResidentIdentityCardNumberValue);
+        public static PiiEntityCategory CNResidentIdentityCardNumber { get; } = new PiiEntityCategory(CNResidentIdentityCardNumberValue);
         /// <summary> CreditCardNumber. </summary>
-        public static PiiCategory CreditCardNumber { get; } = new PiiCategory(CreditCardNumberValue);
+        public static PiiEntityCategory CreditCardNumber { get; } = new PiiEntityCategory(CreditCardNumberValue);
         /// <summary> HRIdentityCardNumber. </summary>
-        public static PiiCategory HRIdentityCardNumber { get; } = new PiiCategory(HRIdentityCardNumberValue);
+        public static PiiEntityCategory HRIdentityCardNumber { get; } = new PiiEntityCategory(HRIdentityCardNumberValue);
         /// <summary> HRNationalIDNumber. </summary>
-        public static PiiCategory HRNationalIDNumber { get; } = new PiiCategory(HRNationalIDNumberValue);
+        public static PiiEntityCategory HRNationalIDNumber { get; } = new PiiEntityCategory(HRNationalIDNumberValue);
         /// <summary> HRPersonalIdentificationNumber. </summary>
-        public static PiiCategory HRPersonalIdentificationNumber { get; } = new PiiCategory(HRPersonalIdentificationNumberValue);
+        public static PiiEntityCategory HRPersonalIdentificationNumber { get; } = new PiiEntityCategory(HRPersonalIdentificationNumberValue);
         /// <summary> HRPersonalIdentificationOIBNumberV2. </summary>
-        public static PiiCategory HRPersonalIdentificationOIBNumberV2 { get; } = new PiiCategory(HRPersonalIdentificationOIBNumberV2Value);
+        public static PiiEntityCategory HRPersonalIdentificationOIBNumberV2 { get; } = new PiiEntityCategory(HRPersonalIdentificationOIBNumberV2Value);
         /// <summary> CYIdentityCard. </summary>
-        public static PiiCategory CYIdentityCard { get; } = new PiiCategory(CYIdentityCardValue);
+        public static PiiEntityCategory CYIdentityCard { get; } = new PiiEntityCategory(CYIdentityCardValue);
         /// <summary> CYTaxIdentificationNumber. </summary>
-        public static PiiCategory CYTaxIdentificationNumber { get; } = new PiiCategory(CYTaxIdentificationNumberValue);
+        public static PiiEntityCategory CYTaxIdentificationNumber { get; } = new PiiEntityCategory(CYTaxIdentificationNumberValue);
         /// <summary> CZPersonalIdentityNumber. </summary>
-        public static PiiCategory CZPersonalIdentityNumber { get; } = new PiiCategory(CZPersonalIdentityNumberValue);
+        public static PiiEntityCategory CZPersonalIdentityNumber { get; } = new PiiEntityCategory(CZPersonalIdentityNumberValue);
         /// <summary> CZPersonalIdentityV2. </summary>
-        public static PiiCategory CZPersonalIdentityV2 { get; } = new PiiCategory(CZPersonalIdentityV2Value);
+        public static PiiEntityCategory CZPersonalIdentityV2 { get; } = new PiiEntityCategory(CZPersonalIdentityV2Value);
         /// <summary> DKPersonalIdentificationNumber. </summary>
-        public static PiiCategory DKPersonalIdentificationNumber { get; } = new PiiCategory(DKPersonalIdentificationNumberValue);
+        public static PiiEntityCategory DKPersonalIdentificationNumber { get; } = new PiiEntityCategory(DKPersonalIdentificationNumberValue);
         /// <summary> DKPersonalIdentificationV2. </summary>
-        public static PiiCategory DKPersonalIdentificationV2 { get; } = new PiiCategory(DKPersonalIdentificationV2Value);
+        public static PiiEntityCategory DKPersonalIdentificationV2 { get; } = new PiiEntityCategory(DKPersonalIdentificationV2Value);
         /// <summary> DrugEnforcementAgencyNumber. </summary>
-        public static PiiCategory DrugEnforcementAgencyNumber { get; } = new PiiCategory(DrugEnforcementAgencyNumberValue);
+        public static PiiEntityCategory DrugEnforcementAgencyNumber { get; } = new PiiEntityCategory(DrugEnforcementAgencyNumberValue);
         /// <summary> EEPersonalIdentificationCode. </summary>
-        public static PiiCategory EEPersonalIdentificationCode { get; } = new PiiCategory(EEPersonalIdentificationCodeValue);
+        public static PiiEntityCategory EEPersonalIdentificationCode { get; } = new PiiEntityCategory(EEPersonalIdentificationCodeValue);
         /// <summary> EUDebitCardNumber. </summary>
-        public static PiiCategory EUDebitCardNumber { get; } = new PiiCategory(EUDebitCardNumberValue);
+        public static PiiEntityCategory EUDebitCardNumber { get; } = new PiiEntityCategory(EUDebitCardNumberValue);
         /// <summary> EUDriversLicenseNumber. </summary>
-        public static PiiCategory EUDriversLicenseNumber { get; } = new PiiCategory(EUDriversLicenseNumberValue);
+        public static PiiEntityCategory EUDriversLicenseNumber { get; } = new PiiEntityCategory(EUDriversLicenseNumberValue);
         /// <summary> EUGPSCoordinates. </summary>
-        public static PiiCategory EugpsCoordinates { get; } = new PiiCategory(EugpsCoordinatesValue);
+        public static PiiEntityCategory EugpsCoordinates { get; } = new PiiEntityCategory(EugpsCoordinatesValue);
         /// <summary> EUNationalIdentificationNumber. </summary>
-        public static PiiCategory EUNationalIdentificationNumber { get; } = new PiiCategory(EUNationalIdentificationNumberValue);
+        public static PiiEntityCategory EUNationalIdentificationNumber { get; } = new PiiEntityCategory(EUNationalIdentificationNumberValue);
         /// <summary> EUPassportNumber. </summary>
-        public static PiiCategory EUPassportNumber { get; } = new PiiCategory(EUPassportNumberValue);
+        public static PiiEntityCategory EUPassportNumber { get; } = new PiiEntityCategory(EUPassportNumberValue);
         /// <summary> EUSocialSecurityNumber. </summary>
-        public static PiiCategory EUSocialSecurityNumber { get; } = new PiiCategory(EUSocialSecurityNumberValue);
+        public static PiiEntityCategory EUSocialSecurityNumber { get; } = new PiiEntityCategory(EUSocialSecurityNumberValue);
         /// <summary> EUTaxIdentificationNumber. </summary>
-        public static PiiCategory EUTaxIdentificationNumber { get; } = new PiiCategory(EUTaxIdentificationNumberValue);
+        public static PiiEntityCategory EUTaxIdentificationNumber { get; } = new PiiEntityCategory(EUTaxIdentificationNumberValue);
         /// <summary> FIEuropeanHealthNumber. </summary>
-        public static PiiCategory FIEuropeanHealthNumber { get; } = new PiiCategory(FIEuropeanHealthNumberValue);
+        public static PiiEntityCategory FIEuropeanHealthNumber { get; } = new PiiEntityCategory(FIEuropeanHealthNumberValue);
         /// <summary> FINationalID. </summary>
-        public static PiiCategory FINationalID { get; } = new PiiCategory(FINationalIDValue);
+        public static PiiEntityCategory FINationalID { get; } = new PiiEntityCategory(FINationalIDValue);
         /// <summary> FINationalIDV2. </summary>
-        public static PiiCategory FINationalIDV2 { get; } = new PiiCategory(FINationalIDV2Value);
+        public static PiiEntityCategory FINationalIDV2 { get; } = new PiiEntityCategory(FINationalIDV2Value);
         /// <summary> FIPassportNumber. </summary>
-        public static PiiCategory FIPassportNumber { get; } = new PiiCategory(FIPassportNumberValue);
+        public static PiiEntityCategory FIPassportNumber { get; } = new PiiEntityCategory(FIPassportNumberValue);
         /// <summary> FRDriversLicenseNumber. </summary>
-        public static PiiCategory FRDriversLicenseNumber { get; } = new PiiCategory(FRDriversLicenseNumberValue);
+        public static PiiEntityCategory FRDriversLicenseNumber { get; } = new PiiEntityCategory(FRDriversLicenseNumberValue);
         /// <summary> FRHealthInsuranceNumber. </summary>
-        public static PiiCategory FRHealthInsuranceNumber { get; } = new PiiCategory(FRHealthInsuranceNumberValue);
+        public static PiiEntityCategory FRHealthInsuranceNumber { get; } = new PiiEntityCategory(FRHealthInsuranceNumberValue);
         /// <summary> FRNationalID. </summary>
-        public static PiiCategory FRNationalID { get; } = new PiiCategory(FRNationalIDValue);
+        public static PiiEntityCategory FRNationalID { get; } = new PiiEntityCategory(FRNationalIDValue);
         /// <summary> FRPassportNumber. </summary>
-        public static PiiCategory FRPassportNumber { get; } = new PiiCategory(FRPassportNumberValue);
+        public static PiiEntityCategory FRPassportNumber { get; } = new PiiEntityCategory(FRPassportNumberValue);
         /// <summary> FRSocialSecurityNumber. </summary>
-        public static PiiCategory FRSocialSecurityNumber { get; } = new PiiCategory(FRSocialSecurityNumberValue);
+        public static PiiEntityCategory FRSocialSecurityNumber { get; } = new PiiEntityCategory(FRSocialSecurityNumberValue);
         /// <summary> FRTaxIdentificationNumber. </summary>
-        public static PiiCategory FRTaxIdentificationNumber { get; } = new PiiCategory(FRTaxIdentificationNumberValue);
+        public static PiiEntityCategory FRTaxIdentificationNumber { get; } = new PiiEntityCategory(FRTaxIdentificationNumberValue);
         /// <summary> FRValueAddedTaxNumber. </summary>
-        public static PiiCategory FRValueAddedTaxNumber { get; } = new PiiCategory(FRValueAddedTaxNumberValue);
+        public static PiiEntityCategory FRValueAddedTaxNumber { get; } = new PiiEntityCategory(FRValueAddedTaxNumberValue);
         /// <summary> DEDriversLicenseNumber. </summary>
-        public static PiiCategory DEDriversLicenseNumber { get; } = new PiiCategory(DEDriversLicenseNumberValue);
+        public static PiiEntityCategory DEDriversLicenseNumber { get; } = new PiiEntityCategory(DEDriversLicenseNumberValue);
         /// <summary> DEPassportNumber. </summary>
-        public static PiiCategory DEPassportNumber { get; } = new PiiCategory(DEPassportNumberValue);
+        public static PiiEntityCategory DEPassportNumber { get; } = new PiiEntityCategory(DEPassportNumberValue);
         /// <summary> DEIdentityCardNumber. </summary>
-        public static PiiCategory DEIdentityCardNumber { get; } = new PiiCategory(DEIdentityCardNumberValue);
+        public static PiiEntityCategory DEIdentityCardNumber { get; } = new PiiEntityCategory(DEIdentityCardNumberValue);
         /// <summary> DETaxIdentificationNumber. </summary>
-        public static PiiCategory DETaxIdentificationNumber { get; } = new PiiCategory(DETaxIdentificationNumberValue);
+        public static PiiEntityCategory DETaxIdentificationNumber { get; } = new PiiEntityCategory(DETaxIdentificationNumberValue);
         /// <summary> DEValueAddedNumber. </summary>
-        public static PiiCategory DEValueAddedNumber { get; } = new PiiCategory(DEValueAddedNumberValue);
+        public static PiiEntityCategory DEValueAddedNumber { get; } = new PiiEntityCategory(DEValueAddedNumberValue);
         /// <summary> GRNationalIDCard. </summary>
-        public static PiiCategory GRNationalIDCard { get; } = new PiiCategory(GRNationalIDCardValue);
+        public static PiiEntityCategory GRNationalIDCard { get; } = new PiiEntityCategory(GRNationalIDCardValue);
         /// <summary> GRNationalIDV2. </summary>
-        public static PiiCategory GRNationalIDV2 { get; } = new PiiCategory(GRNationalIDV2Value);
+        public static PiiEntityCategory GRNationalIDV2 { get; } = new PiiEntityCategory(GRNationalIDV2Value);
         /// <summary> GRTaxIdentificationNumber. </summary>
-        public static PiiCategory GRTaxIdentificationNumber { get; } = new PiiCategory(GRTaxIdentificationNumberValue);
+        public static PiiEntityCategory GRTaxIdentificationNumber { get; } = new PiiEntityCategory(GRTaxIdentificationNumberValue);
         /// <summary> HKIdentityCardNumber. </summary>
-        public static PiiCategory HKIdentityCardNumber { get; } = new PiiCategory(HKIdentityCardNumberValue);
+        public static PiiEntityCategory HKIdentityCardNumber { get; } = new PiiEntityCategory(HKIdentityCardNumberValue);
         /// <summary> HUValueAddedNumber. </summary>
-        public static PiiCategory HUValueAddedNumber { get; } = new PiiCategory(HUValueAddedNumberValue);
+        public static PiiEntityCategory HUValueAddedNumber { get; } = new PiiEntityCategory(HUValueAddedNumberValue);
         /// <summary> HUPersonalIdentificationNumber. </summary>
-        public static PiiCategory HUPersonalIdentificationNumber { get; } = new PiiCategory(HUPersonalIdentificationNumberValue);
+        public static PiiEntityCategory HUPersonalIdentificationNumber { get; } = new PiiEntityCategory(HUPersonalIdentificationNumberValue);
         /// <summary> HUTaxIdentificationNumber. </summary>
-        public static PiiCategory HUTaxIdentificationNumber { get; } = new PiiCategory(HUTaxIdentificationNumberValue);
+        public static PiiEntityCategory HUTaxIdentificationNumber { get; } = new PiiEntityCategory(HUTaxIdentificationNumberValue);
         /// <summary> INPermanentAccount. </summary>
-        public static PiiCategory INPermanentAccount { get; } = new PiiCategory(INPermanentAccountValue);
+        public static PiiEntityCategory INPermanentAccount { get; } = new PiiEntityCategory(INPermanentAccountValue);
         /// <summary> INUniqueIdentificationNumber. </summary>
-        public static PiiCategory INUniqueIdentificationNumber { get; } = new PiiCategory(INUniqueIdentificationNumberValue);
+        public static PiiEntityCategory INUniqueIdentificationNumber { get; } = new PiiEntityCategory(INUniqueIdentificationNumberValue);
         /// <summary> IDIdentityCardNumber. </summary>
-        public static PiiCategory IDIdentityCardNumber { get; } = new PiiCategory(IDIdentityCardNumberValue);
+        public static PiiEntityCategory IDIdentityCardNumber { get; } = new PiiEntityCategory(IDIdentityCardNumberValue);
         /// <summary> InternationalBankingAccountNumber. </summary>
-        public static PiiCategory InternationalBankingAccountNumber { get; } = new PiiCategory(InternationalBankingAccountNumberValue);
+        public static PiiEntityCategory InternationalBankingAccountNumber { get; } = new PiiEntityCategory(InternationalBankingAccountNumberValue);
         /// <summary> IEPersonalPublicServiceNumber. </summary>
-        public static PiiCategory IEPersonalPublicServiceNumber { get; } = new PiiCategory(IEPersonalPublicServiceNumberValue);
+        public static PiiEntityCategory IEPersonalPublicServiceNumber { get; } = new PiiEntityCategory(IEPersonalPublicServiceNumberValue);
         /// <summary> IEPersonalPublicServiceNumberV2. </summary>
-        public static PiiCategory IEPersonalPublicServiceNumberV2 { get; } = new PiiCategory(IEPersonalPublicServiceNumberV2Value);
+        public static PiiEntityCategory IEPersonalPublicServiceNumberV2 { get; } = new PiiEntityCategory(IEPersonalPublicServiceNumberV2Value);
         /// <summary> ILBankAccountNumber. </summary>
-        public static PiiCategory ILBankAccountNumber { get; } = new PiiCategory(ILBankAccountNumberValue);
+        public static PiiEntityCategory ILBankAccountNumber { get; } = new PiiEntityCategory(ILBankAccountNumberValue);
         /// <summary> ILNationalID. </summary>
-        public static PiiCategory ILNationalID { get; } = new PiiCategory(ILNationalIDValue);
+        public static PiiEntityCategory ILNationalID { get; } = new PiiEntityCategory(ILNationalIDValue);
         /// <summary> ITDriversLicenseNumber. </summary>
-        public static PiiCategory ITDriversLicenseNumber { get; } = new PiiCategory(ITDriversLicenseNumberValue);
+        public static PiiEntityCategory ITDriversLicenseNumber { get; } = new PiiEntityCategory(ITDriversLicenseNumberValue);
         /// <summary> ITFiscalCode. </summary>
-        public static PiiCategory ITFiscalCode { get; } = new PiiCategory(ITFiscalCodeValue);
+        public static PiiEntityCategory ITFiscalCode { get; } = new PiiEntityCategory(ITFiscalCodeValue);
         /// <summary> ITValueAddedTaxNumber. </summary>
-        public static PiiCategory ITValueAddedTaxNumber { get; } = new PiiCategory(ITValueAddedTaxNumberValue);
+        public static PiiEntityCategory ITValueAddedTaxNumber { get; } = new PiiEntityCategory(ITValueAddedTaxNumberValue);
         /// <summary> JPBankAccountNumber. </summary>
-        public static PiiCategory JPBankAccountNumber { get; } = new PiiCategory(JPBankAccountNumberValue);
+        public static PiiEntityCategory JPBankAccountNumber { get; } = new PiiEntityCategory(JPBankAccountNumberValue);
         /// <summary> JPDriversLicenseNumber. </summary>
-        public static PiiCategory JPDriversLicenseNumber { get; } = new PiiCategory(JPDriversLicenseNumberValue);
+        public static PiiEntityCategory JPDriversLicenseNumber { get; } = new PiiEntityCategory(JPDriversLicenseNumberValue);
         /// <summary> JPPassportNumber. </summary>
-        public static PiiCategory JPPassportNumber { get; } = new PiiCategory(JPPassportNumberValue);
+        public static PiiEntityCategory JPPassportNumber { get; } = new PiiEntityCategory(JPPassportNumberValue);
         /// <summary> JPResidentRegistrationNumber. </summary>
-        public static PiiCategory JPResidentRegistrationNumber { get; } = new PiiCategory(JPResidentRegistrationNumberValue);
+        public static PiiEntityCategory JPResidentRegistrationNumber { get; } = new PiiEntityCategory(JPResidentRegistrationNumberValue);
         /// <summary> JPSocialInsuranceNumber. </summary>
-        public static PiiCategory JPSocialInsuranceNumber { get; } = new PiiCategory(JPSocialInsuranceNumberValue);
+        public static PiiEntityCategory JPSocialInsuranceNumber { get; } = new PiiEntityCategory(JPSocialInsuranceNumberValue);
         /// <summary> JPMyNumberCorporate. </summary>
-        public static PiiCategory JPMyNumberCorporate { get; } = new PiiCategory(JPMyNumberCorporateValue);
+        public static PiiEntityCategory JPMyNumberCorporate { get; } = new PiiEntityCategory(JPMyNumberCorporateValue);
         /// <summary> JPMyNumberPersonal. </summary>
-        public static PiiCategory JPMyNumberPersonal { get; } = new PiiCategory(JPMyNumberPersonalValue);
+        public static PiiEntityCategory JPMyNumberPersonal { get; } = new PiiEntityCategory(JPMyNumberPersonalValue);
         /// <summary> JPResidenceCardNumber. </summary>
-        public static PiiCategory JPResidenceCardNumber { get; } = new PiiCategory(JPResidenceCardNumberValue);
+        public static PiiEntityCategory JPResidenceCardNumber { get; } = new PiiEntityCategory(JPResidenceCardNumberValue);
         /// <summary> LVPersonalCode. </summary>
-        public static PiiCategory LVPersonalCode { get; } = new PiiCategory(LVPersonalCodeValue);
+        public static PiiEntityCategory LVPersonalCode { get; } = new PiiEntityCategory(LVPersonalCodeValue);
         /// <summary> LTPersonalCode. </summary>
-        public static PiiCategory LTPersonalCode { get; } = new PiiCategory(LTPersonalCodeValue);
+        public static PiiEntityCategory LTPersonalCode { get; } = new PiiEntityCategory(LTPersonalCodeValue);
         /// <summary> LUNationalIdentificationNumberNatural. </summary>
-        public static PiiCategory LUNationalIdentificationNumberNatural { get; } = new PiiCategory(LUNationalIdentificationNumberNaturalValue);
+        public static PiiEntityCategory LUNationalIdentificationNumberNatural { get; } = new PiiEntityCategory(LUNationalIdentificationNumberNaturalValue);
         /// <summary> LUNationalIdentificationNumberNonNatural. </summary>
-        public static PiiCategory LUNationalIdentificationNumberNonNatural { get; } = new PiiCategory(LUNationalIdentificationNumberNonNaturalValue);
+        public static PiiEntityCategory LUNationalIdentificationNumberNonNatural { get; } = new PiiEntityCategory(LUNationalIdentificationNumberNonNaturalValue);
         /// <summary> MYIdentityCardNumber. </summary>
-        public static PiiCategory MYIdentityCardNumber { get; } = new PiiCategory(MYIdentityCardNumberValue);
+        public static PiiEntityCategory MYIdentityCardNumber { get; } = new PiiEntityCategory(MYIdentityCardNumberValue);
         /// <summary> MTIdentityCardNumber. </summary>
-        public static PiiCategory MTIdentityCardNumber { get; } = new PiiCategory(MTIdentityCardNumberValue);
+        public static PiiEntityCategory MTIdentityCardNumber { get; } = new PiiEntityCategory(MTIdentityCardNumberValue);
         /// <summary> MTTaxIDNumber. </summary>
-        public static PiiCategory MTTaxIDNumber { get; } = new PiiCategory(MTTaxIDNumberValue);
+        public static PiiEntityCategory MTTaxIDNumber { get; } = new PiiEntityCategory(MTTaxIDNumberValue);
         /// <summary> NLCitizensServiceNumber. </summary>
-        public static PiiCategory NLCitizensServiceNumber { get; } = new PiiCategory(NLCitizensServiceNumberValue);
+        public static PiiEntityCategory NLCitizensServiceNumber { get; } = new PiiEntityCategory(NLCitizensServiceNumberValue);
         /// <summary> NLCitizensServiceNumberV2. </summary>
-        public static PiiCategory NLCitizensServiceNumberV2 { get; } = new PiiCategory(NLCitizensServiceNumberV2Value);
+        public static PiiEntityCategory NLCitizensServiceNumberV2 { get; } = new PiiEntityCategory(NLCitizensServiceNumberV2Value);
         /// <summary> NLTaxIdentificationNumber. </summary>
-        public static PiiCategory NLTaxIdentificationNumber { get; } = new PiiCategory(NLTaxIdentificationNumberValue);
+        public static PiiEntityCategory NLTaxIdentificationNumber { get; } = new PiiEntityCategory(NLTaxIdentificationNumberValue);
         /// <summary> NLValueAddedTaxNumber. </summary>
-        public static PiiCategory NLValueAddedTaxNumber { get; } = new PiiCategory(NLValueAddedTaxNumberValue);
+        public static PiiEntityCategory NLValueAddedTaxNumber { get; } = new PiiEntityCategory(NLValueAddedTaxNumberValue);
         /// <summary> NZBankAccountNumber. </summary>
-        public static PiiCategory NZBankAccountNumber { get; } = new PiiCategory(NZBankAccountNumberValue);
+        public static PiiEntityCategory NZBankAccountNumber { get; } = new PiiEntityCategory(NZBankAccountNumberValue);
         /// <summary> NZDriversLicenseNumber. </summary>
-        public static PiiCategory NZDriversLicenseNumber { get; } = new PiiCategory(NZDriversLicenseNumberValue);
+        public static PiiEntityCategory NZDriversLicenseNumber { get; } = new PiiEntityCategory(NZDriversLicenseNumberValue);
         /// <summary> NZInlandRevenueNumber. </summary>
-        public static PiiCategory NZInlandRevenueNumber { get; } = new PiiCategory(NZInlandRevenueNumberValue);
+        public static PiiEntityCategory NZInlandRevenueNumber { get; } = new PiiEntityCategory(NZInlandRevenueNumberValue);
         /// <summary> NZMinistryOfHealthNumber. </summary>
-        public static PiiCategory NZMinistryOfHealthNumber { get; } = new PiiCategory(NZMinistryOfHealthNumberValue);
+        public static PiiEntityCategory NZMinistryOfHealthNumber { get; } = new PiiEntityCategory(NZMinistryOfHealthNumberValue);
         /// <summary> NZSocialWelfareNumber. </summary>
-        public static PiiCategory NZSocialWelfareNumber { get; } = new PiiCategory(NZSocialWelfareNumberValue);
+        public static PiiEntityCategory NZSocialWelfareNumber { get; } = new PiiEntityCategory(NZSocialWelfareNumberValue);
         /// <summary> NOIdentityNumber. </summary>
-        public static PiiCategory NOIdentityNumber { get; } = new PiiCategory(NOIdentityNumberValue);
+        public static PiiEntityCategory NOIdentityNumber { get; } = new PiiEntityCategory(NOIdentityNumberValue);
         /// <summary> PHUnifiedMultiPurposeIDNumber. </summary>
-        public static PiiCategory PHUnifiedMultiPurposeIDNumber { get; } = new PiiCategory(PHUnifiedMultiPurposeIDNumberValue);
+        public static PiiEntityCategory PHUnifiedMultiPurposeIDNumber { get; } = new PiiEntityCategory(PHUnifiedMultiPurposeIDNumberValue);
         /// <summary> PLIdentityCard. </summary>
-        public static PiiCategory PLIdentityCard { get; } = new PiiCategory(PLIdentityCardValue);
+        public static PiiEntityCategory PLIdentityCard { get; } = new PiiEntityCategory(PLIdentityCardValue);
         /// <summary> PLNationalID. </summary>
-        public static PiiCategory PLNationalID { get; } = new PiiCategory(PLNationalIDValue);
+        public static PiiEntityCategory PLNationalID { get; } = new PiiEntityCategory(PLNationalIDValue);
         /// <summary> PLNationalIDV2. </summary>
-        public static PiiCategory PLNationalIDV2 { get; } = new PiiCategory(PLNationalIDV2Value);
+        public static PiiEntityCategory PLNationalIDV2 { get; } = new PiiEntityCategory(PLNationalIDV2Value);
         /// <summary> PLPassportNumber. </summary>
-        public static PiiCategory PLPassportNumber { get; } = new PiiCategory(PLPassportNumberValue);
+        public static PiiEntityCategory PLPassportNumber { get; } = new PiiEntityCategory(PLPassportNumberValue);
         /// <summary> PLTaxIdentificationNumber. </summary>
-        public static PiiCategory PLTaxIdentificationNumber { get; } = new PiiCategory(PLTaxIdentificationNumberValue);
+        public static PiiEntityCategory PLTaxIdentificationNumber { get; } = new PiiEntityCategory(PLTaxIdentificationNumberValue);
         /// <summary> PLREGONNumber. </summary>
-        public static PiiCategory PlregonNumber { get; } = new PiiCategory(PlregonNumberValue);
+        public static PiiEntityCategory PlregonNumber { get; } = new PiiEntityCategory(PlregonNumberValue);
         /// <summary> PTCitizenCardNumber. </summary>
-        public static PiiCategory PTCitizenCardNumber { get; } = new PiiCategory(PTCitizenCardNumberValue);
+        public static PiiEntityCategory PTCitizenCardNumber { get; } = new PiiEntityCategory(PTCitizenCardNumberValue);
         /// <summary> PTCitizenCardNumberV2. </summary>
-        public static PiiCategory PTCitizenCardNumberV2 { get; } = new PiiCategory(PTCitizenCardNumberV2Value);
+        public static PiiEntityCategory PTCitizenCardNumberV2 { get; } = new PiiEntityCategory(PTCitizenCardNumberV2Value);
         /// <summary> PTTaxIdentificationNumber. </summary>
-        public static PiiCategory PTTaxIdentificationNumber { get; } = new PiiCategory(PTTaxIdentificationNumberValue);
+        public static PiiEntityCategory PTTaxIdentificationNumber { get; } = new PiiEntityCategory(PTTaxIdentificationNumberValue);
         /// <summary> ROPersonalNumericalCode. </summary>
-        public static PiiCategory ROPersonalNumericalCode { get; } = new PiiCategory(ROPersonalNumericalCodeValue);
+        public static PiiEntityCategory ROPersonalNumericalCode { get; } = new PiiEntityCategory(ROPersonalNumericalCodeValue);
         /// <summary> RUPassportNumberDomestic. </summary>
-        public static PiiCategory RUPassportNumberDomestic { get; } = new PiiCategory(RUPassportNumberDomesticValue);
+        public static PiiEntityCategory RUPassportNumberDomestic { get; } = new PiiEntityCategory(RUPassportNumberDomesticValue);
         /// <summary> RUPassportNumberInternational. </summary>
-        public static PiiCategory RUPassportNumberInternational { get; } = new PiiCategory(RUPassportNumberInternationalValue);
+        public static PiiEntityCategory RUPassportNumberInternational { get; } = new PiiEntityCategory(RUPassportNumberInternationalValue);
         /// <summary> SANationalID. </summary>
-        public static PiiCategory SANationalID { get; } = new PiiCategory(SANationalIDValue);
+        public static PiiEntityCategory SANationalID { get; } = new PiiEntityCategory(SANationalIDValue);
         /// <summary> SGNationalRegistrationIdentityCardNumber. </summary>
-        public static PiiCategory SGNationalRegistrationIdentityCardNumber { get; } = new PiiCategory(SGNationalRegistrationIdentityCardNumberValue);
+        public static PiiEntityCategory SGNationalRegistrationIdentityCardNumber { get; } = new PiiEntityCategory(SGNationalRegistrationIdentityCardNumberValue);
         /// <summary> SKPersonalNumber. </summary>
-        public static PiiCategory SKPersonalNumber { get; } = new PiiCategory(SKPersonalNumberValue);
+        public static PiiEntityCategory SKPersonalNumber { get; } = new PiiEntityCategory(SKPersonalNumberValue);
         /// <summary> SITaxIdentificationNumber. </summary>
-        public static PiiCategory SITaxIdentificationNumber { get; } = new PiiCategory(SITaxIdentificationNumberValue);
+        public static PiiEntityCategory SITaxIdentificationNumber { get; } = new PiiEntityCategory(SITaxIdentificationNumberValue);
         /// <summary> SIUniqueMasterCitizenNumber. </summary>
-        public static PiiCategory SIUniqueMasterCitizenNumber { get; } = new PiiCategory(SIUniqueMasterCitizenNumberValue);
+        public static PiiEntityCategory SIUniqueMasterCitizenNumber { get; } = new PiiEntityCategory(SIUniqueMasterCitizenNumberValue);
         /// <summary> ZAIdentificationNumber. </summary>
-        public static PiiCategory ZAIdentificationNumber { get; } = new PiiCategory(ZAIdentificationNumberValue);
+        public static PiiEntityCategory ZAIdentificationNumber { get; } = new PiiEntityCategory(ZAIdentificationNumberValue);
         /// <summary> KRResidentRegistrationNumber. </summary>
-        public static PiiCategory KRResidentRegistrationNumber { get; } = new PiiCategory(KRResidentRegistrationNumberValue);
+        public static PiiEntityCategory KRResidentRegistrationNumber { get; } = new PiiEntityCategory(KRResidentRegistrationNumberValue);
         /// <summary> ESDNI. </summary>
-        public static PiiCategory Esdni { get; } = new PiiCategory(EsdniValue);
+        public static PiiEntityCategory Esdni { get; } = new PiiEntityCategory(EsdniValue);
         /// <summary> ESSocialSecurityNumber. </summary>
-        public static PiiCategory ESSocialSecurityNumber { get; } = new PiiCategory(ESSocialSecurityNumberValue);
+        public static PiiEntityCategory ESSocialSecurityNumber { get; } = new PiiEntityCategory(ESSocialSecurityNumberValue);
         /// <summary> ESTaxIdentificationNumber. </summary>
-        public static PiiCategory ESTaxIdentificationNumber { get; } = new PiiCategory(ESTaxIdentificationNumberValue);
+        public static PiiEntityCategory ESTaxIdentificationNumber { get; } = new PiiEntityCategory(ESTaxIdentificationNumberValue);
         /// <summary> SQLServerConnectionString. </summary>
-        public static PiiCategory SQLServerConnectionString { get; } = new PiiCategory(SQLServerConnectionStringValue);
+        public static PiiEntityCategory SQLServerConnectionString { get; } = new PiiEntityCategory(SQLServerConnectionStringValue);
         /// <summary> SENationalID. </summary>
-        public static PiiCategory SENationalID { get; } = new PiiCategory(SENationalIDValue);
+        public static PiiEntityCategory SENationalID { get; } = new PiiEntityCategory(SENationalIDValue);
         /// <summary> SENationalIDV2. </summary>
-        public static PiiCategory SENationalIDV2 { get; } = new PiiCategory(SENationalIDV2Value);
+        public static PiiEntityCategory SENationalIDV2 { get; } = new PiiEntityCategory(SENationalIDV2Value);
         /// <summary> SEPassportNumber. </summary>
-        public static PiiCategory SEPassportNumber { get; } = new PiiCategory(SEPassportNumberValue);
+        public static PiiEntityCategory SEPassportNumber { get; } = new PiiEntityCategory(SEPassportNumberValue);
         /// <summary> SETaxIdentificationNumber. </summary>
-        public static PiiCategory SETaxIdentificationNumber { get; } = new PiiCategory(SETaxIdentificationNumberValue);
+        public static PiiEntityCategory SETaxIdentificationNumber { get; } = new PiiEntityCategory(SETaxIdentificationNumberValue);
         /// <summary> SWIFTCode. </summary>
-        public static PiiCategory SwiftCode { get; } = new PiiCategory(SwiftCodeValue);
+        public static PiiEntityCategory SwiftCode { get; } = new PiiEntityCategory(SwiftCodeValue);
         /// <summary> CHSocialSecurityNumber. </summary>
-        public static PiiCategory CHSocialSecurityNumber { get; } = new PiiCategory(CHSocialSecurityNumberValue);
+        public static PiiEntityCategory CHSocialSecurityNumber { get; } = new PiiEntityCategory(CHSocialSecurityNumberValue);
         /// <summary> TWNationalID. </summary>
-        public static PiiCategory TWNationalID { get; } = new PiiCategory(TWNationalIDValue);
+        public static PiiEntityCategory TWNationalID { get; } = new PiiEntityCategory(TWNationalIDValue);
         /// <summary> TWPassportNumber. </summary>
-        public static PiiCategory TWPassportNumber { get; } = new PiiCategory(TWPassportNumberValue);
+        public static PiiEntityCategory TWPassportNumber { get; } = new PiiEntityCategory(TWPassportNumberValue);
         /// <summary> TWResidentCertificate. </summary>
-        public static PiiCategory TWResidentCertificate { get; } = new PiiCategory(TWResidentCertificateValue);
+        public static PiiEntityCategory TWResidentCertificate { get; } = new PiiEntityCategory(TWResidentCertificateValue);
         /// <summary> THPopulationIdentificationCode. </summary>
-        public static PiiCategory THPopulationIdentificationCode { get; } = new PiiCategory(THPopulationIdentificationCodeValue);
+        public static PiiEntityCategory THPopulationIdentificationCode { get; } = new PiiEntityCategory(THPopulationIdentificationCodeValue);
         /// <summary> TRNationalIdentificationNumber. </summary>
-        public static PiiCategory TRNationalIdentificationNumber { get; } = new PiiCategory(TRNationalIdentificationNumberValue);
+        public static PiiEntityCategory TRNationalIdentificationNumber { get; } = new PiiEntityCategory(TRNationalIdentificationNumberValue);
         /// <summary> UKDriversLicenseNumber. </summary>
-        public static PiiCategory UKDriversLicenseNumber { get; } = new PiiCategory(UKDriversLicenseNumberValue);
+        public static PiiEntityCategory UKDriversLicenseNumber { get; } = new PiiEntityCategory(UKDriversLicenseNumberValue);
         /// <summary> UKElectoralRollNumber. </summary>
-        public static PiiCategory UKElectoralRollNumber { get; } = new PiiCategory(UKElectoralRollNumberValue);
+        public static PiiEntityCategory UKElectoralRollNumber { get; } = new PiiEntityCategory(UKElectoralRollNumberValue);
         /// <summary> UKNationalHealthNumber. </summary>
-        public static PiiCategory UKNationalHealthNumber { get; } = new PiiCategory(UKNationalHealthNumberValue);
+        public static PiiEntityCategory UKNationalHealthNumber { get; } = new PiiEntityCategory(UKNationalHealthNumberValue);
         /// <summary> UKNationalInsuranceNumber. </summary>
-        public static PiiCategory UKNationalInsuranceNumber { get; } = new PiiCategory(UKNationalInsuranceNumberValue);
+        public static PiiEntityCategory UKNationalInsuranceNumber { get; } = new PiiEntityCategory(UKNationalInsuranceNumberValue);
         /// <summary> UKUniqueTaxpayerNumber. </summary>
-        public static PiiCategory UKUniqueTaxpayerNumber { get; } = new PiiCategory(UKUniqueTaxpayerNumberValue);
+        public static PiiEntityCategory UKUniqueTaxpayerNumber { get; } = new PiiEntityCategory(UKUniqueTaxpayerNumberValue);
         /// <summary> USUKPassportNumber. </summary>
-        public static PiiCategory UsukPassportNumber { get; } = new PiiCategory(UsukPassportNumberValue);
+        public static PiiEntityCategory UsukPassportNumber { get; } = new PiiEntityCategory(UsukPassportNumberValue);
         /// <summary> USBankAccountNumber. </summary>
-        public static PiiCategory USBankAccountNumber { get; } = new PiiCategory(USBankAccountNumberValue);
+        public static PiiEntityCategory USBankAccountNumber { get; } = new PiiEntityCategory(USBankAccountNumberValue);
         /// <summary> USDriversLicenseNumber. </summary>
-        public static PiiCategory USDriversLicenseNumber { get; } = new PiiCategory(USDriversLicenseNumberValue);
+        public static PiiEntityCategory USDriversLicenseNumber { get; } = new PiiEntityCategory(USDriversLicenseNumberValue);
         /// <summary> USIndividualTaxpayerIdentification. </summary>
-        public static PiiCategory USIndividualTaxpayerIdentification { get; } = new PiiCategory(USIndividualTaxpayerIdentificationValue);
+        public static PiiEntityCategory USIndividualTaxpayerIdentification { get; } = new PiiEntityCategory(USIndividualTaxpayerIdentificationValue);
         /// <summary> USSocialSecurityNumber. </summary>
-        public static PiiCategory USSocialSecurityNumber { get; } = new PiiCategory(USSocialSecurityNumberValue);
+        public static PiiEntityCategory USSocialSecurityNumber { get; } = new PiiEntityCategory(USSocialSecurityNumberValue);
         /// <summary> UAPassportNumberDomestic. </summary>
-        public static PiiCategory UAPassportNumberDomestic { get; } = new PiiCategory(UAPassportNumberDomesticValue);
+        public static PiiEntityCategory UAPassportNumberDomestic { get; } = new PiiEntityCategory(UAPassportNumberDomesticValue);
         /// <summary> UAPassportNumberInternational. </summary>
-        public static PiiCategory UAPassportNumberInternational { get; } = new PiiCategory(UAPassportNumberInternationalValue);
+        public static PiiEntityCategory UAPassportNumberInternational { get; } = new PiiEntityCategory(UAPassportNumberInternationalValue);
         /// <summary> Organization. </summary>
-        public static PiiCategory Organization { get; } = new PiiCategory(OrganizationValue);
+        public static PiiEntityCategory Organization { get; } = new PiiEntityCategory(OrganizationValue);
         /// <summary> Email. </summary>
-        public static PiiCategory Email { get; } = new PiiCategory(EmailValue);
+        public static PiiEntityCategory Email { get; } = new PiiEntityCategory(EmailValue);
         /// <summary> URL. </summary>
-        public static PiiCategory URL { get; } = new PiiCategory(URLValue);
+        public static PiiEntityCategory URL { get; } = new PiiEntityCategory(URLValue);
         /// <summary> Age. </summary>
-        public static PiiCategory Age { get; } = new PiiCategory(AgeValue);
+        public static PiiEntityCategory Age { get; } = new PiiEntityCategory(AgeValue);
         /// <summary> PhoneNumber. </summary>
-        public static PiiCategory PhoneNumber { get; } = new PiiCategory(PhoneNumberValue);
+        public static PiiEntityCategory PhoneNumber { get; } = new PiiEntityCategory(PhoneNumberValue);
         /// <summary> IPAddress. </summary>
-        public static PiiCategory IPAddress { get; } = new PiiCategory(IPAddressValue);
+        public static PiiEntityCategory IPAddress { get; } = new PiiEntityCategory(IPAddressValue);
         /// <summary> Date. </summary>
-        public static PiiCategory Date { get; } = new PiiCategory(DateValue);
+        public static PiiEntityCategory Date { get; } = new PiiEntityCategory(DateValue);
         /// <summary> Person. </summary>
-        public static PiiCategory Person { get; } = new PiiCategory(PersonValue);
+        public static PiiEntityCategory Person { get; } = new PiiEntityCategory(PersonValue);
         /// <summary> Address. </summary>
-        public static PiiCategory Address { get; } = new PiiCategory(AddressValue);
+        public static PiiEntityCategory Address { get; } = new PiiEntityCategory(AddressValue);
         /// <summary> All. </summary>
-        public static PiiCategory All { get; } = new PiiCategory(AllValue);
+        public static PiiEntityCategory All { get; } = new PiiEntityCategory(AllValue);
         /// <summary> Default. </summary>
-        public static PiiCategory Default { get; } = new PiiCategory(DefaultValue);
-        /// <summary> Determines if two <see cref="PiiCategory"/> values are the same. </summary>
-        public static bool operator ==(PiiCategory left, PiiCategory right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="PiiCategory"/> values are not the same. </summary>
-        public static bool operator !=(PiiCategory left, PiiCategory right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PiiCategory"/>. </summary>
-        public static implicit operator PiiCategory(string value) => new PiiCategory(value);
+        public static PiiEntityCategory Default { get; } = new PiiEntityCategory(DefaultValue);
+        /// <summary> Determines if two <see cref="PiiEntityCategory"/> values are the same. </summary>
+        public static bool operator ==(PiiEntityCategory left, PiiEntityCategory right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="PiiEntityCategory"/> values are not the same. </summary>
+        public static bool operator !=(PiiEntityCategory left, PiiEntityCategory right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="PiiEntityCategory"/>. </summary>
+        public static implicit operator PiiEntityCategory(string value) => new PiiEntityCategory(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is PiiCategory other && Equals(other);
+        public override bool Equals(object obj) => obj is PiiEntityCategory other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(PiiCategory other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(PiiEntityCategory other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

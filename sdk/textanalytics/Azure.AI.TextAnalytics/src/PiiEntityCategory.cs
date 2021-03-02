@@ -3,10 +3,10 @@
 
 using Azure.Core;
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics
 {
     [CodeGenModel("PiiCategory")]
-    internal readonly partial struct PiiCategory
+    public readonly partial struct PiiEntityCategory
     {
     }
 }
