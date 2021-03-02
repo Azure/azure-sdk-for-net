@@ -434,13 +434,14 @@ namespace Compute.Tests.DiskRPTests
                         PrivateEndpointConnection peConnection = diskAccessOut.PrivateEndpointConnections[0];
                         // Update peConnection status to Approved
                         peConnection.PrivateLinkServiceConnectionState.Status = "Approved";
-                        peConnection.PrivateEndpoint = null;
                         peConnection = m_CrpClient.DiskAccesses.UpdateAPrivateEndpointConnection(rgName, diskAccessName, peConnection.Name, peConnection);
                     }
 
                     diskAccessOut = m_CrpClient.DiskAccesses.Get(rgName, diskAccessName);
                     Validate(diskAccess, diskAccessOut, diskAccessName, expectedPrivateLinkStatus: "Approved", privateEndpointId: privateEndpoint.Id);
                     IPage<PrivateEndpointConnection> peConnections = m_CrpClient.DiskAccesses.ListPrivateEndpointConnections(rgName, diskAccessName);
+                    Assert.Equal(diskAccessOut.PrivateEndpointConnections.Count, peConnections.Count());
+                    Assert.Equal(diskAccessOut.PrivateEndpointConnections[0].Name, peConnections.First().Name);
 
                     // Patch DiskAccess
                     const string tagKey = "tagKey";
@@ -452,6 +453,9 @@ namespace Compute.Tests.DiskRPTests
                     PrivateLinkResourceListResult privateLinkResources = m_CrpClient.DiskAccesses.GetPrivateLinkResources(rgName, diskAccessName);
                     Validate(privateLinkResources);
 
+                    // Delete PrivateEndpointConnection
+                    m_CrpClient.DiskAccesses.DeleteAPrivateEndpointConnection(rgName, diskAccessName, diskAccessOut.PrivateEndpointConnections[0].Name);
+                    // Delete PrivateEndpoint
                     m_NrpClient.PrivateEndpoints.DeleteWithHttpMessagesAsync(rgName, privateEndpointName).GetAwaiter().GetResult();
 
                     // Delete DiskAccess
