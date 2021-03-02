@@ -8,7 +8,7 @@
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> The LeaseDurationType. </summary>
-    public enum LeaseDurationType
+    internal enum LeaseDurationType
     {
         /// <summary> infinite. </summary>
         Infinite,

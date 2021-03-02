@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ConnectionMonitorListResult
+    internal partial class ConnectionMonitorListResult
     {
         internal static ConnectionMonitorListResult DeserializeConnectionMonitorListResult(JsonElement element)
         {

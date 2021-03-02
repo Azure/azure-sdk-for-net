@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class DeletedVaultListResult
+    internal partial class DeletedVaultListResult
     {
         internal static DeletedVaultListResult DeserializeDeletedVaultListResult(JsonElement element)
         {

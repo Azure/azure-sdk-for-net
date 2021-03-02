@@ -8,7 +8,7 @@
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> The ArchiveStatus. </summary>
-    public enum ArchiveStatus
+    internal enum ArchiveStatus
     {
         /// <summary> rehydrate-pending-to-hot. </summary>
         RehydratePendingToHot,

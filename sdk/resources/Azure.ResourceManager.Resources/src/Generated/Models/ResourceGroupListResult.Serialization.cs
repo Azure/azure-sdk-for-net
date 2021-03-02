@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ResourceGroupListResult
+    internal partial class ResourceGroupListResult
     {
         internal static ResourceGroupListResult DeserializeResourceGroupListResult(JsonElement element)
         {
