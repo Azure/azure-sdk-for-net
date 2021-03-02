@@ -89,9 +89,6 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Config
             // register our binding provider
             ServiceBusAttributeBindingProvider bindingProvider = new ServiceBusAttributeBindingProvider(_nameResolver, _options, _configuration, _messagingProvider);
             context.AddBindingRule<ServiceBusAttribute>().Bind(bindingProvider);
-
-            context.AddBindingRule<ServiceBusAttribute>()
-                .BindToInput(attribute => _messagingProvider.CreateMessageSender(attribute.QueueOrTopicName, attribute.Connection));
         }
 
         internal static void LogExceptionReceivedEvent(ProcessErrorEventArgs e, ILoggerFactory loggerFactory)
