@@ -106,7 +106,7 @@ namespace Azure.Storage.Blobs.Tests
                 {
                     InitialTransferSize = 1,
                     MaximumTransferSize = firstBlockSize,
-                    MaximumConcurrency = 1,
+                    MaximumConcurrency = 2,
                 }
             });
             BlockList blockList = await blobContainerClient.GetBlockBlobClient(blobName).GetBlockListAsync();
