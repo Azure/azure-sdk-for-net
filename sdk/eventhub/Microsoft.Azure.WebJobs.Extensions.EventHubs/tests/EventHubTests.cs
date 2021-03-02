@@ -296,8 +296,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 "Endpoint=sb://test.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=abc123=",
                 eventHubPath,
                 new EventProcessorOptions(),
-                Int32.MaxValue,
-                false, null);
+                Int32.MaxValue, null);
             return new EventProcessorHostPartition(partitionId)
             {
                 ProcessorHost = processor
