@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// DB SQL databases under the restorable account.  This helps in
         /// scenario where database was accidentally deleted to get the
         /// deletion time.  This API requires
-        /// 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/*/read'
+        /// 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read'
         /// permission
         /// </summary>
         /// <param name='location'>

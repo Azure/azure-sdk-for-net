@@ -45,6 +45,11 @@ namespace Microsoft.Azure.Management.CosmosDB
         string SubscriptionId { get; set; }
 
         /// <summary>
+        /// The API version to use for this operation.
+        /// </summary>
+        string ApiVersion { get; }
+
+        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }
@@ -192,6 +197,16 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Gets the IRestorableMongodbResourcesOperations.
         /// </summary>
         IRestorableMongodbResourcesOperations RestorableMongodbResources { get; }
+
+        /// <summary>
+        /// Gets the ICassandraClustersOperations.
+        /// </summary>
+        ICassandraClustersOperations CassandraClusters { get; }
+
+        /// <summary>
+        /// Gets the ICassandraDataCentersOperations.
+        /// </summary>
+        ICassandraDataCentersOperations CassandraDataCenters { get; }
 
         /// <summary>
         /// Gets the IPrivateLinkResourcesOperations.

@@ -38,16 +38,16 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// </summary>
         /// <param name="resource">The standard JSON format of a MongoDB
         /// collection</param>
-        /// <param name="options">A key-value pair of options to be applied for
-        /// the request. This corresponds to the headers sent with the
-        /// request.</param>
         /// <param name="id">The unique resource identifier of the ARM
         /// resource.</param>
         /// <param name="name">The name of the ARM resource.</param>
         /// <param name="type">The type of Azure resource.</param>
         /// <param name="location">The location of the resource group to which
         /// the resource belongs.</param>
-        public MongoDBCollectionCreateUpdateParameters(MongoDBCollectionResource resource, CreateUpdateOptions options, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ManagedServiceIdentity identity = default(ManagedServiceIdentity))
+        /// <param name="options">A key-value pair of options to be applied for
+        /// the request. This corresponds to the headers sent with the
+        /// request.</param>
+        public MongoDBCollectionCreateUpdateParameters(MongoDBCollectionResource resource, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ManagedServiceIdentity identity = default(ManagedServiceIdentity), CreateUpdateOptions options = default(CreateUpdateOptions))
             : base(id, name, type, location, tags, identity)
         {
             Resource = resource;
@@ -84,10 +84,6 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
             if (Resource == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Resource");
-            }
-            if (Options == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Options");
             }
             if (Resource != null)
             {

@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// Return a list of database and container combo that exist on the account at
             /// the given timestamp and location. This helps in scenarios to validate what
             /// resources exist at given timestamp and location. This API requires
-            /// 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/*/read'
+            /// 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read'
             /// permission.
             /// </summary>
             /// <param name='operations'>
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// Return a list of database and container combo that exist on the account at
             /// the given timestamp and location. This helps in scenarios to validate what
             /// resources exist at given timestamp and location. This API requires
-            /// 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/*/read'
+            /// 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read'
             /// permission.
             /// </summary>
             /// <param name='operations'>

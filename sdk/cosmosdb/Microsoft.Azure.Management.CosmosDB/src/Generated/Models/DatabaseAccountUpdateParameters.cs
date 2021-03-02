@@ -78,7 +78,13 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// taking backups on an account.</param>
         /// <param name="cors">The CORS policy for the Cosmos DB database
         /// account.</param>
-        public DatabaseAccountUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), ConsistencyPolicy consistencyPolicy = default(ConsistencyPolicy), IList<Location> locations = default(IList<Location>), IList<IpAddressOrRange> ipRules = default(IList<IpAddressOrRange>), bool? isVirtualNetworkFilterEnabled = default(bool?), bool? enableAutomaticFailover = default(bool?), IList<Capability> capabilities = default(IList<Capability>), IList<VirtualNetworkRule> virtualNetworkRules = default(IList<VirtualNetworkRule>), bool? enableMultipleWriteLocations = default(bool?), bool? enableCassandraConnector = default(bool?), string connectorOffer = default(string), bool? disableKeyBasedMetadataWriteAccess = default(bool?), string keyVaultKeyUri = default(string), string publicNetworkAccess = default(string), bool? enableFreeTier = default(bool?), ApiProperties apiProperties = default(ApiProperties), bool? enableAnalyticalStorage = default(bool?), BackupPolicy backupPolicy = default(BackupPolicy), IList<CorsPolicy> cors = default(IList<CorsPolicy>), ManagedServiceIdentity identity = default(ManagedServiceIdentity))
+        /// <param name="networkAclBypass">Indicates what services are allowed
+        /// to bypass firewall checks. Possible values include: 'None',
+        /// 'AzureServices'</param>
+        /// <param name="networkAclBypassResourceIds">An array that contains
+        /// the Resource Ids for Network Acl Bypass for the Cosmos DB
+        /// account.</param>
+        public DatabaseAccountUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), ConsistencyPolicy consistencyPolicy = default(ConsistencyPolicy), IList<Location> locations = default(IList<Location>), IList<IpAddressOrRange> ipRules = default(IList<IpAddressOrRange>), bool? isVirtualNetworkFilterEnabled = default(bool?), bool? enableAutomaticFailover = default(bool?), IList<Capability> capabilities = default(IList<Capability>), IList<VirtualNetworkRule> virtualNetworkRules = default(IList<VirtualNetworkRule>), bool? enableMultipleWriteLocations = default(bool?), bool? enableCassandraConnector = default(bool?), string connectorOffer = default(string), bool? disableKeyBasedMetadataWriteAccess = default(bool?), string keyVaultKeyUri = default(string), string publicNetworkAccess = default(string), bool? enableFreeTier = default(bool?), ApiProperties apiProperties = default(ApiProperties), bool? enableAnalyticalStorage = default(bool?), BackupPolicy backupPolicy = default(BackupPolicy), IList<CorsPolicy> cors = default(IList<CorsPolicy>), NetworkAclBypass? networkAclBypass = default(NetworkAclBypass?), IList<string> networkAclBypassResourceIds = default(IList<string>), ManagedServiceIdentity identity = default(ManagedServiceIdentity))
         {
             Tags = tags;
             Location = location;
@@ -100,6 +106,8 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
             EnableAnalyticalStorage = enableAnalyticalStorage;
             BackupPolicy = backupPolicy;
             Cors = cors;
+            NetworkAclBypass = networkAclBypass;
+            NetworkAclBypassResourceIds = networkAclBypassResourceIds;
             Identity = identity;
             CustomInit();
         }
@@ -241,6 +249,20 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.cors")]
         public IList<CorsPolicy> Cors { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates what services are allowed to bypass firewall
+        /// checks. Possible values include: 'None', 'AzureServices'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.networkAclBypass")]
+        public NetworkAclBypass? NetworkAclBypass { get; set; }
+
+        /// <summary>
+        /// Gets or sets an array that contains the Resource Ids for Network
+        /// Acl Bypass for the Cosmos DB account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.networkAclBypassResourceIds")]
+        public IList<string> NetworkAclBypassResourceIds { get; set; }
 
         /// <summary>
         /// </summary>

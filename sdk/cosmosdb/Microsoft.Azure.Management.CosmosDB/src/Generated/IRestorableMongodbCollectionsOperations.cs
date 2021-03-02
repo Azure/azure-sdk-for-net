@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// DB MongoDB collections under a specific database.  This helps in
         /// scenario where container was accidentally deleted.  This API
         /// requires
-        /// 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/*/read'
+        /// 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read'
         /// permission
         /// </summary>
         /// <param name='location'>
