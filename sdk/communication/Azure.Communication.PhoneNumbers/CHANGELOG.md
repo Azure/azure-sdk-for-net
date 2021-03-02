@@ -5,11 +5,11 @@
 ### Added
 - Added PhoneNumberAdministrationClient (originally was part of the Azure.Communication.Administration package).
 - Added support to create PhoneNumberAdministrationClient with AzureKeyCredential.
-- Added support to create PhoneNumberAdministrationClient with TokenCredential
-- Added support for long running operations
+- Added support to create PhoneNumberAdministrationClient with TokenCredential.
+- Added support for long running operations.
 
 ### Fixed
-- Issue with paging results not pulling next pages
+- Issue with paging results not pulling next pages.
 
 ### Breaking Changes
 - PhoneNumberAdministrationClient was replaced with PhoneNumbersClient.

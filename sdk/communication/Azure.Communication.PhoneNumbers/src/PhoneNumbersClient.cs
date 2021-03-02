@@ -97,11 +97,6 @@ namespace Azure.Communication.PhoneNumbers
 
         #region private constructors
 
-        /// <summary> Initializes a new instance of PhoneNumbersClient for mocking. </summary>
-        protected PhoneNumbersClient()
-        {
-        }
-
         private PhoneNumbersClient(ConnectionString connectionString, PhoneNumbersClientOptions options)
             : this(connectionString.GetRequired("endpoint"), options.BuildHttpPipeline(connectionString), options)
         { }
@@ -120,18 +115,22 @@ namespace Azure.Communication.PhoneNumbers
 
         #endregion
 
+        #region protected constructors
+        /// <summary> Initializes a new instance of PhoneNumbersClient for mocking. </summary>
+        protected PhoneNumbersClient()
+        {
+        }
+        #endregion protected constructors
+
         /// <summary> Releases an acquired phone number. </summary>
         /// <param name="phoneNumber"> Phone number to be released, e.g. +11234567890. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
         public virtual async Task<ReleasePhoneNumberOperation> StartReleasePhoneNumberAsync(string phoneNumber, CancellationToken cancellationToken = default)
         {
-            if (phoneNumber == null)
-            {
-                throw new ArgumentNullException(nameof(phoneNumber));
-            }
+            Argument.AssertNotNull(phoneNumber, "phoneNumber");
 
-            using var scope = _clientDiagnostics.CreateScope("PhoneNumbersClient.StartReleasePhoneNumber");
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(StartReleasePhoneNumber)}");
             scope.Start();
             try
             {
@@ -151,12 +150,9 @@ namespace Azure.Communication.PhoneNumbers
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
         public virtual ReleasePhoneNumberOperation StartReleasePhoneNumber(string phoneNumber, CancellationToken cancellationToken = default)
         {
-            if (phoneNumber == null)
-            {
-                throw new ArgumentNullException(nameof(phoneNumber));
-            }
+            Argument.AssertNotNull(phoneNumber, "phoneNumber");
 
-            using var scope = _clientDiagnostics.CreateScope("PhoneNumbersClient.StartReleasePhoneNumber");
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(StartReleasePhoneNumber)}");
             scope.Start();
             try
             {
@@ -178,12 +174,9 @@ namespace Azure.Communication.PhoneNumbers
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
         public virtual async Task<UpdatePhoneNumberCapabilitiesOperation> StartUpdateCapabilitiesAsync(string phoneNumber, PhoneNumberCapabilityType? calling = null, PhoneNumberCapabilityType? sms = null, CancellationToken cancellationToken = default)
         {
-            if (phoneNumber == null)
-            {
-                throw new ArgumentNullException(nameof(phoneNumber));
-            }
+            Argument.AssertNotNull(phoneNumber, "phoneNumber");
 
-            using var scope = _clientDiagnostics.CreateScope("PhoneNumbersClient.StartUpdateCapabilities");
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(StartUpdateCapabilities)}");
             scope.Start();
             try
             {
@@ -205,12 +198,9 @@ namespace Azure.Communication.PhoneNumbers
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
         public virtual UpdatePhoneNumberCapabilitiesOperation StartUpdateCapabilities(string phoneNumber, PhoneNumberCapabilityType? calling = null, PhoneNumberCapabilityType? sms = null, CancellationToken cancellationToken = default)
         {
-            if (phoneNumber == null)
-            {
-                throw new ArgumentNullException(nameof(phoneNumber));
-            }
+            Argument.AssertNotNull(phoneNumber, "phoneNumber");
 
-            using var scope = _clientDiagnostics.CreateScope("PhoneNumbersClient.StartUpdateCapabilities");
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(StartUpdateCapabilities)}");
             scope.Start();
             try
             {
@@ -229,7 +219,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<AcquiredPhoneNumber>> GetPhoneNumberAsync(string phoneNumber, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PhoneNumbersClient.GetPhoneNumber");
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetPhoneNumber)}");
             scope.Start();
             try
             {
@@ -247,7 +237,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AcquiredPhoneNumber> GetPhoneNumber(string phoneNumber, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PhoneNumbersClient.GetPhoneNumber");
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetPhoneNumber)}");
             scope.Start();
             try
             {
@@ -265,7 +255,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<PurchasePhoneNumbersOperation> StartPurchasePhoneNumbersAsync(string searchId, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PhoneNumbersClient.StartPurchasePhoneNumbers");
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(StartPurchasePhoneNumbers)}");
             scope.Start();
             try
             {
@@ -284,7 +274,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual PurchasePhoneNumbersOperation StartPurchasePhoneNumbers(string searchId, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PhoneNumbersClient.StartPurchasePhoneNumbers");
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(StartPurchasePhoneNumbers)}");
             scope.Start();
             try
             {
@@ -309,16 +299,10 @@ namespace Azure.Communication.PhoneNumbers
         public virtual async Task<SearchAvailablePhoneNumbersOperation> StartSearchAvailablePhoneNumbersAsync(string threeLetterISOCountryName, PhoneNumberType phoneNumberType, PhoneNumberAssignmentType phoneNumberAssignmentType,
             PhoneNumberCapabilities capabilities, PhoneNumberSearchOptions options = null, CancellationToken cancellationToken = default)
         {
-            if (threeLetterISOCountryName == null)
-            {
-                throw new ArgumentNullException(nameof(threeLetterISOCountryName));
-            }
-            if (capabilities == null)
-            {
-                throw new ArgumentNullException(nameof(capabilities));
-            }
+            Argument.AssertNotNull(threeLetterISOCountryName, "threeLetterISOCountryName");
+            Argument.AssertNotNull(capabilities, "capabilities");
 
-            using var scope = _clientDiagnostics.CreateScope("PhoneNumbersClient.StartSearchAvailablePhoneNumbers");
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(StartSearchAvailablePhoneNumbers)}");
             scope.Start();
             try
             {
@@ -344,16 +328,10 @@ namespace Azure.Communication.PhoneNumbers
         public virtual SearchAvailablePhoneNumbersOperation StartSearchAvailablePhoneNumbers(string threeLetterISOCountryName, PhoneNumberType phoneNumberType, PhoneNumberAssignmentType phoneNumberAssignmentType,
             PhoneNumberCapabilities capabilities, PhoneNumberSearchOptions options = null, CancellationToken cancellationToken = default)
         {
-            if (threeLetterISOCountryName == null)
-            {
-                throw new ArgumentNullException(nameof(threeLetterISOCountryName));
-            }
-            if (capabilities == null)
-            {
-                throw new ArgumentNullException(nameof(capabilities));
-            }
+            Argument.AssertNotNull(threeLetterISOCountryName, "threeLetterISOCountryName");
+            Argument.AssertNotNull(capabilities, "capabilities");
 
-            using var scope = _clientDiagnostics.CreateScope("PhoneNumbersClient.StartSearchAvailablePhoneNumbers");
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(StartSearchAvailablePhoneNumbers)}");
             scope.Start();
             try
             {
@@ -374,7 +352,7 @@ namespace Azure.Communication.PhoneNumbers
         {
             async Task<Page<AcquiredPhoneNumber>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("PhoneNumbersClient.GetPhoneNumbers");
+                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetPhoneNumbers)}");
                 scope.Start();
                 try
                 {
@@ -389,7 +367,7 @@ namespace Azure.Communication.PhoneNumbers
             }
             async Task<Page<AcquiredPhoneNumber>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("PhoneNumbersClient.ListPhoneNumbers");
+                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetPhoneNumbers)}");
                 scope.Start();
                 try
                 {
@@ -411,7 +389,7 @@ namespace Azure.Communication.PhoneNumbers
         {
             Page<AcquiredPhoneNumber> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("PhoneNumbersClient.GetPhoneNumbers");
+                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetPhoneNumbers)}");
                 scope.Start();
                 try
                 {
@@ -426,7 +404,7 @@ namespace Azure.Communication.PhoneNumbers
             }
             Page<AcquiredPhoneNumber> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("PhoneNumbersClient.ListPhoneNumbers");
+                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetPhoneNumbers)}");
                 scope.Start();
                 try
                 {
