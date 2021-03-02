@@ -185,7 +185,7 @@ namespace Azure.Test.Perf
                 .Where(a => a.GetName().Name.StartsWith("Azure", StringComparison.OrdinalIgnoreCase) ||
                             a.GetName().Name.StartsWith("Microsoft.Azure", StringComparison.OrdinalIgnoreCase))
                 // Exclude this perf framework
-                .Where(a => a != typeof(PerfProgram).Assembly)
+                .Where(a => a != Assembly.GetExecutingAssembly())
                 // Exclude assembly containing the perf test itself
                 .Where(a => a != testType.Assembly)
                 // Exclude Azure.Core.TestFramework since it is only used to setup environment and should not impact results
