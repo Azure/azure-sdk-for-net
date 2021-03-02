@@ -1,15 +1,12 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://contosoprod.api.prod.adu.microsoft.com/deviceupdate/blue/v2/management/deviceclasses/foo",
+      "RequestUri": "https://contosoprodwus2.api.prod.adu.microsoft.com/deviceupdate/blue/v2/management/deviceclasses/foo",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-Iot.DeviceUpdate/1.0.0-alpha.20201104.1",
-          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
-        ],
+        "User-Agent": "azsdk-net-Iot.DeviceUpdate/1.0.0-alpha.20210302.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "bfef4aceb6bba51a228e5234c966edac",
         "x-ms-return-client-request-id": "true"
       },
@@ -18,22 +15,21 @@
       "ResponseHeaders": {
         "Content-Length": "183",
         "Content-Type": "application/problem\u002Bjson; charset=utf-8",
-        "Date": "Thu, 05 Nov 2020 02:16:59 GMT",
-        "Request-Context": "appId=",
-        "traceparent": "00-cbbcf097c76f0c4cb4c055f5f0b821a1-58a0eba7e990d441-00"
+        "Date": "Tue, 02 Mar 2021 20:28:27 GMT",
+        "traceparent": "00-137cf0d17318ee4bb76954211a731543-347a90ae3cba844a-00"
       },
       "ResponseBody": [
         "{\r\n",
         "  \u0022type\u0022: \u0022https://tools.ietf.org/html/rfc7231#section-6.5.4\u0022,\r\n",
         "  \u0022title\u0022: \u0022Not Found\u0022,\r\n",
         "  \u0022status\u0022: 404,\r\n",
-        "  \u0022traceId\u0022: \u002200-cbbcf097c76f0c4cb4c055f5f0b821a1-84709dfb40b12045-00\u0022\r\n",
+        "  \u0022traceId\u0022: \u002200-137cf0d17318ee4bb76954211a731543-2c96a7b0a2aa864e-00\u0022\r\n",
         "}"
       ]
     }
   ],
   "Variables": {
-    "DEVICEUPDATE_ACCOUNT_ENDPOINT": "contosoprod.api.prod.adu.microsoft.com",
+    "DEVICEUPDATE_ACCOUNT_ENDPOINT": "contosoprodwus2.api.prod.adu.microsoft.com",
     "DEVICEUPDATE_INSTANCE_ID": "blue",
     "RandomSeed": "440974588"
   }

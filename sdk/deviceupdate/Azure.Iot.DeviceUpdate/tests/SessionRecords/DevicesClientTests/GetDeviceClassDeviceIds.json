@@ -1,44 +1,34 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://contosoprod.api.prod.adu.microsoft.com/deviceupdate/blue/v2/management/deviceclasses/b83e3c87fbf98063c20c3269f1c9e58d255906dd/deviceids",
+      "RequestUri": "https://contosoprodwus2.api.prod.adu.microsoft.com/deviceupdate/blue/v2/management/deviceclasses/b83e3c87fbf98063c20c3269f1c9e58d255906dd/deviceids",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-Iot.DeviceUpdate/1.0.0-alpha.20201104.1",
-          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
-        ],
+        "User-Agent": "azsdk-net-Iot.DeviceUpdate/1.0.0-alpha.20210302.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "7ba578c52583dee779f303d828363190",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "199",
+        "Content-Length": "44",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 05 Nov 2020 02:16:59 GMT",
-        "Request-Context": "appId=",
-        "traceparent": "00-4935a5a394a1d445bdb6f244f16e2837-763fd28365e8f749-00"
+        "Date": "Tue, 02 Mar 2021 20:28:27 GMT",
+        "traceparent": "00-bbe9c91bed10b24d97d60dd860128c55-b189f967ade5af46-00"
       },
       "ResponseBody": [
         "{\r\n",
         "  \u0022value\u0022: [\r\n",
-        "    \u0022dpokluda-test\u0022,\r\n",
-        "    \u0022chejiang-test-1007\u0022,\r\n",
-        "    \u0022chejiang-test-1008\u0022,\r\n",
-        "    \u0022chejiang-test-1008-2\u0022,\r\n",
-        "    \u0022chejiang-test-1008-3\u0022,\r\n",
-        "    \u0022aysancagtest\u0022,\r\n",
-        "    \u0022chejiang-1021\u0022\r\n",
+        "    \u0022dpokluda-test\u0022\r\n",
         "  ]\r\n",
         "}"
       ]
     }
   ],
   "Variables": {
-    "DEVICEUPDATE_ACCOUNT_ENDPOINT": "contosoprod.api.prod.adu.microsoft.com",
+    "DEVICEUPDATE_ACCOUNT_ENDPOINT": "contosoprodwus2.api.prod.adu.microsoft.com",
     "DEVICEUPDATE_INSTANCE_ID": "blue",
     "RandomSeed": "1805723785"
   }

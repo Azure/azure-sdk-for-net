@@ -1,26 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://contosoprod.api.prod.adu.microsoft.com/deviceupdate/blue/v2/management/groups/dpokluda-test/bestUpdates",
+      "RequestUri": "https://contosoprodwus2.api.prod.adu.microsoft.com/deviceupdate/blue/v2/management/groups/dpokluda-test/bestUpdates",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-Iot.DeviceUpdate/1.0.0-alpha.20201104.1",
-          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
-        ],
+        "User-Agent": "azsdk-net-Iot.DeviceUpdate/1.0.0-alpha.20210302.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "61b9c3a87860a3b26b3d003505609118",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "200",
+        "Content-Length": "199",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 05 Nov 2020 02:17:00 GMT",
-        "Request-Context": "appId=",
-        "traceparent": "00-284041b1f248c647b3e9ebff1cfeee2d-5c70a1c3b47b9d4e-00"
+        "Date": "Tue, 02 Mar 2021 20:28:29 GMT",
+        "traceparent": "00-6a2a6a5e8040884c8f5492381fec634f-9cc4bccf82a84749-00"
       },
       "ResponseBody": [
         "{\r\n",
@@ -29,7 +25,7 @@
         "      \u0022updateId\u0022: {\r\n",
         "        \u0022provider\u0022: \u0022Contoso\u0022,\r\n",
         "        \u0022name\u0022: \u0022Virtual-Machine\u0022,\r\n",
-        "        \u0022version\u0022: \u00222020.1104.1616.17\u0022\r\n",
+        "        \u0022version\u0022: \u00222021.302.1202.48\u0022\r\n",
         "      },\r\n",
         "      \u0022deviceCount\u0022: 0\r\n",
         "    }\r\n",
@@ -39,7 +35,7 @@
     }
   ],
   "Variables": {
-    "DEVICEUPDATE_ACCOUNT_ENDPOINT": "contosoprod.api.prod.adu.microsoft.com",
+    "DEVICEUPDATE_ACCOUNT_ENDPOINT": "contosoprodwus2.api.prod.adu.microsoft.com",
     "DEVICEUPDATE_DEVICE_ID": "dpokluda-test",
     "DEVICEUPDATE_INSTANCE_ID": "blue",
     "RandomSeed": "107024186"

@@ -1,16 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://contosoprod.api.prod.adu.microsoft.com/deviceupdate/blue/v2/updates?action=import",
+      "RequestUri": "https://contosoprodwus2.api.prod.adu.microsoft.com/deviceupdate/blue/v2/updates?action=import",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "536",
         "Content-Type": "application/json",
-        "User-Agent": [
-          "azsdk-net-Iot.DeviceUpdate/1.0.0-alpha.20201104.1",
-          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
-        ],
+        "User-Agent": "azsdk-net-Iot.DeviceUpdate/1.0.0-alpha.20210302.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "ecf1eed5078d4ef877098621fe58101f",
         "x-ms-return-client-request-id": "true"
       },
@@ -32,16 +29,16 @@
       "StatusCode": 202,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Thu, 05 Nov 2020 02:13:13 GMT",
-        "Location": "/deviceupdate/blue/v2/updates/operations/b471780f-4030-442a-9e62-2a0e4bffcb40",
-        "Operation-Location": "/deviceupdate/blue/v2/updates/operations/b471780f-4030-442a-9e62-2a0e4bffcb40",
-        "traceparent": "00-cc15e8d40318564d9f53108dd4ad536d-58eefddd26671945-00"
+        "Date": "Tue, 02 Mar 2021 20:28:42 GMT",
+        "Location": "/deviceupdate/blue/updates/operations/b70af712-a651-4ca6-98f7-fa95ae4b2bf1?api-version=2",
+        "Operation-Location": "/deviceupdate/blue/updates/operations/b70af712-a651-4ca6-98f7-fa95ae4b2bf1?api-version=2",
+        "traceparent": "00-fc728fe53b2ba345b8c76c61ab2ec147-e9e154af47e7d246-00"
       },
       "ResponseBody": []
     }
   ],
   "Variables": {
-    "DEVICEUPDATE_ACCOUNT_ENDPOINT": "contosoprod.api.prod.adu.microsoft.com",
+    "DEVICEUPDATE_ACCOUNT_ENDPOINT": "contosoprodwus2.api.prod.adu.microsoft.com",
     "DEVICEUPDATE_INSTANCE_ID": "blue",
     "RandomSeed": "1178167123"
   }

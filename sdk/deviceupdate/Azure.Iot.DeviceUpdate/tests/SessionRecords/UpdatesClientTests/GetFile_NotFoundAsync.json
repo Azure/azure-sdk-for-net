@@ -1,39 +1,39 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://contosoprod.api.prod.adu.microsoft.com/deviceupdate/blue/v2/updates/providers/Contoso/names/Virtual-Machine/versions/2020.1104.1616.17/files/foobar",
+      "RequestUri": "https://contosoprodwus2.api.prod.adu.microsoft.com/deviceupdate/blue/v2/updates/providers/Contoso/names/Virtual-Machine/versions/2021.302.1202.48/files/foobar",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-Iot.DeviceUpdate/1.0.0-alpha.20201104.1",
-          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
-        ],
+        "User-Agent": "azsdk-net-Iot.DeviceUpdate/1.0.0-alpha.20210302.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "6bc36c5d8986ef506c294c2ab2233a3a",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 404,
       "ResponseHeaders": {
-        "Cache-Control": "max-age=60, private",
+        "Cache-Control": [
+          "max-age=60",
+          "private"
+        ],
         "Content-Length": "161",
         "Content-Type": "application/problem\u002Bjson; charset=utf-8",
-        "Date": "Thu, 05 Nov 2020 02:13:10 GMT",
-        "traceparent": "00-df1ee0fb00079b40b02da24c1a88a808-6b6b7f93eff63644-00"
+        "Date": "Tue, 02 Mar 2021 20:28:40 GMT",
+        "traceparent": "00-ab27f45b15b895418298a643126745ab-8be637df7350a44a-00"
       },
       "ResponseBody": {
         "type": "https://tools.ietf.org/html/rfc7231#section-6.5.4",
         "title": "Not Found",
         "status": 404,
-        "traceId": "00-df1ee0fb00079b40b02da24c1a88a808-689267a4de39c943-00"
+        "traceId": "00-ab27f45b15b895418298a643126745ab-a9e8e995a7b3ac4b-00"
       }
     }
   ],
   "Variables": {
-    "DEVICEUPDATE_ACCOUNT_ENDPOINT": "contosoprod.api.prod.adu.microsoft.com",
+    "DEVICEUPDATE_ACCOUNT_ENDPOINT": "contosoprodwus2.api.prod.adu.microsoft.com",
     "DEVICEUPDATE_INSTANCE_ID": "blue",
-    "DEVICEUPDATE_UPDATE_VERSION": "2020.1104.1616.17",
+    "DEVICEUPDATE_UPDATE_VERSION": "2021.302.1202.48",
     "RandomSeed": "59099208"
   }
 }

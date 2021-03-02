@@ -1,15 +1,12 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://contosoprod.api.prod.adu.microsoft.com/deviceupdate/blue/v2/management/groups/foo/updateCompliance",
+      "RequestUri": "https://contosoprodwus2.api.prod.adu.microsoft.com/deviceupdate/blue/v2/management/groups/foo/updateCompliance",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-Iot.DeviceUpdate/1.0.0-alpha.20201104.1",
-          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
-        ],
+        "User-Agent": "azsdk-net-Iot.DeviceUpdate/1.0.0-alpha.20210302.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "c391b15598dbdf30dcfd8542643b7c91",
         "x-ms-return-client-request-id": "true"
       },
@@ -18,22 +15,21 @@
       "ResponseHeaders": {
         "Content-Length": "183",
         "Content-Type": "application/problem\u002Bjson; charset=utf-8",
-        "Date": "Thu, 05 Nov 2020 02:12:51 GMT",
-        "Request-Context": "appId=",
-        "traceparent": "00-a8d359b182426542bcbd8143709d95f1-8cabfb922866a546-00"
+        "Date": "Tue, 02 Mar 2021 20:28:34 GMT",
+        "traceparent": "00-0d84b24e7080bc4cba6a253ba48a6f23-5732e4a4fcfdd349-00"
       },
       "ResponseBody": [
         "{\r\n",
         "  \u0022type\u0022: \u0022https://tools.ietf.org/html/rfc7231#section-6.5.4\u0022,\r\n",
         "  \u0022title\u0022: \u0022Not Found\u0022,\r\n",
         "  \u0022status\u0022: 404,\r\n",
-        "  \u0022traceId\u0022: \u002200-a8d359b182426542bcbd8143709d95f1-0ea3390788ac4647-00\u0022\r\n",
+        "  \u0022traceId\u0022: \u002200-0d84b24e7080bc4cba6a253ba48a6f23-c652ce717a9a784e-00\u0022\r\n",
         "}"
       ]
     }
   ],
   "Variables": {
-    "DEVICEUPDATE_ACCOUNT_ENDPOINT": "contosoprod.api.prod.adu.microsoft.com",
+    "DEVICEUPDATE_ACCOUNT_ENDPOINT": "contosoprodwus2.api.prod.adu.microsoft.com",
     "DEVICEUPDATE_INSTANCE_ID": "blue",
     "RandomSeed": "211236400"
   }

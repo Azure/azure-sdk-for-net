@@ -1,60 +1,40 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://contosoprod.api.prod.adu.microsoft.com/deviceupdate/blue/v2/updates/providers/Contoso/names/Virtual-Machine/versions",
+      "RequestUri": "https://contosoprodwus2.api.prod.adu.microsoft.com/deviceupdate/blue/v2/updates/providers/Contoso/names/Virtual-Machine/versions",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-Iot.DeviceUpdate/1.0.0-alpha.20201104.1",
-          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
-        ],
+        "User-Agent": "azsdk-net-Iot.DeviceUpdate/1.0.0-alpha.20210302.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "056aceee76afe3ea4f764ed4ae250f6d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "523",
+        "Content-Length": "180",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 05 Nov 2020 02:13:12 GMT",
-        "traceparent": "00-bb1aef2444707b4f92da6a2a376e44c4-6e0ea94dc47f1440-00"
+        "Date": "Tue, 02 Mar 2021 20:28:42 GMT",
+        "traceparent": "00-4633dbdfc2bbe642bf0421325c95c6b1-845dc61dc5935149-00"
       },
       "ResponseBody": {
         "value": [
-          "2020.1016.135.58",
-          "2020.1016.141.56",
-          "2020.1016.146.59",
-          "2020.1016.1241.17",
-          "2020.1016.1424.10",
-          "2020.1016.1427.31",
-          "2020.1016.1429.46",
-          "2020.1016.1432.27",
-          "2020.1016.1615.4",
-          "2020.1016.1619.59",
-          "2020.1016.1703.3",
-          "2020.1016.1709.3",
-          "2020.1016.1715.42",
-          "2020.1016.1818.32",
-          "2020.1017.1639.32",
-          "2020.1017.1644.27",
-          "2020.1017.1701.29",
-          "2020.1017.1707.8",
-          "2020.1017.1713.28",
-          "2020.1017.1718.0",
-          "2020.1017.1734.49",
-          "2020.1029.1439.30",
-          "2020.1029.1624.53",
-          "2020.1029.1715.27",
-          "2020.1029.1809.15",
-          "2020.1104.1616.17"
+          "2021.209.1457.25",
+          "2021.209.1525.54",
+          "2021.214.1700.20",
+          "2021.214.1709.51",
+          "2021.301.1926.8",
+          "2021.302.914.51",
+          "2021.302.1045.44",
+          "2021.302.1048.57",
+          "2021.302.1202.48"
         ]
       }
     }
   ],
   "Variables": {
-    "DEVICEUPDATE_ACCOUNT_ENDPOINT": "contosoprod.api.prod.adu.microsoft.com",
+    "DEVICEUPDATE_ACCOUNT_ENDPOINT": "contosoprodwus2.api.prod.adu.microsoft.com",
     "DEVICEUPDATE_INSTANCE_ID": "blue",
     "RandomSeed": "1627505359"
   }

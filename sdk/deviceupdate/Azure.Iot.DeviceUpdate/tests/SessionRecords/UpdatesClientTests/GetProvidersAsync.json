@@ -1,34 +1,26 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://contosoprod.api.prod.adu.microsoft.com/deviceupdate/blue/v2/updates/providers",
+      "RequestUri": "https://contosoprodwus2.api.prod.adu.microsoft.com/deviceupdate/blue/v2/updates/providers",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-Iot.DeviceUpdate/1.0.0-alpha.20201104.1",
-          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
-        ],
+        "User-Agent": "azsdk-net-Iot.DeviceUpdate/1.0.0-alpha.20210302.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "7001a0e048f006e830cf9e1cbd87f869",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "212",
+        "Content-Length": "60",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 05 Nov 2020 02:13:11 GMT",
-        "traceparent": "00-a2c18f8642f9ab4da5c10870b3bb9f1b-7e0b8ac77f75de43-00"
+        "Date": "Tue, 02 Mar 2021 20:28:41 GMT",
+        "traceparent": "00-8ed54ecfd4622e489bf3c82f3b34863f-56bef0907f3f6545-00"
       },
       "ResponseBody": {
         "value": [
           "Contoso",
-          "McsViaApiGateway-OK-epx5y254.2eg",
-          "McsViaApiGateway-OK-gcrgk0v4.nvs",
-          "McsViaApiGateway-OK-uombuvjc.j1f",
-          "McsViaApiGateway-OK-xhpurxdx.kns",
-          "Microsoft",
           "Microsoft-Corporation",
           "Test-Content"
         ]
@@ -36,7 +28,7 @@
     }
   ],
   "Variables": {
-    "DEVICEUPDATE_ACCOUNT_ENDPOINT": "contosoprod.api.prod.adu.microsoft.com",
+    "DEVICEUPDATE_ACCOUNT_ENDPOINT": "contosoprodwus2.api.prod.adu.microsoft.com",
     "DEVICEUPDATE_INSTANCE_ID": "blue",
     "RandomSeed": "1542268550"
   }

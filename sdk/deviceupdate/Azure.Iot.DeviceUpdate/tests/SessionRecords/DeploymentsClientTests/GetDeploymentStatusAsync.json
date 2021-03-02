@@ -1,15 +1,12 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://contosoprod.api.prod.adu.microsoft.com/deviceupdate/blue/v2/management/deployments/dpokluda-test-2020-1104-1616-17/status",
+      "RequestUri": "https://contosoprodwus2.api.prod.adu.microsoft.com/deviceupdate/blue/v2/management/deployments/dpokluda-test-2021-302-1202-48/status",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-Iot.DeviceUpdate/1.0.0-alpha.20201104.1",
-          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
-        ],
+        "User-Agent": "azsdk-net-Iot.DeviceUpdate/1.0.0-alpha.20210302.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "54bf86e3b33fb3402180f8b260e96923",
         "x-ms-return-client-request-id": "true"
       },
@@ -18,9 +15,8 @@
       "ResponseHeaders": {
         "Content-Length": "271",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 05 Nov 2020 02:12:29 GMT",
-        "Request-Context": "appId=",
-        "traceparent": "00-199b367e64604f419d5db469c6819e72-6816f29df3bdd34d-00"
+        "Date": "Tue, 02 Mar 2021 20:28:24 GMT",
+        "traceparent": "00-e394c7fbb0b57941a866e5e4c16472c1-222b3a217831b248-00"
       },
       "ResponseBody": [
         "{\r\n",
@@ -37,8 +33,8 @@
     }
   ],
   "Variables": {
-    "DEVICEUPDATE_ACCOUNT_ENDPOINT": "contosoprod.api.prod.adu.microsoft.com",
-    "DEVICEUPDATE_DEPLOYMENT_ID": "dpokluda-test-2020-1104-1616-17",
+    "DEVICEUPDATE_ACCOUNT_ENDPOINT": "contosoprodwus2.api.prod.adu.microsoft.com",
+    "DEVICEUPDATE_DEPLOYMENT_ID": "dpokluda-test-2021-302-1202-48",
     "DEVICEUPDATE_INSTANCE_ID": "blue",
     "RandomSeed": "2026465137"
   }

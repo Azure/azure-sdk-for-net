@@ -1,15 +1,12 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://contosoprod.api.prod.adu.microsoft.com/deviceupdate/blue/v2/management/groups/dpokluda-test",
+      "RequestUri": "https://contosoprodwus2.api.prod.adu.microsoft.com/deviceupdate/blue/v2/management/groups/dpokluda-test",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-Iot.DeviceUpdate/1.0.0-alpha.20201104.1",
-          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
-        ],
+        "User-Agent": "azsdk-net-Iot.DeviceUpdate/1.0.0-alpha.20210302.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "5ac0c75432b67505cfc7876d93c0f457",
         "x-ms-return-client-request-id": "true"
       },
@@ -18,9 +15,8 @@
       "ResponseHeaders": {
         "Content-Length": "175",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 05 Nov 2020 02:12:50 GMT",
-        "Request-Context": "appId=",
-        "traceparent": "00-8e7376d99a24944f92801a2360d9d2d1-2312ea42aab37a49-00"
+        "Date": "Tue, 02 Mar 2021 20:28:33 GMT",
+        "traceparent": "00-b149d232d0166844a0df0063ae026c6b-7f1c24b4be210c44-00"
       },
       "ResponseBody": [
         "{\r\n",
@@ -28,7 +24,7 @@
         "  \u0022tags\u0022: [\r\n",
         "    \u0022dpokluda-test\u0022\r\n",
         "  ],\r\n",
-        "  \u0022createdDateTime\u0022: \u00222020-10-16T21:34:43\u002B00:00\u0022,\r\n",
+        "  \u0022createdDateTime\u0022: \u00222021-02-09T23:28:03\u002B00:00\u0022,\r\n",
         "  \u0022groupType\u0022: \u0022IoTHubTag\u0022,\r\n",
         "  \u0022deviceCount\u0022: 1\r\n",
         "}"
@@ -36,7 +32,7 @@
     }
   ],
   "Variables": {
-    "DEVICEUPDATE_ACCOUNT_ENDPOINT": "contosoprod.api.prod.adu.microsoft.com",
+    "DEVICEUPDATE_ACCOUNT_ENDPOINT": "contosoprodwus2.api.prod.adu.microsoft.com",
     "DEVICEUPDATE_DEVICE_ID": "dpokluda-test",
     "DEVICEUPDATE_INSTANCE_ID": "blue",
     "RandomSeed": "1004400845"
