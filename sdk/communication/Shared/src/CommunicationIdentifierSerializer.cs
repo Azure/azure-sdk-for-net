@@ -103,7 +103,7 @@ namespace Azure.Communication
             return new CommunicationCloudEnvironmentModel(cloud.ToString());
         }
 
-        private static T AssertNotNull<T>(T value, string name, string type) where T : class?
+        private static T AssertNotNull<T>(T value, string name, string type) where T : class
             => value ?? throw new JsonException($"Property '{name}' is required for identifier of type `{type}`.");
 
         private static T AssertNotNull<T>(T? value, string name, string type) where T : struct

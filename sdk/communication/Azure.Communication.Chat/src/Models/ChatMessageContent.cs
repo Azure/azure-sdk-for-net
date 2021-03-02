@@ -36,6 +36,6 @@ namespace Azure.Communication.Chat
         /// <summary> Chat message content for type 'participantAdded' or 'participantRemoved' messages. </summary>
         public IReadOnlyList<ChatParticipant> Participants { get; }
         /// <summary> Chat message content for type 'participantAdded' or 'participantRemoved' messages. </summary>
-        public CommunicationIdentifier? Initiator { get; }
+        public CommunicationIdentifier Initiator { get; }
     }
 }
