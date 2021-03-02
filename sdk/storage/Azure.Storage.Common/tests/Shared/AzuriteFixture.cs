@@ -73,7 +73,7 @@ namespace Azure.Storage.Test.Shared
             process = new Process();
             process.StartInfo.FileName = "node";
             process.StartInfo.WorkingDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            var arguments = $"{azuriteScriptLocation} --oauth basic -l {tempDirectory} --blobPort 0 --queuePort 0 --cert cert.pem --key cert.pem --skipApiVersionCheck";
+            var arguments = $"{azuriteScriptLocation} --oauth basic -l {tempDirectory} --blobPort 0 --queuePort 0 --cert azurite_cert.pem --key azurite_cert.pem --skipApiVersionCheck";
             string debugLogPath = null;
             if (includeDebugLog)
             {
