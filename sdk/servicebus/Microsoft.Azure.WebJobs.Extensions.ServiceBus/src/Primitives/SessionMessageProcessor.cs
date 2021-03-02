@@ -25,11 +25,11 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         /// This method is called when there is a new message to process, before the job function is invoked.
         /// This allows any preprocessing to take place on the message before processing begins.
         /// </summary>
-        /// <param name="receiver"></param>
+        /// <param name="sessionActions"></param>
         /// <param name="message"></param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>A <see cref="Task"/> that returns true if the message processing should continue, false otherwise.</returns>
-        public virtual Task<bool> BeginProcessingMessageAsync(ServiceBusSessionReceiver receiver, ServiceBusReceivedMessage message, CancellationToken cancellationToken)
+        public virtual Task<bool> BeginProcessingMessageAsync(ServiceBusSessionMessageActions sessionActions, ServiceBusReceivedMessage message, CancellationToken cancellationToken)
         {
             return Task.FromResult<bool>(true);
         }
@@ -42,12 +42,12 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         /// is configured. E.g. if <see cref="ServiceBusSessionProcessorOptions.AutoCompleteMessages"/> is false, it is up to the job function to complete
         /// the message.
         /// </remarks>
-        /// <param name="receiver"></param>
+        /// <param name="sessionActions"></param>
         /// <param name="message"></param>
         /// <param name="result">The <see cref="FunctionResult"/> from the job invocation.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use</param>
         /// <returns>A <see cref="Task"/> that will complete the message processing.</returns>
-        public virtual Task CompleteProcessingMessageAsync(ServiceBusSessionReceiver receiver, ServiceBusReceivedMessage message, FunctionResult result, CancellationToken cancellationToken)
+        public virtual Task CompleteProcessingMessageAsync(ServiceBusSessionMessageActions sessionActions, ServiceBusReceivedMessage message, FunctionResult result, CancellationToken cancellationToken)
         {
             if (result == null)
             {

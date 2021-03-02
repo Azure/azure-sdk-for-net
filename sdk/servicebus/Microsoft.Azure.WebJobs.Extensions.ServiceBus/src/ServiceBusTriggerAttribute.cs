@@ -3,6 +3,7 @@
 
 using System;
 using System.Diagnostics;
+using Azure.Messaging.ServiceBus;
 using Microsoft.Azure.WebJobs.Description;
 
 namespace Microsoft.Azure.WebJobs
@@ -11,15 +12,16 @@ namespace Microsoft.Azure.WebJobs
     /// Attribute used to bind a parameter to a ServiceBus Queue message, causing the function to run when a
     /// message is enqueued.
     /// </summary>
-    ///// <remarks>
-    ///// The method parameter type can be one of the following:
-    ///// <list type="bullet">
-    ///// <item><description>BrokeredMessage</description></item>
-    ///// <item><description><see cref="string"/></description></item>
-    ///// <item><description><see cref="byte[]"/></description></item>
-    ///// <item><description>A user-defined type (serialized as JSON)</description></item>
-    ///// </list>
-    ///// </remarks>
+    /// <remarks>
+    /// The method parameter type can be one of the following:
+    /// <list type="bullet">
+    /// <item><description><see cref="ServiceBusReceivedMessage"/></description></item>
+    /// <item><description><see cref="string"/></description></item>
+    /// <item><description><see cref="byte"/>array</description></item>
+    /// <item><description><see cref="BinaryData"/></description></item>
+    /// <item><description>A user-defined type (serialized as JSON)</description></item>
+    /// </list>
+    /// </remarks>
     [AttributeUsage(AttributeTargets.Parameter)]
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     [ConnectionProvider(typeof(ServiceBusAccountAttribute))]
@@ -56,7 +58,7 @@ namespace Microsoft.Azure.WebJobs
         public string Connection { get; set; }
 
         /// <summary>
-        /// Gets the name of the queue to which to bind.
+        /// Gets the name of the queue to bind to.
         /// </summary>
         /// <remarks>When binding to a subscription in a topic, returns <see langword="null"/>.</remarks>
         public string QueueName
@@ -65,7 +67,7 @@ namespace Microsoft.Azure.WebJobs
         }
 
         /// <summary>
-        /// Gets the name of the topic to which to bind.
+        /// Gets the name of the topic to bind to.
         /// </summary>
         /// <remarks>When binding to a queue, returns <see langword="null"/>.</remarks>
         public string TopicName
@@ -83,7 +85,7 @@ namespace Microsoft.Azure.WebJobs
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the sessions are enabled.
+        /// Gets or sets a value indicating whether sessions are enabled.
         /// </summary>
         public bool IsSessionsEnabled { get; set; }
 
