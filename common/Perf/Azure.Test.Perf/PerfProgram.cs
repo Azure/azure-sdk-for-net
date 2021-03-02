@@ -178,9 +178,11 @@ namespace Azure.Test.Perf
         {
             Console.WriteLine("=== Versions ===");
 
-            Console.WriteLine($"Runtime: {Environment.Version}");
+            Console.WriteLine($"Runtime:         {Environment.Version}");
 
-            var azureAssemblies = AppDomain.CurrentDomain.GetAssemblies()
+            var referencedAssemblies = testType.Assembly.GetReferencedAssemblies();
+
+            var azureLoadedAssemblies = AppDomain.CurrentDomain.GetAssemblies()
                 // Include all Track1 and Track2 assemblies
                 .Where(a => a.GetName().Name.StartsWith("Azure", StringComparison.OrdinalIgnoreCase) ||
                             a.GetName().Name.StartsWith("Microsoft.Azure", StringComparison.OrdinalIgnoreCase))
@@ -192,10 +194,17 @@ namespace Azure.Test.Perf
                 .Where(a => !a.GetName().Name.Equals("Azure.Core.TestFramework", StringComparison.OrdinalIgnoreCase))
                 .OrderBy(a => a.GetName().Name);
 
-            foreach (var a in azureAssemblies)
+            foreach (var a in azureLoadedAssemblies)
             {
+                var name = a.GetName().Name;
+                var referencedVersion = referencedAssemblies.Where(r => r.Name == name).SingleOrDefault()?.Version;
+                var loadedVersion = a.GetName().Version;
                 var informationalVersion = FileVersionInfo.GetVersionInfo(a.Location).ProductVersion;
-                Console.WriteLine($"{a.GetName().Name}: {a.GetName().Version} ({informationalVersion})");
+
+                Console.WriteLine($"{name}:");
+                Console.WriteLine($"  Referenced:    {referencedVersion}");
+                Console.WriteLine($"  Loaded:        {loadedVersion}");
+                Console.WriteLine($"  Informational: {informationalVersion}");
             }
 
             Console.WriteLine();
