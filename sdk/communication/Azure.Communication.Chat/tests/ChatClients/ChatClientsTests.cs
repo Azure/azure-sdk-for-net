@@ -53,21 +53,10 @@ namespace Azure.Communication.Chat.Tests.ChatClients
         [Test]
         public async Task OrderInGetMessagesIteratorIsNotAltered()
         {
-            //arrange
-            var threadId = "19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2";
-            var uri = new Uri("https://localHostTest");
-            var responseAllItems = new MockResponse(200);
-            responseAllItems.SetContent(AllMessagesApiResponsePayload);
-
-            var chatClientOptions = new ChatClientOptions
-            {
-                Transport = new MockTransport(responseAllItems)
-            };
+            //arange
+            ChatThreadClient chatThreadClient = CreateMockChatThreadClient(200, AllMessagesApiResponsePayload);
 
             //act
-            var communicationTokenCredential = new CommunicationTokenCredential(ChatRecordedTestSanitizer.SanitizedUnsignedUserTokenValue);
-            var chatClient = new ChatClient(uri, communicationTokenCredential, chatClientOptions);
-            ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient(threadId);
             AsyncPageable<ChatMessage> allMessages = chatThreadClient.GetMessagesAsync();
 
             //assert
@@ -141,23 +130,11 @@ namespace Azure.Communication.Chat.Tests.ChatClients
         public async Task OrderInGetReadReceiptsIteratorIsNotAltered()
         {
             //arrange
-            var threadId = "19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2";
             var baseSenderId = "8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-0464-274b-b274-5a3a0d00010";
             var baseReadOnDate = DateTimeOffset.Parse("2020-12-15T00:00:00Z");
-            var uri = new Uri("https://localHostTest");
-            var responseAllItems = new MockResponse(200);
-            responseAllItems.SetContent(AllReadReceiptsApiResponsePayload);
-
-            var chatClientOptions = new ChatClientOptions
-            {
-                Transport = new MockTransport(responseAllItems)
-            };
+            ChatThreadClient chatThreadClient = CreateMockChatThreadClient(200, AllReadReceiptsApiResponsePayload);
 
             //act
-            var communicationTokenCredential = new CommunicationTokenCredential(ChatRecordedTestSanitizer.SanitizedUnsignedUserTokenValue);
-            var chatClient = new ChatClient(uri, communicationTokenCredential, chatClientOptions);
-            ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient(threadId);
-
             AsyncPageable<ChatMessageReadReceipt> allReadReceipts = chatThreadClient.GetReadReceiptsAsync();
 
             //assert
@@ -220,19 +197,8 @@ namespace Azure.Communication.Chat.Tests.ChatClients
         [Test]
         public async Task CreateChatThreadShouldSucceed()
         {
-            //arrange
-            var uri = new Uri("https://localHostTest");
-            var communicationTokenCredential = new CommunicationTokenCredential(ChatRecordedTestSanitizer.SanitizedUnsignedUserTokenValue);
-            var mockResponse = new MockResponse(201);
-            mockResponse.SetContent(CreateChatThreadSuccessApiResponsePayload);
-
-            var chatClientOptions = new ChatClientOptions
-            {
-                Transport = new MockTransport(mockResponse)
-            };
-
             //act
-            var chatClient = new ChatClient(uri, communicationTokenCredential, chatClientOptions);
+            var chatClient = CreateMockChatClient(201, CreateChatThreadSuccessApiResponsePayload);
             var chatParticipant = new ChatParticipant(new CommunicationUserIdentifier("8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c"));
             CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync("", new List<ChatParticipant>() { chatParticipant });
 
@@ -246,20 +212,9 @@ namespace Azure.Communication.Chat.Tests.ChatClients
         public async Task SendMessageShouldSucceed()
         {
             //arrange
-            var threadId = "19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2";
-            var uri = new Uri("https://localHostTest");
-            var communicationTokenCredential = new CommunicationTokenCredential(ChatRecordedTestSanitizer.SanitizedUnsignedUserTokenValue);
-            var mockResponse = new MockResponse(201);
-            mockResponse.SetContent(SendMessageApiResponsePayload);
-
-            var chatClientOptions = new ChatClientOptions
-            {
-                Transport = new MockTransport(mockResponse)
-            };
+            ChatThreadClient chatThreadClient = CreateMockChatThreadClient(201, SendMessageApiResponsePayload);
 
             //act
-            var chatClient = new ChatClient(uri, communicationTokenCredential, chatClientOptions);
-            ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient(threadId);
             string messageId = await chatThreadClient.SendMessageAsync("Send Message Test");
 
             //assert
@@ -270,19 +225,9 @@ namespace Azure.Communication.Chat.Tests.ChatClients
         public async Task SendTypingIndicatorShouldSucceed()
         {
             //arrange
-            var threadId = "19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2";
-            var uri = new Uri("https://localHostTest");
-            var communicationTokenCredential = new CommunicationTokenCredential(ChatRecordedTestSanitizer.SanitizedUnsignedUserTokenValue);
-            var mockResponse = new MockResponse(200);
-
-            var chatClientOptions = new ChatClientOptions
-            {
-                Transport = new MockTransport(mockResponse)
-            };
+            ChatThreadClient chatThreadClient = CreateMockChatThreadClient(200);
 
             //act
-            var chatClient = new ChatClient(uri, communicationTokenCredential, chatClientOptions);
-            ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient(threadId);
             Response typingNotificationResponse = await chatThreadClient.SendTypingNotificationAsync();
 
             //assert
@@ -294,19 +239,9 @@ namespace Azure.Communication.Chat.Tests.ChatClients
         {
             //arrange
             var messageId = "1";
-            var threadId = "19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2";
-            var uri = new Uri("https://localHostTest");
-            var communicationTokenCredential = new CommunicationTokenCredential(ChatRecordedTestSanitizer.SanitizedUnsignedUserTokenValue);
-            var mockResponse = new MockResponse(200);
-
-            var chatClientOptions = new ChatClientOptions
-            {
-                Transport = new MockTransport(mockResponse)
-            };
+            ChatThreadClient chatThreadClient = CreateMockChatThreadClient(200);
 
             //act
-            var chatClient = new ChatClient(uri, communicationTokenCredential, chatClientOptions);
-            ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient(threadId);
             Response readReceiptResponse = await chatThreadClient.SendReadReceiptAsync(messageId);
 
             //assert
@@ -318,19 +253,9 @@ namespace Azure.Communication.Chat.Tests.ChatClients
         {
             //arrange
             var messageId = "1";
-            var threadId = "19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2";
-            var uri = new Uri("https://localHostTest");
-            var communicationTokenCredential = new CommunicationTokenCredential(ChatRecordedTestSanitizer.SanitizedUnsignedUserTokenValue);
-            var mockResponse = new MockResponse(204);
-
-            var chatClientOptions = new ChatClientOptions
-            {
-                Transport = new MockTransport(mockResponse)
-            };
+            ChatThreadClient chatThreadClient = CreateMockChatThreadClient(204);
 
             //act
-            var chatClient = new ChatClient(uri, communicationTokenCredential, chatClientOptions);
-            ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient(threadId);
             Response readReceiptResponse = await chatThreadClient.DeleteMessageAsync(messageId);
 
             //assert
@@ -343,19 +268,9 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             //arrange
             var messageId = "1";
             var content = "Update Message Test";
-            var threadId = "19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2";
-            var uri = new Uri("https://localHostTest");
-            var communicationTokenCredential = new CommunicationTokenCredential(ChatRecordedTestSanitizer.SanitizedUnsignedUserTokenValue);
-            var mockResponse = new MockResponse(204);
-
-            var chatClientOptions = new ChatClientOptions
-            {
-                Transport = new MockTransport(mockResponse)
-            };
+            ChatThreadClient chatThreadClient = CreateMockChatThreadClient(204);
 
             //act
-            var chatClient = new ChatClient(uri, communicationTokenCredential, chatClientOptions);
-            ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient(threadId);
             Response updateMessageResponse = await chatThreadClient.UpdateMessageAsync(messageId, content);
 
             //assert
@@ -363,24 +278,13 @@ namespace Azure.Communication.Chat.Tests.ChatClients
         }
 
         [Test]
-        public async Task GetMessagShouldSucceed()
+        public async Task GetMessageShouldSucceed()
         {
             //arrange
             var messageId = "1";
-            var threadId = "19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2";
-            var uri = new Uri("https://localHostTest");
-            var communicationTokenCredential = new CommunicationTokenCredential(ChatRecordedTestSanitizer.SanitizedUnsignedUserTokenValue);
-            var mockResponse = new MockResponse(200);
-            mockResponse.SetContent(GetMessageApiResponsePayload);
-
-            var chatClientOptions = new ChatClientOptions
-            {
-                Transport = new MockTransport(mockResponse)
-            };
+            ChatThreadClient chatThreadClient = CreateMockChatThreadClient(200, GetMessageApiResponsePayload);
 
             //act
-            var chatClient = new ChatClient(uri, communicationTokenCredential, chatClientOptions);
-            ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient(threadId);
             ChatMessage message = await chatThreadClient.GetMessageAsync(messageId);
 
             //assert
@@ -396,18 +300,9 @@ namespace Azure.Communication.Chat.Tests.ChatClients
         {
             //arrange
             var threadId = "19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2";
-            var uri = new Uri("https://localHostTest");
-            var communicationTokenCredential = new CommunicationTokenCredential(ChatRecordedTestSanitizer.SanitizedUnsignedUserTokenValue);
-            var mockResponse = new MockResponse(200);
-            mockResponse.SetContent(GetThreadApiResponsePayload);
-
-            var chatClientOptions = new ChatClientOptions
-            {
-                Transport = new MockTransport(mockResponse)
-            };
+            ChatClient chatClient = CreateMockChatClient(200, GetThreadApiResponsePayload);
 
             //act
-            var chatClient = new ChatClient(uri, communicationTokenCredential, chatClientOptions);
             ChatThread chatThread = await chatClient.GetChatThreadAsync(threadId);
 
             //assert
@@ -421,19 +316,9 @@ namespace Azure.Communication.Chat.Tests.ChatClients
         {
             //arrange
             var topic = "Update Thread Topic";
-            var threadId = "19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2";
-            var uri = new Uri("https://localHostTest");
-            var communicationTokenCredential = new CommunicationTokenCredential(ChatRecordedTestSanitizer.SanitizedUnsignedUserTokenValue);
-            var mockResponse = new MockResponse(204);
-
-            var chatClientOptions = new ChatClientOptions
-            {
-                Transport = new MockTransport(mockResponse)
-            };
+            ChatThreadClient chatThreadClient = CreateMockChatThreadClient(204);
 
             //act
-            var chatClient = new ChatClient(uri, communicationTokenCredential, chatClientOptions);
-            ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient(threadId);
             Response UpdateTopiceResponse = await chatThreadClient.UpdateTopicAsync(topic);
 
             //assert
@@ -444,18 +329,9 @@ namespace Azure.Communication.Chat.Tests.ChatClients
         public async Task GetThreadsShouldSucceed()
         {
             //arrange
-            var uri = new Uri("https://localHostTest");
-            var communicationTokenCredential = new CommunicationTokenCredential(ChatRecordedTestSanitizer.SanitizedUnsignedUserTokenValue);
-            var mockResponse = new MockResponse(200);
-            mockResponse.SetContent(GetThreadsApiResponsePayload);
-
-            var chatClientOptions = new ChatClientOptions
-            {
-                Transport = new MockTransport(mockResponse)
-            };
+            ChatClient chatClient = CreateMockChatClient(200, GetThreadsApiResponsePayload);
 
             //act
-            var chatClient = new ChatClient(uri, communicationTokenCredential, chatClientOptions);
             AsyncPageable<ChatThreadInfo> chatThreadsInfo = chatClient.GetChatThreadsInfoAsync();
 
             //assert
@@ -474,20 +350,9 @@ namespace Azure.Communication.Chat.Tests.ChatClients
         public async Task GetParticipantsShouldSucceed()
         {
             //arrange
-            var threadId = "19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2";
-            var uri = new Uri("https://localHostTest");
-            var communicationTokenCredential = new CommunicationTokenCredential(ChatRecordedTestSanitizer.SanitizedUnsignedUserTokenValue);
-            var mockResponse = new MockResponse(200);
-            mockResponse.SetContent(GetParticipantsApiResponsePayload);
-
-            var chatClientOptions = new ChatClientOptions
-            {
-                Transport = new MockTransport(mockResponse)
-            };
+            ChatThreadClient chatThreadClient = CreateMockChatThreadClient(200, GetParticipantsApiResponsePayload);
 
             //act
-            var chatClient = new ChatClient(uri, communicationTokenCredential, chatClientOptions);
-            ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient(threadId);
             AsyncPageable<ChatParticipant> chatParticipants = chatThreadClient.GetParticipantsAsync();
 
             //assert
@@ -505,21 +370,11 @@ namespace Azure.Communication.Chat.Tests.ChatClients
         public async Task RemoveParticipantShouldSucceed()
         {
             //arrange
-            var threadId = "19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2";
             var id = "8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-0464-274b-b274-5a3a0d000101";
             CommunicationUserIdentifier identifier = new CommunicationUserIdentifier(id);
-            var uri = new Uri("https://localHostTest");
-            var communicationTokenCredential = new CommunicationTokenCredential(ChatRecordedTestSanitizer.SanitizedUnsignedUserTokenValue);
-            var mockResponse = new MockResponse(204);
-
-            var chatClientOptions = new ChatClientOptions
-            {
-                Transport = new MockTransport(mockResponse)
-            };
+            ChatThreadClient chatThreadClient = CreateMockChatThreadClient(204, GetParticipantsApiResponsePayload);
 
             //act
-            var chatClient = new ChatClient(uri, communicationTokenCredential, chatClientOptions);
-            ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient(threadId);
             Response RemoveParticipantResponse = await chatThreadClient.RemoveParticipantAsync(identifier);
 
             //assert
@@ -530,22 +385,11 @@ namespace Azure.Communication.Chat.Tests.ChatClients
         public async Task AddParticipantShouldSucceed()
         {
             //arrange
-            var threadId = "19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2";
             var id = "8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-0464-274b-b274-5a3a0d000101";
             ChatParticipant chatParticipant = new ChatParticipant(new CommunicationUserIdentifier(id));
-            var uri = new Uri("https://localHostTest");
-            var communicationTokenCredential = new CommunicationTokenCredential(ChatRecordedTestSanitizer.SanitizedUnsignedUserTokenValue);
-            var mockResponse = new MockResponse(201);
-            mockResponse.SetContent(AddParticipantApiResponsePayload);
-
-            var chatClientOptions = new ChatClientOptions
-            {
-                Transport = new MockTransport(mockResponse)
-            };
+            ChatThreadClient chatThreadClient = CreateMockChatThreadClient(201, AddParticipantApiResponsePayload);
 
             //act
-            var chatClient = new ChatClient(uri, communicationTokenCredential, chatClientOptions);
-            ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient(threadId);
             AddChatParticipantsResult AddParticipantResponse = await chatThreadClient.AddParticipantAsync(chatParticipant);
 
             //assert
@@ -556,20 +400,9 @@ namespace Azure.Communication.Chat.Tests.ChatClients
         public async Task AddParticipantsShouldSucceed()
         {
             //arrange
-            var threadId = "19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2";
-            var uri = new Uri("https://localHostTest");
-            var communicationTokenCredential = new CommunicationTokenCredential(ChatRecordedTestSanitizer.SanitizedUnsignedUserTokenValue);
-            var mockResponse = new MockResponse(201);
-            mockResponse.SetContent(AddParticipantsApiResponsePayload);
-
-            var chatClientOptions = new ChatClientOptions
-            {
-                Transport = new MockTransport(mockResponse)
-            };
+            ChatThreadClient chatThreadClient = CreateMockChatThreadClient(201, AddParticipantsApiResponsePayload);
 
             //act
-            var chatClient = new ChatClient(uri, communicationTokenCredential, chatClientOptions);
-            ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient(threadId);
             AddChatParticipantsResult AddParticipantsResponse = await chatThreadClient.AddParticipantsAsync(new List<ChatParticipant>());
 
             //assert
@@ -581,17 +414,9 @@ namespace Azure.Communication.Chat.Tests.ChatClients
         {
             //arrange
             var threadId = "19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2";
-            var uri = new Uri("https://localHostTest");
-            var communicationTokenCredential = new CommunicationTokenCredential(ChatRecordedTestSanitizer.SanitizedUnsignedUserTokenValue);
-            var mockResponse = new MockResponse(204);
-
-            var chatClientOptions = new ChatClientOptions
-            {
-                Transport = new MockTransport(mockResponse)
-            };
+            ChatClient chatClient = CreateMockChatClient(204);
 
             //act
-            var chatClient = new ChatClient(uri, communicationTokenCredential, chatClientOptions);
             Response deleteChatThreadResponse = await chatClient.DeleteChatThreadAsync(threadId);
 
             //assert
@@ -602,19 +427,10 @@ namespace Azure.Communication.Chat.Tests.ChatClients
         public async Task CreateChatThreadShouldExposePartialErrors()
         {
             //arrange
-            var uri = new Uri("https://localHostTest");
-            var communicationTokenCredential = new CommunicationTokenCredential(ChatRecordedTestSanitizer.SanitizedUnsignedUserTokenValue);
-            var mockResponse = new MockResponse(201);
-            mockResponse.SetContent(CreateChatThreadWithErrorsApiResponsePayload);
-
-            var chatClientOptions = new ChatClientOptions
-            {
-                Transport = new MockTransport(mockResponse)
-            };
+            ChatClient chatClient = CreateMockChatClient(201, CreateChatThreadWithErrorsApiResponsePayload);
+            var chatParticipant = new ChatParticipant(new CommunicationUserIdentifier("8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c"));
 
             //act
-            var chatClient = new ChatClient(uri, communicationTokenCredential, chatClientOptions);
-            var chatParticipant = new ChatParticipant(new CommunicationUserIdentifier("8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c"));
             CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync("", new List<ChatParticipant>() { chatParticipant});
 
             //assert
@@ -632,20 +448,9 @@ namespace Azure.Communication.Chat.Tests.ChatClients
         public async Task AddParticipantsShouldExposePartialErrors()
         {
             //arrange
-            var threadId = "19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2";
-            var uri = new Uri("https://localHostTest");
-            var communicationTokenCredential = new CommunicationTokenCredential(ChatRecordedTestSanitizer.SanitizedUnsignedUserTokenValue);
-            var mockResponse = new MockResponse(201);
-            mockResponse.SetContent(AddParticipantsdWithErrorsApiResponsePayload);
-
-            var chatClientOptions = new ChatClientOptions
-            {
-                Transport = new MockTransport(mockResponse)
-            };
+            ChatThreadClient chatThreadClient = CreateMockChatThreadClient(201, AddParticipantsdWithErrorsApiResponsePayload);
 
             //act
-            var chatClient = new ChatClient(uri, communicationTokenCredential, chatClientOptions);
-            ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient(threadId);
             AddChatParticipantsResult addChatParticipantsResult = await chatThreadClient.AddParticipantsAsync(new List<ChatParticipant>());
 
             //assert
@@ -659,6 +464,29 @@ namespace Azure.Communication.Chat.Tests.ChatClients
         {
             Assert.AreEqual(expectedMessage, chatParticipantError.Message);
             Assert.AreEqual(expectedTarget, chatParticipantError.Target);
+        }
+
+        private ChatClient CreateMockChatClient(int responseCode, string? responseContent = null)
+        {
+            var uri = new Uri("https://localHostTest");
+            var communicationTokenCredential = new CommunicationTokenCredential(ChatRecordedTestSanitizer.SanitizedUnsignedUserTokenValue);
+            var mockResponse = new MockResponse(responseCode);
+            if (responseContent != null)
+            {
+                mockResponse.SetContent(responseContent);
+            }
+
+            var chatClientOptions = new ChatClientOptions
+            {
+                Transport = new MockTransport(mockResponse)
+            };
+
+            return new ChatClient(uri, communicationTokenCredential, chatClientOptions);
+        }
+
+        private ChatThreadClient CreateMockChatThreadClient(int responseCode, string? responseContent = null, string threadId = "19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2")
+        {
+            return CreateMockChatClient(responseCode, responseContent).GetChatThreadClient(threadId);
         }
     }
 }
