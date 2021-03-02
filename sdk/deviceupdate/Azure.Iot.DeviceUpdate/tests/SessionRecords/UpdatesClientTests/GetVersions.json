@@ -1,0 +1,61 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://contosoprod.api.prod.adu.microsoft.com/deviceupdate/blue/v2/updates/providers/Contoso/names/Virtual-Machine/versions",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Iot.DeviceUpdate/1.0.0-alpha.20201104.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "4a5ebef02a392e5b473025853f405733",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "523",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 05 Nov 2020 02:17:10 GMT",
+        "traceparent": "00-576ffd3b49941c4b8c4dfd3b60a74f8e-3c54fcc0536c2945-00"
+      },
+      "ResponseBody": {
+        "value": [
+          "2020.1016.135.58",
+          "2020.1016.141.56",
+          "2020.1016.146.59",
+          "2020.1016.1241.17",
+          "2020.1016.1424.10",
+          "2020.1016.1427.31",
+          "2020.1016.1429.46",
+          "2020.1016.1432.27",
+          "2020.1016.1615.4",
+          "2020.1016.1619.59",
+          "2020.1016.1703.3",
+          "2020.1016.1709.3",
+          "2020.1016.1715.42",
+          "2020.1016.1818.32",
+          "2020.1017.1639.32",
+          "2020.1017.1644.27",
+          "2020.1017.1701.29",
+          "2020.1017.1707.8",
+          "2020.1017.1713.28",
+          "2020.1017.1718.0",
+          "2020.1017.1734.49",
+          "2020.1029.1439.30",
+          "2020.1029.1624.53",
+          "2020.1029.1715.27",
+          "2020.1029.1809.15",
+          "2020.1104.1616.17"
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "DEVICEUPDATE_ACCOUNT_ENDPOINT": "contosoprod.api.prod.adu.microsoft.com",
+    "DEVICEUPDATE_INSTANCE_ID": "blue",
+    "RandomSeed": "585639068"
+  }
+}

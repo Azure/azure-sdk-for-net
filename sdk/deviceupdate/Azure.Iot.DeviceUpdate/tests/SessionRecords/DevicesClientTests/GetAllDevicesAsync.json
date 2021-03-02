@@ -1,0 +1,184 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://contosoprod.api.prod.adu.microsoft.com/deviceupdate/blue/v2/management/devices",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Iot.DeviceUpdate/1.0.0-alpha.20201104.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "8ceca1546254c53bdcfef3365c391787",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "3634",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 05 Nov 2020 02:12:45 GMT",
+        "Request-Context": "appId=",
+        "traceparent": "00-198f6de986e2be479d884fba382f58bd-86986da1103e144f-00"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "deviceId": "functionaltests-device1",
+            "deviceClassId": "c97c9c774a1c541ecc88e8c65b6431fd8b7eafc3",
+            "manufacturer": "Microsoft-Corporation",
+            "model": "Virtual-Machine",
+            "lastAttemptedUpdateId": null,
+            "installedUpdateId": null,
+            "onLatestUpdate": true,
+            "deploymentStatus": "InProgress",
+            "groupId": "functionaltests-groupname1",
+            "lastDeploymentId": "24975a81-aa92-4e70-a4de-9ae074a51d8b"
+          },
+          {
+            "deviceId": "adu-raspi-e2etest-raps-prod",
+            "deviceClassId": "e27bc5237d50fee933b11146d6804f3acdd605dd",
+            "manufacturer": "Contoso",
+            "model": "ADU-Raspberry-Pi-Example",
+            "lastAttemptedUpdateId": {
+              "provider": "contoso",
+              "name": "adu-raspberry-pi-example",
+              "version": "1.0.1355.1"
+            },
+            "installedUpdateId": {
+              "provider": "contoso",
+              "name": "adu-raspberry-pi-example",
+              "version": "1.0.1355.1"
+            },
+            "onLatestUpdate": false,
+            "deploymentStatus": "Succeeded",
+            "groupId": null,
+            "lastDeploymentId": "[ManagementE2ETest] 45446ff1-4c19-4c0a-ab56-ea95eeb37321"
+          },
+          {
+            "deviceId": "dpokluda-test",
+            "deviceClassId": "b83e3c87fbf98063c20c3269f1c9e58d255906dd",
+            "manufacturer": "Contoso",
+            "model": "Virtual-Machine",
+            "lastAttemptedUpdateId": {
+              "provider": "Contoso",
+              "name": "Virtual-Machine",
+              "version": "2020.1104.1616.17"
+            },
+            "installedUpdateId": {
+              "provider": "Contoso",
+              "name": "Virtual-Machine",
+              "version": "2020.1104.1616.17"
+            },
+            "onLatestUpdate": true,
+            "deploymentStatus": "Succeeded",
+            "groupId": "dpokluda-test",
+            "lastDeploymentId": "84dea95603da4c79a33b32a2605ef070"
+          },
+          {
+            "deviceId": "chejiang-test-1007",
+            "deviceClassId": "b83e3c87fbf98063c20c3269f1c9e58d255906dd",
+            "manufacturer": "Contoso",
+            "model": "Virtual-Machine",
+            "lastAttemptedUpdateId": {
+              "provider": "contoso",
+              "name": "virtual-machine",
+              "version": "2020.924.549.13"
+            },
+            "installedUpdateId": null,
+            "onLatestUpdate": false,
+            "deploymentStatus": "Failed",
+            "groupId": null,
+            "lastDeploymentId": "chejiang-test-1007-2"
+          },
+          {
+            "deviceId": "chejiang-test-1008",
+            "deviceClassId": "b83e3c87fbf98063c20c3269f1c9e58d255906dd",
+            "manufacturer": "Contoso",
+            "model": "Virtual-Machine",
+            "lastAttemptedUpdateId": {
+              "provider": "contoso",
+              "name": "virtual-machine",
+              "version": "2020.924.549.13"
+            },
+            "installedUpdateId": null,
+            "onLatestUpdate": false,
+            "deploymentStatus": "Failed",
+            "groupId": null,
+            "lastDeploymentId": "chejiang-test-1008"
+          },
+          {
+            "deviceId": "chejiang-test-1008-2",
+            "deviceClassId": "b83e3c87fbf98063c20c3269f1c9e58d255906dd",
+            "manufacturer": "Contoso",
+            "model": "Virtual-Machine",
+            "lastAttemptedUpdateId": {
+              "provider": "contoso",
+              "name": "virtual-machine",
+              "version": "2020.924.1748.13"
+            },
+            "installedUpdateId": null,
+            "onLatestUpdate": false,
+            "deploymentStatus": "Failed",
+            "groupId": null,
+            "lastDeploymentId": "chejiang-test-1008-2"
+          },
+          {
+            "deviceId": "chejiang-test-1008-3",
+            "deviceClassId": "b83e3c87fbf98063c20c3269f1c9e58d255906dd",
+            "manufacturer": "Contoso",
+            "model": "Virtual-Machine",
+            "lastAttemptedUpdateId": {
+              "provider": "contoso",
+              "name": "virtual-machine",
+              "version": "2020.929.302.46"
+            },
+            "installedUpdateId": null,
+            "onLatestUpdate": false,
+            "deploymentStatus": "Failed",
+            "groupId": null,
+            "lastDeploymentId": "chejiang-test-1008-8"
+          },
+          {
+            "deviceId": "aysancagtest",
+            "deviceClassId": "b83e3c87fbf98063c20c3269f1c9e58d255906dd",
+            "manufacturer": "Contoso",
+            "model": "Virtual-Machine",
+            "lastAttemptedUpdateId": null,
+            "installedUpdateId": null,
+            "onLatestUpdate": false,
+            "deploymentStatus": "NotStarted",
+            "groupId": "aysancag-test",
+            "lastDeploymentId": null
+          },
+          {
+            "deviceId": "chejiang-1021",
+            "deviceClassId": "b83e3c87fbf98063c20c3269f1c9e58d255906dd",
+            "manufacturer": "Contoso",
+            "model": "Virtual-Machine",
+            "lastAttemptedUpdateId": {
+              "provider": "Contoso",
+              "name": "Virtual-Machine",
+              "version": "2020.1017.1734.49"
+            },
+            "installedUpdateId": {
+              "provider": "Contoso",
+              "name": "Virtual-Machine",
+              "version": "2020.1017.1734.49"
+            },
+            "onLatestUpdate": false,
+            "deploymentStatus": "Succeeded",
+            "groupId": "chejiang-test-group",
+            "lastDeploymentId": "chejiang-1021-2"
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "DEVICEUPDATE_ACCOUNT_ENDPOINT": "contosoprod.api.prod.adu.microsoft.com",
+    "DEVICEUPDATE_INSTANCE_ID": "blue",
+    "RandomSeed": "1231875474"
+  }
+}

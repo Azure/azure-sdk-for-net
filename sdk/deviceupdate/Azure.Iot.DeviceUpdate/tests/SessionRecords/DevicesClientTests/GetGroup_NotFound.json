@@ -1,0 +1,40 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://contosoprod.api.prod.adu.microsoft.com/deviceupdate/blue/v2/management/groups/foo",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Iot.DeviceUpdate/1.0.0-alpha.20201104.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "8cca7224183fa3de084dc1c38781686c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Content-Length": "183",
+        "Content-Type": "application/problem\u002Bjson; charset=utf-8",
+        "Date": "Thu, 05 Nov 2020 02:17:00 GMT",
+        "Request-Context": "appId=",
+        "traceparent": "00-4923376e6f5ecf49b1409de83cac1996-800e198f81375d49-00"
+      },
+      "ResponseBody": [
+        "{\r\n",
+        "  \u0022type\u0022: \u0022https://tools.ietf.org/html/rfc7231#section-6.5.4\u0022,\r\n",
+        "  \u0022title\u0022: \u0022Not Found\u0022,\r\n",
+        "  \u0022status\u0022: 404,\r\n",
+        "  \u0022traceId\u0022: \u002200-4923376e6f5ecf49b1409de83cac1996-a306770948e9d64b-00\u0022\r\n",
+        "}"
+      ]
+    }
+  ],
+  "Variables": {
+    "DEVICEUPDATE_ACCOUNT_ENDPOINT": "contosoprod.api.prod.adu.microsoft.com",
+    "DEVICEUPDATE_INSTANCE_ID": "blue",
+    "RandomSeed": "447781193"
+  }
+}

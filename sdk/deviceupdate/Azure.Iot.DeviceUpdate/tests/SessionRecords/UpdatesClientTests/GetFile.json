@@ -1,0 +1,44 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://contosoprod.api.prod.adu.microsoft.com/deviceupdate/blue/v2/updates/providers/Contoso/names/Virtual-Machine/versions/2020.1104.1616.17/files/00000",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Iot.DeviceUpdate/1.0.0-alpha.20201104.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "6692ed5afc7c5913665d9a1017f02017",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "max-age=60, private",
+        "Content-Length": "213",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 05 Nov 2020 02:17:08 GMT",
+        "ETag": "\u002201d6a457-f498-4415-b560-5b7d60037548\u0022",
+        "traceparent": "00-df4520d15827744e8986b03b3be662fb-3ef002536df5c24d-00"
+      },
+      "ResponseBody": {
+        "fileId": "00000",
+        "fileName": "setup.exe",
+        "sizeInBytes": 94,
+        "hashes": {
+          "Sha256": "GWUcdv8QwiQ\u002B\u002Bq89RCnkVNRzXf1zsw\u002Bo5B60XB/mS3Q="
+        },
+        "mimeType": "application/octet-stream",
+        "etag": "\u002201d6a457-f498-4415-b560-5b7d60037548\u0022"
+      }
+    }
+  ],
+  "Variables": {
+    "DEVICEUPDATE_ACCOUNT_ENDPOINT": "contosoprod.api.prod.adu.microsoft.com",
+    "DEVICEUPDATE_INSTANCE_ID": "blue",
+    "DEVICEUPDATE_UPDATE_VERSION": "2020.1104.1616.17",
+    "RandomSeed": "96134544"
+  }
+}

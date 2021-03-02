@@ -1,0 +1,53 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://contosoprod.api.prod.adu.microsoft.com/deviceupdate/blue/v2/updates/operations?$top=1",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Iot.DeviceUpdate/1.0.0-alpha.20201104.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "8d4fe5e0e83751fd981bee1e80e6b849",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "709",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 05 Nov 2020 02:13:11 GMT",
+        "traceparent": "00-cd0a89c90f75654596b49a73b060ae36-c610f44fd602cd45-00"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "operationId": "3522e244-607e-4f1a-bc74-5f65021e5131",
+            "status": "Failed",
+            "error": {
+              "occurredDateTime": "2020-11-05T01:37:19.9288155Z",
+              "code": "CannotProcessImportManifest",
+              "message": "Error processing import manifest.",
+              "innerError": {
+                "code": "CannotDownload",
+                "message": "Cannot download import manifest.",
+                "errorDetail": "Response status code does not indicate success: 403 (Server failed to authenticate the request. Make sure the value of Authorization header is formed correctly including the signature.)."
+              }
+            },
+            "traceId": "57ba9634fe30784ba85dd7b00925c48a",
+            "lastActionDateTime": "2020-11-05T01:37:19.9516235Z",
+            "createdDateTime": "2020-11-05T01:37:19.620636Z",
+            "etag": "\u00220d21e541-ef23-488f-99e4-e514c7315b84\u0022"
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "DEVICEUPDATE_ACCOUNT_ENDPOINT": "contosoprod.api.prod.adu.microsoft.com",
+    "DEVICEUPDATE_INSTANCE_ID": "blue",
+    "RandomSeed": "1287158714"
+  }
+}
