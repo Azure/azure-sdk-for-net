@@ -38,8 +38,10 @@ namespace Azure.Communication.Chat.Tests.ChatClients
         private const string SendMessageToDeletedThreadApiResponsePayload = "{}";
         private const string UpdateTopicOfDeletedThreadApiResponsePayload = "{}";
 
-        private const string GetMessageApiResponsePayload = "{\"id\":\"1\",\"type\":\"text\",\"sequenceId\":\"1\",\"version\":\"1\",\"content\":{\"message\":\"Test Message\"},\"senderDisplayName\":\"DisplayName for Test Message\",\"createdOn\":\"2021-02-26T00:30:19Z\",\"senderCommunicationIdentifier\":{\"rawId\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7\",\"communicationUser\":{\"id\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7\"}}}";
-
+        private const string GetTextMessageApiResponsePayload = "{\"id\":\"1\",\"type\":\"text\",\"sequenceId\":\"1\",\"version\":\"1\",\"content\":{\"message\":\"Test Message\"},\"senderDisplayName\":\"DisplayName for Test Message\",\"createdOn\":\"2021-02-26T00:30:19Z\",\"senderCommunicationIdentifier\":{\"rawId\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7\",\"communicationUser\":{\"id\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7\"}}}";
+        private const string GetTopicUpdatedMessageApiResponsePayload = "{\"id\":\"2\",\"type\":\"topicUpdated\",\"priority\":\"normal\",\"version\":\"2\",\"content\":{\"topic\":\"TopicUpdateTest\",\"initiatorCommunicationIdentifier\":{\"rawId\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7\"}},\"createdOn\":\"2021-01-11T03:30:35Z\",\"senderId\":\"19:5f2ad13282c449c894a2a388f9d9ddd9@thread.v2\"}";
+        private const string GetParticipantAddedMessageApiResponsePayload = "{\"id\":\"3\",\"type\":\"participantAdded\",\"priority\":\"normal\",\"version\":\"3\",\"content\":{\"participants\":[{\"communicationIdentifier\":{\"rawId\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-0464-274b-b274-5a3a0d0002c9\"},\"shareHistoryTime\":\"1970-01-01T00:00:00Z\"},{\"communicationIdentifier\":{\"rawId\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7\"},\"shareHistoryTime\":\"1970-01-01T00:00:00Z\"}],\"initiatorCommunicationIdentifier\":{\"rawId\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7\"}},\"createdOn\":\"2021-01-11T03:30:34Z\",\"senderId\":\"19:5f2ad13282c449c894a2a388f9d9ddd9@thread.v2\"}";
+        private const string GetParticipantRemovedMessageApiResponsePayload = "{\"id\":\"4\",\"type\":\"participantRemoved\",\"priority\":\"normal\",\"version\":\"4\",\"content\":{\"participants\":[{\"communicationIdentifier\":{\"rawId\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-0464-274b-b274-5a3a0d0002c9\"},\"shareHistoryTime\":\"1970-01-01T00:00:00Z\"}],\"initiatorCommunicationIdentifier\":{\"rawId\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7\"}},\"createdOn\":\"2021-01-11T03:30:34Z\",\"senderId\":\"19:5f2ad13282c449c894a2a388f9d9ddd9@thread.v2\"}";
         private const string GetParticipantsApiResponsePayload = "{\"value\":[{\"communicationIdentifier\":{\"rawId\":\"1\",\"communicationUser\":{\"id\":\"1\"}},\"displayName\":\"Display Name 1\",\"shareHistoryTime\":\"1970-01-01T00:00:00Z\"},{\"communicationIdentifier\":{\"rawId\":\"2\",\"communicationUser\":{\"id\":\"2\"}},\"displayName\":\"Display Name 2\",\"shareHistoryTime\":\"1970-01-01T00:00:00Z\"}]}";
 
         private const string AddParticipantApiResponsePayload = "{}";
@@ -278,16 +280,17 @@ namespace Azure.Communication.Chat.Tests.ChatClients
         }
 
         [Test]
-        public async Task GetMessageShouldSucceed()
+        public async Task GetTextMessageShouldSucceed()
         {
             //arrange
             var messageId = "1";
-            ChatThreadClient chatThreadClient = CreateMockChatThreadClient(200, GetMessageApiResponsePayload);
+            ChatThreadClient chatThreadClient = CreateMockChatThreadClient(200, GetTextMessageApiResponsePayload);
 
             //act
             ChatMessage message = await chatThreadClient.GetMessageAsync(messageId);
 
             //assert
+            Assert.AreEqual(ChatMessageType.Text, message.Type);
             Assert.AreEqual("1", message.Id);
             Assert.AreEqual("Test Message", message.Content.Message);
             Assert.AreEqual("DisplayName for Test Message", message.SenderDisplayName);
@@ -295,6 +298,68 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             Assert.AreEqual("8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7", CommunicationIdentifierSerializer.Serialize(message.Sender!).CommunicationUser.Id);
         }
 
+        [Test]
+        public async Task GetTopicUpdatedMessageShouldSucceed()
+        {
+            //arrange
+            var messageId = "2";
+            ChatThreadClient chatThreadClient = CreateMockChatThreadClient(200, GetTopicUpdatedMessageApiResponsePayload);
+
+            //act
+            ChatMessage message = await chatThreadClient.GetMessageAsync(messageId);
+
+            //assert
+            Assert.AreEqual(ChatMessageType.TopicUpdated, message.Type);
+            Assert.AreEqual("2", message.Id);
+            Assert.AreEqual("TopicUpdateTest", message.Content.Topic);
+            Assert.AreEqual("2", message.Version);
+            Assert.NotNull(message.Content.Initiator);
+            Assert.AreEqual("8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7", CommunicationIdentifierSerializer.Serialize(message.Content.Initiator!).RawId);
+        }
+
+        [Test]
+        public async Task GetParticipantAddedMessageShouldSucceed()
+        {
+            //arrange
+            var messageId = "3";
+            ChatThreadClient chatThreadClient = CreateMockChatThreadClient(200, GetParticipantAddedMessageApiResponsePayload);
+
+            //act
+            ChatMessage message = await chatThreadClient.GetMessageAsync(messageId);
+
+            //assert
+            Assert.AreEqual(ChatMessageType.ParticipantAdded, message.Type);
+            Assert.AreEqual("3", message.Id);
+            Assert.AreEqual("3", message.Version);
+            Assert.AreEqual(2, message.Content.Participants.Count);
+            Assert.NotNull(message.Content.Initiator);
+            Assert.NotNull(message.Content.Participants[0].User);
+            Assert.NotNull(message.Content.Participants[1].User);
+            Assert.AreEqual("8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7", CommunicationIdentifierSerializer.Serialize(message.Content.Initiator!).RawId);
+            Assert.AreEqual("8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-0464-274b-b274-5a3a0d0002c9", CommunicationIdentifierSerializer.Serialize(message.Content.Participants[0].User!).RawId);
+            Assert.AreEqual("8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7", CommunicationIdentifierSerializer.Serialize(message.Content.Participants[1].User!).RawId);
+        }
+
+        [Test]
+        public async Task GetParticipantRemovedMessageShouldSucceed()
+        {
+            //arrange
+            var messageId = "4";
+            ChatThreadClient chatThreadClient = CreateMockChatThreadClient(200, GetParticipantRemovedMessageApiResponsePayload);
+
+            //act
+            ChatMessage message = await chatThreadClient.GetMessageAsync(messageId);
+
+            //assert
+            Assert.AreEqual(ChatMessageType.ParticipantRemoved, message.Type);
+            Assert.AreEqual("4", message.Id);
+            Assert.AreEqual("4", message.Version);
+            Assert.AreEqual(1, message.Content.Participants.Count);
+            Assert.NotNull(message.Content.Initiator);
+            Assert.NotNull(message.Content.Participants[0].User);
+            Assert.AreEqual("8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7", CommunicationIdentifierSerializer.Serialize(message.Content.Initiator!).RawId);
+            Assert.AreEqual("8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-0464-274b-b274-5a3a0d0002c9", CommunicationIdentifierSerializer.Serialize(message.Content.Participants[0].User!).RawId);
+        }
         [Test]
         public async Task GetThreadShouldSucceed()
         {
