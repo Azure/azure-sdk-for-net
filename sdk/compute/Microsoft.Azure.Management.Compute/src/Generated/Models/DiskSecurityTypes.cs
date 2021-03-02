@@ -12,15 +12,14 @@ namespace Microsoft.Azure.Management.Compute.Models
 {
 
     /// <summary>
-    /// Defines values for StorageAccountTypes.
+    /// Defines values for DiskSecurityTypes.
     /// </summary>
-    public static class StorageAccountTypes
+    public static class DiskSecurityTypes
     {
-        public const string StandardLRS = "Standard_LRS";
-        public const string PremiumLRS = "Premium_LRS";
-        public const string StandardSSDLRS = "StandardSSD_LRS";
-        public const string UltraSSDLRS = "UltraSSD_LRS";
-        public const string PremiumZRS = "Premium_ZRS";
-        public const string StandardSSDZRS = "StandardSSD_ZRS";
+        /// <summary>
+        /// Trusted Launch provides security features such as secure boot and
+        /// virtual Trusted Platform Module (vTPM)
+        /// </summary>
+        public const string TrustedLaunch = "TrustedLaunch";
     }
 }
