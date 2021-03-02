@@ -93,8 +93,8 @@ namespace Azure.AI.TextAnalytics.Tests
                 }
             }
 
-            Assert.AreEqual(2, result1.EntitiesRelations.Count());
-            foreach (HealthcareEntityRelation relation in result1.EntitiesRelations)
+            Assert.AreEqual(2, result1.EntityRelations.Count());
+            foreach (HealthcareEntityRelation relation in result1.EntityRelations)
             {
                 if (relation.RelationType == "DosageOfMedication")
                 {

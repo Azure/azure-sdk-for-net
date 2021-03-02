@@ -22,7 +22,7 @@ namespace Azure.AI.TextAnalytics
         {
             _entities = new ReadOnlyCollection<HealthcareEntity>(healthcareEntities);
             Warnings = new ReadOnlyCollection<TextAnalyticsWarning>(warnings);
-            EntitiesRelations = new ReadOnlyCollection<HealthcareEntityRelation>(entityRelations);
+            EntityRelations = new ReadOnlyCollection<HealthcareEntityRelation>(entityRelations);
         }
 
         internal AnalyzeHealthcareEntitiesResult(string id, TextAnalyticsError error) : base(id, error) { }
@@ -50,6 +50,6 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Gets the relations between the entities. <see cref="HealthcareEntityRelation"/>
         /// </summary>
-        public IReadOnlyCollection<HealthcareEntityRelation> EntitiesRelations { get; }
+        public IReadOnlyCollection<HealthcareEntityRelation> EntityRelations { get; }
     }
 }
