@@ -277,3 +277,12 @@ directive:
       "headers": { "x-ms-error-code": { "x-ms-client-name": "ErrorCode", "type": "string" } }
     };
 ```
+
+### Don't buffer downloads and query
+
+``` yaml
+directive:
+- from: swagger-document
+  where: $..[?(@.operationId=='Blob_Query' || @.operationId=='Blob_Download')]
+  transform: $["x-csharp-buffer-response"] = false;
+```
