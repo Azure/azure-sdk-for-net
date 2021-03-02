@@ -56,10 +56,9 @@ namespace Azure.Storage.Tests
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/12312")]
         public void StreamCanHoldLongData()
         {
-            const long dataSize = 4000L * Constants.MB;
+            const long dataSize = (long)int.MaxValue + Constants.MB;
             const int bufferPartitionSize = 512 * Constants.MB;
             PredictableStream originalStream = new PredictableStream();
             PooledMemoryStream arrayPoolStream = PooledMemoryStream.BufferStreamPartitionInternal(originalStream, dataSize, dataSize, 0, _pool, bufferPartitionSize, false, default).EnsureCompleted();
