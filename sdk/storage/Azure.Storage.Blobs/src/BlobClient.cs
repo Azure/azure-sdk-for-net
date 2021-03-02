@@ -273,9 +273,8 @@ namespace Azure.Storage.Blobs
 
         #region Upload
         /// <summary>
-        /// The <see cref="Upload(Stream)"/> operation creates a new block blob
-        /// or updates the content of an existing block blob.  Updating an
-        /// existing block blob overwrites any existing metadata on the blob.
+        /// The <see cref="Upload(Stream)"/> operation
+        /// creates a new block blob or throws if the blob already exists.
         ///
         /// For partial block blob updates and other advanced features, please
         /// see <see cref="BlockBlobClient"/>.  To create or modify page or
@@ -301,9 +300,8 @@ namespace Azure.Storage.Blobs
             Upload(content, CancellationToken.None);
 
         /// <summary>
-        /// The <see cref="Upload(string)"/> operation creates a new block blob
-        /// or updates the content of an existing block blob.  Updating an
-        /// existing block blob overwrites any existing metadata on the blob.
+        /// The <see cref="Upload(string)"/> operation
+        /// creates a new block blob or throws if the blob already exists.
         ///
         /// For partial block blob updates and other advanced features, please
         /// see <see cref="BlockBlobClient"/>.  To create or modify page or
@@ -357,9 +355,8 @@ namespace Azure.Storage.Blobs
             await UploadAsync(content, CancellationToken.None).ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="UploadAsync(string)"/> operation creates a new block blob
-        /// or updates the content of an existing block blob.  Updating an
-        /// existing block blob overwrites any existing metadata on the blob.
+        /// The <see cref="UploadAsync(string)"/> operation
+        /// creates a new block blob or throws if the blob already exists.
         ///
         /// For partial block blob updates and other advanced features, please
         /// see <see cref="BlockBlobClient"/>.  To create or modify page or
@@ -386,9 +383,7 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// The <see cref="Upload(Stream, CancellationToken)"/> operation
-        /// creates a new block blob or updates the content of an existing
-        /// block blob.  Updating an existing block blob overwrites any
-        /// existing metadata on the blob.
+        /// creates a new block blob or throws if the blob already exists.
         ///
         /// For partial block blob updates and other advanced features, please
         /// see <see cref="BlockBlobClient"/>.  To create or modify page or
@@ -424,9 +419,7 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// The <see cref="Upload(string, CancellationToken)"/> operation
-        /// creates a new block blob or updates the content of an existing
-        /// block blob.  Updating an existing block blob overwrites any
-        /// existing metadata on the blob.
+        /// creates a new block blob or throws if the blob already exists.
         ///
         /// For partial block blob updates and other advanced features, please
         /// see <see cref="BlockBlobClient"/>.  To create or modify page or
@@ -462,9 +455,7 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// The <see cref="UploadAsync(Stream, CancellationToken)"/> operation
-        /// creates a new block blob or updates the content of an existing
-        /// block blob.  Updating an existing block blob overwrites any
-        /// existing metadata on the blob.
+        /// creates a new block blob or throws if the blob already exists.
         ///
         /// For partial block blob updates and other advanced features, please
         /// see <see cref="BlockBlobClient"/>.  To create or modify page or
@@ -500,9 +491,7 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// The <see cref="UploadAsync(string, CancellationToken)"/> operation
-        /// creates a new block blob or updates the content of an existing
-        /// block blob.  Updating an existing block blob overwrites any
-        /// existing metadata on the blob.
+        /// creates a new block blob or throws if the blob already exists.
         ///
         /// For partial block blob updates and other advanced features, please
         /// see <see cref="BlockBlobClient"/>.  To create or modify page or
@@ -539,9 +528,7 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// The <see cref="Upload(Stream, CancellationToken)"/> operation
-        /// creates a new block blob or updates the content of an existing
-        /// block blob.  Updating an existing block blob overwrites any
-        /// existing metadata on the blob.
+        /// creates a new block blob or throws if the blob already exists.
         ///
         /// For partial block blob updates and other advanced features, please
         /// see <see cref="BlockBlobClient"/>.  To create or modify page or
@@ -582,9 +569,7 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// The <see cref="Upload(string, CancellationToken)"/> operation
-        /// creates a new block blob or updates the content of an existing
-        /// block blob.  Updating an existing block blob overwrites any
-        /// existing metadata on the blob.
+        /// creates a new block blob or throws if the blob already exists.
         ///
         /// For partial block blob updates and other advanced features, please
         /// see <see cref="BlockBlobClient"/>.  To create or modify page or
@@ -625,9 +610,10 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// The <see cref="UploadAsync(Stream, CancellationToken)"/> operation
-        /// creates a new block blob or updates the content of an existing
-        /// block blob.  Updating an existing block blob overwrites any
-        /// existing metadata on the blob.
+        /// creates a new block blob or throws if the blob already exists.
+        /// Setting <paramref name="overwrite"/> to true allows updating the
+        /// content of an existing block blob.  Updating an existing block blob
+        /// overwrites any existing metadata on the blob.
         ///
         /// For partial block blob updates and other advanced features, please
         /// see <see cref="BlockBlobClient"/>.  To create or modify page or
@@ -668,9 +654,10 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// The <see cref="UploadAsync(string, CancellationToken)"/> operation
-        /// creates a new block blob or updates the content of an existing
-        /// block blob.  Updating an existing block blob overwrites any
-        /// existing metadata on the blob.
+        /// creates a new block blob or throws if the blob already exists.
+        /// Setting <paramref name="overwrite"/> to true allows updating the
+        /// content of an existing block blob.  Updating an existing block blob
+        /// overwrites any existing metadata on the blob.
         ///
         /// For partial block blob updates and other advanced features, please
         /// see <see cref="BlockBlobClient"/>.  To create or modify page or
@@ -712,9 +699,13 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// The <see cref="Upload(Stream, BlobUploadOptions, CancellationToken)"/>
-        /// operation creates a new block blob or updates the content of an
-        /// existing block blob.  Updating an existing block blob overwrites
+        /// operation overwrites the contents of the blob, creating a new block
+        /// blob if none exists.  Overwriting an existing block blob replaces
         /// any existing metadata on the blob.
+        ///
+        /// Set <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations">
+        /// access conditions</see> through <see cref="BlobUploadOptions.Conditions"/>
+        /// to avoid overwriting existing data.
         ///
         /// For partial block blob updates and other advanced features, please
         /// see <see cref="BlockBlobClient"/>.  To create or modify page or
@@ -756,9 +747,13 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// The <see cref="Upload(Stream, BlobHttpHeaders, Metadata, BlobRequestConditions, IProgress{long}, AccessTier?, StorageTransferOptions, CancellationToken)"/>
-        /// operation creates a new block blob or updates the content of an
-        /// existing block blob.  Updating an existing block blob overwrites
+        /// operation overwrites the contents of the blob, creating a new block
+        /// blob if none exists.  Overwriting an existing block blob replaces
         /// any existing metadata on the blob.
+        ///
+        /// Set <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations">
+        /// access conditions</see> through <see cref="BlobRequestConditions"/>
+        /// to avoid overwriting existing data.
         ///
         /// For partial block blob updates and other advanced features, please
         /// see <see cref="BlockBlobClient"/>.  To create or modify page or
@@ -834,9 +829,13 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// The <see cref="Upload(string, BlobUploadOptions, CancellationToken)"/>
-        /// operation creates a new block blob or updates the content of an
-        /// existing block blob.  Updating an existing block blob overwrites
+        /// operation overwrites the contents of the blob, creating a new block
+        /// blob if none exists.  Overwriting an existing block blob replaces
         /// any existing metadata on the blob.
+        ///
+        /// Set <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations">
+        /// access conditions</see> through <see cref="BlobUploadOptions.Conditions"/>
+        /// to avoid overwriting existing data.
         ///
         /// For partial block blob updates and other advanced features, please
         /// see <see cref="BlockBlobClient"/>.  To create or modify page or
@@ -883,9 +882,13 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// The <see cref="Upload(string, BlobHttpHeaders, Metadata, BlobRequestConditions, IProgress{long}, AccessTier?, StorageTransferOptions, CancellationToken)"/>
-        /// operation creates a new block blob or updates the content of an
-        /// existing block blob.  Updating an existing block blob overwrites
+        /// operation overwrites the contents of the blob, creating a new block
+        /// blob if none exists.  Overwriting an existing block blob replaces
         /// any existing metadata on the blob.
+        ///
+        /// Set <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations">
+        /// access conditions</see> through <see cref="BlobRequestConditions"/>
+        /// to avoid overwriting existing data.
         ///
         /// For partial block blob updates and other advanced features, please
         /// see <see cref="BlockBlobClient"/>.  To create or modify page or
@@ -966,9 +969,13 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// The <see cref="UploadAsync(Stream, BlobHttpHeaders, Metadata, BlobRequestConditions, IProgress{long}, AccessTier?, StorageTransferOptions, CancellationToken)"/>
-        /// operation creates a new block blob or updates the content of an
-        /// existing block blob.  Updating an existing block blob overwrites
+        /// operation overwrites the contents of the blob, creating a new block
+        /// blob if none exists.  Overwriting an existing block blob replaces
         /// any existing metadata on the blob.
+        ///
+        /// Set <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations">
+        /// access conditions</see> through <see cref="BlobUploadOptions.Conditions"/>
+        /// to avoid overwriting existing data.
         ///
         /// For partial block blob updates and other advanced features, please
         /// see <see cref="BlockBlobClient"/>.  To create or modify page or
@@ -1010,9 +1017,13 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// The <see cref="UploadAsync(Stream, BlobHttpHeaders, Metadata, BlobRequestConditions, IProgress{long}, AccessTier?, StorageTransferOptions, CancellationToken)"/>
-        /// operation creates a new block blob or updates the content of an
-        /// existing block blob.  Updating an existing block blob overwrites
+        /// operation overwrites the contents of the blob, creating a new block
+        /// blob if none exists.  Overwriting an existing block blob replaces
         /// any existing metadata on the blob.
+        ///
+        /// Set <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations">
+        /// access conditions</see> through <see cref="BlobRequestConditions"/>
+        /// to avoid overwriting existing data.
         ///
         /// For partial block blob updates and other advanced features, please
         /// see <see cref="BlockBlobClient"/>.  To create or modify page or
@@ -1088,9 +1099,13 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// The <see cref="UploadAsync(Stream, BlobUploadOptions, CancellationToken)"/>
-        /// operation creates a new block blob or updates the content of an
-        /// existing block blob.  Updating an existing block blob overwrites
+        /// operation overwrites the contents of the blob, creating a new block
+        /// blob if none exists.  Overwriting an existing block blob replaces
         /// any existing metadata on the blob.
+        ///
+        /// Set <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations">
+        /// access conditions</see> through <see cref="BlobUploadOptions.Conditions"/>
+        /// to avoid overwriting existing data.
         ///
         /// For partial block blob updates and other advanced features, please
         /// see <see cref="BlockBlobClient"/>.  To create or modify page or
@@ -1137,9 +1152,13 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// The <see cref="UploadAsync(string, BlobHttpHeaders, Metadata, BlobRequestConditions, IProgress{long}, AccessTier?, StorageTransferOptions, CancellationToken)"/>
-        /// operation creates a new block blob or updates the content of an
-        /// existing block blob.  Updating an existing block blob overwrites
+        /// operation overwrites the contents of the blob, creating a new block
+        /// blob if none exists.  Overwriting an existing block blob replaces
         /// any existing metadata on the blob.
+        ///
+        /// Set <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations">
+        /// access conditions</see> through <see cref="BlobRequestConditions"/>
+        /// to avoid overwriting existing data.
         ///
         /// For partial block blob updates and other advanced features, please
         /// see <see cref="BlockBlobClient"/>.  To create or modify page or

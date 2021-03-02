@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Iot.TimeSeriesInsights.Models
+namespace Azure.Iot.TimeSeriesInsights
 {
     /// <summary> The range of time. Cannot be null or negative. </summary>
     public partial class DateTimeRange

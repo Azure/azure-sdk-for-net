@@ -737,6 +737,7 @@ namespace Azure.AI.TextAnalytics
                     options.IncludeStatistics,
                     options.DomainFilter.GetString(),
                     options.StringIndexType,
+                    options.CategoriesFilter.Count == 0 ? null : options.CategoriesFilter,
                     cancellationToken: cancellationToken).ConfigureAwait(false);
                 Response response = result.GetRawResponse();
 
@@ -802,6 +803,7 @@ namespace Azure.AI.TextAnalytics
                     options.IncludeStatistics,
                     options.DomainFilter.GetString(),
                     options.StringIndexType,
+                    options.CategoriesFilter.Count == 0 ? null : options.CategoriesFilter,
                     cancellationToken: cancellationToken);
                 Response response = result.GetRawResponse();
 
@@ -968,7 +970,7 @@ namespace Azure.AI.TextAnalytics
                     options.IncludeStatistics,
                     options.DomainFilter.GetString(),
                     options.StringIndexType,
-                    default, // TODO: Implement PIICategory for Preview.4 https://github.com/Azure/azure-sdk-for-net/issues/18985
+                    options.CategoriesFilter.Count == 0 ? null : options.CategoriesFilter,
                     cancellationToken).ConfigureAwait(false);
                 var response = result.GetRawResponse();
 
@@ -996,7 +998,7 @@ namespace Azure.AI.TextAnalytics
                     options.IncludeStatistics,
                     options.DomainFilter.GetString(),
                     options.StringIndexType,
-                    default, // TODO: Implement PIICategory for Preview.4 https://github.com/Azure/azure-sdk-for-net/issues/18985
+                    options.CategoriesFilter.Count == 0 ? null : options.CategoriesFilter,
                     cancellationToken);
                 var response = result.GetRawResponse();
 

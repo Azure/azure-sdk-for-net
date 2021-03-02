@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Iot.TimeSeriesInsights.Models
+namespace Azure.Iot.TimeSeriesInsights
 {
     /// <summary> Information about an API error. </summary>
     internal partial class TsiError

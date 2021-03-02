@@ -16,6 +16,7 @@ using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using Moq;
 using NUnit.Framework;
+using static Azure.Storage.Blobs.BlobClientOptions;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
 

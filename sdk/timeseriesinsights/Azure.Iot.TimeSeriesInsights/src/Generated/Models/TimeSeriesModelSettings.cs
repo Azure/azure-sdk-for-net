@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.Iot.TimeSeriesInsights.Models
+namespace Azure.Iot.TimeSeriesInsights
 {
     /// <summary> Time series model settings including model name, Time Series ID properties and default type ID. </summary>
     public partial class TimeSeriesModelSettings
