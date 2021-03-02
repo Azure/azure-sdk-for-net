@@ -2,12 +2,12 @@
 
 The library provides access to the Device Update for IoT Hub service that enables customers to publish updates for their IoT devices to the cloud, and then deploy these updates to their devices (approve updates to groups of devices managed and provisioned in IoT Hub). 
 
-  [Source code](https://github.com/Azure/azure-sdk-for-sdk/tree/master/sdk/deviceupdate) | [Package](https://www.nuget.org/packages/Azure.DeviceUpdate) | [Product documentation](https://github.com/Azure/adu-private-preview/blob/master/docs/adu-overview.md)
+  [Source code](https://github.com/Azure/azure-sdk-for-sdk/tree/master/sdk/deviceupdate/Azure.Iot.DeviceUpdate/src/) | [Package](https://www.nuget.org/packages/Azure.DeviceUpdate) | [Product documentation](https://github.com/Azure/adu-private-preview/blob/master/docs/adu-overview.md)
 
 
 ## Getting started
 
-The complete Microsoft Azure SDK can be downloaded from the [Microsoft Azure Downloads](https://azure.microsoft.com/en-us/downloads/?sdk=net) page and ships with support for building deployment packages, integrating with tooling, rich command line tooling, and more.
+The complete Microsoft Azure SDK can be downloaded from the [Microsoft Azure Downloads](https://azure.microsoft.com/downloads/?sdk=net) page and ships with support for building deployment packages, integrating with tooling, rich command line tooling, and more.
 
 For the best development experience, developers should use the official Microsoft NuGet packages for libraries. NuGet packages are regularly updated with new functionality and hotfixes.
 
@@ -22,12 +22,12 @@ For the best development experience, developers should use the official Microsof
 Install the Device Update for IoT Hub client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```PowerShell
-Install-Package Azure.DeviceUpdate
+dotnet install Azure.Iot.DeviceUpdate --version 1.0.0-beta.1
 ```
 
 ### Authenticate the Client
 
-In order to interact with the Device Update for IoT Hub service, you will need to create an instance of a [TokenCredential class](https://docs.microsoft.com/en-us/dotnet/api/azure.core.tokencredential?view=azure-dotnet) and pass it to the constructor of your UpdateClient, DeviceClient and DeploymentClient class.
+In order to interact with the Device Update for IoT Hub service, you will need to create an instance of a [TokenCredential class](https://docs.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet) and pass it to the constructor of your UpdateClient, DeviceClient and DeploymentClient class.
 
 ## Key concepts
 
@@ -40,13 +40,13 @@ You can learn more about Device Update for IoT Hub by visiting [Device Update fo
 
 ## Examples
 
-You can familiarize yourself with different APIs using [Samples](./samples).
+You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-sdk/tree/master/sdk/deviceupdate/Azure.Iot.DeviceUpdate/samples).
 
 ## Troubleshooting
 
 All Device Update for IoT Hub service operations will throw a RequestFailedException on failure with helpful ErrorCodes.
 
-For example, if you use the `GetUpdateAsync` operation and the model you are looking for doesn't exist, you can catch that specific [HttpStatusCode](https://docs.microsoft.com/en-us/dotnet/api/system.net.httpstatuscode?view=netcore-3.1) to decide the operation that follows in that case.
+For example, if you use the `GetUpdateAsync` operation and the model you are looking for doesn't exist, you can catch that specific [HttpStatusCode](https://docs.microsoft.com/dotnet/api/system.net.httpstatuscode?view=netcore-3.1) to decide the operation that follows in that case.
 
 ```csharp
 try
@@ -64,7 +64,7 @@ catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.NotFoun
 
 ## Next steps
 
-Get started with our [Device Update for IoT Hub samples](./samples)
+Get started with our [Device Update for IoT Hub samples](https://github.com/Azure/azure-sdk-for-sdk/tree/master/sdk/deviceupdate/Azure.Iot.DeviceUpdate/samples)
 
 ## Contributing
 
