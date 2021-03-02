@@ -4,7 +4,6 @@
 param(
   [Parameter(Mandatory = $true)]
   [string]$PackageName,
-  [string]$ServiceDirectory,
   [string]$ReleaseDate # Pass Date in the form MM/dd/yyyy"
 )
 Set-StrictMode -Version 3
@@ -27,7 +26,7 @@ function Get-ReleaseDay($baseDate)
 
 $ErrorPreference = 'Stop'
 
-$packageProperties = Get-PkgProperties -PackageName $PackageName -ServiceDirectory $serviceDirectory
+$packageProperties = Get-PkgProperties -PackageName $PackageName
 
 if (!$packageProperties)
 {
@@ -36,7 +35,7 @@ if (!$packageProperties)
 }
 
 Write-Host "Package Name [ $($packageProperties.Name) ]"
-Write-Host "Source directory [ $serviceDirectory ]"
+Write-Host "Source directory [ $($packageProperties.ServiceDirectory) ]"
 
 if (!$ReleaseDate)
 {
@@ -89,7 +88,7 @@ if ($null -eq $newVersionParsed)
 
 if (Test-Path "Function:SetPackageVersion")
 {
-  SetPackageVersion -PackageName $packageProperties.Name -Version $newVersion -ServiceDirectory $serviceDirectory -ReleaseDate $releaseDateString `
+  SetPackageVersion -PackageName $packageProperties.Name -Version $newVersion -ServiceDirectory $packageProperties.ServiceDirectory -ReleaseDate $releaseDateString `
     -PackageProperties $packageProperties
 }
 else
@@ -105,7 +104,7 @@ else
   -packageName $packageProperties.Name `
   -version $newVersion `
   -plannedDate $releaseDateString `
-  -packageRepoPath $packageProperties.serviceDirectory `
+  -packageRepoPath $packageProperties.ServiceDirectory `
   -packageType $packageProperties.SDKType `
   -packageNewLibrary $packageProperties.IsNewSDK
 
