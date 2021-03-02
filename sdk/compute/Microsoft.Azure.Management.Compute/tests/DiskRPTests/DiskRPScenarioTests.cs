@@ -67,5 +67,11 @@ namespace Compute.Tests.DiskRPTests
         {
             Snapshot_List_Execute(DiskCreateOption.Empty, "Snapshot_List_EmptyDisk", diskSizeGB: 5);
         }
+
+        [Fact]
+        public void Disk_CRUD_WithSecurityProfile_Import()
+        {
+            Disk_CRUD_WithSecurityProfile_Execute(DiskCreateOption.Import, "Disk_CRUD_WithSecurityProfile_Import", location: "centraluseuap");
+        }
     }
 }
