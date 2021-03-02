@@ -199,6 +199,89 @@ namespace Compute.Tests.DiskRPTests
 
         }
 
+        protected void SSDZRSDisk_CRUD_Execute(string accountType, string methodName, int? diskSizeGB = null, string tier = null, string location = null)
+        {
+            using (MockContext context = MockContext.Start(this.GetType(), methodName))
+            {
+                EnsureClientsInitialized(context);
+                DiskRPLocation = location ?? DiskRPLocation;
+
+                // Data
+                var rgName = TestUtilities.GenerateName(TestPrefix);
+                var diskName = TestUtilities.GenerateName(DiskNamePrefix);
+                Disk disk = GenerateDefaultDisk(DiskCreateOption.Empty, rgName, diskSizeGB, location: location);
+                disk.Sku = new DiskSku()
+                {
+                    Name = accountType
+                };
+                disk.Tier = tier;
+
+                try
+                {
+                    // **********
+                    // SETUP
+                    // **********
+                    // Create resource group
+                    m_ResourcesClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = DiskRPLocation });
+
+                    // **********
+                    // TEST
+                    // **********
+                    // Put
+                    Disk diskOut = m_CrpClient.Disks.CreateOrUpdate(rgName, diskName, disk);
+                    Validate(disk, diskOut, DiskRPLocation);
+                    Assert.Equal(tier, diskOut.Tier);
+
+                    // Get
+                    diskOut = m_CrpClient.Disks.Get(rgName, diskName);
+                    Validate(disk, diskOut, DiskRPLocation);
+                    Assert.Equal(tier, diskOut.Tier);
+
+                    // Get disk access
+                    AccessUri accessUri = m_CrpClient.Disks.GrantAccess(rgName, diskName, AccessDataDefault);
+                    Assert.NotNull(accessUri.AccessSAS);
+
+                    // Get
+                    diskOut = m_CrpClient.Disks.Get(rgName, diskName);
+                    Validate(disk, diskOut, DiskRPLocation);
+
+                    // Update
+                    const string tagKey = "tagKey";
+                    var updatedisk = new DiskUpdate();
+                    updatedisk.Tags = new Dictionary<string, string>() { { tagKey, "tagvalue" } };
+                    diskOut = m_CrpClient.Disks.Update(rgName, diskName, updatedisk);
+                    Validate(disk, diskOut, DiskRPLocation);
+                    Assert.Equal(tier, disk.Tier);
+
+                    // Get
+                    diskOut = m_CrpClient.Disks.Get(rgName, diskName);
+                    Validate(disk, diskOut, DiskRPLocation);
+
+                    // End disk access
+                    m_CrpClient.Disks.RevokeAccess(rgName, diskName);
+
+                    // Delete
+                    m_CrpClient.Disks.Delete(rgName, diskName);
+
+                    try
+                    {
+                        // Ensure it was really deleted
+                        m_CrpClient.Disks.Get(rgName, diskName);
+                        Assert.False(true);
+                    }
+                    catch (CloudException ex)
+                    {
+                        Assert.Equal(HttpStatusCode.NotFound, ex.Response.StatusCode);
+                    }
+                }
+                finally
+                {
+                    // Delete resource group
+                    m_ResourcesClient.ResourceGroups.Delete(rgName);
+                }
+            }
+        }
+
         protected void Snapshot_CRUD_Execute(string diskCreateOption, string methodName, int? diskSizeGB = null, string location = null, bool incremental = false)
         {
             using (MockContext context = MockContext.Start(this.GetType(), methodName))
