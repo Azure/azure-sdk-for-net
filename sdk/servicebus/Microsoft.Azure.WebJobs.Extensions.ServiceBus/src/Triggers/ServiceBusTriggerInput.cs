@@ -20,8 +20,6 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
 
         public ServiceBusMessageActions MessageActions { get; set; }
 
-        public ServiceBusSessionMessageActions SessionActions { get; set; }
-
         public ServiceBusReceivedMessage[] Messages { get; set; }
 
         public static ServiceBusTriggerInput CreateSingle(ServiceBusReceivedMessage message)

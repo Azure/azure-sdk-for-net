@@ -55,9 +55,9 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             // TODO - investigate why the parameter names need to be hard-coded here but they are not
             // for binding to sender
             SafeAddValue(() => bindingData.Add("MessageReceiver", value.MessageActions));
-            SafeAddValue(() => bindingData.Add("MessageSession", value.SessionActions));
+            SafeAddValue(() => bindingData.Add("MessageSession", value.MessageActions));
             SafeAddValue(() => bindingData.Add("MessageActions", value.MessageActions));
-            SafeAddValue(() => bindingData.Add("SessionActions", value.SessionActions));
+            SafeAddValue(() => bindingData.Add("SessionActions", value.MessageActions));
 
             if (value.IsSingleDispatch)
             {

@@ -498,7 +498,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         {
             public static async Task QueueWithSessions(
                 [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)] ServiceBusReceivedMessage msg,
-                ServiceBusSessionMessageActions messageSession,
+                ServiceBusMessageActions messageActions,
                 CancellationToken cancellationToken,
                 ILogger logger)
             {
@@ -507,7 +507,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 _drainValidationPreDelay.Set();
                 await DrainModeHelper.WaitForCancellation(cancellationToken);
                 Assert.True(cancellationToken.IsCancellationRequested);
-                await messageSession.CompleteMessageAsync(msg);
+                await messageActions.CompleteMessageAsync(msg);
                 _drainValidationPostDelay.Set();
             }
         }
@@ -534,7 +534,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         {
             public static async Task QueueWithSessionsBatch(
                 [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)] ServiceBusReceivedMessage[] array,
-                ServiceBusSessionMessageActions messageSession,
+                ServiceBusMessageActions messageActions,
                 CancellationToken cancellationToken,
                 ILogger logger)
             {
@@ -546,7 +546,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.True(cancellationToken.IsCancellationRequested);
                 foreach (ServiceBusReceivedMessage msg in array)
                 {
-                    await messageSession.CompleteMessageAsync(msg);
+                    await messageActions.CompleteMessageAsync(msg);
                 }
                 _drainValidationPostDelay.Set();
             }

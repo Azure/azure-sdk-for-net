@@ -71,9 +71,9 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
             Assert.AreEqual(BindingContractCount, bindingData.Count);
 
             Assert.AreSame(input.MessageActions, bindingData["MessageReceiver"]);
-            Assert.AreSame(input.SessionActions, bindingData["MessageSession"]);
+            Assert.AreSame(input.MessageActions, bindingData["MessageSession"]);
             Assert.AreSame(input.MessageActions, bindingData["MessageActions"]);
-            Assert.AreSame(input.SessionActions, bindingData["SessionActions"]);
+            Assert.AreSame(input.MessageActions, bindingData["SessionActions"]);
             Assert.AreEqual(message.LockToken, bindingData["LockToken"]);
             Assert.AreEqual(message.SequenceNumber, bindingData["SequenceNumber"]);
             Assert.AreEqual(message.DeliveryCount, bindingData["DeliveryCount"]);
@@ -109,9 +109,9 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
 
             Assert.AreEqual(BindingContractCount, bindingData.Count);
             Assert.AreSame(input.MessageActions, bindingData["MessageReceiver"]);
-            Assert.AreSame(input.SessionActions, bindingData["MessageSession"]);
+            Assert.AreSame(input.MessageActions, bindingData["MessageSession"]);
             Assert.AreSame(input.MessageActions, bindingData["MessageActions"]);
-            Assert.AreSame(input.SessionActions, bindingData["SessionActions"]);
+            Assert.AreSame(input.MessageActions, bindingData["SessionActions"]);
 
             // verify an array was created for each binding data type
             Assert.AreEqual(messages.Length, ((int[])bindingData["DeliveryCountArray"]).Length);

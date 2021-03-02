@@ -219,7 +219,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                 }
 
                 ServiceBusTriggerInput input = ServiceBusTriggerInput.CreateSingle(args.Message);
-                input.SessionActions = actions;
+                input.MessageActions = actions;
 
                 TriggeredFunctionData data = input.GetTriggerFunctionData();
                 FunctionResult result = await _triggerExecutor.TryExecuteAsync(data, linkedCts.Token).ConfigureAwait(false);
@@ -278,7 +278,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                             ServiceBusTriggerInput input = ServiceBusTriggerInput.CreateBatch(messagesArray);
                             if (_isSessionsEnabled)
                             {
-                                input.SessionActions = new ServiceBusSessionMessageActions((ServiceBusSessionReceiver) receiver);
+                                input.MessageActions = new ServiceBusSessionMessageActions((ServiceBusSessionReceiver) receiver);
                             }
                             else
                             {

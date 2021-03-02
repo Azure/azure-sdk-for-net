@@ -13,8 +13,14 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
     /// </summary>
     public class ServiceBusMessageActions
     {
-        private readonly ProcessMessageEventArgs _eventArgs;
         private readonly ServiceBusReceiver _receiver;
+        private readonly ProcessMessageEventArgs _eventArgs;
+        private readonly ProcessSessionMessageEventArgs _sessionEventArgs;
+
+        internal ServiceBusMessageActions(ProcessSessionMessageEventArgs sessionEventArgs)
+        {
+            _sessionEventArgs = sessionEventArgs;
+        }
 
         internal ServiceBusMessageActions(ProcessMessageEventArgs eventArgs)
         {
@@ -36,9 +42,13 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             {
                 await _receiver.AbandonMessageAsync(message, propertiesToModify, cancellationToken).ConfigureAwait(false);
             }
-            else
+            else if (_eventArgs != null)
             {
                 await _eventArgs.AbandonMessageAsync(message, propertiesToModify, cancellationToken).ConfigureAwait(false);
+            }
+            else
+            {
+                await _sessionEventArgs.AbandonMessageAsync(message, propertiesToModify, cancellationToken).ConfigureAwait(false);
             }
         }
 
@@ -51,9 +61,13 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             {
                 await _receiver.CompleteMessageAsync(message, cancellationToken).ConfigureAwait(false);
             }
-            else
+            else if (_eventArgs != null)
             {
                 await _eventArgs.CompleteMessageAsync(message, cancellationToken).ConfigureAwait(false);
+            }
+            else
+            {
+                await _sessionEventArgs.CompleteMessageAsync(message, cancellationToken).ConfigureAwait(false);
             }
         }
 
@@ -73,9 +87,18 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
                     cancellationToken)
                 .ConfigureAwait(false);
             }
-            else
+            else if (_eventArgs != null)
             {
                 await _eventArgs.DeadLetterMessageAsync(
+                    message,
+                    deadLetterReason,
+                    deadLetterErrorDescription,
+                    cancellationToken)
+                .ConfigureAwait(false);
+            }
+            else
+            {
+                await _sessionEventArgs.DeadLetterMessageAsync(
                     message,
                     deadLetterReason,
                     deadLetterErrorDescription,
@@ -98,9 +121,17 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
                     cancellationToken)
                 .ConfigureAwait(false);
             }
-            else
+            else if (_eventArgs != null)
             {
                 await _eventArgs.DeadLetterMessageAsync(
+                    message,
+                    propertiesToModify,
+                    cancellationToken)
+                .ConfigureAwait(false);
+            }
+            else
+            {
+                await _sessionEventArgs.DeadLetterMessageAsync(
                     message,
                     propertiesToModify,
                     cancellationToken)
@@ -122,9 +153,17 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
                     cancellationToken)
                 .ConfigureAwait(false);
             }
-            else
+            else if (_eventArgs != null)
             {
                 await _eventArgs.DeferMessageAsync(
+                    message,
+                    propertiesToModify,
+                    cancellationToken)
+                .ConfigureAwait(false);
+            }
+            else
+            {
+                await _sessionEventArgs.DeferMessageAsync(
                     message,
                     propertiesToModify,
                     cancellationToken)

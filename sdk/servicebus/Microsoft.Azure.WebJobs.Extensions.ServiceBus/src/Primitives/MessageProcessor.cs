@@ -10,25 +10,21 @@ using Azure.Messaging.ServiceBus;
 namespace Microsoft.Azure.WebJobs.ServiceBus
 {
     /// <summary>
-    /// This class defines a strategy used for processing ServiceBus messages.
+    /// This class defines a strategy used for processing Service Bus messages.
     /// </summary>
-    /// <remarks>
-    /// Custom <see cref="ServiceBus.MessageProcessor"/> implementations can be specified by implementing
-    /// a custom <see cref="MessagingProvider"/> and setting it via ServiceBusOptions.MessagingProvider.
-    /// </remarks>
     public class MessageProcessor
     {
         /// <summary>
-        /// Constructs a new instance.
+        /// Initializes a new instance of <see cref="MessageProcessor"/>.
         /// </summary>
-        /// <param name="processor">The <see cref="Processor"/>.</param>
+        /// <param name="processor">The <see cref="ServiceBusProcessor"/> to use.</param>
         public MessageProcessor(ServiceBusProcessor processor)
         {
             Processor = processor ?? throw new ArgumentNullException(nameof(processor));
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="Processor"/> that will be used by the <see cref="Processor"/>.
+        /// Gets or sets the <see cref="ServiceBusProcessor"/> that will be used by the <see cref="Processor"/>.
         /// </summary>
         internal ServiceBusProcessor Processor { get; set; }
 
@@ -36,9 +32,9 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         /// This method is called when there is a new message to process, before the job function is invoked.
         /// This allows any preprocessing to take place on the message before processing begins.
         /// </summary>
-        /// <param name="messageActions"></param>
-        /// <param name="message"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="messageActions">The set of actions that can be performed on a <see cref="ServiceBusReceivedMessage"/>.</param>
+        /// <param name="message">The <see cref="ServiceBusReceivedMessage"/> to process.</param>
+        /// <param name="cancellationToken">A cancellation token that will be cancelled when the processor is shutting down.</param>
         /// <returns>A <see cref="Task"/> that returns true if the message processing should continue, false otherwise.</returns>
         public virtual Task<bool> BeginProcessingMessageAsync(ServiceBusMessageActions messageActions, ServiceBusReceivedMessage message, CancellationToken cancellationToken)
         {
@@ -53,10 +49,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         /// is configured. E.g. if <see cref="ServiceBusProcessorOptions.AutoCompleteMessages"/> is false, it is up to the job function to complete
         /// the message.
         /// </remarks>
-        /// <param name="messageActions"></param>
-        /// <param name="message"></param>
+        /// <param name="messageActions">The set of actions that can be performed on a <see cref="ServiceBusReceivedMessage"/>.</param>
+        /// <param name="message">The <see cref="ServiceBusReceivedMessage"/> to process.</param>
         /// <param name="result">The <see cref="FunctionResult"/> from the job invocation.</param>
-        /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use</param>
+        /// <param name="cancellationToken">A cancellation token that will be cancelled when the processor is shutting down.</param>
         /// <returns>A <see cref="Task"/> that will complete the message processing.</returns>
         public virtual Task CompleteProcessingMessageAsync(ServiceBusMessageActions messageActions, ServiceBusReceivedMessage message, FunctionResult result, CancellationToken cancellationToken)
         {
