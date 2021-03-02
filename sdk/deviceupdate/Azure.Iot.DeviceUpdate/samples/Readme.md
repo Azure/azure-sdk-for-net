@@ -29,10 +29,10 @@ To run the samples, you need to compile console DeviceUpdateClientSample project
 | --deviceTag        | IoT device tag for the device           | True     |                                                              |
 | --delete           | Delete update when finished             | False    | false                                                        |
 
-So, as an example let's assume we have set the environment and we have tenant, client, client secret and storage settings set in environment variables. To run the samples against an ADU account `contoso.api.prod.adu.microsoft.com`, instance `blue` and ADU device `device-test` we use the following arguments:
+So, as an example let's assume we have set the environment and we have tenant, client, client secret and storage settings set in environment variables. To run the samples we use the following arguments:
 
 ``` powershell
-.\DeviceUpdateClientSample.exe --accountEndpoint contoso.api.prod.adu.microsoft.com --instance blue --device "device-test" --deviceTag "device-test"
+.\DeviceUpdateClientSample.exe --device "device-test" --deviceTag "device-test"
 ```
 
 
@@ -183,7 +183,7 @@ Similar to importing update, the method will return job identity and you need to
 
 ### Create Simulator Device
 
-To create a simulator device, follow steps on [Getting Started Using Ubuntu (18.04 x64) Simulator Reference Client](https://github.com/Azure/adu-private-preview/blob/master/docs/quickstarts/how-to-client-eval-sim-quickstart.md) page.
+To create a simulator device, follow steps on [Getting Started Using Ubuntu (18.04 x64) Simulator Reference Client](https://docs.microsoft.com/en-us/azure/iot-hub-device-update/device-update-simulator) page.
 
 When you do that and have your simulator running, use your device identifier as `device` command-line argument.
 

@@ -2,7 +2,7 @@
 
 The library provides access to the Device Update for IoT Hub service that enables customers to publish updates for their IoT devices to the cloud, and then deploy these updates to their devices (approve updates to groups of devices managed and provisioned in IoT Hub). 
 
-  [Source code](https://github.com/Azure/azure-sdk-for-sdk/tree/master/sdk/deviceupdate/Azure.Iot.DeviceUpdate/src/) | [Package](https://www.nuget.org/packages/Azure.DeviceUpdate) | [Product documentation](https://github.com/Azure/adu-private-preview/blob/master/docs/adu-overview.md)
+  [Source code](https://github.com/Azure/azure-sdk-for-sdk/tree/master/sdk) | [Package](https://www.nuget.org) | [Product documentation](https://docs.microsoft.com/en-us/azure/iot-hub-device-update/understand-device-update)
 
 
 ## Getting started
@@ -22,7 +22,7 @@ For the best development experience, developers should use the official Microsof
 Install the Device Update for IoT Hub client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```PowerShell
-dotnet install Azure.Iot.DeviceUpdate --version 1.0.0-beta.1
+dotnet add package Azure.Iot.DeviceUpdate --version 1.0.0-beta.1
 ```
 
 ### Authenticate the Client
@@ -36,11 +36,11 @@ Device Update for IoT Hub is a managed service that enables you to deploy over-t
 - **DevicesClient**: device management (enumerate devices and retrieve device properties)
 - **DeploymentsClient**: deployment management (start and monitor update deployments to a set of devices)
 
-You can learn more about Device Update for IoT Hub by visiting [Device Update for IoT Hub](https://github.com/Azure/adu-private-preview/tree/release/v0.2.0-private-preview).
+You can learn more about Device Update for IoT Hub by visiting [Device Update for IoT Hub](https://github.com/azure/iot-hub-device-update).
 
 ## Examples
 
-You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-sdk/tree/master/sdk/deviceupdate/Azure.Iot.DeviceUpdate/samples).
+You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-sdk/tree/master/sdk).
 
 ## Troubleshooting
 
@@ -64,7 +64,7 @@ catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.NotFoun
 
 ## Next steps
 
-Get started with our [Device Update for IoT Hub samples](https://github.com/Azure/azure-sdk-for-sdk/tree/master/sdk/deviceupdate/Azure.Iot.DeviceUpdate/samples)
+Get started with our [Device Update for IoT Hub samples](https://github.com/Azure/azure-sdk-for-sdk/tree/master/sdk)
 
 ## Contributing
 
