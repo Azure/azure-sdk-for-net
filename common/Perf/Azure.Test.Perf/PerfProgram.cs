@@ -68,19 +68,6 @@ namespace Azure.Test.Perf
                 Console.WriteLine("Application started.");
             }
 
-            Console.WriteLine("=== Versions ===");
-            Console.WriteLine($"Runtime: {Environment.Version}");
-            var azureAssemblies = testType.Assembly.GetReferencedAssemblies()
-                .Where(a => a.Name.StartsWith("Azure", StringComparison.OrdinalIgnoreCase) || a.Name.StartsWith("Microsoft.Azure", StringComparison.OrdinalIgnoreCase))
-                .Where(a => !a.Name.Equals("Azure.Test.Perf", StringComparison.OrdinalIgnoreCase))
-                .OrderBy(a => a.Name);
-            foreach (var a in azureAssemblies)
-            {
-                var informationalVersion = FileVersionInfo.GetVersionInfo(Assembly.Load(a).Location).ProductVersion;
-                Console.WriteLine($"{a.Name}: {a.Version} ({informationalVersion})");
-            }
-            Console.WriteLine();
-
             Console.WriteLine("=== Options ===");
             Console.WriteLine(JsonSerializer.Serialize(options, options.GetType(), new JsonSerializerOptions()
             {
@@ -181,6 +168,28 @@ namespace Azure.Test.Perf
             {
                 cleanupStatusThread.Join();
             }
+
+            // I would prefer to print assembly versions at the start of testing, but they cannot be determined until
+            // code in each assembly has been executed, so this must wait until after testing is complete.
+            PrintAssemblyVersions();
+        }
+
+        private static void PrintAssemblyVersions()
+        {
+            Console.WriteLine("=== Versions ===");
+            Console.WriteLine($"Runtime: {Environment.Version}");
+
+            var azureAssemblies = AppDomain.CurrentDomain.GetAssemblies()
+                .Where(a => a.GetName().Name.StartsWith("Azure", StringComparison.OrdinalIgnoreCase) ||
+                            a.GetName().Name.StartsWith("Microsoft.Azure", StringComparison.OrdinalIgnoreCase))
+                .Where(a => !a.GetName().Name.Equals("Azure.Test.Perf", StringComparison.OrdinalIgnoreCase))
+                .OrderBy(a => a.GetName().Name);
+            foreach (var a in azureAssemblies)
+            {
+                var informationalVersion = FileVersionInfo.GetVersionInfo(a.Location).ProductVersion;
+                Console.WriteLine($"{a.GetName().Name}: {a.GetName().Version} ({informationalVersion})");
+            }
+            Console.WriteLine();
         }
 
         private static async Task RunTestsAsync(IPerfTest[] tests, PerfOptions options, string title, bool warmup = false)
