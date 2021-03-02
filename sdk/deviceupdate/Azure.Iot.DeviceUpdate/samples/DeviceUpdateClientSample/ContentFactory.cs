@@ -90,7 +90,7 @@ namespace ConsoleTest
         {
             var aduContent = new ImportManifest(
                 new UpdateId(provider, name, version),
-                "SWUpdate", "1.2.3.4",
+                "microsoft/swupdate:1", "1.2.3.4",
                 new List<ImportManifestCompatibilityInfo>(
                     compatibilityIds.Select(c => new ImportManifestCompatibilityInfo(c.Item1, c.Item2))),
                 DateTime.UtcNow, new Version(2, 0), new List<ImportManifestFile>()
