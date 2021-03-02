@@ -13,10 +13,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Storage.Blobs;
-using Azure.Storage.Queues;
 
-namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests
+namespace Azure.Storage.Test.Shared
 {
     /// <summary>
     /// This class manages Azurite Lifecycle for a test class.
@@ -75,7 +73,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests
             process = new Process();
             process.StartInfo.FileName = "node";
             process.StartInfo.WorkingDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            var arguments = $"{azuriteScriptLocation} --oauth basic -l {tempDirectory} --blobPort 0 --queuePort 0 --cert cert.pem --key cert.pem --skipApiVersionCheck";
+            var arguments = $"{azuriteScriptLocation} --oauth basic -l {tempDirectory} --blobPort 0 --queuePort 0 --cert azurite_cert.pem --key azurite_cert.pem --skipApiVersionCheck";
             string debugLogPath = null;
             if (includeDebugLog)
             {
@@ -166,29 +164,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests
                 "- NodeJS is installed and available in $PATH (i.e. 'node' command can be run in terminal)\n" +
                 "- Azurite V3 is installed via NPM (see https://github.com/Azure/Azurite for instructions)\n" +
                 $"- {AzuriteLocationKey} envorinment is set and pointing to location of directory that has 'azurite' command (i.e. run 'where azurite' in Windows CMD)\n";
-        }
-
-        public BlobServiceClient GetBlobServiceClient()
-        {
-            var transport = GetTransport();
-            return new BlobServiceClient(account.ConnectionString, new BlobClientOptions()
-            {
-                Transport = transport
-            });
-        }
-
-        public QueueServiceClient GetQueueServiceClient(QueueClientOptions queueClientOptions = default)
-        {
-            if (queueClientOptions == default)
-            {
-                queueClientOptions = new QueueClientOptions()
-                {
-                    MessageEncoding = QueueMessageEncoding.Base64
-                };
-            }
-
-            queueClientOptions.Transport = GetTransport();
-            return new QueueServiceClient(account.ConnectionString, queueClientOptions);
         }
 
         public HttpClientTransport GetTransport()
