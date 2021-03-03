@@ -131,7 +131,7 @@ namespace Azure.Communication.Sms.Tests
                    from: TestEnvironment.FromPhoneNumber,
                    to: "+15550000000",
                    message: "Hi");
-                Assert.AreEqual("400", result.HttpStatusCode);
+                Assert.AreEqual(400, result.HttpStatusCode);
             }
             catch (RequestFailedException ex)
             {
