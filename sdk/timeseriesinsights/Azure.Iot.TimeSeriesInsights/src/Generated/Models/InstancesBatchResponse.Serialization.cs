@@ -8,82 +8,10 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Iot.TimeSeriesInsights;
 
-namespace Azure.Iot.TimeSeriesInsights.Models
+namespace Azure.Iot.TimeSeriesInsights
 {
     public partial class InstancesBatchResponse
     {
-        internal static InstancesBatchResponse DeserializeInstancesBatchResponse(JsonElement element)
-        {
-            Optional<IReadOnlyList<InstancesOperationResult>> @get = default;
-            Optional<IReadOnlyList<InstancesOperationResult>> put = default;
-            Optional<IReadOnlyList<InstancesOperationResult>> update = default;
-            Optional<IReadOnlyList<InstancesOperationError>> delete = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("get"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<InstancesOperationResult> array = new List<InstancesOperationResult>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(InstancesOperationResult.DeserializeInstancesOperationResult(item));
-                    }
-                    @get = array;
-                    continue;
-                }
-                if (property.NameEquals("put"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<InstancesOperationResult> array = new List<InstancesOperationResult>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(InstancesOperationResult.DeserializeInstancesOperationResult(item));
-                    }
-                    put = array;
-                    continue;
-                }
-                if (property.NameEquals("update"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<InstancesOperationResult> array = new List<InstancesOperationResult>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(InstancesOperationResult.DeserializeInstancesOperationResult(item));
-                    }
-                    update = array;
-                    continue;
-                }
-                if (property.NameEquals("delete"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<InstancesOperationError> array = new List<InstancesOperationError>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(InstancesOperationError.DeserializeInstancesOperationError(item));
-                    }
-                    delete = array;
-                    continue;
-                }
-            }
-            return new InstancesBatchResponse(Optional.ToList(@get), Optional.ToList(put), Optional.ToList(update), Optional.ToList(delete));
-        }
     }
 }

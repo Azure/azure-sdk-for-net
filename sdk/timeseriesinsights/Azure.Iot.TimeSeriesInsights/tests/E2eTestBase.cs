@@ -69,7 +69,7 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
                 var id = new List<string>();
                 for (int i = 0; i < numOfIdProperties; i++)
                 {
-                    id.Add(Recording.GenerateAlphaNumericId("", 5));
+                    id.Add(Recording.GenerateAlphaNumericId(string.Empty, 5));
                 }
 
                 ITimeSeriesId tsId = numOfIdProperties switch
