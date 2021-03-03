@@ -9,11 +9,11 @@ using Azure.Core;
 namespace Azure.Communication.Identity
 {
     [CodeGenModel("CommunicationIdentityAccessTokenResult")]
-    public partial class CommunicationUserIdentifierAndTokenResult
+    public partial class CommunicationUserIdentifierAndToken
     {
         private readonly AccessToken? _accessToken;
 
-        internal CommunicationUserIdentifierAndTokenResult(CommunicationIdentity identity, CommunicationIdentityAccessToken accessToken)
+        internal CommunicationUserIdentifierAndToken(CommunicationIdentity identity, CommunicationIdentityAccessToken accessToken)
         {
             if (identity == null)
                 throw new ArgumentNullException(nameof(identity));
@@ -24,7 +24,7 @@ namespace Azure.Communication.Identity
             _accessToken = accessToken is null ? null : new AccessToken(accessToken.Token, accessToken.ExpiresOn);
         }
 
-        /// <summary>Deconstructs the <see cref="CommunicationUserIdentifierAndTokenResult"/> into a user and token.</summary>
+        /// <summary>Deconstructs the <see cref="CommunicationUserIdentifierAndToken"/> into a user and token.</summary>
         /// <param name="user">The value of the <see cref="User"/> property.</param>
         /// <param name="accessToken">The value of the <see cref="AccessToken"/> property.</param>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Communication.Identity
 {
-    public partial class CommunicationUserIdentifierAndTokenResult
+    public partial class CommunicationUserIdentifierAndToken
     {
-        internal static CommunicationUserIdentifierAndTokenResult DeserializeCommunicationUserIdentifierAndTokenResult(JsonElement element)
+        internal static CommunicationUserIdentifierAndToken DeserializeCommunicationUserIdentifierAndToken(JsonElement element)
         {
             CommunicationIdentity identity = default;
             Optional<CommunicationIdentityAccessToken> accessToken = default;
@@ -35,7 +35,7 @@ namespace Azure.Communication.Identity
                     continue;
                 }
             }
-            return new CommunicationUserIdentifierAndTokenResult(identity, accessToken.Value);
+            return new CommunicationUserIdentifierAndToken(identity, accessToken.Value);
         }
     }
 }
