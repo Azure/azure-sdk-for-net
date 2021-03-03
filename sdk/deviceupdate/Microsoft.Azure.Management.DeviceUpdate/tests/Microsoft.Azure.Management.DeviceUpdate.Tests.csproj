@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$(RepoEngPath)/mgmt/AzSdk.test.reference.props" />
+
+  <PropertyGroup>
+    <PackageId>DeviceUpdate.Tests</PackageId>
+    <Description>DeviceUpdate.Tests Class Library</Description>
+    <AssemblyName>DeviceUpdate.Tests</AssemblyName>
+    <VersionPrefix>2020-09-01</VersionPrefix>
+    <LangVersion>8.0</LangVersion>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <ExcludeFromBuild>false</ExcludeFromBuild>
+    <ExcludeFromTest>false</ExcludeFromTest>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\src\Microsoft.Azure.Management.DeviceUpdate.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="SessionRecords\**\*.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="SessionRecords\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentAssertions" Version="5.10.3" />
+    <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="3.7.0-preview" />
+  </ItemGroup>
+</Project>
