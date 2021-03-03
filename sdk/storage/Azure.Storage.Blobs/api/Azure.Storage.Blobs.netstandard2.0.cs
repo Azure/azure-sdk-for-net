@@ -290,7 +290,9 @@ namespace Azure.Storage.Blobs.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public string Name { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public int Size { get { throw null; } }
+        public long SizeLong { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool Equals(Azure.Storage.Blobs.Models.BlobBlock other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -839,7 +841,9 @@ namespace Azure.Storage.Blobs.Models
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Storage.Blobs.Models.BlobAppendInfo BlobAppendInfo(Azure.ETag eTag, System.DateTimeOffset lastModified, byte[] contentHash, byte[] contentCrc64, string blobAppendOffset, int blobCommittedBlockCount, bool isServerEncrypted, string encryptionKeySha256) { throw null; }
         public static Azure.Storage.Blobs.Models.BlobAppendInfo BlobAppendInfo(Azure.ETag eTag, System.DateTimeOffset lastModified, byte[] contentHash, byte[] contentCrc64, string blobAppendOffset, int blobCommittedBlockCount, bool isServerEncrypted, string encryptionKeySha256, string encryptionScope) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Storage.Blobs.Models.BlobBlock BlobBlock(string name, int size) { throw null; }
+        public static Azure.Storage.Blobs.Models.BlobBlock BlobBlock(string name, long size) { throw null; }
         public static Azure.Storage.Blobs.Models.BlobContainerAccessPolicy BlobContainerAccessPolicy(Azure.Storage.Blobs.Models.PublicAccessType blobPublicAccess, Azure.ETag eTag, System.DateTimeOffset lastModified, System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.BlobSignedIdentifier> signedIdentifiers) { throw null; }
         public static Azure.Storage.Blobs.Models.BlobContainerInfo BlobContainerInfo(Azure.ETag eTag, System.DateTimeOffset lastModified) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

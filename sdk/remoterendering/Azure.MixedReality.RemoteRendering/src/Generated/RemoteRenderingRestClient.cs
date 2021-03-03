@@ -28,7 +28,7 @@ namespace Azure.MixedReality.RemoteRendering
         /// <param name="endpoint"> The endpoint to use e.g. https://remoterendering.eastus.mixedreality.azure.com. A list can be found at https://docs.microsoft.com/azure/remote-rendering/reference/regions. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public RemoteRenderingRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2021-01-01-preview")
+        public RemoteRenderingRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2021-01-01")
         {
             if (endpoint == null)
             {

@@ -166,8 +166,12 @@ namespace Microsoft.Azure.WebJobs.EventHubs
 
         internal BlobContainerClient GetCheckpointStoreClient()
         {
-            // Fall back to default if not explicitly registered
-            return new BlobContainerClient(_configuration.GetWebJobsConnectionString(ConnectionStringNames.Storage), _options.CheckpointContainer);
+            var section = _configuration.GetWebJobsConnectionStringSection(ConnectionStringNames.Storage);
+            var options = _componentFactory.CreateClientOptions(typeof(BlobClientOptions), null, section);
+            var credential = _componentFactory.CreateTokenCredential(section);
+            var client = (BlobServiceClient)_componentFactory.CreateClient(typeof(BlobServiceClient), section, credential, options);
+
+            return client.GetBlobContainerClient(_options.CheckpointContainer);
         }
 
         internal static string NormalizeConnectionString(string originalConnectionString, string eventHubName)

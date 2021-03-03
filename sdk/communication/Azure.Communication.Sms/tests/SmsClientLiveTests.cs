@@ -3,6 +3,7 @@
 
 #region Snippet:Azure_Communication_Sms_Tests_UsingStatements
 using System;
+using System.Collections.Generic;
 //@@ using Azure.Communication.Sms;
 #endregion Snippet:Azure_Communication_Sms_Tests_UsingStatements
 using System.Threading.Tasks;
@@ -19,7 +20,7 @@ namespace Azure.Communication.Sms.Tests
             => Sanitizer = new SmsClientRecordedTestSanitizer();
 
         [Test]
-        public async Task SendingAnSmsMessage()
+        public async Task SendingSmsMessage()
         {
             SmsClient client = InstrumentClient(
                 new SmsClient(
@@ -30,15 +31,17 @@ namespace Azure.Communication.Sms.Tests
             try
             {
                 #region Snippet:Azure_Communication_Sms_Tests_SendAsync
-                SendSmsResponse result = await client.SendAsync(
-                   //@@ from: new PhoneNumber("+18001230000"), // Phone number acquired on your Azure Communication resource
-                   //@@ to: new PhoneNumber("+18005670000"),
-                   /*@@*/ from: new PhoneNumberIdentifier(TestEnvironment.PhoneNumber),
-                   /*@@*/ to: new PhoneNumberIdentifier(TestEnvironment.PhoneNumber),
+                SmsSendResult result = await client.SendAsync(
+                   //@@ from: "+18001230000" // Phone number acquired on your Azure Communication resource
+                   //@@ to: "+18005670000",
+                   /*@@*/ from: TestEnvironment.FromPhoneNumber,
+                   /*@@*/ to: TestEnvironment.ToPhoneNumber,
                    message: "Hi");
                 Console.WriteLine($"Sms id: {result.MessageId}");
                 #endregion Snippet:Azure_Communication_Sms_Tests_SendAsync
                 /*@@*/ Assert.IsFalse(string.IsNullOrWhiteSpace(result.MessageId));
+                /*@@*/ Assert.AreEqual(202, result.HttpStatusCode);
+                /*@@*/ Assert.IsTrue(result.Successful);
             }
             catch (RequestFailedException ex)
             {
@@ -52,7 +55,7 @@ namespace Azure.Communication.Sms.Tests
         }
 
         [Test]
-        public async Task SendingAnSmsMessageUsingTokenCredential()
+        public async Task SendingSmsMessageUsingTokenCredential()
         {
             TokenCredential tokenCredential;
             if (Mode == RecordedTestMode.Playback)
@@ -71,12 +74,81 @@ namespace Azure.Communication.Sms.Tests
 
             try
             {
-                SendSmsResponse result = await client.SendAsync(
-                   from: new PhoneNumberIdentifier(TestEnvironment.PhoneNumber),
-                   to: new PhoneNumberIdentifier(TestEnvironment.PhoneNumber),
+                SmsSendResult result = await client.SendAsync(
+                   from: TestEnvironment.FromPhoneNumber,
+                   to: TestEnvironment.ToPhoneNumber,
                    message: "Hi");
                 Console.WriteLine($"Sms id: {result.MessageId}");
                 Assert.IsFalse(string.IsNullOrWhiteSpace(result.MessageId));
+                Assert.AreEqual(202, result.HttpStatusCode);
+                Assert.IsTrue(result.Successful);
+            }
+            catch (RequestFailedException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+        }
+
+        [Test]
+        public async Task SendingSmsMessageFromFakeNumber()
+        {
+            SmsClient client = InstrumentClient(
+                new SmsClient(
+                    TestEnvironment.ConnectionString,
+                    InstrumentClientOptions(new SmsClientOptions())));
+            try
+            {
+                SmsSendResult result = await client.SendAsync(
+                   from: "+18001234567",
+                   to: TestEnvironment.ToPhoneNumber,
+                   message: "Hi");
+            }
+            catch (RequestFailedException ex)
+            {
+                Assert.IsNotEmpty(ex.Message);
+                Console.WriteLine(ex.Message);
+            }
+
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+        }
+
+        [Test]
+        public async Task SendingSmsMessageToGroupWithOptions()
+        {
+            SmsClient client = InstrumentClient(
+                new SmsClient(
+                    TestEnvironment.ConnectionString,
+                    InstrumentClientOptions(new SmsClientOptions())));
+            try
+            {
+                #region Snippet:Azure_Communication_SmsClient_Send_GroupSmsWithOptions
+                Response<IEnumerable<SmsSendResult>> response = await client.SendAsync(
+                   //@@ from: "+18001230000" // Phone number acquired on your Azure Communication resource
+                   //@@ to: new string[] {"+18005670000", "+18008900000}",
+                   /*@@*/ from: TestEnvironment.FromPhoneNumber,
+                   /*@@*/ to: new string[] { TestEnvironment.ToPhoneNumber, TestEnvironment.ToPhoneNumber },
+                   message: "Hi",
+                   options: new SmsSendOptions(enableDeliveryReport: true) // OPTIONAL
+                   {
+                       Tag = "marketing", // custom tags
+                   });
+                IEnumerable<SmsSendResult> results = response.Value;
+                foreach (SmsSendResult result in results)
+                {
+                    Console.WriteLine($"Sms id: {result.MessageId}");
+                    /*@@*/ Assert.IsFalse(string.IsNullOrWhiteSpace(result.MessageId));
+                    /*@@*/ Assert.AreEqual(202, result.HttpStatusCode);
+                    /*@@*/ Assert.IsTrue(result.Successful);
+                }
+                #endregion Snippet:Azure_Communication_SmsClient_Send_GroupSmsWithOptions
+
             }
             catch (RequestFailedException ex)
             {
