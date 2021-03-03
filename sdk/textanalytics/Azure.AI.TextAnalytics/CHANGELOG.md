@@ -15,7 +15,11 @@
 - Renamed `OpinionSentiment` to `AssessmentSentiment`.
 - For `PiiEntity.Category` the type of the property is now `PiiEntityCategory` instead of `EntityCategory`.
 - Removed `RelatedEntities`.
- 
+- `RecognizePiiEntitiesOptions.Domain` is now a nullable type.
+
+### Fixes
+- `RecognizePiiEntities` and `TextAnalyticsActions.RecognizePiiEntitiesOptions` were always passing `PiiEntityDomainType.PHI`. Now, it is only passed when requested by the user [19086](https://github.com/Azure/azure-sdk-for-net/issues/19086).
+
 ## 5.1.0-beta.4 (2021-02-10)
 ### New features
 - Added property `Length` to `CategorizedEntity`, `SentenceSentiment`, `LinkedEntityMatch`, `AspectSentiment`, `OpinionSentiment`, and `PiiEntity`.

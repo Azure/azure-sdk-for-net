@@ -58,7 +58,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                             info.TokenCredential,
                             new EventHubProducerClientOptions
                             {
-                                RetryOptions = _options.RetryOptions,
+                                RetryOptions = _options.ClientRetryOptions,
                                 ConnectionOptions = _options.ConnectionOptions
                             });
                     }
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                         NormalizeConnectionString(info.ConnectionString, eventHubName),
                         new EventHubProducerClientOptions
                         {
-                            RetryOptions = _options.RetryOptions,
+                            RetryOptions = _options.ClientRetryOptions,
                             ConnectionOptions = _options.ConnectionOptions
                         });
                 }
@@ -97,7 +97,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                         credential: info.TokenCredential,
                         options: _options.EventProcessorOptions,
                         eventBatchMaximumCount: _options.MaxBatchSize,
-                        invokeProcessorAfterReceiveTimeout: _options.InvokeFunctionAfterReceiveTimeout,
                         exceptionHandler: _options.ExceptionHandler);
                 }
 
@@ -106,7 +105,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                     eventHubName: eventHubName,
                     options: _options.EventProcessorOptions,
                     eventBatchMaximumCount: _options.MaxBatchSize,
-                    invokeProcessorAfterReceiveTimeout: _options.InvokeFunctionAfterReceiveTimeout,
                     exceptionHandler: _options.ExceptionHandler);
             }
 
@@ -138,7 +136,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                             info.TokenCredential,
                             new EventHubConsumerClientOptions
                             {
-                                RetryOptions = _options.RetryOptions,
+                                RetryOptions = _options.ClientRetryOptions,
                                 ConnectionOptions = _options.ConnectionOptions
                             });
                     }
@@ -149,7 +147,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                             NormalizeConnectionString(info.ConnectionString, eventHubName),
                             new EventHubConsumerClientOptions
                             {
-                                RetryOptions = _options.RetryOptions,
+                                RetryOptions = _options.ClientRetryOptions,
                                 ConnectionOptions = _options.ConnectionOptions
                             });
                     }
