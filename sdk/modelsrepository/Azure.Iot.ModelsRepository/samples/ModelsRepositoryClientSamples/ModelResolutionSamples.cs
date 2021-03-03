@@ -17,36 +17,36 @@ namespace Azure.Iot.ModelsRepository.Samples
 
         public static void ClientInitialization()
         {
-            #region Snippet:IoTModelsRepositorySamplesCreateServiceClientSimpleWithGlobalEndpoint
+            #region Snippet:ModelsRepositorySamplesCreateServiceClientWithGlobalEndpoint
 
-            // When no Uri is provided for instantiation, the Azure IoT Models Repository global endpoint
+            // When no URI is provided for instantiation, the Azure IoT Models Repository global endpoint
             // https://devicemodels.azure.com/ is used and the dependency model resolution option is set to TryFromExpanded.
             var client = new ModelsRepositoryClient(new ModelsRepositoryClientOptions());
             Console.WriteLine($"Initialized client pointing to global endpoint: {client.RepositoryUri}");
 
-            #endregion Snippet:IoTModelsRepositorySamplesCreateServiceClientSimpleWithGlobalEndpoint
+            #endregion Snippet:ModelsRepositorySamplesCreateServiceClientWithGlobalEndpoint
 
-            // This form shows specifing a custom Uri for the models repository with default client options.
+            // This form shows specifing a custom URI for the models repository with default client options.
             // The default client options will enable model dependency resolution.
             const string remoteRepoEndpoint = "https://contoso.com/models";
             client = new ModelsRepositoryClient(new Uri(remoteRepoEndpoint));
             Console.WriteLine($"Initialized client pointing to custom endpoint: {client.RepositoryUri}");
 
 
-            #region Snippet:IoTModelsRepositorySamplesCreateServiceClientSimpleWithLocalRepository
+            #region Snippet:ModelsRepositorySamplesCreateServiceClientWithLocalRepository
 
-            // The client will also work with a local filesystem Uri. This example shows initalization
-            // with a local Uri and disabling model dependency resolution.
+            // The client will also work with a local filesystem URI. This example shows initalization
+            // with a local URI and disabling model dependency resolution.
             client = new ModelsRepositoryClient(new Uri(ClientSamplesLocalModelsRepository),
                 new ModelsRepositoryClientOptions(resolutionOption: DependencyResolutionOption.Disabled));
             Console.WriteLine($"Initialized client pointing to local path: {client.RepositoryUri}");
 
-            #endregion Snippet:IoTModelsRepositorySamplesCreateServiceClientSimpleWithLocalRepository
+            #endregion Snippet:ModelsRepositorySamplesCreateServiceClientWithLocalRepository
         }
 
         public static async Task GetModelsFromGlobalRepoAsync()
         {
-            #region Snippet:IoTModelsRepositorySamplesGetModelsFromGlobalRepoAsync
+            #region Snippet:ModelsRepositorySamplesGetModelsFromGlobalRepoAsync
 
             var dtmi = "dtmi:com:example:TemperatureController;1";
 
@@ -62,14 +62,12 @@ namespace Azure.Iot.ModelsRepository.Samples
             // dtmi:com:example:Thermostat;1 and dtmi:azure:DeviceManagement:DeviceInformation;1
             Console.WriteLine($"{dtmi} resolved in {models.Count} interfaces.");
 
-            #endregion Snippet:IoTModelsRepositorySamplesGetModelsFromGlobalRepoAsync
+            #endregion Snippet:ModelsRepositorySamplesGetModelsFromGlobalRepoAsync
         }
 
         public static async Task GetMultipleModelsFromGlobalRepoAsync()
         {
-            #region Snippet:IoTModelsRepositorySamplesGetMultipleModelsFromGlobalRepoAsync
-
-            var dtmis = new [] {"dtmi:com:example:TemperatureController;1", "dtmi:com:example:azuresphere:sampledevice;1"};
+            #region Snippet:ModelsRepositorySamplesGetMultipleModelsFromGlobalRepoAsync
 
             // Global endpoint client
             var client = new ModelsRepositoryClient();
@@ -78,6 +76,7 @@ namespace Azure.Iot.ModelsRepository.Samples
             // least the definitions of each dtmi enumerated in the IEnumerable.
             // If the dependency model resolution option is not disabled, then models in which each
             // enumerated dtmi depends on will also be included in the returned IDictionary<string, string>.
+            var dtmis = new[] { "dtmi:com:example:TemperatureController;1", "dtmi:com:example:azuresphere:sampledevice;1" };
             IDictionary<string, string> models = await client.GetModelsAsync(dtmis).ConfigureAwait(false);
 
             // In this case the dtmi "dtmi:com:example:TemperatureController;1" has 2 model dependencies
@@ -85,12 +84,12 @@ namespace Azure.Iot.ModelsRepository.Samples
             // The returned IDictionary will include 4 models.
             Console.WriteLine($"Dtmis {string.Join(", ", dtmis)} resolved in {models.Count} interfaces.");
 
-            #endregion Snippet:IoTModelsRepositorySamplesGetMultipleModelsFromGlobalRepoAsync
+            #endregion Snippet:ModelsRepositorySamplesGetMultipleModelsFromGlobalRepoAsync
         }
 
         public static async Task GetModelsFromLocalRepoAsync()
         {
-            #region Snippet:IoTModelsRepositorySamplesGetModelsFromLocalRepoAsync
+            #region Snippet:ModelsRepositorySamplesGetModelsFromLocalRepoAsync
 
             var dtmi = "dtmi:com:example:TemperatureController;1";
 
@@ -106,7 +105,7 @@ namespace Azure.Iot.ModelsRepository.Samples
             // dtmi:com:example:Thermostat;1 and dtmi:azure:DeviceManagement:DeviceInformation;1
             Console.WriteLine($"{dtmi} resolved in {models.Count} interfaces.");
 
-            #endregion Snippet:IoTModelsRepositorySamplesGetModelsFromLocalRepoAsync
+            #endregion Snippet:ModelsRepositorySamplesGetModelsFromLocalRepoAsync
         }
 
         public static async Task TryGetModelsFromGlobalRepoButNotFoundAsync()

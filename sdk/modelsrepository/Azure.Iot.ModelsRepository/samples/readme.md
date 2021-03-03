@@ -16,18 +16,18 @@ The samples project demonstrates the following:
 
 ## Initializing the models repository client
 
-### Simple Initialization
+### Initialization
 
-```C# Snippet:IoTModelsRepositorySamplesCreateServiceClientSimpleWithGlobalEndpoint
-// When no Uri is provided for instantiation, the Azure IoT Models Repository global endpoint
+```C# Snippet:ModelsRepositorySamplesCreateServiceClientWithGlobalEndpoint
+// When no URI is provided for instantiation, the Azure IoT Models Repository global endpoint
 // https://devicemodels.azure.com/ is used and the dependency model resolution option is set to TryFromExpanded.
 var client = new ModelsRepositoryClient(new ModelsRepositoryClientOptions());
 Console.WriteLine($"Initialized client pointing to global endpoint: {client.RepositoryUri}");
 ```
 
-```C# Snippet:IoTModelsRepositorySamplesCreateServiceClientSimpleWithLocalRepository
-// The client will also work with a local filesystem Uri. This example shows initalization
-// with a local Uri and disabling model dependency resolution.
+```C# Snippet:ModelsRepositorySamplesCreateServiceClientWithLocalRepository
+// The client will also work with a local filesystem URI. This example shows initalization
+// with a local URI and disabling model dependency resolution.
 client = new ModelsRepositoryClient(new Uri(ClientSamplesLocalModelsRepository),
     new ModelsRepositoryClientOptions(resolutionOption: DependencyResolutionOption.Disabled));
 Console.WriteLine($"Initialized client pointing to local path: {client.RepositoryUri}");
@@ -50,7 +50,7 @@ Publishing models to the models repository requires [exercising][modelsrepositor
 
 After publishing, your model(s) will be available for consumption from the global repository endpoint. The following snippet shows how to retrieve the corresponding JSON-LD content.
 
-```C# Snippet:IoTModelsRepositorySamplesGetModelsFromGlobalRepoAsync
+```C# Snippet:ModelsRepositorySamplesGetModelsFromGlobalRepoAsync
 var dtmi = "dtmi:com:example:TemperatureController;1";
 
 // Global endpoint client
@@ -68,7 +68,7 @@ Console.WriteLine($"{dtmi} resolved in {models.Count} interfaces.");
 
 Because GitHub pull-request workflows are a core aspect of the IoT Models Repository service, and to supported related use cases, the client supports getting models from a local repository.
 
-```C# Snippet:IoTModelsRepositorySamplesGetModelsFromLocalRepoAsync
+```C# Snippet:ModelsRepositorySamplesGetModelsFromLocalRepoAsync
 var dtmi = "dtmi:com:example:TemperatureController;1";
 
 // Local sample repository client
@@ -87,9 +87,7 @@ Console.WriteLine($"{dtmi} resolved in {models.Count} interfaces.");
 You are also able to get definitions for multiple root models at a time by leveraging
 the `GetModels` overload that supports an `IEnumerable`.
 
-```C# Snippet:IoTModelsRepositorySamplesGetMultipleModelsFromGlobalRepoAsync
-var dtmis = new [] {"dtmi:com:example:TemperatureController;1", "dtmi:com:example:azuresphere:sampledevice;1"};
-
+```C# Snippet:ModelsRepositorySamplesGetMultipleModelsFromGlobalRepoAsync
 // Global endpoint client
 var client = new ModelsRepositoryClient();
 
@@ -97,6 +95,7 @@ var client = new ModelsRepositoryClient();
 // least the definitions of each dtmi enumerated in the IEnumerable.
 // If the dependency model resolution option is not disabled, then models in which each
 // enumerated dtmi depends on will also be included in the returned IDictionary<string, string>.
+var dtmis = new[] { "dtmi:com:example:TemperatureController;1", "dtmi:com:example:azuresphere:sampledevice;1" };
 IDictionary<string, string> models = await client.GetModelsAsync(dtmis).ConfigureAwait(false);
 
 // In this case the dtmi "dtmi:com:example:TemperatureController;1" has 2 model dependencies
@@ -111,7 +110,7 @@ The samples provide two different patterns to integrate with the Digital Twins M
 
 The following snippet shows first fetching model definitions from the Azure IoT Models Repository then parsing them.
 
-```C# Snippet:IoTModelsRepositorySamplesParserIntegrationGetModelsAndParseAsync
+```C# Snippet:ModelsRepositorySamplesParserIntegrationGetModelsAndParseAsync
 var dtmi = "dtmi:com:example:TemperatureController;1";
 var client = new ModelsRepositoryClient();
 IDictionary<string, string> models = await client.GetModelsAsync(dtmi).ConfigureAwait(false);
@@ -123,7 +122,7 @@ Console.WriteLine($"{dtmi} resolved in {models.Count} interfaces with {parseResu
 Alternatively, the following snippet shows parsing a model, then fetching dependent model definitions during parsing.
 This is achieved by configuring the `ModelParser` to use the sample [ParserDtmiResolver][modelsrepository_sample_extension] client extension.
 
-```C# Snippet:IoTModelsRepositorySamplesParserIntegrationParseAndGetModelsAsync
+```C# Snippet:ModelsRepositorySamplesParserIntegrationParseAndGetModelsAsync
 var dtmi = "dtmi:com:example:TemperatureController;1";
 var client = new ModelsRepositoryClient(new ModelsRepositoryClientOptions(resolutionOption: DependencyResolutionOption.Disabled));
 IDictionary<string, string> models = await client.GetModelsAsync(dtmi).ConfigureAwait(false);
