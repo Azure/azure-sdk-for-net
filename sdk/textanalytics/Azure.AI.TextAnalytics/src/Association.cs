@@ -3,10 +3,13 @@
 
 using Azure.Core;
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics
 {
+    /// <summary>
+    /// Determines the association of <see cref="HealthcareEntityAssertion"/>
+    /// </summary>
     [CodeGenModel("Association")]
-    internal enum Association
+    public enum Association
     {
         /// <summary> subject. </summary>
         Subject,

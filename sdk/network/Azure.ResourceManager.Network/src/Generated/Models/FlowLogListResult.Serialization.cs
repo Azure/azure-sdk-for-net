@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class FlowLogListResult
+    internal partial class FlowLogListResult
     {
         internal static FlowLogListResult DeserializeFlowLogListResult(JsonElement element)
         {

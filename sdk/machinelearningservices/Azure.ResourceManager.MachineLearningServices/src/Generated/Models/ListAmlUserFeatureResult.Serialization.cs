@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    public partial class ListAmlUserFeatureResult
+    internal partial class ListAmlUserFeatureResult
     {
         internal static ListAmlUserFeatureResult DeserializeListAmlUserFeatureResult(JsonElement element)
         {

@@ -67,6 +67,7 @@ namespace Azure.AI.TextAnalytics
     {
         internal AnalyzeHealthcareEntitiesResult() { }
         public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.HealthcareEntity> Entities { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.HealthcareEntityRelation> EntityRelations { get { throw null; } }
         public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.TextAnalyticsWarning> Warnings { get { throw null; } }
     }
     public partial class AnalyzeHealthcareEntitiesResultCollection : System.Collections.ObjectModel.ReadOnlyCollection<Azure.AI.TextAnalytics.AnalyzeHealthcareEntitiesResult>
@@ -103,6 +104,11 @@ namespace Azure.AI.TextAnalytics
         public Azure.AI.TextAnalytics.TextSentiment Sentiment { get { throw null; } }
         public string Text { get { throw null; } }
     }
+    public enum Association
+    {
+        Subject = 0,
+        Other = 1,
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CategorizedEntity
     {
@@ -119,6 +125,19 @@ namespace Azure.AI.TextAnalytics
     {
         internal CategorizedEntityCollection() : base (default(System.Collections.Generic.IList<Azure.AI.TextAnalytics.CategorizedEntity>)) { }
         public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.TextAnalyticsWarning> Warnings { get { throw null; } }
+    }
+    public enum Certainty
+    {
+        Positive = 0,
+        PositivePossible = 1,
+        NeutralPossible = 2,
+        NegativePossible = 3,
+        Negative = 4,
+    }
+    public enum Conditionality
+    {
+        Hypothetical = 0,
+        Conditional = 1,
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DetectedLanguage
@@ -214,33 +233,69 @@ namespace Azure.AI.TextAnalytics
     public partial class HealthcareEntity
     {
         internal HealthcareEntity() { }
+        public Azure.AI.TextAnalytics.HealthcareEntityAssertion Assertion { get { throw null; } }
         public string Category { get { throw null; } }
         public double ConfidenceScore { get { throw null; } }
         public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.EntityDataSource> DataSources { get { throw null; } }
         public int Length { get { throw null; } }
+        public string NormalizedText { get { throw null; } }
         public int Offset { get { throw null; } }
-        public System.Collections.Generic.IDictionary<Azure.AI.TextAnalytics.HealthcareEntity, Azure.AI.TextAnalytics.HealthcareEntityRelationType> RelatedEntities { get { throw null; } }
         public string SubCategory { get { throw null; } }
         public string Text { get { throw null; } }
+    }
+    public partial class HealthcareEntityAssertion
+    {
+        internal HealthcareEntityAssertion() { }
+        public Azure.AI.TextAnalytics.Association? Association { get { throw null; } }
+        public Azure.AI.TextAnalytics.Certainty? Certainty { get { throw null; } }
+        public Azure.AI.TextAnalytics.Conditionality? Conditionality { get { throw null; } }
+    }
+    public partial class HealthcareEntityRelation
+    {
+        internal HealthcareEntityRelation() { }
+        public Azure.AI.TextAnalytics.HealthcareEntityRelationType RelationType { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.HealthcareEntityRelationRole> Roles { get { throw null; } }
+    }
+    public partial class HealthcareEntityRelationRole
+    {
+        internal HealthcareEntityRelationRole() { }
+        public Azure.AI.TextAnalytics.HealthcareEntity Entity { get { throw null; } }
+        public string Name { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct HealthcareEntityRelationType : System.IEquatable<Azure.AI.TextAnalytics.HealthcareEntityRelationType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public static readonly Azure.AI.TextAnalytics.HealthcareEntityRelationType DirectionOfBodyStructure;
-        public static readonly Azure.AI.TextAnalytics.HealthcareEntityRelationType DirectionOfExamination;
-        public static readonly Azure.AI.TextAnalytics.HealthcareEntityRelationType DosageOfMedication;
-        public static readonly Azure.AI.TextAnalytics.HealthcareEntityRelationType RelationOfExamination;
-        public static readonly Azure.AI.TextAnalytics.HealthcareEntityRelationType TimeOfExamination;
+        public HealthcareEntityRelationType(string value) { throw null; }
+        public static Azure.AI.TextAnalytics.HealthcareEntityRelationType Abbreviation { get { throw null; } }
+        public static Azure.AI.TextAnalytics.HealthcareEntityRelationType DirectionOfBodyStructure { get { throw null; } }
+        public static Azure.AI.TextAnalytics.HealthcareEntityRelationType DirectionOfCondition { get { throw null; } }
+        public static Azure.AI.TextAnalytics.HealthcareEntityRelationType DirectionOfExamination { get { throw null; } }
+        public static Azure.AI.TextAnalytics.HealthcareEntityRelationType DirectionOfTreatment { get { throw null; } }
+        public static Azure.AI.TextAnalytics.HealthcareEntityRelationType DosageOfMedication { get { throw null; } }
+        public static Azure.AI.TextAnalytics.HealthcareEntityRelationType FormOfMedication { get { throw null; } }
+        public static Azure.AI.TextAnalytics.HealthcareEntityRelationType FrequencyOfMedication { get { throw null; } }
+        public static Azure.AI.TextAnalytics.HealthcareEntityRelationType FrequencyOfTreatment { get { throw null; } }
+        public static Azure.AI.TextAnalytics.HealthcareEntityRelationType QualifierOfCondition { get { throw null; } }
+        public static Azure.AI.TextAnalytics.HealthcareEntityRelationType RelationOfExamination { get { throw null; } }
+        public static Azure.AI.TextAnalytics.HealthcareEntityRelationType RouteOfMedication { get { throw null; } }
+        public static Azure.AI.TextAnalytics.HealthcareEntityRelationType TimeOfCondition { get { throw null; } }
+        public static Azure.AI.TextAnalytics.HealthcareEntityRelationType TimeOfEvent { get { throw null; } }
+        public static Azure.AI.TextAnalytics.HealthcareEntityRelationType TimeOfExamination { get { throw null; } }
+        public static Azure.AI.TextAnalytics.HealthcareEntityRelationType TimeOfMedication { get { throw null; } }
+        public static Azure.AI.TextAnalytics.HealthcareEntityRelationType TimeOfTreatment { get { throw null; } }
+        public static Azure.AI.TextAnalytics.HealthcareEntityRelationType UnitOfCondition { get { throw null; } }
+        public static Azure.AI.TextAnalytics.HealthcareEntityRelationType UnitOfExamination { get { throw null; } }
+        public static Azure.AI.TextAnalytics.HealthcareEntityRelationType ValueOfCondition { get { throw null; } }
+        public static Azure.AI.TextAnalytics.HealthcareEntityRelationType ValueOfExamination { get { throw null; } }
         public bool Equals(Azure.AI.TextAnalytics.HealthcareEntityRelationType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.TextAnalytics.HealthcareEntityRelationType left, Azure.AI.TextAnalytics.HealthcareEntityRelationType right) { throw null; }
-        public static explicit operator string (Azure.AI.TextAnalytics.HealthcareEntityRelationType relationtype) { throw null; }
-        public static implicit operator Azure.AI.TextAnalytics.HealthcareEntityRelationType (string relationtype) { throw null; }
+        public static implicit operator Azure.AI.TextAnalytics.HealthcareEntityRelationType (string value) { throw null; }
         public static bool operator !=(Azure.AI.TextAnalytics.HealthcareEntityRelationType left, Azure.AI.TextAnalytics.HealthcareEntityRelationType right) { throw null; }
         public override string ToString() { throw null; }
     }

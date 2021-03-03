@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The List Image operation response. </summary>
-    public partial class ImageListResult
+    internal partial class ImageListResult
     {
         /// <summary> Initializes a new instance of ImageListResult. </summary>
         /// <param name="value"> The list of Images. </param>

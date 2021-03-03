@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Security.KeyVault.Storage.Models
 {
-    public partial class DeletedStorageListResult
+    internal partial class DeletedStorageListResult
     {
         internal static DeletedStorageListResult DeserializeDeletedStorageListResult(JsonElement element)
         {

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class ManagedInstanceLongTermRetentionPolicyListResult
+    internal partial class ManagedInstanceLongTermRetentionPolicyListResult
     {
         internal static ManagedInstanceLongTermRetentionPolicyListResult DeserializeManagedInstanceLongTermRetentionPolicyListResult(JsonElement element)
         {

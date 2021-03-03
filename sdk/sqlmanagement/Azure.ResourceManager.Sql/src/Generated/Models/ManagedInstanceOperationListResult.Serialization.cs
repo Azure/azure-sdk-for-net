@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class ManagedInstanceOperationListResult
+    internal partial class ManagedInstanceOperationListResult
     {
         internal static ManagedInstanceOperationListResult DeserializeManagedInstanceOperationListResult(JsonElement element)
         {

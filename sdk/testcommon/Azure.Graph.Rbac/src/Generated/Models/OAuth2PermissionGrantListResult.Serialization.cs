@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Graph.Rbac.Models
 {
-    public partial class OAuth2PermissionGrantListResult
+    internal partial class OAuth2PermissionGrantListResult
     {
         internal static OAuth2PermissionGrantListResult DeserializeOAuth2PermissionGrantListResult(JsonElement element)
         {

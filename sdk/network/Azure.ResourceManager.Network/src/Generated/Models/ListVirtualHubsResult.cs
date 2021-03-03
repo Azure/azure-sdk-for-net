@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Result of the request to list VirtualHubs. It contains a list of VirtualHubs and a URL nextLink to get the next set of results. </summary>
-    public partial class ListVirtualHubsResult
+    internal partial class ListVirtualHubsResult
     {
         /// <summary> Initializes a new instance of ListVirtualHubsResult. </summary>
         internal ListVirtualHubsResult()

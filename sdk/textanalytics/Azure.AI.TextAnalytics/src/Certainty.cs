@@ -3,10 +3,14 @@
 
 using Azure.Core;
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics
 {
+    /// <summary>
+    /// Determines the Certainity of the <see cref="HealthcareEntityAssertion"/>
+    /// It can be Positive, PositivePossible, NuetralPossible, NegativePossible and Negative.
+    /// </summary>
     [CodeGenModel("Certainty")]
-    internal enum Certainty
+    public enum Certainty
     {
         /// <summary> Positive. </summary>
         Positive,

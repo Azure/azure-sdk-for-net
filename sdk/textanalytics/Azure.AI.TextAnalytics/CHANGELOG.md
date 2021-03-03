@@ -6,12 +6,18 @@
 - Added the ability to recognize linked entities under `AnalyzeBatchActionsOperation`.
 - Added `RecognizeLinkedEntitiesOptions` to `TextAnalyticsActions`.
 - Added `RecognizeLinkedEntitiesActionsResults` to `AnalyzeBatchActionsResult`.
+- `AnalyzeHealthcareEntitiesResult`, now exposes the property `EntityRelations`of type `HealthcareEntityRelation`.
+- Introduced `HealthcareEntityRelation` class which will determine all the different relations between the entities as `Roles`.
+- Added `HealthcareEntityRelationRole`, which exposes `Name` and `Entity` of type `string` and `HealthcareEntity` respectively.
+- `HealthcareEntityAssertion` is added to `HealthcareEntity` which further exposes `Association`, `Certainity` and `Conditionality`.
+- Added new types under `HealthcareRelationType` class.
 
 ### Breaking changes
 - Renamed `AspectSentiment` to `TargetSentiment`.
 - Renamed `MinedOpinion` to `SentenceOpinion`.
 - Renamed `OpinionSentiment` to `AssessmentSentiment`.
 - For `PiiEntity.Category` the type of the property is now `PiiEntityCategory` instead of `EntityCategory`.
+- Removed `RelatedEntities`.
 - `RecognizePiiEntitiesOptions.Domain` is now a nullable type.
 
 ### Fixes
