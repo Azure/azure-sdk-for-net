@@ -34,6 +34,8 @@ namespace Azure.ResourceManager.Core
         public ArmVoidOperation(Response other)
             : base(other)
         {
+            if (other is null)
+                throw new ArgumentNullException(nameof(other));
         }
 
         /// <inheritdoc/>

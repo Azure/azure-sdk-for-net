@@ -1,4 +1,6 @@
-﻿using NUnit.Framework;
+﻿using System;
+using Azure.Core;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Core.Tests
 {
@@ -20,6 +22,16 @@ namespace Azure.ResourceManager.Core.Tests
             options2.FakeRpApiVersions().FakeResourceVersion = FakeResourceApiVersions.V2019_12_01;
             Assert.AreEqual(FakeResourceApiVersions.Default, options1.FakeRpApiVersions().FakeResourceVersion);
             Assert.AreEqual(FakeResourceApiVersions.V2019_12_01, options2.FakeRpApiVersions().FakeResourceVersion);
+        }
+
+        [TestCase]
+        public void TestClientOptionsParamCheck()
+        {
+            Assert.Throws<ArgumentNullException>(() => { new AzureResourceManagerClientOptions(null); });
+            Assert.Throws<ArgumentNullException>(() => { new AzureResourceManagerClientOptions(null, null); });
+
+            var options = new AzureResourceManagerClientOptions();
+            Assert.Throws<ArgumentNullException>(() => { options.AddPolicy(null, HttpPipelinePosition.PerCall); });
         }
     }
 }
