@@ -87,26 +87,23 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             await using var queueB = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
             await using var topicC = await ServiceBusScope.CreateWithTopic(enablePartitioning: false, enableSession: false);
 
-            #region Snippet:ServiceBusTransactionGroup
-
-            // The first sender won't be part of our transaction group.
+            // The first sender won't be part of our transaction and is
+            // used only to populate the queue.
             ServiceBusSender senderA = client.CreateSender(queueA.QueueName);
+            await senderA.SendMessageAsync(new ServiceBusMessage());
+            #region Snippet:ServiceBusTransactionGroup
 
             ServiceBusReceiver receiverA = client.CreateReceiver(queueA.QueueName);
             ServiceBusSender senderB = client.CreateSender(queueB.QueueName);
             ServiceBusSender senderC = client.CreateSender(topicC.TopicName);
-
-            var message = new ServiceBusMessage();
-
-            await senderA.SendMessageAsync(message);
 
             ServiceBusReceivedMessage receivedMessage = await receiverA.ReceiveMessageAsync();
 
             using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
                 await receiverA.CompleteMessageAsync(receivedMessage);
-                await senderB.SendMessageAsync(message);
-                await senderC.SendMessageAsync(message);
+                await senderB.SendMessageAsync(new ServiceBusMessage());
+                await senderC.SendMessageAsync(new ServiceBusMessage());
                 ts.Complete();
             }
             #endregion
@@ -129,20 +126,19 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             await using var queueB = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
             await using var topicC = await ServiceBusScope.CreateWithTopic(enablePartitioning: false, enableSession: false);
 
-            #region Snippet:ServiceBusTransactionGroupWrongOrder
-            // The first sender won't be part of our transaction group.
+            // The first sender won't be part of our transaction and is
+            // used only to populate the queue.
             ServiceBusSender senderA = client.CreateSender(queueA.QueueName);
+            await senderA.SendMessageAsync(new ServiceBusMessage());
+
+            #region Snippet:ServiceBusTransactionGroupWrongOrder
 
             ServiceBusReceiver receiverA = client.CreateReceiver(queueA.QueueName);
             ServiceBusSender senderB = client.CreateSender(queueB.QueueName);
             ServiceBusSender senderC = client.CreateSender(topicC.TopicName);
 
-            var message = new ServiceBusMessage();
-
             // SenderB becomes the entity through which subsequent "sends" are routed through.
-            await senderB.SendMessageAsync(message);
-
-            await senderA.SendMessageAsync(message);
+            await senderB.SendMessageAsync(new ServiceBusMessage());
 
             ServiceBusReceivedMessage receivedMessage = await receiverA.ReceiveMessageAsync();
 
@@ -151,8 +147,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 // This will through an InvalidOperationException because a "receive" cannot be
                 // routed through a different entity.
                 await receiverA.CompleteMessageAsync(receivedMessage);
-                await senderB.SendMessageAsync(message);
-                await senderC.SendMessageAsync(message);
+                await senderB.SendMessageAsync(new ServiceBusMessage());
+                await senderC.SendMessageAsync(new ServiceBusMessage());
                 ts.Complete();
             }
             #endregion
