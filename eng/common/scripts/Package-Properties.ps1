@@ -83,15 +83,7 @@ function Get-PkgProperties
 
     if ($ServiceDirectory)
     {
-        if (Test-Path $ServiceDirectory)
-        {
-            $ServiceDirectoryName = Split-Path $ServiceDirectory -Leaf
-        }
-        else 
-        {
-            $ServiceDirectoryName = $ServiceDirectory
-        }
-        $AllPkgProps = Get-AllPkgProperties -ServiceDirectory $ServiceDirectoryName
+        $AllPkgProps = Get-AllPkgProperties -ServiceDirectory $ServiceDirectory
     }
     else 
     {
@@ -152,6 +144,7 @@ function Get-PkgPropsForEntireService ($serviceDirectoryPath)
 {
     $projectProps = @() # Properties from very project inthe service
     $packageProps = @() # Properties for artifacts specified in ci.yml
+    $serviceDirectory = (Split-Path -Path $serviceDirectoryPath -Leaf)
 
     foreach ($directory in (Get-ChildItem $serviceDirectoryPath -Directory))
     {
@@ -159,7 +152,7 @@ function Get-PkgPropsForEntireService ($serviceDirectoryPath)
 
         if ($GetPackageInfoFromRepoFn -and (Test-Path "Function:$GetPackageInfoFromRepoFn"))
         {
-            $pkgProps = &$GetPackageInfoFromRepoFn $pkgDirectoryPath (Split-Path -Path $serviceDirectoryPath -Leaf)
+            $pkgProps = &$GetPackageInfoFromRepoFn $pkgDirectoryPath $serviceDirectory
             if ($null -ne  $pkgProps)
             {
                 $projectProps += $pkgProps
