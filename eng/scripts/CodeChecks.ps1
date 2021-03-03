@@ -99,7 +99,7 @@ try {
             $status = git status -s | Out-String
             $status = $status -replace "`n","`n    "
             LogError "Generated code is not up to date.`n" + `
-                "You may need to run rebase on the latest master, `n" + `
+                "You may need to rebase on the latest master, `n" + `
                 "run 'eng\scripts\Update-Snippets.ps1' if you modified sample snippets or other *.md files, `n" + `
                 "run 'eng\scripts\Export-API.ps1' if you changed public APIs `n" +
                 "run 'dotnet build /t:GenerateCode' to update the generated code."
