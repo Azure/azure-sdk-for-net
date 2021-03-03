@@ -8,11 +8,11 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics
 {
-    internal partial class HealthcareAssertion
+    public partial class HealthcareEntityAssertion
     {
-        internal static HealthcareAssertion DeserializeHealthcareAssertion(JsonElement element)
+        internal static HealthcareEntityAssertion DeserializeHealthcareEntityAssertion(JsonElement element)
         {
             Optional<Conditionality> conditionality = default;
             Optional<Certainty> certainty = default;
@@ -50,7 +50,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new HealthcareAssertion(Optional.ToNullable(conditionality), Optional.ToNullable(certainty), Optional.ToNullable(association));
+            return new HealthcareEntityAssertion(Optional.ToNullable(conditionality), Optional.ToNullable(certainty), Optional.ToNullable(association));
         }
     }
 }

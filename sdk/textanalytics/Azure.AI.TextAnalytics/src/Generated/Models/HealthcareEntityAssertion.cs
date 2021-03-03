@@ -5,21 +5,21 @@
 
 #nullable disable
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics
 {
     /// <summary> The HealthcareAssertion. </summary>
-    internal partial class HealthcareAssertion
+    public partial class HealthcareEntityAssertion
     {
-        /// <summary> Initializes a new instance of HealthcareAssertion. </summary>
-        internal HealthcareAssertion()
+        /// <summary> Initializes a new instance of HealthcareEntityAssertion. </summary>
+        internal HealthcareEntityAssertion()
         {
         }
 
-        /// <summary> Initializes a new instance of HealthcareAssertion. </summary>
+        /// <summary> Initializes a new instance of HealthcareEntityAssertion. </summary>
         /// <param name="conditionality"> Describes any conditionality on the entity. </param>
         /// <param name="certainty"> Describes the entities certainty and polarity. </param>
         /// <param name="association"> Describes if the entity is the subject of the text or if it describes someone else. </param>
-        internal HealthcareAssertion(Conditionality? conditionality, Certainty? certainty, Association? association)
+        internal HealthcareEntityAssertion(Conditionality? conditionality, Certainty? certainty, Association? association)
         {
             Conditionality = conditionality;
             Certainty = certainty;

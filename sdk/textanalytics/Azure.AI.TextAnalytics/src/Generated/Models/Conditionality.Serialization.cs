@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics
 {
     internal static partial class ConditionalityExtensions
     {
