@@ -978,6 +978,7 @@ namespace Compute.Tests.DiskRPTests
                 var diskName = TestUtilities.GenerateName(DiskNamePrefix);
                 Disk disk = GenerateDefaultDisk(diskCreateOption, rgName, diskSizeGB, zones, location);
                 disk.SecurityProfile = new DiskSecurityProfile { SecurityType = DiskSecurityTypes.TrustedLaunch };
+                disk.HyperVGeneration = HyperVGeneration.V2;
 
                 try
                 {
@@ -1038,7 +1039,7 @@ namespace Compute.Tests.DiskRPTests
             {
                 case "Upload":
                     disk = GenerateBaseDisk(diskCreateOption);
-                    disk.CreationData.UploadSizeBytes = (long)(diskSizeGB ?? 10) * 1024 * 1024 * 1024 + 512;
+                    disk.CreationData.UploadSizeBytes = (long) (diskSizeGB ?? 10) * 1024 * 1024 * 1024 + 512;
                     break;
                 case "Empty":
                     disk = GenerateBaseDisk(diskCreateOption);
