@@ -111,6 +111,62 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
+        public async Task RecognizeHealthcareEntitiesTestWithAssertions()
+        {
+            TextAnalyticsClient client = GetClient();
+
+            IReadOnlyCollection<string> batchDocuments = new List<string>() { "Baby not likely to have Meningitis. in case of fever in the mother, consider Penicillin for the baby too." };
+
+            IReadOnlyCollection<string> expectedEntitiesOutput = new List<string>
+            {
+                "Baby",
+                "Meningitis",
+                "fever",
+                "mother",
+                "Penicillin",
+                "baby"
+            };
+
+            AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(batchDocuments);
+
+            await operation.WaitForCompletionAsync(PollingInterval);
+
+            ValidateOperationProperties(operation);
+
+            List<AnalyzeHealthcareEntitiesResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
+            Assert.AreEqual(1, resultInPages.Count);
+
+            var resultCollection = resultInPages.FirstOrDefault();
+            Assert.AreEqual(batchDocuments.Count, resultCollection.Count);
+
+            AnalyzeHealthcareEntitiesResult result1 = resultCollection[0];
+
+            Assert.AreEqual(expectedEntitiesOutput.Count, result1.Entities.Count);
+
+            foreach (HealthcareEntity entity in result1.Entities)
+            {
+                Assert.IsTrue(expectedEntitiesOutput.Contains(entity.Text));
+
+                if (entity.Text == "Baby")
+                {
+                    var linksList = new List<string> { "UMLS", "AOD", "CCPSS", "CHV", "DXP", "LCH", "LCH_NW", "LNC", "MDR", "MSH", "NCI", "NCI_FDA", "NCI_NICHD", "SNOMEDCT_US" };
+
+                    foreach (EntityDataSource entityDataSource in entity.DataSources)
+                        Assert.IsTrue(linksList.Contains(entityDataSource.Name));
+                    Assert.AreEqual("Infant", entity.Name);
+                }
+
+                if (entity.Text == "Meningitis")
+                {
+                    Assert.AreEqual(24, entity.Offset);
+                    Assert.AreEqual("Diagnosis", entity.Category);
+                    Assert.AreEqual(10, entity.Length);
+                    Assert.IsNotNull(entity.Assertion);
+                    Assert.AreEqual(Certainty.NegativePossible, entity.Assertion.Certainty.Value);
+                }
+            }
+        }
+        [Test]
         public async Task RecognizeHealthcareEntitiesWithLanguageTest()
         {
             TextAnalyticsClient client = GetClient();

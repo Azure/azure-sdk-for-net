@@ -20,7 +20,7 @@ namespace Azure.AI.TextAnalytics
         public HealthcareEntity Entity { get; }
 
         /// <summary>
-        /// Determines the name for the role. It be an Entity, Attribute etc.
+        /// Determines the name for the role.
         /// </summary>
         public string Name { get; }
     }
