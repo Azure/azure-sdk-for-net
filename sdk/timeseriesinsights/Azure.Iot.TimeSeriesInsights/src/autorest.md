@@ -15,7 +15,7 @@ Run `generate.ps1` in this directory to generate the code.
 > see <https://aka.ms/autorest>
 
 ``` yaml
-# Change accessability
+# Change accessibility
 directive:
   from: timeseriesinsights.json
   where: $.definitions.UpdateModelSettingsRequest
