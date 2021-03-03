@@ -54,7 +54,7 @@ namespace Azure.Communication.Chat
         /// <summary> The timestamp when the chat message arrived at the server. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
         public DateTimeOffset CreatedOn { get; }
         /// <summary> The identifier of the chat message sender. </summary>
-        public CommunicationIdentifier? Sender { get; }
+        public CommunicationIdentifier Sender { get; }
         /// <summary> The timestamp (if applicable) when the message was deleted. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
         public DateTimeOffset? DeletedOn { get; }
         /// <summary> The last timestamp (if applicable) when the message was edited. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>

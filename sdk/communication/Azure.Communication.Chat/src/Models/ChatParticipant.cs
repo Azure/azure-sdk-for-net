@@ -27,7 +27,7 @@ namespace Azure.Communication.Chat
         ///<summary>Instance of <see cref="CommunicationIdentifier"/>. </summary>
         public CommunicationIdentifier User { get; set; }
         /// <summary> Display name for the chat thread member. </summary>
-        public string? DisplayName { get; set; }
+        public string DisplayName { get; set; }
         /// <summary> Time from which the chat history is shared with the member. The timestamp is in ISO8601 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
         public DateTimeOffset? ShareHistoryTime { get; set; }
 

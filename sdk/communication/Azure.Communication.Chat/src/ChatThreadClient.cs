@@ -31,7 +31,7 @@ namespace Azure.Communication.Chat
         /// <param name="communicationTokenCredential">Instance of <see cref="CommunicationTokenCredential"/>.</param>
         /// <param name="options">Chat client options exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
-        internal ChatThreadClient(string threadId, Uri endpointUrl, CommunicationTokenCredential communicationTokenCredential, ChatClientOptions? options = default)
+        internal ChatThreadClient(string threadId, Uri endpointUrl, CommunicationTokenCredential communicationTokenCredential, ChatClientOptions options = default)
         {
             Argument.AssertNotNull(threadId, nameof(threadId));
             Argument.AssertNotNull(communicationTokenCredential, nameof(communicationTokenCredential));
@@ -98,7 +98,7 @@ namespace Azure.Communication.Chat
         /// <param name="senderDisplayName"> The display name of the chat message sender. This property is used to populate sender name for push notifications. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<string>> SendMessageAsync(string content, ChatMessageType? type = null, string? senderDisplayName = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<string>> SendMessageAsync(string content, ChatMessageType? type = null, string senderDisplayName = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatThreadClient)}.{nameof(SendMessage)}");
             scope.Start();
@@ -120,7 +120,7 @@ namespace Azure.Communication.Chat
         /// <param name="senderDisplayName"> The display name of the message sender. This property is used to populate sender name for push notifications. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<string> SendMessage(string content, ChatMessageType? type = null, string? senderDisplayName = null, CancellationToken cancellationToken = default)
+        public virtual Response<string> SendMessage(string content, ChatMessageType? type = null, string senderDisplayName = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatThreadClient)}.{nameof(SendMessage)}");
             scope.Start();
@@ -199,7 +199,7 @@ namespace Azure.Communication.Chat
                 }
             }
 
-            async Task<Page<ChatMessage>> NextPageFunc(string? nextLink, int? pageSizeHint)
+            async Task<Page<ChatMessage>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatThreadClient)}.{nameof(GetMessages)}");
                 scope.Start();
@@ -241,7 +241,7 @@ namespace Azure.Communication.Chat
                 }
             }
 
-            Page<ChatMessage> NextPageFunc(string? nextLink, int? pageSizeHint)
+            Page<ChatMessage> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatThreadClient)}.{nameof(GetMessages)}");
                 scope.Start();
@@ -439,7 +439,7 @@ namespace Azure.Communication.Chat
                 }
             }
 
-            async Task<Page<ChatParticipant>> NextPageFunc(string? nextLink, int? pageSizeHint)
+            async Task<Page<ChatParticipant>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatThreadClient)}.{nameof(GetParticipants)}");
                 scope.Start();
@@ -481,7 +481,7 @@ namespace Azure.Communication.Chat
                 }
             }
 
-            Page<ChatParticipant> NextPageFunc(string? nextLink, int? pageSizeHint)
+            Page<ChatParticipant> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatThreadClient)}.{nameof(GetParticipants)}");
                 scope.Start();
@@ -645,7 +645,7 @@ namespace Azure.Communication.Chat
                 }
             }
 
-            async Task<Page<ChatMessageReadReceipt>> NextPageFunc(string? nextLink, int? pageSizeHint)
+            async Task<Page<ChatMessageReadReceipt>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatThreadClient)}.{nameof(GetReadReceipts)}");
                 scope.Start();
@@ -687,7 +687,7 @@ namespace Azure.Communication.Chat
                 }
             }
 
-            Page<ChatMessageReadReceipt> NextPageFunc(string? nextLink, int? pageSizeHint)
+            Page<ChatMessageReadReceipt> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatThreadClient)}.{nameof(GetReadReceipts)}");
                 scope.Start();
