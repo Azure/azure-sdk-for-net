@@ -735,7 +735,7 @@ namespace Azure.AI.TextAnalytics
                     new MultiLanguageBatchInput(documents),
                     options.ModelVersion,
                     options.IncludeStatistics,
-                    options.DomainFilter.GetString(),
+                    options.DomainFilter.HasValue ? options.DomainFilter.Value.GetString() : null,
                     options.StringIndexType,
                     options.CategoriesFilter.Count == 0 ? null : options.CategoriesFilter,
                     cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -801,7 +801,7 @@ namespace Azure.AI.TextAnalytics
                     new MultiLanguageBatchInput(documents),
                     options.ModelVersion,
                     options.IncludeStatistics,
-                    options.DomainFilter.GetString(),
+                    options.DomainFilter.HasValue ? options.DomainFilter.Value.GetString() : null,
                     options.StringIndexType,
                     options.CategoriesFilter.Count == 0 ? null : options.CategoriesFilter,
                     cancellationToken: cancellationToken);
@@ -968,7 +968,7 @@ namespace Azure.AI.TextAnalytics
                     batchInput,
                     options.ModelVersion,
                     options.IncludeStatistics,
-                    options.DomainFilter.GetString(),
+                    options.DomainFilter.HasValue ? options.DomainFilter.Value.GetString() : null,
                     options.StringIndexType,
                     options.CategoriesFilter.Count == 0 ? null : options.CategoriesFilter,
                     cancellationToken).ConfigureAwait(false);
@@ -996,7 +996,7 @@ namespace Azure.AI.TextAnalytics
                     batchInput,
                     options.ModelVersion,
                     options.IncludeStatistics,
-                    options.DomainFilter.GetString(),
+                    options.DomainFilter.HasValue ? options.DomainFilter.Value.GetString() : null,
                     options.StringIndexType,
                     options.CategoriesFilter.Count == 0 ? null : options.CategoriesFilter,
                     cancellationToken);

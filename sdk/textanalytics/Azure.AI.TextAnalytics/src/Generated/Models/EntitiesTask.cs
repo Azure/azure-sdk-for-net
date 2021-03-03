@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.AI.TextAnalytics
+namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The EntitiesTask. </summary>
     internal partial class EntitiesTask
@@ -14,5 +14,7 @@ namespace Azure.AI.TextAnalytics
         public EntitiesTask()
         {
         }
+
+        public EntitiesTaskParameters Parameters { get; set; }
     }
 }
