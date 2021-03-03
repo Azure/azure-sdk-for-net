@@ -40,21 +40,29 @@ namespace Microsoft.Azure.Management.Peering.Models
         /// <param name="type">The type of the resource.</param>
         /// <param name="sku">The SKU that defines the type of the peering
         /// service.</param>
-        /// <param name="peeringServiceLocation">The PeeringServiceLocation of
-        /// the Customer.</param>
-        /// <param name="peeringServiceProvider">The MAPS Provider
-        /// Name.</param>
+        /// <param name="peeringServiceLocation">The location (state/province)
+        /// of the customer.</param>
+        /// <param name="peeringServiceProvider">The name of the service
+        /// provider.</param>
         /// <param name="provisioningState">The provisioning state of the
         /// resource. Possible values include: 'Succeeded', 'Updating',
         /// 'Deleting', 'Failed'</param>
+        /// <param name="providerPrimaryPeeringLocation">The primary peering
+        /// (Microsoft/service provider) location to be used for customer
+        /// traffic.</param>
+        /// <param name="providerBackupPeeringLocation">The backup peering
+        /// (Microsoft/service provider) location to be used for customer
+        /// traffic.</param>
         /// <param name="tags">The resource tags.</param>
-        public PeeringService(string location, string name = default(string), string id = default(string), string type = default(string), PeeringServiceSku sku = default(PeeringServiceSku), string peeringServiceLocation = default(string), string peeringServiceProvider = default(string), string provisioningState = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public PeeringService(string location, string name = default(string), string id = default(string), string type = default(string), PeeringServiceSku sku = default(PeeringServiceSku), string peeringServiceLocation = default(string), string peeringServiceProvider = default(string), string provisioningState = default(string), string providerPrimaryPeeringLocation = default(string), string providerBackupPeeringLocation = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
             : base(name, id, type)
         {
             Sku = sku;
             PeeringServiceLocation = peeringServiceLocation;
             PeeringServiceProvider = peeringServiceProvider;
             ProvisioningState = provisioningState;
+            ProviderPrimaryPeeringLocation = providerPrimaryPeeringLocation;
+            ProviderBackupPeeringLocation = providerBackupPeeringLocation;
             Location = location;
             Tags = tags;
             CustomInit();
@@ -72,13 +80,13 @@ namespace Microsoft.Azure.Management.Peering.Models
         public PeeringServiceSku Sku { get; set; }
 
         /// <summary>
-        /// Gets or sets the PeeringServiceLocation of the Customer.
+        /// Gets or sets the location (state/province) of the customer.
         /// </summary>
         [JsonProperty(PropertyName = "properties.peeringServiceLocation")]
         public string PeeringServiceLocation { get; set; }
 
         /// <summary>
-        /// Gets or sets the MAPS Provider Name.
+        /// Gets or sets the name of the service provider.
         /// </summary>
         [JsonProperty(PropertyName = "properties.peeringServiceProvider")]
         public string PeeringServiceProvider { get; set; }
@@ -89,6 +97,20 @@ namespace Microsoft.Azure.Management.Peering.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the primary peering (Microsoft/service provider)
+        /// location to be used for customer traffic.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.providerPrimaryPeeringLocation")]
+        public string ProviderPrimaryPeeringLocation { get; set; }
+
+        /// <summary>
+        /// Gets or sets the backup peering (Microsoft/service provider)
+        /// location to be used for customer traffic.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.providerBackupPeeringLocation")]
+        public string ProviderBackupPeeringLocation { get; set; }
 
         /// <summary>
         /// Gets or sets the location of the resource.

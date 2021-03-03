@@ -402,7 +402,7 @@ namespace Microsoft.Azure.Management.Peering
             PeeringServiceProviders = new PeeringServiceProvidersOperations(this);
             PeeringServices = new PeeringServicesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2020-10-01";
+            ApiVersion = "2021-01-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
