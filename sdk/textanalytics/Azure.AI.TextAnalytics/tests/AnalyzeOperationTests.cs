@@ -163,7 +163,6 @@ namespace Azure.AI.TextAnalytics.Tests
             }
         }
 
-        [Ignore("Enable this test one service deploys to WestUS2 https://github.com/Azure/azure-sdk-for-net/issues/19152")]
         [Test]
         public async Task AnalyzeOperationWithMultipleActions()
         {
@@ -344,7 +343,6 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(3, pages[1].ExtractKeyPhrasesActionsResults.FirstOrDefault().Result.Count);
         }
 
-        [Ignore("Enable this test one service deploys to WestUS2 https://github.com/Azure/azure-sdk-for-net/issues/19152")]
         [Test]
         public async Task AnalyzeOperationBatchWithErrorTest()
         {
