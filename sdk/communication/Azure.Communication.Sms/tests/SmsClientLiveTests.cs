@@ -31,8 +31,8 @@ namespace Azure.Communication.Sms.Tests
             try
             {
                 SmsSendResult result = await client.SendAsync(
-                   //@@ from: "<from-phone-number>" // Phone number acquired on your Azure Communication resource
-                   //@@ to: "<to-phone-number>",
+                   //@@ from: "<from-phone-number>" // Your E.164 formatted phone number used to send SMS
+                   //@@ to: "<to-phone-number>", // E.164 formatted recipient phone number
                    /*@@*/ from: TestEnvironment.FromPhoneNumber,
                    /*@@*/ to: TestEnvironment.ToPhoneNumber,
                    message: "Hi");
@@ -111,7 +111,6 @@ namespace Azure.Communication.Sms.Tests
                 Assert.True(ex.Message.Contains("400"));
                 Console.WriteLine(ex.Message);
             }
-
             catch (Exception ex)
             {
                 Assert.Fail($"Unexpected error: {ex}");

@@ -37,8 +37,8 @@ namespace Azure.Communication.Sms.Tests.samples
             SmsClient smsClient = CreateSmsClient();
             #region Snippet:Azure_Communication_Sms_Tests_SendAsync
             SmsSendResult sendResult = await smsClient.SendAsync(
-                from: "<from-phone-number>",
-                to: "<to-phone-number>",
+                from: "<from-phone-number>", // Your E.164 formatted from phone number used to send SMS
+                to: "<to-phone-number>", // E.164 formatted recipient phone number
                 message: "Hi");
             Console.WriteLine($"Sms id: {sendResult.MessageId}");
             #endregion Snippet:Azure_Communication_Sms_Tests_SendAsync
@@ -50,8 +50,8 @@ namespace Azure.Communication.Sms.Tests.samples
             SmsClient smsClient = CreateSmsClient();
             #region Snippet:Azure_Communication_SmsClient_Send_GroupSmsWithOptions
             Response<IEnumerable<SmsSendResult>> response = await smsClient.SendAsync(
-                from: "<from-phone-number>",
-                to: new string[] { "<to-phone-number-1>", "<to-phone-number-2>" },
+                from: "<from-phone-number>", // Your E.164 formatted from phone number used to send SMS
+                to: new string[] { "<to-phone-number-1>", "<to-phone-number-2>" }, // E.164 formatted recipient phone numbers
                 message: "Weekly Promotion!",
                 options: new SmsSendOptions(enableDeliveryReport: true) // OPTIONAL
                 {
