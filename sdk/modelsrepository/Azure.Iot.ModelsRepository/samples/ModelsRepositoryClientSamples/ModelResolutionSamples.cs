@@ -48,14 +48,13 @@ namespace Azure.Iot.ModelsRepository.Samples
         {
             #region Snippet:ModelsRepositorySamplesGetModelsFromGlobalRepoAsync
 
-            var dtmi = "dtmi:com:example:TemperatureController;1";
-
             // Global endpoint client
             var client = new ModelsRepositoryClient();
 
             // The output of GetModelsAsync() will include at least the definition for the target dtmi.
             // If the dependency model resolution option is not disabled, then models in which the
             // target dtmi depends on will also be included in the returned IDictionary<string, string>.
+            var dtmi = "dtmi:com:example:TemperatureController;1";
             IDictionary<string, string> models = await client.GetModelsAsync(dtmi).ConfigureAwait(false);
 
             // In this case the above dtmi has 2 model dependencies.
@@ -91,14 +90,13 @@ namespace Azure.Iot.ModelsRepository.Samples
         {
             #region Snippet:ModelsRepositorySamplesGetModelsFromLocalRepoAsync
 
-            var dtmi = "dtmi:com:example:TemperatureController;1";
-
             // Local sample repository client
             var client = new ModelsRepositoryClient(new Uri(ClientSamplesLocalModelsRepository));
 
             // The output of GetModelsAsync() will include at least the definition for the target dtmi.
             // If the dependency model resolution option is not disabled, then models in which the
             // target dtmi depends on will also be included in the returned IDictionary<string, string>.
+            var dtmi = "dtmi:com:example:TemperatureController;1";
             IDictionary<string, string> models = await client.GetModelsAsync(dtmi).ConfigureAwait(false);
 
             // In this case the above dtmi has 2 model dependencies.
@@ -110,8 +108,8 @@ namespace Azure.Iot.ModelsRepository.Samples
 
         public static async Task TryGetModelsFromGlobalRepoButNotFoundAsync()
         {
-            var dtmi = "dtmi:com:example:NotFound;1";
             var client = new ModelsRepositoryClient();
+            var dtmi = "dtmi:com:example:NotFound;1";
 
             try
             {
@@ -126,8 +124,8 @@ namespace Azure.Iot.ModelsRepository.Samples
 
         public static async Task TryGetModelsFromLocalRepoButNotFoundAsync()
         {
-            var dtmi = "dtmi:com:example:NotFound;1";
             var client = new ModelsRepositoryClient(new Uri(ClientSamplesLocalModelsRepository));
+            var dtmi = "dtmi:com:example:NotFound;1";
 
             try
             {

@@ -1,10 +1,10 @@
-# Introduction
+# IoT Models Repository Samples
 
 The Azure IoT Models Repository enables builders to manage and share digital twin models for global consumption. The models are [JSON-LD][json_ld_reference] documents defined using the Digital Twins Definition Language ([DTDL][dtdlv2_reference]).
 
 For more info about the Azure IoT Models Repository checkout the [docs][modelsrepository_msdocs].
 
-# IoT Models Repository Samples
+## Introduction
 
 You can explore the models repository APIs with the client library using the samples project.
 
@@ -15,8 +15,6 @@ The samples project demonstrates the following:
 - Integration with the Digital Twins Model Parser
 
 ## Initializing the models repository client
-
-### Initialization
 
 ```C# Snippet:ModelsRepositorySamplesCreateServiceClientWithGlobalEndpoint
 // When no URI is provided for instantiation, the Azure IoT Models Repository global endpoint

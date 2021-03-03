@@ -15,8 +15,8 @@ namespace Azure.Iot.ModelsRepository.Samples
         {
             #region Snippet:ModelsRepositorySamplesParserIntegrationGetModelsAndParseAsync
 
-            var dtmi = "dtmi:com:example:TemperatureController;1";
             var client = new ModelsRepositoryClient();
+            var dtmi = "dtmi:com:example:TemperatureController;1";
             IDictionary<string, string> models = await client.GetModelsAsync(dtmi).ConfigureAwait(false);
             var parser = new ModelParser();
             IReadOnlyDictionary<Dtmi, DTEntityInfo> parseResult = await parser.ParseAsync(models.Values.ToArray());
@@ -29,8 +29,8 @@ namespace Azure.Iot.ModelsRepository.Samples
         {
             #region Snippet:ModelsRepositorySamplesParserIntegrationParseAndGetModelsAsync
 
-            var dtmi = "dtmi:com:example:TemperatureController;1";
             var client = new ModelsRepositoryClient(new ModelsRepositoryClientOptions(resolutionOption: DependencyResolutionOption.Disabled));
+            var dtmi = "dtmi:com:example:TemperatureController;1";
             IDictionary<string, string> models = await client.GetModelsAsync(dtmi).ConfigureAwait(false);
             var parser = new ModelParser
             {
