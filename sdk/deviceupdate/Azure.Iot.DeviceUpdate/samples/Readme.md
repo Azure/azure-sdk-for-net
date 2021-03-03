@@ -39,7 +39,7 @@ So, as an example let's assume we have set the environment and we have tenant, c
 ## Creating Client
 
 There are three different clients - UpdatesClient for update management, DevicesClient for device management and finally DeploymentsClient for deployment management. To create a new client, you need the Device Update for IoT Hub account, instance and credentials.
-In the sample below, you can set `accountEndpoint`, `instanceId`, `tenantId` and `clientId` as command-line arguments. The client requires an instance of [TokenCredential](https://docs.microsoft.com/en-us/dotnet/api/azure.core.tokencredential?view=azure-dotnet).
+In the sample below, you can set `accountEndpoint`, `instanceId`, `tenantId` and `clientId` as command-line arguments. The client requires an instance of [TokenCredential](https://docs.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet).
 In these samples, we illustrate how to use just derived class: InteractiveLogin. There are other options if you want to use client certificates for authentication (ClientCertificateCredential) or client secret (ClientSecretCredential).
 
 ```C#
@@ -183,7 +183,7 @@ Similar to importing update, the method will return job identity and you need to
 
 ### Create Simulator Device
 
-To create a simulator device, follow steps on [Getting Started Using Ubuntu (18.04 x64) Simulator Reference Client](https://docs.microsoft.com/en-us/azure/iot-hub-device-update/device-update-simulator) page.
+To create a simulator device, follow steps on [Getting Started Using Ubuntu (18.04 x64) Simulator Reference Client](https://docs.microsoft.com/azure/iot-hub-device-update/device-update-simulator) page.
 
 When you do that and have your simulator running, use your device identifier as `device` command-line argument.
 
