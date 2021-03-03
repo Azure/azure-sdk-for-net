@@ -4,7 +4,7 @@ namespace Azure.Iot.DeviceUpdate
     {
         protected DeploymentsClient() { }
         public DeploymentsClient(string accountEndpoint, string instanceId, Azure.Core.TokenCredential credential) { }
-        public DeploymentsClient(string accountEndpoint, string instanceId, Azure.Core.TokenCredential credential, Azure.Iot.DeviceUpdate.DeploymentsClientOptions options) { }
+        public DeploymentsClient(string accountEndpoint, string instanceId, Azure.Core.TokenCredential credential, Azure.Iot.DeviceUpdate.DeviceUpdateClientOptions options) { }
         public virtual Azure.Response<Azure.Iot.DeviceUpdate.Models.Deployment> CancelDeployment(string deploymentId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Iot.DeviceUpdate.Models.Deployment>> CancelDeploymentAsync(string deploymentId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Iot.DeviceUpdate.Models.Deployment> CreateOrUpdateDeployment(string deploymentId, Azure.Iot.DeviceUpdate.Models.Deployment deployment, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -22,19 +22,11 @@ namespace Azure.Iot.DeviceUpdate
         public virtual Azure.Response<Azure.Iot.DeviceUpdate.Models.Deployment> RetryDeployment(string deploymentId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Iot.DeviceUpdate.Models.Deployment>> RetryDeploymentAsync(string deploymentId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class DeploymentsClientOptions : Azure.Core.ClientOptions
-    {
-        public DeploymentsClientOptions(Azure.Iot.DeviceUpdate.DeploymentsClientOptions.ServiceVersion version = Azure.Iot.DeviceUpdate.DeploymentsClientOptions.ServiceVersion.V2020_09_01) { }
-        public enum ServiceVersion
-        {
-            V2020_09_01 = 1,
-        }
-    }
     public partial class DevicesClient
     {
         protected DevicesClient() { }
         public DevicesClient(string accountEndpoint, string instanceId, Azure.Core.TokenCredential credential) { }
-        public DevicesClient(string accountEndpoint, string instanceId, Azure.Core.TokenCredential credential, Azure.Iot.DeviceUpdate.DevicesClientOptions options) { }
+        public DevicesClient(string accountEndpoint, string instanceId, Azure.Core.TokenCredential credential, Azure.Iot.DeviceUpdate.DeviceUpdateClientOptions options) { }
         public virtual Azure.Response<Azure.Iot.DeviceUpdate.Models.Group> CreateOrUpdateGroup(string groupId, Azure.Iot.DeviceUpdate.Models.Group group, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Iot.DeviceUpdate.Models.Group>> CreateOrUpdateGroupAsync(string groupId, Azure.Iot.DeviceUpdate.Models.Group group, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteGroup(string groupId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -66,14 +58,6 @@ namespace Azure.Iot.DeviceUpdate
         public virtual Azure.Response<Azure.Iot.DeviceUpdate.Models.UpdateCompliance> GetUpdateCompliance(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Iot.DeviceUpdate.Models.UpdateCompliance>> GetUpdateComplianceAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class DevicesClientOptions : Azure.Core.ClientOptions
-    {
-        public DevicesClientOptions(Azure.Iot.DeviceUpdate.DevicesClientOptions.ServiceVersion version = Azure.Iot.DeviceUpdate.DevicesClientOptions.ServiceVersion.V2020_09_01) { }
-        public enum ServiceVersion
-        {
-            V2020_09_01 = 1,
-        }
-    }
     public partial class DeviceUpdateClientOptions : Azure.Core.ClientOptions
     {
         public DeviceUpdateClientOptions(Azure.Iot.DeviceUpdate.DeviceUpdateClientOptions.ServiceVersion version = Azure.Iot.DeviceUpdate.DeviceUpdateClientOptions.ServiceVersion.V2020_09_01) { }
@@ -86,7 +70,7 @@ namespace Azure.Iot.DeviceUpdate
     {
         protected UpdatesClient() { }
         public UpdatesClient(string accountEndpoint, string instanceId, Azure.Core.TokenCredential credential) { }
-        public UpdatesClient(string accountEndpoint, string instanceId, Azure.Core.TokenCredential credential, Azure.Iot.DeviceUpdate.UpdatesClientOptions options) { }
+        public UpdatesClient(string accountEndpoint, string instanceId, Azure.Core.TokenCredential credential, Azure.Iot.DeviceUpdate.DeviceUpdateClientOptions options) { }
         public virtual Azure.Response<string> DeleteUpdate(string provider, string name, string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<string>> DeleteUpdateAsync(string provider, string name, string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Iot.DeviceUpdate.Models.File> GetFile(string provider, string name, string version, string fileId, Azure.Iot.DeviceUpdate.Models.AccessCondition accessCondition = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -107,14 +91,6 @@ namespace Azure.Iot.DeviceUpdate
         public virtual Azure.AsyncPageable<string> GetVersionsAsync(string provider, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<string> ImportUpdate(Azure.Iot.DeviceUpdate.Models.ImportUpdateInput updateToImport, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<string>> ImportUpdateAsync(Azure.Iot.DeviceUpdate.Models.ImportUpdateInput updateToImport, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class UpdatesClientOptions : Azure.Core.ClientOptions
-    {
-        public UpdatesClientOptions(Azure.Iot.DeviceUpdate.UpdatesClientOptions.ServiceVersion version = Azure.Iot.DeviceUpdate.UpdatesClientOptions.ServiceVersion.V2020_09_01) { }
-        public enum ServiceVersion
-        {
-            V2020_09_01 = 1,
-        }
     }
 }
 namespace Azure.Iot.DeviceUpdate.Models
@@ -403,66 +379,6 @@ namespace Azure.Iot.DeviceUpdate.Models
         public static implicit operator Azure.Iot.DeviceUpdate.Models.OperationStatus (string value) { throw null; }
         public static bool operator !=(Azure.Iot.DeviceUpdate.Models.OperationStatus left, Azure.Iot.DeviceUpdate.Models.OperationStatus right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class PageableListOfDeploymentDeviceStates
-    {
-        internal PageableListOfDeploymentDeviceStates() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Iot.DeviceUpdate.Models.DeploymentDeviceState> Value { get { throw null; } }
-    }
-    public partial class PageableListOfDeployments
-    {
-        internal PageableListOfDeployments() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Iot.DeviceUpdate.Models.Deployment> Value { get { throw null; } }
-    }
-    public partial class PageableListOfDeviceClasses
-    {
-        internal PageableListOfDeviceClasses() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Iot.DeviceUpdate.Models.DeviceClass> Value { get { throw null; } }
-    }
-    public partial class PageableListOfDevices
-    {
-        internal PageableListOfDevices() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Iot.DeviceUpdate.Models.Device> Value { get { throw null; } }
-    }
-    public partial class PageableListOfDeviceTags
-    {
-        internal PageableListOfDeviceTags() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Iot.DeviceUpdate.Models.DeviceTag> Value { get { throw null; } }
-    }
-    public partial class PageableListOfGroups
-    {
-        internal PageableListOfGroups() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Iot.DeviceUpdate.Models.Group> Value { get { throw null; } }
-    }
-    public partial class PageableListOfOperations
-    {
-        internal PageableListOfOperations() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Iot.DeviceUpdate.Models.Operation> Value { get { throw null; } }
-    }
-    public partial class PageableListOfStrings
-    {
-        internal PageableListOfStrings() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> Value { get { throw null; } }
-    }
-    public partial class PageableListOfUpdatableDevices
-    {
-        internal PageableListOfUpdatableDevices() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Iot.DeviceUpdate.Models.UpdatableDevices> Value { get { throw null; } }
-    }
-    public partial class PageableListOfUpdateIds
-    {
-        internal PageableListOfUpdateIds() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Iot.DeviceUpdate.Models.UpdateId> Value { get { throw null; } }
     }
     public partial class UpdatableDevices
     {

@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Iot.DeviceUpdate.Models
 {
     /// <summary> The list of updatable devices. </summary>
-    public partial class PageableListOfUpdatableDevices
+    internal partial class PageableListOfUpdatableDevices
     {
         /// <summary> Initializes a new instance of PageableListOfUpdatableDevices. </summary>
         internal PageableListOfUpdatableDevices()

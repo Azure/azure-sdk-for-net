@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Iot.DeviceUpdate.Models
 {
     /// <summary> The list of strings with server paging support. </summary>
-    public partial class PageableListOfStrings
+    internal partial class PageableListOfStrings
     {
         /// <summary> Initializes a new instance of PageableListOfStrings. </summary>
         internal PageableListOfStrings()

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Iot.DeviceUpdate.Models
 {
-    public partial class PageableListOfDeploymentDeviceStates
+    internal partial class PageableListOfDeploymentDeviceStates
     {
         internal static PageableListOfDeploymentDeviceStates DeserializePageableListOfDeploymentDeviceStates(JsonElement element)
         {
