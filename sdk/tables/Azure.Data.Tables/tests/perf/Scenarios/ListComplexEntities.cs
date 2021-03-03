@@ -32,15 +32,16 @@ namespace Azure.Data.Tables.Performance
             await RunInternalAsync(true, cancellationToken).ConfigureAwait(false);
         }
 
-        internal async Task RunInternalAsync(bool async, CancellationToken cancellationToken)
+        internal Task RunInternalAsync(bool async, CancellationToken cancellationToken)
         {
             if (async)
             {
-                await Client.QueryAsync<ComplexPerfEntity>(cancellationToken: cancellationToken).ToEnumerableAsync().ConfigureAwait(false);
+                return Client.QueryAsync<ComplexPerfEntity>(cancellationToken: cancellationToken).ToEnumerableAsync();
             }
             else
             {
                 Client.Query<ComplexPerfEntity>(cancellationToken: cancellationToken).ToList();
+                return Task.CompletedTask;
             }
         }
     }
