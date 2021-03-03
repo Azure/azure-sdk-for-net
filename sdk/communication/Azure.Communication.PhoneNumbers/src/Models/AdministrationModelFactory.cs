@@ -179,16 +179,6 @@ namespace Azure.Communication.PhoneNumbers.Models
             => new PhonePlanGroup(phonePlanGroupId, localizedName, localizedDescription);
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PhonePlansResponse"/> class.
-        /// </summary>
-        /// <param name="phonePlans"> Represents the underlying list of phone plans. </param>
-        /// <param name="nextLink"> Represents the URL link to the next page. </param>
-        /// <returns>A new <see cref="PhonePlansResponse"/> instance for mocking.</returns>
-
-        public static PhonePlansResponse PhonePlansResponse(IReadOnlyList<PhonePlan> phonePlans, string nextLink)
-            => new PhonePlansResponse(phonePlans, nextLink);
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="RateInformation"/> class.
         /// </summary>
         /// <param name="monthlyRate"> The monthly rate of a phone plan group. </param>

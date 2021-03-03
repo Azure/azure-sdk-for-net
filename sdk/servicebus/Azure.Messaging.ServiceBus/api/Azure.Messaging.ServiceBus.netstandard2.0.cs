@@ -85,6 +85,7 @@ namespace Azure.Messaging.ServiceBus
     public partial class ServiceBusClientOptions
     {
         public ServiceBusClientOptions() { }
+        public bool EnableCrossEntityTransactions { get { throw null; } set { } }
         public Azure.Messaging.ServiceBus.ServiceBusRetryOptions RetryOptions { get { throw null; } set { } }
         public Azure.Messaging.ServiceBus.ServiceBusTransportType TransportType { get { throw null; } set { } }
         public System.Net.IWebProxy WebProxy { get { throw null; } set { } }
@@ -224,7 +225,6 @@ namespace Azure.Messaging.ServiceBus
         public int MaxConcurrentCalls { get { throw null; } set { } }
         public int PrefetchCount { get { throw null; } set { } }
         public Azure.Messaging.ServiceBus.ServiceBusReceiveMode ReceiveMode { get { throw null; } set { } }
-        public string TransactionGroup { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -304,7 +304,6 @@ namespace Azure.Messaging.ServiceBus
         public int PrefetchCount { get { throw null; } set { } }
         public Azure.Messaging.ServiceBus.ServiceBusReceiveMode ReceiveMode { get { throw null; } set { } }
         public Azure.Messaging.ServiceBus.SubQueue SubQueue { get { throw null; } set { } }
-        public string TransactionGroup { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -345,7 +344,6 @@ namespace Azure.Messaging.ServiceBus
         public virtual string EntityPath { get { throw null; } }
         public virtual string FullyQualifiedNamespace { get { throw null; } }
         public virtual bool IsClosed { get { throw null; } }
-        public virtual string TransactionGroup { get { throw null; } }
         public virtual System.Threading.Tasks.Task CancelScheduledMessageAsync(long sequenceNumber, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task CancelScheduledMessagesAsync(System.Collections.Generic.IEnumerable<long> sequenceNumbers, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task CloseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -361,17 +359,6 @@ namespace Azure.Messaging.ServiceBus
         public virtual System.Threading.Tasks.Task SendMessageAsync(Azure.Messaging.ServiceBus.ServiceBusMessage message, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task SendMessagesAsync(Azure.Messaging.ServiceBus.ServiceBusMessageBatch messageBatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task SendMessagesAsync(System.Collections.Generic.IEnumerable<Azure.Messaging.ServiceBus.ServiceBusMessage> messages, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override string ToString() { throw null; }
-    }
-    public partial class ServiceBusSenderOptions
-    {
-        public ServiceBusSenderOptions() { }
-        public string TransactionGroup { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
     }
@@ -416,7 +403,6 @@ namespace Azure.Messaging.ServiceBus
         public Azure.Messaging.ServiceBus.ServiceBusReceiveMode ReceiveMode { get { throw null; } set { } }
         public System.TimeSpan? SessionIdleTimeout { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> SessionIds { get { throw null; } }
-        public string TransactionGroup { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -438,7 +424,6 @@ namespace Azure.Messaging.ServiceBus
         public ServiceBusSessionReceiverOptions() { }
         public int PrefetchCount { get { throw null; } set { } }
         public Azure.Messaging.ServiceBus.ServiceBusReceiveMode ReceiveMode { get { throw null; } set { } }
-        public string TransactionGroup { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

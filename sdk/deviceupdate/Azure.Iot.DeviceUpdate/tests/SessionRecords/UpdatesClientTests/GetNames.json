@@ -1,0 +1,33 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://contosoprodwus2.api.prod.adu.microsoft.com/deviceupdate/blue/v2/updates/providers/Contoso/names",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-Iot.DeviceUpdate/1.0.0-alpha.20210302.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "66a470f1f9a89a4bd59c1d413a2a1262",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "29",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 02 Mar 2021 20:28:36 GMT",
+        "traceparent": "00-87c2760f6f2c904481cd8956e7099b32-63dc9ef49cc64347-00"
+      },
+      "ResponseBody": {
+        "value": [
+          "Virtual-Machine"
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "DEVICEUPDATE_ACCOUNT_ENDPOINT": "contosoprodwus2.api.prod.adu.microsoft.com",
+    "DEVICEUPDATE_INSTANCE_ID": "blue",
+    "RandomSeed": "1505490100"
+  }
+}

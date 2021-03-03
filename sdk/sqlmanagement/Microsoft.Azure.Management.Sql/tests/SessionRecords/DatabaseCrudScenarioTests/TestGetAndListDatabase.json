@@ -4,10 +4,10 @@
       "RequestUri": "/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourcegroups/sqlcrudtest-7018?api-version=2017-05-10",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDFjNGVjODgtZTE3OS00NGY3LTllYjAtZTk3MTlhNTA4N2FiL3Jlc291cmNlZ3JvdXBzL3NxbGNydWR0ZXN0LTcwMTg/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"location\": \"Southeast Asia\",\r\n  \"tags\": {\r\n    \"sqlcrudtest-7018\": \"2021-02-26 05:34:41Z\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"location\": \"East US 2 EUAP\",\r\n  \"tags\": {\r\n    \"sqlcrudtest-3858\": \"2020-12-29 22:08:39Z\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "cc469d82-0fae-4924-aea8-f997f2268b12"
+          "854dda24-515f-4f7e-8b94-60f1de1f6fda"
         ],
         "Accept-Language": [
           "en-US"

@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Graph.Rbac.Models
 {
     /// <summary> Application list operation result. </summary>
-    public partial class ApplicationListResult
+    internal partial class ApplicationListResult
     {
         /// <summary> Initializes a new instance of ApplicationListResult. </summary>
         internal ApplicationListResult()

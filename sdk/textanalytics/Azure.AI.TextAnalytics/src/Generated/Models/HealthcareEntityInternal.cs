@@ -21,9 +21,8 @@ namespace Azure.AI.TextAnalytics
         /// <param name="offset"> Start position for the entity text. Use of different &apos;stringIndexType&apos; values can affect the offset returned. </param>
         /// <param name="length"> Length for the entity text. Use of different &apos;stringIndexType&apos; values can affect the length returned. </param>
         /// <param name="confidenceScore"> Confidence score between 0 and 1 of the extracted entity. </param>
-        /// <param name="isNegated"> . </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="category"/> is null. </exception>
-        internal HealthcareEntityInternal(string text, string category, int offset, int length, double confidenceScore, bool isNegated) : base(text, category, offset, length, confidenceScore)
+        internal HealthcareEntityInternal(string text, string category, int offset, int length, double confidenceScore) : base(text, category, offset, length, confidenceScore)
         {
             if (text == null)
             {
@@ -34,7 +33,6 @@ namespace Azure.AI.TextAnalytics
                 throw new ArgumentNullException(nameof(category));
             }
 
-            IsNegated = isNegated;
             Links = new ChangeTrackingList<EntityDataSource>();
         }
 
@@ -45,15 +43,19 @@ namespace Azure.AI.TextAnalytics
         /// <param name="offset"> Start position for the entity text. Use of different &apos;stringIndexType&apos; values can affect the offset returned. </param>
         /// <param name="length"> Length for the entity text. Use of different &apos;stringIndexType&apos; values can affect the length returned. </param>
         /// <param name="confidenceScore"> Confidence score between 0 and 1 of the extracted entity. </param>
-        /// <param name="isNegated"> . </param>
+        /// <param name="assertion"> . </param>
+        /// <param name="name"> Preferred name for the entity. Example: &apos;histologically&apos; would have a &apos;name&apos; of &apos;histologic&apos;. </param>
         /// <param name="links"> Entity references in known data sources. </param>
-        internal HealthcareEntityInternal(string text, string category, string subcategory, int offset, int length, double confidenceScore, bool isNegated, IReadOnlyList<EntityDataSource> links) : base(text, category, subcategory, offset, length, confidenceScore)
+        internal HealthcareEntityInternal(string text, string category, string subcategory, int offset, int length, double confidenceScore, HealthcareEntityAssertion assertion, string name, IReadOnlyList<EntityDataSource> links) : base(text, category, subcategory, offset, length, confidenceScore)
         {
-            IsNegated = isNegated;
+            Assertion = assertion;
+            Name = name;
             Links = links;
         }
 
-        public bool IsNegated { get; }
+        public HealthcareEntityAssertion Assertion { get; }
+        /// <summary> Preferred name for the entity. Example: &apos;histologically&apos; would have a &apos;name&apos; of &apos;histologic&apos;. </summary>
+        public string Name { get; }
         /// <summary> Entity references in known data sources. </summary>
         public IReadOnlyList<EntityDataSource> Links { get; }
     }

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class ObjectReplicationPolicies
+    internal partial class ObjectReplicationPolicies
     {
         internal static ObjectReplicationPolicies DeserializeObjectReplicationPolicies(JsonElement element)
         {

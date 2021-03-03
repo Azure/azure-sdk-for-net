@@ -12,7 +12,7 @@ namespace Azure.Messaging.EventGrid
     {
         public static object AsSystemEventData(string eventType, JsonElement data)
         {
-            if (SystemEventDeserializers.TryGetValue(eventType, out Func<JsonElement, object> systemDeserializationFunction))
+            if (s_systemEventDeserializers.TryGetValue(eventType, out Func<JsonElement, object> systemDeserializationFunction))
             {
                 return systemDeserializationFunction(data);
             }
@@ -22,7 +22,7 @@ namespace Azure.Messaging.EventGrid
             }
         }
 
-        public static readonly IReadOnlyDictionary<string, Func<JsonElement, object>> SystemEventDeserializers = new Dictionary<string, Func<JsonElement, object>>(StringComparer.OrdinalIgnoreCase)
+        private static readonly IReadOnlyDictionary<string, Func<JsonElement, object>> s_systemEventDeserializers = new Dictionary<string, Func<JsonElement, object>>(StringComparer.OrdinalIgnoreCase)
         {
             // KEEP THIS SORTED BY THE NAME OF THE PUBLISHING SERVICE
             // Add handling for additional event types here.
@@ -32,15 +32,17 @@ namespace Azure.Messaging.EventGrid
             { SystemEventNames.AppConfigurationKeyValueModified, AppConfigurationKeyValueModifiedEventData.DeserializeAppConfigurationKeyValueModifiedEventData },
 
             // Communication events
-            { SystemEventNames.ACSChatMemberAddedToThreadWithUser, ACSChatMemberAddedToThreadWithUserEventData.DeserializeACSChatMemberAddedToThreadWithUserEventData },
-            { SystemEventNames.ACSChatMemberRemovedFromThreadWithUser, ACSChatMemberRemovedFromThreadWithUserEventData.DeserializeACSChatMemberRemovedFromThreadWithUserEventData },
-            { SystemEventNames.ACSChatMessageDeleted, ACSChatMessageDeletedEventData.DeserializeACSChatMessageDeletedEventData },
-            { SystemEventNames.ACSChatMessageEdited, ACSChatMessageEditedEventData.DeserializeACSChatMessageEditedEventData },
-            { SystemEventNames.ACSChatMessageReceived, ACSChatMessageReceivedEventData.DeserializeACSChatMessageReceivedEventData },
-            { SystemEventNames.ACSChatThreadCreatedWithUser,  ACSChatThreadCreatedWithUserEventData.DeserializeACSChatThreadCreatedWithUserEventData },
-            { SystemEventNames.ACSChatThreadPropertiesUpdatedPerUser, ACSChatThreadPropertiesUpdatedPerUserEventData.DeserializeACSChatThreadPropertiesUpdatedPerUserEventData },
-            { SystemEventNames.ACSChatThreadWithUserDeleted, ACSChatThreadWithUserDeletedEventData.DeserializeACSChatThreadWithUserDeletedEventData },
-            { SystemEventNames.ACSSMSDeliveryReportReceived, AcsSmsDeliveryReportReceivedEventData.DeserializeAcsSmsDeliveryReportReceivedEventData },
+            { SystemEventNames.AcsChatParticipantAddedToThread, AcsChatParticipantAddedToThreadEventData.DeserializeAcsChatParticipantAddedToThreadEventData },
+            { SystemEventNames.AcsChatParticipantAddedToThreadWithUser, AcsChatParticipantAddedToThreadWithUserEventData.DeserializeAcsChatParticipantAddedToThreadWithUserEventData },
+            { SystemEventNames.AcsChatParticipantRemovedFromThread, AcsChatParticipantRemovedFromThreadEventData.DeserializeAcsChatParticipantRemovedFromThreadEventData },
+            { SystemEventNames.AcsChatParticipantRemovedFromThreadWithUser, AcsChatParticipantRemovedFromThreadWithUserEventData.DeserializeAcsChatParticipantRemovedFromThreadWithUserEventData },
+            { SystemEventNames.AcsChatMessageDeleted, AcsChatMessageDeletedEventData.DeserializeAcsChatMessageDeletedEventData },
+            { SystemEventNames.AcsChatMessageEdited, AcsChatMessageEditedEventData.DeserializeAcsChatMessageEditedEventData },
+            { SystemEventNames.AcsChatMessageReceived, AcsChatMessageReceivedEventData.DeserializeAcsChatMessageReceivedEventData },
+            { SystemEventNames.AcsChatThreadCreatedWithUser,  AcsChatThreadCreatedWithUserEventData.DeserializeAcsChatThreadCreatedWithUserEventData },
+            { SystemEventNames.AcsChatThreadPropertiesUpdatedPerUser, AcsChatThreadPropertiesUpdatedPerUserEventData.DeserializeAcsChatThreadPropertiesUpdatedPerUserEventData },
+            { SystemEventNames.AcsChatThreadWithUserDeleted, AcsChatThreadWithUserDeletedEventData.DeserializeAcsChatThreadWithUserDeletedEventData },
+            { SystemEventNames.AcsSmsDeliveryReportReceived, AcsSmsDeliveryReportReceivedEventData.DeserializeAcsSmsDeliveryReportReceivedEventData },
             { SystemEventNames.ACSSMSReceived, AcsSmsReceivedEventData.DeserializeAcsSmsReceivedEventData },
 
             // ContainerRegistry events

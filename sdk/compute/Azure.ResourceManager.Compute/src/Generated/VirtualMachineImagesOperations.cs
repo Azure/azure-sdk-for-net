@@ -21,10 +21,12 @@ namespace Azure.ResourceManager.Compute
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         internal VirtualMachineImagesRestOperations RestClient { get; }
+
         /// <summary> Initializes a new instance of VirtualMachineImagesOperations for mocking. </summary>
         protected VirtualMachineImagesOperations()
         {
         }
+
         /// <summary> Initializes a new instance of VirtualMachineImagesOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>

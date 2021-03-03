@@ -9,9 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
-using Azure.Iot.TimeSeriesInsights;
 
-namespace Azure.Iot.TimeSeriesInsights.Models
+namespace Azure.Iot.TimeSeriesInsights
 {
     /// <summary> Aggregate Series query. Allows to calculate an aggregated time series from events for a given Time Series ID and search span. </summary>
     public partial class AggregateSeries

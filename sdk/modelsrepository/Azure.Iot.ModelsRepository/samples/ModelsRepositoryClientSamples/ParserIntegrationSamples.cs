@@ -11,21 +11,27 @@ namespace Azure.Iot.ModelsRepository.Samples
 {
     internal class ParserIntegrationSamples
     {
-        public static async Task ResolveAndParseAsync()
+        public static async Task GetModelsAndParseAsync()
         {
-            var dtmi = "dtmi:com:example:TemperatureController;1";
+            #region Snippet:ModelsRepositorySamplesParserIntegrationGetModelsAndParseAsync
+
             var client = new ModelsRepositoryClient();
-            IDictionary<string, string> models = await client.ResolveAsync(dtmi).ConfigureAwait(false);
+            var dtmi = "dtmi:com:example:TemperatureController;1";
+            IDictionary<string, string> models = await client.GetModelsAsync(dtmi).ConfigureAwait(false);
             var parser = new ModelParser();
             IReadOnlyDictionary<Dtmi, DTEntityInfo> parseResult = await parser.ParseAsync(models.Values.ToArray());
             Console.WriteLine($"{dtmi} resolved in {models.Count} interfaces with {parseResult.Count} entities.");
+
+            #endregion Snippet:ModelsRepositorySamplesParserIntegrationGetModelsAndParseAsync
         }
 
-        public static async Task ParseAndResolveAsync()
+        public static async Task ParseAndGetModelsWithExtensionAsync()
         {
-            var dtmi = "dtmi:com:example:TemperatureController;1";
+            #region Snippet:ModelsRepositorySamplesParserIntegrationParseAndGetModelsAsync
+
             var client = new ModelsRepositoryClient(new ModelsRepositoryClientOptions(resolutionOption: DependencyResolutionOption.Disabled));
-            IDictionary<string, string> models = await client.ResolveAsync(dtmi).ConfigureAwait(false);
+            var dtmi = "dtmi:com:example:TemperatureController;1";
+            IDictionary<string, string> models = await client.GetModelsAsync(dtmi).ConfigureAwait(false);
             var parser = new ModelParser
             {
                 // Usage of the ModelsRepositoryClientExtensions.ParserDtmiResolver extension.
@@ -33,6 +39,8 @@ namespace Azure.Iot.ModelsRepository.Samples
             };
             IReadOnlyDictionary<Dtmi, DTEntityInfo> parseResult = await parser.ParseAsync(models.Values.Take(1).ToArray());
             Console.WriteLine($"{dtmi} resolved in {models.Count} interfaces with {parseResult.Count} entities.");
+
+            #endregion Snippet:ModelsRepositorySamplesParserIntegrationParseAndGetModelsAsync
         }
     }
 }

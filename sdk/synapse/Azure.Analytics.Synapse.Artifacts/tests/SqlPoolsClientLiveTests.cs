@@ -28,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         private SqlPoolsClient CreateClient()
         {
             return InstrumentClient(new SqlPoolsClient(
-                new Uri(TestEnvironment.EndpointUrl),
+                TestEnvironment.EndpointUrl,
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new ArtifactsClientOptions())
             ));

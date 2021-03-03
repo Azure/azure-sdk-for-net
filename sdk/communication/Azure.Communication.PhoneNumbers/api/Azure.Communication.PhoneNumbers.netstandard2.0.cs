@@ -110,7 +110,6 @@ namespace Azure.Communication.PhoneNumbers.Models
         public static Azure.Communication.PhoneNumbers.Models.PhoneNumberReservationPurchaseOperation PhoneNumberReservationPurchaseOperation(Azure.Communication.PhoneNumbers.PhoneNumberAdministrationClient client, string reservationId) { throw null; }
         public static Azure.Communication.PhoneNumbers.Models.PhonePlan PhonePlan(string phonePlanId, string localizedName, Azure.Communication.PhoneNumbers.Models.LocationType locationType) { throw null; }
         public static Azure.Communication.PhoneNumbers.Models.PhonePlanGroup PhonePlanGroup(string phonePlanGroupId, string localizedName, string localizedDescription) { throw null; }
-        public static Azure.Communication.PhoneNumbers.Models.PhonePlansResponse PhonePlansResponse(System.Collections.Generic.IReadOnlyList<Azure.Communication.PhoneNumbers.Models.PhonePlan> phonePlans, string nextLink) { throw null; }
         public static Azure.Communication.PhoneNumbers.Models.RateInformation RateInformation(double? monthlyRate, Azure.Communication.PhoneNumbers.Models.CurrencyType? currencyType, string rateErrorMessage) { throw null; }
         public static Azure.Communication.PhoneNumbers.Models.ReleasePhoneNumberOperation ReleasePhoneNumberOperation(Azure.Communication.PhoneNumbers.PhoneNumberAdministrationClient client, string releaseId) { throw null; }
         public static Azure.Communication.PhoneNumbers.Models.UpdateNumberCapabilitiesResponse UpdateNumberCapabilitiesResponse(string capabilitiesUpdateId) { throw null; }
@@ -426,12 +425,6 @@ namespace Azure.Communication.PhoneNumbers.Models
         public Azure.Communication.PhoneNumbers.Models.PhoneNumberType? PhoneNumberType { get { throw null; } }
         public string PhonePlanGroupId { get { throw null; } }
         public Azure.Communication.PhoneNumbers.Models.RateInformation RateInformation { get { throw null; } }
-    }
-    public partial class PhonePlansResponse
-    {
-        internal PhonePlansResponse() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Communication.PhoneNumbers.Models.PhonePlan> PhonePlans { get { throw null; } }
     }
     public partial class PstnConfiguration
     {

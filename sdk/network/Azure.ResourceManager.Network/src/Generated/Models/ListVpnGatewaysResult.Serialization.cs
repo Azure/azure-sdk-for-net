@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ListVpnGatewaysResult
+    internal partial class ListVpnGatewaysResult
     {
         internal static ListVpnGatewaysResult DeserializeListVpnGatewaysResult(JsonElement element)
         {

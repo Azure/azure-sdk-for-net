@@ -1,7 +1,24 @@
 # Release History
 
 ## 5.1.0-beta.5 (Unreleased)
+### New features
+- Added ability to filter the categories returned in a Personally Identifiable Information recognition with the optional parameter `CategoriesFilter` in `RecognizePiiEntitiesOptions`.
+- `AnalyzeHealthcareEntitiesResult`, now exposes the property `EntityRelations`of type `HealthcareEntityRelation`.
+- Introduced `HealthcareEntityRelation` class which will determine all the different relations between the entities as `Roles`.
+- Added `HealthcareEntityRelationRole`, which exposes `Name` and `Entity` of type `string` and `HealthcareEntity` respectively.
+- `HealthcareEntityAssertion` is added to `HealthcareEntity` which further exposes `Association`, `Certainity` and `Conditionality`.
+- Added new types under `HealthcareRelationType` class.
 
+### Breaking changes
+- Renamed `AspectSentiment` to `TargetSentiment`.
+- Renamed `MinedOpinion` to `SentenceOpinion`.
+- Renamed `OpinionSentiment` to `AssessmentSentiment`.
+- For `PiiEntity.Category` the type of the property is now `PiiEntityCategory` instead of `EntityCategory`.
+- Removed `RelatedEntities`.
+- `RecognizePiiEntitiesOptions.Domain` is now a nullable type.
+
+### Fixes
+- `RecognizePiiEntities` and `TextAnalyticsActions.RecognizePiiEntitiesOptions` were always passing `PiiEntityDomainType.PHI`. Now, it is only passed when requested by the user [19086](https://github.com/Azure/azure-sdk-for-net/issues/19086).
 
 ## 5.1.0-beta.4 (2021-02-10)
 ### New features

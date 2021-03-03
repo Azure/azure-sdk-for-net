@@ -1,0 +1,44 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://contosoprodwus2.api.prod.adu.microsoft.com/deviceupdate/blue/v2/updates/operations/e3a75d1b-e359-4bbd-a84c-68fbfa8b7b9f%3Fapi-version%3D2",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-Iot.DeviceUpdate/1.0.0-alpha.20210302.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "1edf9450177d6f5fae4e2632e710cfa1",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "487",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 02 Mar 2021 20:28:41 GMT",
+        "ETag": "\u0022a1874484-e4be-4643-b992-c5d43ed6947c\u0022",
+        "traceparent": "00-e34b93dfc36d8c48b87e6948d552f27a-d2b48537e8f1db43-00"
+      },
+      "ResponseBody": {
+        "operationId": "e3a75d1b-e359-4bbd-a84c-68fbfa8b7b9f",
+        "status": "Succeeded",
+        "updateId": {
+          "provider": "Contoso",
+          "name": "Virtual-Machine",
+          "version": "2021.302.1202.48"
+        },
+        "resourceLocation": "/deviceupdate/blue/updates/providers/Contoso/names/Virtual-Machine/versions/2021.302.1202.48?api-version=2",
+        "traceId": "c72d7514826f124fb37678796aa477ae",
+        "lastActionDateTime": "2021-03-02T20:04:47.9517198Z",
+        "createdDateTime": "2021-03-02T20:02:50.6192614Z",
+        "etag": "\u0022a1874484-e4be-4643-b992-c5d43ed6947c\u0022"
+      }
+    }
+  ],
+  "Variables": {
+    "DEVICEUPDATE_ACCOUNT_ENDPOINT": "contosoprodwus2.api.prod.adu.microsoft.com",
+    "DEVICEUPDATE_INSTANCE_ID": "blue",
+    "DEVICEUPDATE_UPDATE_OPERATION": "e3a75d1b-e359-4bbd-a84c-68fbfa8b7b9f?api-version=2",
+    "RandomSeed": "902889502"
+  }
+}

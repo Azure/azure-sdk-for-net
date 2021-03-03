@@ -422,7 +422,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                $"  \"MaxConcurrentCalls\": {16 * Utility.GetProcessorCount()},",
                 "  \"MaxConcurrentSessions\": 8,",
                 "  \"MaxMessages\": 1000,",
-                "  \"MaxWaitTime\": \"\"",
+                "  \"SessionIdleTimeout\": \"\"",
                 "  \"RetryOptions\": {",
                 "       \"Mode\": \"Exponential\",",
                 "       \"TryTimeout\": \"00:00:10\",",
@@ -503,11 +503,10 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             // Passes service bus message from a queue to another queue
             public async Task SBQueue2SBQueue(
                 [ServiceBusTrigger(FirstQueueNameKey)] string start, int deliveryCount,
-                ServiceBusReceiver messageReceiver,
+                ServiceBusMessageActions messageActions,
                 string lockToken,
                 [ServiceBus(SecondQueueNameKey)] ServiceBusSender messageSender)
             {
-                Assert.AreEqual(_firstQueueScope.QueueName, messageReceiver.EntityPath);
                 Assert.AreEqual(1, deliveryCount);
 
                 // verify the message receiver and token are valid
@@ -529,7 +528,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             // First listener for the topic
             public static void SBTopicListener1(
                 [ServiceBusTrigger(TopicNameKey, FirstSubscriptionNameKey)] string message,
-                ServiceBusReceiver messageReceiver,
+                ServiceBusMessageActions messageActions,
                 string lockToken)
             {
                 SBTopicListener1Impl(message);
@@ -606,11 +605,10 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         {
             public static async Task SBQueue2SBQueue(
                 [ServiceBusTrigger(FirstQueueNameKey)] string[] messages,
-                ServiceBusReceiver messageReceiver, CancellationToken cancellationToken)
+                ServiceBusMessageActions messageActions, CancellationToken cancellationToken)
             {
                 try
                 {
-                    Assert.AreEqual(_firstQueueScope.QueueName, messageReceiver.EntityPath);
                     ServiceBusMultipleTestJobsBase.ProcessMessages(messages);
                     await Task.Delay(0, cancellationToken);
                 }
@@ -623,10 +621,10 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         public class ServiceBusMultipleMessagesTestJob_BindToMessageArray
         {
             public static void SBQueue2SBQueue(
-                [ServiceBusTrigger(FirstQueueNameKey)] ServiceBusReceivedMessage[] array,
-                ServiceBusReceiver messageReceiver)
+                [ServiceBusTrigger(FirstQueueNameKey)]
+                ServiceBusReceivedMessage[] array,
+                ServiceBusMessageActions messageActions)
             {
-                Assert.AreEqual(_firstQueueScope.QueueName, messageReceiver.EntityPath);
                 string[] messages = array.Select(x => x.Body.ToString()).ToArray();
                 ServiceBusMultipleTestJobsBase.ProcessMessages(messages);
             }
@@ -636,9 +634,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         {
             public static void SBQueue2SBQueue(
                 [ServiceBusTrigger(FirstQueueNameKey)] TestPoco[] array,
-                ServiceBusReceiver messageReceiver)
+                ServiceBusMessageActions messageActions)
             {
-                Assert.AreEqual(_firstQueueScope.QueueName, messageReceiver.EntityPath);
                 string[] messages = array.Select(x => "{'Name': '" + x.Name + "', 'Value': 'Value'}").ToArray();
                 ServiceBusMultipleTestJobsBase.ProcessMessages(messages);
             }
@@ -672,7 +669,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         {
             public static async Task QueueNoSessions(
                 [ServiceBusTrigger(FirstQueueNameKey)] ServiceBusReceivedMessage msg,
-                ServiceBusReceiver messageReceiver,
+                ServiceBusMessageActions messageActions,
                 CancellationToken cancellationToken,
                 ILogger logger)
             {
@@ -680,7 +677,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 _drainValidationPreDelay.Set();
                 await DrainModeHelper.WaitForCancellation(cancellationToken);
                 Assert.True(cancellationToken.IsCancellationRequested);
-                await messageReceiver.CompleteMessageAsync(msg);
+                await messageActions.CompleteMessageAsync(msg);
                 _drainValidationPostDelay.Set();
             }
         }
@@ -688,8 +685,9 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         public class DrainModeTestJobTopic
         {
             public static async Task TopicNoSessions(
-                [ServiceBusTrigger(TopicNameKey, FirstSubscriptionNameKey)] ServiceBusReceivedMessage msg,
-                ServiceBusReceiver messageReceiver,
+                [ServiceBusTrigger(TopicNameKey, FirstSubscriptionNameKey)]
+                ServiceBusReceivedMessage msg,
+                ServiceBusMessageActions messageActions,
                 CancellationToken cancellationToken,
                 ILogger logger)
             {
@@ -697,7 +695,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 _drainValidationPreDelay.Set();
                 await DrainModeHelper.WaitForCancellation(cancellationToken);
                 Assert.True(cancellationToken.IsCancellationRequested);
-                await messageReceiver.CompleteMessageAsync(msg);
+                await messageActions.CompleteMessageAsync(msg);
                 _drainValidationPostDelay.Set();
             }
         }
@@ -705,8 +703,9 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         public class DrainModeTestJobQueueBatch
         {
             public static async Task QueueNoSessionsBatch(
-               [ServiceBusTrigger(FirstQueueNameKey)] ServiceBusReceivedMessage[] array,
-               ServiceBusReceiver messageReceiver,
+               [ServiceBusTrigger(FirstQueueNameKey)]
+               ServiceBusReceivedMessage[] array,
+               ServiceBusMessageActions messageActions,
                CancellationToken cancellationToken,
                ILogger logger)
             {
@@ -717,7 +716,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.True(cancellationToken.IsCancellationRequested);
                 foreach (ServiceBusReceivedMessage msg in array)
                 {
-                    await messageReceiver.CompleteMessageAsync(msg);
+                    await messageActions.CompleteMessageAsync(msg);
                 }
                 _drainValidationPostDelay.Set();
             }
@@ -727,7 +726,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         {
             public static async Task TopicNoSessionsBatch(
                 [ServiceBusTrigger(TopicNameKey, FirstSubscriptionNameKey)] ServiceBusReceivedMessage[] array,
-                ServiceBusReceiver messageReceiver,
+                ServiceBusMessageActions messageActions,
                 CancellationToken cancellationToken,
                 ILogger logger)
             {
@@ -738,7 +737,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.True(cancellationToken.IsCancellationRequested);
                 foreach (ServiceBusReceivedMessage msg in array)
                 {
-                    await messageReceiver.CompleteMessageAsync(msg);
+                    await messageActions.CompleteMessageAsync(msg);
                 }
                 _drainValidationPostDelay.Set();
             }
@@ -798,16 +797,16 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     _logger = logger;
                 }
 
-                public override async Task<bool> BeginProcessingMessageAsync(ServiceBusReceiver receiver, ServiceBusReceivedMessage message, CancellationToken cancellationToken)
+                public override async Task<bool> BeginProcessingMessageAsync(ServiceBusMessageActions messageActions, ServiceBusReceivedMessage message, CancellationToken cancellationToken)
                 {
                     _logger?.LogInformation("Custom processor Begin called!");
-                    return await base.BeginProcessingMessageAsync(receiver, message, cancellationToken);
+                    return await base.BeginProcessingMessageAsync(messageActions, message, cancellationToken);
                 }
 
-                public override async Task CompleteProcessingMessageAsync(ServiceBusReceiver receiver, ServiceBusReceivedMessage message, Executors.FunctionResult result, CancellationToken cancellationToken)
+                public override async Task CompleteProcessingMessageAsync(ServiceBusMessageActions messageActions, ServiceBusReceivedMessage message, Executors.FunctionResult result, CancellationToken cancellationToken)
                 {
                     _logger?.LogInformation("Custom processor End called!");
-                    await base.CompleteProcessingMessageAsync(receiver, message, result, cancellationToken);
+                    await base.CompleteProcessingMessageAsync(messageActions, message, result, cancellationToken);
                 }
             }
         }

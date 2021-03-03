@@ -8,27 +8,34 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    public partial class ACSChatThreadPropertiesUpdatedPerUserEventData
+    [JsonConverter(typeof(AcsChatThreadPropertiesUpdatedPerUserEventDataConverter))]
+    public partial class AcsChatThreadPropertiesUpdatedPerUserEventData
     {
-        internal static ACSChatThreadPropertiesUpdatedPerUserEventData DeserializeACSChatThreadPropertiesUpdatedPerUserEventData(JsonElement element)
+        internal static AcsChatThreadPropertiesUpdatedPerUserEventData DeserializeAcsChatThreadPropertiesUpdatedPerUserEventData(JsonElement element)
         {
-            Optional<string> editedBy = default;
+            Optional<CommunicationIdentifierModel> editedByCommunicationIdentifier = default;
             Optional<DateTimeOffset> editTime = default;
             Optional<IReadOnlyDictionary<string, object>> properties = default;
             Optional<DateTimeOffset> createTime = default;
             Optional<long> version = default;
-            Optional<string> recipientId = default;
+            Optional<CommunicationIdentifierModel> recipientCommunicationIdentifier = default;
             Optional<string> transactionId = default;
             Optional<string> threadId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("editedBy"))
+                if (property.NameEquals("editedByCommunicationIdentifier"))
                 {
-                    editedBy = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    editedByCommunicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
                     continue;
                 }
                 if (property.NameEquals("editTime"))
@@ -76,9 +83,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     version = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("recipientId"))
+                if (property.NameEquals("recipientCommunicationIdentifier"))
                 {
-                    recipientId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    recipientCommunicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
                     continue;
                 }
                 if (property.NameEquals("transactionId"))
@@ -92,7 +104,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new ACSChatThreadPropertiesUpdatedPerUserEventData(recipientId.Value, transactionId.Value, threadId.Value, Optional.ToNullable(createTime), Optional.ToNullable(version), editedBy.Value, Optional.ToNullable(editTime), Optional.ToDictionary(properties));
+            return new AcsChatThreadPropertiesUpdatedPerUserEventData(recipientCommunicationIdentifier.Value, transactionId.Value, threadId.Value, Optional.ToNullable(createTime), Optional.ToNullable(version), editedByCommunicationIdentifier.Value, Optional.ToNullable(editTime), Optional.ToDictionary(properties));
+        }
+
+        internal partial class AcsChatThreadPropertiesUpdatedPerUserEventDataConverter : JsonConverter<AcsChatThreadPropertiesUpdatedPerUserEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, AcsChatThreadPropertiesUpdatedPerUserEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override AcsChatThreadPropertiesUpdatedPerUserEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeAcsChatThreadPropertiesUpdatedPerUserEventData(document.RootElement);
+            }
         }
     }
 }

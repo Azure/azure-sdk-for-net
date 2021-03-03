@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The List Virtual Machine Scale Set VMs operation response. </summary>
-    public partial class VirtualMachineScaleSetVMListResult
+    internal partial class VirtualMachineScaleSetVMListResult
     {
         /// <summary> Initializes a new instance of VirtualMachineScaleSetVMListResult. </summary>
         /// <param name="value"> The list of virtual machine scale sets VMs. </param>
