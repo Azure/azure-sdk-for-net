@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Core
                 throw new ArgumentOutOfRangeException(nameof(rgName), "ResourceGroupName cannot be longer than 90 characters.");
 
             if (!ValidationPattern.IsMatch(rgName))
-                throw new ArgumentException("The name of the resource group can include alphanumeric, underscore, parentheses, hyphen, period (except at end), and Unicode characters that match the allowed characters.");
+                throw new ArgumentException("The name of the resource group can include alphanumeric, underscore, parentheses, hyphen, period (except at end), and Unicode characters that match the allowed characters.", nameof(rgName));
         }
 
         private static readonly Regex ValidationPattern = new Regex(@"^[-\w\._\(\)]+$");
