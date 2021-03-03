@@ -39,6 +39,12 @@ namespace Compute.Tests.DiskRPTests
         }
 
         [Fact]
+        public void Disk_CRUD_PremiumDiskWithBursting()
+        {
+            PremiumDisk_CRUD_Execute(DiskCreateOption.Import, "Disk_CRUD_PremiumDiskWithBursting", tier: "P30", diskSizeGB: 1024, burstingEnabled: true, location: "eastus2euap");
+        }
+
+        [Fact]
         public void Snapshot_CRUD_EmptyDisk()
         {
             Snapshot_CRUD_Execute(DiskCreateOption.Empty, "Snapshot_CRUD_EmptyDisk", diskSizeGB: 5, location: "eastus2");
