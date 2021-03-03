@@ -7,26 +7,33 @@
 
 using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    public partial class ACSChatThreadWithUserDeletedEventData
+    [JsonConverter(typeof(AcsChatThreadWithUserDeletedEventDataConverter))]
+    public partial class AcsChatThreadWithUserDeletedEventData
     {
-        internal static ACSChatThreadWithUserDeletedEventData DeserializeACSChatThreadWithUserDeletedEventData(JsonElement element)
+        internal static AcsChatThreadWithUserDeletedEventData DeserializeAcsChatThreadWithUserDeletedEventData(JsonElement element)
         {
-            Optional<string> deletedBy = default;
+            Optional<CommunicationIdentifierModel> deletedByCommunicationIdentifier = default;
             Optional<DateTimeOffset> deleteTime = default;
             Optional<DateTimeOffset> createTime = default;
             Optional<long> version = default;
-            Optional<string> recipientId = default;
+            Optional<CommunicationIdentifierModel> recipientCommunicationIdentifier = default;
             Optional<string> transactionId = default;
             Optional<string> threadId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("deletedBy"))
+                if (property.NameEquals("deletedByCommunicationIdentifier"))
                 {
-                    deletedBy = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    deletedByCommunicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
                     continue;
                 }
                 if (property.NameEquals("deleteTime"))
@@ -59,9 +66,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     version = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("recipientId"))
+                if (property.NameEquals("recipientCommunicationIdentifier"))
                 {
-                    recipientId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    recipientCommunicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
                     continue;
                 }
                 if (property.NameEquals("transactionId"))
@@ -75,7 +87,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new ACSChatThreadWithUserDeletedEventData(recipientId.Value, transactionId.Value, threadId.Value, Optional.ToNullable(createTime), Optional.ToNullable(version), deletedBy.Value, Optional.ToNullable(deleteTime));
+            return new AcsChatThreadWithUserDeletedEventData(recipientCommunicationIdentifier.Value, transactionId.Value, threadId.Value, Optional.ToNullable(createTime), Optional.ToNullable(version), deletedByCommunicationIdentifier.Value, Optional.ToNullable(deleteTime));
+        }
+
+        internal partial class AcsChatThreadWithUserDeletedEventDataConverter : JsonConverter<AcsChatThreadWithUserDeletedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, AcsChatThreadWithUserDeletedEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override AcsChatThreadWithUserDeletedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeAcsChatThreadWithUserDeletedEventData(document.RootElement);
+            }
         }
     }
 }

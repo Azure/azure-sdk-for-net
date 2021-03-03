@@ -7,47 +7,41 @@
 
 using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    public partial class ACSChatMemberAddedToThreadWithUserEventData
+    [JsonConverter(typeof(AcsChatThreadDeletedEventDataConverter))]
+    public partial class AcsChatThreadDeletedEventData
     {
-        internal static ACSChatMemberAddedToThreadWithUserEventData DeserializeACSChatMemberAddedToThreadWithUserEventData(JsonElement element)
+        internal static AcsChatThreadDeletedEventData DeserializeAcsChatThreadDeletedEventData(JsonElement element)
         {
-            Optional<DateTimeOffset> time = default;
-            Optional<string> addedBy = default;
-            Optional<ACSChatThreadMemberProperties> memberAdded = default;
+            Optional<CommunicationIdentifierModel> deletedByCommunicationIdentifier = default;
+            Optional<DateTimeOffset> deleteTime = default;
             Optional<DateTimeOffset> createTime = default;
             Optional<long> version = default;
-            Optional<string> recipientId = default;
-            Optional<string> transactionId = default;
             Optional<string> threadId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("time"))
+                if (property.NameEquals("deletedByCommunicationIdentifier"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    time = property.Value.GetDateTimeOffset("O");
+                    deletedByCommunicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
                     continue;
                 }
-                if (property.NameEquals("addedBy"))
-                {
-                    addedBy = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("memberAdded"))
+                if (property.NameEquals("deleteTime"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    memberAdded = ACSChatThreadMemberProperties.DeserializeACSChatThreadMemberProperties(property.Value);
+                    deleteTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("createTime"))
@@ -70,23 +64,26 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     version = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("recipientId"))
-                {
-                    recipientId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("transactionId"))
-                {
-                    transactionId = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("threadId"))
                 {
                     threadId = property.Value.GetString();
                     continue;
                 }
             }
-            return new ACSChatMemberAddedToThreadWithUserEventData(recipientId.Value, transactionId.Value, threadId.Value, Optional.ToNullable(createTime), Optional.ToNullable(version), Optional.ToNullable(time), addedBy.Value, memberAdded.Value);
+            return new AcsChatThreadDeletedEventData(threadId.Value, Optional.ToNullable(createTime), Optional.ToNullable(version), deletedByCommunicationIdentifier.Value, Optional.ToNullable(deleteTime));
+        }
+
+        internal partial class AcsChatThreadDeletedEventDataConverter : JsonConverter<AcsChatThreadDeletedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, AcsChatThreadDeletedEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override AcsChatThreadDeletedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeAcsChatThreadDeletedEventData(document.RootElement);
+            }
         }
     }
 }
