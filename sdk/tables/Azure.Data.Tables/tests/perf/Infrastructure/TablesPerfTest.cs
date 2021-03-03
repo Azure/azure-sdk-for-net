@@ -25,7 +25,7 @@ namespace Azure.Data.Tables.Performance
 
         protected TableTransactionalBatch GetBatch() => Client?.CreateTransactionalBatch(PartitionKey);
 
-        protected TableClient Client;
+        protected TableClient Client {get; private set; }
 
         public TablesPerfTest(TablePerfOptions options) : base(options)
         { }

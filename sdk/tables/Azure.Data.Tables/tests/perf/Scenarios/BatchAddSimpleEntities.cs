@@ -12,11 +12,6 @@ namespace Azure.Data.Tables.Performance
         public BatchAddSimpleEntities(TablePerfOptions options) : base(options)
         { }
 
-        public override async Task GlobalSetupAsync()
-        {
-            await base.GlobalSetupAsync().ConfigureAwait(false);
-        }
-
         public override void Run(CancellationToken cancellationToken)
         {
             RunInternalAsync(false, cancellationToken).GetAwaiter().GetResult();

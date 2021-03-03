@@ -4,7 +4,6 @@
 using System.Reflection;
 using System.Threading.Tasks;
 using Azure.Test.Perf;
-using BenchmarkDotNet.Running;
 
 namespace Azure.Data.Tables.Performance
 {
@@ -14,16 +13,6 @@ namespace Azure.Data.Tables.Performance
         {
             // Allow the framework to execute the test scenarios.
             await PerfProgram.Main(Assembly.GetEntryAssembly(), args);
-
-            /*
-Test permutations:
-    - entity count: 5, 500, 5000
-    - entity properties of: all EDM types, only string
-Test scenarios:
-- Create entity
-- Batch create entity
-- List entities
-            */
         }
     }
 }
