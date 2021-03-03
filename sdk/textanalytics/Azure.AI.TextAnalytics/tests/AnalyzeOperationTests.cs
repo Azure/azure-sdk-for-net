@@ -55,9 +55,12 @@ namespace Azure.AI.TextAnalytics.Tests
 
             IReadOnlyCollection<RecognizePiiEntitiesActionResult> piiResult = resultCollection.RecognizePiiEntitiesActionsResults;
 
+            IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> elResult = resultCollection.RecognizeLinkedEntitiesActionsResults;
+
             Assert.IsNotNull(keyPhrasesResult);
             Assert.IsNotNull(entitiesResult);
             Assert.IsNotNull(piiResult);
+            Assert.IsNotNull(elResult);
 
             Assert.AreEqual(2, keyPhrasesResult.Count);
         }
@@ -85,9 +88,12 @@ namespace Azure.AI.TextAnalytics.Tests
 
             IReadOnlyCollection<RecognizePiiEntitiesActionResult> piiResult = resultCollection.RecognizePiiEntitiesActionsResults;
 
+            IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> elResult = resultCollection.RecognizeLinkedEntitiesActionsResults;
+
             Assert.IsNotNull(keyPhrasesResult);
             Assert.IsNotNull(entitiesResult);
             Assert.IsNotNull(piiResult);
+            Assert.IsNotNull(elResult);
 
             Assert.AreEqual(2, keyPhrasesResult.Count);
 
@@ -157,6 +163,7 @@ namespace Azure.AI.TextAnalytics.Tests
             }
         }
 
+        [Ignore("Enable this test one service deploys to WestUS2 https://github.com/Azure/azure-sdk-for-net/issues/19152")]
         [Test]
         public async Task AnalyzeOperationWithMultipleActions()
         {
@@ -179,6 +186,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 ExtractKeyPhrasesOptions = new List<ExtractKeyPhrasesOptions>() { new ExtractKeyPhrasesOptions() },
                 RecognizeEntitiesOptions = new List<RecognizeEntitiesOptions>() { new RecognizeEntitiesOptions() },
                 RecognizePiiEntitiesOptions = new List<RecognizePiiEntitiesOptions>() { new RecognizePiiEntitiesOptions() },
+                RecognizeLinkedEntitiesOptions = new List<RecognizeLinkedEntitiesOptions>() { new RecognizeLinkedEntitiesOptions() },
                 DisplayName = "AnalyzeOperationWithMultipleTasks"
             };
 
@@ -192,9 +200,9 @@ namespace Azure.AI.TextAnalytics.Tests
             await operation.WaitForCompletionAsync(PollingInterval);
 
             Assert.AreEqual(0, operation.ActionsFailed);
-            Assert.AreEqual(3, operation.ActionsSucceeded);
+            Assert.AreEqual(4, operation.ActionsSucceeded);
             Assert.AreEqual(0, operation.ActionsInProgress);
-            Assert.AreEqual(3, operation.TotalActions);
+            Assert.AreEqual(4, operation.TotalActions);
             Assert.AreNotEqual(new DateTimeOffset(), operation.CreatedOn);
             Assert.AreNotEqual(new DateTimeOffset(), operation.LastModified);
             Assert.AreNotEqual(new DateTimeOffset(), operation.ExpiresOn);
@@ -208,9 +216,12 @@ namespace Azure.AI.TextAnalytics.Tests
 
             RecognizePiiEntitiesResultCollection piiResult = resultCollection.RecognizePiiEntitiesActionsResults.ElementAt(0).Result;
 
+            RecognizeLinkedEntitiesResultCollection entityLinkingResult = resultCollection.RecognizeLinkedEntitiesActionsResults.ElementAt(0).Result;
+
             Assert.IsNotNull(keyPhrasesResult);
             Assert.IsNotNull(entitiesResult);
             Assert.IsNotNull(piiResult);
+            Assert.IsNotNull(entityLinkingResult);
             Assert.AreEqual("AnalyzeOperationWithMultipleTasks", operation.DisplayName);
 
             // Keyphrases
@@ -251,6 +262,30 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.IsNotNull(entitiesResult[0].Id);
             Assert.IsNotNull(entitiesResult[0].Entities);
             Assert.IsNotNull(entitiesResult[0].Error);
+
+            // Entity Linking
+
+            Assert.AreEqual(2, entityLinkingResult.Count);
+
+            Assert.AreEqual(3, entityLinkingResult[0].Entities.Count);
+            Assert.IsNotNull(entityLinkingResult[0].Id);
+            Assert.IsNotNull(entityLinkingResult[0].Entities);
+            Assert.IsNotNull(entityLinkingResult[0].Error);
+
+            foreach (LinkedEntity entity in entityLinkingResult[0].Entities)
+            {
+                if (entity.Name == "Bill Gates")
+                {
+                    Assert.AreEqual("Bill Gates", entity.DataSourceEntityId);
+                    Assert.AreEqual("Wikipedia", entity.DataSource);
+                }
+
+                if (entity.Name == "Microsoft")
+                {
+                    Assert.AreEqual("Microsoft", entity.DataSourceEntityId);
+                    Assert.AreEqual("Wikipedia", entity.DataSource);
+                }
+            }
         }
 
         [Test]
@@ -309,6 +344,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(3, pages[1].ExtractKeyPhrasesActionsResults.FirstOrDefault().Result.Count);
         }
 
+        [Ignore("Enable this test one service deploys to WestUS2 https://github.com/Azure/azure-sdk-for-net/issues/19152")]
         [Test]
         public async Task AnalyzeOperationBatchWithErrorTest()
         {
@@ -346,6 +382,15 @@ namespace Azure.AI.TextAnalytics.Tests
                         ModelVersion = "InvalidVersion"
                     }
                 },
+                RecognizeLinkedEntitiesOptions = new List<RecognizeLinkedEntitiesOptions>()
+                {
+                    new RecognizeLinkedEntitiesOptions(),
+                    new RecognizeLinkedEntitiesOptions()
+                    {
+                        ModelVersion = "InvalidVersion"
+                    }
+                },
+
                 DisplayName = "AnalyzeOperationBatchWithErrorTest",
             };
 
@@ -391,6 +436,19 @@ namespace Azure.AI.TextAnalytics.Tests
 
             Assert.IsTrue(piiEntitiesActions[1].HasError);
             Assert.AreEqual(TextAnalyticsErrorCode.InvalidRequest, piiEntitiesActions[1].Error.ErrorCode.ToString());
+
+            // Entity Linking
+
+            var linkedEntitiesActions = resultCollection.RecognizeLinkedEntitiesActionsResults.ToList();
+
+            Assert.IsFalse(linkedEntitiesActions[0].HasError);
+            Assert.AreEqual(3, linkedEntitiesActions[0].Result.Count);
+            var linkedEntitiesEmptyDocument = linkedEntitiesActions[0].Result.ElementAt(2);
+            Assert.IsTrue(linkedEntitiesEmptyDocument.HasError);
+            Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocument, linkedEntitiesEmptyDocument.Error.ErrorCode.ToString());
+
+            Assert.IsTrue(linkedEntitiesActions[1].HasError);
+            Assert.AreEqual(TextAnalyticsErrorCode.InvalidRequest, linkedEntitiesActions[1].Error.ErrorCode.ToString());
         }
 
         [Test]

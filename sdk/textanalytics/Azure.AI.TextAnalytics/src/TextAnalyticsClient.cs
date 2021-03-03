@@ -2362,6 +2362,10 @@ namespace Azure.AI.TextAnalytics
             {
                 tasks.KeyPhraseExtractionTasks = Transforms.ConvertFromKeyPhrasesOptionsToTasks(actions.ExtractKeyPhrasesOptions);
             }
+            if (actions.RecognizeLinkedEntitiesOptions != null)
+            {
+                tasks.EntityLinkingTasks = Transforms.ConvertFromEntityLinkingOptionsToTasks(actions.RecognizeLinkedEntitiesOptions);
+            }
 
             AnalyzeBatchInput analyzeDocumentInputs = new AnalyzeBatchInput(batchInput, tasks, actions.DisplayName);
 
@@ -2401,6 +2405,10 @@ namespace Azure.AI.TextAnalytics
             if (actions.ExtractKeyPhrasesOptions != null)
             {
                 tasks.KeyPhraseExtractionTasks = Transforms.ConvertFromKeyPhrasesOptionsToTasks(actions.ExtractKeyPhrasesOptions);
+            }
+            if (actions.RecognizeLinkedEntitiesOptions != null)
+            {
+                tasks.EntityLinkingTasks = Transforms.ConvertFromEntityLinkingOptionsToTasks(actions.RecognizeLinkedEntitiesOptions);
             }
 
             AnalyzeBatchInput analyzeDocumentInputs = new AnalyzeBatchInput(batchInput, tasks, actions.DisplayName);

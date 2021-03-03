@@ -14,5 +14,8 @@ namespace Azure.AI.TextAnalytics
         public EntityLinkingTaskParameters()
         {
         }
+
+        public string ModelVersion { get; set; }
+        public StringIndexType? StringIndexType { get; set; }
     }
 }
