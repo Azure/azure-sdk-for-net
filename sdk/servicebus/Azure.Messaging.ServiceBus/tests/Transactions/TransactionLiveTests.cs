@@ -469,65 +469,65 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
             Assert.IsNull(receivedMessage);
         }
 
-        // TODO - possible service bug involving subscription send via
-        //[Test]
-        //public async Task TransactionGroupReceivesFirstRollback()
-        //{
-        //    await using var client = CreateCrossEntityTxnClient();
-        //    await using var topicA = await ServiceBusScope.CreateWithTopic(enablePartitioning: false, enableSession: false);
-        //    await using var queueB = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
-        //    await using var queueC = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
-        //    await using var noTxClient = CreateClient();
-        //    var senderA = noTxClient.CreateSender(topicA.TopicName);
-        //    var receiverA = client.CreateReceiver(topicA.TopicName, topicA.SubscriptionNames.First());
-        //    var senderB = client.CreateSender(queueB.QueueName);
-        //    var senderC = client.CreateSender(queueC.QueueName);
+       [Test]
+       [Ignore("Send claims are not available for the topic. Leaving for now in case this is supported in the future.")]
+        public async Task TransactionGroupReceivesFirstRollbackSubscription()
+        {
+            await using var client = CreateCrossEntityTxnClient();
+            await using var topicA = await ServiceBusScope.CreateWithTopic(enablePartitioning: false, enableSession: false);
+            await using var queueB = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
+            await using var queueC = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
+            await using var noTxClient = CreateClient();
+            var senderA = noTxClient.CreateSender(topicA.TopicName);
+            var receiverA = client.CreateReceiver(topicA.TopicName, topicA.SubscriptionNames.First());
+            var senderB = client.CreateSender(queueB.QueueName);
+            var senderC = client.CreateSender(queueC.QueueName);
 
-        //    var message = new ServiceBusMessage();
+            var message = new ServiceBusMessage();
 
-        //    await senderA.SendMessageAsync(message);
-        //    ServiceBusReceivedMessage receivedMessage = await receiverA.ReceiveMessageAsync();
+            await senderA.SendMessageAsync(message);
+            ServiceBusReceivedMessage receivedMessage = await receiverA.ReceiveMessageAsync();
 
-        //    using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
-        //    {
-        //        await receiverA.CompleteMessageAsync(receivedMessage);
-        //        // claims exception thrown here
-        //        await senderB.SendMessageAsync(message);
-        //        await senderC.SendMessageAsync(message);
-        //    }
-        //    await receiverA.AbandonMessageAsync(receivedMessage);
+            using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                await receiverA.CompleteMessageAsync(receivedMessage);
+                // claims exception thrown here
+                await senderB.SendMessageAsync(message);
+                await senderC.SendMessageAsync(message);
+            }
+            await receiverA.AbandonMessageAsync(receivedMessage);
 
-        //    // transaction wasn't committed - verify that it was rolled back
-        //    receivedMessage = await receiverA.ReceiveMessageAsync();
-        //    Assert.IsNotNull(receivedMessage);
-        //    await receiverA.AbandonMessageAsync(receivedMessage);
+            // transaction wasn't committed - verify that it was rolled back
+            receivedMessage = await receiverA.ReceiveMessageAsync();
+            Assert.IsNotNull(receivedMessage);
+            await receiverA.AbandonMessageAsync(receivedMessage);
 
-        //    var receiverB = client.CreateReceiver(queueB.QueueName);
+            var receiverB = client.CreateReceiver(queueB.QueueName);
 
-        //    receivedMessage = await receiverB.ReceiveMessageAsync(TimeSpan.FromSeconds(10));
-        //    Assert.IsNull(receivedMessage);
+            receivedMessage = await receiverB.ReceiveMessageAsync(TimeSpan.FromSeconds(10));
+            Assert.IsNull(receivedMessage);
 
-        //    var receiverC = client.CreateReceiver(queueC.QueueName);
-        //    receivedMessage = await receiverC.ReceiveMessageAsync(TimeSpan.FromSeconds(10));
-        //    Assert.IsNull(receivedMessage);
+            var receiverC = client.CreateReceiver(queueC.QueueName);
+            receivedMessage = await receiverC.ReceiveMessageAsync(TimeSpan.FromSeconds(10));
+            Assert.IsNull(receivedMessage);
 
-        //    receivedMessage = await receiverA.ReceiveMessageAsync();
+            receivedMessage = await receiverA.ReceiveMessageAsync();
 
-        //    // now commit the transaction
-        //    using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
-        //    {
-        //        await receiverA.CompleteMessageAsync(receivedMessage);
-        //        await senderB.SendMessageAsync(message);
-        //        await senderC.SendMessageAsync(message);
-        //        ts.Complete();
-        //    }
-        //    receivedMessage = await receiverA.ReceiveMessageAsync(TimeSpan.FromSeconds(10));
-        //    Assert.IsNull(receivedMessage);
-        //    receivedMessage = await receiverB.ReceiveMessageAsync();
-        //    Assert.IsNotNull(receivedMessage);
-        //    receivedMessage = await receiverC.ReceiveMessageAsync();
-        //    Assert.IsNotNull(receivedMessage);
-        //}
+            // now commit the transaction
+            using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                await receiverA.CompleteMessageAsync(receivedMessage);
+                await senderB.SendMessageAsync(message);
+                await senderC.SendMessageAsync(message);
+                ts.Complete();
+            }
+            receivedMessage = await receiverA.ReceiveMessageAsync(TimeSpan.FromSeconds(10));
+            Assert.IsNull(receivedMessage);
+            receivedMessage = await receiverB.ReceiveMessageAsync();
+            Assert.IsNotNull(receivedMessage);
+            receivedMessage = await receiverC.ReceiveMessageAsync();
+            Assert.IsNotNull(receivedMessage);
+        }
 
         [Test]
         public async Task TransactionGroupReceivesFirstRollback()

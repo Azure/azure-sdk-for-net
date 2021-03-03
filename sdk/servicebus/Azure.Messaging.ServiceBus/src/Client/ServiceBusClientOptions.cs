@@ -53,10 +53,13 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// If set to true, transactions spanning multiple entities can be performed.
-        /// This should not be set to true if not using transactions, or if all transactions
-        /// will be limited to a single entity.
+        /// Gets or sets a flag that indicates whether or not transactions may span multiple
+        /// Service Bus entities.
         /// </summary>
+        ///<value>
+        /// <c>true</c>, when cross-entity transactions are enabled; <c>false</c> when
+        /// transactions are not being used or should be limited to a single entity.
+        ///</value>
         public bool EnableCrossEntityTransactions { get; set; }
 
         /// <summary>
