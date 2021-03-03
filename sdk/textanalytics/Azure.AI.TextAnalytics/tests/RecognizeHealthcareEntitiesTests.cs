@@ -164,6 +164,14 @@ namespace Azure.AI.TextAnalytics.Tests
                     Assert.IsNotNull(entity.Assertion);
                     Assert.AreEqual(Certainty.NegativePossible, entity.Assertion.Certainty.Value);
                 }
+
+                if (entity.Text == "Penicillin")
+                {
+                    Assert.AreEqual("MedicationName", entity.Category);
+                    Assert.AreEqual(10, entity.Length);
+                    Assert.IsNotNull(entity.Assertion);
+                    Assert.AreEqual(Certainty.NeutralPossible, entity.Assertion.Certainty.Value);
+                }
             }
         }
         [Test]
