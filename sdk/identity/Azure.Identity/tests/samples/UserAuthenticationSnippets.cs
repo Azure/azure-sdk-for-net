@@ -14,6 +14,19 @@ namespace Azure.Identity.Samples
 {
     public class UserAuthenticationSnippets
     {
+        public class InMemoryTokenCacheOptions : UnsafeTokenCacheOptions
+        {
+            public override Task<ReadOnlyMemory<byte>> RefreshCacheAsync()
+            {
+                return Task.FromResult(new ReadOnlyMemory<byte>());
+            }
+
+            public override Task TokenCacheUpdatedAsync(TokenCacheUpdatedArgs tokenCacheUpdatedArgs)
+            {
+                return Task.CompletedTask;
+            }
+        }
+
         #region Snippet:Identity_ClientSideUserAuthentication_Persist_TokenCache_AuthRecordPath
         private const string AUTH_RECORD_PATH = "./tokencache.bin";
         #endregion
@@ -80,7 +93,7 @@ namespace Azure.Identity.Samples
                 var credential = new InteractiveBrowserCredential(
                     new InteractiveBrowserCredentialOptions
                     {
-                        TokenCachePersistenceOptions = new UnsafeTokenCacheOptions()
+                        TokenCachePersistenceOptions = new InMemoryTokenCacheOptions()
                     });
                 #endregion
 
@@ -109,7 +122,7 @@ namespace Azure.Identity.Samples
                 var credential = new InteractiveBrowserCredential(
                     new InteractiveBrowserCredentialOptions
                     {
-                        TokenCachePersistenceOptions = new UnsafeTokenCacheOptions(),
+                        TokenCachePersistenceOptions = new InMemoryTokenCacheOptions(),
                         AuthenticationRecord = authRecord
                     });
                 #endregion
@@ -127,7 +140,7 @@ namespace Azure.Identity.Samples
                 credential = new InteractiveBrowserCredential(
                     new InteractiveBrowserCredentialOptions
                     {
-                        TokenCachePersistenceOptions = new UnsafeTokenCacheOptions()
+                        TokenCachePersistenceOptions = new InMemoryTokenCacheOptions()
                     });
 
                 AuthenticationRecord authRecord = await credential.AuthenticateAsync();
@@ -149,7 +162,7 @@ namespace Azure.Identity.Samples
                 credential = new InteractiveBrowserCredential(
                     new InteractiveBrowserCredentialOptions
                     {
-                        TokenCachePersistenceOptions = new UnsafeTokenCacheOptions(),
+                        TokenCachePersistenceOptions = new InMemoryTokenCacheOptions(),
                         AuthenticationRecord = authRecord
                     });
             }

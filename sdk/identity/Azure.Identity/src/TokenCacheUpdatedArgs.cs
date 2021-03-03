@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+
 namespace Azure.Identity
 {
     /// <summary>
@@ -8,7 +10,7 @@ namespace Azure.Identity
     /// </summary>
     public class TokenCacheUpdatedArgs
     {
-        internal TokenCacheUpdatedArgs(byte[] cacheData)
+        internal TokenCacheUpdatedArgs(ReadOnlyMemory<byte> cacheData)
         {
             Data = cacheData;
         }
@@ -16,6 +18,6 @@ namespace Azure.Identity
         /// <summary>
         /// The <see cref="TokenCachePersistenceOptions"/> instance which was updated.
         /// </summary>
-        public byte[] Data { get; }
+        public ReadOnlyMemory<byte> Data { get; }
     }
 }

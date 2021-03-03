@@ -9,18 +9,18 @@ namespace Azure.Identity
     /// <summary>
     /// Options controlling the storage of the token cache.
     /// </summary>
-    public class UnsafeTokenCacheOptions : TokenCachePersistenceOptions
+    public abstract class UnsafeTokenCacheOptions : TokenCachePersistenceOptions
     {
         /// <summary>
         /// The delegate to be called when the Updated event fires.
         /// </summary>
         /// <value></value>
-        public Func<TokenCacheUpdatedArgs, Task> UpdatedDelegate { get; set; }
+        public abstract Task TokenCacheUpdatedAsync(TokenCacheUpdatedArgs tokenCacheUpdatedArgs);
 
         /// <summary>
         /// The bytes used to initialize the token cache. This would most likely have come from the <see cref="TokenCacheUpdatedArgs"/>.
         /// </summary>
         /// <value></value>
-        public byte[] InitialBytes { get; set; }
+        public abstract Task<ReadOnlyMemory<byte>> RefreshCacheAsync();
     }
 }

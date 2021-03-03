@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 using Microsoft.Identity.Client;
 using Microsoft.Identity.Client.Extensions.Msal;
 
@@ -60,7 +61,7 @@ namespace Azure.Identity
         /// </summary>
         /// <param name="options">Options controlling the storage of the <see cref="TokenCache"/>.</param>
         public TokenCache(TokenCachePersistenceOptions options = null)
-            :this(options, default, default)
+            : this(options, default, default)
         { }
 
         internal TokenCache(TokenCachePersistenceOptions options, MsalCacheHelperWrapper cacheHelperWrapper, Func<IPublicClientApplication> publicApplicationFactory = null)
@@ -69,12 +70,8 @@ namespace Azure.Identity
             _publicClientApplicationFactory = publicApplicationFactory ?? new Func<IPublicClientApplication>(() => PublicClientApplicationBuilder.Create(Guid.NewGuid().ToString()).Build());
             if (options is UnsafeTokenCacheOptions inMemoryOptions)
             {
-                if (inMemoryOptions.UpdatedDelegate != null)
-                {
-                    Updated += inMemoryOptions.UpdatedDelegate;
-                }
-
-                Data = inMemoryOptions.InitialBytes;
+                TokenCacheUpdatedAsync = inMemoryOptions.TokenCacheUpdatedAsync;
+                RefreshCacheFromOptionsAsync = inMemoryOptions.RefreshCacheAsync;
                 _lastUpdated = DateTimeOffset.UtcNow;
                 _cacheAccessMap = new ConditionalWeakTable<object, CacheTimestamp>();
             }
@@ -87,9 +84,14 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// An event notifying the subscriber that the underlying <see cref="TokenCache"/> has been updated. This event can be handled to persist the updated cache data.
+        /// A delegate that is called with the cache contents when the underlying <see cref="TokenCache"/> has been updated.
         /// </summary>
-        internal event Func<TokenCacheUpdatedArgs, Task> Updated;
+        internal Func<TokenCacheUpdatedArgs, Task> TokenCacheUpdatedAsync;
+
+        /// <summary>
+        /// A delegate that will be called before the cache is accessed. The data returned will be used to set the current state of the cache.
+        /// </summary>
+        internal Func<Task<ReadOnlyMemory<byte>>> RefreshCacheFromOptionsAsync;
 
         internal virtual async Task RegisterCache(bool async, ITokenCache tokenCache, CancellationToken cancellationToken)
         {
@@ -142,6 +144,10 @@ namespace Azure.Identity
 
             try
             {
+                if (RefreshCacheFromOptionsAsync != null)
+                {
+                    Data = (await RefreshCacheFromOptionsAsync().ConfigureAwait(false)).ToArray();
+                }
                 args.TokenCache.DeserializeMsalV3(Data, true);
 
                 _cacheAccessMap.GetOrCreateValue(args.TokenCache).Update();
@@ -175,20 +181,17 @@ namespace Azure.Identity
                     Data = tokenCache.SerializeMsalV3();
                 }
 
+                if (TokenCacheUpdatedAsync != null)
+                {
+                    var eventBytes = Data.ToArray();
+                    await TokenCacheUpdatedAsync(new TokenCacheUpdatedArgs(eventBytes)).ConfigureAwait(false);
+                }
+
                 _lastUpdated = _cacheAccessMap.GetOrCreateValue(tokenCache).Update();
             }
             finally
             {
                 _lock.Release();
-            }
-
-            if (Updated != null)
-            {
-                var eventBytes = Data.ToArray();
-                foreach (Func<TokenCacheUpdatedArgs, Task> handler in Updated.GetInvocationList())
-                {
-                    await handler(new TokenCacheUpdatedArgs(eventBytes)).ConfigureAwait(false);
-                }
             }
         }
 
