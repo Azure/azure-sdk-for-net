@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A list of restorable dropped managed databases. </summary>
-    public partial class RestorableDroppedManagedDatabaseListResult
+    internal partial class RestorableDroppedManagedDatabaseListResult
     {
         /// <summary> Initializes a new instance of RestorableDroppedManagedDatabaseListResult. </summary>
         internal RestorableDroppedManagedDatabaseListResult()

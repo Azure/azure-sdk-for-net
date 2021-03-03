@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Graph.Rbac.Models
 {
     /// <summary> Server response for Get tenant groups API call. </summary>
-    public partial class GroupListResult
+    internal partial class GroupListResult
     {
         /// <summary> Initializes a new instance of GroupListResult. </summary>
         internal GroupListResult()

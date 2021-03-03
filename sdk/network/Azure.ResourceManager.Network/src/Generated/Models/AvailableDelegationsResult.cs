@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> An array of available delegations. </summary>
-    public partial class AvailableDelegationsResult
+    internal partial class AvailableDelegationsResult
     {
         /// <summary> Initializes a new instance of AvailableDelegationsResult. </summary>
         internal AvailableDelegationsResult()

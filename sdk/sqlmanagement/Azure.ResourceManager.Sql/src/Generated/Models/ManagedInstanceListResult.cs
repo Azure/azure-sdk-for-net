@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A list of managed instances. </summary>
-    public partial class ManagedInstanceListResult
+    internal partial class ManagedInstanceListResult
     {
         /// <summary> Initializes a new instance of ManagedInstanceListResult. </summary>
         internal ManagedInstanceListResult()

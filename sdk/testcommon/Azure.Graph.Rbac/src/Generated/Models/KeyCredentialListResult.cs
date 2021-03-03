@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Graph.Rbac.Models
 {
     /// <summary> KeyCredential list operation result. </summary>
-    public partial class KeyCredentialListResult
+    internal partial class KeyCredentialListResult
     {
         /// <summary> Initializes a new instance of KeyCredentialListResult. </summary>
         internal KeyCredentialListResult()

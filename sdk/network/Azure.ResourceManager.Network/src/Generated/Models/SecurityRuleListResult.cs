@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for ListSecurityRule API service call. Retrieves all security rules that belongs to a network security group. </summary>
-    public partial class SecurityRuleListResult
+    internal partial class SecurityRuleListResult
     {
         /// <summary> Initializes a new instance of SecurityRuleListResult. </summary>
         internal SecurityRuleListResult()

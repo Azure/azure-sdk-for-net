@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A list of job credentials. </summary>
-    public partial class JobCredentialListResult
+    internal partial class JobCredentialListResult
     {
         /// <summary> Initializes a new instance of JobCredentialListResult. </summary>
         internal JobCredentialListResult()

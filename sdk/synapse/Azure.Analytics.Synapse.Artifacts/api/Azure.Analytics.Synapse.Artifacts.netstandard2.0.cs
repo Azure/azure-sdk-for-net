@@ -2054,12 +2054,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public DataFlowFolder() { }
         public string Name { get { throw null; } set { } }
     }
-    public partial class DataFlowListResponse
-    {
-        internal DataFlowListResponse() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Synapse.Artifacts.Models.DataFlowResource> Value { get { throw null; } }
-    }
     public partial class DataFlowReference : System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IDictionary<string, object>, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.IEnumerable
     {
         public DataFlowReference(Azure.Analytics.Synapse.Artifacts.Models.DataFlowReferenceType type, string referenceName) { }
@@ -2254,12 +2248,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         public DatasetGZipCompression() { }
         public Azure.Analytics.Synapse.Artifacts.Models.DatasetCompressionLevel? Level { get { throw null; } set { } }
-    }
-    public partial class DatasetListResponse
-    {
-        internal DatasetListResponse() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Synapse.Artifacts.Models.DatasetResource> Value { get { throw null; } }
     }
     public partial class DatasetLocation : System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IDictionary<string, object>, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.IEnumerable
     {
@@ -4005,12 +3993,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public JsonWriteSettings() { }
         public Azure.Analytics.Synapse.Artifacts.Models.JsonWriteFilePattern? FilePattern { get { throw null; } set { } }
     }
-    public partial class LibraryListResponse
-    {
-        internal LibraryListResponse() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Synapse.Artifacts.Models.LibraryResource> Value { get { throw null; } }
-    }
     public partial class LibraryRequirements
     {
         public LibraryRequirements() { }
@@ -4089,12 +4071,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         public LinkedServiceDebugResource(Azure.Analytics.Synapse.Artifacts.Models.LinkedService properties) { }
         public Azure.Analytics.Synapse.Artifacts.Models.LinkedService Properties { get { throw null; } }
-    }
-    public partial class LinkedServiceListResponse
-    {
-        internal LinkedServiceListResponse() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Synapse.Artifacts.Models.LinkedServiceResource> Value { get { throw null; } }
     }
     public partial class LinkedServiceReference
     {
@@ -4550,12 +4526,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
         public bool TryGetValue(string key, out object value) { throw null; }
     }
-    public partial class NotebookListResponse
-    {
-        internal NotebookListResponse() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Synapse.Artifacts.Models.NotebookResource> Value { get { throw null; } }
-    }
     public partial class NotebookMetadata : System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IDictionary<string, object>, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.IEnumerable
     {
         public NotebookMetadata() { }
@@ -4993,12 +4963,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public PipelineFolder() { }
         public string Name { get { throw null; } set { } }
     }
-    public partial class PipelineListResponse
-    {
-        internal PipelineListResponse() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Synapse.Artifacts.Models.PipelineResource> Value { get { throw null; } }
-    }
     public partial class PipelineReference
     {
         public PipelineReference(Azure.Analytics.Synapse.Artifacts.Models.PipelineReferenceType type, string referenceName) { }
@@ -5247,12 +5211,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         public PurviewConfiguration() { }
         public string PurviewResourceId { get { throw null; } set { } }
-    }
-    public partial class QueryDataFlowDebugSessionsResponse
-    {
-        internal QueryDataFlowDebugSessionsResponse() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Synapse.Artifacts.Models.DataFlowDebugSessionInfo> Value { get { throw null; } }
     }
     public partial class QuickBooksLinkedService : Azure.Analytics.Synapse.Artifacts.Models.LinkedService
     {
@@ -6290,12 +6248,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public SparkJobDefinitionResource(Azure.Analytics.Synapse.Artifacts.Models.SparkJobDefinition properties) { }
         public Azure.Analytics.Synapse.Artifacts.Models.SparkJobDefinition Properties { get { throw null; } set { } }
     }
-    public partial class SparkJobDefinitionsListResponse
-    {
-        internal SparkJobDefinitionsListResponse() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Synapse.Artifacts.Models.SparkJobDefinitionResource> Value { get { throw null; } }
-    }
     public partial class SparkJobProperties : System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IDictionary<string, object>, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.IEnumerable
     {
         public SparkJobProperties(string file, string driverMemory, int driverCores, string executorMemory, int executorCores, int numExecutors) { }
@@ -6676,12 +6628,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public string Name { get { throw null; } set { } }
         public Azure.Analytics.Synapse.Artifacts.Models.SqlScript Properties { get { throw null; } set { } }
         public string Type { get { throw null; } }
-    }
-    public partial class SqlScriptsListResponse
-    {
-        internal SqlScriptsListResponse() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Synapse.Artifacts.Models.SqlScriptResource> Value { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SqlScriptType : System.IEquatable<Azure.Analytics.Synapse.Artifacts.Models.SqlScriptType>
@@ -7210,12 +7156,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         public TriggerDependencyReference(Azure.Analytics.Synapse.Artifacts.Models.TriggerReference referenceTrigger) { }
         public Azure.Analytics.Synapse.Artifacts.Models.TriggerReference ReferenceTrigger { get { throw null; } set { } }
-    }
-    public partial class TriggerListResponse
-    {
-        internal TriggerListResponse() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Synapse.Artifacts.Models.TriggerResource> Value { get { throw null; } }
     }
     public partial class TriggerPipelineReference
     {
