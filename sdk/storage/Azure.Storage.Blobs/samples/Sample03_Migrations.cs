@@ -53,7 +53,7 @@ namespace Azure.Storage.Blobs.Samples
             try
             {
                 container.Create();
-                container.GetBlobClient(blobName).Upload(new MemoryStream(Encoding.UTF8.GetBytes("hello world")));
+                container.GetBlobClient(blobName).Upload(BinaryData.FromString("hello world"));
 
                 // build SAS URI for sample
                 BlobSasBuilder sas = new BlobSasBuilder
@@ -116,7 +116,7 @@ namespace Azure.Storage.Blobs.Samples
             try
             {
                 await container.CreateAsync();
-                await container.GetBlobClient(blobName).UploadAsync(new MemoryStream(Encoding.UTF8.GetBytes("hello world")));
+                await container.GetBlobClient(blobName).UploadAsync(BinaryData.FromString("hello world"));
 
                 string connectionString = this.ConnectionString;
 
@@ -295,7 +295,7 @@ namespace Azure.Storage.Blobs.Samples
             try
             {
                 containerClient.Create();
-                containerClient.GetBlobClient(blobName).Upload(new MemoryStream(Encoding.UTF8.GetBytes(data)));
+                containerClient.GetBlobClient(blobName).Upload(BinaryData.FromString(data));
 
                 #region Snippet:SampleSnippetsBlobMigration_DownloadBlob
                 BlobClient blobClient = containerClient.GetBlobClient(blobName);
@@ -327,7 +327,7 @@ namespace Azure.Storage.Blobs.Samples
             try
             {
                 containerClient.Create();
-                containerClient.GetBlobClient(blobName).Upload(new MemoryStream(Encoding.UTF8.GetBytes(data)));
+                containerClient.GetBlobClient(blobName).Upload(BinaryData.FromString(data));
 
                 // tools to consume stream while looking good in the sample snippet
                 string downloadedData = null;
@@ -368,7 +368,7 @@ namespace Azure.Storage.Blobs.Samples
                 foreach (var _ in Enumerable.Range(0, 10))
                 {
                     string blobName = Randomize("sample-blob");
-                    containerClient.GetBlobClient(blobName).Upload(new MemoryStream(Encoding.UTF8.GetBytes(data)));
+                    containerClient.GetBlobClient(blobName).Upload(BinaryData.FromString(data));
                     blobNames.Add(blobName);
                 }
 
@@ -410,7 +410,7 @@ namespace Azure.Storage.Blobs.Samples
                 foreach (var _ in Enumerable.Range(0, 10))
                 {
                     string blobName = Randomize("sample-blob");
-                    containerClient.GetBlobClient(blobName).Upload(new MemoryStream(Encoding.UTF8.GetBytes(data)));
+                    containerClient.GetBlobClient(blobName).Upload(BinaryData.FromString(data));
                     blobNames.Add(blobName);
                 }
 
@@ -466,7 +466,7 @@ namespace Azure.Storage.Blobs.Samples
 
                 foreach (var blobName in new List<string> { "foo.txt", "bar.txt", virtualDirName + "/fizz.txt", virtualDirName + "/buzz.txt" })
                 {
-                    containerClient.GetBlobClient(blobName).Upload(new MemoryStream(Encoding.UTF8.GetBytes(data)));
+                    containerClient.GetBlobClient(blobName).Upload(BinaryData.FromString(data));
                 }
                 var expectedBlobNamesResult = new HashSet<string> { "foo.txt", "bar.txt" };
 
@@ -520,7 +520,7 @@ namespace Azure.Storage.Blobs.Samples
             try
             {
                 await container.CreateAsync();
-                await container.GetBlobClient(blobName).UploadAsync(new MemoryStream(Encoding.UTF8.GetBytes("hello world")));
+                await container.GetBlobClient(blobName).UploadAsync(BinaryData.FromString("hello world"));
 
                 #region Snippet:SampleSnippetsBlobMigration_SasBuilder
                 // Create BlobSasBuilder and specify parameters
@@ -568,7 +568,7 @@ namespace Azure.Storage.Blobs.Samples
             try
             {
                 await container.CreateAsync();
-                await container.GetBlobClient(blobName).UploadAsync(new MemoryStream(Encoding.UTF8.GetBytes("hello world")));
+                await container.GetBlobClient(blobName).UploadAsync(BinaryData.FromString("hello world"));
 
                 // Create one or more stored access policies.
                 List<BlobSignedIdentifier> signedIdentifiers = new List<BlobSignedIdentifier>
