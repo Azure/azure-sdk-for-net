@@ -7,11 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.DeviceUpdate.Tests", "tests\Microsoft.Azure.Management.DeviceUpdate.Tests.csproj", "{9F2DB215-83CD-48AE-BEC2-601E6EB50FE3}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution items", "Solution items", "{D1057B40-2779-4320-A41F-8380CDEB3400}"
-	ProjectSection(SolutionItems) = preProject
-		AzSdk.RP.props = AzSdk.RP.props
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,8 +24,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {79BDA1D3-B45F-4F36-927B-856F345347AD}
 	EndGlobalSection
 EndGlobal
