@@ -30,10 +30,10 @@ namespace Azure.Identity.Samples
         public void Identity_TokenCache_PersistentNamed()
         {
             #region Snippet:Identity_TokenCache_PersistentNamed
-            var tokenCache = new TokenCachePersistenceOptions { Name = "my_application_name" };
+            var persistenceOptions = new TokenCachePersistenceOptions { Name = "my_application_name" };
 
             var credential = new InteractiveBrowserCredential(
-                new InteractiveBrowserCredentialOptions { TokenCachePersistenceOptions = tokenCache }
+                new InteractiveBrowserCredentialOptions { TokenCachePersistenceOptions = persistenceOptions }
             );
             #endregion
         }
@@ -41,10 +41,10 @@ namespace Azure.Identity.Samples
         public void Identity_TokenCache_PersistentUnencrypted()
         {
             #region Snippet:Identity_TokenCache_PersistentUnencrypted
-            var tokenCache = new TokenCachePersistenceOptions { AllowUnencryptedStorage = true };
+            var persistenceOptions = new TokenCachePersistenceOptions { AllowUnencryptedStorage = true };
 
             var credential = new InteractiveBrowserCredential(
-                new InteractiveBrowserCredentialOptions { TokenCachePersistenceOptions = tokenCache }
+                new InteractiveBrowserCredentialOptions { TokenCachePersistenceOptions = persistenceOptions }
             );
             #endregion
         }
@@ -64,7 +64,7 @@ namespace Azure.Identity.Samples
 
         public async Task Identity_TokenCache_CustomPersistence_Write()
         {
-            var tokenCache = new TokenCachePersistenceOptions();
+            var persistenceOptions = new TokenCachePersistenceOptions();
 
             #region Snippet:Identity_TokenCache_CustomPersistence_Write
             using (var cacheStream = new FileStream(TOKEN_CACHE_PATH, FileMode.Create, FileAccess.Write))
@@ -98,7 +98,7 @@ namespace Azure.Identity.Samples
 
         public static async Task Main()
         {
-            var tokenCache = await ReadTokenCacheAsync();
+            var persistenceOptions = await ReadTokenCacheAsync();
 
             var credential = new InteractiveBrowserCredential(
                 new InteractiveBrowserCredentialOptions { TokenCacheOptions = tokenCache }
