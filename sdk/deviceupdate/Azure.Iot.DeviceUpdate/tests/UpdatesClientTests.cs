@@ -29,7 +29,7 @@ namespace Azure.Iot.DeviceUpdate.Tests
                 TestEnvironment.AccountEndpoint,
                 TestEnvironment.InstanceId,
                 TestEnvironment.Credential,
-                InstrumentClientOptions(new UpdatesClientOptions())
+                InstrumentClientOptions(new DeviceUpdateClientOptions())
             ));
         }
 
