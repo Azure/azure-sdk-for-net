@@ -77,7 +77,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         [Test]
         public async Task TransactionGroup()
         {
-            await using var client = CreateClient();
+            await using var client = new ServiceBusClient(
+                TestEnvironment.ServiceBusConnectionString,
+                new ServiceBusClientOptions
+                {
+                    EnableCrossEntityTransactions = true
+                });
             await using var queueA = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
             await using var queueB = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
             await using var topicC = await ServiceBusScope.CreateWithTopic(enablePartitioning: false, enableSession: false);
@@ -87,20 +92,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             // The first sender won't be part of our transaction group.
             ServiceBusSender senderA = client.CreateSender(queueA.QueueName);
 
-            string transactionGroup = "myTxn";
-
-            ServiceBusReceiver receiverA = client.CreateReceiver(queueA.QueueName, new ServiceBusReceiverOptions
-            {
-                TransactionGroup = transactionGroup
-            });
-            ServiceBusSender senderB = client.CreateSender(queueB.QueueName, new ServiceBusSenderOptions
-            {
-                TransactionGroup = transactionGroup
-            });
-            ServiceBusSender senderC = client.CreateSender(topicC.TopicName, new ServiceBusSenderOptions
-            {
-                TransactionGroup = transactionGroup
-            });
+            ServiceBusReceiver receiverA = client.CreateReceiver(queueA.QueueName);
+            ServiceBusSender senderB = client.CreateSender(queueB.QueueName);
+            ServiceBusSender senderC = client.CreateSender(topicC.TopicName);
 
             var message = new ServiceBusMessage();
 
@@ -125,7 +119,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         [Ignore("Only verifying that it compiles.")]
         public async Task TransactionGroupWrongOrder()
         {
-            await using var client = CreateClient();
+            await using var client = new ServiceBusClient(
+                TestEnvironment.ServiceBusConnectionString,
+                new ServiceBusClientOptions
+                {
+                    EnableCrossEntityTransactions = true
+                });
             await using var queueA = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
             await using var queueB = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
             await using var topicC = await ServiceBusScope.CreateWithTopic(enablePartitioning: false, enableSession: false);
@@ -134,20 +133,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             // The first sender won't be part of our transaction group.
             ServiceBusSender senderA = client.CreateSender(queueA.QueueName);
 
-            string transactionGroup = "myTxn";
-
-            ServiceBusReceiver receiverA = client.CreateReceiver(queueA.QueueName, new ServiceBusReceiverOptions
-            {
-                TransactionGroup = transactionGroup
-            });
-            ServiceBusSender senderB = client.CreateSender(queueB.QueueName, new ServiceBusSenderOptions
-            {
-                TransactionGroup = transactionGroup
-            });
-            ServiceBusSender senderC = client.CreateSender(topicC.TopicName, new ServiceBusSenderOptions
-            {
-                TransactionGroup = transactionGroup
-            });
+            ServiceBusReceiver receiverA = client.CreateReceiver(queueA.QueueName);
+            ServiceBusSender senderB = client.CreateSender(queueB.QueueName);
+            ServiceBusSender senderC = client.CreateSender(topicC.TopicName);
 
             var message = new ServiceBusMessage();
 

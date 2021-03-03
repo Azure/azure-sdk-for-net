@@ -156,7 +156,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 .Returns(new ServiceBusRetryOptions());
 
             mockConnection
-                .Setup(connection => connection.CreateTransportSender(It.IsAny<string>(), It.IsAny<ServiceBusRetryPolicy>(), It.IsAny<string>(), It.IsAny<string>()))
+                .Setup(connection => connection.CreateTransportSender(It.IsAny<string>(), It.IsAny<ServiceBusRetryPolicy>(), It.IsAny<string>()))
                 .Returns(mockTransportSender.Object);
 
             mockConnection

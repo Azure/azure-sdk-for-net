@@ -53,7 +53,6 @@ namespace Azure.Messaging.ServiceBus
             {
                 ReceiveMode = _processorOptions.ReceiveMode,
                 PrefetchCount = _processorOptions.PrefetchCount,
-                TransactionGroup = _processorOptions.TransactionGroup
             };
             _maxReceiveWaitTime = _processorOptions.MaxReceiveWaitTime;
             _identifier = identifier;

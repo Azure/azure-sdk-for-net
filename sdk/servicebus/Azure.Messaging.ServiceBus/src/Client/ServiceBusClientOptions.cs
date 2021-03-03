@@ -53,6 +53,13 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
+        /// If set to true, transactions spanning multiple entities can be performed.
+        /// This should not be set to true if not using transactions, or if all transactions
+        /// will be limited to a single entity.
+        /// </summary>
+        public bool EnableCrossEntityTransactions { get; set; }
+
+        /// <summary>
         /// The list of plugins for the client.
         /// </summary>
         internal List<ServiceBusPlugin> Plugins { get; set; } = new List<ServiceBusPlugin>();
@@ -109,6 +116,7 @@ namespace Azure.Messaging.ServiceBus
                 TransportType = TransportType,
                 WebProxy = WebProxy,
                 RetryOptions = RetryOptions.Clone(),
+                EnableCrossEntityTransactions = EnableCrossEntityTransactions,
                 Plugins = new List<ServiceBusPlugin>(Plugins)
             };
     }
