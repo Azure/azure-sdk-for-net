@@ -12,7 +12,7 @@ The simplest way to persist the `TokenCache` of a credential is to to use the de
 var credential = new InteractiveBrowserCredential(
     new InteractiveBrowserCredentialOptions
     {
-        TokenCache = new TokenCache(new SuperAdvancedDontUseTokenCacheOptions())
+        TokenCachePersistenceOptions = new TokenCachePersistenceOptions()
     });
 ```
 
@@ -21,12 +21,10 @@ var credential = new InteractiveBrowserCredential(
 Some applications may prefer to isolate the `TokenCache` they user rather than using the shared instance. To accomplish this they can specify a `TokenCacheOptions` when creating the `TokenCache` and provide a `Name` for the persisted cache instance.
 
 ```C# Snippet:Identity_TokenCache_PersistentNamed
-var tokenCache = new TokenCache(
-    new SuperAdvancedDontUseTokenCacheOptions { Name = "my_application_name" }
-);
+var persistenceOptions = new TokenCachePersistenceOptions { Name = "my_application_name" };
 
 var credential = new InteractiveBrowserCredential(
-    new InteractiveBrowserCredentialOptions { TokenCache = tokenCache }
+    new InteractiveBrowserCredentialOptions { TokenCachePersistenceOptions = persistenceOptions }
 );
 ```
 
@@ -35,12 +33,10 @@ var credential = new InteractiveBrowserCredential(
 By default the `TokenCache` will protect any data which is persisted using the user data protection APIs available on the current platform. However, there are cases where no data protection is available, and applications may choose to still persist the token cache in an unencrypted state. This is accomplished with the `AllowUnencryptedStorage` option.
 
 ```C# Snippet:Identity_TokenCache_PersistentUnencrypted
-var tokenCache = new TokenCache(
-    new SuperAdvancedDontUseTokenCacheOptions { AllowUnencryptedStorage = true }
-);
+var persistenceOptions = new TokenCachePersistenceOptions { AllowUnencryptedStorage = true };
 
 var credential = new InteractiveBrowserCredential(
-    new InteractiveBrowserCredentialOptions { TokenCache = tokenCache }
+    new InteractiveBrowserCredentialOptions { TokenCachePersistenceOptions = persistenceOptions }
 );
 ```
 
@@ -59,53 +55,54 @@ private const string TOKEN_CACHE_PATH = "./tokencache.bin";
 ```
 
 ```C# Snippet:Identity_TokenCache_CustomPersistence_Write
-using (var cacheStream = new FileStream(TOKEN_CACHE_PATH, FileMode.Create, FileAccess.Write))
-{
-    await TokenCacheSerializer.SerializeAsync(tokenCache, cacheStream);
-}
+// using (var cacheStream = new FileStream(TOKEN_CACHE_PATH, FileMode.Create, FileAccess.Write))
+// {
+//     await TokenCacheSerializer.SerializeAsync(tokenCache, cacheStream);
+// }
 ```
 
 The `Deserialize` or `DeserializeAsync` methods can be used to read the content of a `TokenCache` from any readable stream.
 
 ```C# Snippet:Identity_TokenCache_CustomPersistence_Read
-TokenCache tokenCache;
+await Task.Yield();
+// TokenCachePersistenceOptions tokenCache;
 
-using (var cacheStream = new FileStream(TOKEN_CACHE_PATH, FileMode.OpenOrCreate, FileAccess.Read))
-{
-    tokenCache = await TokenCacheSerializer.DeserializeAsync(cacheStream);
-}
+// using (var cacheStream = new FileStream(TOKEN_CACHE_PATH, FileMode.OpenOrCreate, FileAccess.Read))
+// {
+//     tokenCache = await TokenCacheSerializer.DeserializeAsync(cacheStream);
+// }
 ```
 
 Applications can combine these methods along with the `Updated` event to automatically persist and read the token from a storage solution of their choice.
 
 ```C# Snippet:Identity_TokenCache_CustomPersistence_Usage
-public static async Task<TokenCache> ReadTokenCacheAsync()
-{
-    TokenCache tokenCache;
+// public static async Task<TokenCacheOptions> ReadTokenCacheAsync()
+// {
+//     TokenCacheOptions tokenCache;
 
-    using (var cacheStream = new FileStream(TOKEN_CACHE_PATH, FileMode.OpenOrCreate, FileAccess.Read))
-    {
-        tokenCache = await TokenCacheSerializer.DeserializeAsync(cacheStream);
-        tokenCache.Updated += WriteCacheOnUpdateAsync;
-    }
+//     using (var cacheStream = new FileStream(TOKEN_CACHE_PATH, FileMode.OpenOrCreate, FileAccess.Read))
+//     {
+//         tokenCache = await TokenCacheSerializer.DeserializeAsync(cacheStream);
+//         tokenCache.Updated += WriteCacheOnUpdateAsync;
+//     }
 
-    return tokenCache;
-}
+//     return tokenCache;
+// }
 
-public static async Task WriteCacheOnUpdateAsync(TokenCacheUpdatedArgs args)
-{
-    using (var cacheStream = new FileStream(TOKEN_CACHE_PATH, FileMode.Create, FileAccess.Write))
-    {
-        await TokenCacheSerializer.SerializeAsync(args.Cache, cacheStream);
-    }
-}
+// public static async Task WriteCacheOnUpdateAsync(TokenCacheUpdatedArgs args)
+// {
+//     using (var cacheStream = new FileStream(TOKEN_CACHE_PATH, FileMode.Create, FileAccess.Write))
+//     {
+//         await TokenCacheSerializer.SerializeAsync(args.Cache, cacheStream);
+//     }
+// }
 
-public static async Task Main()
-{
-    var tokenCache = await ReadTokenCacheAsync();
+// public static async Task Main()
+// {
+//     var persistenceOptions = await ReadTokenCacheAsync();
 
-    var credential = new InteractiveBrowserCredential(
-        new InteractiveBrowserCredentialOptions { TokenCache = tokenCache }
-    );
-}
+//     var credential = new InteractiveBrowserCredential(
+//         new InteractiveBrowserCredentialOptions { TokenCacheOptions = tokenCache }
+//     );
+// }
 ```

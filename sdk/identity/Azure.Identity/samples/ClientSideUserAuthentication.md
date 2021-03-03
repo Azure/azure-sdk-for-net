@@ -85,7 +85,7 @@ To use the `TokenCache` to persist the cache of any credential simply set the `T
 var credential = new InteractiveBrowserCredential(
     new InteractiveBrowserCredentialOptions
     {
-        TokenCache = new TokenCache(new SuperAdvancedDontUseTokenCacheOptions())
+        TokenCachePersistenceOptions = new TokenCachePersistenceOptions()
     });
 ```
 
@@ -123,7 +123,7 @@ using (var authRecordStream = new FileStream(AUTH_RECORD_PATH, FileMode.Open, Fi
 var credential = new InteractiveBrowserCredential(
     new InteractiveBrowserCredentialOptions
     {
-        TokenCache = new TokenCache(new SuperAdvancedDontUseTokenCacheOptions()),
+        TokenCachePersistenceOptions = new TokenCachePersistenceOptions(),
         AuthenticationRecord = authRecord
     });
 ```
