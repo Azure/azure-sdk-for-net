@@ -226,18 +226,18 @@ namespace Azure.Identity
     public partial class TokenCacheUpdatedArgs
     {
         internal TokenCacheUpdatedArgs() { }
-        public byte[] Data { get { throw null; } }
+        public System.ReadOnlyMemory<byte> Data { get { throw null; } }
     }
     public partial class TokenCredentialOptions : Azure.Core.ClientOptions
     {
         public TokenCredentialOptions() { }
         public System.Uri AuthorityHost { get { throw null; } set { } }
     }
-    public partial class UnsafeTokenCacheOptions : Azure.Identity.TokenCachePersistenceOptions
+    public abstract partial class UnsafeTokenCacheOptions : Azure.Identity.TokenCachePersistenceOptions
     {
-        public UnsafeTokenCacheOptions() { }
-        public byte[] InitialBytes { get { throw null; } set { } }
-        public System.Func<Azure.Identity.TokenCacheUpdatedArgs, System.Threading.Tasks.Task> UpdatedDelegate { get { throw null; } set { } }
+        protected UnsafeTokenCacheOptions() { }
+        public abstract System.Threading.Tasks.Task<System.ReadOnlyMemory<byte>> RefreshCacheAsync();
+        public abstract System.Threading.Tasks.Task TokenCacheUpdatedAsync(Azure.Identity.TokenCacheUpdatedArgs tokenCacheUpdatedArgs);
     }
     public partial class UsernamePasswordCredential : Azure.Core.TokenCredential
     {
