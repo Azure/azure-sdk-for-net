@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.TestFramework
 {
     public class ResourceGroupCleanupPolicy : HttpPipelineSynchronousPolicy
     {
+        private readonly object _listLock = new object();
         private Regex _resourceGroupPattern = new Regex(@"/subscriptions/[^/]+/resourcegroups/([^?/]+)\?api-version");
         private readonly IList<string> _resourceGroupCreated = new List<string>();
 
@@ -26,7 +27,10 @@ namespace Azure.ResourceManager.TestFramework
                 var match = _resourceGroupPattern.Match(message.Request.Uri.ToString());
                 if (match.Success)
                 {
-                    _resourceGroupCreated.Add(match.Groups[1].Value);
+                    lock (_listLock)
+                    {
+                        _resourceGroupCreated.Add(match.Groups[1].Value);
+                    }
                 }
             }
         }

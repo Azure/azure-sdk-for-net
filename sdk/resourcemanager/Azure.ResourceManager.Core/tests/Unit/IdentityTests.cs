@@ -9,6 +9,8 @@ namespace Azure.ResourceManager.Core.Tests
 {
     public class IdentityTests
     {
+        private static readonly string TestAssetPath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Unit", "TestAssets", "Identity");
+
         [TestCase]
         public void CheckNoParamConstructor()
         {
@@ -153,7 +155,7 @@ namespace Azure.ResourceManager.Core.Tests
 
         public JsonProperty DeserializerHelper(string filename)
         {
-            var json = File.ReadAllText(Path.Combine(TestContext.CurrentContext.TestDirectory, "TestAssets", "Identity", filename));
+            var json = File.ReadAllText(Path.Combine(TestAssetPath, filename));
             JsonDocument document = JsonDocument.Parse(json);
             JsonElement rootElement = document.RootElement;
             return rootElement.EnumerateObject().First();
@@ -219,7 +221,7 @@ namespace Azure.ResourceManager.Core.Tests
         [TestCase]
         public void TestDeserializerValidOuterExtraField()
         {
-            var json = File.ReadAllText(Path.Combine(TestContext.CurrentContext.TestDirectory, "TestAssets", "Identity", "SystemAndUserAssignedOuterExtraField.json"));
+            var json = File.ReadAllText(Path.Combine(TestAssetPath, "SystemAndUserAssignedOuterExtraField.json"));
             JsonDocument document = JsonDocument.Parse(json);
             JsonElement rootElement = document.RootElement;
             var identityJsonProperty = rootElement.EnumerateObject().ElementAt(1);

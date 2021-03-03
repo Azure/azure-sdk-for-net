@@ -1,16 +1,25 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using NUnit.Framework;
 using System;
+using System.Text;
+using Azure.Core.TestFramework;
+using Azure.ResourceManager.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Core.Tests
 {
-    public class SubscriptionOperationsTests
+    public class SubscriptionOperationsTests : Track2ManagementRecordedTestBase<ResourceManagerTestEnvironment>
     {
+        public SubscriptionOperationsTests(bool isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
+        {
+        }
+
         [TestCase(null)]
         [TestCase("")]
-        [Ignore("Will remove after ADO 5122")]
+        [SyncOnly]
+        [RecordedTest]
         public void TestGetResourceGroupOpsArgNullException(string resourceGroupName)
         {
             var client = new AzureResourceManagerClient();
@@ -23,7 +32,8 @@ namespace Azure.ResourceManager.Core.Tests
         [TestCase("te$st")]
         [TestCase("te#st")]
         [TestCase("te#st")]
-        [Ignore("Will remove after ADO 5122")]
+        [SyncOnly]
+        [RecordedTest]
         public void TestGetResourceGroupOpsArgException(string resourceGroupName)
         {
             var client = new AzureResourceManagerClient();
@@ -31,10 +41,12 @@ namespace Azure.ResourceManager.Core.Tests
             Assert.Throws<ArgumentException>(delegate { subOps.GetResourceGroupOperations(resourceGroupName); });
         }
 
-        [TestCase("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
-        [Ignore("Will remove after ADO 5122")]
-        public void TestGetResourceGroupOpsOutOfRangeArgException(string resourceGroupName)
+        [TestCase(91)]
+        [SyncOnly]
+        [RecordedTest]
+        public void TestGetResourceGroupOpsOutOfRangeArgException(int length)
         {
+            var resourceGroupName = GetLongString(length);
             var client = new AzureResourceManagerClient();
             var subOps = client.DefaultSubscription;
             Assert.Throws<ArgumentOutOfRangeException>(delegate { subOps.GetResourceGroupOperations(resourceGroupName); });
@@ -43,14 +55,35 @@ namespace Azure.ResourceManager.Core.Tests
         [TestCase("te.st")]
         [TestCase("te")]
         [TestCase("t")]
-        [TestCase("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
-        [TestCase("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
-        [Ignore("Will remove after ADO 5122")]
+        [SyncOnly]
+        [RecordedTest]
         public void TestGetResourceGroupOpsValid(string resourceGroupName)
         {
             var client = new AzureResourceManagerClient();
             var subOps = client.DefaultSubscription;
             Assert.DoesNotThrow(delegate { subOps.GetResourceGroupOperations(resourceGroupName); });
+        }
+
+        [TestCase(89)]
+        [TestCase(90)]
+        [SyncOnly]
+        [RecordedTest]
+        public void TestGetResourceGroupOpsLong(int length)
+        {
+            var resourceGroupName = GetLongString(length);
+            var client = new AzureResourceManagerClient();
+            var subOps = client.DefaultSubscription;
+            Assert.DoesNotThrow(delegate { subOps.GetResourceGroupOperations(resourceGroupName); });
+        }
+
+        private string GetLongString(int length)
+        {
+            StringBuilder builder = new StringBuilder();
+            for(int i=0; i<length; i++)
+            {
+                builder.Append('a');
+            }
+            return builder.ToString();
         }
     }
 }

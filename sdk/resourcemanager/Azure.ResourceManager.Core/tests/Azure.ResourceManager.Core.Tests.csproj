@@ -19,14 +19,18 @@
     <None Update="ScenarioTests\*.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="TestAssets\Identity\*.json">
+    <None Update="Unit\TestAssets\Identity\*.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="TestAssets\UserAssignedIdentity\*.json">
+    <None Update="Unit\TestAssets\UserAssignedIdentity\*.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="TestAssets\SystemAssignedIdentity\*.json">
+    <None Update="Unit\TestAssets\SystemAssignedIdentity\*.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SessionRecords\SubscriptionOperationsTests\" />
+    <Folder Include="SessionRecords\TaggableResourceTests\" />
   </ItemGroup>
 </Project>
