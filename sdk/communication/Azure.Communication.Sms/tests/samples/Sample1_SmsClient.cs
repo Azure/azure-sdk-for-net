@@ -37,8 +37,8 @@ namespace Azure.Communication.Sms.Tests.samples
             SmsClient smsClient = CreateSmsClient();
             #region Snippet:Azure_Communication_Sms_Tests_SendAsync
             SmsSendResult sendResult = await smsClient.SendAsync(
-                from: "+15550000000",
-                to: "+15550000001",
+                from: "<from-phone-number>",
+                to: "<to-phone-number>",
                 message: "Hi");
             Console.WriteLine($"Sms id: {sendResult.MessageId}");
             #endregion Snippet:Azure_Communication_Sms_Tests_SendAsync
@@ -50,8 +50,8 @@ namespace Azure.Communication.Sms.Tests.samples
             SmsClient smsClient = CreateSmsClient();
             #region Snippet:Azure_Communication_SmsClient_Send_GroupSmsWithOptions
             Response<IEnumerable<SmsSendResult>> response = await smsClient.SendAsync(
-                from: "+15550000000",
-                to: new string[] { "+15550000001", "+15550000002" },
+                from: "<from-phone-number>",
+                to: new string[] { "<to-phone-number-1>", "<to-phone-number-2>" },
                 message: "Weekly Promotion!",
                 options: new SmsSendOptions(enableDeliveryReport: true) // OPTIONAL
                 {

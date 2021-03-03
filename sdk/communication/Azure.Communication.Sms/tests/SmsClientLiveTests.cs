@@ -31,8 +31,8 @@ namespace Azure.Communication.Sms.Tests
             try
             {
                 SmsSendResult result = await client.SendAsync(
-                   //@@ from: "+18001230000" // Phone number acquired on your Azure Communication resource
-                   //@@ to: "+18005670000",
+                   //@@ from: "<from-phone-number>" // Phone number acquired on your Azure Communication resource
+                   //@@ to: "<to-phone-number>",
                    /*@@*/ from: TestEnvironment.FromPhoneNumber,
                    /*@@*/ to: TestEnvironment.ToPhoneNumber,
                    message: "Hi");

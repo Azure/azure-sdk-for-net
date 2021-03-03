@@ -51,8 +51,8 @@ SmsClient client = new SmsClient(new Uri(endpoint), tokenCredential);
 To send a SMS message, call the `Send` or `SendAsync` function from the `SmsClient`.
 ```C# Snippet:Azure_Communication_Sms_Tests_SendAsync
 SmsSendResult sendResult = await smsClient.SendAsync(
-    from: "+15550000000",
-    to: "+15550000001",
+    from: "<from-phone-number>",
+    to: "<to-phone-number>",
     message: "Hi");
 Console.WriteLine($"Sms id: {sendResult.MessageId}");
 ```
@@ -61,8 +61,8 @@ To send a SMS message to a list of recipients, call the `Send` or `SendAsync` fu
 You may also add pass in an options object to specify whether the delivery report should be enabled and set custom tags.
 ```C# Snippet:Azure_Communication_SmsClient_Send_GroupSmsWithOptions
 Response<IEnumerable<SmsSendResult>> response = await smsClient.SendAsync(
-    from: "+15550000000",
-    to: new string[] { "+15550000001", "+15550000002" },
+    from: "<from-phone-number>",
+    to: new string[] { "<to-phone-number-1>", "<to-phone-number-2>" },
     message: "Weekly Promotion!",
     options: new SmsSendOptions(enableDeliveryReport: true) // OPTIONAL
     {
@@ -82,8 +82,8 @@ All SMS operations will throw a RequestFailedException on failure.
 try
 {
     SmsSendResult result = await client.SendAsync(
-       from: "+18001230000" // Phone number acquired on your Azure Communication resource
-       to: "+18005670000",
+       from: "<from-phone-number>" // Phone number acquired on your Azure Communication resource
+       to: "<to-phone-number>",
        message: "Hi");
     Console.WriteLine($"Sms id: {result.MessageId}");
 }
