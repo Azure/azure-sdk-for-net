@@ -131,7 +131,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 {
                     CustomEndpointAddress = testEndpoint
                 },
-                RetryOptions = new EventHubsRetryOptions
+                ClientRetryOptions = new EventHubsRetryOptions
                 {
                     MaximumRetries = 10
                 }
@@ -164,7 +164,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 {
                     CustomEndpointAddress = testEndpoint
                 },
-                RetryOptions = new EventHubsRetryOptions
+                ClientRetryOptions = new EventHubsRetryOptions
                 {
                     MaximumRetries = 10
                 }
@@ -209,7 +209,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 {
                     CustomEndpointAddress = testEndpoint
                 },
-                RetryOptions = new EventHubsRetryOptions
+                ClientRetryOptions = new EventHubsRetryOptions
                 {
                     MaximumRetries = 10
                 }

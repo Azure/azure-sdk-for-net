@@ -2,14 +2,9 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Text;
 using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Primitives;
-using Azure.Messaging.EventHubs.Processor;
-using Azure.Messaging.EventHubs.Producer;
 using Microsoft.Azure.WebJobs.EventHubs.Processor;
 using Microsoft.Azure.WebJobs.Hosting;
 using Newtonsoft.Json;
@@ -22,7 +17,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         public EventHubOptions()
         {
             MaxBatchSize = 10;
-            InvokeFunctionAfterReceiveTimeout = false;
             EventProcessorOptions = new EventProcessorOptions()
             {
                 TrackLastEnqueuedEventProperties = false,
@@ -51,7 +45,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         ///   amount of time allowed for receiving event batches and other interactions with the Event Hubs service.
         /// </summary>
         ///
-        public EventHubsRetryOptions RetryOptions
+        public EventHubsRetryOptions ClientRetryOptions
         {
             get => EventProcessorOptions.RetryOptions;
             set => EventProcessorOptions.RetryOptions = value;
@@ -96,11 +90,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         }
 
         /// <summary>
-        /// Returns whether the function would be triggered when a receive timeout occurs.
-        /// </summary>
-        public bool InvokeFunctionAfterReceiveTimeout { get; set; }
-
-        /// <summary>
         /// Gets the initial offset options to apply when processing. This only applies
         /// when no checkpoint information is available.
         /// </summary>
@@ -125,16 +114,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         {
             get => EventProcessorOptions.PrefetchSizeInBytes;
             set => EventProcessorOptions.PrefetchSizeInBytes = value;
-        }
-
-        /// <summary>
-        ///   The maximum amount of time to wait for events to become available. If <see cref="InvokeFunctionAfterReceiveTimeout"/> is true,
-        ///   the function will be triggered with an empty <see cref="EventData"/>.
-        /// </summary>
-        public TimeSpan MaximumWaitTime
-        {
-            get => EventProcessorOptions.MaximumWaitTime.Value;
-            set => EventProcessorOptions.MaximumWaitTime = value;
         }
 
         /// <inheritdoc cref="EventProcessorOptions.PartitionOwnershipExpirationInterval"/>
@@ -163,14 +142,12 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             JObject options = new JObject
                 {
                     { nameof(MaxBatchSize), MaxBatchSize },
-                    { nameof(InvokeFunctionAfterReceiveTimeout), InvokeFunctionAfterReceiveTimeout },
                     { nameof(BatchCheckpointFrequency), BatchCheckpointFrequency },
                     { nameof(ConnectionOptions), ConstructConnectionOptions() },
-                    { nameof(RetryOptions), ConstructRetryOptions() },
+                    { nameof(ClientRetryOptions), ConstructRetryOptions() },
                     { nameof(TrackLastEnqueuedEventProperties), TrackLastEnqueuedEventProperties },
                     { nameof(PrefetchCount), PrefetchCount },
                     { nameof(PrefetchSizeInBytes), PrefetchSizeInBytes },
-                    { nameof(MaximumWaitTime), MaximumWaitTime },
                     { nameof(PartitionOwnershipExpirationInterval), PartitionOwnershipExpirationInterval },
                     { nameof(LoadBalancingUpdateInterval), LoadBalancingUpdateInterval },
                     { nameof(InitialOffsetOptions), ConstructInitialOffsetOptions() },
@@ -188,11 +165,11 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         private JObject ConstructRetryOptions() =>
             new JObject
             {
-                { nameof(EventHubsRetryOptions.Mode), RetryOptions.Mode.ToString() },
-                { nameof(EventHubsRetryOptions.TryTimeout), RetryOptions.TryTimeout },
-                { nameof(EventHubsRetryOptions.Delay), RetryOptions.Delay },
-                { nameof(EventHubsRetryOptions.MaximumDelay), RetryOptions.MaximumDelay },
-                { nameof(EventHubsRetryOptions.MaximumRetries), RetryOptions.MaximumRetries },
+                { nameof(EventHubsRetryOptions.Mode), ClientRetryOptions.Mode.ToString() },
+                { nameof(EventHubsRetryOptions.TryTimeout), ClientRetryOptions.TryTimeout },
+                { nameof(EventHubsRetryOptions.Delay), ClientRetryOptions.Delay },
+                { nameof(EventHubsRetryOptions.MaximumDelay), ClientRetryOptions.MaximumDelay },
+                { nameof(EventHubsRetryOptions.MaximumRetries), ClientRetryOptions.MaximumRetries },
             };
 
         private JObject ConstructInitialOffsetOptions() =>
