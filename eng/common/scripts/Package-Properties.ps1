@@ -111,8 +111,14 @@ function Get-AllPkgProperties ([string]$ServiceDirectory = $null)
 
     if (Test-Path "Function:Get-AllPackageInfoFromRepo")
     {
-        
-        $pkgPropsResult = Get-AllPackageInfoFromRepo
+        if ([string]::IsNullOrEmpty($ServiceDirectory))
+        {
+            $pkgPropsResult = Get-AllPackageInfoFromRepo
+        }
+        else
+        {
+            $pkgPropsResult = Get-AllPackageInfoFromRepo -ServiceDirectory $serviceDirectory
+        }
     }
     else
     {
