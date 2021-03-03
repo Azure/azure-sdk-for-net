@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Threading;
@@ -22,7 +23,7 @@ namespace Azure.Identity.Tests
         { }
 
         internal TokenCache cache;
-        public Mock<ITokenCacheSerializer> mockSerializer1;
+        public Mock<ITokenCacheSerializer> mockSerializer;
         public Mock<ITokenCacheSerializer> mockSerializer2;
         public Mock<ITokenCache> mockMSALCache;
         internal Mock<MsalCacheHelperWrapper> mockWrapper;
@@ -40,7 +41,7 @@ namespace Azure.Identity.Tests
         [SetUp]
         public void Setup()
         {
-            mockSerializer1 = new Mock<ITokenCacheSerializer>();
+            mockSerializer = new Mock<ITokenCacheSerializer>();
             mockSerializer2 = new Mock<ITokenCacheSerializer>();
             mockMSALCache = new Mock<ITokenCache>();
             mockWrapper = new Mock<MsalCacheHelperWrapper>();
@@ -258,7 +259,7 @@ namespace Azure.Identity.Tests
         {
             cache = new TokenCache(new InMemoryTokenCacheOptions(bytes));
 
-            TokenCacheNotificationArgs mockArgs = GetMockArgs(mockSerializer1, true);
+            TokenCacheNotificationArgs mockArgs = GetMockArgs(mockSerializer, true);
             bool updatedCalled = false;
 
             mockMSALCache
@@ -268,7 +269,7 @@ namespace Azure.Identity.Tests
                 .Setup(m => m.SetAfterAccessAsync(It.IsAny<Func<TokenCacheNotificationArgs, Task>>()))
                 .Callback<Func<TokenCacheNotificationArgs, Task>>(afterAccess => main_OnAfterCacheAccessAsync = afterAccess);
 
-            mockSerializer1.Setup(m => m.SerializeMsalV3()).Returns(bytes);
+            mockSerializer.Setup(m => m.SerializeMsalV3()).Returns(bytes);
 
             cache.TokenCacheUpdatedAsync += (args) =>
             {
@@ -280,8 +281,8 @@ namespace Azure.Identity.Tests
             await main_OnBeforeCacheAccessAsync.Invoke(mockArgs);
             await main_OnAfterCacheAccessAsync.Invoke(mockArgs);
 
-            mockSerializer1.Verify(m => m.DeserializeMsalV3(cache.Data, true), Times.Once);
-            mockSerializer1.Verify(m => m.SerializeMsalV3(), Times.Once);
+            mockSerializer.Verify(m => m.DeserializeMsalV3(cache.Data, true), Times.Once);
+            mockSerializer.Verify(m => m.SerializeMsalV3(), Times.Once);
             Assert.That(updatedCalled);
             Assert.That(cache.Data, Is.EqualTo(bytes));
         }
@@ -291,7 +292,7 @@ namespace Azure.Identity.Tests
         {
             var mockPublicClient = new Mock<IPublicClientApplication>();
             var mergeMSALCache = new Mock<ITokenCache>();
-            TokenCacheNotificationArgs mockArgs1 = GetMockArgs(mockSerializer1, true);
+            TokenCacheNotificationArgs mockArgs1 = GetMockArgs(mockSerializer, true);
             TokenCacheNotificationArgs mockArgs2 = GetMockArgs(mockSerializer2, true);
 
             mockMSALCache
@@ -309,7 +310,7 @@ namespace Azure.Identity.Tests
             mergeMSALCache
                 .Setup(m => m.SetAfterAccess(It.IsAny<TokenCacheCallback>()))
                 .Callback<TokenCacheCallback>(afterAccess => merge_OnAfterCacheAccessAsync = afterAccess);
-            mockSerializer1
+            mockSerializer
                 .SetupSequence(m => m.SerializeMsalV3())
                 .Returns(bytes)
                 .Returns(mergedBytes);
@@ -344,10 +345,10 @@ namespace Azure.Identity.Tests
             // Consumer 1 now writes, and must update its cache first.
             await main_OnAfterCacheAccessAsync.Invoke(mockArgs1);
 
-            mockSerializer1.Verify(m => m.DeserializeMsalV3(bytes, true), Times.Exactly(1));
-            mockSerializer1.Verify(m => m.SerializeMsalV3(), Times.Exactly(2));
-            mockSerializer1.Verify(m => m.DeserializeMsalV3(bytes, false), Times.Exactly(1));
-            mockSerializer1.Verify(m => m.DeserializeMsalV3(updatedBytes, false), Times.Exactly(1));
+            mockSerializer.Verify(m => m.DeserializeMsalV3(bytes, true), Times.Exactly(1));
+            mockSerializer.Verify(m => m.SerializeMsalV3(), Times.Exactly(2));
+            mockSerializer.Verify(m => m.DeserializeMsalV3(bytes, false), Times.Exactly(1));
+            mockSerializer.Verify(m => m.DeserializeMsalV3(updatedBytes, false), Times.Exactly(1));
             mockSerializer2.Verify(m => m.DeserializeMsalV3(bytes, true), Times.Exactly(1));
             mockSerializer2.Verify(m => m.SerializeMsalV3(), Times.Exactly(1));
 
@@ -360,8 +361,8 @@ namespace Azure.Identity.Tests
         {
             var evt = new ManualResetEventSlim();
             var mockPublicClient = new Mock<IPublicClientApplication>();
-            TokenCacheNotificationArgs mockArgs1 = GetMockArgs(mockSerializer1, true);
-            mockSerializer1
+            TokenCacheNotificationArgs mockArgs = GetMockArgs(mockSerializer, true);
+            mockSerializer
                 .SetupSequence(m => m.SerializeMsalV3())
                 .Returns(updatedBytes);
             mockMSALCache
@@ -374,8 +375,8 @@ namespace Azure.Identity.Tests
             var cache = new TokenCache(new InMemoryTokenCacheOptions(bytes, updateHandler), default, publicApplicationFactory: new Func<IPublicClientApplication>(() => mockPublicClient.Object));
             await cache.RegisterCache(IsAsync, mockMSALCache.Object, default);
 
-            await main_OnBeforeCacheAccessAsync.Invoke(mockArgs1);
-            await main_OnAfterCacheAccessAsync.Invoke(mockArgs1);
+            await main_OnBeforeCacheAccessAsync.Invoke(mockArgs);
+            await main_OnAfterCacheAccessAsync.Invoke(mockArgs);
 
             Task updateHandler(TokenCacheUpdatedArgs args)
             {
@@ -385,6 +386,46 @@ namespace Azure.Identity.Tests
             };
 
             evt.Wait();
+        }
+
+        [Test]
+        public async Task UnsafeOptions()
+        {
+            var bytes1 = new ReadOnlyMemory<byte>(new byte[] { 1 });
+            var bytes2 = new ReadOnlyMemory<byte>(new byte[] { 2 });
+            var bytes3 = new ReadOnlyMemory<byte>(new byte[] { 3 });
+
+            var evt = new ManualResetEventSlim();
+            var mockPublicClient = new Mock<IPublicClientApplication>();
+            TokenCacheNotificationArgs mockArgs = GetMockArgs(mockSerializer, true);
+            mockSerializer
+                .SetupSequence(m => m.SerializeMsalV3())
+                .Returns(updatedBytes);
+            mockMSALCache
+                .Setup(m => m.SetBeforeAccessAsync(It.IsAny<Func<TokenCacheNotificationArgs, Task>>()))
+                .Callback<Func<TokenCacheNotificationArgs, Task>>(beforeAccess => main_OnBeforeCacheAccessAsync = beforeAccess);
+            mockMSALCache
+                .Setup(m => m.SetAfterAccessAsync(It.IsAny<Func<TokenCacheNotificationArgs, Task>>()))
+                .Callback<Func<TokenCacheNotificationArgs, Task>>(afterAccess => main_OnAfterCacheAccessAsync = afterAccess);
+            var mockUnsafeOptions = new Mock<UnsafeTokenCacheOptions>();
+            mockUnsafeOptions
+                .SetupSequence(m => m.RefreshCacheAsync())
+                .ReturnsAsync(bytes1)
+                .ReturnsAsync(bytes2)
+                .ReturnsAsync(bytes3);
+            mockUnsafeOptions
+                .Setup(m => m.TokenCacheUpdatedAsync(It.IsAny<TokenCacheUpdatedArgs>()));
+
+            var cache = new TokenCache(mockUnsafeOptions.Object, default, publicApplicationFactory: new Func<IPublicClientApplication>(() => mockPublicClient.Object));
+            await cache.RegisterCache(IsAsync, mockMSALCache.Object, default);
+
+            await main_OnBeforeCacheAccessAsync.Invoke(mockArgs);
+            await main_OnBeforeCacheAccessAsync.Invoke(mockArgs);
+            await main_OnBeforeCacheAccessAsync.Invoke(mockArgs);
+
+            mockSerializer.Verify(m => m.DeserializeMsalV3(It.Is<byte[]>(b => b.SequenceEqual(bytes1.ToArray())), true));
+            mockSerializer.Verify(m => m.DeserializeMsalV3(It.Is<byte[]>(b => b.SequenceEqual(bytes2.ToArray())), true));
+            mockSerializer.Verify(m => m.DeserializeMsalV3(It.Is<byte[]>(b => b.SequenceEqual(bytes3.ToArray())), true));
         }
 
         private static TokenCacheNotificationArgs GetMockArgs(Mock<ITokenCacheSerializer> mockSerializer, bool hasStateChanged)

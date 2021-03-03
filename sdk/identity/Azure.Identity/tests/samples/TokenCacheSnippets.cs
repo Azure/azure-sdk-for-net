@@ -106,7 +106,7 @@ namespace Azure.Identity.Samples
                 new InteractiveBrowserCredentialOptions { TokenCacheOptions = tokenCache }
             );
         }
-        */
         #endregion
+        */
     }
 }
