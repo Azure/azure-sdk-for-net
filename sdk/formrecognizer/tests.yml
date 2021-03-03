@@ -4,7 +4,7 @@ extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
     ServiceDirectory: formrecognizer
-    TimeoutInMinutes: 90
+    TimeoutInMinutes: 240
     CloudConfig:
       Public:
         SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
@@ -18,4 +18,4 @@ extends:
       China:
         SubscriptionConfiguration: $(sub-config-cn-test-resources)
         Location: 'chinaeast2'
-    SupportedClouds: 'Public,Canary,UsGov,China'
+    Clouds: 'Public,UsGov,China,Canary'

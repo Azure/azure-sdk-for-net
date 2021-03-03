@@ -135,13 +135,15 @@ namespace Azure.Identity.Tests
             var clientId = "aebc6443-996d-45c2-90f0-388ff96faa56";
             var username = testEnvironment.Username;
             var password = testEnvironment.Password;
+            var authorityUri = new Uri(new Uri(testEnvironment.AuthorityHostUrl), testEnvironment.TestTenantId).ToString();
 
             var client = PublicClientApplicationBuilder.Create(clientId)
+                .WithAuthority(authorityUri)
                 .WithTenantId(testEnvironment.TestTenantId)
                 .Build();
 
             var retriever = new RefreshTokenRetriever(client.UserTokenCache);
-            await client.AcquireTokenByUsernamePassword(new[] {".default"}, username, password.ToSecureString()).ExecuteAsync();
+            await client.AcquireTokenByUsernamePassword(new[] { ".default" }, username, password.ToSecureString()).ExecuteAsync();
 
             StaticCachesUtilities.ClearStaticMetadataProviderCache();
             StaticCachesUtilities.ClearAuthorityEndpointResolutionManagerCache();

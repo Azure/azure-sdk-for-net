@@ -20,17 +20,29 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        [RunOnlyOnPlatforms(Windows = true, OSX = true, ContainerNames = new[] { "ubuntu_netcore_keyring" })]
+        [RunOnlyOnPlatforms(Windows = true, OSX = true, ContainerNames = new[] { "ubuntu_netcore2_keyring" })]
         public async Task AuthenticateWithVscCredential()
         {
-            var cloudName = Guid.NewGuid().ToString();
+            var cloudName = "Azure";
+            switch (TestEnvironment.AuthorityHostUrl)
+            {
+                case "https://login.microsoftonline.com":
+                    cloudName = "Azure";
+                    break;
+                case "https://login.microsoftonline.us":
+                    cloudName = "AzureChina";
+                    break;
+                case "https://login.chinacloudapi.cn":
+                    cloudName = "AzureUSGovernment";
+                    break;
+            }
 
             var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudioCode(TestEnvironment, cloudName);
             using IDisposable fixture = await CredentialTestHelpers.CreateRefreshTokenFixtureAsync(TestEnvironment, Mode, ExpectedServiceName, cloudName);
 
             var options = InstrumentClientOptions(new VisualStudioCodeCredentialOptions { TenantId = TestEnvironment.TestTenantId });
             VisualStudioCodeCredential credential = InstrumentClient(new VisualStudioCodeCredential(options, default, default, fileSystem, default));
-            AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(new[] {"https://vault.azure.net/.default"}), CancellationToken.None);
+            AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(new[] { TestEnvironment.KeyvaultScope}), CancellationToken.None);
             Assert.IsNotNull(token.Token);
         }
 
@@ -43,7 +55,7 @@ namespace Azure.Identity.Tests
 
             var options = InstrumentClientOptions(new VisualStudioCodeCredentialOptions { TenantId = TestEnvironment.TestTenantId });
             VisualStudioCodeCredential credential = InstrumentClient(new VisualStudioCodeCredential(options, default, default, fileSystemService, vscAdapter));
-            AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(new[] {"https://vault.azure.net/.default"}), CancellationToken.None);
+            AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(new[] { TestEnvironment.KeyvaultScope}), CancellationToken.None);
             Assert.IsNotNull(token.Token);
         }
 
@@ -56,7 +68,7 @@ namespace Azure.Identity.Tests
 
             var options = InstrumentClientOptions(new VisualStudioCodeCredentialOptions { TenantId = TestEnvironment.TestTenantId });
             VisualStudioCodeCredential credential = InstrumentClient(new VisualStudioCodeCredential(options, default, default, fileSystemService, vscAdapter));
-            AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(new[] {"https://vault.azure.net/.default"}), CancellationToken.None);
+            AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(new[] {TestEnvironment.KeyvaultScope}), CancellationToken.None);
             Assert.IsNotNull(token.Token);
         }
 
@@ -70,12 +82,12 @@ namespace Azure.Identity.Tests
             var options = InstrumentClientOptions(new VisualStudioCodeCredentialOptions { TenantId = TestEnvironment.TestTenantId });
             VisualStudioCodeCredential credential = InstrumentClient(new VisualStudioCodeCredential(options, default, default, fileSystemService, vscAdapter));
 
-            AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(new[] {"https://vault.azure.net/.default"}), CancellationToken.None);
+            AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(new[] {TestEnvironment.KeyvaultScope}), CancellationToken.None);
             Assert.IsNotNull(token.Token);
         }
 
         [Test]
-        [RunOnlyOnPlatforms(Windows = true, OSX = true, ContainerNames = new[] { "ubuntu_netcore_keyring" })]
+        [RunOnlyOnPlatforms(Windows = true, OSX = true, ContainerNames = new[] { "ubuntu_netcore2_keyring" })]
         public async Task AuthenticateWithVscCredential_TenantInSettings()
         {
             var cloudName = Guid.NewGuid().ToString();
@@ -86,12 +98,12 @@ namespace Azure.Identity.Tests
             var options = InstrumentClientOptions(new VisualStudioCodeCredentialOptions { TenantId = Guid.NewGuid().ToString() });
             VisualStudioCodeCredential credential = InstrumentClient(new VisualStudioCodeCredential(options, default, default, fileSystemService, default));
 
-            AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(new[] {"https://vault.azure.net/.default"}), CancellationToken.None);
+            AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(new[] {TestEnvironment.KeyvaultScope}), CancellationToken.None);
             Assert.IsNotNull(token.Token);
         }
 
         [Test]
-        [RunOnlyOnPlatforms(Windows = true, OSX = true, ContainerNames = new[] { "ubuntu_netcore_keyring" })]
+        [RunOnlyOnPlatforms(Windows = true, OSX = true, ContainerNames = new[] { "ubuntu_netcore2_keyring" })]
         public void AuthenticateWithVscCredential_NoVscInstalled()
         {
             var cloudName = Guid.NewGuid().ToString();
@@ -100,7 +112,7 @@ namespace Azure.Identity.Tests
             var options = InstrumentClientOptions(new VisualStudioCodeCredentialOptions { TenantId = TestEnvironment.TestTenantId });
             VisualStudioCodeCredential credential = InstrumentClient(new VisualStudioCodeCredential(options, default, default, fileSystem, default));
 
-            Assert.CatchAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(new[] {"https://vault.azure.net/.default"}), CancellationToken.None));
+            Assert.CatchAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(new[] {TestEnvironment.KeyvaultScope}), CancellationToken.None));
         }
 
         [Test]
@@ -113,7 +125,7 @@ namespace Azure.Identity.Tests
             var options = InstrumentClientOptions(new VisualStudioCodeCredentialOptions { TenantId = tenantId });
             VisualStudioCodeCredential credential = InstrumentClient(new VisualStudioCodeCredential(options, default, default, fileSystem, vscAdapter));
 
-            Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(new[] {"https://vault.azure.net/.default"}), CancellationToken.None));
+            Assert.CatchAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(new[] {TestEnvironment.KeyvaultScope}), CancellationToken.None));
         }
 
         [Test]
@@ -126,7 +138,7 @@ namespace Azure.Identity.Tests
             var options = InstrumentClientOptions(new VisualStudioCodeCredentialOptions { TenantId = tenantId });
             VisualStudioCodeCredential credential = InstrumentClient(new VisualStudioCodeCredential(options, default, default, fileSystemService, vscAdapter));
 
-            Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(new[] {"https://vault.azure.net/.default"}), CancellationToken.None));
+            Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(new[] {TestEnvironment.KeyvaultScope}), CancellationToken.None));
         }
 
         [Test]
@@ -139,7 +151,7 @@ namespace Azure.Identity.Tests
             var options = InstrumentClientOptions(new VisualStudioCodeCredentialOptions { TenantId = tenantId });
             VisualStudioCodeCredential credential = InstrumentClient(new VisualStudioCodeCredential(options, default, default, fileSystemService, vscAdapter));
 
-            Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(new[] {".default"}), CancellationToken.None));
+            Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(new[] { TestEnvironment.KeyvaultScope }), CancellationToken.None));
         }
     }
 }

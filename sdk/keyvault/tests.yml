@@ -5,6 +5,7 @@ extends:
   parameters:
     ServiceDirectory: keyvault
     TimeoutInMinutes: 120
+    Clouds: 'Public,Preview,UsGov,China,Canary'
     EnvVars:
       # Runs samples with live tests.
       # THIS VARIABLE IS A ONE-OFF WORKAROUND FOR KEYVAULT TESTS SPECIFICALLY, DON'T COPY IT
