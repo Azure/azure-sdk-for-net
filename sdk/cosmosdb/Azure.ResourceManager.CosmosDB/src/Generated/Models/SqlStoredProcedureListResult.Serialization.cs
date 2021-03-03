@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class SqlStoredProcedureListResult
+    internal partial class SqlStoredProcedureListResult
     {
         internal static SqlStoredProcedureListResult DeserializeSqlStoredProcedureListResult(JsonElement element)
         {

@@ -212,7 +212,6 @@ namespace Azure.Messaging.ServiceBus
             MaxConcurrentSessions = maxConcurrentSessions;
             MaxConcurrentCallsPerSession = maxConcurrentCallsPerSession;
             _sessionIds = sessionIds ?? Array.Empty<string>();
-            TransactionGroup = _options.TransactionGroup;
 
             int maxCalls = isSessionEntity ?
                 (_sessionIds.Length > 0 ?

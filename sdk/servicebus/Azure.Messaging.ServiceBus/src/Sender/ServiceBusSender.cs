@@ -77,13 +77,6 @@ namespace Azure.Messaging.ServiceBus
         private readonly ServiceBusRetryPolicy _retryPolicy;
 
         /// <summary>
-        /// Gets the transaction group associated with the sender. This is an
-        /// arbitrary string that is used to all senders, receivers, and processors that you
-        /// wish to use in a transaction that spans multiple different queues, topics, or subscriptions.
-        /// </summary>
-        public virtual string TransactionGroup { get; }
-
-        /// <summary>
         ///   The active connection to the Azure Service Bus service, enabling client communications for metadata
         ///   about the associated Service Bus entity and access to transport-aware consumers.
         /// </summary>
@@ -122,17 +115,15 @@ namespace Azure.Messaging.ServiceBus
                 Argument.AssertNotNullOrWhiteSpace(entityPath, nameof(entityPath));
                 connection.ThrowIfClosed();
 
-                options = options?.Clone() ?? new ServiceBusSenderOptions();
+                options = options ?? new ServiceBusSenderOptions();
                 EntityPath = entityPath;
                 Identifier = DiagnosticUtilities.GenerateIdentifier(EntityPath);
                 _connection = connection;
                 _retryPolicy = _connection.RetryOptions.ToRetryPolicy();
-                TransactionGroup = options.TransactionGroup;
                 _innerSender = _connection.CreateTransportSender(
                     entityPath,
                     _retryPolicy,
-                    Identifier,
-                    TransactionGroup);
+                    Identifier);
                 _scopeFactory = new EntityScopeFactory(EntityPath, FullyQualifiedNamespace);
                 _plugins = plugins;
             }

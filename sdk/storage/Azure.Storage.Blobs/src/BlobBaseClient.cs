@@ -1006,7 +1006,7 @@ namespace Azure.Storage.Blobs.Specialized
             }
 
             // Watch out for exploding Responses
-            long length = response.IsUnavailable() ? 0 : response.Value.Length;
+            long length = response.IsUnavailable() ? 0 : response.Headers.ContentLength ?? 0;
             ClientConfiguration.Pipeline.LogTrace($"Response: {response.GetRawResponse().Status}, ContentLength: {length}");
 
             return Response.FromValue(

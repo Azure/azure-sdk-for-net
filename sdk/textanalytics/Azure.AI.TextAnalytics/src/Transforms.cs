@@ -248,23 +248,9 @@ namespace Azure.AI.TextAnalytics
 
         #region Healthcare
 
-        internal static List<HealthcareEntity> ConvertToHealthcareEntityCollection(IEnumerable<HealthcareEntityInternal> healthcareEntities, IEnumerable<HealthcareRelationInternal> healthcareRelations)
+        internal static List<HealthcareEntity> ConvertToHealthcareEntityCollection(IEnumerable<HealthcareEntityInternal> healthcareEntities)
         {
-            var entities = healthcareEntities.Select((entity) => new HealthcareEntity(entity)).ToList();
-            // TODO - Implement HC for preview.4 https://github.com/Azure/azure-sdk-for-net/issues/18984
-            foreach (HealthcareRelationInternal relation in healthcareRelations) {
-            //    string relationType = relation.RelationType;
-            //    int sourceIndex = ParseHealthcareEntityIndex(relation.Source);
-            //    int targetIndex = ParseHealthcareEntityIndex(relation.Target);
-            //    HealthcareEntity sourceEntity = entities[sourceIndex];
-            //    HealthcareEntity targetEntity = entities[targetIndex];
-            //    sourceEntity.RelatedEntities.Add(targetEntity, relationType);
-            //    if (relation.Bidirectional)
-            //    {
-            //        targetEntity.RelatedEntities.Add(sourceEntity, relationType);
-            //    }
-            }
-            return entities;
+            return healthcareEntities.Select((entity) => new HealthcareEntity(entity)).ToList();
         }
 
         internal static AnalyzeHealthcareEntitiesResultCollection ConvertToAnalyzeHealthcareEntitiesResultCollection(HealthcareResult results, IDictionary<string, int> idToIndexMap)
@@ -283,13 +269,39 @@ namespace Azure.AI.TextAnalytics
                 healthcareEntititesResults.Add(new AnalyzeHealthcareEntitiesResult(
                     documentHealthcareEntities.Id,
                     documentHealthcareEntities.Statistics ?? default,
-                    ConvertToHealthcareEntityCollection(documentHealthcareEntities.Entities, documentHealthcareEntities.Relations),
+                    ConvertToHealthcareEntityCollection(documentHealthcareEntities.Entities),
+                    ConvertToHealthcareEntityRelationsCollection(documentHealthcareEntities.Entities, documentHealthcareEntities.Relations),
                     ConvertToWarnings(documentHealthcareEntities.Warnings)));
             }
 
             healthcareEntititesResults = healthcareEntititesResults.OrderBy(result => idToIndexMap[result.Id]).ToList();
 
             return new AnalyzeHealthcareEntitiesResultCollection(healthcareEntititesResults, results.Statistics, results.ModelVersion);
+        }
+
+        private static IList<HealthcareEntityRelation> ConvertToHealthcareEntityRelationsCollection(IReadOnlyList<HealthcareEntityInternal> healthcareEntities, IReadOnlyList<HealthcareRelationInternal> healthcareRelations)
+        {
+            List<HealthcareEntityRelation> result = new List<HealthcareEntityRelation>();
+            foreach (HealthcareRelationInternal relation in healthcareRelations)
+            {
+                result.Add(new HealthcareEntityRelation(relation.RelationType, ConvertToHealthcareEntityRelationRoleCollection(relation.Entities, healthcareEntities)));
+            }
+            return result;
+        }
+
+        private static IReadOnlyCollection<HealthcareEntityRelationRole> ConvertToHealthcareEntityRelationRoleCollection(IReadOnlyList<HealthcareRelationEntity> entities, IReadOnlyList<HealthcareEntityInternal> healthcareEntities)
+        {
+            List<HealthcareEntityRelationRole> result = new List<HealthcareEntityRelationRole>();
+
+            foreach (HealthcareRelationEntity entity in entities)
+            {
+                int refIndex = ParseHealthcareEntityIndex(entity.Ref);
+                HealthcareEntityInternal refEntity = healthcareEntities[refIndex];
+
+                result.Add(new HealthcareEntityRelationRole(refEntity, entity.Role));
+            }
+
+            return result;
         }
 
         private static int ParseHealthcareEntityIndex(string reference)
@@ -315,7 +327,7 @@ namespace Azure.AI.TextAnalytics
             {
                 Parameters = new PiiTaskParameters()
                 {
-                    Domain = option.DomainFilter.GetString(),
+                    Domain = option.DomainFilter.HasValue ? option.DomainFilter.Value.GetString() : (PiiTaskParametersDomain?)null,
                     ModelVersion = !string.IsNullOrEmpty(option.ModelVersion) ? option.ModelVersion : "latest",
                     StringIndexType = option.StringIndexType
                 }

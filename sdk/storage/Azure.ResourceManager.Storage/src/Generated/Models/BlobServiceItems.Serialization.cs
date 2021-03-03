@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class BlobServiceItems
+    internal partial class BlobServiceItems
     {
         internal static BlobServiceItems DeserializeBlobServiceItems(JsonElement element)
         {

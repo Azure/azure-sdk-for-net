@@ -169,7 +169,6 @@ namespace Azure.Messaging.ServiceBus
                 }
 
                 IsSessionReceiver = isSessionEntity;
-                TransactionGroup = options.TransactionGroup;
                 _innerReceiver = _connection.CreateTransportReceiver(
                     entityPath: EntityPath,
                     retryPolicy: _retryPolicy,
@@ -177,8 +176,7 @@ namespace Azure.Messaging.ServiceBus
                     prefetchCount: (uint)PrefetchCount,
                     identifier: Identifier,
                     sessionId: sessionId,
-                    isSessionReceiver: IsSessionReceiver,
-                    transactionGroup: TransactionGroup);
+                    isSessionReceiver: IsSessionReceiver);
                 _scopeFactory = new EntityScopeFactory(EntityPath, FullyQualifiedNamespace);
                 _plugins = plugins;
                 if (!isSessionEntity)

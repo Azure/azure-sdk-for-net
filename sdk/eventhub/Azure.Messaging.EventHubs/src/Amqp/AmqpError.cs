@@ -171,7 +171,7 @@ namespace Azure.Messaging.EventHubs
                 return new EventHubsException(eventHubsResource, description, EventHubsException.FailureReason.ServiceTimeout, innerException);
             }
 
-            // The Event Hubs service was busy.
+            // The Event Hubs service was busy; this likely means that requests are being throttled.
 
             if (string.Equals(condition, ServerBusyError.Value, StringComparison.InvariantCultureIgnoreCase))
             {
@@ -218,7 +218,7 @@ namespace Azure.Messaging.EventHubs
                 return new UnauthorizedAccessException(description, innerException);
             }
 
-            // Requests are being throttled due to exceeding the service quota.
+            // Requests are being rejected due to exceeding the service quota.
 
             if (string.Equals(condition, AmqpErrorCode.ResourceLimitExceeded.Value, StringComparison.InvariantCultureIgnoreCase))
             {

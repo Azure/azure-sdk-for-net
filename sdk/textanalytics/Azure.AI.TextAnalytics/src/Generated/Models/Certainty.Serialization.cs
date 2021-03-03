@@ -7,16 +7,16 @@
 
 using System;
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics
 {
     internal static partial class CertaintyExtensions
     {
         public static string ToSerialString(this Certainty value) => value switch
         {
             Certainty.Positive => "Positive",
-            Certainty.PositivePossible => "Positive Possible",
-            Certainty.NeutralPossible => "Neutral Possible",
-            Certainty.NegativePossible => "Negative Possible",
+            Certainty.PositivePossible => "PositivePossible",
+            Certainty.NeutralPossible => "NeutralPossible",
+            Certainty.NegativePossible => "NegativePossible",
             Certainty.Negative => "Negative",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown Certainty value.")
         };
@@ -24,9 +24,9 @@ namespace Azure.AI.TextAnalytics.Models
         public static Certainty ToCertainty(this string value)
         {
             if (string.Equals(value, "Positive", StringComparison.InvariantCultureIgnoreCase)) return Certainty.Positive;
-            if (string.Equals(value, "Positive Possible", StringComparison.InvariantCultureIgnoreCase)) return Certainty.PositivePossible;
-            if (string.Equals(value, "Neutral Possible", StringComparison.InvariantCultureIgnoreCase)) return Certainty.NeutralPossible;
-            if (string.Equals(value, "Negative Possible", StringComparison.InvariantCultureIgnoreCase)) return Certainty.NegativePossible;
+            if (string.Equals(value, "PositivePossible", StringComparison.InvariantCultureIgnoreCase)) return Certainty.PositivePossible;
+            if (string.Equals(value, "NeutralPossible", StringComparison.InvariantCultureIgnoreCase)) return Certainty.NeutralPossible;
+            if (string.Equals(value, "NegativePossible", StringComparison.InvariantCultureIgnoreCase)) return Certainty.NegativePossible;
             if (string.Equals(value, "Negative", StringComparison.InvariantCultureIgnoreCase)) return Certainty.Negative;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown Certainty value.");
         }
