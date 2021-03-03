@@ -92,6 +92,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             ServiceBusSender senderA = client.CreateSender(queueA.QueueName);
             await senderA.SendMessageAsync(new ServiceBusMessage());
             #region Snippet:ServiceBusTransactionGroup
+            //@@ var options = new ServiceBusClientOptions { EnableCrossEntityTransactions = true };
+            //@@ await using var client = new ServiceBusClient(connectionString, options);
 
             ServiceBusReceiver receiverA = client.CreateReceiver(queueA.QueueName);
             ServiceBusSender senderB = client.CreateSender(queueB.QueueName);
@@ -132,6 +134,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             await senderA.SendMessageAsync(new ServiceBusMessage());
 
             #region Snippet:ServiceBusTransactionGroupWrongOrder
+            //@@ var options = new ServiceBusClientOptions { EnableCrossEntityTransactions = true };
+            //@@ await using var client = new ServiceBusClient(connectionString, options);
 
             ServiceBusReceiver receiverA = client.CreateReceiver(queueA.QueueName);
             ServiceBusSender senderB = client.CreateSender(queueB.QueueName);

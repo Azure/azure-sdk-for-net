@@ -378,6 +378,9 @@ Now in `Azure.Messaging.ServiceBus`, there is an `EnableCrossEntityTransactions`
 The below code snippet shows you how to use transaction groups.
 
 ```C# Snippet:ServiceBusTransactionGroup
+var options = new ServiceBusClientOptions { EnableCrossEntityTransactions = true };
+await using var client = new ServiceBusClient(connectionString, options);
+
 ServiceBusReceiver receiverA = client.CreateReceiver(queueA.QueueName);
 ServiceBusSender senderB = client.CreateSender(queueB.QueueName);
 ServiceBusSender senderC = client.CreateSender(topicC.TopicName);
