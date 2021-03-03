@@ -827,7 +827,12 @@ namespace Azure.Storage.Blobs.Specialized
             CancellationToken cancellationToken)
         {
             Response<BlobDownloadStreamingResult> response = await DownloadStreamingInternal(
-                range, conditions, rangeGetContentHash, async, cancellationToken).ConfigureAwait(false);
+                range,
+                conditions,
+                rangeGetContentHash,
+                $"{nameof(BlobBaseClient)}.{nameof(Download)}",
+                async,
+                cancellationToken).ConfigureAwait(false);
             BlobDownloadStreamingResult blobDownloadStreamingResult = response.Value;
             BlobDownloadDetails blobDownloadDetails = blobDownloadStreamingResult.Details;
             return Response.FromValue(
@@ -987,6 +992,7 @@ namespace Azure.Storage.Blobs.Specialized
                 range,
                 conditions,
                 rangeGetContentHash,
+                $"{nameof(BlobBaseClient)}.{nameof(DownloadStreaming)}",
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -1038,6 +1044,7 @@ namespace Azure.Storage.Blobs.Specialized
                 range,
                 conditions,
                 rangeGetContentHash,
+                $"{nameof(BlobBaseClient)}.{nameof(DownloadStreaming)}",
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1046,6 +1053,7 @@ namespace Azure.Storage.Blobs.Specialized
             HttpRange range,
             BlobRequestConditions conditions,
             bool rangeGetContentHash,
+            string operationName,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1054,7 +1062,7 @@ namespace Azure.Storage.Blobs.Specialized
             {
                 ClientConfiguration.Pipeline.LogMethodEnter(nameof(BlobBaseClient), message: $"{nameof(Uri)}: {Uri}");
 
-                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobBaseClient)}.{nameof(Download)}");
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
 
                 try
                 {
@@ -1420,6 +1428,7 @@ namespace Azure.Storage.Blobs.Specialized
                 range: default,
                 conditions: conditions,
                 rangeGetContentHash: default,
+                operationName: $"{nameof(BlobBaseClient)}.{nameof(DownloadData)}",
                 async: async,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
             using BlobDownloadStreamingResult blobDownloadStreamingResult = response.Value;
@@ -2120,7 +2129,8 @@ namespace Azure.Storage.Blobs.Specialized
                 $"{nameof(bufferSize)}: {bufferSize}\n" +
                 $"{nameof(conditions)}: {conditions}");
 
-                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobBaseClient)}.{nameof(OpenRead)}");
+                string operationName = $"{nameof(BlobBaseClient)}.{nameof(OpenRead)}";
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
                 try
                 {
                     scope.Start();
@@ -2139,6 +2149,7 @@ namespace Azure.Storage.Blobs.Specialized
                                 range,
                                 conditions,
                                 rangeGetContentHash,
+                                operationName,
                                 async,
                                 cancellationToken).ConfigureAwait(false);
 
