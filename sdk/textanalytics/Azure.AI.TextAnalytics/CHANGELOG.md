@@ -3,6 +3,9 @@
 ## 5.1.0-beta.5 (Unreleased)
 ### New features
 - Added ability to filter the categories returned in a Personally Identifiable Information recognition with the optional parameter `CategoriesFilter` in `RecognizePiiEntitiesOptions`.
+- Added the ability to recognize linked entities under `AnalyzeBatchActionsOperation`.
+- Added `RecognizeLinkedEntitiesOptions` to `TextAnalyticsActions`.
+- Added `RecognizeLinkedEntitiesActionsResults` to `AnalyzeBatchActionsResult`.
 
 ### Breaking changes
 - Renamed `AspectSentiment` to `TargetSentiment`.
