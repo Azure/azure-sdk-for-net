@@ -51,7 +51,7 @@ namespace Azure.AI.TextAnalytics
         public IReadOnlyCollection<RecognizePiiEntitiesActionResult> RecognizePiiEntitiesActionsResults { get; }
 
         /// <summary>
-        /// Determines the collection of RecognizePiiEntitiesActionResult.
+        /// Determines the collection of RecognizeLinkedEntitiesActionsResult.
         /// </summary>
         public IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> RecognizeLinkedEntitiesActionsResults { get; }
 
