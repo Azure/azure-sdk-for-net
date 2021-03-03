@@ -47,31 +47,32 @@ SmsClient client = new SmsClient(new Uri(endpoint), tokenCredential);
 ```
 
 ## Examples
-### Send a SMS Message
+### Send a 1:1 SMS Message
 To send a SMS message, call the `Send` or `SendAsync` function from the `SmsClient`.
 ```C# Snippet:Azure_Communication_Sms_Tests_SendAsync
-SmsSendResult result = await client.SendAsync(
-   from: "+18001230000" // Phone number acquired on your Azure Communication resource
-   to: "+18005670000",
-   message: "Hi");
-Console.WriteLine($"Sms id: {result.MessageId}");
+SmsSendResult sendResult = await smsClient.SendAsync(
+    from: "+15550000000",
+    to: "+15550000001",
+    message: "Hi");
+Console.WriteLine($"Sms id: {sendResult.MessageId}");
 ```
-### Send a Group SMS Message
+### Send a 1:N SMS Message
 To send a SMS message to a list of recipients, call the `Send` or `SendAsync` function from the `SmsClient` with a list of recipient's phone numbers.
 You may also add pass in an options object to specify whether the delivery report should be enabled and set custom tags.
 ```C# Snippet:Azure_Communication_SmsClient_Send_GroupSmsWithOptions
-Response<IEnumerable<SmsSendResult>> response = await client.SendAsync(
-   from: "+18001230000" // Phone number acquired on your Azure Communication resource
-   to: new string[] {"+18005670000", "+18008900000}",
-   message: "Hi",
-   options: new SmsSendOptions(enableDeliveryReport: true) // OPTIONAL
-   {
-       Tag = "marketing", // custom tags
-   });
+Response<IEnumerable<SmsSendResult>> response = await smsClient.SendAsync(
+    from: "+15550000000",
+    to: new string[] { "+15550000001", "+15550000002" },
+    message: "Weekly Promotion!",
+    options: new SmsSendOptions(enableDeliveryReport: true) // OPTIONAL
+    {
+        Tag = "marketing", // custom tags
+    });
 IEnumerable<SmsSendResult> results = response.Value;
 foreach (SmsSendResult result in results)
 {
     Console.WriteLine($"Sms id: {result.MessageId}");
+    Console.WriteLine($"Send Result Successful: {result.Successful}");
 }
 ```
 ## Troubleshooting

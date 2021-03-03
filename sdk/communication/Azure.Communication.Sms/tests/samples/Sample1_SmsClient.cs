@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 
@@ -28,6 +30,40 @@ namespace Azure.Communication.Sms.Tests.samples
             SmsClient client = new SmsClient(new Uri(endpoint), tokenCredential);
             #endregion Snippet:Azure_Communication_Sms_Tests_Samples_CreateSmsClientWithToken
             return client;
+        }
+
+        public async Task SendingSMSMessage()
+        {
+            SmsClient smsClient = CreateSmsClient();
+            #region Snippet:Azure_Communication_Sms_Tests_SendAsync
+            SmsSendResult sendResult = await smsClient.SendAsync(
+                from: "+15550000000",
+                to: "+15550000001",
+                message: "Hi");
+            Console.WriteLine($"Sms id: {sendResult.MessageId}");
+            #endregion Snippet:Azure_Communication_Sms_Tests_SendAsync
+            Console.WriteLine($"Send Result Successful: {sendResult.Successful}");
+        }
+
+        public async Task SendingGroupSMSMessageWithOptions()
+        {
+            SmsClient smsClient = CreateSmsClient();
+            #region Snippet:Azure_Communication_SmsClient_Send_GroupSmsWithOptions
+            Response<IEnumerable<SmsSendResult>> response = await smsClient.SendAsync(
+                from: "+15550000000",
+                to: new string[] { "+15550000001", "+15550000002" },
+                message: "Weekly Promotion!",
+                options: new SmsSendOptions(enableDeliveryReport: true) // OPTIONAL
+                {
+                    Tag = "marketing", // custom tags
+                });
+            IEnumerable<SmsSendResult> results = response.Value;
+            foreach (SmsSendResult result in results)
+            {
+                Console.WriteLine($"Sms id: {result.MessageId}");
+                Console.WriteLine($"Send Result Successful: {result.Successful}");
+            }
+            #endregion Snippet:Azure_Communication_SmsClient_Send_GroupSmsWithOptions
         }
     }
 }
