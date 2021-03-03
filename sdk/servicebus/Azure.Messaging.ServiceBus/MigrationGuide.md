@@ -14,7 +14,7 @@ We assume that you are familiar with the `Microsoft.Azure.ServiceBus` library. I
   - [Sending messages](#sending-messages)
   - [Receiving messages](#receiving-messages)
   - [Working with sessions](#working-with-sessions)
-  - [Cross-entity transactions](#cross-entity-transactions)
+  - [Cross-entity transactions](#cross-entity-transactions-unreleased)
 - [Known gaps](#known-gaps-from-previous-library)
 - [Additional samples](#additional-samples)
 
