@@ -110,6 +110,7 @@ namespace Azure.AI.TextAnalytics.Tests
             }
         }
 
+        [Ignore("Waiting for service to deploy to WestU2. Issue https://github.com/Azure/azure-sdk-for-net/issues/19152")]
         [Test]
         public async Task RecognizeHealthcareEntitiesTestWithAssertions()
         {
