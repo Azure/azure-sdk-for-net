@@ -8,10 +8,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.Models
 {
+    [JsonConverter(typeof(CloudEventInternalConverter))]
     internal partial class CloudEventInternal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -143,6 +145,19 @@ namespace Azure.Messaging.EventGrid.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new CloudEventInternal(id, source, data, dataBase64.Value, type, Optional.ToNullable(time), specversion, dataschema.Value, datacontenttype.Value, subject.Value, additionalProperties);
+        }
+
+        internal partial class CloudEventInternalConverter : JsonConverter<CloudEventInternal>
+        {
+            public override void Write(Utf8JsonWriter writer, CloudEventInternal model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override CloudEventInternal Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeCloudEventInternal(document.RootElement);
+            }
         }
     }
 }

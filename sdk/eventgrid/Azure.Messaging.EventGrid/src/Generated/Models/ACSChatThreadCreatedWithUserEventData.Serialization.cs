@@ -8,27 +8,34 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    public partial class ACSChatThreadCreatedWithUserEventData
+    [JsonConverter(typeof(AcsChatThreadCreatedWithUserEventDataConverter))]
+    public partial class AcsChatThreadCreatedWithUserEventData
     {
-        internal static ACSChatThreadCreatedWithUserEventData DeserializeACSChatThreadCreatedWithUserEventData(JsonElement element)
+        internal static AcsChatThreadCreatedWithUserEventData DeserializeAcsChatThreadCreatedWithUserEventData(JsonElement element)
         {
-            Optional<string> createdBy = default;
+            Optional<CommunicationIdentifierModel> createdByCommunicationIdentifier = default;
             Optional<IReadOnlyDictionary<string, object>> properties = default;
-            Optional<IReadOnlyList<ACSChatThreadMemberProperties>> members = default;
+            Optional<IReadOnlyList<AcsChatThreadParticipantProperties>> participants = default;
             Optional<DateTimeOffset> createTime = default;
             Optional<long> version = default;
-            Optional<string> recipientId = default;
+            Optional<CommunicationIdentifierModel> recipientCommunicationIdentifier = default;
             Optional<string> transactionId = default;
             Optional<string> threadId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("createdBy"))
+                if (property.NameEquals("createdByCommunicationIdentifier"))
                 {
-                    createdBy = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    createdByCommunicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -46,19 +53,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     properties = dictionary;
                     continue;
                 }
-                if (property.NameEquals("members"))
+                if (property.NameEquals("participants"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ACSChatThreadMemberProperties> array = new List<ACSChatThreadMemberProperties>();
+                    List<AcsChatThreadParticipantProperties> array = new List<AcsChatThreadParticipantProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ACSChatThreadMemberProperties.DeserializeACSChatThreadMemberProperties(item));
+                        array.Add(AcsChatThreadParticipantProperties.DeserializeAcsChatThreadParticipantProperties(item));
                     }
-                    members = array;
+                    participants = array;
                     continue;
                 }
                 if (property.NameEquals("createTime"))
@@ -81,9 +88,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     version = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("recipientId"))
+                if (property.NameEquals("recipientCommunicationIdentifier"))
                 {
-                    recipientId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    recipientCommunicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
                     continue;
                 }
                 if (property.NameEquals("transactionId"))
@@ -97,7 +109,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new ACSChatThreadCreatedWithUserEventData(recipientId.Value, transactionId.Value, threadId.Value, Optional.ToNullable(createTime), Optional.ToNullable(version), createdBy.Value, Optional.ToDictionary(properties), Optional.ToList(members));
+            return new AcsChatThreadCreatedWithUserEventData(recipientCommunicationIdentifier.Value, transactionId.Value, threadId.Value, Optional.ToNullable(createTime), Optional.ToNullable(version), createdByCommunicationIdentifier.Value, Optional.ToDictionary(properties), Optional.ToList(participants));
+        }
+
+        internal partial class AcsChatThreadCreatedWithUserEventDataConverter : JsonConverter<AcsChatThreadCreatedWithUserEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, AcsChatThreadCreatedWithUserEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override AcsChatThreadCreatedWithUserEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeAcsChatThreadCreatedWithUserEventData(document.RootElement);
+            }
         }
     }
 }

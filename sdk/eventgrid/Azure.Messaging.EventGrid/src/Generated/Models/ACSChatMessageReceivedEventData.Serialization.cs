@@ -7,22 +7,24 @@
 
 using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    public partial class ACSChatMessageReceivedEventData
+    [JsonConverter(typeof(AcsChatMessageReceivedEventDataConverter))]
+    public partial class AcsChatMessageReceivedEventData
     {
-        internal static ACSChatMessageReceivedEventData DeserializeACSChatMessageReceivedEventData(JsonElement element)
+        internal static AcsChatMessageReceivedEventData DeserializeAcsChatMessageReceivedEventData(JsonElement element)
         {
             Optional<string> messageBody = default;
             Optional<string> messageId = default;
-            Optional<string> senderId = default;
+            Optional<CommunicationIdentifierModel> senderCommunicationIdentifier = default;
             Optional<string> senderDisplayName = default;
             Optional<DateTimeOffset> composeTime = default;
             Optional<string> type = default;
             Optional<long> version = default;
-            Optional<string> recipientId = default;
+            Optional<CommunicationIdentifierModel> recipientCommunicationIdentifier = default;
             Optional<string> transactionId = default;
             Optional<string> threadId = default;
             foreach (var property in element.EnumerateObject())
@@ -37,9 +39,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     messageId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("senderId"))
+                if (property.NameEquals("senderCommunicationIdentifier"))
                 {
-                    senderId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    senderCommunicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
                     continue;
                 }
                 if (property.NameEquals("senderDisplayName"))
@@ -72,9 +79,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     version = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("recipientId"))
+                if (property.NameEquals("recipientCommunicationIdentifier"))
                 {
-                    recipientId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    recipientCommunicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
                     continue;
                 }
                 if (property.NameEquals("transactionId"))
@@ -88,7 +100,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new ACSChatMessageReceivedEventData(recipientId.Value, transactionId.Value, threadId.Value, messageId.Value, senderId.Value, senderDisplayName.Value, Optional.ToNullable(composeTime), type.Value, Optional.ToNullable(version), messageBody.Value);
+            return new AcsChatMessageReceivedEventData(recipientCommunicationIdentifier.Value, transactionId.Value, threadId.Value, messageId.Value, senderCommunicationIdentifier.Value, senderDisplayName.Value, Optional.ToNullable(composeTime), type.Value, Optional.ToNullable(version), messageBody.Value);
+        }
+
+        internal partial class AcsChatMessageReceivedEventDataConverter : JsonConverter<AcsChatMessageReceivedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, AcsChatMessageReceivedEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override AcsChatMessageReceivedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeAcsChatMessageReceivedEventData(document.RootElement);
+            }
         }
     }
 }

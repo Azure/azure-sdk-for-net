@@ -12,36 +12,36 @@ using Azure.Core;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.Communication.ChatThreadCreatedWithUser event. </summary>
-    public partial class ACSChatThreadCreatedWithUserEventData : ACSChatThreadEventBaseProperties
+    public partial class AcsChatThreadCreatedWithUserEventData : AcsChatThreadEventBaseProperties
     {
-        /// <summary> Initializes a new instance of ACSChatThreadCreatedWithUserEventData. </summary>
-        internal ACSChatThreadCreatedWithUserEventData()
+        /// <summary> Initializes a new instance of AcsChatThreadCreatedWithUserEventData. </summary>
+        internal AcsChatThreadCreatedWithUserEventData()
         {
             Properties = new ChangeTrackingDictionary<string, object>();
-            Members = new ChangeTrackingList<ACSChatThreadMemberProperties>();
+            Participants = new ChangeTrackingList<AcsChatThreadParticipantProperties>();
         }
 
-        /// <summary> Initializes a new instance of ACSChatThreadCreatedWithUserEventData. </summary>
-        /// <param name="recipientId"> The MRI of the target user. </param>
+        /// <summary> Initializes a new instance of AcsChatThreadCreatedWithUserEventData. </summary>
+        /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
         /// <param name="threadId"> The chat thread id. </param>
         /// <param name="createTime"> The original creation time of the thread. </param>
         /// <param name="version"> The version of the thread. </param>
-        /// <param name="createdBy"> The MRI of the creator of the thread. </param>
+        /// <param name="createdByCommunicationIdentifier"> The communication identifier of the user who created the thread. </param>
         /// <param name="properties"> The thread properties. </param>
-        /// <param name="members"> The list of properties of users who are part of the thread. </param>
-        internal ACSChatThreadCreatedWithUserEventData(string recipientId, string transactionId, string threadId, DateTimeOffset? createTime, long? version, string createdBy, IReadOnlyDictionary<string, object> properties, IReadOnlyList<ACSChatThreadMemberProperties> members) : base(recipientId, transactionId, threadId, createTime, version)
+        /// <param name="participants"> The list of properties of participants who are part of the thread. </param>
+        internal AcsChatThreadCreatedWithUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier, string transactionId, string threadId, DateTimeOffset? createTime, long? version, CommunicationIdentifierModel createdByCommunicationIdentifier, IReadOnlyDictionary<string, object> properties, IReadOnlyList<AcsChatThreadParticipantProperties> participants) : base(recipientCommunicationIdentifier, transactionId, threadId, createTime, version)
         {
-            CreatedBy = createdBy;
+            CreatedByCommunicationIdentifier = createdByCommunicationIdentifier;
             Properties = properties;
-            Members = members;
+            Participants = participants;
         }
 
-        /// <summary> The MRI of the creator of the thread. </summary>
-        public string CreatedBy { get; }
+        /// <summary> The communication identifier of the user who created the thread. </summary>
+        public CommunicationIdentifierModel CreatedByCommunicationIdentifier { get; }
         /// <summary> The thread properties. </summary>
         public IReadOnlyDictionary<string, object> Properties { get; }
-        /// <summary> The list of properties of users who are part of the thread. </summary>
-        public IReadOnlyList<ACSChatThreadMemberProperties> Members { get; }
+        /// <summary> The list of properties of participants who are part of the thread. </summary>
+        public IReadOnlyList<AcsChatThreadParticipantProperties> Participants { get; }
     }
 }

@@ -7,21 +7,20 @@
 
 using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    public partial class ACSChatMemberRemovedFromThreadWithUserEventData
+    [JsonConverter(typeof(AcsChatParticipantAddedToThreadEventDataConverter))]
+    public partial class AcsChatParticipantAddedToThreadEventData
     {
-        internal static ACSChatMemberRemovedFromThreadWithUserEventData DeserializeACSChatMemberRemovedFromThreadWithUserEventData(JsonElement element)
+        internal static AcsChatParticipantAddedToThreadEventData DeserializeAcsChatParticipantAddedToThreadEventData(JsonElement element)
         {
             Optional<DateTimeOffset> time = default;
-            Optional<string> removedBy = default;
-            Optional<ACSChatThreadMemberProperties> memberRemoved = default;
-            Optional<DateTimeOffset> createTime = default;
+            Optional<CommunicationIdentifierModel> addedByCommunicationIdentifier = default;
+            Optional<AcsChatThreadParticipantProperties> participantAdded = default;
             Optional<long> version = default;
-            Optional<string> recipientId = default;
-            Optional<string> transactionId = default;
             Optional<string> threadId = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -35,29 +34,24 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     time = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("removedBy"))
-                {
-                    removedBy = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("memberRemoved"))
+                if (property.NameEquals("addedByCommunicationIdentifier"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    memberRemoved = ACSChatThreadMemberProperties.DeserializeACSChatThreadMemberProperties(property.Value);
+                    addedByCommunicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
                     continue;
                 }
-                if (property.NameEquals("createTime"))
+                if (property.NameEquals("participantAdded"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    createTime = property.Value.GetDateTimeOffset("O");
+                    participantAdded = AcsChatThreadParticipantProperties.DeserializeAcsChatThreadParticipantProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("version"))
@@ -70,23 +64,26 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     version = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("recipientId"))
-                {
-                    recipientId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("transactionId"))
-                {
-                    transactionId = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("threadId"))
                 {
                     threadId = property.Value.GetString();
                     continue;
                 }
             }
-            return new ACSChatMemberRemovedFromThreadWithUserEventData(recipientId.Value, transactionId.Value, threadId.Value, Optional.ToNullable(createTime), Optional.ToNullable(version), Optional.ToNullable(time), removedBy.Value, memberRemoved.Value);
+            return new AcsChatParticipantAddedToThreadEventData(threadId.Value, Optional.ToNullable(time), addedByCommunicationIdentifier.Value, participantAdded.Value, Optional.ToNullable(version));
+        }
+
+        internal partial class AcsChatParticipantAddedToThreadEventDataConverter : JsonConverter<AcsChatParticipantAddedToThreadEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, AcsChatParticipantAddedToThreadEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override AcsChatParticipantAddedToThreadEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeAcsChatParticipantAddedToThreadEventData(document.RootElement);
+            }
         }
     }
 }

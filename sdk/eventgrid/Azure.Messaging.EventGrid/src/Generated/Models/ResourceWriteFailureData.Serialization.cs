@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(ResourceWriteFailureDataConverter))]
     public partial class ResourceWriteFailureData
     {
         internal static ResourceWriteFailureData DeserializeResourceWriteFailureData(JsonElement element)
@@ -84,6 +87,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new ResourceWriteFailureData(tenantId.Value, subscriptionId.Value, resourceGroup.Value, resourceProvider.Value, resourceUri.Value, operationName.Value, status.Value, authorization.Value, claims.Value, correlationId.Value, httpRequest.Value);
+        }
+
+        internal partial class ResourceWriteFailureDataConverter : JsonConverter<ResourceWriteFailureData>
+        {
+            public override void Write(Utf8JsonWriter writer, ResourceWriteFailureData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override ResourceWriteFailureData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeResourceWriteFailureData(document.RootElement);
+            }
         }
     }
 }

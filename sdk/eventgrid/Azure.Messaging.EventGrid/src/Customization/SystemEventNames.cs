@@ -30,57 +30,69 @@ namespace Azure.Messaging.EventGrid
         #region Communication events
         /// <summary>
         /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
-        /// <see cref="ACSChatMemberAddedToThreadWithUserEventData"/> system event.
+        /// <see cref="AcsChatParticipantAddedToThreadEventData"/> system event.
         /// </summary>
-        public const string ACSChatMemberAddedToThreadWithUser = "Microsoft.Communication.ChatMemberAddedToThreadWithUser";
+        public const string AcsChatParticipantAddedToThread = "Microsoft.Communication.ChatParticipantAddedToThread";
 
         /// <summary>
         /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
-        /// <see cref="ACSChatMemberRemovedFromThreadWithUserEventData"/> system event.
+        /// <see cref="AcsChatParticipantAddedToThreadWithUserEventData"/> system event.
         /// </summary>
-        public const string ACSChatMemberRemovedFromThreadWithUser = "Microsoft.Communication.ChatMemberRemovedFromThreadWithUser";
+        public const string AcsChatParticipantAddedToThreadWithUser = "Microsoft.Communication.ChatParticipantAddedToThreadWithUser";
 
         /// <summary>
         /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
-        /// <see cref="ACSChatMessageDeletedEventData"/> system event.
+        /// <see cref="AcsChatParticipantRemovedFromThreadEventData"/> system event.
         /// </summary>
-        public const string ACSChatMessageDeleted = "Microsoft.Communication.ChatMessageDeleted";
+        public const string AcsChatParticipantRemovedFromThread = "Microsoft.Communication.ChatParticipantRemovedFromThread";
 
         /// <summary>
         /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
-        /// <see cref="ACSChatMessageEditedEventData"/> system event.
+        /// <see cref="AcsChatParticipantRemovedFromThreadWithUserEventData"/> system event.
         /// </summary>
-        public const string ACSChatMessageEdited = "Microsoft.Communication.ChatMessageEdited";
+        public const string AcsChatParticipantRemovedFromThreadWithUser = "Microsoft.Communication.ChatParticipantRemovedFromThreadWithUser";
 
         /// <summary>
         /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
-        /// <see cref="ACSChatMessageReceivedEventData"/> system event.
+        /// <see cref="AcsChatMessageDeletedEventData"/> system event.
         /// </summary>
-        public const string ACSChatMessageReceived = "Microsoft.Communication.ChatMessageReceived";
+        public const string AcsChatMessageDeleted = "Microsoft.Communication.ChatMessageDeleted";
 
         /// <summary>
         /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
-        /// <see cref="ACSChatThreadCreatedWithUserEventData"/> system event.
+        /// <see cref="AcsChatMessageEditedEventData"/> system event.
         /// </summary>
-        public const string ACSChatThreadCreatedWithUser = "Microsoft.Communication.ChatThreadCreatedWithUser";
+        public const string AcsChatMessageEdited = "Microsoft.Communication.ChatMessageEdited";
 
         /// <summary>
         /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
-        /// <see cref="ACSChatThreadPropertiesUpdatedPerUserEventData"/> system event.
+        /// <see cref="AcsChatMessageReceivedEventData"/> system event.
         /// </summary>
-        public const string ACSChatThreadPropertiesUpdatedPerUser = "Microsoft.Communication.ChatThreadPropertiesUpdatedPerUser";
+        public const string AcsChatMessageReceived = "Microsoft.Communication.ChatMessageReceived";
 
         /// <summary>
         /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
-        /// <see cref="ACSChatThreadWithUserDeletedEventData"/> system event.
+        /// <see cref="AcsChatThreadCreatedWithUserEventData"/> system event.
         /// </summary>
-        public const string ACSChatThreadWithUserDeleted = "Microsoft.Communication.ChatThreadWithUserDeleted";
+        public const string AcsChatThreadCreatedWithUser = "Microsoft.Communication.ChatThreadCreatedWithUser";
+
+        /// <summary>
+        /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
+        /// <see cref="AcsChatThreadPropertiesUpdatedPerUserEventData"/> system event.
+        /// </summary>
+        public const string AcsChatThreadPropertiesUpdatedPerUser = "Microsoft.Communication.ChatThreadPropertiesUpdatedPerUser";
+
+        /// <summary>
+        /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
+        /// <see cref="AcsChatThreadWithUserDeletedEventData"/> system event.
+        /// </summary>
+        public const string AcsChatThreadWithUserDeleted = "Microsoft.Communication.ChatThreadWithUserDeleted";
 
         /// <summary>
         /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
         /// <see cref="AcsSmsDeliveryReportReceivedEventData"/> system event.
         /// </summary>
-        public const string ACSSMSDeliveryReportReceived = "Microsoft.Communication.SMSDeliveryReportReceived";
+        public const string AcsSmsDeliveryReportReceived = "Microsoft.Communication.SMSDeliveryReportReceived";
 
         /// <summary>
         /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
