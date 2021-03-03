@@ -8,7 +8,7 @@ using System.Linq;
 namespace Azure.ResourceManager.Core
 {
     /// <summary>
-    /// Structure respresenting a resource type
+    /// Structure representing a resource type
     /// </summary>
     public sealed class ResourceType : IEquatable<ResourceType>, IEquatable<string>, IComparable<ResourceType>,
         IComparable<string>

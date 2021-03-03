@@ -28,12 +28,13 @@ namespace Azure.ResourceManager.Core
         /// Initializes a new instance of the <see cref="AzureResourceManagerClient"/> class for mocking.
         /// </summary>
         protected AzureResourceManagerClient()
-            : this(null, null, new DefaultAzureCredential(), new AzureResourceManagerClientOptions())
+            : this(null, null, new DefaultAzureCredential(), null)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AzureResourceManagerClient"/> class.
+        /// Initializes a new instance of the <see cref="AzureResourceManagerClient"/> class
+        /// with <see cref="DefaultAzureCredential"/> as credential.
         /// </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         public AzureResourceManagerClient(AzureResourceManagerClientOptions options = default)
@@ -46,6 +47,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <exception cref="ArgumentNullException"> If <see cref="TokenCredential"/> is null. </exception>
         public AzureResourceManagerClient(TokenCredential credential, AzureResourceManagerClientOptions options = default)
             : this(null, null, credential, options)
         {
@@ -57,7 +59,11 @@ namespace Azure.ResourceManager.Core
         /// <param name="defaultSubscriptionId"> The id of the default Azure subscription. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        public AzureResourceManagerClient(string defaultSubscriptionId, TokenCredential credential, AzureResourceManagerClientOptions options = default)
+        /// <exception cref="ArgumentNullException"> If <see cref="TokenCredential"/> is null. </exception> 
+        public AzureResourceManagerClient(
+            string defaultSubscriptionId,
+            TokenCredential credential,
+            AzureResourceManagerClientOptions options = default)
             : this(defaultSubscriptionId, null, credential, options)
         {
         }
@@ -65,10 +71,14 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Initializes a new instance of the <see cref="AzureResourceManagerClient"/> class.
         /// </summary>
-        /// <param name="baseUri"> The base URI of the service. </param>
+        /// <param name="baseUri"> The base URI of the Azure management endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        public AzureResourceManagerClient(Uri baseUri, TokenCredential credential, AzureResourceManagerClientOptions options = default)
+        /// <exception cref="ArgumentNullException"> If <see cref="TokenCredential"/> is null. </exception>
+        public AzureResourceManagerClient(
+            Uri baseUri,
+            TokenCredential credential,
+            AzureResourceManagerClientOptions options = default)
             : this(null, baseUri, credential, options)
         {
         }
@@ -80,20 +90,22 @@ namespace Azure.ResourceManager.Core
         /// <param name="baseUri"> The base URI of the service. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        private AzureResourceManagerClient(string defaultSubscriptionId, Uri baseUri, TokenCredential credential, AzureResourceManagerClientOptions options = default)
+        private AzureResourceManagerClient(
+            string defaultSubscriptionId,
+            Uri baseUri,
+            TokenCredential credential,
+            AzureResourceManagerClientOptions options)
         {
+            if (credential is null)
+                throw new ArgumentNullException(nameof(credential));
+
             _credentials = credential;
             _baseUri = baseUri;
             ClientOptions = options ?? new AzureResourceManagerClientOptions();
 
-            if (string.IsNullOrWhiteSpace(defaultSubscriptionId))
-            {
-                DefaultSubscription = GetDefaultSubscription();
-            }
-            else
-            {
-                DefaultSubscription = GetSubscriptionOperations(defaultSubscriptionId).Get().Value;
-            }
+            DefaultSubscription = string.IsNullOrWhiteSpace(defaultSubscriptionId) 
+                ? GetDefaultSubscription()
+                : GetSubscriptionOperations(defaultSubscriptionId).Get().Value;
 
             ApiVersionOverrides = new Dictionary<string, string>();
         }
