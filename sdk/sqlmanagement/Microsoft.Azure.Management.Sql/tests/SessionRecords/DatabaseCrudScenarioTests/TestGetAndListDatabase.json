@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourcegroups/sqlcrudtest-7018?api-version=2017-05-10",
+      "RequestUri": "/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourcegroups/sqlcrudtest-7018?api-version=2017-05-10",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDFjNGVjODgtZTE3OS00NGY3LTllYjAtZTk3MTlhNTA4N2FiL3Jlc291cmNlZ3JvdXBzL3NxbGNydWR0ZXN0LTcwMTg/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"Southeast Asia\",\r\n  \"tags\": {\r\n    \"sqlcrudtest-7018\": \"2021-02-26 05:34:41Z\"\r\n  }\r\n}",
@@ -63,11 +63,11 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018\",\r\n  \"name\": \"sqlcrudtest-7018\",\r\n  \"location\": \"southeastasia\",\r\n  \"tags\": {\r\n    \"sqlcrudtest-7018\": \"2021-02-26 05:34:41Z\"\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018\",\r\n  \"name\": \"sqlcrudtest-7018\",\r\n  \"location\": \"southeastasia\",\r\n  \"tags\": {\r\n    \"sqlcrudtest-7018\": \"2021-02-26 05:34:41Z\"\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353?api-version=2019-06-01-preview",
+      "RequestUri": "/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353?api-version=2019-06-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDFjNGVjODgtZTE3OS00NGY3LTllYjAtZTk3MTlhNTA4N2FiL3Jlc291cmNlR3JvdXBzL3NxbGNydWR0ZXN0LTcwMTgvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9zcWxjcnVkdGVzdC0xMzUzP2FwaS12ZXJzaW9uPTIwMTktMDYtMDEtcHJldmlldw==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"administratorLogin\": \"dummylogin\",\r\n    \"administratorLoginPassword\": \"Un53cuRE!\",\r\n    \"version\": \"12.0\"\r\n  },\r\n  \"location\": \"Southeast Asia\",\r\n  \"tags\": {}\r\n}",
@@ -99,13 +99,13 @@
           "no-cache"
         ],
         "Location": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/serverOperationResults/f6f53717-7790-405c-88d1-ce95fdc87040?api-version=2019-06-01-preview"
+          "https://management.azure.com/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/serverOperationResults/f6f53717-7790-405c-88d1-ce95fdc87040?api-version=2019-06-01-preview"
         ],
         "Retry-After": [
           "1"
         ],
         "Azure-AsyncOperation": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/serverAzureAsyncOperation/f6f53717-7790-405c-88d1-ce95fdc87040?api-version=2019-06-01-preview"
+          "https://management.azure.com/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/serverAzureAsyncOperation/f6f53717-7790-405c-88d1-ce95fdc87040?api-version=2019-06-01-preview"
         ],
         "x-ms-request-id": [
           "f6f53717-7790-405c-88d1-ce95fdc87040"
@@ -145,7 +145,7 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/serverAzureAsyncOperation/f6f53717-7790-405c-88d1-ce95fdc87040?api-version=2019-06-01-preview",
+      "RequestUri": "/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/serverAzureAsyncOperation/f6f53717-7790-405c-88d1-ce95fdc87040?api-version=2019-06-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDFjNGVjODgtZTE3OS00NGY3LTllYjAtZTk3MTlhNTA4N2FiL3Jlc291cmNlR3JvdXBzL3NxbGNydWR0ZXN0LTcwMTgvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvbG9jYXRpb25zL3NvdXRoZWFzdGFzaWEvc2VydmVyQXp1cmVBc3luY09wZXJhdGlvbi9mNmY1MzcxNy03NzkwLTQwNWMtODhkMS1jZTk1ZmRjODcwNDA/YXBpLXZlcnNpb249MjAxOS0wNi0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -205,7 +205,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/serverAzureAsyncOperation/f6f53717-7790-405c-88d1-ce95fdc87040?api-version=2019-06-01-preview",
+      "RequestUri": "/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/serverAzureAsyncOperation/f6f53717-7790-405c-88d1-ce95fdc87040?api-version=2019-06-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDFjNGVjODgtZTE3OS00NGY3LTllYjAtZTk3MTlhNTA4N2FiL3Jlc291cmNlR3JvdXBzL3NxbGNydWR0ZXN0LTcwMTgvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvbG9jYXRpb25zL3NvdXRoZWFzdGFzaWEvc2VydmVyQXp1cmVBc3luY09wZXJhdGlvbi9mNmY1MzcxNy03NzkwLTQwNWMtODhkMS1jZTk1ZmRjODcwNDA/YXBpLXZlcnNpb249MjAxOS0wNi0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -265,7 +265,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/serverAzureAsyncOperation/f6f53717-7790-405c-88d1-ce95fdc87040?api-version=2019-06-01-preview",
+      "RequestUri": "/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/serverAzureAsyncOperation/f6f53717-7790-405c-88d1-ce95fdc87040?api-version=2019-06-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDFjNGVjODgtZTE3OS00NGY3LTllYjAtZTk3MTlhNTA4N2FiL3Jlc291cmNlR3JvdXBzL3NxbGNydWR0ZXN0LTcwMTgvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvbG9jYXRpb25zL3NvdXRoZWFzdGFzaWEvc2VydmVyQXp1cmVBc3luY09wZXJhdGlvbi9mNmY1MzcxNy03NzkwLTQwNWMtODhkMS1jZTk1ZmRjODcwNDA/YXBpLXZlcnNpb249MjAxOS0wNi0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -325,7 +325,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/serverAzureAsyncOperation/f6f53717-7790-405c-88d1-ce95fdc87040?api-version=2019-06-01-preview",
+      "RequestUri": "/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/serverAzureAsyncOperation/f6f53717-7790-405c-88d1-ce95fdc87040?api-version=2019-06-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDFjNGVjODgtZTE3OS00NGY3LTllYjAtZTk3MTlhNTA4N2FiL3Jlc291cmNlR3JvdXBzL3NxbGNydWR0ZXN0LTcwMTgvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvbG9jYXRpb25zL3NvdXRoZWFzdGFzaWEvc2VydmVyQXp1cmVBc3luY09wZXJhdGlvbi9mNmY1MzcxNy03NzkwLTQwNWMtODhkMS1jZTk1ZmRjODcwNDA/YXBpLXZlcnNpb249MjAxOS0wNi0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -385,7 +385,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/serverAzureAsyncOperation/f6f53717-7790-405c-88d1-ce95fdc87040?api-version=2019-06-01-preview",
+      "RequestUri": "/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/serverAzureAsyncOperation/f6f53717-7790-405c-88d1-ce95fdc87040?api-version=2019-06-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDFjNGVjODgtZTE3OS00NGY3LTllYjAtZTk3MTlhNTA4N2FiL3Jlc291cmNlR3JvdXBzL3NxbGNydWR0ZXN0LTcwMTgvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvbG9jYXRpb25zL3NvdXRoZWFzdGFzaWEvc2VydmVyQXp1cmVBc3luY09wZXJhdGlvbi9mNmY1MzcxNy03NzkwLTQwNWMtODhkMS1jZTk1ZmRjODcwNDA/YXBpLXZlcnNpb249MjAxOS0wNi0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -445,7 +445,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/serverAzureAsyncOperation/f6f53717-7790-405c-88d1-ce95fdc87040?api-version=2019-06-01-preview",
+      "RequestUri": "/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/serverAzureAsyncOperation/f6f53717-7790-405c-88d1-ce95fdc87040?api-version=2019-06-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDFjNGVjODgtZTE3OS00NGY3LTllYjAtZTk3MTlhNTA4N2FiL3Jlc291cmNlR3JvdXBzL3NxbGNydWR0ZXN0LTcwMTgvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvbG9jYXRpb25zL3NvdXRoZWFzdGFzaWEvc2VydmVyQXp1cmVBc3luY09wZXJhdGlvbi9mNmY1MzcxNy03NzkwLTQwNWMtODhkMS1jZTk1ZmRjODcwNDA/YXBpLXZlcnNpb249MjAxOS0wNi0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -505,7 +505,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353?api-version=2019-06-01-preview",
+      "RequestUri": "/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353?api-version=2019-06-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDFjNGVjODgtZTE3OS00NGY3LTllYjAtZTk3MTlhNTA4N2FiL3Jlc291cmNlR3JvdXBzL3NxbGNydWR0ZXN0LTcwMTgvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9zcWxjcnVkdGVzdC0xMzUzP2FwaS12ZXJzaW9uPTIwMTktMDYtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -558,11 +558,11 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"kind\": \"v12.0\",\r\n  \"properties\": {\r\n    \"administratorLogin\": \"dummylogin\",\r\n    \"version\": \"12.0\",\r\n    \"state\": \"Ready\",\r\n    \"fullyQualifiedDomainName\": \"sqlcrudtest-1353.sqltest-eg1.mscds.com\",\r\n    \"privateEndpointConnections\": [],\r\n    \"publicNetworkAccess\": \"Enabled\"\r\n  },\r\n  \"location\": \"southeastasia\",\r\n  \"tags\": {},\r\n  \"id\": \"/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353\",\r\n  \"name\": \"sqlcrudtest-1353\",\r\n  \"type\": \"Microsoft.Sql/servers\"\r\n}",
+      "ResponseBody": "{\r\n  \"kind\": \"v12.0\",\r\n  \"properties\": {\r\n    \"administratorLogin\": \"dummylogin\",\r\n    \"version\": \"12.0\",\r\n    \"state\": \"Ready\",\r\n    \"fullyQualifiedDomainName\": \"sqlcrudtest-1353.sqltest-eg1.mscds.com\",\r\n    \"privateEndpointConnections\": [],\r\n    \"publicNetworkAccess\": \"Enabled\"\r\n  },\r\n  \"location\": \"southeastasia\",\r\n  \"tags\": {},\r\n  \"id\": \"/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353\",\r\n  \"name\": \"sqlcrudtest-1353\",\r\n  \"type\": \"Microsoft.Sql/servers\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353/databases/sqlcrudtest-412?api-version=2020-11-01-preview",
+      "RequestUri": "/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353/databases/sqlcrudtest-412?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDFjNGVjODgtZTE3OS00NGY3LTllYjAtZTk3MTlhNTA4N2FiL3Jlc291cmNlR3JvdXBzL3NxbGNydWR0ZXN0LTcwMTgvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9zcWxjcnVkdGVzdC0xMzUzL2RhdGFiYXNlcy9zcWxjcnVkdGVzdC00MTI/YXBpLXZlcnNpb249MjAyMC0xMS0wMS1wcmV2aWV3",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"southeastasia\"\r\n}",
@@ -594,13 +594,13 @@
           "no-cache"
         ],
         "Location": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/databaseOperationResults/58678463-c43a-449b-8a18-b90af066139a?api-version=2020-11-01-preview"
+          "https://management.azure.com/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/databaseOperationResults/58678463-c43a-449b-8a18-b90af066139a?api-version=2020-11-01-preview"
         ],
         "Retry-After": [
           "15"
         ],
         "Azure-AsyncOperation": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/databaseAzureAsyncOperation/58678463-c43a-449b-8a18-b90af066139a?api-version=2020-11-01-preview"
+          "https://management.azure.com/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/databaseAzureAsyncOperation/58678463-c43a-449b-8a18-b90af066139a?api-version=2020-11-01-preview"
         ],
         "x-ms-request-id": [
           "58678463-c43a-449b-8a18-b90af066139a"
@@ -640,7 +640,7 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353/databases/sqlcrudtest-342?api-version=2020-11-01-preview",
+      "RequestUri": "/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353/databases/sqlcrudtest-342?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDFjNGVjODgtZTE3OS00NGY3LTllYjAtZTk3MTlhNTA4N2FiL3Jlc291cmNlR3JvdXBzL3NxbGNydWR0ZXN0LTcwMTgvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9zcWxjcnVkdGVzdC0xMzUzL2RhdGFiYXNlcy9zcWxjcnVkdGVzdC0zNDI/YXBpLXZlcnNpb249MjAyMC0xMS0wMS1wcmV2aWV3",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"southeastasia\"\r\n}",
@@ -672,13 +672,13 @@
           "no-cache"
         ],
         "Location": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/databaseOperationResults/36cc8605-3011-42b0-ba62-ddf9d002a7af?api-version=2020-11-01-preview"
+          "https://management.azure.com/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/databaseOperationResults/36cc8605-3011-42b0-ba62-ddf9d002a7af?api-version=2020-11-01-preview"
         ],
         "Retry-After": [
           "15"
         ],
         "Azure-AsyncOperation": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/databaseAzureAsyncOperation/36cc8605-3011-42b0-ba62-ddf9d002a7af?api-version=2020-11-01-preview"
+          "https://management.azure.com/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/databaseAzureAsyncOperation/36cc8605-3011-42b0-ba62-ddf9d002a7af?api-version=2020-11-01-preview"
         ],
         "x-ms-request-id": [
           "36cc8605-3011-42b0-ba62-ddf9d002a7af"
@@ -718,7 +718,7 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353/databases/sqlcrudtest-1674?api-version=2020-11-01-preview",
+      "RequestUri": "/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353/databases/sqlcrudtest-1674?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDFjNGVjODgtZTE3OS00NGY3LTllYjAtZTk3MTlhNTA4N2FiL3Jlc291cmNlR3JvdXBzL3NxbGNydWR0ZXN0LTcwMTgvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9zcWxjcnVkdGVzdC0xMzUzL2RhdGFiYXNlcy9zcWxjcnVkdGVzdC0xNjc0P2FwaS12ZXJzaW9uPTIwMjAtMTEtMDEtcHJldmlldw==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"southeastasia\"\r\n}",
@@ -750,13 +750,13 @@
           "no-cache"
         ],
         "Location": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/databaseOperationResults/ad656162-a260-4774-aee2-d2da3e064e45?api-version=2020-11-01-preview"
+          "https://management.azure.com/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/databaseOperationResults/ad656162-a260-4774-aee2-d2da3e064e45?api-version=2020-11-01-preview"
         ],
         "Retry-After": [
           "15"
         ],
         "Azure-AsyncOperation": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/databaseAzureAsyncOperation/ad656162-a260-4774-aee2-d2da3e064e45?api-version=2020-11-01-preview"
+          "https://management.azure.com/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/databaseAzureAsyncOperation/ad656162-a260-4774-aee2-d2da3e064e45?api-version=2020-11-01-preview"
         ],
         "x-ms-request-id": [
           "ad656162-a260-4774-aee2-d2da3e064e45"
@@ -796,7 +796,7 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353/databases/sqlcrudtest-2527?api-version=2020-11-01-preview",
+      "RequestUri": "/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353/databases/sqlcrudtest-2527?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDFjNGVjODgtZTE3OS00NGY3LTllYjAtZTk3MTlhNTA4N2FiL3Jlc291cmNlR3JvdXBzL3NxbGNydWR0ZXN0LTcwMTgvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9zcWxjcnVkdGVzdC0xMzUzL2RhdGFiYXNlcy9zcWxjcnVkdGVzdC0yNTI3P2FwaS12ZXJzaW9uPTIwMjAtMTEtMDEtcHJldmlldw==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"southeastasia\"\r\n}",
@@ -828,13 +828,13 @@
           "no-cache"
         ],
         "Location": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/databaseOperationResults/8b58df57-0867-428d-b63f-60cb3b5fad92?api-version=2020-11-01-preview"
+          "https://management.azure.com/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/databaseOperationResults/8b58df57-0867-428d-b63f-60cb3b5fad92?api-version=2020-11-01-preview"
         ],
         "Retry-After": [
           "15"
         ],
         "Azure-AsyncOperation": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/databaseAzureAsyncOperation/8b58df57-0867-428d-b63f-60cb3b5fad92?api-version=2020-11-01-preview"
+          "https://management.azure.com/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/databaseAzureAsyncOperation/8b58df57-0867-428d-b63f-60cb3b5fad92?api-version=2020-11-01-preview"
         ],
         "x-ms-request-id": [
           "8b58df57-0867-428d-b63f-60cb3b5fad92"
@@ -874,7 +874,7 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/databaseAzureAsyncOperation/58678463-c43a-449b-8a18-b90af066139a?api-version=2020-11-01-preview",
+      "RequestUri": "/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/databaseAzureAsyncOperation/58678463-c43a-449b-8a18-b90af066139a?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDFjNGVjODgtZTE3OS00NGY3LTllYjAtZTk3MTlhNTA4N2FiL3Jlc291cmNlR3JvdXBzL3NxbGNydWR0ZXN0LTcwMTgvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvbG9jYXRpb25zL3NvdXRoZWFzdGFzaWEvZGF0YWJhc2VBenVyZUFzeW5jT3BlcmF0aW9uLzU4Njc4NDYzLWM0M2EtNDQ5Yi04YTE4LWI5MGFmMDY2MTM5YT9hcGktdmVyc2lvbj0yMDIwLTExLTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -934,7 +934,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/databaseAzureAsyncOperation/58678463-c43a-449b-8a18-b90af066139a?api-version=2020-11-01-preview",
+      "RequestUri": "/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/databaseAzureAsyncOperation/58678463-c43a-449b-8a18-b90af066139a?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDFjNGVjODgtZTE3OS00NGY3LTllYjAtZTk3MTlhNTA4N2FiL3Jlc291cmNlR3JvdXBzL3NxbGNydWR0ZXN0LTcwMTgvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvbG9jYXRpb25zL3NvdXRoZWFzdGFzaWEvZGF0YWJhc2VBenVyZUFzeW5jT3BlcmF0aW9uLzU4Njc4NDYzLWM0M2EtNDQ5Yi04YTE4LWI5MGFmMDY2MTM5YT9hcGktdmVyc2lvbj0yMDIwLTExLTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -994,7 +994,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/databaseAzureAsyncOperation/58678463-c43a-449b-8a18-b90af066139a?api-version=2020-11-01-preview",
+      "RequestUri": "/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/databaseAzureAsyncOperation/58678463-c43a-449b-8a18-b90af066139a?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDFjNGVjODgtZTE3OS00NGY3LTllYjAtZTk3MTlhNTA4N2FiL3Jlc291cmNlR3JvdXBzL3NxbGNydWR0ZXN0LTcwMTgvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvbG9jYXRpb25zL3NvdXRoZWFzdGFzaWEvZGF0YWJhc2VBenVyZUFzeW5jT3BlcmF0aW9uLzU4Njc4NDYzLWM0M2EtNDQ5Yi04YTE4LWI5MGFmMDY2MTM5YT9hcGktdmVyc2lvbj0yMDIwLTExLTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1054,7 +1054,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/databaseAzureAsyncOperation/36cc8605-3011-42b0-ba62-ddf9d002a7af?api-version=2020-11-01-preview",
+      "RequestUri": "/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/databaseAzureAsyncOperation/36cc8605-3011-42b0-ba62-ddf9d002a7af?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDFjNGVjODgtZTE3OS00NGY3LTllYjAtZTk3MTlhNTA4N2FiL3Jlc291cmNlR3JvdXBzL3NxbGNydWR0ZXN0LTcwMTgvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvbG9jYXRpb25zL3NvdXRoZWFzdGFzaWEvZGF0YWJhc2VBenVyZUFzeW5jT3BlcmF0aW9uLzM2Y2M4NjA1LTMwMTEtNDJiMC1iYTYyLWRkZjlkMDAyYTdhZj9hcGktdmVyc2lvbj0yMDIwLTExLTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1114,7 +1114,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/databaseAzureAsyncOperation/36cc8605-3011-42b0-ba62-ddf9d002a7af?api-version=2020-11-01-preview",
+      "RequestUri": "/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/databaseAzureAsyncOperation/36cc8605-3011-42b0-ba62-ddf9d002a7af?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDFjNGVjODgtZTE3OS00NGY3LTllYjAtZTk3MTlhNTA4N2FiL3Jlc291cmNlR3JvdXBzL3NxbGNydWR0ZXN0LTcwMTgvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvbG9jYXRpb25zL3NvdXRoZWFzdGFzaWEvZGF0YWJhc2VBenVyZUFzeW5jT3BlcmF0aW9uLzM2Y2M4NjA1LTMwMTEtNDJiMC1iYTYyLWRkZjlkMDAyYTdhZj9hcGktdmVyc2lvbj0yMDIwLTExLTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1174,7 +1174,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/databaseAzureAsyncOperation/36cc8605-3011-42b0-ba62-ddf9d002a7af?api-version=2020-11-01-preview",
+      "RequestUri": "/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/databaseAzureAsyncOperation/36cc8605-3011-42b0-ba62-ddf9d002a7af?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDFjNGVjODgtZTE3OS00NGY3LTllYjAtZTk3MTlhNTA4N2FiL3Jlc291cmNlR3JvdXBzL3NxbGNydWR0ZXN0LTcwMTgvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvbG9jYXRpb25zL3NvdXRoZWFzdGFzaWEvZGF0YWJhc2VBenVyZUFzeW5jT3BlcmF0aW9uLzM2Y2M4NjA1LTMwMTEtNDJiMC1iYTYyLWRkZjlkMDAyYTdhZj9hcGktdmVyc2lvbj0yMDIwLTExLTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1234,7 +1234,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/databaseAzureAsyncOperation/36cc8605-3011-42b0-ba62-ddf9d002a7af?api-version=2020-11-01-preview",
+      "RequestUri": "/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/databaseAzureAsyncOperation/36cc8605-3011-42b0-ba62-ddf9d002a7af?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDFjNGVjODgtZTE3OS00NGY3LTllYjAtZTk3MTlhNTA4N2FiL3Jlc291cmNlR3JvdXBzL3NxbGNydWR0ZXN0LTcwMTgvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvbG9jYXRpb25zL3NvdXRoZWFzdGFzaWEvZGF0YWJhc2VBenVyZUFzeW5jT3BlcmF0aW9uLzM2Y2M4NjA1LTMwMTEtNDJiMC1iYTYyLWRkZjlkMDAyYTdhZj9hcGktdmVyc2lvbj0yMDIwLTExLTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1294,7 +1294,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/databaseAzureAsyncOperation/ad656162-a260-4774-aee2-d2da3e064e45?api-version=2020-11-01-preview",
+      "RequestUri": "/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/databaseAzureAsyncOperation/ad656162-a260-4774-aee2-d2da3e064e45?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDFjNGVjODgtZTE3OS00NGY3LTllYjAtZTk3MTlhNTA4N2FiL3Jlc291cmNlR3JvdXBzL3NxbGNydWR0ZXN0LTcwMTgvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvbG9jYXRpb25zL3NvdXRoZWFzdGFzaWEvZGF0YWJhc2VBenVyZUFzeW5jT3BlcmF0aW9uL2FkNjU2MTYyLWEyNjAtNDc3NC1hZWUyLWQyZGEzZTA2NGU0NT9hcGktdmVyc2lvbj0yMDIwLTExLTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1354,7 +1354,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/databaseAzureAsyncOperation/ad656162-a260-4774-aee2-d2da3e064e45?api-version=2020-11-01-preview",
+      "RequestUri": "/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/databaseAzureAsyncOperation/ad656162-a260-4774-aee2-d2da3e064e45?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDFjNGVjODgtZTE3OS00NGY3LTllYjAtZTk3MTlhNTA4N2FiL3Jlc291cmNlR3JvdXBzL3NxbGNydWR0ZXN0LTcwMTgvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvbG9jYXRpb25zL3NvdXRoZWFzdGFzaWEvZGF0YWJhc2VBenVyZUFzeW5jT3BlcmF0aW9uL2FkNjU2MTYyLWEyNjAtNDc3NC1hZWUyLWQyZGEzZTA2NGU0NT9hcGktdmVyc2lvbj0yMDIwLTExLTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1414,7 +1414,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/databaseAzureAsyncOperation/ad656162-a260-4774-aee2-d2da3e064e45?api-version=2020-11-01-preview",
+      "RequestUri": "/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/databaseAzureAsyncOperation/ad656162-a260-4774-aee2-d2da3e064e45?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDFjNGVjODgtZTE3OS00NGY3LTllYjAtZTk3MTlhNTA4N2FiL3Jlc291cmNlR3JvdXBzL3NxbGNydWR0ZXN0LTcwMTgvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvbG9jYXRpb25zL3NvdXRoZWFzdGFzaWEvZGF0YWJhc2VBenVyZUFzeW5jT3BlcmF0aW9uL2FkNjU2MTYyLWEyNjAtNDc3NC1hZWUyLWQyZGEzZTA2NGU0NT9hcGktdmVyc2lvbj0yMDIwLTExLTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1474,7 +1474,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/databaseAzureAsyncOperation/ad656162-a260-4774-aee2-d2da3e064e45?api-version=2020-11-01-preview",
+      "RequestUri": "/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/databaseAzureAsyncOperation/ad656162-a260-4774-aee2-d2da3e064e45?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDFjNGVjODgtZTE3OS00NGY3LTllYjAtZTk3MTlhNTA4N2FiL3Jlc291cmNlR3JvdXBzL3NxbGNydWR0ZXN0LTcwMTgvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvbG9jYXRpb25zL3NvdXRoZWFzdGFzaWEvZGF0YWJhc2VBenVyZUFzeW5jT3BlcmF0aW9uL2FkNjU2MTYyLWEyNjAtNDc3NC1hZWUyLWQyZGEzZTA2NGU0NT9hcGktdmVyc2lvbj0yMDIwLTExLTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1534,7 +1534,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/databaseAzureAsyncOperation/8b58df57-0867-428d-b63f-60cb3b5fad92?api-version=2020-11-01-preview",
+      "RequestUri": "/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/databaseAzureAsyncOperation/8b58df57-0867-428d-b63f-60cb3b5fad92?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDFjNGVjODgtZTE3OS00NGY3LTllYjAtZTk3MTlhNTA4N2FiL3Jlc291cmNlR3JvdXBzL3NxbGNydWR0ZXN0LTcwMTgvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvbG9jYXRpb25zL3NvdXRoZWFzdGFzaWEvZGF0YWJhc2VBenVyZUFzeW5jT3BlcmF0aW9uLzhiNThkZjU3LTA4NjctNDI4ZC1iNjNmLTYwY2IzYjVmYWQ5Mj9hcGktdmVyc2lvbj0yMDIwLTExLTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1594,7 +1594,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/databaseAzureAsyncOperation/8b58df57-0867-428d-b63f-60cb3b5fad92?api-version=2020-11-01-preview",
+      "RequestUri": "/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/databaseAzureAsyncOperation/8b58df57-0867-428d-b63f-60cb3b5fad92?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDFjNGVjODgtZTE3OS00NGY3LTllYjAtZTk3MTlhNTA4N2FiL3Jlc291cmNlR3JvdXBzL3NxbGNydWR0ZXN0LTcwMTgvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvbG9jYXRpb25zL3NvdXRoZWFzdGFzaWEvZGF0YWJhc2VBenVyZUFzeW5jT3BlcmF0aW9uLzhiNThkZjU3LTA4NjctNDI4ZC1iNjNmLTYwY2IzYjVmYWQ5Mj9hcGktdmVyc2lvbj0yMDIwLTExLTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1654,7 +1654,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/databaseAzureAsyncOperation/8b58df57-0867-428d-b63f-60cb3b5fad92?api-version=2020-11-01-preview",
+      "RequestUri": "/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/databaseAzureAsyncOperation/8b58df57-0867-428d-b63f-60cb3b5fad92?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDFjNGVjODgtZTE3OS00NGY3LTllYjAtZTk3MTlhNTA4N2FiL3Jlc291cmNlR3JvdXBzL3NxbGNydWR0ZXN0LTcwMTgvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvbG9jYXRpb25zL3NvdXRoZWFzdGFzaWEvZGF0YWJhc2VBenVyZUFzeW5jT3BlcmF0aW9uLzhiNThkZjU3LTA4NjctNDI4ZC1iNjNmLTYwY2IzYjVmYWQ5Mj9hcGktdmVyc2lvbj0yMDIwLTExLTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1714,7 +1714,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/databaseAzureAsyncOperation/8b58df57-0867-428d-b63f-60cb3b5fad92?api-version=2020-11-01-preview",
+      "RequestUri": "/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/locations/southeastasia/databaseAzureAsyncOperation/8b58df57-0867-428d-b63f-60cb3b5fad92?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDFjNGVjODgtZTE3OS00NGY3LTllYjAtZTk3MTlhNTA4N2FiL3Jlc291cmNlR3JvdXBzL3NxbGNydWR0ZXN0LTcwMTgvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvbG9jYXRpb25zL3NvdXRoZWFzdGFzaWEvZGF0YWJhc2VBenVyZUFzeW5jT3BlcmF0aW9uLzhiNThkZjU3LTA4NjctNDI4ZC1iNjNmLTYwY2IzYjVmYWQ5Mj9hcGktdmVyc2lvbj0yMDIwLTExLTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1774,7 +1774,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353/databases/sqlcrudtest-412?api-version=2020-11-01-preview",
+      "RequestUri": "/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353/databases/sqlcrudtest-412?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDFjNGVjODgtZTE3OS00NGY3LTllYjAtZTk3MTlhNTA4N2FiL3Jlc291cmNlR3JvdXBzL3NxbGNydWR0ZXN0LTcwMTgvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9zcWxjcnVkdGVzdC0xMzUzL2RhdGFiYXNlcy9zcWxjcnVkdGVzdC00MTI/YXBpLXZlcnNpb249MjAyMC0xMS0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1827,11 +1827,11 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"GP_Gen5\",\r\n    \"tier\": \"GeneralPurpose\",\r\n    \"family\": \"Gen5\",\r\n    \"capacity\": 2\r\n  },\r\n  \"kind\": \"v12.0,user,vcore\",\r\n  \"properties\": {\r\n    \"collation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n    \"maxSizeBytes\": 34359738368,\r\n    \"status\": \"Online\",\r\n    \"databaseId\": \"0c577934-519c-4202-8c9e-7b792c518666\",\r\n    \"creationDate\": \"2021-02-26T05:36:16.96Z\",\r\n    \"currentServiceObjectiveName\": \"GP_Gen5_2\",\r\n    \"requestedServiceObjectiveName\": \"GP_Gen5_2\",\r\n    \"defaultSecondaryLocation\": \"northeurope\",\r\n    \"catalogCollation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n    \"zoneRedundant\": false,\r\n    \"licenseType\": \"LicenseIncluded\",\r\n    \"maxLogSizeBytes\": 68719476736,\r\n    \"readScale\": \"Disabled\",\r\n    \"currentSku\": {\r\n      \"name\": \"GP_Gen5\",\r\n      \"tier\": \"GeneralPurpose\",\r\n      \"family\": \"Gen5\",\r\n      \"capacity\": 2\r\n    },\r\n    \"currentBackupStorageRedundancy\": \"Geo\",\r\n    \"requestedBackupStorageRedundancy\": \"Geo\",\r\n    \"maintenanceConfigurationId\": \"/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default\"\r\n  },\r\n  \"location\": \"southeastasia\",\r\n  \"id\": \"/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353/databases/sqlcrudtest-412\",\r\n  \"name\": \"sqlcrudtest-412\",\r\n  \"type\": \"Microsoft.Sql/servers/databases\"\r\n}",
+      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"GP_Gen5\",\r\n    \"tier\": \"GeneralPurpose\",\r\n    \"family\": \"Gen5\",\r\n    \"capacity\": 2\r\n  },\r\n  \"kind\": \"v12.0,user,vcore\",\r\n  \"properties\": {\r\n    \"collation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n    \"maxSizeBytes\": 34359738368,\r\n    \"status\": \"Online\",\r\n    \"databaseId\": \"0c577934-519c-4202-8c9e-7b792c518666\",\r\n    \"creationDate\": \"2021-02-26T05:36:16.96Z\",\r\n    \"currentServiceObjectiveName\": \"GP_Gen5_2\",\r\n    \"requestedServiceObjectiveName\": \"GP_Gen5_2\",\r\n    \"defaultSecondaryLocation\": \"northeurope\",\r\n    \"catalogCollation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n    \"zoneRedundant\": false,\r\n    \"licenseType\": \"LicenseIncluded\",\r\n    \"maxLogSizeBytes\": 68719476736,\r\n    \"readScale\": \"Disabled\",\r\n    \"currentSku\": {\r\n      \"name\": \"GP_Gen5\",\r\n      \"tier\": \"GeneralPurpose\",\r\n      \"family\": \"Gen5\",\r\n      \"capacity\": 2\r\n    },\r\n    \"currentBackupStorageRedundancy\": \"Geo\",\r\n    \"requestedBackupStorageRedundancy\": \"Geo\",\r\n    \"maintenanceConfigurationId\": \"/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default\"\r\n  },\r\n  \"location\": \"southeastasia\",\r\n  \"id\": \"/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353/databases/sqlcrudtest-412\",\r\n  \"name\": \"sqlcrudtest-412\",\r\n  \"type\": \"Microsoft.Sql/servers/databases\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353/databases/sqlcrudtest-412?api-version=2020-11-01-preview",
+      "RequestUri": "/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353/databases/sqlcrudtest-412?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDFjNGVjODgtZTE3OS00NGY3LTllYjAtZTk3MTlhNTA4N2FiL3Jlc291cmNlR3JvdXBzL3NxbGNydWR0ZXN0LTcwMTgvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9zcWxjcnVkdGVzdC0xMzUzL2RhdGFiYXNlcy9zcWxjcnVkdGVzdC00MTI/YXBpLXZlcnNpb249MjAyMC0xMS0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1890,11 +1890,11 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"GP_Gen5\",\r\n    \"tier\": \"GeneralPurpose\",\r\n    \"family\": \"Gen5\",\r\n    \"capacity\": 2\r\n  },\r\n  \"kind\": \"v12.0,user,vcore\",\r\n  \"properties\": {\r\n    \"collation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n    \"maxSizeBytes\": 34359738368,\r\n    \"status\": \"Online\",\r\n    \"databaseId\": \"0c577934-519c-4202-8c9e-7b792c518666\",\r\n    \"creationDate\": \"2021-02-26T05:36:16.96Z\",\r\n    \"currentServiceObjectiveName\": \"GP_Gen5_2\",\r\n    \"requestedServiceObjectiveName\": \"GP_Gen5_2\",\r\n    \"defaultSecondaryLocation\": \"northeurope\",\r\n    \"catalogCollation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n    \"zoneRedundant\": false,\r\n    \"licenseType\": \"LicenseIncluded\",\r\n    \"maxLogSizeBytes\": 68719476736,\r\n    \"readScale\": \"Disabled\",\r\n    \"currentSku\": {\r\n      \"name\": \"GP_Gen5\",\r\n      \"tier\": \"GeneralPurpose\",\r\n      \"family\": \"Gen5\",\r\n      \"capacity\": 2\r\n    },\r\n    \"currentBackupStorageRedundancy\": \"Geo\",\r\n    \"requestedBackupStorageRedundancy\": \"Geo\",\r\n    \"maintenanceConfigurationId\": \"/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default\"\r\n  },\r\n  \"location\": \"southeastasia\",\r\n  \"id\": \"/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353/databases/sqlcrudtest-412\",\r\n  \"name\": \"sqlcrudtest-412\",\r\n  \"type\": \"Microsoft.Sql/servers/databases\"\r\n}",
+      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"GP_Gen5\",\r\n    \"tier\": \"GeneralPurpose\",\r\n    \"family\": \"Gen5\",\r\n    \"capacity\": 2\r\n  },\r\n  \"kind\": \"v12.0,user,vcore\",\r\n  \"properties\": {\r\n    \"collation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n    \"maxSizeBytes\": 34359738368,\r\n    \"status\": \"Online\",\r\n    \"databaseId\": \"0c577934-519c-4202-8c9e-7b792c518666\",\r\n    \"creationDate\": \"2021-02-26T05:36:16.96Z\",\r\n    \"currentServiceObjectiveName\": \"GP_Gen5_2\",\r\n    \"requestedServiceObjectiveName\": \"GP_Gen5_2\",\r\n    \"defaultSecondaryLocation\": \"northeurope\",\r\n    \"catalogCollation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n    \"zoneRedundant\": false,\r\n    \"licenseType\": \"LicenseIncluded\",\r\n    \"maxLogSizeBytes\": 68719476736,\r\n    \"readScale\": \"Disabled\",\r\n    \"currentSku\": {\r\n      \"name\": \"GP_Gen5\",\r\n      \"tier\": \"GeneralPurpose\",\r\n      \"family\": \"Gen5\",\r\n      \"capacity\": 2\r\n    },\r\n    \"currentBackupStorageRedundancy\": \"Geo\",\r\n    \"requestedBackupStorageRedundancy\": \"Geo\",\r\n    \"maintenanceConfigurationId\": \"/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default\"\r\n  },\r\n  \"location\": \"southeastasia\",\r\n  \"id\": \"/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353/databases/sqlcrudtest-412\",\r\n  \"name\": \"sqlcrudtest-412\",\r\n  \"type\": \"Microsoft.Sql/servers/databases\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353/databases/sqlcrudtest-342?api-version=2020-11-01-preview",
+      "RequestUri": "/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353/databases/sqlcrudtest-342?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDFjNGVjODgtZTE3OS00NGY3LTllYjAtZTk3MTlhNTA4N2FiL3Jlc291cmNlR3JvdXBzL3NxbGNydWR0ZXN0LTcwMTgvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9zcWxjcnVkdGVzdC0xMzUzL2RhdGFiYXNlcy9zcWxjcnVkdGVzdC0zNDI/YXBpLXZlcnNpb249MjAyMC0xMS0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1947,11 +1947,11 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"GP_Gen5\",\r\n    \"tier\": \"GeneralPurpose\",\r\n    \"family\": \"Gen5\",\r\n    \"capacity\": 2\r\n  },\r\n  \"kind\": \"v12.0,user,vcore\",\r\n  \"properties\": {\r\n    \"collation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n    \"maxSizeBytes\": 34359738368,\r\n    \"status\": \"Online\",\r\n    \"databaseId\": \"1196fec0-2d72-46f2-b83d-3a3ec93b4e23\",\r\n    \"creationDate\": \"2021-02-26T05:36:21.163Z\",\r\n    \"currentServiceObjectiveName\": \"GP_Gen5_2\",\r\n    \"requestedServiceObjectiveName\": \"GP_Gen5_2\",\r\n    \"defaultSecondaryLocation\": \"northeurope\",\r\n    \"catalogCollation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n    \"zoneRedundant\": false,\r\n    \"licenseType\": \"LicenseIncluded\",\r\n    \"maxLogSizeBytes\": 68719476736,\r\n    \"readScale\": \"Disabled\",\r\n    \"currentSku\": {\r\n      \"name\": \"GP_Gen5\",\r\n      \"tier\": \"GeneralPurpose\",\r\n      \"family\": \"Gen5\",\r\n      \"capacity\": 2\r\n    },\r\n    \"currentBackupStorageRedundancy\": \"Geo\",\r\n    \"requestedBackupStorageRedundancy\": \"Geo\",\r\n    \"maintenanceConfigurationId\": \"/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default\"\r\n  },\r\n  \"location\": \"southeastasia\",\r\n  \"id\": \"/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353/databases/sqlcrudtest-342\",\r\n  \"name\": \"sqlcrudtest-342\",\r\n  \"type\": \"Microsoft.Sql/servers/databases\"\r\n}",
+      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"GP_Gen5\",\r\n    \"tier\": \"GeneralPurpose\",\r\n    \"family\": \"Gen5\",\r\n    \"capacity\": 2\r\n  },\r\n  \"kind\": \"v12.0,user,vcore\",\r\n  \"properties\": {\r\n    \"collation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n    \"maxSizeBytes\": 34359738368,\r\n    \"status\": \"Online\",\r\n    \"databaseId\": \"1196fec0-2d72-46f2-b83d-3a3ec93b4e23\",\r\n    \"creationDate\": \"2021-02-26T05:36:21.163Z\",\r\n    \"currentServiceObjectiveName\": \"GP_Gen5_2\",\r\n    \"requestedServiceObjectiveName\": \"GP_Gen5_2\",\r\n    \"defaultSecondaryLocation\": \"northeurope\",\r\n    \"catalogCollation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n    \"zoneRedundant\": false,\r\n    \"licenseType\": \"LicenseIncluded\",\r\n    \"maxLogSizeBytes\": 68719476736,\r\n    \"readScale\": \"Disabled\",\r\n    \"currentSku\": {\r\n      \"name\": \"GP_Gen5\",\r\n      \"tier\": \"GeneralPurpose\",\r\n      \"family\": \"Gen5\",\r\n      \"capacity\": 2\r\n    },\r\n    \"currentBackupStorageRedundancy\": \"Geo\",\r\n    \"requestedBackupStorageRedundancy\": \"Geo\",\r\n    \"maintenanceConfigurationId\": \"/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default\"\r\n  },\r\n  \"location\": \"southeastasia\",\r\n  \"id\": \"/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353/databases/sqlcrudtest-342\",\r\n  \"name\": \"sqlcrudtest-342\",\r\n  \"type\": \"Microsoft.Sql/servers/databases\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353/databases/sqlcrudtest-342?api-version=2020-11-01-preview",
+      "RequestUri": "/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353/databases/sqlcrudtest-342?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDFjNGVjODgtZTE3OS00NGY3LTllYjAtZTk3MTlhNTA4N2FiL3Jlc291cmNlR3JvdXBzL3NxbGNydWR0ZXN0LTcwMTgvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9zcWxjcnVkdGVzdC0xMzUzL2RhdGFiYXNlcy9zcWxjcnVkdGVzdC0zNDI/YXBpLXZlcnNpb249MjAyMC0xMS0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -2010,11 +2010,11 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"GP_Gen5\",\r\n    \"tier\": \"GeneralPurpose\",\r\n    \"family\": \"Gen5\",\r\n    \"capacity\": 2\r\n  },\r\n  \"kind\": \"v12.0,user,vcore\",\r\n  \"properties\": {\r\n    \"collation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n    \"maxSizeBytes\": 34359738368,\r\n    \"status\": \"Online\",\r\n    \"databaseId\": \"1196fec0-2d72-46f2-b83d-3a3ec93b4e23\",\r\n    \"creationDate\": \"2021-02-26T05:36:21.163Z\",\r\n    \"currentServiceObjectiveName\": \"GP_Gen5_2\",\r\n    \"requestedServiceObjectiveName\": \"GP_Gen5_2\",\r\n    \"defaultSecondaryLocation\": \"northeurope\",\r\n    \"catalogCollation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n    \"zoneRedundant\": false,\r\n    \"licenseType\": \"LicenseIncluded\",\r\n    \"maxLogSizeBytes\": 68719476736,\r\n    \"readScale\": \"Disabled\",\r\n    \"currentSku\": {\r\n      \"name\": \"GP_Gen5\",\r\n      \"tier\": \"GeneralPurpose\",\r\n      \"family\": \"Gen5\",\r\n      \"capacity\": 2\r\n    },\r\n    \"currentBackupStorageRedundancy\": \"Geo\",\r\n    \"requestedBackupStorageRedundancy\": \"Geo\",\r\n    \"maintenanceConfigurationId\": \"/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default\"\r\n  },\r\n  \"location\": \"southeastasia\",\r\n  \"id\": \"/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353/databases/sqlcrudtest-342\",\r\n  \"name\": \"sqlcrudtest-342\",\r\n  \"type\": \"Microsoft.Sql/servers/databases\"\r\n}",
+      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"GP_Gen5\",\r\n    \"tier\": \"GeneralPurpose\",\r\n    \"family\": \"Gen5\",\r\n    \"capacity\": 2\r\n  },\r\n  \"kind\": \"v12.0,user,vcore\",\r\n  \"properties\": {\r\n    \"collation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n    \"maxSizeBytes\": 34359738368,\r\n    \"status\": \"Online\",\r\n    \"databaseId\": \"1196fec0-2d72-46f2-b83d-3a3ec93b4e23\",\r\n    \"creationDate\": \"2021-02-26T05:36:21.163Z\",\r\n    \"currentServiceObjectiveName\": \"GP_Gen5_2\",\r\n    \"requestedServiceObjectiveName\": \"GP_Gen5_2\",\r\n    \"defaultSecondaryLocation\": \"northeurope\",\r\n    \"catalogCollation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n    \"zoneRedundant\": false,\r\n    \"licenseType\": \"LicenseIncluded\",\r\n    \"maxLogSizeBytes\": 68719476736,\r\n    \"readScale\": \"Disabled\",\r\n    \"currentSku\": {\r\n      \"name\": \"GP_Gen5\",\r\n      \"tier\": \"GeneralPurpose\",\r\n      \"family\": \"Gen5\",\r\n      \"capacity\": 2\r\n    },\r\n    \"currentBackupStorageRedundancy\": \"Geo\",\r\n    \"requestedBackupStorageRedundancy\": \"Geo\",\r\n    \"maintenanceConfigurationId\": \"/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default\"\r\n  },\r\n  \"location\": \"southeastasia\",\r\n  \"id\": \"/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353/databases/sqlcrudtest-342\",\r\n  \"name\": \"sqlcrudtest-342\",\r\n  \"type\": \"Microsoft.Sql/servers/databases\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353/databases/sqlcrudtest-1674?api-version=2020-11-01-preview",
+      "RequestUri": "/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353/databases/sqlcrudtest-1674?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDFjNGVjODgtZTE3OS00NGY3LTllYjAtZTk3MTlhNTA4N2FiL3Jlc291cmNlR3JvdXBzL3NxbGNydWR0ZXN0LTcwMTgvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9zcWxjcnVkdGVzdC0xMzUzL2RhdGFiYXNlcy9zcWxjcnVkdGVzdC0xNjc0P2FwaS12ZXJzaW9uPTIwMjAtMTEtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -2067,11 +2067,11 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"GP_Gen5\",\r\n    \"tier\": \"GeneralPurpose\",\r\n    \"family\": \"Gen5\",\r\n    \"capacity\": 2\r\n  },\r\n  \"kind\": \"v12.0,user,vcore\",\r\n  \"properties\": {\r\n    \"collation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n    \"maxSizeBytes\": 34359738368,\r\n    \"status\": \"Online\",\r\n    \"databaseId\": \"0b29be3c-39f9-4816-b6ff-627de7f245f3\",\r\n    \"creationDate\": \"2021-02-26T05:36:28.027Z\",\r\n    \"currentServiceObjectiveName\": \"GP_Gen5_2\",\r\n    \"requestedServiceObjectiveName\": \"GP_Gen5_2\",\r\n    \"defaultSecondaryLocation\": \"northeurope\",\r\n    \"catalogCollation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n    \"zoneRedundant\": false,\r\n    \"licenseType\": \"LicenseIncluded\",\r\n    \"maxLogSizeBytes\": 68719476736,\r\n    \"readScale\": \"Disabled\",\r\n    \"currentSku\": {\r\n      \"name\": \"GP_Gen5\",\r\n      \"tier\": \"GeneralPurpose\",\r\n      \"family\": \"Gen5\",\r\n      \"capacity\": 2\r\n    },\r\n    \"currentBackupStorageRedundancy\": \"Geo\",\r\n    \"requestedBackupStorageRedundancy\": \"Geo\",\r\n    \"maintenanceConfigurationId\": \"/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default\"\r\n  },\r\n  \"location\": \"southeastasia\",\r\n  \"id\": \"/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353/databases/sqlcrudtest-1674\",\r\n  \"name\": \"sqlcrudtest-1674\",\r\n  \"type\": \"Microsoft.Sql/servers/databases\"\r\n}",
+      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"GP_Gen5\",\r\n    \"tier\": \"GeneralPurpose\",\r\n    \"family\": \"Gen5\",\r\n    \"capacity\": 2\r\n  },\r\n  \"kind\": \"v12.0,user,vcore\",\r\n  \"properties\": {\r\n    \"collation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n    \"maxSizeBytes\": 34359738368,\r\n    \"status\": \"Online\",\r\n    \"databaseId\": \"0b29be3c-39f9-4816-b6ff-627de7f245f3\",\r\n    \"creationDate\": \"2021-02-26T05:36:28.027Z\",\r\n    \"currentServiceObjectiveName\": \"GP_Gen5_2\",\r\n    \"requestedServiceObjectiveName\": \"GP_Gen5_2\",\r\n    \"defaultSecondaryLocation\": \"northeurope\",\r\n    \"catalogCollation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n    \"zoneRedundant\": false,\r\n    \"licenseType\": \"LicenseIncluded\",\r\n    \"maxLogSizeBytes\": 68719476736,\r\n    \"readScale\": \"Disabled\",\r\n    \"currentSku\": {\r\n      \"name\": \"GP_Gen5\",\r\n      \"tier\": \"GeneralPurpose\",\r\n      \"family\": \"Gen5\",\r\n      \"capacity\": 2\r\n    },\r\n    \"currentBackupStorageRedundancy\": \"Geo\",\r\n    \"requestedBackupStorageRedundancy\": \"Geo\",\r\n    \"maintenanceConfigurationId\": \"/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default\"\r\n  },\r\n  \"location\": \"southeastasia\",\r\n  \"id\": \"/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353/databases/sqlcrudtest-1674\",\r\n  \"name\": \"sqlcrudtest-1674\",\r\n  \"type\": \"Microsoft.Sql/servers/databases\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353/databases/sqlcrudtest-1674?api-version=2020-11-01-preview",
+      "RequestUri": "/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353/databases/sqlcrudtest-1674?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDFjNGVjODgtZTE3OS00NGY3LTllYjAtZTk3MTlhNTA4N2FiL3Jlc291cmNlR3JvdXBzL3NxbGNydWR0ZXN0LTcwMTgvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9zcWxjcnVkdGVzdC0xMzUzL2RhdGFiYXNlcy9zcWxjcnVkdGVzdC0xNjc0P2FwaS12ZXJzaW9uPTIwMjAtMTEtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -2130,11 +2130,11 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"GP_Gen5\",\r\n    \"tier\": \"GeneralPurpose\",\r\n    \"family\": \"Gen5\",\r\n    \"capacity\": 2\r\n  },\r\n  \"kind\": \"v12.0,user,vcore\",\r\n  \"properties\": {\r\n    \"collation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n    \"maxSizeBytes\": 34359738368,\r\n    \"status\": \"Online\",\r\n    \"databaseId\": \"0b29be3c-39f9-4816-b6ff-627de7f245f3\",\r\n    \"creationDate\": \"2021-02-26T05:36:28.027Z\",\r\n    \"currentServiceObjectiveName\": \"GP_Gen5_2\",\r\n    \"requestedServiceObjectiveName\": \"GP_Gen5_2\",\r\n    \"defaultSecondaryLocation\": \"northeurope\",\r\n    \"catalogCollation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n    \"zoneRedundant\": false,\r\n    \"licenseType\": \"LicenseIncluded\",\r\n    \"maxLogSizeBytes\": 68719476736,\r\n    \"readScale\": \"Disabled\",\r\n    \"currentSku\": {\r\n      \"name\": \"GP_Gen5\",\r\n      \"tier\": \"GeneralPurpose\",\r\n      \"family\": \"Gen5\",\r\n      \"capacity\": 2\r\n    },\r\n    \"currentBackupStorageRedundancy\": \"Geo\",\r\n    \"requestedBackupStorageRedundancy\": \"Geo\",\r\n    \"maintenanceConfigurationId\": \"/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default\"\r\n  },\r\n  \"location\": \"southeastasia\",\r\n  \"id\": \"/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353/databases/sqlcrudtest-1674\",\r\n  \"name\": \"sqlcrudtest-1674\",\r\n  \"type\": \"Microsoft.Sql/servers/databases\"\r\n}",
+      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"GP_Gen5\",\r\n    \"tier\": \"GeneralPurpose\",\r\n    \"family\": \"Gen5\",\r\n    \"capacity\": 2\r\n  },\r\n  \"kind\": \"v12.0,user,vcore\",\r\n  \"properties\": {\r\n    \"collation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n    \"maxSizeBytes\": 34359738368,\r\n    \"status\": \"Online\",\r\n    \"databaseId\": \"0b29be3c-39f9-4816-b6ff-627de7f245f3\",\r\n    \"creationDate\": \"2021-02-26T05:36:28.027Z\",\r\n    \"currentServiceObjectiveName\": \"GP_Gen5_2\",\r\n    \"requestedServiceObjectiveName\": \"GP_Gen5_2\",\r\n    \"defaultSecondaryLocation\": \"northeurope\",\r\n    \"catalogCollation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n    \"zoneRedundant\": false,\r\n    \"licenseType\": \"LicenseIncluded\",\r\n    \"maxLogSizeBytes\": 68719476736,\r\n    \"readScale\": \"Disabled\",\r\n    \"currentSku\": {\r\n      \"name\": \"GP_Gen5\",\r\n      \"tier\": \"GeneralPurpose\",\r\n      \"family\": \"Gen5\",\r\n      \"capacity\": 2\r\n    },\r\n    \"currentBackupStorageRedundancy\": \"Geo\",\r\n    \"requestedBackupStorageRedundancy\": \"Geo\",\r\n    \"maintenanceConfigurationId\": \"/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default\"\r\n  },\r\n  \"location\": \"southeastasia\",\r\n  \"id\": \"/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353/databases/sqlcrudtest-1674\",\r\n  \"name\": \"sqlcrudtest-1674\",\r\n  \"type\": \"Microsoft.Sql/servers/databases\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353/databases/sqlcrudtest-2527?api-version=2020-11-01-preview",
+      "RequestUri": "/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353/databases/sqlcrudtest-2527?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDFjNGVjODgtZTE3OS00NGY3LTllYjAtZTk3MTlhNTA4N2FiL3Jlc291cmNlR3JvdXBzL3NxbGNydWR0ZXN0LTcwMTgvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9zcWxjcnVkdGVzdC0xMzUzL2RhdGFiYXNlcy9zcWxjcnVkdGVzdC0yNTI3P2FwaS12ZXJzaW9uPTIwMjAtMTEtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -2187,11 +2187,11 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"GP_Gen5\",\r\n    \"tier\": \"GeneralPurpose\",\r\n    \"family\": \"Gen5\",\r\n    \"capacity\": 2\r\n  },\r\n  \"kind\": \"v12.0,user,vcore\",\r\n  \"properties\": {\r\n    \"collation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n    \"maxSizeBytes\": 34359738368,\r\n    \"status\": \"Online\",\r\n    \"databaseId\": \"9042808e-7dc3-4d2f-94cf-c15b1e411cc2\",\r\n    \"creationDate\": \"2021-02-26T05:36:30.477Z\",\r\n    \"currentServiceObjectiveName\": \"GP_Gen5_2\",\r\n    \"requestedServiceObjectiveName\": \"GP_Gen5_2\",\r\n    \"defaultSecondaryLocation\": \"northeurope\",\r\n    \"catalogCollation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n    \"zoneRedundant\": false,\r\n    \"licenseType\": \"LicenseIncluded\",\r\n    \"maxLogSizeBytes\": 68719476736,\r\n    \"readScale\": \"Disabled\",\r\n    \"currentSku\": {\r\n      \"name\": \"GP_Gen5\",\r\n      \"tier\": \"GeneralPurpose\",\r\n      \"family\": \"Gen5\",\r\n      \"capacity\": 2\r\n    },\r\n    \"currentBackupStorageRedundancy\": \"Geo\",\r\n    \"requestedBackupStorageRedundancy\": \"Geo\",\r\n    \"maintenanceConfigurationId\": \"/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default\"\r\n  },\r\n  \"location\": \"southeastasia\",\r\n  \"id\": \"/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353/databases/sqlcrudtest-2527\",\r\n  \"name\": \"sqlcrudtest-2527\",\r\n  \"type\": \"Microsoft.Sql/servers/databases\"\r\n}",
+      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"GP_Gen5\",\r\n    \"tier\": \"GeneralPurpose\",\r\n    \"family\": \"Gen5\",\r\n    \"capacity\": 2\r\n  },\r\n  \"kind\": \"v12.0,user,vcore\",\r\n  \"properties\": {\r\n    \"collation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n    \"maxSizeBytes\": 34359738368,\r\n    \"status\": \"Online\",\r\n    \"databaseId\": \"9042808e-7dc3-4d2f-94cf-c15b1e411cc2\",\r\n    \"creationDate\": \"2021-02-26T05:36:30.477Z\",\r\n    \"currentServiceObjectiveName\": \"GP_Gen5_2\",\r\n    \"requestedServiceObjectiveName\": \"GP_Gen5_2\",\r\n    \"defaultSecondaryLocation\": \"northeurope\",\r\n    \"catalogCollation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n    \"zoneRedundant\": false,\r\n    \"licenseType\": \"LicenseIncluded\",\r\n    \"maxLogSizeBytes\": 68719476736,\r\n    \"readScale\": \"Disabled\",\r\n    \"currentSku\": {\r\n      \"name\": \"GP_Gen5\",\r\n      \"tier\": \"GeneralPurpose\",\r\n      \"family\": \"Gen5\",\r\n      \"capacity\": 2\r\n    },\r\n    \"currentBackupStorageRedundancy\": \"Geo\",\r\n    \"requestedBackupStorageRedundancy\": \"Geo\",\r\n    \"maintenanceConfigurationId\": \"/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default\"\r\n  },\r\n  \"location\": \"southeastasia\",\r\n  \"id\": \"/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353/databases/sqlcrudtest-2527\",\r\n  \"name\": \"sqlcrudtest-2527\",\r\n  \"type\": \"Microsoft.Sql/servers/databases\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353/databases/sqlcrudtest-2527?api-version=2020-11-01-preview",
+      "RequestUri": "/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353/databases/sqlcrudtest-2527?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDFjNGVjODgtZTE3OS00NGY3LTllYjAtZTk3MTlhNTA4N2FiL3Jlc291cmNlR3JvdXBzL3NxbGNydWR0ZXN0LTcwMTgvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9zcWxjcnVkdGVzdC0xMzUzL2RhdGFiYXNlcy9zcWxjcnVkdGVzdC0yNTI3P2FwaS12ZXJzaW9uPTIwMjAtMTEtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -2250,11 +2250,11 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"GP_Gen5\",\r\n    \"tier\": \"GeneralPurpose\",\r\n    \"family\": \"Gen5\",\r\n    \"capacity\": 2\r\n  },\r\n  \"kind\": \"v12.0,user,vcore\",\r\n  \"properties\": {\r\n    \"collation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n    \"maxSizeBytes\": 34359738368,\r\n    \"status\": \"Online\",\r\n    \"databaseId\": \"9042808e-7dc3-4d2f-94cf-c15b1e411cc2\",\r\n    \"creationDate\": \"2021-02-26T05:36:30.477Z\",\r\n    \"currentServiceObjectiveName\": \"GP_Gen5_2\",\r\n    \"requestedServiceObjectiveName\": \"GP_Gen5_2\",\r\n    \"defaultSecondaryLocation\": \"northeurope\",\r\n    \"catalogCollation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n    \"zoneRedundant\": false,\r\n    \"licenseType\": \"LicenseIncluded\",\r\n    \"maxLogSizeBytes\": 68719476736,\r\n    \"readScale\": \"Disabled\",\r\n    \"currentSku\": {\r\n      \"name\": \"GP_Gen5\",\r\n      \"tier\": \"GeneralPurpose\",\r\n      \"family\": \"Gen5\",\r\n      \"capacity\": 2\r\n    },\r\n    \"currentBackupStorageRedundancy\": \"Geo\",\r\n    \"requestedBackupStorageRedundancy\": \"Geo\",\r\n    \"maintenanceConfigurationId\": \"/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default\"\r\n  },\r\n  \"location\": \"southeastasia\",\r\n  \"id\": \"/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353/databases/sqlcrudtest-2527\",\r\n  \"name\": \"sqlcrudtest-2527\",\r\n  \"type\": \"Microsoft.Sql/servers/databases\"\r\n}",
+      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"GP_Gen5\",\r\n    \"tier\": \"GeneralPurpose\",\r\n    \"family\": \"Gen5\",\r\n    \"capacity\": 2\r\n  },\r\n  \"kind\": \"v12.0,user,vcore\",\r\n  \"properties\": {\r\n    \"collation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n    \"maxSizeBytes\": 34359738368,\r\n    \"status\": \"Online\",\r\n    \"databaseId\": \"9042808e-7dc3-4d2f-94cf-c15b1e411cc2\",\r\n    \"creationDate\": \"2021-02-26T05:36:30.477Z\",\r\n    \"currentServiceObjectiveName\": \"GP_Gen5_2\",\r\n    \"requestedServiceObjectiveName\": \"GP_Gen5_2\",\r\n    \"defaultSecondaryLocation\": \"northeurope\",\r\n    \"catalogCollation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n    \"zoneRedundant\": false,\r\n    \"licenseType\": \"LicenseIncluded\",\r\n    \"maxLogSizeBytes\": 68719476736,\r\n    \"readScale\": \"Disabled\",\r\n    \"currentSku\": {\r\n      \"name\": \"GP_Gen5\",\r\n      \"tier\": \"GeneralPurpose\",\r\n      \"family\": \"Gen5\",\r\n      \"capacity\": 2\r\n    },\r\n    \"currentBackupStorageRedundancy\": \"Geo\",\r\n    \"requestedBackupStorageRedundancy\": \"Geo\",\r\n    \"maintenanceConfigurationId\": \"/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default\"\r\n  },\r\n  \"location\": \"southeastasia\",\r\n  \"id\": \"/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353/databases/sqlcrudtest-2527\",\r\n  \"name\": \"sqlcrudtest-2527\",\r\n  \"type\": \"Microsoft.Sql/servers/databases\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353/databases?api-version=2020-11-01-preview",
+      "RequestUri": "/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353/databases?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDFjNGVjODgtZTE3OS00NGY3LTllYjAtZTk3MTlhNTA4N2FiL3Jlc291cmNlR3JvdXBzL3NxbGNydWR0ZXN0LTcwMTgvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9zcWxjcnVkdGVzdC0xMzUzL2RhdGFiYXNlcz9hcGktdmVyc2lvbj0yMDIwLTExLTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -2313,11 +2313,11 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"sku\": {\r\n        \"name\": \"System\",\r\n        \"tier\": \"System\",\r\n        \"capacity\": 0\r\n      },\r\n      \"kind\": \"v12.0,system\",\r\n      \"managedBy\": \"/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353\",\r\n      \"properties\": {\r\n        \"collation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n        \"maxSizeBytes\": 32212254720,\r\n        \"status\": \"Online\",\r\n        \"databaseId\": \"6abf82c1-a4af-4122-8239-aa44457cbff6\",\r\n        \"creationDate\": \"2021-02-26T05:35:31.113Z\",\r\n        \"currentServiceObjectiveName\": \"System2\",\r\n        \"requestedServiceObjectiveName\": \"System2\",\r\n        \"defaultSecondaryLocation\": \"northeurope\",\r\n        \"catalogCollation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n        \"zoneRedundant\": false,\r\n        \"readScale\": \"Disabled\",\r\n        \"currentSku\": {\r\n          \"name\": \"System\",\r\n          \"tier\": \"System\",\r\n          \"capacity\": 0\r\n        },\r\n        \"currentBackupStorageRedundancy\": \"Local\",\r\n        \"requestedBackupStorageRedundancy\": \"Local\",\r\n        \"maintenanceConfigurationId\": \"/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default\"\r\n      },\r\n      \"location\": \"southeastasia\",\r\n      \"id\": \"/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353/databases/master\",\r\n      \"name\": \"master\",\r\n      \"type\": \"Microsoft.Sql/servers/databases\"\r\n    },\r\n    {\r\n      \"sku\": {\r\n        \"name\": \"GP_Gen5\",\r\n        \"tier\": \"GeneralPurpose\",\r\n        \"family\": \"Gen5\",\r\n        \"capacity\": 2\r\n      },\r\n      \"kind\": \"v12.0,user,vcore\",\r\n      \"properties\": {\r\n        \"collation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n        \"maxSizeBytes\": 34359738368,\r\n        \"status\": \"Online\",\r\n        \"databaseId\": \"0b29be3c-39f9-4816-b6ff-627de7f245f3\",\r\n        \"creationDate\": \"2021-02-26T05:36:28.027Z\",\r\n        \"currentServiceObjectiveName\": \"GP_Gen5_2\",\r\n        \"requestedServiceObjectiveName\": \"GP_Gen5_2\",\r\n        \"defaultSecondaryLocation\": \"northeurope\",\r\n        \"catalogCollation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n        \"zoneRedundant\": false,\r\n        \"licenseType\": \"LicenseIncluded\",\r\n        \"maxLogSizeBytes\": 68719476736,\r\n        \"readScale\": \"Disabled\",\r\n        \"currentSku\": {\r\n          \"name\": \"GP_Gen5\",\r\n          \"tier\": \"GeneralPurpose\",\r\n          \"family\": \"Gen5\",\r\n          \"capacity\": 2\r\n        },\r\n        \"currentBackupStorageRedundancy\": \"Geo\",\r\n        \"requestedBackupStorageRedundancy\": \"Geo\",\r\n        \"maintenanceConfigurationId\": \"/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default\"\r\n      },\r\n      \"location\": \"southeastasia\",\r\n      \"id\": \"/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353/databases/sqlcrudtest-1674\",\r\n      \"name\": \"sqlcrudtest-1674\",\r\n      \"type\": \"Microsoft.Sql/servers/databases\"\r\n    },\r\n    {\r\n      \"sku\": {\r\n        \"name\": \"GP_Gen5\",\r\n        \"tier\": \"GeneralPurpose\",\r\n        \"family\": \"Gen5\",\r\n        \"capacity\": 2\r\n      },\r\n      \"kind\": \"v12.0,user,vcore\",\r\n      \"properties\": {\r\n        \"collation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n        \"maxSizeBytes\": 34359738368,\r\n        \"status\": \"Online\",\r\n        \"databaseId\": \"9042808e-7dc3-4d2f-94cf-c15b1e411cc2\",\r\n        \"creationDate\": \"2021-02-26T05:36:30.477Z\",\r\n        \"currentServiceObjectiveName\": \"GP_Gen5_2\",\r\n        \"requestedServiceObjectiveName\": \"GP_Gen5_2\",\r\n        \"defaultSecondaryLocation\": \"northeurope\",\r\n        \"catalogCollation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n        \"zoneRedundant\": false,\r\n        \"licenseType\": \"LicenseIncluded\",\r\n        \"maxLogSizeBytes\": 68719476736,\r\n        \"readScale\": \"Disabled\",\r\n        \"currentSku\": {\r\n          \"name\": \"GP_Gen5\",\r\n          \"tier\": \"GeneralPurpose\",\r\n          \"family\": \"Gen5\",\r\n          \"capacity\": 2\r\n        },\r\n        \"currentBackupStorageRedundancy\": \"Geo\",\r\n        \"requestedBackupStorageRedundancy\": \"Geo\",\r\n        \"maintenanceConfigurationId\": \"/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default\"\r\n      },\r\n      \"location\": \"southeastasia\",\r\n      \"id\": \"/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353/databases/sqlcrudtest-2527\",\r\n      \"name\": \"sqlcrudtest-2527\",\r\n      \"type\": \"Microsoft.Sql/servers/databases\"\r\n    },\r\n    {\r\n      \"sku\": {\r\n        \"name\": \"GP_Gen5\",\r\n        \"tier\": \"GeneralPurpose\",\r\n        \"family\": \"Gen5\",\r\n        \"capacity\": 2\r\n      },\r\n      \"kind\": \"v12.0,user,vcore\",\r\n      \"properties\": {\r\n        \"collation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n        \"maxSizeBytes\": 34359738368,\r\n        \"status\": \"Online\",\r\n        \"databaseId\": \"1196fec0-2d72-46f2-b83d-3a3ec93b4e23\",\r\n        \"creationDate\": \"2021-02-26T05:36:21.163Z\",\r\n        \"currentServiceObjectiveName\": \"GP_Gen5_2\",\r\n        \"requestedServiceObjectiveName\": \"GP_Gen5_2\",\r\n        \"defaultSecondaryLocation\": \"northeurope\",\r\n        \"catalogCollation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n        \"zoneRedundant\": false,\r\n        \"licenseType\": \"LicenseIncluded\",\r\n        \"maxLogSizeBytes\": 68719476736,\r\n        \"readScale\": \"Disabled\",\r\n        \"currentSku\": {\r\n          \"name\": \"GP_Gen5\",\r\n          \"tier\": \"GeneralPurpose\",\r\n          \"family\": \"Gen5\",\r\n          \"capacity\": 2\r\n        },\r\n        \"currentBackupStorageRedundancy\": \"Geo\",\r\n        \"requestedBackupStorageRedundancy\": \"Geo\",\r\n        \"maintenanceConfigurationId\": \"/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default\"\r\n      },\r\n      \"location\": \"southeastasia\",\r\n      \"id\": \"/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353/databases/sqlcrudtest-342\",\r\n      \"name\": \"sqlcrudtest-342\",\r\n      \"type\": \"Microsoft.Sql/servers/databases\"\r\n    },\r\n    {\r\n      \"sku\": {\r\n        \"name\": \"GP_Gen5\",\r\n        \"tier\": \"GeneralPurpose\",\r\n        \"family\": \"Gen5\",\r\n        \"capacity\": 2\r\n      },\r\n      \"kind\": \"v12.0,user,vcore\",\r\n      \"properties\": {\r\n        \"collation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n        \"maxSizeBytes\": 34359738368,\r\n        \"status\": \"Online\",\r\n        \"databaseId\": \"0c577934-519c-4202-8c9e-7b792c518666\",\r\n        \"creationDate\": \"2021-02-26T05:36:16.96Z\",\r\n        \"currentServiceObjectiveName\": \"GP_Gen5_2\",\r\n        \"requestedServiceObjectiveName\": \"GP_Gen5_2\",\r\n        \"defaultSecondaryLocation\": \"northeurope\",\r\n        \"catalogCollation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n        \"zoneRedundant\": false,\r\n        \"licenseType\": \"LicenseIncluded\",\r\n        \"maxLogSizeBytes\": 68719476736,\r\n        \"readScale\": \"Disabled\",\r\n        \"currentSku\": {\r\n          \"name\": \"GP_Gen5\",\r\n          \"tier\": \"GeneralPurpose\",\r\n          \"family\": \"Gen5\",\r\n          \"capacity\": 2\r\n        },\r\n        \"currentBackupStorageRedundancy\": \"Geo\",\r\n        \"requestedBackupStorageRedundancy\": \"Geo\",\r\n        \"maintenanceConfigurationId\": \"/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default\"\r\n      },\r\n      \"location\": \"southeastasia\",\r\n      \"id\": \"/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353/databases/sqlcrudtest-412\",\r\n      \"name\": \"sqlcrudtest-412\",\r\n      \"type\": \"Microsoft.Sql/servers/databases\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"sku\": {\r\n        \"name\": \"System\",\r\n        \"tier\": \"System\",\r\n        \"capacity\": 0\r\n      },\r\n      \"kind\": \"v12.0,system\",\r\n      \"managedBy\": \"/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353\",\r\n      \"properties\": {\r\n        \"collation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n        \"maxSizeBytes\": 32212254720,\r\n        \"status\": \"Online\",\r\n        \"databaseId\": \"6abf82c1-a4af-4122-8239-aa44457cbff6\",\r\n        \"creationDate\": \"2021-02-26T05:35:31.113Z\",\r\n        \"currentServiceObjectiveName\": \"System2\",\r\n        \"requestedServiceObjectiveName\": \"System2\",\r\n        \"defaultSecondaryLocation\": \"northeurope\",\r\n        \"catalogCollation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n        \"zoneRedundant\": false,\r\n        \"readScale\": \"Disabled\",\r\n        \"currentSku\": {\r\n          \"name\": \"System\",\r\n          \"tier\": \"System\",\r\n          \"capacity\": 0\r\n        },\r\n        \"currentBackupStorageRedundancy\": \"Local\",\r\n        \"requestedBackupStorageRedundancy\": \"Local\",\r\n        \"maintenanceConfigurationId\": \"/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default\"\r\n      },\r\n      \"location\": \"southeastasia\",\r\n      \"id\": \"/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353/databases/master\",\r\n      \"name\": \"master\",\r\n      \"type\": \"Microsoft.Sql/servers/databases\"\r\n    },\r\n    {\r\n      \"sku\": {\r\n        \"name\": \"GP_Gen5\",\r\n        \"tier\": \"GeneralPurpose\",\r\n        \"family\": \"Gen5\",\r\n        \"capacity\": 2\r\n      },\r\n      \"kind\": \"v12.0,user,vcore\",\r\n      \"properties\": {\r\n        \"collation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n        \"maxSizeBytes\": 34359738368,\r\n        \"status\": \"Online\",\r\n        \"databaseId\": \"0b29be3c-39f9-4816-b6ff-627de7f245f3\",\r\n        \"creationDate\": \"2021-02-26T05:36:28.027Z\",\r\n        \"currentServiceObjectiveName\": \"GP_Gen5_2\",\r\n        \"requestedServiceObjectiveName\": \"GP_Gen5_2\",\r\n        \"defaultSecondaryLocation\": \"northeurope\",\r\n        \"catalogCollation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n        \"zoneRedundant\": false,\r\n        \"licenseType\": \"LicenseIncluded\",\r\n        \"maxLogSizeBytes\": 68719476736,\r\n        \"readScale\": \"Disabled\",\r\n        \"currentSku\": {\r\n          \"name\": \"GP_Gen5\",\r\n          \"tier\": \"GeneralPurpose\",\r\n          \"family\": \"Gen5\",\r\n          \"capacity\": 2\r\n        },\r\n        \"currentBackupStorageRedundancy\": \"Geo\",\r\n        \"requestedBackupStorageRedundancy\": \"Geo\",\r\n        \"maintenanceConfigurationId\": \"/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default\"\r\n      },\r\n      \"location\": \"southeastasia\",\r\n      \"id\": \"/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353/databases/sqlcrudtest-1674\",\r\n      \"name\": \"sqlcrudtest-1674\",\r\n      \"type\": \"Microsoft.Sql/servers/databases\"\r\n    },\r\n    {\r\n      \"sku\": {\r\n        \"name\": \"GP_Gen5\",\r\n        \"tier\": \"GeneralPurpose\",\r\n        \"family\": \"Gen5\",\r\n        \"capacity\": 2\r\n      },\r\n      \"kind\": \"v12.0,user,vcore\",\r\n      \"properties\": {\r\n        \"collation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n        \"maxSizeBytes\": 34359738368,\r\n        \"status\": \"Online\",\r\n        \"databaseId\": \"9042808e-7dc3-4d2f-94cf-c15b1e411cc2\",\r\n        \"creationDate\": \"2021-02-26T05:36:30.477Z\",\r\n        \"currentServiceObjectiveName\": \"GP_Gen5_2\",\r\n        \"requestedServiceObjectiveName\": \"GP_Gen5_2\",\r\n        \"defaultSecondaryLocation\": \"northeurope\",\r\n        \"catalogCollation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n        \"zoneRedundant\": false,\r\n        \"licenseType\": \"LicenseIncluded\",\r\n        \"maxLogSizeBytes\": 68719476736,\r\n        \"readScale\": \"Disabled\",\r\n        \"currentSku\": {\r\n          \"name\": \"GP_Gen5\",\r\n          \"tier\": \"GeneralPurpose\",\r\n          \"family\": \"Gen5\",\r\n          \"capacity\": 2\r\n        },\r\n        \"currentBackupStorageRedundancy\": \"Geo\",\r\n        \"requestedBackupStorageRedundancy\": \"Geo\",\r\n        \"maintenanceConfigurationId\": \"/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default\"\r\n      },\r\n      \"location\": \"southeastasia\",\r\n      \"id\": \"/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353/databases/sqlcrudtest-2527\",\r\n      \"name\": \"sqlcrudtest-2527\",\r\n      \"type\": \"Microsoft.Sql/servers/databases\"\r\n    },\r\n    {\r\n      \"sku\": {\r\n        \"name\": \"GP_Gen5\",\r\n        \"tier\": \"GeneralPurpose\",\r\n        \"family\": \"Gen5\",\r\n        \"capacity\": 2\r\n      },\r\n      \"kind\": \"v12.0,user,vcore\",\r\n      \"properties\": {\r\n        \"collation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n        \"maxSizeBytes\": 34359738368,\r\n        \"status\": \"Online\",\r\n        \"databaseId\": \"1196fec0-2d72-46f2-b83d-3a3ec93b4e23\",\r\n        \"creationDate\": \"2021-02-26T05:36:21.163Z\",\r\n        \"currentServiceObjectiveName\": \"GP_Gen5_2\",\r\n        \"requestedServiceObjectiveName\": \"GP_Gen5_2\",\r\n        \"defaultSecondaryLocation\": \"northeurope\",\r\n        \"catalogCollation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n        \"zoneRedundant\": false,\r\n        \"licenseType\": \"LicenseIncluded\",\r\n        \"maxLogSizeBytes\": 68719476736,\r\n        \"readScale\": \"Disabled\",\r\n        \"currentSku\": {\r\n          \"name\": \"GP_Gen5\",\r\n          \"tier\": \"GeneralPurpose\",\r\n          \"family\": \"Gen5\",\r\n          \"capacity\": 2\r\n        },\r\n        \"currentBackupStorageRedundancy\": \"Geo\",\r\n        \"requestedBackupStorageRedundancy\": \"Geo\",\r\n        \"maintenanceConfigurationId\": \"/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default\"\r\n      },\r\n      \"location\": \"southeastasia\",\r\n      \"id\": \"/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353/databases/sqlcrudtest-342\",\r\n      \"name\": \"sqlcrudtest-342\",\r\n      \"type\": \"Microsoft.Sql/servers/databases\"\r\n    },\r\n    {\r\n      \"sku\": {\r\n        \"name\": \"GP_Gen5\",\r\n        \"tier\": \"GeneralPurpose\",\r\n        \"family\": \"Gen5\",\r\n        \"capacity\": 2\r\n      },\r\n      \"kind\": \"v12.0,user,vcore\",\r\n      \"properties\": {\r\n        \"collation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n        \"maxSizeBytes\": 34359738368,\r\n        \"status\": \"Online\",\r\n        \"databaseId\": \"0c577934-519c-4202-8c9e-7b792c518666\",\r\n        \"creationDate\": \"2021-02-26T05:36:16.96Z\",\r\n        \"currentServiceObjectiveName\": \"GP_Gen5_2\",\r\n        \"requestedServiceObjectiveName\": \"GP_Gen5_2\",\r\n        \"defaultSecondaryLocation\": \"northeurope\",\r\n        \"catalogCollation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n        \"zoneRedundant\": false,\r\n        \"licenseType\": \"LicenseIncluded\",\r\n        \"maxLogSizeBytes\": 68719476736,\r\n        \"readScale\": \"Disabled\",\r\n        \"currentSku\": {\r\n          \"name\": \"GP_Gen5\",\r\n          \"tier\": \"GeneralPurpose\",\r\n          \"family\": \"Gen5\",\r\n          \"capacity\": 2\r\n        },\r\n        \"currentBackupStorageRedundancy\": \"Geo\",\r\n        \"requestedBackupStorageRedundancy\": \"Geo\",\r\n        \"maintenanceConfigurationId\": \"/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default\"\r\n      },\r\n      \"location\": \"southeastasia\",\r\n      \"id\": \"/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourceGroups/sqlcrudtest-7018/providers/Microsoft.Sql/servers/sqlcrudtest-1353/databases/sqlcrudtest-412\",\r\n      \"name\": \"sqlcrudtest-412\",\r\n      \"type\": \"Microsoft.Sql/servers/databases\"\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/resourcegroups/sqlcrudtest-7018?api-version=2017-05-10",
+      "RequestUri": "/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/resourcegroups/sqlcrudtest-7018?api-version=2017-05-10",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDFjNGVjODgtZTE3OS00NGY3LTllYjAtZTk3MTlhNTA4N2FiL3Jlc291cmNlZ3JvdXBzL3NxbGNydWR0ZXN0LTcwMTg/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
@@ -2343,7 +2343,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/01c4ec88-e179-44f7-9eb0-e9719a5087ab/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1TUUxDUlVEVEVTVDoyRDcwMTgtU09VVEhFQVNUQVNJQSIsImpvYkxvY2F0aW9uIjoic291dGhlYXN0YXNpYSJ9?api-version=2017-05-10"
+          "https://management.azure.com/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1TUUxDUlVEVEVTVDoyRDcwMTgtU09VVEhFQVNUQVNJQSIsImpvYkxvY2F0aW9uIjoic291dGhlYXN0YXNpYSJ9?api-version=2017-05-10"
         ],
         "Retry-After": [
           "15"
@@ -2396,6 +2396,6 @@
   },
   "Variables": {
     "DefaultLocation": "Southeast Asia",
-    "SubscriptionId": "01c4ec88-e179-44f7-9eb0-e9719a5087ab"
+    "SubscriptionId": "a2118292-1596-401f-aa17-332ff0df38dc"
   }
 }

@@ -222,13 +222,13 @@
           "no-cache"
         ],
         "Location": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/providers/Microsoft.Sql/locations/southeastasia/longTermRetentionBackupOperationResults/a5988f91-c5d9-41aa-aebd-2e31eb49da60?api-version=2020-11-01-preview"
+          "https://management.azure.com/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/providers/Microsoft.Sql/locations/southeastasia/longTermRetentionBackupOperationResults/a5988f91-c5d9-41aa-aebd-2e31eb49da60?api-version=2020-11-01-preview"
         ],
         "Retry-After": [
           "15"
         ],
         "Azure-AsyncOperation": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/providers/Microsoft.Sql/locations/southeastasia/longTermRetentionBackupAzureAsyncOperation/a5988f91-c5d9-41aa-aebd-2e31eb49da60?api-version=2020-11-01-preview"
+          "https://management.azure.com/subscriptions/a2118292-1596-401f-aa17-332ff0df38dc/providers/Microsoft.Sql/locations/southeastasia/longTermRetentionBackupAzureAsyncOperation/a5988f91-c5d9-41aa-aebd-2e31eb49da60?api-version=2020-11-01-preview"
         ],
         "x-ms-request-id": [
           "a5988f91-c5d9-41aa-aebd-2e31eb49da60"
