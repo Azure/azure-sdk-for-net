@@ -154,7 +154,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
                     foreach (EntityDataSource entityDataSource in entity.DataSources)
                         Assert.IsTrue(linksList.Contains(entityDataSource.Name));
-                    Assert.AreEqual("Infant", entity.Name);
+                    Assert.AreEqual("Infant", entity.NormalizedText);
                 }
 
                 if (entity.Text == "Meningitis")

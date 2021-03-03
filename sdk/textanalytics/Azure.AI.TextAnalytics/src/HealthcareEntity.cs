@@ -20,7 +20,7 @@ namespace Azure.AI.TextAnalytics
             Length = entity.Length;
             DataSources = entity.Links;
             Assertion = entity.Assertion;
-            Name = entity.Name;
+            NormalizedText = entity.Name;
         }
         /// <summary>
         /// Gets the entity text as it appears in the input document.
@@ -73,6 +73,6 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Gets the normalized text for the entity.
         /// </summary>
-        public string Name { get; }
+        public string NormalizedText { get; }
     }
 }
