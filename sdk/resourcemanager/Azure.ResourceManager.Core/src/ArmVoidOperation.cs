@@ -21,6 +21,9 @@ namespace Azure.ResourceManager.Core
         public ArmVoidOperation(Operation<Response> other)
             : base(null)
         {
+            if (other is null)
+                throw new ArgumentNullException(nameof(other));
+
             _wrapped = other;
         }
 
