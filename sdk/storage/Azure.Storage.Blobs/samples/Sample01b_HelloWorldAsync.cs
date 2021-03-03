@@ -89,7 +89,7 @@ namespace Azure.Storage.Blobs.Samples
                 await blob.UploadAsync(File.OpenRead(originalPath));
 
                 // Download the blob's contents and save it to a file
-                BlobDownloadInfo download = await blob.DownloadAsync();
+                BlobDownloadStreamingResult download = await blob.DownloadStreamingAsync();
                 using (FileStream file = File.OpenWrite(downloadPath))
                 {
                     await download.Content.CopyToAsync(file);

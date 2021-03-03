@@ -269,7 +269,7 @@ namespace Azure.Storage.Blobs.Samples
                 await blobClient.UploadAsync(localFilePath, overwrite: true);
                 #endregion
 
-                Stream downloadStream = (await blobClient.DownloadAsync()).Value.Content;
+                Stream downloadStream = (await blobClient.DownloadStreamingAsync()).Value.Content;
                 string downloadedData = await new StreamReader(downloadStream).ReadToEndAsync();
                 downloadStream.Close();
 
@@ -338,7 +338,7 @@ namespace Azure.Storage.Blobs.Samples
 
                 #region Snippet:SampleSnippetsBlobMigration_DownloadBlobDirectStream
                 BlobClient blobClient = containerClient.GetBlobClient(blobName);
-                BlobDownloadInfo downloadResponse = await blobClient.DownloadAsync();
+                BlobDownloadStreamingResult downloadResponse = await blobClient.DownloadStreamingAsync();
                 using (Stream downloadStream = downloadResponse.Content)
                 {
                     await MyConsumeStreamFunc(downloadStream);
@@ -652,10 +652,10 @@ namespace Azure.Storage.Blobs.Samples
                     });
 
                 // download whole blob and validate against stored blob content hash
-                Response<BlobDownloadInfo> response = await blobClient.DownloadAsync();
+                Response<BlobDownloadStreamingResult> response = await blobClient.DownloadStreamingAsync();
 
                 Stream downloadStream = response.Value.Content;
-                byte[] blobContentMD5 = response.Value.Details.BlobContentHash ?? response.Value.ContentHash;
+                byte[] blobContentMD5 = response.Value.Details.BlobContentHash ?? response.Value.Details.ContentHash;
                 // validate stream against hash in your workflow
                 #endregion
 
@@ -714,12 +714,12 @@ namespace Azure.Storage.Blobs.Samples
                 await blockBlobClient.CommitBlockListAsync(blockList);
 
                 // download any range of blob with transactional MD5 requested (maximum 4 MB for downloads)
-                Response<BlobDownloadInfo> response = await blockBlobClient.DownloadAsync(
+                Response<BlobDownloadStreamingResult> response = await blockBlobClient.DownloadStreamingAsync(
                     range: new HttpRange(length: 4 * Constants.MB), // a range must be provided; here we use transactional download max size
                     rangeGetContentHash: true);
 
                 Stream downloadStream = response.Value.Content;
-                byte[] transactionalMD5 = response.Value.ContentHash;
+                byte[] transactionalMD5 = response.Value.Details.ContentHash;
                 // validate stream against hash in your workflow
                 #endregion
 

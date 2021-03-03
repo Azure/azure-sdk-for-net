@@ -87,7 +87,7 @@ namespace Azure.Storage.Blobs.Samples
                 blob.Upload(File.OpenRead(originalPath));
 
                 // Download the blob's contents and save it to a file
-                BlobDownloadInfo download = blob.Download();
+                BlobDownloadStreamingResult download = blob.DownloadStreaming();
                 using (FileStream file = File.OpenWrite(downloadPath))
                 {
                     download.Content.CopyTo(file);
