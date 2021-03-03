@@ -337,6 +337,53 @@ namespace Compute.Tests.DiskRPTests
             }
         }
 
+        protected void DiskEncryptionSet_WithRotationToLatestKeyVersionEnabled_CRD_Execute(string methodName, string encryptionType, string location = null)
+        {
+            using (MockContext context = MockContext.Start(this.GetType(), methodName))
+            {
+                EnsureClientsInitialized(context);
+                DiskRPLocation = location ?? DiskRPLocation;
+
+                // Data
+                var rgName = TestUtilities.GenerateName(TestPrefix);
+                var desName = TestUtilities.GenerateName(DiskNamePrefix);
+                bool expectedRotationToLatestKeyVersionEnabled = true;
+                DiskEncryptionSet des = GenerateDefaultDiskEncryptionSet(DiskRPLocation, encryptionType, expectedRotationToLatestKeyVersionEnabled);
+
+                try
+                {
+                    m_ResourcesClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = DiskRPLocation });
+
+                    // Put DiskEncryptionSet
+                    DiskEncryptionSet desOut = m_CrpClient.DiskEncryptionSets.CreateOrUpdate(rgName, desName, des);
+                    Validate(des, desOut, desName, encryptionType, expectedRotationToLatestKeyVersionEnabled);
+
+                    // Get DiskEncryptionSet
+                    desOut = m_CrpClient.DiskEncryptionSets.Get(rgName, desName);
+                    Validate(des, desOut, desName, encryptionType, expectedRotationToLatestKeyVersionEnabled);
+                    
+                    // Delete DiskEncryptionSet
+                    m_CrpClient.DiskEncryptionSets.Delete(rgName, desName);
+
+                    try
+                    {
+                        // Ensure it was really deleted
+                        m_CrpClient.DiskEncryptionSets.Get(rgName, desName);
+                        Assert.False(true);
+                    }
+                    catch (CloudException ex)
+                    {
+                        Assert.Equal(HttpStatusCode.NotFound, ex.Response.StatusCode);
+                    }
+                }
+                finally
+                {
+                    // Delete resource group
+                    m_ResourcesClient.ResourceGroups.Delete(rgName);
+                }
+            }
+        }
+
         protected void DiskAccess_CRUD_Execute(string methodName, string location = null)
         {
             using (MockContext context = MockContext.Start(this.GetType(), methodName))
@@ -1054,7 +1101,7 @@ namespace Compute.Tests.DiskRPTests
             return copyDisk;
         }
 
-        protected DiskEncryptionSet GenerateDefaultDiskEncryptionSet(string location, string encryptionType = EncryptionType.EncryptionAtRestWithCustomerKey)
+        protected DiskEncryptionSet GenerateDefaultDiskEncryptionSet(string location, string encryptionType = EncryptionType.EncryptionAtRestWithCustomerKey, bool? rotationToLatestKeyVersionEnabled = null)
         {
             string testVaultId = @"/subscriptions/0296790d-427c-48ca-b204-8b729bbd8670/resourcegroups/RGforSDKtestResources/providers/Microsoft.KeyVault/vaults/KeyVaultforTest";
             string encryptionKeyUri = @"https://keyvaultfortest.vault.azure.net/keys/KeyforTest/d2312bdc83184b77ae469668c5595e53";
@@ -1074,7 +1121,8 @@ namespace Compute.Tests.DiskRPTests
                     },
                     KeyUrl = encryptionKeyUri
                 },
-                EncryptionType = encryptionType
+                EncryptionType = encryptionType,
+                RotationToLatestKeyVersionEnabled = rotationToLatestKeyVersionEnabled,
             };
             return des;
         }
@@ -1166,7 +1214,7 @@ namespace Compute.Tests.DiskRPTests
 
         #region Validation
 
-        private void Validate(DiskEncryptionSet diskEncryptionSetExpected, DiskEncryptionSet diskEncryptionSetActual, string expectedDESName, string expectedEncryptionType)
+        private void Validate(DiskEncryptionSet diskEncryptionSetExpected, DiskEncryptionSet diskEncryptionSetActual, string expectedDESName, string expectedEncryptionType, bool? expectedRotationToLatestKeyVersionEnabled = null)
         {
             Assert.Equal(expectedDESName, diskEncryptionSetActual.Name);
             Assert.Equal(diskEncryptionSetExpected.Location, diskEncryptionSetActual.Location);
@@ -1175,6 +1223,7 @@ namespace Compute.Tests.DiskRPTests
             Assert.NotNull(diskEncryptionSetActual.Identity);
             Assert.Equal(ResourceIdentityType.SystemAssigned.ToString(), diskEncryptionSetActual.Identity.Type);
             Assert.Equal(expectedEncryptionType, diskEncryptionSetActual.EncryptionType);
+            Assert.Equal(expectedRotationToLatestKeyVersionEnabled, diskEncryptionSetActual.RotationToLatestKeyVersionEnabled);
         }
 
         private void Validate(DiskAccess diskAccessExpected, DiskAccess diskAccessActual, string expectedDiskAccessName, string privateEndpointId = null)
