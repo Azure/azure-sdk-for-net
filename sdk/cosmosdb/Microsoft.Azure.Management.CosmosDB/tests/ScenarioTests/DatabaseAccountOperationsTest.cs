@@ -135,9 +135,6 @@ namespace CosmosDB.Tests.ScenarioTests
 
                 DatabaseAccountListKeysResult databaseAccountListRegeneratedKeysResult = cosmosDBManagementClient.DatabaseAccounts.ListKeysWithHttpMessagesAsync(resourceGroupName, databaseAccountName).GetAwaiter().GetResult().Body;
 
-                bool isNameExists = cosmosDBManagementClient.DatabaseAccounts.CheckNameExistsWithHttpMessagesAsync(databaseAccountName).GetAwaiter().GetResult().Body;
-                Assert.True(isNameExists);
-
                 cosmosDBManagementClient.DatabaseAccounts.DeleteWithHttpMessagesAsync(resourceGroupName, databaseAccountName);
             }
         }
