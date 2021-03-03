@@ -41,7 +41,7 @@ function Submit-APIReview($packagename, $filePath, $uri, $apiKey, $apiLabel)
     try
     {
         $Response = Invoke-WebRequest -Method 'POST' -Uri $uri -Body $multipartContent -Headers $headers
-        Write-Host "API Review: $($Response)"
+        Write-Host "API Review URL: $($Response)"
         $StatusCode = $Response.StatusCode
     }
     catch
@@ -116,14 +116,15 @@ foreach ($pkgName in $responses.Keys)
                 {
                     Write-Host "Package version $($version) is GA and automatic API Review is not yet approved for package $($PackageName)."
                     Write-Host "Build and release is not allowed for GA package without API review approval."
-                    Write-Host "Please reach out to API review approvers and share above link to review for approval."
+                    Write-Host "Please send email to adparchrescue@microsoft.com and share above link to API review for emergency approval to release you package."
                     Write-Host "You will need to queue another build to proceed further after API review is approved"
-                    Write-Host "You can reach out to Azure SDK engineering systems on teams channel if review is in approved status"
+                    Write-Host "You can check http://aka.ms/azsdk/engsys/apireview/faq for more details."
                 }
                 else
                 {
-                    Write-Error "Failed to create API Review for package $($PackageName). Please reach out to Azure SDK engineering systems on teams channel and share this build details."
-                }                
+                    Write-Error "Failed to create API Review for package $($PackageName). Please reach out to Azure SDK engineering systems on teams channel and share this build details."                    
+                }
+                exit 1
             }
             else
             {
@@ -131,9 +132,4 @@ foreach ($pkgName in $responses.Keys)
             }      
         }
     }
-}
-if ($FoundFailure)
-{
-    # Deailed log for each scenario is mentioned above
-    exit 1
 }
