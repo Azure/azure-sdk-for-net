@@ -37,9 +37,7 @@ namespace Azure.Communication.Sms.Tests
                    /*@@*/ to: TestEnvironment.ToPhoneNumber,
                    message: "Hi");
                 Console.WriteLine($"Sms id: {result.MessageId}");
-                /*@@*/ Assert.IsFalse(string.IsNullOrWhiteSpace(result.MessageId));
-                /*@@*/ Assert.AreEqual(202, result.HttpStatusCode);
-                /*@@*/ Assert.IsTrue(result.Successful);
+                /*@@*/ assertHappyPath(result);
             }
             catch (RequestFailedException ex)
             {
@@ -77,9 +75,7 @@ namespace Azure.Communication.Sms.Tests
                    to: TestEnvironment.ToPhoneNumber,
                    message: "Hi");
                 Console.WriteLine($"Sms id: {result.MessageId}");
-                Assert.IsFalse(string.IsNullOrWhiteSpace(result.MessageId));
-                Assert.AreEqual(202, result.HttpStatusCode);
-                Assert.IsTrue(result.Successful);
+                assertHappyPath(result);
             }
             catch (RequestFailedException ex)
             {
@@ -163,7 +159,6 @@ namespace Azure.Communication.Sms.Tests
                 Assert.True(ex.Message.Contains("404"));
                 Console.WriteLine(ex.Message);
             }
-
             catch (Exception ex)
             {
                 Assert.Fail($"Unexpected error: {ex}");
@@ -191,9 +186,7 @@ namespace Azure.Communication.Sms.Tests
                 foreach (SmsSendResult result in results)
                 {
                     Console.WriteLine($"Sms id: {result.MessageId}");
-                    Assert.IsFalse(string.IsNullOrWhiteSpace(result.MessageId));
-                    Assert.AreEqual(202, result.HttpStatusCode);
-                    Assert.IsTrue(result.Successful);
+                    assertHappyPath(result);
                 }
             }
             catch (RequestFailedException ex)
@@ -225,10 +218,8 @@ namespace Azure.Communication.Sms.Tests
                    message: "Hi");
 
                 Assert.AreNotEqual(firstMessageResult.MessageId, secondMessageResult.MessageId);
-                Assert.True(firstMessageResult.Successful);
-                Assert.True(secondMessageResult.Successful);
-                Assert.AreEqual(202, firstMessageResult.HttpStatusCode);
-                Assert.AreEqual(202, secondMessageResult.HttpStatusCode);
+                assertHappyPath(firstMessageResult);
+                assertHappyPath(secondMessageResult);
             }
             catch (RequestFailedException ex)
             {
@@ -238,6 +229,13 @@ namespace Azure.Communication.Sms.Tests
             {
                 Assert.Fail($"Unexpected error: {ex}");
             }
+        }
+
+        public void assertHappyPath(SmsSendResult sendResult)
+        {
+            Assert.True(sendResult.Successful);
+            Assert.AreEqual(202, sendResult.HttpStatusCode);
+            Assert.IsFalse(string.IsNullOrWhiteSpace(sendResult.MessageId));
         }
     }
 }
