@@ -4,6 +4,7 @@
 param(
   [Parameter(Mandatory = $true)]
   [string]$PackageName,
+  [string]$ServiceDirectory,
   [string]$ReleaseDate # Pass Date in the form MM/dd/yyyy"
 )
 Set-StrictMode -Version 3
@@ -26,7 +27,7 @@ function Get-ReleaseDay($baseDate)
 
 $ErrorPreference = 'Stop'
 
-$packageProperties = Get-PkgProperties -PackageName $PackageName
+$packageProperties = Get-PkgProperties -PackageName $PackageName -ServiceDirectory $ServiceDirectory
 
 if (!$packageProperties)
 {
