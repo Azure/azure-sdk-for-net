@@ -49,16 +49,17 @@ namespace Azure.Identity.Samples
             #endregion
         }
 //TODO: Move these samples and refactor for new UnsafeTokenCacheOptions
+/*
         public async Task Identity_TokenCache_CustomPersistence_Read()
         {
             #region Snippet:Identity_TokenCache_CustomPersistence_Read
             await Task.Yield();
-            // TokenCachePersistenceOptions tokenCache;
+            TokenCachePersistenceOptions tokenCache;
 
-            // using (var cacheStream = new FileStream(TOKEN_CACHE_PATH, FileMode.OpenOrCreate, FileAccess.Read))
-            // {
-            //     tokenCache = await TokenCacheSerializer.DeserializeAsync(cacheStream);
-            // }
+            using (var cacheStream = new FileStream(TOKEN_CACHE_PATH, FileMode.OpenOrCreate, FileAccess.Read))
+            {
+                tokenCache = await TokenCacheSerializer.DeserializeAsync(cacheStream);
+            }
             #endregion
         }
 
@@ -68,43 +69,44 @@ namespace Azure.Identity.Samples
             await Task.Yield();
 
             #region Snippet:Identity_TokenCache_CustomPersistence_Write
-            // using (var cacheStream = new FileStream(TOKEN_CACHE_PATH, FileMode.Create, FileAccess.Write))
-            // {
-            //     await TokenCacheSerializer.SerializeAsync(tokenCache, cacheStream);
-            // }
+            using (var cacheStream = new FileStream(TOKEN_CACHE_PATH, FileMode.Create, FileAccess.Write))
+            {
+                await TokenCacheSerializer.SerializeAsync(tokenCache, cacheStream);
+            }
             #endregion
         }
 
         #region Snippet:Identity_TokenCache_CustomPersistence_Usage
-        // public static async Task<TokenCacheOptions> ReadTokenCacheAsync()
-        // {
-        //     TokenCacheOptions tokenCache;
+        public static async Task<TokenCacheOptions> ReadTokenCacheAsync()
+        {
+            TokenCacheOptions tokenCache;
 
-        //     using (var cacheStream = new FileStream(TOKEN_CACHE_PATH, FileMode.OpenOrCreate, FileAccess.Read))
-        //     {
-        //         tokenCache = await TokenCacheSerializer.DeserializeAsync(cacheStream);
-        //         tokenCache.Updated += WriteCacheOnUpdateAsync;
-        //     }
+            using (var cacheStream = new FileStream(TOKEN_CACHE_PATH, FileMode.OpenOrCreate, FileAccess.Read))
+            {
+                tokenCache = await TokenCacheSerializer.DeserializeAsync(cacheStream);
+                tokenCache.Updated += WriteCacheOnUpdateAsync;
+            }
 
-        //     return tokenCache;
-        // }
+            return tokenCache;
+        }
 
-        // public static async Task WriteCacheOnUpdateAsync(TokenCacheUpdatedArgs args)
-        // {
-        //     using (var cacheStream = new FileStream(TOKEN_CACHE_PATH, FileMode.Create, FileAccess.Write))
-        //     {
-        //         await TokenCacheSerializer.SerializeAsync(args.Cache, cacheStream);
-        //     }
-        // }
+        public static async Task WriteCacheOnUpdateAsync(TokenCacheUpdatedArgs args)
+        {
+            using (var cacheStream = new FileStream(TOKEN_CACHE_PATH, FileMode.Create, FileAccess.Write))
+            {
+                await TokenCacheSerializer.SerializeAsync(args.Cache, cacheStream);
+            }
+        }
 
-        // public static async Task Main()
-        // {
-        //     var persistenceOptions = await ReadTokenCacheAsync();
+        public static async Task Main()
+        {
+            var persistenceOptions = await ReadTokenCacheAsync();
 
-        //     var credential = new InteractiveBrowserCredential(
-        //         new InteractiveBrowserCredentialOptions { TokenCacheOptions = tokenCache }
-        //     );
-        // }
+            var credential = new InteractiveBrowserCredential(
+                new InteractiveBrowserCredentialOptions { TokenCacheOptions = tokenCache }
+            );
+        }
+        */
         #endregion
     }
 }
