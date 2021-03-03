@@ -5,6 +5,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using NUnit.Framework;
@@ -25,6 +26,7 @@ namespace Azure.Storage.Blobs.Tests
         }
 
         [Test]
+        [LiveOnly]
         public async Task GetBlockListAsync_LongBlock()
         {
             // Arange
@@ -55,6 +57,7 @@ namespace Azure.Storage.Blobs.Tests
         }
 
         [Test]
+        [LiveOnly]
         public async Task CanHandleLongBlockBufferedUpload()
         {
             // Arrange
@@ -88,6 +91,7 @@ namespace Azure.Storage.Blobs.Tests
         }
 
         [Test]
+        [LiveOnly]
         public async Task CanHandleLongBlockBufferedUploadInParallel()
         {
             // Arrange

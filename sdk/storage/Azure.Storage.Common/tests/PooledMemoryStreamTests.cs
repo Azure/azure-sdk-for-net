@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using Azure.Core.TestFramework;
 using Azure.Storage.Shared;
 using Azure.Storage.Tests.Shared;
 using NUnit.Framework;
@@ -56,6 +57,7 @@ namespace Azure.Storage.Tests
         }
 
         [Test]
+        [LiveOnly]
         public void StreamCanHoldLongData()
         {
             const long dataSize = (long)int.MaxValue + Constants.MB;
