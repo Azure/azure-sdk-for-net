@@ -381,9 +381,9 @@ The below code snippet shows you how to use transaction groups.
 var options = new ServiceBusClientOptions { EnableCrossEntityTransactions = true };
 await using var client = new ServiceBusClient(connectionString, options);
 
-ServiceBusReceiver receiverA = client.CreateReceiver(queueA.QueueName);
-ServiceBusSender senderB = client.CreateSender(queueB.QueueName);
-ServiceBusSender senderC = client.CreateSender(topicC.TopicName);
+ServiceBusReceiver receiverA = client.CreateReceiver("queueA");
+ServiceBusSender senderB = client.CreateSender("queueB");
+ServiceBusSender senderC = client.CreateSender("topicC");
 
 ServiceBusReceivedMessage receivedMessage = await receiverA.ReceiveMessageAsync();
 

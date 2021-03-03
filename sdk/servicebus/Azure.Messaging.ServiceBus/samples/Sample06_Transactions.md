@@ -52,9 +52,9 @@ When creating senders and receivers that should be part of a cross-entity transa
 var options = new ServiceBusClientOptions { EnableCrossEntityTransactions = true };
 await using var client = new ServiceBusClient(connectionString, options);
 
-ServiceBusReceiver receiverA = client.CreateReceiver(queueA.QueueName);
-ServiceBusSender senderB = client.CreateSender(queueB.QueueName);
-ServiceBusSender senderC = client.CreateSender(topicC.TopicName);
+ServiceBusReceiver receiverA = client.CreateReceiver("queueA");
+ServiceBusSender senderB = client.CreateSender("queueB");
+ServiceBusSender senderC = client.CreateSender("topicC");
 
 ServiceBusReceivedMessage receivedMessage = await receiverA.ReceiveMessageAsync();
 
@@ -72,9 +72,9 @@ Bad:
 var options = new ServiceBusClientOptions { EnableCrossEntityTransactions = true };
 await using var client = new ServiceBusClient(connectionString, options);
 
-ServiceBusReceiver receiverA = client.CreateReceiver(queueA.QueueName);
-ServiceBusSender senderB = client.CreateSender(queueB.QueueName);
-ServiceBusSender senderC = client.CreateSender(topicC.TopicName);
+ServiceBusReceiver receiverA = client.CreateReceiver("queueA");
+ServiceBusSender senderB = client.CreateSender("queueB");
+ServiceBusSender senderC = client.CreateSender("topicC");
 
 // SenderB becomes the entity through which subsequent "sends" are routed through.
 await senderB.SendMessageAsync(new ServiceBusMessage());

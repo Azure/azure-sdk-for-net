@@ -91,13 +91,18 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             // used only to populate the queue.
             ServiceBusSender senderA = client.CreateSender(queueA.QueueName);
             await senderA.SendMessageAsync(new ServiceBusMessage());
-            #region Snippet:ServiceBusTransactionGroup
-            //@@ var options = new ServiceBusClientOptions { EnableCrossEntityTransactions = true };
-            //@@ await using var client = new ServiceBusClient(connectionString, options);
 
             ServiceBusReceiver receiverA = client.CreateReceiver(queueA.QueueName);
             ServiceBusSender senderB = client.CreateSender(queueB.QueueName);
             ServiceBusSender senderC = client.CreateSender(topicC.TopicName);
+
+            #region Snippet:ServiceBusTransactionGroup
+            //@@ var options = new ServiceBusClientOptions { EnableCrossEntityTransactions = true };
+            //@@ await using var client = new ServiceBusClient(connectionString, options);
+
+            //@@ ServiceBusReceiver receiverA = client.CreateReceiver("queueA");
+            //@@ ServiceBusSender senderB = client.CreateSender("queueB");
+            //@@ ServiceBusSender senderC = client.CreateSender("topicC");
 
             ServiceBusReceivedMessage receivedMessage = await receiverA.ReceiveMessageAsync();
 
@@ -133,13 +138,17 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             ServiceBusSender senderA = client.CreateSender(queueA.QueueName);
             await senderA.SendMessageAsync(new ServiceBusMessage());
 
+            ServiceBusReceiver receiverA = client.CreateReceiver(queueA.QueueName);
+            ServiceBusSender senderB = client.CreateSender(queueB.QueueName);
+            ServiceBusSender senderC = client.CreateSender(topicC.TopicName);
+
             #region Snippet:ServiceBusTransactionGroupWrongOrder
             //@@ var options = new ServiceBusClientOptions { EnableCrossEntityTransactions = true };
             //@@ await using var client = new ServiceBusClient(connectionString, options);
 
-            ServiceBusReceiver receiverA = client.CreateReceiver(queueA.QueueName);
-            ServiceBusSender senderB = client.CreateSender(queueB.QueueName);
-            ServiceBusSender senderC = client.CreateSender(topicC.TopicName);
+            //@@ ServiceBusReceiver receiverA = client.CreateReceiver("queueA");
+            //@@ ServiceBusSender senderB = client.CreateSender("queueB");
+            //@@ ServiceBusSender senderC = client.CreateSender("topicC");
 
             // SenderB becomes the entity through which subsequent "sends" are routed through.
             await senderB.SendMessageAsync(new ServiceBusMessage());
