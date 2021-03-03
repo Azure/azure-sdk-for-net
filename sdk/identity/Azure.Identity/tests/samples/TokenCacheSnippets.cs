@@ -12,8 +12,6 @@ namespace Azure.Identity.Samples
 {
     public class TokenCacheSnippets
     {
-        //TODO: Fix
-        /*
         #region Snippet:Identity_TokenCache_CustomPersistence_Usage_TokenCachePath
         private const string TOKEN_CACHE_PATH = "./tokencache.bin";
         #endregion
@@ -24,7 +22,7 @@ namespace Azure.Identity.Samples
             var credential = new InteractiveBrowserCredential(
                 new InteractiveBrowserCredentialOptions
                 {
-                    TokenCacheOptions = new TokenCacheOptions()
+                    TokenCachePersistenceOptions = new TokenCachePersistenceOptions()
                 });
             #endregion
         }
@@ -32,10 +30,10 @@ namespace Azure.Identity.Samples
         public void Identity_TokenCache_PersistentNamed()
         {
             #region Snippet:Identity_TokenCache_PersistentNamed
-            var tokenCache = new TokenCacheOptions { Name = "my_application_name" };
+            var tokenCache = new TokenCachePersistenceOptions { Name = "my_application_name" };
 
             var credential = new InteractiveBrowserCredential(
-                new InteractiveBrowserCredentialOptions { TokenCacheOptions = tokenCache }
+                new InteractiveBrowserCredentialOptions { TokenCachePersistenceOptions = tokenCache }
             );
             #endregion
         }
@@ -43,29 +41,30 @@ namespace Azure.Identity.Samples
         public void Identity_TokenCache_PersistentUnencrypted()
         {
             #region Snippet:Identity_TokenCache_PersistentUnencrypted
-            var tokenCache = new TokenCacheOptions { AllowUnencryptedStorage = true };
+            var tokenCache = new TokenCachePersistenceOptions { AllowUnencryptedStorage = true };
 
             var credential = new InteractiveBrowserCredential(
-                new InteractiveBrowserCredentialOptions { TokenCacheOptions = tokenCache }
+                new InteractiveBrowserCredentialOptions { TokenCachePersistenceOptions = tokenCache }
             );
             #endregion
         }
-
+//TODO: Move these samples and refactor for new UnsafeTokenCacheOptions
+/*
         public async Task Identity_TokenCache_CustomPersistence_Read()
         {
             #region Snippet:Identity_TokenCache_CustomPersistence_Read
-            TokenCacheOptions tokenCache;
+            TokenCachePersistenceOptions tokenCache;
 
             using (var cacheStream = new FileStream(TOKEN_CACHE_PATH, FileMode.OpenOrCreate, FileAccess.Read))
             {
-                //TODO: tokenCache = await TokenCacheSerializer.DeserializeAsync(cacheStream);
+                tokenCache = await TokenCacheSerializer.DeserializeAsync(cacheStream);
             }
             #endregion
         }
 
         public async Task Identity_TokenCache_CustomPersistence_Write()
         {
-            var tokenCache = new TokenCacheOptions(new UnsafeTokenCacheOptions());
+            var tokenCache = new TokenCachePersistenceOptions();
 
             #region Snippet:Identity_TokenCache_CustomPersistence_Write
             using (var cacheStream = new FileStream(TOKEN_CACHE_PATH, FileMode.Create, FileAccess.Write))
