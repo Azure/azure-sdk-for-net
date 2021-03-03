@@ -1,16 +1,14 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.Data.Tables.Performance
 {
     public class ComplexPerfEntity : ITableEntity
     {
         public ComplexPerfEntity()
-        {
-        }
+        { }
 
         public string StringTypeProperty { get; set; }
         public DateTime DatetimeTypeProperty { get; set; }
