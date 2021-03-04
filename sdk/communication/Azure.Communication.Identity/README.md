@@ -97,10 +97,10 @@ Console.WriteLine($"Expires On: {expiresOn}");
 
 ### Creating a user and a token in the same request
 ```C# Snippet:CreateCommunicationUserAndToken
-Response<CommunicationUserIdentifierAndToken> response = client.CreateUserAndToken(scopes: new[] { CommunicationTokenScope.Chat });
-CommunicationUserIdentifierAndToken identifierAndToken = response.Value;
-Console.WriteLine($"User id: {identifierAndToken.User.Id}");
-Console.WriteLine($"Token: {identifierAndToken.AccessToken.Token}");
+Response<CommunicationUserIdentifierAndToken> response = await client.CreateUserAndTokenAsync(scopes: new[] { CommunicationTokenScope.Chat });
+var (user, token) = response.Value;
+Console.WriteLine($"User id: {user.Id}");
+Console.WriteLine($"Token: {token.Token}");
 ```
 
 ### Revoking a user's tokens
