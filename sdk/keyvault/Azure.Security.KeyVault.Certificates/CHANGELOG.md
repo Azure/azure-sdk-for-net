@@ -8,6 +8,7 @@
 
 - Added default constructor to `CertificatePolicy` to use when importing a PEM-encoded certificate ([#16217](https://github.com/Azure/azure-sdk-for-net/issues/16217)).
 - Added constructor to `KeyVaultCertificateIdentifier` to parse a `Uri`.
+- Added support for PEM files on .NET Core for `CertificateClient.DownloadCertificate` and `CertificateClient.DownloadCertificateAsync` ([#16897](https://github.com/Azure/azure-sdk-for-net/issues/16897))
 
 ### Changed
 

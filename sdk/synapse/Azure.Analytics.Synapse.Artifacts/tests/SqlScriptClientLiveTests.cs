@@ -61,7 +61,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         private SqlScriptClient CreateClient()
         {
             return InstrumentClient(new SqlScriptClient(
-                new Uri(TestEnvironment.EndpointUrl),
+                TestEnvironment.EndpointUrl,
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new ArtifactsClientOptions())
             ));

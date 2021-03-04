@@ -14,13 +14,9 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Tests
             : base(compareBodies: ShouldValidateBodies())
         {
             IgnoredHeaders.Add(ClientCorrelationVectorHeaderName);
-            VolatileHeaders.Add(ClientCorrelationVectorHeaderName);
-            VolatileResponseHeaders.Add(ClientCorrelationVectorHeaderName);
             if (!ShouldValidateBodies())
             {
                 IgnoredHeaders.Add(ContentLengthHeaderName);
-                VolatileHeaders.Add(ContentLengthHeaderName);
-                VolatileResponseHeaders.Add(ContentLengthHeaderName);
             }
         }
 

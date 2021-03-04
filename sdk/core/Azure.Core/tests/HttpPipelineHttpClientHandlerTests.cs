@@ -13,7 +13,7 @@ using Azure.Core.TestFramework;
 using Azure.Core.Tests;
 using NUnit.Framework;
 
-namespace Azure.Identity.Tests
+namespace Azure.Core.Tests
 {
     public class HttpPipelineHttpClientHandlerTests
     {

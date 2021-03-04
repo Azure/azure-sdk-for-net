@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(ResourceActionCancelDataConverter))]
     public partial class ResourceActionCancelData
     {
         internal static ResourceActionCancelData DeserializeResourceActionCancelData(JsonElement element)
@@ -84,6 +87,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new ResourceActionCancelData(tenantId.Value, subscriptionId.Value, resourceGroup.Value, resourceProvider.Value, resourceUri.Value, operationName.Value, status.Value, authorization.Value, claims.Value, correlationId.Value, httpRequest.Value);
+        }
+
+        internal partial class ResourceActionCancelDataConverter : JsonConverter<ResourceActionCancelData>
+        {
+            public override void Write(Utf8JsonWriter writer, ResourceActionCancelData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override ResourceActionCancelData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeResourceActionCancelData(document.RootElement);
+            }
         }
     }
 }

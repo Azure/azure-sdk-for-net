@@ -29,7 +29,7 @@
     }
   },
   "variables": {
-    "aoaApiVersion": "2020-03-01-preview",
+    "aoaApiVersion": "2021-03-01-preview",
     "aoaAccountName": "[concat(parameters('baseName'), '-aoa-account')]"
   },
     "resources": [
@@ -38,8 +38,7 @@
           "name": "[variables('aoaAccountName')]",
           "apiVersion": "[variables('aoaApiVersion')]",
           "location": "[parameters('location')]",
-          "properties": {},
-          "identity": { "type": "systemAssigned" }
+          "properties": {}
         }
     ],
     "outputs": {

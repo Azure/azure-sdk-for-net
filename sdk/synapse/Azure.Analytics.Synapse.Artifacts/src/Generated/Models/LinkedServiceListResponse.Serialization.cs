@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    public partial class LinkedServiceListResponse
+    internal partial class LinkedServiceListResponse
     {
         internal static LinkedServiceListResponse DeserializeLinkedServiceListResponse(JsonElement element)
         {

@@ -31,91 +31,91 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.AreEqual("1", egEvent.DataVersion);
         }
 
-        //[Test]
-        //public void ConsumeStorageBlobDeletedEventWithExtraProperty()
-        //{
-        //    string requestContent = "[{  \"topic\": \"/subscriptions/id/resourceGroups/Storage/providers/Microsoft.Storage/storageAccounts/xstoretestaccount\",  \"subject\": \"/blobServices/default/containers/testcontainer/blobs/testfile.txt\",  \"eventType\": \"Microsoft.Storage.BlobDeleted\",  \"eventTime\": \"2017-11-07T20:09:22.5674003Z\",  \"id\": \"4c2359fe-001e-00ba-0e04-58586806d298\",  \"data\": {    \"api\": \"DeleteBlob\",    \"requestId\": \"4c2359fe-001e-00ba-0e04-585868000000\",    \"contentType\": \"text/plain\",    \"blobType\": \"BlockBlob\",    \"url\": \"https://example.blob.core.windows.net/testcontainer/testfile.txt\",    \"sequencer\": \"0000000000000281000000000002F5CA\",   \"brandNewProperty\": \"0000000000000281000000000002F5CA\", \"storageDiagnostics\": {      \"batchId\": \"b68529f3-68cd-4744-baa4-3c0498ec19f0\"    }  },  \"dataVersion\": \"\",  \"metadataVersion\": \"1\"}]";
+        [Test]
+        public void ConsumeStorageBlobDeletedEventWithExtraProperty()
+        {
+            string requestContent = "[{  \"topic\": \"/subscriptions/id/resourceGroups/Storage/providers/Microsoft.Storage/storageAccounts/xstoretestaccount\",  \"subject\": \"/blobServices/default/containers/testcontainer/blobs/testfile.txt\",  \"eventType\": \"Microsoft.Storage.BlobDeleted\",  \"eventTime\": \"2017-11-07T20:09:22.5674003Z\",  \"id\": \"4c2359fe-001e-00ba-0e04-58586806d298\",  \"data\": {    \"api\": \"DeleteBlob\",    \"requestId\": \"4c2359fe-001e-00ba-0e04-585868000000\",    \"contentType\": \"text/plain\",    \"blobType\": \"BlockBlob\",    \"url\": \"https://example.blob.core.windows.net/testcontainer/testfile.txt\",    \"sequencer\": \"0000000000000281000000000002F5CA\",   \"brandNewProperty\": \"0000000000000281000000000002F5CA\", \"storageDiagnostics\": {      \"batchId\": \"b68529f3-68cd-4744-baa4-3c0498ec19f0\"    }  },  \"dataVersion\": \"\",  \"metadataVersion\": \"1\"}]";
 
-        //    EventGridEvent[] events = EventGridEvent.Parse(requestContent);
+            EventGridEvent[] events = EventGridEvent.ParseEvents(requestContent);
 
-        //    Assert.NotNull(events);
-        //    foreach (EventGridEvent egEvent in events)
-        //    {
-        //        switch (egEvent.EventType)
-        //        {
-        //            case SystemEventNames.StorageBlobDeleted:
-        //                StorageBlobDeletedEventData blobDeleted = egEvent.GetData<StorageBlobDeletedEventData>();
-        //                Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testfile.txt", blobDeleted.Url);
-        //                Assert.AreEqual("/subscriptions/id/resourceGroups/Storage/providers/Microsoft.Storage/storageAccounts/xstoretestaccount", egEvent.Topic);
-        //                break;
-        //        }
-        //    }
-        //}
+            Assert.NotNull(events);
+            foreach (EventGridEvent egEvent in events)
+            {
+                switch (egEvent.EventType)
+                {
+                    case SystemEventNames.StorageBlobDeleted:
+                        StorageBlobDeletedEventData blobDeleted = egEvent.Data.ToObjectFromJson<StorageBlobDeletedEventData>();
+                        Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testfile.txt", blobDeleted.Url);
+                        Assert.AreEqual("/subscriptions/id/resourceGroups/Storage/providers/Microsoft.Storage/storageAccounts/xstoretestaccount", egEvent.Topic);
+                        break;
+                }
+            }
+        }
 
-        //[Test]
-        //public void ConsumeEventNotWrappedInAnArray()
-        //{
-        //    string requestContent = "{  \"topic\": \"/subscriptions/id/resourceGroups/Storage/providers/Microsoft.Storage/storageAccounts/xstoretestaccount\",  \"subject\": \"/blobServices/default/containers/testcontainer/blobs/testfile.txt\",  \"eventType\": \"Microsoft.Storage.BlobDeleted\",  \"eventTime\": \"2017-11-07T20:09:22.5674003Z\",  \"id\": \"4c2359fe-001e-00ba-0e04-58586806d298\",  \"data\": {    \"api\": \"DeleteBlob\",    \"requestId\": \"4c2359fe-001e-00ba-0e04-585868000000\",    \"contentType\": \"text/plain\",    \"blobType\": \"BlockBlob\",    \"url\": \"https://example.blob.core.windows.net/testcontainer/testfile.txt\",    \"sequencer\": \"0000000000000281000000000002F5CA\",   \"brandNewProperty\": \"0000000000000281000000000002F5CA\", \"storageDiagnostics\": {      \"batchId\": \"b68529f3-68cd-4744-baa4-3c0498ec19f0\"    }  },  \"dataVersion\": \"\",  \"metadataVersion\": \"1\"}";
+        [Test]
+        public void ConsumeEventNotWrappedInAnArray()
+        {
+            string requestContent = "{  \"topic\": \"/subscriptions/id/resourceGroups/Storage/providers/Microsoft.Storage/storageAccounts/xstoretestaccount\",  \"subject\": \"/blobServices/default/containers/testcontainer/blobs/testfile.txt\",  \"eventType\": \"Microsoft.Storage.BlobDeleted\",  \"eventTime\": \"2017-11-07T20:09:22.5674003Z\",  \"id\": \"4c2359fe-001e-00ba-0e04-58586806d298\",  \"data\": {    \"api\": \"DeleteBlob\",    \"requestId\": \"4c2359fe-001e-00ba-0e04-585868000000\",    \"contentType\": \"text/plain\",    \"blobType\": \"BlockBlob\",    \"url\": \"https://example.blob.core.windows.net/testcontainer/testfile.txt\",    \"sequencer\": \"0000000000000281000000000002F5CA\",   \"brandNewProperty\": \"0000000000000281000000000002F5CA\", \"storageDiagnostics\": {      \"batchId\": \"b68529f3-68cd-4744-baa4-3c0498ec19f0\"    }  },  \"dataVersion\": \"\",  \"metadataVersion\": \"1\"}";
 
-        //    EventGridEvent[] events = EventGridEvent.Parse(requestContent);
+            EventGridEvent[] events = EventGridEvent.ParseEvents(requestContent);
 
-        //    Assert.NotNull(events);
-        //    foreach (EventGridEvent egEvent in events)
-        //    {
-        //        switch (egEvent.EventType)
-        //        {
-        //            case SystemEventNames.StorageBlobDeleted:
-        //                StorageBlobDeletedEventData blobDeleted = egEvent.GetData<StorageBlobDeletedEventData>();
-        //                Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testfile.txt", blobDeleted.Url);
-        //                break;
-        //        }
-        //    }
-        //}
+            Assert.NotNull(events);
+            foreach (EventGridEvent egEvent in events)
+            {
+                switch (egEvent.EventType)
+                {
+                    case SystemEventNames.StorageBlobDeleted:
+                        StorageBlobDeletedEventData blobDeleted = egEvent.Data.ToObjectFromJson<StorageBlobDeletedEventData>();
+                        Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testfile.txt", blobDeleted.Url);
+                        break;
+                }
+            }
+        }
 
-        //[Test]
-        //public void ConsumeMultipleEventsInSameBatch()
-        //{
-        //    string requestContent = "[ " +
-        //        "{  \"topic\": \"/subscriptions/319a9601-1ec0-0000-aebc-8fe82724c81e/resourceGroups/testrg/providers/Microsoft.Storage/storageAccounts/myaccount\",  \"subject\": \"/blobServices/default/containers/testcontainer/blobs/file1.txt\",  \"eventType\": \"Microsoft.Storage.BlobCreated\",  \"eventTime\": \"2017-08-16T01:57:26.005121Z\",  \"id\": \"602a88ef-0001-00e6-1233-1646070610ea\",  \"data\": {    \"api\": \"PutBlockList\",    \"clientRequestId\": \"799304a4-bbc5-45b6-9849-ec2c66be800a\",    \"requestId\": \"602a88ef-0001-00e6-1233-164607000000\",    \"eTag\": \"0x8D4E44A24ABE7F1\",    \"contentType\": \"text/plain\",    \"contentLength\": 447,    \"blobType\": \"BlockBlob\",    \"url\": \"https://myaccount.blob.core.windows.net/testcontainer/file1.txt\",    \"sequencer\": \"00000000000000EB000000000000C65A\"  },  \"dataVersion\": \"\",  \"metadataVersion\": \"1\"}, " +
-        //        "{   \"topic\": \"/subscriptions/id/resourceGroups/Storage/providers/Microsoft.Storage/storageAccounts/xstoretestaccount\",  \"subject\": \"/blobServices/default/containers/testcontainer/blobs/testfile.txt\",  \"eventType\": \"Microsoft.Storage.BlobDeleted\",  \"eventTime\": \"2017-11-07T20:09:22.5674003Z\",  \"id\": \"4c2359fe-001e-00ba-0e04-58586806d298\",  \"data\": {    \"api\": \"DeleteBlob\",    \"requestId\": \"4c2359fe-001e-00ba-0e04-585868000000\",    \"contentType\": \"text/plain\",    \"blobType\": \"BlockBlob\",    \"url\": \"https://example.blob.core.windows.net/testcontainer/testfile.txt\",    \"sequencer\": \"0000000000000281000000000002F5CA\",    \"storageDiagnostics\": {      \"batchId\": \"b68529f3-68cd-4744-baa4-3c0498ec19f0\"    }  },  \"dataVersion\": \"\",  \"metadataVersion\": \"1\"}, " +
-        //        "{   \"topic\": \"/subscriptions/id/resourceGroups/Storage/providers/Microsoft.Storage/storageAccounts/xstoretestaccount\",  \"subject\": \"/blobServices/default/containers/testcontainer/blobs/testfile.txt\",  \"eventType\": \"Microsoft.Storage.BlobDeleted\",  \"eventTime\": \"2017-11-07T20:09:22.5674003Z\",  \"id\": \"4c2359fe-001e-00ba-0e04-58586806d298\",  \"data\": {    \"api\": \"DeleteBlob\",    \"requestId\": \"4c2359fe-001e-00ba-0e04-585868000000\",    \"contentType\": \"text/plain\",    \"blobType\": \"BlockBlob\",    \"url\": \"https://example.blob.core.windows.net/testcontainer/testfile.txt\",    \"sequencer\": \"0000000000000281000000000002F5CA\",    \"storageDiagnostics\": {      \"batchId\": \"b68529f3-68cd-4744-baa4-3c0498ec19f0\"    }  },  \"dataVersion\": \"\",  \"metadataVersion\": \"1\"}]";
+        [Test]
+        public void ConsumeMultipleEventsInSameBatch()
+        {
+            string requestContent = "[ " +
+                "{  \"topic\": \"/subscriptions/319a9601-1ec0-0000-aebc-8fe82724c81e/resourceGroups/testrg/providers/Microsoft.Storage/storageAccounts/myaccount\",  \"subject\": \"/blobServices/default/containers/testcontainer/blobs/file1.txt\",  \"eventType\": \"Microsoft.Storage.BlobCreated\",  \"eventTime\": \"2017-08-16T01:57:26.005121Z\",  \"id\": \"602a88ef-0001-00e6-1233-1646070610ea\",  \"data\": {    \"api\": \"PutBlockList\",    \"clientRequestId\": \"799304a4-bbc5-45b6-9849-ec2c66be800a\",    \"requestId\": \"602a88ef-0001-00e6-1233-164607000000\",    \"eTag\": \"0x8D4E44A24ABE7F1\",    \"contentType\": \"text/plain\",    \"contentLength\": 447,    \"blobType\": \"BlockBlob\",    \"url\": \"https://myaccount.blob.core.windows.net/testcontainer/file1.txt\",    \"sequencer\": \"00000000000000EB000000000000C65A\"  },  \"dataVersion\": \"\",  \"metadataVersion\": \"1\"}, " +
+                "{   \"topic\": \"/subscriptions/id/resourceGroups/Storage/providers/Microsoft.Storage/storageAccounts/xstoretestaccount\",  \"subject\": \"/blobServices/default/containers/testcontainer/blobs/testfile.txt\",  \"eventType\": \"Microsoft.Storage.BlobDeleted\",  \"eventTime\": \"2017-11-07T20:09:22.5674003Z\",  \"id\": \"4c2359fe-001e-00ba-0e04-58586806d298\",  \"data\": {    \"api\": \"DeleteBlob\",    \"requestId\": \"4c2359fe-001e-00ba-0e04-585868000000\",    \"contentType\": \"text/plain\",    \"blobType\": \"BlockBlob\",    \"url\": \"https://example.blob.core.windows.net/testcontainer/testfile.txt\",    \"sequencer\": \"0000000000000281000000000002F5CA\",    \"storageDiagnostics\": {      \"batchId\": \"b68529f3-68cd-4744-baa4-3c0498ec19f0\"    }  },  \"dataVersion\": \"\",  \"metadataVersion\": \"1\"}, " +
+                "{   \"topic\": \"/subscriptions/id/resourceGroups/Storage/providers/Microsoft.Storage/storageAccounts/xstoretestaccount\",  \"subject\": \"/blobServices/default/containers/testcontainer/blobs/testfile.txt\",  \"eventType\": \"Microsoft.Storage.BlobDeleted\",  \"eventTime\": \"2017-11-07T20:09:22.5674003Z\",  \"id\": \"4c2359fe-001e-00ba-0e04-58586806d298\",  \"data\": {    \"api\": \"DeleteBlob\",    \"requestId\": \"4c2359fe-001e-00ba-0e04-585868000000\",    \"contentType\": \"text/plain\",    \"blobType\": \"BlockBlob\",    \"url\": \"https://example.blob.core.windows.net/testcontainer/testfile.txt\",    \"sequencer\": \"0000000000000281000000000002F5CA\",    \"storageDiagnostics\": {      \"batchId\": \"b68529f3-68cd-4744-baa4-3c0498ec19f0\"    }  },  \"dataVersion\": \"\",  \"metadataVersion\": \"1\"}]";
 
-        //    EventGridEvent[] events = EventGridEvent.Parse(requestContent);
+            EventGridEvent[] events = EventGridEvent.ParseEvents(requestContent);
 
-        //    Assert.NotNull(events);
-        //    Assert.AreEqual(3, events.Length);
-        //    foreach (EventGridEvent egEvent in events)
-        //    {
-        //        switch (egEvent.EventType)
-        //        {
-        //            case SystemEventNames.StorageBlobCreated:
-        //                StorageBlobCreatedEventData blobCreated = egEvent.GetData<StorageBlobCreatedEventData>();
-        //                Assert.AreEqual("https://myaccount.blob.core.windows.net/testcontainer/file1.txt", blobCreated.Url);
-        //                break;
-        //            case SystemEventNames.StorageBlobDeleted:
-        //                StorageBlobDeletedEventData blobDeleted = egEvent.GetData<StorageBlobDeletedEventData>();
-        //                Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testfile.txt", blobDeleted.Url);
-        //                break;
-        //        }
-        //    }
-        //}
+            Assert.NotNull(events);
+            Assert.AreEqual(3, events.Length);
+            foreach (EventGridEvent egEvent in events)
+            {
+                switch (egEvent.EventType)
+                {
+                    case SystemEventNames.StorageBlobCreated:
+                        StorageBlobCreatedEventData blobCreated = egEvent.Data.ToObjectFromJson<StorageBlobCreatedEventData>();
+                        Assert.AreEqual("https://myaccount.blob.core.windows.net/testcontainer/file1.txt", blobCreated.Url);
+                        break;
+                    case SystemEventNames.StorageBlobDeleted:
+                        StorageBlobDeletedEventData blobDeleted = egEvent.Data.ToObjectFromJson<StorageBlobDeletedEventData>();
+                        Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testfile.txt", blobDeleted.Url);
+                        break;
+                }
+            }
+        }
 
-        //[Test]
-        //public void ConsumeEventUsingBinaryDataExtensionMethod()
-        //{
-        //    BinaryData messageBody = new BinaryData("{  \"topic\": \"/subscriptions/id/resourceGroups/Storage/providers/Microsoft.Storage/storageAccounts/xstoretestaccount\",  \"subject\": \"/blobServices/default/containers/testcontainer/blobs/testfile.txt\",  \"eventType\": \"Microsoft.Storage.BlobDeleted\",  \"eventTime\": \"2017-11-07T20:09:22.5674003Z\",  \"id\": \"4c2359fe-001e-00ba-0e04-58586806d298\",  \"data\": {    \"api\": \"DeleteBlob\",    \"requestId\": \"4c2359fe-001e-00ba-0e04-585868000000\",    \"contentType\": \"text/plain\",    \"blobType\": \"BlockBlob\",    \"url\": \"https://example.blob.core.windows.net/testcontainer/testfile.txt\",    \"sequencer\": \"0000000000000281000000000002F5CA\",   \"brandNewProperty\": \"0000000000000281000000000002F5CA\", \"storageDiagnostics\": {      \"batchId\": \"b68529f3-68cd-4744-baa4-3c0498ec19f0\"    }  },  \"dataVersion\": \"\",  \"metadataVersion\": \"1\"}");
+        [Test]
+        public void ConsumeEventUsingBinaryDataExtensionMethod()
+        {
+            BinaryData messageBody = new BinaryData("{  \"topic\": \"/subscriptions/id/resourceGroups/Storage/providers/Microsoft.Storage/storageAccounts/xstoretestaccount\",  \"subject\": \"/blobServices/default/containers/testcontainer/blobs/testfile.txt\",  \"eventType\": \"Microsoft.Storage.BlobDeleted\",  \"eventTime\": \"2017-11-07T20:09:22.5674003Z\",  \"id\": \"4c2359fe-001e-00ba-0e04-58586806d298\",  \"data\": {    \"api\": \"DeleteBlob\",    \"requestId\": \"4c2359fe-001e-00ba-0e04-585868000000\",    \"contentType\": \"text/plain\",    \"blobType\": \"BlockBlob\",    \"url\": \"https://example.blob.core.windows.net/testcontainer/testfile.txt\",    \"sequencer\": \"0000000000000281000000000002F5CA\",   \"brandNewProperty\": \"0000000000000281000000000002F5CA\", \"storageDiagnostics\": {      \"batchId\": \"b68529f3-68cd-4744-baa4-3c0498ec19f0\"    }  },  \"dataVersion\": \"\",  \"metadataVersion\": \"1\"}");
 
-        //    EventGridEvent egEvent = messageBody.ToEventGridEvent();
+            EventGridEvent egEvent = EventGridEvent.Parse(messageBody);
 
-        //    Assert.NotNull(egEvent);
-        //    switch (egEvent.EventType)
-        //    {
-        //        case SystemEventNames.StorageBlobDeleted:
-        //            StorageBlobDeletedEventData blobDeleted = egEvent.GetData<StorageBlobDeletedEventData>();
-        //            Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testfile.txt", blobDeleted.Url);
-        //            break;
-        //    }
-        //}
+            Assert.NotNull(egEvent);
+            switch (egEvent.EventType)
+            {
+                case SystemEventNames.StorageBlobDeleted:
+                    StorageBlobDeletedEventData blobDeleted = egEvent.Data.ToObjectFromJson<StorageBlobDeletedEventData>();
+                    Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testfile.txt", blobDeleted.Url);
+                    break;
+            }
+        }
 
         [Test]
         public void EGEventParseThrowsIfMissingRequiredProperties()
@@ -1202,6 +1202,9 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.NotNull(events);
             Assert.True(events[0].TryGetSystemEventData(out object eventData));
             Assert.AreEqual(siteName, (eventData as WebBackupOperationFailedEventData).Name);
+
+            var sysEvent = events[0].Data.ToObjectFromJson<WebBackupOperationFailedEventData>();
+            Assert.AreEqual(siteName, sysEvent.Name);
         }
 
         [Test]
@@ -1215,6 +1218,9 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.NotNull(events);
             Assert.True(events[0].TryGetSystemEventData(out object eventData));
             Assert.AreEqual(siteName, (eventData as WebRestoreOperationStartedEventData).Name);
+
+            var sysEvent = events[0].Data.ToObjectFromJson<WebRestoreOperationStartedEventData>();
+            Assert.AreEqual(siteName, sysEvent.Name);
         }
 
         [Test]
@@ -1348,56 +1354,55 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.AreEqual("value", value);
         }
 
-        //[Test]
-        // TODO add back once https://github.com/Azure/autorest.csharp/issues/947 is fixed.
-        //public void ConsumeCloudEventsWithAdditionalProperties()
-        //{
-        //    string requestContent = "[{\"key\": \"value\",  \"id\":\"994bc3f8-c90c-6fc3-9e83-6783db2221d5\",\"source\":\"Subject-0\",  \"data\": {    \"api\": \"DeleteBlob\",    \"requestId\": \"4c2359fe-001e-00ba-0e04-585868000000\",    \"contentType\": \"text/plain\",    \"blobType\": \"BlockBlob\",    \"url\": \"https://example.blob.core.windows.net/testcontainer/testfile.txt\",    \"sequencer\": \"0000000000000281000000000002F5CA\",   \"brandNewProperty\": \"0000000000000281000000000002F5CA\", \"storageDiagnostics\": {      \"batchId\": \"b68529f3-68cd-4744-baa4-3c0498ec19f0\"    }  }, \"type\":\"Microsoft.Storage.BlobDeleted\",\"specversion\":\"1.0\"}]";
+        [Test]
+        public void ConsumeCloudEventsWithAdditionalProperties()
+        {
+            string requestContent = "[{\"key\": \"value\",  \"id\":\"994bc3f8-c90c-6fc3-9e83-6783db2221d5\",\"source\":\"Subject-0\",  \"data\": {    \"api\": \"DeleteBlob\",    \"requestId\": \"4c2359fe-001e-00ba-0e04-585868000000\",    \"contentType\": \"text/plain\",    \"blobType\": \"BlockBlob\",    \"url\": \"https://example.blob.core.windows.net/testcontainer/testfile.txt\",    \"sequencer\": \"0000000000000281000000000002F5CA\",   \"brandNewProperty\": \"0000000000000281000000000002F5CA\", \"storageDiagnostics\": {      \"batchId\": \"b68529f3-68cd-4744-baa4-3c0498ec19f0\"    }  }, \"type\":\"Microsoft.Storage.BlobDeleted\",\"specversion\":\"1.0\"}]";
 
-        //    CloudEvent[] events = CloudEvent.Parse(requestContent);
-        //    Assert.NotNull(events);
+            CloudEvent[] events = CloudEvent.ParseEvents(requestContent);
+            Assert.NotNull(events);
 
-        //    if (events[0].Type == SystemEventNames.StorageBlobDeleted)
-        //    {
-        //        StorageBlobDeletedEventData eventData = events[0].EventData.ToObjectFromJson<StorageBlobDeletedEventData>();
-        //        Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testfile.txt", eventData.Url);
-        //    }
+            if (events[0].Type == SystemEventNames.StorageBlobDeleted)
+            {
+                StorageBlobDeletedEventData eventData = events[0].Data.ToObjectFromJson<StorageBlobDeletedEventData>();
+                Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testfile.txt", eventData.Url);
+            }
 
-        //    events[0].ExtensionAttributes.TryGetValue("key", out var value);
-        //    Assert.AreEqual("value", value);
-        //}
+            events[0].ExtensionAttributes.TryGetValue("key", out var value);
+            Assert.AreEqual("value", value);
+        }
 
-        //[Test]
-        //public void ConsumeCloudEventUsingBinaryDataExtensionMethod()
-        //{
-        //    BinaryData messageBody = new BinaryData("{  \"source\": \"/subscriptions/id/resourceGroups/Storage/providers/Microsoft.Storage/storageAccounts/xstoretestaccount\",  \"subject\": \"/blobServices/default/containers/testcontainer/blobs/testfile.txt\",  \"type\": \"Microsoft.Storage.BlobDeleted\",  \"time\": \"2017-11-07T20:09:22.5674003Z\",  \"id\": \"4c2359fe-001e-00ba-0e04-58586806d298\",  \"data\": {    \"api\": \"DeleteBlob\",    \"requestId\": \"4c2359fe-001e-00ba-0e04-585868000000\",    \"contentType\": \"text/plain\",    \"blobType\": \"BlockBlob\",    \"url\": \"https://example.blob.core.windows.net/testcontainer/testfile.txt\",    \"sequencer\": \"0000000000000281000000000002F5CA\",   \"brandNewProperty\": \"0000000000000281000000000002F5CA\", \"storageDiagnostics\": {      \"batchId\": \"b68529f3-68cd-4744-baa4-3c0498ec19f0\"    }  }}");
+        [Test]
+        public void ConsumeCloudEventUsingBinaryDataExtensionMethod()
+        {
+            BinaryData messageBody = new BinaryData("{  \"source\": \"/subscriptions/id/resourceGroups/Storage/providers/Microsoft.Storage/storageAccounts/xstoretestaccount\",  \"subject\": \"/blobServices/default/containers/testcontainer/blobs/testfile.txt\",  \"type\": \"Microsoft.Storage.BlobDeleted\",  \"time\": \"2017-11-07T20:09:22.5674003Z\",  \"id\": \"4c2359fe-001e-00ba-0e04-58586806d298\",  \"data\": {    \"api\": \"DeleteBlob\",    \"requestId\": \"4c2359fe-001e-00ba-0e04-585868000000\",    \"contentType\": \"text/plain\",    \"blobType\": \"BlockBlob\",    \"url\": \"https://example.blob.core.windows.net/testcontainer/testfile.txt\",    \"sequencer\": \"0000000000000281000000000002F5CA\",   \"brandNewProperty\": \"0000000000000281000000000002F5CA\", \"storageDiagnostics\": {      \"batchId\": \"b68529f3-68cd-4744-baa4-3c0498ec19f0\"    }  }}");
 
-        //    CloudEvent cloudEvent = messageBody.ToCloudEvent();
+            CloudEvent cloudEvent = CloudEvent.Parse(messageBody, skipValidation: true);
 
-        //    Assert.NotNull(cloudEvent);
-        //    switch (cloudEvent.Type)
-        //    {
-        //        case SystemEventNames.StorageBlobDeleted:
-        //            StorageBlobDeletedEventData blobDeleted =cloudEvent.EventData.ToObjectFromJson<StorageBlobDeletedEventData>();
-        //            Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testfile.txt", blobDeleted.Url);
-        //            break;
-        //    }
-        //}
+            Assert.NotNull(cloudEvent);
+            switch (cloudEvent.Type)
+            {
+                case SystemEventNames.StorageBlobDeleted:
+                    StorageBlobDeletedEventData blobDeleted = cloudEvent.Data.ToObjectFromJson<StorageBlobDeletedEventData>();
+                    Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testfile.txt", blobDeleted.Url);
+                    break;
+            }
+        }
 
-        //[Test]
-        //public void ConsumeCloudEventNotWrappedInAnArray()
-        //{
-        //    string requestContent = "{  \"source\": \"/subscriptions/id/resourceGroups/Storage/providers/Microsoft.Storage/storageAccounts/xstoretestaccount\",  \"subject\": \"/blobServices/default/containers/testcontainer/blobs/testfile.txt\",  \"type\": \"Microsoft.Storage.BlobDeleted\",  \"time\": \"2017-11-07T20:09:22.5674003Z\",  \"id\": \"4c2359fe-001e-00ba-0e04-58586806d298\",  \"data\": {    \"api\": \"DeleteBlob\",    \"requestId\": \"4c2359fe-001e-00ba-0e04-585868000000\",    \"contentType\": \"text/plain\",    \"blobType\": \"BlockBlob\",    \"url\": \"https://example.blob.core.windows.net/testcontainer/testfile.txt\",    \"sequencer\": \"0000000000000281000000000002F5CA\",   \"brandNewProperty\": \"0000000000000281000000000002F5CA\", \"storageDiagnostics\": {      \"batchId\": \"b68529f3-68cd-4744-baa4-3c0498ec19f0\"    }  }}";
+        [Test]
+        public void ConsumeCloudEventNotWrappedInAnArray()
+        {
+            string requestContent = "{  \"source\": \"/subscriptions/id/resourceGroups/Storage/providers/Microsoft.Storage/storageAccounts/xstoretestaccount\",  \"subject\": \"/blobServices/default/containers/testcontainer/blobs/testfile.txt\",  \"type\": \"Microsoft.Storage.BlobDeleted\",  \"time\": \"2017-11-07T20:09:22.5674003Z\",  \"id\": \"4c2359fe-001e-00ba-0e04-58586806d298\",  \"data\": {    \"api\": \"DeleteBlob\",    \"requestId\": \"4c2359fe-001e-00ba-0e04-585868000000\",    \"contentType\": \"text/plain\",    \"blobType\": \"BlockBlob\",    \"url\": \"https://example.blob.core.windows.net/testcontainer/testfile.txt\",    \"sequencer\": \"0000000000000281000000000002F5CA\",   \"brandNewProperty\": \"0000000000000281000000000002F5CA\", \"storageDiagnostics\": {      \"batchId\": \"b68529f3-68cd-4744-baa4-3c0498ec19f0\"    }  }}";
 
-        //    CloudEvent[] events = CloudEvent.Parse(requestContent);
+            CloudEvent[] events = CloudEvent.ParseEvents(requestContent, skipValidation: true);
 
-        //    Assert.NotNull(events);
-        //    if (events[0].Type == SystemEventNames.StorageBlobDeleted)
-        //    {
-        //        StorageBlobDeletedEventData eventData = events[0].EventData.ToObjectFromJson<StorageBlobDeletedEventData>();
-        //        Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testfile.txt", eventData.Url);
-        //    }
-        //}
+            Assert.NotNull(events);
+            if (events[0].Type == SystemEventNames.StorageBlobDeleted)
+            {
+                StorageBlobDeletedEventData eventData = events[0].Data.ToObjectFromJson<StorageBlobDeletedEventData>();
+                Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testfile.txt", eventData.Url);
+            }
+        }
 
         [Test]
         public void ConsumeMultipleCloudEventsInSameBatch()
@@ -1566,6 +1571,9 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.NotNull(events);
             Assert.True(events[0].TryGetSystemEventData(out object eventData));
             Assert.AreEqual("key1", (eventData as AppConfigurationKeyValueDeletedEventData).Key);
+
+            var sysEvent = events[0].Data.ToObjectFromJson<AppConfigurationKeyValueDeletedEventData>();
+            Assert.AreEqual("key1", sysEvent.Key);
         }
 
         [Test]
@@ -1577,6 +1585,9 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.NotNull(events);
             Assert.True(events[0].TryGetSystemEventData(out object eventData));
             Assert.AreEqual("key1", (eventData as AppConfigurationKeyValueModifiedEventData).Key);
+
+            var sysEvent = events[0].Data.ToObjectFromJson<AppConfigurationKeyValueModifiedEventData>();
+            Assert.AreEqual("key1", sysEvent.Key);
         }
         #endregion
 
@@ -1591,6 +1602,9 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.NotNull(events);
             Assert.True(events[0].TryGetSystemEventData(out object eventData));
             Assert.AreEqual("127.0.0.1", (eventData as ContainerRegistryImagePushedEventData).Request.Addr);
+
+            var sysEvent = events[0].Data.ToObjectFromJson<ContainerRegistryImagePushedEventData>();
+            Assert.AreEqual("127.0.0.1", sysEvent.Request.Addr);
         }
 
         [Test]
@@ -1603,6 +1617,9 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.NotNull(events);
             Assert.True(events[0].TryGetSystemEventData(out object eventData));
             Assert.AreEqual("testactor", (eventData as ContainerRegistryImageDeletedEventData).Actor.Name);
+
+            var sysEvent = events[0].Data.ToObjectFromJson<ContainerRegistryImageDeletedEventData>();
+            Assert.AreEqual("testactor", sysEvent.Actor.Name);
         }
 
         [Test]

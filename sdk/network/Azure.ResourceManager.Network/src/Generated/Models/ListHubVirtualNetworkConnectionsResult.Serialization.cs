@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ListHubVirtualNetworkConnectionsResult
+    internal partial class ListHubVirtualNetworkConnectionsResult
     {
         internal static ListHubVirtualNetworkConnectionsResult DeserializeListHubVirtualNetworkConnectionsResult(JsonElement element)
         {

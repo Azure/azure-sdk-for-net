@@ -15,6 +15,9 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
     {
         // TODO: replace hardcoding the Type GUID when the Types resource has been implemented
         private const string DefaultType = "1be09af9-f089-4d6b-9f0b-48018b5f7393";
+        private const int MaxNumberOfRetries = 10;
+
+        private readonly TimeSpan _delay = TimeSpan.FromSeconds(10);
 
         public TimeSeriesIdTests(bool isAsync)
             : base(isAsync)
@@ -68,7 +71,7 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
                     resultItem.Instance.TimeSeriesId.ToArray()[1].Should().BeNull();
 
                     return null;
-                }, 5, TimeSpan.FromSeconds(5));
+                }, MaxNumberOfRetries, _delay);
             }
             finally
             {

@@ -8,9 +8,6 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
-using Azure.Messaging;
-using Azure.Messaging.EventGrid;
-using Azure.Messaging.EventGrid.Tests;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventGrid.Tests.Samples
@@ -90,6 +87,15 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
             string topicEndpoint = TestEnvironment.CloudEventTopicHost;
             string topicAccessKey = TestEnvironment.CloudEventTopicKey;
 
+            // Create the publisher client using an AzureKeyCredential
+            // Custom topic should be configured to accept events of the CloudEvents 1.0 schema
+            #region Snippet:CreateClientWithOptions
+            EventGridPublisherClient client = new EventGridPublisherClient(
+                new Uri(topicEndpoint),
+                new AzureKeyCredential(topicAccessKey));
+            #endregion
+
+            #region Snippet:SendCloudEventsToTopic
             // Example of a custom ObjectSerializer used to serialize the event payload to JSON
             var myCustomDataSerializer = new JsonObjectSerializer(
                 new JsonSerializerOptions()
@@ -97,31 +103,28 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase
                 });
 
-            // Create the publisher client using an AzureKeyCredential
-            // Custom topic should be configured to accept events of the CloudEvents 1.0 schema
-            #region Snippet:CreateClientWithOptions
-
-            EventGridPublisherClient client = new EventGridPublisherClient(
-                new Uri(topicEndpoint),
-                new AzureKeyCredential(topicAccessKey));
-            #endregion
-
-            #region Snippet:SendCloudEventsToTopic
             // Add CloudEvents to a list to publish to the topic
             List<CloudEvent> eventsList = new List<CloudEvent>
             {
-                // CloudEvent with populated data
+                // CloudEvent with custom model serialized to JSON
                 new CloudEvent(
                     "/cloudevents/example/source",
                     "Example.EventType",
-                    myCustomDataSerializer.Serialize("This is the event data")),
+                    new CustomModel() { A = 5, B = true }),
+
+                // CloudEvent with custom model serialized to JSON using a custom serializer
+                new CloudEvent(
+                    "/cloudevents/example/source",
+                    "Example.EventType",
+                    myCustomDataSerializer.Serialize(new CustomModel() { A = 5, B = true }),
+                    "application/json"),
 
                 // CloudEvents also supports sending binary-valued data
                 new CloudEvent(
                     "/cloudevents/example/binarydata",
                     "Example.EventType",
-                    new BinaryData(Encoding.UTF8.GetBytes("This is binary data")),
-                    "example/binary")};
+                    new BinaryData(Encoding.UTF8.GetBytes("This is treated as binary data")),
+                    "application/octet-stream")};
 
             // Send the events
             await client.SendEventsAsync(eventsList);
@@ -161,6 +164,12 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
             // Send the events
             await client.SendEventsAsync(eventsList);
             #endregion
+        }
+
+        internal class CustomModel
+        {
+            public int A { get; set; }
+            public bool B { get; set; }
         }
     }
 }

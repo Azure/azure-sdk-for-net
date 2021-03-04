@@ -15,20 +15,17 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private readonly string _transactionId;
         private readonly AmqpTransactionManager _transactionManager;
         private readonly AmqpConnectionScope _connectionScope;
-        private readonly string _transactionGroup;
         private readonly TimeSpan _timeout;
 
         public AmqpTransactionEnlistment(
             Transaction transaction,
             AmqpTransactionManager transactionManager,
             AmqpConnectionScope connectionScope,
-            string transactionGroup,
             TimeSpan timeout)
         {
             _transactionId = transaction.TransactionInformation.LocalIdentifier;
             _transactionManager = transactionManager;
             _connectionScope = connectionScope;
-            _transactionGroup = transactionGroup;
             _timeout = timeout;
         }
 
@@ -54,15 +51,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         private async Task<Controller> GetController(TimeSpan timeout)
         {
-            FaultTolerantAmqpObject<Controller> faultTolerantController;
-            if (_transactionGroup == null)
-            {
-                faultTolerantController = _connectionScope.SingleEntityTransactionController;
-            }
-            else
-            {
-                faultTolerantController = _connectionScope.TransactionGroups[_transactionGroup].Controller;
-            }
+            FaultTolerantAmqpObject<Controller> faultTolerantController = _connectionScope.TransactionController;
             Controller controller = await faultTolerantController.GetOrCreateAsync(timeout).ConfigureAwait(false);
             return controller;
         }

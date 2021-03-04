@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,14 +21,11 @@ namespace Azure.Messaging.EventGrid
     {
         private readonly EventGridRestClient _serviceRestClient;
         private readonly ClientDiagnostics _clientDiagnostics;
-        private string _hostName => _endpoint.Host;
+        private string _hostName => _endpoint.Authority;
         private readonly Uri _endpoint;
         private readonly AzureKeyCredential _key;
         private readonly HttpPipeline _pipeline;
         private readonly string _apiVersion;
-
-        private const string TraceParentHeaderName = "traceparent";
-        private const string TraceStateHeaderName = "tracestate";
 
         private static readonly JsonObjectSerializer s_jsonSerializer = new JsonObjectSerializer();
 
@@ -235,46 +231,9 @@ namespace Azure.Messaging.EventGrid
             {
                 // List of events cannot be null
                 Argument.AssertNotNull(events, nameof(events));
-
-                string activityId = null;
-                string traceState = null;
-                Activity currentActivity = Activity.Current;
-                if (currentActivity != null && currentActivity.IsW3CFormat())
-                {
-                    activityId = currentActivity.Id;
-                    currentActivity.TryGetTraceState(out traceState);
-                }
-
-                foreach (CloudEvent cloudEvent in events)
-                {
-                    // Individual events cannot be null
-                    Argument.AssertNotNull(cloudEvent, nameof(cloudEvent));
-
-                    if (activityId != null &&
-                        !cloudEvent.ExtensionAttributes.ContainsKey(TraceParentHeaderName) &&
-                        !cloudEvent.ExtensionAttributes.ContainsKey(TraceStateHeaderName))
-                    {
-                        cloudEvent.ExtensionAttributes.Add(TraceParentHeaderName, activityId);
-                        if (traceState != null)
-                        {
-                            cloudEvent.ExtensionAttributes.Add(TraceStateHeaderName, traceState);
-                        }
-                    }
-                }
                 using HttpMessage message = _pipeline.CreateMessage();
                 Request request = CreateEventRequest(message, "application/cloudevents-batch+json; charset=utf-8");
-
-                BinaryData data;
-                if (async)
-                {
-                    data = await s_jsonSerializer.SerializeAsync(events, typeof(List<CloudEvent>), cancellationToken).ConfigureAwait(false);
-                }
-                else
-                {
-                    data = s_jsonSerializer.Serialize(events, typeof(List<CloudEvent>), cancellationToken);
-                }
-
-                RequestContent content = RequestContent.Create(data.ToMemory());
+                CloudEventRequestContent content = new CloudEventRequestContent(events);
                 request.Content = content;
 
                 if (async)

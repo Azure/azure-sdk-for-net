@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus.Core;
+using Azure.Messaging.ServiceBus.Diagnostics;
 using Azure.Messaging.ServiceBus.Plugins;
 using Moq;
 using NUnit.Framework;
@@ -145,7 +146,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
 
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var mockTransportBatch = new Mock<TransportMessageBatch>();
-            var batch = new ServiceBusMessageBatch(mockTransportBatch.Object);
+            var mockScope = new EntityScopeFactory("mock", "mock");
+            var batch = new ServiceBusMessageBatch(mockTransportBatch.Object, mockScope);
             var mockTransportSender = new Mock<TransportSender>();
             var mockConnection = new Mock<ServiceBusConnection>();
 
@@ -154,7 +156,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 .Returns(new ServiceBusRetryOptions());
 
             mockConnection
-                .Setup(connection => connection.CreateTransportSender(It.IsAny<string>(), It.IsAny<ServiceBusRetryPolicy>(), It.IsAny<string>(), It.IsAny<string>()))
+                .Setup(connection => connection.CreateTransportSender(It.IsAny<string>(), It.IsAny<ServiceBusRetryPolicy>(), It.IsAny<string>()))
                 .Returns(mockTransportSender.Object);
 
             mockConnection

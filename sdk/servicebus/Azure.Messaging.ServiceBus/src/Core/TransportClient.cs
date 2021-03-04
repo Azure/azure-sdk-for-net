@@ -42,11 +42,10 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <param name="entityPath">The entity path to send the message to.</param>
         /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
         /// <param name="identifier">The identifier for the sender.</param>
-        /// <param name="transactionGroup"></param>
         ///
         /// <returns>A <see cref="TransportSender"/> configured in the requested manner.</returns>
         ///
-        public abstract TransportSender CreateSender(string entityPath, ServiceBusRetryPolicy retryPolicy, string identifier, string transactionGroup);
+        public abstract TransportSender CreateSender(string entityPath, ServiceBusRetryPolicy retryPolicy, string identifier);
 
         public abstract TransportReceiver CreateReceiver(
             string entityPath,
@@ -55,24 +54,7 @@ namespace Azure.Messaging.ServiceBus.Core
             uint prefetchCount,
             string identifier,
             string sessionId,
-            bool isSessionReceiver,
-            string transactionGroup);
-
-        /// <summary>
-        ///   Creates a rule manager strongly aligned with the active protocol and transport,
-        ///   responsible for adding, removing and getting rules from the Service Bus subscription.
-        /// </summary>
-        ///
-        /// <param name="subscriptionPath">The path of the Service Bus subscription to which the rule manager is bound.</param>
-        /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
-        /// <param name="identifier">The identifier for the rule manager.</param>
-        ///
-        /// <returns>A <see cref="TransportRuleManager"/> configured in the requested manner.</returns>
-        ///
-        public abstract TransportRuleManager CreateRuleManager(
-            string subscriptionPath,
-            ServiceBusRetryPolicy retryPolicy,
-            string identifier);
+            bool isSessionReceiver);
 
         /// <summary>
         ///   Closes the connection to the transport client instance.

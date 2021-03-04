@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    public partial class ACSChatEventBaseProperties
+    [JsonConverter(typeof(AcsChatEventBasePropertiesConverter))]
+    public partial class AcsChatEventBaseProperties
     {
-        internal static ACSChatEventBaseProperties DeserializeACSChatEventBaseProperties(JsonElement element)
+        internal static AcsChatEventBaseProperties DeserializeAcsChatEventBaseProperties(JsonElement element)
         {
-            Optional<string> recipientId = default;
+            Optional<CommunicationIdentifierModel> recipientCommunicationIdentifier = default;
             Optional<string> transactionId = default;
             Optional<string> threadId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("recipientId"))
+                if (property.NameEquals("recipientCommunicationIdentifier"))
                 {
-                    recipientId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    recipientCommunicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
                     continue;
                 }
                 if (property.NameEquals("transactionId"))
@@ -35,7 +43,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new ACSChatEventBaseProperties(recipientId.Value, transactionId.Value, threadId.Value);
+            return new AcsChatEventBaseProperties(recipientCommunicationIdentifier.Value, transactionId.Value, threadId.Value);
+        }
+
+        internal partial class AcsChatEventBasePropertiesConverter : JsonConverter<AcsChatEventBaseProperties>
+        {
+            public override void Write(Utf8JsonWriter writer, AcsChatEventBaseProperties model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override AcsChatEventBaseProperties Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeAcsChatEventBaseProperties(document.RootElement);
+            }
         }
     }
 }

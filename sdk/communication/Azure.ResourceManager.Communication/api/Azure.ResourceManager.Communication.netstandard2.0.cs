@@ -117,12 +117,6 @@ namespace Azure.ResourceManager.Communication.Models
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public string Version { get { throw null; } }
     }
-    public partial class CommunicationServiceResourceList
-    {
-        internal CommunicationServiceResourceList() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Communication.Models.CommunicationServiceResource> Value { get { throw null; } }
-    }
     public partial class Dimension
     {
         internal Dimension() { }
@@ -185,12 +179,6 @@ namespace Azure.ResourceManager.Communication.Models
         public string Operation { get { throw null; } }
         public string Provider { get { throw null; } }
         public string Resource { get { throw null; } }
-    }
-    public partial class OperationList
-    {
-        internal OperationList() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Communication.Models.Operation> Value { get { throw null; } }
     }
     public partial class OperationProperties
     {

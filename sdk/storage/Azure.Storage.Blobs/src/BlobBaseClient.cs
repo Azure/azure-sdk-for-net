@@ -1006,7 +1006,7 @@ namespace Azure.Storage.Blobs.Specialized
             }
 
             // Watch out for exploding Responses
-            long length = response.IsUnavailable() ? 0 : response.Value.Length;
+            long length = response.IsUnavailable() ? 0 : response.Headers.ContentLength ?? 0;
             ClientConfiguration.Pipeline.LogTrace($"Response: {response.GetRawResponse().Status}, ContentLength: {length}");
 
             return Response.FromValue(
@@ -1426,9 +1426,7 @@ namespace Azure.Storage.Blobs.Specialized
             bool async = true,
             CancellationToken cancellationToken = default)
         {
-            var client = new BlobBaseClient(Uri, ClientConfiguration, ClientSideEncryption);
-
-            PartitionedDownloader downloader = new PartitionedDownloader(client, transferOptions);
+            PartitionedDownloader downloader = new PartitionedDownloader(this, transferOptions);
 
             if (async)
             {

@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> A paginated list of DataVersion entities. </summary>
-    public partial class DataVersionResourceArmPaginatedResult
+    internal partial class DataVersionResourceArmPaginatedResult
     {
         /// <summary> Initializes a new instance of DataVersionResourceArmPaginatedResult. </summary>
         internal DataVersionResourceArmPaginatedResult()

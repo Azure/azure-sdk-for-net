@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class DiskList
+    internal partial class DiskList
     {
         internal static DiskList DeserializeDiskList(JsonElement element)
         {

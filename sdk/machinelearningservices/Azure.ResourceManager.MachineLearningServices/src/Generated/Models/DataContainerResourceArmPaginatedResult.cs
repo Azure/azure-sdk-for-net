@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> A paginated list of DataContainer entities. </summary>
-    public partial class DataContainerResourceArmPaginatedResult
+    internal partial class DataContainerResourceArmPaginatedResult
     {
         /// <summary> Initializes a new instance of DataContainerResourceArmPaginatedResult. </summary>
         internal DataContainerResourceArmPaginatedResult()

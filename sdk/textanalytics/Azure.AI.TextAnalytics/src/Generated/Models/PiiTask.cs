@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.AI.TextAnalytics
+namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The PiiTask. </summary>
     internal partial class PiiTask
@@ -14,5 +14,7 @@ namespace Azure.AI.TextAnalytics
         public PiiTask()
         {
         }
+
+        public PiiTaskParameters Parameters { get; set; }
     }
 }

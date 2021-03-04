@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Graph.Rbac.Models
 {
     /// <summary> DirectoryObject list operation result. </summary>
-    public partial class DirectoryObjectListResult
+    internal partial class DirectoryObjectListResult
     {
         /// <summary> Initializes a new instance of DirectoryObjectListResult. </summary>
         internal DirectoryObjectListResult()
