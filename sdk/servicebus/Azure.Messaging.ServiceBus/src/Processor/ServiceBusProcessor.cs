@@ -446,6 +446,11 @@ namespace Azure.Messaging.ServiceBus
         /// signal the request to cancel the start operation.  This won't affect the
         /// processor once it starts running.
         /// </param>
+        /// <exception cref="InvalidOperationException">
+        ///   Occurs when the processor is already running. This can be checked via the <see cref="IsProcessing"/> property.
+        ///   This exception will also be thrown if event handlers have not been specified for the <see cref="ProcessMessageAsync"/> or
+        ///   the <see cref="ProcessErrorAsync"/> events.
+        /// </exception>
         public virtual async Task StartProcessingAsync(
             CancellationToken cancellationToken = default)
         {
