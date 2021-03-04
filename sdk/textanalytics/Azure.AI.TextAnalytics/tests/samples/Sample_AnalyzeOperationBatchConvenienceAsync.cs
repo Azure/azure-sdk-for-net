@@ -53,6 +53,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 ExtractKeyPhrasesOptions = new List<ExtractKeyPhrasesOptions>() { new ExtractKeyPhrasesOptions() },
                 RecognizeEntitiesOptions = new List<RecognizeEntitiesOptions>() { new RecognizeEntitiesOptions() },
                 RecognizePiiEntitiesOptions = new List<RecognizePiiEntitiesOptions>() { new RecognizePiiEntitiesOptions() },
+                RecognizeLinkedEntitiesOptions = new List<RecognizeLinkedEntitiesOptions>() { new RecognizeLinkedEntitiesOptions() },
                 DisplayName = "AnalyzeOperationSample"
             };
 
@@ -67,6 +68,8 @@ namespace Azure.AI.TextAnalytics.Samples
                 ExtractKeyPhrasesResultCollection keyPhrasesResult = documentsInPage.ExtractKeyPhrasesActionsResults.FirstOrDefault().Result;
 
                 RecognizePiiEntitiesResultCollection piiResult = documentsInPage.RecognizePiiEntitiesActionsResults.FirstOrDefault().Result;
+
+                RecognizeLinkedEntitiesResultCollection elResult = documentsInPage.RecognizeLinkedEntitiesActionsResults.FirstOrDefault().Result;
 
                 Console.WriteLine("Recognized Entities");
 
@@ -111,6 +114,33 @@ namespace Azure.AI.TextAnalytics.Samples
                     foreach (string keyphrase in result.KeyPhrases)
                     {
                         Console.WriteLine($"    {keyphrase}");
+                    }
+                    Console.WriteLine("");
+                }
+
+                Console.WriteLine("Recognized Linked Entities");
+
+                foreach (RecognizeLinkedEntitiesResult result in elResult)
+                {
+                    Console.WriteLine($"    Recognized the following {result.Entities.Count} linked entities:");
+
+                    foreach (LinkedEntity entity in result.Entities)
+                    {
+                        Console.WriteLine($"    Entity: {entity.Name}");
+                        Console.WriteLine($"    DataSource: {entity.DataSource}");
+                        Console.WriteLine($"    DataSource EntityId: {entity.DataSourceEntityId}");
+                        Console.WriteLine($"    Language: {entity.Language}");
+                        Console.WriteLine($"    DataSource Url: {entity.Url}");
+
+                        Console.WriteLine($"    Total Matches: {entity.Matches.Count()}");
+                        foreach (LinkedEntityMatch match in entity.Matches)
+                        {
+                            Console.WriteLine($"        Match Text: {match.Text}");
+                            Console.WriteLine($"        ConfidenceScore: {match.ConfidenceScore}");
+                            Console.WriteLine($"        Offset: {match.Offset}");
+                            Console.WriteLine($"        Length: {match.Length}");
+                        }
+                        Console.WriteLine("");
                     }
                     Console.WriteLine("");
                 }

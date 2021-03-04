@@ -2247,15 +2247,14 @@ namespace Azure.AI.TextAnalytics
         #region Analyze Operation
 
         /// <summary>
-        /// StartAnalyzeBatchActionsAsync enables the application to have multiple actions including NER, PII and KPE.
+        /// StartAnalyzeBatchActionsAsync enables the application to have multiple actions including entity recognition, PII entity recognition, linked entity recognition and key phrases extraction.
         /// Accepts a list of strings which are analyzed asynchronously.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
         /// <param name="documents">The list of documents to analyze.</param>
         /// <param name="language">The language that the document is written in.</param>
-        /// <param name="actions">
-        /// The different actions to pass as arguments.
+        /// <param name="actions"> The different actions to pass as arguments. <see cref="TextAnalyticsActions"/>
         /// You can use it to have multiple actions to analyze as well as multiple action item per each individual action.
         /// </param>
         /// <param name="options">Sets the IncludeStatistcs property on the analyze action operation. </param>
@@ -2272,14 +2271,13 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// StartAnalyzeBatchActions enables the application to have multiple actions including NER, PII and KPE.
+        /// StartAnalyzeBatchActions enables the application to have multiple actions including entity recognition, PII entity recognition, linked entity recognition and key phrases extraction.
         /// Accepts a list of strings which are analyzed asynchronously.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
         /// <param name="documents">The list of documents to analyze.</param>
-        /// <param name="actions">
-        /// The different actions to pass as arguments.
+        /// <param name="actions"> The different actions to pass as arguments. <see cref="TextAnalyticsActions"/>
         /// You can use it to have multiple actions to analyze as well as multiple action item per each individual action.
         /// </param>
         /// <param name="language">The language that the document is written in.</param>
@@ -2297,14 +2295,13 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// StartAnalyzeBatchActions enables the application to have multiple actions including NER, PII and KPE.
+        /// StartAnalyzeBatchActions enables the application to have multiple actions including entity recognition, PII entity recognition, linked entity recognition and key phrases extraction.
         /// Accepts a list of strings which are analyzed asynchronously.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
         /// <param name="documents">The list of documents to analyze.</param>
-        /// <param name="actions">
-        /// The different actions to pass as arguments.
+        /// <param name="actions"> The different actions to pass as arguments. <see cref="TextAnalyticsActions"/>
         /// You can use it to have multiple actions to analyze as well as multiple action item per each individual action.
         /// </param>
         /// <param name="options">Sets the IncludeStatistcs property on the analyze action operation. </param>
@@ -2321,14 +2318,13 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// StartAnalyzeBatchActionsAsync enables the application to have multiple actions including NER, PII and KPE.
+        /// StartAnalyzeBatchActionsAsync enables the application to have multiple actions including entity recognition, PII entity recognition, linked entity recognition and key phrases extraction.
         /// Accepts a list of strings which are analyzed asynchronously.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
         /// <param name="documents">The list of documents to analyze.</param>
-        /// <param name="actions">
-        /// The different actions to pass as arguments.
+        /// <param name="actions"> The different actions to pass as arguments. <see cref="TextAnalyticsActions"/>
         /// You can use it to have multiple actions to analyze as well as multiple action item per each individual action.
         /// </param>
         /// <param name="options">Sets the IncludeStatistcs property on the analyze action operation. </param>
@@ -2361,6 +2357,10 @@ namespace Azure.AI.TextAnalytics
             if (actions.ExtractKeyPhrasesOptions != null)
             {
                 tasks.KeyPhraseExtractionTasks = Transforms.ConvertFromKeyPhrasesOptionsToTasks(actions.ExtractKeyPhrasesOptions);
+            }
+            if (actions.RecognizeLinkedEntitiesOptions != null)
+            {
+                tasks.EntityLinkingTasks = Transforms.ConvertFromEntityLinkingOptionsToTasks(actions.RecognizeLinkedEntitiesOptions);
             }
 
             AnalyzeBatchInput analyzeDocumentInputs = new AnalyzeBatchInput(batchInput, tasks, actions.DisplayName);
@@ -2401,6 +2401,10 @@ namespace Azure.AI.TextAnalytics
             if (actions.ExtractKeyPhrasesOptions != null)
             {
                 tasks.KeyPhraseExtractionTasks = Transforms.ConvertFromKeyPhrasesOptionsToTasks(actions.ExtractKeyPhrasesOptions);
+            }
+            if (actions.RecognizeLinkedEntitiesOptions != null)
+            {
+                tasks.EntityLinkingTasks = Transforms.ConvertFromEntityLinkingOptionsToTasks(actions.RecognizeLinkedEntitiesOptions);
             }
 
             AnalyzeBatchInput analyzeDocumentInputs = new AnalyzeBatchInput(batchInput, tasks, actions.DisplayName);
