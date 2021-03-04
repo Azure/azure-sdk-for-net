@@ -6,38 +6,38 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers.Models
 {
-    public partial class AcquiredPhoneNumber
+    public partial class PhoneNumberSearchResult
     {
-        internal static AcquiredPhoneNumber DeserializeAcquiredPhoneNumber(JsonElement element)
+        internal static PhoneNumberSearchResult DeserializePhoneNumberSearchResult(JsonElement element)
         {
-            string id = default;
-            string phoneNumber = default;
-            string countryCode = default;
+            string searchId = default;
+            IReadOnlyList<string> phoneNumbers = default;
             PhoneNumberType phoneNumberType = default;
-            PhoneNumberCapabilities capabilities = default;
             PhoneNumberAssignmentType assignmentType = default;
-            DateTimeOffset purchaseDate = default;
+            PhoneNumberCapabilities capabilities = default;
             PhoneNumberCost cost = default;
+            DateTimeOffset searchExpiresBy = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("searchId"))
                 {
-                    id = property.Value.GetString();
+                    searchId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("phoneNumber"))
+                if (property.NameEquals("phoneNumbers"))
                 {
-                    phoneNumber = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("countryCode"))
-                {
-                    countryCode = property.Value.GetString();
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    phoneNumbers = array;
                     continue;
                 }
                 if (property.NameEquals("phoneNumberType"))
@@ -45,19 +45,14 @@ namespace Azure.Communication.PhoneNumbers.Models
                     phoneNumberType = new PhoneNumberType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("capabilities"))
-                {
-                    capabilities = PhoneNumberCapabilities.DeserializePhoneNumberCapabilities(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("assignmentType"))
                 {
                     assignmentType = new PhoneNumberAssignmentType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("purchaseDate"))
+                if (property.NameEquals("capabilities"))
                 {
-                    purchaseDate = property.Value.GetDateTimeOffset("O");
+                    capabilities = PhoneNumberCapabilities.DeserializePhoneNumberCapabilities(property.Value);
                     continue;
                 }
                 if (property.NameEquals("cost"))
@@ -65,8 +60,13 @@ namespace Azure.Communication.PhoneNumbers.Models
                     cost = PhoneNumberCost.DeserializePhoneNumberCost(property.Value);
                     continue;
                 }
+                if (property.NameEquals("searchExpiresBy"))
+                {
+                    searchExpiresBy = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
             }
-            return new AcquiredPhoneNumber(id, phoneNumber, countryCode, phoneNumberType, capabilities, assignmentType, purchaseDate, cost);
+            return new PhoneNumberSearchResult(searchId, phoneNumbers, phoneNumberType, assignmentType, capabilities, cost, searchExpiresBy);
         }
     }
 }
