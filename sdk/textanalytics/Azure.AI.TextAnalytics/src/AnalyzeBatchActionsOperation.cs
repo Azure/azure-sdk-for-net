@@ -258,9 +258,9 @@ namespace Azure.AI.TextAnalytics
                     _totalActions = update.Value.Tasks.Total;
 
                     // TODO - Remove PartiallySucceeded once service deploys this to WestUS2
-                    if (update.Value.Status == TextAnalyticsOperationStatus.Succeeded || 
-                        update.Value.Status == TextAnalyticsOperationStatus.PartiallySucceeded || 
-                        update.Value.Status == TextAnalyticsOperationStatus.PartiallyCompleted || 
+                    if (update.Value.Status == TextAnalyticsOperationStatus.Succeeded ||
+                        update.Value.Status == TextAnalyticsOperationStatus.PartiallySucceeded ||
+                        update.Value.Status == TextAnalyticsOperationStatus.PartiallyCompleted ||
                         update.Value.Status == TextAnalyticsOperationStatus.Failed)
                     {
                         // we need to first assign a value and then mark the operation as completed to avoid race conditions
