@@ -19,6 +19,7 @@
 - For `PiiEntity.Category` the type of the property is now `PiiEntityCategory` instead of `EntityCategory`.
 - Removed `RelatedEntities`.
 - `RecognizePiiEntitiesOptions.Domain` is now a nullable type.
+- In `StartAnalyzeBatchActions` when all actions return status `failed` the SDK will no longer throw an exception. The request will succeed and the errors will be located at the specific action level. 
 
 ### Fixes
 - `RecognizePiiEntities` and `TextAnalyticsActions.RecognizePiiEntitiesOptions` were always passing `PiiEntityDomainType.PHI`. Now, it is only passed when requested by the user [19086](https://github.com/Azure/azure-sdk-for-net/issues/19086).

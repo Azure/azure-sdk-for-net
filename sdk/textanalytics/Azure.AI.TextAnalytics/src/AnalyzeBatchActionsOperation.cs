@@ -106,11 +106,6 @@ namespace Azure.AI.TextAnalytics
         public override bool HasCompleted => _hasCompleted;
 
         /// <summary>
-        /// If the operation has an exception, this property saves its information.
-        /// </summary>
-        private RequestFailedException _requestFailedException;
-
-        /// <summary>
         /// The last HTTP response received from the server. <c>null</c> until the first response is received.
         /// </summary>
         private Response _response;
@@ -263,19 +258,16 @@ namespace Azure.AI.TextAnalytics
                     _totalActions = update.Value.Tasks.Total;
 
                     // TODO - Remove PartiallySucceeded once service deploys this to WestUS2
-                    if (update.Value.Status == TextAnalyticsOperationStatus.Succeeded || update.Value.Status == TextAnalyticsOperationStatus.PartiallySucceeded || update.Value.Status == TextAnalyticsOperationStatus.PartiallyCompleted)
+                    if (update.Value.Status == TextAnalyticsOperationStatus.Succeeded || 
+                        update.Value.Status == TextAnalyticsOperationStatus.PartiallySucceeded || 
+                        update.Value.Status == TextAnalyticsOperationStatus.PartiallyCompleted || 
+                        update.Value.Status == TextAnalyticsOperationStatus.Failed)
                     {
                         // we need to first assign a value and then mark the operation as completed to avoid race conditions
                         var nextLink = update.Value.NextLink;
                         var value = Transforms.ConvertToAnalyzeOperationResult(update.Value, _idToIndexMap);
                         _firstPage = Page.FromValues(new List<AnalyzeBatchActionsResult>() { value }, nextLink, _response);
                         _hasCompleted = true;
-                    }
-                    else if (update.Value.Status == TextAnalyticsOperationStatus.Failed)
-                    {
-                        _requestFailedException = await ClientCommon.CreateExceptionForFailedOperationAsync(async, _diagnostics, _response, update.Value.Errors).ConfigureAwait(false);
-                        _hasCompleted = true;
-                        throw _requestFailedException;
                     }
                 }
                 catch (Exception e)
@@ -350,8 +342,6 @@ namespace Azure.AI.TextAnalytics
         {
             if (!HasCompleted)
                 throw new InvalidOperationException("The operation has not completed yet.");
-            if (!HasValue)
-                throw _requestFailedException;
         }
     }
 }

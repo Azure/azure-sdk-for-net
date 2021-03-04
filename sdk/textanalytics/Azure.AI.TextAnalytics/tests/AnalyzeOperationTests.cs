@@ -450,6 +450,41 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
+        public async Task AnalyzeOperationBatchWithAllErrorsTest()
+        {
+            TextAnalyticsClient client = GetClient();
+
+            var documents = new List<string>
+            {
+                "Subject is taking 100mg of ibuprofen twice daily",
+                "",
+            };
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            {
+                ExtractKeyPhrasesOptions = new List<ExtractKeyPhrasesOptions>()
+                {
+                    new ExtractKeyPhrasesOptions()
+                    {
+                        ModelVersion = "InvalidVersion"
+                    }
+                }
+            };
+
+            AnalyzeBatchActionsOperation operation = await client.StartAnalyzeBatchActionsAsync(documents, batchActions, "en");
+            await operation.WaitForCompletionAsync(PollingInterval);
+
+            //Take the first page
+            AnalyzeBatchActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+
+            //Key phrases
+            var keyPhrasesActions = resultCollection.ExtractKeyPhrasesActionsResults.ToList();
+
+            Assert.AreEqual(1, keyPhrasesActions.Count);
+            Assert.IsTrue(keyPhrasesActions[0].HasError);
+            Assert.AreEqual(TextAnalyticsErrorCode.InvalidRequest, keyPhrasesActions[0].Error.ErrorCode.ToString());
+        }
+
+        [Test]
         public async Task AnalyzeOperationBatchWithPHIDomain()
         {
             TextAnalyticsClient client = GetClient();
