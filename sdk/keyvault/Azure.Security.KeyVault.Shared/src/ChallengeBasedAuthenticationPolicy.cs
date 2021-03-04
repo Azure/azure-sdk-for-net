@@ -13,7 +13,7 @@ namespace Azure.Security.KeyVault
     internal class ChallengeBasedAuthenticationPolicy : BearerTokenChallengeAuthenticationPolicy
     {
         private static ConcurrentDictionary<string, AuthorityScope> _scopeCache = new ConcurrentDictionary<string, AuthorityScope>();
-        private ConcurrentDictionary<HttpMessage, RequestContent> _contentCache = new ConcurrentDictionary<HttpMessage, RequestContent>();
+        private const string KeyVaultStashedContentKey = "KeyVaultContent";
         private AuthorityScope _scope;
 
         public ChallengeBasedAuthenticationPolicy(TokenCredential credential) : base(credential, Array.Empty<string>())
@@ -43,7 +43,7 @@ namespace Azure.Security.KeyVault
                 // As a result, before we know the auth scheme we need to avoid sending an unprotected body to Key Vault.
                 // We don't currently support this enhanced auth scheme in the SDK but we still don't want to send any unprotected data to vaults which require it.
 
-                _contentCache[message] = message.Request.Content;
+                message.SetProperty(KeyVaultStashedContentKey, message.Request.Content);
                 message.Request.Content = null;
             }
             else
@@ -56,14 +56,9 @@ namespace Azure.Security.KeyVault
 
         protected override async ValueTask<bool> AuthenticateRequestFromChallengeAsync(HttpMessage message, bool async)
         {
-            if (message.Request.Content == null && _contentCache.TryRemove(message, out var content))
+            if (message.Request.Content == null && message.TryGetProperty(KeyVaultStashedContentKey, out var content))
             {
-                message.Request.Content = content;
-                if (_contentCache.Count > 10)
-                {
-                    // This should never occur, but it is just a safeguard against a leak of dictionary entries.
-                    _contentCache.Clear();
-                }
+                message.Request.Content = content as RequestContent;
             }
 
             string authority = GetRequestAuthority(message.Request);

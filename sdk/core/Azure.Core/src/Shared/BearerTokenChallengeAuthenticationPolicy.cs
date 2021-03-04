@@ -90,7 +90,7 @@ namespace Azure.Core.Pipeline
                 throw new InvalidOperationException("Bearer token authentication is not permitted for non TLS protected (https) endpoints.");
             }
 
-            if (Scopes.Length > 0)
+            if (Scopes.Length > 0 && !message.Request.Headers.Contains(HttpHeader.Names.Authorization))
             {
                var context = new TokenRequestContext(Scopes, message.Request.ClientRequestId);
                await AuthenticateRequestAsync(message, context, async).ConfigureAwait(false);
