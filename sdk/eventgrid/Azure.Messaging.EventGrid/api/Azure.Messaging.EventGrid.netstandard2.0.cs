@@ -55,13 +55,19 @@ namespace Azure.Messaging.EventGrid
     public static partial class SystemEventNames
     {
         public const string AcsChatMessageDeleted = "Microsoft.Communication.ChatMessageDeleted";
+        public const string AcsChatMessageDeletedInThread = "Microsoft.Communication.ChatMessageDeletedInThread";
         public const string AcsChatMessageEdited = "Microsoft.Communication.ChatMessageEdited";
+        public const string AcsChatMessageEditedInThread = "Microsoft.Communication.ChatMessageEditedInThread";
         public const string AcsChatMessageReceived = "Microsoft.Communication.ChatMessageReceived";
+        public const string AcsChatMessageReceivedInThread = "Microsoft.Communication.ChatMessageReceivedInThread";
         public const string AcsChatParticipantAddedToThread = "Microsoft.Communication.ChatParticipantAddedToThread";
         public const string AcsChatParticipantAddedToThreadWithUser = "Microsoft.Communication.ChatParticipantAddedToThreadWithUser";
         public const string AcsChatParticipantRemovedFromThread = "Microsoft.Communication.ChatParticipantRemovedFromThread";
         public const string AcsChatParticipantRemovedFromThreadWithUser = "Microsoft.Communication.ChatParticipantRemovedFromThreadWithUser";
+        public const string AcsChatThreadCreated = "Microsoft.Communication.ChatThreadCreated";
         public const string AcsChatThreadCreatedWithUser = "Microsoft.Communication.ChatThreadCreatedWithUser";
+        public const string AcsChatThreadDeleted = "Microsoft.Communication.ChatThreadDeleted";
+        public const string AcsChatThreadPropertiesUpdated = "Microsoft.Communication.ChatThreadPropertiesUpdated";
         public const string AcsChatThreadPropertiesUpdatedPerUser = "Microsoft.Communication.ChatThreadPropertiesUpdatedPerUser";
         public const string AcsChatThreadWithUserDeleted = "Microsoft.Communication.ChatThreadWithUserDeleted";
         public const string AcsSmsDeliveryReportReceived = "Microsoft.Communication.SMSDeliveryReportReceived";
