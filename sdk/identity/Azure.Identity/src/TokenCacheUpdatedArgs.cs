@@ -12,12 +12,12 @@ namespace Azure.Identity
     {
         internal TokenCacheUpdatedArgs(ReadOnlyMemory<byte> cacheData)
         {
-            Data = cacheData;
+            UnsafeCacheData = cacheData;
         }
 
         /// <summary>
         /// The <see cref="TokenCachePersistenceOptions"/> instance which was updated.
         /// </summary>
-        public ReadOnlyMemory<byte> Data { get; }
+        public ReadOnlyMemory<byte> UnsafeCacheData { get; }
     }
 }

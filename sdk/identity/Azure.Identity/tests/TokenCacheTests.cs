@@ -58,9 +58,9 @@ namespace Azure.Identity.Tests
 
         public static IEnumerable<object[]> PersistentCacheOptions()
         {
-            yield return new object[] { new TokenCachePersistenceOptions { AllowUnencryptedStorage = true, Name = "foo" }, true, "foo" };
-            yield return new object[] { new TokenCachePersistenceOptions { AllowUnencryptedStorage = false, Name = "bar" }, false, "bar" };
-            yield return new object[] { new TokenCachePersistenceOptions { AllowUnencryptedStorage = false }, false, Constants.DefaultMsalTokenCacheName };
+            yield return new object[] { new TokenCachePersistenceOptions { UnsafeAllowUnencryptedStorage = true, Name = "foo" }, true, "foo" };
+            yield return new object[] { new TokenCachePersistenceOptions { UnsafeAllowUnencryptedStorage = false, Name = "bar" }, false, "bar" };
+            yield return new object[] { new TokenCachePersistenceOptions { UnsafeAllowUnencryptedStorage = false }, false, Constants.DefaultMsalTokenCacheName };
             yield return new object[] { new TokenCachePersistenceOptions { Name = "fizz" }, false, "fizz" };
             yield return new object[] { new TokenCachePersistenceOptions(), false, Constants.DefaultMsalTokenCacheName };
         }
@@ -205,7 +205,7 @@ namespace Azure.Identity.Tests
             mockWrapper.SetupSequence(m => m.VerifyPersistence())
             .Throws<MsalCachePersistenceException>()
             .Pass();
-            cache = new TokenCache(new TokenCachePersistenceOptions { AllowUnencryptedStorage = true }, mockWrapper.Object);
+            cache = new TokenCache(new TokenCachePersistenceOptions { UnsafeAllowUnencryptedStorage = true }, mockWrapper.Object);
 
             await cache.RegisterCache(IsAsync, mockMSALCache.Object, default);
 
@@ -380,7 +380,7 @@ namespace Azure.Identity.Tests
 
             Task updateHandler(TokenCacheUpdatedArgs args)
             {
-                Assert.That(args.Data.ToArray(), Is.EqualTo(updatedBytes));
+                Assert.That(args.UnsafeCacheData.ToArray(), Is.EqualTo(updatedBytes));
                 evt.Set();
                 return Task.CompletedTask;
             };
@@ -445,12 +445,12 @@ namespace Azure.Identity.Tests
                 _bytes = bytes;
                 _updated = updated;
             }
-            public override Task<ReadOnlyMemory<byte>> RefreshCacheAsync()
+            protected internal override Task<ReadOnlyMemory<byte>> RefreshCacheAsync()
             {
                 return Task.FromResult(_bytes);
             }
 
-            public override Task TokenCacheUpdatedAsync(TokenCacheUpdatedArgs tokenCacheUpdatedArgs)
+            protected internal override Task TokenCacheUpdatedAsync(TokenCacheUpdatedArgs tokenCacheUpdatedArgs)
             {
                 return _updated == null ? Task.CompletedTask : _updated(tokenCacheUpdatedArgs);
             }

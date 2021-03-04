@@ -17,6 +17,6 @@ namespace Azure.Identity
         /// If set to true the token cache may be persisted as an unencrypted file if no OS level user encryption is available. When set to false the token cache
         /// will throw a <see cref="CredentialUnavailableException"/> in the event no OS level user encryption is available.
         /// </summary>
-        public bool AllowUnencryptedStorage { get; set; }
+        public bool UnsafeAllowUnencryptedStorage { get; set; }
     }
 }

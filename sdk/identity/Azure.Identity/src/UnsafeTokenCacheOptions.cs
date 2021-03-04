@@ -15,12 +15,12 @@ namespace Azure.Identity
         /// The delegate to be called when the Updated event fires.
         /// </summary>
         /// <value></value>
-        public abstract Task TokenCacheUpdatedAsync(TokenCacheUpdatedArgs tokenCacheUpdatedArgs);
+        protected internal abstract Task TokenCacheUpdatedAsync(TokenCacheUpdatedArgs tokenCacheUpdatedArgs);
 
         /// <summary>
         /// The bytes used to initialize the token cache. This would most likely have come from the <see cref="TokenCacheUpdatedArgs"/>.
         /// </summary>
         /// <value></value>
-        public abstract Task<ReadOnlyMemory<byte>> RefreshCacheAsync();
+        protected internal abstract Task<ReadOnlyMemory<byte>> RefreshCacheAsync();
     }
 }

@@ -41,7 +41,7 @@ namespace Azure.Identity.Samples
         public void Identity_TokenCache_PersistentUnencrypted()
         {
             #region Snippet:Identity_TokenCache_PersistentUnencrypted
-            var persistenceOptions = new TokenCachePersistenceOptions { AllowUnencryptedStorage = true };
+            var persistenceOptions = new TokenCachePersistenceOptions { UnsafeAllowUnencryptedStorage = true };
 
             var credential = new InteractiveBrowserCredential(
                 new InteractiveBrowserCredentialOptions { TokenCachePersistenceOptions = persistenceOptions }

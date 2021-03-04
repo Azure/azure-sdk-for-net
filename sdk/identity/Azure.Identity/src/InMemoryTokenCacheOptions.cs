@@ -8,12 +8,12 @@ namespace Azure.Identity
 {
     internal class InMemoryTokenCacheOptions : UnsafeTokenCacheOptions
     {
-        public override Task<ReadOnlyMemory<byte>> RefreshCacheAsync()
+        protected internal override Task<ReadOnlyMemory<byte>> RefreshCacheAsync()
         {
             return Task.FromResult(new ReadOnlyMemory<byte>());
         }
 
-        public override Task TokenCacheUpdatedAsync(TokenCacheUpdatedArgs tokenCacheUpdatedArgs)
+        protected internal override Task TokenCacheUpdatedAsync(TokenCacheUpdatedArgs tokenCacheUpdatedArgs)
         {
             return Task.CompletedTask;
         }

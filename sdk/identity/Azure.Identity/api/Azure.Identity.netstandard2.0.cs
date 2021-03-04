@@ -220,8 +220,8 @@ namespace Azure.Identity
     public partial class TokenCachePersistenceOptions
     {
         public TokenCachePersistenceOptions() { }
-        public bool AllowUnencryptedStorage { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
+        public bool UnsafeAllowUnencryptedStorage { get { throw null; } set { } }
     }
     public partial class TokenCacheUpdatedArgs
     {
@@ -236,8 +236,8 @@ namespace Azure.Identity
     public abstract partial class UnsafeTokenCacheOptions : Azure.Identity.TokenCachePersistenceOptions
     {
         protected UnsafeTokenCacheOptions() { }
-        public abstract System.Threading.Tasks.Task<System.ReadOnlyMemory<byte>> RefreshCacheAsync();
-        public abstract System.Threading.Tasks.Task TokenCacheUpdatedAsync(Azure.Identity.TokenCacheUpdatedArgs tokenCacheUpdatedArgs);
+        protected internal abstract System.Threading.Tasks.Task<System.ReadOnlyMemory<byte>> RefreshCacheAsync();
+        protected internal abstract System.Threading.Tasks.Task TokenCacheUpdatedAsync(Azure.Identity.TokenCacheUpdatedArgs tokenCacheUpdatedArgs);
     }
     public partial class UsernamePasswordCredential : Azure.Core.TokenCredential
     {

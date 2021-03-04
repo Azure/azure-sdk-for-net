@@ -77,7 +77,7 @@ namespace Azure.Identity
             }
             else
             {
-                _allowUnencryptedStorage = options?.AllowUnencryptedStorage ?? false;
+                _allowUnencryptedStorage = options?.UnsafeAllowUnencryptedStorage ?? false;
                 _name = options?.Name ?? Constants.DefaultMsalTokenCacheName;
                 _persistToDisk = true;
             }
