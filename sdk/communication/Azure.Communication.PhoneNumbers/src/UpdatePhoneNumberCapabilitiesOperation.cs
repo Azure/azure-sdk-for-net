@@ -1,12 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Communication.PhoneNumbers.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.Communication.PhoneNumbers.Models
+namespace Azure.Communication.PhoneNumbers
 {
-    [CodeGenModel("PhoneNumbersUpdateCapabilitiesOperation")]
+    [CodeGenModel("InternalPhoneNumbersUpdateCapabilitiesOperation")]
     public partial class UpdatePhoneNumberCapabilitiesOperation
     {
         internal UpdatePhoneNumberCapabilitiesOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)

@@ -12,7 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.Communication.PhoneNumbers.Models
+namespace Azure.Communication.PhoneNumbers
 {
     /// <summary> Releases an acquired phone number. </summary>
     public partial class ReleasePhoneNumberOperation : Operation<Response>, IOperationSource<Response>

@@ -14,25 +14,11 @@ namespace Azure.Communication.PhoneNumbers
     /// <summary>
     /// The Azure Communication Services phone numbers client.
     /// </summary>
-    [CodeGenSuppress("GetByNumberAsync", typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("GetByNumber", typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("GetSearchResultAsync", typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("GetSearchResult", typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("GetOperationAsync", typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("GetOperation", typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("CancelOperationAsync", typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("CancelOperation", typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("UpdateAsync", typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("Update", typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("ListPhoneNumbersAsync", typeof(int?), typeof(int?),typeof(CancellationToken))]
-    [CodeGenSuppress("ListPhoneNumbers", typeof(int?), typeof(int?), typeof(CancellationToken))]
-    [CodeGenSuppress("StartSearchAvailablePhoneNumbersAsync", typeof(string), typeof(PhoneNumberSearchRequest), typeof(CancellationToken))]
-    [CodeGenSuppress("StartSearchAvailablePhoneNumbers", typeof(string), typeof(PhoneNumberSearchRequest), typeof(CancellationToken))]
-    [CodeGenSuppress("ListPhoneNumbersAsync", typeof(CancellationToken))]
-    [CodeGenSuppress("ListPhoneNumbers", typeof(CancellationToken))]
-    public partial class PhoneNumbersClient
+    public class PhoneNumbersClient
     {
-        internal PhoneNumbersRestClient RestClient { get; }
+        internal InternalPhoneNumbersRestClient RestClient { get; }
+        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly HttpPipeline _pipeline;
 
         #region public constructors - all arguments need null check
 
@@ -88,7 +74,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="apiVersion"> Api Version. </param>
         internal PhoneNumbersClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2021-03-07")
         {
-            RestClient = new PhoneNumbersRestClient(clientDiagnostics, pipeline, endpoint, apiVersion);
+            RestClient = new InternalPhoneNumbersRestClient(clientDiagnostics, pipeline, endpoint, apiVersion);
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }

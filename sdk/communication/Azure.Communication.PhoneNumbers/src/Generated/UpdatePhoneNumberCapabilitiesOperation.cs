@@ -10,10 +10,11 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Communication.PhoneNumbers.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.Communication.PhoneNumbers.Models
+namespace Azure.Communication.PhoneNumbers
 {
     /// <summary> Updates the capabilities of a phone number. </summary>
     public partial class UpdatePhoneNumberCapabilitiesOperation : Operation<AcquiredPhoneNumber>, IOperationSource<AcquiredPhoneNumber>
