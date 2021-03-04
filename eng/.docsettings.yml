@@ -10,6 +10,7 @@ omitted_paths:
   - common/Perf/*
   - common/SmokeTests/*
   - common/Stress/*
+  - sdk/*/*/perf/*
   - sdk/*/samples/*
   - sdk/*/*/samples/*
   - sdk/*/swagger/*
@@ -34,7 +35,6 @@ known_presence_issues:
   - ['sdk/batch/Microsoft.Azure.Batch/Tools','#5499']
   - ['sdk/batch/Microsoft.Azure.Batch/Tools','#5499']
   - ['sdk/cognitiveservices/AnomalyDetector','#5499']
-  - ['sdk/cognitiveservices/FormRecognizer','#5499']
   - ['sdk/cognitiveservices/Knowledge.QnAMaker','#5499']
   - ['sdk/cognitiveservices/Language.LUIS.Authoring','#5499']
   - ['sdk/cognitiveservices/Language.LUIS.Runtime','#5499']
@@ -138,6 +138,7 @@ known_content_issues:
   - ['sdk/appconfiguration/README.md','azure-sdk-tools/issues/42']
   - ['sdk/appconfiguration/Azure.Data.AppConfiguration/tests/Readme.md','#5499']
   - ['sdk/storage/README.md','azure-sdk-tools/issues/42']
+  - ['sdk/cognitiveservices/FormRecognizer/README.md','#5499']
   - ['sdk/cognitiveservices/Language.TextAnalytics/src/README.md','#5499']
   - ['sdk/cognitiveservices/Personalizer/src/README.md','#5499']
   - ['sdk/batch/Microsoft.Azure.Batch/README.md','#5499']
@@ -151,6 +152,7 @@ known_content_issues:
   - ['sdk/eventgrid/Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents/README.md', '#15423']
   - ['sdk/eventhub/README.md','azure-sdk-tools/issues/42']
   - ['sdk/search/README.md','azure-sdk-tools/issues/42']
+  - ['sdk/search/Azure.Search.Documents/README.md','Credscan cleanup']
   - ['sdk/formrecognizer/Azure.AI.FormRecognizer/README.md','#5499']
   - ['sdk/formrecognizer/Azure.AI.FormRecognizer/README.md','#11492']
   - ['sdk/storage/Azure.Storage.Blobs/README.md','#11492']

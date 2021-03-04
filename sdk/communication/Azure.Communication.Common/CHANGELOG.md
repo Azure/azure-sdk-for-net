@@ -1,17 +1,23 @@
 # Release History
+## 1.0.0-beta.5 (Unreleased)
 
-## 1.0.0-beta.4 (Unreleased)
+### Breaking Changes
+- Updated `CommunicationTokenRefreshOptions(bool refreshProactively, Func<CancellationToken, string> tokenRefresher,  Func<CancellationToken, ValueTask<string>> asyncTokenRefresher = null, string initialToken = null)`
+to `CommunicationTokenRefreshOptions(bool refreshProactively, Func<CancellationToken, string> tokenRefresher)`. `asyncTokenRefresher` and `initialToken` are updated to become public properties.
+
+## 1.0.0-beta.4 (2021-02-09)
 
 ### Added
 - Added `MicrosoftTeamsUserIdentifier`.
 
 ### Breaking Changes
 - Renamed `CommunicationUserCredential` to `CommunicationTokenCredential`.
-- Replace `CommunicationTokenCredential(bool refreshProactively, Func<CancellationToken, string> tokenRefresher,Func<CancellationToken, ValueTask<string>>? asyncTokenRefresher = null, string? initialToken = null)` 
+- Replaced `CommunicationTokenCredential(bool refreshProactively, Func<CancellationToken, string> tokenRefresher,Func<CancellationToken, ValueTask<string>>? asyncTokenRefresher = null, string? initialToken = null)`.
 with `CommunicationTokenCredential(CommunicationTokenRefreshOptions tokenRefreshOptions)`.
-- Renamed `PhoneNumber` to `PhoneNumberIdentifier`
-- Renamed `CommunicationUser` to `CommunicationUserIdentifier `
-- Renamed `CallingApplication` to `CallingApplicationIdentifier`
+- Renamed `PhoneNumber` to `PhoneNumberIdentifier`.
+- Renamed `CommunicationUser` to `CommunicationUserIdentifier`.
+- Removed `CallingApplication`.
+- Renamed `Id` to `RawId` in `PhoneNumberIdentifier`.
 
 ## 1.0.0-beta.3 (2020-11-16)
 Updated `Azure.Communication.Common` version.

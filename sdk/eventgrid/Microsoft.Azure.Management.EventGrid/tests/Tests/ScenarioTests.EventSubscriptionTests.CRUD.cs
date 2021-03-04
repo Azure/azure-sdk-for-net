@@ -114,6 +114,20 @@ namespace EventGrid.Tests.ScenarioTests
                     Destination = new WebHookEventSubscriptionDestination()
                     {
                         EndpointUrl = AzureFunctionEndpointUrl,
+                        DeliveryAttributeMappings = new List<DeliveryAttributeMapping> 
+                        { 
+                            new StaticDeliveryAttributeMapping()
+                            {
+                                Name = "StaticDeliveryAttribute1",
+                                IsSecret = false,
+                                Value = "someValue"
+                            },
+                            new DynamicDeliveryAttributeMapping()
+                            { 
+                                Name = "DynamicDeliveryAttribute1",
+                                SourceField = "SomeField"
+                            }
+                        }
                     },
                     Filter = new EventSubscriptionFilter()
                     {
@@ -135,6 +149,10 @@ namespace EventGrid.Tests.ScenarioTests
                 eventSubscriptionResponse = this.eventGridManagementClient.EventSubscriptions.UpdateAsync(scope, eventSubscriptionName, eventSubscriptionUpdateParameters).Result;
                 Assert.Equal(".jpg", eventSubscriptionResponse.Filter.SubjectEndsWith, StringComparer.CurrentCultureIgnoreCase);
                 Assert.Contains(eventSubscriptionResponse.Labels, label => label == "UpdatedLabel1");
+                Assert.NotNull(((WebHookEventSubscriptionDestination)eventSubscriptionResponse.Destination).DeliveryAttributeMappings);
+                Assert.Equal(2, ((WebHookEventSubscriptionDestination)eventSubscriptionResponse.Destination).DeliveryAttributeMappings.Count);
+                Assert.Equal("StaticDeliveryAttribute1", ((WebHookEventSubscriptionDestination)eventSubscriptionUpdateParameters.Destination).DeliveryAttributeMappings[0].Name);
+                Assert.Equal("DynamicDeliveryAttribute1", ((WebHookEventSubscriptionDestination)eventSubscriptionUpdateParameters.Destination).DeliveryAttributeMappings[1].Name);
 
                 // List event subscriptions
                 var eventSubscriptionsPage = this.EventGridManagementClient.EventSubscriptions.ListRegionalByResourceGroupAsync(resourceGroup, location).Result;

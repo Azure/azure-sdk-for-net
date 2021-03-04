@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -94,40 +95,149 @@ namespace Azure.Iot.TimeSeriesInsights
         }
 
         /// <summary>
-        /// Returns the model settings which includes model display name, Time Series ID properties and default type ID. Every Gen2 environment has a model that is automatically created.
-        /// </summary>
-        /// <param name="clientSessionId"> Optional client session ID. Service records this value. Allows the service to trace a group of related operations across services, and allows the customer to contact support regarding a particular group of requests. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns>The deserialized application/json model settings digital twin and the http response <see cref="Response{ModelSettingsResponse}"/>.</returns>
-        /// <example>
-        /// This sample demonstrates getting and deserializing a model settings.
-        ///
-        /// <code snippet="Snippet:TimeSeriesInsightsGetModelSettings">
-        /// // Get the model settings for the time series insights environment
-        /// Response&lt;Models.ModelSettingsResponse&gt; response = await client.GetAsync().ConfigureAwait(false);
-        /// Console.WriteLine($&quot;Retrieved model {response.Value.ModelSettings.Name}.&quot;);
-        /// </code>
-        /// </example>
-        public virtual Task<Response<ModelSettingsResponse>> GetAsync(string clientSessionId = null, CancellationToken cancellationToken = default)
-        {
-            return _modelSettingsRestClient.GetAsync(clientSessionId, cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns the model settings which includes model display name, Time Series ID properties and default type ID. Every Gen2 environment has a model that is automatically created.
-        /// </summary>
-        /// <param name="clientSessionId"> Optional client session ID. Service records this value. Allows the service to trace a group of related operations across services, and allows the customer to contact support regarding a particular group of requests. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns>The deserialized application/json model settings digital twin and the http response <see cref="Response{ModelSettingsResponse}"/>.</returns>
-        public virtual Response<ModelSettingsResponse> Get(string clientSessionId = null, CancellationToken cancellationToken = default)
-        {
-            return _modelSettingsRestClient.Get(clientSessionId, cancellationToken);
-        }
-
-        /// <summary>
         /// Gets the scope for authentication/authorization policy.
         /// </summary>
         /// <returns>List of scopes for the specified endpoint.</returns>
         internal static string[] GetAuthorizationScopes() => s_tsiDefaultScopes;
+
+        /// <summary>
+        /// Gets Time Series model settings asynchronously.
+        /// </summary>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The model settings which includes model display name, Time Series Id properties and default type Id with the http response <see cref="Response{TimeSeriesModelSettings}"/>.</returns>
+        public virtual async Task<Response<TimeSeriesModelSettings>> GetModelSettingsAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetModelSettings)}");
+            scope.Start();
+            try
+            {
+                // To do: Generate client session Id
+                Response<ModelSettingsResponse> modelSettings = await _modelSettingsRestClient.GetAsync(null, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(modelSettings.Value.ModelSettings, modelSettings.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets Time Series model settings synchronously.
+        /// </summary>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The model settings which includes model display name, Time Series Id properties and default type Id with the http response <see cref="Response{TimeSeriesModelSettings}"/>.</returns>
+        public virtual Response<TimeSeriesModelSettings> GetModelSettings(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetModelSettings)}");
+            scope.Start();
+            try
+            {
+                // To do: Generate client session Id
+                Response<ModelSettingsResponse> modelSettings = _modelSettingsRestClient.Get(null, cancellationToken);
+                return Response.FromValue(modelSettings.Value.ModelSettings, modelSettings.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates model name on Time Series model settings asynchronously.
+        /// </summary>
+        /// <param name="name">Model display name which is mutable by the user. Initial value is &quot;DefaultModel&quot;.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The updated model settings with the http response <see cref="Response{TimeSeriesModelSettings}"/>.</returns>
+        public virtual async Task<Response<TimeSeriesModelSettings>> UpdateModelSettingsNameAsync(string name, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(UpdateModelSettingsName)}");
+            scope.Start();
+            try
+            {
+                // To do: Generate client session Id
+                var options = new UpdateModelSettingsRequest { Name = name };
+                Response<ModelSettingsResponse> modelSettings = await _modelSettingsRestClient.UpdateAsync(options, null, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(modelSettings.Value.ModelSettings, modelSettings.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates model default type Id on Time Series model settings asynchronously.
+        /// </summary>
+        /// <param name="defaultTypeId">Default type Id of the model that new instances will automatically belong to.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The updated model settings with the http response <see cref="Response{TimeSeriesModelSettings}"/>.</returns>
+        public virtual async Task<Response<TimeSeriesModelSettings>> UpdateModelSettingsDefaultTypeIdAsync(string defaultTypeId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(UpdateModelSettingsDefaultTypeId)}");
+            scope.Start();
+            try
+            {
+                // To do: Generate client session Id
+                var options = new UpdateModelSettingsRequest { DefaultTypeId = defaultTypeId };
+                Response<ModelSettingsResponse> modelSettings = await _modelSettingsRestClient.UpdateAsync(options, null, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(modelSettings.Value.ModelSettings, modelSettings.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates model name on Time Series model settings synchronously.
+        /// </summary>
+        /// <param name="name">Model display name which is mutable by the user. Initial value is &quot;DefaultModel&quot;.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The updated model settings with the http response <see cref="Response{TimeSeriesModelSettings}"/>.</returns>
+        public virtual Response<TimeSeriesModelSettings> UpdateModelSettingsName(string name, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(UpdateModelSettingsName)}");
+            scope.Start();
+            try
+            {
+                // To do: Generate client session Id
+                var options = new UpdateModelSettingsRequest { Name = name };
+                Response<ModelSettingsResponse> modelSettings = _modelSettingsRestClient.Update(options, null, cancellationToken);
+                return Response.FromValue(modelSettings.Value.ModelSettings, modelSettings.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates default type Id on Time Series model settings synchronously.
+        /// </summary>
+        /// <param name="defaultTypeId">Default type Id of the model that new instances will automatically belong to.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The updated model settings with the http response <see cref="Response{TimeSeriesModelSettings}"/>.</returns>
+        public virtual Response<TimeSeriesModelSettings> UpdateModelSettingsDefaultTypeId(string defaultTypeId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(UpdateModelSettingsDefaultTypeId)}");
+            scope.Start();
+            try
+            {
+                // To do: Generate client session Id
+                var options = new UpdateModelSettingsRequest { DefaultTypeId = defaultTypeId };
+                Response<ModelSettingsResponse> modelSettings = _modelSettingsRestClient.Update(options, null, cancellationToken);
+                return Response.FromValue(modelSettings.Value.ModelSettings, modelSettings.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
     }
 }

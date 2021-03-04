@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    internal static class BlobAuditingPolicyStateExtensions
+    internal static partial class BlobAuditingPolicyStateExtensions
     {
         public static string ToSerialString(this BlobAuditingPolicyState value) => value switch
         {

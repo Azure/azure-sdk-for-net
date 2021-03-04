@@ -16,6 +16,7 @@ using Azure.Messaging.ServiceBus.Primitives;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Encoding;
 using Microsoft.Azure.Amqp.Framing;
+using Microsoft.Azure.Amqp.Transaction;
 
 namespace Azure.Messaging.ServiceBus.Amqp
 {
@@ -70,7 +71,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private readonly ServiceBusReceiveMode _receiveMode;
         private readonly string _identifier;
         private readonly FaultTolerantAmqpObject<ReceivingAmqpLink> _receiveLink;
-
         private readonly FaultTolerantAmqpObject<RequestResponseAmqpLink> _managementLink;
 
         /// <summary>
@@ -82,7 +82,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// The Session Id associated with the receiver.
         /// </summary>
         public override string SessionId { get; protected set; }
-
         public override DateTimeOffset SessionLockedUntil { get; protected set; }
 
         private Exception LinkException { get; set; }

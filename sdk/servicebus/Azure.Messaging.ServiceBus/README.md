@@ -12,7 +12,7 @@ Use the client library for Azure Service Bus to:
 
 - Implement complex workflows: message sessions support scenarios that require message ordering or message deferral.
 
-[Source code](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/servicebus/Azure.Messaging.ServiceBus/src) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Messaging.ServiceBus/) | [API reference documentation](https://docs.microsoft.com/dotnet/api/azure.messaging.servicebus?view=azure-dotnet) | [Product documentation](https://docs.microsoft.com/azure/service-bus/) | [Migration guide](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/MigrationGuide.md)
+[Source code](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/servicebus/Azure.Messaging.ServiceBus/src) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Messaging.ServiceBus/) | [API reference documentation](https://docs.microsoft.com/dotnet/api/azure.messaging.servicebus) | [Product documentation](https://docs.microsoft.com/azure/service-bus/) | [Migration guide](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/MigrationGuide.md)
 
 ## Getting started
 
@@ -22,15 +22,17 @@ Use the client library for Azure Service Bus to:
 
 - **Service Bus namespace:** To interact with Azure Service Bus, you'll also need to have a namespace available. If you are not familiar with creating Azure resources, you may wish to follow the step-by-step guide for [creating a Service Bus namespace using the Azure portal](https://docs.microsoft.com/azure/service-bus-messaging/service-bus-create-namespace-portal). There, you can also find detailed instructions for using the Azure CLI, Azure PowerShell, or Azure Resource Manager (ARM) templates to create a Service bus entity.
 
-- **C# 8.0:** The Azure Service Bus client library makes use of new features that were introduced in C# 8.0.  In order to take advantage of the C# 8.0 syntax, it is recommended that you compile using the [.NET Core SDK](https://dotnet.microsoft.com/download) 3.0 or higher with a [language version](https://docs.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default) of `latest`.  It is also possible to compile with the .NET Core SDK 2.1.x using a language version of `preview`.  Visual Studio users wishing to take advantage of the C# 8.0 syntax will need to use Visual Studio 2019 or later.  Visual Studio 2019, including the free Community edition, can be downloaded [here](https://visualstudio.microsoft.com).
+- **C# 8.0:** The Azure Service Bus client library makes use of new features that were introduced in C# 8.0.  In order to take advantage of the C# 8.0 syntax, it is recommended that you compile using the [.NET Core SDK](https://dotnet.microsoft.com/download) 3.0 or higher with a [language version](https://docs.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default) of `latest`.  It is also possible to compile with the .NET Core SDK 2.1.x using a language version of `preview`.   
+
+  Visual Studio users wishing to take full advantage of the C# 8.0 syntax will need to use Visual Studio 2019 or later.  Visual Studio 2019, including the free Community edition, can be downloaded [here](https://visualstudio.microsoft.com).  Users of Visual Studio 2017 can take advantage of the C# 8 syntax by making use of the [Microsoft.Net.Compilers NuGet package](https://www.nuget.org/packages/Microsoft.Net.Compilers/) and setting the language version, though the editing experience may not be ideal.
 
   You can still use the library with previous C# language versions, but will need to manage asynchronous enumerable and asynchronous disposable members manually rather than benefiting from the new syntax.  You may still target any framework version supported by your .NET Core SDK, including earlier versions of .NET Core or the .NET framework.  For more information, see: [how to specify target frameworks](https://docs.microsoft.com/dotnet/standard/frameworks#how-to-specify-target-frameworks).  
 
-  **Important Note:** In order to build or run the [examples](#examples) and the [samples](#next-steps) without modification, use of C# 8.0 is mandatory.  You can still run the samples if you decide to tweak them for other language versions.
+  **Important Note:** In order to build or run the [examples](#examples) and the [samples](#next-steps) without modification, use of C# 8.0 is mandatory.  You can still run the samples if you decide to tweak them for other language versions.  
 
 To quickly create the needed Service Bus resources in Azure and to receive a connection string for them, you can deploy our sample template by clicking:
 
-[![](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-sdk-for-net%2Fmaster%2Fsdk%2Fservicebus%2FAzure.Messaging.ServiceBus%2Fassets%2Fsamples-azure-deploy.json)
+[![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-sdk-for-net%2Fmaster%2Fsdk%2Fservicebus%2FAzure.Messaging.ServiceBus%2Fassets%2Fsamples-azure-deploy.json)
 
 ### Install the package
 
@@ -68,23 +70,40 @@ For more information about these resources, see [What is Azure Service Bus?](htt
 
 To interact with these resources, one should be familiar with the following SDK concepts:
 
-- A [Service Bus client](https://docs.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebusclient?view=azure-dotnet-preview) is the primary interface for developers interacting with the Service Bus client library. It serves as the gateway from which all interaction with the library will occur.
+- A [Service Bus client](https://docs.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebusclient) is the primary interface for developers interacting with the Service Bus client library. It serves as the gateway from which all interaction with the library will occur.
 
-- A [Service Bus sender](https://docs.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebussender?view=azure-dotnet-preview) is scoped to a particular queue or topic, and is created using the Service Bus client. The sender allows you to send messages to a queue or topic. It also allows for scheduling messages to be available for delivery at a specified date.
+- A [Service Bus sender](https://docs.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebussender) is scoped to a particular queue or topic, and is created using the Service Bus client. The sender allows you to send messages to a queue or topic. It also allows for scheduling messages to be available for delivery at a specified date.
 
-- A [Service Bus receiver](https://docs.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebusreceiver?view=azure-dotnet-preview) is scoped to a particular queue or subscription, and is created using the Service Bus client. The receiver allows you to receive messages from a queue or subscription. It also allows the messages to be settled after receiving them. There are four ways of settling messages:
+- A [Service Bus receiver](https://docs.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebusreceiver) is scoped to a particular queue or subscription, and is created using the Service Bus client. The receiver allows you to receive messages from a queue or subscription. It also allows the messages to be settled after receiving them. There are four ways of settling messages:
   * Complete - causes the message to be deleted from the queue or topic.
   * Abandon - releases the receiver's lock on the message allowing for the message to be received by other receivers.
   * Defer - defers the message from being received by normal means. In order to receive deferred messages, the sequence number of the message needs to be retained.
   * DeadLetter - moves the message to the Dead Letter queue. This will prevent the message from being received again. In order to receive messages from the Dead Letter queue, a receiver scoped to the Dead Letter queue is needed.
 
-- A [Service Bus session receiver](https://docs.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebussessionreceiver?view=azure-dotnet-preview) is scoped to a particular session-enabled queue or subscription, and is created using the Service Bus client. The session receiver is almost identical to the standard receiver, with the difference being that session management operations are exposed which only apply to session-enabled entities. These operations include getting and setting session state, as well as renewing session locks.
+- A [Service Bus session receiver](https://docs.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebussessionreceiver) is scoped to a particular session-enabled queue or subscription, and is created using the Service Bus client. The session receiver is almost identical to the standard receiver, with the difference being that session management operations are exposed which only apply to session-enabled entities. These operations include getting and setting session state, as well as renewing session locks.
 
-- A [Service Bus processor](https://docs.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebusprocessor?view=azure-dotnet-preview) is scoped to a particular queue or subscription, and is created using the Service Bus client. The `ServiceBusProcessor` can be thought of as an abstraction around a set of receivers. It uses a callback model to allow code to be specified when a message is received and when an exception occurs. It offers automatic completion of processed messages, automatic message lock renewal, and concurrent execution of user specified event handlers. Because of its feature set, it should be the go to tool for writing applications that receive from Service Bus entities. The ServiceBusReceiver is recommended for more complex scenarios in which the processor is not able to provide the fine-grained control that one can expect when using the ServiceBusReceiver directly.
+- A [Service Bus processor](https://docs.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebusprocessor) is scoped to a particular queue or subscription, and is created using the Service Bus client. The `ServiceBusProcessor` can be thought of as an abstraction around a set of receivers. It uses a callback model to allow code to be specified when a message is received and when an exception occurs. It offers automatic completion of processed messages, automatic message lock renewal, and concurrent execution of user specified event handlers. Because of its feature set, it should be the go to tool for writing applications that receive from Service Bus entities. The ServiceBusReceiver is recommended for more complex scenarios in which the processor is not able to provide the fine-grained control that one can expect when using the ServiceBusReceiver directly.
 
-- A [Service Bus session processor](https://docs.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebussessionprocessor?view=azure-dotnet-preview) is scoped to a particular session-enabled queue or subscription, and is created using the Service Bus client. The session processor is almost identical to the standard processor, with the difference being that session management operations are exposed which only apply to session-enabled entities.
+- A [Service Bus session processor](https://docs.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebussessionprocessor) is scoped to a particular session-enabled queue or subscription, and is created using the Service Bus client. The session processor is almost identical to the standard processor, with the difference being that session management operations are exposed which only apply to session-enabled entities.
 
 For more concepts and deeper discussion, see: [Service Bus Advanced Features](https://docs.microsoft.com/azure/service-bus-messaging/service-bus-messaging-overview#advanced-features).
+
+### Client lifetime
+
+The `ServiceBusClient`, senders, receivers, and processors are safe to cache and use as a singleton for the lifetime of the application, which is best practice when messages are being sent or received regularly. They are responsible for efficient management of network, CPU, and memory use, working to keep usage low during periods of inactivity. 
+
+These types are disposable and calling either `DisposeAsync` or `CloseAsync` is required to ensure that network resources and other unmanaged objects are properly cleaned up.  It is important to note that when a `ServiceBusClient` instance is disposed, it will automatically close and cleanup any senders, receivers, and processors that were created using it.
+
+### Thread safety
+
+We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
+
+### Additional concepts
+
+<!-- CLIENT COMMON BAR -->
+[Client options](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions) | [Handling failures](#exception-handling) | [Diagnostics](#logging-and-diagnostics) |
+[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#mocking) 
+<!-- CLIENT COMMON BAR -->
 
 ## Examples
 

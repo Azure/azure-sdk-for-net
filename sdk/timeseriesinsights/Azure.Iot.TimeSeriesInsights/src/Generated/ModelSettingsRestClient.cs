@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Iot.TimeSeriesInsights.Models;
 
 namespace Azure.Iot.TimeSeriesInsights
 {

@@ -56,7 +56,8 @@
     "variables": {
         "roleDefinitionId": "[format('/subscriptions/{0}/providers/Microsoft.Authorization/roleDefinitions/5ae67dd6-50cb-40e7-96ff-dc2bfa4b606b', subscription().subscriptionId)]",
         "uniqueAzConfigName": "[format('{0}-{1}', parameters('baseName'), parameters('azConfigPrefix'))]",
-        "endpointValue": "[format('https://{0}-{1}.azconfig.io', parameters('baseName'), parameters('azConfigPrefix'))]"        
+        "endpointValue": "[format('https://{0}-{1}.azconfig.io', parameters('baseName'), parameters('azConfigPrefix'))]",
+        "azureKeyVaultSecretUrl": "[format('https://{0}.vault.azure.net/secrets/TestSecret', parameters('baseName'))]"
     },
     "resources": [
         {
@@ -79,10 +80,45 @@
                 "roleDefinitionId": "[variables('roleDefinitionId')]",
                 "principalId": "[parameters('testApplicationOid')]"
             }
+        },
+        {
+            "type": "Microsoft.KeyVault/vaults",
+            "apiVersion": "2016-10-01",
+            "name": "[parameters('baseName')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "sku": {
+                    "family": "A",
+                    "name": "premium"
+                },
+                "tenantId": "[parameters('tenantId')]",
+                "accessPolicies": [
+                    {
+                        "tenantId": "[parameters('tenantId')]",
+                        "objectId": "[parameters('testApplicationOid')]",
+                        "permissions": {
+                            "secrets": [
+                                "get"
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.KeyVault/vaults/secrets",
+            "name": "[concat(parameters('baseName'), '/TestSecret')]",
+            "apiVersion": "2016-10-01",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+              "[resourceId('Microsoft.KeyVault/vaults', parameters('baseName'))]"
+            ],
+            "properties": {
+              "value": "Very secret value"
+            }
         }
     ],
     "outputs": {
-
         "APPCONFIGURATION_CONNECTION_STRING": {
             "type": "string",
             "value": "[listKeys(resourceId('Microsoft.AppConfiguration/configurationStores',variables('uniqueAzConfigName')), '2019-02-01-preview').value[0].connectionString]"
@@ -90,6 +126,10 @@
         "APPCONFIGURATION_ENDPOINT_STRING": {
             "type": "string",
             "value": "[variables('endpointValue')]"
+        },
+        "KEYVAULT_SECRET_URL": {
+            "type": "string",
+            "value": "[variables('azureKeyVaultSecretUrl')]"
         }
     }
 }

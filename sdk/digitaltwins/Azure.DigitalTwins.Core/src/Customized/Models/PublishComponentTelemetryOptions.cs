@@ -6,7 +6,6 @@ using Azure.Core;
 
 namespace Azure.DigitalTwins.Core
 {
-    /// <inheritdoc />
     [CodeGenModel("DigitalTwinsSendComponentTelemetryOptions")]
     internal partial class PublishComponentTelemetryOptions
     {

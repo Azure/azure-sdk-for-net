@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A list of sync groups. </summary>
-    public partial class SyncGroupListResult
+    internal partial class SyncGroupListResult
     {
         /// <summary> Initializes a new instance of SyncGroupListResult. </summary>
         internal SyncGroupListResult()

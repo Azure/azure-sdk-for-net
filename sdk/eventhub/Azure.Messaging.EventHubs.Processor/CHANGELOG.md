@@ -1,7 +1,40 @@
 # Release History
 
-## 5.3.0-beta.5 (Unreleased)
+## 5.4.0-beta.1 (2021-03-09)
 
+### Changes
+
+#### Key Bug Fixes
+
+- Fixed an issue where long-lived credentials (more than 49 days) were overflowing refresh timer limits and being rejected.
+
+- Added detection and recovery for a race condition that occurred when the Event Hubs service closed a connection or link after the client had validated its state and was performing an operation; this will now be properly retried with a fresh connection/link.
+
+- Extended retry scenarios to include generic I/O exceptions, as they are typically transient network failures.
+
+- Extended retry scenarios to include authorization failures, as the Event Hubs services do not differentiate between authentication and authorization, callers cannot reason about whether an `Unauthorized` return from an operation indicates that the call will never succeed or may trigger a credential renewal that may allow success.
+
+## 5.3.0 (2021-02-09)
+
+### Changes
+
+#### New Features
+
+- Additional options for tuning load balancing have been added to the `EventProcessorClientOptions`.
+
+- It is now possible to specify a custom endpoint to use for establishing the connection to the Event Hubs service in the `EventHubConnectionOptions` for the processor.
+
+- Interactions with Blob Storage have been tuned for better performance and more efficient resource use.  This will also improve start-up time, especially when using the `Greedy` load balancing strategy.
+
+- Errors occurring in the Event Hubs service or active transport are now preserved in full and propagated as an inner exception; this will provide deeper context for diagnosing and troubleshooting exceptions.
+
+- Documentation used for auto-completion via Intellisense and other tools has been enhanced in many areas, addressing gaps and commonly asked questions.
+
+#### Key Bug Fixes
+
+- Upgraded the `Microsoft.Azure.Amqp` library to resolve crashes occurring in .NET 5.
+
+- The calculation for authorization token expiration has been fixed, resulting in fewer token refreshes and network requests.
 
 ## 5.3.0-beta.4 (2020-11-10)
 
@@ -14,6 +47,8 @@
 - Documentation used for auto-completion via Intellisense and other tools has been enhanced in many areas, addressing gaps and commonly asked questions.
 
 #### Key Bug Fixes
+
+- Upgraded the `Microsoft.Azure.Amqp` library to resolve crashes occurring in .NET 5.
 
 - The calculation for authorization token expiration has been fixed, resulting in fewer token refreshes and network requests.
 
@@ -128,7 +163,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 - A cleanup sweep was performed to tune small areas to be more efficient and perform fewer allocations.
 
-## 5.1.0
+## 5.1.0 
 
 ### Changes
 
@@ -140,7 +175,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 - Minor enhancements to reduce allocations and improve efficiency
 
-## 5.1.0-preview.1
+## 5.1.0-preview.1 
 
 ### Acknowledgments
 
@@ -177,7 +212,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 - The tests for load balancing and the Event Processor client have been tuned to remove dependencies on Azure resources and run more efficiently.  (A community contribution, courtesy of [christothes](https://github.com/christothes))
 
-## 5.0.1
+## 5.0.1 
 
 Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
 
@@ -207,7 +242,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 - The protected `On[EventName]` members have been marked private to reduce the public surface and reduce confusion.  They provided no benefit over providing a handler and the cognative cost was not justified.
 
-## 5.0.0-preview.6
+## 5.0.0-preview.6 
 
 ### Acknowledgments
 

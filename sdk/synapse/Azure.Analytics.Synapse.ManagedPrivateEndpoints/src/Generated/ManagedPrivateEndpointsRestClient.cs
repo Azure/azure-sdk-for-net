@@ -46,7 +46,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateGetRequest(string managedVirtualNetworkName, string managedPrivateEndpointName)
+        internal HttpMessage CreateGetRequest(string managedPrivateEndpointName, string managedVirtualNetworkName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -64,22 +64,22 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
         }
 
         /// <summary> Get Managed Private Endpoints. </summary>
-        /// <param name="managedVirtualNetworkName"> Managed virtual network name. </param>
         /// <param name="managedPrivateEndpointName"> Managed private endpoint name. </param>
+        /// <param name="managedVirtualNetworkName"> Managed virtual network name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managedVirtualNetworkName"/> or <paramref name="managedPrivateEndpointName"/> is null. </exception>
-        public async Task<Response<ManagedPrivateEndpoint>> GetAsync(string managedVirtualNetworkName, string managedPrivateEndpointName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="managedPrivateEndpointName"/> or <paramref name="managedVirtualNetworkName"/> is null. </exception>
+        public async Task<Response<ManagedPrivateEndpoint>> GetAsync(string managedPrivateEndpointName, string managedVirtualNetworkName = "default", CancellationToken cancellationToken = default)
         {
-            if (managedVirtualNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(managedVirtualNetworkName));
-            }
             if (managedPrivateEndpointName == null)
             {
                 throw new ArgumentNullException(nameof(managedPrivateEndpointName));
             }
+            if (managedVirtualNetworkName == null)
+            {
+                throw new ArgumentNullException(nameof(managedVirtualNetworkName));
+            }
 
-            using var message = CreateGetRequest(managedVirtualNetworkName, managedPrivateEndpointName);
+            using var message = CreateGetRequest(managedPrivateEndpointName, managedVirtualNetworkName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -96,22 +96,22 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
         }
 
         /// <summary> Get Managed Private Endpoints. </summary>
-        /// <param name="managedVirtualNetworkName"> Managed virtual network name. </param>
         /// <param name="managedPrivateEndpointName"> Managed private endpoint name. </param>
+        /// <param name="managedVirtualNetworkName"> Managed virtual network name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managedVirtualNetworkName"/> or <paramref name="managedPrivateEndpointName"/> is null. </exception>
-        public Response<ManagedPrivateEndpoint> Get(string managedVirtualNetworkName, string managedPrivateEndpointName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="managedPrivateEndpointName"/> or <paramref name="managedVirtualNetworkName"/> is null. </exception>
+        public Response<ManagedPrivateEndpoint> Get(string managedPrivateEndpointName, string managedVirtualNetworkName = "default", CancellationToken cancellationToken = default)
         {
-            if (managedVirtualNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(managedVirtualNetworkName));
-            }
             if (managedPrivateEndpointName == null)
             {
                 throw new ArgumentNullException(nameof(managedPrivateEndpointName));
             }
+            if (managedVirtualNetworkName == null)
+            {
+                throw new ArgumentNullException(nameof(managedVirtualNetworkName));
+            }
 
-            using var message = CreateGetRequest(managedVirtualNetworkName, managedPrivateEndpointName);
+            using var message = CreateGetRequest(managedPrivateEndpointName, managedVirtualNetworkName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -127,7 +127,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string managedVirtualNetworkName, string managedPrivateEndpointName, ManagedPrivateEndpoint managedPrivateEndpoint)
+        internal HttpMessage CreateCreateRequest(string managedPrivateEndpointName, ManagedPrivateEndpoint managedPrivateEndpoint, string managedVirtualNetworkName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -149,17 +149,13 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
         }
 
         /// <summary> Create Managed Private Endpoints. </summary>
-        /// <param name="managedVirtualNetworkName"> Managed virtual network name. </param>
         /// <param name="managedPrivateEndpointName"> Managed private endpoint name. </param>
         /// <param name="managedPrivateEndpoint"> Managed private endpoint properties. </param>
+        /// <param name="managedVirtualNetworkName"> Managed virtual network name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managedVirtualNetworkName"/>, <paramref name="managedPrivateEndpointName"/>, or <paramref name="managedPrivateEndpoint"/> is null. </exception>
-        public async Task<Response<ManagedPrivateEndpoint>> CreateAsync(string managedVirtualNetworkName, string managedPrivateEndpointName, ManagedPrivateEndpoint managedPrivateEndpoint, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="managedPrivateEndpointName"/>, <paramref name="managedPrivateEndpoint"/>, or <paramref name="managedVirtualNetworkName"/> is null. </exception>
+        public async Task<Response<ManagedPrivateEndpoint>> CreateAsync(string managedPrivateEndpointName, ManagedPrivateEndpoint managedPrivateEndpoint, string managedVirtualNetworkName = "default", CancellationToken cancellationToken = default)
         {
-            if (managedVirtualNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(managedVirtualNetworkName));
-            }
             if (managedPrivateEndpointName == null)
             {
                 throw new ArgumentNullException(nameof(managedPrivateEndpointName));
@@ -168,8 +164,12 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
             {
                 throw new ArgumentNullException(nameof(managedPrivateEndpoint));
             }
+            if (managedVirtualNetworkName == null)
+            {
+                throw new ArgumentNullException(nameof(managedVirtualNetworkName));
+            }
 
-            using var message = CreateCreateRequest(managedVirtualNetworkName, managedPrivateEndpointName, managedPrivateEndpoint);
+            using var message = CreateCreateRequest(managedPrivateEndpointName, managedPrivateEndpoint, managedVirtualNetworkName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -186,17 +186,13 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
         }
 
         /// <summary> Create Managed Private Endpoints. </summary>
-        /// <param name="managedVirtualNetworkName"> Managed virtual network name. </param>
         /// <param name="managedPrivateEndpointName"> Managed private endpoint name. </param>
         /// <param name="managedPrivateEndpoint"> Managed private endpoint properties. </param>
+        /// <param name="managedVirtualNetworkName"> Managed virtual network name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managedVirtualNetworkName"/>, <paramref name="managedPrivateEndpointName"/>, or <paramref name="managedPrivateEndpoint"/> is null. </exception>
-        public Response<ManagedPrivateEndpoint> Create(string managedVirtualNetworkName, string managedPrivateEndpointName, ManagedPrivateEndpoint managedPrivateEndpoint, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="managedPrivateEndpointName"/>, <paramref name="managedPrivateEndpoint"/>, or <paramref name="managedVirtualNetworkName"/> is null. </exception>
+        public Response<ManagedPrivateEndpoint> Create(string managedPrivateEndpointName, ManagedPrivateEndpoint managedPrivateEndpoint, string managedVirtualNetworkName = "default", CancellationToken cancellationToken = default)
         {
-            if (managedVirtualNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(managedVirtualNetworkName));
-            }
             if (managedPrivateEndpointName == null)
             {
                 throw new ArgumentNullException(nameof(managedPrivateEndpointName));
@@ -205,8 +201,12 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
             {
                 throw new ArgumentNullException(nameof(managedPrivateEndpoint));
             }
+            if (managedVirtualNetworkName == null)
+            {
+                throw new ArgumentNullException(nameof(managedVirtualNetworkName));
+            }
 
-            using var message = CreateCreateRequest(managedVirtualNetworkName, managedPrivateEndpointName, managedPrivateEndpoint);
+            using var message = CreateCreateRequest(managedPrivateEndpointName, managedPrivateEndpoint, managedVirtualNetworkName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -222,7 +222,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string managedVirtualNetworkName, string managedPrivateEndpointName)
+        internal HttpMessage CreateDeleteRequest(string managedPrivateEndpointName, string managedVirtualNetworkName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -239,22 +239,22 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
         }
 
         /// <summary> Delete Managed Private Endpoints. </summary>
-        /// <param name="managedVirtualNetworkName"> Managed virtual network name. </param>
         /// <param name="managedPrivateEndpointName"> Managed private endpoint name. </param>
+        /// <param name="managedVirtualNetworkName"> Managed virtual network name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managedVirtualNetworkName"/> or <paramref name="managedPrivateEndpointName"/> is null. </exception>
-        public async Task<Response> DeleteAsync(string managedVirtualNetworkName, string managedPrivateEndpointName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="managedPrivateEndpointName"/> or <paramref name="managedVirtualNetworkName"/> is null. </exception>
+        public async Task<Response> DeleteAsync(string managedPrivateEndpointName, string managedVirtualNetworkName = "default", CancellationToken cancellationToken = default)
         {
-            if (managedVirtualNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(managedVirtualNetworkName));
-            }
             if (managedPrivateEndpointName == null)
             {
                 throw new ArgumentNullException(nameof(managedPrivateEndpointName));
             }
+            if (managedVirtualNetworkName == null)
+            {
+                throw new ArgumentNullException(nameof(managedVirtualNetworkName));
+            }
 
-            using var message = CreateDeleteRequest(managedVirtualNetworkName, managedPrivateEndpointName);
+            using var message = CreateDeleteRequest(managedPrivateEndpointName, managedVirtualNetworkName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -267,22 +267,22 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
         }
 
         /// <summary> Delete Managed Private Endpoints. </summary>
-        /// <param name="managedVirtualNetworkName"> Managed virtual network name. </param>
         /// <param name="managedPrivateEndpointName"> Managed private endpoint name. </param>
+        /// <param name="managedVirtualNetworkName"> Managed virtual network name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managedVirtualNetworkName"/> or <paramref name="managedPrivateEndpointName"/> is null. </exception>
-        public Response Delete(string managedVirtualNetworkName, string managedPrivateEndpointName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="managedPrivateEndpointName"/> or <paramref name="managedVirtualNetworkName"/> is null. </exception>
+        public Response Delete(string managedPrivateEndpointName, string managedVirtualNetworkName = "default", CancellationToken cancellationToken = default)
         {
-            if (managedVirtualNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(managedVirtualNetworkName));
-            }
             if (managedPrivateEndpointName == null)
             {
                 throw new ArgumentNullException(nameof(managedPrivateEndpointName));
             }
+            if (managedVirtualNetworkName == null)
+            {
+                throw new ArgumentNullException(nameof(managedVirtualNetworkName));
+            }
 
-            using var message = CreateDeleteRequest(managedVirtualNetworkName, managedPrivateEndpointName);
+            using var message = CreateDeleteRequest(managedPrivateEndpointName, managedVirtualNetworkName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -314,7 +314,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
         /// <param name="managedVirtualNetworkName"> Managed virtual network name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managedVirtualNetworkName"/> is null. </exception>
-        public async Task<Response<ManagedPrivateEndpointListResponse>> ListAsync(string managedVirtualNetworkName, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagedPrivateEndpointListResponse>> ListAsync(string managedVirtualNetworkName = "default", CancellationToken cancellationToken = default)
         {
             if (managedVirtualNetworkName == null)
             {
@@ -341,7 +341,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
         /// <param name="managedVirtualNetworkName"> Managed virtual network name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managedVirtualNetworkName"/> is null. </exception>
-        public Response<ManagedPrivateEndpointListResponse> List(string managedVirtualNetworkName, CancellationToken cancellationToken = default)
+        public Response<ManagedPrivateEndpointListResponse> List(string managedVirtualNetworkName = "default", CancellationToken cancellationToken = default)
         {
             if (managedVirtualNetworkName == null)
             {
@@ -382,7 +382,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
         /// <param name="managedVirtualNetworkName"> Managed virtual network name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="managedVirtualNetworkName"/> is null. </exception>
-        public async Task<Response<ManagedPrivateEndpointListResponse>> ListNextPageAsync(string nextLink, string managedVirtualNetworkName, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagedPrivateEndpointListResponse>> ListNextPageAsync(string nextLink, string managedVirtualNetworkName = "default", CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -414,7 +414,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
         /// <param name="managedVirtualNetworkName"> Managed virtual network name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="managedVirtualNetworkName"/> is null. </exception>
-        public Response<ManagedPrivateEndpointListResponse> ListNextPage(string nextLink, string managedVirtualNetworkName, CancellationToken cancellationToken = default)
+        public Response<ManagedPrivateEndpointListResponse> ListNextPage(string nextLink, string managedVirtualNetworkName = "default", CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

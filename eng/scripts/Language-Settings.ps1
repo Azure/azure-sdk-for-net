@@ -8,9 +8,35 @@ $BlobStorageUrl = "https://azuresdkdocs.blob.core.windows.net/%24web?restype=con
 
 function Get-dotnet-PackageInfoFromRepo ($pkgPath, $serviceDirectory, $pkgName)
 {
-  $projectPath = Join-Path $pkgPath "src" "$pkgName.csproj"
-  if (Test-Path $projectPath)
+  $projDirPath = (Join-Path $pkgPath "src")
+
+  if (!(Test-Path $projDirPath))
   {
+    return $null
+  }
+
+  if ($pkgName)
+  {
+    $projectPath = Join-Path $projDirPath "$pkgName.csproj"
+  }
+  else
+  {
+    $projectPaths = (Resolve-Path (Join-Path $projDirPath "*.csproj")).path
+    if ($projectPaths.Count -gt 1)
+    {
+      LogWarning "There is more than on csproj file in the projectpath/src directory. First project picked."
+      $projectPath = $projectPaths[0]
+    }
+    else {
+      $projectPath = $projectPaths
+    }
+  }
+
+
+
+  if ($projectPath -and (Test-Path $projectPath))
+  {
+    $pkgName = Split-Path -Path $projectPath -LeafBase 
     $projectData = New-Object -TypeName XML
     $projectData.load($projectPath)
     $pkgVersion = Select-XML -Xml $projectData -XPath '/Project/PropertyGroup/Version'
@@ -22,12 +48,11 @@ function Get-dotnet-PackageInfoFromRepo ($pkgPath, $serviceDirectory, $pkgName)
     $pkgProp = [PackageProps]::new($pkgName, $pkgVersion, $pkgPath, $serviceDirectory)
     $pkgProp.SdkType = $sdkType
     $pkgProp.IsNewSdk = $pkgName.StartsWith("Azure")
+    $pkgProp.ArtifactName = $pkgName
     return $pkgProp
   }
-  else
-  {
-    return $null
-  }
+
+  return $null
 }
 
 # Returns the nuget publish status of a package id and version.
@@ -156,7 +181,7 @@ function Publish-dotnet-GithubIODocs ($DocLocation, $PublicArtifactLocation)
 function Get-dotnet-GithubIoDocIndex()
 {
   # Update the main.js and docfx.json language content
-  UpdateDocIndexFiles -appTitleLang ".NET"
+  UpdateDocIndexFiles -appTitleLang $LanguageDisplayName
   # Fetch out all package metadata from csv file.
   $metadata = Get-CSVMetadata -MetadataUri $MetadataUri
   # Get the artifacts name from blob storage
@@ -164,7 +189,7 @@ function Get-dotnet-GithubIoDocIndex()
   # Build up the artifact to service name mapping for GithubIo toc.
   $tocContent = Get-TocMapping -metadata $metadata -artifacts $artifacts
   # Generate yml/md toc files and build site.
-  GenerateDocfxTocContent -tocContent $tocContent -lang "NET"
+  GenerateDocfxTocContent -tocContent $tocContent -lang $LanguageDisplayName
 }
 
 # details on CSV schema can be found here

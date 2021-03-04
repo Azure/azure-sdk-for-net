@@ -68,7 +68,7 @@ namespace Azure.Messaging.ServiceBus
             new ServiceBusReceiverOptions()
             {
                 ReceiveMode = ReceiveMode,
-                PrefetchCount = PrefetchCount
+                PrefetchCount = PrefetchCount,
             };
     }
 }

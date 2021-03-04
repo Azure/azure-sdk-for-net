@@ -520,68 +520,6 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void SendSingleWithoutOptionsRequiresAnEvent()
-        {
-            var producer = new EventHubProducerClient(new MockConnection());
-            Assert.That(async () => await producer.SendAsync(default(EventData)), Throws.ArgumentNullException);
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventHubProducerClient.SendAsync" />
-        ///   method.
-        /// </summary>
-        ///
-        [Test]
-        public void SendSingleRequiresAnEvent()
-        {
-            var producer = new EventHubProducerClient(new MockConnection());
-            Assert.That(async () => await producer.SendAsync(default(EventData), new SendEventOptions()), Throws.ArgumentNullException);
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventHubProducerClient.SendAsync" />
-        ///   method.
-        /// </summary>
-        ///
-        [Test]
-        public async Task SendSingleWithoutOptionsDelegatesToBatchSend()
-        {
-            var transportProducer = new ObservableTransportProducerMock();
-            var producer = new Mock<EventHubProducerClient> { CallBase = true };
-
-            producer
-                .Setup(instance => instance.SendAsync(It.Is<IEnumerable<EventData>>(value => value.Count() == 1), It.IsAny<SendEventOptions>(), It.IsAny<CancellationToken>()))
-                .Returns(Task.CompletedTask)
-                .Verifiable("The single send should delegate to the batch send.");
-
-            await producer.Object.SendAsync(new EventData(new byte[] { 0x22 }));
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventHubProducerClient.SendAsync" />
-        ///   method.
-        /// </summary>
-        ///
-        [Test]
-        public async Task SendSingleWitOptionsDelegatesToBatchSend()
-        {
-            var transportProducer = new ObservableTransportProducerMock();
-            var producer = new Mock<EventHubProducerClient> { CallBase = true };
-
-            producer
-                .Setup(instance => instance.SendAsync(It.Is<IEnumerable<EventData>>(value => value.Count() == 1), It.IsAny<SendEventOptions>(), It.IsAny<CancellationToken>()))
-                .Returns(Task.CompletedTask)
-                .Verifiable("The single send should delegate to the batch send.");
-
-            await producer.Object.SendAsync(new EventData(new byte[] { 0x22 }), new SendEventOptions());
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventHubProducerClient.SendAsync" />
-        ///   method.
-        /// </summary>
-        ///
-        [Test]
         public void SendWithoutOptionsRequiresEvents()
         {
             var transportProducer = new ObservableTransportProducerMock();

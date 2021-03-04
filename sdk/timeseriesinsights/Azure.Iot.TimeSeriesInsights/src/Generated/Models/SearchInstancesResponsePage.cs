@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Iot.TimeSeriesInsights.Models
+namespace Azure.Iot.TimeSeriesInsights
 {
     /// <summary> Single page of the search results. </summary>
     public partial class SearchInstancesResponsePage

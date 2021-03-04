@@ -1,13 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Communication.Pipeline;
-using Azure.Core.TestFramework;
+using Azure.Communication.Tests;
 
 namespace Azure.Communication.PhoneNumbers.Tests
 {
-    public class PhoneNumberAdministrationClientTestEnvironment : TestEnvironment
+    public class PhoneNumberAdministrationClientTestEnvironment : CommunicationTestEnvironment
     {
-        public string ConnectionString => GetRecordedVariable(CommunicationRecordedTestSanitizer.ConnectionStringEnvironmentVariableName);
     }
 }

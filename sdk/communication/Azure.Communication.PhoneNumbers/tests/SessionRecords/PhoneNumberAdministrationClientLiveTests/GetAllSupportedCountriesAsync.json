@@ -1,13 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/countries?api-version=2020-07-20-preview1",
+      "RequestUri": "https://chitchat-test.communication.azure.com/administration/phonenumbers/countries?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Date": "Sat, 21 Nov 2020 03:50:04 GMT",
-        "User-Agent": "azsdk-net-Communication.Administration/1.0.0-alpha.20201120.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "Date": "Fri, 19 Feb 2021 02:06:51 GMT",
+        "traceparent": "00-78d5d7494598b447990c9e5e55badce3-cc498334a4c73246-00",
+        "User-Agent": [
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210218.1",
+          "(.NET 5.0.3; Microsoft Windows 10.0.18363)"
+        ],
         "x-ms-client-request-id": "5cdab42778cdd864c0eb7ad9b720026f",
         "x-ms-content-sha256": "Sanitized",
         "x-ms-return-client-request-id": "true"
@@ -16,18 +20,15 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sat, 21 Nov 2020 03:50:04 GMT",
-        "MS-CV": "NRdPoBGjxUK7sAHqsXHWgw.0",
+        "Date": "Fri, 19 Feb 2021 02:06:52 GMT",
+        "MS-CV": "lNMfU70/XUWXMGEzMXz1rQ.0",
+        "Request-Context": "appId=",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0bI64XwAAAAAW5kEU1zK3SpT0CATdPcAdWVZSMzBFREdFMDMyMQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
-        "X-Processing-Time": "471ms"
+        "X-Azure-Ref": "0Ox0vYAAAAACC\u002ByE5NdScSKjC25KpLQbBWVZSMzBFREdFMDMxMwA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Processing-Time": "1695ms"
       },
       "ResponseBody": {
         "countries": [
-          {
-            "localizedName": "Canada",
-            "countryCode": "CA"
-          },
           {
             "localizedName": "United States",
             "countryCode": "US"
@@ -38,7 +39,7 @@
     }
   ],
   "Variables": {
-    "COMMUNICATION_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.com/;accesskey=Kg==;",
+    "COMMUNICATION_CONNECTION_STRING": "endpoint=https://chitchat-test.communication.azure.com/;accesskey=Kg==",
     "RandomSeed": "508083956"
   }
 }

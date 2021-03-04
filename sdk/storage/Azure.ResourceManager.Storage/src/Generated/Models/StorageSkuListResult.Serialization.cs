@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class StorageSkuListResult
+    internal partial class StorageSkuListResult
     {
         internal static StorageSkuListResult DeserializeStorageSkuListResult(JsonElement element)
         {

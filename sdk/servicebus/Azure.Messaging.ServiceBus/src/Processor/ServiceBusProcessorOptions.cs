@@ -150,7 +150,7 @@ namespace Azure.Messaging.ServiceBus
                 AutoCompleteMessages = AutoCompleteMessages,
                 MaxAutoLockRenewalDuration = MaxAutoLockRenewalDuration,
                 MaxReceiveWaitTime = MaxReceiveWaitTime,
-                MaxConcurrentCalls = MaxConcurrentCalls
+                MaxConcurrentCalls = MaxConcurrentCalls,
             };
         }
     }

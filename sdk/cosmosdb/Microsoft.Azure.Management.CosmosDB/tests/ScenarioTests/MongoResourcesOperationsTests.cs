@@ -9,6 +9,7 @@ using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Azure.Management.CosmosDB.Models;
 using System.Collections.Generic;
 using System;
+using System.Collections.Specialized;
 
 namespace CosmosDB.Tests.ScenarioTests
 {
@@ -55,22 +56,19 @@ namespace CosmosDB.Tests.ScenarioTests
                     {
                         Location = location,
                         Kind = DatabaseAccountKind.MongoDB,
-                        Properties = new DefaultRequestDatabaseAccountCreateUpdateProperties
+                        Locations = new List<Location>
                         {
-                            Locations = new List<Location>
-                            {
-                                {new Location(locationName: location) }
-                            }
+                            {new Location(locationName: location) }
                         }
                     };
 
-                    databaseAccount = cosmosDBManagementClient.DatabaseAccounts.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseAccountCreateUpdateParameters).GetAwaiter().GetResult().Body;
+                   databaseAccount = cosmosDBManagementClient.DatabaseAccounts.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseAccountCreateUpdateParameters).GetAwaiter().GetResult().Body;
                     Assert.Equal(databaseAccount.Name, databaseAccountName);
                 }
 
                 MongoDBDatabaseCreateUpdateParameters mongoDBDatabaseCreateUpdateParameters = new MongoDBDatabaseCreateUpdateParameters
                 {
-                    Resource = new MongoDBDatabaseResource { Id = databaseName },
+                    Resource = new MongoDBDatabaseResource {Id = databaseName},
                     Options = new CreateUpdateOptions()
                 };
 
@@ -106,11 +104,15 @@ namespace CosmosDB.Tests.ScenarioTests
                 Assert.Equal(throughputSettingsGetResults.Resource.Throughput, sampleThroughput);
                 Assert.Equal(mongoDatabaseThroughputType, throughputSettingsGetResults.Type);
 
+                Dictionary<string, string> dict = new Dictionary<string, string>();
+                dict.Add("partitionKey", PartitionKind.Hash.ToString());
+
                 MongoDBCollectionCreateUpdateParameters mongoDBCollectionCreateUpdateParameters = new MongoDBCollectionCreateUpdateParameters
                 {
                     Resource = new MongoDBCollectionResource
                     {
                         Id = collectionName,
+                        ShardKey = dict
                     },
                     Options = new CreateUpdateOptions()
                 };
@@ -122,7 +124,7 @@ namespace CosmosDB.Tests.ScenarioTests
                 IEnumerable<MongoDBCollectionGetResults> mongoDBCollections = cosmosDBManagementClient.MongoDBResources.ListMongoDBCollectionsWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName).GetAwaiter().GetResult().Body;
                 Assert.NotNull(mongoDBCollections);
 
-                foreach (MongoDBCollectionGetResults mongoDBCollection in mongoDBCollections)
+                foreach(MongoDBCollectionGetResults mongoDBCollection in mongoDBCollections)
                 {
                     cosmosDBManagementClient.MongoDBResources.DeleteMongoDBCollectionWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, mongoDBCollection.Name);
                 }

@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A list of usages. </summary>
-    public partial class UsageListResult
+    internal partial class UsageListResult
     {
         /// <summary> Initializes a new instance of UsageListResult. </summary>
         internal UsageListResult()

@@ -38,16 +38,5 @@ namespace Azure.Messaging.ServiceBus
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
-
-        /// <summary>
-        /// Creates a new copy of the current <see cref="ServiceBusSenderOptions" />, cloning its attributes into a new instance.
-        /// </summary>
-        ///
-        /// <returns>A new copy of <see cref="ServiceBusSenderOptions" />.</returns>
-        #pragma warning disable CA1822 // Mark members as static
-
-        internal ServiceBusSenderOptions Clone() =>
-            new ServiceBusSenderOptions();
-        #pragma warning restore CA1822 // Mark members as static
     }
 }

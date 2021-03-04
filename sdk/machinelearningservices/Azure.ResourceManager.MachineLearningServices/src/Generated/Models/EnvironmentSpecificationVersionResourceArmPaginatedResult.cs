@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> A paginated list of EnvironmentSpecificationVersion entities. </summary>
-    public partial class EnvironmentSpecificationVersionResourceArmPaginatedResult
+    internal partial class EnvironmentSpecificationVersionResourceArmPaginatedResult
     {
         /// <summary> Initializes a new instance of EnvironmentSpecificationVersionResourceArmPaginatedResult. </summary>
         internal EnvironmentSpecificationVersionResourceArmPaginatedResult()

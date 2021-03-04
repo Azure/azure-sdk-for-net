@@ -273,16 +273,11 @@ namespace Compute.Tests
                     Sku = "2016-Datacenter",
                     Version = "14393.4048.2011170655"
                 };
-                ExtendedLocation extendedLocation = new ExtendedLocation
-                {
-                    Name = "MicrosoftRRDCLab1",
-                    Type = ExtendedLocationTypes.EdgeZone
-                };
                 using (MockContext context = MockContext.Start(this.GetType()))
                 {
                     TestScaleSetOperationsInternal(context, hasManagedDisks: true, useVmssExtension: false, vmSize: VirtualMachineSizeTypes.StandardD2sV3, 
                         faultDomainCount: 1, capacity: 1, shouldOverProvision: false, validateVmssVMInstanceView: true, imageReference: imageReference,
-                        validateListSku: false, deleteAsPartOfTest: false, extendedLocation: extendedLocation);
+                        validateListSku: false, deleteAsPartOfTest: false, extendedLocation: "MicrosoftRRDCLab1");
                 }
             }
             finally
@@ -527,7 +522,7 @@ namespace Compute.Tests
             Action<VirtualMachineScaleSet> vmScaleSetCustomizer = null, Action<VirtualMachineScaleSet> vmScaleSetValidator = null, string diskEncryptionSetId = null,
             bool? encryptionAtHostEnabled = null, bool isAutomaticPlacementOnDedicatedHostGroupScenario = false,
             int? faultDomainCount = null, int? capacity = null, bool shouldOverProvision = true, bool validateVmssVMInstanceView = false,
-            ImageReference imageReference = null, bool validateListSku = true, bool deleteAsPartOfTest = true, ExtendedLocation extendedLocation = null)
+            ImageReference imageReference = null, bool validateListSku = true, bool deleteAsPartOfTest = true, string extendedLocation = null)
         {
             EnsureClientsInitialized(context);
 

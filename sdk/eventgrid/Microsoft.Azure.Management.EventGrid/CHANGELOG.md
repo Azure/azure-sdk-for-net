@@ -1,5 +1,14 @@
 # Release History
 
+## 6.1.0 (2020-10)
+- This release corresponds to api-version 2020-10-15-preview which includes the following new features:
+    * MSI for System Topics
+    * Azure Arc support Topics and Event Subscriptions
+    * Delivery Attributes for Event Subscriptions
+    * Ability to specify a TTL for StorageQueue destinations
+    * New AttributeFiltering Operators for Event Channels
+    * Exposing Source scopes on the TopicType resource
+
 ## 6.0.0 (2020-06)
 - Add support to new GA service API version 2020-06-01.
 - The new GA'ed features include:

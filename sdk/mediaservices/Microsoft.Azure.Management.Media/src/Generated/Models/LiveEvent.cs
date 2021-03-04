@@ -38,12 +38,12 @@ namespace Microsoft.Azure.Management.Media.Models
         /// lives</param>
         /// <param name="input">Live event input settings. It defines how the
         /// live event receives input from a contribution encoder.</param>
-        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. Ex-
-        /// Microsoft.Compute/virtualMachines or
-        /// Microsoft.Storage/storageAccounts.</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="tags">Resource tags.</param>
         /// <param name="description">A description for the live event.</param>
         /// <param name="preview">Live event preview settings. Preview allows
@@ -80,7 +80,9 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <param name="created">The creation time for the live event</param>
         /// <param name="lastModified">The last modified time of the live
         /// event.</param>
-        public LiveEvent(string location, LiveEventInput input, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string description = default(string), LiveEventPreview preview = default(LiveEventPreview), LiveEventEncoding encoding = default(LiveEventEncoding), IList<LiveEventTranscription> transcriptions = default(IList<LiveEventTranscription>), string provisioningState = default(string), LiveEventResourceState? resourceState = default(LiveEventResourceState?), CrossSiteAccessPolicies crossSiteAccessPolicies = default(CrossSiteAccessPolicies), bool? useStaticHostname = default(bool?), string hostnamePrefix = default(string), IList<StreamOptionsFlag?> streamOptions = default(IList<StreamOptionsFlag?>), System.DateTime? created = default(System.DateTime?), System.DateTime? lastModified = default(System.DateTime?))
+        /// <param name="systemData">The system metadata relating to this
+        /// resource.</param>
+        public LiveEvent(string location, LiveEventInput input, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string description = default(string), LiveEventPreview preview = default(LiveEventPreview), LiveEventEncoding encoding = default(LiveEventEncoding), IList<LiveEventTranscription> transcriptions = default(IList<LiveEventTranscription>), string provisioningState = default(string), LiveEventResourceState? resourceState = default(LiveEventResourceState?), CrossSiteAccessPolicies crossSiteAccessPolicies = default(CrossSiteAccessPolicies), bool? useStaticHostname = default(bool?), string hostnamePrefix = default(string), IList<StreamOptionsFlag?> streamOptions = default(IList<StreamOptionsFlag?>), System.DateTime? created = default(System.DateTime?), System.DateTime? lastModified = default(System.DateTime?), SystemData systemData = default(SystemData))
             : base(location, id, name, type, tags)
         {
             Description = description;
@@ -96,6 +98,7 @@ namespace Microsoft.Azure.Management.Media.Models
             StreamOptions = streamOptions;
             Created = created;
             LastModified = lastModified;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -199,6 +202,12 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.lastModified")]
         public System.DateTime? LastModified { get; private set; }
+
+        /// <summary>
+        /// Gets the system metadata relating to this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Validate the object.
