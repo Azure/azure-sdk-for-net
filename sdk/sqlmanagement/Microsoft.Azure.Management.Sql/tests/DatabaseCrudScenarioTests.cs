@@ -21,7 +21,7 @@ namespace Sql.Tests
 {
     public class DatabaseCrudScenarioTests
     {
-        [Fact]
+        [Fact(Skip = "Manual test due to maintenance configuration unavailable in stage.")]
         public void TestCreateDropDatabase()
         {
             using (SqlManagementTestContext context = new SqlManagementTestContext(this))
