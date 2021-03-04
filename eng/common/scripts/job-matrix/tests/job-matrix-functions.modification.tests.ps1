@@ -9,9 +9,9 @@ BeforeAll {
 
         for ($i = 0; $i -lt $matrix.Length; $i++) {
             foreach ($entry in $matrix[$i]) {
-                $expected[$i].name | Should -Be $entry.name
+                $entry.name | Should -Be $expected[$i].name
                 foreach ($param in $entry.parameters.GetEnumerator()) {
-                    $expected[$i].parameters[$param.Name] | Should -Be $param.Value
+                    $param.Value | Should -Be $expected[$i].parameters[$param.Name]
                 }
             }
         }
@@ -33,18 +33,25 @@ Describe "Platform Matrix nonSparse" -Tag "nonsparse" {
     }
 
     It "Should process nonSparse parameters" {
-        $parameters, $nonSparse = ProcessNonSparseParameters $config.orderedMatrix "testField1","testField3"
-        $parameters.Count | Should -Be 1
-        $parameters["testField2"] | Should -Be 1,2,3
-        $nonSparse.Count | Should -Be 2
-        $nonSparse["testField1"] | Should -Be 1,2
-        $nonSparse["testField3"] | Should -Be 1,2,3,4
+        $parameters, $nonSparse = ProcessNonSparseParameters $config.matrixParameters "testField1","testField3"
 
-        $parameters, $nonSparse = ProcessNonSparseParameters $config.orderedMatrix "testField3"
+        $parameters.Count | Should -Be 1
+        $parameters[0].Name | Should -Be "testField2"
+        $parameters[0].Value | Should -Be 1,2,3
+
+        $nonSparse.Count | Should -Be 2
+        $nonSparse[0].Name | Should -Be "testField1"
+        $nonSparse[0].Value | Should -Be 1,2
+        $nonSparse[1].Name | Should -Be "testField3"
+        $nonSparse[1].Value | Should -Be 1,2,3,4
+
+        $parameters, $nonSparse = ProcessNonSparseParameters $config.matrixParameters "testField3"
         $parameters.Count | Should -Be 2
-        $parameters.Contains("testField3") | Should -Be $false
+        ($parameters).Name -match "testField3" | Should -Be $null
+
         $nonSparse.Count | Should -Be 1
-        $nonSparse["testField3"] | Should -Be 1,2,3,4
+        $nonSparse[0].Name | Should -Be "testField3"
+        $nonSparse[0].Value | Should -Be 1,2,3,4
     }
 
     It "Should ignore nonSparse with all selection" {
@@ -104,7 +111,7 @@ Describe "Platform Matrix Import" -Tag "import" {
         $matrix[4].parameters.Foo | Should -Be "foo2"
     }
 
-    It "Should generate a sparse matrix with an imported a sparse matrix" {
+    It "Should generate a sparse matrix with an imported sparse matrix" {
         $matrixJson = @'
 {
     "matrix": {
@@ -217,7 +224,7 @@ Describe "Platform Matrix Import" -Tag "import" {
         CompareMatrices $matrix $expected
     }
 
-    It "Should generate a sparse matrix with an imported a sparse matrix" {
+    It "Should not combine matrices with duplicate keys" {
         $matrixJson = @'
 {
     "matrix": {
@@ -228,13 +235,125 @@ Describe "Platform Matrix Import" -Tag "import" {
 '@
 
         $importConfig = GetMatrixConfigFromJson $matrixJson
-        $matrix = GenerateMatrix $importConfig "sparse"
+        { GenerateMatrix $importConfig "sparse" } | Should -Throw
+    }
 
-        $matrix[0].parameters["Foo"] | Should -Be "fooOverride1"
-        $matrix[0].name | Should -Be "fooOverride1_bar1"
-        $matrix[3].parameters["Foo"] | Should -Be "fooOverride2"
-        $matrix[3].name | Should -Be "fooOverride2_bar1"
-        $matrix[5].parameters["Foo"] | Should -Be "fooOverride2"
-        $matrix[5].name | Should -Be "fooOverride2_importedBaz"
+}
+
+Describe "Platform Matrix Replace" -Tag "replace" {
+    It "Should parse replacement syntax" -TestCases @(
+         @{ query = 'foo=bar/baz'; key = 'foo'; value = 'bar'; replace = 'baz' },
+         @{ query = 'foo=\/p:bar/\/p:baz'; key = 'foo'; value = '\/p:bar'; replace = '/p:baz' },
+         @{ query = 'f\=o\/o=\/p:b\=ar/\/p:b\=az'; key = 'f\=o\/o'; value = '\/p:b\=ar'; replace = '/p:b=az' },
+         @{ query = 'foo=bar/'; key = 'foo'; value = 'bar'; replace = '' },
+         @{ query = 'foo=/baz'; key = 'foo'; value = ''; replace = 'baz' }
+    ) {
+        $parsed = ParseReplacement $query
+        $parsed.key | Should -Be $key
+        $parsed.value | Should -Be $value
+        $parsed.replace | Should -Be $replace
+    }
+
+    It "Should fail for invalid replacement syntax" -TestCases @(
+        @{ query = '' },
+        @{ query = 'asdf' },
+        @{ query = 'asdf=foo/bar/baz' },
+        @{ query = 'asdf=foo=bar/baz' },
+        @{ query = 'asdf=foo' }
+    ) {
+        { $parsed = ParseReplacement $query } | Should -Throw
+        { $parsed = ParseReplacement $query } | Should -Throw
+        { $parsed = ParseReplacement $query } | Should -Throw
+        { $parsed = ParseReplacement $query } | Should -Throw
+        { $parsed = ParseReplacement $query } | Should -Throw
+    }
+    
+    It "Should replace values in a matrix" {
+        $matrixJson = @'
+{
+    "matrix": {
+        "Foo": [ "foo1", "foo2" ],
+        "Bar": [ "bar1", "bar2" ]
+    },
+    "include": [ { "Baz": "baz1" } ]
+}
+'@
+
+        $expectedMatrix = @'
+[
+  {
+    "parameters": { "Foo": "foo1Replaced", "Bar": "bar1" },
+    "name": "foo1Replaced_bar1"
+  },
+  {
+    "parameters": { "Foo": "fooDefaultReplaced", "Bar": "bar2" },
+    "name": "fooDefaultReplaced_bar2"
+  },
+  {
+    "parameters": { "Baz": "bazReplaced" },
+    "name": "bazReplaced"
+  }
+]
+'@
+
+        $replace = @(
+            "Foo=foo1/foo1Replaced",
+            "Foo=foo.*/fooDefaultReplaced",
+            ".*=B.z/bazReplaced"
+        )
+
+        $importConfig = GetMatrixConfigFromJson $matrixJson
+        $matrix = GenerateMatrix -config $importConfig -selectFromMatrixType "sparse" -replace $replace
+        $expected = $expectedMatrix | ConvertFrom-Json -AsHashtable
+
+        $matrix.Length | Should -Be 3
+        CompareMatrices $matrix $expected
+    }
+
+    It "Should replace values in a matrix with import and nonSparseParameters" {
+        $matrixJson = @'
+{
+    "matrix": {
+        "$IMPORT": "./test-import-matrix.json",
+        "testField": [ "test1", "test2" ]
+    }
+}
+'@
+        $importConfig = GetMatrixConfigFromJson $matrixJson
+        $matrix = GenerateMatrix $importConfig "sparse" -nonSparseParameters "testField" -replace @("testField=test1/testReplaced", "Baz=.*/bazReplaced")
+
+        $matrix.Length | Should -Be 6
+
+        $matrix[0].name | Should -Be testReplaced_foo1_bar1
+        $matrix[0].parameters.testField | Should -Be "testReplaced"
+        $matrix[0].parameters.Foo | Should -Be "foo1"
+        $matrix[2].name | Should -Be testReplaced_bazReplaced
+        $matrix[2].parameters.testField | Should -Be "testReplaced"
+        $matrix[2].parameters.Baz | Should -Be "bazReplaced"
+        $matrix[4].name | Should -Be test2_foo2_bar2
+        $matrix[4].parameters.testField | Should -Be "test2"
+        $matrix[4].parameters.Foo | Should -Be "foo2"
+    }
+
+    It "Should replace values in groupings" {
+        $matrixJson = @'
+{
+  "matrix": {
+    "Agent": {
+      "ubuntu-1804": { "OSVmImage": "MMSUbuntu18.04", "Pool": "azsdk-pool-mms-ubuntu-1804-general" }
+    },
+    "JavaTestVersion": [ "1.8", "1.11" ]
+  }
+}
+'@
+        $importConfig = GetMatrixConfigFromJson $matrixJson
+        $matrix = GenerateMatrix $importConfig "all" -replace @("JavaTestVersion=1.8/2.0", "Pool=.*ubuntu.*/custom-ubuntu-pool")
+
+        $matrix.Length | Should -Be 2
+        # Replacements of inner values will preserve the grouping name
+        $matrix[0].name | Should -Be "ubuntu1804_20"
+        $matrix[0].parameters.JavaTestVersion | Should -Be "2.0"
+        $matrix[0].parameters.Pool | Should -Be "custom-ubuntu-pool"
+        $matrix[0].parameters.OSVmImage | Should -Be "MMSUbuntu18.04"
     }
 }

@@ -14,6 +14,7 @@
     * [include/exclude](#includeexclude)
     * [displayNames](#displaynames-1)
     * [Filters](#filters)
+    * [Replace](#replace-values)
     * [NonSparseParameters](#nonsparseparameters)
     * [Under the hood](#under-the-hood)
 * [Testing](#testing)
@@ -54,6 +55,7 @@ jobs:
         Location: eastus2
         Cloud: Public
       MatrixFilters: []
+      MatrixReplace: []
 ```
 
 ## Matrix config file syntax
@@ -166,7 +168,8 @@ To import a matrix, add a parameter with the key `$IMPORT`:
 ```
 
 Importing can be useful, for example, in cases where there is a shared base matrix, but there is a need to run it
-once for each instance of a language version.
+once for each instance of a language version. Importing does not support overriding duplicate parameters. To achieve
+this, use the [Replace](#replace-values) argument instead.
 
 The processing order is as follows:
 
@@ -376,7 +379,7 @@ The logic for generating display names works like this:
 
 #### Filters
 
-Filters can be passed to the matrix as an array of strings, each matching the format of <key>=<regex>. When a matrix entry
+Filters can be passed to the matrix as an array of strings, each matching the format of `<key>=<regex>`. When a matrix entry
 does not contain the specified key, it will default to a value of empty string for regex parsing. This can be used to specify
 filters for keys that don't exist or keys that optionally exist and match a regex, as seen in the below example.
 
@@ -392,6 +395,67 @@ named "ExcludedKey", a framework variable containing either "461" or "5.0", and 
   -Selection all `
   -DisplayNameFilter ".*windows.*" `
   -Filters @("ExcludedKey=^$", "framework=(461|5\.0)", "SupportedClouds=^$|.*Public.*")
+```
+
+#### Replace values
+
+Replacements for values can be passed to the matrix as an array of strings, each matching the format of `<keyRegex>=<valueRegex>/<replacementValue>`.
+The replace argument will find any permutations where the key matches the key regex and the value matches the value regex, and replace the value with
+the replacement specified.
+
+NOTE:
+- For each value, the first replacement provided that matches will be the only one applied.
+- If `=` or `/` characters need to be part of the regex or replacement, escape them with `\`.
+
+For example, given a matrix config like below:
+
+```
+{
+  "matrix": {
+    "Agent": {
+      "ubuntu-1804": { "OSVmImage": "MMSUbuntu18.04", "Pool": "azsdk-pool-mms-ubuntu-1804-general" }
+    },
+    "JavaTestVersion": [ "1.8", "1.11" ]
+  }
+}
+
+```
+
+The normal matrix output (without replacements), looks like:
+
+```
+$ ./Create-JobMatrix.ps1 -ConfigPath <test> -Selection all
+{
+  "ubuntu1804_18": {
+    "OSVmImage": "MMSUbuntu18.04",
+    "Pool": "azsdk-pool-mms-ubuntu-1804-general",
+    "JavaTestVersion": "1.8"
+  },
+  "ubuntu1804_111": {
+    "OSVmImage": "MMSUbuntu18.04",
+    "Pool": "azsdk-pool-mms-ubuntu-1804-general",
+    "JavaTestVersion": "1.11"
+  }
+}
+```
+
+Passing in multiple replacements, the output will look like below. Note that replacing key/values that appear nested within a grouping
+will not affect that segment of the job name, since the job takes the grouping name (in this case "ubuntu1804").
+
+```
+$ ./Create-JobMatrix.ps1 -ConfigPath <test> -Selection all -Replace @("Java.*Version=1.11/2.0", "Pool=.*ubuntu.*/custom-ubuntu-pool")
+{
+  "ubuntu1804_18": {
+    "OSVmImage": "MMSUbuntu18.04",
+    "Pool": "custom-ubuntu-pool",
+    "JavaTestVersion": "1.8"
+  },
+  "ubuntu1804_20": {
+    "OSVmImage": "MMSUbuntu18.04",
+    "Pool": "custom-ubuntu-pool",
+    "JavaTestVersion": "2.0"
+  }
+}
 ```
 
 #### NonSparseParameters
