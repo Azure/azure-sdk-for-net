@@ -65,12 +65,14 @@ namespace Azure.Communication.Identity.Tests
         [Test]
         [TestCase(AuthMethod.ConnectionString, TestName = "GettingTurnCredentialsWithConnectionString")]
         [TestCase(AuthMethod.KeyCredential, TestName = "GettingTurnCredentialsWithKeyCredential")]
+        [TestCase(AuthMethod.TokenCredential, TestName = "GettingTurnCredentialsWithTokenCredential")]
         public async Task GettingTurnCredentialsGeneratesTurnCredentials(AuthMethod authMethod)
         {
             CommunicationIdentityClient client = authMethod switch
             {
                 AuthMethod.ConnectionString => CreateClientWithConnectionString(),
                 AuthMethod.KeyCredential => CreateClientWithAzureKeyCredential(),
+                AuthMethod.TokenCredential => CreateClientWithTokenCredential(),
                 _ => throw new ArgumentOutOfRangeException(nameof(authMethod)),
             };
 

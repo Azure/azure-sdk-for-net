@@ -11,10 +11,11 @@ Azure Communication Identity is managing tokens for Azure Communication Services
 
 ### Install the package
 
-Install the Azure Communication Identity client library for .NET with [NuGet][nuget]:
+Install the [private preview version of Azure Communication Identity client library][IdentitySDKTurnPrivatePreview] for .NET with [NuGet][nuget]:
 
 ```Powershell
-dotnet add package Azure.Communication.Identity --version 1.0.0-beta.4
+dotnet add package Azure.Communication.Common --version 1.0.0-beta.4
+dotnet add package Azure.Communication.Identity --version 1.0.0-alpha.20210224.2
 ```
 
 ### Prerequisites
@@ -109,6 +110,21 @@ Response revokeResponse = client.RevokeTokens(user);
 Response deleteResponse = client.DeleteUser(user);
 ```
 
+## Generating TURN credentials for a user
+
+```C# Snippet:CreateTURNTokenAsync
+Response<CommunicationTurnCredentialsResponse> turnTokenResponse = await client.GetTurnCredentialsAsync(user);
+DateTimeOffset turnTokenExpiresOn = turnTokenResponse.Value.ExpiresOn;
+IReadOnlyList<CommunicationTurnServer> turnServers = turnTokenResponse.Value.TurnServers;
+Console.WriteLine($"Expires On: {turnTokenExpiresOn}");
+foreach (CommunicationTurnServer turnServer in turnServers)
+{
+    Console.WriteLine($"TURN Url: {turnServer.Urls}");
+    Console.WriteLine($"TURN Username: {turnServer.Username}");
+    Console.WriteLine($"TURN Credential: {turnServer.Credential}");
+}
+```
+
 ## Troubleshooting
 
 All User token service operations will throw a RequestFailedException on failure.
@@ -152,6 +168,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For m
 <!--[package]: https://www.nuget.org/packages/Azure.Communication.Identity-->
 [product_docs]: https://docs.microsoft.com/azure/communication-services/overview
 [nuget]: https://www.nuget.org/
+[IdentitySDKTurnPrivatePreview]: https://dev.azure.com/azure-sdk/public/_packaging?_a=package&feed=azure-sdk-for-net&package=Azure.Communication.Identity&protocolType=NuGet&version=1.0.0-alpha.20210224.2&view=overview
 [user_access_token]: https://docs.microsoft.com/azure/communication-services/quickstarts/access-tokens?pivots=programming-language-csharp
 [communication_resource_docs]: https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp
 [communication_resource_create_portal]: https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp

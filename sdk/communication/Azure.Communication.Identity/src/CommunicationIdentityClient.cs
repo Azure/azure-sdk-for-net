@@ -82,7 +82,7 @@ namespace Azure.Communication.Identity
         {
             _clientDiagnostics = new ClientDiagnostics(options);
             RestClient = new CommunicationIdentityRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
-            TurnRestClient = new CommunicationIdentityRestClient(_clientDiagnostics, httpPipeline, endpoint, "2021-12-12");
+            TurnRestClient = new CommunicationIdentityRestClient(_clientDiagnostics, httpPipeline, endpoint, "2021-02-22-preview1");
         }
 
         #endregion
