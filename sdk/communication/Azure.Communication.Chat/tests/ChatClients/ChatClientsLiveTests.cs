@@ -57,9 +57,9 @@ namespace Azure.Communication.Chat.Tests
             var displayNameMessage = "DisplayName sender message 1";
             var participants = new[]
             {
-                new ChatParticipant(user1){ DisplayName = "user1" },
-                new ChatParticipant(user2){ DisplayName = "user2" },
-                new ChatParticipant(user3){ DisplayName = "user3" }
+                new ChatParticipant(user1) { DisplayName = "user1" },
+                new ChatParticipant(user2) { DisplayName = "user2" },
+                new ChatParticipant(user3) { DisplayName = "user3" }
             };
 
             ChatClient chatClient = CreateInstrumentedChatClient(token1);
@@ -254,9 +254,9 @@ namespace Azure.Communication.Chat.Tests
             var displayNameMessage = "DisplayName sender message 1";
             var participants = new List<ChatParticipant>
             {
-                new ChatParticipant(user1){ DisplayName = "user1" },
-                new ChatParticipant(user2){ DisplayName = "user2" },
-                new ChatParticipant(user3){ DisplayName = "user3" }
+                new ChatParticipant(user1) { DisplayName = "user1" },
+                new ChatParticipant(user2) { DisplayName = "user2" },
+                new ChatParticipant(user3) { DisplayName = "user3" }
             };
             ChatClient chatClient = CreateInstrumentedChatClient(token1);
             ChatClient chatClient3 = CreateInstrumentedChatClient(token3);
