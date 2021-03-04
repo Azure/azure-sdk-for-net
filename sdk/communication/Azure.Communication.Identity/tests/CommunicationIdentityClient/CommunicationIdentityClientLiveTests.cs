@@ -84,7 +84,10 @@ namespace Azure.Communication.Identity.Tests
             Assert.IsNotNull(turnCredentialsResponse.Value.TurnServers);
             foreach (CommunicationTurnServer serverCredential in turnCredentialsResponse.Value.TurnServers)
             {
-                Assert.IsFalse(string.IsNullOrWhiteSpace(serverCredential.Urls));
+                foreach (string url in serverCredential.Urls)
+                {
+                    Assert.IsFalse(string.IsNullOrWhiteSpace(url));
+                }
                 Assert.IsFalse(string.IsNullOrWhiteSpace(serverCredential.Username));
                 Assert.IsFalse(string.IsNullOrWhiteSpace(serverCredential.Credential));
             }

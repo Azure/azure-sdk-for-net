@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -14,14 +15,19 @@ namespace Azure.Communication.Identity.Models
     {
         internal static CommunicationTurnServer DeserializeCommunicationTurnServer(JsonElement element)
         {
-            string urls = default;
+            IReadOnlyList<string> urls = default;
             string username = default;
             string credential = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("urls"))
                 {
-                    urls = property.Value.GetString();
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    urls = array;
                     continue;
                 }
                 if (property.NameEquals("username"))

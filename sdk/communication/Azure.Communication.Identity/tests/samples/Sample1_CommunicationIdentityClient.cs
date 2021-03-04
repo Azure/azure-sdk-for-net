@@ -57,7 +57,10 @@ namespace Azure.Communication.Identity.Samples
             Console.WriteLine($"Expires On: {turnTokenExpiresOn}");
             foreach (CommunicationTurnServer turnServer in turnServers)
             {
-                Console.WriteLine($"TURN Url: {turnServer.Urls}");
+                foreach (string url in turnServer.Urls)
+                {
+                    Console.WriteLine($"TURN Url: {url}");
+                }
                 Console.WriteLine($"TURN Username: {turnServer.Username}");
                 Console.WriteLine($"TURN Credential: {turnServer.Credential}");
             }
