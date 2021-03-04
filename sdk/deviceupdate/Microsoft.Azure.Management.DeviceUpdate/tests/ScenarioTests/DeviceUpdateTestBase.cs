@@ -1,89 +1,40 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using DeviceUpdate.Tests;
-using Microsoft.Azure.Management.DeviceUpdate;
-using Microsoft.Azure.Management.ResourceManager;
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Net;
+using System.Net.Http;
+using System.Threading;
+using Microsoft.Azure.Management.DeviceUpdate.Tests.Helpers;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
-namespace DigitalTwins.Tests.ScenarioTests
+namespace Microsoft.Azure.Management.DeviceUpdate.Tests.ScenarioTests
 {
-    public class DeviceUpdateTestBase
+    public abstract class DeviceUpdateTestBase
     {
-        private readonly object _initializeLock = new object();
-
+        protected static string ResourceGroupName = "DeviceUpdateResourceGroup";
         protected static string DefaultLocation = "westus2";
-        protected static string DefaultInstanceName = "blue";
-        protected static string DefaultEndpointName = "_foo_";
-        protected static string DefaultResourceGroupName = "_bar_";
 
-        protected bool IsInitialized { get; private set; } = false;
-        protected ResourceManagementClient ResourcesClient { get; private set; }
-        protected DeviceUpdateClient DeviceUpdateClient { get; private set; }
-        protected string Location { get; private set; }
-        protected TestEnvironment TestEnv { get; private set; }
+        protected CancellationToken CancellationToken => CancellationToken.None;
 
-        protected void Initialize(MockContext context)
+        protected string Location => GetLocation().Replace(" ", "").ToLowerInvariant();
+
+        private static string GetLocation()
         {
-            if (IsInitialized)
-            {
-                return;
-            }
-
-            lock (_initializeLock)
-            {
-                if (IsInitialized)
-                {
-                    return;
-                }
-
-                TestEnv = TestEnvironmentFactory.GetTestEnvironment();
-
-                ResourcesClient = GetResourceManagementClient(
-                    context,
-                    new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
-
-                DeviceUpdateClient = GetDeviceUpdateClient(
-                    context,
-                    new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
-
-                if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable("AZURE_LOCATION")))
-                {
-                    Location = DefaultLocation;
-                }
-                else
-                {
-                    Location = Environment.GetEnvironmentVariable("AZURE_LOCATION").Replace(" ", "").ToLower();
-                }
-
-                IsInitialized = true;
-            }
+            var location = Environment.GetEnvironmentVariable("AZURE_LOCATION");
+            return !string.IsNullOrEmpty(location) ? location : DefaultLocation;
         }
 
-        private static DeviceUpdateClient GetDeviceUpdateClient(
-            MockContext context,
-            RecordedDelegatingHandler handler = null)
-        {
-            if (handler == null)
-            {
-                handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
-            }
-            else
-            {
-                handler.IsPassThrough = true;
-            }
+        protected TestEnvironment TestEnvironment => TestEnvironmentFactory.GetTestEnvironment();
 
-            return context.GetServiceClient<DeviceUpdateClient>(false, handler);
-        }
-
-        private static ResourceManagementClient GetResourceManagementClient(
-            MockContext context,
-            RecordedDelegatingHandler handler)
+        protected static DeviceUpdateClient CreateDeviceUpdateClient(MockContext context)
         {
-            handler.IsPassThrough = true;
-            return context.GetServiceClient<ResourceManagementClient>(false, handler);
+            DelegatingHandler handler = new RecordedDelegatingHandler
+            {
+                IsPassThrough = true,
+                StatusCodeToReturn = HttpStatusCode.Created
+            };
+            return context.GetServiceClient<DeviceUpdateClient>(handlers: handler);
         }
     }
 }

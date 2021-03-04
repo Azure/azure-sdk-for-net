@@ -4,11 +4,11 @@
   <PropertyGroup>
     <PackageId>DeviceUpdate.Tests</PackageId>
     <Description>DeviceUpdate.Tests Class Library</Description>
-    <AssemblyName>DeviceUpdate.Tests</AssemblyName>
+    <AssemblyName>Microsoft.Azure.Management.DeviceUpdate.Tests</AssemblyName>
     <VersionPrefix>2020-09-01</VersionPrefix>
-    <LangVersion>8.0</LangVersion>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
-  
+
   <PropertyGroup>
     <ExcludeFromBuild>false</ExcludeFromBuild>
     <ExcludeFromTest>false</ExcludeFromTest>
@@ -19,17 +19,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentAssertions" Version="5.10.3" />
+    <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="3.7.0-preview" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="xunit.runner.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="SessionRecords\**\*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  
-  <ItemGroup>
-    <Folder Include="SessionRecords\" />
-  </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="FluentAssertions" Version="5.10.3" />
-    <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="3.7.0-preview" />
-  </ItemGroup>
 </Project>

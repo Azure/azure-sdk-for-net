@@ -7,26 +7,24 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
-namespace DeviceUpdate.Tests
+namespace Microsoft.Azure.Management.DeviceUpdate.Tests.Helpers
 {
     public class RecordedDelegatingHandler : DelegatingHandler
     {
-        private HttpResponseMessage _response;
+        private readonly HttpResponseMessage _response;
 
         public RecordedDelegatingHandler()
+            : this(null)
         {
-            StatusCodeToReturn = HttpStatusCode.Created;
-            SubsequentStatusCodeToReturn = StatusCodeToReturn;
         }
 
         public RecordedDelegatingHandler(HttpResponseMessage response)
         {
-            StatusCodeToReturn = HttpStatusCode.Created;
-            SubsequentStatusCodeToReturn = StatusCodeToReturn;
+            this.SubsequentStatusCodeToReturn = this.StatusCodeToReturn;
             _response = response;
         }
 
-        public HttpStatusCode StatusCodeToReturn { get; set; }
+        public HttpStatusCode StatusCodeToReturn { get; set; } = HttpStatusCode.Created;
 
         public HttpStatusCode SubsequentStatusCodeToReturn { get; set; }
 
@@ -47,25 +45,29 @@ namespace DeviceUpdate.Tests
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, System.Threading.CancellationToken cancellationToken)
         {
             counter++;
+
             // Save request
             if (request.Content == null)
             {
-                Request = string.Empty;
+                this.Request = string.Empty;
             }
             else
             {
-                Request = await request.Content.ReadAsStringAsync();
+                this.Request = await request.Content.ReadAsStringAsync();
             }
-            RequestHeaders = request.Headers;
+
+            this.RequestHeaders = request.Headers;
+
             if (request.Content != null)
             {
-                ContentHeaders = request.Content.Headers;
+                this.ContentHeaders = request.Content.Headers;
             }
-            Method = request.Method;
-            Uri = request.RequestUri;
+
+            this.Method = request.Method;
+            this.Uri = request.RequestUri;
 
             // Prepare response
-            if (IsPassThrough)
+            if (this.IsPassThrough)
             {
                 return await base.SendAsync(request, cancellationToken);
             }
@@ -77,12 +79,11 @@ namespace DeviceUpdate.Tests
                 }
                 else
                 {
-                    var statusCode = StatusCodeToReturn;
-                    if (counter > 1)
-                        statusCode = SubsequentStatusCodeToReturn;
-                    HttpResponseMessage response = new HttpResponseMessage(statusCode);
-                    response.Content = new StringContent("");
-                    return response;
+                    var statusCode = counter > 1 ? this.SubsequentStatusCodeToReturn : this.StatusCodeToReturn;
+                    return new HttpResponseMessage(statusCode)
+                    {
+                        Content = new StringContent(string.Empty)
+                    };
                 }
             }
         }
