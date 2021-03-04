@@ -33,7 +33,7 @@ namespace Azure.Communication.Chat
 
         internal ChatParticipantInternal ToChatParticipantInternal()
         {
-            return new ChatParticipantInternal(CommunicationIdentifierSerializer.Serialize(User));
+            return new ChatParticipantInternal(CommunicationIdentifierSerializer.Serialize(User), DisplayName, ShareHistoryTime);
         }
     }
 }
