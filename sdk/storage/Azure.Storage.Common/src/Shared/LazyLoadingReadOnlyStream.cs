@@ -233,17 +233,17 @@ namespace Azure.Storage
 
             if (offset < 0)
             {
-                throw new ArgumentOutOfRangeException($"{nameof(offset)} cannot be less than 0.");
+                throw new ArgumentOutOfRangeException(nameof(offset), $"{nameof(offset)} cannot be less than 0.");
             }
 
             if (offset > buffer.Length)
             {
-                throw new ArgumentOutOfRangeException($"{nameof(offset)} cannot exceed {nameof(buffer)} length.");
+                throw new ArgumentOutOfRangeException(nameof(offset), $"{nameof(offset)} cannot exceed {nameof(buffer)} length.");
             }
 
             if (count < 0)
             {
-                throw new ArgumentOutOfRangeException($"{nameof(count)} cannot be less than 0.");
+                throw new ArgumentOutOfRangeException(nameof(count), $"{nameof(count)} cannot be less than 0.");
             }
         }
 
@@ -268,7 +268,7 @@ namespace Azure.Storage
 
             if (lengthString == null)
             {
-                throw new ArgumentException($"{HttpHeader.Names.ContentLength} header is mssing on get properties response.");
+                throw new ArgumentException($"{HttpHeader.Names.ContentLength} header is missing on get properties response.");
             }
 
             return Convert.ToInt64(lengthString, CultureInfo.InvariantCulture);
@@ -280,7 +280,7 @@ namespace Azure.Storage
 
             if (lengthString == null)
             {
-                throw new ArgumentException("Content-Range header is mssing on download response.");
+                throw new ArgumentException("Content-Range header is missing on download response.");
             }
 
             string[] split = lengthString.Split('/');
@@ -332,14 +332,13 @@ namespace Azure.Storage
             // newPosition < 0
             if (newPosition < 0)
             {
-                throw new ArgumentException($"New {nameof(offset)} cannot be less than 0.  Value was {newPosition}");
+                throw new ArgumentException($"New {nameof(offset)} cannot be less than 0.  Value was {newPosition}", nameof(offset));
             }
 
             // newPosition > _length
             if (newPosition > _length)
             {
-                throw new ArgumentException(
-                    "You cannot seek past the last known length of the underlying blob or file.");
+                throw new ArgumentException("You cannot seek past the last known length of the underlying blob or file.", nameof(offset));
             }
 
             // newPosition is less than _position, but within _buffer.
@@ -377,14 +376,14 @@ namespace Azure.Storage
                 case SeekOrigin.End:
                     if (_allowBlobModifications)
                     {
-                        throw new ArgumentException($"Cannot {nameof(Seek)} with {nameof(SeekOrigin)}.{nameof(SeekOrigin.End)} on a growing blob or file.  Call Stream.Seek(Stream.Length, SeekOrigin.Begin) to get to the end of known data.");
+                        throw new ArgumentException($"Cannot {nameof(Seek)} with {nameof(SeekOrigin)}.{nameof(SeekOrigin.End)} on a growing blob or file.  Call Stream.Seek(Stream.Length, SeekOrigin.Begin) to get to the end of known data.", nameof(origin));
                     }
                     else
                     {
                         return _length + offset;
                     }
                 default:
-                    throw new ArgumentException($"Unknown ${nameof(SeekOrigin)} value");
+                    throw new ArgumentException($"Unknown ${nameof(SeekOrigin)} value", nameof(origin));
             }
         }
 
