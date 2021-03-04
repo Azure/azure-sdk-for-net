@@ -59,6 +59,7 @@ pr:
     - sdk/datashare/Microsoft.Azure.Management.DataShare
     - sdk/deploymentmanager/Microsoft.Azure.Management.DeploymentManager
     - sdk/deviceprovisioningservices/Microsoft.Azure.Management.DeviceProvisioningServices
+    - sdk/deviceupdate/Microsoft.Azure.Management.DeviceUpdate
     - sdk/devspaces/Microsoft.Azure.Management.DevSpaces
     - sdk/devtestlabs/Microsoft.Azure.Management.DevTestLabs
     - sdk/digitaltwins/Microsoft.Azure.Management.DigitalTwins

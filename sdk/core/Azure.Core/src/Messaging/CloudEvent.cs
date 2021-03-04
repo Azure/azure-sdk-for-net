@@ -19,7 +19,7 @@ namespace Azure.Messaging
         /// <param name="jsonSerializableData"> Event data specific to the event type. </param>
         /// <param name="dataSerializationType">The type to use when serializing the data.
         /// If not specified, <see cref="object.GetType()"/> will be used on <paramref name="jsonSerializableData"/>.</param>
-        public CloudEvent(string source, string type, object jsonSerializableData, Type? dataSerializationType = default)
+        public CloudEvent(string source, string type, object? jsonSerializableData, Type? dataSerializationType = default)
         {
             if (jsonSerializableData is BinaryData)
             {
@@ -39,7 +39,7 @@ namespace Azure.Messaging
         /// <param name="data"> Binary event data specific to the event type. </param>
         /// <param name="dataContentType"> Content type of the payload. A content type different from "application/json" should be specified if payload is not JSON. </param>
         /// <param name="dataFormat"></param>
-        public CloudEvent(string source, string type, BinaryData data, string dataContentType, CloudEventDataFormat dataFormat = CloudEventDataFormat.Binary)
+        public CloudEvent(string source, string type, BinaryData? data, string? dataContentType, CloudEventDataFormat dataFormat = CloudEventDataFormat.Binary)
         {
             Source = source;
             Type = type;
@@ -62,11 +62,11 @@ namespace Azure.Messaging
         /// Gets or sets an identifier for the event. The combination of <see cref="Id"/> and <see cref="Source"/> must be unique for each distinct event.
         /// If not explicitly set, this will default to a <see cref="Guid"/>.
         /// </summary>
-        public string Id
+        public string? Id
         {
             get
             {
-                return _id!;
+                return _id;
             }
             set
             {
@@ -80,11 +80,11 @@ namespace Azure.Messaging
 
         /// <summary>Gets or sets the context in which an event happened. The combination of <see cref="Id"/>
         /// and <see cref="Source"/> must be unique for each distinct event.</summary>
-        public string Source
+        public string? Source
         {
             get
             {
-                return _source!;
+                return _source;
             }
             set
             {
@@ -95,11 +95,11 @@ namespace Azure.Messaging
         private string? _source;
 
         /// <summary>Gets or sets the type of event related to the originating occurrence.</summary>
-        public string Type
+        public string? Type
         {
             get
             {
-                return _type!;
+                return _type;
             }
             set
             {

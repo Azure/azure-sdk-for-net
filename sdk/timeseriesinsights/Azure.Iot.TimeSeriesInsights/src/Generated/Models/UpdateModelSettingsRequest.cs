@@ -8,7 +8,7 @@
 namespace Azure.Iot.TimeSeriesInsights
 {
     /// <summary> Request to update model settings. One of &quot;name&quot; or &quot;defaultTypeId&quot; must be set. </summary>
-    public partial class UpdateModelSettingsRequest
+    internal partial class UpdateModelSettingsRequest
     {
         /// <summary> Initializes a new instance of UpdateModelSettingsRequest. </summary>
         public UpdateModelSettingsRequest()

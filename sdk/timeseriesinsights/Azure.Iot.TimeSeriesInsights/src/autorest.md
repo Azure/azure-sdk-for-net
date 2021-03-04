@@ -15,9 +15,20 @@ Run `generate.ps1` in this directory to generate the code.
 > see <https://aka.ms/autorest>
 
 ``` yaml
+# Change accessibility
+directive:
+  from: timeseriesinsights.json
+  where: $.definitions.UpdateModelSettingsRequest
+  transform: >
+    $["x-accessibility"] = "internal"
+```
+
+
+``` yaml
 # when generating from official source - The raw link must have a commit hash for C# generator
 #input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/9a6510d0597a55d39ab1edcf22abab4631cbc0d3/specification/timeseriesinsights/data-plane/Microsoft.TimeSeriesInsights/stable/2020-07-31/timeseriesinsights.json
 
+# Change model namespace
 directive:
   from: timeseriesinsights.json
   where: $.definitions.*
