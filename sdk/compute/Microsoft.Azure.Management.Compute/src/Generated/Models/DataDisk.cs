@@ -197,7 +197,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "toBeDetached")]
         public bool? ToBeDetached { get; set; }
-        
+
         /// <summary>
         /// Gets specifies the Read-Write IOPS for the managed disk when
         /// StorageAccountType is UltraSSD_LRS. Returned only for
