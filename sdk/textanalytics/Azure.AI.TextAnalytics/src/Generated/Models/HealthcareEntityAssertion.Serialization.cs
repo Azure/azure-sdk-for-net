@@ -14,9 +14,9 @@ namespace Azure.AI.TextAnalytics
     {
         internal static HealthcareEntityAssertion DeserializeHealthcareEntityAssertion(JsonElement element)
         {
-            Optional<Conditionality> conditionality = default;
-            Optional<Certainty> certainty = default;
-            Optional<Association> association = default;
+            Optional<EntityConditionality> conditionality = default;
+            Optional<EntityCertainty> certainty = default;
+            Optional<EntityAssociation> association = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("conditionality"))

@@ -6,10 +6,12 @@ using Azure.Core;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// Determines the condition of the <see cref="HealthcareEntityAssertion"/>
+    /// Determines the condition of the <see cref="HealthcareEntityAssertion"/>.
+    /// For example, "If the patient has a fever, he has pneumonia", the diagnosis of pneumonia
+    /// is 'conditional' on whether the patient has a fever.
     /// </summary>
     [CodeGenModel("Conditionality")]
-    public enum Conditionality
+    public enum EntityConditionality
     {
         /// <summary> Hypothetical. </summary>
         Hypothetical,

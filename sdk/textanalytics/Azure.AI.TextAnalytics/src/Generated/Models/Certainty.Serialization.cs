@@ -11,23 +11,23 @@ namespace Azure.AI.TextAnalytics
 {
     internal static partial class CertaintyExtensions
     {
-        public static string ToSerialString(this Certainty value) => value switch
+        public static string ToSerialString(this EntityCertainty value) => value switch
         {
-            Certainty.Positive => "Positive",
-            Certainty.PositivePossible => "PositivePossible",
-            Certainty.NeutralPossible => "NeutralPossible",
-            Certainty.NegativePossible => "NegativePossible",
-            Certainty.Negative => "Negative",
+            EntityCertainty.Positive => "Positive",
+            EntityCertainty.PositivePossible => "PositivePossible",
+            EntityCertainty.NeutralPossible => "NeutralPossible",
+            EntityCertainty.NegativePossible => "NegativePossible",
+            EntityCertainty.Negative => "Negative",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown Certainty value.")
         };
 
-        public static Certainty ToCertainty(this string value)
+        public static EntityCertainty ToCertainty(this string value)
         {
-            if (string.Equals(value, "Positive", StringComparison.InvariantCultureIgnoreCase)) return Certainty.Positive;
-            if (string.Equals(value, "PositivePossible", StringComparison.InvariantCultureIgnoreCase)) return Certainty.PositivePossible;
-            if (string.Equals(value, "NeutralPossible", StringComparison.InvariantCultureIgnoreCase)) return Certainty.NeutralPossible;
-            if (string.Equals(value, "NegativePossible", StringComparison.InvariantCultureIgnoreCase)) return Certainty.NegativePossible;
-            if (string.Equals(value, "Negative", StringComparison.InvariantCultureIgnoreCase)) return Certainty.Negative;
+            if (string.Equals(value, "Positive", StringComparison.InvariantCultureIgnoreCase)) return EntityCertainty.Positive;
+            if (string.Equals(value, "PositivePossible", StringComparison.InvariantCultureIgnoreCase)) return EntityCertainty.PositivePossible;
+            if (string.Equals(value, "NeutralPossible", StringComparison.InvariantCultureIgnoreCase)) return EntityCertainty.NeutralPossible;
+            if (string.Equals(value, "NegativePossible", StringComparison.InvariantCultureIgnoreCase)) return EntityCertainty.NegativePossible;
+            if (string.Equals(value, "Negative", StringComparison.InvariantCultureIgnoreCase)) return EntityCertainty.Negative;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown Certainty value.");
         }
     }

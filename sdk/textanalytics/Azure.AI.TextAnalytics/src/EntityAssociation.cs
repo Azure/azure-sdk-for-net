@@ -6,10 +6,13 @@ using Azure.Core;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// Determines the association of <see cref="HealthcareEntityAssertion"/>
+    /// Describes whether the healthcare entity it's on the subject of the document, or
+    /// if this entity describes someone else in the document. For example, in "The subject's mother has
+    /// a fever", the "fever" entity is not associated with the subject themselves, but with the subject's
+    /// mother.
     /// </summary>
     [CodeGenModel("Association")]
-    public enum Association
+    public enum EntityAssociation
     {
         /// <summary> subject. </summary>
         Subject,

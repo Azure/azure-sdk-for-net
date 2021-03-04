@@ -11,17 +11,17 @@ namespace Azure.AI.TextAnalytics
 {
     internal static partial class ConditionalityExtensions
     {
-        public static string ToSerialString(this Conditionality value) => value switch
+        public static string ToSerialString(this EntityConditionality value) => value switch
         {
-            Conditionality.Hypothetical => "Hypothetical",
-            Conditionality.Conditional => "Conditional",
+            EntityConditionality.Hypothetical => "Hypothetical",
+            EntityConditionality.Conditional => "Conditional",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown Conditionality value.")
         };
 
-        public static Conditionality ToConditionality(this string value)
+        public static EntityConditionality ToConditionality(this string value)
         {
-            if (string.Equals(value, "Hypothetical", StringComparison.InvariantCultureIgnoreCase)) return Conditionality.Hypothetical;
-            if (string.Equals(value, "Conditional", StringComparison.InvariantCultureIgnoreCase)) return Conditionality.Conditional;
+            if (string.Equals(value, "Hypothetical", StringComparison.InvariantCultureIgnoreCase)) return EntityConditionality.Hypothetical;
+            if (string.Equals(value, "Conditional", StringComparison.InvariantCultureIgnoreCase)) return EntityConditionality.Conditional;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown Conditionality value.");
         }
     }

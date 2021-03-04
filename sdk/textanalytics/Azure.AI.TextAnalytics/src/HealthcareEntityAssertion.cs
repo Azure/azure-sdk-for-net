@@ -8,7 +8,7 @@ namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// Determines the assertions for the healthcare entity. <see cref="HealthcareEntityAssertion"/>
-    /// Exposes <see cref="Conditionality"/>, <see cref="Association"/> and <see cref="Certainty"/>.
+    /// Exposes <see cref="EntityConditionality"/>, <see cref="EntityAssociation"/> and <see cref="EntityCertainty"/>.
     /// </summary>
     [CodeGenModel("HealthcareAssertion")]
     public partial class HealthcareEntityAssertion { }

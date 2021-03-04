@@ -11,17 +11,17 @@ namespace Azure.AI.TextAnalytics
 {
     internal static partial class AssociationExtensions
     {
-        public static string ToSerialString(this Association value) => value switch
+        public static string ToSerialString(this EntityAssociation value) => value switch
         {
-            Association.Subject => "subject",
-            Association.Other => "other",
+            EntityAssociation.Subject => "subject",
+            EntityAssociation.Other => "other",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown Association value.")
         };
 
-        public static Association ToAssociation(this string value)
+        public static EntityAssociation ToAssociation(this string value)
         {
-            if (string.Equals(value, "subject", StringComparison.InvariantCultureIgnoreCase)) return Association.Subject;
-            if (string.Equals(value, "other", StringComparison.InvariantCultureIgnoreCase)) return Association.Other;
+            if (string.Equals(value, "subject", StringComparison.InvariantCultureIgnoreCase)) return EntityAssociation.Subject;
+            if (string.Equals(value, "other", StringComparison.InvariantCultureIgnoreCase)) return EntityAssociation.Other;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown Association value.");
         }
     }
