@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Core
         protected override void Validate(ResourceIdentifier identifier)
         {
             if (identifier != null)
-                throw new ArgumentException("Invalid parent for subscription container");
+                throw new ArgumentException("Invalid parent for subscription container", nameof(identifier));
         }
 
         /// <summary>
