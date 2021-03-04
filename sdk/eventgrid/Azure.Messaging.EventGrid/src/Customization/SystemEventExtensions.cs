@@ -135,6 +135,8 @@ namespace Azure.Messaging.EventGrid
             // ServiceBus events
             { SystemEventNames.ServiceBusActiveMessagesAvailableWithNoListeners, ServiceBusActiveMessagesAvailableWithNoListenersEventData.DeserializeServiceBusActiveMessagesAvailableWithNoListenersEventData },
             { SystemEventNames.ServiceBusDeadletterMessagesAvailableWithNoListener, ServiceBusDeadletterMessagesAvailableWithNoListenersEventData.DeserializeServiceBusDeadletterMessagesAvailableWithNoListenersEventData },
+            { SystemEventNames.ServiceBusActiveMessagesAvailablePeriodicNotifications, ServiceBusActiveMessagesAvailablePeriodicNotificationsEventData.DeserializeServiceBusActiveMessagesAvailablePeriodicNotificationsEventData },
+            { SystemEventNames.ServiceBusDeadletterMessagesAvailablePeriodicNotifications, ServiceBusDeadletterMessagesAvailablePeriodicNotificationsEventData.DeserializeServiceBusDeadletterMessagesAvailablePeriodicNotificationsEventData },
 
             // Storage events
             { SystemEventNames.StorageBlobCreated, StorageBlobCreatedEventData.DeserializeStorageBlobCreatedEventData },

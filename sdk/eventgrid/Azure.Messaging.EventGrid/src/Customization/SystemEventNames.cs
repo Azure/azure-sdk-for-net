@@ -545,6 +545,18 @@ namespace Azure.Messaging.EventGrid
         /// <see cref="ServiceBusDeadletterMessagesAvailableWithNoListenersEventData"/> system event.
         /// </summary>
         public const string ServiceBusDeadletterMessagesAvailableWithNoListener = "Microsoft.ServiceBus.DeadletterMessagesAvailableWithNoListener";
+
+        /// <summary>
+        /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
+        /// <see cref="ServiceBusActiveMessagesAvailablePeriodicNotificationsEventData"/> system event.
+        /// </summary>
+        public const string ServiceBusActiveMessagesAvailablePeriodicNotifications = "Microsoft.ServiceBus.ActiveMessagesAvailablePeriodicNotifications";
+
+        /// <summary>
+        /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
+        /// <see cref="ServiceBusDeadletterMessagesAvailablePeriodicNotificationsEventData"/> system event.
+        /// </summary>
+        public const string ServiceBusDeadletterMessagesAvailablePeriodicNotifications = "Microsoft.ServiceBus.DeadletterMessagesAvailablePeriodicNotifications";
         #endregion
 
         #region Storage events
