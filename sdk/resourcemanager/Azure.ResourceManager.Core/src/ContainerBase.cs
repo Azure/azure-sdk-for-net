@@ -4,6 +4,8 @@
 using Azure.Core;
 using System;
 using System.Globalization;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.Core
 {
@@ -37,17 +39,39 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// Gets the parent resource of this resource
+        /// Gets the parent resource of this resource.
         /// </summary>
         protected ResourceOperationsBase Parent { get; }
 
         /// <summary>
-        /// Returns the resource from Azure if it exists
+        /// Returns the resource from Azure if it exists.
         /// </summary>
         /// <param name="resourceName"> The name of the resource you want to get. </param>
         /// <param name="resource"> The resource if it existed, null otherwise. </param>
         /// <returns> Whether or not the resource existed. </returns>
-        public virtual bool TryGetValue(string resourceName, out ArmResponse<TOperations> resource)
+        public virtual bool TryGet(string resourceName, out TOperations resource)
+        {
+            var op = GetOperation(resourceName);
+
+            try
+            {
+                resource = op.Get().Value;
+                return true;
+            }
+            catch
+            {
+                resource = null;
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Returns the resource from Azure if it exists.
+        /// </summary>
+        /// <param name="resourceName"> The name of the resource you want to get. </param>
+        /// <param name="resource"> The resource if it existed, null otherwise. </param>
+        /// <returns> Whether or not the resource existed. </returns>
+        public virtual bool TryGet(string resourceName, out ArmResponse<TOperations> resource)
         {
             var op = GetOperation(resourceName);
 
@@ -64,6 +88,50 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
+        /// Returns the resource from Azure if it exists.
+        /// </summary>
+        /// <param name="resourceName"> The name of the resource you want to get. </param>
+        /// <param name="resource"> The resource if it existed, null otherwise. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
+        /// The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> Whether or not the resource existed. </returns>
+        public async virtual Task<TOperations> TryGetAsync(string resourceName, TOperations resource, CancellationToken cancellationToken = default)
+        {
+            var op = GetOperation(resourceName);
+
+            try
+            {
+                return (await op.GetAsync(cancellationToken).ConfigureAwait(false)).Value;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Returns the resource from Azure if it exists.
+        /// </summary>
+        /// <param name="resourceName"> The name of the resource you want to get. </param>
+        /// <param name="resource"> The resource if it existed, null otherwise. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
+        /// The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> Whether or not the resource existed. </returns>
+        public async virtual Task<ArmResponse<TOperations>> TryGetAsync(string resourceName, ArmResponse<TOperations> resource, CancellationToken cancellationToken = default)
+        {
+            var op = GetOperation(resourceName);
+
+            try
+            {
+                return await op.GetAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
         /// Determines whether or not the azure resource exists in this container
         /// </summary>
         /// <param name="resourceName"> The name of the resource you want to check. </param>
@@ -71,7 +139,7 @@ namespace Azure.ResourceManager.Core
         public virtual bool DoesExist(string resourceName)
         {
             ArmResponse<TOperations> output;
-            return TryGetValue(resourceName, out output);
+            return TryGet(resourceName, out output);
         }
 
         /// <summary>
