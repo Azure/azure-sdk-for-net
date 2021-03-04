@@ -233,7 +233,7 @@ namespace Azure.Identity.Tests
             {
                 return CreateTokenResponse(code, token);
             }
-            
+
             throw new InvalidOperationException();
         }
 
