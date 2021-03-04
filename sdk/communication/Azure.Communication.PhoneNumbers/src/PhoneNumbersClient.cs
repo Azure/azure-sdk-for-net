@@ -66,21 +66,6 @@ namespace Azure.Communication.PhoneNumbers
 
         #endregion
 
-        #region internal constructors
-        /// <summary> Initializes a new instance of PhoneNumbersClient. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="endpoint"> The communication resource, for example https://resourcename.communication.azure.com. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        internal PhoneNumbersClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2021-03-07")
-        {
-            RestClient = new InternalPhoneNumbersRestClient(clientDiagnostics, pipeline, endpoint, apiVersion);
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
-        }
-
-        #endregion internal constructors
-
         #region private constructors
 
         private PhoneNumbersClient(ConnectionString connectionString, PhoneNumbersClientOptions options)
@@ -98,6 +83,18 @@ namespace Azure.Communication.PhoneNumbers
         private PhoneNumbersClient(string endpoint, HttpPipeline httpPipeline, PhoneNumbersClientOptions options)
             : this(new ClientDiagnostics(options), httpPipeline, endpoint, options.Version)
         { }
+
+        /// <summary> Initializes a new instance of PhoneNumbersClient. </summary>
+        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="endpoint"> The communication resource, for example https://resourcename.communication.azure.com. </param>
+        /// <param name="apiVersion"> Api Version. </param>
+        private PhoneNumbersClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2021-03-07")
+        {
+            RestClient = new InternalPhoneNumbersRestClient(clientDiagnostics, pipeline, endpoint, apiVersion);
+            _clientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
+        }
 
         #endregion
 
