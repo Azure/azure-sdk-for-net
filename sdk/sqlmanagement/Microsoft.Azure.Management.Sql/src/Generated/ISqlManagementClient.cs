@@ -293,6 +293,16 @@ namespace Microsoft.Azure.Management.Sql
         IJobVersionsOperations JobVersions { get; }
 
         /// <summary>
+        /// Gets the ILongTermRetentionBackupsOperations.
+        /// </summary>
+        ILongTermRetentionBackupsOperations LongTermRetentionBackups { get; }
+
+        /// <summary>
+        /// Gets the IBackupLongTermRetentionPoliciesOperations.
+        /// </summary>
+        IBackupLongTermRetentionPoliciesOperations BackupLongTermRetentionPolicies { get; }
+
+        /// <summary>
         /// Gets the IManagedBackupShortTermRetentionPoliciesOperations.
         /// </summary>
         IManagedBackupShortTermRetentionPoliciesOperations ManagedBackupShortTermRetentionPolicies { get; }
@@ -536,16 +546,6 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IServerDevOpsAuditSettingsOperations.
         /// </summary>
         IServerDevOpsAuditSettingsOperations ServerDevOpsAuditSettings { get; }
-
-        /// <summary>
-        /// Gets the ILongTermRetentionBackupsOperations.
-        /// </summary>
-        ILongTermRetentionBackupsOperations LongTermRetentionBackups { get; }
-
-        /// <summary>
-        /// Gets the ILongTermRetentionPoliciesOperations.
-        /// </summary>
-        ILongTermRetentionPoliciesOperations LongTermRetentionPolicies { get; }
 
     }
 }
