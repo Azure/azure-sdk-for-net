@@ -19,16 +19,6 @@ namespace Azure.Security.KeyVault
         public ChallengeBasedAuthenticationPolicy(TokenCredential credential) : base(credential, Array.Empty<string>())
         { }
 
-        public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
-        {
-            base.Process(message, pipeline);
-        }
-
-        public override async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
-        {
-            await base.ProcessAsync(message, pipeline).ConfigureAwait(false);
-        }
-
         /// <inheritdoc cref="BearerTokenChallengeAuthenticationPolicy.AuthenticateRequestFromChallengeAsync(HttpMessage, bool)" />
         protected override async Task PreProcessAsync(HttpMessage message, bool async)
         {

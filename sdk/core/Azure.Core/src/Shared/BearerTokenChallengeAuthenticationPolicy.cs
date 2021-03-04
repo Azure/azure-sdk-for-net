@@ -20,7 +20,6 @@ namespace Azure.Core.Pipeline
     {
         private readonly AccessTokenCache _accessTokenCache;
         protected string[] Scopes { get; private set; }
-        private readonly ValueTask<bool> _falseValueTask = new ValueTask<bool>(Task.FromResult(false));
 
         /// <summary>
         /// Creates a new instance of <see cref="BearerTokenChallengeAuthenticationPolicy"/> using provided token credential and scope to authenticate for.
@@ -81,7 +80,7 @@ namespace Azure.Core.Pipeline
         /// <returns>A boolean indicating whether the request was successfully authenticated and should be sent to the transport.</returns>
         protected virtual ValueTask<bool> AuthenticateRequestFromChallengeAsync(HttpMessage message, bool async)
         {
-            return _falseValueTask;
+            return default(ValueTask<bool>);
         }
 
         private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
