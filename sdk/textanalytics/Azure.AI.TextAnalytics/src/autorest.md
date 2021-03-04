@@ -70,13 +70,6 @@ directive:
       if (! $.get["x-ms-pageable"]) {
         $.get["x-ms-pageable"] = {}
       }
-```
-
-```yaml
-directive:
-  - from: swagger-document
-    where: $["paths"]["/entities/health/jobs/{jobId}"]
-    transform: >
       $.get["x-ms-pageable"].operationName = "HealthStatusNextPage";
       $.get["x-ms-pageable"].nextLink;
       $.get["x-ms-pageable"].values;
