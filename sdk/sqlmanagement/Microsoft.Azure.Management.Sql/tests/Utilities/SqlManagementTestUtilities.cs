@@ -225,9 +225,9 @@ namespace Sql.Tests
                 Assert.Equal(expected.HighAvailabilityReplicaCount, actual.HighAvailabilityReplicaCount);
             }
 
-            if (!string.IsNullOrEmpty(expected.RequestedBackupStorageRedundancy))
+            if (!string.IsNullOrEmpty(expected.StorageAccountType))
             {
-                Assert.Equal(expected.RequestedBackupStorageRedundancy, actual.RequestedBackupStorageRedundancy);
+                Assert.Equal(expected.StorageAccountType, actual.StorageAccountType);
             }
 
             if (!string.IsNullOrEmpty(expected.MaintenanceConfigurationId))
