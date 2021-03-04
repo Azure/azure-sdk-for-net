@@ -13,6 +13,7 @@ namespace Azure.Security.KeyVault
     internal class ChallengeBasedAuthenticationPolicy : BearerTokenChallengeAuthenticationPolicy
     {
         private static ConcurrentDictionary<string, AuthorityScope> _scopeCache = new ConcurrentDictionary<string, AuthorityScope>();
+        private ConcurrentDictionary<HttpMessage, RequestContent> _contentCache = new ConcurrentDictionary<HttpMessage, RequestContent>();
         private AuthorityScope _scope;
 
         public ChallengeBasedAuthenticationPolicy(TokenCredential credential) : base(credential, Array.Empty<string>())
@@ -29,7 +30,7 @@ namespace Azure.Security.KeyVault
         }
 
         /// <inheritdoc cref="BearerTokenChallengeAuthenticationPolicy.AuthenticateRequestFromChallengeAsync(HttpMessage, bool)" />
-        protected override async ValueTask PreProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
+        protected override async Task PreProcessAsync(HttpMessage message, bool async)
         {
             if (message.Request.Uri.Scheme != Uri.UriSchemeHttps)
             {
@@ -39,6 +40,7 @@ namespace Azure.Security.KeyVault
             // if this policy doesn't have _scope cached try to get it from the static challenge cache.
             if (_scope != null)
             {
+                await AuthenticateRequestAsync(message, new TokenRequestContext(_scope.Scopes, message.Request.ClientRequestId), async).ConfigureAwait(false);
                 return;
             }
 
@@ -51,31 +53,24 @@ namespace Azure.Security.KeyVault
                 // As a result, before we know the auth scheme we need to avoid sending an unprotected body to Key Vault.
                 // We don't currently support this enhanced auth scheme in the SDK but we still don't want to send any unprotected data to vaults which require it.
 
-                RequestContent originalContent = message.Request.Content;
+                _contentCache[message] = message.Request.Content;
                 message.Request.Content = null;
-
-                if (async)
-                {
-                    await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
-                }
-                else
-                {
-                    ProcessNext(message, pipeline);
-                }
-
-                // set the content to the original content.
-                message.Request.Content = originalContent;
             }
             else
             {
                 // We fetched the scope from the cache, but we have not initialized the Scopes in the base yet.
-                var context = new TokenRequestContext(_scope.Scopes);
+                var context = new TokenRequestContext(_scope.Scopes, message.Request.ClientRequestId);
                 await AuthenticateRequestAsync(message, context, async).ConfigureAwait(false);
             }
         }
 
         protected override async ValueTask<bool> AuthenticateRequestFromChallengeAsync(HttpMessage message, bool async)
         {
+            if (message.Request.Content == null && _contentCache.TryRemove(message, out var content))
+            {
+                message.Request.Content = content;
+            }
+
             string authority = GetRequestAuthority(message.Request);
             string scope = AuthorizationChallengeParser.GetChallengeParameterFromResponse(message.Response, "Bearer", "resource");
             if (scope != null)

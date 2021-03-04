@@ -47,16 +47,16 @@ namespace Azure.Core.Pipeline
         }
 
         /// <inheritdoc />
-        public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            PreProcessAsync(message, pipeline, true);
-            return ProcessAsync(message, pipeline, true);
+            await PreProcessAsync(message, true).ConfigureAwait(false);
+            await ProcessAsync(message, pipeline, true).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            PreProcessAsync(message, pipeline, false);
+            PreProcessAsync(message, false).EnsureCompleted();
             ProcessAsync(message, pipeline, false).EnsureCompleted();
         }
 
@@ -64,12 +64,12 @@ namespace Azure.Core.Pipeline
         /// Executes a pre-processing step on the <paramref name="message"/> before <see cref="ProcessAsync(HttpMessage, ReadOnlyMemory{HttpPipelinePolicy})"/> or <see cref="Process(HttpMessage, ReadOnlyMemory{HttpPipelinePolicy})"/> is called.
         /// </summary>
         /// <param name="message">The <see cref="HttpMessage"/> this policy would be applied to.</param>
-        /// <param name="pipeline">The set of <see cref="HttpPipelinePolicy"/> to execute after current one.</param>
         /// <param name="async">Indicates whether the method was called from an asynchronous context.</param>
         /// <returns>The <see cref="ValueTask"/> representing the asynchronous operation.</returns>
-        protected virtual ValueTask PreProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
+        protected virtual Task PreProcessAsync(HttpMessage message, bool async)
         {
-            return default;
+            var context = new TokenRequestContext(Scopes, message.Request.ClientRequestId);
+            return AuthenticateRequestAsync(message, context, async);
         }
 
         /// <summary>
@@ -89,23 +89,6 @@ namespace Azure.Core.Pipeline
             if (message.Request.Uri.Scheme != Uri.UriSchemeHttps)
             {
                 throw new InvalidOperationException("Bearer token authentication is not permitted for non TLS protected (https) endpoints.");
-            }
-
-            TokenRequestContext context;
-
-            // If the message already has a challenge response due to a sub-class pre-processing the request, get the context from the challenge.
-            if (message.HasResponse && message.Response.Status == (int)HttpStatusCode.Unauthorized && message.Response.Headers.Contains(HttpHeader.Names.WWWAuthenticate))
-            {
-                if (!await AuthenticateRequestFromChallengeAsync(message, async).ConfigureAwait(false))
-                {
-                    // We were unsuccessful in handling the challenge, so bail out now.
-                    return;
-                }
-            }
-            else
-            {
-                context = new TokenRequestContext(Scopes, message.Request.ClientRequestId);
-                await AuthenticateRequestAsync(message, context, async).ConfigureAwait(false);
             }
 
             if (async)
