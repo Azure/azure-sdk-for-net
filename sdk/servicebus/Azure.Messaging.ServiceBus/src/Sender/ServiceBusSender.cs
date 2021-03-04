@@ -115,7 +115,7 @@ namespace Azure.Messaging.ServiceBus
                 Argument.AssertNotNullOrWhiteSpace(entityPath, nameof(entityPath));
                 connection.ThrowIfClosed();
 
-                options = options?.Clone() ?? new ServiceBusSenderOptions();
+                options = options ?? new ServiceBusSenderOptions();
                 EntityPath = entityPath;
                 Identifier = DiagnosticUtilities.GenerateIdentifier(EntityPath);
                 _connection = connection;
@@ -237,7 +237,10 @@ namespace Azure.Messaging.ServiceBus
 
         private DiagnosticScope CreateDiagnosticScope(IEnumerable<ServiceBusMessage> messages, string activityName)
         {
-            InstrumentMessages(messages);
+            foreach (ServiceBusMessage message in messages)
+            {
+                _scopeFactory.InstrumentMessage(message);
+            }
 
             // create a new scope for the specified operation
             DiagnosticScope scope = _scopeFactory.CreateScope(
@@ -246,32 +249,6 @@ namespace Azure.Messaging.ServiceBus
 
             scope.SetMessageData(messages);
             return scope;
-        }
-
-        /// <summary>
-        ///   Performs the actions needed to instrument a set of messages.
-        /// </summary>
-        ///
-        /// <param name="messages">The messages to instrument.</param>
-        ///
-        private void InstrumentMessages(IEnumerable<ServiceBusMessage> messages)
-        {
-            foreach (ServiceBusMessage message in messages)
-            {
-                if (!message.ApplicationProperties.ContainsKey(DiagnosticProperty.DiagnosticIdAttribute))
-                {
-                    using DiagnosticScope messageScope = _scopeFactory.CreateScope(
-                        DiagnosticProperty.MessageActivityName,
-                        DiagnosticProperty.ProducerKind);
-                    messageScope.Start();
-
-                    Activity activity = Activity.Current;
-                    if (activity != null)
-                    {
-                        message.ApplicationProperties[DiagnosticProperty.DiagnosticIdAttribute] = activity.Id;
-                    }
-                }
-            }
         }
 
         /// <summary>
@@ -320,7 +297,7 @@ namespace Azure.Messaging.ServiceBus
             try
             {
                 TransportMessageBatch transportBatch = await _innerSender.CreateMessageBatchAsync(options, cancellationToken).ConfigureAwait(false);
-                batch = new ServiceBusMessageBatch(transportBatch);
+                batch = new ServiceBusMessageBatch(transportBatch, _scopeFactory);
             }
             catch (Exception ex)
             {

@@ -2,17 +2,16 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Messaging.EventHubs.Producer;
 using Azure.Messaging.EventHubs.Processor;
-using Azure.Messaging.EventHubs.Processor.Tests;
+using Azure.Messaging.EventHubs.Producer;
 using Azure.Storage.Blobs;
 using NUnit.Framework;
-using System.Diagnostics;
-using System.Collections.Concurrent;
 
 namespace Azure.Messaging.EventHubs.Tests.Snippets
 {

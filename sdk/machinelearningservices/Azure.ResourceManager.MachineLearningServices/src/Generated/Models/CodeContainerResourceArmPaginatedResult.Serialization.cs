@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    public partial class CodeContainerResourceArmPaginatedResult
+    internal partial class CodeContainerResourceArmPaginatedResult
     {
         internal static CodeContainerResourceArmPaginatedResult DeserializeCodeContainerResourceArmPaginatedResult(JsonElement element)
         {

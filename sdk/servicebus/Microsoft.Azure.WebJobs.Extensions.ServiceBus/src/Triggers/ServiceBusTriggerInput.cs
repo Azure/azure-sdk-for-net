@@ -3,11 +3,10 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Azure.ServiceBus;
-using Microsoft.Azure.ServiceBus.Core;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebJobs.ServiceBus.Listeners;
 using System.Globalization;
+using Azure.Messaging.ServiceBus;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus
 {
@@ -19,15 +18,15 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
 
         private ServiceBusTriggerInput() { }
 
-        public IMessageReceiver MessageReceiver;
+        public ServiceBusMessageActions MessageActions { get; set; }
 
-        public Message[] Messages { get; set; }
+        public ServiceBusReceivedMessage[] Messages { get; set; }
 
-        public static ServiceBusTriggerInput CreateSingle(Message message)
+        public static ServiceBusTriggerInput CreateSingle(ServiceBusReceivedMessage message)
         {
             return new ServiceBusTriggerInput
             {
-                Messages = new Message[]
+                Messages = new ServiceBusReceivedMessage[]
                 {
                       message
                 },
@@ -35,7 +34,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             };
         }
 
-        public static ServiceBusTriggerInput CreateBatch(Message[] messages)
+        public static ServiceBusTriggerInput CreateBatch(ServiceBusReceivedMessage[] messages)
         {
             return new ServiceBusTriggerInput
             {
@@ -56,7 +55,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         {
             if (Messages.Length > 0)
             {
-                Message message = Messages[0];
+                ServiceBusReceivedMessage message = Messages[0];
                 if (IsSingleDispatch)
                 {
                     Guid? parentId = ServiceBusCausalityHelper.GetOwner(message);
@@ -67,10 +66,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
                         TriggerDetails = new Dictionary<string, string>()
                         {
                             { "MessageId", message.MessageId },
-                            { "SequenceNumber",  message.SystemProperties.SequenceNumber.ToString(CultureInfo.InvariantCulture) },
-                            { "DeliveryCount", message.SystemProperties.DeliveryCount.ToString(CultureInfo.InvariantCulture) },
-                            { "EnqueuedTimeUtc", message.SystemProperties.EnqueuedTimeUtc.ToUniversalTime().ToString("o") },
-                            { "LockedUntilUtc", message.SystemProperties.LockedUntilUtc.ToUniversalTime().ToString("o") },
+                            { "SequenceNumber",  message.SequenceNumber.ToString(CultureInfo.InvariantCulture) },
+                            { "DeliveryCount", message.DeliveryCount.ToString(CultureInfo.InvariantCulture) },
+                            { "EnqueuedTimeUtc", message.EnqueuedTime.ToUniversalTime().ToString("o") },
+                            { "LockedUntilUtc", message.LockedUntil.ToUniversalTime().ToString("o") },
                             { "SessionId", message.SessionId }
                         }
                     };
@@ -90,10 +89,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
                     for (int i = 0; i < Messages.Length; i++)
                     {
                         messageIds[i] = Messages[i].MessageId;
-                        sequenceNumbers[i] = Messages[i].SystemProperties.SequenceNumber;
-                        deliveryCounts[i] = Messages[i].SystemProperties.DeliveryCount;
-                        enqueuedTimes[i] = Messages[i].SystemProperties.EnqueuedTimeUtc.ToUniversalTime().ToString("o");
-                        lockedUntils[i] = Messages[i].SystemProperties.LockedUntilUtc.ToUniversalTime().ToString("o");
+                        sequenceNumbers[i] = Messages[i].SequenceNumber;
+                        deliveryCounts[i] = Messages[i].DeliveryCount;
+                        enqueuedTimes[i] = Messages[i].EnqueuedTime.ToUniversalTime().ToString("o");
+                        lockedUntils[i] = Messages[i].LockedUntil.ToUniversalTime().ToString("o");
                     }
 
                     return new TriggeredFunctionData()

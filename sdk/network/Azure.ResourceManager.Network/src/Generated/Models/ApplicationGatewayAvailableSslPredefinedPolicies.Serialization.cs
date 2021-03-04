@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayAvailableSslPredefinedPolicies
+    internal partial class ApplicationGatewayAvailableSslPredefinedPolicies
     {
         internal static ApplicationGatewayAvailableSslPredefinedPolicies DeserializeApplicationGatewayAvailableSslPredefinedPolicies(JsonElement element)
         {

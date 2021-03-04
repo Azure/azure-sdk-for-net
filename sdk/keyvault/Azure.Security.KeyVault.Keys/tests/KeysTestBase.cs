@@ -14,7 +14,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
 {
     [ClientTestFixture(
         KeyClientOptions.ServiceVersion.V7_0,
-        KeyClientOptions.ServiceVersion.V7_1)]
+        KeyClientOptions.ServiceVersion.V7_1,
+        KeyClientOptions.ServiceVersion.V7_2)]
     [NonParallelizable]
     public abstract class KeysTestBase : RecordedTestBase<KeyVaultTestEnvironment>
     {
@@ -58,7 +59,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
                                 LoggedHeaderNames =
                                 {
                                     "x-ms-request-id",
-                                }
+                                },
+                                // TODO: Remove once https://github.com/Azure/azure-sdk-for-net/issues/18800 is resolved.
+                                IsLoggingContentEnabled = Mode != RecordedTestMode.Playback,
                             },
                         })),
                 interceptors);
@@ -169,7 +172,10 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.AreEqual(exp.CurveName, act.CurveName);
             Assert.AreEqual(exp.K, act.K);
             Assert.AreEqual(exp.N, act.N);
-            Assert.AreEqual(exp.E, act.E);
+
+            // TODO: Simply assert when https://github.com/Azure/azure-sdk-for-net/issues/18800 is resolved.
+            AssertAreEqual(exp.E, act.E);
+
             Assert.AreEqual(exp.X, act.X);
             Assert.AreEqual(exp.Y, act.Y);
             Assert.AreEqual(exp.D, act.D);
@@ -188,6 +194,36 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.AreEqual(exp.ExpiresOn, act.ExpiresOn);
             Assert.AreEqual(exp.NotBefore, act.NotBefore);
             AssertAreEqual(exp.Tags, act.Tags);
+        }
+
+        protected static void AssertAreEqual(byte[] exp, byte[] act)
+        {
+            static byte[] TrimStart(byte[] buf)
+            {
+                int start = 0;
+                for (; start < buf.Length && buf[start] == 0; start++)
+                {
+                    // The index is incremented within the for expression.
+                }
+
+                if (start != 0)
+                {
+                    return buf.AsSpan().Slice(start, buf.Length - start).ToArray();
+                }
+
+                return buf;
+            }
+
+            if (exp is null && act is null)
+                return;
+
+            if (exp?.Length != act?.Length)
+            {
+                exp = TrimStart(exp);
+                act = TrimStart(act);
+            }
+
+            Assert.AreEqual(exp, act);
         }
 
         protected static void AssertAreEqual<T>(IReadOnlyCollection<T> exp, IReadOnlyCollection<T> act)

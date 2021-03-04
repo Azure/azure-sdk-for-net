@@ -222,8 +222,8 @@ namespace Azure.Messaging.ServiceBus
             ServiceBusReceiveMode receiveMode,
             uint prefetchCount,
             string identifier,
-            string sessionId = default,
-            bool isSessionReceiver = default) =>
+            string sessionId,
+            bool isSessionReceiver) =>
                 _innerClient.CreateReceiver(
                     entityPath,
                     retryPolicy,
@@ -232,12 +232,6 @@ namespace Azure.Messaging.ServiceBus
                     identifier,
                     sessionId,
                     isSessionReceiver);
-
-        internal virtual TransportRuleManager CreateTransportRuleManager(
-            string subscriptionPath,
-            ServiceBusRetryPolicy retryPolicy,
-            string identifier) =>
-            _innerClient.CreateRuleManager(subscriptionPath, retryPolicy, identifier);
 
         /// <summary>
         ///   Builds a Service Bus client specific to the protocol and transport specified by the

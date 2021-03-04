@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Net;
 using System.Runtime.ExceptionServices;
@@ -62,6 +63,18 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private static TimeSpan MinimumAuthorizationRefresh { get; } = TimeSpan.FromMinutes(2);
 
         /// <summary>
+        ///   The maximum amount of time to allow before authorization is refreshed; any calculations
+        ///   that call for refreshing less frequently will be substituted with this value.
+        /// </summary>
+        ///
+        /// <remarks>
+        ///   This value must be less than 49 days, 17 hours, 2 minutes, 47 seconds, 294 milliseconds
+        ///   in order to not overflow the Timer used to track authorization refresh.
+        /// </remarks>
+        ///
+        private static TimeSpan MaximumAuthorizationRefresh { get; } = TimeSpan.FromDays(49);
+
+        /// <summary>
         ///   The amount time to allow to refresh authorization of an AMQP link.
         /// </summary>
         private static TimeSpan AuthorizationRefreshTimeout { get; } = TimeSpan.FromMinutes(3);
@@ -117,7 +130,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <summary>
         ///  The controller responsible for managing transactions.
         /// </summary>
-        public FaultTolerantAmqpObject<Controller> TransactionController { get; }
+        internal FaultTolerantAmqpObject<Controller> TransactionController { get; }
+
+        private readonly bool _useSingleSession;
+
+        private readonly FaultTolerantAmqpObject<AmqpSession> _singletonSession;
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="AmqpConnectionScope"/> class.
@@ -127,13 +144,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="credential">The credential to use for authorization with the Service Bus service.</param>
         /// <param name="transport">The transport to use for communication.</param>
         /// <param name="proxy">The proxy, if any, to use for communication.</param>
-        /// <param name="identifier">The identifier to assign this scope; if not provided, one will be generated.</param>
+        /// <param name="useSingleSession">If true, all links will use a single session.</param>
         ///
-        public AmqpConnectionScope(Uri serviceEndpoint,
-                                   ServiceBusTokenCredential credential,
-                                   ServiceBusTransportType transport,
-                                   IWebProxy proxy,
-                                   string identifier = default)
+        public AmqpConnectionScope(
+            Uri serviceEndpoint,
+            ServiceBusTokenCredential credential,
+            ServiceBusTransportType transport,
+            IWebProxy proxy,
+            bool useSingleSession)
         {
             Argument.AssertNotNull(serviceEndpoint, nameof(serviceEndpoint));
             Argument.AssertNotNull(credential, nameof(credential));
@@ -143,33 +161,51 @@ namespace Azure.Messaging.ServiceBus.Amqp
             Transport = transport;
             Proxy = proxy;
             TokenProvider = new CbsTokenProvider(new ServiceBusTokenCredential(credential, serviceEndpoint.ToString()), OperationCancellationSource.Token);
-            Id = identifier ?? $"{ ServiceEndpoint }-{ Guid.NewGuid().ToString("D", CultureInfo.InvariantCulture).Substring(0, 8) }";
-
+            Id = $"{ ServiceEndpoint }-{ Guid.NewGuid().ToString("D", CultureInfo.InvariantCulture).Substring(0, 8) }";
+            _useSingleSession = useSingleSession;
 #pragma warning disable CA2214 // Do not call overridable methods in constructors. This internal method is virtual for testing purposes.
             Task<AmqpConnection> connectionFactory(TimeSpan timeout) => CreateAndOpenConnectionAsync(AmqpVersion, ServiceEndpoint, Transport, Proxy, Id, timeout);
 #pragma warning restore CA2214 // Do not call overridable methods in constructors
+
             ActiveConnection = new FaultTolerantAmqpObject<AmqpConnection>(
                 connectionFactory,
                 CloseConnection);
+
+            _singletonSession = new FaultTolerantAmqpObject<AmqpSession>(
+               async (timeout) =>
+               {
+                   var stopWatch = ValueStopwatch.StartNew();
+                   AmqpConnection connection = await ActiveConnection.GetOrCreateAsync(timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
+                   AmqpSession session = await CreateAndOpenSessionAsync(
+                       connection,
+                       timeout.CalculateRemaining(stopWatch.GetElapsedTime()))
+                   .ConfigureAwait(false);
+                   // When using cross entity transactions, the controller needs to be opened before the link is established
+                   // in order to let the service know that there will be cross entity transactions on this session. We can't
+                   // wait until a transaction is declared to open the controller.
+                   _ = await CreateControllerAsync(session, timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
+                   return session;
+               },
+               session => session.Close());
+
             TransactionController = new FaultTolerantAmqpObject<Controller>(
-                CreateControllerAsync,
-                CloseController);
+                async (timeout) =>
+                {
+                    var stopWatch = ValueStopwatch.StartNew();
+                    AmqpConnection connection = await ActiveConnection.GetOrCreateAsync(timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
+                    AmqpSession session = await CreateSessionIfNeededAsync(connection, timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
+                    return await CreateControllerAsync(session, timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
+                },
+                controller => controller.Close());
         }
 
-        private async Task<Controller> CreateControllerAsync(TimeSpan timeout)
+        private async Task<Controller> CreateControllerAsync(AmqpSession amqpSession, TimeSpan timeout)
         {
             var stopWatch = ValueStopwatch.StartNew();
-            AmqpConnection connection = await ActiveConnection.GetOrCreateAsync(timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
-
-            var sessionSettings = new AmqpSessionSettings { Properties = new Fields() };
-            AmqpSession amqpSession = null;
             Controller controller;
 
             try
             {
-                amqpSession = connection.CreateSession(sessionSettings);
-                await amqpSession.OpenAsync(timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
-
                 controller = new Controller(amqpSession, timeout.CalculateRemaining(stopWatch.GetElapsedTime()));
                 await controller.OpenAsync(timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
             }
@@ -186,9 +222,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             return controller;
         }
-
-        private void CloseController(Controller controller) =>
-            controller.Close();
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="AmqpConnectionScope"/> class.
@@ -316,7 +349,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
             CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-
             var stopWatch = ValueStopwatch.StartNew();
 
             AmqpConnection connection = await ActiveConnection.GetOrCreateAsync(timeout).ConfigureAwait(false);
@@ -572,16 +604,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 // Create and open the AMQP session associated with the link.
 
-                var sessionSettings = new AmqpSessionSettings { Properties = new Fields() };
+                session = await CreateSessionIfNeededAsync(connection, timeout).ConfigureAwait(false);
 
-                // This is the maximum number of unsettled transfers across all receive links on this session.
-                // This will allow the session to accept unlimited number of transfers, even if the receiver(s)
-                // are not settling any of the deliveries.
-                sessionSettings.IncomingWindow = uint.MaxValue;
-
-                session = connection.CreateSession(sessionSettings);
-
-                await OpenAmqpObjectAsync(session, timeout).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 var filters = new FilterSet();
@@ -648,6 +672,34 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
         }
 
+        private async Task<AmqpSession> CreateSessionIfNeededAsync(AmqpConnection connection, TimeSpan timeout)
+        {
+            if (_useSingleSession)
+            {
+                return await _singletonSession.GetOrCreateAsync(timeout).ConfigureAwait(false);
+            }
+            else
+            {
+                return await CreateAndOpenSessionAsync(connection, timeout).ConfigureAwait(false);
+            }
+        }
+
+        private async Task<AmqpSession> CreateAndOpenSessionAsync(AmqpConnection connection, TimeSpan timeout)
+        {
+            AmqpSession session;
+            var sessionSettings = new AmqpSessionSettings { Properties = new Fields() };
+
+            // This is the maximum number of unsettled transfers across all receive links on this session.
+            // This will allow the session to accept unlimited number of transfers, even if the receiver(s)
+            // are not settling any of the deliveries.
+            sessionSettings.IncomingWindow = uint.MaxValue;
+
+            session = connection.CreateSession(sessionSettings);
+
+            await OpenAmqpObjectAsync(session, timeout).ConfigureAwait(false);
+            return session;
+        }
+
         /// <summary>
         ///   Creates an AMQP link for use with publishing operations.
         /// </summary>
@@ -697,10 +749,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 // Create and open the AMQP session associated with the link.
 
-                var sessionSettings = new AmqpSessionSettings { Properties = new Fields() };
-                session = connection.CreateSession(sessionSettings);
-
-                await OpenAmqpObjectAsync(session, timeout).ConfigureAwait(false);
+                session = await CreateSessionIfNeededAsync(connection, timeout).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 // Create and open the link.
@@ -829,7 +878,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
             currentTimeUtc ??= DateTime.UtcNow;
 
             var refreshDueInterval = (expirationTimeUtc.Subtract(AuthorizationRefreshBuffer)).Subtract(currentTimeUtc.Value);
-            return (refreshDueInterval < MinimumAuthorizationRefresh) ? MinimumAuthorizationRefresh : refreshDueInterval;
+
+            return refreshDueInterval switch
+            {
+                _ when (refreshDueInterval < MinimumAuthorizationRefresh) => MinimumAuthorizationRefresh,
+                _ when (refreshDueInterval > MaximumAuthorizationRefresh) => MaximumAuthorizationRefresh,
+                _ => refreshDueInterval
+            };
         }
 
         /// <summary>

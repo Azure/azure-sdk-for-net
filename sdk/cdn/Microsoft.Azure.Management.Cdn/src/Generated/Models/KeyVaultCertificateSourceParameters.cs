@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// the full certificate PFX) in Key Vault.</param>
         /// <param name="secretVersion">The version(GUID) of Key Vault Secret
         /// in Key Vault.</param>
-        public KeyVaultCertificateSourceParameters(string subscriptionId, string resourceGroupName, string vaultName, string secretName, string secretVersion)
+        public KeyVaultCertificateSourceParameters(string subscriptionId, string resourceGroupName, string vaultName, string secretName, string secretVersion = default(string))
         {
             SubscriptionId = subscriptionId;
             ResourceGroupName = resourceGroupName;
@@ -143,10 +143,6 @@ namespace Microsoft.Azure.Management.Cdn.Models
             if (SecretName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "SecretName");
-            }
-            if (SecretVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "SecretVersion");
             }
         }
     }

@@ -110,6 +110,14 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="RecognizeInvoicesOperation"/> class. This constructor
+        /// is intended to be used for mocking only.
+        /// </summary>
+        protected RecognizeInvoicesOperation()
+        {
+        }
+
+        /// <summary>
         /// Periodically calls the server till the long-running operation completes.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the periodical service calls.</param>

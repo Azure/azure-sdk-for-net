@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A list of database extended auditing settings. </summary>
-    public partial class ExtendedDatabaseBlobAuditingPolicyListResult
+    internal partial class ExtendedDatabaseBlobAuditingPolicyListResult
     {
         /// <summary> Initializes a new instance of ExtendedDatabaseBlobAuditingPolicyListResult. </summary>
         internal ExtendedDatabaseBlobAuditingPolicyListResult()

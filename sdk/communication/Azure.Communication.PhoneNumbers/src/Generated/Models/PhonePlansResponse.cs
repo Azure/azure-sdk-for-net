@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Communication.PhoneNumbers.Models
 {
     /// <summary> Represents a wrapper around a list of countries. </summary>
-    public partial class PhonePlansResponse
+    internal partial class PhonePlansResponse
     {
         /// <summary> Initializes a new instance of PhonePlansResponse. </summary>
         internal PhonePlansResponse()

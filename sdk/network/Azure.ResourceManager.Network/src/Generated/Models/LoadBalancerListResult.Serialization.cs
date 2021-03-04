@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class LoadBalancerListResult
+    internal partial class LoadBalancerListResult
     {
         internal static LoadBalancerListResult DeserializeLoadBalancerListResult(JsonElement element)
         {

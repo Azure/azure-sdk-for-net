@@ -444,6 +444,32 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        public void CreateExceptionForErrorWithIllegalStateCondition()
+        {
+            var description = $"'someclient' is closed";
+            var resourceName = "TestHub";
+
+            var error = new Error
+            {
+                Condition = AmqpErrorCode.IllegalState,
+                Description = description
+            };
+
+            Exception exception = AmqpError.CreateExceptionForError(error, resourceName);
+
+            Assert.That(exception, Is.Not.Null, "An exception should have been created");
+            Assert.That(exception, Is.TypeOf<EventHubsException>(), "The exception should match");
+            Assert.That(((EventHubsException)exception).IsTransient, Is.True, "The exception should be transient.");
+            Assert.That(((EventHubsException)exception).Reason, Is.EqualTo(EventHubsException.FailureReason.ClientClosed), "The exception reason should match.");
+            Assert.That(exception.Message, Is.SupersetOf(description), "The exception message should contain the description");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpError.CreateExceptionForError" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
         public void CreateExceptionForErrorWithUnknownCondition()
         {
             var description = "NOT_KNOWN";

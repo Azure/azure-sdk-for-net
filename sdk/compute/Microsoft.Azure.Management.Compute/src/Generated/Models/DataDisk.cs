@@ -66,6 +66,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="toBeDetached">Specifies whether the data disk is in
         /// process of detachment from the
         /// VirtualMachine/VirtualMachineScaleset</param>
+        /// <param name="diskIOPSReadWrite">Specifies the Read-Write IOPS for
+        /// the managed disk when StorageAccountType is UltraSSD_LRS. Returned
+        /// only for VirtualMachine ScaleSet VM disks. Can be updated only via
+        /// updates to the VirtualMachine Scale Set.</param>
+        /// <param name="diskMBpsReadWrite">Specifies the bandwidth in MB per
+        /// second for the managed disk when StorageAccountType is
+        /// UltraSSD_LRS. Returned only for VirtualMachine ScaleSet VM disks.
+        /// Can be updated only via updates to the VirtualMachine Scale
+        /// Set.</param>
         /// <param name="detachOption">Specifies the detach behavior to be used
         /// while detaching a disk or which is already in the process of
         /// detachment from the virtual machine. Supported values:
@@ -80,16 +89,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// VirtualMachineScaleSet. To force-detach a data disk update
         /// toBeDetached to 'true' along with setting detachOption:
         /// 'ForceDetach'. Possible values include: 'ForceDetach'</param>
-        /// <param name="diskIOPSReadWrite">Specifies the Read-Write IOPS for
-        /// the managed disk when StorageAccountType is UltraSSD_LRS. Returned
-        /// only for VirtualMachine ScaleSet VM disks. Can be updated only via
-        /// updates to the VirtualMachine Scale Set.</param>
-        /// <param name="diskMBpsReadWrite">Specifies the bandwidth in MB per
-        /// second for the managed disk when StorageAccountType is
-        /// UltraSSD_LRS. Returned only for VirtualMachine ScaleSet VM disks.
-        /// Can be updated only via updates to the VirtualMachine Scale
-        /// Set.</param>
-        public DataDisk(int lun, string createOption, string name = default(string), VirtualHardDisk vhd = default(VirtualHardDisk), VirtualHardDisk image = default(VirtualHardDisk), CachingTypes? caching = default(CachingTypes?), bool? writeAcceleratorEnabled = default(bool?), int? diskSizeGB = default(int?), ManagedDiskParameters managedDisk = default(ManagedDiskParameters), bool? toBeDetached = default(bool?), string detachOption = default(string), long? diskIOPSReadWrite = default(long?), long? diskMBpsReadWrite = default(long?))
+        public DataDisk(int lun, string createOption, string name = default(string), VirtualHardDisk vhd = default(VirtualHardDisk), VirtualHardDisk image = default(VirtualHardDisk), CachingTypes? caching = default(CachingTypes?), bool? writeAcceleratorEnabled = default(bool?), int? diskSizeGB = default(int?), ManagedDiskParameters managedDisk = default(ManagedDiskParameters), bool? toBeDetached = default(bool?), long? diskIOPSReadWrite = default(long?), long? diskMBpsReadWrite = default(long?), string detachOption = default(string))
         {
             Lun = lun;
             Name = name;
@@ -101,9 +101,9 @@ namespace Microsoft.Azure.Management.Compute.Models
             DiskSizeGB = diskSizeGB;
             ManagedDisk = managedDisk;
             ToBeDetached = toBeDetached;
-            DetachOption = detachOption;
             DiskIOPSReadWrite = diskIOPSReadWrite;
             DiskMBpsReadWrite = diskMBpsReadWrite;
+            DetachOption = detachOption;
             CustomInit();
         }
 
@@ -199,6 +199,24 @@ namespace Microsoft.Azure.Management.Compute.Models
         public bool? ToBeDetached { get; set; }
 
         /// <summary>
+        /// Gets specifies the Read-Write IOPS for the managed disk when
+        /// StorageAccountType is UltraSSD_LRS. Returned only for
+        /// VirtualMachine ScaleSet VM disks. Can be updated only via updates
+        /// to the VirtualMachine Scale Set.
+        /// </summary>
+        [JsonProperty(PropertyName = "diskIOPSReadWrite")]
+        public long? DiskIOPSReadWrite { get; private set; }
+
+        /// <summary>
+        /// Gets specifies the bandwidth in MB per second for the managed disk
+        /// when StorageAccountType is UltraSSD_LRS. Returned only for
+        /// VirtualMachine ScaleSet VM disks. Can be updated only via updates
+        /// to the VirtualMachine Scale Set.
+        /// </summary>
+        [JsonProperty(PropertyName = "diskMBpsReadWrite")]
+        public long? DiskMBpsReadWrite { get; private set; }
+
+        /// <summary>
         /// Gets or sets specifies the detach behavior to be used while
         /// detaching a disk or which is already in the process of detachment
         /// from the virtual machine. Supported values: **ForceDetach**.
@@ -216,24 +234,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "detachOption")]
         public string DetachOption { get; set; }
-
-        /// <summary>
-        /// Gets specifies the Read-Write IOPS for the managed disk when
-        /// StorageAccountType is UltraSSD_LRS. Returned only for
-        /// VirtualMachine ScaleSet VM disks. Can be updated only via updates
-        /// to the VirtualMachine Scale Set.
-        /// </summary>
-        [JsonProperty(PropertyName = "diskIOPSReadWrite")]
-        public long? DiskIOPSReadWrite { get; private set; }
-
-        /// <summary>
-        /// Gets specifies the bandwidth in MB per second for the managed disk
-        /// when StorageAccountType is UltraSSD_LRS. Returned only for
-        /// VirtualMachine ScaleSet VM disks. Can be updated only via updates
-        /// to the VirtualMachine Scale Set.
-        /// </summary>
-        [JsonProperty(PropertyName = "diskMBpsReadWrite")]
-        public long? DiskMBpsReadWrite { get; private set; }
 
         /// <summary>
         /// Validate the object.
