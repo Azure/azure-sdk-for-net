@@ -21,6 +21,9 @@ namespace Azure.ResourceManager.Core
         public ArmVoidOperation(Operation<Response> other)
             : base(null)
         {
+            if (other is null)
+                throw new ArgumentNullException(nameof(other));
+
             _wrapped = other;
         }
 
@@ -31,6 +34,8 @@ namespace Azure.ResourceManager.Core
         public ArmVoidOperation(Response other)
             : base(other)
         {
+            if (other is null)
+                throw new ArgumentNullException(nameof(other));
         }
 
         /// <inheritdoc/>

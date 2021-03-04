@@ -33,9 +33,8 @@ namespace Proto.Client
                 Debug.Assert(virtualNetwork.Value.Data.Name.Equals(response.Data.Id.Name));
                 await foreach (var subnetResponse in response.GetSubnetContainer().ListAsync())
                 {
-                    var actualSubnet = await subnetResponse.GetAsync();
-                    var subnets = await response.GetSubnetContainer().GetAsync(actualSubnet.Value.Data.Name);
-                    Debug.Assert(subnets.Value.Data.Name.Equals(actualSubnet.Value.Data.Name));
+                    var subnets = await response.GetSubnetContainer().GetAsync(subnetResponse.Data.Name);
+                    Debug.Assert(subnets.Value.Data.Name.Equals(subnetResponse.Data.Name));
                 }
             }
             Console.WriteLine("\nDone all asserts passed ...");

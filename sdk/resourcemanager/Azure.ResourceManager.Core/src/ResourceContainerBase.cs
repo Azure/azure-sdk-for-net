@@ -45,6 +45,8 @@ namespace Azure.ResourceManager.Core
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceDetails"> The desired resource configuration. </param>
         /// <returns> A response with the <see cref="ArmResponse{TOperations}"/> operation for this resource. </returns>
+        /// <exception cref="ArgumentException"> Name of the resource cannot be null or a whitespace. </exception>
+        /// <exception cref="ArgumentNullException"> resourceDetails cannot be null. </exception>
         public abstract ArmResponse<TOperations> CreateOrUpdate(
             string name,
             TResource resourceDetails);
@@ -56,6 +58,8 @@ namespace Azure.ResourceManager.Core
         /// <param name="resourceDetails"> The desired resource configuration. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="ArmResponse{TOperations}"/> operation for this resource. </returns>
+        /// <exception cref="ArgumentException"> Name of the resource cannot be null or a whitespace. </exception>
+        /// <exception cref="ArgumentNullException"> resourceDetails cannot be null. </exception>
         public abstract Task<ArmResponse<TOperations>> CreateOrUpdateAsync(
             string name,
             TResource resourceDetails,
@@ -71,6 +75,8 @@ namespace Azure.ResourceManager.Core
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
+        /// <exception cref="ArgumentException"> Name of the resource cannot be null or a whitespace. </exception>
+        /// <exception cref="ArgumentNullException"> resourceDetails cannot be null. </exception>
         public abstract ArmOperation<TOperations> StartCreateOrUpdate(
             string name,
             TResource resourceDetails,
@@ -86,6 +92,8 @@ namespace Azure.ResourceManager.Core
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
+        /// <exception cref="ArgumentException"> Name of the resource cannot be null or a whitespace. </exception>
+        /// <exception cref="ArgumentNullException"> resourceDetails cannot be null. </exception>
         public abstract Task<ArmOperation<TOperations>> StartCreateOrUpdateAsync(
             string name,
             TResource resourceDetails,
@@ -124,6 +132,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="resourceName"> The name of the resource to get. </param>
         /// <returns> A response with the <see cref="ArmResponse{TOperations}"/> operation for this resource. </returns>
+        /// <exception cref="ArgumentException"> resourceName cannot be null or a whitespace. </exception>
         public abstract ArmResponse<TOperations> Get(string resourceName);
 
         /// <summary>
@@ -132,6 +141,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="resourceName"> The name of the resource to get. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="ArmResponse{TOperations}"/> operation for this resource. </returns>
+        /// <exception cref="ArgumentException"> resourceName cannot be null or a whitespace. </exception>
         public abstract Task<ArmResponse<TOperations>> GetAsync(string resourceName, CancellationToken cancellationToken = default);
     }
 }
