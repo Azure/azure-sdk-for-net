@@ -1,7 +1,7 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyTitle>Device Update for IoT Hub client library</AssemblyTitle>
-    <Version>1.0.0-beta.1</Version>
+    <Version>1.0.0-beta.2</Version>
     <Description>
       This is the Device Update for IoT Hub client library for developing .NET applications with rich experience.
     </Description>
