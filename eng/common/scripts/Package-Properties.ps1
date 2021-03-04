@@ -81,14 +81,7 @@ function Get-PkgProperties
         [string]$ServiceDirectory
     )
 
-    if ($ServiceDirectory)
-    {
-        $AllPkgProps = Get-AllPkgProperties -ServiceDirectory $ServiceDirectory
-    }
-    else 
-    {
-        $AllPkgProps = Get-AllPkgProperties
-    }
+    $AllPkgProps = Get-AllPkgProperties -ServiceDirectory $ServiceDirectory
 
     foreach ($pkgProp in $AllPkgProps)
     {
@@ -111,14 +104,7 @@ function Get-AllPkgProperties ([string]$ServiceDirectory = $null)
 
     if (Test-Path "Function:Get-AllPackageInfoFromRepo")
     {
-        if ([string]::IsNullOrEmpty($ServiceDirectory))
-        {
-            $pkgPropsResult = Get-AllPackageInfoFromRepo
-        }
-        else
-        {
-            $pkgPropsResult = Get-AllPackageInfoFromRepo -ServiceDirectory $serviceDirectory
-        }
+        $pkgPropsResult = Get-AllPackageInfoFromRepo -ServiceDirectory $serviceDirectory
     }
     else
     {
@@ -152,23 +138,20 @@ function Get-PkgPropsForEntireService ($serviceDirectoryPath)
     $packageProps = @() # Properties for artifacts specified in ci.yml
     $serviceDirectory = (Split-Path -Path $serviceDirectoryPath -Leaf)
 
+    if (!$GetPackageInfoFromRepoFn -or !(Test-Path "Function:$GetPackageInfoFromRepoFn"))
+    {
+        LogError "The function for '$GetPackageInfoFromRepoFn' was not found.`
+        Make sure it is present in eng/scripts/Language-Settings.ps1 and referenced in eng/common/scripts/common.ps1.`
+        See https://github.com/Azure/azure-sdk-tools/blob/master/doc/common/common_engsys.md#code-structure"
+    }
+
     foreach ($directory in (Get-ChildItem $serviceDirectoryPath -Directory))
     {
         $pkgDirectoryPath = Join-Path $serviceDirectoryPath $directory.Name
-
-        if ($GetPackageInfoFromRepoFn -and (Test-Path "Function:$GetPackageInfoFromRepoFn"))
+        $pkgProps = &$GetPackageInfoFromRepoFn $pkgDirectoryPath $serviceDirectory
+        if ($null -ne  $pkgProps)
         {
-            $pkgProps = &$GetPackageInfoFromRepoFn $pkgDirectoryPath $serviceDirectory
-            if ($null -ne  $pkgProps)
-            {
-                $projectProps += $pkgProps
-            }
-        }
-        else
-        {
-            LogError "The function for '$GetPackageInfoFromRepoFn' was not found.`
-            Make sure it is present in eng/scripts/Language-Settings.ps1 and referenced in eng/common/scripts/common.ps1.`
-            See https://github.com/Azure/azure-sdk-tools/blob/master/doc/common/common_engsys.md#code-structure"
+            $projectProps += $pkgProps
         }
     }
 
