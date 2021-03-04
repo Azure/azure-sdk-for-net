@@ -59,6 +59,11 @@ namespace Azure.Security.KeyVault
             if (message.Request.Content == null && _contentCache.TryRemove(message, out var content))
             {
                 message.Request.Content = content;
+                if (_contentCache.Count > 10)
+                {
+                    // This should never occur, but it is just a safeguard against a leak of dictionary entries.
+                    _contentCache.Clear();
+                }
             }
 
             string authority = GetRequestAuthority(message.Request);

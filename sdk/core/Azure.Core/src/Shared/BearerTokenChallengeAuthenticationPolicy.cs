@@ -20,6 +20,7 @@ namespace Azure.Core.Pipeline
     {
         private readonly AccessTokenCache _accessTokenCache;
         protected string[] Scopes { get; private set; }
+        private readonly ValueTask<bool> _falseValueTask = new ValueTask<bool>(Task.FromResult(false));
 
         /// <summary>
         /// Creates a new instance of <see cref="BearerTokenChallengeAuthenticationPolicy"/> using provided token credential and scope to authenticate for.
@@ -67,8 +68,7 @@ namespace Azure.Core.Pipeline
         /// <returns>The <see cref="ValueTask"/> representing the asynchronous operation.</returns>
         protected virtual Task PreProcessAsync(HttpMessage message, bool async)
         {
-            var context = new TokenRequestContext(Scopes, message.Request.ClientRequestId);
-            return AuthenticateRequestAsync(message, context, async);
+            return Task.CompletedTask;
         }
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace Azure.Core.Pipeline
         /// <returns>A boolean indicating whether the request was successfully authenticated and should be sent to the transport.</returns>
         protected virtual ValueTask<bool> AuthenticateRequestFromChallengeAsync(HttpMessage message, bool async)
         {
-            return default(ValueTask<bool>);
+            return _falseValueTask;
         }
 
         private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
@@ -88,6 +88,12 @@ namespace Azure.Core.Pipeline
             if (message.Request.Uri.Scheme != Uri.UriSchemeHttps)
             {
                 throw new InvalidOperationException("Bearer token authentication is not permitted for non TLS protected (https) endpoints.");
+            }
+
+            if (Scopes.Length > 0)
+            {
+               var context = new TokenRequestContext(Scopes, message.Request.ClientRequestId);
+               await AuthenticateRequestAsync(message, context, async).ConfigureAwait(false);
             }
 
             if (async)
