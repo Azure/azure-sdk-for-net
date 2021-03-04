@@ -6,14 +6,14 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Communication.Identity;
+using Azure.Communication.Identity.Models;
 using Azure.Core;
 
-namespace Azure.Communication.Identity.Models
+namespace Azure.Communication.Identity
 {
-    internal partial class CommunicationIdentityAccessTokenResult
+    public partial class CommunicationUserIdentifierAndToken
     {
-        internal static CommunicationIdentityAccessTokenResult DeserializeCommunicationIdentityAccessTokenResult(JsonElement element)
+        internal static CommunicationUserIdentifierAndToken DeserializeCommunicationUserIdentifierAndToken(JsonElement element)
         {
             CommunicationIdentity identity = default;
             Optional<CommunicationIdentityAccessToken> accessToken = default;
@@ -35,7 +35,7 @@ namespace Azure.Communication.Identity.Models
                     continue;
                 }
             }
-            return new CommunicationIdentityAccessTokenResult(identity, accessToken.Value);
+            return new CommunicationUserIdentifierAndToken(identity, accessToken.Value);
         }
     }
 }
