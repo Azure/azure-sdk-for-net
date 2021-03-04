@@ -4,6 +4,6 @@
   },
   "sdk": {
     "version": "5.0.100",
-    "rollForward": "feature"
+    "rollForward": "patch"
   }
 }
