@@ -30,12 +30,8 @@ namespace Azure.ResourceManager.Core
         /// <returns></returns>
         public static bool operator <(ApiVersionsBase left, ApiVersionsBase right)
         {
-            if (ReferenceEquals(null, right) && ReferenceEquals(null, left))
-                return false;
-            if (ReferenceEquals(null, right) && !ReferenceEquals(null, left))
-                return false;
             if (ReferenceEquals(null, left))
-                return true;
+                return !ReferenceEquals(null, right);
 
             return left.CompareTo(right) == -1;
         }
@@ -48,10 +44,6 @@ namespace Azure.ResourceManager.Core
         /// <returns></returns>
         public static bool operator >(ApiVersionsBase left, ApiVersionsBase right)
         {
-            if (ReferenceEquals(null, right) && ReferenceEquals(null, left))
-                return false;
-            if (ReferenceEquals(null, right) && !ReferenceEquals(null, left))
-                return true;
             if (ReferenceEquals(null, left))
                 return false;
 
@@ -67,7 +59,7 @@ namespace Azure.ResourceManager.Core
         {
             if (ReferenceEquals(null, version))
             {
-                throw new ArgumentNullException(nameof(version));
+                return null;
             }
             return version._value;
         }
