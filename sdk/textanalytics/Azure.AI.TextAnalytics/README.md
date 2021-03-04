@@ -494,7 +494,7 @@ Text Analytics for health is a containerized service that extracts and labels re
 ```
 
 ### Run Analyze Operation Asynchronously
-The Analyze functionality allows to choose which of the supported Text Analytics features to execute in the same set of documents. Currently the supported features are: entity recognition, key phrase extraction, and Personally Identifiable Information (PII) Recognition. For more information see [How to: Use Text Analytics for analyze operation][analyze_operation_howto].
+The Analyze functionality allows to choose which of the supported Text Analytics features to execute in the same set of documents. Currently the supported features are: entity recognition, linked entity recognition, key phrase extraction, and Personally Identifiable Information (PII) Recognition. For more information see [How to: Use Text Analytics for analyze operation][analyze_operation_howto].
 
 ```C# Snippet:AnalyzeOperationBatchConvenienceAsync
     string documentA = @"We love this trail and make the trip every year. The views are breathtaking and well
@@ -526,6 +526,7 @@ The Analyze functionality allows to choose which of the supported Text Analytics
         ExtractKeyPhrasesOptions = new List<ExtractKeyPhrasesOptions>() { new ExtractKeyPhrasesOptions() },
         RecognizeEntitiesOptions = new List<RecognizeEntitiesOptions>() { new RecognizeEntitiesOptions() },
         RecognizePiiEntitiesOptions = new List<RecognizePiiEntitiesOptions>() { new RecognizePiiEntitiesOptions() },
+        RecognizeLinkedEntitiesOptions = new List<RecognizeLinkedEntitiesOptions>() { new RecognizeLinkedEntitiesOptions() },
         DisplayName = "AnalyzeOperationSample"
     };
 
@@ -540,6 +541,8 @@ The Analyze functionality allows to choose which of the supported Text Analytics
         ExtractKeyPhrasesResultCollection keyPhrasesResult = documentsInPage.ExtractKeyPhrasesActionsResults.FirstOrDefault().Result;
 
         RecognizePiiEntitiesResultCollection piiResult = documentsInPage.RecognizePiiEntitiesActionsResults.FirstOrDefault().Result;
+
+        RecognizeLinkedEntitiesResultCollection elResult = documentsInPage.RecognizeLinkedEntitiesActionsResults.FirstOrDefault().Result;
 
         Console.WriteLine("Recognized Entities");
 
@@ -584,6 +587,33 @@ The Analyze functionality allows to choose which of the supported Text Analytics
             foreach (string keyphrase in result.KeyPhrases)
             {
                 Console.WriteLine($"    {keyphrase}");
+            }
+            Console.WriteLine("");
+        }
+
+        Console.WriteLine("Recognized Linked Entities");
+
+        foreach (RecognizeLinkedEntitiesResult result in elResult)
+        {
+            Console.WriteLine($"    Recognized the following {result.Entities.Count} linked entities:");
+
+            foreach (LinkedEntity entity in result.Entities)
+            {
+                Console.WriteLine($"    Entity: {entity.Name}");
+                Console.WriteLine($"    DataSource: {entity.DataSource}");
+                Console.WriteLine($"    DataSource EntityId: {entity.DataSourceEntityId}");
+                Console.WriteLine($"    Language: {entity.Language}");
+                Console.WriteLine($"    DataSource Url: {entity.Url}");
+
+                Console.WriteLine($"    Total Matches: {entity.Matches.Count()}");
+                foreach (LinkedEntityMatch match in entity.Matches)
+                {
+                    Console.WriteLine($"        Match Text: {match.Text}");
+                    Console.WriteLine($"        ConfidenceScore: {match.ConfidenceScore}");
+                    Console.WriteLine($"        Offset: {match.Offset}");
+                    Console.WriteLine($"        Length: {match.Length}");
+                }
+                Console.WriteLine("");
             }
             Console.WriteLine("");
         }

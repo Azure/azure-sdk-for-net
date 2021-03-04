@@ -437,12 +437,6 @@ namespace Azure.Iot.TimeSeriesInsights
         public System.Collections.Generic.IList<string> Names { get { throw null; } }
         public System.Collections.Generic.IList<string> TypeIds { get { throw null; } }
     }
-    public partial class UpdateModelSettingsRequest
-    {
-        public UpdateModelSettingsRequest() { }
-        public string DefaultTypeId { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-    }
 }
 namespace Azure.Iot.TimeSeriesInsights.Models
 {

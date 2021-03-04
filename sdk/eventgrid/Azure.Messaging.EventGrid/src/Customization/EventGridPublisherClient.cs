@@ -21,7 +21,7 @@ namespace Azure.Messaging.EventGrid
     {
         private readonly EventGridRestClient _serviceRestClient;
         private readonly ClientDiagnostics _clientDiagnostics;
-        private string _hostName => _endpoint.Host;
+        private string _hostName => _endpoint.Authority;
         private readonly Uri _endpoint;
         private readonly AzureKeyCredential _key;
         private readonly HttpPipeline _pipeline;

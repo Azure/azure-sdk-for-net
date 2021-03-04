@@ -55,7 +55,7 @@ namespace Sql.Tests
                     Tags = tags,
                     CreateMode = "Default",
                     SampleName = SampleName.AdventureWorksLT,
-                    RequestedBackupStorageRedundancy = "Geo",
+                    StorageAccountType = "GRS",
                 };
                 var db2 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, db2Input);
                 Assert.NotNull(db2);
@@ -117,7 +117,7 @@ namespace Sql.Tests
                 var db8Input = new Database()
                 {
                     Location = server.Location,
-                    RequestedBackupStorageRedundancy = "Geo",
+                    StorageAccountType = "GRS",
                 };
                 var db8 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, db8Input);
                 Assert.NotNull(db8);
