@@ -46,7 +46,7 @@ function Submit-APIReview($packagename, $filePath, $uri, $apiKey, $apiLabel)
     }
     catch
     {
-        Write-Error "Exception details: $($_.Exception.Response)"
+        Write-Host "Exception details: $($_.Exception.Response)"
         $StatusCode = $_.Exception.Response.StatusCode
     }
 
@@ -116,13 +116,12 @@ foreach ($pkgName in $responses.Keys)
                 {
                     Write-Host "Package version $($version) is GA and automatic API Review is not yet approved for package $($PackageName)."
                     Write-Host "Build and release is not allowed for GA package without API review approval."
-                    Write-Host "Please send email to adparchrescue@microsoft.com and share above link to API review for emergency approval to release you package."
                     Write-Host "You will need to queue another build to proceed further after API review is approved"
-                    Write-Host "You can check http://aka.ms/azsdk/engsys/apireview/faq for more details."
+                    Write-Host "You can check http://aka.ms/azsdk/engsys/apireview/faq for more details on API Approval."
                 }
                 else
                 {
-                    Write-Error "Failed to create API Review for package $($PackageName). Please reach out to Azure SDK engineering systems on teams channel and share this build details."                    
+                    Write-Host "Failed to create API Review for package $($PackageName). Please reach out to Azure SDK engineering systems on teams channel and share this build details."
                 }
                 exit 1
             }
