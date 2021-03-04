@@ -20,17 +20,16 @@ namespace Azure.Security.KeyVault
 
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            PreProcessAsync(message, pipeline, false).EnsureCompleted();
             base.Process(message, pipeline);
         }
 
         public override async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            await PreProcessAsync(message, pipeline, true).ConfigureAwait(false);
             await base.ProcessAsync(message, pipeline).ConfigureAwait(false);
         }
 
-        protected async Task PreProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
+        /// <inheritdoc cref="BearerTokenChallengeAuthenticationPolicy.TryAuthenticateRequestFromChallengeAsync(HttpMessage, bool)" />
+        protected override async ValueTask PreProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
             if (message.Request.Uri.Scheme != Uri.UriSchemeHttps)
             {
@@ -70,11 +69,12 @@ namespace Azure.Security.KeyVault
             else
             {
                 // We fetched the scope from the cache, but we have not initialized the Scopes in the base yet.
-                Scopes = _scope.Scopes;
+                var context = new TokenRequestContext(_scope.Scopes);
+                await AuthenticateRequestAsync(message, context, async).ConfigureAwait(false);
             }
         }
 
-        protected override bool TryGetTokenRequestContextFromChallenge(HttpMessage message, out TokenRequestContext context)
+        protected override async ValueTask<bool> TryAuthenticateRequestFromChallengeAsync(HttpMessage message, bool async)
         {
             string authority = GetRequestAuthority(message.Request);
             string scope = AuthorizationChallengeParser.GetChallengeParameterFromResponse(message.Response, "Bearer", "resource");
@@ -100,7 +100,8 @@ namespace Azure.Security.KeyVault
                 _scopeCache[authority] = _scope;
             }
 
-            context = new TokenRequestContext(_scope.Scopes, message.Request.ClientRequestId);
+            var context = new TokenRequestContext(_scope.Scopes, message.Request.ClientRequestId);
+            await AuthenticateRequestAsync(message, context, async).ConfigureAwait(false);
             return true;
         }
 
