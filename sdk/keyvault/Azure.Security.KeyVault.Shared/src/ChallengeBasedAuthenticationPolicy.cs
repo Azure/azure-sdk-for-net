@@ -28,7 +28,7 @@ namespace Azure.Security.KeyVault
             await base.ProcessAsync(message, pipeline).ConfigureAwait(false);
         }
 
-        /// <inheritdoc cref="BearerTokenChallengeAuthenticationPolicy.TryAuthenticateRequestFromChallengeAsync(HttpMessage, bool)" />
+        /// <inheritdoc cref="BearerTokenChallengeAuthenticationPolicy.AuthenticateRequestFromChallengeAsync(HttpMessage, bool)" />
         protected override async ValueTask PreProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
             if (message.Request.Uri.Scheme != Uri.UriSchemeHttps)
@@ -74,7 +74,7 @@ namespace Azure.Security.KeyVault
             }
         }
 
-        protected override async ValueTask<bool> TryAuthenticateRequestFromChallengeAsync(HttpMessage message, bool async)
+        protected override async ValueTask<bool> AuthenticateRequestFromChallengeAsync(HttpMessage message, bool async)
         {
             string authority = GetRequestAuthority(message.Request);
             string scope = AuthorizationChallengeParser.GetChallengeParameterFromResponse(message.Response, "Bearer", "resource");

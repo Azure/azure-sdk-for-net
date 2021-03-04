@@ -30,8 +30,8 @@ namespace Azure.Core.Pipeline
         public ARMChallengeAuthenticationPolicy(TokenCredential credential, IEnumerable<string> scopes)
             : base(credential, scopes, TimeSpan.FromMinutes(5), TimeSpan.FromSeconds(30)) { }
 
-        /// <inheritdoc cref="BearerTokenChallengeAuthenticationPolicy.TryAuthenticateRequestFromChallengeAsync(HttpMessage, bool)" />
-        protected override async ValueTask<bool> TryAuthenticateRequestFromChallengeAsync(HttpMessage message, bool async)
+        /// <inheritdoc cref="BearerTokenChallengeAuthenticationPolicy.AuthenticateRequestFromChallengeAsync(HttpMessage, bool)" />
+        protected override async ValueTask<bool> AuthenticateRequestFromChallengeAsync(HttpMessage message, bool async)
         {
             var challenge = AuthorizationChallengeParser.GetChallengeParameterFromResponse(message.Response, "Bearer", "claims");
             if (challenge == null)

@@ -78,8 +78,8 @@ namespace Azure.Core.Pipeline
         /// <remarks>Service client libraries may derive from this and extend to handle service specific authentication challenges.</remarks>
         /// <param name="message">The <see cref="HttpMessage"/> to be authenticated.</param>
         /// <param name="async">Indicates whether the method was called from an asynchronous context.</param>
-        /// <returns>A boolean indicating whether the requeset was successfully authenticated and should be sent to the transport.</returns>
-        protected virtual ValueTask<bool> TryAuthenticateRequestFromChallengeAsync(HttpMessage message, bool async)
+        /// <returns>A boolean indicating whether the request was successfully authenticated and should be sent to the transport.</returns>
+        protected virtual ValueTask<bool> AuthenticateRequestFromChallengeAsync(HttpMessage message, bool async)
         {
             return _falseValueTask;
         }
@@ -96,7 +96,7 @@ namespace Azure.Core.Pipeline
             // If the message already has a challenge response due to a sub-class pre-processing the request, get the context from the challenge.
             if (message.HasResponse && message.Response.Status == (int)HttpStatusCode.Unauthorized && message.Response.Headers.Contains(HttpHeader.Names.WWWAuthenticate))
             {
-                if (!await TryAuthenticateRequestFromChallengeAsync(message, async).ConfigureAwait(false))
+                if (!await AuthenticateRequestFromChallengeAsync(message, async).ConfigureAwait(false))
                 {
                     // We were unsuccessful in handling the challenge, so bail out now.
                     return;
@@ -123,7 +123,7 @@ namespace Azure.Core.Pipeline
                 // Attempt to get the TokenRequestContext based on the challenge.
                 // If we fail to get the context, the challenge was not present or invalid.
                 // If we succeed in getting the context, authenticate the request and pass it up the policy chain.
-                if (await TryAuthenticateRequestFromChallengeAsync(message, async).ConfigureAwait(false))
+                if (await AuthenticateRequestFromChallengeAsync(message, async).ConfigureAwait(false))
                 {
                     if (async)
                     {
