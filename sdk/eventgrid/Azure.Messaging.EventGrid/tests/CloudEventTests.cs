@@ -299,5 +299,44 @@ namespace Azure.Messaging.EventGrid.Tests
 
             Assert.AreEqual(5, cloudEvent.Data.ToObjectFromJson<DerivedTestPayload>().DerivedProperty);
         }
+
+        [Test]
+        public async Task RespectsPortFromUriSendingCloudEvents()
+        {
+            var mockTransport = new MockTransport((request) =>
+            {
+                Assert.AreEqual(100, request.Uri.Port);
+                return new MockResponse(200);
+            });
+            var options = new EventGridPublisherClientOptions
+            {
+                Transport = mockTransport
+            };
+            EventGridPublisherClient client =
+               new EventGridPublisherClient(
+                   new Uri("https://contoso.com:100/api/events"),
+                   new AzureKeyCredential("fakeKey"),
+                   options);
+            var cloudEvent = new CloudEvent(
+                    "record",
+                    "Microsoft.MockPublisher.TestEvent",
+                    new DerivedTestPayload
+                    {
+                        Name = "name",
+                        Age = 10,
+                        DerivedProperty = 5
+                    });
+
+            Assert.AreEqual(5, cloudEvent.Data.ToObjectFromJson<DerivedTestPayload>().DerivedProperty);
+
+            List<CloudEvent> eventsList = new List<CloudEvent>()
+            {
+                cloudEvent
+            };
+
+            await client.SendEventsAsync(eventsList);
+
+            Assert.AreEqual(5, cloudEvent.Data.ToObjectFromJson<DerivedTestPayload>().DerivedProperty);
+        }
     }
 }
