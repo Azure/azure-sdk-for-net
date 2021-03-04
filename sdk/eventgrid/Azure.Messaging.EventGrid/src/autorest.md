@@ -34,7 +34,7 @@ directive:
     }
 
 title: EventGridClient
-require: https://github.com/Azure/azure-rest-api-specs/blob/6c9d4fe7445b78db8336271895924379d95fbc6c/specification/eventgrid/data-plane/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/bd75cbc7ae9c997f39362ac9d19d557219720bbd/specification/eventgrid/data-plane/readme.md
 
 ```
 
