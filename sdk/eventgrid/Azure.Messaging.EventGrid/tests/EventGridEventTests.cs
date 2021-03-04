@@ -124,14 +124,11 @@ namespace Azure.Messaging.EventGrid.Tests
                     "record",
                     "Microsoft.MockPublisher.TestEvent",
                     "TestPayload",
-                    new DerivedTestPayload
+                    new TestPayload
                     {
                         Name = "name",
                         Age = 10,
-                        DerivedProperty = 5
                     });
-
-            Assert.AreEqual(5, egEvent.Data.ToObjectFromJson<DerivedTestPayload>().DerivedProperty);
 
             List<EventGridEvent> eventsList = new List<EventGridEvent>()
             {
@@ -139,9 +136,6 @@ namespace Azure.Messaging.EventGrid.Tests
             };
 
             await client.SendEventsAsync(eventsList);
-
-            egEvent = DeserializeRequest(mockTransport.SingleRequest).First();
-            Assert.AreEqual(5, egEvent.Data.ToObjectFromJson<DerivedTestPayload>().DerivedProperty);
         }
 
         private static List<EventGridEvent> DeserializeRequest(Request request)

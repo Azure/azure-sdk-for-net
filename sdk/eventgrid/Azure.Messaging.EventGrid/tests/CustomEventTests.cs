@@ -29,11 +29,10 @@ namespace Azure.Messaging.EventGrid.Tests
                    new AzureKeyCredential("fakeKey"),
                    options);
             var evt = new BinaryData(
-                new DerivedTestPayload
+                new TestPayload
                 {
                     Name = "name",
                     Age = 10,
-                    DerivedProperty = 5
                 });
 
             List<BinaryData> eventsList = new List<BinaryData>()
@@ -42,8 +41,6 @@ namespace Azure.Messaging.EventGrid.Tests
             };
 
             await client.SendEventsAsync(eventsList);
-
-            Assert.AreEqual(5, evt.ToObjectFromJson<DerivedTestPayload>().DerivedProperty);
         }
     }
 }

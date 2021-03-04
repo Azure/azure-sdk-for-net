@@ -320,14 +320,11 @@ namespace Azure.Messaging.EventGrid.Tests
             var cloudEvent = new CloudEvent(
                     "record",
                     "Microsoft.MockPublisher.TestEvent",
-                    new DerivedTestPayload
+                    new TestPayload
                     {
                         Name = "name",
                         Age = 10,
-                        DerivedProperty = 5
                     });
-
-            Assert.AreEqual(5, cloudEvent.Data.ToObjectFromJson<DerivedTestPayload>().DerivedProperty);
 
             List<CloudEvent> eventsList = new List<CloudEvent>()
             {
@@ -335,8 +332,6 @@ namespace Azure.Messaging.EventGrid.Tests
             };
 
             await client.SendEventsAsync(eventsList);
-
-            Assert.AreEqual(5, cloudEvent.Data.ToObjectFromJson<DerivedTestPayload>().DerivedProperty);
         }
     }
 }
