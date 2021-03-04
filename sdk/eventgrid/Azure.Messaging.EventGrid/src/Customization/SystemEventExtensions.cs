@@ -122,15 +122,15 @@ namespace Azure.Messaging.EventGrid
             { SystemEventNames.MediaLiveEventTrackDiscontinuityDetected, MediaLiveEventTrackDiscontinuityDetectedEventData.DeserializeMediaLiveEventTrackDiscontinuityDetectedEventData },
 
             // Resource Manager (Azure Subscription/Resource Group) events
-            { SystemEventNames.ResourceWriteSuccess, ResourceWriteSuccessData.DeserializeResourceWriteSuccessData },
-            { SystemEventNames.ResourceWriteFailure, ResourceWriteFailureData.DeserializeResourceWriteFailureData },
-            { SystemEventNames.ResourceWriteCancel, ResourceWriteCancelData.DeserializeResourceWriteCancelData },
-            { SystemEventNames.ResourceDeleteSuccess, ResourceDeleteSuccessData.DeserializeResourceDeleteSuccessData },
-            { SystemEventNames.ResourceDeleteFailure, ResourceDeleteFailureData.DeserializeResourceDeleteFailureData },
-            { SystemEventNames.ResourceDeleteCancel, ResourceDeleteCancelData.DeserializeResourceDeleteCancelData },
-            { SystemEventNames.ResourceActionSuccess, ResourceActionSuccessData.DeserializeResourceActionSuccessData },
-            { SystemEventNames.ResourceActionFailure, ResourceActionFailureData.DeserializeResourceActionFailureData },
-            { SystemEventNames.ResourceActionCancel, ResourceActionCancelData.DeserializeResourceActionCancelData },
+            { SystemEventNames.ResourceWriteSuccess, ResourceWriteSuccessEventData.DeserializeResourceWriteSuccessEventData },
+            { SystemEventNames.ResourceWriteFailure, ResourceWriteFailureEventData.DeserializeResourceWriteFailureEventData },
+            { SystemEventNames.ResourceWriteCancel, ResourceWriteCancelEventData.DeserializeResourceWriteCancelEventData },
+            { SystemEventNames.ResourceDeleteSuccess, ResourceDeleteSuccessEventData.DeserializeResourceDeleteSuccessEventData },
+            { SystemEventNames.ResourceDeleteFailure, ResourceDeleteFailureEventData.DeserializeResourceDeleteFailureEventData },
+            { SystemEventNames.ResourceDeleteCancel, ResourceDeleteCancelEventData.DeserializeResourceDeleteCancelEventData },
+            { SystemEventNames.ResourceActionSuccess, ResourceActionSuccessEventData.DeserializeResourceActionSuccessEventData },
+            { SystemEventNames.ResourceActionFailure, ResourceActionFailureEventData.DeserializeResourceActionFailureEventData },
+            { SystemEventNames.ResourceActionCancel, ResourceActionCancelEventData.DeserializeResourceActionCancelEventData },
 
             // ServiceBus events
             { SystemEventNames.ServiceBusActiveMessagesAvailableWithNoListeners, ServiceBusActiveMessagesAvailableWithNoListenersEventData.DeserializeServiceBusActiveMessagesAvailableWithNoListenersEventData },

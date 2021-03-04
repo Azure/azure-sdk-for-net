@@ -12,10 +12,10 @@ using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    [JsonConverter(typeof(ResourceWriteSuccessDataConverter))]
-    public partial class ResourceWriteSuccessData
+    [JsonConverter(typeof(ResourceWriteFailureEventDataConverter))]
+    public partial class ResourceWriteFailureEventData
     {
-        internal static ResourceWriteSuccessData DeserializeResourceWriteSuccessData(JsonElement element)
+        internal static ResourceWriteFailureEventData DeserializeResourceWriteFailureEventData(JsonElement element)
         {
             Optional<string> tenantId = default;
             Optional<string> subscriptionId = default;
@@ -86,19 +86,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new ResourceWriteSuccessData(tenantId.Value, subscriptionId.Value, resourceGroup.Value, resourceProvider.Value, resourceUri.Value, operationName.Value, status.Value, authorization.Value, claims.Value, correlationId.Value, httpRequest.Value);
+            return new ResourceWriteFailureEventData(tenantId.Value, subscriptionId.Value, resourceGroup.Value, resourceProvider.Value, resourceUri.Value, operationName.Value, status.Value, authorization.Value, claims.Value, correlationId.Value, httpRequest.Value);
         }
 
-        internal partial class ResourceWriteSuccessDataConverter : JsonConverter<ResourceWriteSuccessData>
+        internal partial class ResourceWriteFailureEventDataConverter : JsonConverter<ResourceWriteFailureEventData>
         {
-            public override void Write(Utf8JsonWriter writer, ResourceWriteSuccessData model, JsonSerializerOptions options)
+            public override void Write(Utf8JsonWriter writer, ResourceWriteFailureEventData model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
-            public override ResourceWriteSuccessData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            public override ResourceWriteFailureEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeResourceWriteSuccessData(document.RootElement);
+                return DeserializeResourceWriteFailureEventData(document.RootElement);
             }
         }
     }

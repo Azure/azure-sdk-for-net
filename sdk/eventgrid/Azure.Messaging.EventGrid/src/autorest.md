@@ -32,7 +32,25 @@ directive:
           $[path]["properties"]["x509Thumbprint"]["x-csharp-formats"] = "json";
       }
     }
+```
 
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    $.ResourceActionCancelData["x-ms-client-name"] = "ResourceActionCancelEventData";
+    $.ResourceActionFailureData["x-ms-client-name"] = "ResourceActionFailureEventData";
+    $.ResourceActionSuccessData["x-ms-client-name"] = "ResourceActionSuccessEventData";
+    $.ResourceDeleteCancelData["x-ms-client-name"] = "ResourceDeleteCancelEventData";
+    $.ResourceDeleteFailureData["x-ms-client-name"] = "ResourceDeleteFailureEventData";
+    $.ResourceDeleteSuccessData["x-ms-client-name"] = "ResourceDeleteSuccessEventData";
+    $.ResourceWriteCancelData["x-ms-client-name"] = "ResourceWriteCancelEventData";
+    $.ResourceWriteFailureData["x-ms-client-name"] = "ResourceWriteFailureEventData";
+    $.ResourceWriteSuccessData["x-ms-client-name"] = "ResourceWriteSuccessEventData";
+```
+
+``` yaml
 title: EventGridClient
 require: https://github.com/Azure/azure-rest-api-specs/blob/bd75cbc7ae9c997f39362ac9d19d557219720bbd/specification/eventgrid/data-plane/readme.md
 

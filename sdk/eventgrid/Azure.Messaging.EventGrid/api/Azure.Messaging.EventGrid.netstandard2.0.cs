@@ -1098,9 +1098,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string Status { get { throw null; } }
         public System.DateTimeOffset? Timestamp { get { throw null; } }
     }
-    public partial class ResourceActionCancelData
+    public partial class ResourceActionCancelEventData
     {
-        internal ResourceActionCancelData() { }
+        internal ResourceActionCancelEventData() { }
         public string Authorization { get { throw null; } }
         public string Claims { get { throw null; } }
         public string CorrelationId { get { throw null; } }
@@ -1113,9 +1113,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string SubscriptionId { get { throw null; } }
         public string TenantId { get { throw null; } }
     }
-    public partial class ResourceActionFailureData
+    public partial class ResourceActionFailureEventData
     {
-        internal ResourceActionFailureData() { }
+        internal ResourceActionFailureEventData() { }
         public string Authorization { get { throw null; } }
         public string Claims { get { throw null; } }
         public string CorrelationId { get { throw null; } }
@@ -1128,9 +1128,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string SubscriptionId { get { throw null; } }
         public string TenantId { get { throw null; } }
     }
-    public partial class ResourceActionSuccessData
+    public partial class ResourceActionSuccessEventData
     {
-        internal ResourceActionSuccessData() { }
+        internal ResourceActionSuccessEventData() { }
         public string Authorization { get { throw null; } }
         public string Claims { get { throw null; } }
         public string CorrelationId { get { throw null; } }
@@ -1143,9 +1143,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string SubscriptionId { get { throw null; } }
         public string TenantId { get { throw null; } }
     }
-    public partial class ResourceDeleteCancelData
+    public partial class ResourceDeleteCancelEventData
     {
-        internal ResourceDeleteCancelData() { }
+        internal ResourceDeleteCancelEventData() { }
         public string Authorization { get { throw null; } }
         public string Claims { get { throw null; } }
         public string CorrelationId { get { throw null; } }
@@ -1158,9 +1158,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string SubscriptionId { get { throw null; } }
         public string TenantId { get { throw null; } }
     }
-    public partial class ResourceDeleteFailureData
+    public partial class ResourceDeleteFailureEventData
     {
-        internal ResourceDeleteFailureData() { }
+        internal ResourceDeleteFailureEventData() { }
         public string Authorization { get { throw null; } }
         public string Claims { get { throw null; } }
         public string CorrelationId { get { throw null; } }
@@ -1173,9 +1173,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string SubscriptionId { get { throw null; } }
         public string TenantId { get { throw null; } }
     }
-    public partial class ResourceDeleteSuccessData
+    public partial class ResourceDeleteSuccessEventData
     {
-        internal ResourceDeleteSuccessData() { }
+        internal ResourceDeleteSuccessEventData() { }
         public string Authorization { get { throw null; } }
         public string Claims { get { throw null; } }
         public string CorrelationId { get { throw null; } }
@@ -1188,9 +1188,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string SubscriptionId { get { throw null; } }
         public string TenantId { get { throw null; } }
     }
-    public partial class ResourceWriteCancelData
+    public partial class ResourceWriteCancelEventData
     {
-        internal ResourceWriteCancelData() { }
+        internal ResourceWriteCancelEventData() { }
         public string Authorization { get { throw null; } }
         public string Claims { get { throw null; } }
         public string CorrelationId { get { throw null; } }
@@ -1203,9 +1203,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string SubscriptionId { get { throw null; } }
         public string TenantId { get { throw null; } }
     }
-    public partial class ResourceWriteFailureData
+    public partial class ResourceWriteFailureEventData
     {
-        internal ResourceWriteFailureData() { }
+        internal ResourceWriteFailureEventData() { }
         public string Authorization { get { throw null; } }
         public string Claims { get { throw null; } }
         public string CorrelationId { get { throw null; } }
@@ -1218,9 +1218,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string SubscriptionId { get { throw null; } }
         public string TenantId { get { throw null; } }
     }
-    public partial class ResourceWriteSuccessData
+    public partial class ResourceWriteSuccessEventData
     {
-        internal ResourceWriteSuccessData() { }
+        internal ResourceWriteSuccessEventData() { }
         public string Authorization { get { throw null; } }
         public string Claims { get { throw null; } }
         public string CorrelationId { get { throw null; } }

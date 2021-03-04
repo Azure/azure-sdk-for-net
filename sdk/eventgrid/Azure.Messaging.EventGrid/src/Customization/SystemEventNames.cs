@@ -480,55 +480,55 @@ namespace Azure.Messaging.EventGrid
         #region Resource Manager (Azure Subscription/Resource Group) events
         /// <summary>
         /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
-        /// <see cref="ResourceWriteSuccessData"/> system event.
+        /// <see cref="ResourceWriteSuccessEventData"/> system event.
         /// </summary>
         public const string ResourceWriteSuccess = "Microsoft.Resources.ResourceWriteSuccess";
 
         /// <summary>
         /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
-        /// <see cref="ResourceWriteFailureData"/> system event.
+        /// <see cref="ResourceWriteFailureEventData"/> system event.
         /// </summary>
         public const string ResourceWriteFailure = "Microsoft.Resources.ResourceWriteFailure";
 
         /// <summary>
         /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
-        /// <see cref="ResourceWriteCancelData"/> system event.
+        /// <see cref="ResourceWriteCancelEventData"/> system event.
         /// </summary>
         public const string ResourceWriteCancel = "Microsoft.Resources.ResourceWriteCancel";
 
         /// <summary>
         /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
-        /// <see cref="ResourceDeleteSuccessData"/> system event.
+        /// <see cref="ResourceDeleteSuccessEventData"/> system event.
         /// </summary>
         public const string ResourceDeleteSuccess = "Microsoft.Resources.ResourceDeleteSuccess";
 
         /// <summary>
         /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
-        /// <see cref="ResourceDeleteFailureData"/> system event.
+        /// <see cref="ResourceDeleteFailureEventData"/> system event.
         /// </summary>
         public const string ResourceDeleteFailure = "Microsoft.Resources.ResourceDeleteFailure";
 
         /// <summary>
         /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
-        /// <see cref="ResourceDeleteCancelData"/> system event.
+        /// <see cref="ResourceDeleteCancelEventData"/> system event.
         /// </summary>
         public const string ResourceDeleteCancel = "Microsoft.Resources.ResourceDeleteCancel";
 
         /// <summary>
         /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
-        /// <see cref="ResourceActionSuccessData"/> system event.
+        /// <see cref="ResourceActionSuccessEventData"/> system event.
         /// </summary>
         public const string ResourceActionSuccess = "Microsoft.Resources.ResourceActionSuccess";
 
         /// <summary>
         /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
-        /// <see cref="ResourceActionFailureData"/> system event.
+        /// <see cref="ResourceActionFailureEventData"/> system event.
         /// </summary>
         public const string ResourceActionFailure = "Microsoft.Resources.ResourceActionFailure";
 
         /// <summary>
         /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
-        /// <see cref="ResourceActionCancelData"/> system event.
+        /// <see cref="ResourceActionCancelEventData"/> system event.
         /// </summary>
         public const string ResourceActionCancel = "Microsoft.Resources.ResourceActionCancel";
         #endregion
