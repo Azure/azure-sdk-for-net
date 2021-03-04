@@ -22,11 +22,18 @@ namespace Azure.ResourceManager.Core.Tests
         {
         }
 
-        [SetUp]
-        public async Task GlobalSetUpAsync()
+        [OneTimeSetUp]
+        public void Testing()
         {
-            _rg = await ArmClient.DefaultSubscription.GetResourceGroupContainer().Construct(LocationData.WestUS2).CreateOrUpdateAsync($"{Environment.UserName}-rg-{Environment.TickCount}");
+            //_ = await GlobalClient.DefaultSubscription.GetResourceGroupContainer().Construct(LocationData.WestUS2).CreateOrUpdateAsync($"{Environment.UserName}-rg-{Environment.TickCount}");
+        }
 
+        [SetUp]
+        public async Task SetUpAsync()
+        {
+            var client = GetArmClient();
+
+            _rg = await client.DefaultSubscription.GetResourceGroupContainer().Construct(LocationData.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName(Environment.UserName));
             _rg = _rg.AddTag("key1", "value1");
             _rg = _rg.AddTag("key2", "value2");
         }

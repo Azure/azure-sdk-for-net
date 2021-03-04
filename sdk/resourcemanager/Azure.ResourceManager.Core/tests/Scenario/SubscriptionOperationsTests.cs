@@ -4,16 +4,23 @@
 using System;
 using System.Text;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Core.Tests
 {
-    public class SubscriptionOperationsTests : Track2ManagementRecordedTestBase<ResourceManagerTestEnvironment>
+    public class SubscriptionOperationsTests : ResourceManagerTestBase
     {
+        private AzureResourceManagerClient _client;
+
         public SubscriptionOperationsTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
+        }
+
+        [SetUp]
+        public void SetUp()
+        {
+            _client = GetArmClient();
         }
 
         [TestCase(null)]
@@ -22,8 +29,7 @@ namespace Azure.ResourceManager.Core.Tests
         [RecordedTest]
         public void TestGetResourceGroupOpsArgNullException(string resourceGroupName)
         {
-            var client = new AzureResourceManagerClient();
-            var subOps = client.DefaultSubscription;
+            var subOps = _client.DefaultSubscription;
             Assert.Throws<ArgumentOutOfRangeException>(delegate { subOps.GetResourceGroupOperations(resourceGroupName); });
         }
 
@@ -36,8 +42,7 @@ namespace Azure.ResourceManager.Core.Tests
         [RecordedTest]
         public void TestGetResourceGroupOpsArgException(string resourceGroupName)
         {
-            var client = new AzureResourceManagerClient();
-            var subOps = client.DefaultSubscription;
+            var subOps = _client.DefaultSubscription;
             Assert.Throws<ArgumentException>(delegate { subOps.GetResourceGroupOperations(resourceGroupName); });
         }
 
@@ -47,8 +52,7 @@ namespace Azure.ResourceManager.Core.Tests
         public void TestGetResourceGroupOpsOutOfRangeArgException(int length)
         {
             var resourceGroupName = GetLongString(length);
-            var client = new AzureResourceManagerClient();
-            var subOps = client.DefaultSubscription;
+            var subOps = _client.DefaultSubscription;
             Assert.Throws<ArgumentOutOfRangeException>(delegate { subOps.GetResourceGroupOperations(resourceGroupName); });
         }
 
@@ -59,8 +63,7 @@ namespace Azure.ResourceManager.Core.Tests
         [RecordedTest]
         public void TestGetResourceGroupOpsValid(string resourceGroupName)
         {
-            var client = new AzureResourceManagerClient();
-            var subOps = client.DefaultSubscription;
+            var subOps = _client.DefaultSubscription;
             Assert.DoesNotThrow(delegate { subOps.GetResourceGroupOperations(resourceGroupName); });
         }
 
@@ -71,8 +74,7 @@ namespace Azure.ResourceManager.Core.Tests
         public void TestGetResourceGroupOpsLong(int length)
         {
             var resourceGroupName = GetLongString(length);
-            var client = new AzureResourceManagerClient();
-            var subOps = client.DefaultSubscription;
+            var subOps = _client.DefaultSubscription;
             Assert.DoesNotThrow(delegate { subOps.GetResourceGroupOperations(resourceGroupName); });
         }
 
