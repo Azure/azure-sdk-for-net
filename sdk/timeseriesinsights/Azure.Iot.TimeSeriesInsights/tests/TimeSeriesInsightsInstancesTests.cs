@@ -38,6 +38,8 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
                 timeSeriesInstances.Add(new TimeSeriesInstance(id, DefaultType));
             }
 
+            IEnumerable<ITimeSeriesId> timeSeriesInstancesIds = timeSeriesInstances.Select((instance) => instance.TimeSeriesId);
+
             // Act and assert
             try
             {
@@ -47,47 +49,41 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
                     .ConfigureAwait(false);
 
                 // Assert that the result error array does not contain any object that is set
-                createInstancesResult.Value.Any((errorResult) => errorResult != null)
-                    .Should().BeFalse();
+                createInstancesResult.Value.All((errorResult) => errorResult == null)
+                    .Should().BeTrue();
 
-                // Get the created instances by Ids
-                Response<InstancesOperationResult[]> getInstancesByIdsResult = await client
-                    .GetInstancesAsync(timeSeriesInstances.Select((instance) => instance.TimeSeriesId))
-                    .ConfigureAwait(false);
+                // This retry logic was added as the TSI instance are not immediately available after creation
+                await TestRetryHelper.RetryAsync<Response<InstancesOperationResult[]>>(async () =>
+                 {
+                     // Get the created instances by Ids
+                     Response<InstancesOperationResult[]> getInstancesByIdsResult = await client
+                          .GetInstancesAsync(timeSeriesInstancesIds)
+                          .ConfigureAwait(false);
 
-                getInstancesByIdsResult.Value.Length.Should().Be(timeSeriesInstances.Count);
+                     getInstancesByIdsResult.Value.Length.Should().Be(timeSeriesInstances.Count);
+                     getInstancesByIdsResult.Value.All((instanceResult) =>
+                         instanceResult.Instance != null &&
+                         instanceResult.Error == null &&
+                         instanceResult.Instance.TimeSeriesId.GetType().GenericTypeArguments.Count() == numOfIdProperties &&
+                         instanceResult.Instance.TypeId == DefaultType &&
+                         instanceResult.Instance.HierarchyIds.Count == 0 &&
+                         instanceResult.Instance.InstanceFields.Count == 0)
+                     .Should().BeTrue();
 
-                foreach (InstancesOperationResult resultItem in getInstancesByIdsResult.Value)
-                {
-                    TimeSeriesInstance tsiInstance = resultItem.Instance;
-
-                    tsiInstance.Should().NotBeNull();
-                    resultItem.Error.Should().BeNull();
-
-                    tsiInstance.TimeSeriesId.GetType().GenericTypeArguments.Count().Should().Be(numOfIdProperties);
-                    tsiInstance.TypeId.Should().Be(DefaultType);
-                    tsiInstance.HierarchyIds.Count.Should().Be(0);
-                    tsiInstance.InstanceFields.Count.Should().Be(0);
-
-                    // Ensure that the result response has a Time Series instance that matches one of the instances we setup earlier
-                    timeSeriesInstances.Any(
-                        (timeSeriesInstance) => timeSeriesInstance.TimeSeriesId.ToArray().SequenceEqual(tsiInstance.TimeSeriesId.ToArray()))
-                        .Should().BeTrue();
-                }
+                     return null;
+                 }, 5, TimeSpan.FromSeconds(5));
 
                 // Update the instances by adding names to them
                 var tsiInstanceNamePrefix = "instance";
-                foreach (TimeSeriesInstance instance in timeSeriesInstances)
-                {
-                    instance.Name = Recording.GenerateAlphaNumericId(tsiInstanceNamePrefix);
-                }
+                timeSeriesInstances.ForEach((timeSeriesInstance) =>
+                    timeSeriesInstance.Name = Recording.GenerateAlphaNumericId(tsiInstanceNamePrefix));
 
                 Response<InstancesOperationResult[]> replaceInstancesResult = await client
                     .ReplaceTimeSeriesInstancesAsync(timeSeriesInstances)
                     .ConfigureAwait(false);
 
                 replaceInstancesResult.Value.Length.Should().Be(timeSeriesInstances.Count);
-                replaceInstancesResult.Value.Any((errorResult) => errorResult.Error != null).Should().BeFalse();
+                replaceInstancesResult.Value.All((errorResult) => errorResult.Error == null).Should().BeTrue();
 
                 // Get instances by name
                 Response<InstancesOperationResult[]> getInstancesByNameResult = await client
@@ -95,21 +91,14 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
                     .ConfigureAwait(false);
 
                 getInstancesByNameResult.Value.Length.Should().Be(timeSeriesInstances.Count);
-
-                foreach (InstancesOperationResult resultItem in getInstancesByNameResult.Value)
-                {
-                    TimeSeriesInstance tsiInstance = resultItem.Instance;
-
-                    tsiInstance.Should().NotBeNull();
-                    resultItem.Error.Should().BeNull();
-                    tsiInstance.TimeSeriesId.GetType().GenericTypeArguments.Count().Should().Be(numOfIdProperties);
-                    tsiInstance.TypeId.Should().Be(DefaultType);
-                    tsiInstance.HierarchyIds.Count.Should().Be(0);
-                    tsiInstance.InstanceFields.Count.Should().Be(0);
-
-                    // Ensure that the result response has a Time Series instance that matches one of the instances we setup earlier
-                    timeSeriesInstances.Any((timeSeriesInstance) => timeSeriesInstance.Name == tsiInstance.Name).Should().BeTrue();
-                }
+                getInstancesByNameResult.Value.All((instanceResult) =>
+                    instanceResult.Instance != null &&
+                    instanceResult.Error == null &&
+                    instanceResult.Instance.TimeSeriesId.GetType().GenericTypeArguments.Count() == numOfIdProperties &&
+                    instanceResult.Instance.TypeId == DefaultType &&
+                    instanceResult.Instance.HierarchyIds.Count == 0 &&
+                    instanceResult.Instance.InstanceFields.Count == 0)
+                .Should().BeTrue();
 
                 // Get all Time Series instances in the environment
                 AsyncPageable<TimeSeriesInstance> getAllInstancesResponse = client.GetInstancesAsync();
@@ -141,21 +130,17 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
 
                 searchSuggestionResponse.Value.Length.Should().Be(1);
             }
-            catch (Exception ex)
-            {
-                Assert.Fail($"Failure in executing a step in the test case: {ex.Message}.");
-            }
             finally
             {
                 // clean up
                 try
                 {
                     Response<InstancesOperationError[]> deleteInstancesResponse = await client
-                        .DeleteInstancesAsync(timeSeriesInstances.Select((instance) => instance.TimeSeriesId))
+                        .DeleteInstancesAsync(timeSeriesInstancesIds)
                         .ConfigureAwait(false);
 
                     // Assert that the response array does not have any error object set
-                    deleteInstancesResponse.Value.Any((errorResult) => errorResult == null).Should().BeTrue();
+                    deleteInstancesResponse.Value.All((errorResult) => errorResult == null).Should().BeTrue();
                 }
                 catch (Exception ex)
                 {
