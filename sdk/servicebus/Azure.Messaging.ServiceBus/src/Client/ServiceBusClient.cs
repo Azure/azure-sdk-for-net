@@ -227,7 +227,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <returns>A <see cref="ServiceBusSender"/> scoped to the specified queue or topic.</returns>
         /// <exception cref="ArgumentException">
-        ///   This occurs when the <see cref="ServiceBusClient"/> was constructed with a connection string containing the "EntityPath" token
+        ///   The <see cref="ServiceBusClient"/> was constructed with a connection string containing the "EntityPath" token
         ///   that has a different value than the <paramref name="queueOrTopicName"/> value specified here.
         /// </exception>
         public virtual ServiceBusSender CreateSender(string queueOrTopicName)
@@ -270,7 +270,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="queueName">The queue to create a <see cref="ServiceBusReceiver"/> for.</param>
         /// <returns>A <see cref="ServiceBusReceiver"/> scoped to the specified queue.</returns>
         /// <exception cref="ArgumentException">
-        ///   This occurs when the <see cref="ServiceBusClient"/> was constructed with a connection string containing the "EntityPath" token
+        ///   The <see cref="ServiceBusClient"/> was constructed with a connection string containing the "EntityPath" token
         ///   that has a different value than the <paramref name="queueName"/> value specified here.
         /// </exception>
         public virtual ServiceBusReceiver CreateReceiver(string queueName)
@@ -297,7 +297,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <returns>A <see cref="ServiceBusReceiver"/> scoped to the specified queue.</returns>
         /// <exception cref="ArgumentException">
-        ///   This occurs when the <see cref="ServiceBusClient"/> was constructed with a connection string containing the "EntityPath" token
+        ///   The <see cref="ServiceBusClient"/> was constructed with a connection string containing the "EntityPath" token
         ///   that has a different value than the <paramref name="queueName"/> value specified here.
         /// </exception>
         public virtual ServiceBusReceiver CreateReceiver(
@@ -328,7 +328,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <returns>A <see cref="ServiceBusReceiver"/> scoped to the specified subscription and topic.</returns>
         /// <exception cref="ArgumentException">
-        ///   This occurs when the <see cref="ServiceBusClient"/> was constructed with a connection string containing the "EntityPath" token
+        ///   The <see cref="ServiceBusClient"/> was constructed with a connection string containing the "EntityPath" token
         ///   that has a different value than the <paramref name="topicName"/> value specified here.
         /// </exception>
         public virtual ServiceBusReceiver CreateReceiver(
@@ -359,7 +359,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <returns>A <see cref="ServiceBusReceiver"/> scoped to the specified subscription and topic.</returns>
         /// <exception cref="ArgumentException">
-        ///   This occurs when the <see cref="ServiceBusClient"/> was constructed with a connection string containing the "EntityPath" token
+        ///   The <see cref="ServiceBusClient"/> was constructed with a connection string containing the "EntityPath" token
         ///   that has a different value than the <paramref name="topicName"/> value specified here.
         /// </exception>
         public virtual ServiceBusReceiver CreateReceiver(
@@ -394,7 +394,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <returns>A <see cref="ServiceBusSessionReceiver"/> scoped to the specified queue and a specific session.</returns>
         /// <exception cref="ServiceBusException">
-        ///   Occurs when there are no unlocked sessions in the entity. This can occur if the entity has no messages, or if all of the messages
+        ///   There are no unlocked sessions in the entity. This can occur if the entity has no messages, or if all of the messages
         ///   belong to sessions that are locked by other receivers.
         ///   The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.ServiceTimeout"/> in this case.
         /// </exception>
@@ -432,7 +432,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <returns>A <see cref="ServiceBusSessionReceiver"/> scoped to the specified queue and a specific session.</returns>
         /// <exception cref="ServiceBusException">
-        ///   Occurs when there are no unlocked sessions in the entity. This can occur if the entity has no messages, or if all of the messages
+        ///   There are no unlocked sessions in the entity. This can occur if the entity has no messages, or if all of the messages
         ///   belong to sessions that are locked by other receivers.
         ///   The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.ServiceTimeout"/> in this case.
         /// </exception>
@@ -472,7 +472,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <returns>A <see cref="ServiceBusSessionReceiver"/> scoped to the specified queue and a specific session.</returns>
         /// <exception cref="ServiceBusException">
-        ///   Occurs when the <paramref name="sessionId"/> corresponds to a session that is currently locked by another receiver.
+        ///   The <paramref name="sessionId"/> corresponds to a session that is currently locked by another receiver.
         ///   The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.SessionCannotBeLocked"/> in this case.
         /// </exception>
         public virtual async Task<ServiceBusSessionReceiver> AcceptSessionAsync(
@@ -513,7 +513,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <returns>A <see cref="ServiceBusSessionReceiver"/> scoped to the specified queue and a specific session.</returns>
         /// <exception cref="ServiceBusException">
-        ///   Occurs when the <paramref name="sessionId"/> corresponds to a session that is currently locked by another receiver.
+        ///   The <paramref name="sessionId"/> corresponds to a session that is currently locked by another receiver.
         ///   The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.SessionCannotBeLocked"/> in this case.
         /// </exception>
         public virtual async Task<ServiceBusSessionReceiver> AcceptSessionAsync(
@@ -547,7 +547,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <returns>A <see cref="ServiceBusProcessor"/> scoped to the specified queue.</returns>
         /// <exception cref="ArgumentException">
-        ///   This occurs when the <see cref="ServiceBusClient"/> was constructed with a connection string containing the "EntityPath" token
+        ///   The <see cref="ServiceBusClient"/> was constructed with a connection string containing the "EntityPath" token
         ///   that has a different value than the <paramref name="queueName"/> value specified here.
         /// </exception>
         public virtual ServiceBusProcessor CreateProcessor(string queueName)
@@ -574,7 +574,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <returns>A <see cref="ServiceBusProcessor"/> scoped to the specified queue.</returns>
         /// <exception cref="ArgumentException">
-        ///   This occurs when the <see cref="ServiceBusClient"/> was constructed with a connection string containing the "EntityPath" token
+        ///   The <see cref="ServiceBusClient"/> was constructed with a connection string containing the "EntityPath" token
         ///   that has a different value than the <paramref name="queueName"/> value specified here.
         /// </exception>
         public virtual ServiceBusProcessor CreateProcessor(
@@ -604,7 +604,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <returns>A <see cref="ServiceBusProcessor"/> scoped to the specified topic and subscription.</returns>
         /// <exception cref="ArgumentException">
-        ///   This occurs when the <see cref="ServiceBusClient"/> was constructed with a connection string containing the "EntityPath" token
+        ///   The <see cref="ServiceBusClient"/> was constructed with a connection string containing the "EntityPath" token
         ///   that has a different value than the <paramref name="topicName"/> value specified here.
         /// </exception>
         public virtual ServiceBusProcessor CreateProcessor(

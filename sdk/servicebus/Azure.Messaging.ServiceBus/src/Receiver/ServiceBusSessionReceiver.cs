@@ -102,7 +102,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <returns>The session state as <see cref="BinaryData"/>.</returns>
         /// <exception cref="ServiceBusException">
-        ///   Occurs when the lock for the session has expired.
+        ///   The lock for the session has expired.
         ///   The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.SessionLockLost"/> in this case.
         /// </exception>
         public virtual async Task<BinaryData> GetSessionStateAsync(CancellationToken cancellationToken = default)
@@ -143,7 +143,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         /// <exception cref="ServiceBusException">
-        ///   Occurs when the lock for the session has expired.
+        ///   The lock for the session has expired.
         ///   The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.SessionLockLost"/> in this case.
         /// </exception>
         public virtual async Task SetSessionStateAsync(
@@ -189,7 +189,7 @@ namespace Azure.Messaging.ServiceBus
         /// </para>
         /// </remarks>
         /// <exception cref="ServiceBusException">
-        ///   Occurs when the lock for the session has expired.
+        ///   The lock for the session has expired.
         ///   The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.SessionLockLost"/> in this case.
         /// </exception>
         public virtual async Task RenewSessionLockAsync(CancellationToken cancellationToken = default)

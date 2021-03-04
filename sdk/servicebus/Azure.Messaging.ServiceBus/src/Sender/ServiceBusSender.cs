@@ -174,7 +174,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         /// <exception cref="ServiceBusException">
-        ///   Occurs when the set of events exceeds the maximum size allowed in a single batch, as determined by the Service Bus service.
+        ///   The set of events exceeds the maximum size allowed in a single batch, as determined by the Service Bus service.
         ///   The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.MessageSizeExceeded"/> in this case.
         /// </exception>
         public virtual async Task SendMessagesAsync(
