@@ -447,8 +447,8 @@ namespace Azure.Messaging.ServiceBus
         /// processor once it starts running.
         /// </param>
         /// <exception cref="InvalidOperationException">
-        ///   Occurs when the processor is already running. This can be checked via the <see cref="IsProcessing"/> property.
-        ///   This exception will also be thrown if event handlers have not been specified for the <see cref="ProcessMessageAsync"/> or
+        ///   This can occur if the processor is already running. This can be checked via the <see cref="IsProcessing"/> property.
+        ///   This can also occur if event handlers have not been specified for the <see cref="ProcessMessageAsync"/> or
         ///   the <see cref="ProcessErrorAsync"/> events.
         /// </exception>
         public virtual async Task StartProcessingAsync(
@@ -697,7 +697,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <param name="action">The action to invoke.</param>
         ///
-        /// <exception cref="InvalidOperationException">Occurs when this method is invoked while the event processor is running.</exception>
+        /// <exception cref="InvalidOperationException">Method is invoked while the event processor is running.</exception>
         internal void EnsureNotRunningAndInvoke(Action action)
         {
             if (ActiveReceiveTask == null)
