@@ -1387,15 +1387,15 @@ namespace Azure.Storage.Blobs.Test
 
             await TestHelper.AssertExpectedExceptionAsync<ArgumentOutOfRangeException>(
                 stream.ReadAsync(buffer: new byte[10], offset: -1, count: 10),
-                new ArgumentOutOfRangeException("offset cannot be less than 0.", "Specified argument was out of the range of valid values."));
+                new ArgumentOutOfRangeException("offset", "offset cannot be less than 0."));
 
             await TestHelper.AssertExpectedExceptionAsync<ArgumentOutOfRangeException>(
                 stream.ReadAsync(buffer: new byte[10], offset: 11, count: 10),
-                new ArgumentOutOfRangeException("offset cannot exceed buffer length.", "Specified argument was out of the range of valid values."));
+                new ArgumentOutOfRangeException("offset", "offset cannot exceed buffer length."));
 
             await TestHelper.AssertExpectedExceptionAsync<ArgumentOutOfRangeException>(
                 stream.ReadAsync(buffer: new byte[10], offset: 1, count: -1),
-                new ArgumentOutOfRangeException("count cannot be less than 0.", "Specified argument was out of the range of valid values."));
+                new ArgumentOutOfRangeException("count", "count cannot be less than 0."));
         }
 
         [Test]
@@ -1440,7 +1440,7 @@ namespace Azure.Storage.Blobs.Test
             Stream outputStream = await blob.OpenReadAsync().ConfigureAwait(false);
             TestHelper.AssertExpectedException<ArgumentException>(
                 () => outputStream.Seek(-10, SeekOrigin.Begin),
-                new ArgumentException("New offset cannot be less than 0.  Value was -10"));
+                new ArgumentException("New offset cannot be less than 0.  Value was -10", "offset"));
         }
 
         [Test]
@@ -1463,7 +1463,7 @@ namespace Azure.Storage.Blobs.Test
             Stream outputStream = await blob.OpenReadAsync(options).ConfigureAwait(false);
             TestHelper.AssertExpectedException<ArgumentException>(
                 () => outputStream.Seek(1025, SeekOrigin.Begin),
-                new ArgumentException("You cannot seek past the last known length of the underlying blob or file."));
+                new ArgumentException("You cannot seek past the last known length of the underlying blob or file.", "offset"));
 
             Assert.AreEqual(size, outputStream.Length);
         }
