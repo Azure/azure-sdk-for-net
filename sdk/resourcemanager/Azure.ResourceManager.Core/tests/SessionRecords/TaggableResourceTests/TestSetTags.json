@@ -16,15 +16,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "397",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 04 Mar 2021 22:14:31 GMT",
+        "Date": "Thu, 04 Mar 2021 22:58:32 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "072f71a4-0222-4ea2-8d99-8996ace78442",
+        "x-ms-correlation-request-id": "d78cbcb7-b2eb-411d-b0eb-401d134e86eb",
         "x-ms-ratelimit-remaining-subscription-reads": "11996",
-        "x-ms-request-id": "072f71a4-0222-4ea2-8d99-8996ace78442",
-        "x-ms-routing-request-id": "WESTUS2:20210304T221432Z:072f71a4-0222-4ea2-8d99-8996ace78442"
+        "x-ms-request-id": "d78cbcb7-b2eb-411d-b0eb-401d134e86eb",
+        "x-ms-routing-request-id": "WESTUS2:20210304T225832Z:d78cbcb7-b2eb-411d-b0eb-401d134e86eb"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
@@ -42,7 +42,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/micnash9936?api-version=2019-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/rg9936?api-version=2019-10-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -60,21 +60,21 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "230",
+        "Content-Length": "220",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 04 Mar 2021 22:14:32 GMT",
+        "Date": "Thu, 04 Mar 2021 22:58:32 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "081d53e8-f775-4b52-8bc8-ec397f6a9d28",
+        "x-ms-correlation-request-id": "1a0e954b-e0d7-441a-aaa8-844d96dfc642",
         "x-ms-ratelimit-remaining-subscription-writes": "1195",
-        "x-ms-request-id": "081d53e8-f775-4b52-8bc8-ec397f6a9d28",
-        "x-ms-routing-request-id": "WESTUS2:20210304T221432Z:081d53e8-f775-4b52-8bc8-ec397f6a9d28"
+        "x-ms-request-id": "1a0e954b-e0d7-441a-aaa8-844d96dfc642",
+        "x-ms-routing-request-id": "WESTUS2:20210304T225832Z:1a0e954b-e0d7-441a-aaa8-844d96dfc642"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/micnash9936",
-        "name": "micnash9936",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/rg9936",
+        "name": "rg9936",
         "type": "Microsoft.Resources/resourceGroups",
         "location": "westus2",
         "tags": {},
@@ -84,7 +84,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/micnash9936?api-version=2019-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/rg9936?api-version=2019-10-01",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -103,21 +103,21 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "245",
+        "Content-Length": "235",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 04 Mar 2021 22:14:32 GMT",
+        "Date": "Thu, 04 Mar 2021 22:58:32 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "1eae0964-5b86-40b4-8a40-fa010d92c964",
+        "x-ms-correlation-request-id": "52fb1671-8958-4875-aac4-65b83529e950",
         "x-ms-ratelimit-remaining-subscription-writes": "1194",
-        "x-ms-request-id": "1eae0964-5b86-40b4-8a40-fa010d92c964",
-        "x-ms-routing-request-id": "WESTUS2:20210304T221433Z:1eae0964-5b86-40b4-8a40-fa010d92c964"
+        "x-ms-request-id": "52fb1671-8958-4875-aac4-65b83529e950",
+        "x-ms-routing-request-id": "WESTUS2:20210304T225833Z:52fb1671-8958-4875-aac4-65b83529e950"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/micnash9936",
-        "name": "micnash9936",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/rg9936",
+        "name": "rg9936",
         "type": "Microsoft.Resources/resourceGroups",
         "location": "westus2",
         "tags": {
@@ -129,7 +129,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/micnash9936?api-version=2019-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/rg9936?api-version=2019-10-01",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -149,21 +149,21 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "261",
+        "Content-Length": "251",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 04 Mar 2021 22:14:32 GMT",
+        "Date": "Thu, 04 Mar 2021 22:58:33 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "b26d72b2-d2e5-426b-b646-01f3b1df4995",
+        "x-ms-correlation-request-id": "c5ddabcb-bbc9-4a46-aaad-24125be63d0e",
         "x-ms-ratelimit-remaining-subscription-writes": "1193",
-        "x-ms-request-id": "b26d72b2-d2e5-426b-b646-01f3b1df4995",
-        "x-ms-routing-request-id": "WESTUS2:20210304T221433Z:b26d72b2-d2e5-426b-b646-01f3b1df4995"
+        "x-ms-request-id": "c5ddabcb-bbc9-4a46-aaad-24125be63d0e",
+        "x-ms-routing-request-id": "WESTUS2:20210304T225833Z:c5ddabcb-bbc9-4a46-aaad-24125be63d0e"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/micnash9936",
-        "name": "micnash9936",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/rg9936",
+        "name": "rg9936",
         "type": "Microsoft.Resources/resourceGroups",
         "location": "westus2",
         "tags": {
@@ -176,7 +176,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/micnash9936?api-version=2019-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/rg9936?api-version=2019-10-01",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -196,21 +196,21 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "285",
+        "Content-Length": "275",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 04 Mar 2021 22:14:33 GMT",
+        "Date": "Thu, 04 Mar 2021 22:58:33 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "f875d547-1d67-41f0-b6f2-aa3cff235fad",
+        "x-ms-correlation-request-id": "b434749b-dcbd-45b6-b1c2-e15d81d3cd54",
         "x-ms-ratelimit-remaining-subscription-writes": "1192",
-        "x-ms-request-id": "f875d547-1d67-41f0-b6f2-aa3cff235fad",
-        "x-ms-routing-request-id": "WESTUS2:20210304T221433Z:f875d547-1d67-41f0-b6f2-aa3cff235fad"
+        "x-ms-request-id": "b434749b-dcbd-45b6-b1c2-e15d81d3cd54",
+        "x-ms-routing-request-id": "WESTUS2:20210304T225833Z:b434749b-dcbd-45b6-b1c2-e15d81d3cd54"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/micnash9936",
-        "name": "micnash9936",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/rg9936",
+        "name": "rg9936",
         "type": "Microsoft.Resources/resourceGroups",
         "location": "westus2",
         "tags": {

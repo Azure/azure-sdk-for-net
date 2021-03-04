@@ -16,16 +16,11 @@ namespace Azure.ResourceManager.Core.Tests
         private static readonly IDictionary<string, string> OriTags = new Dictionary<string, string> { { "key1", "value1" }, { "key2", "value2" } };
 
         private ResourceGroup _rg;
+        private string _rgPrefix = "rg";
 
         public TaggableResourceTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
-        }
-
-        [OneTimeSetUp]
-        public void Testing()
-        {
-            //_ = await GlobalClient.DefaultSubscription.GetResourceGroupContainer().Construct(LocationData.WestUS2).CreateOrUpdateAsync($"{Environment.UserName}-rg-{Environment.TickCount}");
         }
 
         [SetUp]
@@ -33,7 +28,7 @@ namespace Azure.ResourceManager.Core.Tests
         {
             var client = GetArmClient();
 
-            _rg = await client.DefaultSubscription.GetResourceGroupContainer().Construct(LocationData.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName(Environment.UserName));
+            _rg = await client.DefaultSubscription.GetResourceGroupContainer().Construct(LocationData.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName(_rgPrefix));
             _rg = _rg.AddTag("key1", "value1");
             _rg = _rg.AddTag("key2", "value2");
         }
