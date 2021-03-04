@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.Core.Tests
 {
+    [Ignore("Waiting on ADO item: 5122")]
     public class ArmBuilderTests
     {
         [TestCase(null)]
