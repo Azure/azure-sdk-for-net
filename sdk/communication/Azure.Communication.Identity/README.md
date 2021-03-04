@@ -77,7 +77,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-### Create a new identity
+### Creating a new user
 
 ```C# Snippet:CreateCommunicationUserAsync
 Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync();
@@ -93,6 +93,14 @@ string token = tokenResponse.Value.Token;
 DateTimeOffset expiresOn = tokenResponse.Value.ExpiresOn;
 Console.WriteLine($"Token: {token}");
 Console.WriteLine($"Expires On: {expiresOn}");
+```
+
+### Creating a user and a token in the same request
+```C# Snippet:CreateCommunicationUserAndToken
+Response<CommunicationUserIdentifierAndToken> response = client.CreateUserAndToken(scopes: new[] { CommunicationTokenScope.Chat });
+CommunicationUserIdentifierAndToken identifierAndToken = response.Value;
+Console.WriteLine($"User id: {identifierAndToken.User.Id}");
+Console.WriteLine($"Token: {identifierAndToken.AccessToken.Token}");
 ```
 
 ### Revoking a user's tokens
