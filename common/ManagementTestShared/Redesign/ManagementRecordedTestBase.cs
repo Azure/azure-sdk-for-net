@@ -6,6 +6,8 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Core;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.TestFramework
@@ -17,7 +19,7 @@ namespace Azure.ResourceManager.TestFramework
 
         protected ResourceGroupCleanupPolicy OneTimeCleanupPolicy = new ResourceGroupCleanupPolicy();
 
-        protected static AzureResourceManagerClient GlobalClient { get; private set; }
+        protected AzureResourceManagerClient GlobalClient { get; private set; }
 
         public TestEnvironment SessionEnvironment { get; private set; }
 
@@ -42,8 +44,8 @@ namespace Azure.ResourceManager.TestFramework
             if (Mode != RecordedTestMode.Playback)
             {
                 return new AzureResourceManagerClient(
-                        SessionEnvironment.SubscriptionId,
-                        SessionEnvironment.Credential,
+                        TestEnvironment.SubscriptionId,
+                        TestEnvironment.Credential,
                         new AzureResourceManagerClientOptions());
             }
             return null;
@@ -58,6 +60,12 @@ namespace Azure.ResourceManager.TestFramework
                 TestEnvironment.SubscriptionId,
                 TestEnvironment.Credential,
                 options);
+        }
+
+        [SetUp]
+        protected void Setup()
+        {
+            _cleanupClient ??= GetCleanupClient();
         }
 
         [TearDown]
@@ -86,7 +94,7 @@ namespace Azure.ResourceManager.TestFramework
             ValidateClientInstrumentation = SessionRecording.HasRequests;
         }
 
-        private void StopSessionRecording()
+        protected void StopSessionRecording()
         {
             if (ValidateClientInstrumentation)
             {
@@ -94,14 +102,16 @@ namespace Azure.ResourceManager.TestFramework
             }
 
             SessionRecording?.Dispose(true);
+            GlobalClient = null;
         }
 
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
-            StartSessionRecording();
+            if (!HasOneTimeSetup())
+                return;
 
-            _cleanupClient = GetCleanupClient();
+            StartSessionRecording();
 
             var options = InstrumentClientOptions(new AzureResourceManagerClientOptions(), SessionRecording);
             options.AddPolicy(OneTimeCleanupPolicy, HttpPipelinePosition.PerCall);
@@ -112,11 +122,32 @@ namespace Azure.ResourceManager.TestFramework
                 options);
         }
 
+        private bool HasOneTimeSetup()
+        {
+            HashSet<Type> types = new HashSet<Type>();
+            Type type = GetType();
+            Type endType = typeof(ManagementRecordedTestBase<TEnvironment>);
+            while (type != endType)
+            {
+                types.Add(type);
+                type = type.BaseType;
+            }
+
+            var methods = GetType().GetMethods().Where(m => types.Contains(m.DeclaringType));
+            foreach (var method in methods)
+            {
+                foreach(var attr in method.GetCustomAttributes(false))
+                {
+                    if (attr is OneTimeSetUpAttribute)
+                        return true;
+                }
+            }
+            return false;
+        }
+
         [OneTimeTearDown]
         public void OneTimeCleanupResourceGroups()
         {
-            StopSessionRecording();
-
             if (Mode != RecordedTestMode.Playback)
             {
                 Parallel.ForEach(OneTimeCleanupPolicy.ResourceGroupsCreated, resourceGroup =>
@@ -124,6 +155,9 @@ namespace Azure.ResourceManager.TestFramework
                     _cleanupClient.GetResourceGroupOperations(SessionEnvironment.SubscriptionId, resourceGroup).StartDelete();
                 });
             }
+
+            if (!(GlobalClient is null))
+                throw new InvalidOperationException("StopSessionRecording was never called please make sure you call that at the end of your OneTimeSetup");
         }
     }
 }
