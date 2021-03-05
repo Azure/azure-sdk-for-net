@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Core
             }
             else if (KnownKeys.ProviderNamespace.Equals(parts[0], StringComparison.InvariantCultureIgnoreCase))
             {
-                if (parts.Count < 3)
+                if (parts.Count < 2)
                 {
                     throw new ArgumentOutOfRangeException(nameof(resourceIdOrType));
                 }
