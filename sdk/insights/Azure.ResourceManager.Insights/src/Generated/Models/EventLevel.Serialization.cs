@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Insights.Models
 {
-    internal static class EventLevelExtensions
+    internal static partial class EventLevelExtensions
     {
         public static string ToSerialString(this EventLevel value) => value switch
         {

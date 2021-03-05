@@ -44,6 +44,43 @@ namespace Azure.Messaging.ServiceBus.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpConnectionScope.CalculateLinkAuthorizationRefreshInterval" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void CalculateLinkAuthorizationRefreshIntervalRespectsTheMinimumDuration()
+        {
+            var credential = new Mock<ServiceBusTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var mockScope = new MockConnectionMockScope(new Uri("sb://mine.hubs.com"), credential.Object, ServiceBusTransportType.AmqpTcp, null);
+            var currentTime = new DateTime(2015, 10, 27, 00, 00, 00);
+            var minimumRefresh = GetMinimumAuthorizationRefresh();
+            var expireTime = currentTime.Add(minimumRefresh.Subtract(TimeSpan.FromMilliseconds(500)));
+            var calculatedRefresh = mockScope.InvokeCalculateLinkAuthorizationRefreshInterval(expireTime, currentTime);
+
+            Assert.That(calculatedRefresh, Is.EqualTo(minimumRefresh), "The minimum refresh duration should have been used.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpConnectionScope.CalculateLinkAuthorizationRefreshInterval" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void CalculateLinkAuthorizationRefreshIntervalRespectsTheMaximumDuration()
+        {
+            var credential = new Mock<ServiceBusTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var mockScope = new MockConnectionMockScope(new Uri("sb://mine.hubs.com"), credential.Object, ServiceBusTransportType.AmqpTcp, null);
+            var currentTime = new DateTime(2015, 10, 27, 00, 00, 00);
+            var refreshBuffer = GetAuthorizationRefreshBuffer();
+            var maximumRefresh = GetMaximumAuthorizationRefresh();
+            var expireTime = currentTime.Add(maximumRefresh.Add(refreshBuffer).Add(TimeSpan.FromMilliseconds(500)));
+            var calculatedRefresh = mockScope.InvokeCalculateLinkAuthorizationRefreshInterval(expireTime, currentTime);
+
+            Assert.That(calculatedRefresh, Is.EqualTo(maximumRefresh), "The maximum refresh duration should have been used.");
+        }
+
+        /// <summary>
         ///   Gets the token refresh buffer for the scope, using the
         ///   private property accessor.
         /// </summary>
@@ -52,6 +89,28 @@ namespace Azure.Messaging.ServiceBus.Tests
             (TimeSpan)
                 typeof(AmqpConnectionScope)
                     .GetProperty("AuthorizationRefreshBuffer", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.GetProperty)
+                    .GetValue(null);
+
+        /// <summary>
+        ///   Gets the minimum authorization refresh interval, using the
+        ///   private property accessor.
+        /// </summary>
+        ///
+        private static TimeSpan GetMinimumAuthorizationRefresh() =>
+            (TimeSpan)
+                typeof(AmqpConnectionScope)
+                    .GetProperty("MinimumAuthorizationRefresh", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.GetProperty)
+                    .GetValue(null);
+
+        /// <summary>
+        ///   Gets the maximum authorization refresh interval, using the
+        ///   private property accessor.
+        /// </summary>
+        ///
+        private static TimeSpan GetMaximumAuthorizationRefresh() =>
+            (TimeSpan)
+                typeof(AmqpConnectionScope)
+                    .GetProperty("MaximumAuthorizationRefresh", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.GetProperty)
                     .GetValue(null);
 
         /// <summary>
@@ -97,7 +156,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                 Uri serviceEndpoint,
                 ServiceBusTokenCredential credential,
                 ServiceBusTransportType transport,
-                IWebProxy proxy) : base(serviceEndpoint, credential, transport, proxy)
+                IWebProxy proxy) : base(serviceEndpoint, credential, transport, proxy, false)
             {
                 MockConnection = new Mock<AmqpConnection>(new MockTransport(), CreateMockAmqpSettings(), new AmqpConnectionSettings());
             }

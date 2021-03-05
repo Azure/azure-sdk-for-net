@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A list of Azure SQL Database sync members. </summary>
-    public partial class SyncMemberListResult
+    internal partial class SyncMemberListResult
     {
         /// <summary> Initializes a new instance of SyncMemberListResult. </summary>
         internal SyncMemberListResult()

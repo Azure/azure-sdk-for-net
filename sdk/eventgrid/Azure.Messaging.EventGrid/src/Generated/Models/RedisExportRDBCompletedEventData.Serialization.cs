@@ -7,10 +7,12 @@
 
 using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(RedisExportRDBCompletedEventDataConverter))]
     public partial class RedisExportRDBCompletedEventData
     {
         internal static RedisExportRDBCompletedEventData DeserializeRedisExportRDBCompletedEventData(JsonElement element)
@@ -42,6 +44,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new RedisExportRDBCompletedEventData(Optional.ToNullable(timestamp), name.Value, status.Value);
+        }
+
+        internal partial class RedisExportRDBCompletedEventDataConverter : JsonConverter<RedisExportRDBCompletedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, RedisExportRDBCompletedEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override RedisExportRDBCompletedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeRedisExportRDBCompletedEventData(document.RootElement);
+            }
         }
     }
 }

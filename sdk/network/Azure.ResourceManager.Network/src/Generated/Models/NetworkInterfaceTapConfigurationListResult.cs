@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for list tap configurations API service call. </summary>
-    public partial class NetworkInterfaceTapConfigurationListResult
+    internal partial class NetworkInterfaceTapConfigurationListResult
     {
         /// <summary> Initializes a new instance of NetworkInterfaceTapConfigurationListResult. </summary>
         internal NetworkInterfaceTapConfigurationListResult()

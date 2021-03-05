@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ExpressRouteCrossConnectionPeeringList
+    internal partial class ExpressRouteCrossConnectionPeeringList
     {
         internal static ExpressRouteCrossConnectionPeeringList DeserializeExpressRouteCrossConnectionPeeringList(JsonElement element)
         {

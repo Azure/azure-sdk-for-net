@@ -1,7 +1,20 @@
 # Release History
 
-## 4.2.0-beta.4 (Unreleased)
+## 4.2.0-beta.5 (Unreleased)
 
+## 4.2.0-beta.4 (2021-02-10)
+
+### Added
+
+- Added constructor to `KeyVaultSecretIdentifier` to parse a `Uri`.
+
+### Changed
+
+- The default service version is now "7.2" (still in preview).
+
+### Removed
+
+- Removed `KeyVaultSecretIdentifier.Parse` and `KeyVaultSecretIdentifier.TryParse` in favor of the added constructor.
 
 ## 4.2.0-beta.3 (2020-11-12)
 

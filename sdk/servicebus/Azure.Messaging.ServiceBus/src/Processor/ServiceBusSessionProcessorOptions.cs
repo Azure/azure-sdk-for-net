@@ -50,6 +50,9 @@ namespace Azure.Messaging.ServiceBus
         /// <value>The maximum duration during which session locks are automatically renewed.</value>
         /// <remarks>The session lock renewal can continue for sometime in the background
         /// after completion of message and result in a few false SessionLockLost exceptions temporarily.</remarks>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   A negative value is attempted to be set for the property.
+        /// </exception>
         public TimeSpan MaxAutoLockRenewalDuration
         {
             get => _maxAutoRenewDuration;
@@ -63,31 +66,35 @@ namespace Azure.Messaging.ServiceBus
         private TimeSpan _maxAutoRenewDuration = TimeSpan.FromMinutes(5);
 
         /// <summary>
-        /// Gets or sets the maximum amount of time to wait for each Receive call using the processor's underlying
-        /// receiver.
+        /// Gets or sets the maximum amount of time to wait for a message to be received for the
+        /// currently active session. After this time has elapsed, the processor will close the session
+        /// and attempt to process another session.
         /// If not specified, the <see cref="ServiceBusRetryOptions.TryTimeout"/> will be used.
         /// </summary>
         ///
-        /// <remarks>If no message is returned for a call
-        /// to Receive, a new session will be requested by the processor.
-        /// Hence, if this value is set to be too low, it could cause new sessions to be requested
-        /// more often than necessary.
+        /// <remarks>
+        /// If <see cref="SessionIds"/> is populated and <see cref="MaxConcurrentSessions"/> is greater or equal to
+        /// the number of sessions specified in <see cref="SessionIds"/>, the session will not be closed when the idle timeout elapses.
+        /// However, it will still control the amount of time each receive call waits.
         /// </remarks>
-        internal TimeSpan? MaxReceiveWaitTime
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   A value that is not positive is attempted to be set for the property.
+        /// </exception>
+        public TimeSpan? SessionIdleTimeout
         {
-            get => _maxReceiveWaitTime;
+            get => _sessionIdleTimeout;
 
             set
             {
                 if (value.HasValue)
                 {
-                    Argument.AssertPositive(value.Value, nameof(MaxReceiveWaitTime));
+                    Argument.AssertPositive(value.Value, nameof(SessionIdleTimeout));
                 }
 
-                _maxReceiveWaitTime = value;
+                _sessionIdleTimeout = value;
             }
         }
-        private TimeSpan? _maxReceiveWaitTime;
+        private TimeSpan? _sessionIdleTimeout;
 
         /// <summary>
         /// Gets or sets the maximum number of sessions that can be processed concurrently by the processor.
@@ -95,6 +102,9 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <value>The maximum number of concurrent sessions to process.</value>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   A value that is not positive is attempted to be set for the property.
+        /// </exception>
         public int MaxConcurrentSessions
         {
             get => _maxConcurrentSessions;
@@ -114,6 +124,9 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <value>The maximum number of concurrent calls to the message handler for each session that is being processed.</value>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   A value that is not positive is attempted to be set for the property.
+        /// </exception>
         public int MaxConcurrentCallsPerSession
         {
             get => _maxConcurrentCallsPerSessions;
@@ -167,7 +180,7 @@ namespace Azure.Messaging.ServiceBus
                 PrefetchCount = PrefetchCount,
                 AutoCompleteMessages = AutoCompleteMessages,
                 MaxAutoLockRenewalDuration = MaxAutoLockRenewalDuration,
-                MaxReceiveWaitTime = MaxReceiveWaitTime
+                MaxReceiveWaitTime = SessionIdleTimeout,
             };
     }
 }

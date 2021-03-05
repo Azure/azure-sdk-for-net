@@ -72,7 +72,14 @@ namespace Azure.AI.FormRecognizer.Tests.Models
 
             var operation = new RecognizeContentOperation("00000000-0000-0000-0000-000000000000", client);
 
-            await operation.UpdateStatusAsync();
+            if (IsAsync)
+            {
+                await operation.UpdateStatusAsync();
+            }
+            else
+            {
+                operation.UpdateStatus();
+            }
 
             testListener.AssertScope($"{nameof(RecognizeContentOperation)}.{nameof(RecognizeContentOperation.UpdateStatus)}");
         }
@@ -100,7 +107,14 @@ namespace Azure.AI.FormRecognizer.Tests.Models
 
             var operation = new RecognizeReceiptsOperation("00000000-0000-0000-0000-000000000000", client);
 
-            await operation.UpdateStatusAsync();
+            if (IsAsync)
+            {
+                await operation.UpdateStatusAsync();
+            }
+            else
+            {
+                operation.UpdateStatus();
+            }
 
             testListener.AssertScope($"{nameof(RecognizeReceiptsOperation)}.{nameof(RecognizeReceiptsOperation.UpdateStatus)}");
         }
@@ -128,7 +142,14 @@ namespace Azure.AI.FormRecognizer.Tests.Models
 
             var operation = new RecognizeBusinessCardsOperation("00000000-0000-0000-0000-000000000000", client);
 
-            await operation.UpdateStatusAsync();
+            if (IsAsync)
+            {
+                await operation.UpdateStatusAsync();
+            }
+            else
+            {
+                operation.UpdateStatus();
+            }
 
             testListener.AssertScope($"{nameof(RecognizeBusinessCardsOperation)}.{nameof(RecognizeBusinessCardsOperation.UpdateStatus)}");
         }
@@ -158,7 +179,14 @@ namespace Azure.AI.FormRecognizer.Tests.Models
 
             var operation = new RecognizeInvoicesOperation("00000000-0000-0000-0000-000000000000", client);
 
-            await operation.UpdateStatusAsync();
+            if (IsAsync)
+            {
+                await operation.UpdateStatusAsync();
+            }
+            else
+            {
+                operation.UpdateStatus();
+            }
 
             testListener.AssertScope($"{nameof(RecognizeInvoicesOperation)}.{nameof(RecognizeInvoicesOperation.UpdateStatus)}");
         }
@@ -188,7 +216,14 @@ namespace Azure.AI.FormRecognizer.Tests.Models
 
             var operation = new RecognizeCustomFormsOperation("00000000-0000-0000-0000-000000000000/analyzeResults/00000000-0000-0000-0000-000000000000", client);
 
-            await operation.UpdateStatusAsync();
+            if (IsAsync)
+            {
+                await operation.UpdateStatusAsync();
+            }
+            else
+            {
+                operation.UpdateStatus();
+            }
 
             testListener.AssertScope($"{nameof(RecognizeCustomFormsOperation)}.{nameof(RecognizeCustomFormsOperation.UpdateStatus)}");
         }
@@ -224,7 +259,14 @@ namespace Azure.AI.FormRecognizer.Tests.Models
 
             var operation = new TrainingOperation("00000000-0000-0000-0000-000000000000", client);
 
-            await operation.UpdateStatusAsync();
+            if (IsAsync)
+            {
+                await operation.UpdateStatusAsync();
+            }
+            else
+            {
+                operation.UpdateStatus();
+            }
 
             testListener.AssertScope($"{nameof(CreateCustomFormModelOperation)}.{nameof(CreateCustomFormModelOperation.UpdateStatus)}");
         }
@@ -258,7 +300,14 @@ namespace Azure.AI.FormRecognizer.Tests.Models
 
             var operation = new CreateComposedModelOperation("00000000-0000-0000-0000-000000000000", client);
 
-            await operation.UpdateStatusAsync();
+            if (IsAsync)
+            {
+                await operation.UpdateStatusAsync();
+            }
+            else
+            {
+                operation.UpdateStatus();
+            }
 
             testListener.AssertScope($"{nameof(CreateCustomFormModelOperation)}.{nameof(CreateCustomFormModelOperation.UpdateStatus)}");
         }
@@ -286,7 +335,14 @@ namespace Azure.AI.FormRecognizer.Tests.Models
 
             var operation = new CopyModelOperation("00000000-0000-0000-0000-000000000000/copyresults/00000000-0000-0000-0000-000000000000", "00000000-0000-0000-0000-000000000000", client);
 
-            await operation.UpdateStatusAsync();
+            if (IsAsync)
+            {
+                await operation.UpdateStatusAsync();
+            }
+            else
+            {
+                operation.UpdateStatus();
+            }
 
             testListener.AssertScope($"{nameof(CopyModelOperation)}.{nameof(CopyModelOperation.UpdateStatus)}");
         }

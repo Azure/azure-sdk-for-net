@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ExpressRouteServiceProviderListResult
+    internal partial class ExpressRouteServiceProviderListResult
     {
         internal static ExpressRouteServiceProviderListResult DeserializeExpressRouteServiceProviderListResult(JsonElement element)
         {

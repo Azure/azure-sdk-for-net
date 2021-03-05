@@ -8,6 +8,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Storage.Blobs.Batch.Tests;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Sas;
@@ -25,6 +26,7 @@ namespace Azure.Storage.Blobs.Test
         {
             // Batch delimiters are random so disable body comparison
             Matcher = new RecordMatcher(compareBodies: false);
+            Sanitizer = new BatchStorageRecordedTestSanitizer();
         }
 
         [SetUp]
@@ -1003,7 +1005,7 @@ namespace Azure.Storage.Blobs.Test
                 for (int i = 0; i < count; i++)
                 {
                     blobs[i] = _test.InstrumentClient(container.GetBlobClient("blob" + (++_blobId)));
-                    await blobs[i].UploadAsync(new MemoryStream(_test.GetRandomBuffer(Constants.KB)));
+                    await blobs[i].UploadAsync(BinaryData.FromBytes(_test.GetRandomBuffer(Constants.KB)));
                 }
                 return blobs;
             }

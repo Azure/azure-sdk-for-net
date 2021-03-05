@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for ListFirewallPolicyRuleGroups API service call. </summary>
-    public partial class FirewallPolicyRuleGroupListResult
+    internal partial class FirewallPolicyRuleGroupListResult
     {
         /// <summary> Initializes a new instance of FirewallPolicyRuleGroupListResult. </summary>
         internal FirewallPolicyRuleGroupListResult()

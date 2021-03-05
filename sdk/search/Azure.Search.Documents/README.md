@@ -97,40 +97,6 @@ AzureKeyCredential credential = new AzureKeyCredential(key);
 SearchClient client = new SearchClient(endpoint, indexName, credential);
 ```
 
-### Send your first search query
-
-To get running immediately, we're going to connect to a well known sandbox
-Search service provided by Microsoft.  This means you do not need an Azure
-subscription or Azure Cognitive Search service to try out this query.
-
-```C# Snippet:Azure_Search_Tests_Samples_Readme_FirstQuery
-// We'll connect to the Azure Cognitive Search public sandbox and send a
-// query to its "nycjobs" index built from a public dataset of available jobs
-// in New York.
-string serviceName = "azs-playground";
-string indexName = "nycjobs";
-string apiKey = "252044BE3886FE4A8E3BAA4F595114BB";
-
-// Create a SearchClient to send queries
-Uri serviceEndpoint = new Uri($"https://{serviceName}.search.windows.net/");
-AzureKeyCredential credential = new AzureKeyCredential(apiKey);
-SearchClient client = new SearchClient(serviceEndpoint, indexName, credential);
-
-// Let's get the top 5 jobs related to Microsoft
-SearchResults<SearchDocument> response = client.Search<SearchDocument>("Microsoft", new SearchOptions { Size = 5 });
-foreach (SearchResult<SearchDocument> result in response.GetResults())
-{
-    // Print out the title and job description (we'll see below how to
-    // use C# objects to make accessing these fields much easier)
-    string title = (string)result.Document["business_title"];
-    string description = (string)result.Document["job_description"];
-    Console.WriteLine($"{title}\n{description}\n");
-}
-```
-
-You can paste that into a new console app, install the Azure.Search.Documents
-package, add a `using Azure.Search.Documents;` statement, and then hit F5 to run.
-
 ## Key concepts
 
 An Azure Cognitive Search service contains one or more indexes that provide
@@ -165,6 +131,20 @@ is an older, fully featured `Microsoft.Azure.Search` client library (v10) with
 many similar looking APIs, so please be careful to avoid confusion when
 exploring online resources.  A good rule of thumb is to check for the namespace
 `using Azure.Search.Documents;` when you're looking for us._
+
+### Thread safety
+We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
+
+### Additional concepts
+<!-- CLIENT COMMON BAR -->
+[Client options](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions) |
+[Accessing the response](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#accessing-http-response-details-using-responset) |
+[Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
+[Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
+[Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md) |
+[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#mocking) |
+[Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
+<!-- CLIENT COMMON BAR -->
 
 ## Examples
 

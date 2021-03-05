@@ -34,28 +34,28 @@ namespace Azure.Security.KeyVault.Keys.Samples
 
 #region Snippet:KeysSample5CreateKey
             string rsaKeyName = $"CloudRsaKey-{Guid.NewGuid()}";
-            var rsaKey = new CreateRsaKeyOptions(rsaKeyName, hardwareProtected: false)
+            var rsaKeyOptions = new CreateRsaKeyOptions(rsaKeyName, hardwareProtected: false)
             {
                 KeySize = 2048,
             };
 
             string ecKeyName = $"CloudEcKey-{Guid.NewGuid()}";
-            var ecKey = new CreateEcKeyOptions(ecKeyName, hardwareProtected: false)
+            var ecKeyOptions = new CreateEcKeyOptions(ecKeyName, hardwareProtected: false)
             {
                 CurveName = KeyCurveName.P256K,
             };
 
-            KeyVaultKey cloudRsaKey = keyClient.CreateRsaKey(rsaKey);
-            Debug.WriteLine($"Key is returned with name {cloudRsaKey.Name} and type {cloudRsaKey.KeyType}");
+            KeyVaultKey rsaKey = keyClient.CreateRsaKey(rsaKeyOptions);
+            Debug.WriteLine($"Key is returned with name {rsaKey.Name} and type {rsaKey.KeyType}");
 
-            KeyVaultKey cloudEcKey = keyClient.CreateEcKey(ecKey);
-            Debug.WriteLine($"Key is returned with name {cloudEcKey.Name} and type {cloudEcKey.KeyType}");
+            KeyVaultKey ecKey = keyClient.CreateEcKey(ecKeyOptions);
+            Debug.WriteLine($"Key is returned with name {ecKey.Name} and type {ecKey.KeyType}");
 #endregion
 
 #region Snippet:KeysSample5CryptographyClient
-            var rsaCryptoClient = new CryptographyClient(cloudRsaKey.Id, new DefaultAzureCredential());
+            var rsaCryptoClient = new CryptographyClient(rsaKey.Id, new DefaultAzureCredential());
 
-            var ecCryptoClient = new CryptographyClient(cloudEcKey.Id, new DefaultAzureCredential());
+            var ecCryptoClient = new CryptographyClient(ecKey.Id, new DefaultAzureCredential());
 #endregion
 
 #region Snippet:KeysSample5SignKey

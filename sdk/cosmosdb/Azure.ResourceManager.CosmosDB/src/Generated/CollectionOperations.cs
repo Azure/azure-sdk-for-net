@@ -21,10 +21,12 @@ namespace Azure.ResourceManager.CosmosDB
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         internal CollectionRestOperations RestClient { get; }
+
         /// <summary> Initializes a new instance of CollectionOperations for mocking. </summary>
         protected CollectionOperations()
         {
         }
+
         /// <summary> Initializes a new instance of CollectionOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>

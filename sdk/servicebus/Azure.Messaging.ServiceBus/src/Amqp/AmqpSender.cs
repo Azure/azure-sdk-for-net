@@ -68,7 +68,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         ///
         private readonly AmqpConnectionScope _connectionScope;
-
         private readonly FaultTolerantAmqpObject<SendingAmqpLink> _sendLink;
 
         private readonly FaultTolerantAmqpObject<RequestResponseAmqpLink> _managementLink;

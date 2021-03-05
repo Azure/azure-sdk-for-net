@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Queues
 {
-    internal class MessageIdUpdateHeaders
+    internal partial class MessageIdUpdateHeaders
     {
         private readonly Response _response;
         public MessageIdUpdateHeaders(Response response)

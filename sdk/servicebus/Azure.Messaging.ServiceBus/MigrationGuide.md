@@ -14,6 +14,7 @@ We assume that you are familiar with the `Microsoft.Azure.ServiceBus` library. I
   - [Sending messages](#sending-messages)
   - [Receiving messages](#receiving-messages)
   - [Working with sessions](#working-with-sessions)
+  - [Cross-entity transactions](#cross-entity-transactions-unreleased)
 - [Known gaps](#known-gaps-from-previous-library)
 - [Additional samples](#additional-samples)
 
@@ -284,7 +285,7 @@ Previously, in `Microsoft.Azure.ServiceBus`, you had the below options to receiv
 
 While the first option is similar to what you would do in a non-session scenario, the second that allows you finer-grained control is very different from any other pattern used in the library.
 
-Now in `Azure.Messaging.ServiceBus`, we simplfify this by giving session variants of the same methods and classes that are available when working with queues/subscriptions that do not have sessions enabled.
+Now in `Azure.Messaging.ServiceBus`, we simplify this by giving session variants of the same methods and classes that are available when working with queues/subscriptions that do not have sessions enabled.
 
 The below code snippet shows you the session variation of the `ServiceBusProcessor`.
 
@@ -365,6 +366,34 @@ ServiceBusSessionReceiver receiver = await client.AcceptSessionAsync(queueName, 
 // the received message is a different type as it contains some service set properties
 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
 Console.WriteLine(receivedMessage.SessionId);
+```
+
+### Cross-Entity transactions (Unreleased)
+
+Previously, in `Microsoft.Azure.ServiceBus`, when performing a transaction that spanned multiple queues, topics, or subscriptions you would need to use the "Send-Via" option
+in the `MessageSender`. 
+
+Now in `Azure.Messaging.ServiceBus`, there is an `EnableCrossEntityTransactions` property on the `ServiceBusClientOptions`. When setting this property to `true`, the first operation that occurs using any senders or receivers created from the client implicitly becomes the send-via entity. Because of this, subsequent operations must either be by senders, or if they are by receivers, the receiver must be receiving from the send-via entity. For this reason, it probably makes more sense to have your first operation be a receive rather than a send when setting this property.
+
+The below code snippet shows you how to perform cross-entity transactions.
+
+```C# Snippet:ServiceBusTransactionGroup
+var options = new ServiceBusClientOptions { EnableCrossEntityTransactions = true };
+await using var client = new ServiceBusClient(connectionString, options);
+
+ServiceBusReceiver receiverA = client.CreateReceiver("queueA");
+ServiceBusSender senderB = client.CreateSender("queueB");
+ServiceBusSender senderC = client.CreateSender("topicC");
+
+ServiceBusReceivedMessage receivedMessage = await receiverA.ReceiveMessageAsync();
+
+using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+{
+    await receiverA.CompleteMessageAsync(receivedMessage);
+    await senderB.SendMessageAsync(new ServiceBusMessage());
+    await senderC.SendMessageAsync(new ServiceBusMessage());
+    ts.Complete();
+}
 ```
 
 ## Known Gaps from Previous Library

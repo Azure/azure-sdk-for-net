@@ -47,12 +47,15 @@ namespace Microsoft.Azure.Management.Media.Models
         /// video before it is encoded. When submitting a Job, exactly one of
         /// the JobInputs should be the image file, and it should have the
         /// label 'xyz'.</param>
+        /// <param name="inputDefinitions">Defines a list of InputDefinitions.
+        /// For each InputDefinition, it defines a list of track selections and
+        /// related metadata.</param>
         /// <param name="baseUri">Base URI for HTTPS job input. It will be
         /// concatenated with provided file names. If no base uri is given,
         /// then the provided file list is assumed to be fully qualified uris.
         /// Maximum length of 4000 characters.</param>
-        public JobInputHttp(IList<string> files = default(IList<string>), ClipTime start = default(ClipTime), ClipTime end = default(ClipTime), string label = default(string), string baseUri = default(string))
-            : base(files, start, end, label)
+        public JobInputHttp(IList<string> files = default(IList<string>), ClipTime start = default(ClipTime), ClipTime end = default(ClipTime), string label = default(string), IList<InputDefinition> inputDefinitions = default(IList<InputDefinition>), string baseUri = default(string))
+            : base(files, start, end, label, inputDefinitions)
         {
             BaseUri = baseUri;
             CustomInit();

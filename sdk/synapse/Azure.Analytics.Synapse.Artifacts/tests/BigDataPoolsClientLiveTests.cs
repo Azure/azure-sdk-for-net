@@ -28,14 +28,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         private BigDataPoolsClient CreateClient()
         {
             return InstrumentClient(new BigDataPoolsClient(
-                new Uri(TestEnvironment.EndpointUrl),
+                TestEnvironment.EndpointUrl,
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new ArtifactsClientOptions())
             ));
         }
 
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18080 - This test case cannot be automated due to the inability to configure infrastructure to test against.")]
-        [Test]
+        [RecordedTest]
         public async Task ListPools()
         {
             BigDataPoolsClient client = CreateClient();
@@ -44,7 +44,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         }
 
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18080 - This test case cannot be automated due to the inability to configure infrastructure to test against.")]
-        [Test]
+        [RecordedTest]
         public async Task GetPool()
         {
             const string PoolName = "sparkchhamosyna";

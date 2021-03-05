@@ -1,10 +1,24 @@
 # Release History
 
-## 1.4.0-beta.3 (Unreleased)
+## 1.4.0-beta.4 (2021-03-09)
+
+### Fixes and Improvements
+
+- Added the `[Serializable]` attribute to all custom exception types.
+
+### Breaking Changes
+
+- Update the default value of `ExcludeSharedTokenCacheCredential` on `DefaultAzureCredentialsOptions` to true, to exclude the `SharedTokenCacheCredential` from the `DefaultAzureCredential` by default. See [BREAKING_CHANGES.md](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/BREAKING_CHANGES.md#140)
+
+## 1.4.0-beta.3 (2021-02-09)
 
 ### Breaking Changes
 
 - The `IDisposable` interface has been removed from `TokenCache`.
+
+### New Features
+
+- All credentials added support to handle the `Claims` property on `TokenRequestContext`
 
 ## 1.4.0-beta.2 (2021-01-29)
 
@@ -18,7 +32,7 @@
 ### New Features
 
 - Redesigned Application Authentication APIs
-  - Adds `TokenCache` and `PersistentTokenCache` classes to give more user control over how the tokens are cached and how the cache is persisted.
+  - Adds `TokenCache` and `TokenCache` classes to give more user control over how the tokens are cached and how the cache is persisted.
   - Adds `TokenCache` property to options for credentials supporting token cache configuration.
 
 ## 1.3.0 (2020-11-12)

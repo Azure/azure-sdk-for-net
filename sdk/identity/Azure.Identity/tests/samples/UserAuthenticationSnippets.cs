@@ -14,10 +14,17 @@ namespace Azure.Identity.Samples
 {
     public class UserAuthenticationSnippets
     {
+        #region Snippet:Identity_ClientSideUserAuthentication_Persist_TokenCache_AuthRecordPath
+        private const string AUTH_RECORD_PATH = "./tokencache.bin";
+        #endregion
+
         public void Identity_ClientSideUserAuthentication_SimpleInteractiveBrowser()
         {
             #region Snippet:Identity_ClientSideUserAuthentication_SimpleInteractiveBrowser
-            var client = new SecretClient(new Uri("https://myvault.azure.vaults.net/"), new InteractiveBrowserCredential());
+            var client = new SecretClient(
+                new Uri("https://myvault.azure.vaults.net/"),
+                new InteractiveBrowserCredential()
+            );
             #endregion
         }
 
@@ -26,14 +33,21 @@ namespace Azure.Identity.Samples
             #region Snippet:Identity_ClientSideUserAuthentication_SimpleDeviceCode
             var credential = new DeviceCodeCredential();
 
-            var client = new BlobClient(new Uri("https://myaccount.blob.core.windows.net/mycontainer/myblob"), credential);
+            var client = new BlobClient(
+                new Uri("https://myaccount.blob.core.windows.net/mycontainer/myblob"),
+                credential
+            );
             #endregion
         }
 
         public async Task Identity_ClientSideUserAuthentication_DisableAutomaticAuthentication()
         {
             #region Snippet:Identity_ClientSideUserAuthentication_DisableAutomaticAuthentication
-            var credential = new InteractiveBrowserCredential(new InteractiveBrowserCredentialOptions { DisableAutomaticAuthentication = true });
+            var credential = new InteractiveBrowserCredential(
+                new InteractiveBrowserCredentialOptions
+                {
+                    DisableAutomaticAuthentication = true
+                });
 
             await credential.AuthenticateAsync();
 
@@ -58,24 +72,26 @@ namespace Azure.Identity.Samples
 
         private Task EnsureAnimationCompleteAsync() => Task.CompletedTask;
 
-        private const string AUTH_RECORD_PATH = @".\Data\authrecord.bin";
-
         public static async Task<TokenCredential> GetUserCredentialAsync()
         {
             if (!File.Exists(AUTH_RECORD_PATH))
             {
                 #region Snippet:Identity_ClientSideUserAuthentication_Persist_TokenCache
-                var credential = new InteractiveBrowserCredential(new InteractiveBrowserCredentialOptions { TokenCache = new PersistentTokenCache() });
+                var credential = new InteractiveBrowserCredential(
+                    new InteractiveBrowserCredentialOptions
+                    {
+                        TokenCachePersistenceOptions = new TokenCachePersistenceOptions()
+                    });
                 #endregion
 
                 #region Snippet:Identity_ClientSideUserAuthentication_Persist_AuthRecord
                 AuthenticationRecord authRecord = await credential.AuthenticateAsync();
 
-                using var authRecordStream = new FileStream(AUTH_RECORD_PATH, FileMode.Create, FileAccess.Write);
+                using (var authRecordStream = new FileStream(AUTH_RECORD_PATH, FileMode.Create, FileAccess.Write))
+                {
+                    await authRecord.SerializeAsync(authRecordStream);
+                }
 
-                await authRecord.SerializeAsync(authRecordStream);
-
-                await authRecordStream.FlushAsync();
                 #endregion
 
                 return credential;
@@ -83,11 +99,19 @@ namespace Azure.Identity.Samples
             else
             {
                 #region Snippet:Identity_ClientSideUserAuthentication_Persist_SilentAuth
-                using var authRecordStream = new FileStream(AUTH_RECORD_PATH, FileMode.Open, FileAccess.Read);
+                AuthenticationRecord authRecord;
 
-                AuthenticationRecord authRecord = await AuthenticationRecord.DeserializeAsync(authRecordStream);
+                using (var authRecordStream = new FileStream(AUTH_RECORD_PATH, FileMode.Open, FileAccess.Read))
+                {
+                    authRecord = await AuthenticationRecord.DeserializeAsync(authRecordStream);
+                }
 
-                var credential = new InteractiveBrowserCredential(new InteractiveBrowserCredentialOptions { TokenCache = new PersistentTokenCache(), AuthenticationRecord = authRecord });
+                var credential = new InteractiveBrowserCredential(
+                    new InteractiveBrowserCredentialOptions
+                    {
+                        TokenCachePersistenceOptions = new TokenCachePersistenceOptions(),
+                        AuthenticationRecord = authRecord
+                    });
                 #endregion
 
                 return credential;
@@ -100,23 +124,34 @@ namespace Azure.Identity.Samples
 
             if (!File.Exists(AUTH_RECORD_PATH))
             {
-                credential = new InteractiveBrowserCredential(new InteractiveBrowserCredentialOptions { TokenCache = new PersistentTokenCache() });
+                credential = new InteractiveBrowserCredential(
+                    new InteractiveBrowserCredentialOptions
+                    {
+                        TokenCachePersistenceOptions = new TokenCachePersistenceOptions()
+                    });
 
                 AuthenticationRecord authRecord = await credential.AuthenticateAsync();
 
-                using var authRecordStream = new FileStream(AUTH_RECORD_PATH, FileMode.Create, FileAccess.Write);
-
-                await authRecord.SerializeAsync(authRecordStream);
-
-                await authRecordStream.FlushAsync();
+                using (var authRecordStream = new FileStream(AUTH_RECORD_PATH, FileMode.Create, FileAccess.Write))
+                {
+                    await authRecord.SerializeAsync(authRecordStream);
+                }
             }
             else
             {
-                using var authRecordStream = new FileStream(AUTH_RECORD_PATH, FileMode.Open, FileAccess.Read);
+                AuthenticationRecord authRecord;
 
-                AuthenticationRecord authRecord = await AuthenticationRecord.DeserializeAsync(authRecordStream);
+                using (var authRecordStream = new FileStream(AUTH_RECORD_PATH, FileMode.Open, FileAccess.Read))
+                {
+                    authRecord = await AuthenticationRecord.DeserializeAsync(authRecordStream);
+                }
 
-                credential = new InteractiveBrowserCredential(new InteractiveBrowserCredentialOptions { TokenCache = new PersistentTokenCache(), AuthenticationRecord = authRecord });
+                credential = new InteractiveBrowserCredential(
+                    new InteractiveBrowserCredentialOptions
+                    {
+                        TokenCachePersistenceOptions = new TokenCachePersistenceOptions(),
+                        AuthenticationRecord = authRecord
+                    });
             }
 
             var client = new SecretClient(new Uri("https://myvault.azure.vaults.net/"), credential);

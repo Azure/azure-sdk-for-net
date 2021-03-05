@@ -3,8 +3,7 @@ namespace Azure.Analytics.Synapse.Spark
     public partial class SparkBatchClient
     {
         protected SparkBatchClient() { }
-        public SparkBatchClient(System.Uri endpoint, string sparkPoolName, Azure.Core.TokenCredential credential) { }
-        public SparkBatchClient(System.Uri endpoint, string sparkPoolName, Azure.Core.TokenCredential credential, Azure.Analytics.Synapse.Spark.SparkClientOptions options) { }
+        public SparkBatchClient(string endpoint, string sparkPoolName, Azure.Core.TokenCredential credential, string livyApiVersion = "2019-11-01-preview", Azure.Analytics.Synapse.Spark.SparkClientOptions options = null) { }
         public virtual Azure.Response CancelSparkBatchJob(int batchId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CancelSparkBatchJobAsync(int batchId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Analytics.Synapse.Spark.Models.SparkBatchJob> GetSparkBatchJob(int batchId, bool? detailed = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -29,7 +28,7 @@ namespace Azure.Analytics.Synapse.Spark
     }
     public partial class SparkClientOptions : Azure.Core.ClientOptions
     {
-        public SparkClientOptions(Azure.Analytics.Synapse.Spark.SparkClientOptions.ServiceVersion serviceVersion = Azure.Analytics.Synapse.Spark.SparkClientOptions.ServiceVersion.V2019_11_01_preview) { }
+        public SparkClientOptions(Azure.Analytics.Synapse.Spark.SparkClientOptions.ServiceVersion version = Azure.Analytics.Synapse.Spark.SparkClientOptions.ServiceVersion.V2019_11_01_preview) { }
         public enum ServiceVersion
         {
             V2019_11_01_preview = 1,
@@ -38,8 +37,7 @@ namespace Azure.Analytics.Synapse.Spark
     public partial class SparkSessionClient
     {
         protected SparkSessionClient() { }
-        public SparkSessionClient(System.Uri endpoint, string sparkPoolName, Azure.Core.TokenCredential credential) { }
-        public SparkSessionClient(System.Uri endpoint, string sparkPoolName, Azure.Core.TokenCredential credential, Azure.Analytics.Synapse.Spark.SparkClientOptions options) { }
+        public SparkSessionClient(string endpoint, string sparkPoolName, Azure.Core.TokenCredential credential, string livyApiVersion = "2019-11-01-preview", Azure.Analytics.Synapse.Spark.SparkClientOptions options = null) { }
         public virtual Azure.Response CancelSparkSession(int sessionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CancelSparkSessionAsync(int sessionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Analytics.Synapse.Spark.Models.SparkStatementCancellationResult> CancelSparkStatement(int sessionId, int statementId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -56,6 +54,8 @@ namespace Azure.Analytics.Synapse.Spark
         public virtual System.Threading.Tasks.Task<Azure.Response> ResetSparkSessionTimeoutAsync(int sessionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Analytics.Synapse.Spark.SparkSessionOperation StartCreateSparkSession(Azure.Analytics.Synapse.Spark.Models.SparkSessionOptions sparkSessionOptions, bool? detailed = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Analytics.Synapse.Spark.SparkSessionOperation> StartCreateSparkSessionAsync(Azure.Analytics.Synapse.Spark.Models.SparkSessionOptions sparkSessionOptions, bool? detailed = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Analytics.Synapse.Spark.SparkStatementOperation StartCreateSparkStatement(int sessionId, Azure.Analytics.Synapse.Spark.Models.SparkStatementOptions sparkStatementOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Analytics.Synapse.Spark.SparkStatementOperation> StartCreateSparkStatementAsync(int sessionId, Azure.Analytics.Synapse.Spark.Models.SparkStatementOptions sparkStatementOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class SparkSessionOperation : Azure.Operation<Azure.Analytics.Synapse.Spark.Models.SparkSession>
     {

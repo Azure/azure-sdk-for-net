@@ -110,6 +110,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <value>The maximum number of concurrent calls to the message handler.</value>
         public virtual int MaxConcurrentCalls { get; }
+        internal TimeSpan? MaxReceiveWaitTime { get; }
 
         /// <summary>
         /// Gets a value that indicates whether the processor should automatically
@@ -156,6 +157,13 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>Indicates whether or not this instance has been closed.</summary>
         private volatile bool _closed;
 
+        /// <summary>
+        /// Gets the transaction group associated with the processor. This is an
+        /// arbitrary string that is used to all senders, receivers, and processors that you
+        /// wish to use in a transaction that spans multiple different queues, topics, or subscriptions.
+        /// </summary>
+        public virtual string TransactionGroup { get; }
+
         private readonly string[] _sessionIds;
         private readonly EntityScopeFactory _scopeFactory;
         private readonly IList<ServiceBusPlugin> _plugins;
@@ -200,6 +208,7 @@ namespace Azure.Messaging.ServiceBus
             PrefetchCount = _options.PrefetchCount;
             MaxAutoLockRenewalDuration = _options.MaxAutoLockRenewalDuration;
             MaxConcurrentCalls = _options.MaxConcurrentCalls;
+            MaxReceiveWaitTime = _options.MaxReceiveWaitTime;
             MaxConcurrentSessions = maxConcurrentSessions;
             MaxConcurrentCallsPerSession = maxConcurrentCallsPerSession;
             _sessionIds = sessionIds ?? Array.Empty<string>();
@@ -437,6 +446,11 @@ namespace Azure.Messaging.ServiceBus
         /// signal the request to cancel the start operation.  This won't affect the
         /// processor once it starts running.
         /// </param>
+        /// <exception cref="InvalidOperationException">
+        ///   This can occur if the processor is already running. This can be checked via the <see cref="IsProcessing"/> property.
+        ///   This can also occur if event handlers have not been specified for the <see cref="ProcessMessageAsync"/> or
+        ///   the <see cref="ProcessErrorAsync"/> events.
+        /// </exception>
         public virtual async Task StartProcessingAsync(
             CancellationToken cancellationToken = default)
         {
@@ -683,7 +697,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <param name="action">The action to invoke.</param>
         ///
-        /// <exception cref="InvalidOperationException">Occurs when this method is invoked while the event processor is running.</exception>
+        /// <exception cref="InvalidOperationException">Method is invoked while the event processor is running.</exception>
         internal void EnsureNotRunningAndInvoke(Action action)
         {
             if (ActiveReceiveTask == null)

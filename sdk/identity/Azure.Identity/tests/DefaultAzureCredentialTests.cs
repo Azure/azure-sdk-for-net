@@ -30,11 +30,10 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(sources.Length, 8);
             Assert.IsInstanceOf(typeof(EnvironmentCredential), sources[0]);
             Assert.IsInstanceOf(typeof(ManagedIdentityCredential), sources[1]);
-            Assert.IsInstanceOf(typeof(SharedTokenCacheCredential), sources[2]);
-            Assert.IsInstanceOf(typeof(VisualStudioCredential), sources[3]);
-            Assert.IsInstanceOf(typeof(VisualStudioCodeCredential), sources[4]);
-            Assert.IsInstanceOf(typeof(AzureCliCredential), sources[5]);
-            Assert.IsInstanceOf(typeof(AzurePowerShellCredential), sources[6]);
+            Assert.IsInstanceOf(typeof(VisualStudioCredential), sources[2]);
+            Assert.IsInstanceOf(typeof(VisualStudioCodeCredential), sources[3]);
+            Assert.IsInstanceOf(typeof(AzureCliCredential), sources[4]);
+            Assert.IsInstanceOf(typeof(AzurePowerShellCredential), sources[5]);
             Assert.IsNull(sources[7]);
         }
 
@@ -49,19 +48,18 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(sources.Length, 8);
             Assert.IsInstanceOf(typeof(EnvironmentCredential), sources[0]);
             Assert.IsInstanceOf(typeof(ManagedIdentityCredential), sources[1]);
-            Assert.IsInstanceOf(typeof(SharedTokenCacheCredential), sources[2]);
-            Assert.IsInstanceOf(typeof(VisualStudioCredential), sources[3]);
-            Assert.IsInstanceOf(typeof(VisualStudioCodeCredential), sources[4]);
-            Assert.IsInstanceOf(typeof(AzureCliCredential), sources[5]);
-            Assert.IsInstanceOf(typeof(AzurePowerShellCredential), sources[6]);
+            Assert.IsInstanceOf(typeof(VisualStudioCredential), sources[2]);
+            Assert.IsInstanceOf(typeof(VisualStudioCodeCredential), sources[3]);
+            Assert.IsInstanceOf(typeof(AzureCliCredential), sources[4]);
+            Assert.IsInstanceOf(typeof(AzurePowerShellCredential), sources[5]);
 
             if (includeInteractive)
             {
-                Assert.IsInstanceOf(typeof(InteractiveBrowserCredential), sources[7]);
+                Assert.IsInstanceOf(typeof(InteractiveBrowserCredential), sources[6]);
             }
             else
             {
-                Assert.IsNull(sources[7]);
+                Assert.IsNull(sources[6]);
             }
         }
 
@@ -96,6 +94,7 @@ namespace Azure.Identity.Tests
             {
                 ManagedIdentityClientId = expClientId,
                 SharedTokenCacheUsername = expUsername,
+                ExcludeSharedTokenCacheCredential = false,
                 SharedTokenCacheTenantId = expCacheTenantId,
                 VisualStudioTenantId = expVsTenantId,
                 VisualStudioCodeTenantId = expCodeTenantId,

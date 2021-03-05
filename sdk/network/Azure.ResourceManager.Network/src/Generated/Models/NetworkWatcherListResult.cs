@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for ListNetworkWatchers API service call. </summary>
-    public partial class NetworkWatcherListResult
+    internal partial class NetworkWatcherListResult
     {
         /// <summary> Initializes a new instance of NetworkWatcherListResult. </summary>
         internal NetworkWatcherListResult()

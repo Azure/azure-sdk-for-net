@@ -3,13 +3,13 @@
 
 using Azure.Core;
 
-namespace Azure.AI.TextAnalytics
+namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary>
     /// PiiTaskParametersDomain.
     /// </summary>
     [CodeGenModel("PiiTaskParametersDomain")]
-    public readonly partial struct PiiTaskParametersDomain
+    internal partial struct PiiTaskParametersDomain
     {
     }
 }

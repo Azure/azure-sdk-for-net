@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Graph.Rbac.Models
 {
-    public partial class DirectoryObjectListResult
+    internal partial class DirectoryObjectListResult
     {
         internal static DirectoryObjectListResult DeserializeDirectoryObjectListResult(JsonElement element)
         {
