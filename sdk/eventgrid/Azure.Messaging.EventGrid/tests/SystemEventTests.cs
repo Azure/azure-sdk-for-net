@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventGrid.Tests
         {
             foreach (var systemEvent in Assembly.GetAssembly(typeof(EventGridEvent)).GetTypes().Where(t => t.Name.EndsWith("EventData")))
             {
-                // these model types have no documented event type
+                // skip base types
                 if (systemEvent == typeof(ContainerRegistryArtifactEventData) ||
                     systemEvent == typeof(ContainerRegistryEventData))
                 {
