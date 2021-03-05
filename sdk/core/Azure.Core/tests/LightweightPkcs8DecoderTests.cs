@@ -199,7 +199,8 @@ namespace Azure.Core.Tests
         {
             byte[] data = Convert.FromBase64String(InvalidPrivateKey);
 
-            Assert.Throws<InvalidDataException>(() => LightweightPkcs8Decoder.DecodeRSAPkcs8(data));
+            Exception ex = Assert.Throws<InvalidDataException>(() => LightweightPkcs8Decoder.DecodeRSAPkcs8(data));
+            Assert.AreEqual("Invalid PKCS#8 Data", ex.Message);
         }
 
         [Test]
@@ -207,7 +208,8 @@ namespace Azure.Core.Tests
         {
             byte[] data = Convert.FromBase64String(EcSecp256k1PrivateKey);
 
-            Assert.Throws<InvalidDataException>(() => LightweightPkcs8Decoder.DecodeRSAPkcs8(data));
+            Exception ex = Assert.Throws<InvalidDataException>(() => LightweightPkcs8Decoder.DecodeRSAPkcs8(data));
+            Assert.AreEqual("Invalid PKCS#8 Data", ex.Message);
         }
 
         private const string Pfx = @"

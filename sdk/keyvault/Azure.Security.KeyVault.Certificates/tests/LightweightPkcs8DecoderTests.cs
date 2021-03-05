@@ -4,6 +4,7 @@
 using System;
 using System.IO;
 using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using Azure.Core;
 using NUnit.Framework;
@@ -14,8 +15,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
     {
         [Test]
         public void VerifyECDecoderPrime256v1Imported() =>
-            // TODO: Need to read in the full ECCurve and make sure this then works on macOS. By using OID 1.3.132.0.10 it will not since that OID is not supported on macOS.
-            VerifyECDecoder(EcPrime256v1PrivateKeyImported, 256, @"Dqi/IwHjt2ttGyT0vleMvzsbStSOiDrevV4hhPGAXZoQ55b//keMmZ/weezuiSnliF4bTGWYxrqs73Yoj/6ddQ==");
+            VerifyECDecoder(EcPrime256v1PrivateKeyImported, 256, @"DFTTJrKrtao7G/B0bK5yv+mX0/3Sefv2MS1gzd6DfYH2ASe9Tw7rSbLjZ8wM0p7I/opbIG1+zHhpYqOGnQNQyw==", EcPrime256v1CertificateImported);
 
         [Test]
         public void VerifyECDecoderSecp256k1()
@@ -47,11 +47,33 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         {
             byte[] data = Convert.FromBase64String(InvalidEcSecp521r1PrivateKey);
 
-            Assert.Throws<InvalidDataException>(() => LightweightPkcs8Decoder.DecodeECDsaPkcs8(data));
+            Exception ex = Assert.Throws<InvalidDataException>(() => LightweightPkcs8Decoder.DecodeECDsaPkcs8(data, null));
+            Assert.AreEqual("Invalid PKCS#8 Data", ex.Message);
+        }
+
+        [Test]
+        public void ECDecoderPrime256v1RequiresPublicKey()
+        {
+#if NET461
+            Assert.Ignore("ECC is not supported before .NET Framework 4.7");
+#endif
+            byte[] data = Convert.FromBase64String(EcPrime256v1PrivateKeyImported);
+
+            Exception ex = Assert.Throws<InvalidDataException>(() => LightweightPkcs8Decoder.DecodeECDsaPkcs8(data, null));
+            Assert.AreEqual("Unsupported PKCS#8 Data", ex.Message);
+        }
+
+        [Test]
+        public void VerifyECDecoderWithRSAKey()
+        {
+            byte[] data = Convert.FromBase64String(RsaPrivateKey);
+
+            Exception ex = Assert.Throws<InvalidDataException>(() => LightweightPkcs8Decoder.DecodeECDsaPkcs8(data, null));
+            Assert.AreEqual("Invalid PKCS#8 Data", ex.Message);
         }
 
         // Not using TestCaseSource because params too long for friendly test case rendering.
-        private static void VerifyECDecoder(string key, int keySize, string signature)
+        private static void VerifyECDecoder(string key, int keySize, string signature, string cer = null)
         {
 #if NET461
             Assert.Ignore("ECC is not supported before .NET Framework 4.7");
@@ -59,23 +81,53 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             byte[] data = Convert.FromBase64String(key);
             byte[] signatureBytes = Convert.FromBase64String(signature);
 
-            using ECDsa ecdsa = LightweightPkcs8Decoder.DecodeECDsaPkcs8(data);
+            ECDsa publicKey = null;
+            if (cer != null)
+            {
+                byte[] publicKeyData = Convert.FromBase64String(cer);
+                using X509Certificate2 certificate = new X509Certificate2(publicKeyData);
 
-            Assert.AreEqual(keySize, ecdsa.KeySize);
-            Assert.IsTrue(ecdsa.VerifyData(Encoding.UTF8.GetBytes("test"), signatureBytes, HashAlgorithmName.SHA256));
+                publicKey = certificate.GetECDsaPublicKey();
+            }
+
+            try
+            {
+                using ECDsa keyPair = LightweightPkcs8Decoder.DecodeECDsaPkcs8(data, publicKey);
+
+                Assert.AreEqual(keySize, keyPair.KeySize);
+                Assert.IsTrue(keyPair.VerifyData(Encoding.UTF8.GetBytes("test"), signatureBytes, HashAlgorithmName.SHA256));
+            }
+            finally
+            {
+                publicKey?.Dispose();
+            }
         }
 
         // This comes from Key Vault when a certificate using P-256K is generated
-        // with OID 1.2.840.10045.1.1 that is not a recognized curve.
+        // with curve OID 1.2.840.10045.1.1 that indicates curve parameters should be read.
         private const string EcPrime256v1PrivateKeyImported = @"
-MIIBYQIBADCB7AYHKoZIzj0CATCB4AIBATAsBgcqhkjOPQEBAiEA////////////
-/////////////////////////v///C8wRAQgAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAEIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHBEEE
-eb5mfvncu6xVoGKVzocLBwKb/NstzijZWfKBWxb4F5hIOtp3JqPEZV2k+/wOEQio
-/Re0SKaFVBmcR9CP+xDUuAIhAP////////////////////66rtzmr0igO7/SXozQ
-NkFBAgEBBG0wawIBAQQg0hfpkSWI0DC9kCrcaQkc0dK9A6UjMUySJ+D8LwN9UCGh
-RANCAASfEif6Nd3c9/AhykaRDH1vUv8FhccPM0g0M5PCY6S7d8b7Mjq9PdHdWQd9
-x3sZH1onGnW13EyciQXFTZnV41Ve";
+MIIBMgIBADCBrgYHKoZIzj0CATCBogIBATAsBgcqhkjOPQEBAiEA////////////
+/////////////////////////v///C8wBgQBAAQBBwRBBHm+Zn753LusVaBilc6H
+CwcCm/zbLc4o2VnygVsW+BeYSDradyajxGVdpPv8DhEIqP0XtEimhVQZnEfQj/sQ
+1LgCIQD////////////////////+uq7c5q9IoDu/0l6M0DZBQQIBAQRtMGsCAQEE
+INIX6ZEliNAwvZAq3GkJHNHSvQOlIzFMkifg/C8DfVAhoUQDQgAEnxIn+jXd3Pfw
+IcpGkQx9b1L/BYXHDzNINDOTwmOku3fG+zI6vT3R3VkHfcd7GR9aJxp1tdxMnIkF
+xU2Z1eNVXqANMAsGA1UdDzEEAwIAgA==";
+
+        private const string EcPrime256v1CertificateImported = @"
+MIICPzCCAeWgAwIBAgIQdclPKrRQTmCpZ0p2lM2pmDAKBggqhkjOPQQDAjAUMRIw
+EAYDVQQDEwlBenVyZSBTREswHhcNMjEwMzAzMDEwOTIxWhcNMjIwMzAzMDExOTIx
+WjAUMRIwEAYDVQQDEwlBenVyZSBTREswgfUwga4GByqGSM49AgEwgaICAQEwLAYH
+KoZIzj0BAQIhAP////////////////////////////////////7///wvMAYEAQAE
+AQcEQQR5vmZ++dy7rFWgYpXOhwsHApv82y3OKNlZ8oFbFvgXmEg62ncmo8RlXaT7
+/A4RCKj9F7RIpoVUGZxH0I/7ENS4AiEA/////////////////////rqu3OavSKA7
+v9JejNA2QUECAQEDQgAEnxIn+jXd3PfwIcpGkQx9b1L/BYXHDzNINDOTwmOku3fG
++zI6vT3R3VkHfcd7GR9aJxp1tdxMnIkFxU2Z1eNVXqN8MHowDgYDVR0PAQH/BAQD
+AgeAMAkGA1UdEwQCMAAwHQYDVR0lBBYwFAYIKwYBBQUHAwEGCCsGAQUFBwMCMB8G
+A1UdIwQYMBaAFAJEtqOacY6KuA8KAyt3dgByxWGlMB0GA1UdDgQWBBQCRLajmnGO
+irgPCgMrd3YAcsVhpTAKBggqhkjOPQQDAgNIADBFAiEAlGVRNxgGsOpmBAGud2v1
+aSnz2Zm8A9EV1a+5EVp8Rz8CIFkJYAXOL/n0xo4fp+7yR+9SwVa3c6wNimYSfhoU
++YpQ";
 
         private const string EcSecp256k1PrivateKey = @"
 MIGEAgEAMBAGByqGSM49AgEGBSuBBAAKBG0wawIBAQQggIszi9CyyZSvzCmMVSnT

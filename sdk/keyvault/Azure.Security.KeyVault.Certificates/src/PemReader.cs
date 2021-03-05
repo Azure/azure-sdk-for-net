@@ -30,8 +30,11 @@ namespace Azure.Core
             if (s_ecCopyWithPrivateKeyMethod is null)
             {
                 s_ecCopyWithPrivateKeyMethod = typeof(ECDsaCertificateExtensions).GetMethod("CopyWithPrivateKey", BindingFlags.Static | BindingFlags.Public, null, new[] { typeof(X509Certificate2), typeof(ECDsa) }, null)
-                    ?? throw new PlatformNotSupportedException("The current platform does not support reading a private key from a PEM file");
+                    ?? throw new PlatformNotSupportedException("The current platform does not support reading an ECDsa private key from a PEM file");
             }
+
+            // Create the certificate without the private key to pass to our PKCS8 decoder if needed to copy the prime curve.
+            using X509Certificate2 certificateWithoutPrivateKey = new X509Certificate2(cer);
 
             ECDsa privateKey = null;
             try
@@ -52,12 +55,11 @@ namespace Azure.Core
                 }
                 else
                 {
-                    privateKey = LightweightPkcs8Decoder.DecodeECDsaPkcs8(key);
+                    // Copy the prime curve from the public key to mitigate risk parsing the ASN.1 structure ourselves.
+                    using ECDsa publicKey = certificateWithoutPrivateKey.GetECDsaPublicKey();
+                    privateKey = LightweightPkcs8Decoder.DecodeECDsaPkcs8(key, publicKey);
                 }
 
-                using X509Certificate2 certificateWithoutPrivateKey = new X509Certificate2(cer);
-
-                // TODO: This will fail for P-256K because the certificate uses OID 1.2.840.10045.1.1 while the private key was modified to use OID 1.3.132.0.10.
                 certificate = (X509Certificate2)s_ecCopyWithPrivateKeyMethod.Invoke(null, new object[] { certificateWithoutPrivateKey, privateKey });
 
                 // Make sure the private key doesn't get disposed now that it's used.
