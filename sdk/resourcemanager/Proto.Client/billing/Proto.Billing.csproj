@@ -24,6 +24,6 @@
   </ItemGroup>
   <PropertyGroup>
     <!-- TODO: As part of release process, this PropertyGroup can be removed once RP is approved for namespace -->
-    <NoWarn>$(NoWarn);AZC0001;CA1303;SA0001;SA1629; SA1101;SA1200;SA1208;</NoWarn>
+    <NoWarn>$(NoWarn);AZC0001;CA1303;SA0001;SA1629; SA1101;SA1200;SA1208;SA1309;</NoWarn>
   </PropertyGroup>
 </Project>
