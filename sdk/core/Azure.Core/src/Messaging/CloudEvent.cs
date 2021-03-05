@@ -198,21 +198,31 @@ namespace Azure.Messaging
         public static CloudEvent? Parse(BinaryData json, bool skipValidation = false)
         {
             Argument.AssertNotNull(json, nameof(json));
-            CloudEvent[]? events = ParseMany(json, skipValidation);
-            if (events.Length == 0)
+
+            JsonDocument requestDocument = JsonDocument.Parse(json);
+            CloudEvent? cloudEvent = null;
+            if (requestDocument.RootElement.ValueKind == JsonValueKind.Object)
             {
-                return null;
+                cloudEvent = CloudEventConverter.DeserializeCloudEvent(requestDocument.RootElement, skipValidation);
             }
-            if (events.Length > 1)
+            else if (requestDocument.RootElement.ValueKind == JsonValueKind.Array)
             {
-                throw new ArgumentException(
-                    "The BinaryData instance contains JSON from multiple cloud events. This method " +
-                    "should only be used with BinaryData containing a single cloud event. " +
-                    Environment.NewLine +
-                    "To parse multiple events, call ToString on the BinaryData and use the " +
-                    "Parse overload that takes a string.");
+                if (requestDocument.RootElement.GetArrayLength() > 1)
+                {
+                    throw new ArgumentException(
+                        "The BinaryData instance contains JSON from multiple cloud events. This method " +
+                        "should only be used with BinaryData containing a single cloud event. " +
+                        Environment.NewLine +
+                        "To parse multiple events, call ToString on the BinaryData and use the " +
+                        "Parse overload that takes a string.");
+                }
+                foreach (JsonElement property in requestDocument.RootElement.EnumerateArray())
+                {
+                    cloudEvent = CloudEventConverter.DeserializeCloudEvent(property, skipValidation);
+                    break;
+                }
             }
-            return events[0];
+            return cloudEvent;
         }
     }
 }
