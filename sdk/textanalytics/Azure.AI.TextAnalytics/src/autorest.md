@@ -132,3 +132,75 @@ directive:
         }
       }
 ```
+
+### Enable Get based pagination for analyze.
+```yaml
+directive:
+  - from: swagger-document
+    where: $["paths"]["/analyze/jobs/{jobId}"]
+    transform: >
+      if (! $.get["x-ms-pageable"]) {
+        $.get["x-ms-pageable"] = {}
+      }
+      $.get["x-ms-pageable"].operationName = "AnalyzeStatusNextPage";
+      $.get["x-ms-pageable"].nextLink;
+      $.get["x-ms-pageable"].values;
+```
+
+```yaml
+directive:
+  - from: swagger-document
+    where: $["x-ms-paths"]
+    transform: >
+      $["/analyze/jobs/{nextLink}"] = {
+        "get": {
+          "x-ms-pageable": {
+            "nextLinkName": "nextLink",
+            "itemName": "values"
+          },
+          "produces": [
+            "application/json",
+            "text/json"
+          ],
+          "description": "Get the status of an analysis job.  A job may consist of one or more tasks.  Once all tasks are completed, the job will transition to the completed state and results will be available for each task.",
+          "operationId": "AnalyzeStatusNextPage",
+          "summary": "Get analysis status and results",
+          "parameters": [
+            {
+              "$ref": "#/parameters/ShowStats"
+            },
+            {
+              "name": "nextLink",
+              "in": "path",
+              "required": true,
+              "type": "string",
+              "description": "Next link for list operation.",
+              "x-ms-skip-url-encoding": true
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Analysis job status and metadata.",
+              "schema": {
+                "$ref": "#/definitions/AnalyzeJobState"
+              }
+            },
+            "404": {
+              "description": "Job ID not found.",
+              "schema": {
+                "$ref": "#/definitions/ErrorResponse"
+              },
+              "x-ms-error-response": true
+            },
+            "500": {
+              "description": "Internal error response",
+              "schema": {
+                "$ref": "#/definitions/ErrorResponse"
+              },
+              "x-ms-error-response": true
+            }
+          },
+          "deprecated": false
+        }
+      }
+```
