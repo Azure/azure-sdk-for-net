@@ -179,7 +179,7 @@ namespace Azure.Messaging.EventGrid
                     "The BinaryData instance contains JSON from multiple event grid events. This method " +
                     "should only be used with BinaryData containing a single event grid event. " +
                     Environment.NewLine +
-                    "To parse multiple events, use the ParseMany overload.");
+                    $"To parse multiple events, use the {nameof(ParseMany)} overload.");
             }
             return events[0];
         }

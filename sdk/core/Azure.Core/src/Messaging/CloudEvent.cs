@@ -213,7 +213,7 @@ namespace Azure.Messaging
                         "The BinaryData instance contains JSON from multiple cloud events. This method " +
                         "should only be used with BinaryData containing a single cloud event. " +
                         Environment.NewLine +
-                        "To parse multiple events, and use the ParseMany overload.");
+                        $"To parse multiple events, use the {nameof(ParseMany)} overload.");
                 }
                 foreach (JsonElement property in requestDocument.RootElement.EnumerateArray())
                 {
