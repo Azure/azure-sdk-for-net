@@ -72,6 +72,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
             Console.WriteLine($"Status: {operation.Status}");
             Console.WriteLine($"Created On: {operation.CreatedOn}");
+            Console.WriteLine($"Expires On: {operation.ExpiresOn}");
             Console.WriteLine($"Last modified: {operation.LastModified}");
             if (!string.IsNullOrEmpty(operation.DisplayName))
                 Console.WriteLine($"Display name: {operation.DisplayName}");

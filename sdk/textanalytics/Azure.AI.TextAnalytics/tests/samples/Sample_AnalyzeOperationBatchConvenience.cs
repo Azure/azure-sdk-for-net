@@ -69,6 +69,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 //If operation has not started, all other fields are null
                 if (operation.Status != TextAnalyticsOperationStatus.NotStarted)
                 {
+                    Console.WriteLine($"Expires On: {operation.ExpiresOn}");
                     Console.WriteLine($"Last modified: {operation.LastModified}");
                     if (!string.IsNullOrEmpty(operation.DisplayName))
                         Console.WriteLine($"Display name: {operation.DisplayName}");
