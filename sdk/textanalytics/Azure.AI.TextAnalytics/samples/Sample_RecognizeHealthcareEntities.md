@@ -15,7 +15,7 @@ var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(a
 
 ## Recognizing healthcare entities in multiple documents
 
-To recognize healthcare entities in multiple documents, call `StartHealthcareBatchAsync` on an `IEnumerable` of strings.  The result is a Long Running operation of type `HealthcareOperation` which polls for the results from the API.
+To recognize healthcare entities in multiple documents, call `StartAnalyzeHealthcareEntities` on an `IEnumerable` of strings.  The result is a Long Running operation of type `AnalyzeHealthcareEntitiesOperation` which polls for the results from the API.
 
 ```C# Snippet:TextAnalyticsSampleHealthcareBatchConvenienceAsync
     string document1 = @"RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS | \
