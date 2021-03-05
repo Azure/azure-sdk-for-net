@@ -27,6 +27,7 @@
 ### Known Issues
 - The parameter `CategoriesFilter` in `RecognizePiiEntitiesOptions` doesn't have an impact when using it in `StartAnalyzeBatchActions`. [19237](https://github.com/Azure/azure-sdk-for-net/issues/19237).
 - `Statistics` for `AnalyzeBatchActionsResult` are not currently returned even if the user passes `IncludeStatistics  = true`. [19268](https://github.com/Azure/azure-sdk-for-net/issues/19268).
+- `StartAnalyzeHealthcareEntities` is in gated preview and can not be used with AAD credentials. For more information, see [the Text Analytics for Health documentation](https://docs.microsoft.com/azure/cognitive-services/text-analytics/how-tos/text-analytics-for-health?tabs=ner#request-access-to-the-public-preview).
 
 ## 5.1.0-beta.4 (2021-02-10)
 ### New features
