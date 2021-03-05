@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.TextAnalytics
 {
-    /// <summary> Determines the set of actions to execute on the input documents.</summary>
+    /// <summary> Determines the set of actions that will get executed on the input documents.</summary>
     public class TextAnalyticsActions
     {
         /// <summary>
