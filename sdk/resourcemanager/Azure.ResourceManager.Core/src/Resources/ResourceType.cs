@@ -309,16 +309,13 @@ namespace Azure.ResourceManager.Core
                 Namespace = parts[1];
                 
                 Type = string.Join("/", parts.Skip(2).Take(parts.Count - 3));
-                 Console.WriteLine("ten type is " + Type);
             }
             // Handle resource types (Micsrsoft.Compute/virtualMachines, Microsoft.Network/virtualNetworks/subnets)
             else if (parts[0].Contains('.'))
             {
                 // it is a full type name
-                Console.WriteLine("resourceIdOrType " + resourceIdOrType);
                 Namespace = parts[0];
                 Type = string.Join("/", parts.Skip(1).Take(parts.Count - 1));
-                Console.WriteLine("type is " + Type);
             }
 
             // Handle built-in resource ids (e.g. /subscriptions/{sub}, /subscriptions/{sub}/resourceGroups/{rg})
