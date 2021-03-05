@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Core
                 other?.ToLowerInvariant(),
                 StringComparison.InvariantCultureIgnoreCase);
         }
-#pragma warning disable CA1303 // Do not raise exceptions in unexpected locations
+        
         /// <summary>
         /// Populate Resource Identity fields from input string.
         /// </summary>
