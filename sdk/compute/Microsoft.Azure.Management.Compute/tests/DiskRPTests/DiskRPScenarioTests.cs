@@ -67,5 +67,17 @@ namespace Compute.Tests.DiskRPTests
         {
             Snapshot_List_Execute(DiskCreateOption.Empty, "Snapshot_List_EmptyDisk", diskSizeGB: 5);
         }
+
+        [Fact]
+        public void Disk_CRUD_WithSupportsHibernationFlag_EmptyDisk()
+        {
+            Disk_CRUD_WithSupportsHibernationFlag_Execute(DiskCreateOption.Empty, "Disk_CRUD_WithSupportsHibernationFlag_EmptyDisk", diskSizeGB: 5);
+        }
+
+        [Fact]
+        public void Disk_CRUD_WithPurchasePlan_EmptyDisk()
+        {
+            Disk_CRUD_WithPurchasePlan_Execute(DiskCreateOption.Empty, "Disk_CRUD_WithPurchasePlan_EmptyDisk", diskSizeGB: 5);
+        }
     }
 }
