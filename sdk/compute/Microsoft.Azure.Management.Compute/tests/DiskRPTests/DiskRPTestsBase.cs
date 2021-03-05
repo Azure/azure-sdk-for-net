@@ -352,7 +352,7 @@ namespace Compute.Tests.DiskRPTests
                 try
                 {
                     m_ResourcesClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = DiskRPLocation });
-                    
+
                     // Put DiskAccess
                     DiskAccess diskAccessOut = m_CrpClient.DiskAccesses.CreateOrUpdate(rgName, diskAccessName, diskAccess);
                     Validate(diskAccess, diskAccessOut, diskAccessName);
@@ -966,6 +966,66 @@ namespace Compute.Tests.DiskRPTests
             }
         }
 
+        protected void Disk_CRUD_WithSecurityProfile_Execute(string diskCreateOption, string methodName, int? diskSizeGB = null, string location = null, IList<string> zones = null)
+        {
+            using (MockContext context = MockContext.Start(this.GetType(), methodName))
+            {
+                EnsureClientsInitialized(context);
+                DiskRPLocation = location ?? DiskRPLocation;
+
+                // Data
+                var rgName = TestUtilities.GenerateName(TestPrefix);
+                var diskName = TestUtilities.GenerateName(DiskNamePrefix);
+                Disk disk = GenerateDefaultDisk(diskCreateOption, rgName, diskSizeGB, zones, location);
+                disk.SecurityProfile = new DiskSecurityProfile { SecurityType = DiskSecurityTypes.TrustedLaunch };
+                disk.HyperVGeneration = HyperVGeneration.V2;
+
+                try
+                {
+                    // **********
+                    // SETUP
+                    // **********
+                    // Create resource group, unless create option is import in which case resource group will be created with vm,
+                    // or copy in which casethe resource group will be created with the original disk.
+                    if (diskCreateOption != DiskCreateOption.Import && diskCreateOption != DiskCreateOption.Copy)
+                    {
+                        m_ResourcesClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = DiskRPLocation });
+                    }
+
+                    // **********
+                    // TEST
+                    // **********
+                    // Put
+                    Disk diskOut = m_CrpClient.Disks.CreateOrUpdate(rgName, diskName, disk);
+                    Validate(disk, diskOut, DiskRPLocation);
+
+                    // Get
+                    diskOut = m_CrpClient.Disks.Get(rgName, diskName);
+                    Validate(disk, diskOut, DiskRPLocation);
+                    Assert.Equal(disk.SecurityProfile.SecurityType, diskOut.SecurityProfile.SecurityType);
+
+                    // Delete
+                    m_CrpClient.Disks.Delete(rgName, diskName);
+
+                    try
+                    {
+                        // Ensure it was really deleted
+                        m_CrpClient.Disks.Get(rgName, diskName);
+                        Assert.False(true);
+                    }
+                    catch (CloudException ex)
+                    {
+                        Assert.Equal(HttpStatusCode.NotFound, ex.Response.StatusCode);
+                    }
+                }
+                finally
+                {
+                    // Delete resource group
+                    m_ResourcesClient.ResourceGroups.Delete(rgName);
+                }
+            }
+
+        }
         #endregion
 
         #region Generation
