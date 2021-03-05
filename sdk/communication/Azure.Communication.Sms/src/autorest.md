@@ -3,10 +3,12 @@
 Run `dotnet msbuild /t:GenerateCode` to generate code.
 
 ### AutoRest Configuration
+
 > see https://aka.ms/autorest
 
 ``` yaml
-input-file:
-    -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/83d782b99cb85a9b2f5ef22774584541dd0ff997/specification/communication/data-plane/Microsoft.CommunicationServicesSms/stable/2021-03-07/communicationservicessms.json
-payload-flattening-threshold: 10
+tag: package-sms-2021-03-07
+require:
+	- https://github.com/JoshuaLai/azure-rest-api-specs/blob/644ed41f990d8adc0edc7aa81e5f03b7ddc493f0/specification/communication/data-plane/readme.md
+payload-flattening-threshold: 3
 ```
