@@ -4,11 +4,14 @@ extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
     ServiceDirectory: communication
+    Clouds: ACS_Public
+    CloudConfig:
+      ACS_Public:
+        SubscriptionConfiguration: $(sub-config-communication-services-cloud-test-resources)
     EnvVars:
-      AZURE_SUBSCRIPTION_ID: $(acs-subscription-id)
+      AZURE_TENANT_ID: $(COMMUNICATION_TENANT_ID)
+      AZURE_CLIENT_ID: $(COMMUNICATION_CLIENT_ID)
+      AZURE_CLIENT_SECRET: $(COMMUNICATION_CLIENT_SECRET)
       AZURE_COMMUNICATION_LIVETEST_CONNECTION_STRING: $(communication-livetest-connection-string)
       AZURE_PHONE_NUMBER: $(communication-livetest-phone-number)
-      AZURE_TENANT_ID: $(aad-azure-sdk-test-tenant-id)
-      AZURE_CLIENT_SECRET: $(aad-azure-sdk-test-client-secret)
-      AZURE_CLIENT_ID: $(aad-azure-sdk-test-client-id)
       INCLUDE_PHONENUMBER_LIVE_TESTS: False
