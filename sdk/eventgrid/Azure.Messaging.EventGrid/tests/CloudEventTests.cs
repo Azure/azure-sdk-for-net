@@ -349,7 +349,7 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridPublisherClient client =
                new EventGridPublisherClient(
                    new Uri("https://contoso.com:100/api/events"),
-                   new AzureKeyCredential(SystemPublisherKey),
+                   new AzureKeyCredential(EventGridKeyCredentialPolicy.SystemPublisherKey),
                    options);
             var cloudEvent = new CloudEvent(
                     "record",
