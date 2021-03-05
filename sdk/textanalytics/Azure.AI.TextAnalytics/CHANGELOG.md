@@ -9,7 +9,7 @@
 - `AnalyzeHealthcareEntitiesResult`, now exposes the property `EntityRelations`of type `HealthcareEntityRelation`.
 - Introduced `HealthcareEntityRelation` class which will determine all the different relations between the entities as `Roles`.
 - Added `HealthcareEntityRelationRole`, which exposes `Name` and `Entity` of type `string` and `HealthcareEntity` respectively.
-- `HealthcareEntityAssertion` is added to `HealthcareEntity` which further exposes `Association`, `Certainity` and `Conditionality`.
+- `HealthcareEntityAssertion` is added to `HealthcareEntity` which further exposes `EntityAssociation`, `EntityCertainity` and `EntityConditionality`.
 - Added new types under `HealthcareRelationType` class.
 
 ### Breaking changes

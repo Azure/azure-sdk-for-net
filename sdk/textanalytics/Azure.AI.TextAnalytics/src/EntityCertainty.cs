@@ -7,10 +7,11 @@ namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// Determines the Certainity of the <see cref="HealthcareEntityAssertion"/>
-    /// It can be Positive, PositivePossible, NuetralPossible, NegativePossible and Negative.
+    /// For example, in "The patient may have a fever", the fever entity is not 100% certain, but is instead
+    /// "PositivePossible".
     /// </summary>
     [CodeGenModel("Certainty")]
-    public enum Certainty
+    public enum EntityCertainty
     {
         /// <summary> Positive. </summary>
         Positive,

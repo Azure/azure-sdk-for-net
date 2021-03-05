@@ -163,7 +163,7 @@ namespace Azure.AI.TextAnalytics.Tests
                     Assert.AreEqual("Diagnosis", entity.Category);
                     Assert.AreEqual(10, entity.Length);
                     Assert.IsNotNull(entity.Assertion);
-                    Assert.AreEqual(Certainty.NegativePossible, entity.Assertion.Certainty.Value);
+                    Assert.AreEqual(EntityCertainty.NegativePossible, entity.Assertion.Certainty.Value);
                 }
 
                 if (entity.Text == "Penicillin")
@@ -171,7 +171,7 @@ namespace Azure.AI.TextAnalytics.Tests
                     Assert.AreEqual("MedicationName", entity.Category);
                     Assert.AreEqual(10, entity.Length);
                     Assert.IsNotNull(entity.Assertion);
-                    Assert.AreEqual(Certainty.NeutralPossible, entity.Assertion.Certainty.Value);
+                    Assert.AreEqual(EntityCertainty.NeutralPossible, entity.Assertion.Certainty.Value);
                 }
             }
         }
