@@ -109,8 +109,8 @@ To see the full example source files, see:
 * [AnalyzeHealthcareEntitiesAsync](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample7_AnalyzeHealthcareEntitiesBatchAsync.cs)
 * [AnalyzeHealthcareEntities Cancellation](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample7_AnalyzeHealthcareEntities_Cancellation.cs)
 * [AnalyzeHealthcareEntitiesAsync Cancellation](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample7_AnalyzeHealthcareEntities_Cancellation.cs)
-* [Automatic Polling AnalyzeHealthcareEntities ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample7_AnalyzeHealthcareEntities_AutomaticPolling.cs)
-* [Manual Polling AnalyzeHealthcareEntities ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample7_AnalyzeHealthcareEntities_ManualPolling.cs)
+* [Automatic Polling AnalyzeHealthcareEntities ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample7_AnalyzeHealthcareEntitiesAsync_AutomaticPolling.cs)
+* [Manual Polling AnalyzeHealthcareEntities ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample7_AnalyzeHealthcareEntitiesAsync_ManualPolling.cs)
 
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md
 [README]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/README.md
