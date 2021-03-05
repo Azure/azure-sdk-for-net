@@ -18,6 +18,7 @@ Azure Cognitive Services Text Analytics is a cloud service that provides advance
 * Named Entity Recognition
 * Personally Identifiable Information (PII) Recognition
 * Linked Entity Recognition
+* Healthcare Recognition
 
 ## Common scenarios samples
 - [Detect Language](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample1_DetectLanguage.md)
@@ -26,6 +27,7 @@ Azure Cognitive Services Text Analytics is a cloud service that provides advance
 - [Recognize Entities](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample4_RecognizeEntities.md)
 - [Recognize PII Entities](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample5_RecognizePiiEntities.md)
 - [Recognize Linked Entities](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample6_RecognizeLinkedEntities.md)
+- [Recognize Healthcare Entities](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample_RecognizeHealthcareEntities.md)
 
 ## Advanced samples
 - [Analyze Sentiment with Opinion Mining](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample2.1_AnalyzeSentimentWithOpinionMining.md)
