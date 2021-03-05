@@ -3,7 +3,7 @@
 ## 12.9.0-beta.2 (Unreleased)
 - Fixed a bug where BlockBlobClient.GetBlockList threw when dealing with extremely large blocks.
 - Fixed bug where `Stream` returned by `BlockBlobClient.OpenWrite` could corrupt blocks if flushed between writes.
-- Added BlobBaseClient.DownloadContent and BlobClient.Upload overloads that work with BinaryData.
+- Added BlobBaseClient.DownloadContent and BlobClient.Upload overloads that work with [BinaryData](https://github.com/Azure/azure-sdk-for-net/tree/System.Memory.Data_1.0.1/sdk/core/System.Memory.Data).
 - Added BlobBaseClient.DownloadStreaming that replaces BlobBaseClient.Download.
 
 ## 12.9.0-beta.1 (2021-02-09)

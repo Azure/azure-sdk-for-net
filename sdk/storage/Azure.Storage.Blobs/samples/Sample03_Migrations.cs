@@ -282,6 +282,75 @@ namespace Azure.Storage.Blobs.Samples
         }
 
         [Test]
+        public async Task UploadBlobFromStream()
+        {
+            string data = "hello world";
+
+            BlobContainerClient containerClient = new BlobContainerClient(ConnectionString, Randomize("sample-container"));
+            try
+            {
+                await containerClient.CreateAsync();
+                string blobName = Randomize("sample-blob");
+
+                string localFilePath = this.CreateTempPath();
+                FileStream fs = File.OpenWrite(localFilePath);
+                var bytes = Encoding.UTF8.GetBytes(data);
+                await fs.WriteAsync(bytes, 0, bytes.Length);
+                await fs.FlushAsync();
+                fs.Close();
+
+                #region Snippet:SampleSnippetsBlobMigration_UploadBlobFromStream
+                BlobClient blobClient = containerClient.GetBlobClient(blobName);
+                using Stream stream = File.OpenRead(localFilePath);
+                await blobClient.UploadAsync(stream, overwrite: true);
+                #endregion
+
+                Stream downloadStream = (await blobClient.DownloadStreamingAsync()).Value.Content;
+                string downloadedData = await new StreamReader(downloadStream).ReadToEndAsync();
+                downloadStream.Close();
+
+                Assert.AreEqual(data, downloadedData);
+            }
+            finally
+            {
+                await containerClient.DeleteIfExistsAsync();
+            }
+        }
+
+        [Test]
+        public async Task UploadBlobText()
+        {
+            string data = "hello world";
+
+            BlobContainerClient containerClient = new BlobContainerClient(ConnectionString, Randomize("sample-container"));
+            try
+            {
+                await containerClient.CreateAsync();
+                string blobName = Randomize("sample-blob");
+
+                string localFilePath = this.CreateTempPath();
+                FileStream fs = File.OpenWrite(localFilePath);
+                var bytes = Encoding.UTF8.GetBytes(data);
+                await fs.WriteAsync(bytes, 0, bytes.Length);
+                await fs.FlushAsync();
+                fs.Close();
+
+                #region Snippet:SampleSnippetsBlobMigration_UploadBlobText
+                BlobClient blobClient = containerClient.GetBlobClient(blobName);
+                await blobClient.UploadAsync(BinaryData.FromString("hello world"), overwrite: true);
+                #endregion
+
+                BinaryData downloadedData = (await blobClient.DownloadContentAsync()).Value.Content;
+
+                Assert.AreEqual(data, downloadedData.ToString());
+            }
+            finally
+            {
+                await containerClient.DeleteIfExistsAsync();
+            }
+        }
+
+        [Test]
         public async Task DownloadBlob()
         {
             string data = "hello world";
@@ -315,11 +384,47 @@ namespace Azure.Storage.Blobs.Samples
         }
 
         [Test]
-        public async Task DownloadBlobDirectStream()
+        public async Task DownloadBlobToStream()
         {
             string data = "hello world";
 
-            // setup blob
+            //setup blob
+            string containerName = Randomize("sample-container");
+            string blobName = Randomize("sample-file");
+            var containerClient = new BlobContainerClient(ConnectionString, containerName);
+            string downloadFilePath = this.CreateTempPath();
+
+            try
+            {
+                containerClient.Create();
+                containerClient.GetBlobClient(blobName).Upload(BinaryData.FromString(data));
+
+                #region Snippet:SampleSnippetsBlobMigration_DownloadBlobToStream
+                BlobClient blobClient = containerClient.GetBlobClient(blobName);
+                using (Stream target = File.OpenWrite(downloadFilePath))
+                {
+                    await blobClient.DownloadToAsync(target);
+                }
+                #endregion
+
+                FileStream fs = File.OpenRead(downloadFilePath);
+                string downloadedData = await new StreamReader(fs).ReadToEndAsync();
+                fs.Close();
+
+                Assert.AreEqual(data, downloadedData);
+            }
+            finally
+            {
+                await containerClient.DeleteIfExistsAsync();
+            }
+        }
+
+        [Test]
+        public async Task DownloadBlobText()
+        {
+            string data = "hello world";
+
+            //setup blob
             string containerName = Randomize("sample-container");
             string blobName = Randomize("sample-file");
             var containerClient = new BlobContainerClient(ConnectionString, containerName);
@@ -329,20 +434,10 @@ namespace Azure.Storage.Blobs.Samples
                 containerClient.Create();
                 containerClient.GetBlobClient(blobName).Upload(BinaryData.FromString(data));
 
-                // tools to consume stream while looking good in the sample snippet
-                string downloadedData = null;
-                async Task MyConsumeStreamFunc(Stream stream)
-                {
-                    downloadedData = await new StreamReader(stream).ReadToEndAsync();
-                }
-
-                #region Snippet:SampleSnippetsBlobMigration_DownloadBlobDirectStream
+                #region Snippet:SampleSnippetsBlobMigration_DownloadBlobText
                 BlobClient blobClient = containerClient.GetBlobClient(blobName);
-                BlobDownloadStreamingResult downloadResponse = await blobClient.DownloadStreamingAsync();
-                using (Stream downloadStream = downloadResponse.Content)
-                {
-                    await MyConsumeStreamFunc(downloadStream);
-                }
+                BlobDownloadResult downloadResult = await blobClient.DownloadContentAsync();
+                string downloadedData = downloadResult.Content.ToString();
                 #endregion
 
                 Assert.AreEqual(data, downloadedData);
@@ -529,7 +624,7 @@ namespace Azure.Storage.Blobs.Samples
                     // with no url in a client to read from, container and blob name must be provided if applicable
                     BlobContainerName = containerName,
                     BlobName = blobName,
-                    ExpiresOn = DateTimeOffset.Now.AddHours(1)
+                    ExpiresOn = DateTimeOffset.UtcNow.AddHours(1)
                 };
                 // permissions applied separately, using the appropriate enum to the scope of your SAS
                 sasBuilder.SetPermissions(BlobSasPermissions.Read);

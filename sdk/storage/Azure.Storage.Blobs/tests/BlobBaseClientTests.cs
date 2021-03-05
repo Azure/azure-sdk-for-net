@@ -261,6 +261,28 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        public async Task DownloadAsync_Disposal()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            var data = GetRandomBuffer(Constants.KB);
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+
+            // Act
+            Response<BlobDownloadInfo> response = await blob.DownloadAsync();
+            response.Value.Dispose();
+            response.Value.Dispose(); // 2nd disposal shouldn't throw.
+
+            // Assert
+            // Not thrown
+        }
+
+        [RecordedTest]
         public async Task DownloadAsync_Streaming()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -281,6 +303,28 @@ namespace Azure.Storage.Blobs.Test
             var actual = new MemoryStream();
             await response.Value.Content.CopyToAsync(actual);
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
+        }
+
+        [RecordedTest]
+        public async Task DownloadAsync_Streaming_Disposal()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            var data = GetRandomBuffer(Constants.KB);
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+
+            // Act
+            Response<BlobDownloadStreamingResult> response = await blob.DownloadStreamingAsync();
+            response.Value.Dispose();
+            response.Value.Dispose(); // 2nd disposal shouldn't throw
+
+            // Assert
+            // not thrown
         }
 
         [RecordedTest]
