@@ -1,5 +1,5 @@
 # Recognizing Healthcare Entities from Documents
-This sample demonstrates how to recognize healthcare entities in one or more document. To get started you will need a Text Analytics endpoint and credentials. See [README][README] for links and instructions.
+This sample demonstrates how to recognize healthcare entities in one or more documents. To get started you will need a Text Analytics endpoint and credentials. See [README][README] for links and instructions.
 
 ## Creating a `TextAnalyticsClient`
 
