@@ -93,6 +93,20 @@ namespace Azure.Communication.Identity.Samples
         }
 
         [Test]
+        public async Task CreateUserAndToken()
+        {
+            var connectionString = TestEnvironment.ConnectionString;
+            var client = new CommunicationIdentityClient(connectionString);
+            client = CreateClientWithConnectionString();
+            #region  Snippet:CreateCommunicationUserAndToken
+            Response<CommunicationUserIdentifierAndToken> response = await client.CreateUserAndTokenAsync(scopes: new[] { CommunicationTokenScope.Chat });
+            var (user, token) = response.Value;
+            Console.WriteLine($"User id: {user.Id}");
+            Console.WriteLine($"Token: {token.Token}");
+            #endregion Snippet:CreateCommunicationToken
+        }
+
+        [Test]
         public async Task CreateIdentityWithToken()
         {
             #region Snippet:CreateCommunicationIdentityFromToken
