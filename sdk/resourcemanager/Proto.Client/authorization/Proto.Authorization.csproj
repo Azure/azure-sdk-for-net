@@ -24,5 +24,8 @@
     <ProjectReference Include="..\..\Azure.ResourceManager.Core\src\Azure.ResourceManager.Core.csproj" />
     <ProjectReference Include="Azure.ResourceManager.Authorization\Azure.ResourceManager.Authorization.csproj" />
   </ItemGroup>
-
+  <PropertyGroup>
+    <!-- TODO: As part of release process, this PropertyGroup can be removed once RP is approved for namespace -->
+    <NoWarn>$(NoWarn);AZC0001;CA1303;SA0001</NoWarn>
+  </PropertyGroup>
 </Project>
