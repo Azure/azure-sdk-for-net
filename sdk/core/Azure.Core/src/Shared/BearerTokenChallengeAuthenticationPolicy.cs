@@ -49,14 +49,12 @@ namespace Azure.Core.Pipeline
         /// <inheritdoc />
         public override async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            await AuthenticateRequestAsync(message, true).ConfigureAwait(false);
             await ProcessAsync(message, pipeline, true).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            AuthenticateRequestAsync(message, false).EnsureCompleted();
             ProcessAsync(message, pipeline, false).EnsureCompleted();
         }
 
@@ -94,10 +92,12 @@ namespace Azure.Core.Pipeline
 
             if (async)
             {
+                await AuthenticateRequestAsync(message, true).ConfigureAwait(false);
                 await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
             }
             else
             {
+                AuthenticateRequestAsync(message, false).EnsureCompleted();
                 ProcessNext(message, pipeline);
             }
 
