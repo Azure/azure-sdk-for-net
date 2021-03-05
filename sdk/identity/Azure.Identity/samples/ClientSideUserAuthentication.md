@@ -74,10 +74,10 @@ catch (AuthenticationRequiredException e)
 ## Persisting user authentication data
 
 Quite often applications desire the ability to be run multiple times without having to re-authenticate the user on each execution.
-This requires that data such a token or `AuthenticationRecord` from the original authentication be persisted outside of the application memory so that it can authenticate silently on subsequent executions.
-Various credential types can be configured to persist the required data by setting the `TokenPersistenceOptions`.
+This requires that data from credentials be persisted outside of the application memory so that it can authenticate silently on subsequent executions.
+Applications can persist this data using `TokenPersistenceOptions` when constructing the credential, and persisting the `AuthenticationRecord` returned from `Authenticate`.
 
-### Persisting the TokenCache
+### Persisting the token cache
 
 The credential handles persisting all the data needed to silently authenticate one or many accounts.
 It manages sensitive data such as refresh tokens and access tokens which must be protected to prevent compromising the accounts related to them.
@@ -114,7 +114,7 @@ using (var authRecordStream = new FileStream(AUTH_RECORD_PATH, FileMode.Create, 
 }
 ```
 
-### Silent authentication with AuthenticationRecord and TokenCache
+### Silent authentication with AuthenticationRecord and TokenCachePersistenceOptions
 
 Once an application has configured a credential to persist token data and an `AuthenticationRecord`, it is possible to silently authenticate.
 This example demonstrates an application setting the `TokenCachePersistenceOptions` and retrieving an `AuthenticationRecord` from the local file system to create an `InteractiveBrowserCredential` capable of silent authentication.

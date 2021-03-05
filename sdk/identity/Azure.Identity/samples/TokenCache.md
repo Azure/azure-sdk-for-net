@@ -7,7 +7,7 @@ To accomplish this the Azure.Identity provides the `TokenCachePersistenceOptions
 
 >IMPORTANT! The token cache contains sensitive data and **MUST** be protected to prevent compromising accounts. All application decisions regarding the persistence of the token cache must consider that a breach of its content will fully compromise all the accounts it contains.
 
-## Using the default TokenCache
+## Using the default token cache
 
 The simplest way to persist the token data for a credential is to to use the default `TokenCachePersistenceOptions`.
 This will persist and read token data from a shared persisted token cache protected to the current account.
