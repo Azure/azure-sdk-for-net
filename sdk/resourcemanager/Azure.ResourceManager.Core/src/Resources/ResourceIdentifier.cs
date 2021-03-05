@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Core
                 other?.ToLowerInvariant(),
                 StringComparison.InvariantCultureIgnoreCase);
         }
-
+#pragma warning disable CA1303 // Do not raise exceptions in unexpected locations
         /// <summary>
         /// Populate Resource Identity fields from input string.
         /// </summary>
@@ -202,16 +202,16 @@ namespace Azure.ResourceManager.Core
 
             // Resource ID paths consist mainly of name/value pairs. Split the uri so we have an array of name/value pairs
             var parts = id.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries).ToList();
-
             // There must be at least one name/value pair for the resource id to be valid
-            if (parts.Count < 2)
+            if (parts.Count < 2 && !KnownKeys.Tenant.Equals(parts[0], StringComparison.InvariantCultureIgnoreCase))
                 throw new ArgumentOutOfRangeException($"'{id}' is not a valid resource");
-
+            
             // This is asserting that resources must start with '/subscriptions', /tenants, or /locations.
             // TODO: we will need to update this code to accomodate tenant based resources (which start with /providers)
-            if (!(KnownKeys.Subscription.Equals(parts[0], StringComparison.InvariantCultureIgnoreCase) ||
-                  KnownKeys.Tenant.Equals(parts[0], StringComparison.InvariantCultureIgnoreCase) ||
-                  KnownKeys.Location.Equals(parts[0], StringComparison.InvariantCultureIgnoreCase)))
+            if (!KnownKeys.Subscription.Equals(parts[0], StringComparison.InvariantCultureIgnoreCase) &&
+                !KnownKeys.Tenant.Equals(parts[0], StringComparison.InvariantCultureIgnoreCase) &&
+                !KnownKeys.ProviderNamespace.Equals(parts[0], StringComparison.InvariantCultureIgnoreCase) &&
+                !KnownKeys.Location.Equals(parts[0], StringComparison.InvariantCultureIgnoreCase))
             {
                 throw new ArgumentOutOfRangeException($"'{id}' is not a valid resource");
             }
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Core
 
             // In the case that this resource is a singleton proxy resource, the number of parts will be odd,
             // where the last part is the type name of the singleton
-            if (parts.Count % 2 != 0)
+            if (parts.Count % 2 != 0 && !KnownKeys.Tenant.Equals(parts[0], StringComparison.InvariantCultureIgnoreCase))
             {
                 _partsDictionary.Add(KnownKeys.UntrackedSubResource, parts.Last());
                 parts.RemoveAt(parts.Count - 1);
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Core
             {
                 ParseProviderResource(parts);
             }
-            else
+            else if (!KnownKeys.Tenant.Equals(parts[0], StringComparison.InvariantCultureIgnoreCase))
             {
                 ParseGenericResource(parts);
             }

@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Core
             }
 
             // Handle resource identifiers from RPs (they have the /providers path segment)
-            if (parts.Contains(KnownKeys.ProviderNamespace))
+            if (parts.Contains(KnownKeys.ProviderNamespace) && !KnownKeys.ProviderNamespace.Equals(parts[0], StringComparison.InvariantCultureIgnoreCase))
             {
                 // it is a resource id from a provider
                 var index = parts.LastIndexOf(KnownKeys.ProviderNamespace);
@@ -300,13 +300,25 @@ namespace Azure.ResourceManager.Core
                 Namespace = parts[0];
                 Type = string.Join("/", type);
             }
-
+            else if (KnownKeys.ProviderNamespace.Equals(parts[0], StringComparison.InvariantCultureIgnoreCase))
+            {
+                if (!parts[1].Contains('.'))
+                {
+                    throw new ArgumentOutOfRangeException(nameof(resourceIdOrType));
+                }
+                Namespace = parts[1];
+                
+                Type = string.Join("/", parts.Skip(2).Take(parts.Count - 3));
+                 Console.WriteLine("ten type is " + Type);
+            }
             // Handle resource types (Micsrsoft.Compute/virtualMachines, Microsoft.Network/virtualNetworks/subnets)
             else if (parts[0].Contains('.'))
             {
                 // it is a full type name
+                Console.WriteLine("resourceIdOrType " + resourceIdOrType);
                 Namespace = parts[0];
-                Type = string.Join("/", parts.Skip(Math.Max(0, 1)).Take(parts.Count - 1));
+                Type = string.Join("/", parts.Skip(1).Take(parts.Count - 1));
+                Console.WriteLine("type is " + Type);
             }
 
             // Handle built-in resource ids (e.g. /subscriptions/{sub}, /subscriptions/{sub}/resourceGroups/{rg})
@@ -315,6 +327,11 @@ namespace Azure.ResourceManager.Core
                 // primitive resource manager resource id
                 Namespace = "Microsoft.Resources";
                 Type = parts[parts.Count - 2];
+            }
+            else if (KnownKeys.Tenant.Equals(parts[0], StringComparison.InvariantCultureIgnoreCase))
+            {
+                Namespace = "providers";
+                Type = parts[0];
             }
             else
             {

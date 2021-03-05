@@ -1,12 +1,11 @@
-using Azure;
-using Azure.ResourceManager.Compute;
-using Azure.ResourceManager.Compute.Models;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Azure.ResourceManager.Billing;
 using Azure.ResourceManager.Core;
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.Management.Billing;
 using Azure.Core;
 
 namespace Proto.Billing
@@ -16,6 +15,7 @@ namespace Proto.Billing
     /// </summary>
     public class BillingAccountOperations : ResourceOperationsBase<BillingAccount>
     {
+        internal Subscription Subscription;
         /// <summary>
         /// Initializes a new instance of the <see cref="GenericResourceOperations"/> class.
         /// </summary>
@@ -24,10 +24,12 @@ namespace Proto.Billing
             : base(genericOperations)
         {
         }
-
-        internal BillingAccountOperations(AzureResourceManagerClientOptions options, string billingAccountId, TokenCredential credential, Uri baseUri)
-            : base(options, $"/providers/Microsoft.Billing/billingAccounts/{billingAccountId}", credential, baseUri)
+        
+        //TODO : dicuss ways to not pass in Subscription subscription for tenant only resources
+        internal BillingAccountOperations(AzureResourceManagerClientOptions options, string billingAccountId, Subscription subscription, TokenCredential credential, Uri baseUri)
+            : base(options, $"/providers/{ResourceType}/{billingAccountId}", credential, baseUri)
         {
+            Subscription = subscription;
         }
 
         /// <summary>
@@ -43,27 +45,37 @@ namespace Proto.Billing
         /// <summary>
         /// Gets the resource type definition for an availability set.
         /// </summary>
-        public static readonly ResourceType ResourceType = "/Microsoft.Billing/billingAccounts";
+        public static readonly ResourceType ResourceType = "Microsoft.Billing/billingAccounts";
 
         /// <inheritdoc/>
         protected override ResourceType ValidResourceType => ResourceType;
 
-        private IBillingAccountsOperations Operations => new BillingManagementClient(
+        private BillingAccountsOperations Operations => new BillingManagementClient(
             BaseUri,
-            null).BillingAccounts;
+            Subscription.Data.Id,
+            Credential,
+            ClientOptions.Convert<BillingManagementClientOptions>()).BillingAccounts;
 
 
         /// <inheritdoc/>
         public override ArmResponse<BillingAccount> Get()
         {
-            return null;
+            return new PhArmResponse<BillingAccount, Azure.ResourceManager.Billing.Models.BillingAccount>(
+                Operations.Get(Id.Name),
+                Converter());
         }
 
         /// <inheritdoc/>
-        public async override Task<ArmResponse<BillingAccount>> GetAsync(CancellationToken cancellationToken = default)
+        public override async Task<ArmResponse<BillingAccount>> GetAsync(CancellationToken cancellationToken = default)
         {
-            return null;
+            return new PhArmResponse<BillingAccount, Azure.ResourceManager.Billing.Models.BillingAccount>(
+                await Operations.GetAsync(Id.Name, null, cancellationToken).ConfigureAwait(false),
+                Converter());
         }
 
+        private Func<Azure.ResourceManager.Billing.Models.BillingAccount, BillingAccount> Converter()
+        {
+            return s => new BillingAccount(this, new BillingAccountData(s));
+        }
     }
 }

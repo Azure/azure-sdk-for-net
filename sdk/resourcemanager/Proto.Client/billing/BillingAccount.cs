@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using System.Threading.Tasks;
 using Azure.ResourceManager.Core;
 
@@ -9,11 +12,11 @@ namespace Proto.Billing
     public class BillingAccount : BillingAccountOperations
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="AvailabilitySet"/> class.
+        /// Initializes a new instance of the <see cref="BillingAccount"/> class.
         /// </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal BillingAccount(ResourceOperationsBase options, Microsoft.Azure.Management.Billing.Models.BillingAccount resource)
+        internal BillingAccount(ResourceOperationsBase options, Azure.ResourceManager.Billing.Models.BillingAccount resource)
             : base(options, resource.Id)
         {
             Data = resource;
@@ -22,7 +25,7 @@ namespace Proto.Billing
         /// <summary>
         /// Gets or sets the availability set data.
         /// </summary>
-        public Microsoft.Azure.Management.Billing.Models.BillingAccount Data { get; private set; }
+        public Azure.ResourceManager.Billing.Models.BillingAccount Data { get; private set; }
 
         /// <inheritdoc />
         protected override BillingAccount GetResource()
