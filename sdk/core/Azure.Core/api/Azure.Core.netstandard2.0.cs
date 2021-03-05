@@ -581,7 +581,7 @@ namespace Azure.Messaging
         public System.BinaryData? Data { get { throw null; } set { } }
         public string? DataContentType { get { throw null; } set { } }
         public string? DataSchema { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, object?> ExtensionAttributes { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, object> ExtensionAttributes { get { throw null; } }
         public string Id { get { throw null; } set { } }
         public string Source { get { throw null; } set { } }
         public string? Subject { get { throw null; } set { } }
