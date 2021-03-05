@@ -17,8 +17,11 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("dataSourceParameter");
-            writer.WriteObjectValue(DataSourceParameter);
+            if (Optional.IsDefined(DataSourceParameter))
+            {
+                writer.WritePropertyName("dataSourceParameter");
+                writer.WriteObjectValue(DataSourceParameter);
+            }
             writer.WritePropertyName("dataSourceType");
             writer.WriteStringValue(DataSourceType.ToString());
             writer.WritePropertyName("dataFeedName");
@@ -156,7 +159,7 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static MySqlDataFeed DeserializeMySqlDataFeed(JsonElement element)
         {
-            SqlSourceParameter dataSourceParameter = default;
+            Optional<SqlSourceParameter> dataSourceParameter = default;
             DataFeedSourceType dataSourceType = default;
             Optional<string> dataFeedId = default;
             string dataFeedName = default;
@@ -172,7 +175,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             Optional<long> minRetryIntervalInSeconds = default;
             Optional<long> stopRetryAfterInSeconds = default;
             Optional<DataFeedRollupType> needRollup = default;
-            Optional<DataFeedAutoRollupMethod> rollUpMethod = default;
+            Optional<RollUpMethod> rollUpMethod = default;
             Optional<IList<string>> rollUpColumns = default;
             Optional<string> allUpIdentification = default;
             Optional<DataFeedMissingDataPointFillType> fillMissingPointType = default;
@@ -182,13 +185,18 @@ namespace Azure.AI.MetricsAdvisor.Models
             Optional<IList<string>> viewers = default;
             Optional<bool> isAdmin = default;
             Optional<string> creator = default;
-            Optional<DataFeedStatus> status = default;
+            Optional<EntityStatus> status = default;
             Optional<DateTimeOffset> createdTime = default;
             Optional<string> actionLinkTemplate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataSourceParameter"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     dataSourceParameter = SqlSourceParameter.DeserializeSqlSourceParameter(property.Value);
                     continue;
                 }
@@ -319,7 +327,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    rollUpMethod = new DataFeedAutoRollupMethod(property.Value.GetString());
+                    rollUpMethod = new RollUpMethod(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("rollUpColumns"))
@@ -424,7 +432,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = new DataFeedStatus(property.Value.GetString());
+                    status = new EntityStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("createdTime"))
@@ -443,7 +451,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new MySqlDataFeed(dataSourceType, dataFeedId.Value, dataFeedName, dataFeedDescription.Value, granularityName, Optional.ToNullable(granularityAmount), metrics, Optional.ToList(dimension), timestampColumn.Value, dataStartFrom, Optional.ToNullable(startOffsetInSeconds), Optional.ToNullable(maxConcurrency), Optional.ToNullable(minRetryIntervalInSeconds), Optional.ToNullable(stopRetryAfterInSeconds), Optional.ToNullable(needRollup), Optional.ToNullable(rollUpMethod), Optional.ToList(rollUpColumns), allUpIdentification.Value, Optional.ToNullable(fillMissingPointType), Optional.ToNullable(fillMissingPointValue), Optional.ToNullable(viewMode), Optional.ToList(admins), Optional.ToList(viewers), Optional.ToNullable(isAdmin), creator.Value, Optional.ToNullable(status), Optional.ToNullable(createdTime), actionLinkTemplate.Value, dataSourceParameter);
+            return new MySqlDataFeed(dataSourceType, dataFeedId.Value, dataFeedName, dataFeedDescription.Value, granularityName, Optional.ToNullable(granularityAmount), metrics, Optional.ToList(dimension), timestampColumn.Value, dataStartFrom, Optional.ToNullable(startOffsetInSeconds), Optional.ToNullable(maxConcurrency), Optional.ToNullable(minRetryIntervalInSeconds), Optional.ToNullable(stopRetryAfterInSeconds), Optional.ToNullable(needRollup), Optional.ToNullable(rollUpMethod), Optional.ToList(rollUpColumns), allUpIdentification.Value, Optional.ToNullable(fillMissingPointType), Optional.ToNullable(fillMissingPointValue), Optional.ToNullable(viewMode), Optional.ToList(admins), Optional.ToList(viewers), Optional.ToNullable(isAdmin), creator.Value, Optional.ToNullable(status), Optional.ToNullable(createdTime), actionLinkTemplate.Value, dataSourceParameter.Value);
         }
     }
 }

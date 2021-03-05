@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    /// <summary> The EntityStatus. </summary>
+    /// <summary> data feed status. </summary>
     internal readonly partial struct EntityStatus : IEquatable<EntityStatus>
     {
         private readonly string _value;

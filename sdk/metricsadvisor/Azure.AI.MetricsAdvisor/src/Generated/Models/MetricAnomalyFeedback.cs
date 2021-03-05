@@ -12,6 +12,23 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The AnomalyFeedback. </summary>
     public partial class MetricAnomalyFeedback : MetricFeedback
     {
+        /// <summary> Initializes a new instance of MetricAnomalyFeedback. </summary>
+        /// <param name="metricId"> metric unique id. </param>
+        /// <param name="dimensionFilter"> . </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="metricId"/> or <paramref name="dimensionFilter"/> is null. </exception>
+        public MetricAnomalyFeedback(string metricId, FeedbackDimensionFilter dimensionFilter) : base(metricId, dimensionFilter)
+        {
+            if (metricId == null)
+            {
+                throw new ArgumentNullException(nameof(metricId));
+            }
+            if (dimensionFilter == null)
+            {
+                throw new ArgumentNullException(nameof(dimensionFilter));
+            }
+
+            Type = FeedbackType.Anomaly;
+        }
 
         /// <summary> Initializes a new instance of MetricAnomalyFeedback. </summary>
         /// <param name="type"> feedback type. </param>
@@ -20,8 +37,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="userPrincipal"> user who gives this feedback. </param>
         /// <param name="metricId"> metric unique id. </param>
         /// <param name="dimensionFilter"> . </param>
-        /// <param name="startTime"> the start timestamp of feedback timerange. </param>
-        /// <param name="endTime"> the end timestamp of feedback timerange, when equals to startTime means only one timestamp. </param>
+        /// <param name="startTime"> the start timestamp of feedback time range. </param>
+        /// <param name="endTime"> the end timestamp of feedback time range, when equals to startTime means only one timestamp. </param>
         /// <param name="valueInternal"> . </param>
         /// <param name="anomalyDetectionConfigurationId"> the corresponding anomaly detection configuration of this feedback. </param>
         /// <param name="anomalyDetectionConfigurationSnapshot"> . </param>

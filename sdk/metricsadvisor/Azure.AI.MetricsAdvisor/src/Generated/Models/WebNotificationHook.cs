@@ -13,5 +13,17 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The WebhookHookInfo. </summary>
     public partial class WebNotificationHook : NotificationHook
     {
+        /// <summary> Initializes a new instance of WebNotificationHook. </summary>
+        /// <param name="name"> hook unique name. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public WebNotificationHook(string name) : base(name)
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            HookType = Models.HookType.Webhook;
+        }
     }
 }
