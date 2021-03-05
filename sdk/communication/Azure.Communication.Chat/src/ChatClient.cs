@@ -24,19 +24,19 @@ namespace Azure.Communication.Chat
         private readonly ChatClientOptions _chatClientOptions;
 
         /// <summary> Initializes a new instance of <see cref="ChatClient"/>.</summary>
-        /// <param name="endpointUrl">The uri for the Azure Communication Services Chat.</param>
+        /// <param name="endpoint">The uri for the Azure Communication Services Chat.</param>
         /// <param name="communicationTokenCredential">Instance of <see cref="CommunicationTokenCredential"/>.</param>
         /// <param name="options">Chat client options exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
-        public ChatClient(Uri endpointUrl, CommunicationTokenCredential communicationTokenCredential, ChatClientOptions options = default)
+        public ChatClient(Uri endpoint, CommunicationTokenCredential communicationTokenCredential, ChatClientOptions options = default)
         {
             Argument.AssertNotNull(communicationTokenCredential, nameof(communicationTokenCredential));
-            Argument.AssertNotNull(endpointUrl, nameof(endpointUrl));
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
             _chatClientOptions = options ?? new ChatClientOptions();
             _communicationTokenCredential = communicationTokenCredential;
-            _endpointUrl = endpointUrl;
+            _endpointUrl = endpoint;
             _clientDiagnostics = new ClientDiagnostics(_chatClientOptions);
             HttpPipeline pipeline = CreatePipelineFromOptions(_chatClientOptions, communicationTokenCredential);
-            _chatRestClient = new ChatRestClient(_clientDiagnostics, pipeline, endpointUrl.AbsoluteUri, _chatClientOptions.ApiVersion);
+            _chatRestClient = new ChatRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri, _chatClientOptions.ApiVersion);
         }
 
         /// <summary>Initializes a new instance of <see cref="ChatClient"/> for mocking.</summary>
