@@ -33,7 +33,7 @@ var credential = new InteractiveBrowserCredential(
 By default the `TokenCache` will protect any data which is persisted using the user data protection APIs available on the current platform. However, there are cases where no data protection is available, and applications may choose to still persist the token cache in an unencrypted state. This is accomplished with the `AllowUnencryptedStorage` option.
 
 ```C# Snippet:Identity_TokenCache_PersistentUnencrypted
-var persistenceOptions = new TokenCachePersistenceOptions { AllowUnencryptedStorage = true };
+var persistenceOptions = new TokenCachePersistenceOptions { UnsafeAllowUnencryptedStorage = true };
 
 var credential = new InteractiveBrowserCredential(
     new InteractiveBrowserCredentialOptions { TokenCachePersistenceOptions = persistenceOptions }
