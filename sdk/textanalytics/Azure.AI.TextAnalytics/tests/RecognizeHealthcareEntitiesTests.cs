@@ -101,7 +101,7 @@ namespace Azure.AI.TextAnalytics.Tests
                     var role = relation.Roles.ElementAt(0);
                     Assert.IsNotNull(relation.Roles);
                     Assert.AreEqual(2, relation.Roles.Count());
-                    Assert.AreEqual("Attribute", role.Name);
+                    Assert.AreEqual("Dosage", role.Name);
                     Assert.AreEqual("100mg", role.Entity.Text);
                     Assert.AreEqual(18, role.Entity.Offset);
                     Assert.AreEqual("Dosage", role.Entity.Category);
@@ -110,7 +110,6 @@ namespace Azure.AI.TextAnalytics.Tests
             }
         }
 
-        [Ignore("Waiting for service to deploy to WestU2. Issue https://github.com/Azure/azure-sdk-for-net/issues/19152")]
         [Test]
         public async Task RecognizeHealthcareEntitiesTestWithAssertions()
         {

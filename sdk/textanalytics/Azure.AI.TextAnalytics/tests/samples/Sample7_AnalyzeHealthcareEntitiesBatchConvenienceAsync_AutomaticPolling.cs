@@ -14,14 +14,14 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples: SamplesBase<TextAnalyticsTestEnvironment>
     {
         [Test]
-        public async Task HealthcareAsync_ManualPolling()
+        public async Task Sample7_AnalyzeHealthcareEntities_AutomaticPolling()
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
 
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            #region Snippet:RecognizeHealthcareEntitiesAsyncManualPolling
+            #region Snippet:RecognizeHealthcareEntitiesAsyncAutomaticPolling
             string document = @"RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS | \
                                 Admission Date: 5/22/2001 Report Status: Signed Discharge Date: 4/24/2001 ADMISSION DIAGNOSIS: CORONARY ARTERY DISEASE. \
                                 HISTORY OF PRESENT ILLNESS: The patient is a 54-year-old gentleman with a history of progressive angina over the past several months. \
@@ -36,16 +36,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
             TimeSpan pollingInterval = new TimeSpan(1000);
 
-            while (true)
-            {
-                await healthOperation.UpdateStatusAsync();
-                if (healthOperation.HasCompleted)
-                {
-                    break;
-                }
-
-                await Task.Delay(pollingInterval);
-            }
+            await healthOperation.WaitForCompletionAsync(pollingInterval);
 
             await foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in healthOperation.Value)
             {
@@ -62,6 +53,7 @@ namespace Azure.AI.TextAnalytics.Samples
                         Console.WriteLine($"    Category: {entity.Category}");
                         Console.WriteLine($"    Offset: {entity.Offset}");
                         Console.WriteLine($"    Length: {entity.Length}");
+                        Console.WriteLine($"    NormalizedText: {entity.NormalizedText}");
                         Console.WriteLine($"    Links:");
 
                         foreach (EntityDataSource entityDataSource in entity.DataSources)
@@ -69,7 +61,49 @@ namespace Azure.AI.TextAnalytics.Samples
                             Console.WriteLine($"        Entity ID in Data Source: {entityDataSource.EntityId}");
                             Console.WriteLine($"        DataSource: {entityDataSource.Name}");
                         }
+
+                        if (entity.Assertion != null)
+                        {
+                            Console.WriteLine($"    Assertions:");
+
+                            if (entity.Assertion?.Association != null)
+                            {
+                                Console.WriteLine($"        Association: {entity.Assertion?.Association}");
+                            }
+
+                            if (entity.Assertion?.Certainty != null)
+                            {
+                                Console.WriteLine($"        Certainty: {entity.Assertion?.Certainty}");
+                            }
+                            if (entity.Assertion?.Conditionality != null)
+                            {
+                                Console.WriteLine($"        Conditionality: {entity.Assertion?.Conditionality}");
+                            }
+                        }
                     }
+
+                    Console.WriteLine($"    We found {result.EntityRelations.Count} relations in the current document:");
+                    Console.WriteLine("");
+
+                    foreach (HealthcareEntityRelation relations in result.EntityRelations)
+                    {
+                        Console.WriteLine($"        Relation: {relations.RelationType}");
+                        Console.WriteLine($"        For this relation there are {relations.Roles.Count} roles");
+
+                        foreach (HealthcareEntityRelationRole role in relations.Roles)
+                        {
+                            Console.WriteLine($"            Role Name: {role.Name}");
+
+                            Console.WriteLine($"            Associated Entity Text: {role.Entity.Text}");
+                            Console.WriteLine($"            Associated Entity Category: {role.Entity.Category}");
+
+                            Console.WriteLine("");
+                        }
+
+                        Console.WriteLine("");
+                    }
+
+                    Console.WriteLine("");
                     Console.WriteLine("");
                 }
             }
