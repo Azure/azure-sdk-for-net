@@ -202,7 +202,7 @@ namespace Compute.Tests.DiskRPTests
 
         }
 
-        protected void SSDZRSDisk_CRUD_Execute(string accountType, string methodName, int? diskSizeGB = null, string tier = null, string location = null)
+        protected void SSDZRSDisk_CRUD_Execute(string diskCreateOption, string accountType, string methodName, int? diskSizeGB = null, string tier = null, string location = null)
         {
             using (MockContext context = MockContext.Start(this.GetType(), methodName))
             {
@@ -212,7 +212,7 @@ namespace Compute.Tests.DiskRPTests
                 // Data
                 var rgName = TestUtilities.GenerateName(TestPrefix);
                 var diskName = TestUtilities.GenerateName(DiskNamePrefix);
-                Disk disk = GenerateDefaultDisk(DiskCreateOption.Empty, rgName, diskSizeGB, location: location);
+                Disk disk = GenerateDefaultDisk(diskCreateOption, rgName, diskSizeGB, location: location);
                 disk.Sku = new DiskSku()
                 {
                     Name = accountType
@@ -225,7 +225,10 @@ namespace Compute.Tests.DiskRPTests
                     // SETUP
                     // **********
                     // Create resource group
-                    m_ResourcesClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = DiskRPLocation });
+                    if (diskCreateOption != DiskCreateOption.Import && diskCreateOption != DiskCreateOption.Copy)
+                    {
+                        m_ResourcesClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = DiskRPLocation });
+                    }
 
                     // **********
                     // TEST
