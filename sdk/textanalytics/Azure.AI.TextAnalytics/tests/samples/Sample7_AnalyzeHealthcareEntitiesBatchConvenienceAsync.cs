@@ -34,36 +34,28 @@ namespace Azure.AI.TextAnalytics.Samples
 
             string document2 = "Prescribed 100mg ibuprofen, taken twice daily.";
 
-            List<TextDocumentInput> batchInput = new List<TextDocumentInput>()
+            List<string> batchInput = new List<string>()
             {
-                new TextDocumentInput("1", document1)
-                { Language = "en" },
-                new TextDocumentInput("2", document2)
-                { Language = "en" },
-                new TextDocumentInput("3", string.Empty)
+                document1,
+                document2,
+                string.Empty
             };
-            var options = new AnalyzeHealthcareEntitiesOptions { IncludeStatistics = true };
 
-            AnalyzeHealthcareEntitiesOperation healthOperation = await client.StartAnalyzeHealthcareEntitiesAsync(batchInput, options);
+            var options = new AnalyzeHealthcareEntitiesOptions { };
+
+            AnalyzeHealthcareEntitiesOperation healthOperation = await client.StartAnalyzeHealthcareEntitiesAsync(batchInput, "en", options);
 
             await healthOperation.WaitForCompletionAsync();
 
             Console.WriteLine($"Created On   : {healthOperation.CreatedOn}");
             Console.WriteLine($"Expires On   : {healthOperation.ExpiresOn}");
-            Console.WriteLine($"Id           : {healthOperation.Id}");
             Console.WriteLine($"Status       : {healthOperation.Status}");
             Console.WriteLine($"Last Modified: {healthOperation.LastModified}");
-
-            int i = 0;
 
             await foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in healthOperation.Value)
             {
                 Console.WriteLine($"Results of Azure Text Analytics \"Healthcare Async\" Model, version: \"{documentsInPage.ModelVersion}\"");
                 Console.WriteLine("");
-
-                TextDocumentInput document = batchInput[i++];
-
-                Console.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\"):");
 
                 foreach (AnalyzeHealthcareEntitiesResult entitiesInDoc in documentsInPage)
                 {
@@ -75,6 +67,7 @@ namespace Azure.AI.TextAnalytics.Samples
                             Console.WriteLine($"    Category: {entity.Category}");
                             Console.WriteLine($"    Offset: {entity.Offset}");
                             Console.WriteLine($"    Length: {entity.Length}");
+                            Console.WriteLine($"    NormalizedText: {entity.NormalizedText}");
                             Console.WriteLine($"    Links:");
 
                             foreach (EntityDataSource entityDataSource in entity.DataSources)
@@ -82,6 +75,46 @@ namespace Azure.AI.TextAnalytics.Samples
                                 Console.WriteLine($"        Entity ID in Data Source: {entityDataSource.EntityId}");
                                 Console.WriteLine($"        DataSource: {entityDataSource.Name}");
                             }
+
+                            if (entity.Assertion != null)
+                            {
+                                Console.WriteLine($"    Assertions:");
+
+                                if (entity.Assertion?.Association != null)
+                                {
+                                    Console.WriteLine($"        Association: {entity.Assertion?.Association}");
+                                }
+
+                                if (entity.Assertion?.Certainty != null)
+                                {
+                                    Console.WriteLine($"        Certainty: {entity.Assertion?.Certainty}");
+                                }
+                                if (entity.Assertion?.Conditionality != null)
+                                {
+                                    Console.WriteLine($"        Conditionality: {entity.Assertion?.Conditionality}");
+                                }
+                            }
+                        }
+
+                        Console.WriteLine($"    We found {entitiesInDoc.EntityRelations.Count} relations in the current document:");
+                        Console.WriteLine("");
+
+                        foreach (HealthcareEntityRelation relations in entitiesInDoc.EntityRelations)
+                        {
+                            Console.WriteLine($"        Relation: {relations.RelationType}");
+                            Console.WriteLine($"        For this relation there are {relations.Roles.Count} roles");
+
+                            foreach (HealthcareEntityRelationRole role in relations.Roles)
+                            {
+                                Console.WriteLine($"            Role Name: {role.Name}");
+
+                                Console.WriteLine($"            Associated Entity Text: {role.Entity.Text}");
+                                Console.WriteLine($"            Associated Entity Category: {role.Entity.Category}");
+
+                                Console.WriteLine("");
+                            }
+
+                            Console.WriteLine("");
                         }
                     }
                     else
@@ -91,18 +124,8 @@ namespace Azure.AI.TextAnalytics.Samples
                         Console.WriteLine($"  Message: {entitiesInDoc.Error.Message}");
                     }
 
-                    Console.WriteLine($"Batch operation statistics:");
-                    Console.WriteLine($"  Document count: {entitiesInDoc.Statistics.CharacterCount}");
-                    Console.WriteLine($"  Valid document count: {entitiesInDoc.Statistics.TransactionCount}");
                     Console.WriteLine("");
                 }
-
-                Console.WriteLine($"Request statistics:");
-                Console.WriteLine($"    Document Count: {documentsInPage.Statistics.DocumentCount}");
-                Console.WriteLine($"    Valid Document Count: {documentsInPage.Statistics.ValidDocumentCount}");
-                Console.WriteLine($"    Transaction Count: {documentsInPage.Statistics.TransactionCount}");
-                Console.WriteLine($"    Invalid Document Count: {documentsInPage.Statistics.InvalidDocumentCount}");
-                Console.WriteLine("");
             }
         }
 

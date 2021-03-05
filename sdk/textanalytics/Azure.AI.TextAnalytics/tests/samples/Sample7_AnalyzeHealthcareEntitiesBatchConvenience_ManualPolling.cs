@@ -14,15 +14,15 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples: SamplesBase<TextAnalyticsTestEnvironment>
     {
         [Test]
-        public async Task Sample7_AnalyzeHealthcareEntitiesBatch()
+        public async Task Sample7_AnalyzeHealthcareEntities_ManualPolling()
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
 
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            #region Snippet:TextAnalyticsSampleHealthcareBatch
-            string document1 = @"RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS | \
+            #region Snippet:RecognizeHealthcareEntitiesAsyncManualPolling
+            string document = @"RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS | \
                                 Admission Date: 5/22/2001 Report Status: Signed Discharge Date: 4/24/2001 ADMISSION DIAGNOSIS: CORONARY ARTERY DISEASE. \
                                 HISTORY OF PRESENT ILLNESS: The patient is a 54-year-old gentleman with a history of progressive angina over the past several months. \
                                 The patient had a cardiac catheterization in July of this year revealing total occlusion of the RCA and 50% left main disease ,\
@@ -32,32 +32,24 @@ namespace Azure.AI.TextAnalytics.Samples
                                 minimal ST depressions in the anterior lateral leads , thought due to fatigue and wrist pain , his anginal equivalent. Due to the patient's \
                                 increased symptoms and family history and history left main disease with total occasional of his RCA was referred for revascularization with open heart surgery.";
 
-            string document2 = "Prescribed 100mg ibuprofen, taken twice daily.";
+            AnalyzeHealthcareEntitiesOperation healthOperation = await client.StartAnalyzeHealthcareEntitiesAsync(new List<string>() { document });
 
-            List<TextDocumentInput> batchInput = new List<TextDocumentInput>()
+            TimeSpan pollingInterval = new TimeSpan(1000);
+
+            while (true)
             {
-                new TextDocumentInput("1", document1)
+                await healthOperation.UpdateStatusAsync();
+                if (healthOperation.HasCompleted)
                 {
-                    Language = "en"
-                },
-                new TextDocumentInput("2", document2)
-                {
-                    Language = "en"
-                },
-            };
+                    break;
+                }
 
-            AnalyzeHealthcareEntitiesOptions options = new AnalyzeHealthcareEntitiesOptions()
+                await Task.Delay(pollingInterval);
+            }
+
+            await foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in healthOperation.Value)
             {
-                IncludeStatistics = true
-            };
-
-            AnalyzeHealthcareEntitiesOperation healthOperation = client.StartAnalyzeHealthcareEntities(batchInput, options);
-
-            await healthOperation.WaitForCompletionAsync();
-
-            foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in healthOperation.GetValues())
-            {
-                Console.WriteLine($"Results of Azure Text Analytics \"Healthcare\" Model, version: \"{documentsInPage.ModelVersion}\"");
+                Console.WriteLine($"Results of Azure Text Analytics \"Healthcare Async\" Model, version: \"{documentsInPage.ModelVersion}\"");
                 Console.WriteLine("");
 
                 foreach (AnalyzeHealthcareEntitiesResult result in documentsInPage)
@@ -78,7 +70,6 @@ namespace Azure.AI.TextAnalytics.Samples
                             Console.WriteLine($"        Entity ID in Data Source: {entityDataSource.EntityId}");
                             Console.WriteLine($"        DataSource: {entityDataSource.Name}");
                         }
-
                         if (entity.Assertion != null)
                         {
                             Console.WriteLine($"    Assertions:");
@@ -97,40 +88,32 @@ namespace Azure.AI.TextAnalytics.Samples
                                 Console.WriteLine($"        Conditionality: {entity.Assertion?.Conditionality}");
                             }
                         }
-                    }
 
-                    Console.WriteLine($"    We found {result.EntityRelations.Count} relations in the current document:");
-                    Console.WriteLine("");
+                        Console.WriteLine($"    We found {result.EntityRelations.Count} relations in the current document:");
+                        Console.WriteLine("");
 
-                    foreach (HealthcareEntityRelation relations in result.EntityRelations)
-                    {
-                        Console.WriteLine($"        Relation: {relations.RelationType}");
-                        Console.WriteLine($"        For this relation there are {relations.Roles.Count} roles");
-
-                        foreach (HealthcareEntityRelationRole role in relations.Roles)
+                        foreach (HealthcareEntityRelation relations in result.EntityRelations)
                         {
-                            Console.WriteLine($"            Role Name: {role.Name}");
+                            Console.WriteLine($"        Relation: {relations.RelationType}");
+                            Console.WriteLine($"        For this relation there are {relations.Roles.Count} roles");
 
-                            Console.WriteLine($"            Associated Entity Text: {role.Entity.Text}");
-                            Console.WriteLine($"            Associated Entity Category: {role.Entity.Category}");
+                            foreach (HealthcareEntityRelationRole role in relations.Roles)
+                            {
+                                Console.WriteLine($"            Role Name: {role.Name}");
+
+                                Console.WriteLine($"            Associated Entity Text: {role.Entity.Text}");
+                                Console.WriteLine($"            Associated Entity Category: {role.Entity.Category}");
+
+                                Console.WriteLine("");
+                            }
 
                             Console.WriteLine("");
                         }
 
                         Console.WriteLine("");
                     }
-
-                    Console.WriteLine($"    Document statistics:");
-                    Console.WriteLine($"        Character count (in Unicode graphemes): {result.Statistics.CharacterCount}");
-                    Console.WriteLine($"        Transaction count: {result.Statistics.TransactionCount}");
                     Console.WriteLine("");
                 }
-                Console.WriteLine($"Request statistics:");
-                Console.WriteLine($"    Document Count: {documentsInPage.Statistics.DocumentCount}");
-                Console.WriteLine($"    Valid Document Count: {documentsInPage.Statistics.ValidDocumentCount}");
-                Console.WriteLine($"    Transaction Count: {documentsInPage.Statistics.TransactionCount}");
-                Console.WriteLine($"    Invalid Document Count: {documentsInPage.Statistics.InvalidDocumentCount}");
-                Console.WriteLine("");
             }
         }
 
