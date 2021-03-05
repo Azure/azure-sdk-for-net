@@ -49,32 +49,34 @@ namespace Azure.Core.Pipeline
         /// <inheritdoc />
         public override async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            await PreProcessAsync(message, true).ConfigureAwait(false);
+            await AuthenticateRequestAsync(message, true).ConfigureAwait(false);
             await ProcessAsync(message, pipeline, true).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            PreProcessAsync(message, false).EnsureCompleted();
+            AuthenticateRequestAsync(message, false).EnsureCompleted();
             ProcessAsync(message, pipeline, false).EnsureCompleted();
         }
 
         /// <summary>
-        /// Executes a pre-processing step on the <paramref name="message"/> before <see cref="ProcessAsync(HttpMessage, ReadOnlyMemory{HttpPipelinePolicy})"/> or <see cref="Process(HttpMessage, ReadOnlyMemory{HttpPipelinePolicy})"/> is called.
+        /// Executes before <see cref="ProcessAsync(HttpMessage, ReadOnlyMemory{HttpPipelinePolicy})"/> or <see cref="Process(HttpMessage, ReadOnlyMemory{HttpPipelinePolicy})"/> is called.
+        /// Implementers of this method are expected to call <see cref="SetAuthorizationHeader(HttpMessage, TokenRequestContext, bool)"/> if authorization is required for requests not related to handling a challenge response.
         /// </summary>
         /// <param name="message">The <see cref="HttpMessage"/> this policy would be applied to.</param>
         /// <param name="async">Indicates whether the method was called from an asynchronous context.</param>
         /// <returns>The <see cref="ValueTask"/> representing the asynchronous operation.</returns>
-        protected virtual Task PreProcessAsync(HttpMessage message, bool async)
+        protected virtual Task AuthenticateRequestAsync(HttpMessage message, bool async)
         {
-            return Task.CompletedTask;
+            var context = new TokenRequestContext(Scopes, message.Request.ClientRequestId);
+            return SetAuthorizationHeader(message, context, async);
         }
 
         /// <summary>
         /// Executed in the event a 401 response with a WWW-Authenticate authentication challenge header is received after the initial request.
         /// </summary>
-        /// <remarks>Service client libraries may derive from this and extend to handle service specific authentication challenges.</remarks>
+        /// <remarks>Service client libraries may override this to handle service specific authentication challenges.</remarks>
         /// <param name="message">The <see cref="HttpMessage"/> to be authenticated.</param>
         /// <param name="async">Indicates whether the method was called from an asynchronous context.</param>
         /// <returns>A boolean indicating whether the request was successfully authenticated and should be sent to the transport.</returns>
@@ -88,12 +90,6 @@ namespace Azure.Core.Pipeline
             if (message.Request.Uri.Scheme != Uri.UriSchemeHttps)
             {
                 throw new InvalidOperationException("Bearer token authentication is not permitted for non TLS protected (https) endpoints.");
-            }
-
-            if (Scopes.Length > 0 && !message.Request.Headers.Contains(HttpHeader.Names.Authorization))
-            {
-               var context = new TokenRequestContext(Scopes, message.Request.ClientRequestId);
-               await AuthenticateRequestAsync(message, context, async).ConfigureAwait(false);
             }
 
             if (async)
@@ -125,7 +121,13 @@ namespace Azure.Core.Pipeline
             }
         }
 
-        protected async Task AuthenticateRequestAsync(HttpMessage message, TokenRequestContext context, bool async)
+        /// <summary>
+        /// Sets the Authorization header on the <see cref="Request"/>.
+        /// </summary>
+        /// <param name="message">The <see cref="HttpMessage"/> with the <see cref="Request"/> to be authorized.</param>
+        /// <param name="context">The <see cref="TokenRequestContext"/> used to authorize the <see cref="Request"/>.</param>
+        /// <param name="async">Indicates whether the method was called from an asynchronous context.</param>
+        protected async Task SetAuthorizationHeader(HttpMessage message, TokenRequestContext context, bool async)
         {
             string headerValue;
             if (async)

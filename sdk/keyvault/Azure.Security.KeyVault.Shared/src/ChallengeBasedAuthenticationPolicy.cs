@@ -20,7 +20,7 @@ namespace Azure.Security.KeyVault
         { }
 
         /// <inheritdoc cref="BearerTokenChallengeAuthenticationPolicy.AuthenticateRequestOnChallengeAsync(HttpMessage, bool)" />
-        protected override async Task PreProcessAsync(HttpMessage message, bool async)
+        protected override async Task AuthenticateRequestAsync(HttpMessage message, bool async)
         {
             if (message.Request.Uri.Scheme != Uri.UriSchemeHttps)
             {
@@ -30,7 +30,7 @@ namespace Azure.Security.KeyVault
             // if this policy doesn't have _scope cached try to get it from the static challenge cache.
             if (_scope != null)
             {
-                await AuthenticateRequestAsync(message, new TokenRequestContext(_scope.Scopes, message.Request.ClientRequestId), async).ConfigureAwait(false);
+                await SetAuthorizationHeader(message, new TokenRequestContext(_scope.Scopes, message.Request.ClientRequestId), async).ConfigureAwait(false);
                 return;
             }
 
@@ -50,7 +50,7 @@ namespace Azure.Security.KeyVault
             {
                 // We fetched the scope from the cache, but we have not initialized the Scopes in the base yet.
                 var context = new TokenRequestContext(_scope.Scopes, message.Request.ClientRequestId);
-                await AuthenticateRequestAsync(message, context, async).ConfigureAwait(false);
+                await SetAuthorizationHeader(message, context, async).ConfigureAwait(false);
             }
         }
 
@@ -86,7 +86,7 @@ namespace Azure.Security.KeyVault
             }
 
             var context = new TokenRequestContext(_scope.Scopes, message.Request.ClientRequestId);
-            await AuthenticateRequestAsync(message, context, async).ConfigureAwait(false);
+            await SetAuthorizationHeader(message, context, async).ConfigureAwait(false);
             return true;
         }
 

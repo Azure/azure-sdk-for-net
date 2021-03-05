@@ -41,7 +41,7 @@ namespace Azure.Core.Pipeline
 
             string claimsChallenge = Base64Url.DecodeString(challenge.ToString());
             var context = new TokenRequestContext(Scopes, message.Request.ClientRequestId, claimsChallenge);
-            await AuthenticateRequestAsync(message, context, async);
+            await SetAuthorizationHeader(message, context, async);
             return true;
         }
     }
