@@ -138,7 +138,7 @@ pr:
     - sdk/servicefabric/Microsoft.Azure.Management.ServiceFabric
     - sdk/servicefabricmanagedclusters/Microsoft.Azure.Management.ServiceFabricManagedClusters
     - sdk/signalr/Microsoft.Azure.Management.SignalR
-    - sdk/sqlmanagement/Microsoft.Azure.Management.SqlManagement
+    - sdk/sqlmanagement/Microsoft.Azure.Management.Sql
     - sdk/sqlvirtualmachine/Microsoft.Azure.Management.SqlVirtualMachine
     - sdk/storage/Microsoft.Azure.Management.Storage
     - sdk/storagecache/Microsoft.Azure.Management.StorageCache
