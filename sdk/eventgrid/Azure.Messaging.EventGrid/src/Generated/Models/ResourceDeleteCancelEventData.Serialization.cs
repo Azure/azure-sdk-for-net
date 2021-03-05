@@ -12,10 +12,10 @@ using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    [JsonConverter(typeof(ResourceDeleteFailureDataConverter))]
-    public partial class ResourceDeleteFailureData
+    [JsonConverter(typeof(ResourceDeleteCancelEventDataConverter))]
+    public partial class ResourceDeleteCancelEventData
     {
-        internal static ResourceDeleteFailureData DeserializeResourceDeleteFailureData(JsonElement element)
+        internal static ResourceDeleteCancelEventData DeserializeResourceDeleteCancelEventData(JsonElement element)
         {
             Optional<string> tenantId = default;
             Optional<string> subscriptionId = default;
@@ -86,19 +86,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new ResourceDeleteFailureData(tenantId.Value, subscriptionId.Value, resourceGroup.Value, resourceProvider.Value, resourceUri.Value, operationName.Value, status.Value, authorization.Value, claims.Value, correlationId.Value, httpRequest.Value);
+            return new ResourceDeleteCancelEventData(tenantId.Value, subscriptionId.Value, resourceGroup.Value, resourceProvider.Value, resourceUri.Value, operationName.Value, status.Value, authorization.Value, claims.Value, correlationId.Value, httpRequest.Value);
         }
 
-        internal partial class ResourceDeleteFailureDataConverter : JsonConverter<ResourceDeleteFailureData>
+        internal partial class ResourceDeleteCancelEventDataConverter : JsonConverter<ResourceDeleteCancelEventData>
         {
-            public override void Write(Utf8JsonWriter writer, ResourceDeleteFailureData model, JsonSerializerOptions options)
+            public override void Write(Utf8JsonWriter writer, ResourceDeleteCancelEventData model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
-            public override ResourceDeleteFailureData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            public override ResourceDeleteCancelEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeResourceDeleteFailureData(document.RootElement);
+                return DeserializeResourceDeleteCancelEventData(document.RootElement);
             }
         }
     }

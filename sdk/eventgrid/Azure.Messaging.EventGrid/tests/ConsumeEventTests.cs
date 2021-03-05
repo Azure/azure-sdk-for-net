@@ -951,7 +951,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
             Assert.NotNull(events);
             Assert.True(events[0].TryGetSystemEventData(out object eventData));
-            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceWriteSuccessData).TenantId);
+            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceWriteSuccessEventData).TenantId);
         }
 
         [Test]
@@ -963,7 +963,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
             Assert.NotNull(events);
             Assert.True(events[0].TryGetSystemEventData(out object eventData));
-            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceWriteFailureData).TenantId);
+            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceWriteFailureEventData).TenantId);
         }
 
         [Test]
@@ -975,7 +975,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
             Assert.NotNull(events);
             Assert.True(events[0].TryGetSystemEventData(out object eventData));
-            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceWriteCancelData).TenantId);
+            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceWriteCancelEventData).TenantId);
         }
 
         [Test]
@@ -987,7 +987,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
             Assert.NotNull(events);
             Assert.True(events[0].TryGetSystemEventData(out object eventData));
-            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceDeleteSuccessData).TenantId);
+            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceDeleteSuccessEventData).TenantId);
         }
 
         [Test]
@@ -999,7 +999,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
             Assert.NotNull(events);
             Assert.True(events[0].TryGetSystemEventData(out object eventData));
-            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceDeleteFailureData).TenantId);
+            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceDeleteFailureEventData).TenantId);
         }
 
         [Test]
@@ -1011,7 +1011,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
             Assert.NotNull(events);
             Assert.True(events[0].TryGetSystemEventData(out object eventData));
-            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceDeleteCancelData).TenantId);
+            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceDeleteCancelEventData).TenantId);
         }
 
         [Test]
@@ -1023,7 +1023,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
             Assert.NotNull(events);
             Assert.True(events[0].TryGetSystemEventData(out object eventData));
-            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceActionSuccessData).TenantId);
+            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceActionSuccessEventData).TenantId);
         }
 
         [Test]
@@ -1035,7 +1035,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
             Assert.NotNull(events);
             Assert.True(events[0].TryGetSystemEventData(out object eventData));
-            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceActionFailureData).TenantId);
+            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceActionFailureEventData).TenantId);
         }
 
         [Test]
@@ -1047,7 +1047,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
             Assert.NotNull(events);
             Assert.True(events[0].TryGetSystemEventData(out object eventData));
-            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceActionCancelData).TenantId);
+            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceActionCancelEventData).TenantId);
         }
         #endregion
 
@@ -2296,7 +2296,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
             Assert.NotNull(events);
             Assert.True(events[0].TryGetSystemEventData(out object eventData));
-            ResourceWriteSuccessData sysData = eventData as ResourceWriteSuccessData;
+            ResourceWriteSuccessEventData sysData = eventData as ResourceWriteSuccessEventData;
 
             Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", sysData.TenantId);
         }
@@ -2311,7 +2311,7 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.NotNull(events);
             Assert.True(events[0].TryGetSystemEventData(out object eventData));
 
-            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceWriteFailureData).TenantId);
+            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceWriteFailureEventData).TenantId);
         }
 
         [Test]
@@ -2323,7 +2323,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
             Assert.NotNull(events);
             Assert.True(events[0].TryGetSystemEventData(out object eventData));
-            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceWriteCancelData).TenantId);
+            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceWriteCancelEventData).TenantId);
         }
 
         [Test]
@@ -2335,7 +2335,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
             Assert.NotNull(events);
             Assert.True(events[0].TryGetSystemEventData(out object eventData));
-            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceDeleteSuccessData).TenantId);
+            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceDeleteSuccessEventData).TenantId);
         }
 
         [Test]
@@ -2347,7 +2347,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
             Assert.NotNull(events);
             Assert.True(events[0].TryGetSystemEventData(out object eventData));
-            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceDeleteFailureData).TenantId);
+            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceDeleteFailureEventData).TenantId);
         }
 
         [Test]
@@ -2359,7 +2359,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
             Assert.NotNull(events);
             Assert.True(events[0].TryGetSystemEventData(out object eventData));
-            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceDeleteCancelData).TenantId);
+            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceDeleteCancelEventData).TenantId);
         }
 
     [Test]
@@ -2371,7 +2371,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
             Assert.NotNull(events);
             Assert.True(events[0].TryGetSystemEventData(out object eventData));
-            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceActionSuccessData).TenantId);
+            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceActionSuccessEventData).TenantId);
         }
 
         [Test]
@@ -2383,7 +2383,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
             Assert.NotNull(events);
             Assert.True(events[0].TryGetSystemEventData(out object eventData));
-            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceActionFailureData).TenantId);
+            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceActionFailureEventData).TenantId);
         }
 
         [Test]
@@ -2395,7 +2395,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
             Assert.NotNull(events);
             Assert.True(events[0].TryGetSystemEventData(out object eventData));
-            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceActionCancelData).TenantId);
+            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceActionCancelEventData).TenantId);
         }
         #endregion
 

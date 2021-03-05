@@ -7,15 +7,15 @@
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Resources.ResourceDeleteFailure event. This is raised when a resource delete operation fails. </summary>
-    public partial class ResourceDeleteFailureData
+    /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Resources.ResourceActionFailure event. This is raised when a resource action operation fails. </summary>
+    public partial class ResourceActionFailureEventData
     {
-        /// <summary> Initializes a new instance of ResourceDeleteFailureData. </summary>
-        internal ResourceDeleteFailureData()
+        /// <summary> Initializes a new instance of ResourceActionFailureEventData. </summary>
+        internal ResourceActionFailureEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceDeleteFailureData. </summary>
+        /// <summary> Initializes a new instance of ResourceActionFailureEventData. </summary>
         /// <param name="tenantId"> The tenant ID of the resource. </param>
         /// <param name="subscriptionId"> The subscription ID of the resource. </param>
         /// <param name="resourceGroup"> The resource group of the resource. </param>
@@ -27,7 +27,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="claims"> The properties of the claims. </param>
         /// <param name="correlationId"> An operation ID used for troubleshooting. </param>
         /// <param name="httpRequest"> The details of the operation. </param>
-        internal ResourceDeleteFailureData(string tenantId, string subscriptionId, string resourceGroup, string resourceProvider, string resourceUri, string operationName, string status, string authorization, string claims, string correlationId, string httpRequest)
+        internal ResourceActionFailureEventData(string tenantId, string subscriptionId, string resourceGroup, string resourceProvider, string resourceUri, string operationName, string status, string authorization, string claims, string correlationId, string httpRequest)
         {
             TenantId = tenantId;
             SubscriptionId = subscriptionId;
