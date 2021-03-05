@@ -932,7 +932,7 @@ namespace Azure.Core.Tests
         [TestCase(false)]
         public void CanParseNullAttributeValue(bool skipValidation)
         {
-            // improperly cased extension can still be deserialized.
+            // null extension attribute values can still be deserialized.
             var json = new BinaryData("{\"subject\": \"Subject-0\", \"source\":\"source\", \"specversion\":\"1.0\", \"id\": \"id\", \"type\": \"type\", \"key\":null }");
 
             if (!skipValidation)
