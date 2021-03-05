@@ -12,23 +12,6 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The CommentFeedback. </summary>
     public partial class MetricCommentFeedback : MetricFeedback
     {
-        /// <summary> Initializes a new instance of MetricCommentFeedback. </summary>
-        /// <param name="metricId"> metric unique id. </param>
-        /// <param name="dimensionFilter"> . </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="metricId"/> or <paramref name="dimensionFilter"/> is null. </exception>
-        public MetricCommentFeedback(string metricId, FeedbackDimensionFilter dimensionFilter) : base(metricId, dimensionFilter)
-        {
-            if (metricId == null)
-            {
-                throw new ArgumentNullException(nameof(metricId));
-            }
-            if (dimensionFilter == null)
-            {
-                throw new ArgumentNullException(nameof(dimensionFilter));
-            }
-
-            Type = FeedbackType.Comment;
-        }
 
         /// <summary> Initializes a new instance of MetricCommentFeedback. </summary>
         /// <param name="type"> feedback type. </param>

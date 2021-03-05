@@ -12,23 +12,6 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The AnomalyFeedback. </summary>
     public partial class MetricAnomalyFeedback : MetricFeedback
     {
-        /// <summary> Initializes a new instance of MetricAnomalyFeedback. </summary>
-        /// <param name="metricId"> metric unique id. </param>
-        /// <param name="dimensionFilter"> . </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="metricId"/> or <paramref name="dimensionFilter"/> is null. </exception>
-        public MetricAnomalyFeedback(string metricId, FeedbackDimensionFilter dimensionFilter) : base(metricId, dimensionFilter)
-        {
-            if (metricId == null)
-            {
-                throw new ArgumentNullException(nameof(metricId));
-            }
-            if (dimensionFilter == null)
-            {
-                throw new ArgumentNullException(nameof(dimensionFilter));
-            }
-
-            Type = FeedbackType.Anomaly;
-        }
 
         /// <summary> Initializes a new instance of MetricAnomalyFeedback. </summary>
         /// <param name="type"> feedback type. </param>
