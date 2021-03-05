@@ -22,8 +22,8 @@ namespace Azure.Messaging.EventGrid.Tests
                     continue;
                 }
                 Assert.IsTrue(
-                    SystemEventExtensions.s_systemEventDeserializers.Values.Where(
-                        f => f.Method.ReturnType == systemEvent).Any(), systemEvent.Name);
+                    SystemEventExtensions.s_systemEventDeserializers.Values.Any(
+                        f => f.Method.ReturnType == systemEvent), systemEvent.Name);
             }
         }
     }
