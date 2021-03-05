@@ -161,6 +161,7 @@ namespace Azure.Messaging.EventGrid
         /// <see cref="ContainerRegistryChartPushedEventData"/> system event.
         /// </summary>
         public const string ContainerRegistryChartPushed = "Microsoft.ContainerRegistry.ChartPushed";
+
         #endregion
 
         #region Device events
@@ -681,6 +682,46 @@ namespace Azure.Messaging.EventGrid
         /// <see cref="WebAppServicePlanUpdatedEventData"/> system event.
         /// </summary>
         public const string WebAppServicePlanUpdated = "Microsoft.Web.AppServicePlanUpdated";
+        #endregion
+
+        #region Redis
+        /// <summary>
+        /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
+        /// <see cref="RedisExportRDBCompletedEventData"/> system event.
+        /// </summary>
+        public const string RedisExportRDBCompleted = "Microsoft.Cache.ExportRDBCompleted";
+
+        /// <summary>
+        /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
+        /// <see cref="RedisImportRDBCompletedEventData"/> system event.
+        /// </summary>
+        public const string RedisImportRDBCompleted = "Microsoft.Cache.ImportRDBCompleted";
+
+        /// <summary>
+        /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
+        /// <see cref="RedisPatchingCompletedEventData"/> system event.
+        /// </summary>
+        public const string RedisPatchingCompleted = "Microsoft.Cache.PatchingCompleted";
+
+        /// <summary>
+        /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
+        /// <see cref="RedisScalingCompletedEventData"/> system event.
+        /// </summary>
+        public const string RedisScalingCompleted = "Microsoft.Cache.ScalingCompleted";
+        #endregion
+
+        #region SignalR
+        /// <summary>
+        /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
+        /// <see cref="SignalRServiceClientConnectionConnectedEventData"/> system event.
+        /// </summary>
+        public const string SignalRServiceClientConnectionConnected = "Microsoft.SignalRService.ClientConnectionConnected";
+
+        /// <summary>
+        /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
+        /// <see cref="SignalRServiceClientConnectionDisconnectedEventData"/> system event.
+        /// </summary>
+        public const string SignalRServiceClientConnectionDisconnected = "Microsoft.SignalRService.ClientConnectionDisconnected";
         #endregion
     }
 }
