@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Core
         /// <returns> Whether or not the resource existed. </returns>
         public virtual bool DoesExist(string resourceName)
         {
-            ArmResponse<TOperations> output;
+            TOperations output;
             return TryGet(resourceName, out output);
         }
 
