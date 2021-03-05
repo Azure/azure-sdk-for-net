@@ -13,17 +13,5 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The EmailHookInfo. </summary>
     public partial class EmailNotificationHook : NotificationHook
     {
-        /// <summary> Initializes a new instance of EmailNotificationHook. </summary>
-        /// <param name="name"> hook unique name. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public EmailNotificationHook(string name) : base(name)
-        {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-
-            HookType = Models.HookType.Email;
-        }
     }
 }
