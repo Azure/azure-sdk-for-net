@@ -43,7 +43,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary> mark if the data feed need rollup. </summary>
         public DataFeedRollupType? NeedRollup { get; set; }
         /// <summary> roll up method. </summary>
-        public RollUpMethod? RollUpMethod { get; set; }
+        public DataFeedAutoRollupMethod? RollUpMethod { get; set; }
         /// <summary> the identification value for the row of calculated all-up value. </summary>
         public string AllUpIdentification { get; set; }
         /// <summary> the type of fill missing point for anomaly detection. </summary>
@@ -53,7 +53,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary> data feed access mode, default is Private. </summary>
         public DataFeedAccessMode? ViewMode { get; set; }
         /// <summary> data feed status. </summary>
-        public EntityStatus? Status { get; set; }
+        public DataFeedStatus? Status { get; set; }
         /// <summary> action link for alert. </summary>
         public string ActionLinkTemplate { get; set; }
     }

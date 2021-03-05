@@ -188,7 +188,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             Optional<long> minRetryIntervalInSeconds = default;
             Optional<long> stopRetryAfterInSeconds = default;
             Optional<DataFeedRollupType> needRollup = default;
-            Optional<RollUpMethod> rollUpMethod = default;
+            Optional<DataFeedAutoRollupMethod> rollUpMethod = default;
             Optional<IList<string>> rollUpColumns = default;
             Optional<string> allUpIdentification = default;
             Optional<DataFeedMissingDataPointFillType> fillMissingPointType = default;
@@ -198,7 +198,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             Optional<IList<string>> viewers = default;
             Optional<bool> isAdmin = default;
             Optional<string> creator = default;
-            Optional<EntityStatus> status = default;
+            Optional<DataFeedStatus> status = default;
             Optional<DateTimeOffset> createdTime = default;
             Optional<string> actionLinkTemplate = default;
             foreach (var property in element.EnumerateObject())
@@ -330,7 +330,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    rollUpMethod = new RollUpMethod(property.Value.GetString());
+                    rollUpMethod = new DataFeedAutoRollupMethod(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("rollUpColumns"))
@@ -435,7 +435,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = new EntityStatus(property.Value.GetString());
+                    status = new DataFeedStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("createdTime"))

@@ -170,7 +170,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             string name = options?.GetDataFeedsFilter?.Name;
             DataFeedSourceType? sourceType = options?.GetDataFeedsFilter?.SourceType;
             DataFeedGranularityType? granularityType = options?.GetDataFeedsFilter?.GranularityType;
-            EntityStatus? status = options?.GetDataFeedsFilter?.Status?.ConvertToEntityStatus();
+            DataFeedStatus? status = options?.GetDataFeedsFilter?.Status;
             string creator = options?.GetDataFeedsFilter?.Creator;
             int? skip = options?.SkipCount;
             int? top = options?.TopCount;
@@ -224,7 +224,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             string name = options?.GetDataFeedsFilter?.Name;
             DataFeedSourceType? sourceType = options?.GetDataFeedsFilter?.SourceType;
             DataFeedGranularityType? granularityType = options?.GetDataFeedsFilter?.GranularityType;
-            EntityStatus? status = options?.GetDataFeedsFilter?.Status?.ConvertToEntityStatus();
+            DataFeedStatus? status = options?.GetDataFeedsFilter?.Status;
             string creator = options?.GetDataFeedsFilter?.Creator;
             int? skip = options?.SkipCount;
             int? top = options?.TopCount;

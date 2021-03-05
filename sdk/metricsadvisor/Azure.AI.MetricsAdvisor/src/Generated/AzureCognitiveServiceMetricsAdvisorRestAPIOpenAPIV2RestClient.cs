@@ -1355,7 +1355,7 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
-        internal HttpMessage CreateListDataFeedsRequest(string dataFeedName, DataFeedSourceType? dataSourceType, DataFeedGranularityType? granularityName, EntityStatus? status, string creator, int? skip, int? top)
+        internal HttpMessage CreateListDataFeedsRequest(string dataFeedName, DataFeedSourceType? dataSourceType, DataFeedGranularityType? granularityName, DataFeedStatus? status, string creator, int? skip, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1406,7 +1406,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="skip"> for paging, skipped number. </param>
         /// <param name="top"> for paging, item number in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<DataFeedList>> ListDataFeedsAsync(string dataFeedName = null, DataFeedSourceType? dataSourceType = null, DataFeedGranularityType? granularityName = null, EntityStatus? status = null, string creator = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DataFeedList>> ListDataFeedsAsync(string dataFeedName = null, DataFeedSourceType? dataSourceType = null, DataFeedGranularityType? granularityName = null, DataFeedStatus? status = null, string creator = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListDataFeedsRequest(dataFeedName, dataSourceType, granularityName, status, creator, skip, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1433,7 +1433,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="skip"> for paging, skipped number. </param>
         /// <param name="top"> for paging, item number in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<DataFeedList> ListDataFeeds(string dataFeedName = null, DataFeedSourceType? dataSourceType = null, DataFeedGranularityType? granularityName = null, EntityStatus? status = null, string creator = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public Response<DataFeedList> ListDataFeeds(string dataFeedName = null, DataFeedSourceType? dataSourceType = null, DataFeedGranularityType? granularityName = null, DataFeedStatus? status = null, string creator = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListDataFeedsRequest(dataFeedName, dataSourceType, granularityName, status, creator, skip, top);
             _pipeline.Send(message, cancellationToken);
@@ -4044,7 +4044,7 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
-        internal HttpMessage CreateListDataFeedsNextPageRequest(string nextLink, string dataFeedName, DataFeedSourceType? dataSourceType, DataFeedGranularityType? granularityName, EntityStatus? status, string creator, int? skip, int? top)
+        internal HttpMessage CreateListDataFeedsNextPageRequest(string nextLink, string dataFeedName, DataFeedSourceType? dataSourceType, DataFeedGranularityType? granularityName, DataFeedStatus? status, string creator, int? skip, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -4069,7 +4069,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="top"> for paging, item number in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<DataFeedList>> ListDataFeedsNextPageAsync(string nextLink, string dataFeedName = null, DataFeedSourceType? dataSourceType = null, DataFeedGranularityType? granularityName = null, EntityStatus? status = null, string creator = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DataFeedList>> ListDataFeedsNextPageAsync(string nextLink, string dataFeedName = null, DataFeedSourceType? dataSourceType = null, DataFeedGranularityType? granularityName = null, DataFeedStatus? status = null, string creator = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -4103,7 +4103,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="top"> for paging, item number in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<DataFeedList> ListDataFeedsNextPage(string nextLink, string dataFeedName = null, DataFeedSourceType? dataSourceType = null, DataFeedGranularityType? granularityName = null, EntityStatus? status = null, string creator = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public Response<DataFeedList> ListDataFeedsNextPage(string nextLink, string dataFeedName = null, DataFeedSourceType? dataSourceType = null, DataFeedGranularityType? granularityName = null, DataFeedStatus? status = null, string creator = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
