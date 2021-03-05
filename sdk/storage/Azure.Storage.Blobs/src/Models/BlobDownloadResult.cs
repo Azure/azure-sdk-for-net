@@ -8,9 +8,9 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// The details and Content returned from downloading a blob.
     /// </summary>
-    public class BlobDownloadDataResult
+    public class BlobDownloadResult
     {
-        internal BlobDownloadDataResult() { }
+        internal BlobDownloadResult() { }
 
         /// <summary>
         /// Details returned when downloading a Blob

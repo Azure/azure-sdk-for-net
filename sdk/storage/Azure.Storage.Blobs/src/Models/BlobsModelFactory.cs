@@ -1942,11 +1942,11 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Creates a new BlobDownloadDataResult instance for mocking.
         /// </summary>
-        public static BlobDownloadDataResult BlobDownloadDataResult(
+        public static BlobDownloadResult BlobDownloadResult(
             BinaryData content = default,
             BlobDownloadDetails details = default)
         {
-            return new BlobDownloadDataResult()
+            return new BlobDownloadResult()
             {
                 Content = content,
                 Details = details,
