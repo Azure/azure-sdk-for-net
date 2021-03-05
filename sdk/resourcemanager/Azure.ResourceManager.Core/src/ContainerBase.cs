@@ -69,61 +69,16 @@ namespace Azure.ResourceManager.Core
         /// Returns the resource from Azure if it exists.
         /// </summary>
         /// <param name="resourceName"> The name of the resource you want to get. </param>
-        /// <param name="resource"> The resource if it existed, null otherwise. </param>
-        /// <returns> Whether or not the resource existed. </returns>
-        public virtual bool TryGet(string resourceName, out ArmResponse<TOperations> resource)
-        {
-            var op = GetOperation(resourceName);
-
-            try
-            {
-                resource = op.Get();
-                return true;
-            }
-            catch
-            {
-                resource = null;
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// Returns the resource from Azure if it exists.
-        /// </summary>
-        /// <param name="resourceName"> The name of the resource you want to get. </param>
-        /// <param name="resource"> The resource if it existed, null otherwise. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
         /// The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> Whether or not the resource existed. </returns>
-        public async virtual Task<TOperations> TryGetAsync(string resourceName, TOperations resource, CancellationToken cancellationToken = default)
+        public async virtual Task<TOperations> TryGetAsync(string resourceName, CancellationToken cancellationToken = default)
         {
             var op = GetOperation(resourceName);
 
             try
             {
                 return (await op.GetAsync(cancellationToken).ConfigureAwait(false)).Value;
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// Returns the resource from Azure if it exists.
-        /// </summary>
-        /// <param name="resourceName"> The name of the resource you want to get. </param>
-        /// <param name="resource"> The resource if it existed, null otherwise. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
-        /// The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> Whether or not the resource existed. </returns>
-        public async virtual Task<ArmResponse<TOperations>> TryGetAsync(string resourceName, ArmResponse<TOperations> resource, CancellationToken cancellationToken = default)
-        {
-            var op = GetOperation(resourceName);
-
-            try
-            {
-                return await op.GetAsync(cancellationToken).ConfigureAwait(false);
             }
             catch
             {
