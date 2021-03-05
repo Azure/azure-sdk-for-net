@@ -439,10 +439,13 @@ Text Analytics for health is a containerized service that extracts and labels re
 
     string document2 = "Prescribed 100mg ibuprofen, taken twice daily.";
 
-    List<string> batchInput = new List<string>()
+    List<TextDocumentInput> batchInput = new List<TextDocumentInput>()
     {
-        document1,
-        document2,
+        new TextDocumentInput("1", document1)
+        { Language = "en" },
+        new TextDocumentInput("2", document2)
+        { Language = "en" },
+        new TextDocumentInput("3", string.Empty)
     };
 
     AnalyzeHealthcareEntitiesOptions options = new AnalyzeHealthcareEntitiesOptions()
@@ -450,44 +453,69 @@ Text Analytics for health is a containerized service that extracts and labels re
         IncludeStatistics = true
     };
 
-    AnalyzeHealthcareEntitiesOperation healthOperation = await client.StartAnalyzeHealthcareEntitiesAsync(batchInput, "en", options);
+    AnalyzeHealthcareEntitiesOperation healthOperation = await client.StartAnalyzeHealthcareEntitiesAsync(batchInput, options);
 
     await healthOperation.WaitForCompletionAsync();
 
-    await foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in healthOperation.Value)
+    Console.WriteLine($"AnalyzeHealthcareEntities operation was completed");
+
+    Console.WriteLine($"Created On   : {healthOperation.CreatedOn}");
+    Console.WriteLine($"Expires On   : {healthOperation.ExpiresOn}");
+    Console.WriteLine($"Id           : {healthOperation.Id}");
+    Console.WriteLine($"Status       : {healthOperation.Status}");
+    Console.WriteLine($"Last Modified: {healthOperation.LastModified}");
+
+    foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in healthOperation.GetValues())
     {
-        Console.WriteLine($"Results of Azure Text Analytics \"Healthcare Async\" Model, version: \"{documentsInPage.ModelVersion}\"");
+        Console.WriteLine($"Results of Azure Text Analytics \"Healthcare\" Model, version: \"{documentsInPage.ModelVersion}\"");
         Console.WriteLine("");
+
+        int i = 0;
 
         foreach (AnalyzeHealthcareEntitiesResult result in documentsInPage)
         {
-            Console.WriteLine($"    Recognized the following {result.Entities.Count} healthcare entities:");
+            TextDocumentInput document = batchInput[i++];
 
-            foreach (HealthcareEntity entity in result.Entities)
+            Console.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\"):");
+
+            if (result.HasError)
             {
-                Console.WriteLine($"    Entity: {entity.Text}");
-                Console.WriteLine($"    Category: {entity.Category}");
-                Console.WriteLine($"    Offset: {entity.Offset}");
-                Console.WriteLine($"    Length: {entity.Length}");
-                Console.WriteLine($"    Links:");
+                Console.WriteLine("  Error!");
+                Console.WriteLine($"  Document error code: {result.Error.ErrorCode}.");
+                Console.WriteLine($"  Message: {result.Error.Message}");
+            }
+            else
+            {
+                Console.WriteLine($"    Recognized the following {result.Entities.Count} healthcare entities:");
 
-                foreach (EntityDataSource entityDataSource in entity.DataSources)
+                foreach (HealthcareEntity entity in result.Entities)
                 {
-                    Console.WriteLine($"        Entity ID in Data Source: {entityDataSource.EntityId}");
-                    Console.WriteLine($"        DataSource: {entityDataSource.Name}");
+                    Console.WriteLine($"    Entity: {entity.Text}");
+                    Console.WriteLine($"    Category: {entity.Category}");
+                    Console.WriteLine($"    Offset: {entity.Offset}");
+                    Console.WriteLine($"    Length: {entity.Length}");
+                    Console.WriteLine($"    Links:");
+
+                    foreach (EntityDataSource entityDataSource in entity.DataSources)
+                    {
+                        Console.WriteLine($"        Entity ID in Data Source: {entityDataSource.EntityId}");
+                        Console.WriteLine($"        DataSource: {entityDataSource.Name}");
+                    }
                 }
+                Console.WriteLine("");
             }
 
-            Console.WriteLine($"    Document statistics:");
-            Console.WriteLine($"        Character count (in Unicode graphemes): {result.Statistics.CharacterCount}");
-            Console.WriteLine($"        Transaction count: {result.Statistics.TransactionCount}");
+            Console.WriteLine($"Batch operation statistics:");
+            Console.WriteLine($"  Document count: {result.Statistics.CharacterCount}");
+            Console.WriteLine($"  Valid document count: {result.Statistics.TransactionCount}");
             Console.WriteLine("");
         }
-        Console.WriteLine($"Request statistics:");
-        Console.WriteLine($"    Document Count: {documentsInPage.Statistics.DocumentCount}");
-        Console.WriteLine($"    Valid Document Count: {documentsInPage.Statistics.ValidDocumentCount}");
-        Console.WriteLine($"    Transaction Count: {documentsInPage.Statistics.TransactionCount}");
-        Console.WriteLine($"    Invalid Document Count: {documentsInPage.Statistics.InvalidDocumentCount}");
+
+        Console.WriteLine($"Batch operation statistics:");
+        Console.WriteLine($"  Document count: {documentsInPage.Statistics.DocumentCount}");
+        Console.WriteLine($"  Valid document count: {documentsInPage.Statistics.ValidDocumentCount}");
+        Console.WriteLine($"  Invalid document count: {documentsInPage.Statistics.InvalidDocumentCount}");
+        Console.WriteLine($"  Transaction count: {documentsInPage.Statistics.TransactionCount}");
         Console.WriteLine("");
     }
 }

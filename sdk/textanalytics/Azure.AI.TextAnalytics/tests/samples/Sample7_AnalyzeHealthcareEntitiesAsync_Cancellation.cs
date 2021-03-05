@@ -14,14 +14,14 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples: SamplesBase<TextAnalyticsTestEnvironment>
     {
         [Test]
-        public async Task HealthcareAsync_AutomaticPolling()
+        public async Task Sample7_AnalyzeHealthcareEntitiesAsync_Cancellation()
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
 
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            #region Snippet:RecognizeHealthcareEntitiesAsyncAutomaticPolling
+            #region Snippet:TextAnalyticsSampleHealthcareAsyncCancellation
             string document = @"RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS | \
                                 Admission Date: 5/22/2001 Report Status: Signed Discharge Date: 4/24/2001 ADMISSION DIAGNOSIS: CORONARY ARTERY DISEASE. \
                                 HISTORY OF PRESENT ILLNESS: The patient is a 54-year-old gentleman with a history of progressive angina over the past several months. \
@@ -32,38 +32,16 @@ namespace Azure.AI.TextAnalytics.Samples
                                 minimal ST depressions in the anterior lateral leads , thought due to fatigue and wrist pain , his anginal equivalent. Due to the patient's \
                                 increased symptoms and family history and history left main disease with total occasional of his RCA was referred for revascularization with open heart surgery.";
 
-            AnalyzeHealthcareEntitiesOperation healthOperation = await client.StartAnalyzeHealthcareEntitiesAsync(new List<string>() { document });
+            var batchDocument = new List<string>();
 
-            TimeSpan pollingInterval = new TimeSpan(1000);
-
-            await healthOperation.WaitForCompletionAsync(pollingInterval);
-
-            await foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in healthOperation.Value)
+            for (var i=0; i < 10; i++)
             {
-                Console.WriteLine($"Results of Azure Text Analytics \"Healthcare Async\" Model, version: \"{documentsInPage.ModelVersion}\"");
-                Console.WriteLine("");
-
-                foreach (AnalyzeHealthcareEntitiesResult result in documentsInPage)
-                {
-                    Console.WriteLine($"    Recognized the following {result.Entities.Count} healthcare entities:");
-
-                    foreach (HealthcareEntity entity in result.Entities)
-                    {
-                        Console.WriteLine($"    Entity: {entity.Text}");
-                        Console.WriteLine($"    Category: {entity.Category}");
-                        Console.WriteLine($"    Offset: {entity.Offset}");
-                        Console.WriteLine($"    Length: {entity.Length}");
-                        Console.WriteLine($"    Links:");
-
-                        foreach (EntityDataSource entityDataSource in entity.DataSources)
-                        {
-                            Console.WriteLine($"        Entity ID in Data Source: {entityDataSource.EntityId}");
-                            Console.WriteLine($"        DataSource: {entityDataSource.Name}");
-                        }
-                    }
-                    Console.WriteLine("");
-                }
+                batchDocument.Add(document);
             }
+
+            AnalyzeHealthcareEntitiesOperation healthOperation = await client.StartAnalyzeHealthcareEntitiesAsync(batchDocument, "en");
+
+            await healthOperation.CancelAsync();
         }
 
         #endregion
