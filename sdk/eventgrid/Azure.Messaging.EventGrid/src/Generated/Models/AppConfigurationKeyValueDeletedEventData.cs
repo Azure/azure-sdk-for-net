@@ -19,11 +19,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="key"> The key used to identify the key-value that was deleted. </param>
         /// <param name="label"> The label, if any, used to identify the key-value that was deleted. </param>
         /// <param name="etag"> The etag representing the key-value that was deleted. </param>
-        internal AppConfigurationKeyValueDeletedEventData(string key, string label, string etag)
+        /// <param name="syncToken"> The sync token representing the server state after the event. </param>
+        internal AppConfigurationKeyValueDeletedEventData(string key, string label, string etag, string syncToken)
         {
             Key = key;
             Label = label;
             Etag = etag;
+            SyncToken = syncToken;
         }
 
         /// <summary> The key used to identify the key-value that was deleted. </summary>
@@ -32,5 +34,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string Label { get; }
         /// <summary> The etag representing the key-value that was deleted. </summary>
         public string Etag { get; }
+        /// <summary> The sync token representing the server state after the event. </summary>
+        public string SyncToken { get; }
     }
 }

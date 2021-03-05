@@ -117,18 +117,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// minutes and 120 minutes (inclusive) and should be specified in ISO
         /// 8601 format. The default value is 90 minutes (PT1H30M).
         /// &lt;br&gt;&lt;br&gt; Minimum api-version: 2020-06-01</param>
-        /// <param name="platformFaultDomain">Specifies the scale set logical
-        /// fault domain into which the Virtual Machine will be created. By
-        /// default, the Virtual Machine will by automatically assigned to a
-        /// fault domain that best maintains balance across available fault
-        /// domains.&lt;br&gt;&lt;li&gt;This is applicable only if the
-        /// 'virtualMachineScaleSet' property of this Virtual Machine is
-        /// set.&lt;li&gt;The Virtual Machine Scale Set that is referenced,
-        /// must have 'platformFaultDomainCount' &amp;gt; 1.&lt;li&gt;This
-        /// property cannot be updated once the Virtual Machine is
-        /// created.&lt;li&gt;Fault domain assignment can be viewed in the
-        /// Virtual Machine Instance View.&lt;br&gt;&lt;br&gt;Minimum
-        /// api‐version: 2020‐12‐01</param>
         /// <param name="identity">The identity of the virtual machine, if
         /// configured.</param>
         /// <param name="zones">The virtual machine zones.</param>

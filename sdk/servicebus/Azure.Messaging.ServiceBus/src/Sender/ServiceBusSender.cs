@@ -77,13 +77,6 @@ namespace Azure.Messaging.ServiceBus
         private readonly ServiceBusRetryPolicy _retryPolicy;
 
         /// <summary>
-        /// Gets the transaction group associated with the sender. This is an
-        /// arbitrary string that is used to all senders, receivers, and processors that you
-        /// wish to use in a transaction that spans multiple different queues, topics, or subscriptions.
-        /// </summary>
-        public virtual string TransactionGroup { get; }
-
-        /// <summary>
         ///   The active connection to the Azure Service Bus service, enabling client communications for metadata
         ///   about the associated Service Bus entity and access to transport-aware consumers.
         /// </summary>
@@ -122,17 +115,15 @@ namespace Azure.Messaging.ServiceBus
                 Argument.AssertNotNullOrWhiteSpace(entityPath, nameof(entityPath));
                 connection.ThrowIfClosed();
 
-                options = options?.Clone() ?? new ServiceBusSenderOptions();
+                options = options ?? new ServiceBusSenderOptions();
                 EntityPath = entityPath;
                 Identifier = DiagnosticUtilities.GenerateIdentifier(EntityPath);
                 _connection = connection;
                 _retryPolicy = _connection.RetryOptions.ToRetryPolicy();
-                TransactionGroup = options.TransactionGroup;
                 _innerSender = _connection.CreateTransportSender(
                     entityPath,
                     _retryPolicy,
-                    Identifier,
-                    TransactionGroup);
+                    Identifier);
                 _scopeFactory = new EntityScopeFactory(EntityPath, FullyQualifiedNamespace);
                 _plugins = plugins;
             }
@@ -155,12 +146,16 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         ///   Sends a message to the associated entity of Service Bus.
         /// </summary>
-        /// <param name="message"></param>
-        ///
+        /// <param name="message">The message to send.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
-        ///
+        /// <exception cref="ServiceBusException">
+        ///   The message exceeds the maximum size allowed, as determined by the Service Bus service.
+        ///   The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.MessageSizeExceeded"/> in this case.
+        ///   For more information on service limits, see
+        ///   <see href="https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-quotas#messaging-quotas"/>.
+        /// </exception>
         public virtual async Task SendMessageAsync(
             ServiceBusMessage message,
             CancellationToken cancellationToken = default)
@@ -182,7 +177,12 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
-        ///
+        /// <exception cref="ServiceBusException">
+        ///   The set of messages exceeds the maximum size allowed in a single batch, as determined by the Service Bus service.
+        ///   The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.MessageSizeExceeded"/> in this case.
+        ///   For more information on service limits, see
+        ///   <see href="https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-quotas#messaging-quotas"/>.
+        /// </exception>
         public virtual async Task SendMessagesAsync(
             IEnumerable<ServiceBusMessage> messages,
             CancellationToken cancellationToken = default)
