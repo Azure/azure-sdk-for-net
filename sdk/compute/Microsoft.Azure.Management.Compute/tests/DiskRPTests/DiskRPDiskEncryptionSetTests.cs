@@ -43,5 +43,11 @@ namespace Compute.Tests.DiskRPTests
         {
             DiskEncryptionSet_UpdateDisk_Execute("DiskEncryptionSet_AddDESToExistingDisk", location: "centraluseuap");
         }
+
+        [Fact]
+        public void DiskEncryptionSet_CRD_RotationToLatestKeyVersionEnabled()
+        {
+            DiskEncryptionSet_WithRotationToLatestKeyVersionEnabled_CRD_Execute("DiskEncryptionSet_CRD_RotationToLatestKeyVersionEnabled", DiskEncryptionSetType.EncryptionAtRestWithCustomerKey, location: supportedZoneLocation);
+        }
     }
 }

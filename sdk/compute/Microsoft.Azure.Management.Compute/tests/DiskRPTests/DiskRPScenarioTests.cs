@@ -49,6 +49,12 @@ namespace Compute.Tests.DiskRPTests
         {
             SSDZRSDisk_CRUD_Execute(StorageAccountTypes.StandardSSDZRS, "Disk_CRUD_StandardSSDZRSDisk", diskSizeGB: 32, location: "eastus2euap");
         }
+        
+        [Fact]
+        public void Disk_CRUD_PremiumDiskWithBursting()
+        {
+            PremiumDisk_CRUD_Execute(DiskCreateOption.Import, "Disk_CRUD_PremiumDiskWithBursting", tier: "P30", diskSizeGB: 1024, burstingEnabled: true, location: "eastus2euap");
+        }
 
         [Fact]
         public void Snapshot_CRUD_EmptyDisk()
@@ -78,6 +84,18 @@ namespace Compute.Tests.DiskRPTests
         public void Snapshot_List_EmptyDisk()
         {
             Snapshot_List_Execute(DiskCreateOption.Empty, "Snapshot_List_EmptyDisk", diskSizeGB: 5);
+        }
+
+        [Fact]
+        public void Disk_CRUD_WithSupportsHibernationFlag_EmptyDisk()
+        {
+            Disk_CRUD_WithSupportsHibernationFlag_Execute(DiskCreateOption.Empty, "Disk_CRUD_WithSupportsHibernationFlag_EmptyDisk", diskSizeGB: 5);
+        }
+
+        [Fact]
+        public void Disk_CRUD_WithPurchasePlan_EmptyDisk()
+        {
+            Disk_CRUD_WithPurchasePlan_Execute(DiskCreateOption.Empty, "Disk_CRUD_WithPurchasePlan_EmptyDisk", diskSizeGB: 5);
         }
     }
 }

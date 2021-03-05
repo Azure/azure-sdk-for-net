@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.Compute
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/meet1993shah/azure-rest-api-specs/blob/swagger20201201/specification/compute/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=C:\\git\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "meet1993shah";
       public static readonly String GithubBranchName = "swagger20201201";
-      public static readonly String GithubCommidId = "1557c98fdccd9754c6ee0216b094fc0bbbd088da";
+      public static readonly String GithubCommidId = "54807e54c95e8ce85c8a47210efaf2720be00a05";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
