@@ -3,6 +3,7 @@
 
 using System;
 using System.Globalization;
+using System.IO;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
@@ -116,7 +117,8 @@ namespace Azure.Messaging.ServiceBus.Core
         ///
         private static bool ShouldRetryException(Exception exception)
         {
-            // There's there's an ambient transaction - should not retry
+            // There's an ambient transaction - should not retry
+
             if (Transaction.Current != null)
             {
                 return false;
@@ -141,6 +143,8 @@ namespace Azure.Messaging.ServiceBus.Core
 
                 case TimeoutException _:
                 case SocketException _:
+                case IOException _:
+                case UnauthorizedAccessException _:
                     return true;
 
                 default:
@@ -149,11 +153,11 @@ namespace Azure.Messaging.ServiceBus.Core
         }
 
         /// <summary>
-        ///   Calculates the delay for an exponential backoff.
+        ///   Calculates the delay for an exponential back-off.
         /// </summary>
         ///
         /// <param name="attemptCount">The number of total attempts that have been made, including the initial attempt before any retries.</param>
-        /// <param name="baseDelaySeconds">The delay to use as a basis for the exponential backoff, in seconds.</param>
+        /// <param name="baseDelaySeconds">The delay to use as a basis for the exponential back-off, in seconds.</param>
         /// <param name="baseJitterSeconds">The delay to use as the basis for a random jitter value, in seconds.</param>
         /// <param name="random">The random number generator to use for the calculation.</param>
         ///
@@ -167,10 +171,10 @@ namespace Azure.Messaging.ServiceBus.Core
             TimeSpan.FromSeconds((Math.Pow(2, attemptCount) * baseDelaySeconds) + (random.NextDouble() * baseJitterSeconds));
 
         /// <summary>
-        ///   Calculates the delay for a fixed backoff.
+        ///   Calculates the delay for a fixed back-off.
         /// </summary>
         ///
-        /// <param name="baseDelaySeconds">The delay to use as a basis for the fixed backoff, in seconds.</param>
+        /// <param name="baseDelaySeconds">The delay to use as a basis for the fixed back-off, in seconds.</param>
         /// <param name="baseJitterSeconds">The delay to use as the basis for a random jitter value, in seconds.</param>
         /// <param name="random">The random number generator to use for the calculation.</param>
         ///

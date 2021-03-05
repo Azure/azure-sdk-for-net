@@ -1,21 +1,23 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+
 namespace Azure.Identity
 {
     /// <summary>
-    /// Data regarding an update of a <see cref="TokenCache"/>.
+    /// Data regarding an update of a token cache.
     /// </summary>
     public class TokenCacheUpdatedArgs
     {
-        internal TokenCacheUpdatedArgs(TokenCache cache)
+        internal TokenCacheUpdatedArgs(ReadOnlyMemory<byte> cacheData)
         {
-            Cache = cache;
+            UnsafeCacheData = cacheData;
         }
 
         /// <summary>
-        /// The <see cref="TokenCache"/> instance which was updated.
+        /// The <see cref="TokenCachePersistenceOptions"/> instance which was updated.
         /// </summary>
-        public TokenCache Cache { get; }
+        public ReadOnlyMemory<byte> UnsafeCacheData { get; }
     }
 }

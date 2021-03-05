@@ -21,10 +21,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.Common"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.Common.Tests", "Azure.Communication.Common\tests\Azure.Communication.Common.Tests.csproj", "{2C4BDD98-F38F-48D6-BAC0-B8BB88D1621A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.Administration", "Azure.Communication.Administration\src\Azure.Communication.Administration.csproj", "{47775D65-5CDC-4ACE-AFB5-533D2214C6BF}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.Administration.Tests", "Azure.Communication.Administration\tests\Azure.Communication.Administration.Tests.csproj", "{059E62B7-9149-4293-BA3E-378E56733712}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Communication", "Azure.ResourceManager.Communication\src\Azure.ResourceManager.Communication.csproj", "{86776D3F-0ACA-4933-9318-21B9E35AA689}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Communication.Tests", "Azure.ResourceManager.Communication\tests\Azure.ResourceManager.Communication.Tests.csproj", "{D3FD90BB-3B91-45F0-920B-68ED33634FFE}"
@@ -67,14 +63,6 @@ Global
 		{2C4BDD98-F38F-48D6-BAC0-B8BB88D1621A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C4BDD98-F38F-48D6-BAC0-B8BB88D1621A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C4BDD98-F38F-48D6-BAC0-B8BB88D1621A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{47775D65-5CDC-4ACE-AFB5-533D2214C6BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{47775D65-5CDC-4ACE-AFB5-533D2214C6BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{47775D65-5CDC-4ACE-AFB5-533D2214C6BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{47775D65-5CDC-4ACE-AFB5-533D2214C6BF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{059E62B7-9149-4293-BA3E-378E56733712}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{059E62B7-9149-4293-BA3E-378E56733712}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{059E62B7-9149-4293-BA3E-378E56733712}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{059E62B7-9149-4293-BA3E-378E56733712}.Release|Any CPU.Build.0 = Release|Any CPU
 		{86776D3F-0ACA-4933-9318-21B9E35AA689}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{86776D3F-0ACA-4933-9318-21B9E35AA689}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86776D3F-0ACA-4933-9318-21B9E35AA689}.Release|Any CPU.ActiveCfg = Release|Any CPU

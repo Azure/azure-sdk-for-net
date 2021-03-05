@@ -10,5 +10,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public GetSsisObjectMetadataRequest()
         {
         }
+
+        /// <summary> Metadata path. </summary>
+        public string MetadataPath { get; set; }
     }
 }

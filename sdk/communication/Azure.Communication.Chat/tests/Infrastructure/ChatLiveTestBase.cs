@@ -9,7 +9,7 @@ namespace Azure.Communication.Chat.Tests
 {
     public class ChatLiveTestBase : RecordedTestBase<ChatTestEnvironment>
     {
-        public ChatLiveTestBase(bool isAsync) : base(isAsync)
+        public ChatLiveTestBase(bool isAsync) : base(isAsync,RecordedTestMode.Playback)
             => Sanitizer = new ChatRecordedTestSanitizer();
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace Azure.Communication.Chat.Tests
             }
 
             CommunicationTokenCredential communicationTokenCredential = new CommunicationTokenCredential(token);
-            return InstrumentClient(new ChatClient(new Uri(TestEnvironment.ChatApiUrl()), communicationTokenCredential,
+            return InstrumentClient(new ChatClient(TestEnvironment.Endpoint, communicationTokenCredential,
                 InstrumentClientOptions(new ChatClientOptions())));
         }
 

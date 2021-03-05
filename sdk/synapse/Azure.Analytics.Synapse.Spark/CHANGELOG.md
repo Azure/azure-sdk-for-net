@@ -1,7 +1,11 @@
 # Release History
 
-## 1.0.0-preview.5 (Unreleased)
+## 1.0.0-preview.6 (Unreleased)
 
+
+## 1.0.0-preview.5 (2021-02-11)
+### Changed
+- Fix StartCreateSparkStatement API visibility
 
 ## 1.0.0-preview.4 (2021-02-10)
 

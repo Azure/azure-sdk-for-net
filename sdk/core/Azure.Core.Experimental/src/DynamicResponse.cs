@@ -11,9 +11,9 @@ using System.Text;
 namespace Azure.Core
 {
     /// <summary>
-    /// Represents a result of Azure operation with a <see cref="DynamicJson"/> response.
+    /// Represents a result of Azure operation with a <see cref="JsonData"/> response.
     /// </summary>
-    [DebuggerDisplay("Status: {Response.Status}, Value: {Value}")]
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class DynamicResponse : Response
     {
         private bool _disposed;
@@ -23,7 +23,12 @@ namespace Azure.Core
         /// <summary>
         /// The JSON body of the response.
         /// </summary>
-        public DynamicJson? Body { get; }
+        public JsonData? Body { get; }
+
+        /// <summary>
+        /// The JSON body of the response.
+        /// </summary>
+        public dynamic? DynamicBody { get => Body; }
 
         /// <inheritdoc />
         public override int Status => Response.Status;
@@ -43,11 +48,11 @@ namespace Azure.Core
         protected override IEnumerable<HttpHeader> EnumerateHeaders() => Response.Headers;
 
         /// <summary>
-        /// Represents a result of Azure operation with a <see cref="DynamicJson"/> response.
+        /// Represents a result of Azure operation with a <see cref="JsonData"/> response.
         /// </summary>
         /// <param name="response">The response returned by the service.</param>
         /// <param name="body">The body returned by the service.</param>
-        public DynamicResponse(Response response, DynamicJson? body)
+        public DynamicResponse(Response response, JsonData? body)
         {
             Response = response;
             Body = body;
@@ -77,6 +82,11 @@ namespace Azure.Core
                 Response.Dispose();
             }
             _disposed = true;
+        }
+
+        private string DebuggerDisplay
+        {
+            get => $"{{Status: {Response.Status}, Body: {(Body == null ? "" : Body.ToJsonString())}}}";
         }
     }
 }

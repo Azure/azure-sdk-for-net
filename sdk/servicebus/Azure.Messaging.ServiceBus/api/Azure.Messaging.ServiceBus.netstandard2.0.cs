@@ -85,6 +85,7 @@ namespace Azure.Messaging.ServiceBus
     public partial class ServiceBusClientOptions
     {
         public ServiceBusClientOptions() { }
+        public bool EnableCrossEntityTransactions { get { throw null; } set { } }
         public Azure.Messaging.ServiceBus.ServiceBusRetryOptions RetryOptions { get { throw null; } set { } }
         public Azure.Messaging.ServiceBus.ServiceBusTransportType TransportType { get { throw null; } set { } }
         public System.Net.IWebProxy WebProxy { get { throw null; } set { } }
@@ -168,6 +169,7 @@ namespace Azure.Messaging.ServiceBus
         public string Subject { get { throw null; } set { } }
         public System.TimeSpan TimeToLive { get { throw null; } set { } }
         public string To { get { throw null; } set { } }
+        public string TransactionPartitionKey { get { throw null; } set { } }
         public Azure.Core.Amqp.AmqpAnnotatedMessage GetRawAmqpMessage() { throw null; }
         public override string ToString() { throw null; }
     }
@@ -201,6 +203,7 @@ namespace Azure.Messaging.ServiceBus
         public virtual int MaxConcurrentCalls { get { throw null; } }
         public virtual int PrefetchCount { get { throw null; } }
         public virtual Azure.Messaging.ServiceBus.ServiceBusReceiveMode ReceiveMode { get { throw null; } }
+        public virtual string TransactionGroup { get { throw null; } }
         public event System.Func<Azure.Messaging.ServiceBus.ProcessErrorEventArgs, System.Threading.Tasks.Task> ProcessErrorAsync { add { } remove { } }
         public event System.Func<Azure.Messaging.ServiceBus.ProcessMessageEventArgs, System.Threading.Tasks.Task> ProcessMessageAsync { add { } remove { } }
         public virtual System.Threading.Tasks.Task CloseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -255,6 +258,7 @@ namespace Azure.Messaging.ServiceBus
         public string Subject { get { throw null; } }
         public System.TimeSpan TimeToLive { get { throw null; } }
         public string To { get { throw null; } }
+        public string TransactionPartitionKey { get { throw null; } }
         public Azure.Core.Amqp.AmqpAnnotatedMessage GetRawAmqpMessage() { throw null; }
         public override string ToString() { throw null; }
     }
@@ -271,6 +275,7 @@ namespace Azure.Messaging.ServiceBus
         public virtual bool IsClosed { get { throw null; } }
         public virtual int PrefetchCount { get { throw null; } }
         public virtual Azure.Messaging.ServiceBus.ServiceBusReceiveMode ReceiveMode { get { throw null; } }
+        public virtual string TransactionGroup { get { throw null; } }
         public virtual System.Threading.Tasks.Task AbandonMessageAsync(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, System.Collections.Generic.IDictionary<string, object> propertiesToModify = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task CloseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task CompleteMessageAsync(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -371,6 +376,7 @@ namespace Azure.Messaging.ServiceBus
         public virtual int PrefetchCount { get { throw null; } }
         public virtual Azure.Messaging.ServiceBus.ServiceBusReceiveMode ReceiveMode { get { throw null; } }
         public virtual System.TimeSpan? SessionIdleTimeout { get { throw null; } }
+        public virtual string TransactionGroup { get { throw null; } }
         public event System.Func<Azure.Messaging.ServiceBus.ProcessErrorEventArgs, System.Threading.Tasks.Task> ProcessErrorAsync { add { } remove { } }
         public event System.Func<Azure.Messaging.ServiceBus.ProcessSessionMessageEventArgs, System.Threading.Tasks.Task> ProcessMessageAsync { add { } remove { } }
         public event System.Func<Azure.Messaging.ServiceBus.ProcessSessionEventArgs, System.Threading.Tasks.Task> SessionClosingAsync { add { } remove { } }

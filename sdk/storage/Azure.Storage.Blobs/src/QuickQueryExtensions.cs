@@ -24,10 +24,7 @@ namespace Azure.Storage.Blobs
                 return default;
             }
 
-            QuerySerialization serialization = new QuerySerialization
-            {
-                Format = new QueryFormat()
-            };
+            QuerySerialization serialization = new QuerySerialization(new QueryFormat());
 
             serialization.Format.DelimitedTextConfiguration = default;
             serialization.Format.JsonTextConfiguration = default;
@@ -36,22 +33,18 @@ namespace Azure.Storage.Blobs
             if (textConfiguration is BlobQueryCsvTextOptions cvsTextConfiguration)
             {
                 serialization.Format.Type = QueryFormatType.Delimited;
-                serialization.Format.DelimitedTextConfiguration = new DelimitedTextConfigurationInternal
-                {
-                    ColumnSeparator = cvsTextConfiguration.ColumnSeparator?.ToString(CultureInfo.InvariantCulture),
-                    FieldQuote = cvsTextConfiguration.QuotationCharacter?.ToString(CultureInfo.InvariantCulture),
-                    RecordSeparator = cvsTextConfiguration.RecordSeparator?.ToString(CultureInfo.InvariantCulture),
-                    EscapeChar = cvsTextConfiguration.EscapeCharacter?.ToString(CultureInfo.InvariantCulture),
-                    HeadersPresent = cvsTextConfiguration.HasHeaders
-                };
+                serialization.Format.DelimitedTextConfiguration = new DelimitedTextConfigurationInternal(
+                    columnSeparator: cvsTextConfiguration.ColumnSeparator?.ToString(CultureInfo.InvariantCulture),
+                    fieldQuote: cvsTextConfiguration.QuotationCharacter?.ToString(CultureInfo.InvariantCulture),
+                    recordSeparator: cvsTextConfiguration.RecordSeparator?.ToString(CultureInfo.InvariantCulture),
+                    escapeChar: cvsTextConfiguration.EscapeCharacter?.ToString(CultureInfo.InvariantCulture),
+                    headersPresent: cvsTextConfiguration.HasHeaders);
             }
             else if (textConfiguration is BlobQueryJsonTextOptions jsonTextConfiguration)
             {
                 serialization.Format.Type = QueryFormatType.Json;
-                serialization.Format.JsonTextConfiguration = new JsonTextConfigurationInternal
-                {
-                    RecordSeparator = jsonTextConfiguration.RecordSeparator?.ToString(CultureInfo.InvariantCulture)
-                };
+                serialization.Format.JsonTextConfiguration = new JsonTextConfigurationInternal(
+                    jsonTextConfiguration.RecordSeparator?.ToString(CultureInfo.InvariantCulture));
             }
             else if (textConfiguration is BlobQueryArrowOptions arrowConfiguration)
             {
@@ -61,10 +54,8 @@ namespace Azure.Storage.Blobs
                 }
 
                 serialization.Format.Type = QueryFormatType.Arrow;
-                serialization.Format.ArrowConfiguration = new ArrowTextConfigurationInternal
-                {
-                    Schema = arrowConfiguration.Schema?.Select(ToArrowFieldInternal).ToList()
-                };
+                serialization.Format.ArrowConfiguration = new ArrowTextConfigurationInternal(
+                    arrowConfiguration.Schema?.Select(ToArrowFieldInternal).ToList());
             }
             else
             {
@@ -74,39 +65,6 @@ namespace Azure.Storage.Blobs
             return serialization;
         }
 
-        internal static BlobDownloadInfo ToBlobDownloadInfo(this BlobQueryResult quickQueryResult)
-            => BlobsModelFactory.BlobDownloadInfo(
-                lastModified: quickQueryResult.LastModified,
-                blobSequenceNumber: quickQueryResult.BlobSequenceNumber,
-                blobType: quickQueryResult.BlobType,
-                contentCrc64: quickQueryResult.ContentCrc64,
-                contentLanguage: quickQueryResult.ContentLanguage,
-                copyStatusDescription: quickQueryResult.CopyStatusDescription,
-                copyId: quickQueryResult.CopyId,
-                copyProgress: quickQueryResult.CopyProgress,
-                copySource: quickQueryResult.CopySource != default ? new Uri(quickQueryResult.CopySource) : default,
-                copyStatus: quickQueryResult.CopyStatus,
-                contentDisposition: quickQueryResult.ContentDisposition,
-                leaseDuration: quickQueryResult.LeaseDuration,
-                cacheControl: quickQueryResult.CacheControl,
-                leaseState: quickQueryResult.LeaseState,
-                contentEncoding: quickQueryResult.ContentEncoding,
-                leaseStatus: quickQueryResult.LeaseStatus,
-                contentHash: quickQueryResult.ContentHash,
-                acceptRanges: quickQueryResult.AcceptRanges,
-                eTag: quickQueryResult.ETag,
-                blobCommittedBlockCount: quickQueryResult.BlobCommittedBlockCount,
-                contentRange: quickQueryResult.ContentRange,
-                isServerEncrypted: quickQueryResult.IsServerEncrypted,
-                contentType: quickQueryResult.ContentType,
-                encryptionKeySha256: quickQueryResult.EncryptionKeySha256,
-                encryptionScope: quickQueryResult.EncryptionScope,
-                contentLength: quickQueryResult.ContentLength,
-                blobContentHash: quickQueryResult.BlobContentMD5,
-                metadata: quickQueryResult.Metadata,
-                content: quickQueryResult.Body,
-                copyCompletionTime: quickQueryResult.CopyCompletionTime);
-
         internal static ArrowFieldInternal ToArrowFieldInternal(this BlobQueryArrowField blobQueryArrowField)
         {
             if (blobQueryArrowField == null)
@@ -114,9 +72,8 @@ namespace Azure.Storage.Blobs
                 return null;
             }
 
-            return new ArrowFieldInternal
+            return new ArrowFieldInternal(blobQueryArrowField.Type.ToArrowFiledInternalType())
             {
-                Type = blobQueryArrowField.Type.ToArrowFiledInternalType(),
                 Name = blobQueryArrowField.Name,
                 Precision = blobQueryArrowField.Precision,
                 Scale = blobQueryArrowField.Scale

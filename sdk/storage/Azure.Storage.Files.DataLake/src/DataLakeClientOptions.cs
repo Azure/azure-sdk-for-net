@@ -67,7 +67,8 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// Gets the <see cref="ServiceVersion"/> of the service API used when
         /// making requests.  For more, see
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/versioning-for-the-azure-storage-services" />.
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/versioning-for-the-azure-storage-services">
+        /// Versioning for the Azure Storage services</see>.
         /// </summary>
         public ServiceVersion Version { get; }
 

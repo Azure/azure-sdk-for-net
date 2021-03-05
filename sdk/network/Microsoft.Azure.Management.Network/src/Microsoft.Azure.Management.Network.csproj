@@ -10,15 +10,20 @@
 			Development of this library has shifted focus to the Azure Unified SDK. The future development will be focused on "Azure.ResourceManager.Network" (https://www.nuget.org/packages/Azure.ResourceManager.Network/). Please see the package changelog for more information.
 		</Description>
 		<AssemblyName>Microsoft.Azure.Management.Network</AssemblyName>
-		<Version>20.3.0</Version>
+		<Version>20.4.0</Version>
 		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>
 		<PackageReleaseNotes>
 		<![CDATA[
-            - Added new api version 2020-08-01
-			- Added extended location properties for private link and other resources
-			- Fixed GetIkeSas returns restult as a string
-			- Added supporting for listing IKE Security Assosiations for Virtual Network Gateway Connections
-			- Added location parameter for LB backend address pool properties
+            - Added new api version 2020-11-01
+			- Fixed property names for Vpn Gateway
+            - No Snat firewall policy
+            - Added insights property for Firewall policy
+            - Support for Listing IKE Security Associations for VPN Link Connections
+            - Added subnet property for Load Balancer Backend Address
+            - Support for ResetConnection for VNG and VPN Link connections
+            - Added support for Traffic selector param in VpnConnection for virtualWan
+            - Added auth type property to vng config
+            - Fixed mistyping in App Gw property
 		]]></PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>

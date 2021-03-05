@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Iot.TimeSeriesInsights.Models
+namespace Azure.Iot.TimeSeriesInsights
 {
     /// <summary> Request to get the event schema of all events within a given search span. </summary>
     public partial class GetEventSchemaRequest

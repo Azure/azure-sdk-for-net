@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.TextAnalytics
+namespace Azure.AI.TextAnalytics.Models
 {
     internal partial class PiiTaskParameters : IUtf8JsonSerializable
     {
@@ -25,10 +25,20 @@ namespace Azure.AI.TextAnalytics
                 writer.WritePropertyName("model-version");
                 writer.WriteStringValue(ModelVersion);
             }
+            if (Optional.IsCollectionDefined(PiiCategories))
+            {
+                writer.WritePropertyName("pii-categories");
+                writer.WriteStartArray();
+                foreach (var item in PiiCategories)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(StringIndexType))
             {
                 writer.WritePropertyName("stringIndexType");
-                writer.WriteStringValue(StringIndexType.ToString());
+                writer.WriteStringValue(StringIndexType.Value.ToString());
             }
             writer.WriteEndObject();
         }

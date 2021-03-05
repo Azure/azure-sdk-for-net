@@ -19,5 +19,27 @@ namespace Azure.Storage.Queues.Models
 #pragma warning disable CA2227 // Collection properties should be read only
         public IList<QueueCorsRule> Cors { get; set; }
 #pragma warning restore CA2227 // Collection properties should be read only
+
+        /// <summary>
+        /// Creates a new QueueServiceProperties instance.
+        /// </summary>
+        public QueueServiceProperties()
+            : this(false)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new QueueServiceProperties instance.
+        /// </summary>
+        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
+        internal QueueServiceProperties(bool skipInitialization)
+        {
+            if (!skipInitialization)
+            {
+                Logging = new Azure.Storage.Queues.Models.QueueAnalyticsLogging();
+                HourMetrics = new Azure.Storage.Queues.Models.QueueMetrics();
+                MinuteMetrics = new Azure.Storage.Queues.Models.QueueMetrics();
+            }
+        }
     }
 }

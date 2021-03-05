@@ -47,6 +47,99 @@ namespace Azure.Analytics.Synapse.AccessControl
             _pipeline = pipeline;
         }
 
+        internal HttpMessage CreateCheckPrincipalAccessRequest(SubjectInfo subject, IEnumerable<RequiredAction> actions, string scope)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(endpoint, false);
+            uri.AppendPath("/checkAccessSynapseRbac", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var model = new CheckPrincipalAccessRequest(subject, actions, scope);
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(model);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Check if the given principalId has access to perform list of actions at a given scope. </summary>
+        /// <param name="subject"> Subject details. </param>
+        /// <param name="actions"> List of actions. </param>
+        /// <param name="scope"> Scope at which the check access is done. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subject"/>, <paramref name="actions"/>, or <paramref name="scope"/> is null. </exception>
+        public async Task<Response<CheckPrincipalAccessResponse>> CheckPrincipalAccessAsync(SubjectInfo subject, IEnumerable<RequiredAction> actions, string scope, CancellationToken cancellationToken = default)
+        {
+            if (subject == null)
+            {
+                throw new ArgumentNullException(nameof(subject));
+            }
+            if (actions == null)
+            {
+                throw new ArgumentNullException(nameof(actions));
+            }
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
+
+            using var message = CreateCheckPrincipalAccessRequest(subject, actions, scope);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CheckPrincipalAccessResponse value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = CheckPrincipalAccessResponse.DeserializeCheckPrincipalAccessResponse(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Check if the given principalId has access to perform list of actions at a given scope. </summary>
+        /// <param name="subject"> Subject details. </param>
+        /// <param name="actions"> List of actions. </param>
+        /// <param name="scope"> Scope at which the check access is done. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subject"/>, <paramref name="actions"/>, or <paramref name="scope"/> is null. </exception>
+        public Response<CheckPrincipalAccessResponse> CheckPrincipalAccess(SubjectInfo subject, IEnumerable<RequiredAction> actions, string scope, CancellationToken cancellationToken = default)
+        {
+            if (subject == null)
+            {
+                throw new ArgumentNullException(nameof(subject));
+            }
+            if (actions == null)
+            {
+                throw new ArgumentNullException(nameof(actions));
+            }
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
+
+            using var message = CreateCheckPrincipalAccessRequest(subject, actions, scope);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CheckPrincipalAccessResponse value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = CheckPrincipalAccessResponse.DeserializeCheckPrincipalAccessResponse(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
         internal HttpMessage CreateListRoleAssignmentsRequest(string roleId, string principalId, string scope, string continuationToken)
         {
             var message = _pipeline.CreateMessage();
@@ -351,99 +444,6 @@ namespace Azure.Analytics.Synapse.AccessControl
                 case 200:
                 case 204:
                     return message.Response;
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateCheckPrincipalAccessRequest(SubjectInfo subject, IEnumerable<RequiredAction> actions, string scope)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
-            uri.AppendPath("/checkAccessSynapseRbac", false);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json, text/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var model = new CheckPrincipalAccessRequest(subject, actions, scope);
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
-            request.Content = content;
-            return message;
-        }
-
-        /// <summary> Check if the given principalId has access to perform list of actions at a given scope. </summary>
-        /// <param name="subject"> Subject details. </param>
-        /// <param name="actions"> List of actions. </param>
-        /// <param name="scope"> Scope at which the check access is done. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subject"/>, <paramref name="actions"/>, or <paramref name="scope"/> is null. </exception>
-        public async Task<Response<CheckPrincipalAccessResponse>> CheckPrincipalAccessAsync(SubjectInfo subject, IEnumerable<RequiredAction> actions, string scope, CancellationToken cancellationToken = default)
-        {
-            if (subject == null)
-            {
-                throw new ArgumentNullException(nameof(subject));
-            }
-            if (actions == null)
-            {
-                throw new ArgumentNullException(nameof(actions));
-            }
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-
-            using var message = CreateCheckPrincipalAccessRequest(subject, actions, scope);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        CheckPrincipalAccessResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CheckPrincipalAccessResponse.DeserializeCheckPrincipalAccessResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Check if the given principalId has access to perform list of actions at a given scope. </summary>
-        /// <param name="subject"> Subject details. </param>
-        /// <param name="actions"> List of actions. </param>
-        /// <param name="scope"> Scope at which the check access is done. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subject"/>, <paramref name="actions"/>, or <paramref name="scope"/> is null. </exception>
-        public Response<CheckPrincipalAccessResponse> CheckPrincipalAccess(SubjectInfo subject, IEnumerable<RequiredAction> actions, string scope, CancellationToken cancellationToken = default)
-        {
-            if (subject == null)
-            {
-                throw new ArgumentNullException(nameof(subject));
-            }
-            if (actions == null)
-            {
-                throw new ArgumentNullException(nameof(actions));
-            }
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-
-            using var message = CreateCheckPrincipalAccessRequest(subject, actions, scope);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        CheckPrincipalAccessResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CheckPrincipalAccessResponse.DeserializeCheckPrincipalAccessResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }

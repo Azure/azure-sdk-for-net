@@ -56,7 +56,7 @@ namespace Compute.Tests
             string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
             try
             {
-                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2");
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "southcentralus");
                 TestVMScenarioOperationsInternal("TestVMScenarioOperations_ManagedDisks", vmSize: VirtualMachineSizeTypes.StandardM64s, hasManagedDisks: true,
                     osDiskStorageAccountType: StorageAccountTypes.PremiumLRS, dataDiskStorageAccountType: StorageAccountTypes.PremiumLRS, writeAcceleratorEnabled: true);
             }
@@ -99,6 +99,27 @@ namespace Compute.Tests
                 Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "northeurope");
                 TestVMScenarioOperationsInternal("TestVMScenarioOperations_EncryptionAtHost", vmSize: VirtualMachineSizeTypes.StandardDS1V2, hasManagedDisks: true,
                     osDiskStorageAccountType: StorageAccountTypes.StandardLRS, encryptionAtHostEnabled: true);
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
+            }
+        }
+        
+        /// <summary>
+        /// To record this test case, you need to run it in region which support Encryption at host
+        /// </summary>
+        [Fact]
+        [Trait("Name", "TestVMScenarioOperations_TrustedLaunch")]
+        public void TestVMScenarioOperations_TrustedLaunch()
+        {
+            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+            try
+            {
+                ImageReference image = new ImageReference(publisher: "MicrosoftWindowsServer", offer: "windowsserver-gen2preview-preview", version: "18363.592.2001092016", sku: "windows10-tvm");
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2euap");
+                TestVMScenarioOperationsInternal("TestVMScenarioOperations_TrustedLaunch", vmSize: VirtualMachineSizeTypes.StandardD2sV3, hasManagedDisks: true,
+                    osDiskStorageAccountType: StorageAccountTypes.StandardSSDLRS, securityType: "TrustedLaunch", imageReference: image, validateListAvailableSize: false);
             }
             finally
             {
@@ -159,7 +180,7 @@ namespace Compute.Tests
             string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
             try
             {
-                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "centralus");
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2");
                 TestVMScenarioOperationsInternal("TestVMScenarioOperations_ManagedDisks_PirImage_Zones", hasManagedDisks: true, zones: new List<string> { "1" }, callUpdateVM: true);
             }
             finally
@@ -196,19 +217,22 @@ namespace Compute.Tests
             string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
             try
             {
-                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "westus");
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2");
                 // This test was recorded in WestUSValidation, where the platform image typically used for recording is not available.
                 // Hence the following custom image was used.
-                ImageReference imageReference = new ImageReference
-                {
-                    Publisher = "AzureRT.PIRCore.TestWAStage",
-                    Offer = "TestUbuntuServer",
-                    Sku = "16.04",
-                    Version = "latest"
-                };
+                //ImageReference imageReference = new ImageReference
+                //{
+                //    Publisher = "AzureRT.PIRCore.TestWAStage",
+                //    Offer = "TestUbuntuServer",
+                //    Sku = "16.04",
+                //    Version = "latest"
+                //};
+                //TestVMScenarioOperationsInternal("TestVMScenarioOperations_AutomaticPlacementOnDedicatedHostGroup",
+                //    hasManagedDisks: true, vmSize: VirtualMachineSizeTypes.StandardD2sV3, isAutomaticPlacementOnDedicatedHostGroupScenario: true,
+                //    imageReference: imageReference, validateListAvailableSize: false);
                 TestVMScenarioOperationsInternal("TestVMScenarioOperations_AutomaticPlacementOnDedicatedHostGroup",
                     hasManagedDisks: true, vmSize: VirtualMachineSizeTypes.StandardD2sV3, isAutomaticPlacementOnDedicatedHostGroupScenario: true,
-                    imageReference: imageReference, validateListAvailableSize: false);
+                    validateListAvailableSize: false);
             }
             finally
             {
@@ -235,10 +259,10 @@ namespace Compute.Tests
             }
         }
 
-        private void TestVMScenarioOperationsInternal(string methodName, bool hasManagedDisks = false, IList<string> zones = null, string vmSize = "Standard_A0",
+        private void TestVMScenarioOperationsInternal(string methodName, bool hasManagedDisks = false, IList<string> zones = null, string vmSize = "Standard_A1_v2",
             string osDiskStorageAccountType = "Standard_LRS", string dataDiskStorageAccountType = "Standard_LRS", bool? writeAcceleratorEnabled = null,
             bool hasDiffDisks = false, bool callUpdateVM = false, bool isPpgScenario = false, string diskEncryptionSetId = null, bool? encryptionAtHostEnabled = null,
-            bool isAutomaticPlacementOnDedicatedHostGroupScenario = false, ImageReference imageReference = null, bool validateListAvailableSize = true)
+            string securityType = null, bool isAutomaticPlacementOnDedicatedHostGroupScenario = false, ImageReference imageReference = null, bool validateListAvailableSize = true)
         {
             using (MockContext context = MockContext.Start(this.GetType(), methodName))
             {
@@ -277,7 +301,7 @@ namespace Compute.Tests
 
                     CreateVM(rgName, asName, storageAccountName, imageRef, out inputVM, hasManagedDisks: hasManagedDisks,hasDiffDisks: hasDiffDisks, vmSize: vmSize, osDiskStorageAccountType: osDiskStorageAccountType,
                         dataDiskStorageAccountType: dataDiskStorageAccountType, writeAcceleratorEnabled: writeAcceleratorEnabled, zones: zones, ppgName: ppgName, 
-                        diskEncryptionSetId: diskEncryptionSetId, encryptionAtHostEnabled: encryptionAtHostEnabled, dedicatedHostGroupReferenceId: dedicatedHostGroupReferenceId,
+                        diskEncryptionSetId: diskEncryptionSetId, encryptionAtHostEnabled: encryptionAtHostEnabled, securityType: securityType, dedicatedHostGroupReferenceId: dedicatedHostGroupReferenceId,
                         dedicatedHostGroupName: dedicatedHostGroupName, dedicatedHostName: dedicatedHostName);
 
                     // Instance view is not completely populated just after VM is provisioned. So we wait here for a few minutes to 
@@ -322,6 +346,12 @@ namespace Compute.Tests
 
                         listVMSizesResponse = m_CrpClient.AvailabilitySets.ListAvailableSizes(rgName, asName);
                         Helpers.ValidateVirtualMachineSizeListResponse(listVMSizesResponse, hasAZ: zones != null, writeAcceleratorEnabled: writeAcceleratorEnabled, hasDiffDisks: hasDiffDisks);
+                    }
+                    
+                    if(securityType != null && securityType.Equals("TrustedLaunch"))
+                    {
+                        Assert.True(inputVM.SecurityProfile.UefiSettings.VTpmEnabled);
+                        Assert.True(inputVM.SecurityProfile.UefiSettings.SecureBootEnabled);
                     }
 
                     if(isPpgScenario)

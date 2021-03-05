@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.Iot.TimeSeriesInsights.Models
+namespace Azure.Iot.TimeSeriesInsights
 {
     /// <summary> Request to perform a single operation on a batch of time series types. Exactly one of &quot;get&quot;, &quot;put&quot; or &quot;delete&quot; must be set. </summary>
     public partial class TypesBatchRequest

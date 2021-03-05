@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
     /// <summary> A list of private endpoint connections. </summary>
-    public partial class PrivateEndpointConnectionListResult
+    internal partial class PrivateEndpointConnectionListResult
     {
         /// <summary> Initializes a new instance of PrivateEndpointConnectionListResult. </summary>
         internal PrivateEndpointConnectionListResult()

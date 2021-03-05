@@ -7,21 +7,23 @@
 
 using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    public partial class ACSChatMessageEventBaseProperties
+    [JsonConverter(typeof(AcsChatMessageEventBasePropertiesConverter))]
+    public partial class AcsChatMessageEventBaseProperties
     {
-        internal static ACSChatMessageEventBaseProperties DeserializeACSChatMessageEventBaseProperties(JsonElement element)
+        internal static AcsChatMessageEventBaseProperties DeserializeAcsChatMessageEventBaseProperties(JsonElement element)
         {
             Optional<string> messageId = default;
-            Optional<string> senderId = default;
+            Optional<CommunicationIdentifierModel> senderCommunicationIdentifier = default;
             Optional<string> senderDisplayName = default;
             Optional<DateTimeOffset> composeTime = default;
             Optional<string> type = default;
             Optional<long> version = default;
-            Optional<string> recipientId = default;
+            Optional<CommunicationIdentifierModel> recipientCommunicationIdentifier = default;
             Optional<string> transactionId = default;
             Optional<string> threadId = default;
             foreach (var property in element.EnumerateObject())
@@ -31,9 +33,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     messageId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("senderId"))
+                if (property.NameEquals("senderCommunicationIdentifier"))
                 {
-                    senderId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    senderCommunicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
                     continue;
                 }
                 if (property.NameEquals("senderDisplayName"))
@@ -66,9 +73,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     version = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("recipientId"))
+                if (property.NameEquals("recipientCommunicationIdentifier"))
                 {
-                    recipientId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    recipientCommunicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
                     continue;
                 }
                 if (property.NameEquals("transactionId"))
@@ -82,7 +94,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new ACSChatMessageEventBaseProperties(recipientId.Value, transactionId.Value, threadId.Value, messageId.Value, senderId.Value, senderDisplayName.Value, Optional.ToNullable(composeTime), type.Value, Optional.ToNullable(version));
+            return new AcsChatMessageEventBaseProperties(recipientCommunicationIdentifier.Value, transactionId.Value, threadId.Value, messageId.Value, senderCommunicationIdentifier.Value, senderDisplayName.Value, Optional.ToNullable(composeTime), type.Value, Optional.ToNullable(version));
+        }
+
+        internal partial class AcsChatMessageEventBasePropertiesConverter : JsonConverter<AcsChatMessageEventBaseProperties>
+        {
+            public override void Write(Utf8JsonWriter writer, AcsChatMessageEventBaseProperties model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override AcsChatMessageEventBaseProperties Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeAcsChatMessageEventBaseProperties(document.RootElement);
+            }
         }
     }
 }

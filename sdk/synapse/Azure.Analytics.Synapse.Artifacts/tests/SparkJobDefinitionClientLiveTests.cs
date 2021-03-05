@@ -19,7 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
     /// These tests have a dependency on live Azure services and may incur costs for the associated
     /// Azure subscription.
     /// </remarks>
-    // [Ignore("This test case cannot be automated due to the inability to configure infrastructure to test against.")]
+    [Ignore("Requires upload of zip from https://github.com/Azure-Samples/Synapse/tree/main/Spark/DotNET as samples/net/wordcount/wordcount.zip to associated storage.")]
     public class SparkJobDefinitionClientLiveTests : RecordedTestBase<SynapseTestEnvironment>
     {
         internal class DisposableSparkJobDefinition : IAsyncDisposable
@@ -64,7 +64,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         private SparkJobDefinitionClient CreateClient()
         {
             return InstrumentClient(new SparkJobDefinitionClient(
-                new Uri(TestEnvironment.EndpointUrl),
+                TestEnvironment.EndpointUrl,
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new ArtifactsClientOptions())
             ));

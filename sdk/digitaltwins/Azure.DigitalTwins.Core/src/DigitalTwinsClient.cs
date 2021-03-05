@@ -226,7 +226,7 @@ namespace Azure.DigitalTwins.Core
 
         /// <summary>
         /// Creates a digital twin asynchronously. If the provided digital twin Id is already in use, then this will attempt to replace the existing digital twin
-        /// with the provided digital twin.
+        /// with the provided digital twin..
         /// </summary>
         /// <param name="digitalTwinId">The Id of the digital twin.</param>
         /// <param name="digitalTwin">The application/json digital twin to create.</param>
@@ -235,9 +235,9 @@ namespace Azure.DigitalTwins.Core
         /// recipient cache or origin server either not having any current
         /// representation of the target resource.  For more information about
         /// this property, see <see href="https://tools.ietf.org/html/rfc7232#section-3.2">RFC 7232</see>.
-        /// Acceptable values are null or "*".  If ifNonMatch option is null
+        /// Acceptable values are null or <c>"*"</c>.  If ifNonMatch option is null
         /// the service will replace the existing entity with the new entity.
-        /// If ifNoneMatch option is "*" (or <see cref="ETag.All"/>) the
+        /// If ifNoneMatch option is <c>"*"</c> (or <see cref="ETag.All"/>) the
         /// service will reject the request if the entity already exists.
         /// An optional ETag to only make the request if the value does not
         /// match on the service.
@@ -321,9 +321,9 @@ namespace Azure.DigitalTwins.Core
         /// recipient cache or origin server either not having any current
         /// representation of the target resource.  For more information about
         /// this property, see <see href="https://tools.ietf.org/html/rfc7232#section-3.2">RFC 7232</see>.
-        /// Acceptable values are null or "*".  If ifNonMatch option is null
+        /// Acceptable values are null or <c>"*"</c>.  If ifNonMatch option is null
         /// the service will replace the existing entity with the new entity.
-        /// If ifNoneMatch option is "*" (or <see cref="ETag.All"/>) the
+        /// If ifNoneMatch option is <c>"*"</c> (or <see cref="ETag.All"/>) the
         /// service will reject the request if the entity already exists.
         /// An optional ETag to only make the request if the value does not
         /// match on the service.
@@ -1261,9 +1261,9 @@ namespace Azure.DigitalTwins.Core
         /// recipient cache or origin server either not having any current
         /// representation of the target resource.  For more information about
         /// this property, see <see href="https://tools.ietf.org/html/rfc7232#section-3.2">RFC 7232</see>.
-        /// Acceptable values are null or "*".  If ifNonMatch option is null
+        /// Acceptable values are null or <c>"*"</c>.  If ifNonMatch option is null
         /// the service will replace the existing entity with the new entity.
-        /// If ifNoneMatch option is "*" (or <see cref="ETag.All"/>) the
+        /// If ifNoneMatch option is <c>"*"</c> (or <see cref="ETag.All"/>) the
         /// service will reject the request if the entity already exists.
         /// An optional ETag to only make the request if the value does not
         /// match on the service.
@@ -1354,9 +1354,9 @@ namespace Azure.DigitalTwins.Core
         /// recipient cache or origin server either not having any current
         /// representation of the target resource.  For more information about
         /// this property, see <see href="https://tools.ietf.org/html/rfc7232#section-3.2">RFC 7232</see>.
-        /// Acceptable values are null or "*".  If ifNonMatch option is null
+        /// Acceptable values are null or <c>"*"</c>.  If ifNonMatch option is null
         /// the service will replace the existing entity with the new entity.
-        /// If ifNoneMatch option is "*" (or <see cref="ETag.All"/>) the
+        /// If ifNoneMatch option is <c>"*"</c> (or <see cref="ETag.All"/>) the
         /// service will reject the request if the entity already exists.
         /// An optional ETag to only make the request if the value does not
         /// match on the service.

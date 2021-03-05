@@ -10,5 +10,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public DataFlowDebugQueryResponse()
         {
         }
+
+        /// <summary> The run ID of data flow debug session. </summary>
+        public string RunId { get; set; }
     }
 }

@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Iot.TimeSeriesInsights.Models
+namespace Azure.Iot.TimeSeriesInsights
 {
     /// <summary> Represents the default category. </summary>
     public partial class TimeSeriesDefaultCategory
