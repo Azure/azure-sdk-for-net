@@ -4,7 +4,7 @@ param (
   [Parameter(mandatory = $true)]
   $BuildID,
   [Parameter(mandatory = $true)]
-  $PackagName,
+  $PackageName,
   [Parameter(mandatory = $true)]
   $ServiceDirectory
 )
