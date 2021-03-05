@@ -70,6 +70,16 @@ namespace Azure.AI.TextAnalytics.Samples
 
             await operation.WaitForCompletionAsync();
 
+            Console.WriteLine($"Status: {operation.Status}");
+            Console.WriteLine($"Created On: {operation.CreatedOn}");
+            Console.WriteLine($"Last modified: {operation.LastModified}");
+            if (!string.IsNullOrEmpty(operation.DisplayName))
+                Console.WriteLine($"Display name: {operation.DisplayName}");
+            Console.WriteLine($"Total actions: {operation.TotalActions}");
+            Console.WriteLine($"  Succeeded actions: {operation.ActionsSucceeded}");
+            Console.WriteLine($"  Failed actions: {operation.ActionsFailed}");
+            Console.WriteLine($"  In progress actions: {operation.ActionsInProgress}");
+
             await foreach (AnalyzeBatchActionsResult documentsInPage in operation.Value)
             {
                 RecognizeEntitiesResultCollection entitiesResult = documentsInPage.RecognizeEntitiesActionsResults.FirstOrDefault().Result;
