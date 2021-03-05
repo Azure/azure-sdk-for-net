@@ -78,7 +78,7 @@ namespace Azure.Core.Pipeline
         /// <param name="message">The <see cref="HttpMessage"/> to be authenticated.</param>
         /// <param name="async">Indicates whether the method was called from an asynchronous context.</param>
         /// <returns>A boolean indicating whether the request was successfully authenticated and should be sent to the transport.</returns>
-        protected virtual ValueTask<bool> AuthenticateRequestFromChallengeAsync(HttpMessage message, bool async)
+        protected virtual ValueTask<bool> AuthenticateRequestOnChallengeAsync(HttpMessage message, bool async)
         {
             return _falseValueTask;
         }
@@ -111,7 +111,7 @@ namespace Azure.Core.Pipeline
                 // Attempt to get the TokenRequestContext based on the challenge.
                 // If we fail to get the context, the challenge was not present or invalid.
                 // If we succeed in getting the context, authenticate the request and pass it up the policy chain.
-                if (await AuthenticateRequestFromChallengeAsync(message, async).ConfigureAwait(false))
+                if (await AuthenticateRequestOnChallengeAsync(message, async).ConfigureAwait(false))
                 {
                     if (async)
                     {
