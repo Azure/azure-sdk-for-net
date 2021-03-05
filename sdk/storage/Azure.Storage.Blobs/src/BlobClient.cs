@@ -1596,7 +1596,7 @@ namespace Azure.Storage.Blobs
             return await uploader.UploadInternal(
                 content,
                 options,
-                options.ProgressHandler,
+                options?.ProgressHandler,
                 async,
                 cancellationToken)
                 .ConfigureAwait(false);
