@@ -35,9 +35,8 @@ namespace Azure.Security.KeyVault
             }
 
             string authority = GetRequestAuthority(message.Request);
-            _scopeCache.TryGetValue(authority, out _scope);
 
-            if (_scope == null)
+            if (!_scopeCache.TryGetValue(authority, out _scope) || _scope == null)
             {
                 // The body is removed from the initial request because Key Vault supports other authentication schemes which also protect the body of the request.
                 // As a result, before we know the auth scheme we need to avoid sending an unprotected body to Key Vault.
