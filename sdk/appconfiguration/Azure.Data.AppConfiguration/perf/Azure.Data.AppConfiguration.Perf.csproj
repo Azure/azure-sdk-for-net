@@ -5,9 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\..\..\common\Perf\Azure.Test.Perf\Azure.Test.Perf.csproj" />
-    <ProjectReference Include="../src/Azure.Data.AppConfiguration.csproj" />
-    <ProjectReference Include="..\..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj" />
+    <ProjectReference Include="..\..\..\..\common\Perf\Azure.Test.Perf\Azure.Test.Perf.csproj" />
+    <ProjectReference Include="..\src\Azure.Data.AppConfiguration.csproj" />
+    <ProjectReference Include="$(AzureCoreTestFramework)" />
   </ItemGroup>
 
 </Project>

@@ -2,18 +2,15 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Data.AppConfiguration;
 using Azure.Test.Perf;
 
-namespace Azure.Storage.Blobs.Perf.Scenarios
+namespace Azure.Data.AppConfiguration.Perf
 {
     /// <summary>
-    /// The performance test scenario focused on downloading blobs from the Azure blobs storage.
+    /// The performance test scenario focused on listing App Configuration settings.
     /// </summary>
-    /// <seealso cref="Azure.Test.Perf.PerfTest{StorageTransferOptionsOptions}" />
     public sealed class GetConfigurationSettings : PerfTest<CountOptions>
     {
         private static string _prefix = Guid.NewGuid().ToString("N");

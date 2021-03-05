@@ -3,7 +3,7 @@
 
 using Azure.Core.TestFramework;
 
-namespace Azure.Storage.Blobs.Perf.Scenarios
+namespace Azure.Data.AppConfiguration.Perf
 {
     public sealed class PerfTestEnvironment : TestEnvironment
     {
