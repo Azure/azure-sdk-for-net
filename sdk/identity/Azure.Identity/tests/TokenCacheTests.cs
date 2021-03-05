@@ -223,7 +223,13 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task Persistance_RegisterCacheDoesNotInitializesEvents()
         {
-            cache = new TokenCache(new TokenCachePersistenceOptions());
+            var options = System.Environment.OSVersion.Platform switch
+            {
+                // Linux tests will fail without UnsafeAllowUnencryptedStorage = true.
+                PlatformID.Unix => new TokenCachePersistenceOptions { UnsafeAllowUnencryptedStorage = true },
+                _ => new TokenCachePersistenceOptions()
+            };
+            cache = new TokenCache(options);
 
             await cache.RegisterCache(IsAsync, mockMSALCache.Object, default);
 
