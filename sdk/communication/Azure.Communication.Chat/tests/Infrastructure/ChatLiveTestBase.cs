@@ -9,7 +9,7 @@ namespace Azure.Communication.Chat.Tests
 {
     public class ChatLiveTestBase : RecordedTestBase<ChatTestEnvironment>
     {
-        public ChatLiveTestBase(bool isAsync) : base(isAsync,RecordedTestMode.Playback)
+        public ChatLiveTestBase(bool isAsync) : base(isAsync)
             => Sanitizer = new ChatRecordedTestSanitizer();
 
         /// <summary>
