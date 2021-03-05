@@ -4,8 +4,6 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>Proto.Authorization</RootNamespace>
     <LangVersion>latest</LangVersion>
-    <CodeAnalysisRuleSet>..\stylecop.ruleset</CodeAnalysisRuleSet>
-    <DocumentationFile>obj\docs.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
