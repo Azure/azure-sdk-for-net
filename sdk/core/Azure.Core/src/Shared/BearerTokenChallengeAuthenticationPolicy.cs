@@ -47,9 +47,9 @@ namespace Azure.Core.Pipeline
         }
 
         /// <inheritdoc />
-        public override async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            await ProcessAsync(message, pipeline, true).ConfigureAwait(false);
+            return ProcessAsync(message, pipeline, true);
         }
 
         /// <inheritdoc />
