@@ -43,8 +43,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 new TextDocumentInput("2", document2)
                 {
                     Language = "en"
-                },
-                new TextDocumentInput("3", string.Empty)
+                }
             };
 
             AnalyzeHealthcareEntitiesOptions options = new AnalyzeHealthcareEntitiesOptions()
