@@ -7,4 +7,5 @@ extends:
     ServiceDirectory: servicebus
     SDKType: client
     TimeoutInMinutes: 120
+    Clouds: 'Public,Canary'
     SupportedClouds: 'Public,Preview,UsGov,China,Canary'
