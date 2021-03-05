@@ -19,6 +19,9 @@ namespace Azure.Messaging
         /// <param name="jsonSerializableData"> Event data specific to the event type. </param>
         /// <param name="dataSerializationType">The type to use when serializing the data.
         /// If not specified, <see cref="object.GetType()"/> will be used on <paramref name="jsonSerializableData"/>.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="source"/> or <paramref name="type"/> was null.
+        /// </exception>
         public CloudEvent(string source, string type, object? jsonSerializableData, Type? dataSerializationType = default)
         {
             if (jsonSerializableData is BinaryData)
@@ -38,7 +41,11 @@ namespace Azure.Messaging
         /// <param name="type"> Type of event related to the originating occurrence. For example, "Contoso.Items.ItemReceived". </param>
         /// <param name="data"> Binary event data specific to the event type. </param>
         /// <param name="dataContentType"> Content type of the payload. A content type different from "application/json" should be specified if payload is not JSON. </param>
-        /// <param name="dataFormat"></param>
+        /// <param name="dataFormat">The format that the data of a <see cref="CloudEvent"/> should be sent in
+        /// when using the JSON envelope format.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="source"/> or <paramref name="type"/> was null.
+        /// </exception>
         public CloudEvent(string source, string type, BinaryData? data, string? dataContentType, CloudEventDataFormat dataFormat = CloudEventDataFormat.Binary)
         {
             Source = source;
@@ -62,11 +69,11 @@ namespace Azure.Messaging
         /// Gets or sets an identifier for the event. The combination of <see cref="Id"/> and <see cref="Source"/> must be unique for each distinct event.
         /// If not explicitly set, this will default to a <see cref="Guid"/>.
         /// </summary>
-        public string? Id
+        public string Id
         {
             get
             {
-                return _id;
+                return _id!;
             }
             set
             {
@@ -80,11 +87,11 @@ namespace Azure.Messaging
 
         /// <summary>Gets or sets the context in which an event happened. The combination of <see cref="Id"/>
         /// and <see cref="Source"/> must be unique for each distinct event.</summary>
-        public string? Source
+        public string Source
         {
             get
             {
-                return _source;
+                return _source!;
             }
             set
             {
@@ -95,11 +102,11 @@ namespace Azure.Messaging
         private string? _source;
 
         /// <summary>Gets or sets the type of event related to the originating occurrence.</summary>
-        public string? Type
+        public string Type
         {
             get
             {
-                return _type;
+                return _type!;
             }
             set
             {
@@ -142,19 +149,18 @@ namespace Azure.Messaging
         /// By default, if the event is missing required properties, an exception is thrown though this can be relaxed
         /// by setting the <paramref name="skipValidation"/> parameter.
         /// </summary>
-        /// <param name="jsonContent"> The JSON-encoded representation of either a single event or an array or events,
-        /// in the CloudEvent schema.</param>
+        /// <param name="json">An instance of <see cref="BinaryData"/> containing the JSON for one or more CloudEvents.</param>
         /// <param name="skipValidation">Set to <see langword="true"/> to allow missing or invalid properties to still parse into a CloudEvent.
         /// In particular, by setting strict to <see langword="true"/>, the source, id, specversion and type properties are no longer required
         /// to be present in the JSON. Additionally, the casing requirements of the extension attribute names are relaxed.
         /// </param>
-        /// <returns> A list of <see cref="CloudEvent"/>. </returns>
-        public static CloudEvent[] ParseEvents(string jsonContent, bool skipValidation = false)
+        /// <returns> An array of <see cref="CloudEvent"/> instances.</returns>
+        public static CloudEvent[] ParseMany(BinaryData json, bool skipValidation = false)
         {
-            Argument.AssertNotNull(jsonContent, nameof(jsonContent));
+            Argument.AssertNotNull(json, nameof(json));
 
             CloudEvent[]? cloudEvents = null;
-            JsonDocument requestDocument = JsonDocument.Parse(jsonContent);
+            JsonDocument requestDocument = JsonDocument.Parse(json);
 
             // Parse JsonElement into separate events, deserialize event envelope properties
             if (requestDocument.RootElement.ValueKind == JsonValueKind.Object)
@@ -180,30 +186,42 @@ namespace Azure.Messaging
         /// By default, if the event is missing required properties, an exception is thrown though this can be relaxed
         /// by setting the <paramref name="skipValidation"/> parameter.
         /// </summary>
-        /// <param name="jsonEvent">Specifies the instance of <see cref="BinaryData"/>.</param>
+        /// <param name="json">An instance of <see cref="BinaryData"/> containing the JSON for the CloudEvent.</param>
         /// <param name="skipValidation">Set to <see langword="true"/> to allow missing or invalid properties to still parse into a CloudEvent.
         /// In particular, by setting strict to <see langword="true"/>, the source, id, specversion and type properties are no longer required
         /// to be present in the JSON. Additionally, the casing requirements of the extension attribute names are relaxed.
         /// </param>
         /// <returns> A <see cref="CloudEvent"/>. </returns>
-        public static CloudEvent? Parse(BinaryData jsonEvent, bool skipValidation = false)
+        /// <exception cref="ArgumentException">
+        /// <paramref name="json"/> contained multiple events. <see cref="ParseMany"/> should be used instead.
+        /// </exception>
+        public static CloudEvent? Parse(BinaryData json, bool skipValidation = false)
         {
-            Argument.AssertNotNull(jsonEvent, nameof(jsonEvent));
-            CloudEvent[]? events = ParseEvents(jsonEvent.ToString(), skipValidation);
-            if (events.Length == 0)
+            Argument.AssertNotNull(json, nameof(json));
+
+            JsonDocument requestDocument = JsonDocument.Parse(json);
+            CloudEvent? cloudEvent = null;
+            if (requestDocument.RootElement.ValueKind == JsonValueKind.Object)
             {
-                return null;
+                cloudEvent = CloudEventConverter.DeserializeCloudEvent(requestDocument.RootElement, skipValidation);
             }
-            if (events.Length > 1)
+            else if (requestDocument.RootElement.ValueKind == JsonValueKind.Array)
             {
-                throw new ArgumentException(
-                    "The BinaryData instance contains JSON from multiple cloud events. This method " +
-                    "should only be used with BinaryData containing a single cloud event. " +
-                    Environment.NewLine +
-                    "To parse multiple events, call ToString on the BinaryData and use the " +
-                    "Parse overload that takes a string.");
+                if (requestDocument.RootElement.GetArrayLength() > 1)
+                {
+                    throw new ArgumentException(
+                        "The BinaryData instance contains JSON from multiple cloud events. This method " +
+                        "should only be used with BinaryData containing a single cloud event. " +
+                        Environment.NewLine +
+                        $"To parse multiple events, use the {nameof(ParseMany)} overload.");
+                }
+                foreach (JsonElement property in requestDocument.RootElement.EnumerateArray())
+                {
+                    cloudEvent = CloudEventConverter.DeserializeCloudEvent(property, skipValidation);
+                    break;
+                }
             }
-            return events[0];
+            return cloudEvent;
         }
     }
 }

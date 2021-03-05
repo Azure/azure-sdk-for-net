@@ -156,7 +156,7 @@ namespace Azure.Core.Tests
             };
             var serializer = new JsonObjectSerializer();
             BinaryData serialized = serializer.Serialize(cloudEvent);
-            CloudEvent deserialized = CloudEvent.ParseEvents(serialized.ToString())[0];
+            CloudEvent deserialized = CloudEvent.ParseMany(serialized)[0];
             Assert.AreEqual("source", deserialized.Source);
             Assert.AreEqual("type", deserialized.Type);
             Assert.AreEqual(10, deserialized.Data.ToObjectFromJson<TestModel>().A);
@@ -213,7 +213,7 @@ namespace Azure.Core.Tests
             };
             var serializer = new JsonObjectSerializer();
             BinaryData serialized = serializer.Serialize(cloudEvent);
-            CloudEvent deserialized = CloudEvent.ParseEvents(serialized.ToString())[0];
+            CloudEvent deserialized = CloudEvent.ParseMany(serialized)[0];
             Assert.AreEqual("source", deserialized.Source);
             Assert.AreEqual("type", deserialized.Type);
             var dataArray = deserialized.Data.ToObjectFromJson<TestModel[]>();
@@ -226,7 +226,7 @@ namespace Azure.Core.Tests
             Assert.AreEqual("id", deserialized.Id);
             Assert.AreEqual(time, deserialized.Time);
 
-            deserialized = CloudEvent.ParseEvents(serialized.ToString())[0];
+            deserialized = CloudEvent.ParseMany(serialized)[0];
             Assert.AreEqual("source", deserialized.Source);
             Assert.AreEqual("type", deserialized.Type);
             dataArray = deserialized.Data.ToObjectFromJson<TestModel[]>();
@@ -287,7 +287,7 @@ namespace Azure.Core.Tests
             };
             var serializer = new JsonObjectSerializer();
             BinaryData serialized = serializer.Serialize(cloudEvent);
-            CloudEvent deserialized = CloudEvent.ParseEvents(serialized.ToString())[0];
+            CloudEvent deserialized = CloudEvent.ParseMany(serialized)[0];
             Assert.AreEqual("source", deserialized.Source);
             Assert.AreEqual("type", deserialized.Type);
             Assert.AreEqual(10, deserialized.Data.ToObject<TestModel>(dataSerializer).A);
@@ -339,7 +339,7 @@ namespace Azure.Core.Tests
 
             var serializer = new JsonObjectSerializer();
             BinaryData serialized = serializer.Serialize(cloudEvent);
-            CloudEvent deserialized = CloudEvent.ParseEvents(serialized.ToString())[0];
+            CloudEvent deserialized = CloudEvent.ParseMany(serialized)[0];
             Assert.AreEqual("source", deserialized.Source);
             Assert.AreEqual("type", deserialized.Type);
             Assert.AreEqual(data, deserialized.Data.ToObjectFromJson<string>());
@@ -383,7 +383,7 @@ namespace Azure.Core.Tests
             var serializer = new JsonObjectSerializer();
             BinaryData serialized = serializer.Serialize(cloudEvent);
 
-            CloudEvent deserialized = CloudEvent.ParseEvents(serialized.ToString())[0];
+            CloudEvent deserialized = CloudEvent.ParseMany(serialized)[0];
             Assert.IsNull(cloudEvent.Data.ToObjectFromJson<object>());
             AssertCloudEvent();
 
@@ -405,7 +405,7 @@ namespace Azure.Core.Tests
             Assert.IsNull(cloudEvent.Data.ToObjectFromJson<object>());
             serialized = serializer.Serialize(cloudEvent);
 
-            deserialized = CloudEvent.ParseEvents(serialized.ToString())[0];
+            deserialized = CloudEvent.ParseMany(serialized)[0];
             Assert.IsNull(cloudEvent.Data.ToObjectFromJson<object>());
             AssertCloudEvent();
 
@@ -427,7 +427,7 @@ namespace Azure.Core.Tests
             Assert.IsNull(cloudEvent.Data);
             serialized = serializer.Serialize(cloudEvent);
 
-            deserialized = CloudEvent.ParseEvents(serialized.ToString())[0];
+            deserialized = CloudEvent.ParseMany(serialized)[0];
             Assert.IsNull(cloudEvent.Data);
             AssertCloudEvent();
 
@@ -465,7 +465,7 @@ namespace Azure.Core.Tests
             var serializer = new JsonObjectSerializer();
             BinaryData serialized = serializer.Serialize(cloudEvent);
 
-            CloudEvent deserialized = CloudEvent.ParseEvents(serialized.ToString())[0];
+            CloudEvent deserialized = CloudEvent.ParseMany(serialized)[0];
             AssertCloudEvent();
 
             deserialized = (CloudEvent)serializer.Deserialize(serialized.ToStream(), typeof(CloudEvent), CancellationToken.None);
@@ -484,7 +484,7 @@ namespace Azure.Core.Tests
             Assert.IsTrue(cloudEvent.Data.ToObjectFromJson<bool>());
             serialized = serializer.Serialize(cloudEvent);
 
-            deserialized = CloudEvent.ParseEvents(serialized.ToString())[0];
+            deserialized = CloudEvent.ParseMany(serialized)[0];
             AssertCloudEvent();
 
             deserialized = (CloudEvent)serializer.Deserialize(serialized.ToStream(), typeof(CloudEvent), CancellationToken.None);
@@ -520,7 +520,7 @@ namespace Azure.Core.Tests
             var serializer = new JsonObjectSerializer();
             BinaryData serialized = serializer.Serialize(cloudEvent);
 
-            CloudEvent deserialized = CloudEvent.ParseEvents(serialized.ToString())[0];
+            CloudEvent deserialized = CloudEvent.ParseMany(serialized)[0];
             AssertCloudEvent();
 
             deserialized = (CloudEvent)serializer.Deserialize(serialized.ToStream(), typeof(CloudEvent), CancellationToken.None);
@@ -539,7 +539,7 @@ namespace Azure.Core.Tests
             Assert.AreEqual(5, cloudEvent.Data.ToObjectFromJson<int>());
             serialized = serializer.Serialize(cloudEvent);
 
-            deserialized = CloudEvent.ParseEvents(serialized.ToString())[0];
+            deserialized = CloudEvent.ParseMany(serialized)[0];
             AssertCloudEvent();
 
             deserialized = (CloudEvent)serializer.Deserialize(serialized.ToStream(), typeof(CloudEvent), CancellationToken.None);
@@ -574,7 +574,7 @@ namespace Azure.Core.Tests
             };
             var serializer = new JsonObjectSerializer();
             BinaryData serialized = serializer.Serialize(cloudEvent);
-            CloudEvent deserialized = CloudEvent.ParseEvents(serialized.ToString())[0];
+            CloudEvent deserialized = CloudEvent.ParseMany(serialized)[0];
             Assert.AreEqual("source", deserialized.Source);
             Assert.AreEqual("type", deserialized.Type);
             Assert.AreEqual(data, deserialized.Data.ToArray());
@@ -600,7 +600,7 @@ namespace Azure.Core.Tests
             };
             var serializer = new JsonObjectSerializer();
             BinaryData serialized = serializer.Serialize(cloudEvent);
-            CloudEvent deserialized = CloudEvent.ParseEvents(serialized.ToString())[0];
+            CloudEvent deserialized = CloudEvent.ParseMany(serialized)[0];
             Assert.AreEqual("source", deserialized.Source);
             Assert.AreEqual("type", deserialized.Type);
             Assert.AreEqual(data, deserialized.Data.ToArray());
@@ -634,7 +634,7 @@ namespace Azure.Core.Tests
             var serializer = new JsonObjectSerializer();
 
             BinaryData serialized = serializer.Serialize(cloudEvent);
-            CloudEvent deserialized = CloudEvent.ParseEvents(serialized.ToString())[0];
+            CloudEvent deserialized = CloudEvent.ParseMany(serialized)[0];
             Assert.AreEqual("source", deserialized.Source);
             Assert.AreEqual("type", deserialized.Type);
             Assert.AreEqual(10, deserialized.Data.ToObject<TestModel>(dataSerializer).A);
@@ -656,7 +656,7 @@ namespace Azure.Core.Tests
             });
 
             BinaryData serialized = serializer.Serialize(cloudEvent);
-            CloudEvent deserialized = CloudEvent.ParseEvents(serialized.ToString())[0];
+            CloudEvent deserialized = CloudEvent.ParseMany(serialized)[0];
             Assert.AreEqual("source", deserialized.Source);
             Assert.AreEqual("type", deserialized.Type);
             Assert.AreEqual(10, deserialized.Data.ToObjectFromJson<TestModel>().A);
@@ -682,7 +682,7 @@ namespace Azure.Core.Tests
             };
             var serializer = new JsonObjectSerializer();
             BinaryData serialized = serializer.Serialize(cloudEvent);
-            CloudEvent deserialized = CloudEvent.ParseEvents(serialized.ToString())[0];
+            CloudEvent deserialized = CloudEvent.ParseMany(serialized)[0];
             Assert.AreEqual("source", deserialized.Source);
             Assert.AreEqual("type", deserialized.Type);
             Assert.AreEqual(10, deserialized.Data.ToObjectFromJson<TestModel>().A);
@@ -704,10 +704,10 @@ namespace Azure.Core.Tests
         [Test]
         public void CloudEventParseThrowsOnNullInput()
         {
-            Assert.That(() => CloudEvent.ParseEvents((string)null),
+            Assert.That(() => CloudEvent.ParseMany(null),
                 Throws.InstanceOf<ArgumentNullException>());
 
-            Assert.That(() => CloudEvent.Parse((BinaryData)null),
+            Assert.That(() => CloudEvent.Parse(null),
                 Throws.InstanceOf<ArgumentNullException>());
         }
 
@@ -726,17 +726,17 @@ namespace Azure.Core.Tests
         public void CanParseMultipleMissingRequired(bool skipValidation)
         {
             // missing Id, Source, SpecVersion
-            string requestContent = "[{ \"subject\": \"Subject-0\", \"data\": {    \"itemSku\": \"512d38b6-c7b8-40c8-89fe-f46f9e9622b6\",    \"itemUri\": \"https://rp-eastus2.eventgrid.azure.net:553/eventsubscriptions/estest/validate?id=B2E34264-7D71-453A-B5FB-B62D0FDC85EE&t=2018-04-26T20:30:54.4538837Z&apiVersion=2018-05-01-preview&token=1BNqCxBBSSE9OnNSfZM4%2b5H9zDegKMY6uJ%2fO2DFRkwQ%3d\"  }}, { \"subject\": \"Subject-0\", \"data\": {    \"itemSku\": \"512d38b6-c7b8-40c8-89fe-f46f9e9622b6\",    \"itemUri\": \"https://rp-eastus2.eventgrid.azure.net:553/eventsubscriptions/estest/validate?id=B2E34264-7D71-453A-B5FB-B62D0FDC85EE&t=2018-04-26T20:30:54.4538837Z&apiVersion=2018-05-01-preview&token=1BNqCxBBSSE9OnNSfZM4%2b5H9zDegKMY6uJ%2fO2DFRkwQ%3d\"  }}]";
+            BinaryData requestContent = new BinaryData("[{ \"subject\": \"Subject-0\", \"data\": {    \"itemSku\": \"512d38b6-c7b8-40c8-89fe-f46f9e9622b6\",    \"itemUri\": \"https://rp-eastus2.eventgrid.azure.net:553/eventsubscriptions/estest/validate?id=B2E34264-7D71-453A-B5FB-B62D0FDC85EE&t=2018-04-26T20:30:54.4538837Z&apiVersion=2018-05-01-preview&token=1BNqCxBBSSE9OnNSfZM4%2b5H9zDegKMY6uJ%2fO2DFRkwQ%3d\"  }}, { \"subject\": \"Subject-0\", \"data\": {    \"itemSku\": \"512d38b6-c7b8-40c8-89fe-f46f9e9622b6\",    \"itemUri\": \"https://rp-eastus2.eventgrid.azure.net:553/eventsubscriptions/estest/validate?id=B2E34264-7D71-453A-B5FB-B62D0FDC85EE&t=2018-04-26T20:30:54.4538837Z&apiVersion=2018-05-01-preview&token=1BNqCxBBSSE9OnNSfZM4%2b5H9zDegKMY6uJ%2fO2DFRkwQ%3d\"  }}]");
 
             if (!skipValidation)
             {
                 Assert.That(
-                    () => CloudEvent.ParseEvents(requestContent, skipValidation),
+                    () => CloudEvent.ParseMany(requestContent, skipValidation),
                     Throws.InstanceOf<ArgumentException>());
             }
             else
             {
-                CloudEvent[] events = CloudEvent.ParseEvents(requestContent, skipValidation);
+                CloudEvent[] events = CloudEvent.ParseMany(requestContent, skipValidation);
                 foreach (CloudEvent cloudEvent in events)
                 {
                     Assert.IsNull(cloudEvent.Id);
@@ -908,17 +908,17 @@ namespace Azure.Core.Tests
         public void CanParseInvalidAttributes(bool skipValidation)
         {
             // improperly cased extension can still be deserialized.
-            var json = "{\"subject\": \"Subject-0\", \"source\":\"source\", \"specversion\":\"1.0\", \"id\": \"id\", \"type\": \"type\", \"KEY\":\"value\", \"dict\": { \"key1\":true, \"key2\": 5 } }";
+            var json = new BinaryData("{\"subject\": \"Subject-0\", \"source\":\"source\", \"specversion\":\"1.0\", \"id\": \"id\", \"type\": \"type\", \"KEY\":\"value\", \"dict\": { \"key1\":true, \"key2\": 5 } }");
 
             if (!skipValidation)
             {
                 Assert.That(
-                    () => CloudEvent.ParseEvents(json),
+                    () => CloudEvent.ParseMany(json),
                     Throws.InstanceOf<ArgumentException>());
             }
             else
             {
-                var evt = CloudEvent.ParseEvents(json, true)[0];
+                var evt = CloudEvent.ParseMany(json, true)[0];
                 Assert.AreEqual("Subject-0", evt.Subject);
                 Assert.AreEqual("type", evt.Type);
                 Assert.AreEqual("value", evt.ExtensionAttributes["KEY"]);
