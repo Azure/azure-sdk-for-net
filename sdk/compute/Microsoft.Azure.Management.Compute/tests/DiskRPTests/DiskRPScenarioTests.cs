@@ -39,6 +39,18 @@ namespace Compute.Tests.DiskRPTests
         }
 
         [Fact]
+        public void Disk_CRUD_PremiumZRSDisk()
+        {
+            SSDZRSDisk_CRUD_Execute(DiskCreateOption.Empty, StorageAccountTypes.PremiumZRS, "Disk_CRUD_PremiumZRSDisk", diskSizeGB: 32, tier: "P4", location: "eastus2euap");
+        }
+
+        [Fact]
+        public void Disk_CRUD_StandardSSDZRSDisk()
+        {
+            SSDZRSDisk_CRUD_Execute(DiskCreateOption.Empty, StorageAccountTypes.StandardSSDZRS, "Disk_CRUD_StandardSSDZRSDisk", diskSizeGB: 32, location: "eastus2euap");
+        }
+        
+        [Fact]
         public void Disk_CRUD_PremiumDiskWithBursting()
         {
             PremiumDisk_CRUD_Execute(DiskCreateOption.Import, "Disk_CRUD_PremiumDiskWithBursting", tier: "P30", diskSizeGB: 1024, burstingEnabled: true, location: "eastus2euap");
