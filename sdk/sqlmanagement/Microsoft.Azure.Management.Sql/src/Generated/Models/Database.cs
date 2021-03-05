@@ -176,9 +176,12 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="autoPauseDelay">Time in minutes after which database
         /// is automatically paused. A value of -1 means that automatic pause
         /// is disabled</param>
-        /// <param name="storageAccountType">The storage account type used to
-        /// store backups for this database. Possible values include: 'GRS',
-        /// 'LRS', 'ZRS'</param>
+        /// <param name="currentBackupStorageRedundancy">The storage account
+        /// type used to store backups for this database. Possible values
+        /// include: 'Geo', 'Local', 'Zone'</param>
+        /// <param name="requestedBackupStorageRedundancy">The storage account
+        /// type to be used to store backups for this database. Possible values
+        /// include: 'Geo', 'Local', 'Zone'</param>
         /// <param name="minCapacity">Minimal capacity that database will
         /// always have allocated, if not paused</param>
         /// <param name="pausedDate">The date when database was paused by user
@@ -190,7 +193,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="maintenanceConfigurationId">Maintenance configuration
         /// id assigned to the database. This configuration defines the period
         /// when the maintenance updates will occur.</param>
-        public Database(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string kind = default(string), string managedBy = default(string), string createMode = default(string), string collation = default(string), long? maxSizeBytes = default(long?), string sampleName = default(string), string elasticPoolId = default(string), string sourceDatabaseId = default(string), string status = default(string), System.Guid? databaseId = default(System.Guid?), System.DateTime? creationDate = default(System.DateTime?), string currentServiceObjectiveName = default(string), string requestedServiceObjectiveName = default(string), string defaultSecondaryLocation = default(string), string failoverGroupId = default(string), System.DateTime? restorePointInTime = default(System.DateTime?), System.DateTime? sourceDatabaseDeletionDate = default(System.DateTime?), string recoveryServicesRecoveryPointId = default(string), string longTermRetentionBackupResourceId = default(string), string recoverableDatabaseId = default(string), string restorableDroppedDatabaseId = default(string), string catalogCollation = default(string), bool? zoneRedundant = default(bool?), string licenseType = default(string), long? maxLogSizeBytes = default(long?), System.DateTime? earliestRestoreDate = default(System.DateTime?), string readScale = default(string), int? highAvailabilityReplicaCount = default(int?), string secondaryType = default(string), Sku currentSku = default(Sku), int? autoPauseDelay = default(int?), string storageAccountType = default(string), double? minCapacity = default(double?), System.DateTime? pausedDate = default(System.DateTime?), System.DateTime? resumedDate = default(System.DateTime?), string maintenanceConfigurationId = default(string))
+        public Database(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string kind = default(string), string managedBy = default(string), string createMode = default(string), string collation = default(string), long? maxSizeBytes = default(long?), string sampleName = default(string), string elasticPoolId = default(string), string sourceDatabaseId = default(string), string status = default(string), System.Guid? databaseId = default(System.Guid?), System.DateTime? creationDate = default(System.DateTime?), string currentServiceObjectiveName = default(string), string requestedServiceObjectiveName = default(string), string defaultSecondaryLocation = default(string), string failoverGroupId = default(string), System.DateTime? restorePointInTime = default(System.DateTime?), System.DateTime? sourceDatabaseDeletionDate = default(System.DateTime?), string recoveryServicesRecoveryPointId = default(string), string longTermRetentionBackupResourceId = default(string), string recoverableDatabaseId = default(string), string restorableDroppedDatabaseId = default(string), string catalogCollation = default(string), bool? zoneRedundant = default(bool?), string licenseType = default(string), long? maxLogSizeBytes = default(long?), System.DateTime? earliestRestoreDate = default(System.DateTime?), string readScale = default(string), int? highAvailabilityReplicaCount = default(int?), string secondaryType = default(string), Sku currentSku = default(Sku), int? autoPauseDelay = default(int?), string currentBackupStorageRedundancy = default(string), string requestedBackupStorageRedundancy = default(string), double? minCapacity = default(double?), System.DateTime? pausedDate = default(System.DateTime?), System.DateTime? resumedDate = default(System.DateTime?), string maintenanceConfigurationId = default(string))
             : base(location, id, name, type, tags)
         {
             Sku = sku;
@@ -225,7 +228,8 @@ namespace Microsoft.Azure.Management.Sql.Models
             SecondaryType = secondaryType;
             CurrentSku = currentSku;
             AutoPauseDelay = autoPauseDelay;
-            StorageAccountType = storageAccountType;
+            CurrentBackupStorageRedundancy = currentBackupStorageRedundancy;
+            RequestedBackupStorageRedundancy = requestedBackupStorageRedundancy;
             MinCapacity = minCapacity;
             PausedDate = pausedDate;
             ResumedDate = resumedDate;
@@ -516,11 +520,18 @@ namespace Microsoft.Azure.Management.Sql.Models
         public int? AutoPauseDelay { get; set; }
 
         /// <summary>
-        /// Gets or sets the storage account type used to store backups for
-        /// this database. Possible values include: 'GRS', 'LRS', 'ZRS'
+        /// Gets the storage account type used to store backups for this
+        /// database. Possible values include: 'Geo', 'Local', 'Zone'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.storageAccountType")]
-        public string StorageAccountType { get; set; }
+        [JsonProperty(PropertyName = "properties.currentBackupStorageRedundancy")]
+        public string CurrentBackupStorageRedundancy { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the storage account type to be used to store backups
+        /// for this database. Possible values include: 'Geo', 'Local', 'Zone'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.requestedBackupStorageRedundancy")]
+        public string RequestedBackupStorageRedundancy { get; set; }
 
         /// <summary>
         /// Gets or sets minimal capacity that database will always have
