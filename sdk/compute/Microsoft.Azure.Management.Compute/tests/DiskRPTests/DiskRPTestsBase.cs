@@ -396,7 +396,7 @@ namespace Compute.Tests.DiskRPTests
             }
         }
 
-        protected void DiskAccess_WithPrivateEndpoint_CRUD_Execute(string methodName, string location = null)
+        protected void DiskAccess_WithPrivateEndpoint_CRUD_Execute(string methodName, string location = null, bool manualApproval = false)
         {
             using (MockContext context = MockContext.Start(this.GetType(), methodName))
             {
@@ -427,10 +427,24 @@ namespace Compute.Tests.DiskRPTests
                     NM.Subnet subnet = CreateVNET(rgName, disablePEPolicies: true);
 
                     // Put Private Endpoint associating it with disk access
-                    NM.PrivateEndpoint privateEndpoint = CreatePrivateEndpoint(rgName, privateEndpointName, diskAccessOut.Id, subnet.Id);
+                    NM.PrivateEndpoint privateEndpoint = CreatePrivateEndpoint(rgName, privateEndpointName, diskAccessOut.Id, subnet.Id, manualApproval: manualApproval);
+
+                    if (manualApproval)
+                    {
+                        diskAccessOut = m_CrpClient.DiskAccesses.Get(rgName, diskAccessName);
+                        Validate(diskAccess, diskAccessOut, diskAccessName, expectedPrivateLinkStatus: "Pending", privateEndpointId: privateEndpoint.Id);
+
+                        PrivateEndpointConnection peConnection = diskAccessOut.PrivateEndpointConnections[0];
+                        // Update peConnection status to Approved
+                        peConnection.PrivateLinkServiceConnectionState.Status = "Approved";
+                        peConnection = m_CrpClient.DiskAccesses.UpdateAPrivateEndpointConnection(rgName, diskAccessName, peConnection.Name, peConnection);
+                    }
 
                     diskAccessOut = m_CrpClient.DiskAccesses.Get(rgName, diskAccessName);
-                    Validate(diskAccess, diskAccessOut, diskAccessName, privateEndpoint.Id);
+                    Validate(diskAccess, diskAccessOut, diskAccessName, expectedPrivateLinkStatus: "Approved", privateEndpointId: privateEndpoint.Id);
+                    IPage<PrivateEndpointConnection> peConnections = m_CrpClient.DiskAccesses.ListPrivateEndpointConnections(rgName, diskAccessName);
+                    Assert.Equal(diskAccessOut.PrivateEndpointConnections.Count, peConnections.Count());
+                    Assert.Equal(diskAccessOut.PrivateEndpointConnections[0].Name, peConnections.First().Name);
 
                     // Patch DiskAccess
                     const string tagKey = "tagKey";
@@ -442,6 +456,9 @@ namespace Compute.Tests.DiskRPTests
                     PrivateLinkResourceListResult privateLinkResources = m_CrpClient.DiskAccesses.GetPrivateLinkResources(rgName, diskAccessName);
                     Validate(privateLinkResources);
 
+                    // Delete PrivateEndpointConnection
+                    m_CrpClient.DiskAccesses.DeleteAPrivateEndpointConnection(rgName, diskAccessName, diskAccessOut.PrivateEndpointConnections[0].Name);
+                    // Delete PrivateEndpoint
                     m_NrpClient.PrivateEndpoints.DeleteWithHttpMessagesAsync(rgName, privateEndpointName).GetAwaiter().GetResult();
 
                     // Delete DiskAccess
@@ -1315,7 +1332,7 @@ namespace Compute.Tests.DiskRPTests
 
         #region Helpers
 
-        protected NM.PrivateEndpoint CreatePrivateEndpoint(string rgName, string peName, string diskAccessId, string subnetId)
+        protected NM.PrivateEndpoint CreatePrivateEndpoint(string rgName, string peName, string diskAccessId, string subnetId, bool manualApproval = false)
         {
             string plsConnectionName = TestUtilities.GenerateName("pls");
             NM.PrivateEndpoint privateEndpoint = new NM.PrivateEndpoint
@@ -1324,8 +1341,12 @@ namespace Compute.Tests.DiskRPTests
                 {
                     Id = subnetId
                 },
-                Location = m_location,
-                PrivateLinkServiceConnections = new List<NM.PrivateLinkServiceConnection>
+                Location = m_location
+            };
+
+            if (manualApproval)
+            {
+                privateEndpoint.ManualPrivateLinkServiceConnections = new List<NM.PrivateLinkServiceConnection>
                 {
                     new NM.PrivateLinkServiceConnection
                     {
@@ -1333,8 +1354,20 @@ namespace Compute.Tests.DiskRPTests
                         Name = plsConnectionName,
                         PrivateLinkServiceId = diskAccessId
                     }
-                }
-            };
+                };
+            }
+            else
+            {
+                privateEndpoint.PrivateLinkServiceConnections = new List<NM.PrivateLinkServiceConnection>
+                {
+                    new NM.PrivateLinkServiceConnection
+                    {
+                        GroupIds = new List<string> { "disks" },
+                        Name = plsConnectionName,
+                        PrivateLinkServiceId = diskAccessId
+                    }
+                };
+            }
 
             NM.PrivateEndpoint privateEndpointOut = m_NrpClient.PrivateEndpoints.CreateOrUpdateWithHttpMessagesAsync(rgName, peName, privateEndpoint).GetAwaiter().GetResult().Body;
 
@@ -1356,7 +1389,7 @@ namespace Compute.Tests.DiskRPTests
             Assert.Equal(expectedEncryptionType, diskEncryptionSetActual.EncryptionType);
         }
 
-        private void Validate(DiskAccess diskAccessExpected, DiskAccess diskAccessActual, string expectedDiskAccessName, string privateEndpointId = null)
+        private void Validate(DiskAccess diskAccessExpected, DiskAccess diskAccessActual, string expectedDiskAccessName, string expectedPrivateLinkStatus = "Approved", string privateEndpointId = null)
         {
             Assert.Equal(expectedDiskAccessName, diskAccessActual.Name);
             Assert.Equal(diskAccessExpected.Location, diskAccessActual.Location);
@@ -1368,7 +1401,7 @@ namespace Compute.Tests.DiskRPTests
                 Assert.NotNull(diskAccessActual.PrivateEndpointConnections);
                 Assert.Equal(string.Format("{0}/{1}/{2}", ApiConstants.ResourceProviderNamespace, "diskAccesses", "PrivateEndpointConnections"), diskAccessActual.PrivateEndpointConnections[0].Type);
                 Assert.Equal(privateEndpointId, diskAccessActual.PrivateEndpointConnections[0].PrivateEndpoint.Id);
-                Assert.Equal("Approved", diskAccessActual.PrivateEndpointConnections[0].PrivateLinkServiceConnectionState.Status);
+                Assert.Equal(expectedPrivateLinkStatus, diskAccessActual.PrivateEndpointConnections[0].PrivateLinkServiceConnectionState.Status);
                 Assert.Equal("None", diskAccessActual.PrivateEndpointConnections[0].PrivateLinkServiceConnectionState.ActionsRequired);
                 Assert.Equal(PrivateEndpointConnectionProvisioningState.Succeeded, diskAccessActual.PrivateEndpointConnections[0].ProvisioningState);
             }
