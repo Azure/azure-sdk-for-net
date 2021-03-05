@@ -14,13 +14,13 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Synapse.Artifacts
 {
-    /// <summary> Creates a library with the library name. Use query param &apos;comp=appendblock&apos; to append the data to the library resource created using the create operation. </summary>
-    internal partial class LibraryCreateOrAppendOperation : Operation<Response>, IOperationSource<Response>
+    /// <summary> Creates a library with the library name. </summary>
+    public partial class LibraryCreateOperation : Operation<Response>, IOperationSource<Response>
     {
         private readonly ArmOperationHelpers<Response> _operation;
-        internal LibraryCreateOrAppendOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal LibraryCreateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "LibraryCreateOrAppendOperation");
+            _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "LibraryCreateOperation");
         }
         /// <inheritdoc />
         public override string Id => _operation.Id;
