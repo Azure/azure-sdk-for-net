@@ -1277,8 +1277,8 @@ namespace Compute.Tests.DiskRPTests
                 // Data
                 var rgName = TestUtilities.GenerateName(TestPrefix);
                 var diskName = TestUtilities.GenerateName(DiskNamePrefix);
-                DiskPurchasePlan originalPurchasePlan = new DiskPurchasePlan { Name = "n", Product = "p", Publisher = "x", PromotionCode = "c" };
-                DiskPurchasePlan newPurchasePlan = new DiskPurchasePlan { Name = "nn", Product = "np", Publisher = "nx", PromotionCode = "nc" };
+                PurchasePlan originalPurchasePlan = new PurchasePlan { Name = "n", Product = "p", Publisher = "x", PromotionCode = "c" };
+                PurchasePlan newPurchasePlan = new PurchasePlan { Name = "nn", Product = "np", Publisher = "nx", PromotionCode = "nc" };
                 IList<string> zones = null;
                 Disk disk = GenerateDefaultDisk(diskCreateOption, rgName, diskSizeGB, zones, location);
                 disk.PurchasePlan = originalPurchasePlan;
@@ -1744,7 +1744,7 @@ namespace Compute.Tests.DiskRPTests
             }
         }
 
-        protected void ValidateDiskPurchasePlan(DiskPurchasePlan inputPlan, DiskPurchasePlan outPutPlan)
+        protected void ValidateDiskPurchasePlan(PurchasePlan inputPlan, PurchasePlan outPutPlan)
         {
             if (inputPlan == null
                  || outPutPlan == null

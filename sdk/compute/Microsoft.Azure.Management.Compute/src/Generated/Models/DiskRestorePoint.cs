@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// keys.</param>
         /// <param name="supportsHibernation">Indicates the OS on a disk
         /// supports hibernation.</param>
-        public DiskRestorePoint(string id = default(string), string name = default(string), string type = default(string), System.DateTime? timeCreated = default(System.DateTime?), string sourceResourceId = default(string), OperatingSystemTypes? osType = default(OperatingSystemTypes?), string hyperVGeneration = default(string), DiskPurchasePlan purchasePlan = default(DiskPurchasePlan), string familyId = default(string), string sourceUniqueId = default(string), Encryption encryption = default(Encryption), bool? supportsHibernation = default(bool?))
+        public DiskRestorePoint(string id = default(string), string name = default(string), string type = default(string), System.DateTime? timeCreated = default(System.DateTime?), string sourceResourceId = default(string), OperatingSystemTypes? osType = default(OperatingSystemTypes?), string hyperVGeneration = default(string), PurchasePlan purchasePlan = default(PurchasePlan), string familyId = default(string), string sourceUniqueId = default(string), Encryption encryption = default(Encryption), bool? supportsHibernation = default(bool?))
             : base(id, name, type)
         {
             TimeCreated = timeCreated;
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// the OS disk was created.
         /// </summary>
         [JsonProperty(PropertyName = "properties.purchasePlan")]
-        public DiskPurchasePlan PurchasePlan { get; set; }
+        public PurchasePlan PurchasePlan { get; set; }
 
         /// <summary>
         /// Gets id of the backing snapshot's MIS family
