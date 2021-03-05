@@ -53,7 +53,7 @@ namespace Azure.Messaging.EventGrid
             _apiVersion = options.Version.GetVersionString();
             _endpoint = endpoint;
             _key = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, Constants.SasKeyName));
+            _pipeline = HttpPipelineBuilder.Build(options, new EventGridKeyCredentialPolicy(credential, Constants.SasKeyName));
             _serviceRestClient = new EventGridRestClient(new ClientDiagnostics(options), _pipeline, options.Version.GetVersionString());
             _clientDiagnostics = new ClientDiagnostics(options);
         }
