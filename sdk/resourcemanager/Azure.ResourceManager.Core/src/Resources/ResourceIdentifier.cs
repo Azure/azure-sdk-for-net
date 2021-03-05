@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Core
                 other?.ToLowerInvariant(),
                 StringComparison.InvariantCultureIgnoreCase);
         }
-        
+
         /// <summary>
         /// Populate Resource Identity fields from input string.
         /// </summary>
