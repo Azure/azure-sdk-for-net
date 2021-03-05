@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.TestFramework
 {
-    public abstract class Track2ManagementRecordedTestBase<TEnvironment> : RecordedTestBase<TEnvironment>
+    public abstract class ManagementRecordedTestBase<TEnvironment> : RecordedTestBase<TEnvironment>
         where TEnvironment: TestEnvironment, new()
     {
         protected ResourceGroupCleanupPolicy CleanupPolicy = new ResourceGroupCleanupPolicy();
@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.TestFramework
 
         private AzureResourceManagerClient _cleanupClient;
 
-        protected Track2ManagementRecordedTestBase(bool isAsync) : base(isAsync)
+        protected ManagementRecordedTestBase(bool isAsync) : base(isAsync)
         {
             SessionEnvironment = new TEnvironment();
             SessionEnvironment.Mode = Mode;
         }
 
-        protected Track2ManagementRecordedTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
+        protected ManagementRecordedTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
             SessionEnvironment = new TEnvironment();
             SessionEnvironment.Mode = Mode;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.TestFramework
             {
                 Parallel.ForEach(OneTimeCleanupPolicy.ResourceGroupsCreated, resourceGroup =>
                 {
-                    _cleanupClient.GetResourceGroupOperations(resourceGroup).StartDelete();
+                    _cleanupClient.GetResourceGroupOperations(SessionEnvironment.SubscriptionId, resourceGroup).StartDelete();
                 });
             }
         }

@@ -6,7 +6,7 @@ using Azure.ResourceManager.TestFramework;
 
 namespace Azure.ResourceManager.Core.Tests
 {
-    public class ResourceManagerTestBase : Track2ManagementRecordedTestBase<ResourceManagerTestEnvironment>
+    public class ResourceManagerTestBase : ManagementRecordedTestBase<ResourceManagerTestEnvironment>
     {
         protected ResourceManagerTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
