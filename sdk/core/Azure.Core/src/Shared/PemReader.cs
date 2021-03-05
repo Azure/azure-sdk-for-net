@@ -132,7 +132,12 @@ namespace Azure.Core
                     // Because ImportPkcs8PrivateKey declares an out parameter we cannot call it directly using MethodInfo.Invoke since all arguments are passed as an object array.
                     // Instead we create a delegate with the correct signature and invoke it.
                     ImportPrivateKeyDelegate importPkcs8PrivateKey = (ImportPrivateKeyDelegate)s_rsaImportPkcs8PrivateKeyMethod.CreateDelegate(typeof(ImportPrivateKeyDelegate), privateKey);
-                    importPkcs8PrivateKey.Invoke(key, out _);
+                    importPkcs8PrivateKey.Invoke(key, out int bytesRead);
+
+                    if (key.Length != bytesRead)
+                    {
+                        throw new InvalidDataException("Invalid PKCS#8 Data");
+                    }
                 }
                 else
                 {

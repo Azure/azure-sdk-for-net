@@ -14,13 +14,21 @@ namespace Azure.Security.KeyVault.Certificates.Tests
     {
         [Test]
         public void VerifyECDecoderPrime256v1Imported() =>
-            // The following signature was generated in Key Vault using the certificate key corresponding to EcPrime256v1PrivateKeyImported,
-            // thus proving that Key Vault-generated OID 1.2.840.10045.1.1 (prime-field) is equivalent to OID 1.3.132.0.10 (secp256k1).
+            // TODO: Need to read in the full ECCurve and make sure this then works on macOS. By using OID 1.3.132.0.10 it will not since that OID is not supported on macOS.
             VerifyECDecoder(EcPrime256v1PrivateKeyImported, 256, @"Dqi/IwHjt2ttGyT0vleMvzsbStSOiDrevV4hhPGAXZoQ55b//keMmZ/weezuiSnliF4bTGWYxrqs73Yoj/6ddQ==");
 
         [Test]
-        public void VerifyECDecoderSecp256k1() =>
-            VerifyECDecoder(EcSecp256k1PrivateKey, 256, @"YV+z2wZfDRqszLwcoPAnT4XmKMbfAqfwQYdYYU5FyicKWLtRmcaAX8Pd8h0OmSAdxoPO2sVyK2FP22pWq/6fJQ==");
+        public void VerifyECDecoderSecp256k1()
+        {
+            try
+            {
+                VerifyECDecoder(EcSecp256k1PrivateKey, 256, @"YV+z2wZfDRqszLwcoPAnT4XmKMbfAqfwQYdYYU5FyicKWLtRmcaAX8Pd8h0OmSAdxoPO2sVyK2FP22pWq/6fJQ==");
+            }
+            catch (CryptographicException) when (Environment.OSVersion.Platform == PlatformID.Unix)
+            {
+                Assert.Ignore("The curve OID 1.3.132.0.10 is not supported by the current platform");
+            }
+        }
 
         [Test]
         public void VerifyECDecoderPrime256v1() =>

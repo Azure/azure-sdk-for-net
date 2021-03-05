@@ -9,7 +9,7 @@ using System.Security.Cryptography;
 
 namespace Azure.Core
 {
-    internal partial class LightweightPkcs8Decoder
+    internal static partial class LightweightPkcs8Decoder
     {
         private static readonly byte[] s_derIntegerOne = { 0x02, 0x01, 0x01 };
 

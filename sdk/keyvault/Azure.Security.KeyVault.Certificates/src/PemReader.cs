@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
@@ -42,7 +43,12 @@ namespace Azure.Core
                     // Because ImportECPrivateKeyMethod declares an out parameter we cannot call it directly using MethodInfo.Invoke since all arguments are passed as an object array.
                     // Instead we create a delegate with the correct signature and invoke it.
                     ImportPrivateKeyDelegate importECPrivateKey = (ImportPrivateKeyDelegate)s_ecImportPkcs8PrivateKeyMethod.CreateDelegate(typeof(ImportPrivateKeyDelegate), privateKey);
-                    importECPrivateKey.Invoke(key, out _);
+                    importECPrivateKey.Invoke(key, out int bytesRead);
+
+                    if (key.Length != bytesRead)
+                    {
+                        throw new InvalidDataException("Invalid PKCS#8 Data");
+                    }
                 }
                 else
                 {

@@ -98,6 +98,16 @@ namespace Azure.Core.Tests
             Assert.AreEqual("Unsupported PKCS#8 Data", ex.Message);
         }
 
+        [Test]
+        public void ReadUnsupportedArc2ObjectIdentifier()
+        {
+            byte[] data = new byte[] { 0x06, 0x02, 0x88, 0x37 };
+            int offset = 0;
+
+            Exception ex = Assert.Throws<InvalidDataException>(() => LightweightPkcs8Decoder.ReadObjectIdentifier(data, ref offset));
+            Assert.AreEqual("Unsupported PKCS#8 Data", ex.Message);
+        }
+
         private static IEnumerable ReadObjectIdentifierData => new[]
         {
             new object[] { "1.2.840.10045.2.1", new byte[] { 0x06, 0x07, 0x2A, 0x86, 0x48, 0xCE, 0x3D, 0x02, 0x01 } },

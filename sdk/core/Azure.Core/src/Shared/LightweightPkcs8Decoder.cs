@@ -21,7 +21,7 @@ namespace Azure.Core
     ///
     /// This code is able to decode RSA keys (without any attributes) from well formed PKCS#8 blobs.
     /// </summary>
-    internal partial class LightweightPkcs8Decoder
+    internal static partial class LightweightPkcs8Decoder
     {
         private static readonly byte[] s_derIntegerZero = { 0x02, 0x01, 0x00 };
 
@@ -103,8 +103,7 @@ namespace Azure.Core
                     }
                     else
                     {
-                        first = 2;
-                        val -= 80;
+                        throw new InvalidDataException("Unsupported PKCS#8 Data");
                     }
 
                     ret.Append(first).Append('.').Append(val);
@@ -142,7 +141,7 @@ namespace Azure.Core
                             throw new InvalidDataException("Invalid PKCS#8 Data");
                         }
 
-                        // 4 or fewer bits fits into a signed integer.
+                        // 4 or fewer bytes fits into a signed integer.
                         int max = end + 1;
                         if (max <= i + 4)
                         {
