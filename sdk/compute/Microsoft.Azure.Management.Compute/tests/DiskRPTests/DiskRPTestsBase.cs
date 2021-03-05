@@ -107,7 +107,7 @@ namespace Compute.Tests.DiskRPTests
 
         }
 
-        protected void PremiumDisk_CRUD_Execute(string diskCreateOption, string methodName, int? diskSizeGB = null, string tier = null, string location = null, IList<string> zones = null)
+        protected void PremiumDisk_CRUD_Execute(string diskCreateOption, string methodName, int? diskSizeGB = null, string tier = null, bool? burstingEnabled = null, string location = null, IList<string> zones = null)
         {
             using (MockContext context = MockContext.Start(this.GetType(), methodName))
             {
@@ -123,6 +123,7 @@ namespace Compute.Tests.DiskRPTests
                     Name = StorageAccountTypes.PremiumLRS
                 };
                 disk.Tier = tier;
+                disk.BurstingEnabled = burstingEnabled;
 
                 try
                 {
@@ -143,11 +144,13 @@ namespace Compute.Tests.DiskRPTests
                     Disk diskOut = m_CrpClient.Disks.CreateOrUpdate(rgName, diskName, disk);
                     Validate(disk, diskOut, DiskRPLocation);
                     Assert.Equal(tier, diskOut.Tier);
+                    Assert.Equal(burstingEnabled, diskOut.BurstingEnabled);
 
                     // Get
                     diskOut = m_CrpClient.Disks.Get(rgName, diskName);
                     Validate(disk, diskOut, DiskRPLocation);
                     Assert.Equal(tier, diskOut.Tier);
+                    Assert.Equal(burstingEnabled, diskOut.BurstingEnabled);
 
                     // Get disk access
                     AccessUri accessUri = m_CrpClient.Disks.GrantAccess(rgName, diskName, AccessDataDefault);
