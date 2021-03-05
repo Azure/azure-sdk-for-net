@@ -75,6 +75,11 @@ namespace Compute.Tests.DiskRPTests
         }
 
         [Fact]
+        public void Disk_CRUD_WithSecurityProfile_Import()
+        {
+            Disk_CRUD_WithSecurityProfile_Execute(DiskCreateOption.Import, "Disk_CRUD_WithSecurityProfile_Import", location: "centraluseuap");
+        }
+        [Fact]
         public void Disk_CRUD_WithSupportsHibernationFlag_EmptyDisk()
         {
             Disk_CRUD_WithSupportsHibernationFlag_Execute(DiskCreateOption.Empty, "Disk_CRUD_WithSupportsHibernationFlag_EmptyDisk", diskSizeGB: 5);
