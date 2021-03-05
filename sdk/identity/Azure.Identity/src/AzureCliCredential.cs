@@ -25,6 +25,7 @@ namespace Azure.Identity
         private const string WinAzureCLIError = "'az' is not recognized";
         private const string AzureCliTimeoutError = "Azure CLI authentication timed out.";
         internal const string AzureCliFailedError = "Azure CLI authentication failed due to an unknown error.";
+        internal const string InteractiveLoginRequired = "Azure CLI could not login. Interactive login is required.";
         private const int CliProcessTimeoutMs = 13000;
 
         // The default install paths are used to find Azure CLI if no path is specified. This is to prevent executing out of the current working directory.
@@ -130,6 +131,13 @@ namespace Azure.Identity
                     throw new CredentialUnavailableException(AzNotLogIn);
                 }
 
+                bool isRefreshTokenFailedError = exception.Message.IndexOf(AzureCliFailedError, StringComparison.OrdinalIgnoreCase) != -1 && exception.Message.IndexOf("The provided authorization code or refresh token has expired due to inactivity. Send a new interactive authorization request for this user and resource.", StringComparison.OrdinalIgnoreCase) != -1;
+
+                if (isRefreshTokenFailedError)
+                {
+                    throw new CredentialUnavailableException(InteractiveLoginRequired);
+                }
+
                 throw new AuthenticationFailedException($"{AzureCliFailedError} {exception.Message}");
             }
 
@@ -145,17 +153,20 @@ namespace Azure.Identity
                 ErrorDialog = false,
                 CreateNoWindow = true,
                 WorkingDirectory = DefaultWorkingDir,
-                Environment = {{"PATH", _path}}
+                Environment = { { "PATH", _path } }
             };
 
         private static void GetFileNameAndArguments(string resource, out string fileName, out string argument)
         {
             string command = $"az account get-access-token --output json --resource {resource}";
 
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
                 fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "cmd.exe");
                 argument = $"/c \"{command}\"";
-            } else {
+            }
+            else
+            {
                 fileName = "/bin/sh";
                 argument = $"-c \"{command}\"";
             }
