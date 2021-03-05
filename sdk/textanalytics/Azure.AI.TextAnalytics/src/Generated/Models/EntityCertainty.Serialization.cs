@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.AI.TextAnalytics
 {
-    internal static partial class CertaintyExtensions
+    internal static partial class EntityCertaintyExtensions
     {
         public static string ToSerialString(this EntityCertainty value) => value switch
         {
@@ -18,17 +18,17 @@ namespace Azure.AI.TextAnalytics
             EntityCertainty.NeutralPossible => "NeutralPossible",
             EntityCertainty.NegativePossible => "NegativePossible",
             EntityCertainty.Negative => "Negative",
-            _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown Certainty value.")
+            _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown EntityCertainty value.")
         };
 
-        public static EntityCertainty ToCertainty(this string value)
+        public static EntityCertainty ToEntityCertainty(this string value)
         {
             if (string.Equals(value, "Positive", StringComparison.InvariantCultureIgnoreCase)) return EntityCertainty.Positive;
             if (string.Equals(value, "PositivePossible", StringComparison.InvariantCultureIgnoreCase)) return EntityCertainty.PositivePossible;
             if (string.Equals(value, "NeutralPossible", StringComparison.InvariantCultureIgnoreCase)) return EntityCertainty.NeutralPossible;
             if (string.Equals(value, "NegativePossible", StringComparison.InvariantCultureIgnoreCase)) return EntityCertainty.NegativePossible;
             if (string.Equals(value, "Negative", StringComparison.InvariantCultureIgnoreCase)) return EntityCertainty.Negative;
-            throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown Certainty value.");
+            throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown EntityCertainty value.");
         }
     }
 }

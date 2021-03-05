@@ -9,20 +9,20 @@ using System;
 
 namespace Azure.AI.TextAnalytics
 {
-    internal static partial class AssociationExtensions
+    internal static partial class EntityAssociationExtensions
     {
         public static string ToSerialString(this EntityAssociation value) => value switch
         {
             EntityAssociation.Subject => "subject",
             EntityAssociation.Other => "other",
-            _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown Association value.")
+            _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown EntityAssociation value.")
         };
 
-        public static EntityAssociation ToAssociation(this string value)
+        public static EntityAssociation ToEntityAssociation(this string value)
         {
             if (string.Equals(value, "subject", StringComparison.InvariantCultureIgnoreCase)) return EntityAssociation.Subject;
             if (string.Equals(value, "other", StringComparison.InvariantCultureIgnoreCase)) return EntityAssociation.Other;
-            throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown Association value.");
+            throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown EntityAssociation value.");
         }
     }
 }
