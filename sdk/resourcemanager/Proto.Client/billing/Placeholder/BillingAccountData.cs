@@ -1,7 +1,7 @@
-﻿using Azure.ResourceManager.Compute.Models;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using Azure.ResourceManager.Core;
-using System;
-using System.Collections.Generic;
 
 namespace Proto.Billing
 {
