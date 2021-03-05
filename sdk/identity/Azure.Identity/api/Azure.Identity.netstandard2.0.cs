@@ -226,7 +226,7 @@ namespace Azure.Identity
     public partial class TokenCacheUpdatedArgs
     {
         internal TokenCacheUpdatedArgs() { }
-        public System.ReadOnlyMemory<byte> Data { get { throw null; } }
+        public System.ReadOnlyMemory<byte> UnsafeCacheData { get { throw null; } }
     }
     public partial class TokenCredentialOptions : Azure.Core.ClientOptions
     {
