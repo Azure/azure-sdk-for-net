@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Security.KeyVault.Storage.Models
 {
     /// <summary> The deleted SAS definition list result. </summary>
-    public partial class DeletedSasDefinitionListResult
+    internal partial class DeletedSasDefinitionListResult
     {
         /// <summary> Initializes a new instance of DeletedSasDefinitionListResult. </summary>
         internal DeletedSasDefinitionListResult()

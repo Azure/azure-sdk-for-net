@@ -96,6 +96,19 @@ namespace Compute.Tests
             Assert.NotNull(vmSizeProperties);
             CompareVMSizes(expectedVMSizeProperties, vmSizeProperties);
         }
+        
+        /// <summary>
+        /// Marks a data disk to be detached.
+        /// </summary>
+        public static void MarkDataDiskToBeDetached(DataDisk disk, string detachOption = null)
+        {
+            Assert.NotNull(disk);
+            disk.ToBeDetached = true;
+            if (!string.IsNullOrEmpty(detachOption))
+            {
+                disk.DetachOption = detachOption;
+            }
+        }
 
         private static List<VirtualMachineSize> GetExpectedVirtualMachineSize(bool hasAZ, bool? writeAcceleratorEnabled = null, bool hasDiffDisks = false)
         {

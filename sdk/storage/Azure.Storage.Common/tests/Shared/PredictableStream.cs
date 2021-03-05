@@ -14,7 +14,7 @@ namespace Azure.Storage.Tests.Shared
     {
         public override bool CanRead => true;
 
-        public override bool CanSeek => true;
+        public override bool CanSeek => _revealsLength;
 
         public override bool CanWrite => false;
 

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    public partial class ListWorkspaceQuotas
+    internal partial class ListWorkspaceQuotas
     {
         internal static ListWorkspaceQuotas DeserializeListWorkspaceQuotas(JsonElement element)
         {

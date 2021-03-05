@@ -29,10 +29,10 @@ namespace Azure.Analytics.Synapse.Spark.Tests
         private SparkBatchClient CreateClient()
         {
             return InstrumentClient(new SparkBatchClient(
-                new Uri(TestEnvironment.EndpointUrl),
+                TestEnvironment.EndpointUrl,
                 TestEnvironment.SparkPoolName,
                 TestEnvironment.Credential,
-                InstrumentClientOptions(new SparkClientOptions())
+                options: InstrumentClientOptions(new SparkClientOptions())
             ));
         }
 

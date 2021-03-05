@@ -27,5 +27,10 @@ namespace Azure.AI.TextAnalytics
         /// RecognizePiiEntityOptions
         /// </summary>
         public IReadOnlyCollection<RecognizePiiEntitiesOptions> RecognizePiiEntitiesOptions { get; set; }
+
+        /// <summary>
+        /// RecognizeLinkedEntitiesOptions
+        /// </summary>
+        public IReadOnlyCollection<RecognizeLinkedEntitiesOptions> RecognizeLinkedEntitiesOptions { get; set; }
     }
 }

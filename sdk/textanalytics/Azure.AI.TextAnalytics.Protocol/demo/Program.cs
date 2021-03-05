@@ -25,7 +25,7 @@ namespace DemoApp
             int i = 0;
             foreach (string review in ReadReviewsFromJson().Take(10))
             {
-                var document = documents.AddEmptyObjet();
+                var document = documents.AddEmptyObject();
                 document["id"] = (++i).ToString();
                 document["text"] = review;
             }
@@ -58,7 +58,7 @@ namespace DemoApp
             int i = 0;
             foreach (string review in ReadReviewsFromJson().Take(5))
             {
-                var document = documents.AddEmptyObjet();
+                var document = documents.AddEmptyObject();
                 document["id"] = (++i).ToString();
                 document["text"] = review;
             }
@@ -101,7 +101,7 @@ namespace DemoApp
             int i = 0;
             foreach (string review in ReadReviewsFromJson().Take(5))
             {
-                var document = documents.AddEmptyObjet();
+                var document = documents.AddEmptyObject();
                 document["id"] = (++i).ToString();
                 document["text"] = review;
             }
@@ -155,7 +155,7 @@ namespace DemoApp
             int i = 0;
             foreach (string review in ReadReviewsFromJson("reviews_mixed.json").Take(5))
             {
-                var document = documents.AddEmptyObjet();
+                var document = documents.AddEmptyObject();
                 document["id"] = (++i).ToString();
                 document["text"] = review;
             }

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class ComputeOperationListResult
+    internal partial class ComputeOperationListResult
     {
         internal static ComputeOperationListResult DeserializeComputeOperationListResult(JsonElement element)
         {

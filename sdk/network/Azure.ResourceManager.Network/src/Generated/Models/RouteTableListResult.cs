@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for the ListRouteTable API service call. </summary>
-    public partial class RouteTableListResult
+    internal partial class RouteTableListResult
     {
         /// <summary> Initializes a new instance of RouteTableListResult. </summary>
         internal RouteTableListResult()

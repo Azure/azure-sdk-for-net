@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class PrivateLinkServiceListResult
+    internal partial class PrivateLinkServiceListResult
     {
         internal static PrivateLinkServiceListResult DeserializePrivateLinkServiceListResult(JsonElement element)
         {

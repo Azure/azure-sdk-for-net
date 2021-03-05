@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for the ListRouteFilters API service call. </summary>
-    public partial class RouteFilterListResult
+    internal partial class RouteFilterListResult
     {
         /// <summary> Initializes a new instance of RouteFilterListResult. </summary>
         internal RouteFilterListResult()
