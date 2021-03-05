@@ -102,7 +102,7 @@ namespace Azure.Core.Pipeline
             }
 
             // Check if we have received a challenge or we have not yet issued the first request.
-            if (message.Response.Status == (int)HttpStatusCode.Unauthorized && message.Response.Headers.Contains(HttpHeader.Names.WWWAuthenticate))
+            if (message.Response.Status == (int)HttpStatusCode.Unauthorized && message.Response.Headers.Contains(HttpHeader.Names.WwwAuthenticate))
             {
                 // Attempt to get the TokenRequestContext based on the challenge.
                 // If we fail to get the context, the challenge was not present or invalid.
