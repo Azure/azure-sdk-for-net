@@ -36,8 +36,8 @@ jobs:
           inputs:
             pwsh: true
             workingDirectory: $(Build.SourcesDirectory)
-            filePath: eng/scripts/SetTestPipelineVersion.ps1
-            arguments: '-BuildID $(Build.BuildId)'
+            filePath: eng/common/scripts/SetTestPipelineVersion.ps1
+            arguments: '-BuildID $(Build.BuildId) -PackageName "Azure.Template" -ServiceDirectory "template"'
       - pwsh: |
           echo "##vso[build.addbuildtag]Scheduled"
         displayName: "Tag scheduled builds"

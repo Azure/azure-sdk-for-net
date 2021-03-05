@@ -64,8 +64,8 @@ stages:
                         inputs:
                           pwsh: true
                           workingDirectory: $(Build.SourcesDirectory)
-                          filePath: eng/scripts/SetTestPipelineVersion.ps1
-                          arguments: '-BuildID $(Build.BuildId)'
+                          filePath: eng/common/scripts/SetTestPipelineVersion.ps1
+                          arguments: '-BuildID $(Build.BuildId) -PackageName "Azure.Template" -ServiceDirectory "template"'
                     - template: /eng/common/pipelines/templates/steps/verify-changelog.yml
                       parameters:
                         PackageName: ${{artifact.name}}
