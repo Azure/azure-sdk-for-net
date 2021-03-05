@@ -56,7 +56,10 @@ namespace Azure.AI.TextAnalytics
         public IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> RecognizeLinkedEntitiesActionsResults { get; }
 
         /// <summary>
-        /// <summary> if showStats=true was specified in the request this field will contain information about the document payload. </summary>
+        /// Gets statistics about the operation executed and how it was processed
+        /// by the service. This property currently won't return a value even if
+        /// <see cref="AnalyzeBatchActionsOptions.IncludeStatistics"/> is set to true.
+        /// More information https://github.com/Azure/azure-sdk-for-net/issues/19268
         /// </summary>
         public TextDocumentBatchStatistics Statistics { get; }
     }
