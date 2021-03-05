@@ -592,6 +592,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<BlobDownloadInfo> Download() =>
             Download(CancellationToken.None);
 
@@ -612,6 +613,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<BlobDownloadInfo>> DownloadAsync() =>
             await DownloadAsync(CancellationToken.None).ConfigureAwait(false);
 
@@ -636,6 +638,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<BlobDownloadInfo> Download(
             CancellationToken cancellationToken = default) =>
             Download(
@@ -664,6 +667,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<BlobDownloadInfo>> DownloadAsync(
             CancellationToken cancellationToken) =>
             await DownloadAsync(
@@ -709,6 +713,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<BlobDownloadInfo> Download(
             HttpRange range = default,
             BlobRequestConditions conditions = default,
@@ -760,6 +765,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<BlobDownloadInfo>> DownloadAsync(
             HttpRange range = default,
             BlobRequestConditions conditions = default,
@@ -820,12 +826,147 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
+            Response<BlobDownloadStreamingResult> response = await DownloadStreamingInternal(
+                range,
+                conditions,
+                rangeGetContentHash,
+                $"{nameof(BlobBaseClient)}.{nameof(Download)}",
+                async,
+                cancellationToken).ConfigureAwait(false);
+            BlobDownloadStreamingResult blobDownloadStreamingResult = response.Value;
+            BlobDownloadDetails blobDownloadDetails = blobDownloadStreamingResult.Details;
+            return Response.FromValue(
+                new BlobDownloadInfo()
+                {
+                    Content = blobDownloadStreamingResult.Content,
+                    Details = blobDownloadDetails,
+                    BlobType = blobDownloadDetails.BlobType,
+                    ContentHash = blobDownloadDetails.ContentHash,
+                    ContentLength = blobDownloadDetails.ContentLength,
+                    ContentType = blobDownloadDetails.ContentType,
+                }, response.GetRawResponse());
+        }
+        #endregion
+
+        #region DownloadStreaming
+        /// <summary>
+        /// The <see cref="DownloadStreaming(HttpRange, BlobRequestConditions, bool, CancellationToken)"/>
+        /// operation downloads a blob from the service, including its metadata
+        /// and properties.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob">
+        /// Get Blob</see>.
+        /// </summary>
+        /// <param name="range">
+        /// If provided, only download the bytes of the blob in the specified
+        /// range.  If not provided, download the entire blob.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
+        /// downloading this blob.
+        /// </param>
+        /// <param name="rangeGetContentHash">
+        /// When set to true and specified together with the <paramref name="range"/>,
+        /// the service returns the MD5 hash for the range, as long as the
+        /// range is less than or equal to 4 MB in size.  If this value is
+        /// specified without <paramref name="range"/> or set to true when the
+        /// range exceeds 4 MB in size, a <see cref="RequestFailedException"/>
+        /// is thrown.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobDownloadStreamingResult}"/> describing the
+        /// downloaded blob.  <see cref="BlobDownloadStreamingResult.Content"/> contains
+        /// the blob's data.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<BlobDownloadStreamingResult> DownloadStreaming(
+            HttpRange range = default,
+            BlobRequestConditions conditions = default,
+            bool rangeGetContentHash = default,
+            CancellationToken cancellationToken = default) =>
+            DownloadStreamingInternal(
+                range,
+                conditions,
+                rangeGetContentHash,
+                $"{nameof(BlobBaseClient)}.{nameof(DownloadStreaming)}",
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="DownloadStreamingAsync(HttpRange, BlobRequestConditions, bool, CancellationToken)"/>
+        /// operation downloads a blob from the service, including its metadata
+        /// and properties.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob">
+        /// Get Blob</see>.
+        /// </summary>
+        /// <param name="range">
+        /// If provided, only download the bytes of the blob in the specified
+        /// range.  If not provided, download the entire blob.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
+        /// downloading this blob.
+        /// </param>
+        /// <param name="rangeGetContentHash">
+        /// When set to true and specified together with the <paramref name="range"/>,
+        /// the service returns the MD5 hash for the range, as long as the
+        /// range is less than or equal to 4 MB in size.  If this value is
+        /// specified without <paramref name="range"/> or set to true when the
+        /// range exceeds 4 MB in size, a <see cref="RequestFailedException"/>
+        /// is thrown.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobDownloadStreamingResult}"/> describing the
+        /// downloaded blob.  <see cref="BlobDownloadStreamingResult.Content"/> contains
+        /// the blob's data.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<BlobDownloadStreamingResult>> DownloadStreamingAsync(
+            HttpRange range = default,
+            BlobRequestConditions conditions = default,
+            bool rangeGetContentHash = default,
+            CancellationToken cancellationToken = default) =>
+            await DownloadStreamingInternal(
+                range,
+                conditions,
+                rangeGetContentHash,
+                $"{nameof(BlobBaseClient)}.{nameof(DownloadStreaming)}",
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        private async Task<Response<BlobDownloadStreamingResult>> DownloadStreamingInternal(
+            HttpRange range,
+            BlobRequestConditions conditions,
+            bool rangeGetContentHash,
+            string operationName,
+            bool async,
+            CancellationToken cancellationToken)
+        {
             HttpRange requestedRange = range;
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
             {
                 ClientConfiguration.Pipeline.LogMethodEnter(nameof(BlobBaseClient), message: $"{nameof(Uri)}: {Uri}");
 
-                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobBaseClient)}.{nameof(Download)}");
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
 
                 try
                 {
@@ -837,7 +978,7 @@ namespace Azure.Storage.Blobs.Specialized
                     }
 
                     // Start downloading the blob
-                    Response<BlobDownloadInfo> response = await StartDownloadAsync(
+                    Response<BlobDownloadStreamingResult> response = await StartDownloadAsync(
                         range,
                         conditions,
                         rangeGetContentHash,
@@ -848,7 +989,7 @@ namespace Azure.Storage.Blobs.Specialized
                     // Return an exploding Response on 304
                     if (response.IsUnavailable())
                     {
-                        return response.GetRawResponse().AsNoBodyResponse<BlobDownloadInfo>();
+                        return response.GetRawResponse().AsNoBodyResponse<BlobDownloadStreamingResult>();
                     }
 
                     // Wrap the response Content in a RetriableStream so we
@@ -949,7 +1090,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<BlobDownloadInfo>> StartDownloadAsync(
+        private async Task<Response<BlobDownloadStreamingResult>> StartDownloadAsync(
             HttpRange range = default,
             BlobRequestConditions conditions = default,
             bool rangeGetContentHash = default,
@@ -1010,10 +1151,208 @@ namespace Azure.Storage.Blobs.Specialized
             ClientConfiguration.Pipeline.LogTrace($"Response: {response.GetRawResponse().Status}, ContentLength: {length}");
 
             return Response.FromValue(
-                response.ToBlobDownloadInfo(),
+                response.ToBlobDownloadStreamingResult(),
                 response.GetRawResponse());
         }
-        #endregion Download
+        #endregion
+
+        #region DownloadContent
+        /// <summary>
+        /// The <see cref="DownloadContent()"/> operation downloads a blob from
+        /// the service, including its metadata and properties.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob">
+        /// Get Blob</see>.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="Response{BlobDownloadResult}"/> describing the
+        /// downloaded blob.  <see cref="BlobDownloadResult.Content"/> contains
+        /// the blob's data.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<BlobDownloadResult> DownloadContent() =>
+            DownloadContent(CancellationToken.None);
+
+        /// <summary>
+        /// The <see cref="DownloadContentAsync()"/> operation downloads a blob from
+        /// the service, including its metadata and properties.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob">
+        /// Get Blob</see>.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="Response{BlobDownloadResult}"/> describing the
+        /// downloaded blob.  <see cref="BlobDownloadResult.Content"/> contains
+        /// the blob's data.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<BlobDownloadResult>> DownloadContentAsync() =>
+            await DownloadContentAsync(CancellationToken.None).ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="DownloadContent(CancellationToken)"/> operation downloads
+        /// a blob from the service, including its metadata and properties.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob">
+        /// Get Blob</see>.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobDownloadResult}"/> describing the
+        /// downloaded blob.  <see cref="BlobDownloadResult.Content"/> contains
+        /// the blob's data.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<BlobDownloadResult> DownloadContent(
+            CancellationToken cancellationToken = default) =>
+            DownloadContent(
+                conditions: default, // Pass anything else so we don't recurse on this overload
+                cancellationToken: cancellationToken);
+
+        /// <summary>
+        /// The <see cref="DownloadContentAsync(CancellationToken)"/> operation
+        /// downloads a blob from the service, including its metadata and
+        /// properties.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob">
+        /// Get Blob</see>.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobDownloadResult}"/> describing the
+        /// downloaded blob.  <see cref="BlobDownloadResult.Content"/> contains
+        /// the blob's data.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<BlobDownloadResult>> DownloadContentAsync(
+            CancellationToken cancellationToken) =>
+            await DownloadContentAsync(
+                conditions: default, // Pass anything else so we don't recurse on this overload
+                cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="DownloadContent(BlobRequestConditions, CancellationToken)"/>
+        /// operation downloads a blob from the service, including its metadata
+        /// and properties.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob">
+        /// Get Blob</see>.
+        /// </summary>
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
+        /// downloading this blob.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobDownloadResult}"/> describing the
+        /// downloaded blob.  <see cref="BlobDownloadResult.Content"/> contains
+        /// the blob's data.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<BlobDownloadResult> DownloadContent(
+            BlobRequestConditions conditions = default,
+            CancellationToken cancellationToken = default) =>
+            DownloadContentInternal(
+                conditions,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="DownloadContentAsync(BlobRequestConditions, CancellationToken)"/>
+        /// operation downloads a blob from the service, including its metadata
+        /// and properties.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob">
+        /// Get Blob</see>.
+        /// </summary>
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
+        /// downloading this blob.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobDownloadResult}"/> describing the
+        /// downloaded blob.  <see cref="BlobDownloadResult.Content"/> contains
+        /// the blob's data.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<BlobDownloadResult>> DownloadContentAsync(
+            BlobRequestConditions conditions = default,
+            CancellationToken cancellationToken = default) =>
+            await DownloadContentInternal(
+                conditions,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        private async Task<Response<BlobDownloadResult>> DownloadContentInternal(
+            BlobRequestConditions conditions,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            Response<BlobDownloadStreamingResult> response = await DownloadStreamingInternal(
+                range: default,
+                conditions: conditions,
+                rangeGetContentHash: default,
+                operationName: $"{nameof(BlobBaseClient)}.{nameof(DownloadContent)}",
+                async: async,
+                cancellationToken: cancellationToken).ConfigureAwait(false);
+            using BlobDownloadStreamingResult blobDownloadStreamingResult = response.Value;
+            BinaryData data;
+            if (async)
+            {
+                data = await BinaryData.FromStreamAsync(blobDownloadStreamingResult.Content, cancellationToken).ConfigureAwait(false);
+            }
+            else
+            {
+                data = BinaryData.FromStream(blobDownloadStreamingResult.Content);
+            }
+            return Response.FromValue(
+                new BlobDownloadResult()
+                {
+                    Content = data,
+                    Details = blobDownloadStreamingResult.Details,
+                }, response.GetRawResponse());
+        }
+        #endregion
 
         #region Parallel Download
         /// <summary>
@@ -1694,7 +2033,8 @@ namespace Azure.Storage.Blobs.Specialized
                 $"{nameof(bufferSize)}: {bufferSize}\n" +
                 $"{nameof(conditions)}: {conditions}");
 
-                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobBaseClient)}.{nameof(OpenRead)}");
+                string operationName = $"{nameof(BlobBaseClient)}.{nameof(OpenRead)}";
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
                 try
                 {
                     scope.Start();
@@ -1709,10 +2049,11 @@ namespace Azure.Storage.Blobs.Specialized
                         bool async,
                         CancellationToken cancellationToken) =>
                         {
-                            Response<BlobDownloadInfo> response = await DownloadInternal(
+                            Response<BlobDownloadStreamingResult> response = await DownloadStreamingInternal(
                                 range,
                                 conditions,
                                 rangeGetContentHash,
+                                operationName,
                                 async,
                                 cancellationToken).ConfigureAwait(false);
 

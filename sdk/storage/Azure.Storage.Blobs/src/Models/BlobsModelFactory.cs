@@ -1279,6 +1279,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Creates a new BlobDownloadDetails instance for mocking.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static BlobDownloadDetails BlobDownloadDetails(
             DateTimeOffset lastModified,
             IDictionary<string, string> metadata,
@@ -1310,6 +1311,78 @@ namespace Azure.Storage.Blobs.Models
             string objectReplicationDestinationPolicy)
             => new BlobDownloadDetails
             {
+                LastModified = lastModified,
+                Metadata = metadata,
+                ContentRange = contentRange,
+                ContentEncoding = contentEncoding,
+                CacheControl = cacheControl,
+                ContentDisposition = contentDisposition,
+                ContentLanguage = contentLanguage,
+                BlobSequenceNumber = blobSequenceNumber,
+                CopyCompletedOn = copyCompletedOn,
+                CopyStatusDescription = copyStatusDescription,
+                CopyId = copyId,
+                CopyProgress = copyProgress,
+                CopySource = copySource,
+                CopyStatus = copyStatus,
+                LeaseDuration = leaseDuration,
+                LeaseState = leaseState,
+                LeaseStatus = leaseStatus,
+                AcceptRanges = acceptRanges,
+                BlobCommittedBlockCount = blobCommittedBlockCount,
+                IsServerEncrypted = isServerEncrypted,
+                EncryptionKeySha256 = encryptionKeySha256,
+                EncryptionScope = encryptionScope,
+                BlobContentHash = blobContentHash,
+                TagCount = tagCount,
+                VersionId = versionId,
+                IsSealed = isSealed,
+                ObjectReplicationSourceProperties = objectReplicationSourceProperties,
+                ObjectReplicationDestinationPolicyId = objectReplicationDestinationPolicy
+            };
+
+        /// <summary>
+        /// Creates a new BlobDownloadDetails instance for mocking.
+        /// </summary>
+        public static BlobDownloadDetails BlobDownloadDetails(
+            BlobType blobType,
+            long contentLength,
+            string contentType,
+            byte[] contentHash,
+            DateTimeOffset lastModified,
+            IDictionary<string, string> metadata,
+            string contentRange,
+            string contentEncoding,
+            string cacheControl,
+            string contentDisposition,
+            string contentLanguage,
+            long blobSequenceNumber,
+            DateTimeOffset copyCompletedOn,
+            string copyStatusDescription,
+            string copyId,
+            string copyProgress,
+            Uri copySource,
+            CopyStatus copyStatus,
+            LeaseDurationType leaseDuration,
+            LeaseState leaseState,
+            LeaseStatus leaseStatus,
+            string acceptRanges,
+            int blobCommittedBlockCount,
+            bool isServerEncrypted,
+            string encryptionKeySha256,
+            string encryptionScope,
+            byte[] blobContentHash,
+            long tagCount,
+            string versionId,
+            bool isSealed,
+            IList<ObjectReplicationPolicy> objectReplicationSourceProperties,
+            string objectReplicationDestinationPolicy)
+            => new BlobDownloadDetails
+            {
+                BlobType = blobType,
+                ContentLength = contentLength,
+                ContentType = contentType,
+                ContentHash = contentHash,
                 LastModified = lastModified,
                 Metadata = metadata,
                 ContentRange = contentRange,
@@ -1590,6 +1663,10 @@ namespace Azure.Storage.Blobs.Models
                 ContentHash = contentHash,
                 Details = new BlobDownloadDetails
                 {
+                    BlobType = blobType,
+                    ContentLength = contentLength,
+                    ContentType = contentType,
+                    ContentHash = contentHash,
                     LastModified = lastModified,
                     Metadata = metadata,
                     ContentRange = contentRange,
@@ -1670,6 +1747,10 @@ namespace Azure.Storage.Blobs.Models
                 ContentHash = contentHash,
                 Details = new BlobDownloadDetails
                 {
+                    BlobType = blobType,
+                    ContentLength = contentLength,
+                    ContentType = contentType,
+                    ContentHash = contentHash,
                     LastModified = lastModified,
                     Metadata = metadata,
                     ContentRange = contentRange,
@@ -1747,6 +1828,10 @@ namespace Azure.Storage.Blobs.Models
                 ContentHash = contentHash,
                 Details = new BlobDownloadDetails
                 {
+                    BlobType = blobType,
+                    ContentLength = contentLength,
+                    ContentType = contentType,
+                    ContentHash = contentHash,
                     LastModified = lastModified,
                     Metadata = metadata,
                     ContentRange = contentRange,
@@ -1821,6 +1906,10 @@ namespace Azure.Storage.Blobs.Models
                 ContentHash = contentHash,
                 Details = new BlobDownloadDetails
                 {
+                    BlobType = blobType,
+                    ContentLength = contentLength,
+                    ContentType = contentType,
+                    ContentHash = contentHash,
                     LastModified = lastModified,
                     Metadata = metadata,
                     ContentRange = contentRange,
@@ -1845,6 +1934,38 @@ namespace Azure.Storage.Blobs.Models
                     EncryptionKeySha256 = encryptionKeySha256,
                     BlobContentHash = blobContentHash,
                 }
+            };
+        }
+        #endregion
+
+        #region BlobDownloadDataResult
+        /// <summary>
+        /// Creates a new BlobDownloadDataResult instance for mocking.
+        /// </summary>
+        public static BlobDownloadResult BlobDownloadResult(
+            BinaryData content = default,
+            BlobDownloadDetails details = default)
+        {
+            return new BlobDownloadResult()
+            {
+                Content = content,
+                Details = details,
+            };
+        }
+        #endregion
+
+        #region BlobDownloadStreamingResult
+        /// <summary>
+        /// Creates a new BlobDownloadStreamingResult instance for mocking.
+        /// </summary>
+        public static BlobDownloadStreamingResult BlobDownloadStreamingResult(
+            Stream content = default,
+            BlobDownloadDetails details = default)
+        {
+            return new BlobDownloadStreamingResult()
+            {
+                Content = content,
+                Details = details,
             };
         }
         #endregion
