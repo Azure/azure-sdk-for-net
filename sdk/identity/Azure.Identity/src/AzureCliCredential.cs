@@ -20,11 +20,11 @@ namespace Azure.Identity
     /// </summary>
     public class AzureCliCredential : TokenCredential
     {
-        private const string AzureCLINotInstalled = "Azure CLI not installed";
-        private const string AzNotLogIn = "Please run 'az login' to set up account";
+        internal const string AzureCLINotInstalled = "Azure CLI not installed";
+        internal const string AzNotLogIn = "Please run 'az login' to set up account";
         private const string WinAzureCLIError = "'az' is not recognized";
         private const string AzureCliTimeoutError = "Azure CLI authentication timed out.";
-        private const string AzureCliFailedError = "Azure CLI authentication failed due to an unknown error.";
+        internal const string AzureCliFailedError = "Azure CLI authentication failed due to an unknown error.";
         private const int CliProcessTimeoutMs = 13000;
 
         // The default install paths are used to find Azure CLI if no path is specified. This is to prevent executing out of the current working directory.
