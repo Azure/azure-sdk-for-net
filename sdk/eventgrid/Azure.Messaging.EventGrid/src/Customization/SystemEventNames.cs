@@ -60,9 +60,21 @@ namespace Azure.Messaging.EventGrid
 
         /// <summary>
         /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
+        /// <see cref="AcsChatMessageDeletedInThreadEventData"/> system event.
+        /// </summary>
+        public const string AcsChatMessageDeletedInThread = "Microsoft.Communication.ChatMessageDeletedInThread";
+
+        /// <summary>
+        /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
         /// <see cref="AcsChatMessageEditedEventData"/> system event.
         /// </summary>
         public const string AcsChatMessageEdited = "Microsoft.Communication.ChatMessageEdited";
+
+        /// <summary>
+        /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
+        /// <see cref="AcsChatMessageEditedInThreadEventData"/> system event.
+        /// </summary>
+        public const string AcsChatMessageEditedInThread = "Microsoft.Communication.ChatMessageEditedInThread";
 
         /// <summary>
         /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
@@ -72,15 +84,39 @@ namespace Azure.Messaging.EventGrid
 
         /// <summary>
         /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
+        /// <see cref="AcsChatMessageReceivedInThreadEventData"/> system event.
+        /// </summary>
+        public const string AcsChatMessageReceivedInThread = "Microsoft.Communication.ChatMessageReceivedInThread";
+
+        /// <summary>
+        /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
+        /// <see cref="AcsChatThreadCreatedEventData"/> system event.
+        /// </summary>
+        public const string AcsChatThreadCreated = "Microsoft.Communication.ChatThreadCreated";
+
+        /// <summary>
+        /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
         /// <see cref="AcsChatThreadCreatedWithUserEventData"/> system event.
         /// </summary>
         public const string AcsChatThreadCreatedWithUser = "Microsoft.Communication.ChatThreadCreatedWithUser";
 
         /// <summary>
         /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
+        /// <see cref="AcsChatThreadPropertiesUpdatedEventData"/> system event.
+        /// </summary>
+        public const string AcsChatThreadPropertiesUpdated = "Microsoft.Communication.ChatThreadPropertiesUpdated";
+
+        /// <summary>
+        /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
         /// <see cref="AcsChatThreadPropertiesUpdatedPerUserEventData"/> system event.
         /// </summary>
         public const string AcsChatThreadPropertiesUpdatedPerUser = "Microsoft.Communication.ChatThreadPropertiesUpdatedPerUser";
+
+        /// <summary>
+        /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
+        /// <see cref="AcsChatThreadDeletedEventData"/> system event.
+        /// </summary>
+        public const string AcsChatThreadDeleted = "Microsoft.Communication.ChatThreadDeleted";
 
         /// <summary>
         /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
@@ -444,55 +480,55 @@ namespace Azure.Messaging.EventGrid
         #region Resource Manager (Azure Subscription/Resource Group) events
         /// <summary>
         /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
-        /// <see cref="ResourceWriteSuccessData"/> system event.
+        /// <see cref="ResourceWriteSuccessEventData"/> system event.
         /// </summary>
         public const string ResourceWriteSuccess = "Microsoft.Resources.ResourceWriteSuccess";
 
         /// <summary>
         /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
-        /// <see cref="ResourceWriteFailureData"/> system event.
+        /// <see cref="ResourceWriteFailureEventData"/> system event.
         /// </summary>
         public const string ResourceWriteFailure = "Microsoft.Resources.ResourceWriteFailure";
 
         /// <summary>
         /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
-        /// <see cref="ResourceWriteCancelData"/> system event.
+        /// <see cref="ResourceWriteCancelEventData"/> system event.
         /// </summary>
         public const string ResourceWriteCancel = "Microsoft.Resources.ResourceWriteCancel";
 
         /// <summary>
         /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
-        /// <see cref="ResourceDeleteSuccessData"/> system event.
+        /// <see cref="ResourceDeleteSuccessEventData"/> system event.
         /// </summary>
         public const string ResourceDeleteSuccess = "Microsoft.Resources.ResourceDeleteSuccess";
 
         /// <summary>
         /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
-        /// <see cref="ResourceDeleteFailureData"/> system event.
+        /// <see cref="ResourceDeleteFailureEventData"/> system event.
         /// </summary>
         public const string ResourceDeleteFailure = "Microsoft.Resources.ResourceDeleteFailure";
 
         /// <summary>
         /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
-        /// <see cref="ResourceDeleteCancelData"/> system event.
+        /// <see cref="ResourceDeleteCancelEventData"/> system event.
         /// </summary>
         public const string ResourceDeleteCancel = "Microsoft.Resources.ResourceDeleteCancel";
 
         /// <summary>
         /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
-        /// <see cref="ResourceActionSuccessData"/> system event.
+        /// <see cref="ResourceActionSuccessEventData"/> system event.
         /// </summary>
         public const string ResourceActionSuccess = "Microsoft.Resources.ResourceActionSuccess";
 
         /// <summary>
         /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
-        /// <see cref="ResourceActionFailureData"/> system event.
+        /// <see cref="ResourceActionFailureEventData"/> system event.
         /// </summary>
         public const string ResourceActionFailure = "Microsoft.Resources.ResourceActionFailure";
 
         /// <summary>
         /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
-        /// <see cref="ResourceActionCancelData"/> system event.
+        /// <see cref="ResourceActionCancelEventData"/> system event.
         /// </summary>
         public const string ResourceActionCancel = "Microsoft.Resources.ResourceActionCancel";
         #endregion
@@ -509,6 +545,18 @@ namespace Azure.Messaging.EventGrid
         /// <see cref="ServiceBusDeadletterMessagesAvailableWithNoListenersEventData"/> system event.
         /// </summary>
         public const string ServiceBusDeadletterMessagesAvailableWithNoListener = "Microsoft.ServiceBus.DeadletterMessagesAvailableWithNoListener";
+
+        /// <summary>
+        /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
+        /// <see cref="ServiceBusActiveMessagesAvailablePeriodicNotificationsEventData"/> system event.
+        /// </summary>
+        public const string ServiceBusActiveMessagesAvailablePeriodicNotifications = "Microsoft.ServiceBus.ActiveMessagesAvailablePeriodicNotifications";
+
+        /// <summary>
+        /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
+        /// <see cref="ServiceBusDeadletterMessagesAvailablePeriodicNotificationsEventData"/> system event.
+        /// </summary>
+        public const string ServiceBusDeadletterMessagesAvailablePeriodicNotifications = "Microsoft.ServiceBus.DeadletterMessagesAvailablePeriodicNotifications";
         #endregion
 
         #region Storage events

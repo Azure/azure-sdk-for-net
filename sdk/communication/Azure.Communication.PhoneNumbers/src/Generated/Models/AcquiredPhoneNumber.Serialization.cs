@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Collections.Generic;
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,66 +15,58 @@ namespace Azure.Communication.PhoneNumbers.Models
     {
         internal static AcquiredPhoneNumber DeserializeAcquiredPhoneNumber(JsonElement element)
         {
+            string id = default;
             string phoneNumber = default;
-            IReadOnlyList<PhoneNumberCapability> acquiredCapabilities = default;
-            IReadOnlyList<PhoneNumberCapability> availableCapabilities = default;
-            Optional<AssignmentStatus> assignmentStatus = default;
-            Optional<string> placeName = default;
-            Optional<ActivationState> activationState = default;
+            string countryCode = default;
+            PhoneNumberType phoneNumberType = default;
+            PhoneNumberCapabilities capabilities = default;
+            PhoneNumberAssignmentType assignmentType = default;
+            DateTimeOffset purchaseDate = default;
+            PhoneNumberCost cost = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("phoneNumber"))
                 {
                     phoneNumber = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("acquiredCapabilities"))
+                if (property.NameEquals("countryCode"))
                 {
-                    List<PhoneNumberCapability> array = new List<PhoneNumberCapability>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(new PhoneNumberCapability(item.GetString()));
-                    }
-                    acquiredCapabilities = array;
+                    countryCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("availableCapabilities"))
+                if (property.NameEquals("phoneNumberType"))
                 {
-                    List<PhoneNumberCapability> array = new List<PhoneNumberCapability>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(new PhoneNumberCapability(item.GetString()));
-                    }
-                    availableCapabilities = array;
+                    phoneNumberType = new PhoneNumberType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("assignmentStatus"))
+                if (property.NameEquals("capabilities"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    assignmentStatus = new AssignmentStatus(property.Value.GetString());
+                    capabilities = PhoneNumberCapabilities.DeserializePhoneNumberCapabilities(property.Value);
                     continue;
                 }
-                if (property.NameEquals("placeName"))
+                if (property.NameEquals("assignmentType"))
                 {
-                    placeName = property.Value.GetString();
+                    assignmentType = new PhoneNumberAssignmentType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("activationState"))
+                if (property.NameEquals("purchaseDate"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    activationState = new ActivationState(property.Value.GetString());
+                    purchaseDate = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("cost"))
+                {
+                    cost = PhoneNumberCost.DeserializePhoneNumberCost(property.Value);
                     continue;
                 }
             }
-            return new AcquiredPhoneNumber(phoneNumber, acquiredCapabilities, availableCapabilities, Optional.ToNullable(assignmentStatus), placeName.Value, Optional.ToNullable(activationState));
+            return new AcquiredPhoneNumber(id, phoneNumber, countryCode, phoneNumberType, capabilities, assignmentType, purchaseDate, cost);
         }
     }
 }

@@ -86,7 +86,6 @@ pr:
     - sdk/logic/Microsoft.Azure.Management.Logic
     - sdk/machinelearning/Microsoft.Azure.Management.MachineLearning
     - sdk/machinelearningcompute/Microsoft.Azure.Management.MachineLearningCompute
-    - sdk/machinelearningservices/Azure.ResourceManager.MachineLearningServices
     - sdk/maintenance/Microsoft.Azure.Management.Maintenance
     - sdk/managednetwork/Microsoft.Azure.Management.ManagedNetwork
     - sdk/managedserviceidentity/Microsoft.Azure.Management.ManagedServiceIdentity
@@ -139,8 +138,7 @@ pr:
     - sdk/servicefabric/Microsoft.Azure.Management.ServiceFabric
     - sdk/servicefabricmanagedclusters/Microsoft.Azure.Management.ServiceFabricManagedClusters
     - sdk/signalr/Microsoft.Azure.Management.SignalR
-    - sdk/sqlmanagement/Azure.ResourceManager.Sql
-    - sdk/sqlmanagement/Microsoft.Azure.Management.SqlManagement
+    - sdk/sqlmanagement/Microsoft.Azure.Management.Sql
     - sdk/sqlvirtualmachine/Microsoft.Azure.Management.SqlVirtualMachine
     - sdk/storage/Microsoft.Azure.Management.Storage
     - sdk/storagecache/Microsoft.Azure.Management.StorageCache
