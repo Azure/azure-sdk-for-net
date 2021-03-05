@@ -173,6 +173,8 @@ namespace Azure.ResourceManager.Core.Tests
                     return FakeResourceApiVersions.V2019_12_01_preview_1;
                 case "2019-12-01-foobar":
                     return FakeResourceApiVersions.V2019_12_01_foobar;
+                case null:
+                    return null;
                 default:
                     throw new ArgumentException($"Version ({version}) was not valid");
             }
@@ -211,6 +213,44 @@ namespace Azure.ResourceManager.Core.Tests
         {
             FakeResourceApiVersions version = FakeResourceApiVersions.Default;
             Assert.AreEqual(version.ToString().GetHashCode(), version.GetHashCode());
+        }
+
+        [TestCase("2019-12-01", null)]
+        [TestCase("2020-06-01", "2019-12-01")]
+        public void TestGreaterThanTrue(string leftString, string rightString)
+        {
+            FakeResourceApiVersions left = ConvertFromString(leftString);
+            FakeResourceApiVersions right = ConvertFromString(rightString);
+            Assert.IsTrue(left > right);
+        }
+
+        [TestCase(null, "2019-12-01")]
+        [TestCase("2019-12-01", "2020-06-01")]
+        [TestCase(null, null)]
+        public void TestGreaterThanFalse(string leftString, string rightString)
+        {
+            FakeResourceApiVersions left = ConvertFromString(leftString);
+            FakeResourceApiVersions right = ConvertFromString(rightString);
+            Assert.IsFalse(left > right);
+        }
+
+        [TestCase(null, "2019-12-01")]
+        [TestCase("2019-12-01-foobar", "2019-12-01-preview-1")]
+        public void TestLessThanTrue(string leftString, string rightString)
+        {
+            FakeResourceApiVersions left = ConvertFromString(leftString);
+            FakeResourceApiVersions right = ConvertFromString(rightString);
+            Assert.IsTrue(left < right);
+        }
+
+        [TestCase("2019-12-01", null)]
+        [TestCase("2020-06-01", "2019-12-01-foobar")]
+        [TestCase(null, null)]
+        public void TestLessThanFalse(string leftString, string rightString)
+        {
+            FakeResourceApiVersions left = ConvertFromString(leftString);
+            FakeResourceApiVersions right = ConvertFromString(rightString);
+            Assert.IsFalse(left < right);
         }
     }
 }

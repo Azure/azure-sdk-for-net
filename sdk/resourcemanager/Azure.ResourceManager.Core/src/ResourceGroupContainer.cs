@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -38,8 +39,12 @@ namespace Azure.ResourceManager.Core
         /// <param name="tags"> The tags of the resource group. </param>
         /// <param name="managedBy"> Who the resource group is managed by. </param>
         /// <returns> A builder with <see cref="ResourceGroup"/> and <see cref="ResourceGroupData"/>. </returns>
+        /// <exception cref="ArgumentNullException"> Location cannot be null. </exception>
         public ArmBuilder<ResourceGroup, ResourceGroupData> Construct(LocationData location, IDictionary<string, string> tags = default, string managedBy = default)
         {
+            if (location is null)
+                throw new ArgumentNullException(nameof(location));
+
             var model = new ResourceManager.Resources.Models.ResourceGroup(location);
             if (!(tags is null))
                 model.Tags.ReplaceWith(tags);
@@ -50,6 +55,11 @@ namespace Azure.ResourceManager.Core
         /// <inheritdoc/>
         public override ArmResponse<ResourceGroup> CreateOrUpdate(string name, ResourceGroupData resourceDetails)
         {
+            if (string.IsNullOrWhiteSpace(name))
+                throw new ArgumentException("name cannot be null or a whitespace.", nameof(name));
+            if (resourceDetails is null)
+                throw new ArgumentNullException(nameof(resourceDetails));
+
             var response = Operations.CreateOrUpdate(name, resourceDetails);
             return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
                 response,
@@ -59,6 +69,11 @@ namespace Azure.ResourceManager.Core
         /// <inheritdoc/>
         public override async Task<ArmResponse<ResourceGroup>> CreateOrUpdateAsync(string name, ResourceGroupData resourceDetails, CancellationToken cancellationToken = default)
         {
+            if (string.IsNullOrWhiteSpace(name))
+                throw new ArgumentException("name cannot be null or a whitespace.", nameof(name));
+            if (resourceDetails is null)
+                throw new ArgumentNullException(nameof(resourceDetails));
+
             var response = await Operations.CreateOrUpdateAsync(name, resourceDetails, cancellationToken).ConfigureAwait(false);
             return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
                 response,
@@ -68,6 +83,11 @@ namespace Azure.ResourceManager.Core
         /// <inheritdoc/>
         public override ArmOperation<ResourceGroup> StartCreateOrUpdate(string name, ResourceGroupData resourceDetails, CancellationToken cancellationToken = default)
         {
+            if (string.IsNullOrWhiteSpace(name))
+                throw new ArgumentException("name cannot be null or a whitespace.", nameof(name));
+            if (resourceDetails is null)
+                throw new ArgumentNullException(nameof(resourceDetails));
+
             return new PhArmOperation<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
                 Operations.CreateOrUpdate(name, resourceDetails, cancellationToken),
                 g => new ResourceGroup(Parent, new ResourceGroupData(g)));
@@ -76,6 +96,11 @@ namespace Azure.ResourceManager.Core
         /// <inheritdoc/>
         public override async Task<ArmOperation<ResourceGroup>> StartCreateOrUpdateAsync(string name, ResourceGroupData resourceDetails, CancellationToken cancellationToken = default)
         {
+            if (string.IsNullOrWhiteSpace(name))
+                throw new ArgumentException("name cannot be null or a whitespace.", nameof(name));
+            if (resourceDetails is null)
+                throw new ArgumentNullException(nameof(resourceDetails));
+
             return new PhArmOperation<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
                 await Operations.CreateOrUpdateAsync(name, resourceDetails, cancellationToken).ConfigureAwait(false),
                 g => new ResourceGroup(Parent, new ResourceGroupData(g)));
@@ -108,6 +133,9 @@ namespace Azure.ResourceManager.Core
         /// <inheritdoc />
         public override ArmResponse<ResourceGroup> Get(string resourceGroupName)
         {
+            if (string.IsNullOrWhiteSpace(resourceGroupName))
+                throw new ArgumentException("resourceGroupName cannot be null or a whitespace.", nameof(resourceGroupName));
+
             return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(Operations.Get(resourceGroupName), g =>
             {
                 return new ResourceGroup(Parent, new ResourceGroupData(g));
@@ -117,6 +145,9 @@ namespace Azure.ResourceManager.Core
         /// <inheritdoc/>
         public override async Task<ArmResponse<ResourceGroup>> GetAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
+            if (string.IsNullOrWhiteSpace(resourceGroupName))
+                throw new ArgumentException("resourceGroupName cannot be null or a whitespace.", nameof(resourceGroupName));
+
             return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
                 await Operations.GetAsync(resourceGroupName, cancellationToken).ConfigureAwait(false),
                 g =>
