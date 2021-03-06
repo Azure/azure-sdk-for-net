@@ -7,7 +7,7 @@ Use the client library for Azure Container Registry to:
 - List the repositories in a registry
 - List the images or artifacts in a repository
 
-  [Source code](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/containerregistry/Azure.Containers.ContainerRegistry) | [Package (NuGet)]() | [API reference documentation]() | [Product documentation](https://docs.microsoft.com//azure/container-registry)
+  [Source code](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/containerregistry/Azure.Containers.ContainerRegistry) | Package (NuGet) | API reference documentation | [Product documentation](https://docs.microsoft.com//azure/container-registry)
 
 ## Getting started
 
