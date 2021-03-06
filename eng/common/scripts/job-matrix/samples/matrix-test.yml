@@ -10,7 +10,6 @@ jobs:
       AdditionalParameters: {}
       Pool: Azure Pipelines
       OsVmImage: ubuntu-18.04
-      SparseCheckout: ${{ parameters.SparseCheckout }}
       CloudConfig:
         SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
         Location: eastus2
