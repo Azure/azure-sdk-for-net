@@ -13,11 +13,12 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
 {
     public class TimeSeriesInsightsInstancesTests : E2eTestBase
     {
-        // TODO: replace hardcoding the Type GUID when the Types resource has been implemented
+        private static readonly TimeSpan s_retryDelay = TimeSpan.FromSeconds(10);
+
+        // This is the GUID that TSI uses to represent the default type for a Time Series Instance.
+        // TODO: replace hardcoding the Type GUID when the Types resource has been implemented.
         private const string DefaultType = "1be09af9-f089-4d6b-9f0b-48018b5f7393";
         private const int MaxNumberOfRetries = 10;
-
-        private readonly TimeSpan _delay = TimeSpan.FromSeconds(10);
 
         public TimeSeriesInsightsInstancesTests(bool isAsync)
             : base(isAsync)
@@ -35,13 +36,13 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
 
             for (int i = 0; i < numOfInstancesToSetup; i++)
             {
-                ITimeSeriesId id = await GetUniqueTimeSeriesInstanceIdAsync(client, numOfIdProperties)
+                TimeSeriesId id = await GetUniqueTimeSeriesInstanceIdAsync(client, numOfIdProperties)
                     .ConfigureAwait(false);
 
                 timeSeriesInstances.Add(new TimeSeriesInstance(id, DefaultType));
             }
 
-            IEnumerable<ITimeSeriesId> timeSeriesInstancesIds = timeSeriesInstances.Select((instance) => instance.TimeSeriesId);
+            IEnumerable<TimeSeriesId> timeSeriesInstancesIds = timeSeriesInstances.Select((instance) => instance.TimeSeriesId);
 
             // Act and assert
             try
@@ -67,14 +68,14 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
                     getInstancesByIdsResult.Value.All((instanceResult) =>
                         instanceResult.Instance != null &&
                         instanceResult.Error == null &&
-                        instanceResult.Instance.TimeSeriesId.GetType().GenericTypeArguments.Count() == numOfIdProperties &&
+                        instanceResult.Instance.TimeSeriesId.ToArray().Length == numOfIdProperties &&
                         instanceResult.Instance.TypeId == DefaultType &&
                         instanceResult.Instance.HierarchyIds.Count == 0 &&
                         instanceResult.Instance.InstanceFields.Count == 0)
                     .Should().BeTrue();
 
                     return null;
-                }, MaxNumberOfRetries, _delay);
+                }, MaxNumberOfRetries, s_retryDelay);
 
                 // Update the instances by adding names to them
                 var tsiInstanceNamePrefix = "instance";
@@ -100,14 +101,14 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
                     getInstancesByNameResult.Value.All((instanceResult) =>
                         instanceResult.Instance != null &&
                         instanceResult.Error == null &&
-                        instanceResult.Instance.TimeSeriesId.GetType().GenericTypeArguments.Count() == numOfIdProperties &&
+                        instanceResult.Instance.TimeSeriesId.ToArray().Length == numOfIdProperties &&
                         instanceResult.Instance.TypeId == DefaultType &&
                         instanceResult.Instance.HierarchyIds.Count == 0 &&
                         instanceResult.Instance.InstanceFields.Count == 0)
                     .Should().BeTrue();
 
                     return null;
-                }, MaxNumberOfRetries, _delay);
+                }, MaxNumberOfRetries, s_retryDelay);
 
                 // Get all Time Series instances in the environment
                 AsyncPageable<TimeSeriesInstance> getAllInstancesResponse = client.GetInstancesAsync();
@@ -121,7 +122,7 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
                 numOfInstances.Should().BeGreaterOrEqualTo(numOfInstancesToSetup);
 
                 // Get search suggestions for the first instance
-                var timeSeriesIdToSuggest = (TimeSeries3Id)timeSeriesInstances.First().TimeSeriesId;
+                var timeSeriesIdToSuggest = (TimeSeriesId)timeSeriesInstances.First().TimeSeriesId;
                 string suggestionString = string.Join(string.Empty, timeSeriesIdToSuggest.ToArray()).Substring(0, 3);
                 Response<SearchSuggestion[]> searchSuggestionResponse = await TestRetryHelper.RetryAsync(async () =>
                 {
@@ -135,7 +136,7 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
                     }
 
                     return searchSuggestions;
-                }, MaxNumberOfRetries, _delay);
+                }, MaxNumberOfRetries, s_retryDelay);
 
                 searchSuggestionResponse.Value.Length.Should().Be(1);
             }
@@ -153,7 +154,8 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
                 }
                 catch (Exception ex)
                 {
-                    Assert.Fail($"Test clean up failed: {ex.Message}");
+                    Console.WriteLine($"Test clean up failed: {ex.Message}");
+                    throw;
                 }
             }
         }

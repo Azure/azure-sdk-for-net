@@ -17,7 +17,7 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <summary> Initializes a new instance of InstancesOperationError. </summary>
         internal InstancesOperationError()
         {
-            Details = new ChangeTrackingList<TsiErrorDetails>();
+            Details = new ChangeTrackingList<InstancesOperationErrorDetails>();
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
@@ -28,7 +28,7 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <param name="innerError"> Contains more specific error that narrows down the cause. May be null. </param>
         /// <param name="details"> Contains additional error information. May be null. </param>
         /// <param name="additionalProperties"> . </param>
-        internal InstancesOperationError(string code, string message, string target, InstancesOperationError innerError, IReadOnlyList<TsiErrorDetails> details, IReadOnlyDictionary<string, object> additionalProperties)
+        internal InstancesOperationError(string code, string message, string target, InstancesOperationError innerError, IReadOnlyList<InstancesOperationErrorDetails> details, IReadOnlyDictionary<string, object> additionalProperties)
         {
             Code = code;
             Message = message;
@@ -47,7 +47,7 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <summary> Contains more specific error that narrows down the cause. May be null. </summary>
         public InstancesOperationError InnerError { get; }
         /// <summary> Contains additional error information. May be null. </summary>
-        public IReadOnlyList<TsiErrorDetails> Details { get; }
+        public IReadOnlyList<InstancesOperationErrorDetails> Details { get; }
         internal IReadOnlyDictionary<string, object> AdditionalProperties { get; }
         /// <inheritdoc />
         public IEnumerator<KeyValuePair<string, object>> GetEnumerator() => AdditionalProperties.GetEnumerator();

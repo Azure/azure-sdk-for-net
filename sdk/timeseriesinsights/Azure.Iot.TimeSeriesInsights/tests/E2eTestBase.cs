@@ -60,7 +60,7 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
                     InstrumentClientOptions(new TimeSeriesInsightsClientOptions())));
         }
 
-        protected async Task<ITimeSeriesId> GetUniqueTimeSeriesInstanceIdAsync(TimeSeriesInsightsClient tsiClient, int numOfIdProperties)
+        protected async Task<TimeSeriesId> GetUniqueTimeSeriesInstanceIdAsync(TimeSeriesInsightsClient tsiClient, int numOfIdProperties)
         {
             Assert.IsTrue(numOfIdProperties > 0 && numOfIdProperties <= 3);
 
@@ -72,16 +72,16 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
                     id.Add(Recording.GenerateAlphaNumericId(string.Empty, 5));
                 }
 
-                ITimeSeriesId tsId = numOfIdProperties switch
+                TimeSeriesId tsId = numOfIdProperties switch
                 {
-                    1 => new TimeSeries1Id(id[0]),
-                    2 => new TimeSeries2Id(id[0], id[1]),
-                    3 => new TimeSeries3Id(id[0], id[1], id[2]),
+                    1 => new TimeSeriesId(id[0]),
+                    2 => new TimeSeriesId(id[0], id[1]),
+                    3 => new TimeSeriesId(id[0], id[1], id[2]),
                     _ => throw new Exception($"Invalid number of Time Series Insights Id properties."),
                 };
 
                 Response<InstancesOperationResult[]> getInstancesResult = await tsiClient
-                    .GetInstancesAsync(new List<ITimeSeriesId> { tsId })
+                    .GetInstancesAsync(new List<TimeSeriesId> { tsId })
                     .ConfigureAwait(false);
 
                 if (getInstancesResult.Value?.First()?.Error != null)

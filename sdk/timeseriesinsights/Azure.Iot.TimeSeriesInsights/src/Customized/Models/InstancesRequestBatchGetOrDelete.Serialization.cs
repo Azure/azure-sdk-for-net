@@ -12,6 +12,10 @@ namespace Azure.Iot.TimeSeriesInsights
     /// </summary>
     public partial class InstancesRequestBatchGetOrDelete : IUtf8JsonSerializable
     {
+        // This class declaration overrides the logic that serializes the object. More specifically, to
+        // serialize "timeSeriesIds". Since TimeSeriesIds changed from a list of objects to a strongly
+        // typed object, serialization is handled differently.
+
         // The use of fully qualified name for IUtf8JsonSerializable is a work around until this
         // issue is fixed: https://github.com/Azure/autorest.csharp/issues/793
         void global::Azure.Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -21,7 +25,7 @@ namespace Azure.Iot.TimeSeriesInsights
             {
                 writer.WritePropertyName("timeSeriesIds");
                 writer.WriteStartArray();
-                foreach (ITimeSeriesId item in TimeSeriesIds)
+                foreach (TimeSeriesId item in TimeSeriesIds)
                 {
                     writer.WriteStartArray();
                     foreach (var item0 in item.ToArray())

@@ -22,7 +22,7 @@ namespace Azure.Iot.TimeSeriesInsights
             writer.WriteStartObject();
             writer.WritePropertyName("timeSeriesId");
             writer.WriteStartArray();
-            foreach (var item in TimeSeriesId.ToArray())
+            foreach (object item in TimeSeriesId.ToArray())
             {
                 writer.WriteObjectValue(item);
             }
@@ -65,7 +65,7 @@ namespace Azure.Iot.TimeSeriesInsights
 
         internal static TimeSeriesInstance DeserializeTimeSeriesInstance(JsonElement element)
         {
-            ITimeSeriesId timeSeriesId = default;
+            TimeSeriesId timeSeriesId = default;
             string typeId = default;
             Optional<string> name = default;
             Optional<string> description = default;
@@ -83,9 +83,9 @@ namespace Azure.Iot.TimeSeriesInsights
 
                     timeSeriesId = array.Count switch
                     {
-                        1 => new TimeSeriesId<object>(array[0]),
-                        2 => new TimeSeriesId<object, object>(array[0], array[1]),
-                        3 => new TimeSeriesId<object, object, object>(array[0], array[1], array[2]),
+                        1 => new TimeSeriesId(array[0]),
+                        2 => new TimeSeriesId(array[0], array[1]),
+                        3 => new TimeSeriesId(array[0], array[1], array[2]),
                         _ => throw new Exception($"Invalid number of Time Series Insights Id properties."),
                     };
                     continue;

@@ -8,7 +8,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Iot.TimeSeriesInsights.Models;
 
 namespace Azure.Iot.TimeSeriesInsights
 {
@@ -78,7 +77,7 @@ namespace Azure.Iot.TimeSeriesInsights
             Argument.AssertNotNull(credential, nameof(environmentFqdn));
             Argument.AssertNotNull(options, nameof(options));
 
-            _clientSessionId = new Guid().ToString();
+            _clientSessionId = Guid.NewGuid().ToString();
             _clientDiagnostics = new ClientDiagnostics(options);
 
             options.AddPolicy(new BearerTokenAuthenticationPolicy(credential, GetAuthorizationScopes()), HttpPipelinePosition.PerCall);
@@ -249,7 +248,7 @@ namespace Azure.Iot.TimeSeriesInsights
         }
 
         /// <summary>
-        /// Gets Time Series instances asynchronously from the environment in pages.
+        /// Gets Time Series instances in pages asynchronously.
         /// </summary>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The pageable list <see cref="AsyncPageable{TimeSeriesInstance}"/> of Time Series instances belonging to the TSI environment and the http response.</returns>
@@ -315,7 +314,7 @@ namespace Azure.Iot.TimeSeriesInsights
         }
 
         /// <summary>
-        /// Gets Time Series instances from the environment in pages.
+        /// Gets Time Series instances synchronously in pages.
         /// </summary>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The pageable list <see cref="Pageable{TimeSeriesInstance}"/> of Time Series instances belonging to the TSI environment and the http response.</returns>
@@ -373,7 +372,7 @@ namespace Azure.Iot.TimeSeriesInsights
         }
 
         /// <summary>
-        /// Gets Time Series instances from the environment by instance names asynchronously.
+        /// Gets Time Series instances by instance names asynchronously.
         /// </summary>
         /// <param name="timeSeriesNames">List of names of the Time Series instance to return.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -388,6 +387,12 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <code snippet="Snippet:TimeSeriesInsightsSampleGetInstancesByNames">
         /// </code>
         /// </example>
+        /// <exception cref="ArgumentNullException">
+        /// The exception is thrown when <paramref name="timeSeriesNames"/> is <c>null</c>.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// The exception is thrown when <paramref name="timeSeriesNames"/> is empty.
+        /// </exception>
         public virtual async Task<Response<InstancesOperationResult[]>> GetInstancesAsync(
             IEnumerable<string> timeSeriesNames,
             CancellationToken cancellationToken = default)
@@ -423,7 +428,7 @@ namespace Azure.Iot.TimeSeriesInsights
         }
 
         /// <summary>
-        /// Gets Time Series instances from the environment by instance names.
+        /// Gets Time Series instances by instance names synchronously.
         /// </summary>
         /// <param name="timeSeriesNames">List of names of the Time Series instance to return.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -434,6 +439,12 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <seealso cref="GetInstancesAsync(IEnumerable{string}, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
+        /// <exception cref="ArgumentNullException">
+        /// The exception is thrown when <paramref name="timeSeriesNames"/> is <c>null</c>.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// The exception is thrown when <paramref name="timeSeriesNames"/> is empty.
+        /// </exception>
         public virtual Response<InstancesOperationResult[]> GetInstances(
             IEnumerable<string> timeSeriesNames,
             CancellationToken cancellationToken = default)
@@ -468,9 +479,9 @@ namespace Azure.Iot.TimeSeriesInsights
         }
 
         /// <summary>
-        /// Gets Time Series instances from the environment by Time Series Id asynchronously.
+        /// Gets Time Series instances by Time Series Id asynchronously.
         /// </summary>
-        /// <param name="timeSeriesIds">List of Ids of the Time Series instance to return.</param>
+        /// <param name="timeSeriesIds">List of Ids of the Time Series instances to return.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
         /// List of instance or error objects corresponding by position to the array in the request. Instance object is set when operation is successful
@@ -483,8 +494,14 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <code snippet="Snippet:TimeSeriesInsightsSampleGetInstancesByIds">
         /// </code>
         /// </example>
+        /// <exception cref="ArgumentNullException">
+        /// The exception is thrown when <paramref name="timeSeriesIds"/> is <c>null</c>.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// The exception is thrown when <paramref name="timeSeriesIds"/> is empty.
+        /// </exception>
         public virtual async Task<Response<InstancesOperationResult[]>> GetInstancesAsync(
-            IEnumerable<ITimeSeriesId> timeSeriesIds,
+            IEnumerable<TimeSeriesId> timeSeriesIds,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetInstances)}");
@@ -499,7 +516,7 @@ namespace Azure.Iot.TimeSeriesInsights
                     Get = new InstancesRequestBatchGetOrDelete()
                 };
 
-                foreach (ITimeSeriesId timeSeriesId in timeSeriesIds)
+                foreach (TimeSeriesId timeSeriesId in timeSeriesIds)
                 {
                     batchRequest.Get.TimeSeriesIds.Add(timeSeriesId);
                 }
@@ -518,19 +535,25 @@ namespace Azure.Iot.TimeSeriesInsights
         }
 
         /// <summary>
-        /// Gets Time Series instances from the environment by Time Series Id.
+        /// Gets Time Series instances by Time Series Id synchronously.
         /// </summary>
-        /// <param name="timeSeriesIds">List of Ids of the Time Series instance to return.</param>
+        /// <param name="timeSeriesIds">List of Ids of the Time Series instances to return.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
         /// List of instance or error objects corresponding by position to the array in the request. Instance object is set when operation is successful
         /// and error object is set when operation is unsuccessful.
         /// </returns>
-        /// <seealso cref="GetInstancesAsync(IEnumerable{ITimeSeriesId}, CancellationToken)">
+        /// <seealso cref="GetInstancesAsync(IEnumerable{TimeSeriesId}, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
+        /// <exception cref="ArgumentNullException">
+        /// The exception is thrown when <paramref name="timeSeriesIds"/> is <c>null</c>.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// The exception is thrown when <paramref name="timeSeriesIds"/> is empty.
+        /// </exception>
         public virtual Response<InstancesOperationResult[]> GetInstances(
-            IEnumerable<ITimeSeriesId> timeSeriesIds,
+            IEnumerable<TimeSeriesId> timeSeriesIds,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetInstances)}");
@@ -545,7 +568,7 @@ namespace Azure.Iot.TimeSeriesInsights
                     Get = new InstancesRequestBatchGetOrDelete()
                 };
 
-                foreach (ITimeSeriesId timeSeriesId in timeSeriesIds)
+                foreach (TimeSeriesId timeSeriesId in timeSeriesIds)
                 {
                     batchRequest.Get.TimeSeriesIds.Add(timeSeriesId);
                 }
@@ -563,7 +586,7 @@ namespace Azure.Iot.TimeSeriesInsights
         }
 
         /// <summary>
-        /// Get search suggestion keywords asynchronously based on Time Series instance attributes to be later used to search for instances.
+        /// Get search suggestion keywords based on Time Series instance attributes to be later used to search for instances asynchronously.
         /// </summary>
         /// <param name="searchString">The search string for which suggestions are required. Empty is allowed, but not null.</param>
         /// <param name="maxNumberOfSuggestions">The maximum number of suggestions expected in the result. Defaults to 10 when not set.</param>
@@ -576,6 +599,9 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <code snippet="Snippet:TimeSeriesInsightsSampleGetSearchSuggestions">
         /// </code>
         /// </example>
+        /// <exception cref="ArgumentNullException">
+        /// The exception is thrown when <paramref name="searchString"/> is <c>null</c>.
+        /// </exception>
         public virtual async Task<Response<SearchSuggestion[]>> GetSearchSuggestionsAsync(
             string searchString,
             int? maxNumberOfSuggestions = null,
@@ -606,7 +632,7 @@ namespace Azure.Iot.TimeSeriesInsights
         }
 
         /// <summary>
-        /// Get search suggestion keywords based on Time Series instance attributes to be later used to search for instances.
+        /// Get search suggestion keywords synchronously based on Time Series instance attributes to be later used to search for instances.
         /// </summary>
         /// <param name="searchString">The search string for which suggestions are required. Empty is allowed, but not null.</param>
         /// <param name="maxNumberOfSuggestions">The maximum number of suggestions expected in the result. Defaults to 10 when not set.</param>
@@ -615,6 +641,9 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <seealso cref="GetSearchSuggestionsAsync(string, int?, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
+        /// <exception cref="ArgumentNullException">
+        /// The exception is thrown when <paramref name="searchString"/> is <c>null</c>.
+        /// </exception>
         public virtual Response<SearchSuggestion[]> GetSearchSuggestions(string searchString, int? maxNumberOfSuggestions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetSearchSuggestions)}");
@@ -657,6 +686,12 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <code snippet="Snippet:TimeSeriesInsightsSampleCreateOrReplaceInstances">
         /// </code>
         /// </example>
+        /// <exception cref="ArgumentNullException">
+        /// The exception is thrown when <paramref name="timeSeriesInstances"/> is <c>null</c>.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// The exception is thrown when <paramref name="timeSeriesInstances"/> is empty.
+        /// </exception>
         public virtual async Task<Response<InstancesOperationError[]>> CreateOrReplaceTimeSeriesInstancesAsync(
             IEnumerable<TimeSeriesInstance> timeSeriesInstances,
             CancellationToken cancellationToken = default)
@@ -667,7 +702,7 @@ namespace Azure.Iot.TimeSeriesInsights
 
             try
             {
-                Argument.AssertNotNull(timeSeriesInstances, nameof(timeSeriesInstances));
+                Argument.AssertNotNullOrEmpty(timeSeriesInstances, nameof(timeSeriesInstances));
 
                 InstancesBatchRequest batchRequest = new InstancesBatchRequest();
 
@@ -694,7 +729,7 @@ namespace Azure.Iot.TimeSeriesInsights
         }
 
         /// <summary>
-        /// Creates Time Series instances. If a provided instance is already in use, then this will attempt to replace the existing
+        /// Creates Time Series instances synchronously. If a provided instance is already in use, then this will attempt to replace the existing
         /// instance with the provided Time Series Instance.
         /// </summary>
         /// <param name="timeSeriesInstances">The Time Series instances to be created or replaced.</param>
@@ -706,6 +741,12 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <seealso cref="CreateOrReplaceTimeSeriesInstancesAsync(IEnumerable{TimeSeriesInstance}, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
+        /// <exception cref="ArgumentNullException">
+        /// The exception is thrown when <paramref name="timeSeriesInstances"/> is <c>null</c>.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// The exception is thrown when <paramref name="timeSeriesInstances"/> is empty.
+        /// </exception>
         public virtual Response<InstancesOperationError[]> CreateOrReplaceTimeSeriesInstances(
             IEnumerable<TimeSeriesInstance> timeSeriesInstances,
             CancellationToken cancellationToken = default)
@@ -715,7 +756,7 @@ namespace Azure.Iot.TimeSeriesInsights
 
             try
             {
-                Argument.AssertNotNull(timeSeriesInstances, nameof(timeSeriesInstances));
+                Argument.AssertNotNullOrEmpty(timeSeriesInstances, nameof(timeSeriesInstances));
 
                 InstancesBatchRequest batchRequest = new InstancesBatchRequest();
 
@@ -756,6 +797,12 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <code snippet="Snippet:TimeSeriesInsightsSampleReplaceInstances">
         /// </code>
         /// </example>
+        /// <exception cref="ArgumentNullException">
+        /// The exception is thrown when <paramref name="timeSeriesInstances"/> is <c>null</c>.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// The exception is thrown when <paramref name="timeSeriesInstances"/> is empty.
+        /// </exception>
         public virtual async Task<Response<InstancesOperationResult[]>> ReplaceTimeSeriesInstancesAsync(
             IEnumerable<TimeSeriesInstance> timeSeriesInstances,
             CancellationToken cancellationToken = default)
@@ -766,7 +813,7 @@ namespace Azure.Iot.TimeSeriesInsights
 
             try
             {
-                Argument.AssertNotNull(timeSeriesInstances, nameof(timeSeriesInstances));
+                Argument.AssertNotNullOrEmpty(timeSeriesInstances, nameof(timeSeriesInstances));
 
                 InstancesBatchRequest batchRequest = new InstancesBatchRequest();
 
@@ -789,7 +836,7 @@ namespace Azure.Iot.TimeSeriesInsights
         }
 
         /// <summary>
-        /// Replaces Time Series instances.
+        /// Replaces Time Series instances synchronously.
         /// </summary>
         /// <param name="timeSeriesInstances">The Time Series instances to be replaced.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -800,6 +847,12 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <seealso cref="ReplaceTimeSeriesInstancesAsync(IEnumerable{TimeSeriesInstance}, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
+        /// <exception cref="ArgumentNullException">
+        /// The exception is thrown when <paramref name="timeSeriesInstances"/> is <c>null</c>.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// The exception is thrown when <paramref name="timeSeriesInstances"/> is empty.
+        /// </exception>
         public virtual Response<InstancesOperationResult[]> ReplaceTimeSeriesInstances(
             IEnumerable<TimeSeriesInstance> timeSeriesInstances,
             CancellationToken cancellationToken = default)
@@ -809,7 +862,7 @@ namespace Azure.Iot.TimeSeriesInsights
 
             try
             {
-                Argument.AssertNotNull(timeSeriesInstances, nameof(timeSeriesInstances));
+                Argument.AssertNotNullOrEmpty(timeSeriesInstances, nameof(timeSeriesInstances));
 
                 InstancesBatchRequest batchRequest = new InstancesBatchRequest();
 
@@ -846,6 +899,12 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <code snippet="Snippet:TimeSeriesInsightsSampleDeletesInstancesByNames">
         /// </code>
         /// </example>
+        /// <exception cref="ArgumentNullException">
+        /// The exception is thrown when <paramref name="timeSeriesNames"/> is <c>null</c>.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// The exception is thrown when <paramref name="timeSeriesNames"/> is empty.
+        /// </exception>
         public virtual async Task<Response<InstancesOperationError[]>> DeleteInstancesAsync(
             IEnumerable<string> timeSeriesNames,
             CancellationToken cancellationToken = default)
@@ -881,7 +940,7 @@ namespace Azure.Iot.TimeSeriesInsights
         }
 
         /// <summary>
-        /// Deletes Time Series instances from the environment by instance names.
+        /// Deletes Time Series instances from the environment by instance names synchronously.
         /// </summary>
         /// <param name="timeSeriesNames">List of names of the Time Series instance to delete.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -892,6 +951,12 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <seealso cref="DeleteInstancesAsync(IEnumerable{string}, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
+        /// <exception cref="ArgumentNullException">
+        /// The exception is thrown when <paramref name="timeSeriesNames"/> is <c>null</c>.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// The exception is thrown when <paramref name="timeSeriesNames"/> is empty.
+        /// </exception>
         public virtual Response<InstancesOperationError[]> DeleteInstances(
             IEnumerable<string> timeSeriesNames,
             CancellationToken cancellationToken = default)
@@ -928,7 +993,7 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <summary>
         /// Deletes Time Series instances from the environment by Time Series Id asynchronously.
         /// </summary>
-        /// <param name="timeSeriesIds">List of Ids of the Time Series instance to delete.</param>
+        /// <param name="timeSeriesIds">List of Ids of the Time Series instances to delete.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
         /// List of error objects corresponding by position to the array in the request. Null means the instance has been deleted, or did not exist.
@@ -941,8 +1006,14 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <code snippet="Snippet:TimeSeriesInsightsSampleDeleteInstancesByIds">
         /// </code>
         /// </example>
+        /// <exception cref="ArgumentNullException">
+        /// The exception is thrown when <paramref name="timeSeriesIds"/> is <c>null</c>.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// The exception is thrown when <paramref name="timeSeriesIds"/> is empty.
+        /// </exception>
         public virtual async Task<Response<InstancesOperationError[]>> DeleteInstancesAsync(
-            IEnumerable<ITimeSeriesId> timeSeriesIds,
+            IEnumerable<TimeSeriesId> timeSeriesIds,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(DeleteInstances)}");
@@ -957,7 +1028,7 @@ namespace Azure.Iot.TimeSeriesInsights
                     Delete = new InstancesRequestBatchGetOrDelete()
                 };
 
-                foreach (ITimeSeriesId timeSeriesId in timeSeriesIds)
+                foreach (TimeSeriesId timeSeriesId in timeSeriesIds)
                 {
                     batchRequest.Delete.TimeSeriesIds.Add(timeSeriesId);
                 }
@@ -976,19 +1047,25 @@ namespace Azure.Iot.TimeSeriesInsights
         }
 
         /// <summary>
-        /// Deletes Time Series instances from the environment by Time Series Id.
+        /// Deletes Time Series instances from the environment by Time Series Id synchronously.
         /// </summary>
-        /// <param name="timeSeriesIds">List of Ids of the Time Series instance to delete.</param>
+        /// <param name="timeSeriesIds">List of Ids of the Time Series instances to delete.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
         /// List of error objects corresponding by position to the array in the request. Null means the instance has been deleted, or did not exist.
         /// Error object is set when operation is unsuccessful.
         /// </returns>
-        /// <seealso cref="DeleteInstancesAsync(IEnumerable{ITimeSeriesId}, CancellationToken)">
+        /// <seealso cref="DeleteInstancesAsync(IEnumerable{TimeSeriesId}, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
+        /// <exception cref="ArgumentNullException">
+        /// The exception is thrown when <paramref name="timeSeriesIds"/> is <c>null</c>.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// The exception is thrown when <paramref name="timeSeriesIds"/> is empty.
+        /// </exception>
         public virtual Response<InstancesOperationError[]> DeleteInstances(
-            IEnumerable<ITimeSeriesId> timeSeriesIds,
+            IEnumerable<TimeSeriesId> timeSeriesIds,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(DeleteInstances)}");
@@ -1003,7 +1080,7 @@ namespace Azure.Iot.TimeSeriesInsights
                     Delete = new InstancesRequestBatchGetOrDelete()
                 };
 
-                foreach (ITimeSeriesId timeSeriesId in timeSeriesIds)
+                foreach (TimeSeriesId timeSeriesId in timeSeriesIds)
                 {
                     batchRequest.Delete.TimeSeriesIds.Add(timeSeriesId);
                 }

@@ -12,19 +12,19 @@ using Azure.Core;
 namespace Azure.Iot.TimeSeriesInsights
 {
     /// <summary> Additional error information. </summary>
-    public partial class TsiErrorDetails : IReadOnlyDictionary<string, object>
+    public partial class InstancesOperationErrorDetails : IReadOnlyDictionary<string, object>
     {
-        /// <summary> Initializes a new instance of TsiErrorDetails. </summary>
-        internal TsiErrorDetails()
+        /// <summary> Initializes a new instance of InstancesOperationErrorDetails. </summary>
+        internal InstancesOperationErrorDetails()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of TsiErrorDetails. </summary>
+        /// <summary> Initializes a new instance of InstancesOperationErrorDetails. </summary>
         /// <param name="code"> Language-independent, human-readable string that defines a service-specific error code. This code serves as a more specific indicator for the HTTP error code specified in the response. Can be used to programmatically handle specific error cases. </param>
         /// <param name="message"> Human-readable, language-independent representation of the error. It is intended as an aid to developers and is not suitable for exposure to end users. </param>
         /// <param name="additionalProperties"> . </param>
-        internal TsiErrorDetails(string code, string message, IReadOnlyDictionary<string, object> additionalProperties)
+        internal InstancesOperationErrorDetails(string code, string message, IReadOnlyDictionary<string, object> additionalProperties)
         {
             Code = code;
             Message = message;

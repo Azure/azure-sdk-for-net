@@ -11,5 +11,6 @@ namespace Azure.Iot.TimeSeriesInsights
     [CodeGenModel("InstancesSearchStringSuggestion")]
     public partial class SearchSuggestion
     {
+        // This declaration is to simplify the class name; do not remove.
     }
 }

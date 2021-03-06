@@ -13,20 +13,24 @@ namespace Azure.Iot.TimeSeriesInsights
     [CodeGenModel("InstancesRequestBatchGetOrDelete")]
     public partial class InstancesRequestBatchGetOrDelete
     {
+        // Autorest does not support changing type for properties. In order to turn TimeSeriesId
+        // from a list of objects to a strongly typed object, TimeSeriesId has been renamed to
+        // TimeSeriesIdInternal and a new property, TimeSeriesId, has been created with the proper type.
+
         [CodeGenMember("TimeSeriesIds")]
         private IList<IList<object>> TimeSeriesIdsInternal { get; }
 
         /// <summary>
         /// The list of Time Series Ids used to make the request.
         /// </summary>
-        public IList<ITimeSeriesId> TimeSeriesIds { get; }
+        public IList<TimeSeriesId> TimeSeriesIds { get; }
 
         /// <summary>
         /// Initializes a new instance of InstancesRequestBatchGetOrDelete.
         /// </summary>
         public InstancesRequestBatchGetOrDelete()
         {
-            TimeSeriesIds = new ChangeTrackingList<ITimeSeriesId>();
+            TimeSeriesIds = new ChangeTrackingList<TimeSeriesId>();
             Names = new ChangeTrackingList<string>();
         }
     }

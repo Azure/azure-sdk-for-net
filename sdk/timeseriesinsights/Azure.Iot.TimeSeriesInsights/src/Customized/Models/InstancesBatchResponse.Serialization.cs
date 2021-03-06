@@ -4,24 +4,28 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Iot.TimeSeriesInsights;
 
 namespace Azure.Iot.TimeSeriesInsights
 {
     /// <summary>
     /// This class definition overrides serialization implementation in order to turn a raw response
-    /// from Time Series insights into a <see cref="InstancesBatchResponse"/> object.
+    /// from Time Series Insights into a InstancesBatchResponse object.
     /// </summary>
     [CodeGenModel("InstancesBatchResponse")]
     public partial class InstancesBatchResponse
     {
+        // The purpose of overriding this method is to protect against an InvalidOperationException
+        // that is being thrown by the generated code. More specifically, the exception is being thrown
+        // when trying to deserialize the "delete" property. A coveration has started with the Time Series
+        // Insights team on take a closer look on the thrown exception.
+
         internal static InstancesBatchResponse DeserializeInstancesBatchResponse(JsonElement element)
         {
             Optional<IReadOnlyList<InstancesOperationResult>> @get = default;
             Optional<IReadOnlyList<InstancesOperationResult>> put = default;
             Optional<IReadOnlyList<InstancesOperationResult>> update = default;
             Optional<IReadOnlyList<InstancesOperationError>> delete = default;
-            foreach (var property in element.EnumerateObject())
+            foreach (JsonProperty property in element.EnumerateObject())
             {
                 if (property.NameEquals("get"))
                 {

@@ -9,11 +9,11 @@
         "Content-Length": "53",
         "Content-Type": "application/json",
         "User-Agent": [
-          "azsdk-net-Iot.TimeSeriesInsights/1.0.0-alpha.20210303.1",
-          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
+          "azsdk-net-Iot.TimeSeriesInsights/1.0.0-alpha.20210305.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "36a0a8792fa08e583e8ab8241ed4d9bd",
-        "x-ms-client-session-id": "00000000-0000-0000-0000-000000000000",
+        "x-ms-client-session-id": "b3dfa5bc-01fe-4ddd-97ef-a6a8942034e3",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -32,12 +32,12 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-continuation",
         "Content-Type": "application/json",
-        "Date": "Thu, 04 Mar 2021 07:44:08 GMT",
+        "Date": "Sat, 06 Mar 2021 00:27:34 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-request-id": "14b9baed-af5f-4ddb-a06f-471bd2dddcab"
+        "x-ms-request-id": "93f4a60e-7ef0-4050-b395-6197aec51503"
       },
       "ResponseBody": {
         "get": [
@@ -62,11 +62,11 @@
         "Content-Length": "53",
         "Content-Type": "application/json",
         "User-Agent": [
-          "azsdk-net-Iot.TimeSeriesInsights/1.0.0-alpha.20210303.1",
-          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
+          "azsdk-net-Iot.TimeSeriesInsights/1.0.0-alpha.20210305.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "1ee98f9590db5a2224c1138184b46017",
-        "x-ms-client-session-id": "00000000-0000-0000-0000-000000000000",
+        "x-ms-client-session-id": "b3dfa5bc-01fe-4ddd-97ef-a6a8942034e3",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -85,12 +85,12 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-continuation",
         "Content-Type": "application/json",
-        "Date": "Thu, 04 Mar 2021 07:44:08 GMT",
+        "Date": "Sat, 06 Mar 2021 00:27:34 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-request-id": "8df1770d-617a-4233-ac86-98a8359e52d7"
+        "x-ms-request-id": "e2196708-c6a8-4705-8dfc-97f3590b2a62"
       },
       "ResponseBody": {
         "get": [
@@ -115,11 +115,11 @@
         "Content-Length": "191",
         "Content-Type": "application/json",
         "User-Agent": [
-          "azsdk-net-Iot.TimeSeriesInsights/1.0.0-alpha.20210303.1",
-          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
+          "azsdk-net-Iot.TimeSeriesInsights/1.0.0-alpha.20210305.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "b92ce89d9eef0c40a53ba79443644a12",
-        "x-ms-client-session-id": "00000000-0000-0000-0000-000000000000",
+        "x-ms-client-session-id": "b3dfa5bc-01fe-4ddd-97ef-a6a8942034e3",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -147,12 +147,12 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-continuation",
         "Content-Type": "application/json",
-        "Date": "Thu, 04 Mar 2021 07:44:08 GMT",
+        "Date": "Sat, 06 Mar 2021 00:27:34 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-request-id": "fda630a9-89de-4b80-90ec-86fee003bcb4"
+        "x-ms-request-id": "c95a8e71-a73f-4fef-a52a-9ad56b966fa4"
       },
       "ResponseBody": {
         "put": [
@@ -170,11 +170,11 @@
         "Content-Length": "79",
         "Content-Type": "application/json",
         "User-Agent": [
-          "azsdk-net-Iot.TimeSeriesInsights/1.0.0-alpha.20210303.1",
-          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
+          "azsdk-net-Iot.TimeSeriesInsights/1.0.0-alpha.20210305.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "d035fae1ec7879dcc4e5958b1e63f8c8",
-        "x-ms-client-session-id": "00000000-0000-0000-0000-000000000000",
+        "x-ms-client-session-id": "b3dfa5bc-01fe-4ddd-97ef-a6a8942034e3",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -198,12 +198,12 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-continuation",
         "Content-Type": "application/json",
-        "Date": "Thu, 04 Mar 2021 07:44:08 GMT",
+        "Date": "Sat, 06 Mar 2021 00:27:34 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-request-id": "ce259394-9f0d-42b2-b35f-19b566c1ffbb"
+        "x-ms-request-id": "3bdb9b91-53b5-476e-aa5d-3cd8d3efa5a7"
       },
       "ResponseBody": {
         "get": [
@@ -239,11 +239,11 @@
         "Content-Length": "246",
         "Content-Type": "application/json",
         "User-Agent": [
-          "azsdk-net-Iot.TimeSeriesInsights/1.0.0-alpha.20210303.1",
-          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
+          "azsdk-net-Iot.TimeSeriesInsights/1.0.0-alpha.20210305.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "8a9f00778f7fb09e0cb3f50a09b4ed42",
-        "x-ms-client-session-id": "00000000-0000-0000-0000-000000000000",
+        "x-ms-client-session-id": "b3dfa5bc-01fe-4ddd-97ef-a6a8942034e3",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -273,12 +273,12 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-continuation",
         "Content-Type": "application/json",
-        "Date": "Thu, 04 Mar 2021 07:44:08 GMT",
+        "Date": "Sat, 06 Mar 2021 00:27:34 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-request-id": "fcd79f5e-6a92-4bab-84ca-4ea28c9374d7"
+        "x-ms-request-id": "ef1df2e5-b9e2-4422-a4b9-e3a8739352a7"
       },
       "ResponseBody": {
         "update": [
@@ -296,11 +296,11 @@
         "Content-Length": "57",
         "Content-Type": "application/json",
         "User-Agent": [
-          "azsdk-net-Iot.TimeSeriesInsights/1.0.0-alpha.20210303.1",
-          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
+          "azsdk-net-Iot.TimeSeriesInsights/1.0.0-alpha.20210305.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "c96bdf42bf8c2abeaf3e819c733c9036",
-        "x-ms-client-session-id": "00000000-0000-0000-0000-000000000000",
+        "x-ms-client-session-id": "b3dfa5bc-01fe-4ddd-97ef-a6a8942034e3",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -316,12 +316,12 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-continuation",
         "Content-Type": "application/json",
-        "Date": "Thu, 04 Mar 2021 07:44:08 GMT",
+        "Date": "Sat, 06 Mar 2021 00:27:34 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-request-id": "838476f5-45bc-4bd4-995b-07d4fe237c0d"
+        "x-ms-request-id": "2f7efa51-9d5b-47bd-b0e3-c8179442f1fb"
       },
       "ResponseBody": {
         "get": [
@@ -357,11 +357,11 @@
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-Iot.TimeSeriesInsights/1.0.0-alpha.20210303.1",
-          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
+          "azsdk-net-Iot.TimeSeriesInsights/1.0.0-alpha.20210305.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "1e14d5ce6ec49949db277ea0c140ed9a",
-        "x-ms-client-session-id": "00000000-0000-0000-0000-000000000000",
+        "x-ms-client-session-id": "b3dfa5bc-01fe-4ddd-97ef-a6a8942034e3",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -370,12 +370,12 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-continuation",
         "Content-Type": "application/json",
-        "Date": "Thu, 04 Mar 2021 07:44:08 GMT",
+        "Date": "Sat, 06 Mar 2021 00:27:34 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-request-id": "435a5978-8fe1-4f30-be7f-b70478ccca42"
+        "x-ms-request-id": "581e5855-058f-4baf-9771-05670c3f0cab"
       },
       "ResponseBody": {
         "instances": [
@@ -685,6 +685,14 @@
           {
             "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
             "timeSeriesId": [
+              "cwaiZ",
+              null,
+              "ciLHI"
+            ]
+          },
+          {
+            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
+            "timeSeriesId": [
               "cYoXX",
               null,
               "aut4o"
@@ -738,6 +746,14 @@
               "fZgWg",
               "PoY01",
               "zutep"
+            ]
+          },
+          {
+            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
+            "timeSeriesId": [
+              "Gxi3g",
+              null,
+              "K2vZV"
             ]
           },
           {
@@ -905,6 +921,14 @@
           {
             "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
             "timeSeriesId": [
+              "U8PZ5",
+              null,
+              "fvmli"
+            ]
+          },
+          {
+            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
+            "timeSeriesId": [
               "uRlHT",
               "Hz7Kb",
               "fr1PC"
@@ -1011,11 +1035,11 @@
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-Iot.TimeSeriesInsights/1.0.0-alpha.20210303.1",
-          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
+          "azsdk-net-Iot.TimeSeriesInsights/1.0.0-alpha.20210305.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "095d37ef4d21b8334174da410d023ccf",
-        "x-ms-client-session-id": "00000000-0000-0000-0000-000000000000",
+        "x-ms-client-session-id": "b3dfa5bc-01fe-4ddd-97ef-a6a8942034e3",
         "x-ms-continuation": "aXsic2tpcCI6MTAwMCwidGFrZSI6MTAwMCwicmVxdWVzdEhhc2hDb2RlIjoxOTQ3MjUzNzgyLCJlbnZpcm9ubWVudElkIjoiZTYyMTY4NGEtZmMwNi00M2RiLTg1YTQtMjkxNjBjMjZmMmQ1In0=",
         "x-ms-return-client-request-id": "true"
       },
@@ -1025,12 +1049,12 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-continuation",
         "Content-Type": "application/json",
-        "Date": "Thu, 04 Mar 2021 07:44:08 GMT",
+        "Date": "Sat, 06 Mar 2021 00:27:34 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-request-id": "731c6cee-f53f-4c49-bf97-ae23c793d334"
+        "x-ms-request-id": "3edb633c-7e61-4e54-9c41-6ba4722e64da"
       },
       "ResponseBody": {
         "instances": []
@@ -1045,11 +1069,11 @@
         "Content-Length": "22",
         "Content-Type": "application/json",
         "User-Agent": [
-          "azsdk-net-Iot.TimeSeriesInsights/1.0.0-alpha.20210303.1",
-          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
+          "azsdk-net-Iot.TimeSeriesInsights/1.0.0-alpha.20210305.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "343bbe23cfa0d47d96d2ed65401e696f",
-        "x-ms-client-session-id": "00000000-0000-0000-0000-000000000000",
+        "x-ms-client-session-id": "b3dfa5bc-01fe-4ddd-97ef-a6a8942034e3",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -1060,12 +1084,12 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-continuation",
         "Content-Type": "application/json",
-        "Date": "Thu, 04 Mar 2021 07:44:08 GMT",
+        "Date": "Sat, 06 Mar 2021 00:27:34 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-request-id": "ad9a3044-e284-4558-b4ca-acfdad3d7bf9"
+        "x-ms-request-id": "ed86445f-ecbd-481d-8d6a-ebacd1962a87"
       },
       "ResponseBody": {
         "suggestions": [
@@ -1085,11 +1109,11 @@
         "Content-Length": "82",
         "Content-Type": "application/json",
         "User-Agent": [
-          "azsdk-net-Iot.TimeSeriesInsights/1.0.0-alpha.20210303.1",
-          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
+          "azsdk-net-Iot.TimeSeriesInsights/1.0.0-alpha.20210305.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "3cace75187df8115a15bdc5094078bd9",
-        "x-ms-client-session-id": "00000000-0000-0000-0000-000000000000",
+        "x-ms-client-session-id": "b3dfa5bc-01fe-4ddd-97ef-a6a8942034e3",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -1113,12 +1137,12 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-continuation",
         "Content-Type": "application/json",
-        "Date": "Thu, 04 Mar 2021 07:44:08 GMT",
+        "Date": "Sat, 06 Mar 2021 00:27:34 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-request-id": "295961e9-4a73-448f-9ff6-34a629ded6c6"
+        "x-ms-request-id": "f6778dbb-eef2-48e9-8ed2-c260cacb460e"
       },
       "ResponseBody": {
         "delete": [

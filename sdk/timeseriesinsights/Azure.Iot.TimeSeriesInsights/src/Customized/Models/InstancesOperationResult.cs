@@ -12,5 +12,8 @@ namespace Azure.Iot.TimeSeriesInsights
     [CodeGenModel("InstanceOrError")]
     public partial class InstancesOperationResult
     {
+        // This class declaration changes the class name; do not remove.
+        // The class name change is to make it clearer to the user that this type represents
+        // an instances operation result.
     }
 }

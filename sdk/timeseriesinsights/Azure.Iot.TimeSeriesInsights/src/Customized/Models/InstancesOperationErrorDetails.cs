@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using Azure.Core;
@@ -6,13 +6,13 @@ using Azure.Core;
 namespace Azure.Iot.TimeSeriesInsights
 {
     /// <summary>
-    /// A particular API error with an error code and a message.
+    /// Additional error information.
     /// </summary>
-    [CodeGenModel("TsiErrorBody")]
-    public partial class InstancesOperationError
+    [CodeGenModel("TsiErrorDetails")]
+    public partial class InstancesOperationErrorDetails
     {
         // This class declaration changes the class name; do not remove.
         // The class name change is to make it clearer to the user that this type represents
-        // an instances operation error.
+        // error details for an instances operation.
     }
 }
