@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -885,10 +886,22 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             SignResult result = await cryptoClient.SignDataAsync(keyCurveName.GetSignatureAlgorithm(), plaintext);
 
             // Download the certificate and verify data locally.
-            using X509Certificate2 certificate = await Client.DownloadCertificateAsync(name, operation.Value.Properties.Version);
-            using ECDsa publicKey = certificate.GetECDsaPublicKey();
+            X509Certificate2 certificate = null;
+            try
+            {
+                certificate = await Client.DownloadCertificateAsync(name, operation.Value.Properties.Version);
+                using ECDsa publicKey = certificate.GetECDsaPublicKey();
 
-            Assert.IsTrue(publicKey.VerifyData(plaintext, result.Signature, keyCurveName.GetHashAlgorithmName()));
+                Assert.IsTrue(publicKey.VerifyData(plaintext, result.Signature, keyCurveName.GetHashAlgorithmName()));
+            }
+            catch (CryptographicException) when (IsExpectedP256KException(certificate, keyCurveName))
+            {
+                Assert.Ignore("The curve is not supported by the current platform");
+            }
+            finally
+            {
+                certificate?.Dispose();
+            }
         }
 
         [Test]
@@ -921,16 +934,28 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             // Download the certificate and sign data locally.
             byte[] plaintext = Encoding.UTF8.GetBytes(nameof(DownloadECDsaCertificateSignRemoteVerifyLocal));
 
-            using X509Certificate2 certificate = await Client.DownloadCertificateAsync(name, operation.Value.Properties.Version);
-            using ECDsa privateKey = certificate.GetECDsaPrivateKey();
+            X509Certificate2 certificate = null;
+            try
+            {
+                certificate = await Client.DownloadCertificateAsync(name, operation.Value.Properties.Version);
+                using ECDsa privateKey = certificate.GetECDsaPrivateKey();
 
-            byte[] signature = privateKey.SignData(plaintext, keyCurveName.GetHashAlgorithmName());
+                byte[] signature = privateKey.SignData(plaintext, keyCurveName.GetHashAlgorithmName());
 
-            // Verify data remotely.
-            CryptographyClient cryptoClient = GetCryptographyClient(operation.Value.KeyId);
-            VerifyResult result = await cryptoClient.VerifyDataAsync(keyCurveName.GetSignatureAlgorithm(), plaintext, signature);
+                // Verify data remotely.
+                CryptographyClient cryptoClient = GetCryptographyClient(operation.Value.KeyId);
+                VerifyResult result = await cryptoClient.VerifyDataAsync(keyCurveName.GetSignatureAlgorithm(), plaintext, signature);
 
-            Assert.IsTrue(result.IsValid);
+                Assert.IsTrue(result.IsValid);
+            }
+            catch (CryptographicException) when (IsExpectedP256KException(certificate, keyCurveName))
+            {
+                Assert.Ignore("The curve is not supported by the current platform");
+            }
+            finally
+            {
+                certificate?.Dispose();
+            }
         }
 
         public CryptographyClient GetCryptographyClient(Uri keyId) => InstrumentClient(
@@ -952,6 +977,11 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                     )
                 )
             );
+
+        private static bool IsExpectedP256KException(X509Certificate2 certificate, CertificateKeyCurveName keyCurveName) =>
+            certificate is null &&
+            RuntimeInformation.IsOSPlatform(OSPlatform.OSX) &&
+            keyCurveName == CertificateKeyCurveName.P256K;
 
         private static CertificatePolicy DefaultPolicy => new CertificatePolicy
         {

@@ -17,12 +17,22 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             "P-521" => SignatureAlgorithm.ES512,
             _ => throw new NotSupportedException($"{keyCurveName} is not supported"),
         };
+
         public static HashAlgorithmName GetHashAlgorithmName(this CertificateKeyCurveName keyCurveName) => keyCurveName.ToString() switch
         {
             "P-256" => HashAlgorithmName.SHA256,
             "P-256K" => HashAlgorithmName.SHA256,
             "P-384" => HashAlgorithmName.SHA384,
             "P-521" => HashAlgorithmName.SHA512,
+            _ => throw new NotSupportedException($"{keyCurveName} is not supported"),
+        };
+
+        public static int GetKeySize(this CertificateKeyCurveName keyCurveName) => keyCurveName.ToString() switch
+        {
+            "P-256" => 256,
+            "P-256K" => 256,
+            "P-384" => 384,
+            "P-521" => 521,
             _ => throw new NotSupportedException($"{keyCurveName} is not supported"),
         };
     }

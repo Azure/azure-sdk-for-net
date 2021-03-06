@@ -3,6 +3,8 @@
 
 using System;
 using System.IO;
+using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -15,32 +17,23 @@ namespace Azure.Security.KeyVault.Certificates.Tests
     {
         [Test]
         public void VerifyECDecoderPrime256v1Imported() =>
-            VerifyECDecoder(EcPrime256v1PrivateKeyImported, 256, @"DFTTJrKrtao7G/B0bK5yv+mX0/3Sefv2MS1gzd6DfYH2ASe9Tw7rSbLjZ8wM0p7I/opbIG1+zHhpYqOGnQNQyw==", EcPrime256v1CertificateImported);
+            VerifyECDecoder(EcPrime256v1PrivateKeyImported, CertificateKeyCurveName.P256K, @"DFTTJrKrtao7G/B0bK5yv+mX0/3Sefv2MS1gzd6DfYH2ASe9Tw7rSbLjZ8wM0p7I/opbIG1+zHhpYqOGnQNQyw==", EcPrime256v1CertificateImported);
 
         [Test]
-        public void VerifyECDecoderSecp256k1()
-        {
-            try
-            {
-                VerifyECDecoder(EcSecp256k1PrivateKey, 256, @"YV+z2wZfDRqszLwcoPAnT4XmKMbfAqfwQYdYYU5FyicKWLtRmcaAX8Pd8h0OmSAdxoPO2sVyK2FP22pWq/6fJQ==");
-            }
-            catch (CryptographicException) when (Environment.OSVersion.Platform == PlatformID.Unix)
-            {
-                Assert.Ignore("The curve OID 1.3.132.0.10 is not supported by the current platform");
-            }
-        }
+        public void VerifyECDecoderSecp256k1() =>
+            VerifyECDecoder(EcSecp256k1PrivateKey, CertificateKeyCurveName.P256K, @"YV+z2wZfDRqszLwcoPAnT4XmKMbfAqfwQYdYYU5FyicKWLtRmcaAX8Pd8h0OmSAdxoPO2sVyK2FP22pWq/6fJQ==");
 
         [Test]
         public void VerifyECDecoderPrime256v1() =>
-            VerifyECDecoder(EcPrime256v1PrivateKey, 256, @"1Byf+UuKVAEj+lsGBLQ4HiUDd4v/wa/XgcGlOEHorg47kjN2V6EDhC5aLwqZnXkbr48Y1umvBRAWcRYT6f8WfA==");
+            VerifyECDecoder(EcPrime256v1PrivateKey, CertificateKeyCurveName.P256, @"1Byf+UuKVAEj+lsGBLQ4HiUDd4v/wa/XgcGlOEHorg47kjN2V6EDhC5aLwqZnXkbr48Y1umvBRAWcRYT6f8WfA==");
 
         [Test]
         public void VerifyECDecoderSecp384r1() =>
-            VerifyECDecoder(EcSecp384r1PrivateKey, 384, @"gHf3reGX71P7us9/fvcK1+6ONqRnkw5b9v+arz7G8iHk8BGflKwMlESIEEg2EezbNvLg6pURkCPC4OBngnM0OVYCjhb7Onh+zUogi2LSSCEIRZqrYcjzg8PHukp/sRyU");
+            VerifyECDecoder(EcSecp384r1PrivateKey, CertificateKeyCurveName.P384, @"gHf3reGX71P7us9/fvcK1+6ONqRnkw5b9v+arz7G8iHk8BGflKwMlESIEEg2EezbNvLg6pURkCPC4OBngnM0OVYCjhb7Onh+zUogi2LSSCEIRZqrYcjzg8PHukp/sRyU");
 
         [Test]
         public void VerifyECDecoderSecp521r1() =>
-            VerifyECDecoder(EcSecp521r1PrivateKey, 521, @"ADB74QoZQcAbO0gfOhcavQLhV+nYMfLtNXC0i7a7FOYCiyZIJFoZtEzWbVTe4de1yMoe0lwGnW1mkCoPtEb0Q8f+AYAgRYSXlYkaF96XZYGcSp+RyALtOUpSvvpIaffk/3farwiFlGj6Dqryd5wLRksfLNR4DSyZbpEtHOg2RwkQ+vsI");
+            VerifyECDecoder(EcSecp521r1PrivateKey, CertificateKeyCurveName.P521, @"ADB74QoZQcAbO0gfOhcavQLhV+nYMfLtNXC0i7a7FOYCiyZIJFoZtEzWbVTe4de1yMoe0lwGnW1mkCoPtEb0Q8f+AYAgRYSXlYkaF96XZYGcSp+RyALtOUpSvvpIaffk/3farwiFlGj6Dqryd5wLRksfLNR4DSyZbpEtHOg2RwkQ+vsI");
 
         [Test]
         public void VerifyECDecoderBadData()
@@ -73,7 +66,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         }
 
         // Not using TestCaseSource because params too long for friendly test case rendering.
-        private static void VerifyECDecoder(string key, int keySize, string signature, string cer = null)
+        private static void VerifyECDecoder(string key, CertificateKeyCurveName keyCurveName, string signature, string cer = null)
         {
 #if NET461
             Assert.Ignore("ECC is not supported before .NET Framework 4.7");
@@ -82,20 +75,27 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             byte[] signatureBytes = Convert.FromBase64String(signature);
 
             ECDsa publicKey = null;
-            if (cer != null)
-            {
-                byte[] publicKeyData = Convert.FromBase64String(cer);
-                using X509Certificate2 certificate = new X509Certificate2(publicKeyData);
-
-                publicKey = certificate.GetECDsaPublicKey();
-            }
-
             try
             {
+                if (cer != null)
+                {
+                    byte[] publicKeyData = Convert.FromBase64String(cer);
+                    using X509Certificate2 certificate = new X509Certificate2(publicKeyData);
+
+                    publicKey = certificate.GetECDsaPublicKey();
+                }
+
                 using ECDsa keyPair = LightweightPkcs8Decoder.DecodeECDsaPkcs8(data, publicKey);
 
-                Assert.AreEqual(keySize, keyPair.KeySize);
+                Assert.AreEqual(keyCurveName.GetKeySize(), keyPair.KeySize);
                 Assert.IsTrue(keyPair.VerifyData(Encoding.UTF8.GetBytes("test"), signatureBytes, HashAlgorithmName.SHA256));
+            }
+            catch (Exception ex) when (
+                (ex is CryptographicException || (ex is TargetInvocationException && ex.InnerException is CryptographicException)) &&
+                RuntimeInformation.IsOSPlatform(OSPlatform.OSX) &&
+                keyCurveName == CertificateKeyCurveName.P256K)
+            {
+                Assert.Ignore("The curve is not supported by the current platform");
             }
             finally
             {

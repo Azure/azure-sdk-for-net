@@ -12,6 +12,7 @@ namespace Azure.Core
     internal static partial class LightweightPkcs8Decoder
     {
         private static readonly byte[] s_derIntegerOne = { 0x02, 0x01, 0x01 };
+        private static readonly object[] s_argsFalse = new object[] { false };
 
         private static readonly byte[] s_ecAlgorithmId =
         {
@@ -210,7 +211,7 @@ namespace Azure.Core
                     s_curveField = s_exportParametersMethod.ReturnType.GetField("Curve", BindingFlags.Public | BindingFlags.Instance);
                 }
 
-                object parameters = s_exportParametersMethod.Invoke(publicKey, new object[] { false });
+                object parameters = s_exportParametersMethod.Invoke(publicKey, s_argsFalse);
                 object curve = s_curveField.GetValue(parameters);
 
                 return new ECCurveProxy(curve);
