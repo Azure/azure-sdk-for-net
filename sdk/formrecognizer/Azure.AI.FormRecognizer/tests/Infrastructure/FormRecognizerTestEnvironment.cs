@@ -48,7 +48,7 @@ namespace Azure.AI.FormRecognizer.Tests
         public string Endpoint => GetRecordedVariable(EndpointEnvironmentVariableName);
         public string BlobContainerSasUrl => GetRecordedVariable(BlobContainerSasUrlEnvironmentVariableName, options => options.IsSecret("https://sanitized.blob.core.windows.net"));
         public string SelectionMarkBlobContainerSasUrl => GetRecordedVariable(SelectionMarkBlobContainerSasUrlEnvironmentVariableName, options => options.IsSecret("https://sanitized.blob.core.windows.net"));
-        public string MultipageBlobContainerSasUrl => GetRecordedVariable(MultipageBlobContainerSasUrlEnvironmentVariableName);
+        public string MultipageBlobContainerSasUrl => GetRecordedVariable(MultipageBlobContainerSasUrlEnvironmentVariableName, options => options.IsSecret("https://sanitized.blob.core.windows.net"));
         public string TargetResourceId => GetRecordedVariable(TargetResourceIdEnvironmentVariableName);
         public string TargetResourceRegion => GetRecordedVariable(TargetResourceRegionEnvironmentVariableName);
 
