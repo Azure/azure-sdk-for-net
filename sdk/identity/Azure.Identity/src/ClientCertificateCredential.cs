@@ -310,7 +310,7 @@ namespace Azure.Identity
                         }
                     }
 
-                    Certificate = PemReader.LoadCertificate(certficateText.AsSpan());
+                    Certificate = PemReader.LoadCertificate(certficateText.AsSpan(), keyType: PemReader.KeyType.RSA);
 
                     return Certificate;
                 }

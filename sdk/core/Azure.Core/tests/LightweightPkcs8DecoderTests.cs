@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
 using System.IO;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
@@ -9,15 +10,182 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    public class LightweightPcks8DecoderTests
+    public class LightweightPkcs8DecoderTests
     {
+        [TestCaseSource(nameof(ReadBitStringData))]
+        public void ReadBitString(byte[] data)
+        {
+            int offset = 0;
+
+            byte[] actual = LightweightPkcs8Decoder.ReadBitString(data, ref offset);
+
+            Assert.AreEqual(new byte[] { 0x11, 0x22, 0x33, 0x00 }, actual);
+        }
+
+        [Test]
+        public void ReadNonBitString()
+        {
+            byte[] data = { 0x30 };
+            int offset = 0;
+
+            Exception ex = Assert.Throws<InvalidDataException>(() => LightweightPkcs8Decoder.ReadBitString(data, ref offset));
+            Assert.AreEqual("Invalid PKCS#8 Data", ex.Message);
+        }
+
+        [Test]
+        public void ReadEmptyBitString()
+        {
+            byte[] data = { 0x30, 0x00 };
+            int offset = 0;
+
+            Exception ex = Assert.Throws<InvalidDataException>(() => LightweightPkcs8Decoder.ReadBitString(data, ref offset));
+            Assert.AreEqual("Invalid PKCS#8 Data", ex.Message);
+        }
+
+        [Test]
+        public void ReadInvalidBitString()
+        {
+            byte[] data = { 0x30, 0x01, 0x08 };
+            int offset = 0;
+
+            Exception ex = Assert.Throws<InvalidDataException>(() => LightweightPkcs8Decoder.ReadBitString(data, ref offset));
+            Assert.AreEqual("Invalid PKCS#8 Data", ex.Message);
+        }
+
+        private static IEnumerable ReadBitStringData => new[]
+        {
+            new object[] { new byte[] { 0x03, 0x05, 0x00, 0x11, 0x22, 0x33, 0x00 } },
+            new object[] { new byte[] { 0x03, 0x05, 0x07, 0x11, 0x22, 0x33, 0x00 } },
+        };
+
+        [TestCaseSource(nameof(ReadObjectIdentifierData))]
+        public void ReadObjectIdentifier(string expectedOid, byte[] data)
+        {
+            int offset = 0;
+
+            string actualOid = LightweightPkcs8Decoder.ReadObjectIdentifier(data, ref offset);
+
+            Assert.AreEqual(expectedOid, actualOid);
+        }
+
+        [Test]
+        public void ReadNonObjectIdentifier()
+        {
+            byte[] data = { 0x30 };
+            int offset = 0;
+
+            Exception ex = Assert.Throws<InvalidDataException>(() => LightweightPkcs8Decoder.ReadObjectIdentifier(data, ref offset));
+            Assert.AreEqual("Invalid PKCS#8 Data", ex.Message);
+        }
+
+        [Test]
+        public void ReadInvalidObjectIdentifier()
+        {
+            byte[] data = new byte[] { 0x06, 0x03, 0x2B, 0x80, 0x01 };
+            int offset = 0;
+
+            Exception ex = Assert.Throws<InvalidDataException>(() => LightweightPkcs8Decoder.ReadObjectIdentifier(data, ref offset));
+            Assert.AreEqual("Invalid PKCS#8 Data", ex.Message);
+        }
+
+        [Test]
+        public void ReadUnsupportedObjectIdentifier()
+        {
+            byte[] data = new byte[] { 0x06, 0x06, 0x2B, 0x88, 0x80, 0x80, 0x80, 0x00 }; // 1.3.2147483648
+            int offset = 0;
+
+            Exception ex = Assert.Throws<InvalidDataException>(() => LightweightPkcs8Decoder.ReadObjectIdentifier(data, ref offset));
+            Assert.AreEqual("Unsupported PKCS#8 Data", ex.Message);
+        }
+
+        [Test]
+        public void ReadUnsupportedArc2ObjectIdentifier()
+        {
+            byte[] data = new byte[] { 0x06, 0x02, 0x88, 0x37 };
+            int offset = 0;
+
+            Exception ex = Assert.Throws<InvalidDataException>(() => LightweightPkcs8Decoder.ReadObjectIdentifier(data, ref offset));
+            Assert.AreEqual("Unsupported PKCS#8 Data", ex.Message);
+        }
+
+        private static IEnumerable ReadObjectIdentifierData => new[]
+        {
+            new object[] { "1.2.840.10045.2.1", new byte[] { 0x06, 0x07, 0x2A, 0x86, 0x48, 0xCE, 0x3D, 0x02, 0x01 } },
+            new object[] { "1.3.132.0.35", new byte[] { 0x06, 0x05, 0x2B, 0x81, 0x04, 0x00, 0x23 } },
+            new object[] { "1.3.132.0.34", new byte[] { 0x06, 0x05, 0x2B, 0x81, 0x04, 0x00, 0x22 } },
+            new object[] { "1.2.840.10045.1.1", new byte[] { 0x06, 0x07, 0x2A, 0x86, 0x48, 0xCE, 0x3D, 0x01, 0x01, } },
+            new object[] { "1.3.132.0.10", new byte[] { 0x06, 0x05, 0x2B, 0x81, 0x04, 0x00, 0x0A } },
+            new object[] { "1.2.840.113549.1.1.1", new byte[] { 0x06, 0x09, 0x2A, 0x86, 0x48, 0x86, 0xF7, 0x0D, 0x01, 0x01, 0x01 } },
+        };
+
+        [Test]
+        public void ReadOctetString()
+        {
+            byte[] data =
+            {
+                0x04, 0x42, 0x00, 0x43, 0x3E, 0x10, 0x5C, 0xE3, 0x75, 0x42, 0x54, 0x37, 0xDD, 0x3C, 0x35,
+                0x2D, 0x2F, 0x32, 0x69, 0x09, 0x3C, 0x73, 0x23, 0x1C, 0x6F, 0x2A, 0xE6, 0x12, 0xE5, 0x78, 0x20,
+                0xC8, 0xF3, 0x46, 0xA8, 0x19, 0xCB, 0xD8, 0x60, 0x02, 0xAA, 0x81, 0x79, 0x77, 0x1A, 0x86, 0x7E,
+                0xE2, 0x45, 0x53, 0x66, 0xDF, 0x9A, 0xC2, 0x3C, 0x77, 0xCD, 0x12, 0x6B, 0x8D, 0x74, 0x83, 0x2B,
+                0x8A, 0xEA, 0x24, 0xAA, 0xD7,
+            };
+
+            byte[] expected =
+            {
+                0x00, 0x43, 0x3E, 0x10, 0x5C, 0xE3, 0x75, 0x42, 0x54, 0x37, 0xDD, 0x3C, 0x35,
+                0x2D, 0x2F, 0x32, 0x69, 0x09, 0x3C, 0x73, 0x23, 0x1C, 0x6F, 0x2A, 0xE6, 0x12, 0xE5, 0x78, 0x20,
+                0xC8, 0xF3, 0x46, 0xA8, 0x19, 0xCB, 0xD8, 0x60, 0x02, 0xAA, 0x81, 0x79, 0x77, 0x1A, 0x86, 0x7E,
+                0xE2, 0x45, 0x53, 0x66, 0xDF, 0x9A, 0xC2, 0x3C, 0x77, 0xCD, 0x12, 0x6B, 0x8D, 0x74, 0x83, 0x2B,
+                0x8A, 0xEA, 0x24, 0xAA, 0xD7,
+            };
+
+            int offset = 0;
+            byte[] actual = LightweightPkcs8Decoder.ReadOctetString(data, ref offset);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void ReadNonOctsetString()
+        {
+            byte[] data = { 0x30 };
+            int offset = 0;
+
+            Exception ex = Assert.Throws<InvalidDataException>(() => LightweightPkcs8Decoder.ReadOctetString(data, ref offset));
+            Assert.AreEqual("Invalid PKCS#8 Data", ex.Message);
+        }
+
+        [Test]
+        public void ReadTooLongOctsetString()
+        {
+            byte[] data = { 0x04, 0x83, 0x01, 0x00, 0x00, 0xff, 0xff, /* ... */ };
+            int offset = 0;
+
+            Exception ex = Assert.Throws<InvalidDataException>(() => LightweightPkcs8Decoder.ReadOctetString(data, ref offset));
+            Assert.AreEqual("Invalid PKCS#8 Data", ex.Message);
+        }
+
+        [Test]
+        public void GetRSAPrivateKeyOid()
+        {
+            byte[] data = Convert.FromBase64String(PrivateKey);
+            Assert.AreEqual("1.2.840.113549.1.1.1", LightweightPkcs8Decoder.DecodePrivateKeyOid(data));
+        }
+
+        [Test]
+        public void GetECDsaPrivateKeyImportedOid()
+        {
+            byte[] data = Convert.FromBase64String(EcSecp256k1PrivateKey);
+            Assert.AreEqual("1.2.840.10045.2.1", LightweightPkcs8Decoder.DecodePrivateKeyOid(data));
+        }
+
         [Test]
         public void VerifyDecoder()
         {
             byte[] data = Convert.FromBase64String(PrivateKey);
 
-            RSA fromPem = LightweightPkcs8Decoder.DecodeRSAPkcs8(data);
-            RSA fromPfx = (RSA) new X509Certificate2(Convert.FromBase64String(Pfx)).PrivateKey;
+            using RSA fromPem = LightweightPkcs8Decoder.DecodeRSAPkcs8(data);
+            using RSA fromPfx = (RSA)new X509Certificate2(Convert.FromBase64String(Pfx)).PrivateKey;
 
             RSAParameters pemParams = fromPem.ExportParameters(false);
             RSAParameters pfxParams = fromPfx.ExportParameters(false);
@@ -31,7 +199,17 @@ namespace Azure.Core.Tests
         {
             byte[] data = Convert.FromBase64String(InvalidPrivateKey);
 
-            Assert.Throws<InvalidDataException>(() => LightweightPkcs8Decoder.DecodeRSAPkcs8(data));
+            Exception ex = Assert.Throws<InvalidDataException>(() => LightweightPkcs8Decoder.DecodeRSAPkcs8(data));
+            Assert.AreEqual("Invalid PKCS#8 Data", ex.Message);
+        }
+
+        [Test]
+        public void VerifyRsaDecoderWithEcKey()
+        {
+            byte[] data = Convert.FromBase64String(EcSecp256k1PrivateKey);
+
+            Exception ex = Assert.Throws<InvalidDataException>(() => LightweightPkcs8Decoder.DecodeRSAPkcs8(data));
+            Assert.AreEqual("Invalid PKCS#8 Data", ex.Message);
         }
 
         private const string Pfx = @"
@@ -216,5 +394,10 @@ xhTQxCscz5OWqNMo+5eB+aeJ8ywgN2CqEMJdJTnUORVQesdm53sksRgCH+0+M+Mm
 0580cGKeUvSZvkbQleoQCzHDyt9apR3ZHcm2lw/k2P47YkuLtcZk73d6F7voM04d
 IPVJQAAvuKCBZIXOKL1rRmNW3/HkuB5bMjARrqxOFP7aiwqnMMnNk/uSb3QCOG8j
 TPJ0/sCkfgvKDnNAiIYJVVvu4IyYUt==";
+
+        private const string EcSecp256k1PrivateKey = @"
+MIGEAgEAMBAGByqGSM49AgEGBSuBBAAKBG0wawIBAQQggIszi9CyyZSvzCmMVSnT
+XlQQz+m62V3B1Uopp/Q2gOOhRANCAASy4TPJzmokaWtXadcXAC3tz8UhGCjEiygJ
+OLBbWHiQCEJSk8du+JbQe0TzijhdFwqfbkenBxX7QpStBwCNqzFU";
     }
 }
