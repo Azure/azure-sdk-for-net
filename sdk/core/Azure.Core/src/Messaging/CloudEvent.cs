@@ -141,7 +141,7 @@ namespace Azure.Messaging
         /// <summary>
         /// Gets extension attributes that can be additionally added to the CloudEvent envelope.
         /// </summary>
-        public IDictionary<string, object?> ExtensionAttributes { get; } = new CloudEventExtensionAttributes<string, object?>();
+        public IDictionary<string, object> ExtensionAttributes { get; } = new CloudEventExtensionAttributes<string, object>();
 
         /// <summary>
         /// Given JSON-encoded events, parses the event envelope and returns an array of CloudEvents.
