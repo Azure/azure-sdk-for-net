@@ -77,7 +77,7 @@ namespace Azure.Iot.TimeSeriesInsights
             Argument.AssertNotNull(credential, nameof(environmentFqdn));
             Argument.AssertNotNull(options, nameof(options));
 
-            _clientSessionId = Guid.NewGuid().ToString();
+            _clientSessionId = new Guid().ToString();
             _clientDiagnostics = new ClientDiagnostics(options);
 
             options.AddPolicy(new BearerTokenAuthenticationPolicy(credential, GetAuthorizationScopes()), HttpPipelinePosition.PerCall);

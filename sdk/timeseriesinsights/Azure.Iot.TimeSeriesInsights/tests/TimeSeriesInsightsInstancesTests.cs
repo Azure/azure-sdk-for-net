@@ -65,14 +65,15 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
                         .ConfigureAwait(false);
 
                     getInstancesByIdsResult.Value.Length.Should().Be(timeSeriesInstances.Count);
-                    getInstancesByIdsResult.Value.All((instanceResult) =>
-                        instanceResult.Instance != null &&
-                        instanceResult.Error == null &&
-                        instanceResult.Instance.TimeSeriesId.ToArray().Length == numOfIdProperties &&
-                        instanceResult.Instance.TypeId == DefaultType &&
-                        instanceResult.Instance.HierarchyIds.Count == 0 &&
-                        instanceResult.Instance.InstanceFields.Count == 0)
-                    .Should().BeTrue();
+                    foreach (InstancesOperationResult instanceResult in getInstancesByIdsResult.Value)
+                    {
+                        instanceResult.Instance.Should().NotBeNull();
+                        instanceResult.Error.Should().BeNull();
+                        instanceResult.Instance.TimeSeriesId.ToArray().Length.Should().Be(numOfIdProperties);
+                        instanceResult.Instance.TypeId.Should().Be(DefaultType);
+                        instanceResult.Instance.HierarchyIds.Count.Should().Be(0);
+                        instanceResult.Instance.InstanceFields.Count.Should().Be(0);
+                    }
 
                     return null;
                 }, MaxNumberOfRetries, s_retryDelay);
@@ -98,14 +99,15 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
                         .ConfigureAwait(false);
 
                     getInstancesByNameResult.Value.Length.Should().Be(timeSeriesInstances.Count);
-                    getInstancesByNameResult.Value.All((instanceResult) =>
-                        instanceResult.Instance != null &&
-                        instanceResult.Error == null &&
-                        instanceResult.Instance.TimeSeriesId.ToArray().Length == numOfIdProperties &&
-                        instanceResult.Instance.TypeId == DefaultType &&
-                        instanceResult.Instance.HierarchyIds.Count == 0 &&
-                        instanceResult.Instance.InstanceFields.Count == 0)
-                    .Should().BeTrue();
+                    foreach (InstancesOperationResult instanceResult in getInstancesByNameResult.Value)
+                    {
+                        instanceResult.Instance.Should().NotBeNull();
+                        instanceResult.Error.Should().BeNull();
+                        instanceResult.Instance.TimeSeriesId.ToArray().Length.Should().Be(numOfIdProperties);
+                        instanceResult.Instance.TypeId.Should().Be(DefaultType);
+                        instanceResult.Instance.HierarchyIds.Count.Should().Be(0);
+                        instanceResult.Instance.InstanceFields.Count.Should().Be(0);
+                    }
 
                     return null;
                 }, MaxNumberOfRetries, s_retryDelay);
