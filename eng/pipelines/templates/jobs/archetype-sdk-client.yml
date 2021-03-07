@@ -22,6 +22,14 @@ parameters:
   default: []
 - name: TestTimeoutInMinutes
   type: number
+- name: MatrixConfigs
+  type: object
+- name: AdditionalMatrixConfigs
+  type: object
+  default: []
+- name: MatrixFilters
+  type: object
+  default: []
 
 jobs:
   - job: Build
@@ -137,91 +145,16 @@ jobs:
         condition: and(succeededOrFailed(), ne(variables['Build.Reason'],'PullRequest'))
       - template: /eng/common/pipelines/templates/steps/eng-common-workflow-enforcer.yml
 
-  - job: "Test"
-    timeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
-    condition: and(succeededOrFailed(), ne(variables['Skip.Test'], true))
-    strategy:
-      maxParallel: $[ variables['MaxParallelTestJobs'] ]
-      matrix:
-        Linux:
-          Pool: azsdk-pool-mms-ubuntu-1804-general
-          OSVmImage: MMSUbuntu18.04
-          TestTargetFramework: netcoreapp2.1
-        Windows_NetCoreApp:
-          Pool: azsdk-pool-mms-win-2019-general # Comment out to swap back to public hosted pool.
-          OSVmImage: MMS2019
-          TestTargetFramework: netcoreapp2.1
-          CollectCoverage: true
-        Windows_NetCoreApp_ProjectReferences:
-          Pool: azsdk-pool-mms-win-2019-general # Comment out to swap back to public hosted pool.
-          OSVmImage: MMS2019
-          TestTargetFramework: netcoreapp2.1
-          ConvertToProjectReferenceOption: /p:UseProjectReferenceToAzureClients=true
-        Windows_NetFramework:
-          Pool: azsdk-pool-mms-win-2019-general # Comment out to swap back to public hosted pool.
-          OSVmImage: MMS2019
-          TestTargetFramework: net461
-        Windows_NetFramework_ProjectReferences:
-          Pool: azsdk-pool-mms-win-2019-general # Comment out to swap back to public hosted pool.
-          OSVmImage: MMS2019
-          TestTargetFramework: net461
-          ConvertToProjectReferenceOption: /p:UseProjectReferenceToAzureClients=true
-        MacOs:
-          Pool: Azure Pipelines
-          OSVmImage: macOS-10.15
-          TestTargetFramework: netcoreapp2.1
-        Windows_Net50:
-          Pool: azsdk-pool-mms-win-2019-general # Comment out to swap back to public hosted pool.
-          OSVmImage: MMS2019
-          TestTargetFramework: net5.0
-        Windows_Net50_ProjectReferences:
-          Pool: azsdk-pool-mms-win-2019-general # Comment out to swap back to public hosted pool.
-          OSVmImage: MMS2019
-          TestTargetFramework: net5.0
-          ConvertToProjectReferenceOption: /p:UseProjectReferenceToAzureClients=true
-    pool:
-      vmImage: $(OSVmImage)
-      name: $(Pool)
-    steps:
-      - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
-        parameters:
-          AgentImage: $(OSVmImage)
-      - ${{ each step in parameters.TestSetupSteps }}:
-        - ${{ each pair in step }}:
-            ${{ pair.key }}: ${{ pair.value }}
-      - template: /eng/pipelines/templates/steps/install-dotnet.yml
-      - script: >-
-          dotnet test eng/service.proj --filter "(TestCategory!=Manually) & (TestCategory!=Live)" --framework $(TestTargetFramework)
-          --logger "trx;LogFileName=$(TestTargetFramework).trx" --logger:"console;verbosity=normal"
-          /p:SDKType=${{ parameters.SDKType }}
-          /p:ServiceDirectory=${{ parameters.ServiceToTest }}
-          /p:IncludeSrc=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false
-          /p:Configuration=$(BuildConfiguration) $(ConvertToProjectReferenceOption)
-          /p:CollectCoverage=$(CollectCoverage) /p:CodeCoverageDirectory=${{ parameters.ServiceDirectory }}
-        displayName: "Build & Test ($(TestTargetFramework))"
-        env:
-          DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
-          DOTNET_CLI_TELEMETRY_OPTOUT: 1
-      - task: PublishTestResults@2
-        condition: always()
-        displayName: "Publish Results ($(TestTargetFramework))"
-        inputs:
-          testResultsFiles: "**/$(TestTargetFramework)*.trx"
-          testRunTitle: "$(OSName) $(TestTargetFramework)"
-          testResultsFormat: "VSTest"
-          mergeTestResults: true
-      - task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@4
-        condition: and(succeededOrFailed(), eq(variables['CollectCoverage'], 'true'), eq(variables['coverage.collected'], 'true'))
-        displayName: Generate Code Coverage Reports
-        inputs:
-          reports: $(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}\**\coverage.cobertura.xml
-          targetdir: $(Build.ArtifactStagingDirectory)\coverage
-          reporttypes: Cobertura
-          filefilters: +$(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}\**
-          verbosity: Verbose
-      - task: PublishCodeCoverageResults@1
-        condition: and(succeededOrFailed(), eq(variables['CollectCoverage'], 'true'), eq(variables['coverage.collected'], 'true'))
-        displayName: Publish Code Coverage Reports
-        inputs:
-          codeCoverageTool: Cobertura
-          summaryFileLocation: $(Build.ArtifactStagingDirectory)\coverage\Cobertura.xml
+  - template: /eng/pipelines/templates/jobs/archetype-sdk-tests-generate.yml
+    parameters:
+      JobTemplatePath: /eng/pipelines/templates/jobs/archetype-sdk-client-test.yml
+      MatrixConfigs: ${{ parameters.MatrixConfigs }}
+      MatrixFilters: ${{ parameters.MatrixFilters }}
+      CloudConfig:
+        Cloud: Public
+      AdditionalParameters:
+        SDKType: ${{ parameters.SDKType }}
+        ServiceToTest: ${{ coalesce(parameters.ServiceToTest, parameters.ServiceDirectory) }}
+        ServiceDirectory: ${{ parameters.ServiceDirectory }}
+        TestSetupSteps: ${{ parameters.TestSetupSteps }}
+        TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
