@@ -53,8 +53,7 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
                     .ConfigureAwait(false);
 
                 // Assert that the result error array does not contain any object that is set
-                createInstancesResult.Value.All((errorResult) => errorResult == null)
-                    .Should().BeTrue();
+                createInstancesResult.Value.Should().OnlyContain((errorResult) => errorResult == null);
 
                 // This retry logic was added as the TSI instance are not immediately available after creation
                 await TestRetryHelper.RetryAsync<Response<InstancesOperationResult[]>>(async () =>
@@ -88,7 +87,7 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
                     .ConfigureAwait(false);
 
                 replaceInstancesResult.Value.Length.Should().Be(timeSeriesInstances.Count);
-                replaceInstancesResult.Value.All((errorResult) => errorResult.Error == null).Should().BeTrue();
+                replaceInstancesResult.Value.Should().OnlyContain((errorResult) => errorResult.Error == null);
 
                 // This retry logic was added as the TSI instance are not immediately available after creation
                 await TestRetryHelper.RetryAsync<Response<InstancesOperationResult[]>>(async () =>
@@ -152,7 +151,7 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
                         .ConfigureAwait(false);
 
                     // Assert that the response array does not have any error object set
-                    deleteInstancesResponse.Value.All((errorResult) => errorResult == null).Should().BeTrue();
+                    deleteInstancesResponse.Value.Should().OnlyContain((errorResult) => errorResult == null);
                 }
                 catch (Exception ex)
                 {

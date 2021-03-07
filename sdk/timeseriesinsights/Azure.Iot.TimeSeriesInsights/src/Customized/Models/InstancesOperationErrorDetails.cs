@@ -6,7 +6,7 @@ using Azure.Core;
 namespace Azure.Iot.TimeSeriesInsights
 {
     /// <summary>
-    /// Additional error information.
+    /// Error details for Time Series Insights instances operations.
     /// </summary>
     [CodeGenModel("TsiErrorDetails")]
     public partial class InstancesOperationErrorDetails

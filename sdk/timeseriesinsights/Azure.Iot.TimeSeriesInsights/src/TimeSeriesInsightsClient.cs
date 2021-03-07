@@ -74,7 +74,7 @@ namespace Azure.Iot.TimeSeriesInsights
         public TimeSeriesInsightsClient(string environmentFqdn, TokenCredential credential, TimeSeriesInsightsClientOptions options)
         {
             Argument.AssertNotNullOrEmpty(environmentFqdn, nameof(environmentFqdn));
-            Argument.AssertNotNull(credential, nameof(environmentFqdn));
+            Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(options, nameof(options));
 
             _clientSessionId = new Guid().ToString();
@@ -479,7 +479,7 @@ namespace Azure.Iot.TimeSeriesInsights
         }
 
         /// <summary>
-        /// Gets Time Series instances by Time Series Id asynchronously.
+        /// Gets Time Series instances by Time Series Ids asynchronously.
         /// </summary>
         /// <param name="timeSeriesIds">List of Ids of the Time Series instances to return.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -535,7 +535,7 @@ namespace Azure.Iot.TimeSeriesInsights
         }
 
         /// <summary>
-        /// Gets Time Series instances by Time Series Id synchronously.
+        /// Gets Time Series instances by Time Series Ids synchronously.
         /// </summary>
         /// <param name="timeSeriesIds">List of Ids of the Time Series instances to return.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -586,12 +586,12 @@ namespace Azure.Iot.TimeSeriesInsights
         }
 
         /// <summary>
-        /// Get search suggestion keywords based on Time Series instance attributes to be later used to search for instances asynchronously.
+        /// Get search suggestion keywords based on Time Series instance attributes to be used later to search for instances asynchronously.
         /// </summary>
         /// <param name="searchString">The search string for which suggestions are required. Empty is allowed, but not null.</param>
         /// <param name="maxNumberOfSuggestions">The maximum number of suggestions expected in the result. Defaults to 10 when not set.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>A list of suggested search strings to be used for further search for Time Series instances or heirarchies.</returns>
+        /// <returns>A list of suggested search strings to be used for further search for Time Series instances or hierarchies.</returns>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.Iot.TimeSeriesInsights/samples">our repo samples</see>.
         /// </remarks>
@@ -599,9 +599,6 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <code snippet="Snippet:TimeSeriesInsightsSampleGetSearchSuggestions">
         /// </code>
         /// </example>
-        /// <exception cref="ArgumentNullException">
-        /// The exception is thrown when <paramref name="searchString"/> is <c>null</c>.
-        /// </exception>
         public virtual async Task<Response<SearchSuggestion[]>> GetSearchSuggestionsAsync(
             string searchString,
             int? maxNumberOfSuggestions = null,
@@ -612,8 +609,6 @@ namespace Azure.Iot.TimeSeriesInsights
 
             try
             {
-                Argument.AssertNotNull(searchString, nameof(searchString));
-
                 var instancesSuggestRequest = new InstancesSuggestRequest(searchString)
                 {
                     Take = maxNumberOfSuggestions,
@@ -637,13 +632,10 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <param name="searchString">The search string for which suggestions are required. Empty is allowed, but not null.</param>
         /// <param name="maxNumberOfSuggestions">The maximum number of suggestions expected in the result. Defaults to 10 when not set.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>A list of suggested search strings to be used for further search for Time Series instances or heirarchies.</returns>
+        /// <returns>A list of suggested search strings to be used for further search for Time Series instances or hierarchies.</returns>
         /// <seealso cref="GetSearchSuggestionsAsync(string, int?, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
-        /// <exception cref="ArgumentNullException">
-        /// The exception is thrown when <paramref name="searchString"/> is <c>null</c>.
-        /// </exception>
         public virtual Response<SearchSuggestion[]> GetSearchSuggestions(string searchString, int? maxNumberOfSuggestions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetSearchSuggestions)}");
@@ -651,8 +643,6 @@ namespace Azure.Iot.TimeSeriesInsights
 
             try
             {
-                Argument.AssertNotNullOrEmpty(searchString, nameof(searchString));
-
                 var instancesSuggestRequest = new InstancesSuggestRequest(searchString)
                 {
                     Take = maxNumberOfSuggestions,
@@ -991,7 +981,7 @@ namespace Azure.Iot.TimeSeriesInsights
         }
 
         /// <summary>
-        /// Deletes Time Series instances from the environment by Time Series Id asynchronously.
+        /// Deletes Time Series instances from the environment by Time Series Ids asynchronously.
         /// </summary>
         /// <param name="timeSeriesIds">List of Ids of the Time Series instances to delete.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -1047,7 +1037,7 @@ namespace Azure.Iot.TimeSeriesInsights
         }
 
         /// <summary>
-        /// Deletes Time Series instances from the environment by Time Series Id synchronously.
+        /// Deletes Time Series instances from the environment by Time Series Ids synchronously.
         /// </summary>
         /// <param name="timeSeriesIds">List of Ids of the Time Series instances to delete.</param>
         /// <param name="cancellationToken">The cancellation token.</param>

@@ -26,12 +26,12 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
         }
 
         [Test]
-        public async Task TimeSeriesInsightsInstances_TimeSeries3Id()
+        public async Task TimeSeriesId_CreateInstanceWith3Keys()
         {
             // Arrange
             TimeSeriesInsightsClient client = GetClient();
 
-            // Create a Time Series Id with 3 properties. Middle property is a null
+            // Create a Time Series Id with 3 keys. Middle key is a null
             TimeSeriesId idWithNull = new TimeSeriesId(
                 Recording.GenerateAlphaNumericId(string.Empty, 5),
                 null,
@@ -51,8 +51,7 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
                     .ConfigureAwait(false);
 
                 // Assert that the result error array does not contain any object that is set
-                createInstancesResult.Value.All((errorResult) => errorResult == null)
-                    .Should().BeTrue();
+                createInstancesResult.Value.Should().OnlyContain((errorResult) => errorResult == null);
 
                 // This retry logic was added as the TSI instance are not immediately available after creation
                 await TestRetryHelper.RetryAsync<Response<InstancesOperationResult[]>>(async () =>
@@ -65,7 +64,7 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
                     getInstanceWithNullInId.Value.Length.Should().Be(1);
 
                     InstancesOperationResult resultItem = getInstanceWithNullInId.Value.First();
-                    resultItem.Error.Should().BeNull();
+                    resultItem.Error.Should().BeNullOrEmpty();
                     resultItem.Instance.Should().NotBeNull();
                     resultItem.Instance.TimeSeriesId.ToArray().Length.Should().Be(3);
                     resultItem.Instance.TimeSeriesId.ToArray()[1].Should().BeNull();
@@ -83,7 +82,7 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
                         .ConfigureAwait(false);
 
                     // Assert that the response array does not have any error object set
-                    deleteInstancesResponse.Value.All((errorResult) => errorResult == null).Should().BeTrue();
+                    deleteInstancesResponse.Value.Should().OnlyContain((errorResult) => errorResult == null);
                 }
                 catch (Exception ex)
                 {
@@ -94,7 +93,7 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
         }
 
         [Test]
-        public void TimeSeriesInsightsInstances_GetIdForStringKeys()
+        public void TimeSeriesId_GetIdForStringKeys()
         {
             // Arrange
             var tsiId = new TimeSeriesId("B17", "F1", "R400");
@@ -107,7 +106,7 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
         }
 
         [Test]
-        public void TimeSeriesInsightsInstances_GetIdForObjectKeys()
+        public void TimeSeriesId_GetIdForObjectKeys()
         {
             // Arrange
             var tsiId = new TimeSeriesId(true, 1);
@@ -120,7 +119,7 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
         }
 
         [Test]
-        public void TimeSeriesInsightsInstances_ToArrayWith1StringKey()
+        public void TimeSeriesId_ToArrayWith1StringKey()
         {
             // Arrange
             var tsiId = new TimeSeriesId("B17");
@@ -133,7 +132,7 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
         }
 
         [Test]
-        public void TimeSeriesInsightsInstances_ToArrayWith2StringKeys()
+        public void TimeSeriesId_ToArrayWith2StringKeys()
         {
             // Arrange
             var tsiId = new TimeSeriesId("B17", "F1");
@@ -146,7 +145,7 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
         }
 
         [Test]
-        public void TimeSeriesInsightsInstances_ToArrayWith3StringKeys()
+        public void TimeSeriesId_ToArrayWith3StringKeys()
         {
             // Arrange
             var tsiId = new TimeSeriesId("B17", "F1", "R1");
@@ -159,7 +158,7 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
         }
 
         [Test]
-        public void TimeSeriesInsightsInstances_ToArrayWith1ObjectKeys()
+        public void TimeSeriesId_ToArrayWith1ObjectKeys()
         {
             // Arrange
             var tsiId = new TimeSeriesId(true);
@@ -172,7 +171,7 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
         }
 
         [Test]
-        public void TimeSeriesInsightsInstances_ToArrayWith2ObjectKeys()
+        public void TimeSeriesId_ToArrayWith2ObjectKeys()
         {
             // Arrange
             var tsiId = new TimeSeriesId(1, true);
@@ -185,7 +184,7 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
         }
 
         [Test]
-        public void TimeSeriesInsightsInstances_ToArrayWith3ObjectKeys()
+        public void TimeSeriesId_ToArrayWith3ObjectKeys()
         {
             // Arrange
             var tsiId = new TimeSeriesId(1, false, "B1");

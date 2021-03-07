@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using FluentAssertions;
 using NUnit.Framework;
 
 namespace Azure.Iot.TimeSeriesInsights.Tests
@@ -60,19 +61,19 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
                     InstrumentClientOptions(new TimeSeriesInsightsClientOptions())));
         }
 
-        protected async Task<TimeSeriesId> GetUniqueTimeSeriesInstanceIdAsync(TimeSeriesInsightsClient tsiClient, int numOfIdProperties)
+        protected async Task<TimeSeriesId> GetUniqueTimeSeriesInstanceIdAsync(TimeSeriesInsightsClient tsiClient, int numOfIdKeys)
         {
-            Assert.IsTrue(numOfIdProperties > 0 && numOfIdProperties <= 3);
+            numOfIdKeys.Should().BeInRange(1, 3);
 
             for (int tryNumber = 0; tryNumber < MaxTries; ++tryNumber)
             {
                 var id = new List<string>();
-                for (int i = 0; i < numOfIdProperties; i++)
+                for (int i = 0; i < numOfIdKeys; i++)
                 {
                     id.Add(Recording.GenerateAlphaNumericId(string.Empty, 5));
                 }
 
-                TimeSeriesId tsId = numOfIdProperties switch
+                TimeSeriesId tsId = numOfIdKeys switch
                 {
                     1 => new TimeSeriesId(id[0]),
                     2 => new TimeSeriesId(id[0], id[1]),

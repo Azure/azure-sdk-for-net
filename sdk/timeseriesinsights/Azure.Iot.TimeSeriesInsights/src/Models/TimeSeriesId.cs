@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace Azure.Iot.TimeSeriesInsights
 {
     /// <summary>
-    /// A single Time Series Id value that is composed of three primitive values that uniquely identifies a Time Series instance. The
+    /// A single Time Series Id value that is composed of up to 3 primitive values that uniquely identifies a Time Series instance. The
     /// keys that make up the Time Series Id are chosen when creating a Time Series Insights Gen2 environment through the Azure portal.
     /// </summary>
     /// <remarks>
@@ -18,12 +18,6 @@ namespace Azure.Iot.TimeSeriesInsights
         private (bool, object) _key1;
         private (bool, object) _key2;
         private (bool, object) _key3;
-
-        internal (bool, object) Key1 => _key1;
-
-        internal (bool, object) Key2 => _key2;
-
-        internal (bool, object) Key3 => _key3;
 
         /// <summary>
         /// Creates a new Time Series Id with 1 key.
@@ -87,32 +81,32 @@ namespace Azure.Iot.TimeSeriesInsights
         /// Creates a new Time Series Id with 2 string keys.
         /// </summary>
         /// <param name="stringKey1">The first key that identifies a Time Series instance.</param>
-        /// <param name="timeSeriesIdStringProp2">The second key that identifies a Time Series instance.</param>
+        /// <param name="stringKey2">The second key that identifies a Time Series instance.</param>
         /// <remarks>
         /// Use this constructor if the Time Series Id chosen at environment creation time
         /// is composed of 2 string keys.
         /// </remarks>
-        public TimeSeriesId(string stringKey1, string timeSeriesIdStringProp2)
+        public TimeSeriesId(string stringKey1, string stringKey2)
         {
             _key1 = (true, stringKey1);
-            _key2 = (true, timeSeriesIdStringProp2);
+            _key2 = (true, stringKey2);
         }
 
         /// <summary>
         /// Creates a new Time Series Id with 3 string keys.
         /// </summary>
-        /// <param name="timeSeriesIdStringProp1">The first key that identifies a Time Series instance.</param>
-        /// <param name="timeSeriesIdStringProp2">The second key that identifies a Time Series instance.</param>
-        /// <param name="timeSeriesIdStringProp3">The third key that identifies a Time Series instance.</param>
+        /// <param name="stringKey1">The first key that identifies a Time Series instance.</param>
+        /// <param name="stringKey2">The second key that identifies a Time Series instance.</param>
+        /// <param name="stringKey3">The third key that identifies a Time Series instance.</param>
         /// <remarks>
         /// Use this constructor if the Time Series Id chosen at environment creation time
         /// is composed of 3 string keys.
         /// </remarks>
-        public TimeSeriesId(string timeSeriesIdStringProp1, string timeSeriesIdStringProp2, string timeSeriesIdStringProp3)
+        public TimeSeriesId(string stringKey1, string stringKey2, string stringKey3)
         {
-            _key1 = (true, timeSeriesIdStringProp1);
-            _key2 = (true, timeSeriesIdStringProp2);
-            _key3 = (true, timeSeriesIdStringProp3);
+            _key1 = (true, stringKey1);
+            _key2 = (true, stringKey2);
+            _key3 = (true, stringKey3);
         }
 
         /// <summary>
@@ -122,12 +116,12 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <returns>An array representing a single Time Series Id.</returns>
         public object[] ToArray()
         {
-            if (_key3.Item1)
+            if (_key3.Item1 && _key2.Item1 && _key1.Item1)
             {
                 return new object[] { _key1.Item2, _key2.Item2, _key3.Item2 };
             }
 
-            if (_key2.Item1)
+            if (_key2.Item1 && _key1.Item1)
             {
                 return new object[] { _key1.Item2, _key2.Item2 };
             }
@@ -141,12 +135,12 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <returns>The keys that make up the Time Series Id separated by a comma.</returns>
         public string GetId()
         {
-            if (_key3.Item1)
+            if (_key3.Item1 && _key2.Item1 && _key1.Item1)
             {
                 return $"{_key1.Item2},{_key2.Item2},{_key3.Item2}";
             }
 
-            if (_key2.Item1)
+            if (_key2.Item1 && _key1.Item1)
             {
                 return $"{_key1.Item2},{_key2.Item2}";
             }
