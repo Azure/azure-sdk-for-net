@@ -26,24 +26,19 @@ namespace Azure.Communication.Sms.Tests
                 new SmsClient(
                     TestEnvironment.ConnectionString,
                     InstrumentClientOptions(new SmsClientOptions())));
-
-            #region Snippet:Azure_Communication_Sms_Tests_Troubleshooting
             try
             {
                 SmsSendResult result = await client.SendAsync(
-                   //@@ from: "<from-phone-number>" // Your E.164 formatted phone number used to send SMS
-                   //@@ to: "<to-phone-number>", // E.164 formatted recipient phone number
-                   /*@@*/ from: TestEnvironment.FromPhoneNumber,
-                   /*@@*/ to: TestEnvironment.ToPhoneNumber,
+                   from: TestEnvironment.FromPhoneNumber,
+                   to: TestEnvironment.ToPhoneNumber,
                    message: "Hi");
                 Console.WriteLine($"Sms id: {result.MessageId}");
-                /*@@*/ assertHappyPath(result);
+                assertHappyPath(result);
             }
             catch (RequestFailedException ex)
             {
                 Console.WriteLine(ex.Message);
             }
-            #endregion Snippet:Azure_Communication_Sms_Tests_Troubleshooting
             catch (Exception ex)
             {
                 Assert.Fail($"Unexpected error: {ex}");
