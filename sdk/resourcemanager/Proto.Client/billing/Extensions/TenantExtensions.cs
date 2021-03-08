@@ -20,8 +20,8 @@ namespace Proto.Billing
         /// <returns> Returns an object representing the operations that can be performed over a specific <see cref="BillingAccountOperations" />. </returns>
         public static BillingAccountOperations GetBillingAccountsOperations(this TenantOperations client, string billingAccountId)
         {
-            if (billingAccountId is null)
-                throw new ArgumentNullException(nameof(billingAccountId));
+            if (string.IsNullOrEmpty(billingAccountId))
+                throw new ArgumentException(nameof(billingAccountId));
 
             return new BillingAccountOperations(client.ClientOptions, billingAccountId, client.Credential, client.BaseUri);
         }
