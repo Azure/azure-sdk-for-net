@@ -23,7 +23,7 @@ namespace Proto.Billing
             if (billingAccountId is null)
                 throw new ArgumentNullException(nameof(billingAccountId));
 
-            return new BillingAccountOperations(client.ClientOptions, billingAccountId, client.Subscription, client.Credential, client.BaseUri);
+            return new BillingAccountOperations(client.ClientOptions, billingAccountId, client.Credential, client.BaseUri);
         }
     }
 }

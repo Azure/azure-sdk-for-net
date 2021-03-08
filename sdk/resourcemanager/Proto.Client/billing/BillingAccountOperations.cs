@@ -15,7 +15,6 @@ namespace Proto.Billing
     /// </summary>
     public class BillingAccountOperations : ResourceOperationsBase<BillingAccount>
     {
-        internal Subscription Subscription;
         /// <summary>
         /// Initializes a new instance of the <see cref="GenericResourceOperations"/> class.
         /// </summary>
@@ -26,10 +25,9 @@ namespace Proto.Billing
         }
         
         //TODO : dicuss ways to not pass in Subscription subscription for tenant only resources
-        internal BillingAccountOperations(AzureResourceManagerClientOptions options, string billingAccountId, Subscription subscription, TokenCredential credential, Uri baseUri)
+        internal BillingAccountOperations(AzureResourceManagerClientOptions options, string billingAccountId, TokenCredential credential, Uri baseUri)
             : base(options, $"/providers/{ResourceType}/{billingAccountId}", credential, baseUri)
         {
-            Subscription = subscription;
         }
 
         /// <summary>
@@ -52,7 +50,7 @@ namespace Proto.Billing
 
         private BillingAccountsOperations Operations => new BillingManagementClient(
             BaseUri,
-            Subscription.Data.Id,
+            Guid.Empty.ToString(),
             Credential,
             ClientOptions.Convert<BillingManagementClientOptions>()).BillingAccounts;
 
