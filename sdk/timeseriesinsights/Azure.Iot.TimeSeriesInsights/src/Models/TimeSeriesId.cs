@@ -15,9 +15,8 @@ namespace Azure.Iot.TimeSeriesInsights
     /// </remarks>
     public class TimeSeriesId
     {
-        private (bool, object) _key1;
-        private (bool, object) _key2;
-        private (bool, object) _key3;
+        private readonly object[] _keys;
+        private readonly string _tsiId;
 
         /// <summary>
         /// Creates a new Time Series Id with 1 key.
@@ -29,7 +28,8 @@ namespace Azure.Iot.TimeSeriesInsights
         /// </remarks>
         public TimeSeriesId(object key1)
         {
-            _key1 = (true, key1);
+            _keys = new object[] { key1 };
+            _tsiId = $"{key1}";
         }
 
         /// <summary>
@@ -43,8 +43,8 @@ namespace Azure.Iot.TimeSeriesInsights
         /// </remarks>
         public TimeSeriesId(object key1, object key2)
         {
-            _key1 = (true, key1);
-            _key2 = (true, key2);
+            _keys = new object[] { key1, key2 };
+            _tsiId = $"{key1},{key2}";
         }
 
         /// <summary>
@@ -59,9 +59,8 @@ namespace Azure.Iot.TimeSeriesInsights
         /// </remarks>
         public TimeSeriesId(object key1, object key2, object key3)
         {
-            _key1 = (true, key1);
-            _key2 = (true, key2);
-            _key3 = (true, key3);
+            _keys = new object[] { key1, key2, key3 };
+            _tsiId = $"{key1},{key2},{key3}";
         }
 
         /// <summary>
@@ -73,8 +72,8 @@ namespace Azure.Iot.TimeSeriesInsights
         /// is composed of 1 string key.
         /// </remarks>
         public TimeSeriesId(string stringKey1)
+            : this(key1: stringKey1)
         {
-            _key1 = (true, stringKey1);
         }
 
         /// <summary>
@@ -87,9 +86,8 @@ namespace Azure.Iot.TimeSeriesInsights
         /// is composed of 2 string keys.
         /// </remarks>
         public TimeSeriesId(string stringKey1, string stringKey2)
+            : this(key1: stringKey1, key2: stringKey2)
         {
-            _key1 = (true, stringKey1);
-            _key2 = (true, stringKey2);
         }
 
         /// <summary>
@@ -103,49 +101,21 @@ namespace Azure.Iot.TimeSeriesInsights
         /// is composed of 3 string keys.
         /// </remarks>
         public TimeSeriesId(string stringKey1, string stringKey2, string stringKey3)
+            : this(key1: stringKey1, key2: stringKey2, key3: stringKey3)
         {
-            _key1 = (true, stringKey1);
-            _key2 = (true, stringKey2);
-            _key3 = (true, stringKey3);
         }
 
         /// <summary>
-        /// Builds an array to represent a single Time Series Id in order to use it when making calls against the Time
+        /// An array to represent a single Time Series Id in order to use it when making calls against the Time
         /// Series Insights client library.
         /// </summary>
         /// <returns>An array representing a single Time Series Id.</returns>
-        public object[] ToArray()
-        {
-            if (_key3.Item1 && _key2.Item1 && _key1.Item1)
-            {
-                return new object[] { _key1.Item2, _key2.Item2, _key3.Item2 };
-            }
-
-            if (_key2.Item1 && _key1.Item1)
-            {
-                return new object[] { _key1.Item2, _key2.Item2 };
-            }
-
-            return new object[] { _key1.Item2 };
-        }
+        public object[] ToArray() => _keys;
 
         /// <summary>
-        /// Builds a string representation of the Time Series Id.
+        /// A string representation of the Time Series Id.
         /// </summary>
         /// <returns>The keys that make up the Time Series Id separated by a comma.</returns>
-        public string GetId()
-        {
-            if (_key3.Item1 && _key2.Item1 && _key1.Item1)
-            {
-                return $"{_key1.Item2},{_key2.Item2},{_key3.Item2}";
-            }
-
-            if (_key2.Item1 && _key1.Item1)
-            {
-                return $"{_key1.Item2},{_key2.Item2}";
-            }
-
-            return $"{_key1.Item2}";
-        }
+        public string GetId() => _tsiId;
     }
 }

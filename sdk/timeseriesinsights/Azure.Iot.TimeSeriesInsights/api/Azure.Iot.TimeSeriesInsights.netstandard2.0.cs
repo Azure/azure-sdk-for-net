@@ -360,8 +360,8 @@ namespace Azure.Iot.TimeSeriesInsights
         public TimeSeriesId(object key1, object key2) { }
         public TimeSeriesId(object key1, object key2, object key3) { }
         public TimeSeriesId(string stringKey1) { }
-        public TimeSeriesId(string stringKey1, string timeSeriesIdStringProp2) { }
-        public TimeSeriesId(string timeSeriesIdStringProp1, string timeSeriesIdStringProp2, string timeSeriesIdStringProp3) { }
+        public TimeSeriesId(string stringKey1, string stringKey2) { }
+        public TimeSeriesId(string stringKey1, string stringKey2, string stringKey3) { }
         public string GetId() { throw null; }
         public object[] ToArray() { throw null; }
     }
