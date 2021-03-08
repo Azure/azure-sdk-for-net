@@ -12,16 +12,10 @@ When a new version of the swagger needs to be updated:
 
 > see https://aka.ms/autorest
 
-<<<<<<< HEAD
-``` yaml
-input-file:
-    -  communicationserviceschat.json
-=======
 ```yaml
 tag: package-2020-11-01-preview3
 required:
-    - https://github.com/Azure/azure-rest-api-specs/tree/5b19c6e69cd2bb9dbe4e5c1237b2c5a175d90ca5/specification/communication/data-plane/readme.md
->>>>>>> 1688f21a40 ([autorest] update the autorest to point to readme)
+    - https://github.com/Azure/azure-rest-api-specs/blob/644ed41f990d8adc0edc7aa81e5f03b7ddc493f0/specification/communication/data-plane/readme.md
 payload-flattening-threshold: 10
 directive:
     from: swagger-document
