@@ -5,8 +5,8 @@ using Azure.Core;
 
 namespace Azure.AI.DocumentTranslation.Models
 {
-    [CodeGenModel("StatusSummary")]
-    internal partial class StatusSummary
+    [CodeGenModel("DocumentFilter")]
+    public partial class DocumentFilter
     {
     }
 }

@@ -5,8 +5,8 @@ using Azure.Core;
 
 namespace Azure.AI.DocumentTranslation.Models
 {
-    [CodeGenModel("BatchStatusResponse")]
-    internal partial class BatchStatusResponse
+    [CodeGenModel("StorageSource")]
+    public partial struct StorageSource
     {
     }
 }
