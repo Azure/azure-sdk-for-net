@@ -1,5 +1,6 @@
 # Release History
-## 1.0.0-beta.5 (Unreleased)
+## 1.0.0-beta.5 (2021-03-09)
+Updated `Azure.Communication.Common` version.
 
 ### Breaking Changes
 - Updated `CommunicationTokenRefreshOptions(bool refreshProactively, Func<CancellationToken, string> tokenRefresher,  Func<CancellationToken, ValueTask<string>> asyncTokenRefresher = null, string initialToken = null)`
