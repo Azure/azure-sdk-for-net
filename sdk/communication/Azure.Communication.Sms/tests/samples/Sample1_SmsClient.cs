@@ -92,12 +92,12 @@ namespace Azure.Communication.Sms.Tests.samples
             try
             {
                 Response<IEnumerable<SmsSendResult>> response = await smsClient.SendAsync(
-                   //@@ from: "<from-phone-number>" // Your E.164 formatted phone number used to send SMS
-                   //@@ to: new string [] {"<to-phone-number-1>", "<to-phone-number-2>"}, // E.164 formatted recipient phone number
-                   /*@@*/ from: TestEnvironment.FromPhoneNumber,
-                   /*@@*/ to: new string[] { TestEnvironment.ToPhoneNumber, TestEnvironment.ToPhoneNumber },
-                message: "Weekly Promotion!",
-                options: new SmsSendOptions(enableDeliveryReport: true) // OPTIONAL
+                    //@@ from: "<from-phone-number>" // Your E.164 formatted phone number used to send SMS
+                    //@@ to: new string [] {"<to-phone-number-1>", "<to-phone-number-2>"}, // E.164 formatted recipient phone number
+                    /*@@*/ from: TestEnvironment.FromPhoneNumber,
+                    /*@@*/ to: new string[] { TestEnvironment.ToPhoneNumber, TestEnvironment.ToPhoneNumber },
+                    message: "Weekly Promotion!",
+                    options: new SmsSendOptions(enableDeliveryReport: true) // OPTIONAL
                 {
                     Tag = "marketing", // custom tags
                 });
@@ -107,7 +107,9 @@ namespace Azure.Communication.Sms.Tests.samples
                     if (result.Successful)
                     {
                         Console.WriteLine($"Successfully sent this message: {result.MessageId} to {result.To}.");
-                    } else {
+                    }
+                    else
+                    {
                         Console.WriteLine($"Something went wrong when trying to send this message {result.MessageId} to {result.To}.");
                         Console.WriteLine(result.ErrorMessage);
                     }
