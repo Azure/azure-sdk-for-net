@@ -1,4 +1,7 @@
-﻿using Azure.ResourceManager.Core;
+﻿using System.Security.Claims;
+using System.Net.WebSockets;
+using System.Net.Http;
+using Azure.ResourceManager.Core;
 using Proto.Compute;
 using Proto.Network;
 using System;
@@ -15,7 +18,7 @@ namespace Proto.Client
         {
             var client = new AzureResourceManagerClient();
             var subscription = client.GetSubscriptionOperations(Context.SubscriptionId);
-
+            
             // Create Resource Group
             Console.WriteLine($"--------Start create group {Context.RgName}--------");
             var resourceGroup = subscription.GetResourceGroupContainer().Construct(Context.Loc).CreateOrUpdate(Context.RgName).Value;

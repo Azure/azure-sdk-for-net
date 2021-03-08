@@ -6,6 +6,9 @@ using Azure.Core.Pipeline;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Reflection;
+using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace Azure.ResourceManager.Core
 {
@@ -17,6 +20,11 @@ namespace Azure.ResourceManager.Core
         private static readonly object _overridesLock = new object();
 
         private Dictionary<Type, object> _overrides = new Dictionary<Type, object>();
+
+        /// <summary>
+        /// Dictionary to look up the API version to use for a resource
+        /// </summary>
+        public Dictionary<Type, ApiVersionsBase> ProviderToApiVersions { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AzureResourceManagerClientOptions"/> class.
@@ -46,6 +54,7 @@ namespace Azure.ResourceManager.Core
             if (!ReferenceEquals(other, null))
                 Copy(other);
             DefaultLocation = defaultLocation;
+            ProviderToApiVersions = BuildApiTable();
         }
 
         /// <summary>
@@ -151,6 +160,46 @@ namespace Azure.ResourceManager.Core
             {
                 AddPolicy(pol, HttpPipelinePosition.PerRetry);
             }
+        }
+
+        private Dictionary<Type, ApiVersionsBase> BuildApiTable()
+        {
+            Dictionary<Type, ApiVersionsBase> results = new Dictionary<Type, ApiVersionsBase>();
+            var methods = GetExtensionMethods();
+            foreach (var method in methods)
+            {
+                if (method.Name.EndsWith("RestApiVersions"))
+                {
+                    var apiObject = method.Invoke(null, new object[] { this });
+                    var properties = apiObject.GetType().GetProperties();
+                    foreach (var prop in properties)
+                    {
+                        if (typeof(ApiVersionsBase).IsAssignableFrom(prop.PropertyType))
+                        {
+                            var propVal = (ApiVersionsBase)prop.GetValue(apiObject);
+                            results.Add(prop.PropertyType, propVal);
+                        }
+                    }
+                }
+            }
+            return results;
+        }
+
+        public ApiVersionsBase GetApiVersionForResource(ResourceType resourceType) 
+        {
+            
+        }
+        private static IEnumerable<MethodInfo> GetExtensionMethods()
+        {
+            var results =
+                        from assembly in AppDomain.CurrentDomain.GetAssemblies()
+                        from type in assembly.GetTypes()
+                        where type.IsSealed && !type.IsGenericType && !type.IsNested
+                        from method in type.GetMethods(BindingFlags.Static | BindingFlags.Public)
+                        where method.IsDefined(typeof(ExtensionAttribute), false)
+                        where method.GetParameters()[0].ParameterType == typeof(AzureResourceManagerClientOptions)
+                        select method;
+            return results;
         }
     }
 }
