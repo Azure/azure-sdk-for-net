@@ -48,16 +48,30 @@
             "defaultValue": "azconfig-net",
             "type": "string"
         },
-        "endpointSuffix": {
+        "azConfigEndpointSuffix": {
             "defaultValue": ".azconfig.io",
             "type": "string"
+        },
+        "keyVaultEndpointSuffix": {
+            "defaultValue": ".vault.azure.net",
+            "type": "string",
+            "metadata": {
+                "description": "Endpoint suffix for sovereign clouds, requires the proceeding '.'. The default uses the public Azure Cloud (.vault.azure.net)"
+            }
+        },
+        "keyVaultSku": {
+            "type": "string",
+            "defaultValue": "premium",
+            "metadata": {
+                "description": "Key Vault SKU to deploy. The default is 'premium'"
+            }
         }
     },
     "variables": {
         "roleDefinitionId": "[format('/subscriptions/{0}/providers/Microsoft.Authorization/roleDefinitions/5ae67dd6-50cb-40e7-96ff-dc2bfa4b606b', subscription().subscriptionId)]",
         "uniqueAzConfigName": "[format('{0}-{1}', parameters('baseName'), parameters('azConfigPrefix'))]",
-        "endpointValue": "[format('https://{0}-{1}.azconfig.io', parameters('baseName'), parameters('azConfigPrefix'))]",
-        "azureKeyVaultSecretUrl": "[format('https://{0}.vault.azure.net/secrets/TestSecret', parameters('baseName'))]"
+        "endpointValue": "[format('https://{0}-{1}{2}', parameters('baseName'), parameters('azConfigPrefix'), parameters('azConfigEndpointSuffix'))]",
+        "azureKeyVaultSecretUrl": "[format('https://{0}{1}/secrets/TestSecret', parameters('baseName'), parameters('keyVaultEndpointSuffix'))]"
     },
     "resources": [
         {
@@ -89,7 +103,7 @@
             "properties": {
                 "sku": {
                     "family": "A",
-                    "name": "premium"
+                    "name": "[parameters('keyVaultSku')]"
                 },
                 "tenantId": "[parameters('tenantId')]",
                 "accessPolicies": [
