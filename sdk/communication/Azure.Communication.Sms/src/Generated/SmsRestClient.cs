@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -46,10 +47,10 @@ namespace Azure.Communication.Sms
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateSendRequest(SendMessageRequest sendMessageRequest)
+        internal HttpMessage CreateSendRequest(string @from, IEnumerable<SmsRecipient> smsRecipients, string message, SmsSendOptions smsSendOptions)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
+            var message0 = _pipeline.CreateMessage();
+            var request = message0.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
@@ -58,63 +59,89 @@ namespace Azure.Communication.Sms
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
+            var model = new SendMessageRequest(@from, smsRecipients, message)
+            {
+                SmsSendOptions = smsSendOptions
+            };
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(sendMessageRequest);
+            content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
-            return message;
+            return message0;
         }
 
         /// <summary> Sends a SMS message from a phone number that belongs to the authenticated account. </summary>
-        /// <param name="sendMessageRequest"> Represents the body of the send message request. </param>
+        /// <param name="from"> The sender&apos;s phone number in E.164 format that is owned by the authenticated account. </param>
+        /// <param name="smsRecipients"> The recipient&apos;s phone number in E.164 format. In this version, a minimum of 1 and upto 100 recipients in the list are supported. </param>
+        /// <param name="message"> The contents of the message that will be sent to the recipient. The allowable content is defined by RFC 5724. </param>
+        /// <param name="smsSendOptions"> Optional configuration for sending SMS messages. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sendMessageRequest"/> is null. </exception>
-        public async Task<Response<SmsSendResponse>> SendAsync(SendMessageRequest sendMessageRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="smsRecipients"/>, or <paramref name="message"/> is null. </exception>
+        public async Task<Response<SmsSendResponse>> SendAsync(string @from, IEnumerable<SmsRecipient> smsRecipients, string message, SmsSendOptions smsSendOptions = null, CancellationToken cancellationToken = default)
         {
-            if (sendMessageRequest == null)
+            if (@from == null)
             {
-                throw new ArgumentNullException(nameof(sendMessageRequest));
+                throw new ArgumentNullException(nameof(@from));
+            }
+            if (smsRecipients == null)
+            {
+                throw new ArgumentNullException(nameof(smsRecipients));
+            }
+            if (message == null)
+            {
+                throw new ArgumentNullException(nameof(message));
             }
 
-            using var message = CreateSendRequest(sendMessageRequest);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
+            using var message0 = CreateSendRequest(@from, smsRecipients, message, smsSendOptions);
+            await _pipeline.SendAsync(message0, cancellationToken).ConfigureAwait(false);
+            switch (message0.Response.Status)
             {
                 case 202:
                     {
                         SmsSendResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message0.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                         value = SmsSendResponse.DeserializeSmsSendResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
+                        return Response.FromValue(value, message0.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message0.Response).ConfigureAwait(false);
             }
         }
 
         /// <summary> Sends a SMS message from a phone number that belongs to the authenticated account. </summary>
-        /// <param name="sendMessageRequest"> Represents the body of the send message request. </param>
+        /// <param name="from"> The sender&apos;s phone number in E.164 format that is owned by the authenticated account. </param>
+        /// <param name="smsRecipients"> The recipient&apos;s phone number in E.164 format. In this version, a minimum of 1 and upto 100 recipients in the list are supported. </param>
+        /// <param name="message"> The contents of the message that will be sent to the recipient. The allowable content is defined by RFC 5724. </param>
+        /// <param name="smsSendOptions"> Optional configuration for sending SMS messages. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sendMessageRequest"/> is null. </exception>
-        public Response<SmsSendResponse> Send(SendMessageRequest sendMessageRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="smsRecipients"/>, or <paramref name="message"/> is null. </exception>
+        public Response<SmsSendResponse> Send(string @from, IEnumerable<SmsRecipient> smsRecipients, string message, SmsSendOptions smsSendOptions = null, CancellationToken cancellationToken = default)
         {
-            if (sendMessageRequest == null)
+            if (@from == null)
             {
-                throw new ArgumentNullException(nameof(sendMessageRequest));
+                throw new ArgumentNullException(nameof(@from));
+            }
+            if (smsRecipients == null)
+            {
+                throw new ArgumentNullException(nameof(smsRecipients));
+            }
+            if (message == null)
+            {
+                throw new ArgumentNullException(nameof(message));
             }
 
-            using var message = CreateSendRequest(sendMessageRequest);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
+            using var message0 = CreateSendRequest(@from, smsRecipients, message, smsSendOptions);
+            _pipeline.Send(message0, cancellationToken);
+            switch (message0.Response.Status)
             {
                 case 202:
                     {
                         SmsSendResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message0.Response.ContentStream);
                         value = SmsSendResponse.DeserializeSmsSendResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
+                        return Response.FromValue(value, message0.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw _clientDiagnostics.CreateRequestFailedException(message0.Response);
             }
         }
     }
