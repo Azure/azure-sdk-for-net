@@ -16,7 +16,7 @@ namespace Proto.Billing
         /// </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal BillingAccount(ResourceOperationsBase options, Azure.ResourceManager.Billing.Models.BillingAccount resource)
+        internal BillingAccount(ResourceOperationsBase options, BillingAccountData resource)
             : base(options, resource.Id)
         {
             Data = resource;
@@ -25,7 +25,7 @@ namespace Proto.Billing
         /// <summary>
         /// Gets or sets the availability set data.
         /// </summary>
-        public Azure.ResourceManager.Billing.Models.BillingAccount Data { get; private set; }
+        public BillingAccountData Data { get; private set; }
 
         /// <inheritdoc />
         protected override BillingAccount GetResource()
