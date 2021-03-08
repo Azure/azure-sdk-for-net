@@ -67,7 +67,7 @@ namespace Azure.Communication.Sms.Tests.samples
             #region Snippet:Azure_Communication_SmsClient_Send_GroupSmsWithOptions
             Response<IEnumerable<SmsSendResult>> response = await smsClient.SendAsync(
                 //@@ from: "<from-phone-number>", // Your E.164 formatted from phone number used to send SMS
-                //@@ to: new string[] { "<to-phone-number-1>", "<to-phone-number-2>" }, // E.164 formatted recipient phone number
+                //@@ to: new string[] { "<to-phone-number-1>", "<to-phone-number-2>" }, // E.164 formatted recipient phone numbers
                 /*@@*/ from: TestEnvironment.FromPhoneNumber,
                 /*@@*/ to: new string[] { TestEnvironment.ToPhoneNumber, TestEnvironment.ToPhoneNumber },
                 message: "Weekly Promotion!",
