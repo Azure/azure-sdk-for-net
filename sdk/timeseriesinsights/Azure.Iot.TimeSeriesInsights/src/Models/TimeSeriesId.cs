@@ -29,7 +29,7 @@ namespace Azure.Iot.TimeSeriesInsights
         public TimeSeriesId(object key1)
         {
             _keys = new object[] { key1 };
-            _tsiId = $"{key1}";
+            _tsiId = $"Time Series Id key 1: {key1}";
         }
 
         /// <summary>
@@ -44,7 +44,9 @@ namespace Azure.Iot.TimeSeriesInsights
         public TimeSeriesId(object key1, object key2)
         {
             _keys = new object[] { key1, key2 };
-            _tsiId = $"{key1},{key2}";
+            _tsiId =
+                $"Time Series Id key 1: {key1}\n" +
+                $"Time Series Id key 2: {key2}";
         }
 
         /// <summary>
@@ -60,7 +62,10 @@ namespace Azure.Iot.TimeSeriesInsights
         public TimeSeriesId(object key1, object key2, object key3)
         {
             _keys = new object[] { key1, key2, key3 };
-            _tsiId = $"{key1},{key2},{key3}";
+            _tsiId =
+                $"Time Series Id key 1: {key1}\n" +
+                $"Time Series Id key 2: {key2}\n" +
+                $"Time Series Id key 3: {key3}";
         }
 
         /// <summary>
@@ -113,9 +118,9 @@ namespace Azure.Iot.TimeSeriesInsights
         public object[] ToArray() => _keys;
 
         /// <summary>
-        /// A string representation of the Time Series Id.
+        /// Builds a friendly string representation of the Time Series Id.
         /// </summary>
-        /// <returns>The keys that make up the Time Series Id separated by a comma.</returns>
+        /// <returns>The keys that make up the Time Series Id.</returns>
         public string GetId() => _tsiId;
     }
 }

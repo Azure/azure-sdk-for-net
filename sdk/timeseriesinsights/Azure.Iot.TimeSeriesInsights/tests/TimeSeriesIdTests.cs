@@ -102,7 +102,8 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
             var idAsString = tsiId.GetId();
 
             // Assert
-            idAsString.Should().Be("B17,F1,R400");
+            idAsString.Should().Be($"Time Series Id key 1: B17\nTime Series Id key 2: F1\n" +
+                $"Time Series Id key 3: R400");
         }
 
         [Test]
@@ -115,7 +116,7 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
             var idAsString = tsiId.GetId();
 
             // Assert
-            idAsString.Should().Be("True,1");
+            idAsString.Should().Be($"Time Series Id key 1: True\nTime Series Id key 2: 1");
         }
 
         [Test]
