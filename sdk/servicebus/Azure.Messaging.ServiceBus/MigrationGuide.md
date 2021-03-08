@@ -14,7 +14,7 @@ We assume that you are familiar with the `Microsoft.Azure.ServiceBus` library. I
   - [Sending messages](#sending-messages)
   - [Receiving messages](#receiving-messages)
   - [Working with sessions](#working-with-sessions)
-  - [Cross-entity transactions](#cross-entity-transactions-unreleased)
+  - [Cross-entity transactions](#cross-entity-transactions)
 - [Known gaps](#known-gaps-from-previous-library)
 - [Additional samples](#additional-samples)
 
@@ -368,7 +368,7 @@ ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync()
 Console.WriteLine(receivedMessage.SessionId);
 ```
 
-### Cross-Entity transactions (Unreleased)
+### Cross-Entity transactions
 
 Previously, in `Microsoft.Azure.ServiceBus`, when performing a transaction that spanned multiple queues, topics, or subscriptions you would need to use the "Send-Via" option
 in the `MessageSender`. 
