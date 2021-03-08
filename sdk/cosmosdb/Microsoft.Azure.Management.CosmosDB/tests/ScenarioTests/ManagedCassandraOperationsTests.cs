@@ -161,7 +161,8 @@
 
             var deploymentProperties = new DeploymentProperties
             {
-                Template = JObject.Parse(File.ReadAllText(@"TestData\ManagedCassandraVnetTemplate.azrm.json")),
+                Template = JObject.Parse(File.ReadAllText(
+                    "TestData" + Path.PathSeparator + "ManagedCassandraVnetTemplate.azrm.json")),
                 Parameters = templateParameters,
                 Mode = DeploymentMode.Incremental
             };
