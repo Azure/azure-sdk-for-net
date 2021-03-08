@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(AcsSmsEventBasePropertiesConverter))]
     public partial class AcsSmsEventBaseProperties
     {
         internal static AcsSmsEventBaseProperties DeserializeAcsSmsEventBaseProperties(JsonElement element)
@@ -36,6 +39,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new AcsSmsEventBaseProperties(messageId.Value, @from.Value, to.Value);
+        }
+
+        internal partial class AcsSmsEventBasePropertiesConverter : JsonConverter<AcsSmsEventBaseProperties>
+        {
+            public override void Write(Utf8JsonWriter writer, AcsSmsEventBaseProperties model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override AcsSmsEventBaseProperties Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeAcsSmsEventBaseProperties(document.RootElement);
+            }
         }
     }
 }

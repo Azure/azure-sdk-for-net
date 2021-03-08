@@ -39,12 +39,6 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
         public string Description { get { throw null; } set { } }
         public string Status { get { throw null; } }
     }
-    public partial class ManagedPrivateEndpointListResponse
-    {
-        internal ManagedPrivateEndpointListResponse() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models.ManagedPrivateEndpoint> Value { get { throw null; } }
-    }
     public partial class ManagedPrivateEndpointProperties
     {
         public ManagedPrivateEndpointProperties() { }

@@ -1,0 +1,54 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://smstestapp.communication.azure.com/sms?api-version=2021-03-07",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "146",
+        "Content-Type": "application/json",
+        "Date": "Tue, 02 Mar 2021 23:44:44 GMT",
+        "traceparent": "00-5836e052fbc9dd45a877501af6e358b2-2dd694986813264c-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Sms/1.0.0-alpha.20210302.1",
+          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
+        ],
+        "x-ms-client-request-id": "621800f0d36e41fb0d285a768c6de9b3",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "from": "Sanitized",
+        "smsRecipients": [
+          {
+            "to": "Sanitized",
+            "repeatabilityRequestId": "Sanitized",
+            "repeatabilityFirstSent": "Sanitized"
+          }
+        ],
+        "message": "Hi"
+      },
+      "StatusCode": 400,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 02 Mar 2021 23:44:44 GMT",
+        "MS-CV": "VksIup1UEkOPntPr9ZIVzg.0",
+        "Request-Context": "appId=",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "07M0\u002BYAAAAAB54mQYp2ltSYJw/5iEsykpRVdSMzBFREdFMDUwOAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Processing-Time": "151ms"
+      },
+      "ResponseBody": {
+        "From": [
+          "Invalid From phone number format"
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_PHONE_NUMBER": "\u002B18005555555",
+    "COMMUNICATION_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
+    "RandomSeed": "1340238721"
+  }
+}

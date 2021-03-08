@@ -106,7 +106,7 @@ namespace Azure.Identity
         /// Interactively authenticates a user via the default browser.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>The <see cref="AuthenticationRecord"/> which can be used to silently authenticate the account on future execution of credentials using the same <see cref="DeviceCodeCredentialOptions.TokenCache"/>.</returns>
+        /// <returns>The <see cref="AuthenticationRecord"/> which can be used to silently authenticate the account on future execution of credentials using the same persisted token cache.</returns>
         public virtual async Task<AuthenticationRecord> AuthenticateAsync(CancellationToken cancellationToken = default)
         {
             // get the default scope for the authority, throw if no default scope exists

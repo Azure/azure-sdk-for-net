@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The response to a list recoverable databases request. </summary>
-    public partial class RecoverableDatabaseListResult
+    internal partial class RecoverableDatabaseListResult
     {
         /// <summary> Initializes a new instance of RecoverableDatabaseListResult. </summary>
         /// <param name="value"> A list of recoverable databases. </param>

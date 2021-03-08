@@ -5,7 +5,9 @@
 
 #nullable disable
 
-namespace Azure.Iot.TimeSeriesInsights.Models
+using Azure.Iot.TimeSeriesInsights.Models;
+
+namespace Azure.Iot.TimeSeriesInsights
 {
     /// <summary> Definition of sorting of hierarchy nodes. </summary>
     public partial class HierarchiesSortParameter

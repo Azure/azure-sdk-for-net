@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> A paginated list of CodeContainer entities. </summary>
-    public partial class CodeContainerResourceArmPaginatedResult
+    internal partial class CodeContainerResourceArmPaginatedResult
     {
         /// <summary> Initializes a new instance of CodeContainerResourceArmPaginatedResult. </summary>
         internal CodeContainerResourceArmPaginatedResult()

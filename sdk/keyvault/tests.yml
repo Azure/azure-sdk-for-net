@@ -4,7 +4,7 @@ extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
     ServiceDirectory: keyvault
-    TimeoutInMinutes: 120
+    TimeoutInMinutes: 180
     EnvVars:
       # Runs samples with live tests.
       # THIS VARIABLE IS A ONE-OFF WORKAROUND FOR KEYVAULT TESTS SPECIFICALLY, DON'T COPY IT

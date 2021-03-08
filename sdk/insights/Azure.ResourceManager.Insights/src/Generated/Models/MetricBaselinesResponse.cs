@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Insights.Models
 {
     /// <summary> A list of metric baselines. </summary>
-    public partial class MetricBaselinesResponse
+    internal partial class MetricBaselinesResponse
     {
         /// <summary> Initializes a new instance of MetricBaselinesResponse. </summary>
         internal MetricBaselinesResponse()

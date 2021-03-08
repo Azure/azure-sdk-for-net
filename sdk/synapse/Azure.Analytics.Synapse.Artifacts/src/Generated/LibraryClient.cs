@@ -17,7 +17,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Analytics.Synapse.Artifacts
 {
     /// <summary> The Library service client. </summary>
-    internal partial class LibraryClient
+    public partial class LibraryClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
@@ -126,6 +126,46 @@ namespace Azure.Analytics.Synapse.Artifacts
             try
             {
                 return RestClient.Get(libraryName, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Append the content to the library resource created using the create operation. The maximum content size is 4MiB. Content larger than 4MiB must be appended in 4MiB chunks. </summary>
+        /// <param name="libraryName"> file name to upload. Minimum length of the filename should be 1 excluding the extension length. </param>
+        /// <param name="content"> Library file chunk. </param>
+        /// <param name="xMsBlobConditionAppendpos"> Set this header to a byte offset at which the block is expected to be appended. The request succeeds only if the current offset matches this value. Otherwise, the request fails with the AppendPositionConditionNotMet error (HTTP status code 412 – Precondition Failed). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> AppendAsync(string libraryName, Stream content, long? xMsBlobConditionAppendpos = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("LibraryClient.Append");
+            scope.Start();
+            try
+            {
+                return await RestClient.AppendAsync(libraryName, content, xMsBlobConditionAppendpos, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Append the content to the library resource created using the create operation. The maximum content size is 4MiB. Content larger than 4MiB must be appended in 4MiB chunks. </summary>
+        /// <param name="libraryName"> file name to upload. Minimum length of the filename should be 1 excluding the extension length. </param>
+        /// <param name="content"> Library file chunk. </param>
+        /// <param name="xMsBlobConditionAppendpos"> Set this header to a byte offset at which the block is expected to be appended. The request succeeds only if the current offset matches this value. Otherwise, the request fails with the AppendPositionConditionNotMet error (HTTP status code 412 – Precondition Failed). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response Append(string libraryName, Stream content, long? xMsBlobConditionAppendpos = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("LibraryClient.Append");
+            scope.Start();
+            try
+            {
+                return RestClient.Append(libraryName, content, xMsBlobConditionAppendpos, cancellationToken);
             }
             catch (Exception e)
             {
@@ -308,26 +348,23 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
-        /// <summary> Creates a library with the library name. Use query param &apos;comp=appendblock&apos; to append the data to the library resource created using the create operation. </summary>
+        /// <summary> Creates a library with the library name. </summary>
         /// <param name="libraryName"> file name to upload. Minimum length of the filename should be 1 excluding the extension length. </param>
-        /// <param name="comp"> If this param is specified with value appendblock, the api will append the data chunk provided in body to the library created. </param>
-        /// <param name="xMsBlobConditionAppendpos"> Set this header to a byte offset at which the block is expected to be appended. The request succeeds only if the current offset matches this value. Otherwise, the request fails with the AppendPositionConditionNotMet error (HTTP status code 412 – Precondition Failed). </param>
-        /// <param name="content"> Library file chunk. Use this content in with append operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="libraryName"/> is null. </exception>
-        public virtual async Task<LibraryCreateOrAppendOperation> StartCreateOrAppendAsync(string libraryName, string comp = null, long? xMsBlobConditionAppendpos = null, Stream content = null, CancellationToken cancellationToken = default)
+        public virtual async Task<LibraryCreateOperation> StartCreateAsync(string libraryName, CancellationToken cancellationToken = default)
         {
             if (libraryName == null)
             {
                 throw new ArgumentNullException(nameof(libraryName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("LibraryClient.StartCreateOrAppend");
+            using var scope = _clientDiagnostics.CreateScope("LibraryClient.StartCreate");
             scope.Start();
             try
             {
-                var originalResponse = await RestClient.CreateOrAppendAsync(libraryName, comp, xMsBlobConditionAppendpos, content, cancellationToken).ConfigureAwait(false);
-                return new LibraryCreateOrAppendOperation(_clientDiagnostics, _pipeline, RestClient.CreateCreateOrAppendRequest(libraryName, comp, xMsBlobConditionAppendpos, content).Request, originalResponse);
+                var originalResponse = await RestClient.CreateAsync(libraryName, cancellationToken).ConfigureAwait(false);
+                return new LibraryCreateOperation(_clientDiagnostics, _pipeline, RestClient.CreateCreateRequest(libraryName).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -336,26 +373,23 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
-        /// <summary> Creates a library with the library name. Use query param &apos;comp=appendblock&apos; to append the data to the library resource created using the create operation. </summary>
+        /// <summary> Creates a library with the library name. </summary>
         /// <param name="libraryName"> file name to upload. Minimum length of the filename should be 1 excluding the extension length. </param>
-        /// <param name="comp"> If this param is specified with value appendblock, the api will append the data chunk provided in body to the library created. </param>
-        /// <param name="xMsBlobConditionAppendpos"> Set this header to a byte offset at which the block is expected to be appended. The request succeeds only if the current offset matches this value. Otherwise, the request fails with the AppendPositionConditionNotMet error (HTTP status code 412 – Precondition Failed). </param>
-        /// <param name="content"> Library file chunk. Use this content in with append operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="libraryName"/> is null. </exception>
-        public virtual LibraryCreateOrAppendOperation StartCreateOrAppend(string libraryName, string comp = null, long? xMsBlobConditionAppendpos = null, Stream content = null, CancellationToken cancellationToken = default)
+        public virtual LibraryCreateOperation StartCreate(string libraryName, CancellationToken cancellationToken = default)
         {
             if (libraryName == null)
             {
                 throw new ArgumentNullException(nameof(libraryName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("LibraryClient.StartCreateOrAppend");
+            using var scope = _clientDiagnostics.CreateScope("LibraryClient.StartCreate");
             scope.Start();
             try
             {
-                var originalResponse = RestClient.CreateOrAppend(libraryName, comp, xMsBlobConditionAppendpos, content, cancellationToken);
-                return new LibraryCreateOrAppendOperation(_clientDiagnostics, _pipeline, RestClient.CreateCreateOrAppendRequest(libraryName, comp, xMsBlobConditionAppendpos, content).Request, originalResponse);
+                var originalResponse = RestClient.Create(libraryName, cancellationToken);
+                return new LibraryCreateOperation(_clientDiagnostics, _pipeline, RestClient.CreateCreateRequest(libraryName).Request, originalResponse);
             }
             catch (Exception e)
             {

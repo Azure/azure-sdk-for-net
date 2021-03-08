@@ -9,6 +9,7 @@ using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Primitives;
 using Azure.Messaging.EventHubs.Producer;
+using Azure.Storage.Blobs;
 using Microsoft.Azure.WebJobs.EventHubs.Processor;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
@@ -105,7 +106,14 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             var configuration = CreateConfiguration(new KeyValuePair<string, string>("AzureWebJobsStorage", "UseDevelopmentStorage=true"));
 
-            var factory = new EventHubClientFactory(configuration, Mock.Of<AzureComponentFactory>(), Options.Create(options), new DefaultNameResolver(configuration));
+            var factoryMock = new Mock<AzureComponentFactory>();
+            factoryMock.Setup(m => m.CreateClient(
+                        typeof(BlobServiceClient),
+                        It.Is<ConfigurationSection>(c => c.Path == "AzureWebJobsStorage"),
+                        null, null))
+                .Returns(new BlobServiceClient(configuration["AzureWebJobsStorage"]));
+
+            var factory = new EventHubClientFactory(configuration, factoryMock.Object, Options.Create(options), new DefaultNameResolver(configuration));
 
             var client = factory.GetCheckpointStoreClient();
             Assert.AreEqual("azure-webjobs-eventhub", client.Name);
@@ -123,7 +131,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 {
                     CustomEndpointAddress = testEndpoint
                 },
-                RetryOptions = new EventHubsRetryOptions
+                ClientRetryOptions = new EventHubsRetryOptions
                 {
                     MaximumRetries = 10
                 }
@@ -156,7 +164,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 {
                     CustomEndpointAddress = testEndpoint
                 },
-                RetryOptions = new EventHubsRetryOptions
+                ClientRetryOptions = new EventHubsRetryOptions
                 {
                     MaximumRetries = 10
                 }
@@ -201,7 +209,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 {
                     CustomEndpointAddress = testEndpoint
                 },
-                RetryOptions = new EventHubsRetryOptions
+                ClientRetryOptions = new EventHubsRetryOptions
                 {
                     MaximumRetries = 10
                 }

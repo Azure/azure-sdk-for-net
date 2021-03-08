@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.TextAnalytics.Models;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
@@ -16,7 +15,7 @@ namespace Azure.AI.TextAnalytics
     {
         internal static HealthcareEntityInternal DeserializeHealthcareEntityInternal(JsonElement element)
         {
-            Optional<HealthcareAssertion> assertion = default;
+            Optional<HealthcareEntityAssertion> assertion = default;
             Optional<string> name = default;
             Optional<IReadOnlyList<EntityDataSource>> links = default;
             string text = default;
@@ -34,7 +33,7 @@ namespace Azure.AI.TextAnalytics
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    assertion = HealthcareAssertion.DeserializeHealthcareAssertion(property.Value);
+                    assertion = HealthcareEntityAssertion.DeserializeHealthcareEntityAssertion(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"))

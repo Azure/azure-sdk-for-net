@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class FeatureOperationsListResult
+    internal partial class FeatureOperationsListResult
     {
         internal static FeatureOperationsListResult DeserializeFeatureOperationsListResult(JsonElement element)
         {
