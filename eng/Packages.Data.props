@@ -73,9 +73,9 @@
     <PackageReference Update="Microsoft.CSharp" Version="4.5.0" />
 
     <!-- Azure SDK packages -->
-    <PackageReference Update="Azure.Core" Version="1.9.0" />
+    <PackageReference Update="Azure.Core" Version="1.10.0" />
     <PackageReference Update="Azure.Core.Amqp" Version="1.0.0" />
-    <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.9" />
+    <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.10" />
     <PackageReference Update="Azure.Messaging.EventHubs" Version="5.3.0" />
     <PackageReference Update="Azure.Identity" Version="1.2.1" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.0.2" />
