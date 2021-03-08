@@ -14,7 +14,7 @@ When a new version of the swagger needs to be updated:
 
 ```yaml
 tag: package-2020-11-01-preview3
-required:
+require:
     - https://github.com/Azure/azure-rest-api-specs/blob/644ed41f990d8adc0edc7aa81e5f03b7ddc493f0/specification/communication/data-plane/readme.md
 payload-flattening-threshold: 10
 directive:
