@@ -9,6 +9,8 @@ namespace Azure.ResourceManager.Core.Tests
 {
     public class SystemAssignedIdentityTests
     {
+        private static readonly string TestAssetPath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Unit", "TestAssets", "SystemAssignedIdentity");
+
         [TestCase(0, null, null, null, null)]
         [TestCase(0, "72f988bf-86f1-41af-91ab-2d7cd011db47", "de29bab1-49e1-4705-819b-4dfddceaaa98", "72f988bf-86f1-41af-91ab-2d7cd011db47", "de29bab1-49e1-4705-819b-4dfddceaaa98")]
 
@@ -148,7 +150,7 @@ namespace Azure.ResourceManager.Core.Tests
 
         private static string GetFileText(string filename)
         {
-            return File.ReadAllText(Path.Combine(TestContext.CurrentContext.TestDirectory, "TestAssets", "SystemAssignedIdentity", filename));
+            return File.ReadAllText(Path.Combine(TestAssetPath, filename));
         }
 
         [TestCase]
