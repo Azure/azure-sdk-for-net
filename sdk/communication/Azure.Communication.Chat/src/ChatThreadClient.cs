@@ -98,7 +98,7 @@ namespace Azure.Communication.Chat
         /// <param name="senderDisplayName"> The display name of the chat message sender. This property is used to populate sender name for push notifications. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<string>> SendMessageAsync(string content, ChatMessageType? type = null, string senderDisplayName = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<string>> SendMessageAsync(string content, ChatMessageType? type = default, string senderDisplayName = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatThreadClient)}.{nameof(SendMessage)}");
             scope.Start();
@@ -120,7 +120,7 @@ namespace Azure.Communication.Chat
         /// <param name="senderDisplayName"> The display name of the message sender. This property is used to populate sender name for push notifications. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<string> SendMessage(string content, ChatMessageType? type = null, string senderDisplayName = null, CancellationToken cancellationToken = default)
+        public virtual Response<string> SendMessage(string content, ChatMessageType? type = default, string senderDisplayName = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatThreadClient)}.{nameof(SendMessage)}");
             scope.Start();
