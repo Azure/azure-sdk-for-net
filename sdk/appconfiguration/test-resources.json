@@ -56,7 +56,7 @@
             "defaultValue": ".vault.azure.net",
             "type": "string",
             "metadata": {
-                "description": "Endpoint suffix for sovereign clouds, requies the preceeding '.'. The default uses the public Azure Cloud (.vault.azure.net)"
+                "description": "Endpoint suffix for sovereign clouds, requires the proceeding '.'. The default uses the public Azure Cloud (.vault.azure.net)"
             }
         },
         "keyVaultSku": {
