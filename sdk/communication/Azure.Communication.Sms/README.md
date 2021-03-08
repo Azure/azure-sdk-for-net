@@ -101,7 +101,7 @@ try
         else
         {
             Console.WriteLine($"Something went wrong when trying to send this message {result.MessageId} to {result.To}.");
-            Console.WriteLine(result.ErrorMessage);
+            Console.WriteLine($"Status code {result.HttpStatusCode} and error message {result.ErrorMessage}.");
         }
     }
 }
