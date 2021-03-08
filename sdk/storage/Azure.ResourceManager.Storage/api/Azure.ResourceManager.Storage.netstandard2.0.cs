@@ -387,11 +387,6 @@ namespace Azure.ResourceManager.Storage.Models
         public string RestoreId { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.BlobRestoreProgressStatus? Status { get { throw null; } }
     }
-    public partial class BlobServiceItems
-    {
-        internal BlobServiceItems() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Storage.Models.BlobServiceProperties> Value { get { throw null; } }
-    }
     public partial class BlobServiceProperties : Azure.ResourceManager.Storage.Models.Resource
     {
         public BlobServiceProperties() { }
@@ -572,12 +567,6 @@ namespace Azure.ResourceManager.Storage.Models
         public EncryptionScopeKeyVaultProperties() { }
         public string KeyUri { get { throw null; } set { } }
     }
-    public partial class EncryptionScopeListResult
-    {
-        internal EncryptionScopeListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Storage.Models.EncryptionScope> Value { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EncryptionScopeSource : System.IEquatable<Azure.ResourceManager.Storage.Models.EncryptionScopeSource>
     {
@@ -686,12 +675,6 @@ namespace Azure.ResourceManager.Storage.Models
         public int? ShareQuota { get { throw null; } set { } }
         public long? ShareUsageBytes { get { throw null; } }
         public string Version { get { throw null; } }
-    }
-    public partial class FileShareItems
-    {
-        internal FileShareItems() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Storage.Models.FileShareItem> Value { get { throw null; } }
     }
     public partial class GeoReplicationStats
     {
@@ -1009,12 +992,6 @@ namespace Azure.ResourceManager.Storage.Models
         public int? RemainingRetentionDays { get { throw null; } }
         public string Version { get { throw null; } }
     }
-    public partial class ListContainerItems
-    {
-        internal ListContainerItems() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Storage.Models.ListContainerItem> Value { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ListContainersInclude : System.IEquatable<Azure.ResourceManager.Storage.Models.ListContainersInclude>
     {
@@ -1037,12 +1014,6 @@ namespace Azure.ResourceManager.Storage.Models
         public ListQueue() { }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
     }
-    public partial class ListQueueResource
-    {
-        internal ListQueueResource() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Storage.Models.ListQueue> Value { get { throw null; } }
-    }
     public partial class ListQueueServices
     {
         internal ListQueueServices() { }
@@ -1052,12 +1023,6 @@ namespace Azure.ResourceManager.Storage.Models
     {
         internal ListServiceSasResponse() { }
         public string ServiceSasToken { get { throw null; } }
-    }
-    public partial class ListTableResource
-    {
-        internal ListTableResource() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Storage.Models.Table> Value { get { throw null; } }
     }
     public partial class ListTableServices
     {
@@ -1152,11 +1117,6 @@ namespace Azure.ResourceManager.Storage.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.Storage.Models.IPRule> IpRules { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Storage.Models.VirtualNetworkRule> VirtualNetworkRules { get { throw null; } }
     }
-    public partial class ObjectReplicationPolicies
-    {
-        internal ObjectReplicationPolicies() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Storage.Models.ObjectReplicationPolicy> Value { get { throw null; } }
-    }
     public partial class ObjectReplicationPolicy : Azure.ResourceManager.Storage.Models.Resource
     {
         public ObjectReplicationPolicy() { }
@@ -1196,11 +1156,6 @@ namespace Azure.ResourceManager.Storage.Models
         public string Provider { get { throw null; } }
         public string Resource { get { throw null; } }
     }
-    public partial class OperationListResult
-    {
-        internal OperationListResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Storage.Models.Operation> Value { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct Permissions : System.IEquatable<Azure.ResourceManager.Storage.Models.Permissions>
     {
@@ -1236,11 +1191,6 @@ namespace Azure.ResourceManager.Storage.Models
         public Azure.ResourceManager.Storage.Models.PrivateEndpoint PrivateEndpoint { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.PrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.PrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } }
-    }
-    public partial class PrivateEndpointConnectionListResult
-    {
-        internal PrivateEndpointConnectionListResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Storage.Models.PrivateEndpointConnection> Value { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PrivateEndpointConnectionProvisioningState : System.IEquatable<Azure.ResourceManager.Storage.Models.PrivateEndpointConnectionProvisioningState>
@@ -1666,12 +1616,6 @@ namespace Azure.ResourceManager.Storage.Models
         internal StorageAccountListKeysResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Storage.Models.StorageAccountKey> Keys { get { throw null; } }
     }
-    public partial class StorageAccountListResult
-    {
-        internal StorageAccountListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Storage.Models.StorageAccount> Value { get { throw null; } }
-    }
     public partial class StorageAccountMicrosoftEndpoints
     {
         internal StorageAccountMicrosoftEndpoints() { }
@@ -1708,11 +1652,6 @@ namespace Azure.ResourceManager.Storage.Models
         public StorageQueue() { }
         public int? ApproximateMessageCount { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
-    }
-    public partial class StorageSkuListResult
-    {
-        internal StorageSkuListResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Storage.Models.SkuInformation> Value { get { throw null; } }
     }
     public partial class Table : Azure.ResourceManager.Storage.Models.Resource
     {
@@ -1763,11 +1702,6 @@ namespace Azure.ResourceManager.Storage.Models
         public int? Limit { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.UsageName Name { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.UsageUnit? Unit { get { throw null; } }
-    }
-    public partial class UsageListResult
-    {
-        internal UsageListResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Storage.Models.Usage> Value { get { throw null; } }
     }
     public partial class UsageName
     {

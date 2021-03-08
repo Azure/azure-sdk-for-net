@@ -5,7 +5,9 @@
 
 #nullable disable
 
-namespace Azure.AI.TextAnalytics
+using Azure.AI.TextAnalytics;
+
+namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The EntitiesTaskParameters. </summary>
     internal partial class EntitiesTaskParameters
@@ -14,5 +16,8 @@ namespace Azure.AI.TextAnalytics
         public EntitiesTaskParameters()
         {
         }
+
+        public string ModelVersion { get; set; }
+        public StringIndexType? StringIndexType { get; set; }
     }
 }

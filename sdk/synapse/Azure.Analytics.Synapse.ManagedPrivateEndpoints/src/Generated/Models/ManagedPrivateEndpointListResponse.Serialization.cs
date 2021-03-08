@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
 {
-    public partial class ManagedPrivateEndpointListResponse
+    internal partial class ManagedPrivateEndpointListResponse
     {
         internal static ManagedPrivateEndpointListResponse DeserializeManagedPrivateEndpointListResponse(JsonElement element)
         {

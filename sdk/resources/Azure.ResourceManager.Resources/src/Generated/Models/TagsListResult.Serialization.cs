@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class TagsListResult
+    internal partial class TagsListResult
     {
         internal static TagsListResult DeserializeTagsListResult(JsonElement element)
         {

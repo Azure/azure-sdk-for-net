@@ -42,6 +42,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution", "Solution", "{A4
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Blobs", "Blobs", "{B93D17A7-F7D7-4A2E-9E57-7B6ED57EF749}"
 	ProjectSection(SolutionItems) = preProject
+		Azure.Storage.Blobs\AzureStorageNetMigrationV12.md = Azure.Storage.Blobs\AzureStorageNetMigrationV12.md
 		Azure.Storage.Blobs\BreakingChanges.txt = Azure.Storage.Blobs\BreakingChanges.txt
 		Azure.Storage.Blobs\CHANGELOG.md = Azure.Storage.Blobs\CHANGELOG.md
 		Azure.Storage.Blobs\README.md = Azure.Storage.Blobs\README.md

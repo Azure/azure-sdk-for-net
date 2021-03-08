@@ -15,16 +15,8 @@ namespace Azure.AI.TextAnalytics
         /// <summary> Initializes a new instance of EntityRecognitionPiiTasksItem. </summary>
         /// <param name="lastUpdateDateTime"> . </param>
         /// <param name="status"> . </param>
-        /// <param name="resultsInternal"> . </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resultsInternal"/> is null. </exception>
-        internal EntityRecognitionPiiTasksItem(DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status, PiiEntitiesResult resultsInternal) : base(lastUpdateDateTime, status)
+        internal EntityRecognitionPiiTasksItem(DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status) : base(lastUpdateDateTime, status)
         {
-            if (resultsInternal == null)
-            {
-                throw new ArgumentNullException(nameof(resultsInternal));
-            }
-
-            ResultsInternal = resultsInternal;
         }
 
         /// <summary> Initializes a new instance of EntityRecognitionPiiTasksItem. </summary>

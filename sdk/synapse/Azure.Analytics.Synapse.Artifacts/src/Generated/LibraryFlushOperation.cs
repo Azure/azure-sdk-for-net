@@ -15,7 +15,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Analytics.Synapse.Artifacts
 {
     /// <summary> Flush Library. </summary>
-    internal partial class LibraryFlushOperation : Operation<Response>, IOperationSource<Response>
+    public partial class LibraryFlushOperation : Operation<Response>, IOperationSource<Response>
     {
         private readonly ArmOperationHelpers<Response> _operation;
         internal LibraryFlushOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)

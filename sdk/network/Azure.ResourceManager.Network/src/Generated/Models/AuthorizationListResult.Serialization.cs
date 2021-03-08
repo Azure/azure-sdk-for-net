@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class AuthorizationListResult
+    internal partial class AuthorizationListResult
     {
         internal static AuthorizationListResult DeserializeAuthorizationListResult(JsonElement element)
         {

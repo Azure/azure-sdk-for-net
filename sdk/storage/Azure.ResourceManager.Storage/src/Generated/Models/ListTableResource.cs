@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> Response schema. Contains list of tables returned. </summary>
-    public partial class ListTableResource
+    internal partial class ListTableResource
     {
         /// <summary> Initializes a new instance of ListTableResource. </summary>
         internal ListTableResource()

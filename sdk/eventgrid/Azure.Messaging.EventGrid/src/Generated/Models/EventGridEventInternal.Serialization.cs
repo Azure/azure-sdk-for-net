@@ -7,10 +7,12 @@
 
 using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.Models
 {
+    [JsonConverter(typeof(EventGridEventInternalConverter))]
     internal partial class EventGridEventInternal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -90,6 +92,19 @@ namespace Azure.Messaging.EventGrid.Models
                 }
             }
             return new EventGridEventInternal(id, topic.Value, subject, data, eventType, eventTime, metadataVersion.Value, dataVersion);
+        }
+
+        internal partial class EventGridEventInternalConverter : JsonConverter<EventGridEventInternal>
+        {
+            public override void Write(Utf8JsonWriter writer, EventGridEventInternal model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override EventGridEventInternal Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeEventGridEventInternal(document.RootElement);
+            }
         }
     }
 }

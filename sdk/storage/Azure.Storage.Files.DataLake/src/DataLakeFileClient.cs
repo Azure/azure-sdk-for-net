@@ -2283,7 +2283,7 @@ namespace Azure.Storage.Files.DataLake
             {
                 scope.Start();
 
-                Response<Blobs.Models.BlobDownloadInfo> response = _blockBlobClient.Download();
+                Response<Blobs.Models.BlobDownloadStreamingResult> response = _blockBlobClient.DownloadStreaming();
 
                 return Response.FromValue(
                     response.Value.ToFileDownloadInfo(),
@@ -2325,8 +2325,8 @@ namespace Azure.Storage.Files.DataLake
             {
                 scope.Start();
 
-                Response<Blobs.Models.BlobDownloadInfo> response
-                    = await _blockBlobClient.DownloadAsync(CancellationToken.None).ConfigureAwait(false);
+                Response<Blobs.Models.BlobDownloadStreamingResult> response
+                    = await _blockBlobClient.DownloadStreamingAsync(cancellationToken: CancellationToken.None).ConfigureAwait(false);
 
                 return Response.FromValue(
                     response.Value.ToFileDownloadInfo(),
@@ -2373,7 +2373,7 @@ namespace Azure.Storage.Files.DataLake
             {
                 scope.Start();
 
-                Response<Blobs.Models.BlobDownloadInfo> response = _blockBlobClient.Download(cancellationToken);
+                Response<Blobs.Models.BlobDownloadStreamingResult> response = _blockBlobClient.DownloadStreaming(cancellationToken: cancellationToken);
 
                 return Response.FromValue(
                     response.Value.ToFileDownloadInfo(),
@@ -2420,8 +2420,8 @@ namespace Azure.Storage.Files.DataLake
             {
                 scope.Start();
 
-                Response<Blobs.Models.BlobDownloadInfo> response
-                    = await _blockBlobClient.DownloadAsync(cancellationToken).ConfigureAwait(false);
+                Response<Blobs.Models.BlobDownloadStreamingResult> response
+                    = await _blockBlobClient.DownloadStreamingAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
 
                 return Response.FromValue(
                     response.Value.ToFileDownloadInfo(),
@@ -2488,7 +2488,7 @@ namespace Azure.Storage.Files.DataLake
             {
                 scope.Start();
 
-                Response<Blobs.Models.BlobDownloadInfo> response = _blockBlobClient.Download(
+                Response<Blobs.Models.BlobDownloadStreamingResult> response = _blockBlobClient.DownloadStreaming(
                     range: range,
                     conditions: conditions.ToBlobRequestConditions(),
                     rangeGetContentHash: rangeGetContentHash,
@@ -2559,7 +2559,7 @@ namespace Azure.Storage.Files.DataLake
             {
                 scope.Start();
 
-                Response<Blobs.Models.BlobDownloadInfo> response = await _blockBlobClient.DownloadAsync(
+                Response<Blobs.Models.BlobDownloadStreamingResult> response = await _blockBlobClient.DownloadStreamingAsync(
                     range: range,
                     conditions: conditions.ToBlobRequestConditions(),
                     rangeGetContentHash: rangeGetContentHash,

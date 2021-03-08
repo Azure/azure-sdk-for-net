@@ -42,10 +42,6 @@ namespace Microsoft.Extensions.Hosting
                 {
                     // Map old property names for backwards compatibility
                     // do it before the binding so new property names take precedence
-                    options.InvokeFunctionAfterReceiveTimeout = section.GetValue(
-                        "EventProcessorOptions:InvokeProcessorAfterReceiveTimeout",
-                        options.InvokeFunctionAfterReceiveTimeout);
-
                     options.TrackLastEnqueuedEventProperties = section.GetValue(
                         "EventProcessorOptions:EnableReceiverRuntimeMetric",
                         options.TrackLastEnqueuedEventProperties);
@@ -57,15 +53,6 @@ namespace Microsoft.Extensions.Hosting
                     options.PrefetchCount = section.GetValue(
                         "EventProcessorOptions:PrefetchCount",
                         options.PrefetchCount);
-
-                    var receiveTimeout = section.GetValue<TimeSpan?>(
-                        "EventProcessorOptions:ReceiveTimeout",
-                        null);
-
-                    if (receiveTimeout != null)
-                    {
-                        options.MaximumWaitTime = receiveTimeout.Value;
-                    }
 
                     var leaseDuration = section.GetValue<TimeSpan?>(
                         "PartitionManagerOptions:LeaseDuration",

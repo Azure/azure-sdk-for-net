@@ -3,16 +3,13 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using Azure.Storage.Sas;
@@ -39,7 +36,6 @@ namespace Azure.Storage.Test.Shared
             : base(async, mode ?? RecordedTestUtilities.GetModeFromEnvironment())
         {
             Sanitizer = new StorageRecordedTestSanitizer();
-            Matcher = new StorageRecordMatcher();
         }
 
         /// <summary>

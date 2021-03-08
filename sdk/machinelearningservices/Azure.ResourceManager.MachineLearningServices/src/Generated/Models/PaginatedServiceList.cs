@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Paginated list of Machine Learning service objects wrapped in ARM resource envelope. </summary>
-    public partial class PaginatedServiceList
+    internal partial class PaginatedServiceList
     {
         /// <summary> Initializes a new instance of PaginatedServiceList. </summary>
         internal PaginatedServiceList()

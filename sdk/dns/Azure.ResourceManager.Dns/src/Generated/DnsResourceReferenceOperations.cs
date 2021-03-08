@@ -20,10 +20,12 @@ namespace Azure.ResourceManager.Dns
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         internal DnsResourceReferenceRestOperations RestClient { get; }
+
         /// <summary> Initializes a new instance of DnsResourceReferenceOperations for mocking. </summary>
         protected DnsResourceReferenceOperations()
         {
         }
+
         /// <summary> Initializes a new instance of DnsResourceReferenceOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>

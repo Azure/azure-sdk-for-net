@@ -98,7 +98,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 ServiceEndpoint,
                 credential,
                 options.TransportType,
-                options.WebProxy);
+                options.WebProxy,
+                options.EnableCrossEntityTransactions);
         }
 
         /// <summary>
@@ -109,14 +110,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="entityPath">The entity path to send the message to.</param>
         /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
         /// <param name="identifier">The identifier for the sender.</param>
-        /// <param name="transactionGroup"></param>
         ///
         /// <returns>A <see cref="TransportSender"/> configured in the requested manner.</returns>
         public override TransportSender CreateSender(
             string entityPath,
             ServiceBusRetryPolicy retryPolicy,
-            string identifier,
-            string transactionGroup)
+            string identifier)
         {
             Argument.AssertNotDisposed(_closed, nameof(AmqpClient));
 
@@ -125,8 +124,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 entityPath,
                 ConnectionScope,
                 retryPolicy,
-                identifier,
-                transactionGroup
+                identifier
             );
         }
 
@@ -142,7 +140,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="identifier"></param>
         /// <param name="sessionId"></param>
         /// <param name="isSessionReceiver"></param>
-        /// <param name="transactionGroup"></param>
         ///
         /// <returns>A <see cref="TransportReceiver" /> configured in the requested manner.</returns>
         ///
@@ -153,8 +150,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             uint prefetchCount,
             string identifier,
             string sessionId,
-            bool isSessionReceiver,
-            string transactionGroup)
+            bool isSessionReceiver)
         {
             Argument.AssertNotDisposed(_closed, nameof(AmqpClient));
 
@@ -167,34 +163,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 retryPolicy,
                 identifier,
                 sessionId,
-                isSessionReceiver,
-                transactionGroup
-            );
-        }
-
-        /// <summary>
-        ///   Creates a rule manager strongly aligned with the active protocol and transport,
-        ///   responsible for adding, removing and getting rules from the Service Bus subscription.
-        /// </summary>
-        ///
-        /// <param name="subscriptionPath">The path of the Service Bus subscription to which the rule manager is bound.</param>
-        /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
-        /// <param name="identifier">The identifier for the rule manager.</param>
-        ///
-        /// <returns>A <see cref="TransportRuleManager"/> configured in the requested manner.</returns>
-        public override TransportRuleManager CreateRuleManager(
-            string subscriptionPath,
-            ServiceBusRetryPolicy retryPolicy,
-            string identifier)
-        {
-            Argument.AssertNotDisposed(_closed, nameof(AmqpClient));
-
-            return new AmqpRuleManager
-            (
-                subscriptionPath,
-                ConnectionScope,
-                retryPolicy,
-                identifier
+                isSessionReceiver
             );
         }
 

@@ -1793,12 +1793,6 @@ namespace Azure.ResourceManager.Compute.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.InstanceViewStatus> Statuses { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.SubResource> VirtualMachines { get { throw null; } }
     }
-    public partial class AvailabilitySetListResult
-    {
-        internal AvailabilitySetListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.AvailabilitySet> Value { get { throw null; } }
-    }
     public partial class AvailabilitySetUpdate : Azure.ResourceManager.Compute.Models.UpdateResource
     {
         public AvailabilitySetUpdate() { }
@@ -1844,11 +1838,6 @@ namespace Azure.ResourceManager.Compute.Models
         public ComponentsNj115SSchemasVirtualmachinescalesetidentityPropertiesUserassignedidentitiesAdditionalproperties() { }
         public string ClientId { get { throw null; } }
         public string PrincipalId { get { throw null; } }
-    }
-    public partial class ComputeOperationListResult
-    {
-        internal ComputeOperationListResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.ComputeOperationValue> Value { get { throw null; } }
     }
     public partial class ComputeOperationValue
     {
@@ -1897,12 +1886,6 @@ namespace Azure.ResourceManager.Compute.Models
         public ContainerServiceLinuxProfile(string adminUsername, Azure.ResourceManager.Compute.Models.ContainerServiceSshConfiguration ssh) { }
         public string AdminUsername { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ContainerServiceSshConfiguration Ssh { get { throw null; } set { } }
-    }
-    public partial class ContainerServiceListResult
-    {
-        internal ContainerServiceListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.ContainerService> Value { get { throw null; } }
     }
     public partial class ContainerServiceMasterProfile
     {
@@ -2083,12 +2066,6 @@ namespace Azure.ResourceManager.Compute.Models
         public int? PlatformFaultDomainCount { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Zones { get { throw null; } }
     }
-    public partial class DedicatedHostGroupListResult
-    {
-        internal DedicatedHostGroupListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.DedicatedHostGroup> Value { get { throw null; } }
-    }
     public partial class DedicatedHostGroupUpdate : Azure.ResourceManager.Compute.Models.UpdateResource
     {
         public DedicatedHostGroupUpdate() { }
@@ -2108,12 +2085,6 @@ namespace Azure.ResourceManager.Compute.Models
         None = 0,
         WindowsServerHybrid = 1,
         WindowsServerPerpetual = 2,
-    }
-    public partial class DedicatedHostListResult
-    {
-        internal DedicatedHostListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.DedicatedHost> Value { get { throw null; } }
     }
     public partial class DedicatedHostUpdate : Azure.ResourceManager.Compute.Models.UpdateResource
     {
@@ -2270,12 +2241,6 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator !=(Azure.ResourceManager.Compute.Models.DiskEncryptionSetIdentityType left, Azure.ResourceManager.Compute.Models.DiskEncryptionSetIdentityType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DiskEncryptionSetList
-    {
-        internal DiskEncryptionSetList() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.DiskEncryptionSet> Value { get { throw null; } }
-    }
     public partial class DiskEncryptionSetParameters : Azure.ResourceManager.Compute.Models.SubResource
     {
         public DiskEncryptionSetParameters() { }
@@ -2304,12 +2269,6 @@ namespace Azure.ResourceManager.Compute.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.DiskEncryptionSettings> EncryptionSettings { get { throw null; } }
         public string Name { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.InstanceViewStatus> Statuses { get { throw null; } }
-    }
-    public partial class DiskList
-    {
-        internal DiskList() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.Disk> Value { get { throw null; } }
     }
     public partial class DiskSku
     {
@@ -2459,12 +2418,6 @@ namespace Azure.ResourceManager.Compute.Models
         public string ReleaseNoteUri { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.OperatingSystemTypes? SupportedOSType { get { throw null; } set { } }
     }
-    public partial class GalleryApplicationList
-    {
-        internal GalleryApplicationList() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.GalleryApplication> Value { get { throw null; } }
-    }
     public partial class GalleryApplicationUpdate : Azure.ResourceManager.Compute.Models.UpdateResourceDefinition
     {
         public GalleryApplicationUpdate() { }
@@ -2481,12 +2434,6 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.GalleryApplicationVersionPropertiesProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.GalleryApplicationVersionPublishingProfile PublishingProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ReplicationStatus ReplicationStatus { get { throw null; } }
-    }
-    public partial class GalleryApplicationVersionList
-    {
-        internal GalleryApplicationVersionList() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.GalleryApplicationVersion> Value { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct GalleryApplicationVersionPropertiesProvisioningState : System.IEquatable<Azure.ResourceManager.Compute.Models.GalleryApplicationVersionPropertiesProvisioningState>
@@ -2580,12 +2527,6 @@ namespace Azure.ResourceManager.Compute.Models
         public string Publisher { get { throw null; } set { } }
         public string Sku { get { throw null; } set { } }
     }
-    public partial class GalleryImageList
-    {
-        internal GalleryImageList() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.GalleryImage> Value { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct GalleryImagePropertiesProvisioningState : System.IEquatable<Azure.ResourceManager.Compute.Models.GalleryImagePropertiesProvisioningState>
     {
@@ -2633,12 +2574,6 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.ReplicationStatus ReplicationStatus { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.GalleryImageVersionStorageProfile StorageProfile { get { throw null; } set { } }
     }
-    public partial class GalleryImageVersionList
-    {
-        internal GalleryImageVersionList() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.GalleryImageVersion> Value { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct GalleryImageVersionPropertiesProvisioningState : System.IEquatable<Azure.ResourceManager.Compute.Models.GalleryImageVersionPropertiesProvisioningState>
     {
@@ -2679,12 +2614,6 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.GalleryImageVersionPublishingProfile PublishingProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ReplicationStatus ReplicationStatus { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.GalleryImageVersionStorageProfile StorageProfile { get { throw null; } set { } }
-    }
-    public partial class GalleryList
-    {
-        internal GalleryList() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.Gallery> Value { get { throw null; } }
     }
     public partial class GalleryOSDiskImage : Azure.ResourceManager.Compute.Models.GalleryDiskImage
     {
@@ -2820,12 +2749,6 @@ namespace Azure.ResourceManager.Compute.Models
         public string Id { get { throw null; } set { } }
         public int? Lun { get { throw null; } set { } }
     }
-    public partial class ImageListResult
-    {
-        internal ImageListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.Image> Value { get { throw null; } }
-    }
     public partial class ImageOSDisk : Azure.ResourceManager.Compute.Models.ImageDisk
     {
         public ImageOSDisk(Azure.ResourceManager.Compute.Models.OperatingSystemTypes osType, Azure.ResourceManager.Compute.Models.OperatingSystemStateTypes osState) { }
@@ -2933,12 +2856,6 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? DisablePasswordAuthentication { get { throw null; } set { } }
         public bool? ProvisionVMAgent { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.SshConfiguration Ssh { get { throw null; } set { } }
-    }
-    public partial class ListUsagesResult
-    {
-        internal ListUsagesResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.Usage> Value { get { throw null; } }
     }
     public partial class LogAnalyticsInputBase
     {
@@ -3128,12 +3045,6 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.ProximityPlacementGroupType? ProximityPlacementGroupType { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.SubResourceWithColocationStatus> VirtualMachines { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.SubResourceWithColocationStatus> VirtualMachineScaleSets { get { throw null; } }
-    }
-    public partial class ProximityPlacementGroupListResult
-    {
-        internal ProximityPlacementGroupListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.ProximityPlacementGroup> Value { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ProximityPlacementGroupType : System.IEquatable<Azure.ResourceManager.Compute.Models.ProximityPlacementGroupType>
@@ -3329,12 +3240,6 @@ namespace Azure.ResourceManager.Compute.Models
         Location = 0,
         Zone = 1,
     }
-    public partial class ResourceSkusResult
-    {
-        internal ResourceSkusResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.ResourceSku> Value { get { throw null; } }
-    }
     public partial class ResourceSkuZoneDetails
     {
         internal ResourceSkuZoneDetails() { }
@@ -3420,12 +3325,6 @@ namespace Azure.ResourceManager.Compute.Models
         public string Name { get { throw null; } }
         public string Value { get { throw null; } }
     }
-    public partial class RunCommandListResult
-    {
-        internal RunCommandListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.RunCommandDocumentBase> Value { get { throw null; } }
-    }
     public partial class RunCommandParameterDefinition
     {
         internal RunCommandParameterDefinition() { }
@@ -3482,12 +3381,6 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.SnapshotSku Sku { get { throw null; } set { } }
         public System.DateTimeOffset? TimeCreated { get { throw null; } }
         public string UniqueId { get { throw null; } }
-    }
-    public partial class SnapshotList
-    {
-        internal SnapshotList() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.Snapshot> Value { get { throw null; } }
     }
     public partial class SnapshotSku
     {
@@ -3551,12 +3444,6 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public SshPublicKeyResource(string location) : base (default(string)) { }
         public string PublicKey { get { throw null; } set { } }
-    }
-    public partial class SshPublicKeysGroupListResult
-    {
-        internal SshPublicKeysGroupListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.SshPublicKeyResource> Value { get { throw null; } }
     }
     public partial class SshPublicKeyUpdateResource : Azure.ResourceManager.Compute.Models.UpdateResource
     {
@@ -3913,12 +3800,6 @@ namespace Azure.ResourceManager.Compute.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.InstanceViewStatus> Statuses { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineAgentInstanceView VmAgent { get { throw null; } }
     }
-    public partial class VirtualMachineListResult
-    {
-        internal VirtualMachineListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.VirtualMachine> Value { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct VirtualMachinePriorityTypes : System.IEquatable<Azure.ResourceManager.Compute.Models.VirtualMachinePriorityTypes>
     {
@@ -3992,12 +3873,6 @@ namespace Azure.ResourceManager.Compute.Models
         public string TypeHandlerVersion { get { throw null; } set { } }
         public string TypePropertiesType { get { throw null; } set { } }
     }
-    public partial class VirtualMachineScaleSetExtensionListResult
-    {
-        internal VirtualMachineScaleSetExtensionListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetExtension> Value { get { throw null; } }
-    }
     public partial class VirtualMachineScaleSetExtensionProfile
     {
         public VirtualMachineScaleSetExtensionProfile() { }
@@ -4057,30 +3932,6 @@ namespace Azure.ResourceManager.Compute.Models
         public VirtualMachineScaleSetIpTag() { }
         public string IpTagType { get { throw null; } set { } }
         public string Tag { get { throw null; } set { } }
-    }
-    public partial class VirtualMachineScaleSetListOSUpgradeHistory
-    {
-        internal VirtualMachineScaleSetListOSUpgradeHistory() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.UpgradeOperationHistoricalStatusInfo> Value { get { throw null; } }
-    }
-    public partial class VirtualMachineScaleSetListResult
-    {
-        internal VirtualMachineScaleSetListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSet> Value { get { throw null; } }
-    }
-    public partial class VirtualMachineScaleSetListSkusResult
-    {
-        internal VirtualMachineScaleSetListSkusResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetSku> Value { get { throw null; } }
-    }
-    public partial class VirtualMachineScaleSetListWithLinkResult
-    {
-        internal VirtualMachineScaleSetListWithLinkResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSet> Value { get { throw null; } }
     }
     public partial class VirtualMachineScaleSetManagedDiskParameters
     {
@@ -4346,12 +4197,6 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.VirtualMachineAgentInstanceView VmAgent { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineHealthStatus VmHealth { get { throw null; } }
     }
-    public partial class VirtualMachineScaleSetVMListResult
-    {
-        internal VirtualMachineScaleSetVMListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVM> Value { get { throw null; } }
-    }
     public partial class VirtualMachineScaleSetVMNetworkProfileConfiguration
     {
         public VirtualMachineScaleSetVMNetworkProfileConfiguration() { }
@@ -4390,11 +4235,6 @@ namespace Azure.ResourceManager.Compute.Models
         public int? NumberOfCores { get { throw null; } }
         public int? OsDiskSizeInMB { get { throw null; } }
         public int? ResourceDiskSizeInMB { get { throw null; } }
-    }
-    public partial class VirtualMachineSizeListResult
-    {
-        internal VirtualMachineSizeListResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.VirtualMachineSize> Value { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct VirtualMachineSizeTypes : System.IEquatable<Azure.ResourceManager.Compute.Models.VirtualMachineSizeTypes>

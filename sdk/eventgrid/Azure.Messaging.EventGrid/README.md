@@ -193,14 +193,14 @@ Once events are delivered to the event handler, parse the JSON payload into list
 
 Using `EventGridEvent`:
 ```C# Snippet:EGEventParseJson
-// Parse the JSON payload into a list of events using EventGridEvent.Parse
-EventGridEvent[] egEvents = EventGridEvent.ParseEvents(jsonPayloadSampleOne);
+// Parse the JSON payload into a list of events
+EventGridEvent[] egEvents = EventGridEvent.ParseMany(jsonPayloadSampleOne);
 ```
 
 Using `CloudEvent`:
 ```C# Snippet:CloudEventParseJson
-// Parse the JSON payload into a list of events using CloudEvent.Parse
-CloudEvent[] cloudEvents = CloudEvent.ParseEvents(jsonPayloadSampleTwo);
+// Parse the JSON payload into a list of events
+CloudEvent[] cloudEvents = CloudEvent.ParseMany(jsonPayloadSampleTwo);
 ```
 From here, one can access the event data by deserializing to a specific type using `GetData<T>()`. Calling `GetData()` will either return the event data wrapped in `BinaryData`, which represents the serialized JSON event data as bytes.
 
@@ -241,7 +241,7 @@ If expecting mostly system events, it may be cleaner to switch on `TryGetSystemE
 ```C# Snippet:DeserializePayloadUsingAsSystemEventData
 foreach (EventGridEvent egEvent in egEvents)
 {
-    // If the event is a system event, TryGetSystemEventData() will return the deserialized system event
+    // If the event is a system event, TryGetSystemEventData will return the deserialized system event
     if (egEvent.TryGetSystemEventData(out object systemEvent))
     {
         switch (systemEvent)
