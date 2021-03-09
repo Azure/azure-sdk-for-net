@@ -2371,6 +2371,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Recognizer cognitive service and handle returned errors.
         /// </summary>
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/19375")]
         [TestCase(true)]
         [TestCase(false)]
         public async Task StartRecognizeCustomFormsFromUriThrowsForNonExistingContent(bool useTrainingLabels)
