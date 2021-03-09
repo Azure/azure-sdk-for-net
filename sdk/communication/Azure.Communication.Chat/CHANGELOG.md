@@ -2,7 +2,12 @@
 
 ## 1.0.0-beta.5 (2021-03-09)
 
+### Breaking Changes
+
 - Added support for communication identifiers instead of raw strings.
+
+### Added
+
 - Removed support for nullable reference types.
 - Added unit test and live test coverage.
 
