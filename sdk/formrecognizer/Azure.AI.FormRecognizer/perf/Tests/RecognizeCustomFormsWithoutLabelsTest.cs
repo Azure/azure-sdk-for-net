@@ -40,14 +40,19 @@ namespace Azure.AI.FormRecognizer.Perf
 
         public override async Task RunAsync(CancellationToken cancellationToken)
         {
-            var op = await _client.StartRecognizeCustomFormsFromUriAsync(_modelId, CreateUri(TestFile.Form1));
-            await op.WaitForCompletionAsync();
+            var op = await _client.StartRecognizeCustomFormsFromUriAsync(_modelId, CreateUri(TestFile.Form1), cancellationToken: cancellationToken);
+            await op.WaitForCompletionAsync(cancellationToken);
         }
 
         public override void Run(CancellationToken cancellationToken)
         {
-            var op = _client.StartRecognizeCustomFormsFromUri(_modelId, CreateUri(TestFile.Form1));
-            op.WaitForCompletionAsync().GetAwaiter().GetResult();
+            var op = _client.StartRecognizeCustomFormsFromUri(_modelId, CreateUri(TestFile.Form1), cancellationToken: cancellationToken);
+
+            while (!op.HasCompleted)
+            {
+                Thread.Sleep(TimeSpan.FromSeconds(1));
+                op.UpdateStatus(cancellationToken);
+            }
         }
     }
 }

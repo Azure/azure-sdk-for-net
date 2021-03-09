@@ -16,6 +16,10 @@ namespace Azure.AI.FormRecognizer.Perf
 
         public FormRecognizerTest(TOptions options) : base(options)
         {
+            if (options.Parallel > 1)
+            {
+                throw new InvalidOperationException("Do not stress the service until we can reduce testing costs. Set '--parallel 1'.");
+            }
         }
 
         protected string Endpoint => GetEnvironmentVariable("FORM_RECOGNIZER_ENDPOINT");
