@@ -1,6 +1,6 @@
 # Release History
 
-## 3.1.0-beta.3 (Unreleased)
+## 3.1.0-beta.3 (2021-03-09)
 
 ## New Features
 - Added protected constructors for mocking to `Operation` types, such as `TrainingOperation` and `RecognizeContentOperation`.
