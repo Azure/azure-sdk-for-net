@@ -102,17 +102,10 @@ namespace Azure.ResourceManager.Core
             _baseUri = baseUri;
             ClientOptions = options ?? new AzureResourceManagerClientOptions();
 
-            DefaultSubscription = string.IsNullOrWhiteSpace(defaultSubscriptionId) 
+            DefaultSubscription = string.IsNullOrWhiteSpace(defaultSubscriptionId)
                 ? GetDefaultSubscription()
                 : GetSubscriptionOperations(defaultSubscriptionId).Get().Value;
-
-            ApiVersionOverrides = new Dictionary<string, string>();
         }
-
-        /// <summary>
-        /// Gets the Api version overrides.
-        /// </summary>
-        public virtual Dictionary<string, string> ApiVersionOverrides { get; private set; }
 
         /// <summary>
         /// Gets the default Azure subscription.
