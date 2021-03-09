@@ -8,7 +8,7 @@
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The MongoDBDataFeedPatch. </summary>
-    internal partial class MongoDBDataFeedPatch : DataFeedDetailPatch
+    public partial class MongoDBDataFeedPatch : DataFeedDetailPatch
     {
         /// <summary> Initializes a new instance of MongoDBDataFeedPatch. </summary>
         public MongoDBDataFeedPatch()

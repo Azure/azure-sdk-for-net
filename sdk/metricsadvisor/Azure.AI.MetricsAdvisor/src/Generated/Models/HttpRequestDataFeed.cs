@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The HttpRequestDataFeed. </summary>
-    internal partial class HttpRequestDataFeed : DataFeedDetail
+    public partial class HttpRequestDataFeed : DataFeedDetail
     {
         /// <summary> Initializes a new instance of HttpRequestDataFeed. </summary>
         /// <param name="dataFeedName"> data feed name. </param>

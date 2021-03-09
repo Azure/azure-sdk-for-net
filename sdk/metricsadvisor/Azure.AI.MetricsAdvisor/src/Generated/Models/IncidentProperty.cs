@@ -8,7 +8,7 @@
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The IncidentProperty. </summary>
-    internal partial class IncidentProperty
+    public partial class IncidentProperty
     {
         /// <summary> Initializes a new instance of IncidentProperty. </summary>
         /// <param name="maxSeverity"> max severity of latest anomalies in the incident. </param>

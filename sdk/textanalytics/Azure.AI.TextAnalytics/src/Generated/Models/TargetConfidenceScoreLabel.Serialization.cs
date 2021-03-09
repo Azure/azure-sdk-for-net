@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class TargetConfidenceScoreLabel
+    public partial class TargetConfidenceScoreLabel
     {
         internal static TargetConfidenceScoreLabel DeserializeTargetConfidenceScoreLabel(JsonElement element)
         {

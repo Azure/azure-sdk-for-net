@@ -8,7 +8,7 @@
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The KeyPhrasesTask. </summary>
-    internal partial class KeyPhrasesTask
+    public partial class KeyPhrasesTask
     {
         /// <summary> Initializes a new instance of KeyPhrasesTask. </summary>
         public KeyPhrasesTask()

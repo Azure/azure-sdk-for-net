@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The PostgreSqlDataFeed. </summary>
-    internal partial class PostgreSqlDataFeed : DataFeedDetail
+    public partial class PostgreSqlDataFeed : DataFeedDetail
     {
         /// <summary> Initializes a new instance of PostgreSqlDataFeed. </summary>
         /// <param name="dataFeedName"> data feed name. </param>

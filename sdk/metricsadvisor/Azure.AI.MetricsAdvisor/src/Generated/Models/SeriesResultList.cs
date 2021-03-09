@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The SeriesResultList. </summary>
-    internal partial class SeriesResultList
+    public partial class SeriesResultList
     {
         /// <summary> Initializes a new instance of SeriesResultList. </summary>
         /// <param name="value"> . </param>

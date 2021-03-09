@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class DocumentEntities
+    public partial class DocumentEntities
     {
         internal static DocumentEntities DeserializeDocumentEntities(JsonElement element)
         {

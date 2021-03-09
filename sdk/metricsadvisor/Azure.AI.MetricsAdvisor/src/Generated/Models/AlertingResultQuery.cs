@@ -11,7 +11,7 @@ using Azure.AI.MetricsAdvisor;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The AlertingResultQuery. </summary>
-    internal partial class AlertingResultQuery
+    public partial class AlertingResultQuery
     {
         /// <summary> Initializes a new instance of AlertingResultQuery. </summary>
         /// <param name="startTime"> start time. </param>

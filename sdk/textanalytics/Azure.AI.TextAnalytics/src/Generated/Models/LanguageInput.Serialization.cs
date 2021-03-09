@@ -10,29 +10,15 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class LanguageInput : IUtf8JsonSerializable
+    public partial class LanguageInput : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Id != null)
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
-            else
-            {
-                writer.WriteNull("id");
-            }
-            if (Text != null)
-            {
-                writer.WritePropertyName("text");
-                writer.WriteStringValue(Text);
-            }
-            else
-            {
-                writer.WriteNull("text");
-            }
+            writer.WritePropertyName("id");
+            writer.WriteStringValue(Id);
+            writer.WritePropertyName("text");
+            writer.WriteStringValue(Text);
             if (Optional.IsDefined(CountryHint))
             {
                 writer.WritePropertyName("countryHint");

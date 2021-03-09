@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class KeyPhraseResult
+    public partial class KeyPhraseResult
     {
         internal static KeyPhraseResult DeserializeKeyPhraseResult(JsonElement element)
         {

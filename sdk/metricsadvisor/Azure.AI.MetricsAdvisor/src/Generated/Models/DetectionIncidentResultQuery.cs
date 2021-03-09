@@ -10,7 +10,7 @@ using System;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The DetectionIncidentResultQuery. </summary>
-    internal partial class DetectionIncidentResultQuery
+    public partial class DetectionIncidentResultQuery
     {
         /// <summary> Initializes a new instance of DetectionIncidentResultQuery. </summary>
         /// <param name="startTime"> start time. </param>

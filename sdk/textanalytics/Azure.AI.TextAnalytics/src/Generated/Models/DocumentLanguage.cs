@@ -13,7 +13,7 @@ using Azure.AI.TextAnalytics;
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The DocumentLanguage. </summary>
-    internal partial class DocumentLanguage
+    public partial class DocumentLanguage
     {
         /// <summary> Initializes a new instance of DocumentLanguage. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>

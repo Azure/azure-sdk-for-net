@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The InfluxDBDataFeed. </summary>
-    internal partial class InfluxDBDataFeed : DataFeedDetail
+    public partial class InfluxDBDataFeed : DataFeedDetail
     {
         /// <summary> Initializes a new instance of InfluxDBDataFeed. </summary>
         /// <param name="dataFeedName"> data feed name. </param>

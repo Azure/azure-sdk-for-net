@@ -8,7 +8,7 @@
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The JobDescriptor. </summary>
-    internal partial class JobDescriptor
+    public partial class JobDescriptor
     {
         /// <summary> Initializes a new instance of JobDescriptor. </summary>
         public JobDescriptor()

@@ -8,7 +8,7 @@
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The EntityLinkingTask. </summary>
-    internal partial class EntityLinkingTask
+    public partial class EntityLinkingTask
     {
         /// <summary> Initializes a new instance of EntityLinkingTask. </summary>
         public EntityLinkingTask()

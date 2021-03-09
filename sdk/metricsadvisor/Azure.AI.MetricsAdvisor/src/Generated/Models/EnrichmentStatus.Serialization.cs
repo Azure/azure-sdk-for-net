@@ -15,13 +15,18 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         internal static EnrichmentStatus DeserializeEnrichmentStatus(JsonElement element)
         {
-            DateTimeOffset timestamp = default;
-            string status = default;
-            string message = default;
+            Optional<DateTimeOffset> timestamp = default;
+            Optional<string> status = default;
+            Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timestamp"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     timestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
@@ -36,7 +41,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new EnrichmentStatus(timestamp, status, message);
+            return new EnrichmentStatus(timestamp, status.Value, message.Value);
         }
     }
 }

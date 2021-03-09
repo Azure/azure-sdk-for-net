@@ -10,7 +10,7 @@ using System;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The UsageStats. </summary>
-    internal partial class UsageStats
+    public partial class UsageStats
     {
         /// <summary> Initializes a new instance of UsageStats. </summary>
         internal UsageStats()

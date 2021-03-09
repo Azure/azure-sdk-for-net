@@ -21,21 +21,11 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        name = null;
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("iso6391Name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        iso6391Name = null;
-                        continue;
-                    }
                     iso6391Name = property.Value.GetString();
                     continue;
                 }

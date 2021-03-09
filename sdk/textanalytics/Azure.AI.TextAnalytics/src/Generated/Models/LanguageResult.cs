@@ -13,7 +13,7 @@ using Azure.AI.TextAnalytics;
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The LanguageResult. </summary>
-    internal partial class LanguageResult
+    public partial class LanguageResult
     {
         /// <summary> Initializes a new instance of LanguageResult. </summary>
         /// <param name="documents"> Response by document. </param>

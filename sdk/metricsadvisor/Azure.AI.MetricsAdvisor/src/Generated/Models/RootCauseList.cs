@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The RootCauseList. </summary>
-    internal partial class RootCauseList
+    public partial class RootCauseList
     {
         /// <summary> Initializes a new instance of RootCauseList. </summary>
         /// <param name="value"> . </param>

@@ -10,7 +10,7 @@ using System;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The IngestionProgressResetOptions. </summary>
-    internal partial class IngestionProgressResetOptions
+    public partial class IngestionProgressResetOptions
     {
         /// <summary> Initializes a new instance of IngestionProgressResetOptions. </summary>
         /// <param name="startTime"> the start point of time range to reset data ingestion status. </param>

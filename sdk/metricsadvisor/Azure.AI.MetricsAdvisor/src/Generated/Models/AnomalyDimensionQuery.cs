@@ -10,7 +10,7 @@ using System;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The AnomalyDimensionQuery. </summary>
-    internal partial class AnomalyDimensionQuery
+    public partial class AnomalyDimensionQuery
     {
         /// <summary> Initializes a new instance of AnomalyDimensionQuery. </summary>
         /// <param name="startTime"> start time. </param>

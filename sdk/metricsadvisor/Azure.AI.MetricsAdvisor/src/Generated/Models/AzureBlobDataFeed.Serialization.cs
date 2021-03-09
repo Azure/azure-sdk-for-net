@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class AzureBlobDataFeed : IUtf8JsonSerializable
+    public partial class AzureBlobDataFeed : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -32,15 +32,8 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStringValue(GranularityName.ToString());
             if (Optional.IsDefined(GranularityAmount))
             {
-                if (GranularityAmount != null)
-                {
-                    writer.WritePropertyName("granularityAmount");
-                    writer.WriteNumberValue(GranularityAmount.Value);
-                }
-                else
-                {
-                    writer.WriteNull("granularityAmount");
-                }
+                writer.WritePropertyName("granularityAmount");
+                writer.WriteNumberValue(GranularityAmount.Value);
             }
             writer.WritePropertyName("metrics");
             writer.WriteStartArray();
@@ -162,7 +155,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             string dataFeedName = default;
             Optional<string> dataFeedDescription = default;
             DataFeedGranularityType granularityName = default;
-            Optional<int?> granularityAmount = default;
+            Optional<int> granularityAmount = default;
             IList<DataFeedMetric> metrics = default;
             Optional<IList<DataFeedDimension>> dimension = default;
             Optional<string> timestampColumn = default;
@@ -221,7 +214,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        granularityAmount = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     granularityAmount = property.Value.GetInt32();

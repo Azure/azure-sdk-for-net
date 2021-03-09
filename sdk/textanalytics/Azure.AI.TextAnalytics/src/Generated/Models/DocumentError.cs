@@ -10,7 +10,7 @@ using System;
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The DocumentError. </summary>
-    internal partial class DocumentError
+    public partial class DocumentError
     {
         /// <summary> Initializes a new instance of DocumentError. </summary>
         /// <param name="id"> Document Id. </param>

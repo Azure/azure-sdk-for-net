@@ -10,7 +10,7 @@ using System;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The IngestionStatusQueryOptions. </summary>
-    internal partial class IngestionStatusQueryOptions
+    public partial class IngestionStatusQueryOptions
     {
         /// <summary> Initializes a new instance of IngestionStatusQueryOptions. </summary>
         /// <param name="startTime"> the start point of time range to query data ingestion status. </param>

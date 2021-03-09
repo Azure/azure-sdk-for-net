@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The SeriesIdentity. </summary>
-    internal partial class SeriesIdentity
+    public partial class SeriesIdentity
     {
         /// <summary> Initializes a new instance of SeriesIdentity. </summary>
         /// <param name="dimension"> dimension specified for series. </param>
