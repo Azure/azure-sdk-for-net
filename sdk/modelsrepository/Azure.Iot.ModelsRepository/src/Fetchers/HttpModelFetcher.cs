@@ -32,7 +32,7 @@ namespace Azure.Iot.ModelsRepository.Fetchers
         public FetchResult Fetch(
             string dtmi, Uri repositoryUri, ModelDependencyResolution dependencyResolution, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("HttpModelFetcher.Fetch");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(HttpModelFetcher)}.{nameof(Fetch)}");
             scope.Start();
             try
             {
@@ -76,7 +76,7 @@ namespace Azure.Iot.ModelsRepository.Fetchers
         public async Task<FetchResult> FetchAsync(
             string dtmi, Uri repositoryUri, ModelDependencyResolution dependencyResolution, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("HttpModelFetcher.Fetch");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(HttpModelFetcher)}.{nameof(Fetch)}");
             scope.Start();
             try
             {
@@ -165,7 +165,7 @@ namespace Azure.Iot.ModelsRepository.Fetchers
 
         private string EvaluatePath(string path, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("HttpModelFetcher.EvaluatePath");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(HttpModelFetcher)}.{nameof(EvaluatePath)}");
             scope.Start();
 
             try
@@ -193,7 +193,7 @@ namespace Azure.Iot.ModelsRepository.Fetchers
 
         private async Task<string> EvaluatePathAsync(string path, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("HttpModelFetcher.EvaluatePath");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(HttpModelFetcher)}.{nameof(EvaluatePath)}");
             scope.Start();
 
             try

@@ -32,7 +32,7 @@ namespace Azure.Iot.ModelsRepository.Fetchers
 
         public FetchResult Fetch(string dtmi, Uri repositoryUri, ModelDependencyResolution dependencyResolution, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("FileModelFetcher.Fetch");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(FileModelFetcher)}.{nameof(Fetch)}");
             scope.Start();
 
             try
