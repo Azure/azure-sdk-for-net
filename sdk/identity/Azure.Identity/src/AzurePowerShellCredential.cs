@@ -188,7 +188,7 @@ return $token | ConvertTo-Json
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "cmd.exe");
+                fileName = Path.Combine(DefaultWorkingDirWindows, "cmd.exe");
                 argument = $"/c \"{powershellExe} \"{commandBase64}\" \"";
             }
             else
