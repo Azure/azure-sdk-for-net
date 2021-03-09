@@ -63,7 +63,9 @@ Phone numbers come in two types: Geographic and Toll-Free. Geographic phone plan
 
 ### Searching, purchasing and releasing phone numbers
 
-Phone numbers can be searched through the search creation API by providing an area code, quantity of phone numbers, application type, phone number type, and capabilities. The provided quantity of phone numbers will be reserved for ten minutes and can be purchased within this time. If the search is not purchased, the phone numbers will become available to others after ten minutes. If the search is purchased, then the phone numbers are acquired for the Azure resources.
+Phone numbers can be searched through the search creation API by providing an area code, quantity of phone numbers, application type, phone number type and capabilities. The provided quantity of phone numbers will be reserved for ten minutes and can be purchased within this time. If the search is not purchased, the phone numbers will become available to others after ten minutes. If the search is purchased, then the phone numbers are acquired for the Azure resources.
+
+Phone numbers can also be released using the release API.
 
 ### Thread safety
 We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
@@ -116,7 +118,7 @@ await purchaseOperation.WaitForCompletionAsync();
 
 ## Listing acquired phone numbers
 
-Fetching area codes for geographic phone plans will require the the location options queries set. You must include the chain of geographic locations traversing down the location options object returned by the GetLocationOptions API.
+You can list all phone numbers that have been acquired for your resource.
 
 ```C# Snippet:ListAcquiredPhoneNumbersAsync
 var acquiredPhoneNumbers = client.GetPhoneNumbersAsync();
