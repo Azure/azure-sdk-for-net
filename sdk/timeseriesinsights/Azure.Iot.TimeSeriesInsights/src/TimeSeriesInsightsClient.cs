@@ -255,10 +255,6 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.Iot.TimeSeriesInsights/samples">our repo samples</see>.
         /// </remarks>
-        /// <example>
-        /// <code snippet="Snippet:TimeSeriesInsightsSampleGetInstances">
-        /// </code>
-        /// </example>
         public virtual AsyncPageable<TimeSeriesInstance> GetInstancesAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetInstances)}");
@@ -383,10 +379,6 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.Iot.TimeSeriesInsights/samples">our repo samples</see>.
         /// </remarks>
-        /// <example>
-        /// <code snippet="Snippet:TimeSeriesInsightsSampleGetInstancesByNames">
-        /// </code>
-        /// </example>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="timeSeriesNames"/> is <c>null</c>.
         /// </exception>
@@ -490,10 +482,6 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.Iot.TimeSeriesInsights/samples">our repo samples</see>.
         /// </remarks>
-        /// <example>
-        /// <code snippet="Snippet:TimeSeriesInsightsSampleGetInstancesByIds">
-        /// </code>
-        /// </example>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="timeSeriesIds"/> is <c>null</c>.
         /// </exception>
@@ -595,10 +583,6 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.Iot.TimeSeriesInsights/samples">our repo samples</see>.
         /// </remarks>
-        /// <example>
-        /// <code snippet="Snippet:TimeSeriesInsightsSampleGetSearchSuggestions">
-        /// </code>
-        /// </example>
         public virtual async Task<Response<SearchSuggestion[]>> GetSearchSuggestionsAsync(
             string searchString,
             int? maxNumberOfSuggestions = null,
@@ -672,10 +656,6 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.Iot.TimeSeriesInsights/samples">our repo samples</see>.
         /// </remarks>
-        /// <example>
-        /// <code snippet="Snippet:TimeSeriesInsightsSampleCreateOrReplaceInstances">
-        /// </code>
-        /// </example>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="timeSeriesInstances"/> is <c>null</c>.
         /// </exception>
@@ -783,10 +763,6 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.Iot.TimeSeriesInsights/samples">our repo samples</see>.
         /// </remarks>
-        /// <example>
-        /// <code snippet="Snippet:TimeSeriesInsightsSampleReplaceInstances">
-        /// </code>
-        /// </example>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="timeSeriesInstances"/> is <c>null</c>.
         /// </exception>
@@ -885,10 +861,6 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.Iot.TimeSeriesInsights/samples">our repo samples</see>.
         /// </remarks>
-        /// <example>
-        /// <code snippet="Snippet:TimeSeriesInsightsSampleDeletesInstancesByNames">
-        /// </code>
-        /// </example>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="timeSeriesNames"/> is <c>null</c>.
         /// </exception>
@@ -992,10 +964,6 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.Iot.TimeSeriesInsights/samples">our repo samples</see>.
         /// </remarks>
-        /// <example>
-        /// <code snippet="Snippet:TimeSeriesInsightsSampleDeleteInstancesByIds">
-        /// </code>
-        /// </example>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="timeSeriesIds"/> is <c>null</c>.
         /// </exception>
