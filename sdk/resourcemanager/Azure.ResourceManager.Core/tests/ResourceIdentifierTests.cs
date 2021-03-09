@@ -12,13 +12,18 @@ namespace Azure.ResourceManager.Core.Tests
         const string ResourceGroupResourceId = "/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575/resourceGroups/myRg";
         const string LocationResourceId = "/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575/locations/MyLocation";
         const string SubscriptionResourceId = "/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575";
-
-        const string 
+        const string TenantResourceId = "/providers/Microsoft.Billing/billingAccounts/3984c6f4-2d2a-4b04-93ce-43cf4824b698%3Ae2f1492a-a492-468d-909f-bf7fe6662c01_2019-05-31";
 
         [SetUp]
         public void Setup()
         {
         }
+
+        /*[TestCase(TenantResourceId)]
+        public void CanParseTenant(string id)
+        {
+            ResourceIdentifier asIdentifier = id;
+        }*/
 
         [TestCase("")]
         [TestCase(" ")]
