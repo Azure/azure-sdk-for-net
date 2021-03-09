@@ -21,7 +21,7 @@ namespace Azure.Communication.Sms.Tests.samples
 
         public SmsClient CreateSmsClient()
         {
-            var connectionString = TestEnvironment.ConnectionString;
+            var connectionString = TestEnvironment.LiveTestConnectionString;
             SmsClient client = new SmsClient(connectionString, InstrumentClientOptions(new SmsClientOptions()));
 
             #region Snippet:Azure_Communication_Sms_Tests_Samples_CreateSmsClient
@@ -33,7 +33,7 @@ namespace Azure.Communication.Sms.Tests.samples
 
         public SmsClient CreateSmsClientWithToken()
         {
-            string endpoint = TestEnvironment.Endpoint.ToString();
+            string endpoint = ConnectionString.Parse(TestEnvironment.LiveTestConnectionString, allowEmptyValues: true).GetRequired("endpoint");
 
             #region Snippet:Azure_Communication_Sms_Tests_Samples_CreateSmsClientWithToken
             //@@string endpoint = "<endpoint_url>";
@@ -50,17 +50,10 @@ namespace Azure.Communication.Sms.Tests.samples
             SmsClient smsClient = CreateSmsClient();
             #region Snippet:Azure_Communication_Sms_Tests_SendAsync
             SmsSendResult sendResult = await smsClient.SendAsync(
-<<<<<<< HEAD
-                   //@@ from: "<from-phone-number>", // Your E.164 formatted from phone number used to send SMS
-                   //@@ to: "<to-phone-number>", // E.164 formatted recipient phone number
-                   /*@@*/ from: TestEnvironment.FromPhoneNumber,
-                   /*@@*/ to: TestEnvironment.ToPhoneNumber,
-=======
                 //@@ from: "<from-phone-number>", // Your E.164 formatted from phone number used to send SMS
                 //@@ to: "<to-phone-number>", // E.164 formatted recipient phone number
                 /*@@*/ from: TestEnvironment.FromPhoneNumber,
                 /*@@*/ to: TestEnvironment.ToPhoneNumber,
->>>>>>> 4e9b08248b25d9b81d09815a57925ac249ca8f28
                 message: "Hi");
             Console.WriteLine($"Sms id: {sendResult.MessageId}");
             #endregion Snippet:Azure_Communication_Sms_Tests_SendAsync
@@ -73,17 +66,10 @@ namespace Azure.Communication.Sms.Tests.samples
             SmsClient smsClient = CreateSmsClient();
             #region Snippet:Azure_Communication_SmsClient_Send_GroupSmsWithOptions
             Response<IEnumerable<SmsSendResult>> response = await smsClient.SendAsync(
-<<<<<<< HEAD
-                   //@@ from: "<from-phone-number>", // Your E.164 formatted from phone number used to send SMS
-                   //@@ to: new string[] { "<to-phone-number-1>", "<to-phone-number-2>" }, // E.164 formatted recipient phone number
-                   /*@@*/ from: TestEnvironment.FromPhoneNumber,
-                   /*@@*/ to: new string[] { TestEnvironment.ToPhoneNumber, TestEnvironment.ToPhoneNumber },
-=======
                 //@@ from: "<from-phone-number>", // Your E.164 formatted from phone number used to send SMS
                 //@@ to: new string[] { "<to-phone-number-1>", "<to-phone-number-2>" }, // E.164 formatted recipient phone numbers
                 /*@@*/ from: TestEnvironment.FromPhoneNumber,
                 /*@@*/ to: new string[] { TestEnvironment.ToPhoneNumber, TestEnvironment.ToPhoneNumber },
->>>>>>> 4e9b08248b25d9b81d09815a57925ac249ca8f28
                 message: "Weekly Promotion!",
                 options: new SmsSendOptions(enableDeliveryReport: true) // OPTIONAL
                 {
@@ -106,21 +92,12 @@ namespace Azure.Communication.Sms.Tests.samples
             try
             {
                 Response<IEnumerable<SmsSendResult>> response = await smsClient.SendAsync(
-<<<<<<< HEAD
-                   //@@ from: "<from-phone-number>" // Your E.164 formatted phone number used to send SMS
-                   //@@ to: new string [] {"<to-phone-number-1>", "<to-phone-number-2>"}, // E.164 formatted recipient phone number
-                   /*@@*/ from: TestEnvironment.FromPhoneNumber,
-                   /*@@*/ to: new string[] { TestEnvironment.ToPhoneNumber, TestEnvironment.ToPhoneNumber },
-                message: "Weekly Promotion!",
-                options: new SmsSendOptions(enableDeliveryReport: true) // OPTIONAL
-=======
                     //@@ from: "<from-phone-number>" // Your E.164 formatted phone number used to send SMS
                     //@@ to: new string [] {"<to-phone-number-1>", "<to-phone-number-2>"}, // E.164 formatted recipient phone number
                     /*@@*/ from: TestEnvironment.FromPhoneNumber,
                     /*@@*/ to: new string[] { TestEnvironment.ToPhoneNumber, TestEnvironment.ToPhoneNumber },
                     message: "Weekly Promotion!",
                     options: new SmsSendOptions(enableDeliveryReport: true) // OPTIONAL
->>>>>>> 4e9b08248b25d9b81d09815a57925ac249ca8f28
                 {
                     Tag = "marketing", // custom tags
                 });
@@ -130,17 +107,11 @@ namespace Azure.Communication.Sms.Tests.samples
                     if (result.Successful)
                     {
                         Console.WriteLine($"Successfully sent this message: {result.MessageId} to {result.To}.");
-<<<<<<< HEAD
-                    } else {
-                        Console.WriteLine($"Something went wrong when trying to send this message {result.MessageId} to {result.To}.");
-                        Console.WriteLine(result.ErrorMessage);
-=======
                     }
                     else
                     {
                         Console.WriteLine($"Something went wrong when trying to send this message {result.MessageId} to {result.To}.");
                         Console.WriteLine($"Status code {result.HttpStatusCode} and error message {result.ErrorMessage}.");
->>>>>>> 4e9b08248b25d9b81d09815a57925ac249ca8f28
                     }
                 }
             }

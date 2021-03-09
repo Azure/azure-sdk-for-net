@@ -24,7 +24,7 @@ namespace Azure.Communication.Sms.Tests
         {
             SmsClient client = InstrumentClient(
                 new SmsClient(
-                    TestEnvironment.ConnectionString,
+                    TestEnvironment.LiveTestConnectionString,
                     InstrumentClientOptions(new SmsClientOptions())));
             try
             {
@@ -38,6 +38,7 @@ namespace Azure.Communication.Sms.Tests
             catch (RequestFailedException ex)
             {
                 Console.WriteLine(ex.Message);
+                Assert.Fail($"Unexpected error: {ex}");
             }
             catch (Exception ex)
             {
@@ -59,7 +60,7 @@ namespace Azure.Communication.Sms.Tests
             }
             SmsClient client = InstrumentClient(
                 new SmsClient(
-                    new Uri(ConnectionString.Parse(TestEnvironment.ConnectionString, allowEmptyValues: true).GetRequired("endpoint")),
+                    new Uri(ConnectionString.Parse(TestEnvironment.LiveTestConnectionString, allowEmptyValues: true).GetRequired("endpoint")),
                     tokenCredential,
                     InstrumentClientOptions(new SmsClientOptions())));
 
@@ -75,6 +76,7 @@ namespace Azure.Communication.Sms.Tests
             catch (RequestFailedException ex)
             {
                 Console.WriteLine(ex.Message);
+                Assert.Fail($"Unexpected error: {ex}");
             }
             catch (Exception ex)
             {
@@ -87,7 +89,7 @@ namespace Azure.Communication.Sms.Tests
         {
             SmsClient client = InstrumentClient(
                 new SmsClient(
-                    TestEnvironment.ConnectionString,
+                    TestEnvironment.LiveTestConnectionString,
                     InstrumentClientOptions(new SmsClientOptions())));
             try
             {
@@ -113,7 +115,7 @@ namespace Azure.Communication.Sms.Tests
         {
             SmsClient client = InstrumentClient(
                 new SmsClient(
-                    TestEnvironment.ConnectionString,
+                    TestEnvironment.LiveTestConnectionString,
                     InstrumentClientOptions(new SmsClientOptions())));
             try
             {
@@ -126,6 +128,7 @@ namespace Azure.Communication.Sms.Tests
             catch (RequestFailedException ex)
             {
                 Console.WriteLine(ex.Message);
+                Assert.Fail($"Unexpected error: {ex}");
             }
 
             catch (Exception ex)
@@ -139,7 +142,7 @@ namespace Azure.Communication.Sms.Tests
         {
             SmsClient client = InstrumentClient(
                 new SmsClient(
-                    TestEnvironment.ConnectionString,
+                    TestEnvironment.LiveTestConnectionString,
                     InstrumentClientOptions(new SmsClientOptions())));
             try
             {
@@ -165,7 +168,7 @@ namespace Azure.Communication.Sms.Tests
         {
             SmsClient client = InstrumentClient(
                 new SmsClient(
-                    TestEnvironment.ConnectionString,
+                    TestEnvironment.LiveTestConnectionString,
                     InstrumentClientOptions(new SmsClientOptions())));
             try
             {
@@ -187,6 +190,7 @@ namespace Azure.Communication.Sms.Tests
             catch (RequestFailedException ex)
             {
                 Console.WriteLine(ex.Message);
+                Assert.Fail($"Unexpected error: {ex}");
             }
             catch (Exception ex)
             {
@@ -199,7 +203,7 @@ namespace Azure.Communication.Sms.Tests
         {
             SmsClient client = InstrumentClient(
                 new SmsClient(
-                    TestEnvironment.ConnectionString,
+                    TestEnvironment.LiveTestConnectionString,
                     InstrumentClientOptions(new SmsClientOptions())));
             try
             {
@@ -219,6 +223,7 @@ namespace Azure.Communication.Sms.Tests
             catch (RequestFailedException ex)
             {
                 Console.WriteLine(ex.Message);
+                Assert.Fail($"Unexpected error: {ex}");
             }
             catch (Exception ex)
             {

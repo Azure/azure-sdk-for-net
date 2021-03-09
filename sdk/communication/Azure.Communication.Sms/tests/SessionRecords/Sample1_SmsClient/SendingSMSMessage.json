@@ -8,9 +8,12 @@
         "Authorization": "Sanitized",
         "Content-Length": "146",
         "Content-Type": "application/json",
-        "Date": "Mon, 08 Mar 2021 21:19:07 GMT",
-        "traceparent": "00-79f9894040d59943a604ab68f6b15619-640649830ea22a48-00",
-        "User-Agent": "azsdk-net-Communication.Sms/1.0.0-alpha.20210308.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "Date": "Tue, 09 Mar 2021 19:50:46 GMT",
+        "traceparent": "00-e22c3065911e444b836b533508d02f6b-96d68db9e669b646-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Sms/1.0.0-alpha.20210309.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19042 )"
+        ],
         "x-ms-client-request-id": "9800f8702cae318fb5b9dcf8ed2f1f21",
         "x-ms-content-sha256": "Sanitized",
         "x-ms-return-client-request-id": "true"
@@ -30,18 +33,18 @@
       "ResponseHeaders": {
         "api-supported-versions": "2020-07-20-preview1, 2020-08-20-preview, 2021-03-07",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 08 Mar 2021 21:19:05 GMT",
-        "MS-CV": "ZOTHd2k56kCzmvNB9LbXsQ.0",
+        "Date": "Tue, 09 Mar 2021 19:50:47 GMT",
+        "MS-CV": "jYW0CtU1RUWARpU1qCy7GQ.0",
         "Request-Context": "appId=",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0yZRGYAAAAABKMULDRChLQ46yKFvC681/Q0hHRURHRTE2MTgAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
-        "X-Processing-Time": "600ms"
+        "X-Azure-Ref": "0l9FHYAAAAAC6OrxkOxquTZmamTzzcTBdQ0hHRURHRTE2MTAAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Processing-Time": "297ms"
       },
       "ResponseBody": {
         "value": [
           {
             "to": "Sanitized",
-            "messageId": "Outgoing_202103082119054b8bd9ab-b90f-4c97-bcb5-d79a9eb3d448_noam",
+            "messageId": "Outgoing_20210309195047c15897be-89fa-46fa-90eb-7cf3aa4ab389_noam",
             "httpStatusCode": 202,
             "repeatabilityResult": "accepted",
             "successful": true
@@ -51,8 +54,8 @@
     }
   ],
   "Variables": {
+    "AZURE_COMMUNICATION_LIVETEST_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=3z7dN2ZEcANlOejjlHaJUfqdC4SyuzdiHbaMcFR0tNRK37KDZ14HUuhIybbBgt6oSQwUwu5TnF5cYFm22Lh/xg==",
     "AZURE_PHONE_NUMBER": "\u002B18005555555",
-    "COMMUNICATION_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
     "RandomSeed": "1804854755"
   }
 }

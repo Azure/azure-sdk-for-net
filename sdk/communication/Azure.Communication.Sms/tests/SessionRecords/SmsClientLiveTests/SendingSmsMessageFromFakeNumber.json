@@ -8,11 +8,11 @@
         "Authorization": "Sanitized",
         "Content-Length": "146",
         "Content-Type": "application/json",
-        "Date": "Tue, 02 Mar 2021 23:44:40 GMT",
-        "traceparent": "00-f6713212b4c62240a7b7e9f433fa11f3-514712ab2ee14243-00",
+        "Date": "Tue, 09 Mar 2021 19:50:50 GMT",
+        "traceparent": "00-cd441985193e664f9a2f2784a356a5d1-63627b21995a7b4b-00",
         "User-Agent": [
-          "azsdk-net-Communication.Sms/1.0.0-alpha.20210302.1",
-          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
+          "azsdk-net-Communication.Sms/1.0.0-alpha.20210309.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "45c8957597a6dffe099e7013371db1f0",
         "x-ms-content-sha256": "Sanitized",
@@ -32,12 +32,12 @@
       "StatusCode": 400,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 02 Mar 2021 23:44:40 GMT",
-        "MS-CV": "Afc3Qfz3LESUHZAn9xunfA.0",
+        "Date": "Tue, 09 Mar 2021 19:50:50 GMT",
+        "MS-CV": "aY3cjeaCNU60Ks5uV/ZTWA.0",
         "Request-Context": "appId=",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "06M0\u002BYAAAAABqysAsEgIRS7Jt3wPOFLVtRVdSMzBFREdFMDUwOAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
-        "X-Processing-Time": "151ms"
+        "X-Azure-Ref": "0mtFHYAAAAAB6qCBZQtLlQLuTlfma3YCVQ0hHRURHRTE2MTAAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Processing-Time": "150ms"
       },
       "ResponseBody": {
         "From": [
@@ -47,8 +47,8 @@
     }
   ],
   "Variables": {
+    "AZURE_COMMUNICATION_LIVETEST_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=3z7dN2ZEcANlOejjlHaJUfqdC4SyuzdiHbaMcFR0tNRK37KDZ14HUuhIybbBgt6oSQwUwu5TnF5cYFm22Lh/xg==",
     "AZURE_PHONE_NUMBER": "\u002B18005555555",
-    "COMMUNICATION_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
     "RandomSeed": "1661011836"
   }
 }
