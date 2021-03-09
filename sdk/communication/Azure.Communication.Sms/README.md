@@ -62,7 +62,7 @@ You may also add pass in an options object to specify whether the delivery repor
 ```C# Snippet:Azure_Communication_SmsClient_Send_GroupSmsWithOptions
 Response<IEnumerable<SmsSendResult>> response = await smsClient.SendAsync(
     from: "<from-phone-number>", // Your E.164 formatted from phone number used to send SMS
-    to: new string[] { "<to-phone-number-1>", "<to-phone-number-2>" }, // E.164 formatted recipient phone number
+    to: new string[] { "<to-phone-number-1>", "<to-phone-number-2>" }, // E.164 formatted recipient phone numbers
     message: "Weekly Promotion!",
     options: new SmsSendOptions(enableDeliveryReport: true) // OPTIONAL
     {
