@@ -1180,10 +1180,7 @@ schemas: !Schemas
                               description: Settings concerning key vault encryption for a configuration store.
                               namespace: ''
                           protocol: !Protocols {}
-                        nullable: true
                         serializedName: keyVaultProperties
-                        extensions:
-                          x-nullable: true
                         language: !Languages 
                           default:
                             name: keyVaultProperties
