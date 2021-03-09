@@ -24,19 +24,19 @@ namespace Azure.Communication.Chat
         private readonly ChatClientOptions _chatClientOptions;
 
         /// <summary> Initializes a new instance of <see cref="ChatClient"/>.</summary>
-        /// <param name="endpointUrl">The uri for the Azure Communication Services Chat.</param>
+        /// <param name="endpoint">The uri for the Azure Communication Services Chat.</param>
         /// <param name="communicationTokenCredential">Instance of <see cref="CommunicationTokenCredential"/>.</param>
         /// <param name="options">Chat client options exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
-        public ChatClient(Uri endpointUrl, CommunicationTokenCredential communicationTokenCredential, ChatClientOptions? options = default)
+        public ChatClient(Uri endpoint, CommunicationTokenCredential communicationTokenCredential, ChatClientOptions options = default)
         {
             Argument.AssertNotNull(communicationTokenCredential, nameof(communicationTokenCredential));
-            Argument.AssertNotNull(endpointUrl, nameof(endpointUrl));
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
             _chatClientOptions = options ?? new ChatClientOptions();
             _communicationTokenCredential = communicationTokenCredential;
-            _endpointUrl = endpointUrl;
+            _endpointUrl = endpoint;
             _clientDiagnostics = new ClientDiagnostics(_chatClientOptions);
             HttpPipeline pipeline = CreatePipelineFromOptions(_chatClientOptions, communicationTokenCredential);
-            _chatRestClient = new ChatRestClient(_clientDiagnostics, pipeline, endpointUrl.AbsoluteUri, _chatClientOptions.ApiVersion);
+            _chatRestClient = new ChatRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri, _chatClientOptions.ApiVersion);
         }
 
         /// <summary>Initializes a new instance of <see cref="ChatClient"/> for mocking.</summary>
@@ -56,7 +56,7 @@ namespace Azure.Communication.Chat
         /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-ID and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-ID is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. </param>
         /// <param name="cancellationToken">The cancellation token for the task.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<CreateChatThreadResult>> CreateChatThreadAsync(string topic, IEnumerable<ChatParticipant> participants, string? repeatabilityRequestId = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CreateChatThreadResult>> CreateChatThreadAsync(string topic, IEnumerable<ChatParticipant> participants, string repeatabilityRequestId = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatClient)}.{nameof(CreateChatThread)}");
             scope.Start();
@@ -79,7 +79,7 @@ namespace Azure.Communication.Chat
         /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-ID and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-ID is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. </param>
         /// <param name="cancellationToken">The cancellation token for the task.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<CreateChatThreadResult> CreateChatThread(string topic, IEnumerable<ChatParticipant> participants, string? repeatabilityRequestId = null, CancellationToken cancellationToken = default)
+        public virtual Response<CreateChatThreadResult> CreateChatThread(string topic, IEnumerable<ChatParticipant> participants, string repeatabilityRequestId = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatClient)}.{nameof(CreateChatThread)}");
             scope.Start();
@@ -176,7 +176,7 @@ namespace Azure.Communication.Chat
                 }
             }
 
-            async Task<Page<ChatThreadInfo>> NextPageFunc(string? nextLink, int? pageSizeHint)
+            async Task<Page<ChatThreadInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatClient)}.{nameof(GetChatThreadsInfo)}");
                 scope.Start();
@@ -219,7 +219,7 @@ namespace Azure.Communication.Chat
                 }
             }
 
-            Page<ChatThreadInfo> NextPageFunc(string? nextLink, int? pageSizeHint)
+            Page<ChatThreadInfo> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatClient)}.{nameof(GetChatThreadsInfo)}");
                 scope.Start();
@@ -235,7 +235,7 @@ namespace Azure.Communication.Chat
                     throw;
                 }
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            return PageableHelpers.CreateEnumerable(FirstPageFunc,  NextPageFunc);
         }
 
         /// <summary> Deletes a thread asynchronously. </summary>

@@ -57,10 +57,11 @@ namespace Azure.Communication.Chat.Tests
             var displayNameMessage = "DisplayName sender message 1";
             var participants = new[]
             {
-                new ChatParticipant(user1),
-                new ChatParticipant(user2),
-                new ChatParticipant(user3)
+                new ChatParticipant(user1) { DisplayName = "user1" },
+                new ChatParticipant(user2) { DisplayName = "user2" },
+                new ChatParticipant(user3) { DisplayName = "user3" }
             };
+
             ChatClient chatClient = CreateInstrumentedChatClient(token1);
             ChatClient chatClient3 = CreateInstrumentedChatClient(token3);
 
@@ -120,8 +121,8 @@ namespace Azure.Communication.Chat.Tests
             Pageable<ChatParticipant> chatParticipants = chatThreadClient.GetParticipants();
             var chatParticipantsCount = chatParticipants.Count();
 
-            var newParticipant = new ChatParticipant(user4);
-            var newParticipant2 = new ChatParticipant(user5);
+            var newParticipant = new ChatParticipant(user4) { DisplayName = "user4" };
+            var newParticipant2 = new ChatParticipant(user5) { DisplayName = "user5" };
             chatThreadClient.AddParticipants(participants: new[] { newParticipant });
             AddChatParticipantsResult addChatParticipantsResult = chatThreadClient.AddParticipant(newParticipant2);
 
@@ -129,10 +130,16 @@ namespace Azure.Communication.Chat.Tests
             PageableTester<ChatParticipant>.AssertPagination(enumerableResource: chatParticipantsAfterTwoAdded, expectedPageSize: 2, expectedTotalResources: 5);
             var chatParticipantsAfterTwoAddedCount = chatParticipantsAfterTwoAdded.Count();
 
+            Pageable<ChatMessage> messagesAfterParticipantsAdded = chatThreadClient.GetMessages();
+            ChatMessage participantAddedMessage = messagesAfterParticipantsAdded.First(x => x.Type == ChatMessageType.ParticipantAdded);
+
             CommunicationUserIdentifier participantToBeRemoved = user4;
-            chatThreadClient.RemoveParticipant(user: participantToBeRemoved);
+            chatThreadClient.RemoveParticipant(identifier: participantToBeRemoved);
             Pageable<ChatParticipant> chatParticipantAfterOneDeleted = chatThreadClient.GetParticipants();
             var chatParticipantAfterOneDeletedCount = chatParticipantAfterOneDeleted.Count();
+
+            Pageable<ChatMessage> messagesAfterParticipantRemoved = chatThreadClient.GetMessages();
+            ChatMessage participantRemovedMessage = messagesAfterParticipantRemoved.First(x => x.Type == ChatMessageType.ParticipantRemoved);
 
             Response typingNotificationResponse = chatThreadClient.SendTypingNotification();
             chatThreadClient.SendTypingNotification();
@@ -159,6 +166,14 @@ namespace Azure.Communication.Chat.Tests
             Assert.AreEqual(2, threadsCount);
             Assert.AreEqual(8, getMessagesCount); //Including all types : 5 text message, 3 control messages
             Assert.AreEqual(3, getMessagesCount2); //Including all types : 1 text message, 2 control messages
+
+            Assert.AreEqual(1, participantAddedMessage.Content.Participants.Count);
+            Assert.AreEqual(user5.Id, CommunicationIdentifierSerializer.Serialize(participantAddedMessage.Content.Participants[0].User).CommunicationUser.Id);
+            Assert.AreEqual("user5", participantAddedMessage.Content.Participants[0].DisplayName);
+
+            Assert.AreEqual(1, participantRemovedMessage.Content.Participants.Count);
+            Assert.AreEqual(user4.Id, CommunicationIdentifierSerializer.Serialize(participantRemovedMessage.Content.Participants[0].User).CommunicationUser.Id);
+            Assert.AreEqual("user4", participantRemovedMessage.Content.Participants[0].DisplayName);
 
             Assert.IsTrue(deletedChatMessage.DeletedOn.HasValue);
             Assert.AreEqual(3, chatParticipantsCount);
@@ -239,9 +254,9 @@ namespace Azure.Communication.Chat.Tests
             var displayNameMessage = "DisplayName sender message 1";
             var participants = new List<ChatParticipant>
             {
-                new ChatParticipant(user1),
-                new ChatParticipant(user2),
-                new ChatParticipant(user3)
+                new ChatParticipant(user1) { DisplayName = "user1" },
+                new ChatParticipant(user2) { DisplayName = "user2" },
+                new ChatParticipant(user3) { DisplayName = "user3" }
             };
             ChatClient chatClient = CreateInstrumentedChatClient(token1);
             ChatClient chatClient3 = CreateInstrumentedChatClient(token3);
@@ -305,8 +320,8 @@ namespace Azure.Communication.Chat.Tests
             var chatParticipantsCount = chatParticipants.ToEnumerableAsync().Result.Count;
             #endregion
 
-            var newParticipant = new ChatParticipant(user4);
-            var newParticipant2 = new ChatParticipant(user5);
+            var newParticipant = new ChatParticipant(user4) { DisplayName = "user4" };
+            var newParticipant2 = new ChatParticipant(user5) { DisplayName = "user5" };
             AddChatParticipantsResult addChatParticipantsResult = await chatThreadClient.AddParticipantsAsync(participants: new[] { newParticipant });
             AddChatParticipantsResult addChatParticipantsResult2 = await chatThreadClient.AddParticipantAsync(newParticipant2);
 
@@ -314,10 +329,18 @@ namespace Azure.Communication.Chat.Tests
             await PageableTester<ChatParticipant>.AssertPaginationAsync(enumerableResource: chatParticipantsAfterTwoOneAdded, expectedPageSize: 2, expectedTotalResources: 5);
             var chatParticipantsAfterTwoOneAddedCount = chatParticipantsAfterTwoOneAdded.ToEnumerableAsync().Result.Count;
 
+            List<ChatMessage> messagesAfterParticipantsAdded = chatThreadClient.GetMessagesAsync().ToEnumerableAsync().Result;
+            ChatMessage participantAddedMessage = messagesAfterParticipantsAdded.First(x => x.Type == ChatMessageType.ParticipantAdded);
+
             CommunicationUserIdentifier participantToBeRemoved = user4;
-            await chatThreadClient.RemoveParticipantAsync(user: participantToBeRemoved);
+            await chatThreadClient.RemoveParticipantAsync(identifier: participantToBeRemoved);
             AsyncPageable<ChatParticipant> chatParticipantAfterOneDeleted = chatThreadClient.GetParticipantsAsync();
             var chatParticipantAfterOneDeletedCount = chatParticipantAfterOneDeleted.ToEnumerableAsync().Result.Count;
+
+            List<ChatMessage> messagesAfterParticipantRemoved = chatThreadClient.GetMessagesAsync().ToEnumerableAsync().Result;
+            ChatMessage participantRemovedMessage = messagesAfterParticipantRemoved.First(x => x.Type == ChatMessageType.ParticipantRemoved);
+
+            ChatMessage participantRemovedMessage2 = await chatThreadClient.GetMessageAsync(participantRemovedMessage.Id);
 
             Response typingNotificationResponse = await chatThreadClient.SendTypingNotificationAsync();
             await chatThreadClient.SendTypingNotificationAsync();
@@ -344,6 +367,14 @@ namespace Azure.Communication.Chat.Tests
             Assert.AreEqual(2, threadsCount);
             Assert.AreEqual(8, getMessagesCount); //Including all types : 5 text message, 3 control messages
             Assert.AreEqual(3, getMessagesCount2); //Including all types : 1 text message, 2 control messages
+
+            Assert.AreEqual(1, participantAddedMessage.Content.Participants.Count);
+            Assert.AreEqual(user5.Id, CommunicationIdentifierSerializer.Serialize(participantAddedMessage.Content.Participants[0].User).CommunicationUser.Id);
+            Assert.AreEqual("user5", participantAddedMessage.Content.Participants[0].DisplayName);
+
+            Assert.AreEqual(1, participantRemovedMessage.Content.Participants.Count);
+            Assert.AreEqual(user4.Id, CommunicationIdentifierSerializer.Serialize(participantRemovedMessage.Content.Participants[0].User).CommunicationUser.Id);
+            Assert.AreEqual("user4", participantRemovedMessage.Content.Participants[0].DisplayName);
 
             Assert.IsTrue(deletedChatMessage.DeletedOn.HasValue);
             Assert.AreEqual(3, chatParticipantsCount);

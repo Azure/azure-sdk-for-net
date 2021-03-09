@@ -36,8 +36,9 @@ $PrPaths = [ordered]@{ }
 $Includes = New-Object "System.Collections.Generic.List[String]"
 $PrIncludes = New-Object "System.Collections.Generic.List[String]"
 
-$MgmtDirs = Get-ChildItem -Path "$PackagesPath" -Directory -Recurse -Depth 1 | Where-Object { $_.FullName -match ".Management.|\\mgmt" }
+$MgmtDirs = Get-ChildItem -Path "$PackagesPath" -Directory -Recurse -Depth 1 | Where-Object { $_.FullName -match "(.Microsoft\.Azure(Stack)?\.Management.)|(.\\mgmt)" }
 
+$Includes.Add('eng/pipelines/mgmt.yml')
 # Add Each client path to the exclude list
 foreach ($Item in $MgmtDirs) {
     $IncludePath = $Item.FullName.Substring($Item.FullName.IndexOf("sdk\"))
