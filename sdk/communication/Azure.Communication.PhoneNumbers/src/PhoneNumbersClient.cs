@@ -106,7 +106,7 @@ namespace Azure.Communication.PhoneNumbers
         #endregion protected constructors
 
         /// <summary> Releases an acquired phone number. </summary>
-        /// <param name="phoneNumber"> Phone number to be released, e.g. +11234567890. </param>
+        /// <param name="phoneNumber"> Phone number to be released, e.g. +14255550123. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
         public virtual async Task<ReleasePhoneNumberOperation> StartReleasePhoneNumberAsync(string phoneNumber, CancellationToken cancellationToken = default)
@@ -128,7 +128,7 @@ namespace Azure.Communication.PhoneNumbers
         }
 
         /// <summary> Releases an acquired phone number. </summary>
-        /// <param name="phoneNumber"> Phone number to be released, e.g. +11234567890. </param>
+        /// <param name="phoneNumber"> Phone number to be released, e.g. +14255550123. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
         public virtual ReleasePhoneNumberOperation StartReleasePhoneNumber(string phoneNumber, CancellationToken cancellationToken = default)
@@ -150,7 +150,7 @@ namespace Azure.Communication.PhoneNumbers
         }
 
         /// <summary> Updates the capabilities of a phone number. </summary>
-        /// <param name="phoneNumber"> The phone number id in E.164 format. The leading plus can be either + or encoded as %2B, e.g. +11234567890. </param>
+        /// <param name="phoneNumber"> The phone number id in E.164 format. The leading plus can be either + or encoded as %2B, e.g. +14255550123. </param>
         /// <param name="calling"> Capability value for calling. </param>
         /// <param name="sms"> Capability value for SMS. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -174,7 +174,7 @@ namespace Azure.Communication.PhoneNumbers
         }
 
         /// <summary> Updates the capabilities of a phone number. </summary>
-        /// <param name="phoneNumber"> The phone number id in E.164 format. The leading plus can be either + or encoded as %2B, e.g. +11234567890. </param>
+        /// <param name="phoneNumber"> The phone number id in E.164 format. The leading plus can be either + or encoded as %2B, e.g. +14255550123. </param>
         /// <param name="calling"> Capability value for calling. </param>
         /// <param name="sms"> Capability value for SMS. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -198,7 +198,7 @@ namespace Azure.Communication.PhoneNumbers
         }
 
         /// <summary> Gets the details of the given acquired phone number. </summary>
-        /// <param name="phoneNumber"> The acquired phone number whose details are to be fetched in E.164 format, e.g. +11234567890. </param>
+        /// <param name="phoneNumber"> The acquired phone number whose details are to be fetched in E.164 format, e.g. +14255550123. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<AcquiredPhoneNumber>> GetPhoneNumberAsync(string phoneNumber, CancellationToken cancellationToken = default)
         {
@@ -216,7 +216,7 @@ namespace Azure.Communication.PhoneNumbers
         }
 
         /// <summary> Gets the details of the given acquired phone number. </summary>
-        /// <param name="phoneNumber"> The acquired phone number whose details are to be fetched in E.164 format, e.g. +11234567890. </param>
+        /// <param name="phoneNumber"> The acquired phone number whose details are to be fetched in E.164 format, e.g. +14255550123. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AcquiredPhoneNumber> GetPhoneNumber(string phoneNumber, CancellationToken cancellationToken = default)
         {
