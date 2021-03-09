@@ -1,6 +1,10 @@
 # Release History
 
-## 4.2.0-beta.5 (Unreleased)
+## 4.2.0-beta.5 (2021-03-09)
+
+### Changed
+
+- `DownloadCertificate` and `DownloadCertificateAsync` on `CertificateClient` now support PEM-encoded certificates and keys.
 
 ## 4.2.0-beta.4 (2021-02-10)
 
