@@ -5,8 +5,10 @@ using System;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using System.Web;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Runtime.Serialization;
 
 namespace Azure.ResourceManager.Core
@@ -30,12 +32,12 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets and set the Details of the response.
         /// </summary>
-        public System.Collections.IDictionary Details { get; }
+        public ArrayList Details { get; }
 
         /// <summary>
         /// Gets and set the AdditionalInfo of the response.
         /// </summary>
-        public System.Collections.IDictionary AdditionalInfo { get; }
+        public IDictionary AdditionalInfo { get; }
 
         /// <summary>
         /// TODO.
@@ -85,9 +87,14 @@ namespace Azure.ResourceManager.Core
         public ManagementException(int status, string message, string? errorCode, Exception? innerException)
             : base(status, message, errorCode, innerException)
         {
-            Code = errorCode;
-            Target = "";
-            Details = GetResponseDetails(message);
+            Code = (string)GetResponseProperty("code");
+            Target = (string)GetResponseProperty("target");
+            Data.Clear();
+            foreach (KeyValuePair<string,string> item in (ArrayList)GetResponseProperty("additionalInfo"))
+            {
+                Data.Add(item.Key, item.Value);
+            }
+            Details = (ArrayList)GetResponseProperty("details");
             AdditionalInfo = this.Data;
         }
 
@@ -99,20 +106,76 @@ namespace Azure.ResourceManager.Core
         protected ManagementException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
+            Code = (string)GetResponseProperty("code");
+            Target = (string)GetResponseProperty("target");
+            Data.Clear();
+            foreach (KeyValuePair<string, string> item in (ArrayList)GetResponseProperty("additionalInfo"))
+            {
+                Data.Add(item.Key, item.Value);
+            }
+            Details = (ArrayList)GetResponseProperty("details");
+            AdditionalInfo = this.Data;
         }
 
         /// <summary>
         /// TODO.
         /// </summary>
-        /// <param name="streamingContext"> TODO. </param>
-        public static System.Collections.IDictionary GetResponseDetails(string streamingContext)
+        /// <param name="propertyName"> TODO. </param>
+        public static object GetResponseProperty(string propertyName)
         {
             string rawContent = System.IO.File.ReadAllText(@"C:\Users\v-minghc\Desktop\testdata.json");
-            Console.WriteLine(rawContent);
-            var jsonObject = JsonSerializer.Deserialize<ManagementException>(rawContent);
+            JsonDocument jsonObejct = JsonDocument.Parse(rawContent);
+            JsonElement error;
+            if (jsonObejct.RootElement.TryGetProperty("error", out error))
+            {
+                return TryGetProperties(error, propertyName);
+            }
+            else
+            {
+                return TryGetProperties(jsonObejct.RootElement, propertyName);
+            }
+        }
 
-            Console.WriteLine(streamingContext);
-            return jsonObject.AdditionalInfo;
+        /// <summary>
+        /// TODO.
+        /// </summary>
+        /// <param name="rootElements"> TODO. </param>
+        /// <param name="propertyName"> TODO. </param>
+#pragma warning disable AZC0014 // Avoid using banned types in public API
+        protected static object TryGetProperties(JsonElement rootElements, string propertyName)
+#pragma warning restore AZC0014 // Avoid using banned types in public API
+        {
+            JsonElement targetProperty;
+            if (rootElements.TryGetProperty(propertyName, out targetProperty))
+            {
+                switch (targetProperty.ValueKind)
+                {
+                    case JsonValueKind.String:
+                        return targetProperty.GetString();
+                    case JsonValueKind.Array:
+                        ArrayList result = new ArrayList();
+                        foreach (JsonElement item in targetProperty.EnumerateArray())
+                        {
+                            if (item.ValueKind == JsonValueKind.String)
+                            {
+                                result.Add(item.GetString());
+                            } else if (item.ValueKind == JsonValueKind.Object)
+                            {
+                                foreach (var childElement in item.EnumerateObject())
+                                {
+                                    result.Add(new KeyValuePair<string, string>(childElement.Name, childElement.Value.ToString()));
+                                }     
+                            }
+                        }
+                        return result;
+                    default:
+                        return targetProperty;
+                }
+            }
+            else
+            {
+                throw new InvalidOperationException("No such Property: " + propertyName + " exsit in current Json");
+            }
         }
     }
 }
