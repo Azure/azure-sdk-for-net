@@ -15,9 +15,9 @@ save-inputs: true
 ``` yaml
 directive:
   from: swagger-document
-  where: $.definitions.EncryptionProperties
+  where: $.definitions.KeyVaultProperties
   transform: >
-    $.properties.keyVaultProperties["x-nullable"] = true;
+    $["x-nullable"] = true;
 ````
 
 
