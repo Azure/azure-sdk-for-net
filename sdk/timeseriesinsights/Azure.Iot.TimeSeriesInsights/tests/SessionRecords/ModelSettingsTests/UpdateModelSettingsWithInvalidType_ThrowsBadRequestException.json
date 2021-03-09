@@ -12,7 +12,7 @@
           "azsdk-net-Iot.TimeSeriesInsights/1.0.0-alpha.20210308.1",
           "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
         ],
-        "x-ms-client-request-id": "fd0064aededf5bf63624d944df462695",
+        "x-ms-client-request-id": "74fa75c49be8000f0cedeaf522ae94a7",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -23,12 +23,12 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-continuation",
         "Content-Type": "application/json",
-        "Date": "Mon, 08 Mar 2021 21:23:21 GMT",
+        "Date": "Tue, 09 Mar 2021 00:01:03 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-request-id": "def9b9c5-6724-40ba-82f5-4e10b7e29ad2"
+        "x-ms-request-id": "b6eec8fb-5e10-4a50-a6c1-a94613b08635"
       },
       "ResponseBody": {
         "error": {
@@ -42,7 +42,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1365987461",
+    "RandomSeed": "792542313",
     "TIMESERIESINSIGHTS_URL": "fakeHost.api.wus2.timeseriesinsights.azure.com"
   }
 }

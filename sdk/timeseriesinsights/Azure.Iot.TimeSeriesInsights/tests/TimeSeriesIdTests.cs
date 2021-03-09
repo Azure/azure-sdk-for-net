@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using FluentAssertions;
@@ -99,24 +100,10 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
             var tsiId = new TimeSeriesId("B17", "F1", "R400");
 
             // Act
-            var idAsString = tsiId.GetId();
+            var idAsString = tsiId.ToString();
 
             // Assert
-            idAsString.Should().Be($"Time Series Id key 1: B17\nTime Series Id key 2: F1\n" +
-                $"Time Series Id key 3: R400");
-        }
-
-        [Test]
-        public void TimeSeriesId_GetIdForObjectKeys()
-        {
-            // Arrange
-            var tsiId = new TimeSeriesId(true, 1);
-
-            // Act
-            var idAsString = tsiId.GetId();
-
-            // Assert
-            idAsString.Should().Be($"Time Series Id key 1: True\nTime Series Id key 2: 1");
+            idAsString.Should().Be("[\"B17\",\"F1\",\"R400\"]");
         }
 
         [Test]
@@ -156,45 +143,6 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
 
             // Assert
             Enumerable.SequenceEqual(idAsArray, new object[] { "B17", "F1", "R1" }).Should().BeTrue();
-        }
-
-        [Test]
-        public void TimeSeriesId_ToArrayWith1ObjectKeys()
-        {
-            // Arrange
-            var tsiId = new TimeSeriesId(true);
-
-            // Act
-            var idAsArray = tsiId.ToArray();
-
-            // Assert
-            Enumerable.SequenceEqual(idAsArray, new object[] { true }).Should().BeTrue();
-        }
-
-        [Test]
-        public void TimeSeriesId_ToArrayWith2ObjectKeys()
-        {
-            // Arrange
-            var tsiId = new TimeSeriesId(1, true);
-
-            // Act
-            var idAsArray = tsiId.ToArray();
-
-            // Assert
-            Enumerable.SequenceEqual(idAsArray, new object[] { 1, true }).Should().BeTrue();
-        }
-
-        [Test]
-        public void TimeSeriesId_ToArrayWith3ObjectKeys()
-        {
-            // Arrange
-            var tsiId = new TimeSeriesId(1, false, "B1");
-
-            // Act
-            var idAsArray = tsiId.ToArray();
-
-            // Assert
-            Enumerable.SequenceEqual(idAsArray, new object[] { 1, false, "B1" }).Should().BeTrue();
         }
     }
 }

@@ -75,10 +75,10 @@ namespace Azure.Iot.TimeSeriesInsights
             {
                 if (property.NameEquals("timeSeriesId"))
                 {
-                    List<object> array = new List<object>();
+                    var array = new List<string>();
                     foreach (JsonElement item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetObject());
+                        array.Add(item.GetString());
                     }
 
                     timeSeriesId = array.Count switch
