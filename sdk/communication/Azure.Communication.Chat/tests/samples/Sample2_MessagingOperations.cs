@@ -46,7 +46,7 @@ namespace Azure.Communication.Chat.Tests.samples
             AsyncPageable<ChatMessage> allMessages = chatThreadClient.GetMessagesAsync();
             await foreach (ChatMessage message in allMessages)
             {
-                Console.WriteLine($"{message.Id}:{message.Content}");
+                Console.WriteLine($"{message.Id}:{message.Content.Message}");
             }
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_GetMessages
 
