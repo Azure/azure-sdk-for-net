@@ -2,6 +2,10 @@
 
 ## 1.0.0-beta.5 (2021-03-09)
 Updated `Azure.Communication.Chat` version.
+- Added identifier serialization in Chat
+- Updated the SDK to use `CommunicationIdentifier` changes everywhere instead of string Id
+- Removal of nullable references
+- Added unit test and live test coverage 
 
 ## 1.0.0-beta.4 (2021-02-09)
 
