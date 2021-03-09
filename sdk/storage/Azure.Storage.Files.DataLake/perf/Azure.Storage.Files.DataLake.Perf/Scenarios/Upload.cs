@@ -51,6 +51,14 @@ namespace Azure.Storage.Files.DataLake.Perf.Scenarios
         {
             var serviceClient = new DataLakeServiceClient(TestEnvironment.DataLakeServiceUri, TestEnvironment.DataLakeCredential);
             FileSystemClient = serviceClient.GetFileSystemClient(FileSystemName);
+
+            Payload = RandomStream.Create(Options.Size);
+        }
+
+        public override void Dispose(bool disposing)
+        {
+            Payload.Dispose();
+            base.Dispose(disposing);
         }
 
         /// <summary>
@@ -86,19 +94,6 @@ namespace Azure.Storage.Files.DataLake.Perf.Scenarios
         public async override Task SetupAsync()
         {
             await base.SetupAsync();
-            Payload = RandomStream.Create(Options.Size);
-        }
-
-        /// <summary>
-        ///   Performs the tasks needed to clean up the environment for an instance
-        ///   of the test scenario.  When multiple instances are run in parallel, cleanup
-        ///   will be run once for each after execution has completed.
-        /// </summary>
-        ///
-        public async override Task CleanupAsync()
-        {
-            await base.CleanupAsync();
-            Payload.Dispose();
         }
 
         /// <summary>
