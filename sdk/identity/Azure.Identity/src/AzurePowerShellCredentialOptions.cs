@@ -13,9 +13,9 @@ namespace Azure.Identity
         private bool _useLegacyPowerShell;
 
         /// <summary>
-        /// Set this if you want to use PowerShell (version 5 or lower) for getting the token
-        /// instead of PowerShell Core (version 6 or higher) which is the version used by default.
-        /// This can be set to true only on Windows OS.
+        /// Set this to <c>true</c> if to use PowerShell (version 5 or lower) for getting the token
+        /// or <c>false</c> to use PowerShell Core (version 6 or higher). The default is <c>false</c>.
+        /// Note: This can be set to true only on Windows OS.
         /// </summary>
         public bool UseLegacyPowerShell
         {
