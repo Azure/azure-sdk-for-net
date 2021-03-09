@@ -54,7 +54,7 @@
     Dependency versions for Track 2, Azure.* libraries.
     Only packages that are approved dependencies should go here.
   -->
-  
+
   <ItemGroup Condition="'$(IsClientLibrary)' == 'true'">
 
     <!-- BCL packages -->
@@ -73,15 +73,15 @@
     <PackageReference Update="Microsoft.CSharp" Version="4.5.0" />
 
     <!-- Azure SDK packages -->
-    <PackageReference Update="Azure.Core" Version="1.9.0" />
+    <PackageReference Update="Azure.Core" Version="1.10.0" />
     <PackageReference Update="Azure.Core.Amqp" Version="1.0.0" />
-    <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.9" />
-    <PackageReference Update="Azure.Messaging.EventHubs" Version="5.3.0" />
+    <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.10" />
+    <PackageReference Update="Azure.Messaging.EventHubs" Version="5.3.1" />
     <PackageReference Update="Azure.Identity" Version="1.2.1" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.0.2" />
     <PackageReference Update="Azure.Security.KeyVault.Keys" Version="4.0.2" />
     <PackageReference Update="Azure.Storage.Blobs" Version="12.8.0" />
-    
+
     <!-- Other approved packages -->
     <PackageReference Update="Microsoft.Azure.Amqp" Version="2.4.11" />
     <PackageReference Update="Microsoft.Identity.Client" Version="4.23.0" />
