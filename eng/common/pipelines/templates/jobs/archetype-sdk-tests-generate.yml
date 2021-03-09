@@ -12,16 +12,40 @@ parameters:
   default: []
 - name: JobTemplatePath
   type: string
+# Set this to false to do a full checkout for private repositories with the azure pipelines service connection
+- name: SparseCheckout
+  type: boolean
+  default: true
+- name: SparseCheckoutPaths
+  type: object
+  default: []
+- name: Pool
+  type: string
+  default: azsdk-pool-mms-ubuntu-1804-general
+- name: OsVmImage
+  type: string
+  default: MMSUbuntu18.04
 
 jobs:
 - job: generate_matrix
   variables:
     displayNameFilter: $[ coalesce(variables.jobMatrixFilter, '.*') ]
   pool:
-    name: Azure Pipelines
-    vmImage: ubuntu-18.04
+    name: ${{ parameters.Pool }}
+    vmImage: ${{ parameters.OsVmImage }}
   displayName: Generate Job Matrix
   steps:
+    # Skip sparse checkout for the `azure-sdk-for-<lang>-pr` private mirrored repositories
+    # as we require the github service connection to be loaded.
+    - ${{ if and(parameters.SparseCheckout, not(contains(variables['Build.DefinitionName'], '-pr - '))) }}:
+      - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+        parameters:
+          ${{ if ne(length(parameters.SparseCheckoutPaths), 0) }}:
+            Paths: ${{ parameters.SparseCheckoutPaths }}
+          ${{ if and(eq(length(parameters.SparseCheckoutPaths), 0), ne(parameters.AdditionalParameters.ServiceDirectory, '')) }}:
+            Paths:
+              - ${{ parameters.AdditionalParameters.ServiceDirectory }}
+
     - ${{ each config in parameters.MatrixConfigs }}:
       - ${{ if eq(config.GenerateVMJobs, 'true') }}:
         - task: Powershell@2
