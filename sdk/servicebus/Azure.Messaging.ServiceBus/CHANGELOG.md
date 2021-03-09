@@ -1,7 +1,14 @@
 # Release History
 
-## 7.2.0-beta.1 (Unreleased)
+## 7.2.0-beta.1 (2021-03-08)
+### Added
+- Added `EnableCrossEntityTransactions` property to `ServiceBusClientOptions` to support transactions spanning multiple entities.
+- Added `SessionIdleTimeout` property to `ServiceBusSessionProcessorOptions` to allow configuration of when to switch to the next session when using the session processor. 
 
+### Key Bug Fixes
+- Fixed issue where batch size calculation was not taking diagnostic tracing information into account.
+- Retry on authorization failures to reduce likelihood of transient failures bubbling up to user application.
+- Reduce maximum refresh interval to prevent Timer exceptions involving long-lived SAS tokens.
 
 ## 7.1.0 (2021-02-09)
 
