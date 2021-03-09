@@ -27,8 +27,8 @@ namespace Azure.Iot.ModelsRepository
             _clientOptions = options;
             _clientDiagnostics = clientDiagnostics;
             _modelFetcher = repositoryUri.Scheme == ModelsRepositoryConstants.File
-                ? _modelFetcher = new LocalModelFetcher(_clientDiagnostics)
-                : _modelFetcher = new RemoteModelFetcher(_clientDiagnostics, _clientOptions);
+                ? _modelFetcher = new FileModelFetcher(_clientDiagnostics)
+                : _modelFetcher = new HttpModelFetcher(_clientDiagnostics, _clientOptions);
             _clientId = Guid.NewGuid();
 
             _repositoryUri = repositoryUri;
@@ -36,28 +36,28 @@ namespace Azure.Iot.ModelsRepository
             ModelsRepositoryEventSource.Instance.InitFetcher(_clientId, repositoryUri.Scheme);
         }
 
-        public async Task<IDictionary<string, string>> ProcessAsync(string dtmi, DependencyResolutionOption resolutionOption, CancellationToken cancellationToken)
+        public async Task<IDictionary<string, string>> ProcessAsync(string dtmi, ModelDependencyResolution dependencyResolution, CancellationToken cancellationToken)
         {
-            return await ProcessAsync(new List<string> { dtmi }, true, resolutionOption, cancellationToken).ConfigureAwait(false);
+            return await ProcessAsync(new List<string> { dtmi }, true, dependencyResolution, cancellationToken).ConfigureAwait(false);
         }
 
-        public IDictionary<string, string> Process(string dtmi, DependencyResolutionOption resolutionOption, CancellationToken cancellationToken)
+        public IDictionary<string, string> Process(string dtmi, ModelDependencyResolution dependencyResolution, CancellationToken cancellationToken)
         {
-            return ProcessAsync(new List<string> { dtmi }, false, resolutionOption, cancellationToken).EnsureCompleted();
+            return ProcessAsync(new List<string> { dtmi }, false, dependencyResolution, cancellationToken).EnsureCompleted();
         }
 
-        public Task<IDictionary<string, string>> ProcessAsync(IEnumerable<string> dtmis, DependencyResolutionOption resolutionOption, CancellationToken cancellationToken)
+        public Task<IDictionary<string, string>> ProcessAsync(IEnumerable<string> dtmis, ModelDependencyResolution dependencyResolution, CancellationToken cancellationToken)
         {
-            return ProcessAsync(dtmis, true, resolutionOption, cancellationToken);
+            return ProcessAsync(dtmis, true, dependencyResolution, cancellationToken);
         }
 
-        public IDictionary<string, string> Process(IEnumerable<string> dtmis, DependencyResolutionOption resolutionOption, CancellationToken cancellationToken)
+        public IDictionary<string, string> Process(IEnumerable<string> dtmis, ModelDependencyResolution dependencyResolution, CancellationToken cancellationToken)
         {
-            return ProcessAsync(dtmis, false, resolutionOption, cancellationToken).EnsureCompleted();
+            return ProcessAsync(dtmis, false, dependencyResolution, cancellationToken).EnsureCompleted();
         }
 
         private async Task<IDictionary<string, string>> ProcessAsync(
-            IEnumerable<string> dtmis, bool async, DependencyResolutionOption resolutionOption, CancellationToken cancellationToken)
+            IEnumerable<string> dtmis, bool async, ModelDependencyResolution dependencyResolution, CancellationToken cancellationToken)
         {
             var processedModels = new Dictionary<string, string>();
             Queue<string> toProcessModels = PrepareWork(dtmis);
@@ -76,8 +76,8 @@ namespace Azure.Iot.ModelsRepository
                 ModelsRepositoryEventSource.Instance.ProcessingDtmi(targetDtmi);
 
                 FetchResult result = async
-                    ? await FetchAsync(targetDtmi, resolutionOption, cancellationToken).ConfigureAwait(false)
-                    : Fetch(targetDtmi, resolutionOption, cancellationToken);
+                    ? await FetchAsync(targetDtmi, dependencyResolution, cancellationToken).ConfigureAwait(false)
+                    : Fetch(targetDtmi, dependencyResolution, cancellationToken);
 
                 if (result.FromExpanded)
                 {
@@ -96,7 +96,7 @@ namespace Azure.Iot.ModelsRepository
 
                 ModelMetadata metadata = new ModelQuery(result.Definition).ParseModel();
 
-                if (resolutionOption >= DependencyResolutionOption.Enabled)
+                if (dependencyResolution >= ModelDependencyResolution.Enabled)
                 {
                     IList<string> dependencies = metadata.Dependencies;
 
@@ -128,14 +128,14 @@ namespace Azure.Iot.ModelsRepository
             return processedModels;
         }
 
-        private Task<FetchResult> FetchAsync(string dtmi, DependencyResolutionOption resolutionOption, CancellationToken cancellationToken)
+        private Task<FetchResult> FetchAsync(string dtmi, ModelDependencyResolution dependencyResolution, CancellationToken cancellationToken)
         {
-            return _modelFetcher.FetchAsync(dtmi, _repositoryUri, resolutionOption, cancellationToken);
+            return _modelFetcher.FetchAsync(dtmi, _repositoryUri, dependencyResolution, cancellationToken);
         }
 
-        private FetchResult Fetch(string dtmi, DependencyResolutionOption resolutionOption, CancellationToken cancellationToken)
+        private FetchResult Fetch(string dtmi, ModelDependencyResolution dependencyResolution, CancellationToken cancellationToken)
         {
-            return _modelFetcher.Fetch(dtmi, _repositoryUri, resolutionOption, cancellationToken);
+            return _modelFetcher.Fetch(dtmi, _repositoryUri, dependencyResolution, cancellationToken);
         }
 
         private static Queue<string> PrepareWork(IEnumerable<string> dtmis)
