@@ -64,6 +64,15 @@ Windows (Note: Administrator access is required)
 5.  Click on the property you would like to change, then click the Edit…
     button. If the property name is not listed, then click the New…
     button.
+    
+Setx from a command prompt can also be used. Please remember to start a new console session after running the command(s).
+
+Windows-based OS :
+
+    setx AZURE_CLIENT_ID "__CLIENT_ID__"
+    setx AZURE_CLIENT_SECRET "__CLIENT_SECRET__"
+    setx AZURE_TENANT_ID "__TENANT_ID__"
+    setx AZURE_SUBSCRIPTION_ID "__SUBSCRIPTION_ID__"
 
 Linux-based OS :
 
