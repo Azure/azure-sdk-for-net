@@ -28,6 +28,16 @@ namespace Azure.ResourceManager.Core.Tests
             Assert.AreEqual(asIdentifier.Name, "3984c6f4-2d2a-4b04-93ce-43cf4824b698%3Ae2f1492a-a492-468d-909f-bf7fe6662c01_2019-05-31");
         }
 
+        [TestCase("/providers/MicrosoftSomething/billingAccounts/")]
+        [TestCase("/MicrosoftSomething/billingAccounts/")]
+        [TestCase("providers/subscription/MicrosoftSomething/billingAccounts/")]
+        [TestCase("/subscription/providersSomething")]
+        [TestCase("/providers")]
+        public void InvalidTenantID(string id)
+        {
+            Assert.Throws<ArgumentOutOfRangeException>(() => { ResourceIdentifier subject = id; });
+        }
+
         [TestCase("")]
         [TestCase(" ")]
         [TestCase("asdfghj")]
