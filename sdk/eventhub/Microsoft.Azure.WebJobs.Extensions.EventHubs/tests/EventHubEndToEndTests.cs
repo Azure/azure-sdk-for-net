@@ -49,7 +49,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             var (jobHost, host) = BuildHost<EventHubTestBindToPocoJobs>();
             using (jobHost)
             {
-                await jobHost.CallAsync(nameof(EventHubTestBindToPocoJobs.SendEvent_TestHub), new { input = "{ Name: 'foo', Value: 'data' }" });
+                await jobHost.CallAsync(nameof(EventHubTestBindToPocoJobs.SendEvent_TestHub));
 
                 bool result = _eventWait.WaitOne(Timeout);
                 Assert.True(result);
@@ -131,6 +131,19 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             AssertSingleDispatchLogs(host);
         }
 
+        [Test]
+        public async Task EventHub_ProducerClient()
+        {
+            var (jobHost, host) = BuildHost<EventHubTestClientDispatch>();
+            using (jobHost)
+            {
+                await jobHost.CallAsync(nameof(EventHubTestClientDispatch.SendEvents));
+
+                bool result = _eventWait.WaitOne(Timeout);
+                Assert.True(result);
+            }
+        }
+
         private static void AssertSingleDispatchLogs(IHost host)
         {
             IEnumerable<LogMessage> logMessages = host.GetTestLoggerProvider()
@@ -160,7 +173,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 host.ConfigureAppConfiguration(configurationBuilder =>
                     configurationBuilder.AddInMemoryCollection(new Dictionary<string, string>()
                     {
-                        {"TestConnection", EventHubsTestEnvironment.Instance.EventHubsConnectionString}
+                        {"TestConnection", EventHubsTestEnvironment.Instance.EventHubsConnectionString},
+                        {"AzureWebJobsStorage", StorageTestEnvironment.Instance.StorageConnectionString}
                     })));
         }
 
@@ -175,7 +189,16 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                         {"TestConnection:clientId", EventHubsTestEnvironment.Instance.ClientId},
                         {"TestConnection:clientSecret", EventHubsTestEnvironment.Instance.ClientSecret},
                         {"TestConnection:tenantId", EventHubsTestEnvironment.Instance.TenantId},
+                        {"AzureWebJobsStorage:serviceUri", GetServiceUri()},
+                        {"AzureWebJobsStorage:clientId", EventHubsTestEnvironment.Instance.ClientId},
+                        {"AzureWebJobsStorage:clientSecret", EventHubsTestEnvironment.Instance.ClientSecret},
+                        {"AzureWebJobsStorage:tenantId", EventHubsTestEnvironment.Instance.TenantId},
                     })));
+        }
+
+        private static string GetServiceUri()
+        {
+            return "https://" + StorageTestEnvironment.Instance.StorageAccountName + ".blob." + StorageTestEnvironment.Instance.StorageEndpointSuffix;
         }
 
         public async Task AssertCanSendReceiveMessage(Action<IHostBuilder> hostConfiguration)
@@ -375,13 +398,34 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             public static void ProcessSingleEvent([EventHubTrigger(TestHubName, Connection = TestHubName)] string evt,
                 string partitionKey, DateTime enqueuedTimeUtc, IDictionary<string, object> properties,
-                IDictionary<string, object> systemProperties)
+                IDictionary<string, object> systemProperties,
+                PartitionContext partitionContext)
             {
                 Assert.True((DateTime.Now - enqueuedTimeUtc).TotalSeconds < 30);
 
                 Assert.AreEqual("value1", properties["TestProp1"]);
                 Assert.AreEqual("value2", properties["TestProp2"]);
 
+                Assert.NotNull(partitionContext.PartitionId);
+                Assert.NotNull(partitionContext.ReadLastEnqueuedEventProperties());
+
+                _eventWait.Set();
+            }
+        }
+
+        public class EventHubTestClientDispatch
+        {
+            public static async Task SendEvents([EventHub(TestHubName, Connection = TestHubName)] EventHubProducerClient producer)
+            {
+                await producer.SendAsync(new[]
+                {
+                    new EventData(new BinaryData("Event 1")),
+                });
+            }
+
+            public static void ProcessSingleEvent([EventHubTrigger(TestHubName, Connection = TestHubName)] EventData eventData)
+            {
+                Assert.AreEqual(eventData.EventBody.ToString(), "Event 1");
                 _eventWait.Set();
             }
         }
@@ -419,16 +463,16 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
         public class EventHubTestBindToPocoJobs
         {
-            public static void SendEvent_TestHub(string input, [EventHub(TestHubName, Connection = TestHubName)] out EventData evt)
+            public static void SendEvent_TestHub([EventHub(TestHubName, Connection = TestHubName)] out TestPoco evt)
             {
-                evt = new EventData(Encoding.UTF8.GetBytes(input));
+                evt = new TestPoco() {Value = "data", Name = "foo"};
             }
 
-            public static void BindToPoco([EventHubTrigger(TestHubName, Connection = TestHubName)] TestPoco input, string value, string name, ILogger logger)
+            public static void BindToPoco([EventHubTrigger(TestHubName, Connection = TestHubName)] TestPoco input, ILogger logger)
             {
-                Assert.AreEqual(input.Value, value);
-                Assert.AreEqual(input.Name, name);
-                logger.LogInformation($"PocoValues({name},{value})");
+                Assert.AreEqual(input.Value, "data");
+                Assert.AreEqual(input.Name, "foo");
+                logger.LogInformation($"PocoValues(foo,data)");
                 _eventWait.Set();
             }
         }

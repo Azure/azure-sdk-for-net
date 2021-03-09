@@ -34,7 +34,6 @@ namespace Azure.ResourceManager.Core
         /// Initializes a new instance of the <see cref="AzureResourceManagerClient"/> class for mocking.
         /// </summary>
         protected AzureResourceManagerClient()
-            : this(null, null, new DefaultAzureCredential(), null)
         {
         }
 
@@ -119,17 +118,17 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets the Api version overrides.
         /// </summary>
-        public Dictionary<string, string> ApiVersionOverrides { get; private set; }
+        public virtual Dictionary<string, string> ApiVersionOverrides { get; private set; }
 
         /// <summary>
         /// Gets the default Azure subscription.
         /// </summary>
-        public Subscription DefaultSubscription { get; private set; }
+        public virtual Subscription DefaultSubscription { get; private set; }
 
         /// <summary>
         /// Gets the Azure resource manager client options.
         /// </summary>
-        internal AzureResourceManagerClientOptions ClientOptions { get; }
+        internal virtual AzureResourceManagerClientOptions ClientOptions { get; }
 
         /// <summary>
         /// Gets the Azure subscription operations.

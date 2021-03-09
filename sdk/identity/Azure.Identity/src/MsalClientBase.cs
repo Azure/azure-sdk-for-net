@@ -1,11 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Identity.Client;
-using Microsoft.Identity.Client.Extensions.Msal;
 
 namespace Azure.Identity
 {
@@ -36,7 +34,7 @@ namespace Azure.Identity
 
             ClientId = clientId;
 
-            TokenCache = cacheOptions?.TokenCache;
+            TokenCache = cacheOptions?.TokenCachePersistenceOptions == null ? null : new TokenCache(cacheOptions?.TokenCachePersistenceOptions);
 
             _clientAsyncLock = new AsyncLockWithValue<TClient>();
         }

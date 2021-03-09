@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class TenantListResult
+    internal partial class TenantListResult
     {
         internal static TenantListResult DeserializeTenantListResult(JsonElement element)
         {

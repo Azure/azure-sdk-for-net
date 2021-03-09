@@ -17,7 +17,8 @@ This sample shows how to use the library to create, retrieve, and delete Secret 
 To create a secret reference, use the `SecretReferenceConfigurationSetting` class:
 
 ```C# Snippet:Sample_CreateSecretReference
-var secretReferenceSetting = new SecretReferenceConfigurationSetting("setting", new Uri("https://<keyvault_name>.vault.azure.net/secrets/<secret_name>"));
+var secretId = "https://keyvault_name.vault.azure.net/secrets/<secret_name>";
+var secretReferenceSetting = new SecretReferenceConfigurationSetting("setting", new Uri(secretId));
 ```
 
 **NOTE** you can retrieve the secret identifier from the Azure Portal or using the `KeyVaultSecret.Id` property.

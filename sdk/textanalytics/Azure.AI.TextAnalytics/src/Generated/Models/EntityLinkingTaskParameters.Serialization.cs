@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.TextAnalytics
+namespace Azure.AI.TextAnalytics.Models
 {
     internal partial class EntityLinkingTaskParameters : IUtf8JsonSerializable
     {
@@ -23,7 +23,7 @@ namespace Azure.AI.TextAnalytics
             if (Optional.IsDefined(StringIndexType))
             {
                 writer.WritePropertyName("stringIndexType");
-                writer.WriteStringValue(StringIndexType.ToString());
+                writer.WriteStringValue(StringIndexType.Value.ToString());
             }
             writer.WriteEndObject();
         }

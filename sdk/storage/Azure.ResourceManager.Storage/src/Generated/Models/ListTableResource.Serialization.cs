@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class ListTableResource
+    internal partial class ListTableResource
     {
         internal static ListTableResource DeserializeListTableResource(JsonElement element)
         {

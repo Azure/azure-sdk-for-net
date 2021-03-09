@@ -1,23 +1,23 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.4/entities/recognition/pii?showStats=true\u0026domain=phi\u0026stringIndexType=Utf16CodeUnit",
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.4/entities/recognition/pii?showStats=true\u0026stringIndexType=Utf16CodeUnit",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json, text/json",
-        "Content-Length": "293",
+        "Content-Length": "316",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-b0db1db26f202a4b81d2276056753d8b-c653c183f9421446-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210224.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "eecc011d319477b6a3836264a1185b02",
+        "traceparent": "00-f8eb8fe9a808ef4ca006f7dd4d60ba6f-5517ed8ec0eaa54f-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210302.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "04ded076a7d1ef20d826d8bd22d2f313",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "documents": [
           {
             "id": "0",
-            "text": "A developer with SSN 859-98-0987 whose phone number is 800-102-1100 is building tools with our APIs.",
+            "text": "A developer with SSN 859-98-0987 whose phone number is 800-102-1100 is building tools with our APIs. They work at Microsoft",
             "language": "en"
           },
           {
@@ -29,14 +29,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "5539ef36-4017-4678-8f5c-6158d6e01859",
+        "apim-request-id": "da6add3d-3efd-43cb-a881-05331cb8e131",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2",
-        "Date": "Wed, 24 Feb 2021 16:57:40 GMT",
+        "Date": "Tue, 02 Mar 2021 14:35:05 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "94"
+        "x-envoy-upstream-service-time": "50"
       },
       "ResponseBody": {
         "statistics": {
@@ -47,10 +47,10 @@
         },
         "documents": [
           {
-            "redactedText": "A developer with SSN *********** whose phone number is ************ is building tools with our APIs.",
+            "redactedText": "A developer with SSN *********** whose phone number is ************ is building tools with our APIs. They work at *********",
             "id": "0",
             "statistics": {
-              "charactersCount": 100,
+              "charactersCount": 123,
               "transactionsCount": 1
             },
             "entities": [
@@ -67,6 +67,13 @@
                 "offset": 55,
                 "length": 12,
                 "confidenceScore": 0.8
+              },
+              {
+                "text": "Microsoft",
+                "category": "Organization",
+                "offset": 114,
+                "length": 9,
+                "confidenceScore": 0.96
               }
             ],
             "warnings": []
@@ -110,8 +117,8 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1097726284",
+    "RandomSeed": "706747963",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://ta-s-westeurope.cognitiveservices.azure.com"
+    "TEXT_ANALYTICS_ENDPOINT": "https://mariari-westus2-s.cognitiveservices.azure.com/"
   }
 }

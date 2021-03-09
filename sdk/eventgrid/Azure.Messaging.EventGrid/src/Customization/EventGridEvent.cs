@@ -18,6 +18,9 @@ namespace Azure.Messaging.EventGrid
         /// <param name="data"> Event data specific to the event type. </param>
         /// <param name="dataSerializationType">The type to use when serializing the data.
         /// If not specified, <see cref="object.GetType()"/> will be used on <paramref name="data"/>.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="subject"/>, <paramref name="data"/>, <paramref name="eventType"/>, or <paramref name="dataVersion"/> was null.
+        /// </exception>
         public EventGridEvent(string subject, string eventType, string dataVersion, object data, Type dataSerializationType = default)
         {
             Argument.AssertNotNull(subject, nameof(subject));
@@ -41,6 +44,9 @@ namespace Azure.Messaging.EventGrid
         /// <param name="eventType"> The type of the event that occurred. For example, "Contoso.Items.ItemReceived". </param>
         /// <param name="dataVersion"> The schema version of the data object. </param>
         /// <param name="data"> Event data specific to the event type. </param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="subject"/>, <paramref name="data"/>, <paramref name="eventType"/>, or <paramref name="dataVersion"/> was null.
+        /// </exception>
         public EventGridEvent(string subject, string eventType, string dataVersion, BinaryData data)
         {
             Argument.AssertNotNull(subject, nameof(subject));
@@ -123,15 +129,14 @@ namespace Azure.Messaging.EventGrid
         /// Given JSON-encoded events, parses the event envelope and returns an array of EventGridEvents.
         /// If the content is not valid JSON, or events are missing required properties, an exception is thrown.
         /// </summary>
-        /// <param name="requestContent"> The JSON-encoded representation of either a single event or an array or events,
-        /// encoded in the EventGridEvent schema. </param>
-        /// <returns> A list of <see cref="EventGridEvent"/>. </returns>
-        public static EventGridEvent[] ParseEvents(string requestContent)
+        /// <param name="json">An instance of <see cref="BinaryData"/> containing the JSON for one or more EventGridEvents.</param>
+        /// <returns> An array of <see cref="EventGridEvent"/> instances.</returns>
+        public static EventGridEvent[] ParseMany(BinaryData json)
         {
-            Argument.AssertNotNull(requestContent, nameof(requestContent));
+            Argument.AssertNotNull(json, nameof(json));
 
             EventGridEvent[] egEvents = null;
-            JsonDocument requestDocument = JsonDocument.Parse(requestContent);
+            JsonDocument requestDocument = JsonDocument.Parse(json);
 
             // Parse JsonElement into separate events, deserialize event envelope properties
             if (requestDocument.RootElement.ValueKind == JsonValueKind.Object)
@@ -155,13 +160,15 @@ namespace Azure.Messaging.EventGrid
         /// Given a single JSON-encoded event, parses the event envelope and returns an EventGridEvent.
         /// If the specified event is not valid JSON, or the event is missing required properties, an exception is thrown.
         /// </summary>
-        /// <param name="jsonEvent"> Specifies the instance of <see cref="BinaryData"/> containing the JSON for an
-        /// <see cref="EventGridEvent"/>.</param>
+        /// <param name="json">An instance of <see cref="BinaryData"/> containing the JSON for the EventGridEvent.</param>
         /// <returns> An <see cref="EventGridEvent"/>. </returns>
-        public static EventGridEvent Parse(BinaryData jsonEvent)
+        /// <exception cref="ArgumentException">
+        /// <paramref name="json"/> contained multiple events. <see cref="ParseMany"/> should be used instead.
+        /// </exception>
+        public static EventGridEvent Parse(BinaryData json)
         {
-            Argument.AssertNotNull(jsonEvent, nameof(jsonEvent));
-            EventGridEvent[] events = ParseEvents(jsonEvent.ToString());
+            Argument.AssertNotNull(json, nameof(json));
+            EventGridEvent[] events = ParseMany(json);
             if (events.Length == 0)
             {
                 return null;
@@ -172,8 +179,7 @@ namespace Azure.Messaging.EventGrid
                     "The BinaryData instance contains JSON from multiple event grid events. This method " +
                     "should only be used with BinaryData containing a single event grid event. " +
                     Environment.NewLine +
-                    "To parse multiple events, call ToString on the BinaryData and use the " +
-                    "Parse overload that takes a string.");
+                    $"To parse multiple events, use the {nameof(ParseMany)} overload.");
             }
             return events[0];
         }

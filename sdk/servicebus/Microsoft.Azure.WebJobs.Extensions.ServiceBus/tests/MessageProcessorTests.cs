@@ -29,10 +29,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
             var functionException = new InvalidOperationException("Kaboom!");
             FunctionResult result = new FunctionResult(functionException);
             var client = new ServiceBusClient("Endpoint = sb://test.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=abc123=");
-            var receiver = client.CreateReceiver("test-entity");
+            var actions = new ServiceBusMessageActions(client.CreateReceiver("test-entity"));
             var ex = Assert.ThrowsAsync<InvalidOperationException>(async () =>
             {
-                await _processor.CompleteProcessingMessageAsync(receiver, message, result, CancellationToken.None);
+                await _processor.CompleteProcessingMessageAsync(actions, message, result, CancellationToken.None);
             });
 
             Assert.AreSame(functionException, ex);
@@ -44,8 +44,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
             ServiceBusReceivedMessage message = ServiceBusModelFactory.ServiceBusReceivedMessage();
             FunctionResult result = new FunctionResult(true);
             var client = new ServiceBusClient("Endpoint = sb://test.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=abc123=");
-            var receiver = client.CreateReceiver("test-entity");
-            await _processor.CompleteProcessingMessageAsync(receiver, message, result, CancellationToken.None);
+            var actions = new ServiceBusMessageActions(client.CreateReceiver("test-entity"));
+            await _processor.CompleteProcessingMessageAsync(actions, message, result, CancellationToken.None);
         }
 
         private Task ExceptionReceivedHandler(ProcessErrorEventArgs eventArgs)

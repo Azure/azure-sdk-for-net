@@ -2229,16 +2229,20 @@ namespace Azure.AI.FormRecognizer.Tests
                     includeFieldElements: true,
                     expectedFirstPageNumber: expectedPageNumber,
                     expectedLastPageNumber: expectedPageNumber);
-
-                // Basic sanity test to make sure pages are ordered correctly.
-                var expectedLabelData = formIndex == 0 ? "__Address__1" : "Company Name:";
-                var expectedValueData = formIndex == 0 ? "Contoso Ltd. 2345 Dogwood Lane Birch, Kansas 98123" : "Southridge Video";
-
-                FormField fieldInPage = recognizedForm.Fields.Values.Where(field => field.LabelData.Text.Contains(expectedLabelData)).FirstOrDefault();
-                Assert.IsNotNull(fieldInPage);
-                Assert.IsNotNull(fieldInPage.ValueData);
-                Assert.AreEqual(expectedValueData, fieldInPage.ValueData.Text);
             }
+
+            // Basic sanity test to make sure pages are ordered correctly.
+
+            FormPage firstFormPage = recognizedForms[0].Pages.Single();
+            FormTable firstFormTable = firstFormPage.Tables.Single();
+
+            Assert.True(firstFormTable.Cells.Any(c => c.Text == "Gold Sponsor"));
+
+            FormField secondFormFieldInPage = recognizedForms[1].Fields.Values.Where(field => field.LabelData.Text.Contains("Company Name:")).FirstOrDefault();
+
+            Assert.IsNotNull(secondFormFieldInPage);
+            Assert.IsNotNull(secondFormFieldInPage.ValueData);
+            Assert.AreEqual("Southridge Video", secondFormFieldInPage.ValueData.Text);
         }
 
         [Test]

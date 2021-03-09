@@ -1,5 +1,5 @@
 # Recognizing Healthcare Entities from Documents
-This sample demonstrates how to recognize healthcare entities in one or more documents and get them asynchronously. To get started you will need a Text Analytics endpoint and credentials.  See [README][README] for links and instructions.
+This sample demonstrates how to recognize healthcare entities in one or more documents. To get started you will need a Text Analytics endpoint and credentials. See [README][README] for links and instructions.
 
 ## Creating a `TextAnalyticsClient`
 
@@ -13,14 +13,14 @@ string apiKey = "<apiKey>";
 var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 ```
 
-## Recognizing healthcare entities in a single document asynchronously
+## Recognizing healthcare entities in multiple documents
 
-To recognize healthcare entities in a document, use the `StarthealthcareAsyc` method.  The returned type is a Long Running operation of type `HealthcareOperation` which polls for the results from the API.
+To recognize healthcare entities in multiple documents, call `StartAnalyzeHealthcareEntities` on an `IEnumerable` of strings.  The result is a Long Running operation of type `AnalyzeHealthcareEntitiesOperation` which polls for the results from the API.
 
-```C# Snippet:TextAnalyticsSampleHealthcareBatchAsync
-    string document1 = @"RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS |
-                        Admission Date: 5/22/2001 Report Status: Signed Discharge Date: 4/24/2001 ADMISSION DIAGNOSIS: CORONARY ARTERY DISEASE.
-                        HISTORY OF PRESENT ILLNESS: The patient is a 54-year-old gentleman with a history of progressive angina over the past several months.
+```C# Snippet:TextAnalyticsSampleHealthcareBatchConvenienceAsync
+    string document1 = @"RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS | \
+                        Admission Date: 5/22/2001 Report Status: Signed Discharge Date: 4/24/2001 ADMISSION DIAGNOSIS: CORONARY ARTERY DISEASE. \
+                        HISTORY OF PRESENT ILLNESS: The patient is a 54-year-old gentleman with a history of progressive angina over the past several months. \
                         The patient had a cardiac catheterization in July of this year revealing total occlusion of the RCA and 50% left main disease ,\
                         with a strong family history of coronary artery disease with a brother dying at the age of 52 from a myocardial infarction and \
                         another brother who is status post coronary artery bypass grafting. The patient had a stress echocardiogram done on July , 2001 , \
@@ -34,73 +34,19 @@ To recognize healthcare entities in a document, use the `StarthealthcareAsyc` me
     {
         document1,
         document2,
+        string.Empty
     };
 
-    AnalyzeHealthcareEntitiesOptions options = new AnalyzeHealthcareEntitiesOptions()
-    {
-        IncludeStatistics = true
-    };
+    var options = new AnalyzeHealthcareEntitiesOptions { };
 
     AnalyzeHealthcareEntitiesOperation healthOperation = await client.StartAnalyzeHealthcareEntitiesAsync(batchInput, "en", options);
 
     await healthOperation.WaitForCompletionAsync();
 
-    await foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in healthOperation.Value)
-    {
-        Console.WriteLine($"Results of Azure Text Analytics \"Healthcare Async\" Model, version: \"{documentsInPage.ModelVersion}\"");
-        Console.WriteLine("");
-
-        foreach (AnalyzeHealthcareEntitiesResult result in documentsInPage)
-        {
-            Console.WriteLine($"    Recognized the following {result.Entities.Count} healthcare entities:");
-
-            foreach (HealthcareEntity entity in result.Entities)
-            {
-                Console.WriteLine($"    Entity: {entity.Text}");
-                Console.WriteLine($"    Category: {entity.Category}");
-                Console.WriteLine($"    Offset: {entity.Offset}");
-                Console.WriteLine($"    Length: {entity.Length}");
-                Console.WriteLine($"    Links:");
-
-                foreach (EntityDataSource entityDataSource in entity.DataSources)
-                {
-                    Console.WriteLine($"        Entity ID in Data Source: {entityDataSource.EntityId}");
-                    Console.WriteLine($"        DataSource: {entityDataSource.Name}");
-                }
-            }
-
-            Console.WriteLine($"    Document statistics:");
-            Console.WriteLine($"        Character count (in Unicode graphemes): {result.Statistics.CharacterCount}");
-            Console.WriteLine($"        Transaction count: {result.Statistics.TransactionCount}");
-            Console.WriteLine("");
-        }
-        Console.WriteLine($"Request statistics:");
-        Console.WriteLine($"    Document Count: {documentsInPage.Statistics.DocumentCount}");
-        Console.WriteLine($"    Valid Document Count: {documentsInPage.Statistics.ValidDocumentCount}");
-        Console.WriteLine($"    Transaction Count: {documentsInPage.Statistics.TransactionCount}");
-        Console.WriteLine($"    Invalid Document Count: {documentsInPage.Statistics.InvalidDocumentCount}");
-        Console.WriteLine("");
-    }
-}
-```
-
-## Recognizing healthcare entities in multiple documents
-
-To recognize healthcare entities in multiple documents, call `StartHealthcareBatchAsync` on an `IEnumerable` of strings.  The result is a Long Running operation of type `HealthcareOperation` which polls for the results from the API.
-
-```C# Snippet:TextAnalyticsSampleHealthcareBatchConvenienceAsync
-    string document = "Subject is taking 100mg of ibuprofen twice daily";
-
-    var list = new List<string>();
-
-    for (int i = 0; i < 6; i++)
-    {
-        list.Add(document);
-    };
-
-    AnalyzeHealthcareEntitiesOperation healthOperation = await client.StartAnalyzeHealthcareEntitiesAsync(list, "en", new AnalyzeHealthcareEntitiesOptions() { IncludeStatistics = true } );
-
-    await healthOperation.WaitForCompletionAsync();
+    Console.WriteLine($"Created On   : {healthOperation.CreatedOn}");
+    Console.WriteLine($"Expires On   : {healthOperation.ExpiresOn}");
+    Console.WriteLine($"Status       : {healthOperation.Status}");
+    Console.WriteLine($"Last Modified: {healthOperation.LastModified}");
 
     await foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in healthOperation.Value)
     {
@@ -117,6 +63,7 @@ To recognize healthcare entities in multiple documents, call `StartHealthcareBat
                     Console.WriteLine($"    Category: {entity.Category}");
                     Console.WriteLine($"    Offset: {entity.Offset}");
                     Console.WriteLine($"    Length: {entity.Length}");
+                    Console.WriteLine($"    NormalizedText: {entity.NormalizedText}");
                     Console.WriteLine($"    Links:");
 
                     foreach (EntityDataSource entityDataSource in entity.DataSources)
@@ -124,28 +71,71 @@ To recognize healthcare entities in multiple documents, call `StartHealthcareBat
                         Console.WriteLine($"        Entity ID in Data Source: {entityDataSource.EntityId}");
                         Console.WriteLine($"        DataSource: {entityDataSource.Name}");
                     }
+
+                    if (entity.Assertion != null)
+                    {
+                        Console.WriteLine($"    Assertions:");
+
+                        if (entity.Assertion?.Association != null)
+                        {
+                            Console.WriteLine($"        Association: {entity.Assertion?.Association}");
+                        }
+
+                        if (entity.Assertion?.Certainty != null)
+                        {
+                            Console.WriteLine($"        Certainty: {entity.Assertion?.Certainty}");
+                        }
+                        if (entity.Assertion?.Conditionality != null)
+                        {
+                            Console.WriteLine($"        Conditionality: {entity.Assertion?.Conditionality}");
+                        }
+                    }
+                }
+
+                Console.WriteLine($"    We found {entitiesInDoc.EntityRelations.Count} relations in the current document:");
+                Console.WriteLine("");
+
+                foreach (HealthcareEntityRelation relations in entitiesInDoc.EntityRelations)
+                {
+                    Console.WriteLine($"        Relation: {relations.RelationType}");
+                    Console.WriteLine($"        For this relation there are {relations.Roles.Count} roles");
+
+                    foreach (HealthcareEntityRelationRole role in relations.Roles)
+                    {
+                        Console.WriteLine($"            Role Name: {role.Name}");
+
+                        Console.WriteLine($"            Associated Entity Text: {role.Entity.Text}");
+                        Console.WriteLine($"            Associated Entity Category: {role.Entity.Category}");
+
+                        Console.WriteLine("");
+                    }
+
+                    Console.WriteLine("");
                 }
             }
-        }
+            else
+            {
+                Console.WriteLine("  Error!");
+                Console.WriteLine($"  Document error code: {entitiesInDoc.Error.ErrorCode}.");
+                Console.WriteLine($"  Message: {entitiesInDoc.Error.Message}");
+            }
 
-        Console.WriteLine($"Request statistics:");
-        Console.WriteLine($"    Document Count: {documentsInPage.Statistics.DocumentCount}");
-        Console.WriteLine($"    Valid Document Count: {documentsInPage.Statistics.ValidDocumentCount}");
-        Console.WriteLine($"    Transaction Count: {documentsInPage.Statistics.TransactionCount}");
-        Console.WriteLine($"    Invalid Document Count: {documentsInPage.Statistics.InvalidDocumentCount}");
-        Console.WriteLine("");
+            Console.WriteLine("");
+        }
     }
 }
 ```
 
 To see the full example source files, see:
 
-* [Synchronously RecognizeHealthcareBatch](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample_HealthcareBatch.cs)
-* [Asynchronously RecognizeHealthcareBatch](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample_HealthcareBatchAsync.cs)
-* [Synchronously RecognizeHealthcare Cancellation](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample_Healthcare_Cancellation.cs)
-* [Asynchronously RecognizeHealthcare Cancellation](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample_HealthcareAsync_Cancellation.cs)
-* [Automatic Polling HealthcareOperation ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample_HealthcareAsync_AutomaticPolling.cs)
-* [Manual Polling HealthcareOperation ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample_HealthcareAsync_ManualPolling.cs)
+* [AnalyzeHealthcareEntities](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample7_AnalyzeHealthcareEntitiesBatch.cs)
+* [AnalyzeHealthcareEntitiesAsync](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample7_AnalyzeHealthcareEntitiesBatchAsync.cs)
+* [AnalyzeHealthcareEntities Cancellation](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample7_AnalyzeHealthcareEntities_Cancellation.cs)
+* [AnalyzeHealthcareEntitiesAsync Cancellation](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample7_AnalyzeHealthcareEntities_Cancellation.cs)
+* [Automatic Polling AnalyzeHealthcareEntitiesBatchConvenienceAsync ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample7_AnalyzeHealthcareEntitiesBatchConvenienceAsync_AutomaticPolling.cs)
+* [Manual Polling AnalyzeHealthcareBatchConvenienceEntities ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample7_AnalyzeHealthcareEntitiesBatchConvenience_ManualPolling.cs)
+* [Automatic Polling AnalyzeHealthcareEntitiesBatchAsync ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample7_AnalyzeHealthcareEntitiesBatchAsync_AutomaticPolling.cs)
+* [Manual Polling AnalyzeHealthcareEntitiesBatch ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample7_AnalyzeHealthcareEntitiesBatch_ManualPolling.cs)
 
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md
 [README]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/README.md

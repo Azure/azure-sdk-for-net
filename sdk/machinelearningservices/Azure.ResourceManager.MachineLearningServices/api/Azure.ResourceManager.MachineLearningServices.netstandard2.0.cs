@@ -816,12 +816,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public Azure.ResourceManager.MachineLearningServices.Models.SystemData SystemData { get { throw null; } }
         public string Type { get { throw null; } }
     }
-    public partial class CodeContainerResourceArmPaginatedResult
-    {
-        internal CodeContainerResourceArmPaginatedResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MachineLearningServices.Models.CodeContainerResource> Value { get { throw null; } }
-    }
     public partial class CodeVersion
     {
         public CodeVersion() { }
@@ -839,12 +833,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public Azure.ResourceManager.MachineLearningServices.Models.CodeVersion Properties { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.SystemData SystemData { get { throw null; } }
         public string Type { get { throw null; } }
-    }
-    public partial class CodeVersionResourceArmPaginatedResult
-    {
-        internal CodeVersionResourceArmPaginatedResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MachineLearningServices.Models.CodeVersionResource> Value { get { throw null; } }
     }
     public partial class CommandJob : Azure.ResourceManager.MachineLearningServices.Models.ComputeJobBase
     {
@@ -1209,12 +1197,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public Azure.ResourceManager.MachineLearningServices.Models.SystemData SystemData { get { throw null; } }
         public string Type { get { throw null; } }
     }
-    public partial class DataContainerResourceArmPaginatedResult
-    {
-        internal DataContainerResourceArmPaginatedResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MachineLearningServices.Models.DataContainerResource> Value { get { throw null; } }
-    }
     public partial class DataFactory : Azure.ResourceManager.MachineLearningServices.Models.Compute
     {
         public DataFactory() { }
@@ -1294,12 +1276,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public Azure.ResourceManager.MachineLearningServices.Models.SystemData SystemData { get { throw null; } }
         public string Type { get { throw null; } }
     }
-    public partial class DatastorePropertiesResourceArmPaginatedResult
-    {
-        internal DatastorePropertiesResourceArmPaginatedResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MachineLearningServices.Models.DatastorePropertiesResource> Value { get { throw null; } }
-    }
     public partial class DataVersion
     {
         public DataVersion() { }
@@ -1318,12 +1294,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public Azure.ResourceManager.MachineLearningServices.Models.DataVersion Properties { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.SystemData SystemData { get { throw null; } }
         public string Type { get { throw null; } }
-    }
-    public partial class DataVersionResourceArmPaginatedResult
-    {
-        internal DataVersionResourceArmPaginatedResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MachineLearningServices.Models.DataVersionResource> Value { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DeploymentType : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.DeploymentType>
@@ -1461,12 +1431,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public Azure.ResourceManager.MachineLearningServices.Models.SystemData SystemData { get { throw null; } }
         public string Type { get { throw null; } }
     }
-    public partial class EnvironmentContainerResourceArmPaginatedResult
-    {
-        internal EnvironmentContainerResourceArmPaginatedResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MachineLearningServices.Models.EnvironmentContainerResource> Value { get { throw null; } }
-    }
     public partial class EnvironmentImageRequest
     {
         public EnvironmentImageRequest() { }
@@ -1547,12 +1511,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public Azure.ResourceManager.MachineLearningServices.Models.EnvironmentSpecificationVersion Properties { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.SystemData SystemData { get { throw null; } }
         public string Type { get { throw null; } }
-    }
-    public partial class EnvironmentSpecificationVersionResourceArmPaginatedResult
-    {
-        internal EnvironmentSpecificationVersionResourceArmPaginatedResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MachineLearningServices.Models.EnvironmentSpecificationVersionResource> Value { get { throw null; } }
     }
     public partial class ErrorDetail
     {
@@ -1685,12 +1643,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public Azure.ResourceManager.MachineLearningServices.Models.JobBase Properties { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.SystemData SystemData { get { throw null; } }
         public string Type { get { throw null; } }
-    }
-    public partial class JobBaseResourceArmPaginatedResult
-    {
-        internal JobBaseResourceArmPaginatedResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MachineLearningServices.Models.JobBaseResource> Value { get { throw null; } }
     }
     public partial class JobOutput
     {
@@ -1828,12 +1780,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public Azure.ResourceManager.MachineLearningServices.Models.SystemData SystemData { get { throw null; } }
         public string Type { get { throw null; } }
     }
-    public partial class LabelingJobResourceArmPaginatedResult
-    {
-        internal LabelingJobResourceArmPaginatedResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MachineLearningServices.Models.LabelingJobResource> Value { get { throw null; } }
-    }
     public partial class LinkedInfo
     {
         public LinkedInfo() { }
@@ -1872,23 +1818,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public Azure.ResourceManager.MachineLearningServices.Models.LinkedServiceProps Properties { get { throw null; } }
         public string Type { get { throw null; } }
     }
-    public partial class ListAmlUserFeatureResult
-    {
-        internal ListAmlUserFeatureResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MachineLearningServices.Models.AmlUserFeature> Value { get { throw null; } }
-    }
     public partial class ListNotebookKeysResult
     {
         internal ListNotebookKeysResult() { }
         public string PrimaryAccessKey { get { throw null; } }
         public string SecondaryAccessKey { get { throw null; } }
-    }
-    public partial class ListUsagesResult
-    {
-        internal ListUsagesResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MachineLearningServices.Models.Usage> Value { get { throw null; } }
     }
     public partial class ListWorkspaceKeysResult
     {
@@ -1897,12 +1831,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public Azure.ResourceManager.MachineLearningServices.Models.RegistryListCredentialsResult ContainerRegistryCredentials { get { throw null; } }
         public string UserStorageKey { get { throw null; } }
         public string UserStorageResourceId { get { throw null; } }
-    }
-    public partial class ListWorkspaceQuotas
-    {
-        internal ListWorkspaceQuotas() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MachineLearningServices.Models.ResourceQuota> Value { get { throw null; } }
     }
     public partial class LivenessProbeRequirements
     {
@@ -1984,12 +1912,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public Azure.ResourceManager.MachineLearningServices.Models.ModelContainer Properties { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.SystemData SystemData { get { throw null; } }
         public string Type { get { throw null; } }
-    }
-    public partial class ModelContainerResourceArmPaginatedResult
-    {
-        internal ModelContainerResourceArmPaginatedResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MachineLearningServices.Models.ModelContainerResource> Value { get { throw null; } }
     }
     public partial class ModelDataCollection
     {
@@ -2109,12 +2031,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public Azure.ResourceManager.MachineLearningServices.Models.SystemData SystemData { get { throw null; } }
         public string Type { get { throw null; } }
     }
-    public partial class ModelVersionResourceArmPaginatedResult
-    {
-        internal ModelVersionResourceArmPaginatedResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MachineLearningServices.Models.ModelVersionResource> Value { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct NodeState : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.NodeState>
     {
@@ -2173,11 +2089,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public string Operation { get { throw null; } }
         public string Provider { get { throw null; } }
         public string Resource { get { throw null; } }
-    }
-    public partial class OperationListResult
-    {
-        internal OperationListResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MachineLearningServices.Models.Operation> Value { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct OperationName : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.OperationName>
@@ -2279,24 +2190,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.OsType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.OsType left, Azure.ResourceManager.MachineLearningServices.Models.OsType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class PaginatedComputeResourcesList
-    {
-        internal PaginatedComputeResourcesList() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MachineLearningServices.Models.ComputeResource> Value { get { throw null; } }
-    }
-    public partial class PaginatedServiceList
-    {
-        internal PaginatedServiceList() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MachineLearningServices.Models.ServiceResource> Value { get { throw null; } }
-    }
-    public partial class PaginatedWorkspaceConnectionsList
-    {
-        internal PaginatedWorkspaceConnectionsList() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MachineLearningServices.Models.WorkspaceConnection> Value { get { throw null; } }
     }
     public partial class ParameterSamplingConfiguration
     {
@@ -2691,12 +2584,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         internal SKUCapability() { }
         public string Name { get { throw null; } }
         public string Value { get { throw null; } }
-    }
-    public partial class SkuListResult
-    {
-        internal SkuListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MachineLearningServices.Models.WorkspaceSku> Value { get { throw null; } }
     }
     public partial class SparkMavenPackage
     {
@@ -3137,12 +3024,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public string Name { get { throw null; } set { } }
         public string Target { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
-    }
-    public partial class WorkspaceListResult
-    {
-        internal WorkspaceListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MachineLearningServices.Models.Workspace> Value { get { throw null; } }
     }
     public partial class WorkspaceSku
     {

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class SensitivityLabelListResult
+    internal partial class SensitivityLabelListResult
     {
         internal static SensitivityLabelListResult DeserializeSensitivityLabelListResult(JsonElement element)
         {

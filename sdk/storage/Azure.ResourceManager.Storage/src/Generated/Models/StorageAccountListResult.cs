@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> The response from the List Storage Accounts operation. </summary>
-    public partial class StorageAccountListResult
+    internal partial class StorageAccountListResult
     {
         /// <summary> Initializes a new instance of StorageAccountListResult. </summary>
         internal StorageAccountListResult()
