@@ -15,7 +15,7 @@ Install the [private preview version of Azure Communication Identity client libr
 
 ```Powershell
 dotnet add package Azure.Communication.Common --version 1.0.0-beta.4
-dotnet add package Azure.Communication.Identity --version 1.0.0-alpha.20210224.2
+dotnet add package Azure.Communication.Identity --version 1.0.0-alpha.20210310.1
 ```
 
 ### Prerequisites
