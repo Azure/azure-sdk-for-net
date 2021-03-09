@@ -14,24 +14,29 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
     using System.Linq;
 
     /// <summary>
-    /// An error response from the service.
+    /// A restorable backup of a Cassandra cluster.
     /// </summary>
-    public partial class ErrorResponseUpdatedFormat
+    public partial class BackupResource : ARMProxyResource
     {
         /// <summary>
-        /// Initializes a new instance of the ErrorResponseUpdatedFormat class.
+        /// Initializes a new instance of the BackupResource class.
         /// </summary>
-        public ErrorResponseUpdatedFormat()
+        public BackupResource()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ErrorResponseUpdatedFormat class.
+        /// Initializes a new instance of the BackupResource class.
         /// </summary>
-        public ErrorResponseUpdatedFormat(ErrorResponse error = default(ErrorResponse))
+        /// <param name="id">The unique resource identifier of the database
+        /// account.</param>
+        /// <param name="name">The name of the database account.</param>
+        /// <param name="type">The type of Azure resource.</param>
+        public BackupResource(string id = default(string), string name = default(string), string type = default(string), BackupResourceProperties properties = default(BackupResourceProperties))
+            : base(id, name, type)
         {
-            Error = error;
+            Properties = properties;
             CustomInit();
         }
 
@@ -42,8 +47,8 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "error")]
-        public ErrorResponse Error { get; set; }
+        [JsonProperty(PropertyName = "properties")]
+        public BackupResourceProperties Properties { get; set; }
 
     }
 }
