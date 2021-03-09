@@ -38,7 +38,7 @@ namespace Azure.Iot.ModelsRepository.Samples
             // The client will also work with a local filesystem URI. This example shows initalization
             // with a local URI and disabling model dependency resolution.
             client = new ModelsRepositoryClient(new Uri(ClientSamplesLocalModelsRepository),
-                new ModelsRepositoryClientOptions(resolutionOption: DependencyResolutionOption.Disabled));
+                new ModelsRepositoryClientOptions(dependencyResolution: ModelDependencyResolution.Disabled));
             Console.WriteLine($"Initialized client pointing to local path: {client.RepositoryUri}");
 
             #endregion Snippet:ModelsRepositorySamplesCreateServiceClientWithLocalRepository

@@ -39,18 +39,18 @@ namespace Azure.Iot.ModelsRepository
         /// The <see cref="ServiceVersion"/> of the service API used when
         /// making requests.
         /// </param>
-        /// <param name="resolutionOption">The dependency processing options.</param>
+        /// <param name="dependencyResolution">The model dependency processing options.</param>
         public ModelsRepositoryClientOptions(
             ServiceVersion version = LatestVersion,
-            DependencyResolutionOption resolutionOption = DependencyResolutionOption.Enabled)
+            ModelDependencyResolution dependencyResolution = ModelDependencyResolution.Enabled)
         {
-            DependencyResolution = resolutionOption;
+            DependencyResolution = dependencyResolution;
             Version = version;
         }
 
         /// <summary>
-        /// The dependency processing options.
+        /// The model dependency processing options.
         /// </summary>
-        public DependencyResolutionOption DependencyResolution { get; }
+        public ModelDependencyResolution DependencyResolution { get; }
     }
 }

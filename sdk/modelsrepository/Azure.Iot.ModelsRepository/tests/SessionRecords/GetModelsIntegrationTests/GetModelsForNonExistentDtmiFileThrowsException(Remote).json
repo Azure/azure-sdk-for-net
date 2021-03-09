@@ -4,9 +4,9 @@
       "RequestUri": "https://devicemodels.azure.com/dtmi/com/example/thermojax-999.json",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "traceparent": "00-9fe4b3ec7c490840b9644f3daa669919-c6408cc31ee1d944-00",
+        "traceparent": "00-d763be3f7d65a54395a096e6ade81a65-c1ec3a227b8feb4e-00",
         "User-Agent": [
-          "azsdk-net-Iot.ModelsRepository/1.0.0-alpha.20210226.1",
+          "azsdk-net-Iot.ModelsRepository/1.0.0-alpha.20210309.1",
           "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "5869dbe376a9c64b690acc46c7df7b04",
@@ -20,16 +20,16 @@
         "Access-Control-Expose-Headers": "*",
         "Content-Length": "321",
         "Content-Type": "text/html",
-        "Date": "Fri, 26 Feb 2021 21:43:10 GMT",
+        "Date": "Tue, 09 Mar 2021 20:58:40 GMT",
         "Server": [
           "Windows-Azure-Web/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-error-code": "WebContentNotFound",
-        "x-ms-request-id": "20926d3c-201e-002d-0788-0c795b000000",
+        "x-ms-request-id": "37c616c5-901e-006a-4026-157b44000000",
         "x-ms-version": "2018-03-28"
       },
-      "ResponseBody": "\u003C!DOCTYPE html\u003E\u003Chtml\u003E\u003Chead\u003E\u003Ctitle\u003EWebContentNotFound\u003C/title\u003E\u003C/head\u003E\u003Cbody\u003E\u003Ch1\u003EThe requested content does not exist.\u003C/h1\u003E\u003Cp\u003E\u003Cul\u003E\u003Cli\u003EHttpStatusCode: 404\u003C/li\u003E\u003Cli\u003EErrorCode: WebContentNotFound\u003C/li\u003E\u003Cli\u003ERequestId : 20926d3c-201e-002d-0788-0c795b000000\u003C/li\u003E\u003Cli\u003ETimeStamp : 2021-02-26T21:43:10.5728596Z\u003C/li\u003E\u003C/ul\u003E\u003C/p\u003E\u003C/body\u003E\u003C/html\u003E"
+      "ResponseBody": "\u003C!DOCTYPE html\u003E\u003Chtml\u003E\u003Chead\u003E\u003Ctitle\u003EWebContentNotFound\u003C/title\u003E\u003C/head\u003E\u003Cbody\u003E\u003Ch1\u003EThe requested content does not exist.\u003C/h1\u003E\u003Cp\u003E\u003Cul\u003E\u003Cli\u003EHttpStatusCode: 404\u003C/li\u003E\u003Cli\u003EErrorCode: WebContentNotFound\u003C/li\u003E\u003Cli\u003ERequestId : 37c616c5-901e-006a-4026-157b44000000\u003C/li\u003E\u003Cli\u003ETimeStamp : 2021-03-09T20:58:40.9365459Z\u003C/li\u003E\u003C/ul\u003E\u003C/p\u003E\u003C/body\u003E\u003C/html\u003E"
     }
   ],
   "Variables": {

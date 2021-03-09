@@ -15,28 +15,28 @@ using System.Threading.Tasks;
 namespace Azure.Iot.ModelsRepository.Fetchers
 {
     /// <summary>
-    /// The RemoteModelFetcher is an implementation of IModelFetcher
+    /// The HttpModelFetcher is an implementation of IModelFetcher
     /// for supporting http[s] based model content fetching.
     /// </summary>
-    internal class RemoteModelFetcher : IModelFetcher
+    internal class HttpModelFetcher : IModelFetcher
     {
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
 
-        public RemoteModelFetcher(ClientDiagnostics clientDiagnostics, ModelsRepositoryClientOptions clientOptions)
+        public HttpModelFetcher(ClientDiagnostics clientDiagnostics, ModelsRepositoryClientOptions clientOptions)
         {
             _pipeline = CreatePipeline(clientOptions);
             _clientDiagnostics = clientDiagnostics;
         }
 
         public FetchResult Fetch(
-            string dtmi, Uri repositoryUri, DependencyResolutionOption resolutionOption, CancellationToken cancellationToken = default)
+            string dtmi, Uri repositoryUri, ModelDependencyResolution dependencyResolution, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("RemoteModelFetcher.Fetch");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("HttpModelFetcher.Fetch");
             scope.Start();
             try
             {
-                Queue<string> work = PrepareWork(dtmi, repositoryUri, resolutionOption == DependencyResolutionOption.TryFromExpanded);
+                Queue<string> work = PrepareWork(dtmi, repositoryUri, dependencyResolution == ModelDependencyResolution.TryFromExpanded);
 
                 string remoteFetchError = string.Empty;
 
@@ -74,13 +74,13 @@ namespace Azure.Iot.ModelsRepository.Fetchers
         }
 
         public async Task<FetchResult> FetchAsync(
-            string dtmi, Uri repositoryUri, DependencyResolutionOption resolutionOption, CancellationToken cancellationToken = default)
+            string dtmi, Uri repositoryUri, ModelDependencyResolution dependencyResolution, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("RemoteModelFetcher.Fetch");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("HttpModelFetcher.Fetch");
             scope.Start();
             try
             {
-                Queue<string> work = PrepareWork(dtmi, repositoryUri, resolutionOption == DependencyResolutionOption.TryFromExpanded);
+                Queue<string> work = PrepareWork(dtmi, repositoryUri, dependencyResolution == ModelDependencyResolution.TryFromExpanded);
 
                 string remoteFetchError = string.Empty;
                 RequestFailedException requestFailedExceptionThrown = null;
@@ -165,7 +165,7 @@ namespace Azure.Iot.ModelsRepository.Fetchers
 
         private string EvaluatePath(string path, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("RemoteModelFetcher.EvaluatePath");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("HttpModelFetcher.EvaluatePath");
             scope.Start();
 
             try
@@ -193,7 +193,7 @@ namespace Azure.Iot.ModelsRepository.Fetchers
 
         private async Task<string> EvaluatePathAsync(string path, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("RemoteModelFetcher.EvaluatePath");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("HttpModelFetcher.EvaluatePath");
             scope.Start();
 
             try

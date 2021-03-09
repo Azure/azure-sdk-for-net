@@ -13,32 +13,32 @@ using Azure.Core.Pipeline;
 namespace Azure.Iot.ModelsRepository.Fetchers
 {
     /// <summary>
-    /// The LocalModelFetcher is an implementation of IModelFetcher
+    /// The FileModelFetcher is an implementation of IModelFetcher
     /// for supporting local filesystem based model content fetching.
     /// </summary>
-    internal class LocalModelFetcher : IModelFetcher
+    internal class FileModelFetcher : IModelFetcher
     {
         private readonly ClientDiagnostics _clientDiagnostics;
 
-        public LocalModelFetcher(ClientDiagnostics clientDiagnostics)
+        public FileModelFetcher(ClientDiagnostics clientDiagnostics)
         {
             _clientDiagnostics = clientDiagnostics;
         }
 
-        public Task<FetchResult> FetchAsync(string dtmi, Uri repositoryUri, DependencyResolutionOption resolutionOption, CancellationToken cancellationToken = default)
+        public Task<FetchResult> FetchAsync(string dtmi, Uri repositoryUri, ModelDependencyResolution dependencyResolution, CancellationToken cancellationToken = default)
         {
-            return Task.FromResult(Fetch(dtmi, repositoryUri, resolutionOption, cancellationToken));
+            return Task.FromResult(Fetch(dtmi, repositoryUri, dependencyResolution, cancellationToken));
         }
 
-        public FetchResult Fetch(string dtmi, Uri repositoryUri, DependencyResolutionOption resolutionOption, CancellationToken cancellationToken = default)
+        public FetchResult Fetch(string dtmi, Uri repositoryUri, ModelDependencyResolution dependencyResolution, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("LocalModelFetcher.Fetch");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("FileModelFetcher.Fetch");
             scope.Start();
 
             try
             {
                 var work = new Queue<string>();
-                if (resolutionOption == DependencyResolutionOption.TryFromExpanded)
+                if (dependencyResolution == ModelDependencyResolution.TryFromExpanded)
                 {
                     work.Enqueue(GetPath(dtmi, repositoryUri, true));
                 }
