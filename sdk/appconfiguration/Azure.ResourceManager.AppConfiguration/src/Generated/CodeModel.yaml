@@ -1,0 +1,4878 @@
+!CodeModel 
+info: !Info 
+  title: AppConfigurationManagementClient
+schemas: !Schemas 
+  booleans:
+    - !BooleanSchema &ref_43
+      type: boolean
+      language: !Languages 
+        default:
+          name: Boolean
+          description: The value indicating whether the resource name is available.
+      protocol: !Protocols {}
+    - !BooleanSchema &ref_51
+      type: boolean
+      language: !Languages 
+        default:
+          name: Boolean
+          description: Whether this key can only be used for read operations.
+      protocol: !Protocols {}
+    - !BooleanSchema &ref_71
+      type: boolean
+      language: !Languages 
+        default:
+          name: Boolean
+          description: "A value indicating whether the key-value is locked.\r\nA locked key-value may not be modified until it is unlocked."
+      protocol: !Protocols {}
+  strings:
+    - !StringSchema &ref_0
+      type: string
+      language: !Languages 
+        default:
+          name: String
+          description: simple string
+      protocol: !Protocols {}
+    - !StringSchema &ref_3
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      language: !Languages 
+        default:
+          name: String
+          description: ''
+      protocol: !Protocols {}
+    - !StringSchema &ref_1
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      language: !Languages 
+        default:
+          name: UserIdentityPrincipalId
+          description: The principal ID of the user-assigned identity.
+      protocol: !Protocols {}
+    - !StringSchema &ref_2
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      language: !Languages 
+        default:
+          name: UserIdentityClientId
+          description: The client ID of the user-assigned identity.
+      protocol: !Protocols {}
+    - !StringSchema &ref_13
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      language: !Languages 
+        default:
+          name: ResourceIdentityPrincipalId
+          description: The principal id of the identity. This property will only be provided for a system-assigned identity.
+      protocol: !Protocols {}
+    - !StringSchema &ref_14
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      language: !Languages 
+        default:
+          name: ResourceIdentityTenantId
+          description: The tenant id associated with the resource's identity. This property will only be provided for a system-assigned identity.
+      protocol: !Protocols {}
+    - !StringSchema &ref_18
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      language: !Languages 
+        default:
+          name: ConfigurationStorePropertiesEndpoint
+          description: The DNS endpoint where the configuration store API will be available.
+      protocol: !Protocols {}
+    - !StringSchema &ref_19
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      language: !Languages 
+        default:
+          name: KeyVaultPropertiesKeyIdentifier
+          description: The URI of the key vault key used to encrypt data.
+      protocol: !Protocols {}
+    - !StringSchema &ref_20
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      language: !Languages 
+        default:
+          name: KeyVaultPropertiesIdentityClientId
+          description: The client id of the identity which will be used to access key vault.
+      protocol: !Protocols {}
+    - !StringSchema &ref_21
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      language: !Languages 
+        default:
+          name: PrivateEndpointConnectionReferenceId
+          description: The resource ID.
+      protocol: !Protocols {}
+    - !StringSchema &ref_22
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      language: !Languages 
+        default:
+          name: PrivateEndpointConnectionReferenceName
+          description: The name of the resource.
+      protocol: !Protocols {}
+    - !StringSchema &ref_23
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      language: !Languages 
+        default:
+          name: PrivateEndpointConnectionReferenceType
+          description: The type of the resource.
+      protocol: !Protocols {}
+    - !StringSchema &ref_24
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      language: !Languages 
+        default:
+          name: PrivateEndpointId
+          description: The resource Id for private endpoint
+      protocol: !Protocols {}
+    - !StringSchema &ref_26
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      language: !Languages 
+        default:
+          name: PrivateLinkServiceConnectionStateDescription
+          description: The private link service connection description.
+      protocol: !Protocols {}
+    - !StringSchema &ref_15
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      language: !Languages 
+        default:
+          name: SkuName
+          description: The SKU name of the configuration store.
+      protocol: !Protocols {}
+    - !StringSchema &ref_5
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      language: !Languages 
+        default:
+          name: ResourceId
+          description: The resource ID.
+      protocol: !Protocols {}
+    - !StringSchema &ref_6
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      language: !Languages 
+        default:
+          name: ResourceName
+          description: The name of the resource.
+      protocol: !Protocols {}
+    - !StringSchema &ref_7
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      language: !Languages 
+        default:
+          name: ResourceType
+          description: The type of the resource.
+      protocol: !Protocols {}
+    - !StringSchema &ref_8
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      extensions:
+        x-ms-mutability:
+          - read
+          - create
+      language: !Languages 
+        default:
+          name: ResourceLocation
+          description: The location of the resource. This cannot be changed after the resource is created.
+      protocol: !Protocols {}
+    - !StringSchema &ref_29
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      language: !Languages 
+        default:
+          name: ConfigurationStoreListResultNextLink
+          description: The URI that can be used to request the next set of paged results.
+      protocol: !Protocols {}
+    - !StringSchema &ref_38
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      language: !Languages 
+        default:
+          name: ErrorCode
+          description: Error code.
+      protocol: !Protocols {}
+    - !StringSchema &ref_39
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      language: !Languages 
+        default:
+          name: ErrorMessage
+          description: Error message.
+      protocol: !Protocols {}
+    - !StringSchema &ref_104
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      maxLength: 50
+      minLength: 5
+      pattern: ^[a-zA-Z0-9_-]*$
+      language: !Languages 
+        default:
+          name: String
+          description: ''
+      protocol: !Protocols {}
+    - !StringSchema &ref_41
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      language: !Languages 
+        default:
+          name: CheckNameAvailabilityParametersName
+          description: The name to check for availability.
+      protocol: !Protocols {}
+    - !StringSchema &ref_44
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      language: !Languages 
+        default:
+          name: NameAvailabilityStatusMessage
+          description: If any, the error message that provides more detail for the reason that the name is not available.
+      protocol: !Protocols {}
+    - !StringSchema &ref_45
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      language: !Languages 
+        default:
+          name: NameAvailabilityStatusReason
+          description: If any, the reason that the name is not available.
+      protocol: !Protocols {}
+    - !StringSchema &ref_46
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      language: !Languages 
+        default:
+          name: ApiKeyId
+          description: The key ID.
+      protocol: !Protocols {}
+    - !StringSchema &ref_47
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      language: !Languages 
+        default:
+          name: ApiKeyName
+          description: A name for the key describing its usage.
+      protocol: !Protocols {}
+    - !StringSchema &ref_48
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      language: !Languages 
+        default:
+          name: ApiKeyValue
+          description: The value of the key that is used for authentication purposes.
+      protocol: !Protocols {}
+    - !StringSchema &ref_49
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      language: !Languages 
+        default:
+          name: ApiKeyConnectionString
+          description: A connection string that can be used by supporting clients for authentication.
+      protocol: !Protocols {}
+    - !StringSchema &ref_52
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      language: !Languages 
+        default:
+          name: ApiKeyListResultNextLink
+          description: The URI that can be used to request the next set of paged results.
+      protocol: !Protocols {}
+    - !StringSchema &ref_54
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      language: !Languages 
+        default:
+          name: RegenerateKeyParametersId
+          description: The id of the key to regenerate.
+      protocol: !Protocols {}
+    - !StringSchema &ref_55
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      language: !Languages 
+        default:
+          name: OperationDefinitionName
+          description: 'Operation name: {provider}/{resource}/{operation}.'
+      protocol: !Protocols {}
+    - !StringSchema &ref_56
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      language: !Languages 
+        default:
+          name: OperationDefinitionDisplayProvider
+          description: 'The resource provider name: Microsoft App Configuration."'
+      protocol: !Protocols {}
+    - !StringSchema &ref_57
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      language: !Languages 
+        default:
+          name: OperationDefinitionDisplayResource
+          description: The resource on which the operation is performed.
+      protocol: !Protocols {}
+    - !StringSchema &ref_58
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      language: !Languages 
+        default:
+          name: OperationDefinitionDisplayOperation
+          description: The operation that users can perform.
+      protocol: !Protocols {}
+    - !StringSchema &ref_59
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      language: !Languages 
+        default:
+          name: OperationDefinitionDisplayDescription
+          description: The description for the operation.
+      protocol: !Protocols {}
+    - !StringSchema &ref_60
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      language: !Languages 
+        default:
+          name: OperationDefinitionListResultNextLink
+          description: The URI that can be used to request the next set of paged results.
+      protocol: !Protocols {}
+    - !StringSchema &ref_63
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      language: !Languages 
+        default:
+          name: ListKeyValueParametersKey
+          description: The key to retrieve.
+      protocol: !Protocols {}
+    - !StringSchema &ref_64
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      language: !Languages 
+        default:
+          name: ListKeyValueParametersLabel
+          description: The label of the key.
+      protocol: !Protocols {}
+    - !StringSchema &ref_65
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      language: !Languages 
+        default:
+          name: KeyValueKey
+          description: "The primary identifier of a key-value.\r\nThe key is used in unison with the label to uniquely identify a key-value."
+      protocol: !Protocols {}
+    - !StringSchema &ref_66
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      language: !Languages 
+        default:
+          name: KeyValueLabel
+          description: "A value used to group key-values.\r\nThe label is used in unison with the key to uniquely identify a key-value."
+      protocol: !Protocols {}
+    - !StringSchema &ref_67
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      language: !Languages 
+        default:
+          name: KeyValue
+          description: The value of the key-value.
+      protocol: !Protocols {}
+    - !StringSchema &ref_68
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      language: !Languages 
+        default:
+          name: KeyValueContentType
+          description: "The content type of the key-value's value.\r\nProviding a proper content-type can enable transformations of values when they are retrieved by applications."
+      protocol: !Protocols {}
+    - !StringSchema &ref_69
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      language: !Languages 
+        default:
+          name: KeyValueETag
+          description: An ETag indicating the state of a key-value within a configuration store.
+      protocol: !Protocols {}
+    - !StringSchema &ref_73
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      language: !Languages 
+        default:
+          name: PrivateEndpointConnectionId
+          description: The resource ID.
+      protocol: !Protocols {}
+    - !StringSchema &ref_74
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      language: !Languages 
+        default:
+          name: PrivateEndpointConnectionName
+          description: The name of the resource.
+      protocol: !Protocols {}
+    - !StringSchema &ref_75
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      language: !Languages 
+        default:
+          name: PrivateEndpointConnectionType
+          description: The type of the resource.
+      protocol: !Protocols {}
+    - !StringSchema &ref_76
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      language: !Languages 
+        default:
+          name: PrivateEndpointConnectionListResultNextLink
+          description: The URI that can be used to request the next set of paged results.
+      protocol: !Protocols {}
+    - !StringSchema &ref_78
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      language: !Languages 
+        default:
+          name: PrivateLinkResourceId
+          description: The resource ID.
+      protocol: !Protocols {}
+    - !StringSchema &ref_79
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      language: !Languages 
+        default:
+          name: PrivateLinkResourceName
+          description: The name of the resource.
+      protocol: !Protocols {}
+    - !StringSchema &ref_80
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      language: !Languages 
+        default:
+          name: PrivateLinkResourceType
+          description: The type of the resource.
+      protocol: !Protocols {}
+    - !StringSchema &ref_81
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      language: !Languages 
+        default:
+          name: PrivateLinkResourcePropertiesGroupId
+          description: The private link resource group id.
+      protocol: !Protocols {}
+    - !StringSchema &ref_82
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      language: !Languages 
+        default:
+          name: PrivateLinkResourcePropertiesRequiredMembersItem
+          description: ''
+      protocol: !Protocols {}
+    - !StringSchema &ref_83
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      language: !Languages 
+        default:
+          name: PrivateLinkResourcePropertiesRequiredZoneNamesItem
+          description: ''
+      protocol: !Protocols {}
+    - !StringSchema &ref_84
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      language: !Languages 
+        default:
+          name: PrivateLinkResourceListResultNextLink
+          description: The URI that can be used to request the next set of paged results.
+      protocol: !Protocols {}
+  choices:
+    - !ChoiceSchema &ref_11
+      choices:
+        - !ChoiceValue 
+          value: None
+          language:
+            default:
+              name: None
+              description: ''
+        - !ChoiceValue 
+          value: SystemAssigned
+          language:
+            default:
+              name: SystemAssigned
+              description: ''
+        - !ChoiceValue 
+          value: UserAssigned
+          language:
+            default:
+              name: UserAssigned
+              description: ''
+        - !ChoiceValue 
+          value: SystemAssigned, UserAssigned
+          language:
+            default:
+              name: SystemAssignedUserAssigned
+              description: ''
+      type: choice
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      choiceType: *ref_0
+      language: !Languages 
+        default:
+          name: IdentityType
+          description: The type of managed identity used. The type 'SystemAssigned, UserAssigned' includes both an implicitly created identity and a set of user-assigned identities. The type 'None' will remove any identities.
+      protocol: !Protocols {}
+    - !ChoiceSchema &ref_16
+      choices:
+        - !ChoiceValue 
+          value: Creating
+          language:
+            default:
+              name: Creating
+              description: ''
+        - !ChoiceValue 
+          value: Updating
+          language:
+            default:
+              name: Updating
+              description: ''
+        - !ChoiceValue 
+          value: Deleting
+          language:
+            default:
+              name: Deleting
+              description: ''
+        - !ChoiceValue 
+          value: Succeeded
+          language:
+            default:
+              name: Succeeded
+              description: ''
+        - !ChoiceValue 
+          value: Failed
+          language:
+            default:
+              name: Failed
+              description: ''
+        - !ChoiceValue 
+          value: Canceled
+          language:
+            default:
+              name: Canceled
+              description: ''
+      type: choice
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      choiceType: *ref_0
+      language: !Languages 
+        default:
+          name: ProvisioningState
+          description: The provisioning state of the configuration store.
+      protocol: !Protocols {}
+    - !ChoiceSchema &ref_25
+      choices:
+        - !ChoiceValue 
+          value: Pending
+          language:
+            default:
+              name: Pending
+              description: ''
+        - !ChoiceValue 
+          value: Approved
+          language:
+            default:
+              name: Approved
+              description: ''
+        - !ChoiceValue 
+          value: Rejected
+          language:
+            default:
+              name: Rejected
+              description: ''
+        - !ChoiceValue 
+          value: Disconnected
+          language:
+            default:
+              name: Disconnected
+              description: ''
+      type: choice
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      choiceType: *ref_0
+      language: !Languages 
+        default:
+          name: ConnectionStatus
+          description: The private link service connection status.
+      protocol: !Protocols {}
+    - !ChoiceSchema &ref_27
+      choices:
+        - !ChoiceValue 
+          value: None
+          language:
+            default:
+              name: None
+              description: ''
+        - !ChoiceValue 
+          value: Recreate
+          language:
+            default:
+              name: Recreate
+              description: ''
+      type: choice
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      choiceType: *ref_0
+      language: !Languages 
+        default:
+          name: ActionsRequired
+          description: Any action that is required beyond basic workflow (approve/ reject/ disconnect)
+      protocol: !Protocols {}
+    - !ChoiceSchema &ref_28
+      choices:
+        - !ChoiceValue 
+          value: Enabled
+          language:
+            default:
+              name: Enabled
+              description: ''
+        - !ChoiceValue 
+          value: Disabled
+          language:
+            default:
+              name: Disabled
+              description: ''
+      type: choice
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      choiceType: *ref_0
+      language: !Languages 
+        default:
+          name: PublicNetworkAccess
+          description: Control permission for data plane traffic coming from public networks while private endpoint is enabled.
+      protocol: !Protocols {}
+    - !ChoiceSchema &ref_42
+      choices:
+        - !ChoiceValue 
+          value: Microsoft.AppConfiguration/configurationStores
+          language:
+            default:
+              name: MicrosoftAppConfigurationConfigurationStores
+              description: ''
+      type: choice
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      choiceType: *ref_0
+      language: !Languages 
+        default:
+          name: ConfigurationResourceType
+          description: The resource type to check for name availability.
+      protocol: !Protocols {}
+  constants:
+    - !ConstantSchema &ref_94
+      type: constant
+      value: !ConstantValue 
+        value: '2020-06-01'
+      valueType: *ref_0
+      language: !Languages 
+        default:
+          name: ApiVersion20200601
+          description: Api Version (2020-06-01)
+      protocol: !Protocols {}
+    - !ConstantSchema &ref_98
+      type: constant
+      value: !ConstantValue 
+        value: application/json
+      valueType: *ref_0
+      language: !Languages 
+        default:
+          name: Accept
+          description: 'Accept: application/json'
+      protocol: !Protocols {}
+    - !ConstantSchema &ref_107
+      type: constant
+      value: !ConstantValue 
+        value: application/json
+      valueType: *ref_0
+      language: !Languages 
+        default:
+          name: ApplicationJson
+          description: Content Type 'application/json'
+      protocol: !Protocols {}
+  dictionaries:
+    - !DictionarySchema &ref_12
+      type: dictionary
+      elementType: !ObjectSchema &ref_31
+        type: object
+        apiVersions:
+          - !ApiVersion 
+            version: '2020-06-01'
+        properties:
+          - !Property 
+            schema: *ref_1
+            readOnly: true
+            serializedName: principalId
+            language: !Languages 
+              default:
+                name: principalId
+                description: The principal ID of the user-assigned identity.
+            protocol: !Protocols {}
+          - !Property 
+            schema: *ref_2
+            readOnly: true
+            serializedName: clientId
+            language: !Languages 
+              default:
+                name: clientId
+                description: The client ID of the user-assigned identity.
+            protocol: !Protocols {}
+        serializationFormats:
+          - json
+        usage:
+          - output
+          - input
+        language: !Languages 
+          default:
+            name: UserIdentity
+            description: A resource identity that is managed by the user of the service.
+            namespace: ''
+        protocol: !Protocols {}
+      language: !Languages 
+        default:
+          name: ResourceIdentityUserAssignedIdentities
+          description: >-
+            The list of user-assigned identities associated with the resource. The user-assigned identity dictionary keys will be ARM resource ids in the form:
+            '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
+      protocol: !Protocols {}
+    - !DictionarySchema &ref_9
+      type: dictionary
+      elementType: *ref_3
+      language: !Languages 
+        default:
+          name: ResourceTags
+          description: The tags of the resource.
+      protocol: !Protocols {}
+    - !DictionarySchema &ref_40
+      type: dictionary
+      elementType: *ref_3
+      language: !Languages 
+        default:
+          name: ConfigurationStoreUpdateParametersTags
+          description: The ARM resource tags.
+      protocol: !Protocols {}
+    - !DictionarySchema &ref_72
+      type: dictionary
+      elementType: *ref_3
+      language: !Languages 
+        default:
+          name: KeyValueTags
+          description: A dictionary of tags that can help identify what a key-value may be applicable for.
+      protocol: !Protocols {}
+  dateTimes:
+    - !DateTimeSchema &ref_17
+      type: date-time
+      format: date-time
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      language: !Languages 
+        default:
+          name: ConfigurationStorePropertiesCreationDate
+          description: The creation date of configuration store.
+      protocol: !Protocols {}
+    - !DateTimeSchema &ref_50
+      type: date-time
+      format: date-time
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      language: !Languages 
+        default:
+          name: ApiKeyLastModified
+          description: The last time any of the key's properties were modified.
+      protocol: !Protocols {}
+    - !DateTimeSchema &ref_70
+      type: date-time
+      format: date-time
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      language: !Languages 
+        default:
+          name: KeyValueLastModified
+          description: The last time a modifying operation was performed on the given key-value.
+      protocol: !Protocols {}
+  objects:
+    - !ObjectSchema &ref_100
+      type: object
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      properties:
+        - !Property 
+          schema: !ArraySchema &ref_87
+            type: array
+            apiVersions:
+              - !ApiVersion 
+                version: '2020-06-01'
+            elementType: !ObjectSchema &ref_4
+              type: object
+              apiVersions:
+                - !ApiVersion 
+                  version: '2020-06-01'
+              parents: !Relations 
+                all:
+                  - !ObjectSchema &ref_10
+                    type: object
+                    apiVersions:
+                      - !ApiVersion 
+                        version: '2020-06-01'
+                    children: !Relations 
+                      all:
+                        - *ref_4
+                      immediate:
+                        - *ref_4
+                    properties:
+                      - !Property 
+                        schema: *ref_5
+                        readOnly: true
+                        required: false
+                        serializedName: id
+                        language: !Languages 
+                          default:
+                            name: id
+                            description: The resource ID.
+                        protocol: !Protocols {}
+                      - !Property 
+                        schema: *ref_6
+                        readOnly: true
+                        required: false
+                        serializedName: name
+                        language: !Languages 
+                          default:
+                            name: name
+                            description: The name of the resource.
+                        protocol: !Protocols {}
+                      - !Property 
+                        schema: *ref_7
+                        readOnly: true
+                        required: false
+                        serializedName: type
+                        language: !Languages 
+                          default:
+                            name: type
+                            description: The type of the resource.
+                        protocol: !Protocols {}
+                      - !Property 
+                        schema: *ref_8
+                        required: true
+                        serializedName: location
+                        language: !Languages 
+                          default:
+                            name: location
+                            description: The location of the resource. This cannot be changed after the resource is created.
+                        protocol: !Protocols {}
+                      - !Property 
+                        schema: *ref_9
+                        required: false
+                        serializedName: tags
+                        language: !Languages 
+                          default:
+                            name: tags
+                            description: The tags of the resource.
+                        protocol: !Protocols {}
+                    serializationFormats:
+                      - json
+                    usage:
+                      - output
+                      - input
+                    extensions:
+                      x-ms-azure-resource: true
+                    language: !Languages 
+                      default:
+                        name: Resource
+                        description: An Azure resource.
+                        namespace: ''
+                    protocol: !Protocols {}
+                immediate:
+                  - *ref_10
+              properties:
+                - !Property 
+                  schema: !ObjectSchema &ref_30
+                    type: object
+                    apiVersions:
+                      - !ApiVersion 
+                        version: '2020-06-01'
+                    properties:
+                      - !Property 
+                        schema: *ref_11
+                        serializedName: type
+                        language: !Languages 
+                          default:
+                            name: type
+                            description: The type of managed identity used. The type 'SystemAssigned, UserAssigned' includes both an implicitly created identity and a set of user-assigned identities. The type 'None' will remove any identities.
+                        protocol: !Protocols {}
+                      - !Property 
+                        schema: *ref_12
+                        serializedName: userAssignedIdentities
+                        language: !Languages 
+                          default:
+                            name: userAssignedIdentities
+                            description: >-
+                              The list of user-assigned identities associated with the resource. The user-assigned identity dictionary keys will be ARM resource ids in the form:
+                              '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
+                        protocol: !Protocols {}
+                      - !Property 
+                        schema: *ref_13
+                        readOnly: true
+                        serializedName: principalId
+                        language: !Languages 
+                          default:
+                            name: principalId
+                            description: The principal id of the identity. This property will only be provided for a system-assigned identity.
+                        protocol: !Protocols {}
+                      - !Property 
+                        schema: *ref_14
+                        readOnly: true
+                        serializedName: tenantId
+                        language: !Languages 
+                          default:
+                            name: tenantId
+                            description: The tenant id associated with the resource's identity. This property will only be provided for a system-assigned identity.
+                        protocol: !Protocols {}
+                    serializationFormats:
+                      - json
+                    usage:
+                      - output
+                      - input
+                    language: !Languages 
+                      default:
+                        name: ResourceIdentity
+                        description: An identity that can be associated with a resource.
+                        namespace: ''
+                    protocol: !Protocols {}
+                  required: false
+                  serializedName: identity
+                  language: !Languages 
+                    default:
+                      name: identity
+                      description: The managed identity information, if configured.
+                  protocol: !Protocols {}
+                - !Property 
+                  schema: !ObjectSchema &ref_37
+                    type: object
+                    apiVersions:
+                      - !ApiVersion 
+                        version: '2020-06-01'
+                    properties:
+                      - !Property 
+                        schema: *ref_15
+                        required: true
+                        serializedName: name
+                        language: !Languages 
+                          default:
+                            name: name
+                            description: The SKU name of the configuration store.
+                        protocol: !Protocols {}
+                    serializationFormats:
+                      - json
+                    usage:
+                      - output
+                      - input
+                    language: !Languages 
+                      default:
+                        name: Sku
+                        description: Describes a configuration store SKU.
+                        namespace: ''
+                    protocol: !Protocols {}
+                  required: true
+                  serializedName: sku
+                  language: !Languages 
+                    default:
+                      name: sku
+                      description: The sku of the configuration store.
+                  protocol: !Protocols {}
+                - !Property 
+                  schema: *ref_16
+                  flattenedNames:
+                    - properties
+                    - provisioningState
+                  readOnly: true
+                  required: false
+                  serializedName: provisioningState
+                  language: !Languages 
+                    default:
+                      name: provisioningState
+                      description: The provisioning state of the configuration store.
+                  protocol: !Protocols {}
+                - !Property 
+                  schema: *ref_17
+                  flattenedNames:
+                    - properties
+                    - creationDate
+                  readOnly: true
+                  required: false
+                  serializedName: creationDate
+                  language: !Languages 
+                    default:
+                      name: creationDate
+                      description: The creation date of configuration store.
+                  protocol: !Protocols {}
+                - !Property 
+                  schema: *ref_18
+                  flattenedNames:
+                    - properties
+                    - endpoint
+                  readOnly: true
+                  required: false
+                  serializedName: endpoint
+                  language: !Languages 
+                    default:
+                      name: endpoint
+                      description: The DNS endpoint where the configuration store API will be available.
+                  protocol: !Protocols {}
+                - !Property 
+                  schema: !ObjectSchema &ref_32
+                    type: object
+                    apiVersions:
+                      - !ApiVersion 
+                        version: '2020-06-01'
+                    properties:
+                      - !Property 
+                        schema: !ObjectSchema &ref_33
+                          type: object
+                          apiVersions:
+                            - !ApiVersion 
+                              version: '2020-06-01'
+                          properties:
+                            - !Property 
+                              schema: *ref_19
+                              serializedName: keyIdentifier
+                              language: !Languages 
+                                default:
+                                  name: keyIdentifier
+                                  description: The URI of the key vault key used to encrypt data.
+                              protocol: !Protocols {}
+                            - !Property 
+                              schema: *ref_20
+                              serializedName: identityClientId
+                              language: !Languages 
+                                default:
+                                  name: identityClientId
+                                  description: The client id of the identity which will be used to access key vault.
+                              protocol: !Protocols {}
+                          serializationFormats:
+                            - json
+                          usage:
+                            - output
+                            - input
+                          language: !Languages 
+                            default:
+                              name: KeyVaultProperties
+                              description: Settings concerning key vault encryption for a configuration store.
+                              namespace: ''
+                          protocol: !Protocols {}
+                        nullable: true
+                        serializedName: keyVaultProperties
+                        extensions:
+                          x-nullable: true
+                        language: !Languages 
+                          default:
+                            name: keyVaultProperties
+                            description: Key vault properties.
+                        protocol: !Protocols {}
+                    serializationFormats:
+                      - json
+                    usage:
+                      - output
+                      - input
+                    language: !Languages 
+                      default:
+                        name: EncryptionProperties
+                        description: The encryption settings for a configuration store.
+                        namespace: ''
+                    protocol: !Protocols {}
+                  flattenedNames:
+                    - properties
+                    - encryption
+                  required: false
+                  serializedName: encryption
+                  language: !Languages 
+                    default:
+                      name: encryption
+                      description: The encryption settings of the configuration store.
+                  protocol: !Protocols {}
+                - !Property 
+                  schema: !ArraySchema &ref_86
+                    type: array
+                    apiVersions:
+                      - !ApiVersion 
+                        version: '2020-06-01'
+                    elementType: !ObjectSchema &ref_34
+                      type: object
+                      apiVersions:
+                        - !ApiVersion 
+                          version: '2020-06-01'
+                      properties:
+                        - !Property 
+                          schema: *ref_21
+                          readOnly: true
+                          serializedName: id
+                          language: !Languages 
+                            default:
+                              name: id
+                              description: The resource ID.
+                          protocol: !Protocols {}
+                        - !Property 
+                          schema: *ref_22
+                          readOnly: true
+                          serializedName: name
+                          language: !Languages 
+                            default:
+                              name: name
+                              description: The name of the resource.
+                          protocol: !Protocols {}
+                        - !Property 
+                          schema: *ref_23
+                          readOnly: true
+                          serializedName: type
+                          language: !Languages 
+                            default:
+                              name: type
+                              description: The type of the resource.
+                          protocol: !Protocols {}
+                        - !Property 
+                          schema: *ref_16
+                          flattenedNames:
+                            - properties
+                            - provisioningState
+                          readOnly: true
+                          serializedName: provisioningState
+                          language: !Languages 
+                            default:
+                              name: provisioningState
+                              description: The provisioning status of the private endpoint connection.
+                          protocol: !Protocols {}
+                        - !Property 
+                          schema: !ObjectSchema &ref_35
+                            type: object
+                            apiVersions:
+                              - !ApiVersion 
+                                version: '2020-06-01'
+                            properties:
+                              - !Property 
+                                schema: *ref_24
+                                serializedName: id
+                                language: !Languages 
+                                  default:
+                                    name: id
+                                    description: The resource Id for private endpoint
+                                protocol: !Protocols {}
+                            serializationFormats:
+                              - json
+                            usage:
+                              - output
+                              - input
+                            language: !Languages 
+                              default:
+                                name: PrivateEndpoint
+                                description: Private endpoint which a connection belongs to.
+                                namespace: ''
+                            protocol: !Protocols {}
+                          flattenedNames:
+                            - properties
+                            - privateEndpoint
+                          serializedName: privateEndpoint
+                          language: !Languages 
+                            default:
+                              name: privateEndpoint
+                              description: The resource of private endpoint.
+                          protocol: !Protocols {}
+                        - !Property 
+                          schema: !ObjectSchema &ref_36
+                            type: object
+                            apiVersions:
+                              - !ApiVersion 
+                                version: '2020-06-01'
+                            properties:
+                              - !Property 
+                                schema: *ref_25
+                                serializedName: status
+                                language: !Languages 
+                                  default:
+                                    name: status
+                                    description: The private link service connection status.
+                                protocol: !Protocols {}
+                              - !Property 
+                                schema: *ref_26
+                                serializedName: description
+                                language: !Languages 
+                                  default:
+                                    name: description
+                                    description: The private link service connection description.
+                                protocol: !Protocols {}
+                              - !Property 
+                                schema: *ref_27
+                                readOnly: true
+                                serializedName: actionsRequired
+                                language: !Languages 
+                                  default:
+                                    name: actionsRequired
+                                    description: Any action that is required beyond basic workflow (approve/ reject/ disconnect)
+                                protocol: !Protocols {}
+                            serializationFormats:
+                              - json
+                            usage:
+                              - output
+                              - input
+                            language: !Languages 
+                              default:
+                                name: PrivateLinkServiceConnectionState
+                                description: The state of a private link service connection.
+                                namespace: ''
+                            protocol: !Protocols {}
+                          flattenedNames:
+                            - properties
+                            - privateLinkServiceConnectionState
+                          serializedName: privateLinkServiceConnectionState
+                          language: !Languages 
+                            default:
+                              name: privateLinkServiceConnectionState
+                              description: A collection of information about the state of the connection between service consumer and provider.
+                          protocol: !Protocols {}
+                      serializationFormats:
+                        - json
+                      usage:
+                        - output
+                        - input
+                      language: !Languages 
+                        default:
+                          name: PrivateEndpointConnectionReference
+                          description: A reference to a related private endpoint connection.
+                          namespace: ''
+                      protocol: !Protocols {}
+                    language: !Languages 
+                      default:
+                        name: ConfigurationStorePropertiesPrivateEndpointConnections
+                        description: The list of private endpoint connections that are set up for this resource.
+                    protocol: !Protocols {}
+                  flattenedNames:
+                    - properties
+                    - privateEndpointConnections
+                  nullable: true
+                  readOnly: true
+                  required: false
+                  serializedName: privateEndpointConnections
+                  language: !Languages 
+                    default:
+                      name: privateEndpointConnections
+                      description: The list of private endpoint connections that are set up for this resource.
+                  protocol: !Protocols {}
+                - !Property 
+                  schema: *ref_28
+                  flattenedNames:
+                    - properties
+                    - publicNetworkAccess
+                  required: false
+                  serializedName: publicNetworkAccess
+                  language: !Languages 
+                    default:
+                      name: publicNetworkAccess
+                      description: Control permission for data plane traffic coming from public networks while private endpoint is enabled.
+                  protocol: !Protocols {}
+              serializationFormats:
+                - json
+              usage:
+                - output
+                - input
+              language: !Languages 
+                default:
+                  name: ConfigurationStore
+                  description: The configuration store along with all resource properties. The Configuration Store will have all information to begin utilizing it.
+                  namespace: ''
+              protocol: !Protocols {}
+            language: !Languages 
+              default:
+                name: ConfigurationStoreListResultValue
+                description: The collection value.
+            protocol: !Protocols {}
+          serializedName: value
+          language: !Languages 
+            default:
+              name: value
+              description: The collection value.
+          protocol: !Protocols {}
+        - !Property 
+          schema: *ref_29
+          serializedName: nextLink
+          language: !Languages 
+            default:
+              name: nextLink
+              description: The URI that can be used to request the next set of paged results.
+          protocol: !Protocols {}
+      serializationFormats:
+        - json
+      usage:
+        - output
+      language: !Languages 
+        default:
+          name: ConfigurationStoreListResult
+          description: The result of a request to list configuration stores.
+          namespace: ''
+      protocol: !Protocols {}
+    - *ref_4
+    - *ref_30
+    - *ref_31
+    - *ref_32
+    - *ref_33
+    - *ref_34
+    - *ref_35
+    - *ref_36
+    - *ref_37
+    - *ref_10
+    - !ObjectSchema &ref_101
+      type: object
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      properties:
+        - !Property 
+          schema: *ref_38
+          serializedName: code
+          language: !Languages 
+            default:
+              name: code
+              description: Error code.
+          protocol: !Protocols {}
+        - !Property 
+          schema: *ref_39
+          serializedName: message
+          language: !Languages 
+            default:
+              name: message
+              description: Error message.
+          protocol: !Protocols {}
+      serializationFormats:
+        - json
+      usage:
+        - exception
+      language: !Languages 
+        default:
+          name: Error
+          description: AppConfiguration error object.
+          namespace: ''
+      protocol: !Protocols {}
+    - !ObjectSchema &ref_113
+      type: object
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      properties:
+        - !Property 
+          schema: *ref_30
+          serializedName: identity
+          language: !Languages 
+            default:
+              name: identity
+              description: The managed identity information for the configuration store.
+          protocol: !Protocols {}
+        - !Property 
+          schema: *ref_37
+          serializedName: sku
+          language: !Languages 
+            default:
+              name: sku
+              description: The SKU of the configuration store.
+          protocol: !Protocols {}
+        - !Property 
+          schema: *ref_40
+          serializedName: tags
+          language: !Languages 
+            default:
+              name: tags
+              description: The ARM resource tags.
+          protocol: !Protocols {}
+        - !Property 
+          schema: *ref_32
+          flattenedNames:
+            - properties
+            - encryption
+          serializedName: encryption
+          language: !Languages 
+            default:
+              name: encryption
+              description: The encryption settings of the configuration store.
+          protocol: !Protocols {}
+        - !Property 
+          schema: *ref_28
+          flattenedNames:
+            - properties
+            - publicNetworkAccess
+          serializedName: publicNetworkAccess
+          language: !Languages 
+            default:
+              name: publicNetworkAccess
+              description: Control permission for data plane traffic coming from public networks while private endpoint is enabled.
+          protocol: !Protocols {}
+      serializationFormats:
+        - json
+      usage:
+        - input
+      language: !Languages 
+        default:
+          name: ConfigurationStoreUpdateParameters
+          description: The parameters for updating a configuration store.
+          namespace: ''
+      protocol: !Protocols {}
+    - !ObjectSchema &ref_130
+      type: object
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      properties:
+        - !Property 
+          schema: *ref_41
+          required: true
+          serializedName: name
+          language: !Languages 
+            default:
+              name: name
+              description: The name to check for availability.
+          protocol: !Protocols {}
+        - !Property 
+          schema: *ref_42
+          required: true
+          serializedName: type
+          language: !Languages 
+            default:
+              name: type
+              description: The resource type to check for name availability.
+          protocol: !Protocols {}
+      serializationFormats:
+        - json
+      usage:
+        - input
+      language: !Languages 
+        default:
+          name: CheckNameAvailabilityParameters
+          description: Parameters used for checking whether a resource name is available.
+          namespace: ''
+      protocol: !Protocols {}
+    - !ObjectSchema &ref_132
+      type: object
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      properties:
+        - !Property 
+          schema: *ref_43
+          readOnly: true
+          serializedName: nameAvailable
+          language: !Languages 
+            default:
+              name: nameAvailable
+              description: The value indicating whether the resource name is available.
+          protocol: !Protocols {}
+        - !Property 
+          schema: *ref_44
+          readOnly: true
+          serializedName: message
+          language: !Languages 
+            default:
+              name: message
+              description: If any, the error message that provides more detail for the reason that the name is not available.
+          protocol: !Protocols {}
+        - !Property 
+          schema: *ref_45
+          readOnly: true
+          serializedName: reason
+          language: !Languages 
+            default:
+              name: reason
+              description: If any, the reason that the name is not available.
+          protocol: !Protocols {}
+      serializationFormats:
+        - json
+      usage:
+        - output
+      language: !Languages 
+        default:
+          name: NameAvailabilityStatus
+          description: The result of a request to check the availability of a resource name.
+          namespace: ''
+      protocol: !Protocols {}
+    - !ObjectSchema &ref_120
+      type: object
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      properties:
+        - !Property 
+          schema: !ArraySchema &ref_88
+            type: array
+            apiVersions:
+              - !ApiVersion 
+                version: '2020-06-01'
+            elementType: !ObjectSchema &ref_53
+              type: object
+              apiVersions:
+                - !ApiVersion 
+                  version: '2020-06-01'
+              properties:
+                - !Property 
+                  schema: *ref_46
+                  readOnly: true
+                  serializedName: id
+                  language: !Languages 
+                    default:
+                      name: id
+                      description: The key ID.
+                  protocol: !Protocols {}
+                - !Property 
+                  schema: *ref_47
+                  readOnly: true
+                  serializedName: name
+                  language: !Languages 
+                    default:
+                      name: name
+                      description: A name for the key describing its usage.
+                  protocol: !Protocols {}
+                - !Property 
+                  schema: *ref_48
+                  readOnly: true
+                  serializedName: value
+                  language: !Languages 
+                    default:
+                      name: value
+                      description: The value of the key that is used for authentication purposes.
+                  protocol: !Protocols {}
+                - !Property 
+                  schema: *ref_49
+                  readOnly: true
+                  serializedName: connectionString
+                  language: !Languages 
+                    default:
+                      name: connectionString
+                      description: A connection string that can be used by supporting clients for authentication.
+                  protocol: !Protocols {}
+                - !Property 
+                  schema: *ref_50
+                  readOnly: true
+                  serializedName: lastModified
+                  language: !Languages 
+                    default:
+                      name: lastModified
+                      description: The last time any of the key's properties were modified.
+                  protocol: !Protocols {}
+                - !Property 
+                  schema: *ref_51
+                  readOnly: true
+                  serializedName: readOnly
+                  language: !Languages 
+                    default:
+                      name: readOnly
+                      description: Whether this key can only be used for read operations.
+                  protocol: !Protocols {}
+              serializationFormats:
+                - json
+              usage:
+                - output
+              language: !Languages 
+                default:
+                  name: ApiKey
+                  description: An API key used for authenticating with a configuration store endpoint.
+                  namespace: ''
+              protocol: !Protocols {}
+            language: !Languages 
+              default:
+                name: ApiKeyListResultValue
+                description: The collection value.
+            protocol: !Protocols {}
+          serializedName: value
+          language: !Languages 
+            default:
+              name: value
+              description: The collection value.
+          protocol: !Protocols {}
+        - !Property 
+          schema: *ref_52
+          serializedName: nextLink
+          language: !Languages 
+            default:
+              name: nextLink
+              description: The URI that can be used to request the next set of paged results.
+          protocol: !Protocols {}
+      serializationFormats:
+        - json
+      usage:
+        - output
+      language: !Languages 
+        default:
+          name: ApiKeyListResult
+          description: The result of a request to list API keys.
+          namespace: ''
+      protocol: !Protocols {}
+    - *ref_53
+    - !ObjectSchema &ref_121
+      type: object
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      properties:
+        - !Property 
+          schema: *ref_54
+          serializedName: id
+          language: !Languages 
+            default:
+              name: id
+              description: The id of the key to regenerate.
+          protocol: !Protocols {}
+      serializationFormats:
+        - json
+      usage:
+        - input
+      language: !Languages 
+        default:
+          name: RegenerateKeyParameters
+          description: The parameters used to regenerate an API key.
+          namespace: ''
+      protocol: !Protocols {}
+    - !ObjectSchema &ref_134
+      type: object
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      properties:
+        - !Property 
+          schema: !ArraySchema &ref_89
+            type: array
+            apiVersions:
+              - !ApiVersion 
+                version: '2020-06-01'
+            elementType: !ObjectSchema &ref_61
+              type: object
+              apiVersions:
+                - !ApiVersion 
+                  version: '2020-06-01'
+              properties:
+                - !Property 
+                  schema: *ref_55
+                  serializedName: name
+                  language: !Languages 
+                    default:
+                      name: name
+                      description: 'Operation name: {provider}/{resource}/{operation}.'
+                  protocol: !Protocols {}
+                - !Property 
+                  schema: !ObjectSchema &ref_62
+                    type: object
+                    apiVersions:
+                      - !ApiVersion 
+                        version: '2020-06-01'
+                    properties:
+                      - !Property 
+                        schema: *ref_56
+                        readOnly: true
+                        serializedName: provider
+                        language: !Languages 
+                          default:
+                            name: provider
+                            description: 'The resource provider name: Microsoft App Configuration."'
+                        protocol: !Protocols {}
+                      - !Property 
+                        schema: *ref_57
+                        serializedName: resource
+                        language: !Languages 
+                          default:
+                            name: resource
+                            description: The resource on which the operation is performed.
+                        protocol: !Protocols {}
+                      - !Property 
+                        schema: *ref_58
+                        serializedName: operation
+                        language: !Languages 
+                          default:
+                            name: operation
+                            description: The operation that users can perform.
+                        protocol: !Protocols {}
+                      - !Property 
+                        schema: *ref_59
+                        serializedName: description
+                        language: !Languages 
+                          default:
+                            name: description
+                            description: The description for the operation.
+                        protocol: !Protocols {}
+                    serializationFormats:
+                      - json
+                    usage:
+                      - output
+                    language: !Languages 
+                      default:
+                        name: OperationDefinitionDisplay
+                        description: The display information for a configuration store operation.
+                        namespace: ''
+                    protocol: !Protocols {}
+                  serializedName: display
+                  language: !Languages 
+                    default:
+                      name: display
+                      description: The display information for the configuration store operation.
+                  protocol: !Protocols {}
+              serializationFormats:
+                - json
+              usage:
+                - output
+              language: !Languages 
+                default:
+                  name: OperationDefinition
+                  description: The definition of a configuration store operation.
+                  namespace: ''
+              protocol: !Protocols {}
+            language: !Languages 
+              default:
+                name: OperationDefinitionListResultValue
+                description: The collection value.
+            protocol: !Protocols {}
+          serializedName: value
+          language: !Languages 
+            default:
+              name: value
+              description: The collection value.
+          protocol: !Protocols {}
+        - !Property 
+          schema: *ref_60
+          serializedName: nextLink
+          language: !Languages 
+            default:
+              name: nextLink
+              description: The URI that can be used to request the next set of paged results.
+          protocol: !Protocols {}
+      serializationFormats:
+        - json
+      usage:
+        - output
+      language: !Languages 
+        default:
+          name: OperationDefinitionListResult
+          description: The result of a request to list configuration store operations.
+          namespace: ''
+      protocol: !Protocols {}
+    - *ref_61
+    - *ref_62
+    - !ObjectSchema &ref_125
+      type: object
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      properties:
+        - !Property 
+          schema: *ref_63
+          required: true
+          serializedName: key
+          language: !Languages 
+            default:
+              name: key
+              description: The key to retrieve.
+          protocol: !Protocols {}
+        - !Property 
+          schema: *ref_64
+          required: false
+          serializedName: label
+          language: !Languages 
+            default:
+              name: label
+              description: The label of the key.
+          protocol: !Protocols {}
+      serializationFormats:
+        - json
+      usage:
+        - input
+      language: !Languages 
+        default:
+          name: ListKeyValueParameters
+          description: The parameters used to list a configuration store key-value
+          namespace: ''
+      protocol: !Protocols {}
+    - !ObjectSchema &ref_129
+      type: object
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      properties:
+        - !Property 
+          schema: *ref_65
+          readOnly: true
+          serializedName: key
+          language: !Languages 
+            default:
+              name: key
+              description: "The primary identifier of a key-value.\r\nThe key is used in unison with the label to uniquely identify a key-value."
+          protocol: !Protocols {}
+        - !Property 
+          schema: *ref_66
+          readOnly: true
+          serializedName: label
+          language: !Languages 
+            default:
+              name: label
+              description: "A value used to group key-values.\r\nThe label is used in unison with the key to uniquely identify a key-value."
+          protocol: !Protocols {}
+        - !Property 
+          schema: *ref_67
+          readOnly: true
+          serializedName: value
+          language: !Languages 
+            default:
+              name: value
+              description: The value of the key-value.
+          protocol: !Protocols {}
+        - !Property 
+          schema: *ref_68
+          readOnly: true
+          serializedName: contentType
+          language: !Languages 
+            default:
+              name: contentType
+              description: "The content type of the key-value's value.\r\nProviding a proper content-type can enable transformations of values when they are retrieved by applications."
+          protocol: !Protocols {}
+        - !Property 
+          schema: *ref_69
+          readOnly: true
+          serializedName: eTag
+          language: !Languages 
+            default:
+              name: eTag
+              description: An ETag indicating the state of a key-value within a configuration store.
+          protocol: !Protocols {}
+        - !Property 
+          schema: *ref_70
+          readOnly: true
+          serializedName: lastModified
+          language: !Languages 
+            default:
+              name: lastModified
+              description: The last time a modifying operation was performed on the given key-value.
+          protocol: !Protocols {}
+        - !Property 
+          schema: *ref_71
+          readOnly: true
+          serializedName: locked
+          language: !Languages 
+            default:
+              name: locked
+              description: "A value indicating whether the key-value is locked.\r\nA locked key-value may not be modified until it is unlocked."
+          protocol: !Protocols {}
+        - !Property 
+          schema: *ref_72
+          readOnly: true
+          serializedName: tags
+          language: !Languages 
+            default:
+              name: tags
+              description: A dictionary of tags that can help identify what a key-value may be applicable for.
+          protocol: !Protocols {}
+      serializationFormats:
+        - json
+      usage:
+        - output
+      language: !Languages 
+        default:
+          name: KeyValue
+          description: The result of a request to retrieve a key-value from the specified configuration store.
+          namespace: ''
+      protocol: !Protocols {}
+    - !ObjectSchema &ref_137
+      type: object
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      properties:
+        - !Property 
+          schema: !ArraySchema &ref_90
+            type: array
+            apiVersions:
+              - !ApiVersion 
+                version: '2020-06-01'
+            elementType: !ObjectSchema &ref_77
+              type: object
+              apiVersions:
+                - !ApiVersion 
+                  version: '2020-06-01'
+              properties:
+                - !Property 
+                  schema: *ref_73
+                  readOnly: true
+                  serializedName: id
+                  language: !Languages 
+                    default:
+                      name: id
+                      description: The resource ID.
+                  protocol: !Protocols {}
+                - !Property 
+                  schema: *ref_74
+                  readOnly: true
+                  serializedName: name
+                  language: !Languages 
+                    default:
+                      name: name
+                      description: The name of the resource.
+                  protocol: !Protocols {}
+                - !Property 
+                  schema: *ref_75
+                  readOnly: true
+                  serializedName: type
+                  language: !Languages 
+                    default:
+                      name: type
+                      description: The type of the resource.
+                  protocol: !Protocols {}
+                - !Property 
+                  schema: *ref_16
+                  flattenedNames:
+                    - properties
+                    - provisioningState
+                  readOnly: true
+                  serializedName: provisioningState
+                  language: !Languages 
+                    default:
+                      name: provisioningState
+                      description: The provisioning status of the private endpoint connection.
+                  protocol: !Protocols {}
+                - !Property 
+                  schema: *ref_35
+                  flattenedNames:
+                    - properties
+                    - privateEndpoint
+                  serializedName: privateEndpoint
+                  language: !Languages 
+                    default:
+                      name: privateEndpoint
+                      description: The resource of private endpoint.
+                  protocol: !Protocols {}
+                - !Property 
+                  schema: *ref_36
+                  flattenedNames:
+                    - properties
+                    - privateLinkServiceConnectionState
+                  serializedName: privateLinkServiceConnectionState
+                  language: !Languages 
+                    default:
+                      name: privateLinkServiceConnectionState
+                      description: A collection of information about the state of the connection between service consumer and provider.
+                  protocol: !Protocols {}
+              serializationFormats:
+                - json
+              usage:
+                - output
+                - input
+              extensions:
+                x-ms-azure-resource: true
+              language: !Languages 
+                default:
+                  name: PrivateEndpointConnection
+                  description: A private endpoint connection
+                  namespace: ''
+              protocol: !Protocols {}
+            language: !Languages 
+              default:
+                name: PrivateEndpointConnectionListResultValue
+                description: The collection value.
+            protocol: !Protocols {}
+          serializedName: value
+          language: !Languages 
+            default:
+              name: value
+              description: The collection value.
+          protocol: !Protocols {}
+        - !Property 
+          schema: *ref_76
+          serializedName: nextLink
+          language: !Languages 
+            default:
+              name: nextLink
+              description: The URI that can be used to request the next set of paged results.
+          protocol: !Protocols {}
+      serializationFormats:
+        - json
+      usage:
+        - output
+      language: !Languages 
+        default:
+          name: PrivateEndpointConnectionListResult
+          description: A list of private endpoint connections
+          namespace: ''
+      protocol: !Protocols {}
+    - *ref_77
+    - !ObjectSchema &ref_150
+      type: object
+      apiVersions:
+        - !ApiVersion 
+          version: '2020-06-01'
+      properties:
+        - !Property 
+          schema: !ArraySchema &ref_93
+            type: array
+            apiVersions:
+              - !ApiVersion 
+                version: '2020-06-01'
+            elementType: !ObjectSchema &ref_85
+              type: object
+              apiVersions:
+                - !ApiVersion 
+                  version: '2020-06-01'
+              properties:
+                - !Property 
+                  schema: *ref_78
+                  readOnly: true
+                  serializedName: id
+                  language: !Languages 
+                    default:
+                      name: id
+                      description: The resource ID.
+                  protocol: !Protocols {}
+                - !Property 
+                  schema: *ref_79
+                  readOnly: true
+                  serializedName: name
+                  language: !Languages 
+                    default:
+                      name: name
+                      description: The name of the resource.
+                  protocol: !Protocols {}
+                - !Property 
+                  schema: *ref_80
+                  readOnly: true
+                  serializedName: type
+                  language: !Languages 
+                    default:
+                      name: type
+                      description: The type of the resource.
+                  protocol: !Protocols {}
+                - !Property 
+                  schema: *ref_81
+                  flattenedNames:
+                    - properties
+                    - groupId
+                  readOnly: true
+                  serializedName: groupId
+                  language: !Languages 
+                    default:
+                      name: groupId
+                      description: The private link resource group id.
+                  protocol: !Protocols {}
+                - !Property 
+                  schema: !ArraySchema &ref_91
+                    type: array
+                    apiVersions:
+                      - !ApiVersion 
+                        version: '2020-06-01'
+                    elementType: *ref_82
+                    language: !Languages 
+                      default:
+                        name: PrivateLinkResourcePropertiesRequiredMembers
+                        description: The private link resource required member names.
+                    protocol: !Protocols {}
+                  flattenedNames:
+                    - properties
+                    - requiredMembers
+                  readOnly: true
+                  serializedName: requiredMembers
+                  language: !Languages 
+                    default:
+                      name: requiredMembers
+                      description: The private link resource required member names.
+                  protocol: !Protocols {}
+                - !Property 
+                  schema: !ArraySchema &ref_92
+                    type: array
+                    apiVersions:
+                      - !ApiVersion 
+                        version: '2020-06-01'
+                    elementType: *ref_83
+                    language: !Languages 
+                      default:
+                        name: PrivateLinkResourcePropertiesRequiredZoneNames
+                        description: The list of required DNS zone names of the private link resource.
+                    protocol: !Protocols {}
+                  flattenedNames:
+                    - properties
+                    - requiredZoneNames
+                  readOnly: true
+                  serializedName: requiredZoneNames
+                  language: !Languages 
+                    default:
+                      name: requiredZoneNames
+                      description: The list of required DNS zone names of the private link resource.
+                  protocol: !Protocols {}
+              serializationFormats:
+                - json
+              usage:
+                - output
+              language: !Languages 
+                default:
+                  name: PrivateLinkResource
+                  description: A resource that supports private link capabilities.
+                  namespace: ''
+              protocol: !Protocols {}
+            language: !Languages 
+              default:
+                name: PrivateLinkResourceListResultValue
+                description: The collection value.
+            protocol: !Protocols {}
+          serializedName: value
+          language: !Languages 
+            default:
+              name: value
+              description: The collection value.
+          protocol: !Protocols {}
+        - !Property 
+          schema: *ref_84
+          serializedName: nextLink
+          language: !Languages 
+            default:
+              name: nextLink
+              description: The URI that can be used to request the next set of paged results.
+          protocol: !Protocols {}
+      serializationFormats:
+        - json
+      usage:
+        - output
+      language: !Languages 
+        default:
+          name: PrivateLinkResourceListResult
+          description: A list of private link resources.
+          namespace: ''
+      protocol: !Protocols {}
+    - *ref_85
+  arrays:
+    - *ref_86
+    - *ref_87
+    - *ref_88
+    - *ref_89
+    - *ref_90
+    - *ref_91
+    - *ref_92
+    - *ref_93
+globalParameters:
+  - !Parameter &ref_96
+    schema: *ref_3
+    implementation: Client
+    required: true
+    extensions:
+      x-ms-priority: 0
+    language: !Languages 
+      default:
+        name: SubscriptionId
+        description: The Microsoft Azure subscription ID.
+        serializedName: subscriptionId
+    protocol: !Protocols 
+      http: !HttpParameter 
+        in: path
+  - !Parameter &ref_95
+    schema: *ref_0
+    clientDefaultValue: https://management.azure.com
+    implementation: Client
+    origin: modelerfour:synthesized/host
+    required: true
+    extensions:
+      x-ms-skip-url-encoding: true
+    language: !Languages 
+      default:
+        name: $host
+        description: server parameter
+        serializedName: $host
+    protocol: !Protocols 
+      http: !HttpParameter 
+        in: uri
+  - !Parameter &ref_97
+    schema: *ref_94
+    implementation: Client
+    origin: modelerfour:synthesized/api-version
+    required: true
+    language: !Languages 
+      default:
+        name: apiVersion
+        description: Api Version
+        serializedName: api-version
+    protocol: !Protocols 
+      http: !HttpParameter 
+        in: query
+operationGroups:
+  - !OperationGroup 
+    $key: ConfigurationStores
+    operations:
+      - !Operation 
+        apiVersions:
+          - !ApiVersion 
+            version: '2020-06-01'
+        parameters:
+          - *ref_95
+          - *ref_96
+          - *ref_97
+          - !Parameter &ref_99
+            schema: *ref_3
+            implementation: Method
+            language: !Languages 
+              default:
+                name: skipToken
+                description: >-
+                  A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that
+                  specifies a starting point to use for subsequent calls.
+                serializedName: $skipToken
+            protocol: !Protocols 
+              http: !HttpParameter 
+                in: query
+        requests:
+          - !Request 
+            parameters:
+              - !Parameter 
+                schema: *ref_98
+                implementation: Method
+                origin: modelerfour:synthesized/accept
+                required: true
+                language: !Languages 
+                  default:
+                    name: accept
+                    description: Accept header
+                    serializedName: Accept
+                protocol: !Protocols 
+                  http: !HttpParameter 
+                    in: header
+            signatureParameters: []
+            language: !Languages 
+              default:
+                name: ''
+                description: ''
+            protocol: !Protocols 
+              http: !HttpRequest 
+                path: /subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/configurationStores
+                method: get
+                uri: '{$host}'
+        signatureParameters:
+          - *ref_99
+        responses:
+          - !SchemaResponse 
+            schema: *ref_100
+            language: !Languages 
+              default:
+                name: ''
+                description: The request was successful; the request was well-formed and received properly.
+            protocol: !Protocols 
+              http: !HttpResponse 
+                knownMediaType: json
+                mediaTypes:
+                  - application/json
+                statusCodes:
+                  - '200'
+        exceptions:
+          - !SchemaResponse 
+            schema: *ref_101
+            language: !Languages 
+              default:
+                name: ''
+                description: Error response describing why the operation failed
+            protocol: !Protocols 
+              http: !HttpResponse 
+                knownMediaType: json
+                mediaTypes:
+                  - application/json
+                statusCodes:
+                  - default
+        extensions:
+          x-ms-examples:
+            ConfigurationStores_List:
+              parameters:
+                api-version: '2020-06-01'
+                subscriptionId: c80fb759-c965-4c6a-9110-9b2b2d038882
+              responses:
+                '200':
+                  body:
+                    value:
+                      - name: contoso
+                        type: Microsoft.AppConfiguration/configurationStores
+                        id: /subscriptions/c80fb759-c965-4c6a-9110-9b2b2d038882/resourceGroups/myResourceGroup/providers/Microsoft.AppConfiguration/configurationStores/contoso
+                        identity:
+                          type: SystemAssigned
+                          principalId: AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA
+                          tenantId: BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB
+                        location: westus
+                        properties:
+                          creationDate: '2018-04-24T16:30:55+00:00'
+                          encryption:
+                            keyVaultProperties:
+                              identityClientId: null
+                              keyIdentifier: null
+                          endpoint: https://contoso.azconfig.io
+                          privateEndpointConnections: []
+                          provisioningState: Succeeded
+                          publicNetworkAccess: Disabled
+                        sku:
+                          name: Standard
+                        tags: {}
+                      - name: contoso2
+                        type: Microsoft.AppConfiguration/configurationStores
+                        id: /subscriptions/c80fb759-c965-4c6a-9110-9b2b2d038882/resourceGroups/myResourceGroup/providers/Microsoft.AppConfiguration/configurationStores/contoso2
+                        identity:
+                          type: SystemAssigned
+                          principalId: CCCCCCCC-CCCC-CCCC-CCCC-CCCCCCCCCCCC
+                          tenantId: BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB
+                        location: westus
+                        properties:
+                          creationDate: '2018-04-24T23:06:59+00:00'
+                          encryption:
+                            keyVaultProperties:
+                              identityClientId: null
+                              keyIdentifier: null
+                          endpoint: https://contoso2.azconfig.io
+                          privateEndpointConnections: []
+                          provisioningState: Succeeded
+                          publicNetworkAccess: Disabled
+                        sku:
+                          name: Standard
+                        tags: {}
+          x-ms-pageable:
+            nextLinkName: nextLink
+        language: !Languages 
+          default:
+            name: List
+            description: Lists the configuration stores for a given subscription.
+            paging:
+              nextLinkName: nextLink
+        protocol: !Protocols {}
+      - !Operation 
+        apiVersions:
+          - !ApiVersion 
+            version: '2020-06-01'
+        parameters:
+          - *ref_95
+          - *ref_96
+          - !Parameter &ref_102
+            schema: *ref_3
+            implementation: Method
+            required: true
+            language: !Languages 
+              default:
+                name: resourceGroupName
+                description: The name of the resource group to which the container registry belongs.
+                serializedName: resourceGroupName
+            protocol: !Protocols 
+              http: !HttpParameter 
+                in: path
+          - *ref_97
+          - !Parameter &ref_103
+            schema: *ref_3
+            implementation: Method
+            language: !Languages 
+              default:
+                name: skipToken
+                description: >-
+                  A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that
+                  specifies a starting point to use for subsequent calls.
+                serializedName: $skipToken
+            protocol: !Protocols 
+              http: !HttpParameter 
+                in: query
+        requests:
+          - !Request 
+            parameters:
+              - !Parameter 
+                schema: *ref_98
+                implementation: Method
+                origin: modelerfour:synthesized/accept
+                required: true
+                language: !Languages 
+                  default:
+                    name: accept
+                    description: Accept header
+                    serializedName: Accept
+                protocol: !Protocols 
+                  http: !HttpParameter 
+                    in: header
+            signatureParameters: []
+            language: !Languages 
+              default:
+                name: ''
+                description: ''
+            protocol: !Protocols 
+              http: !HttpRequest 
+                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores
+                method: get
+                uri: '{$host}'
+        signatureParameters:
+          - *ref_102
+          - *ref_103
+        responses:
+          - !SchemaResponse 
+            schema: *ref_100
+            language: !Languages 
+              default:
+                name: ''
+                description: The request was successful; the request was well-formed and received properly.
+            protocol: !Protocols 
+              http: !HttpResponse 
+                knownMediaType: json
+                mediaTypes:
+                  - application/json
+                statusCodes:
+                  - '200'
+        exceptions:
+          - !SchemaResponse 
+            schema: *ref_101
+            language: !Languages 
+              default:
+                name: ''
+                description: Error response describing why the operation failed
+            protocol: !Protocols 
+              http: !HttpResponse 
+                knownMediaType: json
+                mediaTypes:
+                  - application/json
+                statusCodes:
+                  - default
+        extensions:
+          x-ms-examples:
+            ConfigurationStores_ListByResourceGroup:
+              parameters:
+                api-version: '2020-06-01'
+                resourceGroupName: myResourceGroup
+                subscriptionId: c80fb759-c965-4c6a-9110-9b2b2d038882
+              responses:
+                '200':
+                  body:
+                    value:
+                      - name: contoso
+                        type: Microsoft.AppConfiguration/configurationStores
+                        id: /subscriptions/c80fb759-c965-4c6a-9110-9b2b2d038882/resourceGroups/myResourceGroup/providers/Microsoft.AppConfiguration/configurationStores/contoso
+                        location: westus
+                        properties:
+                          creationDate: '2018-04-24T16:30:55+00:00'
+                          encryption:
+                            keyVaultProperties:
+                              identityClientId: null
+                              keyIdentifier: null
+                          endpoint: https://contoso.azconfig.io
+                          privateEndpointConnections: []
+                          provisioningState: Succeeded
+                          publicNetworkAccess: Disabled
+                        sku:
+                          name: Standard
+                        tags: {}
+                      - name: contoso2
+                        type: Microsoft.AppConfiguration/configurationStores
+                        id: /subscriptions/c80fb759-c965-4c6a-9110-9b2b2d038882/resourceGroups/myResourceGroup/providers/Microsoft.AppConfiguration/configurationStores/contoso2
+                        location: westus
+                        properties:
+                          creationDate: '2018-04-24T23:06:59+00:00'
+                          encryption:
+                            keyVaultProperties:
+                              identityClientId: null
+                              keyIdentifier: null
+                          endpoint: https://contoso2.azconfig.io
+                          privateEndpointConnections: []
+                          provisioningState: Succeeded
+                          publicNetworkAccess: Disabled
+                        sku:
+                          name: Standard
+                        tags: {}
+          x-ms-pageable:
+            nextLinkName: nextLink
+        language: !Languages 
+          default:
+            name: ListByResourceGroup
+            description: Lists the configuration stores for a given resource group.
+            paging:
+              nextLinkName: nextLink
+        protocol: !Protocols {}
+      - !Operation 
+        apiVersions:
+          - !ApiVersion 
+            version: '2020-06-01'
+        parameters:
+          - *ref_95
+          - *ref_96
+          - !Parameter &ref_105
+            schema: *ref_3
+            implementation: Method
+            required: true
+            language: !Languages 
+              default:
+                name: resourceGroupName
+                description: The name of the resource group to which the container registry belongs.
+                serializedName: resourceGroupName
+            protocol: !Protocols 
+              http: !HttpParameter 
+                in: path
+          - !Parameter &ref_106
+            schema: *ref_104
+            implementation: Method
+            required: true
+            language: !Languages 
+              default:
+                name: configStoreName
+                description: The name of the configuration store.
+                serializedName: configStoreName
+            protocol: !Protocols 
+              http: !HttpParameter 
+                in: path
+          - *ref_97
+        requests:
+          - !Request 
+            parameters:
+              - !Parameter 
+                schema: *ref_98
+                implementation: Method
+                origin: modelerfour:synthesized/accept
+                required: true
+                language: !Languages 
+                  default:
+                    name: accept
+                    description: Accept header
+                    serializedName: Accept
+                protocol: !Protocols 
+                  http: !HttpParameter 
+                    in: header
+            signatureParameters: []
+            language: !Languages 
+              default:
+                name: ''
+                description: ''
+            protocol: !Protocols 
+              http: !HttpRequest 
+                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}
+                method: get
+                uri: '{$host}'
+        signatureParameters:
+          - *ref_105
+          - *ref_106
+        responses:
+          - !SchemaResponse 
+            schema: *ref_4
+            language: !Languages 
+              default:
+                name: ''
+                description: The request was successful; the request was well-formed and received properly.
+            protocol: !Protocols 
+              http: !HttpResponse 
+                knownMediaType: json
+                mediaTypes:
+                  - application/json
+                statusCodes:
+                  - '200'
+        exceptions:
+          - !SchemaResponse 
+            schema: *ref_101
+            language: !Languages 
+              default:
+                name: ''
+                description: Error response describing why the operation failed
+            protocol: !Protocols 
+              http: !HttpResponse 
+                knownMediaType: json
+                mediaTypes:
+                  - application/json
+                statusCodes:
+                  - default
+        extensions:
+          x-ms-examples:
+            ConfigurationStores_Get:
+              parameters:
+                api-version: '2020-06-01'
+                configStoreName: contoso
+                resourceGroupName: myResourceGroup
+                subscriptionId: c80fb759-c965-4c6a-9110-9b2b2d038882
+              responses:
+                '200':
+                  body:
+                    name: contoso
+                    type: Microsoft.AppConfiguration/configurationStores
+                    id: /subscriptions/c80fb759-c965-4c6a-9110-9b2b2d038882/resourceGroups/myResourceGroup/providers/Microsoft.AppConfiguration/configurationStores/contoso
+                    identity:
+                      type: SystemAssigned
+                      principalId: AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA
+                      tenantId: BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB
+                    location: westus
+                    properties:
+                      creationDate: '2018-04-24T16:30:55+00:00'
+                      encryption:
+                        keyVaultProperties:
+                          identityClientId: null
+                          keyIdentifier: null
+                      endpoint: https://contoso.azconfig.io
+                      privateEndpointConnections: []
+                      provisioningState: Succeeded
+                      publicNetworkAccess: Disabled
+                    sku:
+                      name: Standard
+                    tags: {}
+        language: !Languages 
+          default:
+            name: Get
+            description: Gets the properties of the specified configuration store.
+        protocol: !Protocols {}
+      - !Operation 
+        apiVersions:
+          - !ApiVersion 
+            version: '2020-06-01'
+        parameters:
+          - *ref_95
+          - *ref_96
+          - !Parameter &ref_109
+            schema: *ref_3
+            implementation: Method
+            required: true
+            language: !Languages 
+              default:
+                name: resourceGroupName
+                description: The name of the resource group to which the container registry belongs.
+                serializedName: resourceGroupName
+            protocol: !Protocols 
+              http: !HttpParameter 
+                in: path
+          - !Parameter &ref_110
+            schema: *ref_104
+            implementation: Method
+            required: true
+            language: !Languages 
+              default:
+                name: configStoreName
+                description: The name of the configuration store.
+                serializedName: configStoreName
+            protocol: !Protocols 
+              http: !HttpParameter 
+                in: path
+          - *ref_97
+        requests:
+          - !Request 
+            parameters:
+              - !Parameter 
+                schema: *ref_107
+                implementation: Method
+                origin: modelerfour:synthesized/content-type
+                required: true
+                language: !Languages 
+                  default:
+                    name: contentType
+                    description: Body Parameter content-type
+                    serializedName: Content-Type
+                protocol: !Protocols 
+                  http: !HttpParameter 
+                    in: header
+              - !Parameter &ref_108
+                schema: *ref_4
+                implementation: Method
+                required: true
+                language: !Languages 
+                  default:
+                    name: configStoreCreationParameters
+                    description: The parameters for creating a configuration store.
+                protocol: !Protocols 
+                  http: !HttpParameter 
+                    in: body
+                    style: json
+              - !Parameter 
+                schema: *ref_98
+                implementation: Method
+                origin: modelerfour:synthesized/accept
+                required: true
+                language: !Languages 
+                  default:
+                    name: accept
+                    description: Accept header
+                    serializedName: Accept
+                protocol: !Protocols 
+                  http: !HttpParameter 
+                    in: header
+            signatureParameters:
+              - *ref_108
+            language: !Languages 
+              default:
+                name: ''
+                description: ''
+            protocol: !Protocols 
+              http: !HttpWithBodyRequest 
+                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}
+                method: put
+                knownMediaType: json
+                mediaTypes:
+                  - application/json
+                uri: '{$host}'
+        signatureParameters:
+          - *ref_109
+          - *ref_110
+        responses:
+          - !SchemaResponse 
+            schema: *ref_4
+            language: !Languages 
+              default:
+                name: ''
+                description: The request was successful; the request was well-formed and received properly.
+            protocol: !Protocols 
+              http: !HttpResponse 
+                knownMediaType: json
+                mediaTypes:
+                  - application/json
+                statusCodes:
+                  - '200'
+          - !SchemaResponse 
+            schema: *ref_4
+            language: !Languages 
+              default:
+                name: ''
+                description: The request was successfully accepted; the operation will complete asynchronously. The provisioning state of the resource should indicate the current state of the resource.
+            protocol: !Protocols 
+              http: !HttpResponse 
+                knownMediaType: json
+                mediaTypes:
+                  - application/json
+                statusCodes:
+                  - '201'
+        exceptions:
+          - !SchemaResponse 
+            schema: *ref_101
+            language: !Languages 
+              default:
+                name: ''
+                description: Error response describing why the operation failed
+            protocol: !Protocols 
+              http: !HttpResponse 
+                knownMediaType: json
+                mediaTypes:
+                  - application/json
+                statusCodes:
+                  - default
+        extensions:
+          x-ms-examples:
+            ConfigurationStores_Create:
+              parameters:
+                api-version: '2020-06-01'
+                configStoreCreationParameters:
+                  location: westus
+                  sku:
+                    name: Standard
+                  tags:
+                    myTag: myTagValue
+                configStoreName: contoso
+                resourceGroupName: myResourceGroup
+                subscriptionId: c80fb759-c965-4c6a-9110-9b2b2d038882
+              responses:
+                '200':
+                  body:
+                    name: contoso
+                    type: Microsoft.AppConfiguration/configurationStores
+                    id: /subscriptions/c80fb759-c965-4c6a-9110-9b2b2d038882/resourceGroups/myResourceGroup/providers/Microsoft.AppConfiguration/configurationStores/contoso
+                    location: westus
+                    properties:
+                      creationDate: '2018-04-24T16:30:55+00:00'
+                      encryption:
+                        keyVaultProperties:
+                          identityClientId: null
+                          keyIdentifier: null
+                      endpoint: https://contoso.azconfig.io
+                      privateEndpointConnections: []
+                      provisioningState: Succeeded
+                      publicNetworkAccess: Disabled
+                    sku:
+                      name: Standard
+                    tags:
+                      myTag: myTagValue
+                '201':
+                  body:
+                    name: contoso
+                    type: Microsoft.AppConfiguration/configurationStores
+                    id: /subscriptions/c80fb759-c965-4c6a-9110-9b2b2d038882/resourceGroups/myResourceGroup/providers/Microsoft.AppConfiguration/configurationStores/contoso
+                    location: westus
+                    properties:
+                      creationDate: '2018-04-24T16:30:55+00:00'
+                      encryption:
+                        keyVaultProperties:
+                          identityClientId: null
+                          keyIdentifier: null
+                      endpoint: https://contoso.azconfig.io
+                      privateEndpointConnections: []
+                      provisioningState: Creating
+                      publicNetworkAccess: Disabled
+                    sku:
+                      name: Standard
+                    tags:
+                      myTag: myTagValue
+            ConfigurationStores_Create_WithIdentity:
+              parameters:
+                api-version: '2020-06-01'
+                configStoreCreationParameters:
+                  identity:
+                    type: SystemAssigned, UserAssigned
+                    userAssignedIdentities:
+                      /subscriptions/c80fb759-c965-4c6a-9110-9b2b2d038882/resourcegroups/myResourceGroup1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/identity2: {}
+                  location: westus
+                  sku:
+                    name: Standard
+                  tags:
+                    myTag: myTagValue
+                configStoreName: contoso
+                resourceGroupName: myResourceGroup
+                subscriptionId: c80fb759-c965-4c6a-9110-9b2b2d038882
+              responses:
+                '200':
+                  body:
+                    name: contoso
+                    type: Microsoft.AppConfiguration/configurationStores
+                    id: /subscriptions/c80fb759-c965-4c6a-9110-9b2b2d038882/resourceGroups/myResourceGroup/providers/Microsoft.AppConfiguration/configurationStores/contoso
+                    identity:
+                      type: SystemAssigned, UserAssigned
+                      principalId: AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA
+                      tenantId: BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB
+                      userAssignedIdentities:
+                        /subscriptions/c80fb759-c965-4c6a-9110-9b2b2d038882/resourcegroups/myResourceGroup1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/identity2:
+                          clientId: CCCCCCCC-CCCC-CCCC-CCCC-CCCCCCCCCCCC
+                          principalId: DDDDDDDD-DDDD-DDDD-DDDD-DDDDDDDDDDDD
+                    location: westus
+                    properties:
+                      creationDate: '2018-04-24T16:30:55+00:00'
+                      encryption:
+                        keyVaultProperties:
+                          identityClientId: null
+                          keyIdentifier: null
+                      endpoint: https://contoso.azconfig.io
+                      privateEndpointConnections: []
+                      provisioningState: Succeeded
+                      publicNetworkAccess: Disabled
+                    sku:
+                      name: Standard
+                    tags:
+                      myTag: myTagValue
+                '201':
+                  body:
+                    name: contoso
+                    type: Microsoft.AppConfiguration/configurationStores
+                    id: /subscriptions/c80fb759-c965-4c6a-9110-9b2b2d038882/resourceGroups/myResourceGroup/providers/Microsoft.AppConfiguration/configurationStores/contoso
+                    identity:
+                      type: SystemAssigned, UserAssigned
+                      principalId: AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA
+                      tenantId: BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB
+                      userAssignedIdentities:
+                        /subscriptions/c80fb759-c965-4c6a-9110-9b2b2d038882/resourcegroups/myResourceGroup1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/identity2:
+                          clientId: CCCCCCCC-CCCC-CCCC-CCCC-CCCCCCCCCCCC
+                          principalId: DDDDDDDD-DDDD-DDDD-DDDD-DDDDDDDDDDDD
+                    location: westus
+                    properties:
+                      creationDate: '2018-04-24T16:30:55+00:00'
+                      encryption:
+                        keyVaultProperties:
+                          identityClientId: null
+                          keyIdentifier: null
+                      endpoint: https://contoso.azconfig.io
+                      privateEndpointConnections: []
+                      provisioningState: Creating
+                      publicNetworkAccess: Disabled
+                    sku:
+                      name: Standard
+                    tags:
+                      myTag: myTagValue
+          x-ms-long-running-operation: true
+        language: !Languages 
+          default:
+            name: Create
+            description: Creates a configuration store with the specified parameters.
+        protocol: !Protocols {}
+      - !Operation 
+        apiVersions:
+          - !ApiVersion 
+            version: '2020-06-01'
+        parameters:
+          - *ref_95
+          - *ref_96
+          - !Parameter &ref_111
+            schema: *ref_3
+            implementation: Method
+            required: true
+            language: !Languages 
+              default:
+                name: resourceGroupName
+                description: The name of the resource group to which the container registry belongs.
+                serializedName: resourceGroupName
+            protocol: !Protocols 
+              http: !HttpParameter 
+                in: path
+          - !Parameter &ref_112
+            schema: *ref_104
+            implementation: Method
+            required: true
+            language: !Languages 
+              default:
+                name: configStoreName
+                description: The name of the configuration store.
+                serializedName: configStoreName
+            protocol: !Protocols 
+              http: !HttpParameter 
+                in: path
+          - *ref_97
+        requests:
+          - !Request 
+            parameters:
+              - !Parameter 
+                schema: *ref_98
+                implementation: Method
+                origin: modelerfour:synthesized/accept
+                required: true
+                language: !Languages 
+                  default:
+                    name: accept
+                    description: Accept header
+                    serializedName: Accept
+                protocol: !Protocols 
+                  http: !HttpParameter 
+                    in: header
+            signatureParameters: []
+            language: !Languages 
+              default:
+                name: ''
+                description: ''
+            protocol: !Protocols 
+              http: !HttpRequest 
+                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}
+                method: delete
+                uri: '{$host}'
+        signatureParameters:
+          - *ref_111
+          - *ref_112
+        responses:
+          - !Response 
+            language: !Languages 
+              default:
+                name: ''
+                description: The request was successful; the request was well-formed and received properly.
+            protocol: !Protocols 
+              http: !HttpResponse 
+                statusCodes:
+                  - '200'
+          - !Response 
+            language: !Languages 
+              default:
+                name: ''
+                description: The request was successful; the operation will complete asynchronously.
+            protocol: !Protocols 
+              http: !HttpResponse 
+                statusCodes:
+                  - '202'
+          - !Response 
+            language: !Languages 
+              default:
+                name: ''
+                description: No Content - the specified resource was not found.
+            protocol: !Protocols 
+              http: !HttpResponse 
+                statusCodes:
+                  - '204'
+        exceptions:
+          - !SchemaResponse 
+            schema: *ref_101
+            language: !Languages 
+              default:
+                name: ''
+                description: Error response describing why the operation failed
+            protocol: !Protocols 
+              http: !HttpResponse 
+                knownMediaType: json
+                mediaTypes:
+                  - application/json
+                statusCodes:
+                  - default
+        extensions:
+          x-ms-examples:
+            ConfigurationStores_Delete:
+              parameters:
+                api-version: '2020-06-01'
+                configStoreName: contoso
+                resourceGroupName: myResourceGroup
+                subscriptionId: c80fb759-c965-4c6a-9110-9b2b2d038882
+              responses:
+                '200': {}
+                '202': {}
+                '204': {}
+          x-ms-long-running-operation: true
+        language: !Languages 
+          default:
+            name: Delete
+            description: Deletes a configuration store.
+        protocol: !Protocols {}
+      - !Operation 
+        apiVersions:
+          - !ApiVersion 
+            version: '2020-06-01'
+        parameters:
+          - *ref_95
+          - *ref_96
+          - !Parameter &ref_115
+            schema: *ref_3
+            implementation: Method
+            required: true
+            language: !Languages 
+              default:
+                name: resourceGroupName
+                description: The name of the resource group to which the container registry belongs.
+                serializedName: resourceGroupName
+            protocol: !Protocols 
+              http: !HttpParameter 
+                in: path
+          - !Parameter &ref_116
+            schema: *ref_104
+            implementation: Method
+            required: true
+            language: !Languages 
+              default:
+                name: configStoreName
+                description: The name of the configuration store.
+                serializedName: configStoreName
+            protocol: !Protocols 
+              http: !HttpParameter 
+                in: path
+          - *ref_97
+        requests:
+          - !Request 
+            parameters:
+              - !Parameter 
+                schema: *ref_107
+                implementation: Method
+                origin: modelerfour:synthesized/content-type
+                required: true
+                language: !Languages 
+                  default:
+                    name: contentType
+                    description: Body Parameter content-type
+                    serializedName: Content-Type
+                protocol: !Protocols 
+                  http: !HttpParameter 
+                    in: header
+              - !Parameter &ref_114
+                schema: *ref_113
+                implementation: Method
+                required: true
+                language: !Languages 
+                  default:
+                    name: configStoreUpdateParameters
+                    description: The parameters for updating a configuration store.
+                protocol: !Protocols 
+                  http: !HttpParameter 
+                    in: body
+                    style: json
+              - !Parameter 
+                schema: *ref_98
+                implementation: Method
+                origin: modelerfour:synthesized/accept
+                required: true
+                language: !Languages 
+                  default:
+                    name: accept
+                    description: Accept header
+                    serializedName: Accept
+                protocol: !Protocols 
+                  http: !HttpParameter 
+                    in: header
+            signatureParameters:
+              - *ref_114
+            language: !Languages 
+              default:
+                name: ''
+                description: ''
+            protocol: !Protocols 
+              http: !HttpWithBodyRequest 
+                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}
+                method: patch
+                knownMediaType: json
+                mediaTypes:
+                  - application/json
+                uri: '{$host}'
+        signatureParameters:
+          - *ref_115
+          - *ref_116
+        responses:
+          - !SchemaResponse 
+            schema: *ref_4
+            language: !Languages 
+              default:
+                name: ''
+                description: The request was successful; the request was well-formed and received properly.
+            protocol: !Protocols 
+              http: !HttpResponse 
+                knownMediaType: json
+                mediaTypes:
+                  - application/json
+                statusCodes:
+                  - '200'
+          - !SchemaResponse 
+            schema: *ref_4
+            language: !Languages 
+              default:
+                name: ''
+                description: The request was successfully accepted; the operation will complete asynchronously. The provisioning state of the resource should indicate the current state of the resource.
+            protocol: !Protocols 
+              http: !HttpResponse 
+                knownMediaType: json
+                mediaTypes:
+                  - application/json
+                statusCodes:
+                  - '201'
+        exceptions:
+          - !SchemaResponse 
+            schema: *ref_101
+            language: !Languages 
+              default:
+                name: ''
+                description: Error response describing why the operation failed
+            protocol: !Protocols 
+              http: !HttpResponse 
+                knownMediaType: json
+                mediaTypes:
+                  - application/json
+                statusCodes:
+                  - default
+        extensions:
+          x-ms-examples:
+            ConfigurationStores_Update:
+              parameters:
+                api-version: '2020-06-01'
+                configStoreName: contoso
+                configStoreUpdateParameters:
+                  sku:
+                    name: Standard
+                  tags:
+                    Category: Marketing
+                resourceGroupName: myResourceGroup
+                subscriptionId: c80fb759-c965-4c6a-9110-9b2b2d038882
+              responses:
+                '200':
+                  body:
+                    name: contoso
+                    type: Microsoft.AppConfiguration/configurationStores
+                    id: /subscriptions/c80fb759-c965-4c6a-9110-9b2b2d038882/resourceGroups/myResourceGroup/providers/Microsoft.AppConfiguration/configurationStores/contoso
+                    location: westus
+                    properties:
+                      creationDate: '2018-04-24T16:30:55+00:00'
+                      encryption:
+                        keyVaultProperties:
+                          identityClientId: null
+                          keyIdentifier: null
+                      endpoint: https://contoso.azconfig.io
+                      privateEndpointConnections: []
+                      provisioningState: Succeeded
+                      publicNetworkAccess: Disabled
+                    sku:
+                      name: Standard
+                    tags:
+                      Category: Marketing
+                '201':
+                  body:
+                    name: contoso
+                    type: Microsoft.AppConfiguration/configurationStores
+                    id: /subscriptions/c80fb759-c965-4c6a-9110-9b2b2d038882/resourceGroups/myResourceGroup/providers/Microsoft.AppConfiguration/configurationStores/contoso
+                    location: westus
+                    properties:
+                      creationDate: '2018-04-24T16:30:55+00:00'
+                      encryption:
+                        keyVaultProperties:
+                          identityClientId: null
+                          keyIdentifier: null
+                      endpoint: https://contoso.azconfig.io
+                      privateEndpointConnections: []
+                      provisioningState: Updating
+                      publicNetworkAccess: Disabled
+                    sku:
+                      name: Standard
+                    tags:
+                      Category: Marketing
+            ConfigurationStores_Update_WithIdentity:
+              parameters:
+                api-version: '2020-06-01'
+                configStoreName: contoso
+                configStoreUpdateParameters:
+                  identity:
+                    type: SystemAssigned, UserAssigned
+                    userAssignedIdentities:
+                      /subscriptions/c80fb759-c965-4c6a-9110-9b2b2d038882/resourcegroups/myResourceGroup1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/identity2: {}
+                  sku:
+                    name: Standard
+                  tags:
+                    Category: Marketing
+                resourceGroupName: myResourceGroup
+                subscriptionId: c80fb759-c965-4c6a-9110-9b2b2d038882
+              responses:
+                '200':
+                  body:
+                    name: contoso
+                    type: Microsoft.AppConfiguration/configurationStores
+                    id: /subscriptions/c80fb759-c965-4c6a-9110-9b2b2d038882/resourceGroups/myResourceGroup/providers/Microsoft.AppConfiguration/configurationStores/contoso
+                    identity:
+                      type: SystemAssigned, UserAssigned
+                      principalId: AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA
+                      tenantId: BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB
+                      userAssignedIdentities:
+                        /subscriptions/c80fb759-c965-4c6a-9110-9b2b2d038882/resourcegroups/myResourceGroup1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/identity2:
+                          clientId: CCCCCCCC-CCCC-CCCC-CCCC-CCCCCCCCCCCC
+                          principalId: DDDDDDDD-DDDD-DDDD-DDDD-DDDDDDDDDDDD
+                    location: westus
+                    properties:
+                      creationDate: '2018-04-24T16:30:55+00:00'
+                      encryption:
+                        keyVaultProperties:
+                          identityClientId: null
+                          keyIdentifier: null
+                      endpoint: https://contoso.azconfig.io
+                      privateEndpointConnections: []
+                      provisioningState: Succeeded
+                      publicNetworkAccess: Disabled
+                    sku:
+                      name: Standard
+                    tags:
+                      Category: Marketing
+                '201':
+                  body:
+                    name: contoso
+                    type: Microsoft.AppConfiguration/configurationStores
+                    id: /subscriptions/c80fb759-c965-4c6a-9110-9b2b2d038882/resourceGroups/myResourceGroup/providers/Microsoft.AppConfiguration/configurationStores/contoso
+                    identity:
+                      type: SystemAssigned, UserAssigned
+                      principalId: AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA
+                      tenantId: BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB
+                      userAssignedIdentities:
+                        /subscriptions/c80fb759-c965-4c6a-9110-9b2b2d038882/resourcegroups/myResourceGroup1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/identity2:
+                          clientId: CCCCCCCC-CCCC-CCCC-CCCC-CCCCCCCCCCCC
+                          principalId: DDDDDDDD-DDDD-DDDD-DDDD-DDDDDDDDDDDD
+                    location: westus
+                    properties:
+                      creationDate: '2018-04-24T16:30:55+00:00'
+                      encryption:
+                        keyVaultProperties:
+                          identityClientId: null
+                          keyIdentifier: null
+                      endpoint: https://contoso.azconfig.io
+                      privateEndpointConnections: []
+                      provisioningState: Updating
+                      publicNetworkAccess: Disabled
+                    sku:
+                      name: Standard
+                    tags:
+                      Category: Marketing
+          x-ms-long-running-operation: true
+        language: !Languages 
+          default:
+            name: Update
+            description: Updates a configuration store with the specified parameters.
+        protocol: !Protocols {}
+      - !Operation 
+        apiVersions:
+          - !ApiVersion 
+            version: '2020-06-01'
+        parameters:
+          - *ref_95
+          - *ref_96
+          - !Parameter &ref_117
+            schema: *ref_3
+            implementation: Method
+            required: true
+            language: !Languages 
+              default:
+                name: resourceGroupName
+                description: The name of the resource group to which the container registry belongs.
+                serializedName: resourceGroupName
+            protocol: !Protocols 
+              http: !HttpParameter 
+                in: path
+          - !Parameter &ref_118
+            schema: *ref_104
+            implementation: Method
+            required: true
+            language: !Languages 
+              default:
+                name: configStoreName
+                description: The name of the configuration store.
+                serializedName: configStoreName
+            protocol: !Protocols 
+              http: !HttpParameter 
+                in: path
+          - *ref_97
+          - !Parameter &ref_119
+            schema: *ref_3
+            implementation: Method
+            language: !Languages 
+              default:
+                name: skipToken
+                description: >-
+                  A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that
+                  specifies a starting point to use for subsequent calls.
+                serializedName: $skipToken
+            protocol: !Protocols 
+              http: !HttpParameter 
+                in: query
+        requests:
+          - !Request 
+            parameters:
+              - !Parameter 
+                schema: *ref_98
+                implementation: Method
+                origin: modelerfour:synthesized/accept
+                required: true
+                language: !Languages 
+                  default:
+                    name: accept
+                    description: Accept header
+                    serializedName: Accept
+                protocol: !Protocols 
+                  http: !HttpParameter 
+                    in: header
+            signatureParameters: []
+            language: !Languages 
+              default:
+                name: ''
+                description: ''
+            protocol: !Protocols 
+              http: !HttpRequest 
+                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/ListKeys
+                method: post
+                uri: '{$host}'
+        signatureParameters:
+          - *ref_117
+          - *ref_118
+          - *ref_119
+        responses:
+          - !SchemaResponse 
+            schema: *ref_120
+            language: !Languages 
+              default:
+                name: ''
+                description: The request was successful; the request was well-formed and received properly.
+            protocol: !Protocols 
+              http: !HttpResponse 
+                knownMediaType: json
+                mediaTypes:
+                  - application/json
+                statusCodes:
+                  - '200'
+        exceptions:
+          - !SchemaResponse 
+            schema: *ref_101
+            language: !Languages 
+              default:
+                name: ''
+                description: Error response describing why the operation failed
+            protocol: !Protocols 
+              http: !HttpResponse 
+                knownMediaType: json
+                mediaTypes:
+                  - application/json
+                statusCodes:
+                  - default
+        extensions:
+          x-ms-examples:
+            ConfigurationStores_ListKeys:
+              parameters:
+                api-version: '2020-06-01'
+                configStoreName: contoso
+                resourceGroupName: myResourceGroup
+                subscriptionId: c80fb759-c965-4c6a-9110-9b2b2d038882
+              responses:
+                '200':
+                  body:
+                    value:
+                      - name: Primary
+                        connectionString: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        id: 439AD01B4BE67DB1
+                        lastModified: '2018-04-24T16:30:54+00:00'
+                        readOnly: false
+                        value: '000000000000000000000000000000000000000000000000000000'
+                      - name: Secondary
+                        connectionString: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        id: CB45E100456857B9
+                        lastModified: '2018-04-24T16:30:54+00:00'
+                        readOnly: false
+                        value: '000000000000000000000000000000000000000000000000000000'
+                      - name: Primary Read Only
+                        connectionString: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        id: B3AC55B7E71431A9
+                        lastModified: '2018-04-24T16:30:54+00:00'
+                        readOnly: true
+                        value: '000000000000000000000000000000000000000000000000000000'
+                      - name: Secondary Read Only
+                        connectionString: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        id: E2AF6A9A89DCC177
+                        lastModified: '2018-04-24T16:30:54+00:00'
+                        readOnly: true
+                        value: '000000000000000000000000000000000000000000000000000000'
+          x-ms-pageable:
+            nextLinkName: nextLink
+        language: !Languages 
+          default:
+            name: ListKeys
+            description: Lists the access key for the specified configuration store.
+            paging:
+              nextLinkName: nextLink
+        protocol: !Protocols {}
+      - !Operation 
+        apiVersions:
+          - !ApiVersion 
+            version: '2020-06-01'
+        parameters:
+          - *ref_95
+          - *ref_96
+          - !Parameter &ref_123
+            schema: *ref_3
+            implementation: Method
+            required: true
+            language: !Languages 
+              default:
+                name: resourceGroupName
+                description: The name of the resource group to which the container registry belongs.
+                serializedName: resourceGroupName
+            protocol: !Protocols 
+              http: !HttpParameter 
+                in: path
+          - !Parameter &ref_124
+            schema: *ref_104
+            implementation: Method
+            required: true
+            language: !Languages 
+              default:
+                name: configStoreName
+                description: The name of the configuration store.
+                serializedName: configStoreName
+            protocol: !Protocols 
+              http: !HttpParameter 
+                in: path
+          - *ref_97
+        requests:
+          - !Request 
+            parameters:
+              - !Parameter 
+                schema: *ref_107
+                implementation: Method
+                origin: modelerfour:synthesized/content-type
+                required: true
+                language: !Languages 
+                  default:
+                    name: contentType
+                    description: Body Parameter content-type
+                    serializedName: Content-Type
+                protocol: !Protocols 
+                  http: !HttpParameter 
+                    in: header
+              - !Parameter &ref_122
+                schema: *ref_121
+                implementation: Method
+                required: true
+                language: !Languages 
+                  default:
+                    name: regenerateKeyParameters
+                    description: The parameters for regenerating an access key.
+                protocol: !Protocols 
+                  http: !HttpParameter 
+                    in: body
+                    style: json
+              - !Parameter 
+                schema: *ref_98
+                implementation: Method
+                origin: modelerfour:synthesized/accept
+                required: true
+                language: !Languages 
+                  default:
+                    name: accept
+                    description: Accept header
+                    serializedName: Accept
+                protocol: !Protocols 
+                  http: !HttpParameter 
+                    in: header
+            signatureParameters:
+              - *ref_122
+            language: !Languages 
+              default:
+                name: ''
+                description: ''
+            protocol: !Protocols 
+              http: !HttpWithBodyRequest 
+                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/RegenerateKey
+                method: post
+                knownMediaType: json
+                mediaTypes:
+                  - application/json
+                uri: '{$host}'
+        signatureParameters:
+          - *ref_123
+          - *ref_124
+        responses:
+          - !SchemaResponse 
+            schema: *ref_53
+            language: !Languages 
+              default:
+                name: ''
+                description: The request was successful; the request was well-formed and received properly.
+            protocol: !Protocols 
+              http: !HttpResponse 
+                knownMediaType: json
+                mediaTypes:
+                  - application/json
+                statusCodes:
+                  - '200'
+        exceptions:
+          - !SchemaResponse 
+            schema: *ref_101
+            language: !Languages 
+              default:
+                name: ''
+                description: Error response describing why the operation failed
+            protocol: !Protocols 
+              http: !HttpResponse 
+                knownMediaType: json
+                mediaTypes:
+                  - application/json
+                statusCodes:
+                  - default
+        extensions:
+          x-ms-examples:
+            ConfigurationStores_RegenerateKey:
+              parameters:
+                api-version: '2020-06-01'
+                configStoreName: contoso
+                regenerateKeyParameters:
+                  id: 439AD01B4BE67DB1
+                resourceGroupName: myResourceGroup
+                subscriptionId: c80fb759-c965-4c6a-9110-9b2b2d038882
+              responses:
+                '200':
+                  body:
+                    name: Primary
+                    connectionString: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                    id: 439AD01B4BE67DB1
+                    lastModified: '2018-04-26T22:59:24.2370906+00:00'
+                    readOnly: false
+                    value: '000000000000000000000000000000000000000000000000000000'
+        language: !Languages 
+          default:
+            name: RegenerateKey
+            description: Regenerates an access key for the specified configuration store.
+        protocol: !Protocols {}
+      - !Operation 
+        apiVersions:
+          - !ApiVersion 
+            version: '2020-06-01'
+        parameters:
+          - *ref_95
+          - *ref_96
+          - !Parameter &ref_127
+            schema: *ref_3
+            implementation: Method
+            required: true
+            language: !Languages 
+              default:
+                name: resourceGroupName
+                description: The name of the resource group to which the container registry belongs.
+                serializedName: resourceGroupName
+            protocol: !Protocols 
+              http: !HttpParameter 
+                in: path
+          - !Parameter &ref_128
+            schema: *ref_104
+            implementation: Method
+            required: true
+            language: !Languages 
+              default:
+                name: configStoreName
+                description: The name of the configuration store.
+                serializedName: configStoreName
+            protocol: !Protocols 
+              http: !HttpParameter 
+                in: path
+          - *ref_97
+        requests:
+          - !Request 
+            parameters:
+              - !Parameter 
+                schema: *ref_107
+                implementation: Method
+                origin: modelerfour:synthesized/content-type
+                required: true
+                language: !Languages 
+                  default:
+                    name: contentType
+                    description: Body Parameter content-type
+                    serializedName: Content-Type
+                protocol: !Protocols 
+                  http: !HttpParameter 
+                    in: header
+              - !Parameter &ref_126
+                schema: *ref_125
+                implementation: Method
+                required: true
+                language: !Languages 
+                  default:
+                    name: listKeyValueParameters
+                    description: The parameters for retrieving a key-value.
+                protocol: !Protocols 
+                  http: !HttpParameter 
+                    in: body
+                    style: json
+              - !Parameter 
+                schema: *ref_98
+                implementation: Method
+                origin: modelerfour:synthesized/accept
+                required: true
+                language: !Languages 
+                  default:
+                    name: accept
+                    description: Accept header
+                    serializedName: Accept
+                protocol: !Protocols 
+                  http: !HttpParameter 
+                    in: header
+            signatureParameters:
+              - *ref_126
+            language: !Languages 
+              default:
+                name: ''
+                description: ''
+            protocol: !Protocols 
+              http: !HttpWithBodyRequest 
+                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/listKeyValue
+                method: post
+                knownMediaType: json
+                mediaTypes:
+                  - application/json
+                uri: '{$host}'
+        signatureParameters:
+          - *ref_127
+          - *ref_128
+        responses:
+          - !SchemaResponse 
+            schema: *ref_129
+            language: !Languages 
+              default:
+                name: ''
+                description: The request was successful; the request was well-formed and received properly.
+            protocol: !Protocols 
+              http: !HttpResponse 
+                knownMediaType: json
+                mediaTypes:
+                  - application/json
+                statusCodes:
+                  - '200'
+        exceptions:
+          - !SchemaResponse 
+            schema: *ref_101
+            language: !Languages 
+              default:
+                name: ''
+                description: Error response describing why the operation failed
+            protocol: !Protocols 
+              http: !HttpResponse 
+                knownMediaType: json
+                mediaTypes:
+                  - application/json
+                statusCodes:
+                  - default
+        extensions:
+          x-ms-examples:
+            ConfigurationStores_ListKeyValue:
+              parameters:
+                api-version: '2020-06-01'
+                configStoreName: fayeh
+                listKeyValueParameters:
+                  key: MaxRequests
+                  label: dev
+                resourceGroupName: myResourceGroup
+                subscriptionId: c80fb759-c965-4c6a-9110-9b2b2d038882
+              responses:
+                '200':
+                  body:
+                    contentType: ''
+                    eTag: 4f6dd610dd5e4deebc7fbaef685fb903
+                    key: MaxRequests
+                    label: dev
+                    lastModified: '2017-12-05T02:41:26+00:00'
+                    locked: false
+                    tags:
+                      t1: value1
+                      t2: value2
+                    value: '100'
+        language: !Languages 
+          default:
+            name: ListKeyValue
+            description: Lists a configuration store key-value.
+        protocol: !Protocols {}
+    language: !Languages 
+      default:
+        name: ConfigurationStores
+        description: ''
+    protocol: !Protocols {}
+  - !OperationGroup 
+    $key: Operations
+    operations:
+      - !Operation 
+        apiVersions:
+          - !ApiVersion 
+            version: '2020-06-01'
+        parameters:
+          - *ref_95
+          - *ref_96
+          - *ref_97
+        requests:
+          - !Request 
+            parameters:
+              - !Parameter 
+                schema: *ref_107
+                implementation: Method
+                origin: modelerfour:synthesized/content-type
+                required: true
+                language: !Languages 
+                  default:
+                    name: contentType
+                    description: Body Parameter content-type
+                    serializedName: Content-Type
+                protocol: !Protocols 
+                  http: !HttpParameter 
+                    in: header
+              - !Parameter &ref_131
+                schema: *ref_130
+                implementation: Method
+                required: true
+                language: !Languages 
+                  default:
+                    name: checkNameAvailabilityParameters
+                    description: The object containing information for the availability request.
+                protocol: !Protocols 
+                  http: !HttpParameter 
+                    in: body
+                    style: json
+              - !Parameter 
+                schema: *ref_98
+                implementation: Method
+                origin: modelerfour:synthesized/accept
+                required: true
+                language: !Languages 
+                  default:
+                    name: accept
+                    description: Accept header
+                    serializedName: Accept
+                protocol: !Protocols 
+                  http: !HttpParameter 
+                    in: header
+            signatureParameters:
+              - *ref_131
+            language: !Languages 
+              default:
+                name: ''
+                description: ''
+            protocol: !Protocols 
+              http: !HttpWithBodyRequest 
+                path: /subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/checkNameAvailability
+                method: post
+                knownMediaType: json
+                mediaTypes:
+                  - application/json
+                uri: '{$host}'
+        signatureParameters: []
+        responses:
+          - !SchemaResponse 
+            schema: *ref_132
+            language: !Languages 
+              default:
+                name: ''
+                description: The request was successful; the request was well-formed and received properly.
+            protocol: !Protocols 
+              http: !HttpResponse 
+                knownMediaType: json
+                mediaTypes:
+                  - application/json
+                statusCodes:
+                  - '200'
+        exceptions:
+          - !SchemaResponse 
+            schema: *ref_101
+            language: !Languages 
+              default:
+                name: ''
+                description: Error response describing why the operation failed
+            protocol: !Protocols 
+              http: !HttpResponse 
+                knownMediaType: json
+                mediaTypes:
+                  - application/json
+                statusCodes:
+                  - default
+        extensions:
+          x-ms-examples:
+            ConfigurationStores_CheckNameAvailable:
+              parameters:
+                api-version: '2020-06-01'
+                checkNameAvailabilityParameters:
+                  name: contoso
+                  type: Microsoft.AppConfiguration/configurationStores
+                subscriptionId: c80fb759-c965-4c6a-9110-9b2b2d038882
+              responses:
+                '200':
+                  body:
+                    message: The specified name is available.
+                    nameAvailable: true
+                    reason: null
+            ConfigurationStores_CheckNameNotAvailable:
+              parameters:
+                api-version: '2020-06-01'
+                checkNameAvailabilityParameters:
+                  name: contoso
+                  type: Microsoft.AppConfiguration/configurationStores
+                subscriptionId: c80fb759-c965-4c6a-9110-9b2b2d038882
+              responses:
+                '200':
+                  body:
+                    message: The specified name is already in use.
+                    nameAvailable: false
+                    reason: AlreadyExists
+        language: !Languages 
+          default:
+            name: CheckNameAvailability
+            description: Checks whether the configuration store name is available for use.
+        protocol: !Protocols {}
+      - !Operation 
+        apiVersions:
+          - !ApiVersion 
+            version: '2020-06-01'
+        parameters:
+          - *ref_95
+          - *ref_97
+          - !Parameter &ref_133
+            schema: *ref_3
+            implementation: Method
+            language: !Languages 
+              default:
+                name: skipToken
+                description: >-
+                  A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that
+                  specifies a starting point to use for subsequent calls.
+                serializedName: $skipToken
+            protocol: !Protocols 
+              http: !HttpParameter 
+                in: query
+        requests:
+          - !Request 
+            parameters:
+              - !Parameter 
+                schema: *ref_98
+                implementation: Method
+                origin: modelerfour:synthesized/accept
+                required: true
+                language: !Languages 
+                  default:
+                    name: accept
+                    description: Accept header
+                    serializedName: Accept
+                protocol: !Protocols 
+                  http: !HttpParameter 
+                    in: header
+            signatureParameters: []
+            language: !Languages 
+              default:
+                name: ''
+                description: ''
+            protocol: !Protocols 
+              http: !HttpRequest 
+                path: /providers/Microsoft.AppConfiguration/operations
+                method: get
+                uri: '{$host}'
+        signatureParameters:
+          - *ref_133
+        responses:
+          - !SchemaResponse 
+            schema: *ref_134
+            language: !Languages 
+              default:
+                name: ''
+                description: The request was successful; the request was well-formed and received properly.
+            protocol: !Protocols 
+              http: !HttpResponse 
+                knownMediaType: json
+                mediaTypes:
+                  - application/json
+                statusCodes:
+                  - '200'
+        exceptions:
+          - !SchemaResponse 
+            schema: *ref_101
+            language: !Languages 
+              default:
+                name: ''
+                description: Error response describing why the operation failed
+            protocol: !Protocols 
+              http: !HttpResponse 
+                knownMediaType: json
+                mediaTypes:
+                  - application/json
+                statusCodes:
+                  - default
+        extensions:
+          x-ms-pageable:
+            nextLinkName: nextLink
+        language: !Languages 
+          default:
+            name: List
+            description: Lists the operations available from this provider.
+            paging:
+              nextLinkName: nextLink
+        protocol: !Protocols {}
+    language: !Languages 
+      default:
+        name: Operations
+        description: ''
+    protocol: !Protocols {}
+  - !OperationGroup 
+    $key: PrivateEndpointConnections
+    operations:
+      - !Operation 
+        apiVersions:
+          - !ApiVersion 
+            version: '2020-06-01'
+        parameters:
+          - *ref_95
+          - *ref_96
+          - !Parameter &ref_135
+            schema: *ref_3
+            implementation: Method
+            required: true
+            language: !Languages 
+              default:
+                name: resourceGroupName
+                description: The name of the resource group to which the container registry belongs.
+                serializedName: resourceGroupName
+            protocol: !Protocols 
+              http: !HttpParameter 
+                in: path
+          - !Parameter &ref_136
+            schema: *ref_104
+            implementation: Method
+            required: true
+            language: !Languages 
+              default:
+                name: configStoreName
+                description: The name of the configuration store.
+                serializedName: configStoreName
+            protocol: !Protocols 
+              http: !HttpParameter 
+                in: path
+          - *ref_97
+        requests:
+          - !Request 
+            parameters:
+              - !Parameter 
+                schema: *ref_98
+                implementation: Method
+                origin: modelerfour:synthesized/accept
+                required: true
+                language: !Languages 
+                  default:
+                    name: accept
+                    description: Accept header
+                    serializedName: Accept
+                protocol: !Protocols 
+                  http: !HttpParameter 
+                    in: header
+            signatureParameters: []
+            language: !Languages 
+              default:
+                name: ''
+                description: ''
+            protocol: !Protocols 
+              http: !HttpRequest 
+                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/privateEndpointConnections
+                method: get
+                uri: '{$host}'
+        signatureParameters:
+          - *ref_135
+          - *ref_136
+        responses:
+          - !SchemaResponse 
+            schema: *ref_137
+            language: !Languages 
+              default:
+                name: ''
+                description: The request was successful; the request was well-formed and received properly.
+            protocol: !Protocols 
+              http: !HttpResponse 
+                knownMediaType: json
+                mediaTypes:
+                  - application/json
+                statusCodes:
+                  - '200'
+        exceptions:
+          - !SchemaResponse 
+            schema: *ref_101
+            language: !Languages 
+              default:
+                name: ''
+                description: Error response describing why the operation failed
+            protocol: !Protocols 
+              http: !HttpResponse 
+                knownMediaType: json
+                mediaTypes:
+                  - application/json
+                statusCodes:
+                  - default
+        extensions:
+          x-ms-examples:
+            PrivateEndpointConnection_List:
+              parameters:
+                api-version: '2020-06-01'
+                configStoreName: contoso
+                resourceGroupName: myResourceGroup
+                subscriptionId: c80fb759-c965-4c6a-9110-9b2b2d038882
+              responses:
+                '200':
+                  body:
+                    value:
+                      - name: myConnection
+                        type: Microsoft.AppConfiguration/configurationStores/privateEndpointConnections
+                        id: /subscriptions/c80fb759-c965-4c6a-9110-9b2b2d038882/resourceGroups/myResourceGroup/providers/Microsoft.AppConfiguration/configurationStores/contoso/privateEndpointConnections/myConnection
+                        properties:
+                          privateEndpoint:
+                            id: /subscriptions/c80fb759-c965-4c6a-9110-9b2b2d038882/resourceGroups/myResourceGroup/providers/Microsoft.Network/privateEndpoints/peexample01
+                          privateLinkServiceConnectionState:
+                            description: Auto-Approved
+                            actionsRequired: None
+                            status: Approved
+                          provisioningState: Succeeded
+          x-ms-pageable:
+            nextLinkName: nextLink
+        language: !Languages 
+          default:
+            name: ListByConfigurationStore
+            description: Lists all private endpoint connections for a configuration store.
+            paging:
+              nextLinkName: nextLink
+        protocol: !Protocols {}
+      - !Operation 
+        apiVersions:
+          - !ApiVersion 
+            version: '2020-06-01'
+        parameters:
+          - *ref_95
+          - *ref_96
+          - !Parameter &ref_138
+            schema: *ref_3
+            implementation: Method
+            required: true
+            language: !Languages 
+              default:
+                name: resourceGroupName
+                description: The name of the resource group to which the container registry belongs.
+                serializedName: resourceGroupName
+            protocol: !Protocols 
+              http: !HttpParameter 
+                in: path
+          - !Parameter &ref_139
+            schema: *ref_104
+            implementation: Method
+            required: true
+            language: !Languages 
+              default:
+                name: configStoreName
+                description: The name of the configuration store.
+                serializedName: configStoreName
+            protocol: !Protocols 
+              http: !HttpParameter 
+                in: path
+          - *ref_97
+          - !Parameter &ref_140
+            schema: *ref_3
+            implementation: Method
+            required: true
+            language: !Languages 
+              default:
+                name: privateEndpointConnectionName
+                description: Private endpoint connection name
+                serializedName: privateEndpointConnectionName
+            protocol: !Protocols 
+              http: !HttpParameter 
+                in: path
+        requests:
+          - !Request 
+            parameters:
+              - !Parameter 
+                schema: *ref_98
+                implementation: Method
+                origin: modelerfour:synthesized/accept
+                required: true
+                language: !Languages 
+                  default:
+                    name: accept
+                    description: Accept header
+                    serializedName: Accept
+                protocol: !Protocols 
+                  http: !HttpParameter 
+                    in: header
+            signatureParameters: []
+            language: !Languages 
+              default:
+                name: ''
+                description: ''
+            protocol: !Protocols 
+              http: !HttpRequest 
+                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/privateEndpointConnections/{privateEndpointConnectionName}
+                method: get
+                uri: '{$host}'
+        signatureParameters:
+          - *ref_138
+          - *ref_139
+          - *ref_140
+        responses:
+          - !SchemaResponse 
+            schema: *ref_77
+            language: !Languages 
+              default:
+                name: ''
+                description: The request was successful; the request was well-formed and received properly.
+            protocol: !Protocols 
+              http: !HttpResponse 
+                knownMediaType: json
+                mediaTypes:
+                  - application/json
+                statusCodes:
+                  - '200'
+        exceptions:
+          - !SchemaResponse 
+            schema: *ref_101
+            language: !Languages 
+              default:
+                name: ''
+                description: Error response describing why the operation failed
+            protocol: !Protocols 
+              http: !HttpResponse 
+                knownMediaType: json
+                mediaTypes:
+                  - application/json
+                statusCodes:
+                  - default
+        extensions:
+          x-ms-examples:
+            PrivateEndpointConnection_GetConnection:
+              parameters:
+                api-version: '2020-06-01'
+                configStoreName: contoso
+                privateEndpointConnectionName: myConnection
+                resourceGroupName: myResourceGroup
+                subscriptionId: c80fb759-c965-4c6a-9110-9b2b2d038882
+              responses:
+                '200':
+                  body:
+                    name: myConnection
+                    type: Microsoft.AppConfiguration/configurationStores/privateEndpointConnections
+                    id: /subscriptions/c80fb759-c965-4c6a-9110-9b2b2d038882/resourceGroups/myResourceGroup/providers/Microsoft.AppConfiguration/configurationStores/contoso/privateEndpointConnections/myConnection
+                    properties:
+                      privateEndpoint:
+                        id: /subscriptions/c80fb759-c965-4c6a-9110-9b2b2d038882/resourceGroups/myResourceGroup/providers/Microsoft.Network/privateEndpoints/peexample01
+                      privateLinkServiceConnectionState:
+                        description: Auto-Approved
+                        actionsRequired: None
+                        status: Approved
+                      provisioningState: Succeeded
+        language: !Languages 
+          default:
+            name: Get
+            description: Gets the specified private endpoint connection associated with the configuration store.
+        protocol: !Protocols {}
+      - !Operation 
+        apiVersions:
+          - !ApiVersion 
+            version: '2020-06-01'
+        parameters:
+          - *ref_95
+          - *ref_96
+          - !Parameter &ref_142
+            schema: *ref_3
+            implementation: Method
+            required: true
+            language: !Languages 
+              default:
+                name: resourceGroupName
+                description: The name of the resource group to which the container registry belongs.
+                serializedName: resourceGroupName
+            protocol: !Protocols 
+              http: !HttpParameter 
+                in: path
+          - !Parameter &ref_143
+            schema: *ref_104
+            implementation: Method
+            required: true
+            language: !Languages 
+              default:
+                name: configStoreName
+                description: The name of the configuration store.
+                serializedName: configStoreName
+            protocol: !Protocols 
+              http: !HttpParameter 
+                in: path
+          - *ref_97
+          - !Parameter &ref_144
+            schema: *ref_3
+            implementation: Method
+            required: true
+            language: !Languages 
+              default:
+                name: privateEndpointConnectionName
+                description: Private endpoint connection name
+                serializedName: privateEndpointConnectionName
+            protocol: !Protocols 
+              http: !HttpParameter 
+                in: path
+        requests:
+          - !Request 
+            parameters:
+              - !Parameter 
+                schema: *ref_107
+                implementation: Method
+                origin: modelerfour:synthesized/content-type
+                required: true
+                language: !Languages 
+                  default:
+                    name: contentType
+                    description: Body Parameter content-type
+                    serializedName: Content-Type
+                protocol: !Protocols 
+                  http: !HttpParameter 
+                    in: header
+              - !Parameter &ref_141
+                schema: *ref_77
+                implementation: Method
+                required: true
+                language: !Languages 
+                  default:
+                    name: privateEndpointConnection
+                    description: The private endpoint connection properties.
+                protocol: !Protocols 
+                  http: !HttpParameter 
+                    in: body
+                    style: json
+              - !Parameter 
+                schema: *ref_98
+                implementation: Method
+                origin: modelerfour:synthesized/accept
+                required: true
+                language: !Languages 
+                  default:
+                    name: accept
+                    description: Accept header
+                    serializedName: Accept
+                protocol: !Protocols 
+                  http: !HttpParameter 
+                    in: header
+            signatureParameters:
+              - *ref_141
+            language: !Languages 
+              default:
+                name: ''
+                description: ''
+            protocol: !Protocols 
+              http: !HttpWithBodyRequest 
+                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/privateEndpointConnections/{privateEndpointConnectionName}
+                method: put
+                knownMediaType: json
+                mediaTypes:
+                  - application/json
+                uri: '{$host}'
+        signatureParameters:
+          - *ref_142
+          - *ref_143
+          - *ref_144
+        responses:
+          - !SchemaResponse 
+            schema: *ref_77
+            language: !Languages 
+              default:
+                name: ''
+                description: The request was successful; the request was well-formed and received properly.
+            protocol: !Protocols 
+              http: !HttpResponse 
+                knownMediaType: json
+                mediaTypes:
+                  - application/json
+                statusCodes:
+                  - '200'
+          - !SchemaResponse 
+            schema: *ref_77
+            language: !Languages 
+              default:
+                name: ''
+                description: The request was successfully accepted; the operation will complete asynchronously. The provisioning state of the resource should indicate the current state of the resource.
+            protocol: !Protocols 
+              http: !HttpResponse 
+                knownMediaType: json
+                mediaTypes:
+                  - application/json
+                statusCodes:
+                  - '201'
+        exceptions:
+          - !SchemaResponse 
+            schema: *ref_101
+            language: !Languages 
+              default:
+                name: ''
+                description: Error response describing why the operation failed
+            protocol: !Protocols 
+              http: !HttpResponse 
+                knownMediaType: json
+                mediaTypes:
+                  - application/json
+                statusCodes:
+                  - default
+        extensions:
+          x-ms-examples:
+            PrivateEndpointConnection_CreateOrUpdate:
+              parameters:
+                api-version: '2020-06-01'
+                configStoreName: contoso
+                privateEndpointConnection:
+                  properties:
+                    privateLinkServiceConnectionState:
+                      description: Auto-Approved
+                      status: Approved
+                privateEndpointConnectionName: myConnection
+                resourceGroupName: myResourceGroup
+                subscriptionId: c80fb759-c965-4c6a-9110-9b2b2d038882
+              responses:
+                '200':
+                  body:
+                    name: myConnection
+                    type: Microsoft.AppConfiguration/configurationStores/privateEndpointConnections
+                    id: /subscriptions/c80fb759-c965-4c6a-9110-9b2b2d038882/resourceGroups/myResourceGroup/providers/Microsoft.AppConfiguration/configurationStores/contoso/privateEndpointConnections/myConnection
+                    properties:
+                      privateEndpoint:
+                        id: /subscriptions/c80fb759-c965-4c6a-9110-9b2b2d038882/resourceGroups/myResourceGroup/providers/Microsoft.Network/privateEndpoints/peexample01
+                      privateLinkServiceConnectionState:
+                        description: Auto-Approved
+                        actionsRequired: None
+                        status: Approved
+                      provisioningState: Succeeded
+                '201':
+                  body:
+                    name: myConnection
+                    type: Microsoft.AppConfiguration/configurationStores/privateEndpointConnections
+                    id: /subscriptions/c80fb759-c965-4c6a-9110-9b2b2d038882/resourceGroups/myResourceGroup/providers/Microsoft.AppConfiguration/configurationStores/contoso/privateEndpointConnections/myConnection
+                    properties:
+                      privateEndpoint:
+                        id: /subscriptions/c80fb759-c965-4c6a-9110-9b2b2d038882/resourceGroups/myResourceGroup/providers/Microsoft.Network/privateEndpoints/peexample01
+                      privateLinkServiceConnectionState:
+                        description: Auto-Approved
+                        actionsRequired: None
+                        status: Approved
+                      provisioningState: Succeeded
+          x-ms-long-running-operation: true
+        language: !Languages 
+          default:
+            name: CreateOrUpdate
+            description: Update the state of the specified private endpoint connection associated with the configuration store.
+        protocol: !Protocols {}
+      - !Operation 
+        apiVersions:
+          - !ApiVersion 
+            version: '2020-06-01'
+        parameters:
+          - *ref_95
+          - *ref_96
+          - !Parameter &ref_145
+            schema: *ref_3
+            implementation: Method
+            required: true
+            language: !Languages 
+              default:
+                name: resourceGroupName
+                description: The name of the resource group to which the container registry belongs.
+                serializedName: resourceGroupName
+            protocol: !Protocols 
+              http: !HttpParameter 
+                in: path
+          - !Parameter &ref_146
+            schema: *ref_104
+            implementation: Method
+            required: true
+            language: !Languages 
+              default:
+                name: configStoreName
+                description: The name of the configuration store.
+                serializedName: configStoreName
+            protocol: !Protocols 
+              http: !HttpParameter 
+                in: path
+          - *ref_97
+          - !Parameter &ref_147
+            schema: *ref_3
+            implementation: Method
+            required: true
+            language: !Languages 
+              default:
+                name: privateEndpointConnectionName
+                description: Private endpoint connection name
+                serializedName: privateEndpointConnectionName
+            protocol: !Protocols 
+              http: !HttpParameter 
+                in: path
+        requests:
+          - !Request 
+            parameters:
+              - !Parameter 
+                schema: *ref_98
+                implementation: Method
+                origin: modelerfour:synthesized/accept
+                required: true
+                language: !Languages 
+                  default:
+                    name: accept
+                    description: Accept header
+                    serializedName: Accept
+                protocol: !Protocols 
+                  http: !HttpParameter 
+                    in: header
+            signatureParameters: []
+            language: !Languages 
+              default:
+                name: ''
+                description: ''
+            protocol: !Protocols 
+              http: !HttpRequest 
+                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/privateEndpointConnections/{privateEndpointConnectionName}
+                method: delete
+                uri: '{$host}'
+        signatureParameters:
+          - *ref_145
+          - *ref_146
+          - *ref_147
+        responses:
+          - !Response 
+            language: !Languages 
+              default:
+                name: ''
+                description: The request was successful; the request was well-formed and received properly.
+            protocol: !Protocols 
+              http: !HttpResponse 
+                statusCodes:
+                  - '200'
+          - !Response 
+            language: !Languages 
+              default:
+                name: ''
+                description: The request was successful; the operation will complete asynchronously.
+            protocol: !Protocols 
+              http: !HttpResponse 
+                statusCodes:
+                  - '202'
+          - !Response 
+            language: !Languages 
+              default:
+                name: ''
+                description: No Content - the specified resource was not found.
+            protocol: !Protocols 
+              http: !HttpResponse 
+                statusCodes:
+                  - '204'
+        exceptions:
+          - !SchemaResponse 
+            schema: *ref_101
+            language: !Languages 
+              default:
+                name: ''
+                description: Error response describing why the operation failed
+            protocol: !Protocols 
+              http: !HttpResponse 
+                knownMediaType: json
+                mediaTypes:
+                  - application/json
+                statusCodes:
+                  - default
+        extensions:
+          x-ms-examples:
+            PrivateEndpointConnections_Delete:
+              parameters:
+                api-version: '2020-06-01'
+                configStoreName: contoso
+                privateEndpointConnectionName: myConnection
+                resourceGroupName: myResourceGroup
+                subscriptionId: c80fb759-c965-4c6a-9110-9b2b2d038882
+              responses:
+                '200': {}
+                '202': {}
+                '204': {}
+          x-ms-long-running-operation: true
+        language: !Languages 
+          default:
+            name: Delete
+            description: Deletes a private endpoint connection.
+        protocol: !Protocols {}
+    language: !Languages 
+      default:
+        name: PrivateEndpointConnections
+        description: ''
+    protocol: !Protocols {}
+  - !OperationGroup 
+    $key: PrivateLinkResources
+    operations:
+      - !Operation 
+        apiVersions:
+          - !ApiVersion 
+            version: '2020-06-01'
+        parameters:
+          - *ref_95
+          - *ref_96
+          - !Parameter &ref_148
+            schema: *ref_3
+            implementation: Method
+            required: true
+            language: !Languages 
+              default:
+                name: resourceGroupName
+                description: The name of the resource group to which the container registry belongs.
+                serializedName: resourceGroupName
+            protocol: !Protocols 
+              http: !HttpParameter 
+                in: path
+          - !Parameter &ref_149
+            schema: *ref_104
+            implementation: Method
+            required: true
+            language: !Languages 
+              default:
+                name: configStoreName
+                description: The name of the configuration store.
+                serializedName: configStoreName
+            protocol: !Protocols 
+              http: !HttpParameter 
+                in: path
+          - *ref_97
+        requests:
+          - !Request 
+            parameters:
+              - !Parameter 
+                schema: *ref_98
+                implementation: Method
+                origin: modelerfour:synthesized/accept
+                required: true
+                language: !Languages 
+                  default:
+                    name: accept
+                    description: Accept header
+                    serializedName: Accept
+                protocol: !Protocols 
+                  http: !HttpParameter 
+                    in: header
+            signatureParameters: []
+            language: !Languages 
+              default:
+                name: ''
+                description: ''
+            protocol: !Protocols 
+              http: !HttpRequest 
+                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/privateLinkResources
+                method: get
+                uri: '{$host}'
+        signatureParameters:
+          - *ref_148
+          - *ref_149
+        responses:
+          - !SchemaResponse 
+            schema: *ref_150
+            language: !Languages 
+              default:
+                name: ''
+                description: The request was successful; the request was well-formed and received properly.
+            protocol: !Protocols 
+              http: !HttpResponse 
+                knownMediaType: json
+                mediaTypes:
+                  - application/json
+                statusCodes:
+                  - '200'
+        exceptions:
+          - !SchemaResponse 
+            schema: *ref_101
+            language: !Languages 
+              default:
+                name: ''
+                description: Error response describing why the operation failed
+            protocol: !Protocols 
+              http: !HttpResponse 
+                knownMediaType: json
+                mediaTypes:
+                  - application/json
+                statusCodes:
+                  - default
+        extensions:
+          x-ms-examples:
+            PrivateLinkResources_ListGroupIds:
+              parameters:
+                api-version: '2020-06-01'
+                configStoreName: contoso
+                resourceGroupName: myResourceGroup
+                subscriptionId: c80fb759-c965-4c6a-9110-9b2b2d038882
+              responses:
+                '200':
+                  body:
+                    value:
+                      - name: configurationStores
+                        type: Microsoft.AppConfiguraiton/configurationStores/privateLinkResources
+                        id: /subscriptions/c80fb759-c965-4c6a-9110-9b2b2d038882/resourceGroups/myResourceGroup/providers/Microsoft.AppConfiguration/configurationStores/contoso/privateLinkResources/configurationStores
+                        properties:
+                          groupId: configurationStores
+                          requiredMembers:
+                            - configurationStores
+                          requiredZoneNames:
+                            - privatelink.azconfig.io
+          x-ms-pageable:
+            nextLinkName: nextLink
+        language: !Languages 
+          default:
+            name: ListByConfigurationStore
+            description: Gets the private link resources that need to be created for a configuration store.
+            paging:
+              nextLinkName: nextLink
+        protocol: !Protocols {}
+      - !Operation 
+        apiVersions:
+          - !ApiVersion 
+            version: '2020-06-01'
+        parameters:
+          - *ref_95
+          - *ref_96
+          - !Parameter &ref_151
+            schema: *ref_3
+            implementation: Method
+            required: true
+            language: !Languages 
+              default:
+                name: resourceGroupName
+                description: The name of the resource group to which the container registry belongs.
+                serializedName: resourceGroupName
+            protocol: !Protocols 
+              http: !HttpParameter 
+                in: path
+          - !Parameter &ref_152
+            schema: *ref_104
+            implementation: Method
+            required: true
+            language: !Languages 
+              default:
+                name: configStoreName
+                description: The name of the configuration store.
+                serializedName: configStoreName
+            protocol: !Protocols 
+              http: !HttpParameter 
+                in: path
+          - *ref_97
+          - !Parameter &ref_153
+            schema: *ref_3
+            implementation: Method
+            required: true
+            language: !Languages 
+              default:
+                name: groupName
+                description: The name of the private link resource group.
+                serializedName: groupName
+            protocol: !Protocols 
+              http: !HttpParameter 
+                in: path
+        requests:
+          - !Request 
+            parameters:
+              - !Parameter 
+                schema: *ref_98
+                implementation: Method
+                origin: modelerfour:synthesized/accept
+                required: true
+                language: !Languages 
+                  default:
+                    name: accept
+                    description: Accept header
+                    serializedName: Accept
+                protocol: !Protocols 
+                  http: !HttpParameter 
+                    in: header
+            signatureParameters: []
+            language: !Languages 
+              default:
+                name: ''
+                description: ''
+            protocol: !Protocols 
+              http: !HttpRequest 
+                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/privateLinkResources/{groupName}
+                method: get
+                uri: '{$host}'
+        signatureParameters:
+          - *ref_151
+          - *ref_152
+          - *ref_153
+        responses:
+          - !SchemaResponse 
+            schema: *ref_85
+            language: !Languages 
+              default:
+                name: ''
+                description: The request was successful; the request was well-formed and received properly.
+            protocol: !Protocols 
+              http: !HttpResponse 
+                knownMediaType: json
+                mediaTypes:
+                  - application/json
+                statusCodes:
+                  - '200'
+        exceptions:
+          - !SchemaResponse 
+            schema: *ref_101
+            language: !Languages 
+              default:
+                name: ''
+                description: Error response describing why the operation failed
+            protocol: !Protocols 
+              http: !HttpResponse 
+                knownMediaType: json
+                mediaTypes:
+                  - application/json
+                statusCodes:
+                  - default
+        extensions:
+          x-ms-examples:
+            PrivateLinkResources_Get:
+              parameters:
+                api-version: '2020-06-01'
+                configStoreName: contoso
+                groupName: configurationStores
+                resourceGroupName: myResourceGroup
+                subscriptionId: c80fb759-c965-4c6a-9110-9b2b2d038882
+              responses:
+                '200':
+                  body:
+                    name: configurationStores
+                    type: Microsoft.AppConfiguraiton/configurationStores/privateLinkResources
+                    id: /subscriptions/c80fb759-c965-4c6a-9110-9b2b2d038882/resourceGroups/myResourceGroup/providers/Microsoft.AppConfiguration/configurationStores/contoso/privateLinkResources/configurationStores
+                    properties:
+                      groupId: configurationStores
+                      requiredMembers:
+                        - configurationStores
+                      requiredZoneNames:
+                        - privatelink.azconfig.io
+        language: !Languages 
+          default:
+            name: Get
+            description: Gets a private link resource that need to be created for a configuration store.
+        protocol: !Protocols {}
+    language: !Languages 
+      default:
+        name: PrivateLinkResources
+        description: ''
+    protocol: !Protocols {}
+security: !Security 
+  authenticationRequired: true
+language: !Languages 
+  default:
+    name: AppConfigurationManagementClient
+    description: ''
+protocol: !Protocols 
+  http: !HttpModel {}

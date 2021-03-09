@@ -17,8 +17,15 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(KeyVaultProperties))
             {
-                writer.WritePropertyName("keyVaultProperties");
-                writer.WriteObjectValue(KeyVaultProperties);
+                if (KeyVaultProperties != null)
+                {
+                    writer.WritePropertyName("keyVaultProperties");
+                    writer.WriteObjectValue(KeyVaultProperties);
+                }
+                else
+                {
+                    writer.WriteNull("keyVaultProperties");
+                }
             }
             writer.WriteEndObject();
         }
@@ -32,7 +39,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        keyVaultProperties = null;
                         continue;
                     }
                     keyVaultProperties = KeyVaultProperties.DeserializeKeyVaultProperties(property.Value);
