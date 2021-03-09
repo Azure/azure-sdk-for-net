@@ -27,7 +27,7 @@ namespace Azure.Identity
 
         private const string AzurePowerShellFailedError = "Azure PowerShell authentication failed due to an unknown error.";
         private const string AzurePowerShellTimeoutError = "Azure PowerShell authentication timed out.";
-        private const string AzurePowerShellNotLogInError = "Please run 'Connect-AzAccount' to set up account.";
+        internal const string AzurePowerShellNotLogInError = "Please run 'Connect-AzAccount' to set up account.";
         internal const string AzurePowerShellModuleNotInstalledError = "Az.Account module >= 2.2.0 is not installed.";
         internal const string PowerShellNotInstalledError = "PowerShell is not installed.";
 
