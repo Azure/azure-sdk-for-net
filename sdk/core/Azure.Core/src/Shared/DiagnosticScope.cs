@@ -245,7 +245,7 @@ namespace Azure.Core.Pipeline
                         }
                     }
 
-                    var link = ActivityExtensions.CreateActivityLink(activity.Id!, linkTagsCollection);
+                    var link = ActivityExtensions.CreateActivityLink(activity.ParentId!, linkTagsCollection);
                     if (link != null)
                     {
                         linkCollection.Add(link);
@@ -284,6 +284,16 @@ namespace Azure.Core.Pipeline
                     };
                     _currentActivity.SetW3CFormat();
                     _currentActivity.SetStartTime(_startTime.DateTime);
+
+                    if (_tagCollection != null)
+                    {
+                        foreach (var tag in _tagCollection)
+                        {
+                            _currentActivity.AddTag(tag.Key, (string)tag.Value);
+                        }
+                    }
+
+                    _currentActivity.Start();
                 }
 
                 _diagnosticSourceArgs ??= _currentActivity;

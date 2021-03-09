@@ -48,11 +48,10 @@ namespace Azure.Core.Tests
                 Assert.AreEqual(1, activityListener.Activities.Count);
                 var activity = activityListener.Activities.Dequeue();
 
-                Assert.AreEqual("ActivityName", activity.DisplayName);
+                Assert.AreEqual("ClientName.ActivityName", activity.DisplayName);
                 Assert.AreEqual("Value1", activity.TagObjects.Single(o => o.Key == "Attribute1").Value);
-                Assert.AreEqual(2, activity.TagObjects.Single(o => o.Key == "Attribute2").Value);
-                Assert.AreEqual(3, activity.TagObjects.Single(o => o.Key == "Attribute3").Value);
-                Assert.AreEqual(0, activity.TagObjects.Count(o => o.Key == "otel.status_code"));
+                Assert.AreEqual("2", activity.TagObjects.Single(o => o.Key == "Attribute2").Value);
+                Assert.AreEqual("3", activity.TagObjects.Single(o => o.Key == "Attribute3").Value);
 
                 var links = activity.Links.ToArray();
                 Assert.AreEqual(2, links.Length);
@@ -93,8 +92,8 @@ namespace Azure.Core.Tests
 
             var activitySourceActivity = activityListener.Activities.Dequeue();
             Assert.AreEqual("Value1", activitySourceActivity.TagObjects.Single(o => o.Key == "Attribute1").Value);
-            Assert.AreEqual(2, activitySourceActivity.TagObjects.Single(o => o.Key == "Attribute2").Value);
-            Assert.AreEqual(3, activitySourceActivity.TagObjects.Single(o => o.Key == "Attribute3").Value);
+            Assert.AreEqual("2", activitySourceActivity.TagObjects.Single(o => o.Key == "Attribute2").Value);
+            Assert.AreEqual("3", activitySourceActivity.TagObjects.Single(o => o.Key == "Attribute3").Value);
 
             Assert.Null(Activity.Current);
             Assert.AreEqual("ClientName.ActivityName.Start", startEvent.Key);
@@ -124,24 +123,6 @@ namespace Azure.Core.Tests
             Assert.AreEqual(1, activityListener.Activities.Count);
             var activity = activityListener.Activities.Dequeue();
             Assert.AreEqual("value", activity.TagObjects.Single(o => o.Key == "name").Value);
-        }
-
-        [Test]
-        public void StartsActivitySourceActivityAndMarksFailed()
-        {
-            using var activityListener = new TestActivitySourceListener("Azure.Clients.ClientName");
-
-            DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true);
-
-            DiagnosticScope scope = clientDiagnostics.CreateScope("ClientName.ActivityName");
-            scope.Start();
-            scope.Failed(new Exception());
-            scope.Dispose();
-
-            Assert.AreEqual(1, activityListener.Activities.Count);
-            var activity = activityListener.Activities.Dequeue();
-            Assert.AreEqual(1, activity.TagObjects.Single(o => o.Key == "otel.status_code").Value);
-            Assert.AreEqual("Exception of type 'System.Exception' was thrown.", activity.TagObjects.Single(o => o.Key == "otel.status_description").Value);
         }
 
         [Test]
