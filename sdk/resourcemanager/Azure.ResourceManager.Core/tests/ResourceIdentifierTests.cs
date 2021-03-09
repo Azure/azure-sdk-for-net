@@ -13,6 +13,8 @@ namespace Azure.ResourceManager.Core.Tests
         const string LocationResourceId = "/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575/locations/MyLocation";
         const string SubscriptionResourceId = "/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575";
 
+        const string 
+
         [SetUp]
         public void Setup()
         {
