@@ -33,7 +33,7 @@ using Azure.Communication.Sms;
 SMS clients can be authenticated using the connection string acquired from an Azure Communication Resource in the [Azure Portal][azure_portal].
 
 ```C# Snippet:Azure_Communication_Sms_Tests_Samples_CreateSmsClient
-string connectionString = "YOUR_CONNECTION_STRING"; // Find your Communication Services resource in the Azure portal
+var connectionString = "<connection_string>"; // Find your Communication Services resource in the Azure portal
 SmsClient client = new SmsClient(connectionString);
 ```
 
@@ -76,16 +76,34 @@ foreach (SmsSendResult result in results)
 }
 ```
 ## Troubleshooting
-All SMS operations will throw a RequestFailedException on failure.
+SMS operations will throw an exception if the request to the server fails.
+Exceptions will not be thrown if the error is caused by an individual message, only if something fails with the overall request.
+Please use the `Successful` flag to validate each individual result to verify if the message was sent.
 
 ```C# Snippet:Azure_Communication_Sms_Tests_Troubleshooting
 try
 {
-    SmsSendResult result = await client.SendAsync(
-       from: "<from-phone-number>" // Your E.164 formatted phone number used to send SMS
-       to: "<to-phone-number>", // E.164 formatted recipient phone number
-       message: "Hi");
-    Console.WriteLine($"Sms id: {result.MessageId}");
+    Response<IEnumerable<SmsSendResult>> response = await smsClient.SendAsync(
+        from: "<from-phone-number>" // Your E.164 formatted phone number used to send SMS
+        to: new string [] {"<to-phone-number-1>", "<to-phone-number-2>"}, // E.164 formatted recipient phone number
+        message: "Weekly Promotion!",
+        options: new SmsSendOptions(enableDeliveryReport: true) // OPTIONAL
+    {
+        Tag = "marketing", // custom tags
+    });
+    IEnumerable<SmsSendResult> results = response.Value;
+    foreach (SmsSendResult result in results)
+    {
+        if (result.Successful)
+        {
+            Console.WriteLine($"Successfully sent this message: {result.MessageId} to {result.To}.");
+        }
+        else
+        {
+            Console.WriteLine($"Something went wrong when trying to send this message {result.MessageId} to {result.To}.");
+            Console.WriteLine($"Status code {result.HttpStatusCode} and error message {result.ErrorMessage}.");
+        }
+    }
 }
 catch (RequestFailedException ex)
 {

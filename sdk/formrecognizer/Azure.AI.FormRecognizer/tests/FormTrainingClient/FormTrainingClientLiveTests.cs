@@ -276,6 +276,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/19375")]
         public async Task StartTrainingError()
         {
             var client = CreateFormTrainingClient();

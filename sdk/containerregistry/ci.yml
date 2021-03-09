@@ -21,6 +21,9 @@ pr:
     - release/*
   paths:
     include:
+    - common/Perf/
+    - common/PerfStressShared/
+    - common/Stress/
     - sdk/containerregistry/
 
 extends:
@@ -29,5 +32,7 @@ extends:
     ServiceDirectory: containerregistry
     ArtifactName: packages
     Artifacts:
+    - name: Azure.Containers.ContainerRegistry
+      safeName: AzureContainersContainerRegistry
     - name: Microsoft.Azure.ContainerRegistry
       safeName: MicrosoftAzureContainerRegistry

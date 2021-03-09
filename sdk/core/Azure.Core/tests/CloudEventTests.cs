@@ -926,6 +926,29 @@ namespace Azure.Core.Tests
                 Assert.AreEqual(5, ((IDictionary<string, object>)evt.ExtensionAttributes["dict"])["key2"]);
             }
         }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public void CanParseNullAttributeValue(bool skipValidation)
+        {
+            // null extension attribute values can still be deserialized.
+            var json = new BinaryData("{\"subject\": \"Subject-0\", \"source\":\"source\", \"specversion\":\"1.0\", \"id\": \"id\", \"type\": \"type\", \"key\":null }");
+
+            if (!skipValidation)
+            {
+                Assert.That(
+                    () => CloudEvent.ParseMany(json),
+                    Throws.InstanceOf<ArgumentException>());
+            }
+            else
+            {
+                var evt = CloudEvent.ParseMany(json, true)[0];
+                Assert.AreEqual("Subject-0", evt.Subject);
+                Assert.AreEqual("type", evt.Type);
+                Assert.IsNull(evt.ExtensionAttributes["key"]);
+            }
+        }
     }
 
 #pragma warning disable SA1402 // File may only contain a single type

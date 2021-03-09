@@ -17,9 +17,9 @@ namespace Azure.Communication.Chat
             Content = new ChatMessageContent(chatMessageInternal.Content);
             SenderDisplayName = chatMessageInternal.SenderDisplayName;
             CreatedOn = chatMessageInternal.CreatedOn;
-            if (chatMessageInternal.SenderId != null)
+            if (chatMessageInternal.SenderCommunicationIdentifier != null)
             {
-                Sender = new CommunicationUserIdentifier(chatMessageInternal.SenderId);
+                Sender = CommunicationIdentifierSerializer.Deserialize(chatMessageInternal.SenderCommunicationIdentifier);
             }
             DeletedOn = chatMessageInternal.DeletedOn;
             EditedOn = chatMessageInternal.EditedOn;
@@ -54,7 +54,7 @@ namespace Azure.Communication.Chat
         /// <summary> The timestamp when the chat message arrived at the server. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
         public DateTimeOffset CreatedOn { get; }
         /// <summary> The identifier of the chat message sender. </summary>
-        public CommunicationIdentifier? Sender { get; }
+        public CommunicationIdentifier Sender { get; }
         /// <summary> The timestamp (if applicable) when the message was deleted. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
         public DateTimeOffset? DeletedOn { get; }
         /// <summary> The last timestamp (if applicable) when the message was edited. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>

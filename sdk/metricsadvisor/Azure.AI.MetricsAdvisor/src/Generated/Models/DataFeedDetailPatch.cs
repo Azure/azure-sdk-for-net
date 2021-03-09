@@ -23,7 +23,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary> data source type. </summary>
-        internal DataFeedDetailPatchDataSourceType DataSourceType { get; set; }
+        internal DataFeedSourceType DataSourceType { get; set; }
         /// <summary> data feed name. </summary>
         public string DataFeedName { get; set; }
         /// <summary> data feed description. </summary>
@@ -41,19 +41,19 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary> stop retry data ingestion after the data slice first schedule time in seconds. </summary>
         public long? StopRetryAfterInSeconds { get; set; }
         /// <summary> mark if the data feed need rollup. </summary>
-        public DataFeedDetailPatchNeedRollup? NeedRollup { get; set; }
+        public DataFeedRollupType? NeedRollup { get; set; }
         /// <summary> roll up method. </summary>
-        public DataFeedDetailPatchRollUpMethod? RollUpMethod { get; set; }
+        public DataFeedAutoRollupMethod? RollUpMethod { get; set; }
         /// <summary> the identification value for the row of calculated all-up value. </summary>
         public string AllUpIdentification { get; set; }
         /// <summary> the type of fill missing point for anomaly detection. </summary>
-        public DataFeedDetailPatchFillMissingPointType? FillMissingPointType { get; set; }
+        public DataFeedMissingDataPointFillType? FillMissingPointType { get; set; }
         /// <summary> the value of fill missing point for anomaly detection. </summary>
         public double? FillMissingPointValue { get; set; }
         /// <summary> data feed access mode, default is Private. </summary>
-        public DataFeedDetailPatchViewMode? ViewMode { get; set; }
+        public DataFeedAccessMode? ViewMode { get; set; }
         /// <summary> data feed status. </summary>
-        public DataFeedDetailPatchStatus? Status { get; set; }
+        public DataFeedStatus? Status { get; set; }
         /// <summary> action link for alert. </summary>
         public string ActionLinkTemplate { get; set; }
     }

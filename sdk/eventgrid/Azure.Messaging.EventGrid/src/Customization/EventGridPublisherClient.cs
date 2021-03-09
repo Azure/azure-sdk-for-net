@@ -53,8 +53,25 @@ namespace Azure.Messaging.EventGrid
             _apiVersion = options.Version.GetVersionString();
             _endpoint = endpoint;
             _key = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, Constants.SasKeyName));
+            _pipeline = HttpPipelineBuilder.Build(options, new EventGridKeyCredentialPolicy(credential, Constants.SasKeyName));
             _serviceRestClient = new EventGridRestClient(new ClientDiagnostics(options), _pipeline, options.Version.GetVersionString());
+            _clientDiagnostics = new ClientDiagnostics(options);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EventGridPublisherClient"/> class.
+        /// </summary>
+        /// <param name="endpoint">The topic endpoint. For example, "https://TOPIC-NAME.REGION-NAME-1.eventgrid.azure.net/api/events".</param>
+        /// <param name="credential">The Shared Access Signature credential used to connect to Azure. This signature
+        /// can be constructed using the <see cref="EventGridSasBuilder"/>.</param>
+        /// <param name="options">The set of options to use for configuring the client.</param>
+        public EventGridPublisherClient(Uri endpoint, AzureSasCredential credential, EventGridPublisherClientOptions options = default)
+        {
+            Argument.AssertNotNull(credential, nameof(credential));
+            options ??= new EventGridPublisherClientOptions();
+            _endpoint = endpoint;
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new EventGridSharedAccessSignatureCredentialPolicy(credential));
+            _serviceRestClient = new EventGridRestClient(new ClientDiagnostics(options), pipeline, options.Version.GetVersionString());
             _clientDiagnostics = new ClientDiagnostics(options);
         }
 
@@ -120,34 +137,31 @@ namespace Azure.Messaging.EventGrid
             return request;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="EventGridPublisherClient"/> class.
-        /// </summary>
-        /// <param name="endpoint">The topic endpoint. For example, "https://TOPIC-NAME.REGION-NAME-1.eventgrid.azure.net/api/events".</param>
-        /// <param name="credential">The Shared Access Signature credential used to connect to Azure. This signature
-        /// can be constructed using the <see cref="EventGridSasBuilder"/>.</param>
-        /// <param name="options">The set of options to use for configuring the client.</param>
-        public EventGridPublisherClient(Uri endpoint, AzureSasCredential credential, EventGridPublisherClientOptions options = default)
-        {
-            Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new EventGridPublisherClientOptions();
-            _endpoint = endpoint;
-            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new EventGridSharedAccessSignatureCredentialPolicy(credential));
-            _serviceRestClient = new EventGridRestClient(new ClientDiagnostics(options), pipeline, options.Version.GetVersionString());
-            _clientDiagnostics = new ClientDiagnostics(options);
-        }
+        /// <summary> Publishes a set of EventGridEvents to an Event Grid topic. </summary>
+        /// <param name="eventGridEvent"> The event to be published to Event Grid. </param>
+        /// <param name="cancellationToken"> An optional cancellation token instance to signal the request to cancel the operation.</param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response> SendEventAsync(EventGridEvent eventGridEvent, CancellationToken cancellationToken = default)
+            => await SendEventsAsync(new EventGridEvent[] { eventGridEvent }, cancellationToken).ConfigureAwait(false);
 
         /// <summary> Publishes a set of EventGridEvents to an Event Grid topic. </summary>
-        /// <param name="events"> The set of events to be published to Event Grid. </param>
+        /// <param name="eventGridEvent"> The set of events to be published to Event Grid. </param>
         /// <param name="cancellationToken"> An optional cancellation token instance to signal the request to cancel the operation.</param>
-        public virtual async Task<Response> SendEventsAsync(IEnumerable<EventGridEvent> events, CancellationToken cancellationToken = default)
-            => await SendEventsInternal(events, true /*async*/, cancellationToken).ConfigureAwait(false);
+        [ForwardsClientCalls]
+        public virtual Response SendEvent(EventGridEvent eventGridEvent, CancellationToken cancellationToken = default)
+            => SendEvents(new EventGridEvent[] { eventGridEvent }, cancellationToken);
 
         /// <summary> Publishes a set of EventGridEvents to an Event Grid topic. </summary>
-        /// <param name="events"> The set of events to be published to Event Grid. </param>
+        /// <param name="eventGridEvents"> The set of events to be published to Event Grid. </param>
         /// <param name="cancellationToken"> An optional cancellation token instance to signal the request to cancel the operation.</param>
-        public virtual Response SendEvents(IEnumerable<EventGridEvent> events, CancellationToken cancellationToken = default)
-            => SendEventsInternal(events, false /*async*/, cancellationToken).EnsureCompleted();
+        public virtual async Task<Response> SendEventsAsync(IEnumerable<EventGridEvent> eventGridEvents, CancellationToken cancellationToken = default)
+            => await SendEventsInternal(eventGridEvents, true /*async*/, cancellationToken).ConfigureAwait(false);
+
+        /// <summary> Publishes a set of EventGridEvents to an Event Grid topic. </summary>
+        /// <param name="eventGridEvents"> The set of events to be published to Event Grid. </param>
+        /// <param name="cancellationToken"> An optional cancellation token instance to signal the request to cancel the operation.</param>
+        public virtual Response SendEvents(IEnumerable<EventGridEvent> eventGridEvents, CancellationToken cancellationToken = default)
+            => SendEventsInternal(eventGridEvents, false /*async*/, cancellationToken).EnsureCompleted();
 
         /// <summary> Publishes a set of EventGridEvents to an Event Grid topic. </summary>
         /// <param name="events"> The set of events to be published to Event Grid. </param>
@@ -206,17 +220,31 @@ namespace Azure.Messaging.EventGrid
             }
         }
 
-        /// <summary> Publishes a set of CloudEvents to an Event Grid topic. </summary>
-        /// <param name="events"> The set of events to be published to Event Grid. </param>
+        /// <summary> Publishes a CloudEvent to an Event Grid topic. </summary>
+        /// <param name="cloudEvent"> The set of events to be published to Event Grid. </param>
         /// <param name="cancellationToken"> An optional cancellation token instance to signal the request to cancel the operation.</param>
-        public virtual async Task<Response> SendEventsAsync(IEnumerable<CloudEvent> events, CancellationToken cancellationToken = default)
-            => await SendCloudEventsInternal(events, true /*async*/, cancellationToken).ConfigureAwait(false);
+        [ForwardsClientCalls]
+        public virtual async Task<Response> SendEventAsync(CloudEvent cloudEvent, CancellationToken cancellationToken = default)
+            => await SendEventsAsync(new CloudEvent[] { cloudEvent }, cancellationToken).ConfigureAwait(false);
+
+        /// <summary> Publishes a CloudEvent to an Event Grid topic. </summary>
+        /// <param name="cloudEvent"> The set of events to be published to Event Grid. </param>
+        /// <param name="cancellationToken"> An optional cancellation token instance to signal the request to cancel the operation.</param>
+        [ForwardsClientCalls]
+        public virtual Response SendEvent(CloudEvent cloudEvent, CancellationToken cancellationToken = default)
+            => SendEvents(new CloudEvent[] { cloudEvent }, cancellationToken);
 
         /// <summary> Publishes a set of CloudEvents to an Event Grid topic. </summary>
-        /// <param name="events"> The set of events to be published to Event Grid. </param>
+        /// <param name="cloudEvents"> The set of events to be published to Event Grid. </param>
         /// <param name="cancellationToken"> An optional cancellation token instance to signal the request to cancel the operation.</param>
-        public virtual Response SendEvents(IEnumerable<CloudEvent> events, CancellationToken cancellationToken = default)
-            => SendCloudEventsInternal(events, false /*async*/, cancellationToken).EnsureCompleted();
+        public virtual async Task<Response> SendEventsAsync(IEnumerable<CloudEvent> cloudEvents, CancellationToken cancellationToken = default)
+            => await SendCloudEventsInternal(cloudEvents, true /*async*/, cancellationToken).ConfigureAwait(false);
+
+        /// <summary> Publishes a set of CloudEvents to an Event Grid topic. </summary>
+        /// <param name="cloudEvents"> The set of events to be published to Event Grid. </param>
+        /// <param name="cancellationToken"> An optional cancellation token instance to signal the request to cancel the operation.</param>
+        public virtual Response SendEvents(IEnumerable<CloudEvent> cloudEvents, CancellationToken cancellationToken = default)
+            => SendCloudEventsInternal(cloudEvents, false /*async*/, cancellationToken).EnsureCompleted();
 
         /// <summary> Publishes a set of CloudEvents to an Event Grid topic. </summary>
         /// <param name="events"> The set of events to be published to Event Grid. </param>
@@ -259,17 +287,31 @@ namespace Azure.Messaging.EventGrid
             }
         }
 
-        /// <summary> Publishes a set of custom events to an Event Grid topic. </summary>
-        /// <param name="events"> An array of events to be published to Event Grid. </param>
+        /// <summary> Publishes a set of custom schema events to an Event Grid topic. </summary>
+        /// <param name="customEvent"> A custom schema event to be published to Event Grid. </param>
         /// <param name="cancellationToken"> An optional cancellation token instance to signal the request to cancel the operation.</param>
-        public virtual async Task<Response> SendEventsAsync(IEnumerable<BinaryData> events, CancellationToken cancellationToken = default)
-            => await PublishCustomEventsInternal(events, true /*async*/, cancellationToken).ConfigureAwait(false);
+        [ForwardsClientCalls]
+        public virtual async Task<Response> SendEventAsync(BinaryData customEvent, CancellationToken cancellationToken = default)
+            => await SendEventsAsync(new BinaryData[] { customEvent }, cancellationToken).ConfigureAwait(false);
 
-        /// <summary> Publishes a set of custom events to an Event Grid topic. </summary>
-        /// <param name="events">The set of events to be published to Event Grid. The events are  </param>
+        /// <summary> Publishes a set of custom schema events to an Event Grid topic.</summary>
+        /// <param name="customEvent">A custom schema event to be published to Event Grid.</param>
         /// <param name="cancellationToken"> An optional cancellation token instance to signal the request to cancel the operation.</param>
-        public virtual Response SendEvents(IEnumerable<BinaryData> events, CancellationToken cancellationToken = default)
-            => PublishCustomEventsInternal(events, false /*async*/, cancellationToken).EnsureCompleted();
+        [ForwardsClientCalls]
+        public virtual Response SendEvent(BinaryData customEvent, CancellationToken cancellationToken = default)
+            => SendEvents(new BinaryData[] { customEvent }, cancellationToken);
+
+        /// <summary> Publishes a set of custom schema events to an Event Grid topic. </summary>
+        /// <param name="customEvents">The set of custom schema events to be published to Event Grid.</param>
+        /// <param name="cancellationToken"> An optional cancellation token instance to signal the request to cancel the operation.</param>
+        public virtual async Task<Response> SendEventsAsync(IEnumerable<BinaryData> customEvents, CancellationToken cancellationToken = default)
+            => await PublishCustomEventsInternal(customEvents, true /*async*/, cancellationToken).ConfigureAwait(false);
+
+        /// <summary> Publishes a set of custom schema events to an Event Grid topic. </summary>
+        /// <param name="customEvents">The set of custom schema events to be published to Event Grid.</param>
+        /// <param name="cancellationToken"> An optional cancellation token instance to signal the request to cancel the operation.</param>
+        public virtual Response SendEvents(IEnumerable<BinaryData> customEvents, CancellationToken cancellationToken = default)
+            => PublishCustomEventsInternal(customEvents, false /*async*/, cancellationToken).EnsureCompleted();
 
         private async Task<Response> PublishCustomEventsInternal(IEnumerable<object> events, bool async, CancellationToken cancellationToken = default)
         {

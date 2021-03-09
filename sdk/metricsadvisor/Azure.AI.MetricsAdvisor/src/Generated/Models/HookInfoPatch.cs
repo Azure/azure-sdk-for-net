@@ -20,7 +20,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary> hook type. </summary>
-        internal HookInfoPatchHookType HookType { get; set; }
+        internal HookType HookType { get; set; }
         /// <summary> hook unique name. </summary>
         public string HookName { get; set; }
         /// <summary> hook description. </summary>
