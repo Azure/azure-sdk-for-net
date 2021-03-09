@@ -8,8 +8,8 @@
         "Authorization": "Sanitized",
         "Content-Length": "146",
         "Content-Type": "application/json",
-        "Date": "Tue, 09 Mar 2021 20:07:36 GMT",
-        "traceparent": "00-bc9c18a768f9b8429b1b359f99284e39-c2f5979201090c49-00",
+        "Date": "Tue, 09 Mar 2021 20:17:40 GMT",
+        "traceparent": "00-a29f823187104e4786be08342baa439c-a5821152ee9bda4d-00",
         "User-Agent": [
           "azsdk-net-Communication.Sms/1.0.0-alpha.20210309.1",
           "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19042 )"
@@ -33,18 +33,18 @@
       "ResponseHeaders": {
         "api-supported-versions": "2020-07-20-preview1, 2020-08-20-preview, 2021-03-07",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 09 Mar 2021 20:07:37 GMT",
-        "MS-CV": "OYfdfofJmEuhWl6eVb4PcQ.0",
+        "Date": "Tue, 09 Mar 2021 20:17:41 GMT",
+        "MS-CV": "\u002B5B9cOouS02wQbo8p4l5ZQ.0",
         "Request-Context": "appId=",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0idVHYAAAAAD4uFOfIioHQK/RGfGT2tf8RVdSMzBFREdFMDUxNQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
-        "X-Processing-Time": "304ms"
+        "X-Azure-Ref": "05NdHYAAAAAD0MD0wBFGAQb\u002BIIP4EOIRWRVdSMzBFREdFMDUwOQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Processing-Time": "924ms"
       },
       "ResponseBody": {
         "value": [
           {
             "to": "Sanitized",
-            "messageId": "Outgoing_20210309200737b0a941ad-e11f-4be5-8ee7-02a7fb23d599_noam",
+            "messageId": "Outgoing_20210309201741be263473-d197-4edf-ba05-6e16cdada7f6_noam",
             "httpStatusCode": 202,
             "repeatabilityResult": "accepted",
             "successful": true
@@ -54,7 +54,7 @@
     }
   ],
   "Variables": {
-    "AZURE_COMMUNICATION_LIVETEST_CONNECTION_STRING": "endpoint=https://Sanitized.communication.azure.com/;accesskey=Kg==",
+    "AZURE_COMMUNICATION_LIVETEST_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
     "AZURE_PHONE_NUMBER": "\u002B18005555555",
     "RandomSeed": "1981761896"
   }

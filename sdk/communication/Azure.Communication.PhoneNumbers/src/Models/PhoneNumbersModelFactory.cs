@@ -12,8 +12,8 @@ namespace Azure.Communication.PhoneNumbers.Models
     public static class PhoneNumbersModelFactory
     {
         /// <summary> Initializes a new instance of AcquiredPhoneNumber. </summary>
-        /// <param name="id"> The id of the phone number, e.g. 11234567890. </param>
-        /// <param name="phoneNumber"> String of the E.164 format of the phone number, e.g. +11234567890. </param>
+        /// <param name="id"> The id of the phone number, e.g. +14255550123. </param>
+        /// <param name="phoneNumber"> String of the E.164 format of the phone number, e.g. +14255550123. </param>
         /// <param name="countryCode"> The ISO 3166-2 code of the phone number&apos;s country, e.g. US. </param>
         /// <param name="phoneNumberType"> The phone number&apos;s type, e.g. Geographic, TollFree. </param>
         /// <param name="capabilities"> Capabilities of a phone number. </param>
