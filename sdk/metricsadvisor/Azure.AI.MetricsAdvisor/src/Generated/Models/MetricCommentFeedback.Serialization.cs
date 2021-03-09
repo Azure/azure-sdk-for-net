@@ -26,8 +26,11 @@ namespace Azure.AI.MetricsAdvisor.Models
                 writer.WritePropertyName("endTime");
                 writer.WriteStringValue(EndTime.Value, "O");
             }
-            writer.WritePropertyName("value");
-            writer.WriteObjectValue(ValueInternal);
+            if (Optional.IsDefined(ValueInternal))
+            {
+                writer.WritePropertyName("value");
+                writer.WriteObjectValue(ValueInternal);
+            }
             writer.WritePropertyName("feedbackType");
             writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("metricId");
@@ -41,7 +44,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
-            CommentFeedbackValue value = default;
+            Optional<CommentFeedbackValue> value = default;
             FeedbackType feedbackType = default;
             Optional<string> feedbackId = default;
             Optional<DateTimeOffset> createdTime = default;
@@ -72,6 +75,11 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     value = CommentFeedbackValue.DeserializeCommentFeedbackValue(property.Value);
                     continue;
                 }
@@ -111,7 +119,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new MetricCommentFeedback(feedbackType, feedbackId.Value, Optional.ToNullable(createdTime), userPrincipal.Value, metricId, dimensionFilter, Optional.ToNullable(startTime), Optional.ToNullable(endTime), value);
+            return new MetricCommentFeedback(feedbackType, feedbackId.Value, Optional.ToNullable(createdTime), userPrincipal.Value, metricId, dimensionFilter, Optional.ToNullable(startTime), Optional.ToNullable(endTime), value.Value);
         }
     }
 }

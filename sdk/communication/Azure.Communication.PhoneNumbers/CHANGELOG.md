@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
+## 1.0.0-beta.5 (2021-03-09)
 
 ### Added
 - Added PhoneNumberAdministrationClient (originally was part of the Azure.Communication.Administration package).

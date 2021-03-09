@@ -13,7 +13,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary> Initializes a new instance of AzureDataExplorerDataFeedPatch. </summary>
         public AzureDataExplorerDataFeedPatch()
         {
-            DataSourceType = DataFeedDetailPatchDataSourceType.AzureDataExplorer;
+            DataSourceType = DataFeedSourceType.AzureDataExplorer;
         }
 
         public SqlSourceParameter DataSourceParameter { get; set; }

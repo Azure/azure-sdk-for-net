@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.0.0-beta.4 (2021-03-09)
 
 ### Added
 - Added support to create SmsClient with AzureKeyCredential.
