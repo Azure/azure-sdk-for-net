@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Diagnostics;
 using Azure.Core.Pipeline;
 
 namespace Azure.Messaging.ServiceBus.Diagnostics
@@ -69,6 +69,23 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             scope.AddAttribute(DiagnosticProperty.EntityAttribute, _entityPath);
             scope.AddAttribute(DiagnosticProperty.EndpointAttribute, _fullyQualifiedNamespace);
             return scope;
+        }
+
+        public void InstrumentMessage(ServiceBusMessage message)
+        {
+            if (!message.ApplicationProperties.ContainsKey(DiagnosticProperty.DiagnosticIdAttribute))
+            {
+                using DiagnosticScope messageScope = CreateScope(
+                    DiagnosticProperty.MessageActivityName,
+                    DiagnosticProperty.ProducerKind);
+                messageScope.Start();
+
+                Activity activity = Activity.Current;
+                if (activity != null)
+                {
+                    message.ApplicationProperties[DiagnosticProperty.DiagnosticIdAttribute] = activity.Id;
+                }
+            }
         }
     }
 }

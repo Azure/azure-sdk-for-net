@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.AI.MetricsAdvisor.Administration;
 using Azure.AI.MetricsAdvisor.Models;
@@ -32,45 +31,54 @@ namespace Azure.AI.MetricsAdvisor.Samples
             //@@ string sqlServerConnectionString = "<connectionString>";
             //@@ string sqlServerQuery = "<query>";
 
-            var dataFeedName = "Sample data feed";
-            var dataFeedSource = new SqlServerDataFeedSource(sqlServerConnectionString, sqlServerQuery);
-            var dataFeedGranularity = new DataFeedGranularity(DataFeedGranularityType.Daily);
+            var dataFeed = new DataFeed();
 
-            var dataFeedMetrics = new List<DataFeedMetric>()
+            dataFeed.Name = "Sample data feed";
+            dataFeed.DataSource = new SqlServerDataFeedSource(sqlServerConnectionString, sqlServerQuery);
+            dataFeed.Granularity = new DataFeedGranularity(DataFeedGranularityType.Daily);
+
+            dataFeed.Schema = new DataFeedSchema();
+            dataFeed.Schema.MetricColumns.Add(new DataFeedMetric("cost"));
+            dataFeed.Schema.MetricColumns.Add(new DataFeedMetric("revenue"));
+            dataFeed.Schema.DimensionColumns.Add(new DataFeedDimension("category"));
+            dataFeed.Schema.DimensionColumns.Add(new DataFeedDimension("city"));
+
+            dataFeed.IngestionSettings = new DataFeedIngestionSettings()
             {
-                new DataFeedMetric("cost"),
-                new DataFeedMetric("revenue")
-            };
-            var dataFeedDimensions = new List<DataFeedDimension>()
-            {
-                new DataFeedDimension("category"),
-                new DataFeedDimension("city")
-            };
-            var dataFeedSchema = new DataFeedSchema(dataFeedMetrics)
-            {
-                DimensionColumns = dataFeedDimensions
+                IngestionStartTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z")
             };
 
-            var ingestionStartTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
-            var dataFeedIngestionSettings = new DataFeedIngestionSettings(ingestionStartTime);
+            Response<DataFeed> response = await adminClient.CreateDataFeedAsync(dataFeed);
 
-            var dataFeed = new DataFeed(dataFeedName, dataFeedSource, dataFeedGranularity, dataFeedSchema, dataFeedIngestionSettings);
+            DataFeed createdDataFeed = response.Value;
 
-            Response<string> response = await adminClient.CreateDataFeedAsync(dataFeed);
+            Console.WriteLine($"Data feed ID: {createdDataFeed.Id}");
+            Console.WriteLine($"Data feed status: {createdDataFeed.Status.Value}");
+            Console.WriteLine($"Data feed created time: {createdDataFeed.CreatedTime.Value}");
 
-            string dataFeedId = response.Value;
+            Console.WriteLine($"Data feed administrators:");
+            foreach (string admin in createdDataFeed.Administrators)
+            {
+                Console.WriteLine($" - {admin}");
+            }
 
-            Console.WriteLine($"Data feed ID: {dataFeedId}");
+            Console.WriteLine($"Metric IDs:");
+            foreach (DataFeedMetric metric in createdDataFeed.Schema.MetricColumns)
+            {
+                Console.WriteLine($" - {metric.MetricName}: {metric.MetricId}");
+            }
+
+            Console.WriteLine($"Dimension columns:");
+            foreach (DataFeedDimension dimension in createdDataFeed.Schema.DimensionColumns)
+            {
+                Console.WriteLine($" - {dimension.DimensionName}");
+            }
             #endregion
-
-            // Only the ID of the data feed is known at this point. You can perform another service
-            // call to GetDataFeedAsync or GetDataFeed to get more information, such as status, created
-            // time, the list of administrators, or the metric IDs.
 
             // Delete the created data feed to clean up the Metrics Advisor resource. Do not perform this
             // step if you intend to keep using the data feed.
 
-            await adminClient.DeleteDataFeedAsync(dataFeedId);
+            await adminClient.DeleteDataFeedAsync(createdDataFeed.Id);
         }
 
         [Test]
@@ -84,9 +92,6 @@ namespace Azure.AI.MetricsAdvisor.Samples
             var adminClient = new MetricsAdvisorAdministrationClient(new Uri(endpoint), credential);
 
             string dataFeedId = DataFeedId;
-
-            #region Snippet:GetDataFeedAsync
-            //@@ string dataFeedId = "<dataFeedId>";
 
             Response<DataFeed> response = await adminClient.GetDataFeedAsync(dataFeedId);
 
@@ -106,7 +111,6 @@ namespace Azure.AI.MetricsAdvisor.Samples
             {
                 Console.WriteLine($" - {metric.MetricName}: {metric.MetricId}");
             }
-            #endregion
 
             Console.WriteLine($"Dimension columns:");
             foreach (DataFeedDimension dimension in dataFeed.Schema.DimensionColumns)

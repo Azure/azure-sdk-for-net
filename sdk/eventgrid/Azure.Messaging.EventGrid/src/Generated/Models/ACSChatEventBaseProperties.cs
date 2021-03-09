@@ -8,26 +8,26 @@
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of common properties of all chat events. </summary>
-    public partial class ACSChatEventBaseProperties
+    public partial class AcsChatEventBaseProperties
     {
-        /// <summary> Initializes a new instance of ACSChatEventBaseProperties. </summary>
-        internal ACSChatEventBaseProperties()
+        /// <summary> Initializes a new instance of AcsChatEventBaseProperties. </summary>
+        internal AcsChatEventBaseProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ACSChatEventBaseProperties. </summary>
-        /// <param name="recipientId"> The MRI of the target user. </param>
+        /// <summary> Initializes a new instance of AcsChatEventBaseProperties. </summary>
+        /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
         /// <param name="threadId"> The chat thread id. </param>
-        internal ACSChatEventBaseProperties(string recipientId, string transactionId, string threadId)
+        internal AcsChatEventBaseProperties(CommunicationIdentifierModel recipientCommunicationIdentifier, string transactionId, string threadId)
         {
-            RecipientId = recipientId;
+            RecipientCommunicationIdentifier = recipientCommunicationIdentifier;
             TransactionId = transactionId;
             ThreadId = threadId;
         }
 
-        /// <summary> The MRI of the target user. </summary>
-        public string RecipientId { get; }
+        /// <summary> The communication identifier of the target user. </summary>
+        public CommunicationIdentifierModel RecipientCommunicationIdentifier { get; }
         /// <summary> The transaction id will be used as co-relation vector. </summary>
         public string TransactionId { get; }
         /// <summary> The chat thread id. </summary>

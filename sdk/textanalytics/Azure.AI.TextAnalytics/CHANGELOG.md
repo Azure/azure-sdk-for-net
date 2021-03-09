@@ -1,7 +1,70 @@
 # Release History
 
-## 5.1.0-beta.4 (Unreleased)
+## 5.1.0-beta.5 (Unreleased)
+### New features
+- Added ability to filter the categories returned in a Personally Identifiable Information recognition with the optional parameter `CategoriesFilter` in `RecognizePiiEntitiesOptions`.
+- Added the ability to recognize linked entities under `StartAnalyzeBatchActions`.
+- Added `RecognizeLinkedEntitiesOptions` to `TextAnalyticsActions`.
+- Added `RecognizeLinkedEntitiesActionsResults` to `AnalyzeBatchActionsResult`.
+- `AnalyzeHealthcareEntitiesResult`, now exposes the property `EntityRelations`of type `HealthcareEntityRelation`.
+- Introduced `HealthcareEntityRelation` class which will determine all the different relations between the entities as `Roles`.
+- Added `HealthcareEntityRelationRole`, which exposes `Name` and `Entity` of type `string` and `HealthcareEntity` respectively.
+- `HealthcareEntityAssertion` is added to `HealthcareEntity` which further exposes `EntityAssociation`, `EntityCertainity` and `EntityConditionality`.
+- Added new types under `HealthcareRelationType` class.
 
+### Breaking changes
+- Renamed `AspectSentiment` to `TargetSentiment`.
+- Renamed `MinedOpinion` to `SentenceOpinion`.
+- Renamed `OpinionSentiment` to `AssessmentSentiment`.
+- For `PiiEntity.Category` the type of the property is now `PiiEntityCategory` instead of `EntityCategory`.
+- Removed `RelatedEntities`.
+- `RecognizePiiEntitiesOptions.Domain` is now a nullable type.
+- In `StartAnalyzeBatchActions` when all actions return status `failed` the SDK will no longer throw an exception. The request will succeed and the errors will be located at the specific action level. 
+
+### Fixes
+- `RecognizePiiEntities` and `TextAnalyticsActions.RecognizePiiEntitiesOptions` were always passing `PiiEntityDomainType.PHI`. Now, it is only passed when requested by the user [19086](https://github.com/Azure/azure-sdk-for-net/issues/19086).
+
+### Known Issues
+- The parameter `CategoriesFilter` in `RecognizePiiEntitiesOptions` is currently not working when used in `StartAnalyzeBatchActions`. [19237](https://github.com/Azure/azure-sdk-for-net/issues/19237).
+- `Statistics` for `AnalyzeBatchActionsResult` are not currently returned even if the user passes `IncludeStatistics  = true`. [19268](https://github.com/Azure/azure-sdk-for-net/issues/19268).
+- `StartAnalyzeHealthcareEntities` is in gated preview and can not be used with AAD credentials. For more information, see [the Text Analytics for Health documentation](https://docs.microsoft.com/azure/cognitive-services/text-analytics/how-tos/text-analytics-for-health?tabs=ner#request-access-to-the-public-preview).
+
+## 5.1.0-beta.4 (2021-02-10)
+### New features
+- Added property `Length` to `CategorizedEntity`, `SentenceSentiment`, `LinkedEntityMatch`, `AspectSentiment`, `OpinionSentiment`, and `PiiEntity`.
+- `StringIndexType` has been added to all endpoints that expose the new properties `Offset` and `Length` to determine the encoding which service should use. It is added into the `TextAnalyticsRequestOptions` class and default for this SDK is `UTF-16` code unit.
+- `AnalyzeHealthcareEntitiesOperation` now exposes the properties `CreatedOn`, `ExpiresOn`, `LastModified`, and `Status`.
+- `AnalyzeBatchActionsOperation ` now exposes the properties `CreatedOn`, `ExpiresOn`, `LastModified`, `Status`, `ActionsFailed`, `ActionsInProgress`,  `ActionsSucceeded`,  `DisplayName`, and `TotalActions`.
+
+### Breaking changes
+- Renamed `JobStatus` to `TextAnalyticsOperationStatus`.
+
+#### Analyze Healthcare Entities
+- Pagination support was added for all `StartAnalyzeHealthcareEntities` methods.
+- Moved `Cancel` and `CancelAsync` for Healthcare from `TextAnalyticsClient` to `AnalyzeHealthcareEntitiesOperation`.
+- The healthcare entities returned by `StartAnalyzeHealthcareEntities` are now organized as a directed graph where the edges represent a certain type of healthcare relationship between the source and target entities. Edges are stored in the `RelatedEntities` property.
+- Renamed `StartHealthcareBatch` and `StartHealthcareBatchAsync` to `StartAnalyzeHealthcareEntities` and `StartAnalyzeHealthcareEntitiesAsync` respectively.
+- Renamed `RecognizeHealthcareEntitiesResultCollection` to `AnalyzeHealthcareEntitiesResultCollection`.
+- Renamed `DocumentHealthcareResult` to `AnalyzeHealthcareEntitiesResult`.
+- Renamed `HealthcareOperation` to `AnalyzeHealthcareEntitiesOperation`.
+- Renamed `HealthcareOptions` to `AnalyzeHealthcareEntitiesOptions`, and removed types `Skip` and `Top` from it. Pagination is now done automatically by the SDK.
+- Renamed `HealthcareEntityLink` to `EntityDataSource` with `DataSource` to `EntityDataSource` and `Id` to `Name`.
+- Renamed `HealthcareRelation` to `HealthcareRelationType`.
+- Removed method `GetHealthcareEntities` as pagination is now done with the main `StartAnalyzeHealthcareEntities` methods.
+- Removed `HealthcareTaskResult`.
+- Removed `StartHealthcare` and `StartHealthcareAsync` methods.
+- Removed `IsNegated` property from `HealthcareEntity`.
+
+#### Analyze batch actions
+- The word `action` is now used consistently in our names and documentation instead of `task`.
+- Pagination support was added for all `StartAnalyzeBatchActions` methods.
+- Renamed methods `StartAnalyzeOperationBatch` and `StartAnalyzeOperationBatchAsync` to `StartAnalyzeBatchActions` and `StartAnalyzeBatchActionsAsync` respectively.
+- Type `TextAnalyticsActions` added to `StartAnalyzeBatchActions` methods to specify the actions to execute in the batch of documents instead of in `AnalyzeOperationOptions`.
+- The way to configure the options for each action is now exposed in the respective `ExtractKeyPhrasesOptions`, `RecognizeEntitiesOptions`, or `RecognizePiiEntitiesOptions` object.
+- Results for the `StartAnalyzeBatchActions` method are now returned in a `AnalyzeHealthcareEntitiesResultCollection` object that contains information per type of action.
+- Renamed `AnalyzeOperation` to `AnalyzeBatchActionsOperation`.
+- Reuse `PiiEntityDomainType` instead of `PiiTaskParametersDomain`.
+- Removed `AnalyzeTasks`, `EntitiesTask`, `EntitiesTaskParameters`, `EntityRecognitionTasksItem`, `JobManifestTasks`, `KeyPhraseExtractionTasksItem`, `KeyPhrasesTask`, `KeyPhrasesTaskParameters`, `PiiTask`, `PiiTaskParameters`.
 
 ## 5.1.0-beta.3 (2020-11-19)
 ### New Features

@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
@@ -136,7 +135,7 @@ namespace Azure.Storage.Queues
         /// Determines whether the client is able to generate a SAS.
         /// If the client is authenticated with a <see cref="StorageSharedKeyCredential"/>.
         /// </summary>
-        public bool CanGenerateSasUri => ClientConfiguration.SharedKeyCredential != null;
+        public virtual bool CanGenerateSasUri => ClientConfiguration.SharedKeyCredential != null;
 
         #region ctors
         /// <summary>
@@ -207,7 +206,8 @@ namespace Azure.Storage.Queues
                 clientDiagnostics: new ClientDiagnostics(options),
                 version: options.Version,
                 clientSideEncryption: QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions),
-                messageEncoding: options.MessageEncoding);
+                messageEncoding: options.MessageEncoding,
+                queueMessageDecodingFailedHandlers: options.GetMessageDecodingFailedHandlers());
 
             (QueueRestClient queueRestClient, MessagesRestClient messagesRestClient, MessageIdRestClient messageIdRestClient) = BuildRestClients();
             _queueRestClient = queueRestClient;
@@ -343,7 +343,8 @@ namespace Azure.Storage.Queues
                 clientDiagnostics: new ClientDiagnostics(options),
                 version: options.Version,
                 clientSideEncryption: QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions),
-                messageEncoding: options.MessageEncoding);
+                messageEncoding: options.MessageEncoding,
+                queueMessageDecodingFailedHandlers: options.GetMessageDecodingFailedHandlers());
 
             (QueueRestClient queueRestClient, MessagesRestClient messagesRestClient, MessageIdRestClient messageIdRestClient) = BuildRestClients();
             _queueRestClient = queueRestClient;
@@ -436,9 +437,18 @@ namespace Azure.Storage.Queues
         /// <returns>New instance with provided options and same internals otherwise.</returns>
         protected internal virtual QueueClient WithClientSideEncryptionOptionsCore(ClientSideEncryptionOptions clientSideEncryptionOptions)
         {
+            QueueClientConfiguration queueClientConfiguration = new QueueClientConfiguration(
+                ClientConfiguration.Pipeline,
+                ClientConfiguration.SharedKeyCredential,
+                ClientConfiguration.ClientDiagnostics,
+                ClientConfiguration.Version,
+                QueueClientSideEncryptionOptions.CloneFrom(clientSideEncryptionOptions),
+                ClientConfiguration.MessageEncoding,
+                ClientConfiguration.QueueMessageDecodingFailedHandlers);
+
             return new QueueClient(
                 Uri,
-                ClientConfiguration);
+                queueClientConfiguration);
         }
 
         #region Create
@@ -2200,17 +2210,21 @@ namespace Azure.Storage.Queues
                     if (response.IsUnavailable())
                     {
                         return response.GetRawResponse().AsNoBodyResponse<QueueMessage[]>();
-                    }
-                    else if (UsingClientSideEncryption)
+                    } else
                     {
-                        return Response.FromValue(
-                            await new QueueClientSideDecryptor(ClientConfiguration.ClientSideEncryption)
-                                .ClientSideDecryptMessagesInternal(response.Value.Select(x => QueueMessage.ToQueueMessage(x, ClientConfiguration.MessageEncoding)).ToArray(), async, cancellationToken).ConfigureAwait(false),
-                            response.GetRawResponse());
-                    }
-                    else
-                    {
-                        return Response.FromValue(response.Value.Select(x => QueueMessage.ToQueueMessage(x, ClientConfiguration.MessageEncoding)).ToArray(), response.GetRawResponse());
+                        QueueMessage[] queueMessages = await ToQueueMessagesWithInvalidMessageHandling(response.Value, async, cancellationToken).ConfigureAwait(false);
+
+                        if (UsingClientSideEncryption)
+                        {
+                            return Response.FromValue(
+                                await new QueueClientSideDecryptor(ClientConfiguration.ClientSideEncryption)
+                                    .ClientSideDecryptMessagesInternal(queueMessages, async, cancellationToken).ConfigureAwait(false),
+                                response.GetRawResponse());
+                        }
+                        else
+                        {
+                            return Response.FromValue(queueMessages, response.GetRawResponse());
+                        }
                     }
                 }
                 catch (Exception ex)
@@ -2225,6 +2239,34 @@ namespace Azure.Storage.Queues
                     scope.Dispose();
                 }
             }
+        }
+
+        private async Task<QueueMessage[]> ToQueueMessagesWithInvalidMessageHandling(
+            IEnumerable<DequeuedMessageItem> dequeuedMessageItems,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            List<QueueMessage> queueMessages = new List<QueueMessage>();
+
+            foreach (var dequeuedMessageItem in dequeuedMessageItems)
+            {
+                try
+                {
+                    queueMessages.Add(QueueMessage.ToQueueMessage(dequeuedMessageItem, ClientConfiguration.MessageEncoding));
+                }
+                catch (FormatException) when (ClientConfiguration.QueueMessageDecodingFailedHandlers != null)
+                {
+#pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+                    await OnMessageDecodingFailedAsync(
+                        QueueMessage.ToQueueMessage(dequeuedMessageItem, QueueMessageEncoding.None),
+                        null,
+                        !async,
+                        cancellationToken).ConfigureAwait(false);
+#pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+                }
+            }
+
+            return queueMessages.ToArray();
         }
 
         #endregion ReceiveMessages
@@ -2516,16 +2558,21 @@ namespace Azure.Storage.Queues
                     {
                         return response.GetRawResponse().AsNoBodyResponse<PeekedMessage[]>();
                     }
-                    else if (UsingClientSideEncryption)
-                    {
-                        return Response.FromValue(
-                            await new QueueClientSideDecryptor(ClientConfiguration.ClientSideEncryption)
-                                .ClientSideDecryptMessagesInternal(response.Value.Select(x => PeekedMessage.ToPeekedMessage(x, ClientConfiguration.MessageEncoding)).ToArray(), async, cancellationToken).ConfigureAwait(false),
-                            response.GetRawResponse());
-                    }
                     else
                     {
-                        return Response.FromValue(response.Value.Select(x => PeekedMessage.ToPeekedMessage(x, ClientConfiguration.MessageEncoding)).ToArray(), response.GetRawResponse());
+                        PeekedMessage[] peekedMessages = await ToPeekedMessagesWithInvalidMessageHandling(response.Value, async, cancellationToken).ConfigureAwait(false);
+
+                        if (UsingClientSideEncryption)
+                        {
+                            return Response.FromValue(
+                                await new QueueClientSideDecryptor(ClientConfiguration.ClientSideEncryption)
+                                    .ClientSideDecryptMessagesInternal(peekedMessages, async, cancellationToken).ConfigureAwait(false),
+                                response.GetRawResponse());
+                        }
+                        else
+                        {
+                            return Response.FromValue(peekedMessages, response.GetRawResponse());
+                        }
                     }
                 }
                 catch (Exception ex)
@@ -2541,6 +2588,35 @@ namespace Azure.Storage.Queues
                 }
             }
         }
+
+        private async Task<PeekedMessage[]> ToPeekedMessagesWithInvalidMessageHandling(
+            IEnumerable<PeekedMessageItem> peekedMessageItems,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            List<PeekedMessage> peekedMessages = new List<PeekedMessage>();
+
+            foreach (var peekedMessageItem in peekedMessageItems)
+            {
+                try
+                {
+                    peekedMessages.Add(PeekedMessage.ToPeekedMessage(peekedMessageItem, ClientConfiguration.MessageEncoding));
+                }
+                catch (FormatException) when (ClientConfiguration.QueueMessageDecodingFailedHandlers != null)
+                {
+#pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+                    await OnMessageDecodingFailedAsync(
+                        null,
+                        PeekedMessage.ToPeekedMessage(peekedMessageItem, QueueMessageEncoding.None),
+                        !async,
+                        cancellationToken).ConfigureAwait(false);
+#pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+                }
+            }
+
+            return peekedMessages.ToArray();
+        }
+
         #endregion PeekMessages
 
         /// <summary>
@@ -3090,7 +3166,62 @@ namespace Azure.Storage.Queues
                     $" if {nameof(SpecializedQueueClientOptions.ClientSideEncryption)} is enabled as encrypted payload is already Base64 encoded.");
             }
         }
+
+        /// <summary>
+        /// Raises <see cref="QueueClientOptions.MessageDecodingFailed"/> event.
+        /// </summary>
+        /// <param name="receivedMessage">The <see cref="QueueMessage"/> with raw body, if present.</param>
+        /// <param name="peekedMessage">The <see cref="PeekedMessage"/> with raw body, if present.</param>
+        /// <param name="isRunningSynchronously">A value indicating whether the event handler was invoked
+        /// synchronously or asynchronously.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns></returns>
+        protected virtual async Task OnMessageDecodingFailedAsync(QueueMessage receivedMessage, PeekedMessage peekedMessage,
+            bool isRunningSynchronously, CancellationToken cancellationToken)
+        {
+            await ClientConfiguration.QueueMessageDecodingFailedHandlers.RaiseAsync(
+                new QueueMessageDecodingFailedEventArgs(
+                    queueClient: this,
+                    receivedMessage: receivedMessage,
+                    peekedMessage: peekedMessage,
+                    isRunningSynchronously: isRunningSynchronously,
+                    cancellationToken: cancellationToken),
+                nameof(QueueClientOptions),
+                nameof(QueueClientOptions.MessageDecodingFailed),
+                ClientConfiguration.ClientDiagnostics).ConfigureAwait(false);
+        }
+
         #endregion Encoding
+
+        #region GetParentQueueServiceClientCore
+
+        private QueueServiceClient _parentQueueServiceClient;
+
+        /// <summary>
+        /// Create a new <see cref="QueueServiceClient"/> that pointing to this <see cref="QueueClient"/>'s queue service.
+        /// The new <see cref="QueueServiceClient"/>
+        /// uses the same request policy pipeline as the
+        /// <see cref="QueueClient"/>.
+        /// </summary>
+        /// <returns>A new <see cref="QueueServiceClient"/> instance.</returns>
+        protected internal virtual QueueServiceClient GetParentQueueServiceClientCore()
+        {
+            if (_parentQueueServiceClient == null)
+            {
+                QueueUriBuilder queueUriBuilder = new QueueUriBuilder(Uri)
+                {
+                    // erase parameters unrelated to service
+                    QueueName = null,
+                };
+
+                _parentQueueServiceClient = new QueueServiceClient(
+                    queueUriBuilder.ToUri(),
+                    ClientConfiguration);
+            }
+
+            return _parentQueueServiceClient;
+        }
+        #endregion
     }
 }
 
@@ -3110,5 +3241,18 @@ namespace Azure.Storage.Queues.Specialized
         /// <returns>New instance with provided options and same internals otherwise.</returns>
         public static QueueClient WithClientSideEncryptionOptions(this QueueClient client, ClientSideEncryptionOptions clientSideEncryptionOptions)
             => client.WithClientSideEncryptionOptionsCore(clientSideEncryptionOptions);
+
+        /// <summary>
+        /// Create a new <see cref="QueueServiceClient"/> that pointing to this <see cref="QueueClient"/>'s queue service.
+        /// The new <see cref="QueueServiceClient"/>
+        /// uses the same request policy pipeline as the
+        /// <see cref="QueueClient"/>.
+        /// </summary>
+        /// <returns>A new <see cref="QueueServiceClient"/> instance.</returns>
+        public static QueueServiceClient GetParentQueueServiceClient(this QueueClient client)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+            return client.GetParentQueueServiceClientCore();
+        }
     }
 }

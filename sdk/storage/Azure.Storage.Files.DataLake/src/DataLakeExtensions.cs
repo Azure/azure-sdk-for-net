@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using Azure.Core;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Files.DataLake.Models;
 
@@ -17,6 +18,8 @@ namespace Azure.Storage.Files.DataLake
             new FileSystemItem()
             {
                 Name = containerItem.Name,
+                IsDeleted = containerItem.IsDeleted,
+                VersionId = containerItem.VersionId,
                 Properties = containerItem.Properties.ToFileSystemProperties()
             };
 
@@ -35,7 +38,9 @@ namespace Azure.Storage.Files.DataLake
                     HasImmutabilityPolicy = containerProperties.HasImmutabilityPolicy,
                     HasLegalHold = containerProperties.HasLegalHold,
                     ETag = containerProperties.ETag,
-                    Metadata = containerProperties.Metadata
+                    Metadata = containerProperties.Metadata,
+                    DeletedOn = containerProperties.DeletedOn,
+                    RemainingRetentionDays = containerProperties.RemainingRetentionDays
                 };
 
         internal static FileDownloadDetails ToFileDownloadDetails(this BlobDownloadDetails blobDownloadProperties) =>
@@ -69,6 +74,15 @@ namespace Azure.Storage.Files.DataLake
                 Content = blobDownloadInfo.Content,
                 ContentHash = blobDownloadInfo.ContentHash,
                 Properties = blobDownloadInfo.Details.ToFileDownloadDetails()
+            };
+
+        internal static FileDownloadInfo ToFileDownloadInfo(this BlobDownloadStreamingResult blobDownloadStreamingResult) =>
+            new FileDownloadInfo()
+            {
+                ContentLength = blobDownloadStreamingResult.Details.ContentLength,
+                Content = blobDownloadStreamingResult.Content,
+                ContentHash = blobDownloadStreamingResult.Details.ContentHash,
+                Properties = blobDownloadStreamingResult.Details.ToFileDownloadDetails()
             };
 
         internal static PathProperties ToPathProperties(this BlobProperties blobProperties) =>
@@ -202,23 +216,6 @@ namespace Azure.Storage.Files.DataLake
             };
             return pathItem;
         }
-
-        internal static PathContentInfo ToPathContentInfo(this PathUpdateResult pathUpdateResult) =>
-            new PathContentInfo()
-            {
-                ContentHash = pathUpdateResult.ContentMD5,
-                ETag = pathUpdateResult.ETag,
-                LastModified = pathUpdateResult.LastModified,
-                AcceptRanges = pathUpdateResult.AcceptRanges,
-                CacheControl = pathUpdateResult.CacheControl,
-                ContentDisposition = pathUpdateResult.ContentDisposition,
-                ContentEncoding = pathUpdateResult.ContentEncoding,
-                ContentLanguage = pathUpdateResult.ContentLanguage,
-                ContentLength = pathUpdateResult.ContentLength,
-                ContentRange = pathUpdateResult.ContentRange,
-                ContentType = pathUpdateResult.ContentType,
-                Metadata = ToMetadata(pathUpdateResult.Properties)
-            };
 
         private static IDictionary<string, string> ToMetadata(string rawMetdata)
         {
@@ -489,5 +486,79 @@ namespace Azure.Storage.Files.DataLake
                 Position = options.Position
             };
         }
+
+        internal static PathSegment ToPathSegment(this ResponseWithHeaders<PathList, FileSystemListPathsHeaders> response)
+            => new PathSegment
+            {
+                Continuation = response.Headers.Continuation,
+                Paths = response.Value.ToPathItems()
+            };
+
+        internal static IEnumerable<PathItem> ToPathItems(this PathList pathList)
+        {
+            if (pathList == null)
+            {
+                return null;
+            }
+
+            return pathList.Paths.Select(path => path.ToPathItem());
+        }
+
+        internal static PathItem ToPathItem(this Path path)
+        {
+            if (path == null)
+            {
+                return null;
+            }
+
+            return new PathItem
+            {
+                Name = path.Name,
+                IsDirectory = path.IsDirectory != null && bool.Parse(path.IsDirectory),
+                LastModified = path.LastModified.GetValueOrDefault(),
+                ETag = new ETag(path.ETag),
+                ContentLength = path.ContentLength == null ? 0 : long.Parse(path.ContentLength, CultureInfo.InvariantCulture),
+                Owner = path.Owner,
+                Group = path.Group,
+                Permissions = path.Permissions
+            };
+        }
+
+        internal static PathInfo ToPathInfo(this ResponseWithHeaders<PathCreateHeaders> response)
+            => new PathInfo
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault()
+            };
+
+        internal static PathAccessControl ToPathAccessControl(this ResponseWithHeaders<PathGetPropertiesHeaders> response)
+            => new PathAccessControl
+            {
+                Owner = response.Headers.Owner,
+                Group = response.Headers.Group,
+                Permissions = PathPermissions.ParseSymbolicPermissions(response.Headers.Permissions),
+                AccessControlList = PathAccessControlExtensions.ParseAccessControlList(response.Headers.ACL)
+            };
+
+        internal static PathInfo ToPathInfo(this ResponseWithHeaders<PathSetAccessControlHeaders> response)
+            => new PathInfo
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault()
+            };
+
+        internal static PathInfo ToPathInfo(this ResponseWithHeaders<PathFlushDataHeaders> response)
+            => new PathInfo
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault()
+            };
+
+        internal static PathInfo ToPathInfo(this ResponseWithHeaders<PathSetExpiryHeaders> response)
+            => new PathInfo
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault()
+            };
     }
 }

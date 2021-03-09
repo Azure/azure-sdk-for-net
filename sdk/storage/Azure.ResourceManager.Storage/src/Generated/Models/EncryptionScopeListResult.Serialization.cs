@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class EncryptionScopeListResult
+    internal partial class EncryptionScopeListResult
     {
         internal static EncryptionScopeListResult DeserializeEncryptionScopeListResult(JsonElement element)
         {

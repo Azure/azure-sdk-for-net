@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Files.Shares
 {
-    internal class DirectoryGetPropertiesHeaders
+    internal partial class DirectoryGetPropertiesHeaders
     {
         private readonly Response _response;
         public DirectoryGetPropertiesHeaders(Response response)

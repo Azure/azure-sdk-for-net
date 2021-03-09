@@ -1,0 +1,60 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sanitized.communication.azure.com/availablePhoneNumbers/countries/US/:search?api-version=2021-03-07",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "137",
+        "Content-Type": "application/json",
+        "Date": "Fri, 12 Feb 2021 18:45:38 GMT",
+        "traceparent": "00-461fbbe6eb6c68419e9cda535401d814-91b65bf02ea1cc4a-00",
+        "User-Agent": [
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210212.1",
+          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
+        ],
+        "x-ms-client-request-id": "1998e942088b41528902c5a717b9722d",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "phoneNumberType": "tollFree",
+        "assignmentType": "person",
+        "capabilities": {
+          "calling": "outbound",
+          "sms": "none"
+        },
+        "areaCode": "212",
+        "quantity": 1
+      },
+      "StatusCode": 400,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 12 Feb 2021 18:45:37 GMT",
+        "MS-CV": "E9xjMhHnD0SnllCkvbbebw.0",
+        "Request-Context": "appId=",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "00swmYAAAAABVQUNZrWPeSLU8l/my5ZaDWVZSMzBFREdFMDMxMgA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Processing-Time": "67ms"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "InvalidInput",
+          "message": "One or more request inputs are not valid.",
+          "details": [
+            {
+              "code": "InvalidValue",
+              "message": "assignmentType is not valid.",
+              "target": "assignmenttype"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "COMMUNICATION_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.com/;accesskey=Kg==",
+    "RandomSeed": "1747956266"
+  }
+}

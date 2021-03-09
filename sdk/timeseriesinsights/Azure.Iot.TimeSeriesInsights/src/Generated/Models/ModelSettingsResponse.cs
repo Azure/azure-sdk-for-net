@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Iot.TimeSeriesInsights.Models
+namespace Azure.Iot.TimeSeriesInsights
 {
     /// <summary> Response containing full time series model settings which include model name, Time Series ID properties and default type ID. </summary>
     public partial class ModelSettingsResponse

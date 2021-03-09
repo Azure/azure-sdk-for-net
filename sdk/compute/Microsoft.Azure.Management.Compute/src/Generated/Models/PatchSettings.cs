@@ -13,6 +13,9 @@ namespace Microsoft.Azure.Management.Compute.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Specifies settings related to VM Guest Patching on Windows.
+    /// </summary>
     public partial class PatchSettings
     {
         /// <summary>
@@ -26,7 +29,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the PatchSettings class.
         /// </summary>
-        /// <param name="patchMode">Specifies the mode of in-guest patching to
+        /// <param name="patchMode">Specifies the mode of VM Guest Patching to
         /// IaaS virtual machine.&lt;br /&gt;&lt;br /&gt; Possible values
         /// are:&lt;br /&gt;&lt;br /&gt; **Manual** - You  control the
         /// application of patches to a virtual machine. You do this by
@@ -36,14 +39,19 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// /&gt;&lt;br /&gt; **AutomaticByOS** - The virtual machine will
         /// automatically be updated by the OS. The property
         /// WindowsConfiguration.enableAutomaticUpdates must be true. &lt;br
-        /// /&gt;&lt;br /&gt; ** AutomaticByPlatform** - the virtual machine
+        /// /&gt;&lt;br /&gt; **AutomaticByPlatform** - the virtual machine
         /// will automatically updated by the platform. The properties
         /// provisionVMAgent and WindowsConfiguration.enableAutomaticUpdates
         /// must be true. Possible values include: 'Manual', 'AutomaticByOS',
         /// 'AutomaticByPlatform'</param>
-        public PatchSettings(string patchMode = default(string))
+        /// <param name="enableHotpatching">Enables customers to patch their
+        /// Azure VMs without requiring a reboot. For enableHotpatching, the
+        /// 'provisionVMAgent' must be set to true and 'patchMode' must be set
+        /// to 'AutomaticByPlatform'.</param>
+        public PatchSettings(string patchMode = default(string), bool? enableHotpatching = default(bool?))
         {
             PatchMode = patchMode;
+            EnableHotpatching = enableHotpatching;
             CustomInit();
         }
 
@@ -53,7 +61,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets specifies the mode of in-guest patching to IaaS
+        /// Gets or sets specifies the mode of VM Guest Patching to IaaS
         /// virtual machine.&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt; Possible
         /// values are:&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt; **Manual** -
         /// You  control the application of patches to a virtual machine. You
@@ -63,7 +71,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// /&amp;gt;&amp;lt;br /&amp;gt; **AutomaticByOS** - The virtual
         /// machine will automatically be updated by the OS. The property
         /// WindowsConfiguration.enableAutomaticUpdates must be true.
-        /// &amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt; ** AutomaticByPlatform** -
+        /// &amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt; **AutomaticByPlatform** -
         /// the virtual machine will automatically updated by the platform. The
         /// properties provisionVMAgent and
         /// WindowsConfiguration.enableAutomaticUpdates must be true. Possible
@@ -71,6 +79,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "patchMode")]
         public string PatchMode { get; set; }
+
+        /// <summary>
+        /// Gets or sets enables customers to patch their Azure VMs without
+        /// requiring a reboot. For enableHotpatching, the 'provisionVMAgent'
+        /// must be set to true and 'patchMode' must be set to
+        /// 'AutomaticByPlatform'.
+        /// </summary>
+        [JsonProperty(PropertyName = "enableHotpatching")]
+        public bool? EnableHotpatching { get; set; }
 
     }
 }

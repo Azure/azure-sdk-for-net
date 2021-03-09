@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Files.Shares
 {
-    internal class FileGetRangeListHeaders
+    internal partial class FileGetRangeListHeaders
     {
         private readonly Response _response;
         public FileGetRangeListHeaders(Response response)

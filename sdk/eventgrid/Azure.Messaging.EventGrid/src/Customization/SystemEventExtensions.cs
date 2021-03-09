@@ -12,7 +12,7 @@ namespace Azure.Messaging.EventGrid
     {
         public static object AsSystemEventData(string eventType, JsonElement data)
         {
-            if (SystemEventDeserializers.TryGetValue(eventType, out Func<JsonElement, object> systemDeserializationFunction))
+            if (s_systemEventDeserializers.TryGetValue(eventType, out Func<JsonElement, object> systemDeserializationFunction))
             {
                 return systemDeserializationFunction(data);
             }
@@ -22,135 +22,155 @@ namespace Azure.Messaging.EventGrid
             }
         }
 
-        public static readonly IReadOnlyDictionary<string, Func<JsonElement, object>> SystemEventDeserializers = new Dictionary<string, Func<JsonElement, object>>(StringComparer.OrdinalIgnoreCase)
+        internal static readonly IReadOnlyDictionary<string, Func<JsonElement, object>> s_systemEventDeserializers = new Dictionary<string, Func<JsonElement, object>>(StringComparer.OrdinalIgnoreCase)
         {
             // KEEP THIS SORTED BY THE NAME OF THE PUBLISHING SERVICE
             // Add handling for additional event types here.
 
             // AppConfiguration events
-            { SystemEventMappings.AppConfigurationKeyValueDeletedEventName, AppConfigurationKeyValueDeletedEventData.DeserializeAppConfigurationKeyValueDeletedEventData },
-            { SystemEventMappings.AppConfigurationKeyValueModifiedEventName, AppConfigurationKeyValueModifiedEventData.DeserializeAppConfigurationKeyValueModifiedEventData },
+            { SystemEventNames.AppConfigurationKeyValueDeleted, AppConfigurationKeyValueDeletedEventData.DeserializeAppConfigurationKeyValueDeletedEventData },
+            { SystemEventNames.AppConfigurationKeyValueModified, AppConfigurationKeyValueModifiedEventData.DeserializeAppConfigurationKeyValueModifiedEventData },
 
             // Communication events
-            { SystemEventMappings.ACSChatMemberAddedToThreadWithUserEventName, ACSChatMemberAddedToThreadWithUserEventData.DeserializeACSChatMemberAddedToThreadWithUserEventData },
-            { SystemEventMappings.ACSChatMemberRemovedFromThreadWithUserEventName, ACSChatMemberRemovedFromThreadWithUserEventData.DeserializeACSChatMemberRemovedFromThreadWithUserEventData },
-            { SystemEventMappings.ACSChatMessageDeletedEventName, ACSChatMessageDeletedEventData.DeserializeACSChatMessageDeletedEventData },
-            { SystemEventMappings.ACSChatMessageEditedEventName, ACSChatMessageEditedEventData.DeserializeACSChatMessageEditedEventData },
-            { SystemEventMappings.ACSChatMessageReceivedEventName, ACSChatMessageReceivedEventData.DeserializeACSChatMessageReceivedEventData },
-            { SystemEventMappings.ACSChatThreadCreatedWithUserEventName,  ACSChatThreadCreatedWithUserEventData.DeserializeACSChatThreadCreatedWithUserEventData },
-            { SystemEventMappings.ACSChatThreadPropertiesUpdatedPerUserEventName, ACSChatThreadPropertiesUpdatedPerUserEventData.DeserializeACSChatThreadPropertiesUpdatedPerUserEventData },
-            { SystemEventMappings.ACSChatThreadWithUserDeletedEventName, ACSChatThreadWithUserDeletedEventData.DeserializeACSChatThreadWithUserDeletedEventData },
-            { SystemEventMappings.ACSSMSDeliveryReportReceivedEventName, AcsSmsDeliveryReportReceivedEventData.DeserializeAcsSmsDeliveryReportReceivedEventData },
-            { SystemEventMappings.ACSSMSReceivedEventName, AcsSmsReceivedEventData.DeserializeAcsSmsReceivedEventData },
+            { SystemEventNames.AcsChatParticipantAddedToThread, AcsChatParticipantAddedToThreadEventData.DeserializeAcsChatParticipantAddedToThreadEventData },
+            { SystemEventNames.AcsChatParticipantAddedToThreadWithUser, AcsChatParticipantAddedToThreadWithUserEventData.DeserializeAcsChatParticipantAddedToThreadWithUserEventData },
+            { SystemEventNames.AcsChatParticipantRemovedFromThread, AcsChatParticipantRemovedFromThreadEventData.DeserializeAcsChatParticipantRemovedFromThreadEventData },
+            { SystemEventNames.AcsChatParticipantRemovedFromThreadWithUser, AcsChatParticipantRemovedFromThreadWithUserEventData.DeserializeAcsChatParticipantRemovedFromThreadWithUserEventData },
+            { SystemEventNames.AcsChatMessageDeleted, AcsChatMessageDeletedEventData.DeserializeAcsChatMessageDeletedEventData },
+            { SystemEventNames.AcsChatMessageDeletedInThread, AcsChatMessageDeletedInThreadEventData.DeserializeAcsChatMessageDeletedInThreadEventData },
+            { SystemEventNames.AcsChatMessageEdited, AcsChatMessageEditedEventData.DeserializeAcsChatMessageEditedEventData },
+            { SystemEventNames.AcsChatMessageEditedInThread, AcsChatMessageEditedInThreadEventData.DeserializeAcsChatMessageEditedInThreadEventData },
+            { SystemEventNames.AcsChatMessageReceived, AcsChatMessageReceivedEventData.DeserializeAcsChatMessageReceivedEventData },
+            { SystemEventNames.AcsChatMessageReceivedInThread, AcsChatMessageReceivedInThreadEventData.DeserializeAcsChatMessageReceivedInThreadEventData },
+            { SystemEventNames.AcsChatThreadCreated, AcsChatThreadCreatedEventData.DeserializeAcsChatThreadCreatedEventData },
+            { SystemEventNames.AcsChatThreadCreatedWithUser,  AcsChatThreadCreatedWithUserEventData.DeserializeAcsChatThreadCreatedWithUserEventData },
+            { SystemEventNames.AcsChatThreadPropertiesUpdated, AcsChatThreadPropertiesUpdatedEventData.DeserializeAcsChatThreadPropertiesUpdatedEventData },
+            { SystemEventNames.AcsChatThreadPropertiesUpdatedPerUser, AcsChatThreadPropertiesUpdatedPerUserEventData.DeserializeAcsChatThreadPropertiesUpdatedPerUserEventData },
+            { SystemEventNames.AcsChatThreadDeleted, AcsChatThreadDeletedEventData.DeserializeAcsChatThreadDeletedEventData },
+            { SystemEventNames.AcsChatThreadWithUserDeleted, AcsChatThreadWithUserDeletedEventData.DeserializeAcsChatThreadWithUserDeletedEventData },
+            { SystemEventNames.AcsSmsDeliveryReportReceived, AcsSmsDeliveryReportReceivedEventData.DeserializeAcsSmsDeliveryReportReceivedEventData },
+            { SystemEventNames.ACSSMSReceived, AcsSmsReceivedEventData.DeserializeAcsSmsReceivedEventData },
 
             // ContainerRegistry events
-            { SystemEventMappings.ContainerRegistryImagePushedEventName, ContainerRegistryImagePushedEventData.DeserializeContainerRegistryImagePushedEventData },
-            { SystemEventMappings.ContainerRegistryImageDeletedEventName, ContainerRegistryImageDeletedEventData.DeserializeContainerRegistryImageDeletedEventData },
-            { SystemEventMappings.ContainerRegistryChartDeletedEventName, ContainerRegistryChartDeletedEventData.DeserializeContainerRegistryChartDeletedEventData },
-            { SystemEventMappings.ContainerRegistryChartPushedEventName, ContainerRegistryChartPushedEventData.DeserializeContainerRegistryChartPushedEventData },
+            { SystemEventNames.ContainerRegistryImagePushed, ContainerRegistryImagePushedEventData.DeserializeContainerRegistryImagePushedEventData },
+            { SystemEventNames.ContainerRegistryImageDeleted, ContainerRegistryImageDeletedEventData.DeserializeContainerRegistryImageDeletedEventData },
+            { SystemEventNames.ContainerRegistryChartDeleted, ContainerRegistryChartDeletedEventData.DeserializeContainerRegistryChartDeletedEventData },
+            { SystemEventNames.ContainerRegistryChartPushed, ContainerRegistryChartPushedEventData.DeserializeContainerRegistryChartPushedEventData },
 
             // IoTHub Device events
-            { SystemEventMappings.IoTHubDeviceCreatedEventName, IotHubDeviceCreatedEventData.DeserializeIotHubDeviceCreatedEventData },
-            { SystemEventMappings.IoTHubDeviceDeletedEventName, IotHubDeviceDeletedEventData.DeserializeIotHubDeviceDeletedEventData },
-            { SystemEventMappings.IoTHubDeviceConnectedEventName, IotHubDeviceConnectedEventData.DeserializeIotHubDeviceConnectedEventData },
-            { SystemEventMappings.IoTHubDeviceDisconnectedEventName, IotHubDeviceDisconnectedEventData.DeserializeIotHubDeviceDisconnectedEventData },
-            { SystemEventMappings.IotHubDeviceTelemetryEventName, IotHubDeviceTelemetryEventData.DeserializeIotHubDeviceTelemetryEventData },
+            { SystemEventNames.IoTHubDeviceCreated, IotHubDeviceCreatedEventData.DeserializeIotHubDeviceCreatedEventData },
+            { SystemEventNames.IoTHubDeviceDeleted, IotHubDeviceDeletedEventData.DeserializeIotHubDeviceDeletedEventData },
+            { SystemEventNames.IoTHubDeviceConnected, IotHubDeviceConnectedEventData.DeserializeIotHubDeviceConnectedEventData },
+            { SystemEventNames.IoTHubDeviceDisconnected, IotHubDeviceDisconnectedEventData.DeserializeIotHubDeviceDisconnectedEventData },
+            { SystemEventNames.IotHubDeviceTelemetry, IotHubDeviceTelemetryEventData.DeserializeIotHubDeviceTelemetryEventData },
 
             // EventGrid events
-            { SystemEventMappings.EventGridSubscriptionValidationEventName, SubscriptionValidationEventData.DeserializeSubscriptionValidationEventData },
-            { SystemEventMappings.EventGridSubscriptionDeletedEventName, SubscriptionDeletedEventData.DeserializeSubscriptionDeletedEventData },
+            { SystemEventNames.EventGridSubscriptionValidation, SubscriptionValidationEventData.DeserializeSubscriptionValidationEventData },
+            { SystemEventNames.EventGridSubscriptionDeleted, SubscriptionDeletedEventData.DeserializeSubscriptionDeletedEventData },
 
             // Event Hub events
-            { SystemEventMappings.EventHubCaptureFileCreatedEventName, EventHubCaptureFileCreatedEventData.DeserializeEventHubCaptureFileCreatedEventData },
+            { SystemEventNames.EventHubCaptureFileCreated, EventHubCaptureFileCreatedEventData.DeserializeEventHubCaptureFileCreatedEventData },
 
             // Key Vault events
-            { SystemEventMappings.KeyVaultCertificateNewVersionCreatedEventName, KeyVaultCertificateNewVersionCreatedEventData.DeserializeKeyVaultCertificateNewVersionCreatedEventData },
-            { SystemEventMappings.KeyVaultCertificateNearExpiryEventName, KeyVaultCertificateNearExpiryEventData.DeserializeKeyVaultCertificateNearExpiryEventData },
-            { SystemEventMappings.KeyVaultCertificateExpiredEventName, KeyVaultCertificateExpiredEventData.DeserializeKeyVaultCertificateExpiredEventData },
-            { SystemEventMappings.KeyVaultKeyNearExpiryEventName, KeyVaultKeyNearExpiryEventData.DeserializeKeyVaultKeyNearExpiryEventData },
-            { SystemEventMappings.KeyVaultKeyNewVersionCreatedEventName, KeyVaultKeyNewVersionCreatedEventData.DeserializeKeyVaultKeyNewVersionCreatedEventData },
-            { SystemEventMappings.KeyVaultKeyExpiredEventName, KeyVaultKeyExpiredEventData.DeserializeKeyVaultKeyExpiredEventData },
-            { SystemEventMappings.KeyVaultSecretNewVersionCreatedEventName, KeyVaultSecretNewVersionCreatedEventData.DeserializeKeyVaultSecretNewVersionCreatedEventData },
-            { SystemEventMappings.KeyVaultSecretNearExpiryEventName, KeyVaultSecretNearExpiryEventData.DeserializeKeyVaultSecretNearExpiryEventData },
-            { SystemEventMappings.KeyVaultSecretExpiredEventName, KeyVaultSecretExpiredEventData.DeserializeKeyVaultSecretExpiredEventData },
-            { SystemEventMappings.KeyVaultAccessPolicyChangedEventName, KeyVaultAccessPolicyChangedEventData.DeserializeKeyVaultAccessPolicyChangedEventData },
+            { SystemEventNames.KeyVaultCertificateNewVersionCreated, KeyVaultCertificateNewVersionCreatedEventData.DeserializeKeyVaultCertificateNewVersionCreatedEventData },
+            { SystemEventNames.KeyVaultCertificateNearExpiry, KeyVaultCertificateNearExpiryEventData.DeserializeKeyVaultCertificateNearExpiryEventData },
+            { SystemEventNames.KeyVaultCertificateExpired, KeyVaultCertificateExpiredEventData.DeserializeKeyVaultCertificateExpiredEventData },
+            { SystemEventNames.KeyVaultKeyNearExpiry, KeyVaultKeyNearExpiryEventData.DeserializeKeyVaultKeyNearExpiryEventData },
+            { SystemEventNames.KeyVaultKeyNewVersionCreated, KeyVaultKeyNewVersionCreatedEventData.DeserializeKeyVaultKeyNewVersionCreatedEventData },
+            { SystemEventNames.KeyVaultKeyExpired, KeyVaultKeyExpiredEventData.DeserializeKeyVaultKeyExpiredEventData },
+            { SystemEventNames.KeyVaultSecretNewVersionCreated, KeyVaultSecretNewVersionCreatedEventData.DeserializeKeyVaultSecretNewVersionCreatedEventData },
+            { SystemEventNames.KeyVaultSecretNearExpiry, KeyVaultSecretNearExpiryEventData.DeserializeKeyVaultSecretNearExpiryEventData },
+            { SystemEventNames.KeyVaultSecretExpired, KeyVaultSecretExpiredEventData.DeserializeKeyVaultSecretExpiredEventData },
+            { SystemEventNames.KeyVaultAccessPolicyChanged, KeyVaultAccessPolicyChangedEventData.DeserializeKeyVaultAccessPolicyChangedEventData },
 
             // MachineLearningServices events
-            { SystemEventMappings.MachineLearningServicesDatasetDriftDetectedEventName, MachineLearningServicesDatasetDriftDetectedEventData.DeserializeMachineLearningServicesDatasetDriftDetectedEventData },
-            { SystemEventMappings.MachineLearningServicesModelDeployedEventName, MachineLearningServicesModelDeployedEventData.DeserializeMachineLearningServicesModelDeployedEventData },
-            { SystemEventMappings.MachineLearningServicesModelRegisteredEventName, MachineLearningServicesModelRegisteredEventData.DeserializeMachineLearningServicesModelRegisteredEventData },
-            { SystemEventMappings.MachineLearningServicesRunCompletedEventName, MachineLearningServicesRunCompletedEventData.DeserializeMachineLearningServicesRunCompletedEventData },
-            { SystemEventMappings.MachineLearningServicesRunStatusChangedEventName, MachineLearningServicesRunStatusChangedEventData.DeserializeMachineLearningServicesRunStatusChangedEventData },
+            { SystemEventNames.MachineLearningServicesDatasetDriftDetected, MachineLearningServicesDatasetDriftDetectedEventData.DeserializeMachineLearningServicesDatasetDriftDetectedEventData },
+            { SystemEventNames.MachineLearningServicesModelDeployed, MachineLearningServicesModelDeployedEventData.DeserializeMachineLearningServicesModelDeployedEventData },
+            { SystemEventNames.MachineLearningServicesModelRegistered, MachineLearningServicesModelRegisteredEventData.DeserializeMachineLearningServicesModelRegisteredEventData },
+            { SystemEventNames.MachineLearningServicesRunCompleted, MachineLearningServicesRunCompletedEventData.DeserializeMachineLearningServicesRunCompletedEventData },
+            { SystemEventNames.MachineLearningServicesRunStatusChanged, MachineLearningServicesRunStatusChangedEventData.DeserializeMachineLearningServicesRunStatusChangedEventData },
 
             // Maps events
-            { SystemEventMappings.MapsGeofenceEnteredEventName, MapsGeofenceEnteredEventData.DeserializeMapsGeofenceEnteredEventData },
-            { SystemEventMappings.MapsGeofenceExitedEventName, MapsGeofenceExitedEventData.DeserializeMapsGeofenceExitedEventData },
-            { SystemEventMappings.MapsGeofenceResultEventName, MapsGeofenceResultEventData.DeserializeMapsGeofenceResultEventData },
+            { SystemEventNames.MapsGeofenceEntered, MapsGeofenceEnteredEventData.DeserializeMapsGeofenceEnteredEventData },
+            { SystemEventNames.MapsGeofenceExited, MapsGeofenceExitedEventData.DeserializeMapsGeofenceExitedEventData },
+            { SystemEventNames.MapsGeofenceResult, MapsGeofenceResultEventData.DeserializeMapsGeofenceResultEventData },
 
             // Media Services events
-            { SystemEventMappings.MediaJobStateChangeEventName, MediaJobStateChangeEventData.DeserializeMediaJobStateChangeEventData },
-            { SystemEventMappings.MediaJobOutputStateChangeEventName, MediaJobOutputStateChangeEventData.DeserializeMediaJobOutputStateChangeEventData },
-            { SystemEventMappings.MediaJobScheduledEventName, MediaJobScheduledEventData.DeserializeMediaJobScheduledEventData },
-            { SystemEventMappings.MediaJobProcessingEventName, MediaJobProcessingEventData.DeserializeMediaJobProcessingEventData },
-            { SystemEventMappings.MediaJobCancelingEventName, MediaJobCancelingEventData.DeserializeMediaJobCancelingEventData },
-            { SystemEventMappings.MediaJobFinishedEventName, MediaJobFinishedEventData.DeserializeMediaJobFinishedEventData },
-            { SystemEventMappings.MediaJobCanceledEventName, MediaJobCanceledEventData.DeserializeMediaJobCanceledEventData },
-            { SystemEventMappings.MediaJobErroredEventName, MediaJobErroredEventData.DeserializeMediaJobErroredEventData },
-            { SystemEventMappings.MediaJobOutputCanceledEventName, MediaJobOutputCanceledEventData.DeserializeMediaJobOutputCanceledEventData },
-            { SystemEventMappings.MediaJobOutputCancelingEventName, MediaJobOutputCancelingEventData.DeserializeMediaJobOutputCancelingEventData },
-            { SystemEventMappings.MediaJobOutputErroredEventName, MediaJobOutputErroredEventData.DeserializeMediaJobOutputErroredEventData },
-            { SystemEventMappings.MediaJobOutputFinishedEventName, MediaJobOutputFinishedEventData.DeserializeMediaJobOutputFinishedEventData },
-            { SystemEventMappings.MediaJobOutputProcessingEventName, MediaJobOutputProcessingEventData.DeserializeMediaJobOutputProcessingEventData },
-            { SystemEventMappings.MediaJobOutputScheduledEventName, MediaJobOutputScheduledEventData.DeserializeMediaJobOutputScheduledEventData },
-            { SystemEventMappings.MediaJobOutputProgressEventName, MediaJobOutputProgressEventData.DeserializeMediaJobOutputProgressEventData },
-            { SystemEventMappings.MediaLiveEventEncoderConnectedEventName, MediaLiveEventEncoderConnectedEventData.DeserializeMediaLiveEventEncoderConnectedEventData },
-            { SystemEventMappings.MediaLiveEventConnectionRejectedEventName, MediaLiveEventConnectionRejectedEventData.DeserializeMediaLiveEventConnectionRejectedEventData },
-            { SystemEventMappings.MediaLiveEventEncoderDisconnectedEventName, MediaLiveEventEncoderDisconnectedEventData.DeserializeMediaLiveEventEncoderDisconnectedEventData },
-            { SystemEventMappings.MediaLiveEventIncomingStreamReceivedEventName, MediaLiveEventIncomingStreamReceivedEventData.DeserializeMediaLiveEventIncomingStreamReceivedEventData },
-            { SystemEventMappings.MediaLiveEventIncomingStreamsOutOfSyncEventName, MediaLiveEventIncomingStreamsOutOfSyncEventData.DeserializeMediaLiveEventIncomingStreamsOutOfSyncEventData },
-            { SystemEventMappings.MediaLiveEventIncomingVideoStreamsOutOfSyncEventName, MediaLiveEventIncomingVideoStreamsOutOfSyncEventData.DeserializeMediaLiveEventIncomingVideoStreamsOutOfSyncEventData },
-            { SystemEventMappings.MediaLiveEventIncomingDataChunkDroppedEventName, MediaLiveEventIncomingDataChunkDroppedEventData.DeserializeMediaLiveEventIncomingDataChunkDroppedEventData },
-            { SystemEventMappings.MediaLiveEventIngestHeartbeatEventName, MediaLiveEventIngestHeartbeatEventData.DeserializeMediaLiveEventIngestHeartbeatEventData },
-            { SystemEventMappings.MediaLiveEventTrackDiscontinuityDetectedEventName, MediaLiveEventTrackDiscontinuityDetectedEventData.DeserializeMediaLiveEventTrackDiscontinuityDetectedEventData },
+            { SystemEventNames.MediaJobStateChange, MediaJobStateChangeEventData.DeserializeMediaJobStateChangeEventData },
+            { SystemEventNames.MediaJobOutputStateChange, MediaJobOutputStateChangeEventData.DeserializeMediaJobOutputStateChangeEventData },
+            { SystemEventNames.MediaJobScheduled, MediaJobScheduledEventData.DeserializeMediaJobScheduledEventData },
+            { SystemEventNames.MediaJobProcessing, MediaJobProcessingEventData.DeserializeMediaJobProcessingEventData },
+            { SystemEventNames.MediaJobCanceling, MediaJobCancelingEventData.DeserializeMediaJobCancelingEventData },
+            { SystemEventNames.MediaJobFinished, MediaJobFinishedEventData.DeserializeMediaJobFinishedEventData },
+            { SystemEventNames.MediaJobCanceled, MediaJobCanceledEventData.DeserializeMediaJobCanceledEventData },
+            { SystemEventNames.MediaJobErrored, MediaJobErroredEventData.DeserializeMediaJobErroredEventData },
+            { SystemEventNames.MediaJobOutputCanceled, MediaJobOutputCanceledEventData.DeserializeMediaJobOutputCanceledEventData },
+            { SystemEventNames.MediaJobOutputCanceling, MediaJobOutputCancelingEventData.DeserializeMediaJobOutputCancelingEventData },
+            { SystemEventNames.MediaJobOutputErrored, MediaJobOutputErroredEventData.DeserializeMediaJobOutputErroredEventData },
+            { SystemEventNames.MediaJobOutputFinished, MediaJobOutputFinishedEventData.DeserializeMediaJobOutputFinishedEventData },
+            { SystemEventNames.MediaJobOutputProcessing, MediaJobOutputProcessingEventData.DeserializeMediaJobOutputProcessingEventData },
+            { SystemEventNames.MediaJobOutputScheduled, MediaJobOutputScheduledEventData.DeserializeMediaJobOutputScheduledEventData },
+            { SystemEventNames.MediaJobOutputProgress, MediaJobOutputProgressEventData.DeserializeMediaJobOutputProgressEventData },
+            { SystemEventNames.MediaLiveEventEncoderConnected, MediaLiveEventEncoderConnectedEventData.DeserializeMediaLiveEventEncoderConnectedEventData },
+            { SystemEventNames.MediaLiveEventConnectionRejected, MediaLiveEventConnectionRejectedEventData.DeserializeMediaLiveEventConnectionRejectedEventData },
+            { SystemEventNames.MediaLiveEventEncoderDisconnected, MediaLiveEventEncoderDisconnectedEventData.DeserializeMediaLiveEventEncoderDisconnectedEventData },
+            { SystemEventNames.MediaLiveEventIncomingStreamReceived, MediaLiveEventIncomingStreamReceivedEventData.DeserializeMediaLiveEventIncomingStreamReceivedEventData },
+            { SystemEventNames.MediaLiveEventIncomingStreamsOutOfSync, MediaLiveEventIncomingStreamsOutOfSyncEventData.DeserializeMediaLiveEventIncomingStreamsOutOfSyncEventData },
+            { SystemEventNames.MediaLiveEventIncomingVideoStreamsOutOfSync, MediaLiveEventIncomingVideoStreamsOutOfSyncEventData.DeserializeMediaLiveEventIncomingVideoStreamsOutOfSyncEventData },
+            { SystemEventNames.MediaLiveEventIncomingDataChunkDropped, MediaLiveEventIncomingDataChunkDroppedEventData.DeserializeMediaLiveEventIncomingDataChunkDroppedEventData },
+            { SystemEventNames.MediaLiveEventIngestHeartbeat, MediaLiveEventIngestHeartbeatEventData.DeserializeMediaLiveEventIngestHeartbeatEventData },
+            { SystemEventNames.MediaLiveEventTrackDiscontinuityDetected, MediaLiveEventTrackDiscontinuityDetectedEventData.DeserializeMediaLiveEventTrackDiscontinuityDetectedEventData },
 
             // Resource Manager (Azure Subscription/Resource Group) events
-            { SystemEventMappings.ResourceWriteSuccessEventName, ResourceWriteSuccessData.DeserializeResourceWriteSuccessData },
-            { SystemEventMappings.ResourceWriteFailureEventName, ResourceWriteFailureData.DeserializeResourceWriteFailureData },
-            { SystemEventMappings.ResourceWriteCancelEventName, ResourceWriteCancelData.DeserializeResourceWriteCancelData },
-            { SystemEventMappings.ResourceDeleteSuccessEventName, ResourceDeleteSuccessData.DeserializeResourceDeleteSuccessData },
-            { SystemEventMappings.ResourceDeleteFailureEventName, ResourceDeleteFailureData.DeserializeResourceDeleteFailureData },
-            { SystemEventMappings.ResourceDeleteCancelEventName, ResourceDeleteCancelData.DeserializeResourceDeleteCancelData },
-            { SystemEventMappings.ResourceActionSuccessEventName, ResourceActionSuccessData.DeserializeResourceActionSuccessData },
-            { SystemEventMappings.ResourceActionFailureEventName, ResourceActionFailureData.DeserializeResourceActionFailureData },
-            { SystemEventMappings.ResourceActionCancelEventName, ResourceActionCancelData.DeserializeResourceActionCancelData },
+            { SystemEventNames.ResourceWriteSuccess, ResourceWriteSuccessEventData.DeserializeResourceWriteSuccessEventData },
+            { SystemEventNames.ResourceWriteFailure, ResourceWriteFailureEventData.DeserializeResourceWriteFailureEventData },
+            { SystemEventNames.ResourceWriteCancel, ResourceWriteCancelEventData.DeserializeResourceWriteCancelEventData },
+            { SystemEventNames.ResourceDeleteSuccess, ResourceDeleteSuccessEventData.DeserializeResourceDeleteSuccessEventData },
+            { SystemEventNames.ResourceDeleteFailure, ResourceDeleteFailureEventData.DeserializeResourceDeleteFailureEventData },
+            { SystemEventNames.ResourceDeleteCancel, ResourceDeleteCancelEventData.DeserializeResourceDeleteCancelEventData },
+            { SystemEventNames.ResourceActionSuccess, ResourceActionSuccessEventData.DeserializeResourceActionSuccessEventData },
+            { SystemEventNames.ResourceActionFailure, ResourceActionFailureEventData.DeserializeResourceActionFailureEventData },
+            { SystemEventNames.ResourceActionCancel, ResourceActionCancelEventData.DeserializeResourceActionCancelEventData },
+
+            // Redis
+            { SystemEventNames.RedisExportRDBCompleted, RedisExportRDBCompletedEventData.DeserializeRedisExportRDBCompletedEventData },
+            { SystemEventNames.RedisImportRDBCompleted, RedisImportRDBCompletedEventData.DeserializeRedisImportRDBCompletedEventData },
+            { SystemEventNames.RedisPatchingCompleted, RedisPatchingCompletedEventData.DeserializeRedisPatchingCompletedEventData },
+            { SystemEventNames.RedisScalingCompleted, RedisScalingCompletedEventData.DeserializeRedisScalingCompletedEventData },
 
             // ServiceBus events
-            { SystemEventMappings.ServiceBusActiveMessagesAvailableWithNoListenersEventName, ServiceBusActiveMessagesAvailableWithNoListenersEventData.DeserializeServiceBusActiveMessagesAvailableWithNoListenersEventData },
-            { SystemEventMappings.ServiceBusDeadletterMessagesAvailableWithNoListenerEventName, ServiceBusDeadletterMessagesAvailableWithNoListenersEventData.DeserializeServiceBusDeadletterMessagesAvailableWithNoListenersEventData },
+            { SystemEventNames.ServiceBusActiveMessagesAvailableWithNoListeners, ServiceBusActiveMessagesAvailableWithNoListenersEventData.DeserializeServiceBusActiveMessagesAvailableWithNoListenersEventData },
+            { SystemEventNames.ServiceBusDeadletterMessagesAvailableWithNoListener, ServiceBusDeadletterMessagesAvailableWithNoListenersEventData.DeserializeServiceBusDeadletterMessagesAvailableWithNoListenersEventData },
+            { SystemEventNames.ServiceBusActiveMessagesAvailablePeriodicNotifications, ServiceBusActiveMessagesAvailablePeriodicNotificationsEventData.DeserializeServiceBusActiveMessagesAvailablePeriodicNotificationsEventData },
+            { SystemEventNames.ServiceBusDeadletterMessagesAvailablePeriodicNotifications, ServiceBusDeadletterMessagesAvailablePeriodicNotificationsEventData.DeserializeServiceBusDeadletterMessagesAvailablePeriodicNotificationsEventData },
+
+            // SignalR
+            { SystemEventNames.SignalRServiceClientConnectionConnected, SignalRServiceClientConnectionConnectedEventData.DeserializeSignalRServiceClientConnectionConnectedEventData },
+            { SystemEventNames.SignalRServiceClientConnectionDisconnected, SignalRServiceClientConnectionDisconnectedEventData.DeserializeSignalRServiceClientConnectionDisconnectedEventData },
 
             // Storage events
-            { SystemEventMappings.StorageBlobCreatedEventName, StorageBlobCreatedEventData.DeserializeStorageBlobCreatedEventData },
-            { SystemEventMappings.StorageBlobDeletedEventName, StorageBlobDeletedEventData.DeserializeStorageBlobDeletedEventData },
-            { SystemEventMappings.StorageBlobRenamedEventName, StorageBlobRenamedEventData.DeserializeStorageBlobRenamedEventData },
-            { SystemEventMappings.StorageDirectoryCreatedEventName, StorageDirectoryCreatedEventData.DeserializeStorageDirectoryCreatedEventData },
-            { SystemEventMappings.StorageDirectoryDeletedEventName, StorageDirectoryDeletedEventData.DeserializeStorageDirectoryDeletedEventData },
-            { SystemEventMappings.StorageDirectoryRenamedEventName, StorageDirectoryRenamedEventData.DeserializeStorageDirectoryRenamedEventData },
-            { SystemEventMappings.StorageLifecyclePolicyCompletedEventName, StorageLifecyclePolicyCompletedEventData.DeserializeStorageLifecyclePolicyCompletedEventData },
+            { SystemEventNames.StorageBlobCreated, StorageBlobCreatedEventData.DeserializeStorageBlobCreatedEventData },
+            { SystemEventNames.StorageBlobDeleted, StorageBlobDeletedEventData.DeserializeStorageBlobDeletedEventData },
+            { SystemEventNames.StorageBlobRenamed, StorageBlobRenamedEventData.DeserializeStorageBlobRenamedEventData },
+            { SystemEventNames.StorageDirectoryCreated, StorageDirectoryCreatedEventData.DeserializeStorageDirectoryCreatedEventData },
+            { SystemEventNames.StorageDirectoryDeleted, StorageDirectoryDeletedEventData.DeserializeStorageDirectoryDeletedEventData },
+            { SystemEventNames.StorageDirectoryRenamed, StorageDirectoryRenamedEventData.DeserializeStorageDirectoryRenamedEventData },
+            { SystemEventNames.StorageLifecyclePolicyCompleted, StorageLifecyclePolicyCompletedEventData.DeserializeStorageLifecyclePolicyCompletedEventData },
 
             // App Service
-            { SystemEventMappings.WebAppUpdatedEventName, WebAppUpdatedEventData.DeserializeWebAppUpdatedEventData },
-            { SystemEventMappings.WebBackupOperationStartedEventName, WebBackupOperationStartedEventData.DeserializeWebBackupOperationStartedEventData },
-            { SystemEventMappings.WebBackupOperationCompletedEventName, WebBackupOperationCompletedEventData.DeserializeWebBackupOperationCompletedEventData },
-            { SystemEventMappings.WebBackupOperationFailedEventName, WebBackupOperationFailedEventData.DeserializeWebBackupOperationFailedEventData },
-            { SystemEventMappings.WebRestoreOperationStartedEventName, WebRestoreOperationStartedEventData.DeserializeWebRestoreOperationStartedEventData },
-            { SystemEventMappings.WebRestoreOperationCompletedEventName, WebRestoreOperationCompletedEventData.DeserializeWebRestoreOperationCompletedEventData },
-            { SystemEventMappings.WebRestoreOperationFailedEventName, WebRestoreOperationFailedEventData.DeserializeWebRestoreOperationFailedEventData },
-            { SystemEventMappings.WebSlotSwapStartedEventName, WebSlotSwapStartedEventData.DeserializeWebSlotSwapStartedEventData },
-            { SystemEventMappings.WebSlotSwapCompletedEventName, WebSlotSwapCompletedEventData.DeserializeWebSlotSwapCompletedEventData },
-            { SystemEventMappings.WebSlotSwapFailedEventName, WebSlotSwapFailedEventData.DeserializeWebSlotSwapFailedEventData },
-            { SystemEventMappings.WebSlotSwapWithPreviewStartedEventName, WebSlotSwapWithPreviewStartedEventData.DeserializeWebSlotSwapWithPreviewStartedEventData },
-            { SystemEventMappings.WebSlotSwapWithPreviewCancelledEventName, WebSlotSwapWithPreviewCancelledEventData.DeserializeWebSlotSwapWithPreviewCancelledEventData },
-            { SystemEventMappings.WebAppServicePlanUpdatedEventName, WebAppServicePlanUpdatedEventData.DeserializeWebAppServicePlanUpdatedEventData }
+            { SystemEventNames.WebAppUpdated, WebAppUpdatedEventData.DeserializeWebAppUpdatedEventData },
+            { SystemEventNames.WebBackupOperationStarted, WebBackupOperationStartedEventData.DeserializeWebBackupOperationStartedEventData },
+            { SystemEventNames.WebBackupOperationCompleted, WebBackupOperationCompletedEventData.DeserializeWebBackupOperationCompletedEventData },
+            { SystemEventNames.WebBackupOperationFailed, WebBackupOperationFailedEventData.DeserializeWebBackupOperationFailedEventData },
+            { SystemEventNames.WebRestoreOperationStarted, WebRestoreOperationStartedEventData.DeserializeWebRestoreOperationStartedEventData },
+            { SystemEventNames.WebRestoreOperationCompleted, WebRestoreOperationCompletedEventData.DeserializeWebRestoreOperationCompletedEventData },
+            { SystemEventNames.WebRestoreOperationFailed, WebRestoreOperationFailedEventData.DeserializeWebRestoreOperationFailedEventData },
+            { SystemEventNames.WebSlotSwapStarted, WebSlotSwapStartedEventData.DeserializeWebSlotSwapStartedEventData },
+            { SystemEventNames.WebSlotSwapCompleted, WebSlotSwapCompletedEventData.DeserializeWebSlotSwapCompletedEventData },
+            { SystemEventNames.WebSlotSwapFailed, WebSlotSwapFailedEventData.DeserializeWebSlotSwapFailedEventData },
+            { SystemEventNames.WebSlotSwapWithPreviewStarted, WebSlotSwapWithPreviewStartedEventData.DeserializeWebSlotSwapWithPreviewStartedEventData },
+            { SystemEventNames.WebSlotSwapWithPreviewCancelled, WebSlotSwapWithPreviewCancelledEventData.DeserializeWebSlotSwapWithPreviewCancelledEventData },
+            { SystemEventNames.WebAppServicePlanUpdated, WebAppServicePlanUpdatedEventData.DeserializeWebAppServicePlanUpdatedEventData }
         };
     }
 }

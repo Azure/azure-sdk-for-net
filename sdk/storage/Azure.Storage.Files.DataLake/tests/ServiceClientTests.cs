@@ -291,6 +291,28 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task GetFileSystemsAsync_Deleted()
+        {
+            // Arrange
+            DataLakeServiceClient service = GetServiceClient_SharedKey();
+            string fileSystemName = GetNewFileSystemName();
+            DataLakeFileSystemClient fileSystemClient = InstrumentClient(service.GetFileSystemClient(fileSystemName));
+            await fileSystemClient.CreateAsync();
+            await fileSystemClient.DeleteAsync();
+
+            // Act
+            IList<FileSystemItem> fileSystems = await service.GetFileSystemsAsync(states: FileSystemStates.Deleted).ToListAsync();
+            FileSystemItem fileSystemItem = fileSystems.Where(c => c.Name == fileSystemName).FirstOrDefault();
+
+            // Assert
+            Assert.IsTrue(fileSystemItem.IsDeleted);
+            Assert.IsNotNull(fileSystemItem.VersionId);
+            Assert.IsNotNull(fileSystemItem.Properties.DeletedOn);
+            Assert.IsNotNull(fileSystemItem.Properties.RemainingRetentionDays);
+        }
+
+        [Test]
         [AsyncOnly]
         public async Task GetFileSystemsAsync_Error()
         {
@@ -336,8 +358,179 @@ namespace Azure.Storage.Files.DataLake.Tests
                 async () => await fileSystem.GetPropertiesAsync());
         }
 
-        #region GenerateSasTests
         [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task UndeleteFileSystemAsync()
+        {
+            // Arrange
+            DataLakeServiceClient service = GetServiceClient_SharedKey();
+            string fileSystemName = GetNewFileSystemName();
+            DataLakeFileSystemClient fileSystem = InstrumentClient(service.GetFileSystemClient(fileSystemName));
+            await fileSystem.CreateAsync();
+            await fileSystem.DeleteAsync();
+            IList<FileSystemItem> fileSystems = await service.GetFileSystemsAsync(states: FileSystemStates.Deleted).ToListAsync();
+            FileSystemItem fileSystemItem = fileSystems.Where(c => c.Name == fileSystemName).FirstOrDefault();
+
+            // It takes some time for the FileSystem to be deleted.
+            await Delay(30000);
+
+            // Act
+            Response<DataLakeFileSystemClient> response = await service.UndeleteFileSystemAsync(
+                fileSystemItem.Name,
+                fileSystemItem.VersionId,
+                GetNewFileSystemName());
+
+            // Assert
+            await response.Value.GetPropertiesAsync();
+
+            // Cleanup
+            await response.Value.DeleteAsync();
+        }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task UndeleteFileSystemAsync_Error()
+        {
+            // Arrange
+            DataLakeServiceClient service = GetServiceClient_SharedKey();
+            string fileSytemName = GetNewFileSystemName();
+            DataLakeFileSystemClient fileSystem = InstrumentClient(service.GetFileSystemClient(fileSytemName));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                service.UndeleteFileSystemAsync(GetNewFileSystemName(), "01D60F8BB59A4652"),
+                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
+        }
+
+        //[Test]
+        //[PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/18257")]
+        //[ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_06_12)]
+        //public async Task RenameFileSystemAsync()
+        //{
+        //    // Arrange
+        //    DataLakeServiceClient service = GetServiceClient_SharedKey();
+        //    string oldFileSystemName = GetNewFileName();
+        //    string newFileSystemName = GetNewFileName();
+        //    DataLakeFileSystemClient fileSystem = InstrumentClient(service.GetFileSystemClient(oldFileSystemName));
+        //    await fileSystem.CreateAsync();
+
+        //    // Act
+        //    DataLakeFileSystemClient newFileSystem = await service.RenameFileSystemAsync(
+        //        sourceFileSystemName: oldFileSystemName,
+        //        destinationFileSystemName: newFileSystemName);
+
+        //    // Assert
+        //    await newFileSystem.GetPropertiesAsync();
+
+        //    // Cleanup
+        //    await newFileSystem.DeleteAsync();
+        //}
+
+        //[Test]
+        //[PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/18257")]
+        //[ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_06_12)]
+        //public async Task RenameBlobContainerAsync_AccountSas()
+        //{
+        //    // Arrange
+        //    DataLakeServiceClient service = GetServiceClient_SharedKey();
+        //    string oldFileSystemName = GetNewFileName();
+        //    string newFileSystemName = GetNewFileName();
+        //    DataLakeFileSystemClient fileSystem = InstrumentClient(service.GetFileSystemClient(oldFileSystemName));
+        //    await fileSystem.CreateAsync();
+        //    SasQueryParameters sasQueryParameters = GetNewAccountSas();
+        //    service = InstrumentClient(new DataLakeServiceClient(new Uri($"{service.Uri}?{sasQueryParameters}"), GetOptions()));
+
+        //    // Act
+        //    DataLakeFileSystemClient newFileSystem = await service.RenameFileSystemAsync(
+        //        destinationFileSystemName: newFileSystemName,
+        //        sourceFileSystemName: oldFileSystemName);
+
+        //    // Assert
+        //    await newFileSystem.GetPropertiesAsync();
+
+        //    // Cleanup
+        //    await newFileSystem.DeleteAsync();
+        //}
+
+        //[Test]
+        //[PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/18257")]
+        //[ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_06_12)]
+        //public async Task RenameFileSystemAsync_Error()
+        //{
+        //    // Arrange
+        //    DataLakeServiceClient service = GetServiceClient_SharedKey();
+
+        //    // Act
+        //    await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+        //        service.RenameFileSystemAsync(GetNewFileSystemName(), GetNewFileSystemName()),
+        //        e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
+        //}
+
+        //[Test]
+        //[PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/18257")]
+        //[ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_06_12)]
+        //public async Task RenameFileSystemAsync_SourceLease()
+        //{
+        //    // Arrange
+        //    DataLakeServiceClient service = GetServiceClient_SharedKey();
+        //    string oldFileSystemName = GetNewFileSystemName();
+        //    string newFileSystemName = GetNewFileSystemName();
+        //    DataLakeFileSystemClient fileSystem = InstrumentClient(service.GetFileSystemClient(oldFileSystemName));
+        //    await fileSystem.CreateAsync();
+        //    string leaseId = Recording.Random.NewGuid().ToString();
+
+        //    DataLakeLeaseClient leaseClient = InstrumentClient(fileSystem.GetDataLakeLeaseClient(leaseId));
+        //    await leaseClient.AcquireAsync(duration: TimeSpan.FromSeconds(30));
+
+        //    DataLakeRequestConditions sourceConditions = new DataLakeRequestConditions
+        //    {
+        //        LeaseId = leaseId
+        //    };
+
+        //    // Act
+        //    DataLakeFileSystemClient newFileSystem = await service.RenameFileSystemAsync(
+        //        sourceFileSystemName: oldFileSystemName,
+        //        destinationFileSystemName: newFileSystemName,
+        //        sourceConditions: sourceConditions);
+
+        //    // Assert
+        //    await newFileSystem.GetPropertiesAsync();
+
+        //    // Cleanup
+        //    await newFileSystem.DeleteAsync();
+        //}
+
+        //[Test]
+        //[ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_06_12)]
+        //public async Task RenameFileSystemAsync_SourceLeaseFailed()
+        //{
+        //    // Arrange
+        //    DataLakeServiceClient service = GetServiceClient_SharedKey();
+        //    string oldFileSystemName = GetNewFileSystemName();
+        //    string newFileSystemName = GetNewFileSystemName();
+        //    DataLakeFileSystemClient fileSystem = InstrumentClient(service.GetFileSystemClient(oldFileSystemName));
+        //    await fileSystem.CreateAsync();
+        //    string leaseId = Recording.Random.NewGuid().ToString();
+
+        //    DataLakeRequestConditions sourceConditions = new DataLakeRequestConditions
+        //    {
+        //        LeaseId = leaseId
+        //    };
+
+        //    // Act
+        //    await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+        //        service.RenameFileSystemAsync(
+        //            sourceFileSystemName: oldFileSystemName,
+        //            destinationFileSystemName: newFileSystemName,
+        //            sourceConditions: sourceConditions),
+        //        e => Assert.AreEqual("LeaseNotPresentWithContainerOperation", e.ErrorCode));
+
+        //    // Cleanup
+        //    await fileSystem.DeleteAsync();
+        //}
+
+            #region GenerateSasTests
+            [Test]
         public void CanGenerateSas_ClientConstructors()
         {
             // Arrange
@@ -400,6 +593,23 @@ namespace Azure.Storage.Files.DataLake.Tests
                 GetOptions()));
             DataLakeFileSystemClient fileSystemClient3 = serviceClient3.GetFileSystemClient(GetNewFileSystemName());
             Assert.IsFalse(fileSystemClient3.CanGenerateSasUri);
+        }
+
+        [Test]
+        public void CanGenerateAccountSas_Mockable()
+        {
+            // Act
+            var serviceClient = new Mock<DataLakeServiceClient>();
+            serviceClient.Setup(x => x.CanGenerateAccountSasUri).Returns(false);
+
+            // Assert
+            Assert.IsFalse(serviceClient.Object.CanGenerateAccountSasUri);
+
+            // Act
+            serviceClient.Setup(x => x.CanGenerateAccountSasUri).Returns(true);
+
+            // Assert
+            Assert.IsTrue(serviceClient.Object.CanGenerateAccountSasUri);
         }
 
         [Test]

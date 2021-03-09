@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    internal static class SkuNameExtensions
+    internal static partial class SkuNameExtensions
     {
         public static string ToSerialString(this SkuName value) => value switch
         {

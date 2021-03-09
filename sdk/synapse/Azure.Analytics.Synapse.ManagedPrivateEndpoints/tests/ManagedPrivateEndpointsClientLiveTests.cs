@@ -29,14 +29,14 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Tests
         private ManagedPrivateEndpointsClient CreateClient()
         {
             return InstrumentClient(new ManagedPrivateEndpointsClient(
-                new Uri(TestEnvironment.EndpointUrl),
+                TestEnvironment.EndpointUrl,
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new ManagedPrivateEndpointsClientOptions())
             ));
         }
 
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/17455")]
-        [Test]
+        [RecordedTest]
         public async Task TestManagedPrivateEndpoints()
         {
             ManagedPrivateEndpointsClient client = CreateClient();
@@ -47,7 +47,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Tests
             string fakedStorageAccountName = Recording.GenerateId("myStorageAccount", 21);
             string privateLinkResourceId = $"/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/myResourceGroup/providers/Microsoft.Storage/accounts/{fakedStorageAccountName}";
             string groupId = "blob";
-            ManagedPrivateEndpoint managedPrivateEndpoint = await client.CreateAsync(managedVnetName, managedPrivateEndpointName, new ManagedPrivateEndpoint
+            ManagedPrivateEndpoint managedPrivateEndpoint = await client.CreateAsync(managedVnetName, new ManagedPrivateEndpoint
             {
                 Properties = new ManagedPrivateEndpointProperties
                 {

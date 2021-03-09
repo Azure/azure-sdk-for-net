@@ -421,7 +421,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
-        public async Task AnalyzeSentimentOpinionInOtherSentence()
+        public async Task AnalyzeSentimentAssessmentInOtherSentence()
         {
             using var stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
                 {
@@ -445,7 +445,7 @@ namespace Azure.AI.TextAnalytics.Tests
                                     ""offset"": 0,
                                     ""length"": 30,
                                     ""text"": ""The park was clean."",
-                                    ""aspects"": [
+                                    ""targets"": [
                                         {
                                             ""sentiment"": ""positive"",
                                             ""confidenceScores"": {
@@ -457,13 +457,13 @@ namespace Azure.AI.TextAnalytics.Tests
                                             ""text"": ""park"",
                                             ""relations"": [
                                                 {
-                                                    ""relationType"": ""opinion"",
-                                                    ""ref"": ""#/documents/0/sentences/0/opinions/0""
+                                                    ""relationType"": ""assessment"",
+                                                    ""ref"": ""#/documents/0/sentences/0/assessments/0""
                                                 }
                                             ]
                                         }
                                     ],
-                                    ""opinions"": [
+                                    ""assessments"": [
                                         {
                                             ""sentiment"": ""positive"",
                                             ""confidenceScores"": {
@@ -487,7 +487,7 @@ namespace Azure.AI.TextAnalytics.Tests
                                     ""offset"": 31,
                                     ""length"": 23,
                                     ""text"": ""It was clean."",
-                                    ""aspects"": [
+                                    ""targets"": [
                                         {
                                             ""sentiment"": ""positive"",
                                             ""confidenceScores"": {
@@ -499,13 +499,13 @@ namespace Azure.AI.TextAnalytics.Tests
                                             ""text"": ""park"",
                                             ""relations"": [
                                                 {
-                                                    ""relationType"": ""opinion"",
-                                                    ""ref"": ""#/documents/0/sentences/0/opinions/0""
+                                                    ""relationType"": ""assessment"",
+                                                    ""ref"": ""#/documents/0/sentences/0/assessments/0""
                                                 }
                                             ]
                                         }
                                     ],
-                                    ""opinions"": []
+                                    ""assessments"": []
                                 }
                             ],
                             ""warnings"": []
@@ -523,15 +523,15 @@ namespace Azure.AI.TextAnalytics.Tests
 
             DocumentSentiment response = await client.AnalyzeSentimentAsync("The park was clean. It was clean.");
 
-            MinedOpinion minedOpinionS1 = response.Sentences.ElementAt(0).MinedOpinions.FirstOrDefault();
-            Assert.AreEqual("park", minedOpinionS1.Aspect.Text);
-            Assert.AreEqual(TextSentiment.Positive, minedOpinionS1.Aspect.Sentiment);
-            Assert.AreEqual("clean", minedOpinionS1.Opinions.FirstOrDefault().Text);
+            SentenceOpinion opinionS1 = response.Sentences.ElementAt(0).Opinions.FirstOrDefault();
+            Assert.AreEqual("park", opinionS1.Target.Text);
+            Assert.AreEqual(TextSentiment.Positive, opinionS1.Target.Sentiment);
+            Assert.AreEqual("clean", opinionS1.Assessments.FirstOrDefault().Text);
 
-            MinedOpinion minedOpinionS2 = response.Sentences.ElementAt(1).MinedOpinions.FirstOrDefault();
-            Assert.AreEqual("park", minedOpinionS2.Aspect.Text);
-            Assert.AreEqual(TextSentiment.Positive, minedOpinionS2.Aspect.Sentiment);
-            Assert.AreEqual("clean", minedOpinionS2.Opinions.FirstOrDefault().Text);
+            SentenceOpinion opinionS2 = response.Sentences.ElementAt(1).Opinions.FirstOrDefault();
+            Assert.AreEqual("park", opinionS2.Target.Text);
+            Assert.AreEqual(TextSentiment.Positive, opinionS2.Target.Sentiment);
+            Assert.AreEqual("clean", opinionS2.Assessments.FirstOrDefault().Text);
         }
 
         [Test]

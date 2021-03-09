@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Queues
 {
-    internal class QueueGetPropertiesHeaders
+    internal partial class QueueGetPropertiesHeaders
     {
         private readonly Response _response;
         public QueueGetPropertiesHeaders(Response response)

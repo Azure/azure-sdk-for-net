@@ -1,6 +1,30 @@
 # Release History
 
-## 4.2.0-beta.4 (Unreleased)
+## 4.2.0-beta.5 (Unreleased)
+
+### Added
+
+- `LocalCryptographyClientOptions` has been added to configure diagnostics for `CryptographyClient` when used for local-only operations.
+
+### Removed
+
+- `LocalCryptographyClient` has been removed. Use `CryptographyClient` with a `JsonWebKey` instead.
+
+## 4.2.0-beta.4 (2021-02-10)
+
+### Added
+
+- Added `CreateEcKeyOptions` class.
+- Added `CreateEcKey` and `CreateEcKeyAsync` methods to the `KeyClient` class.
+- Added constructor to `KeyVaultKeyIdentifier` to parse a `Uri`.
+
+### Changed
+
+- The default service version is now "7.2" (still in preview).
+- Renamed `EncryptOptions` to `EncryptParameters`.
+- Renamed `DecryptOptions` to `DecryptParameters`.
+- Made `EncryptParameters.AdditionalAuthenticatedData` read-only, requiring it to be passed to the constructor.
+- Made `DecryptParameters.AdditionalAuthenticatedData` read-only, requiring it to be passed to the constructor.
 
 ### Removed
 
@@ -8,6 +32,7 @@
 - Removed `Export` and `ExportAsync` methods from `KeyClient`.
 - Removed `Exportable` property from `KeyProperties`'.
 - Removed `KeyReleasePolicy` class and associated properties.
+- Removed `KeyVaultKeyIdentifier.Parse` and `KeyVaultKeyIdentifier.TryParse` in favor of the added constructor.
 
 ## 4.2.0-beta.3 (2020-11-12)
 

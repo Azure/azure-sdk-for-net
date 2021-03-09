@@ -64,7 +64,7 @@ namespace Azure.Search.Documents
         /// Gets the <see cref="Azure.Core.Pipeline.ClientDiagnostics"/> used
         /// to provide tracing support for the client library.
         /// </summary>
-        private ClientDiagnostics ClientDiagnostics { get; }
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
         /// Gets the REST API version of the Search Service to use when making
@@ -1438,7 +1438,7 @@ namespace Azure.Search.Documents
         /// The .NET type that maps to the index schema. Instances of this type
         /// can be retrieved as documents from the index.
         /// </typeparam>
-        /// <param name="documents">The documents to upload.</param>
+        /// <param name="documents">The documents to merge.</param>
         /// <param name="options">
         /// Options that allow specifying document indexing behavior.
         /// </param>
@@ -1497,7 +1497,7 @@ namespace Azure.Search.Documents
         /// The .NET type that maps to the index schema. Instances of this type
         /// can be retrieved as documents from the index.
         /// </typeparam>
-        /// <param name="documents">The documents to upload.</param>
+        /// <param name="documents">The documents to merge.</param>
         /// <param name="options">
         /// Options that allow specifying document indexing behavior.
         /// </param>
@@ -1557,7 +1557,7 @@ namespace Azure.Search.Documents
         /// The .NET type that maps to the index schema. Instances of this type
         /// can be retrieved as documents from the index.
         /// </typeparam>
-        /// <param name="documents">The documents to upload.</param>
+        /// <param name="documents">The documents to merge or upload.</param>
         /// <param name="options">
         /// Options that allow specifying document indexing behavior.
         /// </param>
@@ -1616,7 +1616,7 @@ namespace Azure.Search.Documents
         /// The .NET type that maps to the index schema. Instances of this type
         /// can be retrieved as documents from the index.
         /// </typeparam>
-        /// <param name="documents">The documents to upload.</param>
+        /// <param name="documents">The documents to merge or upload.</param>
         /// <param name="options">
         /// Options that allow specifying document indexing behavior.
         /// </param>
@@ -1676,7 +1676,7 @@ namespace Azure.Search.Documents
         /// The .NET type that maps to the index schema. Instances of this type
         /// can be retrieved as documents from the index.
         /// </typeparam>
-        /// <param name="documents">The documents to upload.</param>
+        /// <param name="documents">The documents to delete.</param>
         /// <param name="options">
         /// Options that allow specifying document indexing behavior.
         /// </param>
@@ -1735,7 +1735,7 @@ namespace Azure.Search.Documents
         /// The .NET type that maps to the index schema. Instances of this type
         /// can be retrieved as documents from the index.
         /// </typeparam>
-        /// <param name="documents">The documents to upload.</param>
+        /// <param name="documents">The documents to delete.</param>
         /// <param name="options">
         /// Options that allow specifying document indexing behavior.
         /// </param>
@@ -1899,26 +1899,5 @@ namespace Azure.Search.Documents
             }
         }
         #endregion Index Documents Conveniences
-
-        /// <summary>
-        /// Creates a new <see cref="SearchIndexingBufferedSender{T}"/> that
-        /// can be used to index search documents with intelligent batching,
-        /// automatic flushing, and retries for failed indexing actions.
-        /// </summary>
-        /// <typeparam name="T">
-        /// The .NET type that maps to the index schema.  Instances of this
-        /// type can be retrieved as documents from the index. You can use
-        /// <see cref="SearchDocument"/> for dynamic documents.
-        /// </typeparam>
-        /// <param name="options">
-        /// The <see cref="SearchIndexingBufferedSenderOptions{T}"/> to
-        /// customize the sender's behavior.
-        /// </param>
-        /// <returns>
-        /// A new <see cref="SearchIndexingBufferedSender{T}"/>.
-        /// </returns>
-        public virtual SearchIndexingBufferedSender<T> CreateIndexingBufferedSender<T>(
-            SearchIndexingBufferedSenderOptions<T> options = null) =>
-            new SearchIndexingBufferedSender<T>(this, options);
     }
 }

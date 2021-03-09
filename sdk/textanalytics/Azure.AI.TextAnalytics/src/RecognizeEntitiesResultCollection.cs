@@ -3,6 +3,8 @@
 
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Linq;
 
 namespace Azure.AI.TextAnalytics
 {
@@ -10,6 +12,7 @@ namespace Azure.AI.TextAnalytics
     /// Collection of <see cref="RecognizeEntitiesResult"/> objects corresponding
     /// to a batch of documents, and information about the batch operation.
     /// </summary>
+    [DebuggerTypeProxy(typeof(RecognizeEntitiesResultCollectionDebugView))]
     public class RecognizeEntitiesResultCollection : ReadOnlyCollection<RecognizeEntitiesResult>
     {
         internal RecognizeEntitiesResultCollection(IList<RecognizeEntitiesResult> list, TextDocumentBatchStatistics statistics, string modelVersion) : base(list)
@@ -30,5 +33,43 @@ namespace Azure.AI.TextAnalytics
         /// on this batch of documents.
         /// </summary>
         public string ModelVersion { get; }
+
+        /// <summary>
+        /// Debugger Proxy class for <see cref="RecognizeEntitiesResultCollection"/>.
+        /// </summary>
+        internal class RecognizeEntitiesResultCollectionDebugView
+        {
+            private RecognizeEntitiesResultCollection BaseCollection { get; }
+
+            public RecognizeEntitiesResultCollectionDebugView(RecognizeEntitiesResultCollection collection)
+            {
+                BaseCollection = collection;
+            }
+
+            [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
+            public List<RecognizeEntitiesResult> Items
+            {
+                get
+                {
+                    return BaseCollection.ToList();
+                }
+            }
+
+            public TextDocumentBatchStatistics Statistics
+            {
+                get
+                {
+                    return BaseCollection.Statistics;
+                }
+            }
+
+            public string ModelVersion
+            {
+                get
+                {
+                    return BaseCollection.ModelVersion;
+                }
+            }
+        }
     }
 }

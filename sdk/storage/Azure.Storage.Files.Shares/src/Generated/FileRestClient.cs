@@ -96,7 +96,7 @@ namespace Azure.Storage.Files.Shares
             }
             if (fileHttpHeaders?.FileContentMD5 != null)
             {
-                request.Headers.Add("x-ms-content-md5", fileHttpHeaders.FileContentMD5);
+                request.Headers.Add("x-ms-content-md5", fileHttpHeaders.FileContentMD5, "D");
             }
             if (fileHttpHeaders?.FileContentDisposition != null)
             {
@@ -209,6 +209,7 @@ namespace Azure.Storage.Files.Shares
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
+            message.BufferResponse = false;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
@@ -446,7 +447,7 @@ namespace Azure.Storage.Files.Shares
             }
             if (fileHttpHeaders?.FileContentMD5 != null)
             {
-                request.Headers.Add("x-ms-content-md5", fileHttpHeaders.FileContentMD5);
+                request.Headers.Add("x-ms-content-md5", fileHttpHeaders.FileContentMD5, "D");
             }
             if (fileHttpHeaders?.FileContentDisposition != null)
             {
@@ -889,7 +890,7 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
-        internal HttpMessage CreateUploadRangeRequest(string range, ShareFileRangeWriteType fileRangeWrite, long contentLength, Stream optionalbody, int? timeout, byte[] contentMD5, ShareFileRequestConditions leaseAccessConditions)
+        internal HttpMessage CreateUploadRangeRequest(string range, ShareFileRangeWriteType fileRangeWrite, long contentLength, int? timeout, byte[] contentMD5, Stream optionalbody, ShareFileRequestConditions leaseAccessConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -912,13 +913,16 @@ namespace Azure.Storage.Files.Shares
                 request.Headers.Add("x-ms-lease-id", leaseAccessConditions.LeaseId);
             }
             request.Headers.Add("Accept", "application/xml");
-            request.Headers.Add("Content-Length", contentLength);
-            if (contentMD5 != null)
+            if (optionalbody != null)
             {
-                request.Headers.Add("Content-MD5", contentMD5);
+                request.Headers.Add("Content-Length", contentLength);
+                if (contentMD5 != null)
+                {
+                    request.Headers.Add("Content-MD5", contentMD5, "D");
+                }
+                request.Headers.Add("Content-Type", "application/octet-stream");
+                request.Content = RequestContent.Create(optionalbody);
             }
-            request.Headers.Add("Content-Type", "application/octet-stream");
-            request.Content = RequestContent.Create(optionalbody);
             return message;
         }
 
@@ -926,24 +930,20 @@ namespace Azure.Storage.Files.Shares
         /// <param name="range"> Specifies the range of bytes to be written. Both the start and end of the range must be specified. For an update operation, the range can be up to 4 MB in size. For a clear operation, the range can be up to the value of the file&apos;s full size. The File service accepts only a single byte range for the Range and &apos;x-ms-range&apos; headers, and the byte range must be specified in the following format: bytes=startByte-endByte. </param>
         /// <param name="fileRangeWrite"> Specify one of the following options: - Update: Writes the bytes specified by the request body into the specified range. The Range and Content-Length headers must match to perform the update. - Clear: Clears the specified range and releases the space used in storage for that range. To clear a range, set the Content-Length header to zero, and set the Range header to a value that indicates the range to clear, up to maximum file size. </param>
         /// <param name="contentLength"> Specifies the number of bytes being transmitted in the request body. When the x-ms-write header is set to clear, the value of this header must be set to zero. </param>
-        /// <param name="optionalbody"> Initial data. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="contentMD5"> An MD5 hash of the content. This hash is used to verify the integrity of the data during transport. When the Content-MD5 header is specified, the File service compares the hash of the content that has arrived with the header value that was sent. If the two hashes do not match, the operation will fail with error code 400 (Bad Request). </param>
+        /// <param name="optionalbody"> Initial data. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="range"/> or <paramref name="optionalbody"/> is null. </exception>
-        public async Task<ResponseWithHeaders<FileUploadRangeHeaders>> UploadRangeAsync(string range, ShareFileRangeWriteType fileRangeWrite, long contentLength, Stream optionalbody, int? timeout = null, byte[] contentMD5 = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="range"/> is null. </exception>
+        public async Task<ResponseWithHeaders<FileUploadRangeHeaders>> UploadRangeAsync(string range, ShareFileRangeWriteType fileRangeWrite, long contentLength, int? timeout = null, byte[] contentMD5 = null, Stream optionalbody = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
             if (range == null)
             {
                 throw new ArgumentNullException(nameof(range));
             }
-            if (optionalbody == null)
-            {
-                throw new ArgumentNullException(nameof(optionalbody));
-            }
 
-            using var message = CreateUploadRangeRequest(range, fileRangeWrite, contentLength, optionalbody, timeout, contentMD5, leaseAccessConditions);
+            using var message = CreateUploadRangeRequest(range, fileRangeWrite, contentLength, timeout, contentMD5, optionalbody, leaseAccessConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new FileUploadRangeHeaders(message.Response);
             switch (message.Response.Status)
@@ -959,24 +959,20 @@ namespace Azure.Storage.Files.Shares
         /// <param name="range"> Specifies the range of bytes to be written. Both the start and end of the range must be specified. For an update operation, the range can be up to 4 MB in size. For a clear operation, the range can be up to the value of the file&apos;s full size. The File service accepts only a single byte range for the Range and &apos;x-ms-range&apos; headers, and the byte range must be specified in the following format: bytes=startByte-endByte. </param>
         /// <param name="fileRangeWrite"> Specify one of the following options: - Update: Writes the bytes specified by the request body into the specified range. The Range and Content-Length headers must match to perform the update. - Clear: Clears the specified range and releases the space used in storage for that range. To clear a range, set the Content-Length header to zero, and set the Range header to a value that indicates the range to clear, up to maximum file size. </param>
         /// <param name="contentLength"> Specifies the number of bytes being transmitted in the request body. When the x-ms-write header is set to clear, the value of this header must be set to zero. </param>
-        /// <param name="optionalbody"> Initial data. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="contentMD5"> An MD5 hash of the content. This hash is used to verify the integrity of the data during transport. When the Content-MD5 header is specified, the File service compares the hash of the content that has arrived with the header value that was sent. If the two hashes do not match, the operation will fail with error code 400 (Bad Request). </param>
+        /// <param name="optionalbody"> Initial data. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="range"/> or <paramref name="optionalbody"/> is null. </exception>
-        public ResponseWithHeaders<FileUploadRangeHeaders> UploadRange(string range, ShareFileRangeWriteType fileRangeWrite, long contentLength, Stream optionalbody, int? timeout = null, byte[] contentMD5 = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="range"/> is null. </exception>
+        public ResponseWithHeaders<FileUploadRangeHeaders> UploadRange(string range, ShareFileRangeWriteType fileRangeWrite, long contentLength, int? timeout = null, byte[] contentMD5 = null, Stream optionalbody = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
             if (range == null)
             {
                 throw new ArgumentNullException(nameof(range));
             }
-            if (optionalbody == null)
-            {
-                throw new ArgumentNullException(nameof(optionalbody));
-            }
 
-            using var message = CreateUploadRangeRequest(range, fileRangeWrite, contentLength, optionalbody, timeout, contentMD5, leaseAccessConditions);
+            using var message = CreateUploadRangeRequest(range, fileRangeWrite, contentLength, timeout, contentMD5, optionalbody, leaseAccessConditions);
             _pipeline.Send(message, cancellationToken);
             var headers = new FileUploadRangeHeaders(message.Response);
             switch (message.Response.Status)
@@ -1012,15 +1008,15 @@ namespace Azure.Storage.Files.Shares
             request.Headers.Add("x-ms-write", fileRangeWriteFromUrl);
             if (sourceContentCrc64 != null)
             {
-                request.Headers.Add("x-ms-source-content-crc64", sourceContentCrc64);
+                request.Headers.Add("x-ms-source-content-crc64", sourceContentCrc64, "D");
             }
             if (sourceModifiedAccessConditions?.SourceIfMatchCrc64 != null)
             {
-                request.Headers.Add("x-ms-source-if-match-crc64", sourceModifiedAccessConditions.SourceIfMatchCrc64);
+                request.Headers.Add("x-ms-source-if-match-crc64", sourceModifiedAccessConditions.SourceIfMatchCrc64, "D");
             }
             if (sourceModifiedAccessConditions?.SourceIfNoneMatchCrc64 != null)
             {
-                request.Headers.Add("x-ms-source-if-none-match-crc64", sourceModifiedAccessConditions.SourceIfNoneMatchCrc64);
+                request.Headers.Add("x-ms-source-if-none-match-crc64", sourceModifiedAccessConditions.SourceIfNoneMatchCrc64, "D");
             }
             request.Headers.Add("x-ms-version", version);
             if (leaseAccessConditions?.LeaseId != null)

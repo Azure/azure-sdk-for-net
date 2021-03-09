@@ -14,34 +14,11 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// </summary>
     public class DataFeed
     {
-        private IList<string> _administrators;
-
-        private IList<string> _viewers;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="DataFeed"/> class.
         /// </summary>
-        /// <param name="dataFeedName">A custom name for the <see cref="DataFeed"/>.</param>
-        /// <param name="dataSource">The source from which data is consumed.</param>
-        /// <param name="dataFeedGranularity">The frequency with which ingestion from the data source occurs.</param>
-        /// <param name="dataFeedSchema">Defines how this <see cref="DataFeed"/> structures the data ingested from the data source in terms of metrics and dimensions.</param>
-        /// <param name="dataFeedIngestionSettings">Configures how a <see cref="DataFeed"/> behaves during data ingestion from its data source.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="dataFeedName"/>, <paramref name="dataSource"/>, <paramref name="dataFeedGranularity"/>, <paramref name="dataFeedSchema"/>, or <paramref name="dataFeedIngestionSettings"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="dataFeedName"/> is empty.</exception>
-        public DataFeed(string dataFeedName, DataFeedSource dataSource, DataFeedGranularity dataFeedGranularity, DataFeedSchema dataFeedSchema, DataFeedIngestionSettings dataFeedIngestionSettings)
+        public DataFeed()
         {
-            Argument.AssertNotNullOrEmpty(dataFeedName, nameof(dataFeedName));
-            Argument.AssertNotNull(dataSource, nameof(dataSource));
-            Argument.AssertNotNull(dataFeedGranularity, nameof(dataFeedGranularity));
-            Argument.AssertNotNull(dataFeedSchema, nameof(dataFeedSchema));
-            Argument.AssertNotNull(dataFeedIngestionSettings, nameof(dataFeedIngestionSettings));
-
-            Name = dataFeedName;
-            DataSource = dataSource;
-            SourceType = dataSource.Type;
-            Granularity = dataFeedGranularity;
-            Schema = dataFeedSchema;
-            IngestionSettings = dataFeedIngestionSettings;
             Administrators = new ChangeTrackingList<string>();
             Viewers = new ChangeTrackingList<string>();
         }
@@ -56,7 +33,6 @@ namespace Azure.AI.MetricsAdvisor.Models
             MetricIds = dataFeedDetail.Metrics.ToDictionary(metric => metric.MetricName, metric => metric.MetricId);
             Name = dataFeedDetail.DataFeedName;
             DataSource = DataFeedSource.GetDataFeedSource(dataFeedDetail);
-            SourceType = dataFeedDetail.DataSourceType;
             Schema = new DataFeedSchema(dataFeedDetail);
             Granularity = new DataFeedGranularity(dataFeedDetail);
             IngestionSettings = new DataFeedIngestionSettings(dataFeedDetail);
@@ -72,7 +48,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// The unique identifier of this <see cref="DataFeed"/>. Set by the service.
         /// </summary>
-        public string Id { get; }
+        public string Id { get; internal set; }
 
         /// <summary>
         /// The current ingestion status of this <see cref="DataFeed"/>.
@@ -104,33 +80,33 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// A custom name for this <see cref="DataFeed"/> to be displayed on the web portal.
         /// </summary>
-        public string Name { get; }
+        public string Name { get; set; }
 
         /// <summary>
         /// The source from which data is consumed.
         /// </summary>
-        public DataFeedSource DataSource { get; }
+        public DataFeedSource DataSource { get; set; }
 
         /// <summary>
         /// The type of data source that ingests this <see cref="DataFeed"/> with data.
         /// </summary>
-        public DataFeedSourceType SourceType { get; }
+        public DataFeedSourceType? SourceType => DataSource?.Type;
 
         /// <summary>
         /// Defines how this <see cref="DataFeed"/> structures the data ingested from the data source
         /// in terms of metrics and dimensions.
         /// </summary>
-        public DataFeedSchema Schema { get; }
+        public DataFeedSchema Schema { get; set; }
 
         /// <summary>
         /// The frequency with which ingestion from the data source will happen.
         /// </summary>
-        public DataFeedGranularity Granularity { get; }
+        public DataFeedGranularity Granularity { get; set; }
 
         /// <summary>
         /// Configures how a <see cref="DataFeed"/> behaves during data ingestion from its data source.
         /// </summary>
-        public DataFeedIngestionSettings IngestionSettings { get; }
+        public DataFeedIngestionSettings IngestionSettings { get; set; }
 
         /// <summary>
         /// A description of this <see cref="DataFeed"/>.
@@ -166,39 +142,17 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// data feed, being allowed to update, delete or pause them. They also have access to the
         /// credentials used to authenticate to the data source.
         /// </summary>
-        /// <exception cref="ArgumentNullException">The value assigned to <see cref="Administrators"/> is null.</exception>
-#pragma warning disable CA2227 // Collection properties should be readonly
-        public IList<string> Administrators
-        {
-            get => _administrators;
-            set
-            {
-                Argument.AssertNotNull(value, nameof(Administrators));
-                _administrators = value;
-            }
-        }
-#pragma warning restore CA2227 // Collection properties should be readonly
+        public IList<string> Administrators { get; }
 
         /// <summary>
         /// The emails of this data feed's viewers. Viewers have read-only access to a data feed, and
         /// do not have access to the credentials used to authenticate to the data source.
         /// </summary>
-        /// <exception cref="ArgumentNullException">The value assigned to <see cref="Viewers"/> is null.</exception>
-#pragma warning disable CA2227 // Collection properties should be readonly
-        public IList<string> Viewers
-        {
-            get => _viewers;
-            set
-            {
-                Argument.AssertNotNull(value, nameof(Viewers));
-                _viewers = value;
-            }
-        }
-#pragma warning restore CA2227 // Collection properties should be readonly
+        public IList<string> Viewers { get; }
 
         internal DataFeedDetail GetDataFeedDetail()
         {
-            DataFeedDetail detail = DataSource.InstantiateDataFeedDetail(Name, Granularity.GranularityType, Schema.MetricColumns, IngestionSettings.IngestionStartTime);
+            DataFeedDetail detail = DataSource.InstantiateDataFeedDetail(Name, Granularity.GranularityType, Schema.MetricColumns, IngestionSettings.IngestionStartTime.Value);
 
             foreach (var column in Schema.DimensionColumns)
             {
@@ -234,8 +188,15 @@ namespace Azure.AI.MetricsAdvisor.Models
                 detail.FillMissingPointValue = MissingDataPointFillSettings.CustomFillValue;
             }
 
-            Administrators = detail.Admins;
-            Viewers = detail.Viewers;
+            foreach (var admin in Administrators)
+            {
+                detail.Admins.Add(admin);
+            }
+
+            foreach (var viewer in Viewers)
+            {
+                detail.Viewers.Add(viewer);
+            }
 
             return detail;
         }
@@ -245,18 +206,25 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// </summary>
         internal DataFeedDetailPatch GetPatchModel()
         {
-            DataFeedDetailPatch patch = DataSource.InstantiateDataFeedDetailPatch();
+            DataFeedDetailPatch patch = DataSource?.InstantiateDataFeedDetailPatch()
+                ?? new DataFeedDetailPatch();
 
             patch.DataFeedName = Name;
             patch.Status = Status.HasValue ? new DataFeedDetailPatchStatus(Status.ToString()) : default(DataFeedDetailPatchStatus?);
 
-            patch.TimestampColumn = Schema.TimestampColumn;
+            if (Schema != null)
+            {
+                patch.TimestampColumn = Schema.TimestampColumn;
+            }
 
-            patch.DataStartFrom = ClientCommon.NormalizeDateTimeOffset(IngestionSettings.IngestionStartTime);
-            patch.MaxConcurrency = IngestionSettings.DataSourceRequestConcurrency;
-            patch.MinRetryIntervalInSeconds = (long?)IngestionSettings.IngestionRetryDelay?.TotalSeconds;
-            patch.StartOffsetInSeconds = (long?)IngestionSettings.IngestionStartOffset?.TotalSeconds;
-            patch.StopRetryAfterInSeconds = (long?)IngestionSettings.StopRetryAfter?.TotalSeconds;
+            if (IngestionSettings != null)
+            {
+                patch.DataStartFrom = IngestionSettings.IngestionStartTime.HasValue ? ClientCommon.NormalizeDateTimeOffset(IngestionSettings.IngestionStartTime.Value) : null;
+                patch.MaxConcurrency = IngestionSettings.DataSourceRequestConcurrency;
+                patch.MinRetryIntervalInSeconds = (long?)IngestionSettings.IngestionRetryDelay?.TotalSeconds;
+                patch.StartOffsetInSeconds = (long?)IngestionSettings.IngestionStartOffset?.TotalSeconds;
+                patch.StopRetryAfterInSeconds = (long?)IngestionSettings.StopRetryAfter?.TotalSeconds;
+            }
 
             patch.DataFeedDescription = Description;
             patch.ActionLinkTemplate = ActionLinkTemplate;

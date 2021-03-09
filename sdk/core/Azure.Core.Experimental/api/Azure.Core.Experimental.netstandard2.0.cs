@@ -1,70 +1,139 @@
-namespace Azure
-{
-    public static partial class SerializationExtensions
-    {
-        public static System.BinaryData SerializeToBinaryData(this Azure.Core.Serialization.ObjectSerializer serializer, object? value, System.Type? inputType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.ValueTask<System.BinaryData> SerializeToBinaryDataAsync(this Azure.Core.Serialization.ObjectSerializer serializer, object? value, System.Type? inputType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.ValueTask<T?> ToObjectAsync<T>(this System.BinaryData data, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static T? ToObject<T>(this System.BinaryData data, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-}
 namespace Azure.Core
 {
-    public partial class DynamicJson : System.Dynamic.IDynamicMetaObjectProvider
+    [System.Diagnostics.DebuggerDisplayAttribute("Content: {_body}")]
+    public partial class DynamicContent : Azure.Core.RequestContent
     {
-        public DynamicJson(string json) { }
-        public DynamicJson(System.Text.Json.JsonElement element) { }
-        public Azure.Core.DynamicJson this[int arrayIndex] { get { throw null; } set { } }
-        public Azure.Core.DynamicJson this[string propertyName] { get { throw null; } set { } }
-        public static Azure.Core.DynamicJson Array() { throw null; }
-        public static Azure.Core.DynamicJson Array(params Azure.Core.DynamicJson[] values) { throw null; }
-        public static Azure.Core.DynamicJson Array(System.Collections.Generic.IEnumerable<Azure.Core.DynamicJson> values) { throw null; }
-        public static Azure.Core.DynamicJson Create(System.Text.Json.JsonElement element) { throw null; }
-        public System.Threading.Tasks.Task<T?> DeserializeAsync<T>(Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public T? Deserialize<T>(Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public T Deserialize<T>(System.Text.Json.JsonSerializerOptions? options = null) { throw null; }
-        public System.Collections.Generic.IEnumerable<Azure.Core.DynamicJson> EnumerateArray() { throw null; }
-        public System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, Azure.Core.DynamicJson>> EnumerateObject() { throw null; }
-        public int GetArrayLength() { throw null; }
-        public bool GetBoolean() { throw null; }
-        public double GetDouble() { throw null; }
-        public float GetFloat() { throw null; }
-        public int GetIn32() { throw null; }
-        public long GetLong() { throw null; }
-        public Azure.Core.DynamicJson GetProperty(string name) { throw null; }
-        public string? GetString() { throw null; }
-        public static Azure.Core.DynamicJson Object() { throw null; }
-        public static Azure.Core.DynamicJson Object(System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, Azure.Core.DynamicJson>> values) { throw null; }
-        public static explicit operator bool (Azure.Core.DynamicJson json) { throw null; }
-        public static explicit operator double (Azure.Core.DynamicJson json) { throw null; }
-        public static explicit operator int (Azure.Core.DynamicJson json) { throw null; }
-        public static explicit operator long (Azure.Core.DynamicJson json) { throw null; }
-        public static explicit operator bool? (Azure.Core.DynamicJson json) { throw null; }
-        public static explicit operator double? (Azure.Core.DynamicJson json) { throw null; }
-        public static explicit operator int? (Azure.Core.DynamicJson json) { throw null; }
-        public static explicit operator long? (Azure.Core.DynamicJson json) { throw null; }
-        public static explicit operator float? (Azure.Core.DynamicJson json) { throw null; }
-        public static explicit operator float (Azure.Core.DynamicJson json) { throw null; }
-        public static explicit operator string (Azure.Core.DynamicJson json) { throw null; }
-        public static implicit operator Azure.Core.DynamicJson (bool value) { throw null; }
-        public static implicit operator Azure.Core.DynamicJson (double value) { throw null; }
-        public static implicit operator Azure.Core.DynamicJson (int value) { throw null; }
-        public static implicit operator Azure.Core.DynamicJson (long value) { throw null; }
-        public static implicit operator Azure.Core.DynamicJson (bool? value) { throw null; }
-        public static implicit operator Azure.Core.DynamicJson (double? value) { throw null; }
-        public static implicit operator Azure.Core.DynamicJson (int? value) { throw null; }
-        public static implicit operator Azure.Core.DynamicJson (long? value) { throw null; }
-        public static implicit operator Azure.Core.DynamicJson (float? value) { throw null; }
-        public static implicit operator Azure.Core.DynamicJson (float value) { throw null; }
-        public static implicit operator Azure.Core.DynamicJson (string? value) { throw null; }
-        public static Azure.Core.DynamicJson Parse(string json) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Core.DynamicJson> SerializeAsync<T>(T value, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.DynamicJson Serialize<T>(T value, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.DynamicJson Serialize<T>(T value, System.Text.Json.JsonSerializerOptions? options = null) { throw null; }
+        internal DynamicContent() { }
+        public static Azure.Core.RequestContent Create(Azure.Core.JsonData body) { throw null; }
+        public override void Dispose() { }
+        public override bool TryComputeLength(out long length) { throw null; }
+        public override void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellation) { }
+        public override System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellation) { throw null; }
+    }
+    [System.Diagnostics.DebuggerDisplayAttribute("{DebuggerDisplay,nq}")]
+    public partial class DynamicRequest : Azure.Core.Request
+    {
+        public DynamicRequest(Azure.Core.Request request, Azure.Core.Pipeline.HttpPipeline pipeline) { }
+        public Azure.Core.JsonData Body { get { throw null; } set { } }
+        public override string ClientRequestId { get { throw null; } set { } }
+        public override Azure.Core.RequestContent? Content { get { throw null; } set { } }
+        public dynamic DynamicBody { get { throw null; } }
+        protected override void AddHeader(string name, string value) { }
+        protected override bool ContainsHeader(string name) { throw null; }
+        public override void Dispose() { }
+        protected virtual void Dispose(bool disposing) { }
+        protected override System.Collections.Generic.IEnumerable<Azure.Core.HttpHeader> EnumerateHeaders() { throw null; }
+        protected override bool RemoveHeader(string name) { throw null; }
+        public Azure.Core.DynamicResponse Send(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.Task<Azure.Core.DynamicResponse> SendAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected override bool TryGetHeader(string name, out string? value) { throw null; }
+        protected override bool TryGetHeaderValues(string name, out System.Collections.Generic.IEnumerable<string>? values) { throw null; }
+    }
+    [System.Diagnostics.DebuggerDisplayAttribute("{DebuggerDisplay,nq}")]
+    public partial class DynamicResponse : Azure.Response
+    {
+        public DynamicResponse(Azure.Response response, Azure.Core.JsonData? body) { }
+        public Azure.Core.JsonData? Body { get { throw null; } }
+        public override string ClientRequestId { get { throw null; } set { } }
+        public override System.IO.Stream? ContentStream { get { throw null; } set { } }
+        public dynamic? DynamicBody { get { throw null; } }
+        public override string ReasonPhrase { get { throw null; } }
+        public override int Status { get { throw null; } }
+        protected override bool ContainsHeader(string name) { throw null; }
+        public override void Dispose() { }
+        protected virtual void Dispose(bool disposing) { }
+        protected override System.Collections.Generic.IEnumerable<Azure.Core.HttpHeader> EnumerateHeaders() { throw null; }
+        protected override bool TryGetHeader(string name, out string? value) { throw null; }
+        protected override bool TryGetHeaderValues(string name, out System.Collections.Generic.IEnumerable<string>? values) { throw null; }
+    }
+    [System.Diagnostics.DebuggerDisplayAttribute("{DebuggerDisplay,nq}")]
+    public partial class JsonData : System.Dynamic.IDynamicMetaObjectProvider, System.IEquatable<Azure.Core.JsonData>
+    {
+        public JsonData() { }
+        public JsonData(object? value) { }
+        public JsonData(object? value, System.Text.Json.JsonSerializerOptions options, System.Type? type = null) { }
+        public JsonData(System.Text.Json.JsonDocument jsonDocument) { }
+        public Azure.Core.JsonData this[int arrayIndex] { get { throw null; } set { } }
+        public Azure.Core.JsonData this[string propertyName] { get { throw null; } set { } }
+        public System.Collections.Generic.IEnumerable<Azure.Core.JsonData> Items { get { throw null; } }
+        public System.Text.Json.JsonValueKind Kind { get { throw null; } }
+        public int Length { get { throw null; } }
+        public System.Collections.Generic.IEnumerable<string> Properties { get { throw null; } }
+        public void Add(bool value) { }
+        public void Add(double value) { }
+        public void Add(int value) { }
+        public void Add(long value) { }
+        public Azure.Core.JsonData Add(object? serializable) { throw null; }
+        public Azure.Core.JsonData Add(object? serializable, System.Text.Json.JsonSerializerOptions options) { throw null; }
+        public void Add(float value) { }
+        public void Add(string? value) { }
+        public Azure.Core.JsonData AddEmptyArray() { throw null; }
+        public Azure.Core.JsonData AddEmptyObject() { throw null; }
+        public Azure.Core.JsonData Add<T>(T[] serializable) { throw null; }
+        public Azure.Core.JsonData Add<T>(T[] serializable, System.Text.Json.JsonSerializerOptions options) { throw null; }
+        public static Azure.Core.JsonData EmptyArray() { throw null; }
+        public static Azure.Core.JsonData EmptyObject() { throw null; }
+        public bool Equals(Azure.Core.JsonData other) { throw null; }
+        public override bool Equals(object? obj) { throw null; }
+        public static Azure.Core.JsonData FromBytes(byte[] utf8Json) { throw null; }
+        public static Azure.Core.JsonData FromBytes(System.ReadOnlyMemory<byte> utf8Json) { throw null; }
+        public static Azure.Core.JsonData FromObject<T>(T value, System.Text.Json.JsonSerializerOptions? options = null) { throw null; }
+        public static Azure.Core.JsonData FromStream(System.IO.Stream utf8Json) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Core.JsonData> FromStreamAsync(System.IO.Stream utf8JsonStream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.JsonData FromString(string json) { throw null; }
+        public Azure.Core.JsonData? Get(string propertyName) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public T Get<T>(string propertyName) { throw null; }
+        public T Get<T>(string propertyName, System.Text.Json.JsonSerializerOptions options) { throw null; }
+        public static bool operator ==(Azure.Core.JsonData? left, string? right) { throw null; }
+        public static bool operator ==(string? left, Azure.Core.JsonData? right) { throw null; }
+        public static explicit operator bool (Azure.Core.JsonData json) { throw null; }
+        public static explicit operator double (Azure.Core.JsonData json) { throw null; }
+        public static explicit operator int (Azure.Core.JsonData json) { throw null; }
+        public static explicit operator long (Azure.Core.JsonData json) { throw null; }
+        public static explicit operator bool? (Azure.Core.JsonData json) { throw null; }
+        public static explicit operator double? (Azure.Core.JsonData json) { throw null; }
+        public static explicit operator int? (Azure.Core.JsonData json) { throw null; }
+        public static explicit operator long? (Azure.Core.JsonData json) { throw null; }
+        public static explicit operator float? (Azure.Core.JsonData json) { throw null; }
+        public static explicit operator float (Azure.Core.JsonData json) { throw null; }
+        public static explicit operator string (Azure.Core.JsonData json) { throw null; }
+        public static implicit operator Azure.Core.JsonData (bool value) { throw null; }
+        public static implicit operator Azure.Core.JsonData (double value) { throw null; }
+        public static implicit operator Azure.Core.JsonData (int value) { throw null; }
+        public static implicit operator Azure.Core.JsonData (long value) { throw null; }
+        public static implicit operator Azure.Core.JsonData (bool? value) { throw null; }
+        public static implicit operator Azure.Core.JsonData (double? value) { throw null; }
+        public static implicit operator Azure.Core.JsonData (int? value) { throw null; }
+        public static implicit operator Azure.Core.JsonData (long? value) { throw null; }
+        public static implicit operator Azure.Core.JsonData (float? value) { throw null; }
+        public static implicit operator Azure.Core.JsonData (float value) { throw null; }
+        public static implicit operator Azure.Core.JsonData (string? value) { throw null; }
+        public static bool operator !=(Azure.Core.JsonData? left, string? right) { throw null; }
+        public static bool operator !=(string? left, Azure.Core.JsonData? right) { throw null; }
+        public void Set(string propertyName, bool value) { }
+        public void Set(string propertyName, double value) { }
+        public void Set(string propertyName, int value) { }
+        public void Set(string propertyName, long value) { }
+        public Azure.Core.JsonData Set(string propertyName, object? serializable) { throw null; }
+        public Azure.Core.JsonData Set(string propertyName, object? serializable, System.Text.Json.JsonSerializerOptions options) { throw null; }
+        public void Set(string propertyName, float value) { }
+        public void Set(string propertyName, string? value) { }
+        public Azure.Core.JsonData SetEmptyArray(string propertyName) { throw null; }
+        public Azure.Core.JsonData SetEmptyObject(string propertyName) { throw null; }
+        public Azure.Core.JsonData Set<T>(string propertyName, T[] serializable) { throw null; }
+        public Azure.Core.JsonData Set<T>(string propertyName, T[] serializable, System.Text.Json.JsonSerializerOptions options) { throw null; }
         System.Dynamic.DynamicMetaObject System.Dynamic.IDynamicMetaObjectProvider.GetMetaObject(System.Linq.Expressions.Expression parameter) { throw null; }
-        public System.Text.Json.JsonElement ToJsonElement() { throw null; }
+        public string ToJsonString() { throw null; }
         public override string ToString() { throw null; }
-        public void WriteTo(System.Text.Json.Utf8JsonWriter writer) { }
+        public T To<T>() { throw null; }
+        public T To<T>(System.Text.Json.JsonSerializerOptions options) { throw null; }
+        public long WriteTo(System.IO.Stream stream) { throw null; }
+        public System.Threading.Tasks.Task<long> WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken) { throw null; }
+    }
+    public partial class ProtocolClientOptions : Azure.Core.ClientOptions
+    {
+        public ProtocolClientOptions() { }
     }
 }
 namespace Azure.Core.GeoJson

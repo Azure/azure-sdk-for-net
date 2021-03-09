@@ -21,10 +21,12 @@ namespace Azure.ResourceManager.Resources
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         internal ProvidersRestOperations RestClient { get; }
+
         /// <summary> Initializes a new instance of ProvidersOperations for mocking. </summary>
         protected ProvidersOperations()
         {
         }
+
         /// <summary> Initializes a new instance of ProvidersOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>

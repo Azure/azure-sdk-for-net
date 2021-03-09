@@ -73,7 +73,10 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <param name="shareUsageBytes">The approximate size of the data
         /// stored on the share. Note that this value may not include all
         /// recently created or recently resized files.</param>
-        public FileShare(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), System.DateTime? lastModifiedTime = default(System.DateTime?), IDictionary<string, string> metadata = default(IDictionary<string, string>), int? shareQuota = default(int?), string enabledProtocols = default(string), string rootSquash = default(string), string version = default(string), bool? deleted = default(bool?), System.DateTime? deletedTime = default(System.DateTime?), int? remainingRetentionDays = default(int?), string accessTier = default(string), System.DateTime? accessTierChangeTime = default(System.DateTime?), string accessTierStatus = default(string), long? shareUsageBytes = default(long?))
+        /// <param name="snapshotTime">Creation time of share snapshot returned
+        /// in the response of list shares with expand param
+        /// "snapshots".</param>
+        public FileShare(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), System.DateTime? lastModifiedTime = default(System.DateTime?), IDictionary<string, string> metadata = default(IDictionary<string, string>), int? shareQuota = default(int?), string enabledProtocols = default(string), string rootSquash = default(string), string version = default(string), bool? deleted = default(bool?), System.DateTime? deletedTime = default(System.DateTime?), int? remainingRetentionDays = default(int?), string accessTier = default(string), System.DateTime? accessTierChangeTime = default(System.DateTime?), string accessTierStatus = default(string), long? shareUsageBytes = default(long?), System.DateTime? snapshotTime = default(System.DateTime?))
             : base(id, name, type, etag)
         {
             LastModifiedTime = lastModifiedTime;
@@ -89,6 +92,7 @@ namespace Microsoft.Azure.Management.Storage.Models
             AccessTierChangeTime = accessTierChangeTime;
             AccessTierStatus = accessTierStatus;
             ShareUsageBytes = shareUsageBytes;
+            SnapshotTime = snapshotTime;
             CustomInit();
         }
 
@@ -186,6 +190,13 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.shareUsageBytes")]
         public long? ShareUsageBytes { get; private set; }
+
+        /// <summary>
+        /// Gets creation time of share snapshot returned in the response of
+        /// list shares with expand param "snapshots".
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.snapshotTime")]
+        public System.DateTime? SnapshotTime { get; private set; }
 
         /// <summary>
         /// Validate the object.

@@ -53,7 +53,6 @@ jobs:
       matrix: $[ ${{ parameters.Matrix }} ]
 
     variables:
-      - template: ../variables/globals.yml
       # ServiceDirectory references must get passed down by the caller as variable references
       - name: ServiceDirectory
         value: ${{ parameters.ServiceDirectory }}
@@ -77,7 +76,9 @@ jobs:
     steps:
       - ${{ parameters.PreSteps }}
 
-#      - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
+      - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
+        parameters:
+          AgentImage: $(OSVmImage)
 
       - ${{ each step in parameters.TestSetupSteps }}:
         - ${{ each pair in step }}:

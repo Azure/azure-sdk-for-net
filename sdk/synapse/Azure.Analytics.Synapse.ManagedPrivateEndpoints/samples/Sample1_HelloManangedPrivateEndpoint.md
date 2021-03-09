@@ -1,7 +1,7 @@
 ```C# Snippet:CreateManagedPrivateClient
 // Replace the string below with your actual endpoint url.
 string endpoint = "<my-endpoint-url>";
-ManagedPrivateEndpointsClient client = new ManagedPrivateEndpointsClient(endpoint: new Uri(endpoint), credential: new DefaultAzureCredential(includeInteractiveCredentials: true));
+ManagedPrivateEndpointsClient client = new ManagedPrivateEndpointsClient(endpoint: endpoint, credential: new DefaultAzureCredential(includeInteractiveCredentials: true));
 ```
 
 ```C# Snippet:CreateManagedPrivateEndpoint
@@ -10,7 +10,7 @@ string managedPrivateEndpointName = "myPrivateEndpoint";
 string fakedStorageAccountName = "myStorageAccount";
 string privateLinkResourceId = $"/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/myResourceGroup/providers/Microsoft.Storage/accounts/{fakedStorageAccountName}";
 string groupId = "blob";
-client.Create(managedVnetName, managedPrivateEndpointName, new ManagedPrivateEndpoint
+client.Create(managedVnetName, new ManagedPrivateEndpoint
 {
     Properties = new ManagedPrivateEndpointProperties
     {

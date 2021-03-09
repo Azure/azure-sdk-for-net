@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.Insights.Models
 {
     /// <summary> Represents collection of metric definitions. </summary>
-    public partial class MetricDefinitionCollection
+    internal partial class MetricDefinitionCollection
     {
         /// <summary> Initializes a new instance of MetricDefinitionCollection. </summary>
         /// <param name="value"> the values for the metric definitions. </param>

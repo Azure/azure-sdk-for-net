@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class DeploymentScriptListResult
+    internal partial class DeploymentScriptListResult
     {
         internal static DeploymentScriptListResult DeserializeDeploymentScriptListResult(JsonElement element)
         {

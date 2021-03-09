@@ -14,7 +14,7 @@
 /sdk/core/                                      @pakrym @KrzysztofCwalina
 
 # PRLabel: %Azure.Identity
-/sdk/identity/                                  @schaabs @alexanderSher
+/sdk/identity/                                  @schaabs @christothes
 
 # Extensions
 /sdk/extensions/                                @pakrym
@@ -173,7 +173,7 @@
 #/<NotInRepo>/            @ms-premp @qiaozha
 
 # PRLabel: %Communication
-/sdk/communication/                             @RezaJooyandeh @DominikMe @ankitarorabit @Azure/azure-sdk-communication-code-reviewers
+/sdk/communication/                             @acsdevx-msft
 
 # ServiceLabel: %Compute %Service Attention
 # PRLabel: %Compute
@@ -257,9 +257,13 @@
 # ServiceLabel: %Device Provisioning Service %Service Attention
 /sdk/deviceprovisioningservices/Microsoft.Azure.Management.DeviceProvisioningServices/            @nberdy
 
-# PRLabel: %DigitalTwins
+# PRLabel: %Digital Twins
 # ServiceLabel: %Digital Twins %Service Attention
 /sdk/digitaltwins/                              @drwill-ms @timtay-microsoft @abhipsaMisra @vinagesh @azabbasi @bikamani @barustum @jamdavi
+
+# PRLabel: %IoT Models Repository
+# ServiceLabel: %IoT Models Repository %Service Attention
+/sdk/modelsrepository/                              @drwill-ms @timtay-microsoft @abhipsaMisra @vinagesh @azabbasi @bikamani @barustum @jamdavi @digimaun
 
 # PRLabel: %TimeSeriesInsights
 # ServiceLabel: %TimeSeriesInsights %Service Attention
@@ -294,13 +298,17 @@
 #/<NotInRepo>/            @madhurinms
 
 # PRLabel: %Iot
-/sdk/iot/                                       @drwill-ms @timtay-microsoft @abhipsaMisra @vinagesh @azabbasi @bikamani @barustum @jamdavi
+/sdk/iot/                               @drwill-ms @timtay-microsoft @abhipsaMisra @vinagesh @azabbasi @bikamani @barustum @jamdavi
 
 # ServiceLabel: %IotCentral %Service Attention
 /sdk/iotcentral/Microsoft.Azure.Management.IotCentral/           @iluican @jlian
 
 # ServiceLabel: %IotDPS %Service Attention
 #/<NotInRepo>/            @iluican @jlian
+
+# PRLabel: %IotHub
+# ServiceLabel: %IotHub %Service Attention
+/sdk/iothub/                            @drwill-ms @timtay-microsoft @abhipsaMisra @vinagesh @azabbasi @bikamani @barustum @jamdavi
 
 # ServiceLabel: %IotHub %Service Attention
 /sdk/iothub/Microsoft.Azure.Management.IotHub/            @rkmanda @chieftn
@@ -368,7 +376,7 @@ sdk/monitor/           @SameergMS @dadunl
 
 # PRLabel: %Monitor - Exporter
 # ServiceLabel: %Monitor - Exporter %Service Attention
-/sdk/monitor/Microsoft.OpenTelemetry.*/         @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra
+/sdk/monitor/Azure.Monitor.OpenTelemetry.*/     @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra
 
 # ServiceLabel: %Monitor - Metrics %Service Attention
 #/<NotInRepo>/            @AzMonEssential
@@ -496,7 +504,7 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 
 # Client
 # PRLabel: %Service Bus
-/sdk/servicebus/                                @JoshLove-msft @ShivangiReja @jsquire
+/sdk/servicebus/                                @JoshLove-msft @jsquire
 
 # ServiceLabel: %Service Bus %Service Attention
 /sdk/servicebus/Microsoft.*/                    @axisc

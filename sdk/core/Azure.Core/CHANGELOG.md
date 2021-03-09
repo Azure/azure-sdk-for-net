@@ -1,6 +1,17 @@
 # Release History
 
-## 1.9.0-beta.1 (Unreleased)
+## 1.11.0-beta.1 (Unreleased)
+
+
+## 1.10.0 (2021-03-09)
+
+- Added `CloudEvent` type based on the [CloudEvent spec](https://github.com/cloudevents/spec/blob/master/spec.md).
+
+## 1.9.0 (2021-02-09)
+
+## Added
+- Added Serialize overloads on `ObjectSerializer` that serialize to `BinaryData`.
+- Added AzureCoreExtensions containing extensions methods for `BinaryData` that allow deserializing with an `ObjectSerializer`.
 
 ### Key Bug Fixes
 

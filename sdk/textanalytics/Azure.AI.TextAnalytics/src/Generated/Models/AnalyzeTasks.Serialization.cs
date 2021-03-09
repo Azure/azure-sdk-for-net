@@ -11,11 +11,11 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
 {
-    public partial class AnalyzeTasks
+    internal partial class AnalyzeTasks
     {
         internal static AnalyzeTasks DeserializeAnalyzeTasks(JsonElement element)
         {
-            Optional<TasksStateTasksDetails> details = default;
+            Optional<TasksStateTasksDetailsInternal> details = default;
             int completed = default;
             int failed = default;
             int inProgress = default;
@@ -23,6 +23,7 @@ namespace Azure.AI.TextAnalytics
             Optional<IReadOnlyList<EntityRecognitionTasksItem>> entityRecognitionTasks = default;
             Optional<IReadOnlyList<EntityRecognitionPiiTasksItem>> entityRecognitionPiiTasks = default;
             Optional<IReadOnlyList<KeyPhraseExtractionTasksItem>> keyPhraseExtractionTasks = default;
+            Optional<IReadOnlyList<EntityLinkingTasksItem>> entityLinkingTasks = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("details"))
@@ -32,7 +33,7 @@ namespace Azure.AI.TextAnalytics
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    details = TasksStateTasksDetails.DeserializeTasksStateTasksDetails(property.Value);
+                    details = TasksStateTasksDetailsInternal.DeserializeTasksStateTasksDetailsInternal(property.Value);
                     continue;
                 }
                 if (property.NameEquals("completed"))
@@ -100,8 +101,23 @@ namespace Azure.AI.TextAnalytics
                     keyPhraseExtractionTasks = array;
                     continue;
                 }
+                if (property.NameEquals("entityLinkingTasks"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<EntityLinkingTasksItem> array = new List<EntityLinkingTasksItem>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(EntityLinkingTasksItem.DeserializeEntityLinkingTasksItem(item));
+                    }
+                    entityLinkingTasks = array;
+                    continue;
+                }
             }
-            return new AnalyzeTasks(details.Value, completed, failed, inProgress, total, Optional.ToList(entityRecognitionTasks), Optional.ToList(entityRecognitionPiiTasks), Optional.ToList(keyPhraseExtractionTasks));
+            return new AnalyzeTasks(details.Value, completed, failed, inProgress, total, Optional.ToList(entityRecognitionTasks), Optional.ToList(entityRecognitionPiiTasks), Optional.ToList(keyPhraseExtractionTasks), Optional.ToList(entityLinkingTasks));
         }
     }
 }

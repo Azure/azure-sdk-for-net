@@ -18,6 +18,7 @@ namespace Azure.Quantum.Jobs.Tests
             JsonPathSanitizers.Add("$..containerUri");
             JsonPathSanitizers.Add("$..inputDataUri");
             JsonPathSanitizers.Add("$..outputDataUri");
+            JsonPathSanitizers.Add("$..sasUri");
         }
     }
 }

@@ -1009,7 +1009,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 file.GetAccessControlAsync(),
-                e => Assert.AreEqual("404", e.ErrorCode));
+                e => Assert.AreEqual("PathNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -4798,6 +4798,23 @@ namespace Azure.Storage.Files.DataLake.Tests
                 tokenCredentials,
                 GetOptions()));
             Assert.IsFalse(file3.CanGenerateSasUri);
+        }
+
+        [Test]
+        public void CanGenerateSas_Mockable()
+        {
+            // Act
+            var file = new Mock<DataLakeFileClient>();
+            file.Setup(x => x.CanGenerateSasUri).Returns(false);
+
+            // Assert
+            Assert.IsFalse(file.Object.CanGenerateSasUri);
+
+            // Act
+            file.Setup(x => x.CanGenerateSasUri).Returns(true);
+
+            // Assert
+            Assert.IsTrue(file.Object.CanGenerateSasUri);
         }
 
         [Test]

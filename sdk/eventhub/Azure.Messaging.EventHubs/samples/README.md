@@ -40,7 +40,7 @@ To quickly create a basic set of Event Hubs resources in Azure and to receive a 
 Install the Azure Event Hubs client library for .NET with [NuGet](https://www.nuget.org/):
 
 ```PowerShell
-dotnet add package Azure.Messaging.EventHubs --version 5.3.0-beta.4
+dotnet add package Azure.Messaging.EventHubs
 ```
 
 ### Authenticate the client

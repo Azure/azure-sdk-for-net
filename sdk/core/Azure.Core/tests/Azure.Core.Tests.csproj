@@ -21,17 +21,23 @@
     <PackageReference Include="Azure.Security.KeyVault.Secrets" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\src\Shared\Multipart\*.cs" />
-    <Compile Include="..\src\Shared\ArrayBufferWriter.cs" />
-    <Compile Include="..\src\Shared\AzureResourceProviderNamespaceAttribute.cs" />
-    <Compile Include="..\src\Shared\ConnectionString.cs" />
-    <Compile Include="..\src\Shared\ForwardsClientCallsAttribute.cs" />
-    <Compile Include="..\src\Shared\NoBodyResponseOfT.cs" />
-    <Compile Include="..\src\Shared\OperationHelpers.cs" />
-    <Compile Include="..\src\Shared\PageResponseEnumerator.cs" />
-    <Compile Include="..\src\Shared\RetriableStream.cs" />
-    <Compile Include="..\src\Shared\RequestRequestContent.cs" />
-    <Compile Include="..\src\Shared\ValueStopwatch.cs" />
+    <Compile Include="..\src\Shared\Multipart\*.cs" LinkBase="Shared\Multipart" />
+    <Compile Include="..\src\Shared\ArrayBufferWriter.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\ARMChallengeAuthenticationPolicy.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\BearerTokenChallengeAuthenticationPolicy.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\ConnectionString.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\ForwardsClientCallsAttribute.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\HttpPipelineMessageHandler.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\NoBodyResponseOfT.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\ObjectNotDisposedException.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\OperationHelpers.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\PageResponseEnumerator.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\RetriableStream.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\RequestRequestContent.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\SyncAsyncEventHandlerExtensions.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\ValueStopwatch.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\LightweightPkcs8Decoder.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\PemReader.cs" LinkBase="Shared" />
   </ItemGroup>
-
 </Project>

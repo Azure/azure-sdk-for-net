@@ -21,10 +21,12 @@ namespace Azure.ResourceManager.MachineLearningServices
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         internal EnvironmentContainersRestOperations RestClient { get; }
+
         /// <summary> Initializes a new instance of EnvironmentContainersOperations for mocking. </summary>
         protected EnvironmentContainersOperations()
         {
         }
+
         /// <summary> Initializes a new instance of EnvironmentContainersOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>

@@ -31,21 +31,28 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Initializes a new instance of the WebActivityAuthentication class.
         /// </summary>
         /// <param name="type">Web activity authentication
-        /// (Basic/ClientCertificate/MSI)</param>
-        /// <param name="pfx">Base64-encoded contents of a PFX file.</param>
+        /// (Basic/ClientCertificate/MSI/ServicePrincipal)</param>
+        /// <param name="pfx">Base64-encoded contents of a PFX file or
+        /// Certificate when used for ServicePrincipal</param>
         /// <param name="username">Web activity authentication user name for
-        /// basic authentication.</param>
+        /// basic authentication or ClientID when used for ServicePrincipal.
+        /// Type: string (or Expression with resultType string).</param>
         /// <param name="password">Password for the PFX file or basic
-        /// authentication.</param>
+        /// authentication / Secret when used for ServicePrincipal</param>
         /// <param name="resource">Resource for which Azure Auth token will be
-        /// requested when using MSI Authentication.</param>
-        public WebActivityAuthentication(string type, SecretBase pfx = default(SecretBase), string username = default(string), SecretBase password = default(SecretBase), string resource = default(string))
+        /// requested when using MSI Authentication. Type: string (or
+        /// Expression with resultType string).</param>
+        /// <param name="userTenant">TenantId for which Azure Auth token will
+        /// be requested when using ServicePrincipal Authentication. Type:
+        /// string (or Expression with resultType string).</param>
+        public WebActivityAuthentication(string type, SecretBase pfx = default(SecretBase), object username = default(object), SecretBase password = default(SecretBase), object resource = default(object), object userTenant = default(object))
         {
             Type = type;
             Pfx = pfx;
             Username = username;
             Password = password;
             Resource = resource;
+            UserTenant = userTenant;
             CustomInit();
         }
 
@@ -56,36 +63,48 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 
         /// <summary>
         /// Gets or sets web activity authentication
-        /// (Basic/ClientCertificate/MSI)
+        /// (Basic/ClientCertificate/MSI/ServicePrincipal)
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }
 
         /// <summary>
-        /// Gets or sets base64-encoded contents of a PFX file.
+        /// Gets or sets base64-encoded contents of a PFX file or Certificate
+        /// when used for ServicePrincipal
         /// </summary>
         [JsonProperty(PropertyName = "pfx")]
         public SecretBase Pfx { get; set; }
 
         /// <summary>
         /// Gets or sets web activity authentication user name for basic
-        /// authentication.
+        /// authentication or ClientID when used for ServicePrincipal. Type:
+        /// string (or Expression with resultType string).
         /// </summary>
         [JsonProperty(PropertyName = "username")]
-        public string Username { get; set; }
+        public object Username { get; set; }
 
         /// <summary>
-        /// Gets or sets password for the PFX file or basic authentication.
+        /// Gets or sets password for the PFX file or basic authentication /
+        /// Secret when used for ServicePrincipal
         /// </summary>
         [JsonProperty(PropertyName = "password")]
         public SecretBase Password { get; set; }
 
         /// <summary>
         /// Gets or sets resource for which Azure Auth token will be requested
-        /// when using MSI Authentication.
+        /// when using MSI Authentication. Type: string (or Expression with
+        /// resultType string).
         /// </summary>
         [JsonProperty(PropertyName = "resource")]
-        public string Resource { get; set; }
+        public object Resource { get; set; }
+
+        /// <summary>
+        /// Gets or sets tenantId for which Azure Auth token will be requested
+        /// when using ServicePrincipal Authentication. Type: string (or
+        /// Expression with resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "userTenant")]
+        public object UserTenant { get; set; }
 
         /// <summary>
         /// Validate the object.

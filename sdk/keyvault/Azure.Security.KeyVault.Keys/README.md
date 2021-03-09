@@ -16,7 +16,7 @@ The Azure Key Vault keys library client supports RSA keys and Elliptic Curve (EC
 Install the Azure Key Vault keys client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-dotnet add package Azure.Security.KeyVault.Keys
+dotnet add package Azure.Security.KeyVault.Keys --version 4.2.0-beta.4
 ```
 
 ### Prerequisites
@@ -155,6 +155,20 @@ A `KeyClient` providing both synchronous and asynchronous operations exists in t
 ### CryptographyClient
 A `CryptographyClient` providing both synchronous and asynchronous operations exists in the SDK allowing for selection of a client based on an application's use case. Once you've initialized a `CryptographyClient`, you can use it to perform cryptographic operations with keys stored in Azure Key Vault.
 
+### Thread safety
+We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
+
+### Additional concepts
+<!-- CLIENT COMMON BAR -->
+[Client options](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions) | 
+[Accessing the response](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#accessing-http-response-details-using-responset) |
+[Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
+[Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
+[Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md) |
+[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#mocking) |
+[Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
+<!-- CLIENT COMMON BAR -->
+
 ## Examples
 The Azure.Security.KeyVault.Keys package supports synchronous and asynchronous APIs.
 
@@ -203,7 +217,7 @@ Console.WriteLine(ecKey.KeyType);
 ```
 
 ### Retrieve a key
-`GetKeyAsync` retrieves a key previously stored in the Azure Key Vault.
+`GetKey` retrieves a key previously stored in the Azure Key Vault.
 
 ```C# Snippet:RetrieveKey
 KeyVaultKey key = client.GetKey("key-name");
