@@ -8,7 +8,7 @@
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The AzureTableDataFeedPatch. </summary>
-    internal partial class AzureTableDataFeedPatch : DataFeedDetailPatch
+    public partial class AzureTableDataFeedPatch : DataFeedDetailPatch
     {
         /// <summary> Initializes a new instance of AzureTableDataFeedPatch. </summary>
         public AzureTableDataFeedPatch()

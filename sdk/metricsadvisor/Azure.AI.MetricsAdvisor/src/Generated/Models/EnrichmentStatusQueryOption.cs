@@ -10,7 +10,7 @@ using System;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The EnrichmentStatusQueryOption. </summary>
-    internal partial class EnrichmentStatusQueryOption
+    public partial class EnrichmentStatusQueryOption
     {
         /// <summary> Initializes a new instance of EnrichmentStatusQueryOption. </summary>
         /// <param name="startTime"> the start point of time range to query anomaly detection status. </param>

@@ -10,7 +10,7 @@ using System;
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The TargetRelation. </summary>
-    internal partial class TargetRelation
+    public partial class TargetRelation
     {
         /// <summary> Initializes a new instance of TargetRelation. </summary>
         /// <param name="relationType"> The type related to the target. </param>

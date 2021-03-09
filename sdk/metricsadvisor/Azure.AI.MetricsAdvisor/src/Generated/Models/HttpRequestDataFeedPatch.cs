@@ -8,7 +8,7 @@
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The HttpRequestDataFeedPatch. </summary>
-    internal partial class HttpRequestDataFeedPatch : DataFeedDetailPatch
+    public partial class HttpRequestDataFeedPatch : DataFeedDetailPatch
     {
         /// <summary> Initializes a new instance of HttpRequestDataFeedPatch. </summary>
         public HttpRequestDataFeedPatch()

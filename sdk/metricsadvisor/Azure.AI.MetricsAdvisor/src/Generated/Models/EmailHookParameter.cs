@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The EmailHookParameter. </summary>
-    internal partial class EmailHookParameter
+    public partial class EmailHookParameter
     {
         /// <summary> Initializes a new instance of EmailHookParameter. </summary>
         /// <param name="toList"> Email TO: list. </param>

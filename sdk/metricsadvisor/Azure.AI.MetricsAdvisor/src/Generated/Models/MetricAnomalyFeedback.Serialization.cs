@@ -33,27 +33,13 @@ namespace Azure.AI.MetricsAdvisor.Models
             }
             if (Optional.IsDefined(AnomalyDetectionConfigurationId))
             {
-                if (AnomalyDetectionConfigurationId != null)
-                {
-                    writer.WritePropertyName("anomalyDetectionConfigurationId");
-                    writer.WriteStringValue(AnomalyDetectionConfigurationId);
-                }
-                else
-                {
-                    writer.WriteNull("anomalyDetectionConfigurationId");
-                }
+                writer.WritePropertyName("anomalyDetectionConfigurationId");
+                writer.WriteStringValue(AnomalyDetectionConfigurationId);
             }
             if (Optional.IsDefined(AnomalyDetectionConfigurationSnapshot))
             {
-                if (AnomalyDetectionConfigurationSnapshot != null)
-                {
-                    writer.WritePropertyName("anomalyDetectionConfigurationSnapshot");
-                    writer.WriteObjectValue(AnomalyDetectionConfigurationSnapshot);
-                }
-                else
-                {
-                    writer.WriteNull("anomalyDetectionConfigurationSnapshot");
-                }
+                writer.WritePropertyName("anomalyDetectionConfigurationSnapshot");
+                writer.WriteObjectValue(AnomalyDetectionConfigurationSnapshot);
             }
             writer.WritePropertyName("feedbackType");
             writer.WriteStringValue(Type.ToString());
@@ -111,11 +97,6 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 if (property.NameEquals("anomalyDetectionConfigurationId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        anomalyDetectionConfigurationId = null;
-                        continue;
-                    }
                     anomalyDetectionConfigurationId = property.Value.GetString();
                     continue;
                 }
@@ -123,7 +104,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        anomalyDetectionConfigurationSnapshot = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     anomalyDetectionConfigurationSnapshot = AnomalyDetectionConfiguration.DeserializeAnomalyDetectionConfiguration(property.Value);

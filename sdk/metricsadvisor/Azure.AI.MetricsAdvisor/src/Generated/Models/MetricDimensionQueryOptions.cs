@@ -10,7 +10,7 @@ using System;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The MetricDimensionQueryOptions. </summary>
-    internal partial class MetricDimensionQueryOptions
+    public partial class MetricDimensionQueryOptions
     {
         /// <summary> Initializes a new instance of MetricDimensionQueryOptions. </summary>
         /// <param name="dimensionName"> dimension name. </param>

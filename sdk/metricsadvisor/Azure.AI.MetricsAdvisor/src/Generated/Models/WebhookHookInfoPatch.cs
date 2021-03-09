@@ -8,7 +8,7 @@
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The WebhookHookInfoPatch. </summary>
-    internal partial class WebhookHookInfoPatch : HookInfoPatch
+    public partial class WebhookHookInfoPatch : HookInfoPatch
     {
         /// <summary> Initializes a new instance of WebhookHookInfoPatch. </summary>
         public WebhookHookInfoPatch()

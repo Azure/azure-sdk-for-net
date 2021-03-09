@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The MetricSeriesQueryOptions. </summary>
-    internal partial class MetricSeriesQueryOptions
+    public partial class MetricSeriesQueryOptions
     {
         /// <summary> Initializes a new instance of MetricSeriesQueryOptions. </summary>
         /// <param name="activeSince"> query series ingested after this time, the format should be yyyy-MM-ddTHH:mm:ssZ. </param>

@@ -8,7 +8,7 @@
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> Contains an input document to be analyzed by the service. </summary>
-    internal partial class MultiLanguageInput
+    public partial class MultiLanguageInput
     {
         /// <summary> Initializes a new instance of MultiLanguageInput. </summary>
         /// <param name="id"> A unique, non-empty document identifier. </param>

@@ -13,7 +13,7 @@ using Azure.AI.TextAnalytics;
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The KeyPhraseResult. </summary>
-    internal partial class KeyPhraseResult
+    public partial class KeyPhraseResult
     {
         /// <summary> Initializes a new instance of KeyPhraseResult. </summary>
         /// <param name="documents"> Response by document. </param>

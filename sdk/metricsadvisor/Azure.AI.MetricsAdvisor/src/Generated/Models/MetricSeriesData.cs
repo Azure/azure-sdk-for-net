@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
@@ -15,28 +15,10 @@ namespace Azure.AI.MetricsAdvisor.Models
     public partial class MetricSeriesData
     {
         /// <summary> Initializes a new instance of MetricSeriesData. </summary>
-        /// <param name="definition"> . </param>
-        /// <param name="timestamps"> timestamps of the data related to this time series. </param>
-        /// <param name="values"> values of the data related to this time series. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="definition"/>, <paramref name="timestamps"/>, or <paramref name="values"/> is null. </exception>
-        internal MetricSeriesData(MetricSeriesDefinition definition, IEnumerable<DateTimeOffset> timestamps, IEnumerable<double> values)
+        internal MetricSeriesData()
         {
-            if (definition == null)
-            {
-                throw new ArgumentNullException(nameof(definition));
-            }
-            if (timestamps == null)
-            {
-                throw new ArgumentNullException(nameof(timestamps));
-            }
-            if (values == null)
-            {
-                throw new ArgumentNullException(nameof(values));
-            }
-
-            Definition = definition;
-            Timestamps = timestamps.ToList();
-            Values = values.ToList();
+            Timestamps = new ChangeTrackingList<DateTimeOffset>();
+            Values = new ChangeTrackingList<double>();
         }
 
         /// <summary> Initializes a new instance of MetricSeriesData. </summary>

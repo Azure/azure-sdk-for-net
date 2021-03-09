@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The AnomalyDetectionConfigurationList. </summary>
-    internal partial class AnomalyDetectionConfigurationList
+    public partial class AnomalyDetectionConfigurationList
     {
         /// <summary> Initializes a new instance of AnomalyDetectionConfigurationList. </summary>
         /// <param name="value"> . </param>

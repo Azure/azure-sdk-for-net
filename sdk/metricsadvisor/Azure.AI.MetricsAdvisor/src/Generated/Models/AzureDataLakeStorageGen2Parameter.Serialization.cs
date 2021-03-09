@@ -10,56 +10,21 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class AzureDataLakeStorageGen2Parameter : IUtf8JsonSerializable
+    public partial class AzureDataLakeStorageGen2Parameter : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (AccountName != null)
-            {
-                writer.WritePropertyName("accountName");
-                writer.WriteStringValue(AccountName);
-            }
-            else
-            {
-                writer.WriteNull("accountName");
-            }
-            if (AccountKey != null)
-            {
-                writer.WritePropertyName("accountKey");
-                writer.WriteStringValue(AccountKey);
-            }
-            else
-            {
-                writer.WriteNull("accountKey");
-            }
-            if (FileSystemName != null)
-            {
-                writer.WritePropertyName("fileSystemName");
-                writer.WriteStringValue(FileSystemName);
-            }
-            else
-            {
-                writer.WriteNull("fileSystemName");
-            }
-            if (DirectoryTemplate != null)
-            {
-                writer.WritePropertyName("directoryTemplate");
-                writer.WriteStringValue(DirectoryTemplate);
-            }
-            else
-            {
-                writer.WriteNull("directoryTemplate");
-            }
-            if (FileTemplate != null)
-            {
-                writer.WritePropertyName("fileTemplate");
-                writer.WriteStringValue(FileTemplate);
-            }
-            else
-            {
-                writer.WriteNull("fileTemplate");
-            }
+            writer.WritePropertyName("accountName");
+            writer.WriteStringValue(AccountName);
+            writer.WritePropertyName("accountKey");
+            writer.WriteStringValue(AccountKey);
+            writer.WritePropertyName("fileSystemName");
+            writer.WriteStringValue(FileSystemName);
+            writer.WritePropertyName("directoryTemplate");
+            writer.WriteStringValue(DirectoryTemplate);
+            writer.WritePropertyName("fileTemplate");
+            writer.WriteStringValue(FileTemplate);
             writer.WriteEndObject();
         }
 
@@ -74,51 +39,26 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 if (property.NameEquals("accountName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        accountName = null;
-                        continue;
-                    }
                     accountName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("accountKey"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        accountKey = null;
-                        continue;
-                    }
                     accountKey = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("fileSystemName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        fileSystemName = null;
-                        continue;
-                    }
                     fileSystemName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("directoryTemplate"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        directoryTemplate = null;
-                        continue;
-                    }
                     directoryTemplate = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("fileTemplate"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        fileTemplate = null;
-                        continue;
-                    }
                     fileTemplate = property.Value.GetString();
                     continue;
                 }

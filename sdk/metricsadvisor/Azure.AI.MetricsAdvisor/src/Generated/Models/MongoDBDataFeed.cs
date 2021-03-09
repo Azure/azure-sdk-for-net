@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The MongoDBDataFeed. </summary>
-    internal partial class MongoDBDataFeed : DataFeedDetail
+    public partial class MongoDBDataFeed : DataFeedDetail
     {
         /// <summary> Initializes a new instance of MongoDBDataFeed. </summary>
         /// <param name="dataFeedName"> data feed name. </param>

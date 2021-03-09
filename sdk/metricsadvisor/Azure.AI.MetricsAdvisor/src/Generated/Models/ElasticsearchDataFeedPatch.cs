@@ -8,7 +8,7 @@
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The ElasticsearchDataFeedPatch. </summary>
-    internal partial class ElasticsearchDataFeedPatch : DataFeedDetailPatch
+    public partial class ElasticsearchDataFeedPatch : DataFeedDetailPatch
     {
         /// <summary> Initializes a new instance of ElasticsearchDataFeedPatch. </summary>
         public ElasticsearchDataFeedPatch()

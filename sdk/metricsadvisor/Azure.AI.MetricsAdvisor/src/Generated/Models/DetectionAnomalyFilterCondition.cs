@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The DetectionAnomalyFilterCondition. </summary>
-    internal partial class DetectionAnomalyFilterCondition
+    public partial class DetectionAnomalyFilterCondition
     {
         /// <summary> Initializes a new instance of DetectionAnomalyFilterCondition. </summary>
         public DetectionAnomalyFilterCondition()
