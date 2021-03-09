@@ -97,52 +97,61 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
         public void TimeSeriesId_GetIdForStringKeys()
         {
             // Arrange
-            var tsiId = new TimeSeriesId("B17", "F1", "R400");
+            var key1 = "B17";
+            var key2 = "F1";
+            var key3 = "R400";
+            var tsiId = new TimeSeriesId(key1, key2, key3);
 
             // Act
             var idAsString = tsiId.ToString();
 
             // Assert
-            idAsString.Should().Be("[\"B17\",\"F1\",\"R400\"]");
+            idAsString.Should().Be($"[\"{key1}\",\"{key2}\",\"{key3}\"]");
         }
 
         [Test]
         public void TimeSeriesId_ToArrayWith1StringKey()
         {
             // Arrange
-            var tsiId = new TimeSeriesId("B17");
+            var key1 = "B17";
+            var tsiId = new TimeSeriesId(key1);
 
             // Act
             var idAsArray = tsiId.ToArray();
 
             // Assert
-            Enumerable.SequenceEqual(idAsArray, new object[] { "B17" }).Should().BeTrue();
+            idAsArray.Should().Equal(new string[] { key1 });
         }
 
         [Test]
         public void TimeSeriesId_ToArrayWith2StringKeys()
         {
             // Arrange
-            var tsiId = new TimeSeriesId("B17", "F1");
+            var key1 = "B17";
+            var key2 = "F1";
+            var tsiId = new TimeSeriesId(key1, key2);
 
             // Act
             var idAsArray = tsiId.ToArray();
 
             // Assert
-            Enumerable.SequenceEqual(idAsArray, new object[] { "B17", "F1" }).Should().BeTrue();
+            idAsArray.Should().Equal(new string[] { key1, key2 });
         }
 
         [Test]
         public void TimeSeriesId_ToArrayWith3StringKeys()
         {
             // Arrange
-            var tsiId = new TimeSeriesId("B17", "F1", "R1");
+            var key1 = "B17";
+            var key2 = "F1";
+            var key3 = "R1";
+            var tsiId = new TimeSeriesId(key1, key2, key3);
 
             // Act
             var idAsArray = tsiId.ToArray();
 
             // Assert
-            Enumerable.SequenceEqual(idAsArray, new object[] { "B17", "F1", "R1" }).Should().BeTrue();
+            idAsArray.Should().Equal(new string[] { key1, key2, key3 });
         }
     }
 }
