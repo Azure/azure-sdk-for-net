@@ -8,8 +8,8 @@
         "Authorization": "Sanitized",
         "Content-Length": "146",
         "Content-Type": "application/json",
-        "Date": "Tue, 09 Mar 2021 19:50:49 GMT",
-        "traceparent": "00-14c3e9f932e2b74fbb25e6528a394f2b-1f0b6dd244a1b145-00",
+        "Date": "Tue, 09 Mar 2021 20:07:31 GMT",
+        "traceparent": "00-7a408106e4f75042b15b9133c2040add-58f2b1152aa48145-00",
         "User-Agent": [
           "azsdk-net-Communication.Sms/1.0.0-alpha.20210309.1",
           "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19042 )"
@@ -33,18 +33,18 @@
       "ResponseHeaders": {
         "api-supported-versions": "2020-07-20-preview1, 2020-08-20-preview, 2021-03-07",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 09 Mar 2021 19:50:50 GMT",
-        "MS-CV": "AmAOUvbapEec8vXJdztVQw.0",
+        "Date": "Tue, 09 Mar 2021 20:07:31 GMT",
+        "MS-CV": "nHURzwXmG0m1PzZu0MVXiA.0",
         "Request-Context": "appId=",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0mtFHYAAAAACvbAaICmuuTIykxkssMdBoQ0hHRURHRTE2MTAAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
-        "X-Processing-Time": "473ms"
+        "X-Azure-Ref": "0hNVHYAAAAAAmMxHXsDRjS58xBbKIt9ztRVdSMzBFREdFMDUxNQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Processing-Time": "433ms"
       },
       "ResponseBody": {
         "value": [
           {
             "to": "Sanitized",
-            "messageId": "Outgoing_202103091950501eaa7d17-0ab3-41d7-a355-dac2645fe45b_noam",
+            "messageId": "Outgoing_2021030920073284918e14-fdb1-438e-87d2-80319d63f3dc_noam",
             "httpStatusCode": 202,
             "repeatabilityResult": "accepted",
             "successful": true
@@ -54,7 +54,7 @@
     }
   ],
   "Variables": {
-    "AZURE_COMMUNICATION_LIVETEST_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=3z7dN2ZEcANlOejjlHaJUfqdC4SyuzdiHbaMcFR0tNRK37KDZ14HUuhIybbBgt6oSQwUwu5TnF5cYFm22Lh/xg==",
+    "AZURE_COMMUNICATION_LIVETEST_CONNECTION_STRING": "endpoint=https://Sanitized.communication.azure.com/;accesskey=Kg==",
     "AZURE_PHONE_NUMBER": "\u002B18005555555",
     "RandomSeed": "780012571"
   }

@@ -8,8 +8,8 @@
         "Authorization": "Sanitized",
         "Content-Length": "146",
         "Content-Type": "application/json",
-        "Date": "Tue, 09 Mar 2021 19:50:50 GMT",
-        "traceparent": "00-c7ea02b0404c924995374455f421a870-230c78653e6e8b44-00",
+        "Date": "Tue, 09 Mar 2021 20:07:32 GMT",
+        "traceparent": "00-138dcc046aef7c45bb70c20b3b50f602-b0bddd83b167e044-00",
         "User-Agent": [
           "azsdk-net-Communication.Sms/1.0.0-alpha.20210309.1",
           "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19042 )"
@@ -33,17 +33,17 @@
       "ResponseHeaders": {
         "api-supported-versions": "2020-07-20-preview1, 2020-08-20-preview, 2021-03-07",
         "Content-Length": "0",
-        "Date": "Tue, 09 Mar 2021 19:50:51 GMT",
-        "MS-CV": "sPDzhk/eC02rSNyWZtQhZQ.0",
+        "Date": "Tue, 09 Mar 2021 20:07:32 GMT",
+        "MS-CV": "UHZbLLAGq0Cvvi3glsQLew.0",
         "Request-Context": "appId=",
-        "X-Azure-Ref": "0m9FHYAAAAAA2lpHPZ3zlR7OqcmeIIYcmQ0hHRURHRTE2MTAAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
-        "X-Processing-Time": "347ms"
+        "X-Azure-Ref": "0hdVHYAAAAACTI1hvU/ZlSpggJ\u002BLuQC/HRVdSMzBFREdFMDUxNQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Processing-Time": "184ms"
       },
       "ResponseBody": []
     }
   ],
   "Variables": {
-    "AZURE_COMMUNICATION_LIVETEST_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=3z7dN2ZEcANlOejjlHaJUfqdC4SyuzdiHbaMcFR0tNRK37KDZ14HUuhIybbBgt6oSQwUwu5TnF5cYFm22Lh/xg==",
+    "AZURE_COMMUNICATION_LIVETEST_CONNECTION_STRING": "endpoint=https://Sanitized.communication.azure.com/;accesskey=Kg==",
     "AZURE_PHONE_NUMBER": "\u002B18005555555",
     "RandomSeed": "1025377727"
   }
