@@ -20,7 +20,7 @@ namespace Proto.Client
         ShutdownVmsByLINQ,
         ShutdownVmsByNameAcrossResourceGroups,
         //ShutdownVmsByNameAcrossSubscriptions,
-        ListByNameExpanded,
+        List,
         ClientOptionsOverride,
         GetSubscription,
         NullDataValues,
