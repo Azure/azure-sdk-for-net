@@ -8,9 +8,9 @@ Run `dotnet msbuild /t:GenerateCode` to generate code.
 
 ```yaml
 public-clients: true
-tag: package-2021-03-07
+tag: package-phonenumber-2021-03-07
 require:
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/a4d1e1516433894fca89f9600a6ac8a5471fc598/specification/communication/data-plane/readme.md
+    - https://github.com/JoshuaLai/azure-rest-api-specs/blob/85f3acf2ca9c8dd0da721e98c7e1b9fd2a447155/specification/communication/data-plane/readme.md
 title: Phone numbers
 payload-flattening-threshold: 3
 ```
