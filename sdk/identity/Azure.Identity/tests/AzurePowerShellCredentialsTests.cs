@@ -65,7 +65,7 @@ namespace Azure.Identity.Tests
         public void AuthenticateWithAzurePowerShellCredential_RunConnectAzAccount([Values("Run Connect-AzAccount to login")] string errorMessage)
         {
             var testProcess = new TestProcess { Error = errorMessage };
-            AzurePowerShellCredential credential = InstrumentClient(new AzurePowerShellCredential(new AzurePowerShellCredentialOptions() { UseLegacyPowerShell = true }, CredentialPipeline.GetInstance(null), new TestProcessService(testProcess)));
+            AzurePowerShellCredential credential = InstrumentClient(new AzurePowerShellCredential(new AzurePowerShellCredentialOptions { UseLegacyPowerShell = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) }, CredentialPipeline.GetInstance(null), new TestProcessService(testProcess)));
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
             Assert.AreEqual(AzurePowerShellCredential.AzurePowerShellNotLogInError, ex.Message);
         }
@@ -110,7 +110,7 @@ namespace Azure.Identity.Tests
             AssertOptionsHonored(new AzurePowerShellCredentialOptions(), credential);
 
             // with options
-            var options = new AzurePowerShellCredentialOptions() {UseLegacyPowerShell = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? true : false};
+            var options = new AzurePowerShellCredentialOptions {UseLegacyPowerShell = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) };
 
             credential = new AzurePowerShellCredential(options);
 
