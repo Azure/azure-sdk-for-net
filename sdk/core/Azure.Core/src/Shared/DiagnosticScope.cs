@@ -9,99 +9,51 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Linq.Expressions;
 using System.Reflection;
 
 namespace Azure.Core.Pipeline
 {
-    /// <summary>
-    /// This type abstracts Activity creation complexity from the client implementation
-    /// There are two kinds of Activities we create:
-    ///     1. DiagnosticSource-based activity - a legacy mechanist that primarily used by ApplicationInsights collector
-    ///     2. ActivitySource-based activity - the ActivitySource type is new in .NET 5 and the simpler way to
-    ///         publish and consume activities. Would be consumed by OpenTelemetry and other ActivityListener users.
-    ///
-    /// Both these methods operate on the same Activity type but have slight differences:
-    /// Feature                           | DiagnosticSource                        | ActivitySource
-    ///                                   |                                         |
-    /// Specifying activity kind          | Using the "kind" tag                    | Using the strongly typed kind parameter on
-    ///                                   |                                         |  ActivitySource.StartActivity method
-    ///                                   |                                         |
-    /// Links support                     | Simulated via the DiagnosticActivity    | Using the strongly typed Links property
-    ///                                   | Links property that consumers use       |
-    ///                                   | reflection to read                      |
-    ///                                   |                                         |
-    /// Non-string tags                   | Non supported, all values stringified   | Added using new AddTag(string, object) overload
-    ///                                   |                                         | consumed via TagObjects property
-    ///                                   |                                         |
-    /// Activity name                     | "ClientName.MethodName"                 | "MethodName"
-    ///                                   |                                         |
-    /// Source name                       | "ClientNamespace"                       | "ClientNamespace.ClientName"
-    ///                                   |                                         |
-    /// Failure notification              | via raising ".Exception" diagnostic     | via additional tags, possibly new
-    ///                                   | source event                            | status property in NET6
-    ///
-    /// </summary>
+#pragma warning disable CA1001 // Implement IDisposable
     internal readonly struct DiagnosticScope : IDisposable
+#pragma warning restore CA1001 // Implement IDisposable
     {
         private static readonly ConcurrentDictionary<string, object?> ActivitySources = new ();
 
-        private readonly DiagnosticActivity? _legacyActivity;
-        private readonly DiagnosticListener _source;
-        private readonly object? _diagnosticSourceArgs;
-        private readonly ActivitySourceAdapter? _activitySourceAdapter;
+        private readonly ActivityAdapter? _activitySourceAdapter;
 
         internal DiagnosticScope(string ns, string scopeName, DiagnosticListener source, ActivityKind kind)
         {
-            _source = source;
-            _legacyActivity = InitializeLegacyActivity(source, null, scopeName, kind);
-            _diagnosticSourceArgs = _legacyActivity;
-            _activitySourceAdapter = InitializeActivitySource(ns, scopeName, kind);
-        }
+            var activitySource = GetActivitySource(ns, scopeName);
 
-        internal DiagnosticScope(string scopeName, string methodName, DiagnosticListener source, object? diagnosticSourceArgs, object? activitySource, ActivityKind kind)
-        {
-            _source = source;
-            _diagnosticSourceArgs = diagnosticSourceArgs;
-            _legacyActivity = InitializeLegacyActivity(source, diagnosticSourceArgs, scopeName, kind);
-            _diagnosticSourceArgs = diagnosticSourceArgs ?? _legacyActivity;
-            if (activitySource != null)
+            IsEnabled = source.IsEnabled() || ActivityExtensions.ActivitySourceHasListeners(activitySource);
+
+            if (IsEnabled)
             {
-                _activitySourceAdapter = new ActivitySourceAdapter(activitySource, methodName, kind);
+                _activitySourceAdapter = new ActivityAdapter(activitySource, source, scopeName, kind, null);
             }
             else
             {
-                _activitySourceAdapter= null;
+                _activitySourceAdapter = null;
             }
         }
 
-        private static DiagnosticActivity? InitializeLegacyActivity(DiagnosticListener source, object? diagnosticSourceArgs, string scopeName, ActivityKind kind)
+        internal DiagnosticScope(string scopeName, DiagnosticListener source, object? diagnosticSourceArgs, object? activitySource, ActivityKind kind)
         {
-            var legacyActivity = source.IsEnabled(scopeName, diagnosticSourceArgs) ? new DiagnosticActivity(scopeName) : null;
-            legacyActivity?.SetW3CFormat();
+            IsEnabled = source.IsEnabled() || ActivityExtensions.ActivitySourceHasListeners(activitySource);
 
-            switch (kind)
+            if (IsEnabled)
             {
-                case ActivityKind.Internal:
-                    legacyActivity?.AddTag("kind", "internal");
-                    break;
-                case ActivityKind.Server:
-                    legacyActivity?.AddTag("kind", "server");
-                    break;
-                case ActivityKind.Client:
-                    legacyActivity?.AddTag("kind", "client");
-                    break;
-                case ActivityKind.Producer:
-                    legacyActivity?.AddTag("kind", "producer");
-                    break;
-                case ActivityKind.Consumer:
-                    legacyActivity?.AddTag("kind", "consumer");
-                    break;
+                _activitySourceAdapter = new ActivityAdapter(activitySource, source, scopeName, kind, diagnosticSourceArgs);
             }
-            return legacyActivity;
+            else
+            {
+                _activitySourceAdapter = null;
+            }
         }
 
-        private static ActivitySourceAdapter? InitializeActivitySource(string ns, string name, ActivityKind kind)
+        private static object? GetActivitySource(string ns, string name)
         {
             if (!ActivityExtensions.SupportsActivitySource())
             {
@@ -115,22 +67,14 @@ namespace Azure.Core.Pipeline
             }
 
             string clientName = ns + "." + name.Substring(0, indexOfDot);
-            string methodName = name.Substring(indexOfDot + 1);
 
-            var currentSource = ActivitySources.GetOrAdd(clientName, static n => ActivityExtensions.CreateActivitySource(n));
-            if (currentSource == null)
-            {
-                return null;
-            }
-
-            return new ActivitySourceAdapter(currentSource, methodName, kind);
+            return ActivitySources.GetOrAdd(clientName, static n => ActivityExtensions.CreateActivitySource(n));
         }
 
-        public bool IsEnabled => _legacyActivity != null || _activitySourceAdapter?.HasListeners() == true;
+        public bool IsEnabled { get; }
 
         public void AddAttribute(string name, string value)
         {
-            _legacyActivity?.AddTag(name, value);
             _activitySourceAdapter?.AddTag(name, value);
         }
 
@@ -140,83 +84,41 @@ namespace Azure.Core.Pipeline
 #endif
             T value)
         {
-            _legacyActivity?.AddTag(name, value?.ToString() ?? string.Empty);
-            _activitySourceAdapter?.AddTag(name, value);
+            AddAttribute(name, value, static v => Convert.ToString(v, CultureInfo.InvariantCulture) ?? string.Empty);
         }
 
         public void AddAttribute<T>(string name, T value, Func<T, string> format)
         {
-            if (_legacyActivity != null)
+            if (_activitySourceAdapter != null)
             {
                 var formattedValue = format(value);
-                _legacyActivity.AddTag(name, formattedValue);
+                _activitySourceAdapter.AddTag(name, formattedValue);
             }
-
-            _activitySourceAdapter?.AddTag(name, value);
         }
 
         public void AddLink(string id, IDictionary<string, string>? attributes = null)
         {
-            if (_legacyActivity != null)
-            {
-                var linkedActivity = new Activity("LinkedActivity");
-                linkedActivity.SetW3CFormat();
-                linkedActivity.SetParentId(id);
-
-                if (attributes != null)
-                {
-                    foreach (var kvp in attributes)
-                    {
-                        linkedActivity.AddTag(kvp.Key, kvp.Value);
-                    }
-                }
-
-                _legacyActivity.AddLink(linkedActivity);
-            }
-
             _activitySourceAdapter?.AddLink(id, attributes);
         }
 
         public void Start()
         {
             _activitySourceAdapter?.Start();
-
-            if (_legacyActivity != null)
-            {
-                _source.StartActivity(_legacyActivity, _diagnosticSourceArgs);
-            }
         }
 
         public void SetStartTime(DateTime dateTime)
         {
-            _legacyActivity?.SetStartTime(dateTime);
             _activitySourceAdapter?.SetStartTime(dateTime);
         }
 
         public void Dispose()
         {
-            if (_legacyActivity != null)
-            {
-#if DEBUG
-                if (Activity.Current != _legacyActivity)
-                {
-                    throw new InvalidOperationException("Activity is already stopped.");
-                }
-#endif
-                _source.StopActivity(_legacyActivity, _diagnosticSourceArgs);
-            }
-
             // Reverse the Start order
             _activitySourceAdapter?.Dispose();
         }
 
         public void Failed(Exception e)
         {
-            if (_legacyActivity != null)
-            {
-                _source?.Write(_legacyActivity.OperationName + ".Exception", e);
-            }
-
             _activitySourceAdapter?.MarkFailed(e);
         }
 
@@ -254,47 +156,63 @@ namespace Azure.Core.Pipeline
 
         private class DiagnosticActivity : Activity
         {
-            private List<Activity>? _links;
-
 #pragma warning disable 109 // extra new modifier
-            public new IEnumerable<Activity> Links => (IEnumerable<Activity>?)_links ?? Array.Empty<Activity>();
+            public new IEnumerable<Activity> Links { get; set; } = Array.Empty<Activity>();
 #pragma warning restore 109
 
             public DiagnosticActivity(string operationName) : base(operationName)
             {
             }
-
-            public void AddLink(Activity activity)
-            {
-                _links ??= new List<Activity>();
-                _links.Add(activity);
-            }
         }
 
-        private class ActivitySourceAdapter
+        private class ActivityAdapter : IDisposable
         {
-            private readonly object _activitySource;
+            private readonly object? _activitySource;
+            private readonly DiagnosticSource _diagnosticSource;
             private readonly string _activityName;
             private readonly ActivityKind _kind;
+            private object? _diagnosticSourceArgs;
             private Activity? _currentActivity;
             private ICollection<KeyValuePair<string,object>>? _tagCollection;
             private DateTimeOffset _startTime;
-            private IList? _linkCollection;
 
-            public ActivitySourceAdapter(object activitySource, string activityName, ActivityKind kind)
+            private List<Activity>? _links;
+
+            public ActivityAdapter(object? activitySource, DiagnosticSource diagnosticSource, string activityName, ActivityKind kind, object? diagnosticSourceArgs)
             {
                 _activitySource = activitySource;
+                _diagnosticSource = diagnosticSource;
                 _activityName = activityName;
                 _kind = kind;
+                _diagnosticSourceArgs = diagnosticSourceArgs;
+
+                switch (_kind)
+                {
+                    case ActivityKind.Internal:
+                        AddTag("kind", "internal");
+                        break;
+                    case ActivityKind.Server:
+                        AddTag("kind", "server");
+                        break;
+                    case ActivityKind.Client:
+                        AddTag("kind", "client");
+                        break;
+                    case ActivityKind.Producer:
+                        AddTag("kind", "producer");
+                        break;
+                    case ActivityKind.Consumer:
+                        AddTag("kind", "consumer");
+                        break;
+                }
             }
 
-            public void AddTag<T>(string name, T value)
+            public void AddTag(string name, string value)
             {
                 if (_currentActivity == null)
                 {
                     // Activity is not started yet, add the value to the collection
                     // that is going to be passed to StartActivity
-                    _tagCollection ??= ActivityExtensions.CreateTagsCollection();
+                    _tagCollection ??= ActivityExtensions.CreateTagsCollection() ?? new List<KeyValuePair<string, object>>();
                     _tagCollection?.Add(new KeyValuePair<string, object>(name, value!));
                 }
                 else
@@ -303,75 +221,109 @@ namespace Azure.Core.Pipeline
                 }
             }
 
-            public void AddLink(string id, IDictionary<string, string>? attributes)
+            private IList? GetActivitySourceLinkCollection()
             {
-                _linkCollection ??= ActivityExtensions.CreateLinkCollection();
-
-                if (_linkCollection == null)
+                if (_links == null)
                 {
-                    return;
+                    return null;
                 }
 
-                ICollection<KeyValuePair<string,object>>? linkTagsCollection = null;
-                if (attributes != null)
+                var linkCollection = ActivityExtensions.CreateLinkCollection();
+                if (linkCollection == null)
                 {
-                    linkTagsCollection ??= ActivityExtensions.CreateTagsCollection();
+                    return null;
+                }
 
+                foreach (var activity in _links)
+                {
+                    ICollection<KeyValuePair<string,object>>? linkTagsCollection =  ActivityExtensions.CreateTagsCollection();
                     if (linkTagsCollection != null)
                     {
-                        foreach (var attribute in attributes)
+                        foreach (var tag in activity.Tags)
                         {
-                            linkTagsCollection.Add(new KeyValuePair<string, object>(attribute.Key, attribute.Value));
+                            linkTagsCollection.Add(new KeyValuePair<string, object>(tag.Key, tag.Value!));
                         }
+                    }
+
+                    var link = ActivityExtensions.CreateActivityLink(activity.Id!, linkTagsCollection);
+                    if (link != null)
+                    {
+                        linkCollection.Add(link);
                     }
                 }
 
-                var link = ActivityExtensions.CreateActivityLink(id, linkTagsCollection);
-                if (link != null)
-                {
-                    _linkCollection.Add(link);
-                }
+                return linkCollection;
             }
 
-            public bool HasListeners() => ActivityExtensions.ActivitySourceHasListeners(_activitySource);
+            public void AddLink(string id, IDictionary<string, string>? attributes)
+            {
+                var linkedActivity = new Activity("LinkedActivity");
+                linkedActivity.SetW3CFormat();
+                linkedActivity.SetParentId(id);
+
+                if (attributes != null)
+                {
+                    foreach (var kvp in attributes)
+                    {
+                        linkedActivity.AddTag(kvp.Key, kvp.Value);
+                    }
+                }
+
+                (_links ??= new List<Activity>()).Add(linkedActivity);
+            }
 
             public void Start()
             {
-                _currentActivity = ActivityExtensions.ActivitySourceStartActivity(
+                _currentActivity = StartActivitySourceActivity();
+
+                if (_currentActivity == null)
+                {
+                    _currentActivity = new DiagnosticActivity(_activityName)
+                    {
+                        Links = (IEnumerable<Activity>?)_links ?? Array.Empty<Activity>(),
+                    };
+                    _currentActivity.SetW3CFormat();
+                    _currentActivity.SetStartTime(_startTime.DateTime);
+                }
+
+                _diagnosticSourceArgs ??= _currentActivity;
+
+                _diagnosticSource.Write(_activityName + ".Start", _diagnosticSourceArgs);
+            }
+
+            private Activity? StartActivitySourceActivity()
+            {
+                return ActivityExtensions.ActivitySourceStartActivity(
                     _activitySource,
                     _activityName,
                     (int)_kind,
                     startTime: _startTime,
                     tags: _tagCollection,
-                    links: _linkCollection);
+                    links: GetActivitySourceLinkCollection());
             }
 
             public void SetStartTime(DateTime startTime)
             {
                 _startTime = startTime;
+                _currentActivity?.SetStartTime(startTime);
             }
 
             public void MarkFailed(Exception exception)
             {
-                // See https://github.com/open-telemetry/opentelemetry-dotnet/blob/master/src/OpenTelemetry.Api/Trace/StatusCode.cs
-                // and https://github.com/open-telemetry/opentelemetry-dotnet/blob/master/src/OpenTelemetry.Api/Trace/ActivityExtensions.cs#L45
-                // Unset = 0,
-                // Error = 1
-                // Ok = 2
-                _currentActivity?.AddObjectTag("otel.status_code", 1);
-                _currentActivity?.AddTag("otel.status_description", exception.Message);
+                _diagnosticSource?.Write(_activityName + ".Exception", exception);
             }
 
             public void Dispose()
             {
-#if DEBUG
-                if (_currentActivity != null &&
-                    _currentActivity != Activity.Current)
+                if (_currentActivity != null)
                 {
-                    throw new InvalidOperationException("Activity is already stopped.");
+                    _diagnosticSource.Write(_activityName + ".Stop", _diagnosticSourceArgs);
+
+                    if (!_currentActivity.TryDispose())
+                    {
+                        _currentActivity.Stop();
+                    }
                 }
-#endif
-                (_currentActivity as IDisposable)?.Dispose();
             }
         }
     }
@@ -660,6 +612,17 @@ namespace Azure.Core.Pipeline
                 return null;
             }
             return Activator.CreateInstance(typeof(List<>).MakeGenericType(s_activityLinkType)) as IList;
+        }
+
+        public static bool TryDispose(this Activity activity)
+        {
+            if (activity is IDisposable disposable)
+            {
+                disposable.Dispose();
+                return true;
+            }
+
+            return false;
         }
     }
 }
