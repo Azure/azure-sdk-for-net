@@ -1321,5 +1321,21 @@ namespace Azure.Storage.Blobs
             return metadata;
         }
         #endregion
+
+        #region ToBlobImmutabilityPolicy
+        internal static BlobImmutabilityPolicy ToBlobImmutabilityPolicy(this ResponseWithHeaders<BlobSetImmutabilityPolicyHeaders> response)
+        {
+            if (response == null)
+            {
+                return null;
+            }
+
+            return new BlobImmutabilityPolicy
+            {
+                ExpiriesOn = response.Headers.ImmutabilityPolicyExpiry,
+                PolicyMode = response.Headers.ImmutabilityPolicyMode
+            };
+        }
+        #endregion
     }
 }

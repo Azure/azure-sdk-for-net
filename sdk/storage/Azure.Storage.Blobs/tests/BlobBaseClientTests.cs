@@ -7115,6 +7115,28 @@ namespace Azure.Storage.Blobs.Test
             mock = new Mock<BlobBaseClient>(new Uri("https://test/test"), GetOAuthCredential(TestConfigHierarchicalNamespace), new BlobClientOptions()).Object;
         }
 
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task SetImmutibilityPolicyAsync()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy
+            {
+                ExpiriesOn = Recording.UtcNow.AddDays(1),
+                PolicyMode = BlobImmutabilityPolicyMode.Locked
+            };
+
+            // Act
+            Response<BlobImmutabilityPolicy> response = await blob.SetImmutabilityPolicyAsync(immutabilityPolicy);
+
+            // Assert
+            Assert.AreEqual(immutabilityPolicy.ExpiriesOn, response.Value.ExpiriesOn);
+            Assert.AreEqual(immutabilityPolicy.PolicyMode, response.Value.PolicyMode);
+        }
+
         public IEnumerable<AccessConditionParameters> AccessConditions_Data
             => new[]
             {

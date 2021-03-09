@@ -4787,6 +4787,160 @@ namespace Azure.Storage.Blobs.Specialized
         }
         #endregion
 
+        #region SetImmutabilityPolicy
+        /// <summary>
+        /// Sets the Immutability Policy on a Blob, Blob Snapshot, or Blob Version.
+        /// Note that Blob Versioning and Version Level Worm must be enable for to call
+        /// this API.
+        /// </summary>
+        /// <param name="immutabilityPolicy">
+        /// The <see cref="BlobImmutabilityPolicy"/> to set.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
+        /// setting the blob's HTTP headers.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobImmutabilityPolicy}"/>.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<BlobImmutabilityPolicy> SetImmutabilityPolicy(
+            BlobImmutabilityPolicy immutabilityPolicy,
+            BlobRequestConditions conditions,
+            CancellationToken cancellationToken = default) =>
+            SetImmutabilityPolicyInternal(
+                immutabilityPolicy: immutabilityPolicy,
+                conditions: conditions,
+                async: false,
+                cancellationToken: cancellationToken)
+            .EnsureCompleted();
+
+        /// <summary>
+        /// Sets the Immutability Policy on a Blob, Blob Snapshot, or Blob Version.
+        /// Note that Blob Versioning and Version Level Worm must be enable for to call
+        /// this API.
+        /// </summary>
+        /// <param name="immutabilityPolicy">
+        /// The <see cref="BlobImmutabilityPolicy"/> to set.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
+        /// setting the blob's HTTP headers.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobImmutabilityPolicy}"/>.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<BlobImmutabilityPolicy>> SetImmutabilityPolicyAsync(
+            BlobImmutabilityPolicy immutabilityPolicy,
+            BlobRequestConditions conditions,
+            CancellationToken cancellationToken = default) =>
+            await SetImmutabilityPolicyInternal(
+                immutabilityPolicy: immutabilityPolicy,
+                conditions: conditions,
+                async: true,
+                cancellationToken: cancellationToken)
+            .ConfigureAwait(false);
+
+        /// <summary>
+        /// Sets the Immutability Policy on a Blob, Blob Snapshot, or Blob Version.
+        /// Note that Blob Versioning and Version Level Worm must be enable for to call
+        /// this API.
+        /// </summary>
+        /// <param name="immutabilityPolicy">
+        /// The <see cref="BlobImmutabilityPolicy"/> to set.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
+        /// setting the blob's HTTP headers.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobImmutabilityPolicy}"/>.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<BlobImmutabilityPolicy>> SetImmutabilityPolicyInternal(
+            BlobImmutabilityPolicy immutabilityPolicy,
+            BlobRequestConditions conditions,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
+            {
+                ClientConfiguration.Pipeline.LogMethodEnter(
+                    nameof(BlobBaseClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(immutabilityPolicy)}: {immutabilityPolicy}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobBaseClient)}.{nameof(SetImmutabilityPolicy)}");
+
+                try
+                {
+                    scope.Start();
+                    ResponseWithHeaders<BlobSetImmutabilityPolicyHeaders> response;
+
+                    if (async)
+                    {
+                        response = await BlobRestClient.SetImmutabilityPolicyAsync(
+                            timeout: null,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            immutabilityPolicyExpiry: immutabilityPolicy.ExpiriesOn,
+                            immutabilityPolicyMode: immutabilityPolicy.PolicyMode,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = BlobRestClient.SetImmutabilityPolicy(
+                            timeout: null,
+                            immutabilityPolicyExpiry: immutabilityPolicy.ExpiriesOn,
+                            immutabilityPolicyMode: immutabilityPolicy.PolicyMode,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.ToBlobImmutabilityPolicy(),
+                        response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(BlobBaseClient));
+                    scope.Dispose();
+                }
+            }
+        }
+        #endregion
+
         #region GenerateSas
         /// <summary>
         /// The <see cref="GenerateSasUri(BlobSasPermissions, DateTimeOffset)"/>
