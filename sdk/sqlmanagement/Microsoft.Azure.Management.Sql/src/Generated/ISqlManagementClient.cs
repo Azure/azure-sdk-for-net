@@ -438,11 +438,6 @@ namespace Microsoft.Azure.Management.Sql
         IUsagesOperations Usages { get; }
 
         /// <summary>
-        /// Gets the IPrivateEndpointConnectionsOperations.
-        /// </summary>
-        IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; }
-
-        /// <summary>
         /// Gets the IPrivateLinkResourcesOperations.
         /// </summary>
         IPrivateLinkResourcesOperations PrivateLinkResources { get; }
@@ -546,6 +541,11 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the ILongTermRetentionPoliciesOperations.
         /// </summary>
         ILongTermRetentionPoliciesOperations LongTermRetentionPolicies { get; }
+
+        /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; }
 
     }
 }
