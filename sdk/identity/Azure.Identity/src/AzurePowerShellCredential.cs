@@ -193,7 +193,7 @@ return $token | ConvertTo-Json
             }
             else
             {
-                fileName = "/bin/sh";
+                fileName = $"{DefaultWorkingDirNonWindows}sh";
                 argument = $"-c \"{powershellExe} \"{commandBase64}\" \"";
             }
         }
