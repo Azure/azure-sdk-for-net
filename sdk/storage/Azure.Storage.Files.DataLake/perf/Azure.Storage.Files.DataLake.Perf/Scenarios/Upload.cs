@@ -86,17 +86,6 @@ namespace Azure.Storage.Files.DataLake.Perf.Scenarios
         }
 
         /// <summary>
-        ///   Performs the tasks needed to initialize and set up the environment for an instance
-        ///   of the test scenario.  When multiple instances are run in parallel, setup will be
-        ///   run once for each prior to its execution.
-        /// </summary>
-        ///
-        public async override Task SetupAsync()
-        {
-            await base.SetupAsync();
-        }
-
-        /// <summary>
         ///   Executes the performance test scenario synchronously.
         /// </summary>
         ///
