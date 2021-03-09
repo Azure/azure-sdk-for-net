@@ -266,8 +266,7 @@ namespace Azure.Identity.Tests
                                                    [Values(true, false)]bool excludeVisualStudioCodeCredential,
                                                    [Values(true, false)]bool excludeCliCredential,
                                                    [Values(true, false)]bool excludeAzurePowerShellCredential,
-                                                   [Values(true, false)]bool excludeInteractiveBrowserCredential
-                                                   )
+                                                   [Values(true, false)]bool excludeInteractiveBrowserCredential)
         {
             var credFactory = new MockDefaultAzureCredentialFactory(CredentialPipeline.GetInstance(null));
 

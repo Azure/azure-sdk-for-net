@@ -28,8 +28,8 @@ namespace Azure.Identity
         private const string AzurePowerShellFailedError = "Azure PowerShell authentication failed due to an unknown error.";
         private const string AzurePowerShellTimeoutError = "Azure PowerShell authentication timed out.";
         private const string AzurePowerShellNotLogInError = "Please run 'Connect-AzAccount' to set up account.";
-        private const string AzurePowerShellModuleNotInstalledError = "Az.Account module >= 2.2.0 is not installed.";
-        private const string PowerShellNotInstalledError = "PowerShell is not installed.";
+        internal const string AzurePowerShellModuleNotInstalledError = "Az.Account module >= 2.2.0 is not installed.";
+        internal const string PowerShellNotInstalledError = "PowerShell is not installed.";
 
         private const string AzurePowerShellNoAzAccountModule = "NoAzAccountModule";
         private static readonly string DefaultWorkingDirWindows = Environment.GetFolderPath(Environment.SpecialFolder.System);
@@ -125,9 +125,7 @@ namespace Azure.Identity
                     throw new CredentialUnavailableException(PowerShellNotInstalledError);
                 }
 
-                bool noLogin =
-                    exception.Message.IndexOf("Run Connect-AzAccount to login", StringComparison.OrdinalIgnoreCase) !=
-                    -1;
+                bool noLogin = exception.Message.IndexOf("Run Connect-AzAccount to login", StringComparison.OrdinalIgnoreCase) != -1;
 
                 if (noLogin)
                 {

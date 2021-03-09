@@ -14,7 +14,7 @@ namespace Azure.Identity
 
         private const string NonTlsAuthorityHostErrorMessage = "Authority host must be a TLS protected (https) endpoint.";
 
-        private const string NoWindowsPowerShellLegacyErrorMessage = "PowerShell Legacy is only supported in Windows.";
+        internal const string NoWindowsPowerShellLegacyErrorMessage = "PowerShell Legacy is only supported in Windows.";
 
         /// <summary>
         /// As tenant id is used in constructing authority endpoints and in command line invocation we validate the character set of the tenant id matches allowed characters.
