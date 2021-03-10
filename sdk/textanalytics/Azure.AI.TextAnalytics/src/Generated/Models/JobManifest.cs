@@ -11,7 +11,7 @@ using Azure.AI.TextAnalytics;
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The JobManifest. </summary>
-    public partial class JobManifest
+    internal partial class JobManifest
     {
         /// <summary> Initializes a new instance of JobManifest. </summary>
         /// <param name="tasks"> The set of tasks to execute on the input documents. Cannot specify the same task more than once. </param>

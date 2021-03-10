@@ -13,7 +13,7 @@ using Azure.AI.TextAnalytics;
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The SentimentResponse. </summary>
-    public partial class SentimentResponse
+    internal partial class SentimentResponse
     {
         /// <summary> Initializes a new instance of SentimentResponse. </summary>
         /// <param name="documents"> Sentiment analysis per document. </param>

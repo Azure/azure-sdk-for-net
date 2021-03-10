@@ -8,7 +8,7 @@
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The MySqlDataFeedPatch. </summary>
-    public partial class MySqlDataFeedPatch : DataFeedDetailPatch
+    internal partial class MySqlDataFeedPatch : DataFeedDetailPatch
     {
         /// <summary> Initializes a new instance of MySqlDataFeedPatch. </summary>
         public MySqlDataFeedPatch()

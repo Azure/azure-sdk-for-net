@@ -8,7 +8,7 @@
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The AnomalyProperty. </summary>
-    public partial class AnomalyProperty
+    internal partial class AnomalyProperty
     {
         /// <summary> Initializes a new instance of AnomalyProperty. </summary>
         /// <param name="anomalySeverity"> anomaly severity. </param>

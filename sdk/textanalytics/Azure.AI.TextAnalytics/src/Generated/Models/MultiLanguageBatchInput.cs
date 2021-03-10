@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> Contains a set of input documents to be analyzed by the service. </summary>
-    public partial class MultiLanguageBatchInput
+    internal partial class MultiLanguageBatchInput
     {
         /// <summary> Initializes a new instance of MultiLanguageBatchInput. </summary>
         /// <param name="documents"> The set of documents to process as part of this batch. </param>

@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    public partial class SentimentResponse
+    internal partial class SentimentResponse
     {
         internal static SentimentResponse DeserializeSentimentResponse(JsonElement element)
         {

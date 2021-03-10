@@ -13,7 +13,7 @@ using Azure.AI.TextAnalytics;
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The DocumentKeyPhrases. </summary>
-    public partial class DocumentKeyPhrases
+    internal partial class DocumentKeyPhrases
     {
         /// <summary> Initializes a new instance of DocumentKeyPhrases. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>

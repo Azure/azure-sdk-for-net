@@ -11,7 +11,7 @@ using Azure.AI.MetricsAdvisor;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The MetricFeedbackFilter. </summary>
-    public partial class MetricFeedbackFilter
+    internal partial class MetricFeedbackFilter
     {
         /// <summary> Initializes a new instance of MetricFeedbackFilter. </summary>
         /// <param name="metricId"> filter feedbacks by metric id. </param>

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    public partial class TargetRelation
+    internal partial class TargetRelation
     {
         internal static TargetRelation DeserializeTargetRelation(JsonElement element)
         {

@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The AzureDataLakeStorageGen2Parameter. </summary>
-    public partial class AzureDataLakeStorageGen2Parameter
+    internal partial class AzureDataLakeStorageGen2Parameter
     {
         /// <summary> Initializes a new instance of AzureDataLakeStorageGen2Parameter. </summary>
         /// <param name="accountName"> Account name. </param>
@@ -18,30 +16,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="fileSystemName"> File system name (Container). </param>
         /// <param name="directoryTemplate"> Directory template. </param>
         /// <param name="fileTemplate"> File template. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/>, <paramref name="accountKey"/>, <paramref name="fileSystemName"/>, <paramref name="directoryTemplate"/>, or <paramref name="fileTemplate"/> is null. </exception>
         public AzureDataLakeStorageGen2Parameter(string accountName, string accountKey, string fileSystemName, string directoryTemplate, string fileTemplate)
         {
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountKey == null)
-            {
-                throw new ArgumentNullException(nameof(accountKey));
-            }
-            if (fileSystemName == null)
-            {
-                throw new ArgumentNullException(nameof(fileSystemName));
-            }
-            if (directoryTemplate == null)
-            {
-                throw new ArgumentNullException(nameof(directoryTemplate));
-            }
-            if (fileTemplate == null)
-            {
-                throw new ArgumentNullException(nameof(fileTemplate));
-            }
-
             AccountName = accountName;
             AccountKey = accountKey;
             FileSystemName = fileSystemName;

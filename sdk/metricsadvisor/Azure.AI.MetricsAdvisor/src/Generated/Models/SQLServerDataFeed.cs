@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The SQLServerDataFeed. </summary>
-    public partial class SQLServerDataFeed : DataFeedDetail
+    internal partial class SQLServerDataFeed : DataFeedDetail
     {
         /// <summary> Initializes a new instance of SQLServerDataFeed. </summary>
         /// <param name="dataFeedName"> data feed name. </param>

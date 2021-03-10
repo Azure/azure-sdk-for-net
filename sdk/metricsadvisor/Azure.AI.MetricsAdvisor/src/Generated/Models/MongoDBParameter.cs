@@ -5,33 +5,17 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The MongoDBParameter. </summary>
-    public partial class MongoDBParameter
+    internal partial class MongoDBParameter
     {
         /// <summary> Initializes a new instance of MongoDBParameter. </summary>
         /// <param name="connectionString"> MongoDB connection string. </param>
         /// <param name="database"> Database name. </param>
         /// <param name="command"> Query script. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/>, <paramref name="database"/>, or <paramref name="command"/> is null. </exception>
         public MongoDBParameter(string connectionString, string database, string command)
         {
-            if (connectionString == null)
-            {
-                throw new ArgumentNullException(nameof(connectionString));
-            }
-            if (database == null)
-            {
-                throw new ArgumentNullException(nameof(database));
-            }
-            if (command == null)
-            {
-                throw new ArgumentNullException(nameof(command));
-            }
-
             ConnectionString = connectionString;
             Database = database;
             Command = command;

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The AzureBlobDataFeed. </summary>
-    public partial class AzureBlobDataFeed : DataFeedDetail
+    internal partial class AzureBlobDataFeed : DataFeedDetail
     {
         /// <summary> Initializes a new instance of AzureBlobDataFeed. </summary>
         /// <param name="dataFeedName"> data feed name. </param>

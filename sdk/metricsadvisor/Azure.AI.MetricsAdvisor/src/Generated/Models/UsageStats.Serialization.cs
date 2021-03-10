@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    public partial class UsageStats
+    internal partial class UsageStats
     {
         internal static UsageStats DeserializeUsageStats(JsonElement element)
         {

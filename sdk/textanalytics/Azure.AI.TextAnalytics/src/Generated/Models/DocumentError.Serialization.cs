@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    public partial class DocumentError
+    internal partial class DocumentError
     {
         internal static DocumentError DeserializeDocumentError(JsonElement element)
         {

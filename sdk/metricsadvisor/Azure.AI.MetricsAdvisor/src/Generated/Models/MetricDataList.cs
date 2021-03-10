@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The MetricDataList. </summary>
-    public partial class MetricDataList
+    internal partial class MetricDataList
     {
         /// <summary> Initializes a new instance of MetricDataList. </summary>
         internal MetricDataList()

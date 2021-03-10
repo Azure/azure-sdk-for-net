@@ -8,7 +8,7 @@
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The SeverityFilterCondition. </summary>
-    public partial class SeverityFilterCondition
+    internal partial class SeverityFilterCondition
     {
         /// <summary> Initializes a new instance of SeverityFilterCondition. </summary>
         /// <param name="min"> min severity. </param>

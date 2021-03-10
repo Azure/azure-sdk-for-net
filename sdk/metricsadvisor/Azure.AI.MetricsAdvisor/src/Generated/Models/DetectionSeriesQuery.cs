@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The DetectionSeriesQuery. </summary>
-    public partial class DetectionSeriesQuery
+    internal partial class DetectionSeriesQuery
     {
         /// <summary> Initializes a new instance of DetectionSeriesQuery. </summary>
         /// <param name="startTime"> start time. </param>

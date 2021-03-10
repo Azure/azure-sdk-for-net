@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    public partial class AnomalyProperty
+    internal partial class AnomalyProperty
     {
         internal static AnomalyProperty DeserializeAnomalyProperty(JsonElement element)
         {

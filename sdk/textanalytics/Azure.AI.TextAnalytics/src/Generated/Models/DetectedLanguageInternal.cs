@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The DetectedLanguage. </summary>
@@ -16,18 +14,8 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="name"> Long name of a detected language (e.g. English, French). </param>
         /// <param name="iso6391Name"> A two letter representation of the detected language according to the ISO 639-1 standard (e.g. en, fr). </param>
         /// <param name="confidenceScore"> A confidence score between 0 and 1. Scores close to 1 indicate 100% certainty that the identified language is true. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="iso6391Name"/> is null. </exception>
         internal DetectedLanguageInternal(string name, string iso6391Name, double confidenceScore)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (iso6391Name == null)
-            {
-                throw new ArgumentNullException(nameof(iso6391Name));
-            }
-
             Name = name;
             Iso6391Name = iso6391Name;
             ConfidenceScore = confidenceScore;

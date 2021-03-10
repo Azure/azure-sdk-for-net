@@ -15,10 +15,10 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         internal static AnomalyAlert DeserializeAnomalyAlert(JsonElement element)
         {
-            Optional<string> alertId = default;
-            Optional<DateTimeOffset> timestamp = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<DateTimeOffset> modifiedTime = default;
+            string alertId = default;
+            DateTimeOffset timestamp = default;
+            DateTimeOffset createdTime = default;
+            DateTimeOffset modifiedTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("alertId"))
@@ -28,36 +28,21 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 if (property.NameEquals("timestamp"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     timestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("createdTime"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     createdTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("modifiedTime"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     modifiedTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }
-            return new AnomalyAlert(alertId.Value, timestamp, createdTime, modifiedTime);
+            return new AnomalyAlert(alertId, timestamp, createdTime, modifiedTime);
         }
     }
 }

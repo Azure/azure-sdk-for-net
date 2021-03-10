@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    public partial class DocumentKeyPhrases
+    internal partial class DocumentKeyPhrases
     {
         internal static DocumentKeyPhrases DeserializeDocumentKeyPhrases(JsonElement element)
         {

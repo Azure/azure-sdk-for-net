@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The LanguageBatchInput. </summary>
-    public partial class LanguageBatchInput
+    internal partial class LanguageBatchInput
     {
         /// <summary> Initializes a new instance of LanguageBatchInput. </summary>
         /// <param name="documents"> . </param>

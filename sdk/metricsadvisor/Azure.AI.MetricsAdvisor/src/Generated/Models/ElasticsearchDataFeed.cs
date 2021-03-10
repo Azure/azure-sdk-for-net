@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The ElasticsearchDataFeed. </summary>
-    public partial class ElasticsearchDataFeed : DataFeedDetail
+    internal partial class ElasticsearchDataFeed : DataFeedDetail
     {
         /// <summary> Initializes a new instance of ElasticsearchDataFeed. </summary>
         /// <param name="dataFeedName"> data feed name. </param>

@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    public partial class DocumentLanguage
+    internal partial class DocumentLanguage
     {
         internal static DocumentLanguage DeserializeDocumentLanguage(JsonElement element)
         {

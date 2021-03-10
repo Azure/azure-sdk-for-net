@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The MetricDataQueryOptions. </summary>
-    public partial class MetricDataQueryOptions
+    internal partial class MetricDataQueryOptions
     {
         /// <summary> Initializes a new instance of MetricDataQueryOptions. </summary>
         /// <param name="startTime"> start time of query a time series data, and format should be yyyy-MM-ddThh:mm:ssZ. </param>

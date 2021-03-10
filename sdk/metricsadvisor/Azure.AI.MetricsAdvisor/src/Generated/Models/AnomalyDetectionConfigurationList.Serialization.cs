@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    public partial class AnomalyDetectionConfigurationList
+    internal partial class AnomalyDetectionConfigurationList
     {
         internal static AnomalyDetectionConfigurationList DeserializeAnomalyDetectionConfigurationList(JsonElement element)
         {

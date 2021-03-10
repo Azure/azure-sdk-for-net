@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    public partial class MetricDataList
+    internal partial class MetricDataList
     {
         internal static MetricDataList DeserializeMetricDataList(JsonElement element)
         {

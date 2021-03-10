@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    public partial class IncidentProperty
+    internal partial class IncidentProperty
     {
         internal static IncidentProperty DeserializeIncidentProperty(JsonElement element)
         {

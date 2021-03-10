@@ -8,7 +8,7 @@
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The EmailHookInfoPatch. </summary>
-    public partial class EmailHookInfoPatch : HookInfoPatch
+    internal partial class EmailHookInfoPatch : HookInfoPatch
     {
         /// <summary> Initializes a new instance of EmailHookInfoPatch. </summary>
         public EmailHookInfoPatch()

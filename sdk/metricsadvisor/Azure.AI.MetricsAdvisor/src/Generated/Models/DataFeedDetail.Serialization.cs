@@ -30,8 +30,15 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStringValue(GranularityName.ToString());
             if (Optional.IsDefined(GranularityAmount))
             {
-                writer.WritePropertyName("granularityAmount");
-                writer.WriteNumberValue(GranularityAmount.Value);
+                if (GranularityAmount != null)
+                {
+                    writer.WritePropertyName("granularityAmount");
+                    writer.WriteNumberValue(GranularityAmount.Value);
+                }
+                else
+                {
+                    writer.WriteNull("granularityAmount");
+                }
             }
             writer.WritePropertyName("metrics");
             writer.WriteStartArray();
@@ -171,7 +178,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             string dataFeedName = default;
             Optional<string> dataFeedDescription = default;
             DataFeedGranularityType granularityName = default;
-            Optional<int> granularityAmount = default;
+            Optional<int?> granularityAmount = default;
             IList<DataFeedMetric> metrics = default;
             Optional<IList<DataFeedDimension>> dimension = default;
             Optional<string> timestampColumn = default;
@@ -225,7 +232,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        granularityAmount = null;
                         continue;
                     }
                     granularityAmount = property.Value.GetInt32();

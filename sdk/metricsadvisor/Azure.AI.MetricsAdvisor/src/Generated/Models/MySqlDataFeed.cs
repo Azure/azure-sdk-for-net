@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The MySqlDataFeed. </summary>
-    public partial class MySqlDataFeed : DataFeedDetail
+    internal partial class MySqlDataFeed : DataFeedDetail
     {
         /// <summary> Initializes a new instance of MySqlDataFeed. </summary>
         /// <param name="dataFeedName"> data feed name. </param>

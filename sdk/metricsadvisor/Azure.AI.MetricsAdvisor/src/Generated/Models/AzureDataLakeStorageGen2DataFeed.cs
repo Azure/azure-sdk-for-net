@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The AzureDataLakeStorageGen2DataFeed. </summary>
-    public partial class AzureDataLakeStorageGen2DataFeed : DataFeedDetail
+    internal partial class AzureDataLakeStorageGen2DataFeed : DataFeedDetail
     {
         /// <summary> Initializes a new instance of AzureDataLakeStorageGen2DataFeed. </summary>
         /// <param name="dataFeedName"> data feed name. </param>

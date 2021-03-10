@@ -15,15 +15,15 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         internal static DataFeedIngestionProgress DeserializeDataFeedIngestionProgress(JsonElement element)
         {
-            Optional<DateTimeOffset> latestSuccessTimestamp = default;
-            Optional<DateTimeOffset> latestActiveTimestamp = default;
+            Optional<DateTimeOffset?> latestSuccessTimestamp = default;
+            Optional<DateTimeOffset?> latestActiveTimestamp = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("latestSuccessTimestamp"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        latestSuccessTimestamp = null;
                         continue;
                     }
                     latestSuccessTimestamp = property.Value.GetDateTimeOffset("O");
@@ -33,7 +33,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        latestActiveTimestamp = null;
                         continue;
                     }
                     latestActiveTimestamp = property.Value.GetDateTimeOffset("O");

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    public partial class RootCauseList
+    internal partial class RootCauseList
     {
         internal static RootCauseList DeserializeRootCauseList(JsonElement element)
         {
