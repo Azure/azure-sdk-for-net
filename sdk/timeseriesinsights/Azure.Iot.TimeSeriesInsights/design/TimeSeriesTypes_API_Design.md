@@ -16,7 +16,7 @@ Returns time series types in pages.
 /// </summary>
 /// <param name="cancellationToken">The cancellation token.</param>
 /// <returns>The pageable list <see cref="AsyncPageable{TimeSeriesType}"/> of Time Series instances types with the http response.</returns>
-public virtual AsyncPageable<TimeSeriesType> GetTypesAsync(
+public virtual AsyncPageable<TimeSeriesType> GetTimeSeriesTypesAsync(
     CancellationToken cancellationToken = default)
 ```
 
@@ -33,7 +33,7 @@ Executes a batch get, create, update, delete operation on multiple time series t
 /// <param name="timeSeriesIds">List of Ids of the Time Series instances.</param>
 /// <param name="cancellationToken">The cancellation token.</param>
 /// <returns>List of types or error objects corresponding by position to the array in the request. Type object is set when operation is successful and error object is set when operation is unsuccessful.
-public virtual async Task<Response<TypesOperationResult[]>> GetTypesAsync(
+public virtual async Task<Response<TimeSeriesTypeOperationResult[]>> GetTimeSeriesTypesAsync(
     IEnumerable<TimeSeriesId> timeSeriesIds, 
     CancellationToken cancellationToken = default)
 ```
@@ -45,7 +45,7 @@ public virtual async Task<Response<TypesOperationResult[]>> GetTypesAsync(
 /// <param name="timeSeriesNames">List of names of the Time Series instances.</param>
 /// <param name="cancellationToken">The cancellation token.</param>
 /// <returns>List of types or error objects corresponding by position to the array in the request. Type object is set when operation is successful and error object is set when operation is unsuccessful.
-public virtual async Task<Response<TypesOperationResult[]>> GetTypesAsync(
+public virtual async Task<Response<TimeSeriesTypeOperationResult[]>> GetTimeSeriesTypesAsync(
     IEnumerable<string> timeSeriesNames, 
     CancellationToken cancellationToken = default)
 ```
@@ -62,7 +62,7 @@ public virtual async Task<Response<TypesOperationResult[]>> GetTypesAsync(
 /// List of error objects corresponding by position to the <paramref name="timeSeriesTypes"/> array in the request.
 /// An error object will be set when operation is unsuccessful.
 /// </returns>
-public virtual async Task<Response<TypesOperationResult[]>> CreateOrReplaceTimeSeriesTypesAsync(
+public virtual async Task<Response<TimeSeriesTypeOperationResult[]>> CreateOrReplaceTimeSeriesTypesAsync(
     IEnumerable<TimeSeriesType> timeSeriesTypes,
     CancellationToken cancellationToken = default)
 ```
@@ -80,7 +80,7 @@ public virtual async Task<Response<TypesOperationResult[]>> CreateOrReplaceTimeS
 /// An error object will be set when operation is unsuccessful.
 /// null will be set when the operation is successful.
 /// </returns>
-public virtual async Task<Response<TypesOperationResult[]>> DeleteTimeSeriesTypesAsync(
+public virtual async Task<Response<TimeSeriesTypeOperationResult[]>> DeleteTimeSeriesTypesAsync(
     IEnumerable<TimeSeriesId> timeSeriesIds,
     CancellationToken cancellationToken = default)
 ```
@@ -96,7 +96,7 @@ public virtual async Task<Response<TypesOperationResult[]>> DeleteTimeSeriesType
 /// An error object will be set when operation is unsuccessful.
 /// null will be set when the operation is successful.
 /// </returns>
-public virtual async Task<Response<TypesOperationResult[]>> DeleteTimeSeriesTypesAsync(
+public virtual async Task<Response<TimeSeriesTypeOperationResult[]>> DeleteTimeSeriesTypesAsync(
     IEnumerable<string> timeSeriesNames,
     CancellationToken cancellationToken = default)
 ```
