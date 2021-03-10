@@ -77,7 +77,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             {
                 using DiagnosticScope messageScope = CreateScope(
                     DiagnosticProperty.MessageActivityName,
-                    DiagnosticProperty.ProducerKind);
+                    DiagnosticScope.ActivityKind.Producer);
                 messageScope.Start();
 
                 Activity activity = Activity.Current;
