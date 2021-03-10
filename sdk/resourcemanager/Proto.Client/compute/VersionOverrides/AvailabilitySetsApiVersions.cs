@@ -22,6 +22,8 @@ namespace Proto.Compute
         /// </summary>
         public static readonly AvailabilitySetsApiVersions Default = V2020_05_01;
 
+        public override ResourceType ResourceType => AvailabilitySetOperations.ResourceType;
+
         private AvailabilitySetsApiVersions(string value) : base(value) { }
 
         /// <summary>

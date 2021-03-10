@@ -61,6 +61,12 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
+        /// Implicit operator to convert ApiVersionsBase to string.
+        /// </summary>
+        /// <returns> API version value. </returns>
+        public virtual ResourceType ResourceType {get; }
+        
+        /// <summary>
         /// Overrides == operator for comparing ApiVersionsBase object with string object.
         /// </summary>
         /// <param name="first"> The ApiVersionsBase object to compare. </param>

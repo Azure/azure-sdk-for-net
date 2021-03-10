@@ -22,6 +22,9 @@ namespace Proto.Compute
         /// </summary>
         public static readonly VirtualMachinesApiVersions Default = V2020_06_01;
 
+        /// <inheritdoc/>
+        public override ResourceType ResourceType => VirtualMachineOperations.ResourceType;
+
         private VirtualMachinesApiVersions(string value) : base(value) { }
 
         /// <summary>
