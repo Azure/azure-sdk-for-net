@@ -15,7 +15,7 @@
 ## 1.0.0-beta.5 (2021-03-09)
 
 ### Added
-- Added PhoneNumberAdministrationClient (originally was part of the Azure.Communication.Administration package).
+- Added PhoneNumbersClient (originally was part of the Azure.Communication.Administration package).
 - Added support for Azure Active Directory Authentication.
 
 
