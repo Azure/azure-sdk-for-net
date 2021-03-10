@@ -38,13 +38,7 @@ namespace Azure.Communication.Identity.Tests
         [TestCase(AuthMethod.TokenCredential, "chat", "voip", TestName = "GettingTokenWithMultipleScopesWithTokenCredential")]
         public async Task GetTokenGeneratesTokenAndIdentityWithScopes(AuthMethod authMethod, params string[] scopes)
         {
-            CommunicationIdentityClient client = authMethod switch
-            {
-                AuthMethod.ConnectionString => CreateClientWithConnectionString(),
-                AuthMethod.KeyCredential => CreateClientWithAzureKeyCredential(),
-                AuthMethod.TokenCredential => CreateClientWithTokenCredential(),
-                _ => throw new ArgumentOutOfRangeException(nameof(authMethod)),
-            };
+            CommunicationIdentityClient client = CreateIdentityClient(authMethod);
 
             Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync();
             Response<AccessToken> tokenResponse = await client.GetTokenAsync(userResponse.Value, scopes: scopes.Select(x => new CommunicationTokenScope(x)));
@@ -65,14 +59,10 @@ namespace Azure.Communication.Identity.Tests
         [Test]
         [TestCase(AuthMethod.ConnectionString, TestName = "GettingTurnCredentialsWithConnectionString")]
         [TestCase(AuthMethod.KeyCredential, TestName = "GettingTurnCredentialsWithKeyCredential")]
+        [TestCase(AuthMethod.TokenCredential, TestName = "GettingTurnCredentialsWithTokenCredential")]
         public async Task GettingTurnCredentialsGeneratesTurnCredentials(AuthMethod authMethod)
         {
-            CommunicationIdentityClient client = authMethod switch
-            {
-                AuthMethod.ConnectionString => CreateClientWithConnectionString(),
-                AuthMethod.KeyCredential => CreateClientWithAzureKeyCredential(),
-                _ => throw new ArgumentOutOfRangeException(nameof(authMethod)),
-            };
+            CommunicationIdentityClient client = CreateIdentityClient(authMethod);
 
             Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync();
             Response<CommunicationTurnCredentialsResponse> turnCredentialsResponse = await client.GetTurnCredentialsAsync(userResponse.Value);
@@ -82,10 +72,24 @@ namespace Azure.Communication.Identity.Tests
             Assert.IsNotNull(turnCredentialsResponse.Value.TurnServers);
             foreach (CommunicationTurnServer serverCredential in turnCredentialsResponse.Value.TurnServers)
             {
-                Assert.IsFalse(string.IsNullOrWhiteSpace(serverCredential.Urls));
+                foreach (string url in serverCredential.Urls)
+                {
+                    Assert.IsFalse(string.IsNullOrWhiteSpace(url));
+                }
                 Assert.IsFalse(string.IsNullOrWhiteSpace(serverCredential.Username));
                 Assert.IsFalse(string.IsNullOrWhiteSpace(serverCredential.Credential));
             }
+        }
+
+        private CommunicationIdentityClient CreateIdentityClient(AuthMethod authMethod)
+        {
+            return authMethod switch
+            {
+                AuthMethod.ConnectionString => CreateClientWithConnectionString(),
+                AuthMethod.KeyCredential => CreateClientWithAzureKeyCredential(),
+                AuthMethod.TokenCredential => CreateClientWithTokenCredential(),
+                _ => throw new ArgumentOutOfRangeException(nameof(authMethod)),
+            };
         }
 
         public enum AuthMethod

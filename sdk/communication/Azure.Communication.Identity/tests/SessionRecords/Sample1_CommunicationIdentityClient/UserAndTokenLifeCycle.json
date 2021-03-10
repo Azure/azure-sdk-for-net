@@ -1,15 +1,18 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://avinpcommunication-communication.communication.azure.com/identities?api-version=2021-03-07",
+      "RequestUri": "https://avinpsdklivetestacs-communication.communication.azure.com/identities?api-version=2021-03-07",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "2",
         "Content-Type": "application/json",
-        "Date": "Tue, 23 Feb 2021 22:43:41 GMT",
-        "User-Agent": "azsdk-net-Communication.Identity/1.0.0-alpha.20210222.1 (.NET Framework 4.8.4341.0; Microsoft Windows 10.0.21322 )",
+        "Date": "Tue, 09 Mar 2021 18:17:09 GMT",
+        "User-Agent": [
+          "azsdk-net-Communication.Identity/1.0.0-alpha.20210309.1",
+          "(.NET 5.0.2; Microsoft Windows 10.0.21332)"
+        ],
         "x-ms-client-request-id": "f9ace4fde99e08d492756d5939ec7f5e",
         "x-ms-content-sha256": "Sanitized",
         "x-ms-return-client-request-id": "true"
@@ -19,31 +22,34 @@
       "ResponseHeaders": {
         "api-supported-versions": "2020-07-20-preview2, 2021-03-07",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 23 Feb 2021 22:43:41 GMT",
-        "MS-CV": "IKVsDdmgBkiH2e18IYUcGw.0",
+        "Date": "Tue, 09 Mar 2021 18:17:08 GMT",
+        "MS-CV": "9rNiL\u002BqXkE2ep3VIuzvibQ.0",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0HoU1YAAAAABfyjtghim\u002BRZHaRp076rcsV1NURURHRTA4MjIAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Azure-Ref": "0pbtHYAAAAADOaNLVNFqcT5cdrgw1Z/jyV1NURURHRTA4MTcAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
         "x-ms-client-request-id": "f9ace4fde99e08d492756d5939ec7f5e",
-        "X-Processing-Time": "53ms"
+        "X-Processing-Time": "106ms"
       },
       "ResponseBody": {
         "identity": {
-          "id": "8:acs:baad9c59-2f35-44b0-b341-5c376bce0ed7_00000008-70f1-a2a2-28c5-593a0d002b5e"
+          "id": "8:acs:b8a8b112-dfb5-4496-998e-3fcc0ad949a0_00000008-b816-a406-b8ba-a43a0d0013bf"
         }
       }
     },
     {
-      "RequestUri": "https://avinpcommunication-communication.communication.azure.com/identities/8%3Aacs%3Abaad9c59-2f35-44b0-b341-5c376bce0ed7_00000008-70f1-a2a2-28c5-593a0d002b5e/:issueAccessToken?api-version=2021-03-07",
+      "RequestUri": "https://avinpsdklivetestacs-communication.communication.azure.com/identities/8%3Aacs%3Ab8a8b112-dfb5-4496-998e-3fcc0ad949a0_00000008-b816-a406-b8ba-a43a0d0013bf/:issueAccessToken?api-version=2021-03-07",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "19",
         "Content-Type": "application/json",
-        "Date": "Tue, 23 Feb 2021 22:43:42 GMT",
-        "User-Agent": "azsdk-net-Communication.Identity/1.0.0-alpha.20210222.1 (.NET Framework 4.8.4341.0; Microsoft Windows 10.0.21322 )",
+        "Date": "Tue, 09 Mar 2021 18:17:09 GMT",
+        "User-Agent": [
+          "azsdk-net-Communication.Identity/1.0.0-alpha.20210309.1",
+          "(.NET 5.0.2; Microsoft Windows 10.0.21332)"
+        ],
         "x-ms-client-request-id": "74542cca26c64f6c3b26b1bfe24ac2b1",
         "x-ms-content-sha256": "Sanitized",
         "x-ms-return-client-request-id": "true"
@@ -57,28 +63,31 @@
       "ResponseHeaders": {
         "api-supported-versions": "2020-07-20-preview2, 2021-03-07",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 23 Feb 2021 22:43:41 GMT",
-        "MS-CV": "sjgm/UQN50Cqb0vxXAKfrw.0",
+        "Date": "Tue, 09 Mar 2021 18:17:09 GMT",
+        "MS-CV": "h/XT9QSsikOscG7V6sumVA.0",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0HoU1YAAAAAD5w\u002B8Yw0NsTpZjNaS5QmNEV1NURURHRTA4MjIAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Azure-Ref": "0pbtHYAAAAABR/NmZ7RCeRYqQZDXyOauWV1NURURHRTA4MTcAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
         "x-ms-client-request-id": "74542cca26c64f6c3b26b1bfe24ac2b1",
-        "X-Processing-Time": "23ms"
+        "X-Processing-Time": "248ms"
       },
       "ResponseBody": {
         "token": "Sanitized",
-        "expiresOn": "2021-02-24T22:43:41.4871382\u002B00:00"
+        "expiresOn": "2021-03-10T18:17:09.2479599\u002B00:00"
       }
     },
     {
-      "RequestUri": "https://avinpcommunication-communication.communication.azure.com/turn/8%3Aacs%3Abaad9c59-2f35-44b0-b341-5c376bce0ed7_00000008-70f1-a2a2-28c5-593a0d002b5e/:issueCredentials?api-version=2021-12-12",
+      "RequestUri": "https://avinpsdklivetestacs-communication.communication.azure.com/turn/8%3Aacs%3Ab8a8b112-dfb5-4496-998e-3fcc0ad949a0_00000008-b816-a406-b8ba-a43a0d0013bf/:issueCredentials?api-version=2021-02-22-preview1",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Date": "Tue, 23 Feb 2021 22:43:42 GMT",
-        "User-Agent": "azsdk-net-Communication.Identity/1.0.0-alpha.20210222.1 (.NET Framework 4.8.4341.0; Microsoft Windows 10.0.21322 )",
+        "Date": "Tue, 09 Mar 2021 18:17:10 GMT",
+        "User-Agent": [
+          "azsdk-net-Communication.Identity/1.0.0-alpha.20210309.1",
+          "(.NET 5.0.2; Microsoft Windows 10.0.21332)"
+        ],
         "x-ms-client-request-id": "09d0a92bcf8a648a7167dd20a484dcc4",
         "x-ms-content-sha256": "Sanitized",
         "x-ms-return-client-request-id": "true"
@@ -86,36 +95,41 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "api-supported-versions": "2021-12-12",
+        "api-supported-versions": "2021-02-22-preview1",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 23 Feb 2021 22:43:42 GMT",
-        "MS-CV": "BXTS1aL9v0eNEOQs7faf8g.0",
+        "Date": "Tue, 09 Mar 2021 18:17:09 GMT",
+        "MS-CV": "4RSFzjPsnEWzhr9eLPGfow.0",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0HoU1YAAAAACntzhOBJQ4QLq/SOEDweDFV1NURURHRTA4MjIAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Azure-Ref": "0prtHYAAAAAAvv6KdEtoISLANmTaCKkx3V1NURURHRTA4MTcAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
         "x-ms-client-request-id": "09d0a92bcf8a648a7167dd20a484dcc4",
-        "X-Processing-Time": "458ms"
+        "X-Processing-Time": "557ms"
       },
       "ResponseBody": {
-        "expiresOn": "2021-02-23T22:43:42.9779167\u002B00:00",
+        "expiresOn": "2021-03-09T18:17:10.8574662\u002B00:00",
         "turnServers": [
           {
-            "urls": "turn:worldaz.turn.skype.com:3478",
-            "username": "AgAAJKs3xb4B1wvHbj5xcQ8C/PsQhVvEVNt2VWQybsoAAAAEBG6em8CunW9uplogugLq9ssxrqo=",
+            "urls": [
+              "turn:worldaz.turn.skype.com:3478"
+            ],
+            "username": "BQAANsDzTHwB1xaihlxvcyCkOh3h4PhWzcKwbAbQUtkAAAAEARC4qLES37VElpmOP8wK2UmgN3lXcxt3PYoDncOMjgiBTkipits=",
             "credential": "Sanitized"
           }
         ]
       }
     },
     {
-      "RequestUri": "https://avinpcommunication-communication.communication.azure.com/identities/8%3Aacs%3Abaad9c59-2f35-44b0-b341-5c376bce0ed7_00000008-70f1-a2a2-28c5-593a0d002b5e/:revokeAccessTokens?api-version=2021-03-07",
+      "RequestUri": "https://avinpsdklivetestacs-communication.communication.azure.com/identities/8%3Aacs%3Ab8a8b112-dfb5-4496-998e-3fcc0ad949a0_00000008-b816-a406-b8ba-a43a0d0013bf/:revokeAccessTokens?api-version=2021-03-07",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Date": "Tue, 23 Feb 2021 22:43:42 GMT",
-        "User-Agent": "azsdk-net-Communication.Identity/1.0.0-alpha.20210222.1 (.NET Framework 4.8.4341.0; Microsoft Windows 10.0.21322 )",
+        "Date": "Tue, 09 Mar 2021 18:17:10 GMT",
+        "User-Agent": [
+          "azsdk-net-Communication.Identity/1.0.0-alpha.20210309.1",
+          "(.NET 5.0.2; Microsoft Windows 10.0.21332)"
+        ],
         "x-ms-client-request-id": "9914a8c9df07d639785cbd7737142647",
         "x-ms-content-sha256": "Sanitized",
         "x-ms-return-client-request-id": "true"
@@ -124,24 +138,27 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "api-supported-versions": "2020-07-20-preview2, 2021-03-07",
-        "Date": "Tue, 23 Feb 2021 22:43:42 GMT",
-        "MS-CV": "gKM\u002BmG2eNE2726hURi/Hdw.0",
+        "Date": "Tue, 09 Mar 2021 18:17:10 GMT",
+        "MS-CV": "k/fyGNkJO0GkhcwIxI6Vjw.0",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
-        "X-Azure-Ref": "0HoU1YAAAAAB7uzoiGyZFSLxXovXQQDgHV1NURURHRTA4MjIAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Azure-Ref": "0prtHYAAAAABQbGqR4PDNSbtq8v6l1dtcV1NURURHRTA4MTcAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
         "x-ms-client-request-id": "9914a8c9df07d639785cbd7737142647",
-        "X-Processing-Time": "155ms"
+        "X-Processing-Time": "639ms"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://avinpcommunication-communication.communication.azure.com/identities/8%3Aacs%3Abaad9c59-2f35-44b0-b341-5c376bce0ed7_00000008-70f1-a2a2-28c5-593a0d002b5e?api-version=2021-03-07",
+      "RequestUri": "https://avinpsdklivetestacs-communication.communication.azure.com/identities/8%3Aacs%3Ab8a8b112-dfb5-4496-998e-3fcc0ad949a0_00000008-b816-a406-b8ba-a43a0d0013bf?api-version=2021-03-07",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Date": "Tue, 23 Feb 2021 22:43:43 GMT",
-        "User-Agent": "azsdk-net-Communication.Identity/1.0.0-alpha.20210222.1 (.NET Framework 4.8.4341.0; Microsoft Windows 10.0.21322 )",
+        "Date": "Tue, 09 Mar 2021 18:17:11 GMT",
+        "User-Agent": [
+          "azsdk-net-Communication.Identity/1.0.0-alpha.20210309.1",
+          "(.NET 5.0.2; Microsoft Windows 10.0.21332)"
+        ],
         "x-ms-client-request-id": "8f2ebbb3761cfad4a1ef035e494baab7",
         "x-ms-content-sha256": "Sanitized",
         "x-ms-return-client-request-id": "true"
@@ -150,19 +167,19 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "api-supported-versions": "2020-07-20-preview2, 2021-03-07",
-        "Date": "Tue, 23 Feb 2021 22:43:42 GMT",
-        "MS-CV": "3CUfX9Km3UKriaZPAk3Pgw.0",
+        "Date": "Tue, 09 Mar 2021 18:17:11 GMT",
+        "MS-CV": "VSRlKiZsF067wUa22Zcv6g.0",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
-        "X-Azure-Ref": "0H4U1YAAAAAAA3UsbVcpHSqYpME58wsVrV1NURURHRTA4MjIAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Azure-Ref": "0p7tHYAAAAABkkVt1zHoMQLSpzQaFZOGVV1NURURHRTA4MTcAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
         "x-ms-client-request-id": "8f2ebbb3761cfad4a1ef035e494baab7",
-        "X-Processing-Time": "183ms"
+        "X-Processing-Time": "748ms"
       },
       "ResponseBody": []
     }
   ],
   "Variables": {
-    "COMMUNICATION_CONNECTION_STRING": "endpoint=https://avinpcommunication-communication.communication.azure.com/;accesskey=Kg==",
+    "COMMUNICATION_CONNECTION_STRING": "endpoint=https://avinpsdklivetestacs-communication.communication.azure.com/;accesskey=Kg==",
     "RandomSeed": "1455221037"
   }
 }

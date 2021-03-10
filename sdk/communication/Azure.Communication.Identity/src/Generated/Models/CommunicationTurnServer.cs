@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Communication.Identity.Models
 {
@@ -13,11 +15,11 @@ namespace Azure.Communication.Identity.Models
     public partial class CommunicationTurnServer
     {
         /// <summary> Initializes a new instance of CommunicationTurnServer. </summary>
-        /// <param name="urls"> URL of the server. </param>
+        /// <param name="urls"> List of TURN server URLs. </param>
         /// <param name="username"> User account name which uniquely identifies the credentials. </param>
         /// <param name="credential"> Credential for the server. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="urls"/>, <paramref name="username"/>, or <paramref name="credential"/> is null. </exception>
-        internal CommunicationTurnServer(string urls, string username, string credential)
+        internal CommunicationTurnServer(IEnumerable<string> urls, string username, string credential)
         {
             if (urls == null)
             {
@@ -32,13 +34,24 @@ namespace Azure.Communication.Identity.Models
                 throw new ArgumentNullException(nameof(credential));
             }
 
+            Urls = urls.ToList();
+            Username = username;
+            Credential = credential;
+        }
+
+        /// <summary> Initializes a new instance of CommunicationTurnServer. </summary>
+        /// <param name="urls"> List of TURN server URLs. </param>
+        /// <param name="username"> User account name which uniquely identifies the credentials. </param>
+        /// <param name="credential"> Credential for the server. </param>
+        internal CommunicationTurnServer(IReadOnlyList<string> urls, string username, string credential)
+        {
             Urls = urls;
             Username = username;
             Credential = credential;
         }
 
-        /// <summary> URL of the server. </summary>
-        public string Urls { get; }
+        /// <summary> List of TURN server URLs. </summary>
+        public IReadOnlyList<string> Urls { get; }
         /// <summary> User account name which uniquely identifies the credentials. </summary>
         public string Username { get; }
         /// <summary> Credential for the server. </summary>

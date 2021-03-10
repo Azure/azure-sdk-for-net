@@ -11,10 +11,10 @@ Azure Communication Identity is managing tokens for Azure Communication Services
 
 ### Install the package
 
-Install the Azure Communication Identity client library for .NET with [NuGet][nuget]:
+Install the Azure Communication Identity client library by searching for `Azure.Communication.Identity` package and choosing the appropriate version from the [azure-sdk-for-net Nuget feed][TurnSDKPrivatePreviewFeed] for .NET with [NuGet][nuget]:
 
 ```Powershell
-dotnet add package Azure.Communication.Identity --version 1.0.0-beta.5
+dotnet add package Azure.Communication.Identity --version <version>
 ```
 
 ### Prerequisites
@@ -117,6 +117,24 @@ Response revokeResponse = client.RevokeTokens(user);
 Response deleteResponse = client.DeleteUser(user);
 ```
 
+## Generating TURN credentials for a user
+
+```C# Snippet:CreateTURNTokenAsync
+Response<CommunicationTurnCredentialsResponse> turnTokenResponse = await client.GetTurnCredentialsAsync(user);
+DateTimeOffset turnTokenExpiresOn = turnTokenResponse.Value.ExpiresOn;
+IReadOnlyList<CommunicationTurnServer> turnServers = turnTokenResponse.Value.TurnServers;
+Console.WriteLine($"Expires On: {turnTokenExpiresOn}");
+foreach (CommunicationTurnServer turnServer in turnServers)
+{
+    foreach (string url in turnServer.Urls)
+    {
+        Console.WriteLine($"TURN Url: {url}");
+    }
+    Console.WriteLine($"TURN Username: {turnServer.Username}");
+    Console.WriteLine($"TURN Credential: {turnServer.Credential}");
+}
+```
+
 ## Troubleshooting
 
 All User token service operations will throw a RequestFailedException on failure.
@@ -160,6 +178,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For m
 <!--[package]: https://www.nuget.org/packages/Azure.Communication.Identity-->
 [product_docs]: https://docs.microsoft.com/azure/communication-services/overview
 [nuget]: https://www.nuget.org/
+[TurnSDKPrivatePreviewFeed]: https://dev.azure.com/azure-sdk/public/_packaging?_a=feed&feed=azure-sdk-for-net
 [user_access_token]: https://docs.microsoft.com/azure/communication-services/quickstarts/access-tokens?pivots=programming-language-csharp
 [communication_resource_docs]: https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp
 [communication_resource_create_portal]: https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp

@@ -74,7 +74,7 @@ namespace Azure.Communication.Identity.Models
     {
         internal CommunicationTurnServer() { }
         public string Credential { get { throw null; } }
-        public string Urls { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> Urls { get { throw null; } }
         public string Username { get { throw null; } }
     }
 }
