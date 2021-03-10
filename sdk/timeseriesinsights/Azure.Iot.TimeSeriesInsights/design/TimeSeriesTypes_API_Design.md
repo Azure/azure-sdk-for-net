@@ -76,7 +76,7 @@ public virtual async Task<Response<TimeSeriesTypeOperationResult[]>> CreateOrRep
 /// <param name="timeSeriesIds">List of Ids of the Time Series instances.</param>
 /// <param name="cancellationToken">The cancellation token.</param>
 /// <returns>
-/// List of error objects corresponding by position to the <paramref name="timeSeriesTypes"/> array in the request.
+/// List of error objects corresponding by position to the <paramref name="timeSeriesIds"/> array in the request.
 /// An error object will be set when operation is unsuccessful.
 /// null will be set when the operation is successful.
 /// </returns>
@@ -92,7 +92,7 @@ public virtual async Task<Response<TimeSeriesTypeOperationResult[]>> DeleteTimeS
 /// <param name="timeSeriesNames">List of names of the Time Series instances.</param>
 /// <param name="cancellationToken">The cancellation token.</param>
 /// <returns>
-/// List of error objects corresponding by position to the <paramref name="timeSeriesTypes"/> array in the request.
+/// List of error objects corresponding by position to the <paramref name="timeSeriesNames"/> array in the request.
 /// An error object will be set when operation is unsuccessful.
 /// null will be set when the operation is successful.
 /// </returns>
