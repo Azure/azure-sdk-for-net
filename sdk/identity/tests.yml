@@ -10,6 +10,7 @@ resources:
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
+    TimeoutInMinutes: 120
     AdditionalMatrixConfigs:
       - Name: identity_container
         Path: sdk/identity/platform-matrix.json

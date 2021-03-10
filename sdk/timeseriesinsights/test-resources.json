@@ -45,11 +45,7 @@
       },
       "defaultValue": [
         {
-          "name": "timeseriesinsights.id",
-          "type": "string"
-        },
-        {
-          "name": "id",
+          "name": "iothub-connection-device-id",
           "type": "string"
         }
       ]
