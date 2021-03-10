@@ -1,5 +1,8 @@
 # Release History
 
+## 4.2.0-beta.6 (Unreleased)
+
+
 ## 4.2.0-beta.5 (2021-03-09)
 
 ### Added
@@ -68,6 +71,13 @@
 
 - Default service version is now 7.1.
 
+## 4.1.0-preview.1 (2020-03-09)
+
+### Added
+
+- Add "import" value to `KeyOperation` enumeration.
+- Add `RecoverableDays` property to `KeyProperties`.
+
 ## 4.0.4 (2020-07-09)
 
 ### Fixed
@@ -83,13 +93,6 @@
 ### Fixed
 
 - Fixed concurrency issue in our challenge-based authentication policy ([#9737](https://github.com/Azure/azure-sdk-for-net/issues/9737))
-
-## 4.1.0-preview.1 (2020-03-09)
-
-### Added
-
-- Add "import" value to `KeyOperation` enumeration.
-- Add `RecoverableDays` property to `KeyProperties`.
 
 ## 4.0.2 (2020-03-03)
 
