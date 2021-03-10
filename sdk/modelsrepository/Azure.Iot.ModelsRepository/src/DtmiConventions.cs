@@ -3,7 +3,6 @@
 
 using System;
 using System.Globalization;
-using System.IO;
 using System.Text.RegularExpressions;
 
 namespace Azure.Iot.ModelsRepository
@@ -27,8 +26,6 @@ namespace Azure.Iot.ModelsRepository
         /// Indicates whether a given string DTMI value is well-formed.
         /// </summary>
         public static bool IsValidDtmi(string dtmi) => !string.IsNullOrEmpty(dtmi) && s_validDtmiRegex.IsMatch(dtmi);
-
-        internal static string DtmiToPath(string dtmi) => IsValidDtmi(dtmi) ? $"{dtmi.ToLowerInvariant().Replace(":", "/").Replace(";", "-")}.json" : null;
 
         /// <summary>
         /// Produces a fully qualified path to a model file.
@@ -65,5 +62,7 @@ namespace Azure.Iot.ModelsRepository
 
             return fullyQualifiedPath;
         }
+
+        internal static string DtmiToPath(string dtmi) => IsValidDtmi(dtmi) ? $"{dtmi.ToLowerInvariant().Replace(":", "/").Replace(";", "-")}.json" : null;
     }
 }

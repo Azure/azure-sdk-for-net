@@ -155,7 +155,7 @@ DtmiConventions.IsValidDtmi("dtmi:com:example:Thermostat");
 // Local repository example
 string localRepository = "/path/to/repository";
 string fullyQualifiedModelPath = 
-    DtmiConventions.DtmiToQualifiedPath("dtmi:com:example:Thermostat", localRepository);
+    DtmiConventions.DtmiToQualifiedPath("dtmi:com:example:Thermostat;1", localRepository);
 
 // Prints '/path/to/repository/dtmi/com/example/thermostat-1.json'
 Console.WriteLine(fullyQualifiedModelPath);
@@ -163,7 +163,7 @@ Console.WriteLine(fullyQualifiedModelPath);
 // Remote repository example
 string remoteRepository = "https://contoso.com/models";
 fullyQualifiedModelPath =
-    DtmiConventions.DtmiToQualifiedPath("dtmi:com:example:Thermostat", remoteRepository);
+    DtmiConventions.DtmiToQualifiedPath("dtmi:com:example:Thermostat;1", remoteRepository);
 
 // Prints 'https://contoso.com/models/dtmi/com/example/thermostat-1.json'
 Console.WriteLine(fullyQualifiedModelPath);
