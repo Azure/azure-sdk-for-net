@@ -48,13 +48,13 @@ When deployed, use the [application settings](https://docs.microsoft.com/azure/a
 
 The Service Bus Trigger allows a function to be executed when a message is sent to a Service Bus queue or topic.
 
-Please follow the [Azure Service Bus trigger tutorial](https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-service-bus-trigger?tabs=csharp) to learn more about Service Bus triggers.
+Please follow the [Azure Service Bus trigger tutorial](https://docs.microsoft.com/azure/azure-functions/functions-bindings-service-bus-trigger?tabs=csharp) to learn more about Service Bus triggers.
 
 ### Service Bus Output Binding
 
 The Service Bus Output Binding allows a function to send Service Bus messages.
 
-Please follow the [Azure Service Bus output binding](https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-service-bus-output?tabs=csharp) to learn more about Service Bus bindings.
+Please follow the [Azure Service Bus output binding](https://docs.microsoft.com/azure/azure-functions/functions-bindings-service-bus-output?tabs=csharp) to learn more about Service Bus bindings.
 
 ## Examples
 
