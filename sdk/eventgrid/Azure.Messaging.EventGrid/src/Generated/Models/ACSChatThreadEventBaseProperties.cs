@@ -10,20 +10,20 @@ using System;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of common properties of all chat thread events. </summary>
-    public partial class ACSChatThreadEventBaseProperties : ACSChatEventBaseProperties
+    public partial class AcsChatThreadEventBaseProperties : AcsChatEventBaseProperties
     {
-        /// <summary> Initializes a new instance of ACSChatThreadEventBaseProperties. </summary>
-        internal ACSChatThreadEventBaseProperties()
+        /// <summary> Initializes a new instance of AcsChatThreadEventBaseProperties. </summary>
+        internal AcsChatThreadEventBaseProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ACSChatThreadEventBaseProperties. </summary>
-        /// <param name="recipientId"> The MRI of the target user. </param>
+        /// <summary> Initializes a new instance of AcsChatThreadEventBaseProperties. </summary>
+        /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
         /// <param name="threadId"> The chat thread id. </param>
         /// <param name="createTime"> The original creation time of the thread. </param>
         /// <param name="version"> The version of the thread. </param>
-        internal ACSChatThreadEventBaseProperties(string recipientId, string transactionId, string threadId, DateTimeOffset? createTime, long? version) : base(recipientId, transactionId, threadId)
+        internal AcsChatThreadEventBaseProperties(CommunicationIdentifierModel recipientCommunicationIdentifier, string transactionId, string threadId, DateTimeOffset? createTime, long? version) : base(recipientCommunicationIdentifier, transactionId, threadId)
         {
             CreateTime = createTime;
             Version = version;

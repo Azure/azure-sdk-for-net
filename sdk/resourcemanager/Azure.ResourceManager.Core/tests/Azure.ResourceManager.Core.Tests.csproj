@@ -3,6 +3,7 @@
   <PropertyGroup>
     <DefineConstants>$(DefineConstants);RESOURCES_RP</DefineConstants>
     <TestHelperProjects>;</TestHelperProjects>
+    <UseNewMgmtFramework>true</UseNewMgmtFramework>
   </PropertyGroup>
   <PropertyGroup>
     <NoWarn>SA1649;SA1633;SA1000;SA1028;SA1400;SA1508</NoWarn>
@@ -16,17 +17,15 @@
     <ProjectReference Include="..\src\Azure.ResourceManager.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="ScenarioTests\*.json">
+    <None Update="Unit\TestAssets\Identity\*.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="TestAssets\Identity\*.json">
+    <None Update="Unit\TestAssets\UserAssignedIdentity\*.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="TestAssets\UserAssignedIdentity\*.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="TestAssets\SystemAssignedIdentity\*.json">
+    <None Update="Unit\TestAssets\SystemAssignedIdentity\*.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+
 </Project>

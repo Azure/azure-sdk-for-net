@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ResourceLinkResult
+    internal partial class ResourceLinkResult
     {
         internal static ResourceLinkResult DeserializeResourceLinkResult(JsonElement element)
         {

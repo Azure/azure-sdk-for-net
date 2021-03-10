@@ -20,7 +20,7 @@ namespace Proto.Client
         ShutdownVmsByLINQ,
         ShutdownVmsByNameAcrossResourceGroups,
         //ShutdownVmsByNameAcrossSubscriptions,
-        ListByNameExpanded,
+        List,
         ClientOptionsOverride,
         GetSubscription,
         NullDataValues,
@@ -37,7 +37,8 @@ namespace Proto.Client
         UseParentLocation,
         GetByContainers,
         GetByContainersAsync,
-        CheckResourceGroupOpsAsync
+        CheckResourceGroupOpsAsync,
+        CheckResourceGroupContainerAsync
     }
 
     class ScenarioFactory

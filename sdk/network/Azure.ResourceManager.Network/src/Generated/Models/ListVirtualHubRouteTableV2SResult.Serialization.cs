@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ListVirtualHubRouteTableV2SResult
+    internal partial class ListVirtualHubRouteTableV2SResult
     {
         internal static ListVirtualHubRouteTableV2SResult DeserializeListVirtualHubRouteTableV2SResult(JsonElement element)
         {

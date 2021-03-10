@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 
 #nullable enable
@@ -29,17 +30,9 @@ namespace Azure.Core.Pipeline
         public ARMChallengeAuthenticationPolicy(TokenCredential credential, IEnumerable<string> scopes)
             : base(credential, scopes, TimeSpan.FromMinutes(5), TimeSpan.FromSeconds(30)) { }
 
-        /// <summary>
-        /// Executed in the event a 401 response with a WWW-Authenticate authentication challenge header is received after the initial request.
-        /// </summary>
-        /// <remarks>Handles claims authentication challenges.</remarks>
-        /// <param name="message">The <see cref="HttpMessage"/> to be authenticated.</param>
-        /// <param name="context">If the return value is <c>true</c>, a <see cref="TokenRequestContext"/>.</param>
-        /// <returns>A boolean indicated whether the request contained a valid challenge and a <see cref="TokenRequestContext"/> was successfully initialized with it.</returns>
-        protected override bool TryGetTokenRequestContextFromChallenge(HttpMessage message, out TokenRequestContext context)
+        /// <inheritdoc cref="BearerTokenChallengeAuthenticationPolicy.AuthenticateRequestOnChallengeAsync(HttpMessage, bool)" />
+        protected override async ValueTask<bool> AuthenticateRequestOnChallengeAsync(HttpMessage message, bool async)
         {
-            context = default;
-
             var challenge = AuthorizationChallengeParser.GetChallengeParameterFromResponse(message.Response, "Bearer", "claims");
             if (challenge == null)
             {
@@ -47,7 +40,8 @@ namespace Azure.Core.Pipeline
             }
 
             string claimsChallenge = Base64Url.DecodeString(challenge.ToString());
-           context = new TokenRequestContext(Scopes, message.Request.ClientRequestId, claimsChallenge);
+            var context = new TokenRequestContext(Scopes, message.Request.ClientRequestId, claimsChallenge);
+            await SetAuthorizationHeader(message, context, async);
             return true;
         }
     }

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    public partial class SkuListResult
+    internal partial class SkuListResult
     {
         internal static SkuListResult DeserializeSkuListResult(JsonElement element)
         {

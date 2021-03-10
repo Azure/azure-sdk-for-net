@@ -101,6 +101,10 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>The session state as <see cref="BinaryData"/>.</returns>
+        /// <exception cref="ServiceBusException">
+        ///   The lock for the session has expired.
+        ///   The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.SessionLockLost"/> in this case.
+        /// </exception>
         public virtual async Task<BinaryData> GetSessionStateAsync(CancellationToken cancellationToken = default)
         {
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusSessionReceiver));
@@ -138,6 +142,10 @@ namespace Azure.Messaging.ServiceBus
         /// <remarks>This state is stored on Service Bus forever unless you set an empty state on it.</remarks>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
+        /// <exception cref="ServiceBusException">
+        ///   The lock for the session has expired.
+        ///   The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.SessionLockLost"/> in this case.
+        /// </exception>
         public virtual async Task SetSessionStateAsync(
             BinaryData sessionState,
             CancellationToken cancellationToken = default)
@@ -172,7 +180,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <remarks>
         /// <para>
-        /// When you get session receiver, the session is locked for this receiver by the service for a duration as specified during the Queue/Subscription creation.
+        /// When you accept a session, the session is locked for this receiver by the service for a duration as specified during the Queue/Subscription creation.
         /// If processing of the session requires longer than this duration, the session-lock needs to be renewed.
         /// For each renewal, it resets the time the session is locked by the LockDuration set on the Entity.
         /// </para>
@@ -180,6 +188,10 @@ namespace Azure.Messaging.ServiceBus
         /// Renewal of session renews all the messages in the session as well. Each individual message need not be renewed.
         /// </para>
         /// </remarks>
+        /// <exception cref="ServiceBusException">
+        ///   The lock for the session has expired.
+        ///   The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.SessionLockLost"/> in this case.
+        /// </exception>
         public virtual async Task RenewSessionLockAsync(CancellationToken cancellationToken = default)
         {
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusSessionReceiver));

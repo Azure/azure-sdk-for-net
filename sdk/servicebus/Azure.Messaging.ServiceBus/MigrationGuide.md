@@ -14,7 +14,7 @@ We assume that you are familiar with the `Microsoft.Azure.ServiceBus` library. I
   - [Sending messages](#sending-messages)
   - [Receiving messages](#receiving-messages)
   - [Working with sessions](#working-with-sessions)
-  - [Cross-entity transactions](#cross-entity-transactions)
+  - [Cross-entity transactions](#cross-entity-transactions-unreleased)
 - [Known gaps](#known-gaps-from-previous-library)
 - [Additional samples](#additional-samples)
 
@@ -373,40 +373,25 @@ Console.WriteLine(receivedMessage.SessionId);
 Previously, in `Microsoft.Azure.ServiceBus`, when performing a transaction that spanned multiple queues, topics, or subscriptions you would need to use the "Send-Via" option
 in the `MessageSender`. 
 
-Now in `Azure.Messaging.ServiceBus`, there is a `TransactionGroup` property on the sender, receiver, and processor options bags. This property is used to group senders, receivers, and processors that will be involved in entities that span transactions. When using this property, the first operation that occurs among this group implicitly becomes the send-via entity. Because of this, subsequent operations must either be by senders, or if they are by receivers, the receiver must be receiving from the send-via entity. For this reason, it probably makes more sense to have your first operation be a receive rather than a send when using transaction groups.
+Now in `Azure.Messaging.ServiceBus`, there is an `EnableCrossEntityTransactions` property on the `ServiceBusClientOptions`. When setting this property to `true`, the first operation that occurs using any senders or receivers created from the client implicitly becomes the send-via entity. Because of this, subsequent operations must either be by senders, or if they are by receivers, the receiver must be receiving from the send-via entity. For this reason, it probably makes more sense to have your first operation be a receive rather than a send when setting this property.
 
-The below code snippet shows you how to use transaction groups.
+The below code snippet shows you how to perform cross-entity transactions.
 
 ```C# Snippet:ServiceBusTransactionGroup
-// The first sender won't be part of our transaction group.
-ServiceBusSender senderA = client.CreateSender(queueA.QueueName);
+var options = new ServiceBusClientOptions { EnableCrossEntityTransactions = true };
+await using var client = new ServiceBusClient(connectionString, options);
 
-string transactionGroup = "myTxn";
-
-ServiceBusReceiver receiverA = client.CreateReceiver(queueA.QueueName, new ServiceBusReceiverOptions
-{
-    TransactionGroup = transactionGroup
-});
-ServiceBusSender senderB = client.CreateSender(queueB.QueueName, new ServiceBusSenderOptions
-{
-    TransactionGroup = transactionGroup
-});
-ServiceBusSender senderC = client.CreateSender(topicC.TopicName, new ServiceBusSenderOptions
-{
-    TransactionGroup = transactionGroup
-});
-
-var message = new ServiceBusMessage();
-
-await senderA.SendMessageAsync(message);
+ServiceBusReceiver receiverA = client.CreateReceiver("queueA");
+ServiceBusSender senderB = client.CreateSender("queueB");
+ServiceBusSender senderC = client.CreateSender("topicC");
 
 ServiceBusReceivedMessage receivedMessage = await receiverA.ReceiveMessageAsync();
 
 using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
 {
     await receiverA.CompleteMessageAsync(receivedMessage);
-    await senderB.SendMessageAsync(message);
-    await senderC.SendMessageAsync(message);
+    await senderB.SendMessageAsync(new ServiceBusMessage());
+    await senderC.SendMessageAsync(new ServiceBusMessage());
     ts.Complete();
 }
 ```

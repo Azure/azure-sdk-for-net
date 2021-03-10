@@ -14,8 +14,12 @@ namespace Azure.ResourceManager.Core.Resources
         /// Initializes a new instance of the <see cref="ResourceTypeFilter"/> class.
         /// </summary>
         /// <param name="resourceType"> The resource type to filter by. </param>
+        /// <exception cref="ArgumentNullException"> If <see cref="ResourceType"/> is null. </exception>
         public ResourceTypeFilter(ResourceType resourceType)
         {
+            if (resourceType is null)
+                throw new ArgumentNullException(nameof(resourceType));
+
             ResourceType = resourceType;
         }
 

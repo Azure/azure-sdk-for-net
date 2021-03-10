@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    /// <summary> The DataSourceType. </summary>
+    /// <summary> data source type. </summary>
     public readonly partial struct DataFeedSourceType : IEquatable<DataFeedSourceType>
     {
         private readonly string _value;

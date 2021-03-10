@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Represents the response to a get database service objectives request. </summary>
-    public partial class ServiceObjectiveListResult
+    internal partial class ServiceObjectiveListResult
     {
         /// <summary> Initializes a new instance of ServiceObjectiveListResult. </summary>
         /// <param name="value"> The list of database service objectives. </param>

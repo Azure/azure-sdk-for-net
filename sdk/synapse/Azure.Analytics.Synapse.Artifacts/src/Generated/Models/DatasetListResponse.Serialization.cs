@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    public partial class DatasetListResponse
+    internal partial class DatasetListResponse
     {
         internal static DatasetListResponse DeserializeDatasetListResponse(JsonElement element)
         {

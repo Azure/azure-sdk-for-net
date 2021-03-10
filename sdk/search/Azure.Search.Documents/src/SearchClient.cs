@@ -1438,7 +1438,7 @@ namespace Azure.Search.Documents
         /// The .NET type that maps to the index schema. Instances of this type
         /// can be retrieved as documents from the index.
         /// </typeparam>
-        /// <param name="documents">The documents to upload.</param>
+        /// <param name="documents">The documents to merge.</param>
         /// <param name="options">
         /// Options that allow specifying document indexing behavior.
         /// </param>
@@ -1497,7 +1497,7 @@ namespace Azure.Search.Documents
         /// The .NET type that maps to the index schema. Instances of this type
         /// can be retrieved as documents from the index.
         /// </typeparam>
-        /// <param name="documents">The documents to upload.</param>
+        /// <param name="documents">The documents to merge.</param>
         /// <param name="options">
         /// Options that allow specifying document indexing behavior.
         /// </param>
@@ -1557,7 +1557,7 @@ namespace Azure.Search.Documents
         /// The .NET type that maps to the index schema. Instances of this type
         /// can be retrieved as documents from the index.
         /// </typeparam>
-        /// <param name="documents">The documents to upload.</param>
+        /// <param name="documents">The documents to merge or upload.</param>
         /// <param name="options">
         /// Options that allow specifying document indexing behavior.
         /// </param>
@@ -1616,7 +1616,7 @@ namespace Azure.Search.Documents
         /// The .NET type that maps to the index schema. Instances of this type
         /// can be retrieved as documents from the index.
         /// </typeparam>
-        /// <param name="documents">The documents to upload.</param>
+        /// <param name="documents">The documents to merge or upload.</param>
         /// <param name="options">
         /// Options that allow specifying document indexing behavior.
         /// </param>
@@ -1676,7 +1676,7 @@ namespace Azure.Search.Documents
         /// The .NET type that maps to the index schema. Instances of this type
         /// can be retrieved as documents from the index.
         /// </typeparam>
-        /// <param name="documents">The documents to upload.</param>
+        /// <param name="documents">The documents to delete.</param>
         /// <param name="options">
         /// Options that allow specifying document indexing behavior.
         /// </param>
@@ -1735,7 +1735,7 @@ namespace Azure.Search.Documents
         /// The .NET type that maps to the index schema. Instances of this type
         /// can be retrieved as documents from the index.
         /// </typeparam>
-        /// <param name="documents">The documents to upload.</param>
+        /// <param name="documents">The documents to delete.</param>
         /// <param name="options">
         /// Options that allow specifying document indexing behavior.
         /// </param>

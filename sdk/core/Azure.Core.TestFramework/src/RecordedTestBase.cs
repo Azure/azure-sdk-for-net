@@ -68,9 +68,10 @@ namespace Azure.Core.TestFramework
             Mode = mode;
         }
 
-        public T InstrumentClientOptions<T>(T clientOptions) where T : ClientOptions
+        public T InstrumentClientOptions<T>(T clientOptions, TestRecording recording = default) where T : ClientOptions
         {
-            clientOptions.Transport = Recording.CreateTransport(clientOptions.Transport);
+            recording ??= Recording;
+            clientOptions.Transport = recording.CreateTransport(clientOptions.Transport);
             if (Mode == RecordedTestMode.Playback)
             {
                 // Not making the timeout zero so retry code still goes async
@@ -80,7 +81,7 @@ namespace Azure.Core.TestFramework
             return clientOptions;
         }
 
-        private string GetSessionFilePath()
+        protected string GetSessionFilePath()
         {
             TestContext.TestAdapter testAdapter = TestContext.CurrentContext.Test;
 
@@ -141,7 +142,7 @@ namespace Azure.Core.TestFramework
             if (Mode != RecordedTestMode.Live &&
                 test.Properties.ContainsKey("SkipRecordings"))
             {
-                throw new IgnoreException((string) test.Properties.Get("SkipRecordings"));
+                throw new IgnoreException((string)test.Properties.Get("SkipRecordings"));
             }
             Recording = new TestRecording(Mode, GetSessionFilePath(), Sanitizer, Matcher);
             ValidateClientInstrumentation = Recording.HasRequests;

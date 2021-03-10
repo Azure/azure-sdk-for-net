@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> The List Usages operation response. </summary>
-    public partial class ListUsagesResult
+    internal partial class ListUsagesResult
     {
         /// <summary> Initializes a new instance of ListUsagesResult. </summary>
         internal ListUsagesResult()

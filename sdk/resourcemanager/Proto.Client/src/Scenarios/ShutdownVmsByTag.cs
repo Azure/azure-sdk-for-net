@@ -16,7 +16,7 @@ namespace Proto.Client
 
             //set tags on random vms
             Random rand = new Random(Environment.TickCount);
-            foreach (var generic in rg.GetVirtualMachineContainer().ListByName(Environment.UserName))
+            foreach (var generic in rg.GetVirtualMachineContainer().ListAsGenericResource(Environment.UserName))
             {
                 var vm = VirtualMachineOperations.FromGeneric(generic);
                 if (rand.NextDouble() > 0.5)

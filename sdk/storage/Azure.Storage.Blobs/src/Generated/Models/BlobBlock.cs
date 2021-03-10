@@ -14,9 +14,9 @@ namespace Azure.Storage.Blobs.Models
     {
         /// <summary> Initializes a new instance of BlobBlock. </summary>
         /// <param name="name"> The base64 encoded block ID. </param>
-        /// <param name="size"> The block size in bytes. </param>
+        /// <param name="sizeLong"> The block size in bytes. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        internal BlobBlock(string name, int size)
+        internal BlobBlock(string name, long sizeLong)
         {
             if (name == null)
             {
@@ -24,12 +24,7 @@ namespace Azure.Storage.Blobs.Models
             }
 
             Name = name;
-            Size = size;
+            SizeLong = sizeLong;
         }
-
-        /// <summary> The base64 encoded block ID. </summary>
-        public string Name { get; }
-        /// <summary> The block size in bytes. </summary>
-        public int Size { get; }
     }
 }
