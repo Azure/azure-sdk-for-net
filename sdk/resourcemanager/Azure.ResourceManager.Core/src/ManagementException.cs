@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets and set the Code of the response.
         /// </summary>
-        public string Code { get; }
+        public string? Code { get; }
 
         /// <summary>
         /// Gets and set the Target of the response.
         /// </summary>
-        public string Target { get; }
+        public string? Target { get; }
 
         /// <summary>
         /// Gets and set the Details of the response.
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="message"> TODO. </param>
         /// <param name="innerException"></param>
         public ManagementException(int status, string message, Exception? innerException)
-            : this(status, message, null, innerException)
+            : this(status, message, null, innerException, null)
         {
         }
 
@@ -84,17 +84,18 @@ namespace Azure.ResourceManager.Core
         /// <param name="errorCode"> TODO. </param>
         /// <param name="message"></param>
         /// <param name="innerException"></param>
-        public ManagementException(int status, string message, string? errorCode, Exception? innerException)
+        /// <param name="content"></param>
+        public ManagementException(int status, string message, string? errorCode, Exception? innerException, string? content)
             : base(status, message, errorCode, innerException)
         {
-            Code = (string)GetResponseProperty("code");
-            Target = (string)GetResponseProperty("target");
+            Code = ErrorCode;
+            Target = (string)GetResponseProperty(content, "target");
             Data.Clear();
-            foreach (KeyValuePair<string,string> item in (ArrayList)GetResponseProperty("additionalInfo"))
+            foreach (KeyValuePair<string,string> item in (ArrayList)GetResponseProperty(content, "additionalInfo"))
             {
                 Data.Add(item.Key, item.Value);
             }
-            Details = (ArrayList)GetResponseProperty("details");
+            Details = (ArrayList)GetResponseProperty(content, "details");
             AdditionalInfo = this.Data;
         }
 
@@ -106,25 +107,16 @@ namespace Azure.ResourceManager.Core
         protected ManagementException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
-            Code = (string)GetResponseProperty("code");
-            Target = (string)GetResponseProperty("target");
-            Data.Clear();
-            foreach (KeyValuePair<string, string> item in (ArrayList)GetResponseProperty("additionalInfo"))
-            {
-                Data.Add(item.Key, item.Value);
-            }
-            Details = (ArrayList)GetResponseProperty("details");
-            AdditionalInfo = this.Data;
         }
 
         /// <summary>
         /// TODO.
         /// </summary>
         /// <param name="propertyName"> TODO. </param>
-        public static object GetResponseProperty(string propertyName)
+        /// <param name="content"> TODO. </param>
+        public static object GetResponseProperty(string content, string propertyName)
         {
-            string rawContent = System.IO.File.ReadAllText(@"C:\Users\v-minghc\Desktop\testdata.json");
-            JsonDocument jsonObejct = JsonDocument.Parse(rawContent);
+            JsonDocument jsonObejct = JsonDocument.Parse(content);
             JsonElement error;
             if (jsonObejct.RootElement.TryGetProperty("error", out error))
             {
