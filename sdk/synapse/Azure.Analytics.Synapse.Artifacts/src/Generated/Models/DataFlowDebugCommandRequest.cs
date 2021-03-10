@@ -31,26 +31,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             CommandPayload = commandPayload;
         }
 
-        /// <summary> Initializes a new instance of DataFlowDebugCommandRequest. </summary>
-        /// <param name="sessionId"> The ID of data flow debug session. </param>
-        /// <param name="dataFlowName"> The data flow which contains the debug session. </param>
-        /// <param name="commandName"> The command name. </param>
-        /// <param name="commandPayload"> The command payload object. </param>
-        internal DataFlowDebugCommandRequest(string sessionId, string dataFlowName, string commandName, object commandPayload)
-        {
-            SessionId = sessionId;
-            DataFlowName = dataFlowName;
-            CommandName = commandName;
-            CommandPayload = commandPayload;
-        }
-
         /// <summary> The ID of data flow debug session. </summary>
-        public string SessionId { get; set; }
+        public string SessionId { get; }
         /// <summary> The data flow which contains the debug session. </summary>
         public string DataFlowName { get; set; }
         /// <summary> The command name. </summary>
         public string CommandName { get; set; }
         /// <summary> The command payload object. </summary>
-        public object CommandPayload { get; set; }
+        public object CommandPayload { get; }
     }
 }

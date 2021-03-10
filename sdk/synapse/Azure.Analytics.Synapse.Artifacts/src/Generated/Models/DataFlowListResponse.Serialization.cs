@@ -14,7 +14,7 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(DataFlowListResponseConverter))]
-    public partial class DataFlowListResponse
+    internal partial class DataFlowListResponse
     {
         internal static DataFlowListResponse DeserializeDataFlowListResponse(JsonElement element)
         {

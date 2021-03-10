@@ -26,20 +26,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static ArtifactRenameRequest DeserializeArtifactRenameRequest(JsonElement element)
-        {
-            Optional<string> newName = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("newName"))
-                {
-                    newName = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new ArtifactRenameRequest(newName.Value);
-        }
-
         internal partial class ArtifactRenameRequestConverter : JsonConverter<ArtifactRenameRequest>
         {
             public override void Write(Utf8JsonWriter writer, ArtifactRenameRequest model, JsonSerializerOptions options)

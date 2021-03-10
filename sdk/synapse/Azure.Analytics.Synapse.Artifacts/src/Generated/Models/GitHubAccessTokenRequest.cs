@@ -38,10 +38,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> The GitHub Client Id. </summary>
-        public string GitHubClientId { get; set; }
+        public string GitHubClientId { get; }
         /// <summary> The GitHub Access code. </summary>
-        public string GitHubAccessCode { get; set; }
+        public string GitHubAccessCode { get; }
         /// <summary> The GitHub access token base URL. </summary>
-        public string GitHubAccessTokenBaseUrl { get; set; }
+        public string GitHubAccessTokenBaseUrl { get; }
     }
 }

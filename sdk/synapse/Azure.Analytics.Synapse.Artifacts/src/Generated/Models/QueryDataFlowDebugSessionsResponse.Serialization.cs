@@ -14,7 +14,7 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(QueryDataFlowDebugSessionsResponseConverter))]
-    public partial class QueryDataFlowDebugSessionsResponse
+    internal partial class QueryDataFlowDebugSessionsResponse
     {
         internal static QueryDataFlowDebugSessionsResponse DeserializeQueryDataFlowDebugSessionsResponse(JsonElement element)
         {

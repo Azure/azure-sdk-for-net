@@ -8,7 +8,7 @@
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Contains details when the response code indicates an error. </summary>
-    public partial class ErrorContract
+    internal partial class ErrorContract
     {
         /// <summary> Initializes a new instance of ErrorContract. </summary>
         internal ErrorContract()

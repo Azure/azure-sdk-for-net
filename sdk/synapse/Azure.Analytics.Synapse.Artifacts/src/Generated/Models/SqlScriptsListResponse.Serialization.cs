@@ -14,7 +14,7 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(SqlScriptsListResponseConverter))]
-    public partial class SqlScriptsListResponse
+    internal partial class SqlScriptsListResponse
     {
         internal static SqlScriptsListResponse DeserializeSqlScriptsListResponse(JsonElement element)
         {

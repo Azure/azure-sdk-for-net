@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -31,37 +30,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
-        }
-
-        internal static RunQueryFilter DeserializeRunQueryFilter(JsonElement element)
-        {
-            RunQueryFilterOperand operand = default;
-            RunQueryFilterOperator @operator = default;
-            IList<string> values = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("operand"))
-                {
-                    operand = new RunQueryFilterOperand(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("operator"))
-                {
-                    @operator = new RunQueryFilterOperator(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("values"))
-                {
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    values = array;
-                    continue;
-                }
-            }
-            return new RunQueryFilter(operand, @operator, values);
         }
 
         internal partial class RunQueryFilterConverter : JsonConverter<RunQueryFilter>

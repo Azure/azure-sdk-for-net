@@ -14,7 +14,7 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(TriggerListResponseConverter))]
-    public partial class TriggerListResponse
+    internal partial class TriggerListResponse
     {
         internal static TriggerListResponse DeserializeTriggerListResponse(JsonElement element)
         {

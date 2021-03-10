@@ -14,7 +14,7 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(SparkJobDefinitionsListResponseConverter))]
-    public partial class SparkJobDefinitionsListResponse
+    internal partial class SparkJobDefinitionsListResponse
     {
         internal static SparkJobDefinitionsListResponse DeserializeSparkJobDefinitionsListResponse(JsonElement element)
         {

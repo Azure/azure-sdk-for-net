@@ -25,26 +25,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static RunQueryOrderBy DeserializeRunQueryOrderBy(JsonElement element)
-        {
-            RunQueryOrderByField orderBy = default;
-            RunQueryOrder order = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("orderBy"))
-                {
-                    orderBy = new RunQueryOrderByField(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("order"))
-                {
-                    order = new RunQueryOrder(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new RunQueryOrderBy(orderBy, order);
-        }
-
         internal partial class RunQueryOrderByConverter : JsonConverter<RunQueryOrderBy>
         {
             public override void Write(Utf8JsonWriter writer, RunQueryOrderBy model, JsonSerializerOptions options)

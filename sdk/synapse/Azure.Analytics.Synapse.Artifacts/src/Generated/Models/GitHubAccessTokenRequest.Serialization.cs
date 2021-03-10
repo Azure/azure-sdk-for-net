@@ -27,32 +27,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static GitHubAccessTokenRequest DeserializeGitHubAccessTokenRequest(JsonElement element)
-        {
-            string gitHubClientId = default;
-            string gitHubAccessCode = default;
-            string gitHubAccessTokenBaseUrl = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("gitHubClientId"))
-                {
-                    gitHubClientId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("gitHubAccessCode"))
-                {
-                    gitHubAccessCode = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("gitHubAccessTokenBaseUrl"))
-                {
-                    gitHubAccessTokenBaseUrl = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new GitHubAccessTokenRequest(gitHubClientId, gitHubAccessCode, gitHubAccessTokenBaseUrl);
-        }
-
         internal partial class GitHubAccessTokenRequestConverter : JsonConverter<GitHubAccessTokenRequest>
         {
             public override void Write(Utf8JsonWriter writer, GitHubAccessTokenRequest model, JsonSerializerOptions options)

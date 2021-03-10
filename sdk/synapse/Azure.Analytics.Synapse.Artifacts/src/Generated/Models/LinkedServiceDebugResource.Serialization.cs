@@ -28,26 +28,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static LinkedServiceDebugResource DeserializeLinkedServiceDebugResource(JsonElement element)
-        {
-            LinkedService properties = default;
-            Optional<string> name = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("properties"))
-                {
-                    properties = LinkedService.DeserializeLinkedService(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("name"))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new LinkedServiceDebugResource(name.Value, properties);
-        }
-
         internal partial class LinkedServiceDebugResourceConverter : JsonConverter<LinkedServiceDebugResource>
         {
             public override void Write(Utf8JsonWriter writer, LinkedServiceDebugResource model, JsonSerializerOptions options)

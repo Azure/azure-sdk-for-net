@@ -26,20 +26,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static SubResourceDebugResource DeserializeSubResourceDebugResource(JsonElement element)
-        {
-            Optional<string> name = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("name"))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new SubResourceDebugResource(name.Value);
-        }
-
         internal partial class SubResourceDebugResourceConverter : JsonConverter<SubResourceDebugResource>
         {
             public override void Write(Utf8JsonWriter writer, SubResourceDebugResource model, JsonSerializerOptions options)

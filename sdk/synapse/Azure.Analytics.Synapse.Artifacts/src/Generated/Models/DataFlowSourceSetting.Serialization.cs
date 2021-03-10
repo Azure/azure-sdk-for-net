@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -35,35 +34,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteObjectValue(item.Value);
             }
             writer.WriteEndObject();
-        }
-
-        internal static DataFlowSourceSetting DeserializeDataFlowSourceSetting(JsonElement element)
-        {
-            Optional<string> sourceName = default;
-            Optional<int> rowLimit = default;
-            IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("sourceName"))
-                {
-                    sourceName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("rowLimit"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    rowLimit = property.Value.GetInt32();
-                    continue;
-                }
-                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
-            }
-            additionalProperties = additionalPropertiesDictionary;
-            return new DataFlowSourceSetting(sourceName.Value, Optional.ToNullable(rowLimit), additionalProperties);
         }
 
         internal partial class DataFlowSourceSettingConverter : JsonConverter<DataFlowSourceSetting>

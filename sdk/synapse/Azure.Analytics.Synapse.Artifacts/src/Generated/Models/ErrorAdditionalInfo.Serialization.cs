@@ -13,7 +13,7 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(ErrorAdditionalInfoConverter))]
-    public partial class ErrorAdditionalInfo
+    internal partial class ErrorAdditionalInfo
     {
         internal static ErrorAdditionalInfo DeserializeErrorAdditionalInfo(JsonElement element)
         {

@@ -14,7 +14,7 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(ErrorResponseConverter))]
-    public partial class ErrorResponse
+    internal partial class ErrorResponse
     {
         internal static ErrorResponse DeserializeErrorResponse(JsonElement element)
         {

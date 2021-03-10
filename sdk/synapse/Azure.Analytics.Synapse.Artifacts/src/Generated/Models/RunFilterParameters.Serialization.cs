@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -49,64 +48,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
-        }
-
-        internal static RunFilterParameters DeserializeRunFilterParameters(JsonElement element)
-        {
-            Optional<string> continuationToken = default;
-            DateTimeOffset lastUpdatedAfter = default;
-            DateTimeOffset lastUpdatedBefore = default;
-            Optional<IList<RunQueryFilter>> filters = default;
-            Optional<IList<RunQueryOrderBy>> orderBy = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("continuationToken"))
-                {
-                    continuationToken = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("lastUpdatedAfter"))
-                {
-                    lastUpdatedAfter = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (property.NameEquals("lastUpdatedBefore"))
-                {
-                    lastUpdatedBefore = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (property.NameEquals("filters"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<RunQueryFilter> array = new List<RunQueryFilter>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(RunQueryFilter.DeserializeRunQueryFilter(item));
-                    }
-                    filters = array;
-                    continue;
-                }
-                if (property.NameEquals("orderBy"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<RunQueryOrderBy> array = new List<RunQueryOrderBy>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(RunQueryOrderBy.DeserializeRunQueryOrderBy(item));
-                    }
-                    orderBy = array;
-                    continue;
-                }
-            }
-            return new RunFilterParameters(continuationToken.Value, lastUpdatedAfter, lastUpdatedBefore, Optional.ToList(filters), Optional.ToList(orderBy));
         }
 
         internal partial class RunFilterParametersConverter : JsonConverter<RunFilterParameters>
