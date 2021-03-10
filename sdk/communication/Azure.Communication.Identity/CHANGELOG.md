@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
+## 1.0.0-beta.5 (2021-03-09)
 ### Breaking
 - CommunicationIdentityClient.IssueToken and CommunicationIdentityClient.IssueTokenAsync are renamed to GetToken and GetTokenAsync, respectively.
 - CommunicationIdentityClient.CreateUserWithToken and CommunicationIdentityClient.CreateUserWithTokenAsync are renamed to CreateUserAndToken and CreateUserAndTokenAsync, respectively. Their return value is also changed from Tuple<CommunicationUserIdentifier, string> to CommunicationUserIdentifierAndToken.

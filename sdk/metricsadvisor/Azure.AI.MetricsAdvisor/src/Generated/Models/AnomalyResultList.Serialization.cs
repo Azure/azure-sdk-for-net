@@ -15,7 +15,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         internal static AnomalyResultList DeserializeAnomalyResultList(JsonElement element)
         {
-            string nextLink = default;
+            Optional<string> nextLink = default;
             IReadOnlyList<DataPointAnomaly> value = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -35,7 +35,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new AnomalyResultList(nextLink, value);
+            return new AnomalyResultList(nextLink.Value, value);
         }
     }
 }

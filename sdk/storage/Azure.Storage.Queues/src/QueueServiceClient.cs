@@ -142,14 +142,16 @@ namespace Azure.Storage.Queues
         /// class.
         /// </summary>
         /// <param name="serviceUri">
-        /// A <see cref="Uri"/> referencing the queue service.
-        /// This is likely to be similar to "https://{account_name}.queue.core.windows.net".
+        /// A <see cref="Uri"/> referencing the queue that includes the
+        /// name of the account, the name of the queue, and a SAS token.
+        /// This is likely to be similar to "https://{account_name}.queue.core.windows.net/{queue_name}?{sas_token}".
         /// </param>
         /// <param name="options">
         /// Optional client options that define the transport pipeline
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
+        /// <seealso href="https://docs.microsoft.com/azure/storage/common/storage-sas-overview">Storage SAS Token Overview</seealso>
         public QueueServiceClient(Uri serviceUri, QueueClientOptions options = default)
             : this(serviceUri, (HttpPipelinePolicy)null, options, null)
         {

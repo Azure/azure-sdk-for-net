@@ -29,7 +29,7 @@ namespace Azure.Iot.ModelsRepository.Samples
         {
             #region Snippet:ModelsRepositorySamplesParserIntegrationParseAndGetModelsAsync
 
-            var client = new ModelsRepositoryClient(new ModelsRepositoryClientOptions(resolutionOption: DependencyResolutionOption.Disabled));
+            var client = new ModelsRepositoryClient(new ModelsRepositoryClientOptions(dependencyResolution: ModelDependencyResolution.Disabled));
             var dtmi = "dtmi:com:example:TemperatureController;1";
             IDictionary<string, string> models = await client.GetModelsAsync(dtmi).ConfigureAwait(false);
             var parser = new ModelParser

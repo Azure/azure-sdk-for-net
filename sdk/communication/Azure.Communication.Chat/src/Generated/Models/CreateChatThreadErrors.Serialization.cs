@@ -28,14 +28,7 @@ namespace Azure.Communication.Chat
                     List<CommunicationError> array = new List<CommunicationError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(CommunicationError.DeserializeCommunicationError(item));
-                        }
+                        array.Add(CommunicationError.DeserializeCommunicationError(item));
                     }
                     invalidParticipants = array;
                     continue;

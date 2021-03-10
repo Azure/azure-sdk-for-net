@@ -19,12 +19,12 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         /// <summary> Initializes a new instance of DataFeedIngestionProgress. </summary>
         /// <param name="latestSuccessTimestamp">
-        /// the timestamp of lastest success ingestion job.
+        /// the timestamp of latest success ingestion job.
         /// 
         /// null indicates not available.
         /// </param>
         /// <param name="latestActiveTimestamp">
-        /// the timestamp of lastest ingestion job with status update.
+        /// the timestamp of latest ingestion job with status update.
         /// 
         /// null indicates not available.
         /// </param>

@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\src\Azure.AI.FormRecognizer.csproj" />
+    <ProjectReference Include="..\..\..\..\common\Perf\Azure.Test.Perf\Azure.Test.Perf.csproj" />
+  </ItemGroup>
+
+  <!-- Shared source from Azure.AI.FormRecognizer.Tests -->
+  <ItemGroup>
+    <Compile Include="..\tests\Infrastructure\TestFile.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+  </ItemGroup>
+
+</Project>
