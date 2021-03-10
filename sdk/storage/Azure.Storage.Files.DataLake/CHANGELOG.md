@@ -1,5 +1,8 @@
 # Release History
 
+## 12.7.0-beta.3 (Unreleased)
+
+
 ## 12.7.0-beta.2 (2021-03-09)
 - Changed error codes from numerical (404) to descriptive (PathNotFound).
 
