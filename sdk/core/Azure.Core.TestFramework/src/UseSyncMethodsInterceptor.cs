@@ -36,6 +36,12 @@ namespace Azure.Core.TestFramework
         [DebuggerStepThrough]
         public void Intercept(IInvocation invocation)
         {
+            if (invocation.Method.Name.Contains("WaitForCompletionAsync"))
+            {
+                invocation.Proceed();
+                return;
+            }
+
             Type[] parameterTypes = invocation.Method.GetParameters().Select(p => p.ParameterType).ToArray();
 
             var methodName = invocation.Method.Name;

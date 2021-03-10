@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.TestFramework
         }
 
         [SetUp]
-        protected void Setup()
+        protected void CreateCleanupClient()
         {
             _cleanupClient ??= GetCleanupClient();
         }
@@ -75,7 +75,14 @@ namespace Azure.ResourceManager.TestFramework
             {
                 Parallel.ForEach(CleanupPolicy.ResourceGroupsCreated, resourceGroup =>
                 {
-                    _cleanupClient.GetResourceGroupOperations(TestEnvironment.SubscriptionId, resourceGroup).StartDelete();
+                    try
+                    {
+                        _cleanupClient.GetResourceGroupOperations(TestEnvironment.SubscriptionId, resourceGroup).StartDelete();
+                    }
+                    catch(RequestFailedException e) when (e.Status == 404)
+                    {
+                        //we assume the test case cleaned up it up if it no longer exists.
+                    }
                 });
             }
         }
