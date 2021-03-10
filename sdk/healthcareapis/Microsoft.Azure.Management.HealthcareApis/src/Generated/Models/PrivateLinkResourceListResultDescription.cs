@@ -18,23 +18,23 @@ namespace Microsoft.Azure.Management.HealthcareApis.Models
     /// <summary>
     /// A list of private link resources
     /// </summary>
-    public partial class PrivateLinkResourceListResult
+    public partial class PrivateLinkResourceListResultDescription
     {
         /// <summary>
-        /// Initializes a new instance of the PrivateLinkResourceListResult
-        /// class.
+        /// Initializes a new instance of the
+        /// PrivateLinkResourceListResultDescription class.
         /// </summary>
-        public PrivateLinkResourceListResult()
+        public PrivateLinkResourceListResultDescription()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the PrivateLinkResourceListResult
-        /// class.
+        /// Initializes a new instance of the
+        /// PrivateLinkResourceListResultDescription class.
         /// </summary>
         /// <param name="value">Array of private link resources</param>
-        public PrivateLinkResourceListResult(IList<PrivateLinkResource> value = default(IList<PrivateLinkResource>))
+        public PrivateLinkResourceListResultDescription(IList<PrivateLinkResourceDescription> value = default(IList<PrivateLinkResourceDescription>))
         {
             Value = value;
             CustomInit();
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.HealthcareApis.Models
         /// Gets or sets array of private link resources
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public IList<PrivateLinkResource> Value { get; set; }
+        public IList<PrivateLinkResourceDescription> Value { get; set; }
 
     }
 }

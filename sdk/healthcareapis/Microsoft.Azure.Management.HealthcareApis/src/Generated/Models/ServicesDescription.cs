@@ -44,10 +44,11 @@ namespace Microsoft.Azure.Management.HealthcareApis.Models
         /// managed identity associated with it.</param>
         /// <param name="properties">The common properties of a
         /// service.</param>
-        public ServicesDescription(Kind kind, string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), ServicesResourceIdentity identity = default(ServicesResourceIdentity), ServicesProperties properties = default(ServicesProperties))
+        public ServicesDescription(Kind kind, string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), ServicesResourceIdentity identity = default(ServicesResourceIdentity), ServicesProperties properties = default(ServicesProperties), SystemData systemData = default(SystemData))
             : base(kind, location, id, name, type, tags, etag, identity)
         {
             Properties = properties;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -61,6 +62,11 @@ namespace Microsoft.Azure.Management.HealthcareApis.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public ServicesProperties Properties { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; set; }
 
         /// <summary>
         /// Validate the object.
