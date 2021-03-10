@@ -11,15 +11,15 @@ using Azure.Core;
 
 namespace Azure.Iot.TimeSeriesInsights
 {
-    public partial class TsiErrorBody
+    public partial class InstancesOperationError
     {
-        internal static TsiErrorBody DeserializeTsiErrorBody(JsonElement element)
+        internal static InstancesOperationError DeserializeInstancesOperationError(JsonElement element)
         {
             Optional<string> code = default;
             Optional<string> message = default;
             Optional<string> target = default;
-            Optional<TsiErrorBody> innerError = default;
-            Optional<IReadOnlyList<TsiErrorDetails>> details = default;
+            Optional<InstancesOperationError> innerError = default;
+            Optional<IReadOnlyList<InstancesOperationErrorDetails>> details = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -46,7 +46,7 @@ namespace Azure.Iot.TimeSeriesInsights
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    innerError = DeserializeTsiErrorBody(property.Value);
+                    innerError = DeserializeInstancesOperationError(property.Value);
                     continue;
                 }
                 if (property.NameEquals("details"))
@@ -56,10 +56,10 @@ namespace Azure.Iot.TimeSeriesInsights
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<TsiErrorDetails> array = new List<TsiErrorDetails>();
+                    List<InstancesOperationErrorDetails> array = new List<InstancesOperationErrorDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TsiErrorDetails.DeserializeTsiErrorDetails(item));
+                        array.Add(InstancesOperationErrorDetails.DeserializeInstancesOperationErrorDetails(item));
                     }
                     details = array;
                     continue;
@@ -67,7 +67,7 @@ namespace Azure.Iot.TimeSeriesInsights
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new TsiErrorBody(code.Value, message.Value, target.Value, innerError.Value, Optional.ToList(details), additionalProperties);
+            return new InstancesOperationError(code.Value, message.Value, target.Value, innerError.Value, Optional.ToList(details), additionalProperties);
         }
     }
 }

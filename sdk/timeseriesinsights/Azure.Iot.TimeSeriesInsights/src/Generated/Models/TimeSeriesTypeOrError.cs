@@ -18,7 +18,7 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <summary> Initializes a new instance of TimeSeriesTypeOrError. </summary>
         /// <param name="timeSeriesType"> Time series type object - set when the operation is successful. </param>
         /// <param name="error"> Error object - set when the operation is unsuccessful. </param>
-        internal TimeSeriesTypeOrError(TimeSeriesType timeSeriesType, TsiErrorBody error)
+        internal TimeSeriesTypeOrError(TimeSeriesType timeSeriesType, InstancesOperationError error)
         {
             TimeSeriesType = timeSeriesType;
             Error = error;
@@ -27,6 +27,6 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <summary> Time series type object - set when the operation is successful. </summary>
         public TimeSeriesType TimeSeriesType { get; }
         /// <summary> Error object - set when the operation is unsuccessful. </summary>
-        public TsiErrorBody Error { get; }
+        public InstancesOperationError Error { get; }
     }
 }
