@@ -680,7 +680,6 @@ namespace Azure.Storage.Blobs
             request.Headers.Add("Accept", "application/xml");
             request.Headers.Add("Content-Length", contentLength);
             request.Headers.Add("Content-Type", multipartContentType);
-            request.Headers.Add("Content-Type", "application/xml");
             request.Content = RequestContent.Create(body);
             return message;
         }
