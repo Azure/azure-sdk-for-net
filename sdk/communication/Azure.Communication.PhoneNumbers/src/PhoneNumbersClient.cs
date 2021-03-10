@@ -198,7 +198,7 @@ namespace Azure.Communication.PhoneNumbers
         }
 
         /// <summary> Gets the details of the given purchased phone number. </summary>
-        /// <param name="phoneNumber"> The acquired phone number whose details are to be fetched in E.164 format, e.g. +11234567890. </param>
+        /// <param name="phoneNumber"> The acquired phone number whose details are to be fetched in E.164 format, e.g. +14255550123. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PurchasedPhoneNumber>> GetPurchasedPhoneNumberAsync(string phoneNumber, CancellationToken cancellationToken = default)
         {
@@ -216,7 +216,7 @@ namespace Azure.Communication.PhoneNumbers
         }
 
         /// <summary> Gets the details of the given purchased phone number. </summary>
-        /// <param name="phoneNumber"> The acquired phone number whose details are to be fetched in E.164 format, e.g. +11234567890. </param>
+        /// <param name="phoneNumber"> The acquired phone number whose details are to be fetched in E.164 format, e.g. +14255550123. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PurchasedPhoneNumber> GetPurchasedPhoneNumber(string phoneNumber, CancellationToken cancellationToken = default)
         {

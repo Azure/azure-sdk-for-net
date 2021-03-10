@@ -21,7 +21,7 @@ namespace Azure.Communication.PhoneNumbers.Models
         /// <param name="purchaseDate"> The date and time that the phone number was purchased. </param>
         /// <param name="cost"> The incurred cost for a single phone number. </param>
 #pragma warning disable CA1054 // URI-like parameters should not be strings
-        public static PurchasedPhoneNumber AcquiredPhoneNumber(string id, string phoneNumber, string countryCode, PhoneNumberType phoneNumberType, PhoneNumberCapabilities capabilities, PhoneNumberAssignmentType assignmentType, DateTimeOffset purchaseDate, PhoneNumberCost cost)
+        public static PurchasedPhoneNumber PurchasedPhoneNumber(string id, string phoneNumber, string countryCode, PhoneNumberType phoneNumberType, PhoneNumberCapabilities capabilities, PhoneNumberAssignmentType assignmentType, DateTimeOffset purchaseDate, PhoneNumberCost cost)
 #pragma warning restore CA1054 // URI-like parameters should not be strings
             => new PurchasedPhoneNumber(id, phoneNumber, countryCode, phoneNumberType, capabilities, assignmentType, purchaseDate, cost);
 
