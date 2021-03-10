@@ -2,6 +2,7 @@
 
 ## 1.4.0-beta.5 (Unreleased)
 
+- Added `AzurePowerShellCredential` to `DefaultAzureCredential`
 
 ## 1.4.0-beta.4 (2021-03-09)
 
