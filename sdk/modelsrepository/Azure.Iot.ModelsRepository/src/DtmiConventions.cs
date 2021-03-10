@@ -50,7 +50,10 @@ namespace Azure.Iot.ModelsRepository
                     ModelsRepositoryConstants.ExpandedJsonFileExtension);
             }
 
-            UriBuilder repositoryUriBuilder = new UriBuilder(repositoryUri);
+            var repositoryUriBuilder = new UriBuilder(repositoryUri);
+
+            // If the base URI (repositoryUri in this case) path segment does not end in slash
+            // that segment will be dropped and not properly anchored to by the intended relative URI.
             if (!repositoryUriBuilder.Path.EndsWith("/", StringComparison.InvariantCultureIgnoreCase))
             {
                 repositoryUriBuilder.Path += "/";
