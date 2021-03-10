@@ -13,6 +13,7 @@
 
 ### Breaking Changes
 - PhoneNumberAdministrationClient has been replaced with PhoneNumbersClient, which has the same functionality but different APIs. To learn more about how PhoneNumbersClient works, refer to the [README.md][read_me]
+- AcquiredPhoneNumber is renamed to PurchasedPhoneNumber
 
 <!-- LINKS -->
 [read_me]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/communication/Azure.Communication.PhoneNumbers/README.md
