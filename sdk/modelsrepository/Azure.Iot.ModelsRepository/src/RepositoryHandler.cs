@@ -143,7 +143,7 @@ namespace Azure.Iot.ModelsRepository
             var toProcessModels = new Queue<string>();
             foreach (string dtmi in dtmis)
             {
-                if (!DtmiConventions.IsDtmi(dtmi))
+                if (!DtmiConventions.IsValidDtmi(dtmi))
                 {
                     ModelsRepositoryEventSource.Instance.InvalidDtmiInput(dtmi);
 

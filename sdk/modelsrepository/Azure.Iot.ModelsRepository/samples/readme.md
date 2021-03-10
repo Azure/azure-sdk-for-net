@@ -134,6 +134,43 @@ IReadOnlyDictionary<Dtmi, DTEntityInfo> parseResult = await parser.ParseAsync(mo
 Console.WriteLine($"{dtmi} resolved in {models.Count} interfaces with {parseResult.Count} entities.");
 ```
 
+## DtmiConventions utility
+
+The IoT Models Repository applies a set of conventions for organizing digital twin models. This package exposes a utility class
+called `DtmiConventions` which exposes functions supporting these conventions. These same functions are used throughout the client.
+
+
+```C# Snippet:ModelsRepositorySamplesDtmiConventionsIsValidDtmi
+// This snippet shows how to validate a given DTMI string is well-formed.
+
+// Returns true
+DtmiConventions.IsValidDtmi("dtmi:com:example:Thermostat;1");
+
+// Returns false
+DtmiConventions.IsValidDtmi("dtmi:com:example:Thermostat");
+```
+
+```C# Snippet:ModelsRepositorySamplesDtmiConventionsGetDtmiToQualifiedPath
+// This snippet shows obtaining a fully qualified path to a model file.
+
+// Local repository example
+string localRepository = "/path/to/repository";
+string fullyQualifiedModelPath = 
+    DtmiConventions.DtmiToQualifiedPath("dtmi:com:example:Thermostat", localRepository);
+
+// Prints '/path/to/repository/dtmi/com/example/thermostat-1.json'
+Console.WriteLine(fullyQualifiedModelPath);
+
+// Remote repository example
+string remoteRepository = "https://contoso.com/models";
+fullyQualifiedModelPath =
+    DtmiConventions.DtmiToQualifiedPath("dtmi:com:example:Thermostat", remoteRepository);
+
+// Prints 'https://contoso.com/models/dtmi/com/example/thermostat-1.json'
+Console.WriteLine(fullyQualifiedModelPath);
+```
+
+
 <!-- LINKS -->
 [modelsrepository_github_repo]: https://github.com/Azure/iot-plugandplay-models
 [modelsrepository_sample_extension]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/modelsrepository/Azure.Iot.ModelsRepository/samples/ModelsRepositoryClientSamples/ModelsRepositoryClientExtensions.cs
