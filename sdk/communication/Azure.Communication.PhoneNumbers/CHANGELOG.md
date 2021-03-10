@@ -3,6 +3,15 @@
 ## 1.0.0-beta.6 (Unreleased)
 
 
+### Breaking Changes
+- AcquiredPhoneNumber class is renamed to PurchasedPhoneNumber
+- PhoneNumbersClient methods renamed:
+  - GetPhoneNumber -> GetPurchasedPhoneNumber
+  - GetPhoneNumberAsync -> GetPurchasedPhoneNumberAsync
+  - GetPhoneNumbers -> GetPurchasedPhoneNumbers
+  - GetPhoneNumbersAsync -> GetPurchasedPhoneNumbersAsync
+- PhoneNumbersModelFactory static method AcquiredPhoneNumber is renamed to PurchasedPhoneNumber
+
 ## 1.0.0-beta.5 (2021-03-09)
 
 ### Added

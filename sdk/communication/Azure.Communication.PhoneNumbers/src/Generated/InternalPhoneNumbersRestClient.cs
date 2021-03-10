@@ -396,7 +396,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="phoneNumber"> The acquired phone number whose details are to be fetched in E.164 format, e.g. +11234567890. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
-        public async Task<Response<AcquiredPhoneNumber>> GetByNumberAsync(string phoneNumber, CancellationToken cancellationToken = default)
+        public async Task<Response<PurchasedPhoneNumber>> GetByNumberAsync(string phoneNumber, CancellationToken cancellationToken = default)
         {
             if (phoneNumber == null)
             {
@@ -409,9 +409,9 @@ namespace Azure.Communication.PhoneNumbers
             {
                 case 200:
                     {
-                        AcquiredPhoneNumber value = default;
+                        PurchasedPhoneNumber value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AcquiredPhoneNumber.DeserializeAcquiredPhoneNumber(document.RootElement);
+                        value = PurchasedPhoneNumber.DeserializePurchasedPhoneNumber(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -423,7 +423,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="phoneNumber"> The acquired phone number whose details are to be fetched in E.164 format, e.g. +11234567890. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
-        public Response<AcquiredPhoneNumber> GetByNumber(string phoneNumber, CancellationToken cancellationToken = default)
+        public Response<PurchasedPhoneNumber> GetByNumber(string phoneNumber, CancellationToken cancellationToken = default)
         {
             if (phoneNumber == null)
             {
@@ -436,9 +436,9 @@ namespace Azure.Communication.PhoneNumbers
             {
                 case 200:
                     {
-                        AcquiredPhoneNumber value = default;
+                        PurchasedPhoneNumber value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AcquiredPhoneNumber.DeserializeAcquiredPhoneNumber(document.RootElement);
+                        value = PurchasedPhoneNumber.DeserializePurchasedPhoneNumber(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
