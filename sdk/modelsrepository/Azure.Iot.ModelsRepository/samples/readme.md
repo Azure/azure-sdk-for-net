@@ -134,10 +134,10 @@ IReadOnlyDictionary<Dtmi, DTEntityInfo> parseResult = await parser.ParseAsync(mo
 Console.WriteLine($"{dtmi} resolved in {models.Count} interfaces with {parseResult.Count} entities.");
 ```
 
-## DtmiConventions utility
+## DtmiConventions utility functions
 
-The IoT Models Repository applies a set of conventions for organizing digital twin models. This package exposes a utility class
-called `DtmiConventions` which exposes functions supporting these conventions. These same functions are used throughout the client.
+The IoT Models Repository applies a set of conventions for organizing digital twin models. This package exposes a class
+called `DtmiConventions` which exposes utility functions supporting these conventions. These same functions are used throughout the client.
 
 ```C# Snippet:ModelsRepositorySamplesDtmiConventionsIsValidDtmi
 // This snippet shows how to validate a given DTMI string is well-formed.
@@ -149,21 +149,21 @@ DtmiConventions.IsValidDtmi("dtmi:com:example:Thermostat;1");
 DtmiConventions.IsValidDtmi("dtmi:com:example:Thermostat");
 ```
 
-```C# Snippet:ModelsRepositorySamplesDtmiConventionsGetDtmiToQualifiedPath
+```C# Snippet:ModelsRepositorySamplesDtmiConventionsGetModelUri
 // This snippet shows obtaining a fully qualified path to a model file.
 
 // Local repository example
-string localRepository = "/path/to/repository";
+Uri localRepositoryUri = new Uri("file:///path/to/repository/");
 string fullyQualifiedModelPath = 
-    DtmiConventions.DtmiToQualifiedPath("dtmi:com:example:Thermostat;1", localRepository);
+    DtmiConventions.GetModelUri("dtmi:com:example:Thermostat;1", localRepositoryUri).AbsolutePath;
 
 // Prints '/path/to/repository/dtmi/com/example/thermostat-1.json'
 Console.WriteLine(fullyQualifiedModelPath);
 
 // Remote repository example
-string remoteRepository = "https://contoso.com/models";
+Uri remoteRepositoryUri = new Uri("https://contoso.com/models/");
 fullyQualifiedModelPath =
-    DtmiConventions.DtmiToQualifiedPath("dtmi:com:example:Thermostat;1", remoteRepository);
+    DtmiConventions.GetModelUri("dtmi:com:example:Thermostat;1", remoteRepositoryUri).AbsoluteUri;
 
 // Prints 'https://contoso.com/models/dtmi/com/example/thermostat-1.json'
 Console.WriteLine(fullyQualifiedModelPath);

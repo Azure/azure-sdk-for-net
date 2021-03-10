@@ -22,29 +22,29 @@ namespace Azure.Iot.ModelsRepository.Samples
             #endregion Snippet:ModelsRepositorySamplesDtmiConventionsIsValidDtmi
         }
 
-        public static void GetDtmiToQualifiedPath()
+        public static void GetModelUri()
         {
-            #region Snippet:ModelsRepositorySamplesDtmiConventionsGetDtmiToQualifiedPath
+            #region Snippet:ModelsRepositorySamplesDtmiConventionsGetModelUri
 
             // This snippet shows obtaining a fully qualified path to a model file.
             
             // Local repository example
-            string localRepository = "/path/to/repository";
+            Uri localRepositoryUri = new Uri("file:///path/to/repository/");
             string fullyQualifiedModelPath = 
-                DtmiConventions.DtmiToQualifiedPath("dtmi:com:example:Thermostat;1", localRepository);
+                DtmiConventions.GetModelUri("dtmi:com:example:Thermostat;1", localRepositoryUri).AbsolutePath;
             
             // Prints '/path/to/repository/dtmi/com/example/thermostat-1.json'
             Console.WriteLine(fullyQualifiedModelPath);
 
             // Remote repository example
-            string remoteRepository = "https://contoso.com/models";
+            Uri remoteRepositoryUri = new Uri("https://contoso.com/models/");
             fullyQualifiedModelPath =
-                DtmiConventions.DtmiToQualifiedPath("dtmi:com:example:Thermostat;1", remoteRepository);
+                DtmiConventions.GetModelUri("dtmi:com:example:Thermostat;1", remoteRepositoryUri).AbsoluteUri;
 
             // Prints 'https://contoso.com/models/dtmi/com/example/thermostat-1.json'
             Console.WriteLine(fullyQualifiedModelPath);
 
-            #endregion Snippet:ModelsRepositorySamplesDtmiConventionsGetDtmiToQualifiedPath
+            #endregion Snippet:ModelsRepositorySamplesDtmiConventionsGetModelUri
         }
     }
 }

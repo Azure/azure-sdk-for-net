@@ -26,7 +26,7 @@ namespace Azure.Iot.ModelsRepository
 
             _clientOptions = options;
             _clientDiagnostics = clientDiagnostics;
-            _modelFetcher = repositoryUri.Scheme == ModelsRepositoryConstants.File
+            _modelFetcher = repositoryUri.Scheme == ModelsRepositoryConstants.UriFileSchema
                 ? _modelFetcher = new FileModelFetcher(_clientDiagnostics)
                 : _modelFetcher = new HttpModelFetcher(_clientDiagnostics, _clientOptions);
             _clientId = Guid.NewGuid();
