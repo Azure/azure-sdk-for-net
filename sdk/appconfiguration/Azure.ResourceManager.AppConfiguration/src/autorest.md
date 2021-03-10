@@ -13,17 +13,17 @@ require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/d302c82f32
 
 ``` yaml
 directive:
-  - from: swagger-document
-    where: $.definitions.EncryptionProperties
-    transform: >
-      $.properties.keyVaultProperties["x-nullable"] = true;
-```
+  from: swagger-document
+  where: $.definitions.EncryptionProperties
+  transform: >
+    $.properties.keyVaultProperties["x-nullable"] = true;
+````
 
 
 ``` yaml
 directive:
-  - from: swagger-document
-    where: $.definitions.ConfigurationStoreProperties
-    transform: >
-      $.properties.privateEndpointConnections["x-nullable"] = true;
+  from: swagger-document
+  where: $.definitions.ConfigurationStoreProperties
+  transform: >
+    $.properties.privateEndpointConnections["x-nullable"] = true;
 ````
