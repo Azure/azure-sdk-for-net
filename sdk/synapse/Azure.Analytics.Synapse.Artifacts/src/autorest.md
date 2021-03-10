@@ -24,4 +24,17 @@ directive:
   from: swagger-document
   where: $.parameters.Endpoint
   transform: $.format = "url"
+directive:
+```
+
+### Expose serialization and deserialization methods
+
+``` yaml
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    for (var path in $)
+    {
+      $[path]["x-csharp-usage"] = "converter";
+    }
 ```

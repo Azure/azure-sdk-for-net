@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> A list of dataset resources. </summary>
-    internal partial class DatasetListResponse
+    public partial class DatasetListResponse
     {
         /// <summary> Initializes a new instance of DatasetListResponse. </summary>
         /// <param name="value"> List of datasets. </param>

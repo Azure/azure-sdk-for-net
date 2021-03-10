@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> A list of Notebook resources. </summary>
-    internal partial class NotebookListResponse
+    public partial class NotebookListResponse
     {
         /// <summary> Initializes a new instance of NotebookListResponse. </summary>
         /// <param name="value"> List of Notebooks. </param>

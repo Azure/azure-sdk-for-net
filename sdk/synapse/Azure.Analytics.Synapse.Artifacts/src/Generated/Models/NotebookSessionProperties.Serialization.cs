@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(NotebookSessionPropertiesConverter))]
     public partial class NotebookSessionProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -64,6 +67,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new NotebookSessionProperties(driverMemory, driverCores, executorMemory, executorCores, numExecutors);
+        }
+
+        internal partial class NotebookSessionPropertiesConverter : JsonConverter<NotebookSessionProperties>
+        {
+            public override void Write(Utf8JsonWriter writer, NotebookSessionProperties model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override NotebookSessionProperties Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeNotebookSessionProperties(document.RootElement);
+            }
         }
     }
 }

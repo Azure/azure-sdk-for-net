@@ -14,6 +14,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Columns that define the physical type schema of the dataset. </summary>
     public partial class DatasetSchemaDataElement : IReadOnlyDictionary<string, object>
     {
+
+        /// <summary> Initializes a new instance of DatasetSchemaDataElement. </summary>
+        /// <param name="name"> Name of the schema column. Type: string (or Expression with resultType string). </param>
+        /// <param name="type"> Type of the schema column. Type: string (or Expression with resultType string). </param>
+        /// <param name="additionalProperties"> . </param>
+        internal DatasetSchemaDataElement(object name, object type, IReadOnlyDictionary<string, object> additionalProperties)
+        {
+            Name = name;
+            Type = type;
+            AdditionalProperties = additionalProperties;
+        }
         internal IReadOnlyDictionary<string, object> AdditionalProperties { get; }
         /// <inheritdoc />
         public IEnumerator<KeyValuePair<string, object>> GetEnumerator() => AdditionalProperties.GetEnumerator();

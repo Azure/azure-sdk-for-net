@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(DataFlowDebugCommandRequestConverter))]
     public partial class DataFlowDebugCommandRequest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -30,6 +33,51 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("commandPayload");
             writer.WriteObjectValue(CommandPayload);
             writer.WriteEndObject();
+        }
+
+        internal static DataFlowDebugCommandRequest DeserializeDataFlowDebugCommandRequest(JsonElement element)
+        {
+            string sessionId = default;
+            Optional<string> dataFlowName = default;
+            Optional<string> commandName = default;
+            object commandPayload = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("sessionId"))
+                {
+                    sessionId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("dataFlowName"))
+                {
+                    dataFlowName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("commandName"))
+                {
+                    commandName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("commandPayload"))
+                {
+                    commandPayload = property.Value.GetObject();
+                    continue;
+                }
+            }
+            return new DataFlowDebugCommandRequest(sessionId, dataFlowName.Value, commandName.Value, commandPayload);
+        }
+
+        internal partial class DataFlowDebugCommandRequestConverter : JsonConverter<DataFlowDebugCommandRequest>
+        {
+            public override void Write(Utf8JsonWriter writer, DataFlowDebugCommandRequest model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override DataFlowDebugCommandRequest Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeDataFlowDebugCommandRequest(document.RootElement);
+            }
         }
     }
 }

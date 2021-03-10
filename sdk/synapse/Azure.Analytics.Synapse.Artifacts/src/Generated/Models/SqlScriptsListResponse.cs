@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> A list of sql scripts resources. </summary>
-    internal partial class SqlScriptsListResponse
+    public partial class SqlScriptsListResponse
     {
         /// <summary> Initializes a new instance of SqlScriptsListResponse. </summary>
         /// <param name="value"> List of sql scripts. </param>

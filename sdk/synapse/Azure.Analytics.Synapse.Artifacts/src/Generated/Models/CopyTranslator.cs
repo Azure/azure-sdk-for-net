@@ -15,6 +15,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     public partial class CopyTranslator : IReadOnlyDictionary<string, object>
     {
 
+        /// <summary> Initializes a new instance of CopyTranslator. </summary>
+        /// <param name="type"> Copy translator type. </param>
+        /// <param name="additionalProperties"> . </param>
+        internal CopyTranslator(string type, IReadOnlyDictionary<string, object> additionalProperties)
+        {
+            Type = type ?? "CopyTranslator";
+            AdditionalProperties = additionalProperties;
+        }
+
         /// <summary> Copy translator type. </summary>
         internal string Type { get; set; }
         internal IReadOnlyDictionary<string, object> AdditionalProperties { get; }

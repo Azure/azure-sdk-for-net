@@ -20,8 +20,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Parameter name to be used for order by. The allowed parameters to order by for pipeline runs are PipelineName, RunStart, RunEnd and Status; for activity runs are ActivityName, ActivityRunStart, ActivityRunEnd and Status; for trigger runs are TriggerName, TriggerRunTimestamp and Status. </summary>
-        public RunQueryOrderByField OrderBy { get; }
+        public RunQueryOrderByField OrderBy { get; set; }
         /// <summary> Sorting order of the parameter. </summary>
-        public RunQueryOrder Order { get; }
+        public RunQueryOrder Order { get; set; }
     }
 }

@@ -5,13 +5,16 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    internal partial class ErrorResponse
+    [JsonConverter(typeof(ErrorResponseConverter))]
+    public partial class ErrorResponse
     {
         internal static ErrorResponse DeserializeErrorResponse(JsonElement element)
         {
@@ -69,6 +72,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new ErrorResponse(code.Value, message.Value, target.Value, Optional.ToList(details), Optional.ToList(additionalInfo));
+        }
+
+        internal partial class ErrorResponseConverter : JsonConverter<ErrorResponse>
+        {
+            public override void Write(Utf8JsonWriter writer, ErrorResponse model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override ErrorResponse Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeErrorResponse(document.RootElement);
+            }
         }
     }
 }

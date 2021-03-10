@@ -15,6 +15,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     public partial class DatasetStorageFormat : IReadOnlyDictionary<string, object>
     {
 
+        /// <summary> Initializes a new instance of DatasetStorageFormat. </summary>
+        /// <param name="type"> Type of dataset storage format. </param>
+        /// <param name="serializer"> Serializer. Type: string (or Expression with resultType string). </param>
+        /// <param name="deserializer"> Deserializer. Type: string (or Expression with resultType string). </param>
+        /// <param name="additionalProperties"> . </param>
+        internal DatasetStorageFormat(string type, object serializer, object deserializer, IReadOnlyDictionary<string, object> additionalProperties)
+        {
+            Type = type ?? "DatasetStorageFormat";
+            Serializer = serializer;
+            Deserializer = deserializer;
+            AdditionalProperties = additionalProperties;
+        }
+
         /// <summary> Type of dataset storage format. </summary>
         internal string Type { get; set; }
         internal IReadOnlyDictionary<string, object> AdditionalProperties { get; }

@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(DeleteDataFlowDebugSessionRequestConverter))]
     public partial class DeleteDataFlowDebugSessionRequest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -26,6 +29,39 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStringValue(DataFlowName);
             }
             writer.WriteEndObject();
+        }
+
+        internal static DeleteDataFlowDebugSessionRequest DeserializeDeleteDataFlowDebugSessionRequest(JsonElement element)
+        {
+            Optional<string> sessionId = default;
+            Optional<string> dataFlowName = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("sessionId"))
+                {
+                    sessionId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("dataFlowName"))
+                {
+                    dataFlowName = property.Value.GetString();
+                    continue;
+                }
+            }
+            return new DeleteDataFlowDebugSessionRequest(sessionId.Value, dataFlowName.Value);
+        }
+
+        internal partial class DeleteDataFlowDebugSessionRequestConverter : JsonConverter<DeleteDataFlowDebugSessionRequest>
+        {
+            public override void Write(Utf8JsonWriter writer, DeleteDataFlowDebugSessionRequest model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override DeleteDataFlowDebugSessionRequest Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeDeleteDataFlowDebugSessionRequest(document.RootElement);
+            }
         }
     }
 }

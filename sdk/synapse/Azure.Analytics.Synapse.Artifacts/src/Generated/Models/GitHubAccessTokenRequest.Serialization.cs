@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(GitHubAccessTokenRequestConverter))]
     public partial class GitHubAccessTokenRequest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -22,6 +25,45 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("gitHubAccessTokenBaseUrl");
             writer.WriteStringValue(GitHubAccessTokenBaseUrl);
             writer.WriteEndObject();
+        }
+
+        internal static GitHubAccessTokenRequest DeserializeGitHubAccessTokenRequest(JsonElement element)
+        {
+            string gitHubClientId = default;
+            string gitHubAccessCode = default;
+            string gitHubAccessTokenBaseUrl = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("gitHubClientId"))
+                {
+                    gitHubClientId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("gitHubAccessCode"))
+                {
+                    gitHubAccessCode = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("gitHubAccessTokenBaseUrl"))
+                {
+                    gitHubAccessTokenBaseUrl = property.Value.GetString();
+                    continue;
+                }
+            }
+            return new GitHubAccessTokenRequest(gitHubClientId, gitHubAccessCode, gitHubAccessTokenBaseUrl);
+        }
+
+        internal partial class GitHubAccessTokenRequestConverter : JsonConverter<GitHubAccessTokenRequest>
+        {
+            public override void Write(Utf8JsonWriter writer, GitHubAccessTokenRequest model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override GitHubAccessTokenRequest Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeGitHubAccessTokenRequest(document.RootElement);
+            }
         }
     }
 }

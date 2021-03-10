@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(ExecuteDataFlowActivityTypePropertiesComputeConverter))]
     public partial class ExecuteDataFlowActivityTypePropertiesCompute : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -56,6 +59,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new ExecuteDataFlowActivityTypePropertiesCompute(Optional.ToNullable(computeType), Optional.ToNullable(coreCount));
+        }
+
+        internal partial class ExecuteDataFlowActivityTypePropertiesComputeConverter : JsonConverter<ExecuteDataFlowActivityTypePropertiesCompute>
+        {
+            public override void Write(Utf8JsonWriter writer, ExecuteDataFlowActivityTypePropertiesCompute model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override ExecuteDataFlowActivityTypePropertiesCompute Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeExecuteDataFlowActivityTypePropertiesCompute(document.RootElement);
+            }
         }
     }
 }
