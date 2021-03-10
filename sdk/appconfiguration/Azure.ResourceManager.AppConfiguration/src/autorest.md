@@ -18,7 +18,7 @@ directive:
   where: $.definitions.KeyVaultProperties
   transform: >
     $["x-nullable"] = true;
-````
+```
 
 
 ``` yaml
@@ -27,4 +27,4 @@ directive:
   where: $.definitions.ConfigurationStoreProperties
   transform: >
     $.properties.privateEndpointConnections["x-nullable"] = true;
-````
+```
