@@ -16,4 +16,8 @@
     <ProjectReference Include="..\network\Proto.Network.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Azure.Identity" />
+  </ItemGroup>
+
 </Project>

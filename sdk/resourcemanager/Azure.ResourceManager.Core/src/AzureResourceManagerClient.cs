@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
-using Azure.Identity;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -28,16 +27,6 @@ namespace Azure.ResourceManager.Core
         /// Initializes a new instance of the <see cref="AzureResourceManagerClient"/> class for mocking.
         /// </summary>
         protected AzureResourceManagerClient()
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AzureResourceManagerClient"/> class
-        /// with <see cref="DefaultAzureCredential"/> as credential.
-        /// </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
-        public AzureResourceManagerClient(AzureResourceManagerClientOptions options = default)
-            : this(null, null, new DefaultAzureCredential(), options)
         {
         }
 
