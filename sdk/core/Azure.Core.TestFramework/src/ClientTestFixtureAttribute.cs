@@ -25,7 +25,18 @@ namespace Azure.Core.TestFramework
 
         private readonly object[] _additionalParameters;
         private readonly object[] _serviceVersions;
-        private readonly int? _maxServiceVersion;
+        private int? _actualPlaybackServiceVersion;
+        private int? _actualLiveServiceVersion;
+
+        /// <summary>
+        /// Specifies which service version is run during recording/playback runs.
+        /// </summary>
+        public object RecordingServiceVersion { get; set; }
+
+        /// <summary>
+        /// Specifies which service version is run during live runs.
+        /// </summary>
+        public object LiveServiceVersion { get; set; }
 
         /// <summary>
         /// Initializes an instance of the <see cref="ClientTestFixtureAttribute"/> accepting additional fixture parameters.
@@ -43,8 +54,6 @@ namespace Azure.Core.TestFramework
         {
             _additionalParameters = additionalParameters ?? new object[] { };
             _serviceVersions = serviceVersions ?? new object[] { };
-
-            _maxServiceVersion = _serviceVersions.Any() ? _serviceVersions.Max(s => Convert.ToInt32(s)) : (int?)null;
         }
 
         public IEnumerable<TestSuite> BuildFrom(ITypeInfo typeInfo)
@@ -54,6 +63,13 @@ namespace Azure.Core.TestFramework
 
         public IEnumerable<TestSuite> BuildFrom(ITypeInfo typeInfo, IPreFilter filter)
         {
+            var latestVersion = _serviceVersions.Any() ? _serviceVersions.Max(s => Convert.ToInt32(s)) : (int?)null;
+            _actualPlaybackServiceVersion = RecordingServiceVersion != null ? Convert.ToInt32(RecordingServiceVersion) : latestVersion;
+            _actualLiveServiceVersion =
+                LiveServiceVersion != null ?
+                    Convert.ToInt32(LiveServiceVersion) :
+                    OnlyTestLatestServiceVersionLazy.Value ? latestVersion : null;
+
             var suitePermutations = GeneratePermutations();
 
             foreach (var (fixture, isAsync, serviceVersion, parameter) in suitePermutations)
@@ -157,16 +173,15 @@ namespace Azure.Core.TestFramework
                 return;
             }
 
-            if (serviceVersionNumber != _maxServiceVersion)
+            if (serviceVersionNumber != _actualPlaybackServiceVersion)
             {
-                test.Properties.Add("SkipRecordings", $"Test is ignored when not running live because the service version {serviceVersion} is not the latest.");
+                test.Properties.Add("SkipRecordings", $"Test is ignored when not running live because the service version {serviceVersion} is not {_actualPlaybackServiceVersion}.");
             }
 
-            if (OnlyTestLatestServiceVersionLazy.Value && serviceVersionNumber != _maxServiceVersion)
+            if (_actualLiveServiceVersion != null && serviceVersionNumber != _actualLiveServiceVersion)
             {
-                test.RunState = RunState.Ignored;
-                test.Properties.Set("_SKIPREASON",
-                    $"Test ignored because {OnlyTestLatestServiceVersionKey} is set in the environment and version {serviceVersion} is not the latest.");
+                test.Properties.Set("SkipLive",
+                    $"Test ignored when running live service version {serviceVersion} is not {_actualLiveServiceVersion}.");
             }
 
             var minServiceVersion = test.GetCustomAttributes<ServiceVersionAttribute>(true);
