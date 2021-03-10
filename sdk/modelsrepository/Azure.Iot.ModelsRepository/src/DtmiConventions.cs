@@ -28,13 +28,13 @@ namespace Azure.Iot.ModelsRepository
         public static bool IsValidDtmi(string dtmi) => !string.IsNullOrEmpty(dtmi) && s_validDtmiRegex.IsMatch(dtmi);
 
         /// <summary>
-        /// Produces a fully qualified path to a model file.
+        /// Get the URI object representing a digital twin model file in a target model repository.
         /// </summary>
         /// <exception cref="ArgumentException">Thrown when a given DTMI string is malformed.</exception>
         /// <param name="dtmi">A well-formed DTMI. For example 'dtmi:com:example:Thermostat;1'.</param>
-        /// <param name="basePath">The base path in which a transformed DTMI to path will be appended to.</param>
-        /// <param name="fromExpanded">Indicates whether the produced path should be for the expanded model definition.</param>
-        public static string DtmiToQualifiedPath(string dtmi, string basePath, bool fromExpanded = false)
+        /// <param name="repositoryUri">The repository URI in which a transformed DTMI to path will be combined with.</param>
+        /// <param name="expanded">Indicates whether the produced path should be for the expanded model definition.</param>
+        public static Uri GetModelUri(string dtmi, Uri repositoryUri, bool expanded = false)
         {
             string dtmiPath = DtmiToPath(dtmi);
 
@@ -43,24 +43,20 @@ namespace Azure.Iot.ModelsRepository
                 throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, StandardStrings.InvalidDtmiFormat, dtmi));
             }
 
-            // Normalize directory seperators
-            basePath = basePath.Replace("\\", "/");
-
-            if (!basePath.EndsWith("/", StringComparison.InvariantCultureIgnoreCase))
+            if (expanded)
             {
-                basePath += "/";
-            }
-
-            string fullyQualifiedPath = $"{basePath}{dtmiPath}";
-
-            if (fromExpanded)
-            {
-                fullyQualifiedPath = fullyQualifiedPath.Replace(
+                dtmiPath = dtmiPath.Replace(
                     ModelsRepositoryConstants.JsonFileExtension,
                     ModelsRepositoryConstants.ExpandedJsonFileExtension);
             }
 
-            return fullyQualifiedPath;
+            UriBuilder repositoryUriBuilder = new UriBuilder(repositoryUri);
+            if (!repositoryUriBuilder.Path.EndsWith("/", StringComparison.InvariantCultureIgnoreCase))
+            {
+                repositoryUriBuilder.Path += "/";
+            }
+
+            return new Uri(repositoryUriBuilder.Uri, dtmiPath);
         }
 
         internal static string DtmiToPath(string dtmi) => IsValidDtmi(dtmi) ? $"{dtmi.ToLowerInvariant().Replace(":", "/").Replace(";", "-")}.json" : null;
