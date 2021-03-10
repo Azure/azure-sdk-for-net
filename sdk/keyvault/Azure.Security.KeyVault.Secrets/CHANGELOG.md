@@ -67,7 +67,7 @@
 
 - Challenge-based authentication requests are only sent over HTTPS.
 
-## 4.0.0 (2019-11)
+## 4.0.0 (2019-11-01)
 
 ### Breaking changes
 
