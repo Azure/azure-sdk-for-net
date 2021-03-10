@@ -33,6 +33,48 @@ namespace Azure.Messaging.EventGrid.Tests
         }
 
         [RecordedTest]
+        public void CannotPublishEventMissingApiEventsPathFromUri()
+        {
+            EventGridPublisherClientOptions options = InstrumentClientOptions(new EventGridPublisherClientOptions());
+            Uri host = new UriBuilder("https", new Uri(TestEnvironment.TopicHost).Host).Uri;
+            EventGridPublisherClient client = InstrumentClient(
+                new EventGridPublisherClient(
+                    host,
+                    new AzureKeyCredential(TestEnvironment.TopicKey),
+                    options));
+
+            Assert.ThrowsAsync<RequestFailedException>(async () => await client.SendEventAsync(new BinaryData(jsonSerializable: "data")));
+        }
+
+        [RecordedTest]
+        public void CannotPublishCloudEventMissingApiEventsPathFromUri()
+        {
+            EventGridPublisherClientOptions options = InstrumentClientOptions(new EventGridPublisherClientOptions());
+            Uri host = new UriBuilder("https", new Uri(TestEnvironment.TopicHost).Host).Uri;
+            EventGridPublisherClient client = InstrumentClient(
+                new EventGridPublisherClient(
+                    host,
+                    new AzureKeyCredential(TestEnvironment.TopicKey),
+                    options));
+
+            Assert.ThrowsAsync<RequestFailedException>(async () => await client.SendEventAsync(new BinaryData(jsonSerializable: "data")));
+        }
+
+        [RecordedTest]
+        public void CannotPublishCustomEventMissingApiEventsPathFromUri()
+        {
+            EventGridPublisherClientOptions options = InstrumentClientOptions(new EventGridPublisherClientOptions());
+            Uri host = new UriBuilder("https", new Uri(TestEnvironment.TopicHost).Host).Uri;
+            EventGridPublisherClient client = InstrumentClient(
+                new EventGridPublisherClient(
+                    host,
+                    new AzureKeyCredential(TestEnvironment.TopicKey),
+                    options));
+
+            Assert.ThrowsAsync<RequestFailedException>(async () => await client.SendEventAsync(new BinaryData(jsonSerializable: "data")));
+        }
+
+        [RecordedTest]
         public async Task CanPublishSingleEvent()
         {
             EventGridPublisherClientOptions options = InstrumentClientOptions(new EventGridPublisherClientOptions());

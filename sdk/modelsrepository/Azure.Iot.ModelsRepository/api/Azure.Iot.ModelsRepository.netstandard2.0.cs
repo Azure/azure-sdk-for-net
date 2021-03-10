@@ -2,7 +2,7 @@ namespace Azure.Iot.ModelsRepository
 {
     public static partial class DtmiConventions
     {
-        public static string DtmiToQualifiedPath(string dtmi, string basePath, bool fromExpanded = false) { throw null; }
+        public static System.Uri GetModelUri(string dtmi, System.Uri repositoryUri, bool expanded = false) { throw null; }
         public static bool IsValidDtmi(string dtmi) { throw null; }
     }
     public enum ModelDependencyResolution

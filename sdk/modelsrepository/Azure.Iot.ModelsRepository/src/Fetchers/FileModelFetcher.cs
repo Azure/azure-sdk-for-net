@@ -40,10 +40,10 @@ namespace Azure.Iot.ModelsRepository.Fetchers
                 var work = new Queue<string>();
                 if (dependencyResolution == ModelDependencyResolution.TryFromExpanded)
                 {
-                    work.Enqueue(GetPath(dtmi, repositoryUri, true));
+                    work.Enqueue(DtmiConventions.GetModelUri(dtmi, repositoryUri, true).LocalPath);
                 }
 
-                work.Enqueue(GetPath(dtmi, repositoryUri, false));
+                work.Enqueue(DtmiConventions.GetModelUri(dtmi, repositoryUri, false).LocalPath);
 
                 string fnfError = string.Empty;
                 while (work.Count != 0)
@@ -75,12 +75,6 @@ namespace Azure.Iot.ModelsRepository.Fetchers
                 scope.Failed(ex);
                 throw;
             }
-        }
-
-        private static string GetPath(string dtmi, Uri repositoryUri, bool expanded = false)
-        {
-            string registryPath = repositoryUri.AbsolutePath;
-            return DtmiConventions.DtmiToQualifiedPath(dtmi, registryPath, expanded);
         }
     }
 }

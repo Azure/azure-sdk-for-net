@@ -35,7 +35,7 @@ namespace Azure.Iot.ModelsRepository.Samples
 
             // DtmiConventions utility samples
             DtmiConventionsSamples.IsValidDtmi();
-            DtmiConventionsSamples.GetDtmiToQualifiedPath();
+            DtmiConventionsSamples.GetModelUri();
         }
     }
 }

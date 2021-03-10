@@ -22,28 +22,30 @@ namespace Azure.Iot.ModelsRepository.Tests
 
         [TestCase("dtmi:com:example:Thermostat;1", "https://localhost/repository/", "https://localhost/repository/dtmi/com/example/thermostat-1.json")]
         [TestCase("dtmi:com:example:Thermostat;1", "https://localhost/REPOSITORY", "https://localhost/REPOSITORY/dtmi/com/example/thermostat-1.json")]
-        [TestCase("dtmi:com:example:Thermostat;1", "/path/to/repository/", "/path/to/repository/dtmi/com/example/thermostat-1.json")]
-        [TestCase("dtmi:com:example:Thermostat;1", "/path/to/RepoSitory", "/path/to/RepoSitory/dtmi/com/example/thermostat-1.json")]
-        [TestCase("dtmi:com:example:Thermostat;1", "C:\\path\\to\\repository", "C:/path/to/repository/dtmi/com/example/thermostat-1.json")]
-        [TestCase("dtmi:com:example:Thermostat:1", "https://localhost/repository", null)]
-        [TestCase("dtmi:com:example:Thermostat:1", "/path/to/repository/", null)]
-        [TestCase("dtmi:com:example:Thermostat;1", "", "/dtmi/com/example/thermostat-1.json")]
-        public void DtmiToQualifiedPath(string dtmi, string repository, string expectedPath)
+        [TestCase("dtmi:com:example:Thermostat;1", "file:///path/to/repository/", "file:///path/to/repository/dtmi/com/example/thermostat-1.json")]
+        [TestCase("dtmi:com:example:Thermostat;1", "file://path/to/RepoSitory", "file://path/to/RepoSitory/dtmi/com/example/thermostat-1.json")]
+        [TestCase("dtmi:com:example:Thermostat;1", "C:\\path\\to\\repository\\", "file:///C:/path/to/repository/dtmi/com/example/thermostat-1.json")]
+        [TestCase("dtmi:com:example:Thermostat:1", "https://localhost/repository/", null)]
+        [TestCase("dtmi:com:example:Thermostat:1", "file://path/to/repository/", null)]
+        [TestCase("dtmi:com:example:Thermostat;1", "\\\\server\\repository", "file://server/repository/dtmi/com/example/thermostat-1.json")]
+        public void GetModelUri(string dtmi, string repository, string expectedUri)
         {
-            if (string.IsNullOrEmpty(expectedPath))
+            Uri repositoryUri = new Uri(repository);
+            if (string.IsNullOrEmpty(expectedUri))
             {
-                Action act = () => DtmiConventions.DtmiToQualifiedPath(dtmi, repository);
+                Action act = () => DtmiConventions.GetModelUri(dtmi, repositoryUri);
                 act.Should().Throw<ArgumentException>().WithMessage(string.Format(StandardStrings.InvalidDtmiFormat, dtmi));
                 return;
             }
 
-            string modelPath = DtmiConventions.DtmiToQualifiedPath(dtmi, repository);
-            modelPath.Should().Be(expectedPath);
+            Uri modelUri = DtmiConventions.GetModelUri(dtmi, repositoryUri);
+            modelUri.AbsoluteUri.Should().Be(expectedUri);
 
-            string expectedExpandedPath = expectedPath.Replace(
+            string expectedExpandedUri = expectedUri.Replace(
                 ModelsRepositoryConstants.JsonFileExtension, ModelsRepositoryConstants.ExpandedJsonFileExtension);
-            string expandedModelPath = DtmiConventions.DtmiToQualifiedPath(dtmi, repository, true);
-            expandedModelPath.Should().Be(expectedExpandedPath);
+
+            Uri expandedModelUri = DtmiConventions.GetModelUri(dtmi, repositoryUri, true);
+            expandedModelUri.Should().Be(expectedExpandedUri);
         }
 
         [TestCase("dtmi:com:example:Thermostat;1", true)]

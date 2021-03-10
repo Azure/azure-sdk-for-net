@@ -149,18 +149,12 @@ namespace Azure.Iot.ModelsRepository.Fetchers
 
             if (tryExpanded)
             {
-                work.Enqueue(GetPath(dtmi, repositoryUri, true));
+                work.Enqueue(DtmiConventions.GetModelUri(dtmi, repositoryUri, true).AbsoluteUri);
             }
 
-            work.Enqueue(GetPath(dtmi, repositoryUri, false));
+            work.Enqueue(DtmiConventions.GetModelUri(dtmi, repositoryUri, false).AbsoluteUri);
 
             return work;
-        }
-
-        private static string GetPath(string dtmi, Uri repositoryUri, bool expanded = false)
-        {
-            string absoluteUri = repositoryUri.AbsoluteUri;
-            return DtmiConventions.DtmiToQualifiedPath(dtmi, absoluteUri, expanded);
         }
 
         private string EvaluatePath(string path, CancellationToken cancellationToken = default)
