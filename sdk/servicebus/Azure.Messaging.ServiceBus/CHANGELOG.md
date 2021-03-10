@@ -1,5 +1,10 @@
 # Release History
 
+## 7.1.1 (2021-03-10)
+
+### Key Bug Fixes
+- Fixed issue where batch size calculation was not taking diagnostic tracing information into account.
+
 ## 7.1.0 (2021-02-09)
 
 ### Acknowledgments
