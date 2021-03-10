@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    public partial class FsLayer : IUtf8JsonSerializable
+    internal partial class FsLayer : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

@@ -8,7 +8,7 @@
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Image layer information. </summary>
-    public partial class FsLayer
+    internal partial class FsLayer
     {
         /// <summary> Initializes a new instance of FsLayer. </summary>
         public FsLayer()

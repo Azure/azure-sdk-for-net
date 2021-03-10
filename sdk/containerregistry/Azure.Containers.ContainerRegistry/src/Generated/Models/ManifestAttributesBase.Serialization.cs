@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    public partial class ManifestAttributesBase
+    internal partial class ManifestAttributesBase
     {
         internal static ManifestAttributesBase DeserializeManifestAttributesBase(JsonElement element)
         {

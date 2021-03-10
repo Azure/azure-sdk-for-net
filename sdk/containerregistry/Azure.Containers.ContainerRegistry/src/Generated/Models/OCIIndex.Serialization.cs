@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    public partial class OCIIndex : IUtf8JsonSerializable
+    internal partial class OCIIndex : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

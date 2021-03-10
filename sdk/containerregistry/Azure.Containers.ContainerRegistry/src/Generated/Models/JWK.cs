@@ -8,7 +8,7 @@
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> A JSON web signature. </summary>
-    public partial class JWK
+    internal partial class JWK
     {
         /// <summary> Initializes a new instance of JWK. </summary>
         public JWK()

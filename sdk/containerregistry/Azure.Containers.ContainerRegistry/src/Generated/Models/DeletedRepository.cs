@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Deleted repository. </summary>
-    public partial class DeletedRepository
+    internal partial class DeletedRepository
     {
         /// <summary> Initializes a new instance of DeletedRepository. </summary>
         internal DeletedRepository()

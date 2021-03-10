@@ -8,3 +8,11 @@ require:
     -  https://github.com/Azure/azure-rest-api-specs/tree/255757f41275e8ec474361690ea8886cae8a503b/specification/containerregistry/data-plane/readme.md
 model-namespace: false
 ```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.*
+  transform: >
+    $["x-accessibility"] = "internal"
+```

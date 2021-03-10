@@ -8,7 +8,7 @@
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Signature of a signed manifest. </summary>
-    public partial class ImageSignature
+    internal partial class ImageSignature
     {
         /// <summary> Initializes a new instance of ImageSignature. </summary>
         public ImageSignature()

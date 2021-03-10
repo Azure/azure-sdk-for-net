@@ -8,7 +8,7 @@
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> A list of unstructured historical data for v1 compatibility. </summary>
-    public partial class History
+    internal partial class History
     {
         /// <summary> Initializes a new instance of History. </summary>
         public History()

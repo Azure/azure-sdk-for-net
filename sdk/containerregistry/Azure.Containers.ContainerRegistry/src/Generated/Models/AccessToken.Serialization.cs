@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    public partial class AccessToken
+    internal partial class AccessToken
     {
         internal static AccessToken DeserializeAccessToken(JsonElement element)
         {

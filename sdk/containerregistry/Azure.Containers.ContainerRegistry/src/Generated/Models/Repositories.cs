@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> List of repositories. </summary>
-    public partial class Repositories
+    internal partial class Repositories
     {
         /// <summary> Initializes a new instance of Repositories. </summary>
         internal Repositories()

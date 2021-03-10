@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Returns the requested manifest file. </summary>
-    public partial class ManifestWrapper : Manifest
+    internal partial class ManifestWrapper : Manifest
     {
         /// <summary> Initializes a new instance of ManifestWrapper. </summary>
         public ManifestWrapper()

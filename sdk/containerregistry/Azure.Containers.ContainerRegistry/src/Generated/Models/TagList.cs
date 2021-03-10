@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> List of tag details. </summary>
-    public partial class TagList
+    internal partial class TagList
     {
         /// <summary> Initializes a new instance of TagList. </summary>
         internal TagList()
