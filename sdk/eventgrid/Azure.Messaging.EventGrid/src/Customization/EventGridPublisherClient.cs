@@ -41,6 +41,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="options">The set of options to use for configuring the client.</param>
         public EventGridPublisherClient(Uri endpoint, AzureKeyCredential credential, EventGridPublisherClientOptions options)
         {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new EventGridPublisherClientOptions();
             _uriBuilder = new RequestUriBuilder();
@@ -59,6 +60,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="options">The set of options to use for configuring the client.</param>
         public EventGridPublisherClient(Uri endpoint, AzureSasCredential credential, EventGridPublisherClientOptions options = default)
         {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new EventGridPublisherClientOptions();
             _uriBuilder = new RequestUriBuilder();
