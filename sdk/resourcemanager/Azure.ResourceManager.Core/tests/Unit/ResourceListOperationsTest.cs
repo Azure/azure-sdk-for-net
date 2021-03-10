@@ -4,6 +4,8 @@ using System.Reflection;
 using Azure.Identity;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Azure.ResourceManager.Core.Tests
 {
@@ -87,6 +89,7 @@ namespace Azure.ResourceManager.Core.Tests
             var createResourceConverterMethod = typeof(ResourceListOperations).GetMethod("CreateResourceConverter", BindingFlags.Static | BindingFlags.NonPublic);
             ResourceGroupOperations rgOp = GetResourceGroupOperations();
             var activatorFunction = (Func<GenericResourceExpanded, GenericResource>)createResourceConverterMethod.Invoke(null, new object[] { rgOp });
+            TestContext.Progress.WriteLine("activate is " + activatorFunction.ToString());
             return activatorFunction.DynamicInvoke(new object[] { genericResource });
         }
 
@@ -131,6 +134,12 @@ namespace Azure.ResourceManager.Core.Tests
             resource.Plan = plan;
             resource.Kind = kind;
             resource.ManagedBy = managedBy;
+            var field = typeof(GenericResourceExpanded).BaseType.BaseType.GetField("<Id>k__BackingField", BindingFlags.Instance | BindingFlags.NonPublic);
+            field.SetValue(resource, "/subscriptions/{subscription-id}/resourceGroups/myResourceGrou");
+            //FieldInfo MyWriteableField = resource.GetType().BaseType.BaseType.GetRuntimeFields().Where( a => Regex.IsMatch( a.Name, $"\\A<{nameof( resource.Id )}>k__BackingField\\Z" ) ).FirstOrDefault();
+            //MyWriteableField.SetValue( MyWriteableField, "Another new value" );
+            //var field = typeof(GenericResourceExpanded).BaseType.BaseType.GetField("Id", BindingFlags.Public | BindingFlags.Instance);
+            //field.SetValue(resource, "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup");
             return resource;
         }
     }
