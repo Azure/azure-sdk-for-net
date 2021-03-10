@@ -32,7 +32,7 @@ namespace Azure.Communication.Chat.Tests.samples
                 ShareHistoryTime = DateTimeOffset.MinValue
             };
             CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync(topic: "Hello world!", participants: new[] { chatParticipant });
-            ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient(createChatThreadResult.ChatThread.Id);
+            ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient(createChatThreadResult.ChatThreadProperties.Id);
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_SendMessage
             var messageId = await chatThreadClient.SendMessageAsync(content:"hello world");
