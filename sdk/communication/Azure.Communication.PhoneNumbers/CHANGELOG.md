@@ -3,6 +3,15 @@
 ## 1.0.0-beta.6 (Unreleased)
 
 
+### Breaking Changes
+- AcquiredPhoneNumber class is renamed to PurchasedPhoneNumber
+- PhoneNumbersClient methods renamed:
+  - GetPhoneNumber -> GetPurchasedPhoneNumber
+  - GetPhoneNumberAsync -> GetPurchasedPhoneNumberAsync
+  - GetPhoneNumbers -> GetPurchasedPhoneNumbers
+  - GetPhoneNumbersAsync -> GetPurchasedPhoneNumbersAsync
+- PhoneNumbersModelFactory static method AcquiredPhoneNumber is renamed to PurchasedPhoneNumber
+
 ## 1.0.0-beta.5 (2021-03-09)
 
 ### Added
@@ -13,7 +22,6 @@
 
 ### Breaking Changes
 - PhoneNumberAdministrationClient has been replaced with PhoneNumbersClient, which has the same functionality but different APIs. To learn more about how PhoneNumbersClient works, refer to the [README.md][read_me]
-- AcquiredPhoneNumber is renamed to PurchasedPhoneNumber
 
 <!-- LINKS -->
 [read_me]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/communication/Azure.Communication.PhoneNumbers/README.md
