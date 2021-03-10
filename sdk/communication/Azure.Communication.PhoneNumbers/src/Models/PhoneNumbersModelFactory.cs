@@ -11,7 +11,7 @@ namespace Azure.Communication.PhoneNumbers.Models
     /// </summary>
     public static class PhoneNumbersModelFactory
     {
-        /// <summary> Initializes a new instance of AcquiredPhoneNumber. </summary>
+        /// <summary> Initializes a new instance of PurchasedPhoneNumber. </summary>
         /// <param name="id"> The id of the phone number, e.g. 14255550123. </param>
         /// <param name="phoneNumber"> String of the E.164 format of the phone number, e.g. +14255550123. </param>
         /// <param name="countryCode"> The ISO 3166-2 code of the phone number&apos;s country, e.g. US. </param>
@@ -21,9 +21,9 @@ namespace Azure.Communication.PhoneNumbers.Models
         /// <param name="purchaseDate"> The date and time that the phone number was purchased. </param>
         /// <param name="cost"> The incurred cost for a single phone number. </param>
 #pragma warning disable CA1054 // URI-like parameters should not be strings
-        public static AcquiredPhoneNumber AcquiredPhoneNumber(string id, string phoneNumber, string countryCode, PhoneNumberType phoneNumberType, PhoneNumberCapabilities capabilities, PhoneNumberAssignmentType assignmentType, DateTimeOffset purchaseDate, PhoneNumberCost cost)
+        public static PurchasedPhoneNumber AcquiredPhoneNumber(string id, string phoneNumber, string countryCode, PhoneNumberType phoneNumberType, PhoneNumberCapabilities capabilities, PhoneNumberAssignmentType assignmentType, DateTimeOffset purchaseDate, PhoneNumberCost cost)
 #pragma warning restore CA1054 // URI-like parameters should not be strings
-            => new AcquiredPhoneNumber(id, phoneNumber, countryCode, phoneNumberType, capabilities, assignmentType, purchaseDate, cost);
+            => new PurchasedPhoneNumber(id, phoneNumber, countryCode, phoneNumberType, capabilities, assignmentType, purchaseDate, cost);
 
         /// <summary> Initializes a new instance of PhoneNumberCost. </summary>
         /// <param name="amount"> The cost amount. </param>

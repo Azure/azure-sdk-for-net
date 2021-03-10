@@ -10,9 +10,9 @@ using System;
 namespace Azure.Communication.PhoneNumbers.Models
 {
     /// <summary> Represents an acquired phone number. </summary>
-    public partial class AcquiredPhoneNumber
+    public partial class PurchasedPhoneNumber
     {
-        /// <summary> Initializes a new instance of AcquiredPhoneNumber. </summary>
+        /// <summary> Initializes a new instance of PurchasedPhoneNumber. </summary>
         /// <param name="id"> The id of the phone number, e.g. 11234567890. </param>
         /// <param name="phoneNumber"> String of the E.164 format of the phone number, e.g. +11234567890. </param>
         /// <param name="countryCode"> The ISO 3166-2 code of the phone number&apos;s country, e.g. US. </param>
@@ -22,7 +22,7 @@ namespace Azure.Communication.PhoneNumbers.Models
         /// <param name="purchaseDate"> The date and time that the phone number was purchased. </param>
         /// <param name="cost"> The incurred cost for a single phone number. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="phoneNumber"/>, <paramref name="countryCode"/>, <paramref name="capabilities"/>, or <paramref name="cost"/> is null. </exception>
-        internal AcquiredPhoneNumber(string id, string phoneNumber, string countryCode, PhoneNumberType phoneNumberType, PhoneNumberCapabilities capabilities, PhoneNumberAssignmentType assignmentType, DateTimeOffset purchaseDate, PhoneNumberCost cost)
+        internal PurchasedPhoneNumber(string id, string phoneNumber, string countryCode, PhoneNumberType phoneNumberType, PhoneNumberCapabilities capabilities, PhoneNumberAssignmentType assignmentType, DateTimeOffset purchaseDate, PhoneNumberCost cost)
         {
             if (id == null)
             {

@@ -17,7 +17,7 @@ namespace Azure.Communication.PhoneNumbers.Models
         /// <summary> Initializes a new instance of AcquiredPhoneNumbers. </summary>
         /// <param name="phoneNumbers"> Represents a list of phone numbers. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumbers"/> is null. </exception>
-        internal AcquiredPhoneNumbers(IEnumerable<AcquiredPhoneNumber> phoneNumbers)
+        internal AcquiredPhoneNumbers(IEnumerable<PurchasedPhoneNumber> phoneNumbers)
         {
             if (phoneNumbers == null)
             {
@@ -30,14 +30,14 @@ namespace Azure.Communication.PhoneNumbers.Models
         /// <summary> Initializes a new instance of AcquiredPhoneNumbers. </summary>
         /// <param name="phoneNumbers"> Represents a list of phone numbers. </param>
         /// <param name="nextLink"> Represents the URL link to the next page of phone number results. </param>
-        internal AcquiredPhoneNumbers(IReadOnlyList<AcquiredPhoneNumber> phoneNumbers, string nextLink)
+        internal AcquiredPhoneNumbers(IReadOnlyList<PurchasedPhoneNumber> phoneNumbers, string nextLink)
         {
             PhoneNumbers = phoneNumbers;
             NextLink = nextLink;
         }
 
         /// <summary> Represents a list of phone numbers. </summary>
-        public IReadOnlyList<AcquiredPhoneNumber> PhoneNumbers { get; }
+        public IReadOnlyList<PurchasedPhoneNumber> PhoneNumbers { get; }
         /// <summary> Represents the URL link to the next page of phone number results. </summary>
         public string NextLink { get; }
     }

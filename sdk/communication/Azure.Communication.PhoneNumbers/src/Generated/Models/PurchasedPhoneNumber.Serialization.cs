@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers.Models
 {
-    public partial class AcquiredPhoneNumber
+    public partial class PurchasedPhoneNumber
     {
-        internal static AcquiredPhoneNumber DeserializeAcquiredPhoneNumber(JsonElement element)
+        internal static PurchasedPhoneNumber DeserializePurchasedPhoneNumber(JsonElement element)
         {
             string id = default;
             string phoneNumber = default;
@@ -66,7 +66,7 @@ namespace Azure.Communication.PhoneNumbers.Models
                     continue;
                 }
             }
-            return new AcquiredPhoneNumber(id, phoneNumber, countryCode, phoneNumberType, capabilities, assignmentType, purchaseDate, cost);
+            return new PurchasedPhoneNumber(id, phoneNumber, countryCode, phoneNumberType, capabilities, assignmentType, purchaseDate, cost);
         }
     }
 }
