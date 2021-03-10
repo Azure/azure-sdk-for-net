@@ -19,4 +19,8 @@
     <PackageReference Include="System.Linq.Async" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)ForwardsClientCallsAttribute.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
+  </ItemGroup>
+
 </Project>

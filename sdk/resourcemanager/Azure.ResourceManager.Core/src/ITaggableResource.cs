@@ -19,8 +19,13 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="key"> The tag key. </param>
         /// <param name="value"> The tag value. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
+        /// The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns>An <see cref="ArmResponse{TOperations}"/> that allows the user to control polling and waiting for Tag completion.</returns>
-        ArmResponse<TOperations> AddTag(string key, string value);
+        ArmResponse<TOperations> AddTag(
+            string key,
+            string value,
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Add a tag to the resource.
@@ -42,8 +47,13 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="key"> The tag key. </param>
         /// <param name="value"> The tag value. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
+        /// The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns>An <see cref="ArmOperation{TOperations}"/> that allows the user to control polling and waiting for Tag completion.</returns>
-        ArmOperation<TOperations> StartAddTag(string key, string value);
+        ArmOperation<TOperations> StartAddTag(
+            string key,
+            string value,
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Add a tag to the resource.
@@ -64,8 +74,11 @@ namespace Azure.ResourceManager.Core
         /// Set the resource tags.
         /// </summary>
         /// <param name="tags"> The resource tags. </param>
+        /// <param name="cancellationToken"> A token allowing immediate cancellation of any blocking call performed during the deletion. </param>
         /// <returns> The status of the delete operation. </returns>
-        ArmResponse<TOperations> SetTags(IDictionary<string, string> tags);
+        ArmResponse<TOperations> SetTags(
+            IDictionary<string, string> tags,
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Set the resource tags.
@@ -81,8 +94,12 @@ namespace Azure.ResourceManager.Core
         /// Set the resource tags.
         /// </summary>
         /// <param name="tags"> The resource tags. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
+        /// The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns>An <see cref="ArmOperation{TOperations}"/> that allows the user to control polling and waiting for Tag completion.</returns>
-        ArmOperation<TOperations> StartSetTags(IDictionary<string, string> tags);
+        ArmOperation<TOperations> StartSetTags(
+            IDictionary<string, string> tags,
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Set the resource tags.
@@ -101,8 +118,11 @@ namespace Azure.ResourceManager.Core
         /// Remove the resource tag.
         /// </summary>
         /// <param name="key"> The tag key. </param>
+        /// <param name="cancellationToken"> A token allowing immediate cancellation of any blocking call performed during the deletion. </param>
         /// <returns> The status of the delete operation. </returns>
-        ArmResponse<TOperations> RemoveTag(string key);
+        ArmResponse<TOperations> RemoveTag(
+            string key,
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Remove the resource tag.
@@ -118,8 +138,12 @@ namespace Azure.ResourceManager.Core
         /// Remove the resource tag.
         /// </summary>
         /// <param name="key"> The tag key. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
+        /// The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns>An <see cref="ArmOperation{TOperations}"/> that allows the user to control polling and waiting for Tag completion.</returns>
-        ArmOperation<TOperations> StartRemoveTag(string key);
+        ArmOperation<TOperations> StartRemoveTag(
+            string key,
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Remove the resource tag.

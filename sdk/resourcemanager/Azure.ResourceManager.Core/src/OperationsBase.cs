@@ -3,6 +3,7 @@
 
 using System;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Core
@@ -12,6 +13,13 @@ namespace Azure.ResourceManager.Core
     /// </summary>
     public abstract class OperationsBase
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OperationsBase"/> class for mocking.
+        /// </summary>
+        protected OperationsBase()
+        {
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="OperationsBase"/> class.
         /// </summary>
@@ -25,9 +33,11 @@ namespace Azure.ResourceManager.Core
             Id = id;
             Credential = credential;
             BaseUri = baseUri;
-
+            Diagnostics = new ClientDiagnostics(options);
             Validate(id);
         }
+
+        internal ClientDiagnostics Diagnostics { get; }
 
         /// <summary>
         /// Gets the resource identifier.
@@ -37,7 +47,7 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets the Azure Resource Manager client options.
         /// </summary>
-        public virtual AzureResourceManagerClientOptions ClientOptions { get; }
+        public AzureResourceManagerClientOptions ClientOptions { get; }
 
         /// <summary>
         /// Gets the Azure credential.
@@ -58,7 +68,11 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets the resource client.
         /// </summary>
-        protected ResourcesManagementClient ResourcesClient => new ResourcesManagementClient(BaseUri, Id.Subscription, Credential);
+        protected ResourcesManagementClient ResourcesClient => new ResourcesManagementClient(
+            BaseUri,
+            Id.Subscription,
+            Credential,
+            ClientOptions.Convert<ResourcesManagementClientOptions>());
 
         /// <summary>
         /// Validate the resource identifier against current operations.

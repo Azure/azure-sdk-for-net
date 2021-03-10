@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.Core
         where TOperations : ResourceOperationsBase<TOperations>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="ContainerBase{TOperations}"/> class for mocking.
+        /// </summary>
+        protected ContainerBase()
+        {
+        }
+        
+        /// <summary>
         /// Initializes a new instance of the <see cref="ContainerBase{TOperations}"/> class.
         /// </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
