@@ -27,6 +27,7 @@ namespace Azure.Iot.ModelsRepository.Tests
         [TestCase("dtmi:com:example:Thermostat;1", "C:\\path\\to\\repository", "C:/path/to/repository/dtmi/com/example/thermostat-1.json")]
         [TestCase("dtmi:com:example:Thermostat:1", "https://localhost/repository", null)]
         [TestCase("dtmi:com:example:Thermostat:1", "/path/to/repository/", null)]
+        [TestCase("dtmi:com:example:Thermostat;1", "", "/dtmi/com/example/thermostat-1.json")]
         public void DtmiToQualifiedPath(string dtmi, string repository, string expectedPath)
         {
             if (string.IsNullOrEmpty(expectedPath))

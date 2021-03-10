@@ -139,7 +139,6 @@ Console.WriteLine($"{dtmi} resolved in {models.Count} interfaces with {parseResu
 The IoT Models Repository applies a set of conventions for organizing digital twin models. This package exposes a utility class
 called `DtmiConventions` which exposes functions supporting these conventions. These same functions are used throughout the client.
 
-
 ```C# Snippet:ModelsRepositorySamplesDtmiConventionsIsValidDtmi
 // This snippet shows how to validate a given DTMI string is well-formed.
 
@@ -169,7 +168,6 @@ fullyQualifiedModelPath =
 // Prints 'https://contoso.com/models/dtmi/com/example/thermostat-1.json'
 Console.WriteLine(fullyQualifiedModelPath);
 ```
-
 
 <!-- LINKS -->
 [modelsrepository_github_repo]: https://github.com/Azure/iot-plugandplay-models
