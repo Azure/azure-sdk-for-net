@@ -2,6 +2,7 @@
 
 namespace Azure.ResourceManager.Core.Tests
 {
+    [Parallelizable]
     class SkuTests
     {
         [TestCase(0, "name", "name")]

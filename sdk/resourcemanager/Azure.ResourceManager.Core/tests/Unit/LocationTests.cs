@@ -3,6 +3,7 @@ using System;
 
 namespace Azure.ResourceManager.Core.Tests
 {
+    [Parallelizable]
     public class LocationTests
     {
         [TestCase("westus", "westus", "west-us", "West US")]

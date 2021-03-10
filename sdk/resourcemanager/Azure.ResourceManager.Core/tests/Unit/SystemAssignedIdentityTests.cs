@@ -7,6 +7,7 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Core.Tests
 {
+    [Parallelizable]
     public class SystemAssignedIdentityTests
     {
         private static readonly string TestAssetPath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Unit", "TestAssets", "SystemAssignedIdentity");

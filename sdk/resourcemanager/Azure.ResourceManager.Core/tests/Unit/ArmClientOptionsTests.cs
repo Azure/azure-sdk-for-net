@@ -4,6 +4,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Core.Tests
 {
+    [Parallelizable]
     public class AzureResourceManagerClientOptionsTests
     {
         [TestCase]

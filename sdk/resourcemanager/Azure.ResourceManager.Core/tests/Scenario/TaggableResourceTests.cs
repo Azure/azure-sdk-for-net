@@ -25,11 +25,9 @@ namespace Azure.ResourceManager.Core.Tests
         [SetUp]
         public async Task SetUpAsync()
         {
-            var client = GetArmClient();
-
-            _rg = await client.DefaultSubscription.GetResourceGroupContainer().Construct(LocationData.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName(_rgPrefix));
-            _rg = _rg.AddTag("key1", "value1");
-            _rg = _rg.AddTag("key2", "value2");
+            _rg = await Client.DefaultSubscription.GetResourceGroupContainer().Construct(LocationData.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName(_rgPrefix));
+            _rg = await _rg.AddTagAsync("key1", "value1");
+            _rg = await _rg.AddTagAsync("key2", "value2");
         }
 
         [Test]

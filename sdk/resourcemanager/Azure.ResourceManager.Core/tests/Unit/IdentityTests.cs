@@ -7,6 +7,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Core.Tests
 {
+    [Parallelizable]
     public class IdentityTests
     {
         private static readonly string TestAssetPath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Unit", "TestAssets", "Identity");

@@ -3,6 +3,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Core.Tests
 {
+    [Parallelizable]
     public class ArmClientTests
     {
         [TestCase]
