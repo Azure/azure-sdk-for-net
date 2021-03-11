@@ -124,7 +124,7 @@ EventGridSubscriber eventGridSubscriber = new EventGridSubscriber();
 // Optionally add one or more custom event type mappings
 eventGridSubscriber.AddOrUpdateCustomEventMapping("Contoso.Items.ItemReceived", typeof(ContosoItemReceivedEventData));
 
-var events = eventGridSubscriber.DeserializeEventGridEvents(requestContent);            
+EventGridEvent[] events = eventGridSubscriber.DeserializeEventGridEvents(requestContent);            
  
 foreach (EventGridEvent receivedEvent in events)
 {
