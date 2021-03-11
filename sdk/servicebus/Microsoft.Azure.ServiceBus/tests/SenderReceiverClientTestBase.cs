@@ -26,6 +26,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         {
             await TestUtility.SendMessagesAsync(messageSender, messageCount);
             var receivedMessages = await TestUtility.ReceiveMessagesAsync(messageReceiver, messageCount, TimeSpan.FromSeconds(10));
+            TestUtility.Log($"ReceiveDeleteTestCase messageCount: {messageCount} receivedMessagesCount: {receivedMessages}");
             Assert.Equal(messageCount, receivedMessages.Count);
         }
 
