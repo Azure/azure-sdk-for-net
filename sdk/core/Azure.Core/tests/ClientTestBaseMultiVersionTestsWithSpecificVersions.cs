@@ -11,11 +11,12 @@ using NUnit.Framework;
 namespace Azure.Core.Tests
 {
     [ClientTestFixture(
+        TestClientOptions.ServiceVersion.V0,
         TestClientOptions.ServiceVersion.V1,
         TestClientOptions.ServiceVersion.V2,
         TestClientOptions.ServiceVersion.V3,
         RecordingServiceVersion = TestClientOptions.ServiceVersion.V2,
-        LiveServiceVersion = TestClientOptions.ServiceVersion.V1)]
+        LiveServiceVersions = new object[] { TestClientOptions.ServiceVersion.V1, TestClientOptions.ServiceVersion.V0 })]
     public class ClientTestBaseMultiVersionTestsWithSpecificVersions : RecordedTestBase
     {
         private readonly TestClientOptions.ServiceVersion _version;
@@ -38,7 +39,7 @@ namespace Azure.Core.Tests
             }
             else
             {
-                Assert.IsTrue(_version == TestClientOptions.ServiceVersion.V1);
+                Assert.IsTrue(_version == TestClientOptions.ServiceVersion.V1 || _version == TestClientOptions.ServiceVersion.V0);
             }
         }
 
@@ -48,6 +49,7 @@ namespace Azure.Core.Tests
 
             public enum ServiceVersion
             {
+                V0 = 0,
                 V1 = 1,
                 V2 = 2,
                 V3 = 3
