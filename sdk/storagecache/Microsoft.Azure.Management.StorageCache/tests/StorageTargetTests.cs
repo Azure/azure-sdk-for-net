@@ -80,6 +80,43 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
         }
 
         /// <summary>
+        /// The TestCreateBlobNfsStorageTarget.
+        /// </summary>
+        [Fact]
+        public void TestCreateBlobNfsStorageTarget()
+        {
+            this.testOutputHelper.WriteLine($"Running in {HttpMockServer.GetCurrentMode()} mode.");
+            using (StorageCacheTestContext context = new StorageCacheTestContext(this))
+            {
+                var client = context.GetClient<StorageCacheManagementClient>();
+                client.ApiVersion = StorageCacheTestEnvironmentUtilities.APIVersion;
+                this.fixture.CacheHelper.StoragecacheManagementClient = client;
+                StorageTarget storageTarget;
+                var suffix = "bre";
+                string blobNfsUsageModel = "WRITE_WORKLOAD_15";
+                storageTarget = this.storageAccountsFixture.AddBlobNfsStorageAccount(context, suffix: suffix, waitForPermissions: false, testOutputHelper: this.testOutputHelper, usageModel: blobNfsUsageModel);
+                string id =
+                    $"/subscriptions/{this.fixture.SubscriptionID}" +
+                    $"/resourceGroups/{this.fixture.ResourceGroup.Name}" +
+                    $"/providers/Microsoft.StorageCache/caches/{this.fixture.Cache.Name}" +
+                    $"/storageTargets/{this.fixture.ResourceGroup.Name + suffix}";
+
+                string blobNfsTarget =
+                    $"/subscriptions/{this.fixture.SubscriptionID}" +
+                    $"/resourceGroups/{this.fixture.ResourceGroup.Name}" +
+                    $"/providers/Microsoft.Storage/storageAccounts/{this.fixture.ResourceGroup.Name + suffix}" +
+                    $"/blobServices/default/containers/{this.fixture.ResourceGroup.Name + suffix}";
+                Assert.Equal(this.fixture.ResourceGroup.Name + suffix, storageTarget.Name);
+                Assert.Equal(id, storageTarget.Id, ignoreCase: true);
+                Assert.Equal("blobNfs", storageTarget.TargetType);
+                Assert.Equal(blobNfsTarget, storageTarget.BlobNfs.Target);
+                Assert.Equal(blobNfsUsageModel, storageTarget.BlobNfs.UsageModel);
+                Assert.Equal("/junction" + suffix, storageTarget.Junctions[0].NamespacePath);
+                Assert.Equal("/", storageTarget.Junctions[0].TargetPath);
+            }
+        }
+
+        /// <summary>
         /// The list storage target by cache.
         /// </summary>
         [Fact]
@@ -149,6 +186,39 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
                 Assert.Equal(storageTarget.TargetType, response.TargetType);
                 Assert.Equal(storageTarget.Clfs.Target, response.Clfs.Target);
                 Assert.Equal(storageTarget.Name, response.Name);
+            }
+        }
+
+        /// <summary>
+        /// The TestStorageTargetDnsRefresh.
+        /// </summary>
+        [Fact]
+        public void TestStorageTargetDnsRefresh()
+        {
+            this.testOutputHelper.WriteLine($"Running in {HttpMockServer.GetCurrentMode()} mode.");
+            using (StorageCacheTestContext context = new StorageCacheTestContext(this))
+            {
+                var client = context.GetClient<StorageCacheManagementClient>();
+                client.ApiVersion = StorageCacheTestEnvironmentUtilities.APIVersion;
+                this.fixture.CacheHelper.StoragecacheManagementClient = client;
+                StorageTarget storageTarget;
+                try
+                {
+                     storageTarget = this.fixture.CacheHelper.GetStorageTarget(this.fixture.Cache.Name, this.fixture.ResourceGroup.Name);
+                }
+                catch (CloudErrorException)
+                {
+                    storageTarget = this.storageAccountsFixture.AddClfsStorageAccount(context, waitForStorageTarget: false, waitForPermissions: false, testOutputHelper: this.testOutputHelper);
+                }
+
+                try
+                {
+                    client.StorageTargets.DnsRefresh(this.fixture.ResourceGroup.Name, this.fixture.Cache.Name, storageTarget.Name);
+                }
+                catch(CloudErrorException ex)
+                {
+                    Assert.True(false, ex.ToString());
+                }
             }
         }
 

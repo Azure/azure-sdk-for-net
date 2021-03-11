@@ -8,13 +8,12 @@ namespace Microsoft.Azure.Management.StorageCache.Models
 {
 
     /// <summary>
-    /// Defines values for StorageTargetType.
+    /// Defines values for DomainJoinedType.
     /// </summary>
-    public static class StorageTargetType
+    public static class DomainJoinedType
     {
-        public const string Nfs3 = "nfs3";
-        public const string Clfs = "clfs";
-        public const string Unknown = "unknown";
-        public const string BlobNfs = "blobNfs";
+        public const string Yes = "Yes";
+        public const string No = "No";
+        public const string Error = "Error";
     }
 }

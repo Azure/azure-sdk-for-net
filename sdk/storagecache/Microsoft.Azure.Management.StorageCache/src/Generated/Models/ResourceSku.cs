@@ -31,10 +31,10 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         /// to.</param>
         /// <param name="capabilities">A list of capabilities of this SKU, such
         /// as throughput or ops/sec.</param>
-        /// <param name="locations">The set of locations that the SKU is
-        /// available. This will be supported and registered Azure Geo Regions
+        /// <param name="locations">The set of locations where the SKU is
+        /// available. This is the supported and registered Azure Geo Regions
         /// (e.g., West US, East US, Southeast Asia, etc.).</param>
-        /// <param name="locationInfo">The set of locations that the SKU is
+        /// <param name="locationInfo">The set of locations where the SKU is
         /// available.</param>
         /// <param name="name">The name of this SKU.</param>
         /// <param name="restrictions">The restrictions preventing this SKU
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         public IList<ResourceSkuCapabilities> Capabilities { get; set; }
 
         /// <summary>
-        /// Gets the set of locations that the SKU is available. This will be
+        /// Gets the set of locations where the SKU is available. This is the
         /// supported and registered Azure Geo Regions (e.g., West US, East US,
         /// Southeast Asia, etc.).
         /// </summary>
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         public IList<string> Locations { get; private set; }
 
         /// <summary>
-        /// Gets or sets the set of locations that the SKU is available.
+        /// Gets or sets the set of locations where the SKU is available.
         /// </summary>
         [JsonProperty(PropertyName = "locationInfo")]
         public IList<ResourceSkuLocationInfo> LocationInfo { get; set; }

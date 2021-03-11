@@ -8,13 +8,13 @@ namespace Microsoft.Azure.Management.StorageCache.Models
 {
 
     /// <summary>
-    /// Defines values for StorageTargetType.
+    /// Defines values for UsernameSource.
     /// </summary>
-    public static class StorageTargetType
+    public static class UsernameSource
     {
-        public const string Nfs3 = "nfs3";
-        public const string Clfs = "clfs";
-        public const string Unknown = "unknown";
-        public const string BlobNfs = "blobNfs";
+        public const string AD = "AD";
+        public const string LDAP = "LDAP";
+        public const string File = "File";
+        public const string None = "None";
     }
 }

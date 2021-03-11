@@ -6,6 +6,8 @@
 
 namespace Microsoft.Azure.Management.StorageCache.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -13,6 +15,7 @@ namespace Microsoft.Azure.Management.StorageCache.Models
     /// REST API operation description: see
     /// https://github.com/Azure/azure-rest-api-specs/blob/master/documentation/openapi-authoring-automated-guidelines.md#r3023-operationsapiimplementation
     /// </summary>
+    [Rest.Serialization.JsonTransformation]
     public partial class ApiOperation
     {
         /// <summary>
@@ -28,12 +31,20 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         /// </summary>
         /// <param name="display">The object that represents the
         /// operation.</param>
+        /// <param name="origin">Origin of the operation.</param>
+        /// <param name="isDataAction">The flag that indicates whether the
+        /// operation applies to data plane.</param>
         /// <param name="name">Operation name:
         /// {provider}/{resource}/{operation}</param>
-        public ApiOperation(ApiOperationDisplay display = default(ApiOperationDisplay), string name = default(string))
+        /// <param name="serviceSpecification">Specification of the all the
+        /// metrics provided for a resource type.</param>
+        public ApiOperation(ApiOperationDisplay display = default(ApiOperationDisplay), string origin = default(string), bool? isDataAction = default(bool?), string name = default(string), ApiOperationPropertiesServiceSpecification serviceSpecification = default(ApiOperationPropertiesServiceSpecification))
         {
             Display = display;
+            Origin = origin;
+            IsDataAction = isDataAction;
             Name = name;
+            ServiceSpecification = serviceSpecification;
             CustomInit();
         }
 
@@ -49,10 +60,30 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         public ApiOperationDisplay Display { get; set; }
 
         /// <summary>
+        /// Gets or sets origin of the operation.
+        /// </summary>
+        [JsonProperty(PropertyName = "origin")]
+        public string Origin { get; set; }
+
+        /// <summary>
+        /// Gets or sets the flag that indicates whether the operation applies
+        /// to data plane.
+        /// </summary>
+        [JsonProperty(PropertyName = "isDataAction")]
+        public bool? IsDataAction { get; set; }
+
+        /// <summary>
         /// Gets or sets operation name: {provider}/{resource}/{operation}
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets specification of the all the metrics provided for a
+        /// resource type.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.serviceSpecification")]
+        public ApiOperationPropertiesServiceSpecification ServiceSpecification { get; set; }
 
     }
 }

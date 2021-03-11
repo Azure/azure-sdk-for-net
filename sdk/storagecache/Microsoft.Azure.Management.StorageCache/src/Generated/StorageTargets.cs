@@ -47,14 +47,192 @@ namespace Microsoft.Azure.Management.StorageCache
         public StorageCacheManagementClient Client { get; private set; }
 
         /// <summary>
+        /// Tells a storage target to refresh its DNS information.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Target resource group.
+        /// </param>
+        /// <param name='cacheName'>
+        /// Name of Cache. Length of name must not be greater than 80 and chars must be
+        /// from the [-0-9a-zA-Z_] char class.
+        /// </param>
+        /// <param name='storageTargetName'>
+        /// Name of Storage Target.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="CloudErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<HttpOperationResponse> DnsRefreshWithHttpMessagesAsync(string resourceGroupName, string cacheName, string storageTargetName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (cacheName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "cacheName");
+            }
+            if (cacheName != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(cacheName, "^[-0-9a-zA-Z_]{1,80}$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "cacheName", "^[-0-9a-zA-Z_]{1,80}$");
+                }
+            }
+            if (storageTargetName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "storageTargetName");
+            }
+            if (storageTargetName != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(storageTargetName, "^[-0-9a-zA-Z_]{1,80}$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "storageTargetName", "^[-0-9a-zA-Z_]{1,80}$");
+                }
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("cacheName", cacheName);
+                tracingParameters.Add("storageTargetName", storageTargetName);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "DnsRefresh", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StorageCache/caches/{cacheName}/storageTargets/{storageTargetName}/dnsRefresh").ToString();
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            _url = _url.Replace("{cacheName}", System.Uri.EscapeDataString(cacheName));
+            _url = _url.Replace("{storageTargetName}", System.Uri.EscapeDataString(storageTargetName));
+            List<string> _queryParameters = new List<string>();
+            if (Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200 && (int)_statusCode != 202)
+            {
+                var ex = new CloudErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new HttpOperationResponse();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
         /// Returns a list of Storage Targets for the specified Cache.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Target resource group.
         /// </param>
         /// <param name='cacheName'>
-        /// Name of Cache. Length of name must be not greater than 80 and chars must be
-        /// in list of [-0-9a-zA-Z_] char class.
+        /// Name of Cache. Length of name must not be greater than 80 and chars must be
+        /// from the [-0-9a-zA-Z_] char class.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -240,8 +418,8 @@ namespace Microsoft.Azure.Management.StorageCache
         /// Target resource group.
         /// </param>
         /// <param name='cacheName'>
-        /// Name of Cache. Length of name must be not greater than 80 and chars must be
-        /// in list of [-0-9a-zA-Z_] char class.
+        /// Name of Cache. Length of name must not be greater than 80 and chars must be
+        /// from the [-0-9a-zA-Z_] char class.
         /// </param>
         /// <param name='storageTargetName'>
         /// Name of Storage Target.
@@ -255,9 +433,6 @@ namespace Microsoft.Azure.Management.StorageCache
         /// <exception cref="CloudErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
@@ -267,7 +442,7 @@ namespace Microsoft.Azure.Management.StorageCache
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> DeleteWithHttpMessagesAsync(string resourceGroupName, string cacheName, string storageTargetName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string cacheName, string storageTargetName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -404,63 +579,9 @@ namespace Microsoft.Azure.Management.StorageCache
                 throw ex;
             }
             // Create Result
-            var _result = new HttpOperationResponse<object>();
+            var _result = new HttpOperationResponse();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<object>(_responseContent, Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 202)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<object>(_responseContent, Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 204)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<object>(_responseContent, Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
             if (_shouldTrace)
             {
                 ServiceClientTracing.Exit(_invocationId, _result);
@@ -475,12 +596,11 @@ namespace Microsoft.Azure.Management.StorageCache
         /// Target resource group.
         /// </param>
         /// <param name='cacheName'>
-        /// Name of Cache. Length of name must be not greater than 80 and chars must be
-        /// in list of [-0-9a-zA-Z_] char class.
+        /// Name of Cache. Length of name must not be greater than 80 and chars must be
+        /// from the [-0-9a-zA-Z_] char class.
         /// </param>
         /// <param name='storageTargetName'>
-        /// Name of the Storage Target. Length of name must be not greater than 80 and
-        /// chars must be in list of [-0-9a-zA-Z_] char class.
+        /// Name of Storage Target.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -677,12 +797,11 @@ namespace Microsoft.Azure.Management.StorageCache
         /// Target resource group.
         /// </param>
         /// <param name='cacheName'>
-        /// Name of Cache. Length of name must be not greater than 80 and chars must be
-        /// in list of [-0-9a-zA-Z_] char class.
+        /// Name of Cache. Length of name must not be greater than 80 and chars must be
+        /// from the [-0-9a-zA-Z_] char class.
         /// </param>
         /// <param name='storageTargetName'>
-        /// Name of the Storage Target. Length of name must be not greater than 80 and
-        /// chars must be in list of [-0-9a-zA-Z_] char class.
+        /// Name of Storage Target.
         /// </param>
         /// <param name='storagetarget'>
         /// Object containing the definition of a Storage Target.
@@ -826,7 +945,7 @@ namespace Microsoft.Azure.Management.StorageCache
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 201)
+            if ((int)_statusCode != 200 && (int)_statusCode != 201 && (int)_statusCode != 202)
             {
                 var ex = new CloudErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try

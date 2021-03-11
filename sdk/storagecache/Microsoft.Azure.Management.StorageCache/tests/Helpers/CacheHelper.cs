@@ -105,6 +105,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
         {
             Cache cache;
             CacheEncryptionSettings cacheEncryptionSettings;
+            CacheNetworkSettings cacheNetworkSettings;
             KeyVaultKeyReference keyVaultKeyReference;
             if (!skipGet)
             {
@@ -151,6 +152,13 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
                     };
                 }
 
+                cacheNetworkSettings = new CacheNetworkSettings()
+                {
+                    DnsSearchDomain = "contoso.com",
+                    DnsServers = { "10.1.22.33", "10.1.12.33" },
+                    NtpServer = "time.contoso.com",
+                    Mtu = 1500
+                };
 
                 var cacheParameters = new Cache()
                 {
@@ -160,6 +168,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
                     Subnet = subnetUri,
                     Identity = identity,
                     EncryptionSettings = cacheEncryptionSettings,
+                    NetworkSettings = cacheNetworkSettings
                 };
                 cache = this.StoragecacheManagementClient.Caches.CreateOrUpdate(this.resourceGroup.Name, name, cacheParameters);
             }
@@ -299,6 +308,53 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
             {
                 TargetType = "clfs",
                 Clfs = clfsTarget,
+                Junctions = new List<NamespaceJunction>() { namespaceJunction },
+            };
+
+            return storageTargetParameters;
+        }
+
+        /// <summary>
+        /// Create BlobNfs storage target parameters.
+        /// </summary>
+        /// <param name="storageAccountName">Storage account name.</param>
+        /// <param name="containerName"> Storage container name.</param>
+        /// <param name="namespacePath"> namepace path.</param>
+        /// <param name="subscriptionId">Subscription id.</param>
+        /// <param name="resourceGroupName">Resource group name.</param>
+        /// <param name="usageModel">Usage Model.</param>
+        /// <returns>BlobNfs storage target parameters.</returns>
+        public StorageTarget CreateBlobNfsStorageTargetParameters(
+            string storageAccountName,
+            string containerName,
+            string namespacePath,
+            string subscriptionId = null,
+            string resourceGroupName = null,
+            string usageModel = null)
+        {
+            var subscriptionID = string.IsNullOrEmpty(subscriptionId) ? this.subscriptionId : subscriptionId;
+            var resourceGroup = string.IsNullOrEmpty(resourceGroupName) ? this.resourceGroup.Name : resourceGroupName;
+            BlobNfsTarget blobNfsTarget = new BlobNfsTarget()
+            {
+                Target =
+                $"/subscriptions/{subscriptionID}/" +
+                $"resourceGroups/{resourceGroup}/" +
+                $"providers/Microsoft.Storage/storageAccounts/{storageAccountName}/" +
+                $"blobServices/default/containers/{containerName}",
+
+                UsageModel = usageModel
+            };
+
+            NamespaceJunction namespaceJunction = new NamespaceJunction()
+            {
+                NamespacePath = namespacePath,
+                TargetPath = "/",
+            };
+
+            StorageTarget storageTargetParameters = new StorageTarget
+            {
+                TargetType = "blobNfs",
+                BlobNfs = blobNfsTarget,
                 Junctions = new List<NamespaceJunction>() { namespaceJunction },
             };
 

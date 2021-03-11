@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.StorageCache.Models
     using System.Linq;
 
     /// <summary>
-    /// Properties pertained to UnknownTarget
+    /// Properties pertaining to the UnknownTarget
     /// </summary>
     public partial class UnknownTarget
     {
@@ -27,11 +27,11 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         /// <summary>
         /// Initializes a new instance of the UnknownTarget class.
         /// </summary>
-        /// <param name="unknownMap">Dictionary of string-&gt;string pairs
+        /// <param name="attributes">Dictionary of string-&gt;string pairs
         /// containing information about the Storage Target.</param>
-        public UnknownTarget(IDictionary<string, string> unknownMap = default(IDictionary<string, string>))
+        public UnknownTarget(IDictionary<string, string> attributes = default(IDictionary<string, string>))
         {
-            UnknownMap = unknownMap;
+            Attributes = attributes;
             CustomInit();
         }
 
@@ -44,8 +44,8 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         /// Gets or sets dictionary of string-&amp;gt;string pairs containing
         /// information about the Storage Target.
         /// </summary>
-        [JsonProperty(PropertyName = "unknownMap")]
-        public IDictionary<string, string> UnknownMap { get; set; }
+        [JsonProperty(PropertyName = "attributes")]
+        public IDictionary<string, string> Attributes { get; set; }
 
     }
 }

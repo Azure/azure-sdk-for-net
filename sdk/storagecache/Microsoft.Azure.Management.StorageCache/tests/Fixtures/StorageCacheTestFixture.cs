@@ -102,7 +102,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Fixtures
                     {
                         this.Cache = null;
                         CacheIdentity cacheIdentity;
-                        if (StorageCacheTestEnvironmentUtilities.APIVersion == "2019-11-01")
+                        if (StorageCacheTestEnvironmentUtilities.APIVersion == "2021-03-01")
                         {
                             cacheIdentity = new CacheIdentity() { Type = CacheIdentityType.None };
                         }

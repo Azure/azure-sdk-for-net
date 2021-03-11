@@ -6,31 +6,29 @@
 
 namespace Microsoft.Azure.Management.StorageCache.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// Properties pertaining to the Nfs3Target
+    /// Properties pertaining to the BlobNfsTarget.
     /// </summary>
-    public partial class Nfs3Target
+    public partial class BlobNfsTarget
     {
         /// <summary>
-        /// Initializes a new instance of the Nfs3Target class.
+        /// Initializes a new instance of the BlobNfsTarget class.
         /// </summary>
-        public Nfs3Target()
+        public BlobNfsTarget()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Nfs3Target class.
+        /// Initializes a new instance of the BlobNfsTarget class.
         /// </summary>
-        /// <param name="target">IP address or host name of an NFSv3 host
-        /// (e.g., 10.0.44.44).</param>
+        /// <param name="target">Resource ID of the storage container.</param>
         /// <param name="usageModel">Identifies the StorageCache usage model to
         /// be used for this storage target.</param>
-        public Nfs3Target(string target = default(string), string usageModel = default(string))
+        public BlobNfsTarget(string target = default(string), string usageModel = default(string))
         {
             Target = target;
             UsageModel = usageModel;
@@ -43,8 +41,7 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets IP address or host name of an NFSv3 host (e.g.,
-        /// 10.0.44.44).
+        /// Gets or sets resource ID of the storage container.
         /// </summary>
         [JsonProperty(PropertyName = "target")]
         public string Target { get; set; }
@@ -56,21 +53,5 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         [JsonProperty(PropertyName = "usageModel")]
         public string UsageModel { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Target != null)
-            {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(Target, "^[-.0-9a-zA-Z]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "Target", "^[-.0-9a-zA-Z]+$");
-                }
-            }
-        }
     }
 }

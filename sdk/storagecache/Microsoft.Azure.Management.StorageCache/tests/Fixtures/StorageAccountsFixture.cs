@@ -191,6 +191,66 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Fixtures
         }
 
         /// <summary>
+        /// Creates storage account, blob container and adds CLFS storage account to cache.
+        /// </summary>
+        /// <param name="context">StorageCacheTestContext.</param>
+        /// <param name="suffix">suffix.</param>
+        /// <param name="waitForStorageTarget">Whether to wait for storage target to deploy.</param>
+        /// <param name="addPermissions">Whether to add storage account contributor roles.</param>
+        /// <param name="testOutputHelper">testOutputHelper.</param>
+        /// <param name="sleep">Sleep time for permissions to get propagated.</param>
+        /// <param name="waitForPermissions">Whether to wait for permissions to be propagated.</param>
+        /// <param name="maxRequestTries">Max retries.</param>
+        /// <returns>StorageTarget.</returns>
+        public StorageTarget AddBlobNfsStorageAccount(
+            StorageCacheTestContext context,
+            string suffix = null,
+            bool waitForStorageTarget = true,
+            bool addPermissions = true,
+            ITestOutputHelper testOutputHelper = null,
+            int sleep = 300,
+            bool waitForPermissions = true,
+            int maxRequestTries = 25,
+            string usageModel = "WRITE_WORKLOAD_15")
+        {
+            string storageTargetName = string.IsNullOrEmpty(suffix) ? this.fixture.ResourceGroup.Name : this.fixture.ResourceGroup.Name + suffix;
+            string junction = "/junction" + suffix;
+            var storageAccount = this.AddStorageAccount(
+                context,
+                this.fixture.ResourceGroup,
+                suffix,
+                addPermissions,
+                testOutputHelper,
+                sleep: sleep,
+                waitForPermissions: waitForPermissions);
+            var blobContainer = this.AddBlobContainer(context, this.fixture.ResourceGroup, storageAccount, suffix, testOutputHelper);
+            StorageTarget storageTargetParameters = this.fixture.CacheHelper.CreateBlobNfsStorageTargetParameters(
+                storageAccount.Name,
+                blobContainer.Name,
+                junction,
+                usageModel);
+            StorageTarget storageTarget = this.fixture.CacheHelper.CreateStorageTarget(
+                this.fixture.Cache.Name,
+                storageTargetName,
+                storageTargetParameters,
+                testOutputHelper,
+                waitForStorageTarget,
+                maxRequestTries);
+
+            if (testOutputHelper != null)
+            {
+                testOutputHelper.WriteLine($"Storage target Name {storageTarget.Name}");
+                testOutputHelper.WriteLine($"Storage target NamespacePath {storageTarget.Junctions[0].NamespacePath}");
+                testOutputHelper.WriteLine($"Storage target TargetPath {storageTarget.Junctions[0].TargetPath}");
+                testOutputHelper.WriteLine($"Storage target Id {storageTarget.Id}");
+                testOutputHelper.WriteLine($"Storage target Target {storageTarget.BlobNfs.Target}");
+                testOutputHelper.WriteLine($"Storage target UsageModel {storageTarget.BlobNfs.UsageModel}");
+            }
+
+            return storageTarget;
+        }
+
+        /// <summary>
         /// Adds storage account access roles.
         /// Storage Account Contributor or Storage blob Contributor.
         /// </summary>

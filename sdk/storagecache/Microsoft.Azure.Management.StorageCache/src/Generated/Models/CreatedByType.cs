@@ -8,13 +8,13 @@ namespace Microsoft.Azure.Management.StorageCache.Models
 {
 
     /// <summary>
-    /// Defines values for StorageTargetType.
+    /// Defines values for CreatedByType.
     /// </summary>
-    public static class StorageTargetType
+    public static class CreatedByType
     {
-        public const string Nfs3 = "nfs3";
-        public const string Clfs = "clfs";
-        public const string Unknown = "unknown";
-        public const string BlobNfs = "blobNfs";
+        public const string User = "User";
+        public const string Application = "Application";
+        public const string ManagedIdentity = "ManagedIdentity";
+        public const string Key = "Key";
     }
 }

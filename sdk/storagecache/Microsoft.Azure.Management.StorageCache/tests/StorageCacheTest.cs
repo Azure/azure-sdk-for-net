@@ -62,7 +62,8 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
                 Assert.Equal(this.fixture.Cache.Identity.Type, response.Identity.Type);
                 Assert.Equal(this.fixture.Cache.Identity.PrincipalId, response.Identity.PrincipalId);
                 Assert.Equal(this.fixture.Cache.Identity.TenantId, response.Identity.TenantId);
-                Assert.Equal(this.fixture.Cache.SecuritySettings.RootSquash, response.SecuritySettings.RootSquash);
+                Assert.Equal(1500, this.fixture.Cache.NetworkSettings.Mtu);
+                Assert.Equal("time.contoso.com", this.fixture.Cache.NetworkSettings.NtpServer);
             }
         }
 
