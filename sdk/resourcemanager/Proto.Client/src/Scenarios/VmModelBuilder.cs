@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Identity;
 using Proto.Compute;
 using Azure.ResourceManager.Core;
 using Proto.Network;
@@ -19,7 +20,7 @@ namespace Proto.Client
 
         private Task<VirtualMachine> CreateVmWithBuilderAsync()
         {
-            var client = new AzureResourceManagerClient();
+            var client = new AzureResourceManagerClient(new DefaultAzureCredential());
             var subscription = client.GetSubscriptionOperations(Context.SubscriptionId);
 
             // Create Resource Group

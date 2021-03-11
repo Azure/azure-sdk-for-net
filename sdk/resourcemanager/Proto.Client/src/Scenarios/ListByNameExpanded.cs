@@ -3,6 +3,7 @@ using Azure.ResourceManager.Core;
 using Proto.Network;
 using System;
 using System.Threading.Tasks;
+using Azure.Identity;
 
 namespace Proto.Client
 {
@@ -13,7 +14,7 @@ namespace Proto.Client
             var createMultipleVms = new CreateMultipleVms(Context);
             createMultipleVms.Execute();
 
-            var rg = new AzureResourceManagerClient().GetResourceGroupOperations(Context.SubscriptionId, Context.RgName).Get().Value;
+            var rg = new AzureResourceManagerClient(new DefaultAzureCredential()).GetResourceGroupOperations(Context.SubscriptionId, Context.RgName).Get().Value;
             foreach (var availabilitySet in rg.GetAvailabilitySetContainer().ListAsGenericResource(Environment.UserName))
             {
                 Console.WriteLine($"--------AvailabilitySet operation id--------: {availabilitySet.Id}");

@@ -1,6 +1,7 @@
 ﻿using Proto.Compute;
 using Azure.ResourceManager.Core;
 using System;
+using Azure.Identity;
 
 namespace Proto.Client
 {
@@ -11,7 +12,7 @@ namespace Proto.Client
             var createVm = new CreateSingleVmExample(Context);
             createVm.Execute();
 
-            var client = new AzureResourceManagerClient();
+            var client = new AzureResourceManagerClient(new DefaultAzureCredential());
             var subscription = client.GetSubscriptionOperations(Context.SubscriptionId);
             var resourceGroup = subscription.GetResourceGroupOperations(Context.RgName);
             var vm = resourceGroup.GetVirtualMachineOperations(Context.VmName);

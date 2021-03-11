@@ -4,6 +4,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using System.Threading;
 using System.Diagnostics;
+using Azure.Identity;
 
 namespace Proto.Client
 {
@@ -18,8 +19,8 @@ namespace Proto.Client
             var dummyPolicy2 = new dummyPolicy2();
             options1.AddPolicy(dummyPolicy1, HttpPipelinePosition.PerCall);
             options2.AddPolicy(dummyPolicy2, HttpPipelinePosition.PerCall);
-            var client1 = new AzureResourceManagerClient(options1);
-            var client2 = new AzureResourceManagerClient(options2);
+            var client1 = new AzureResourceManagerClient(new DefaultAzureCredential(), options1);
+            var client2 = new AzureResourceManagerClient(new DefaultAzureCredential(), options2);
 
             Console.WriteLine("-----Client 1-----");
             foreach (var sub in client1.GetSubscriptionContainer().List())

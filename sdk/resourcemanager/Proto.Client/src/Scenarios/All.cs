@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Identity;
 
 namespace Proto.Client
 {
@@ -28,7 +29,7 @@ namespace Proto.Client
                 foreach (var rgId in CleanUp)
                 {
                     ResourceIdentifier id = new ResourceIdentifier(rgId);
-                    var rg = new AzureResourceManagerClient().GetResourceGroupOperations(rgId);
+                    var rg = new AzureResourceManagerClient(new DefaultAzureCredential()).GetResourceGroupOperations(rgId);
                     Console.WriteLine($"--------Deleting {rg.Id.Name}--------");
                     try
                     {
