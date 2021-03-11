@@ -136,10 +136,6 @@ namespace Azure.ResourceManager.Core.Tests
             resource.ManagedBy = managedBy;
             var field = typeof(GenericResourceExpanded).BaseType.BaseType.GetField("<Id>k__BackingField", BindingFlags.Instance | BindingFlags.NonPublic);
             field.SetValue(resource, "/subscriptions/{subscription-id}/resourceGroups/myResourceGrou");
-            //FieldInfo MyWriteableField = resource.GetType().BaseType.BaseType.GetRuntimeFields().Where( a => Regex.IsMatch( a.Name, $"\\A<{nameof( resource.Id )}>k__BackingField\\Z" ) ).FirstOrDefault();
-            //MyWriteableField.SetValue( MyWriteableField, "Another new value" );
-            //var field = typeof(GenericResourceExpanded).BaseType.BaseType.GetField("Id", BindingFlags.Public | BindingFlags.Instance);
-            //field.SetValue(resource, "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup");
             return resource;
         }
     }
