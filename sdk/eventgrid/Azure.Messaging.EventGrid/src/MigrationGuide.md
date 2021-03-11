@@ -115,10 +115,35 @@ await client.SendEventsAsync(eventsList);
 ### Deserializing events and data
 
 In `Microsoft.Azure.EventGrid`, there was the `EventGridSubscriber` type that was used to deserialize events:
-```C# Snippet:EGEventParseJson
-var bytes = await httpContent.ReadAsByteArrayAsync();
-// Parse the JSON payload into a list of events
-EventGridEvent[] egEvents = EventGridEvent.ParseMany(new BinaryData(bytes));
+```C#
+string requestContent = await req.Content.ReadAsStringAsync();
+
+EventGridSubscriber eventGridSubscriber = new EventGridSubscriber();
+
+// Optionally add one or more custom event type mappings
+eventGridSubscriber.AddOrUpdateCustomEventMapping("Contoso.Items.ItemReceived", typeof(ContosoItemReceivedEventData));
+
+var events = eventGridSubscriber.DeserializeEventGridEvents(requestContent);            
+ 
+foreach (EventGridEvent receivedEvent in events)
+{
+    if (receivedEvent.Data is SubscriptionValidationEventData)
+    {
+        SubscriptionValidationEventData eventData = (SubscriptionValidationEventData)receivedEvent.Data;
+        log.Info($"Got SubscriptionValidation event data, validationCode: {eventData.ValidationCode},  validationUrl: {eventData.ValidationUrl}, topic: {eventGridEvent.Topic}");
+        // Handle subscription validation
+    }
+    else if (receivedEvent.Data is StorageBlobCreatedEventData)
+    {
+        StorageBlobCreatedEventData eventData = (StorageBlobCreatedEventData)receivedEvent.Data;
+        log.Info($"Got BlobCreated event data, blob URI {eventData.Url}");
+        // Handle StorageBlobCreatedEventData
+    }
+    else if (receivedEvent.Data is ContosoItemReceivedEventData)
+    {
+        ContosoItemReceivedEventData eventData = (ContosoItemReceivedEventData)receivedEvent.Data;
+    }
+}
 ```
 
 In the `Azure.Messaging.EventGrid` library, there is no longer a separate type to deserialize events. Instead, you can use static factory methods on `EventGridEvent` to parse into an array of `EventGridEvents`.
@@ -126,4 +151,45 @@ In the `Azure.Messaging.EventGrid` library, there is no longer a separate type t
 var bytes = await httpContent.ReadAsByteArrayAsync();
 // Parse the JSON payload into a list of events
 EventGridEvent[] egEvents = EventGridEvent.ParseMany(new BinaryData(bytes));
+```
+
+You can then iterate through your events and deserialize the data.
+```C# Snippet:DeserializePayloadUsingAsSystemEventData
+foreach (EventGridEvent egEvent in egEvents)
+{
+    // If the event is a system event, TryGetSystemEventData will return the deserialized system event
+    if (egEvent.TryGetSystemEventData(out object systemEvent))
+    {
+        switch (systemEvent)
+        {
+            case SubscriptionValidationEventData subscriptionValidated:
+                Console.WriteLine(subscriptionValidated.ValidationCode);
+                break;
+            case StorageBlobCreatedEventData blobCreated:
+                Console.WriteLine(blobCreated.BlobType);
+                break;
+            // Handle any other system event type
+            default:
+                Console.WriteLine(egEvent.EventType);
+                // we can get the raw Json for the event using Data
+                Console.WriteLine(egEvent.Data.ToString());
+                break;
+        }
+    }
+    else
+    {
+        switch (egEvent.EventType)
+        {
+            case "MyApp.Models.CustomEventType":
+                TestPayload deserializedEventData = egEvent.Data.ToObjectFromJson<TestPayload>();
+                Console.WriteLine(deserializedEventData.Name);
+                break;
+            // Handle any other custom event type
+            default:
+                Console.Write(egEvent.EventType);
+                Console.WriteLine(egEvent.Data.ToString());
+                break;
+        }
+    }
+}
 ```
