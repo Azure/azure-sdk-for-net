@@ -1863,8 +1863,8 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": null,\r\n  \"endTime\": null,\r\n  \"status\": \"Failed\",\r\n  \"error\": {\r\n    \"code\": \"10002\",\r\n    \"message\": \"Failed because Blob is missing or cannot be located. Please check the blob name and path and retry later.\",\r\n    \"target\": \"ErrorCode=UserErrorSourceBlobNotExist,'Type=Microsoft.DataTransfer.Common.Shared.HybridDeliveryException,Message=The required Blob is missing. ContainerName: https://storageactsample.blob.core.windows.net/containername, path: apple.,Source=Microsoft.DataTransfer.ClientLibrary,'\",\r\n    \"details\": []\r\n  }\r\n}",
-      "StatusCode": 200
+      "ResponseBody": "",
+      "StatusCode": 202
     }
   ],
   "Names": {},
