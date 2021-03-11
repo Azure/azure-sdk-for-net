@@ -30,7 +30,7 @@ namespace Azure.Communication.Chat
         /// <param name="endpoint"> The endpoint of the Azure Communication resource. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public ChatThreadRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2021-01-27-preview4")
+        public ChatThreadRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2021-03-01-preview5")
         {
             if (endpoint == null)
             {
@@ -918,7 +918,7 @@ namespace Azure.Communication.Chat
             }
         }
 
-        internal HttpMessage CreateUpdateChatThreadRequest(string chatThreadId, string topic)
+        internal HttpMessage CreateUpdateChatThreadPropertiesRequest(string chatThreadId, string topic)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -946,14 +946,14 @@ namespace Azure.Communication.Chat
         /// <param name="topic"> Chat thread topic. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> is null. </exception>
-        public async Task<Response> UpdateChatThreadAsync(string chatThreadId, string topic = null, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateChatThreadPropertiesAsync(string chatThreadId, string topic = null, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
             {
                 throw new ArgumentNullException(nameof(chatThreadId));
             }
 
-            using var message = CreateUpdateChatThreadRequest(chatThreadId, topic);
+            using var message = CreateUpdateChatThreadPropertiesRequest(chatThreadId, topic);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -969,14 +969,14 @@ namespace Azure.Communication.Chat
         /// <param name="topic"> Chat thread topic. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> is null. </exception>
-        public Response UpdateChatThread(string chatThreadId, string topic = null, CancellationToken cancellationToken = default)
+        public Response UpdateChatThreadProperties(string chatThreadId, string topic = null, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
             {
                 throw new ArgumentNullException(nameof(chatThreadId));
             }
 
-            using var message = CreateUpdateChatThreadRequest(chatThreadId, topic);
+            using var message = CreateUpdateChatThreadPropertiesRequest(chatThreadId, topic);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

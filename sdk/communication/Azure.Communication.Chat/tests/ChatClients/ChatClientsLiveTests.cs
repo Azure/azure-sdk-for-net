@@ -67,11 +67,11 @@ namespace Azure.Communication.Chat.Tests
 
             //act
             CreateChatThreadResult createChatThreadResult = chatClient.CreateChatThread(topic, participants, repeatabilityRequestId1);
-            ChatThreadClient chatThreadClient = GetInstrumentedChatThreadClient(chatClient, createChatThreadResult.ChatThread.Id);
+            ChatThreadClient chatThreadClient = GetInstrumentedChatThreadClient(chatClient, createChatThreadResult.ChatThreadProperties.Id);
             var threadId = chatThreadClient.Id;
 
             CreateChatThreadResult createChatThreadResult2 = chatClient.CreateChatThread(topic, participants, repeatabilityRequestId2);
-            ChatThreadClient chatThreadClient2 = GetInstrumentedChatThreadClient(chatClient, createChatThreadResult2.ChatThread.Id);
+            ChatThreadClient chatThreadClient2 = GetInstrumentedChatThreadClient(chatClient, createChatThreadResult2.ChatThreadProperties.Id);
             ChatThreadClient chatThreadClient3 = GetInstrumentedChatThreadClient(chatClient3, threadId);
 
             Pageable<ChatParticipant> chatParticipantsOnCreation = chatThreadClient.GetParticipants();
@@ -80,7 +80,7 @@ namespace Azure.Communication.Chat.Tests
             string updatedTopic = "Launch meeting";
             chatThreadClient.UpdateTopic(topic: "Launch meeting");
 
-            ChatThread chatThread = chatClient.GetChatThread(threadId);
+            ChatThreadProperties chatThread = chatClient.GetChatThreadProperties(threadId);
 
             string messageContent = "Let's meet at 11am";
             string messageId = chatThreadClient.SendMessage("Let's meet at 11am");
@@ -144,7 +144,7 @@ namespace Azure.Communication.Chat.Tests
             Response typingNotificationResponse = chatThreadClient.SendTypingNotification();
             chatThreadClient.SendTypingNotification();
 
-            Pageable<ChatThreadInfo> threads = chatClient.GetChatThreadsInfo();
+            Pageable<ChatThreadItem> threads = chatClient.GetChatThreadsItem();
             var threadsCount = threads.Count();
 
             chatClient.DeleteChatThread(threadId);
@@ -179,7 +179,7 @@ namespace Azure.Communication.Chat.Tests
             Assert.AreEqual(3, chatParticipantsCount);
             Assert.AreEqual(5, chatParticipantsAfterTwoAddedCount);
             Assert.AreEqual(4, chatParticipantAfterOneDeletedCount);
-            Assert.IsNull(addChatParticipantsResult.Errors);
+            Assert.AreEqual(0, addChatParticipantsResult.InvalidParticipants.Count);
             Assert.AreEqual((int)HttpStatusCode.OK, typingNotificationResponse.Status);
         }
 
@@ -206,7 +206,7 @@ namespace Azure.Communication.Chat.Tests
 
             //act
             CreateChatThreadResult createChatThreadResult = chatClient.CreateChatThread("Thread topic - ReadReceipts Test", participants, repeatabilityRequestId1);
-            ChatThreadClient chatThreadClient = GetInstrumentedChatThreadClient(chatClient, createChatThreadResult.ChatThread.Id);
+            ChatThreadClient chatThreadClient = GetInstrumentedChatThreadClient(chatClient, createChatThreadResult.ChatThreadProperties.Id);
             var threadId = chatThreadClient.Id;
             ChatThreadClient chatThreadClient2 = GetInstrumentedChatThreadClient(chatClient2, threadId);
 
@@ -263,10 +263,10 @@ namespace Azure.Communication.Chat.Tests
 
             //act
             CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync(topic, participants, repeatabilityRequestId1);
-            ChatThreadClient chatThreadClient = GetInstrumentedChatThreadClient(chatClient, createChatThreadResult.ChatThread.Id);
+            ChatThreadClient chatThreadClient = GetInstrumentedChatThreadClient(chatClient, createChatThreadResult.ChatThreadProperties.Id);
             var threadId = chatThreadClient.Id;
             CreateChatThreadResult createChatThreadResult2 = await chatClient.CreateChatThreadAsync(topic, participants, repeatabilityRequestId2);
-            ChatThreadClient chatThreadClient2 = GetInstrumentedChatThreadClient(chatClient, createChatThreadResult2.ChatThread.Id);
+            ChatThreadClient chatThreadClient2 = GetInstrumentedChatThreadClient(chatClient, createChatThreadResult2.ChatThreadProperties.Id);
             ChatThreadClient chatThreadClient3 = GetInstrumentedChatThreadClient(chatClient3, threadId);
 
             AsyncPageable<ChatParticipant> chatParticipantsOnCreation = chatThreadClient.GetParticipantsAsync();
@@ -275,7 +275,7 @@ namespace Azure.Communication.Chat.Tests
             var updatedTopic = "Updated topic - C# sdk";
             await chatThreadClient.UpdateTopicAsync(updatedTopic);
 
-            ChatThread chatThread = await chatClient.GetChatThreadAsync(threadId);
+            ChatThreadProperties chatThread = await chatClient.GetChatThreadPropertiesAsync(threadId);
 
             string messageContent = "Content for message 1";
             string messageId = await chatThreadClient.SendMessageAsync(messageContent, ChatMessageType.Text, displayNameMessage);
@@ -345,7 +345,7 @@ namespace Azure.Communication.Chat.Tests
             Response typingNotificationResponse = await chatThreadClient.SendTypingNotificationAsync();
             await chatThreadClient.SendTypingNotificationAsync();
 
-            AsyncPageable<ChatThreadInfo> threads = chatClient.GetChatThreadsInfoAsync();
+            AsyncPageable<ChatThreadItem> threads = chatClient.GetChatThreadsItemAsync();
             var threadsCount = threads.ToEnumerableAsync().Result.Count;
 
             await chatClient.DeleteChatThreadAsync(threadId);
@@ -380,8 +380,8 @@ namespace Azure.Communication.Chat.Tests
             Assert.AreEqual(3, chatParticipantsCount);
             Assert.AreEqual(5, chatParticipantsAfterTwoOneAddedCount);
             Assert.AreEqual(4, chatParticipantAfterOneDeletedCount);
-            Assert.IsNull(addChatParticipantsResult.Errors);
-            Assert.IsNull(addChatParticipantsResult2.Errors);
+            Assert.AreEqual(0, addChatParticipantsResult.InvalidParticipants.Count);
+            Assert.AreEqual(0, addChatParticipantsResult2.InvalidParticipants.Count);
             Assert.AreEqual((int)HttpStatusCode.OK, typingNotificationResponse.Status);
         }
 
@@ -408,7 +408,7 @@ namespace Azure.Communication.Chat.Tests
 
             //act
             CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync("Thread topic - ReadReceipts Async Test", participants, repeatabilityRequestId1);
-            ChatThreadClient chatThreadClient = GetInstrumentedChatThreadClient(chatClient, createChatThreadResult.ChatThread.Id);
+            ChatThreadClient chatThreadClient = GetInstrumentedChatThreadClient(chatClient, createChatThreadResult.ChatThreadProperties.Id);
             var threadId = chatThreadClient.Id;
             ChatThreadClient chatThreadClient2 = GetInstrumentedChatThreadClient(chatClient2, threadId);
 
