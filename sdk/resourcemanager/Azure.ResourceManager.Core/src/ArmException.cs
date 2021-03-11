@@ -2,14 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core;
 using Azure.Core.Pipeline;
-using System.Web;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Runtime.Serialization;
+using System.Threading.Tasks;
+using System.IO;
 
 namespace Azure.ResourceManager.Core
 {
@@ -42,99 +41,100 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// TODO.
         /// </summary>
-        /// <param name="message"> TODO. </param>
-        public ArmException(string message) : this(0, message)
-        {
-        }
-
-        /// <summary>
-        /// TODO.
-        /// </summary>
-        /// <param name="message"> TODO. </param>
-        /// <param name="innerException"></param>
-        public ArmException(string message, Exception? innerException) : this(0, message, innerException)
-        {
-        }
-
-        /// <summary>
-        /// TODO.
-        /// </summary>
-        /// <param name="message"> TODO. </param>
-        /// <param name="status"></param>
-        public ArmException(int status, string message)
-            : this(status, message, null)
-        {
-        }
-
-        /// <summary>
-        /// TODO.
-        /// </summary>
-        /// <param name="status"></param>
-        /// <param name="message"> TODO. </param>
-        /// <param name="innerException"></param>
-        public ArmException(int status, string message, Exception? innerException)
-            : this(status, message, null, innerException, null)
-        {
-        }
-
-        /// <summary>
-        /// TODO.
-        /// </summary>
-        /// <param name="status"></param>
-        /// <param name="errorCode"> TODO. </param>
-        /// <param name="message"></param>
-        /// <param name="innerException"></param>
-        /// <param name="content"></param>
-        public ArmException(int status, string message, string? errorCode, Exception? innerException, string? content)
+        /// <param name="status"> The HTTP status code, or <c>0</c> if not available. </param>
+        /// <param name="errorCode"> The error message that explains the reason for the exception. </param>
+        /// <param name="message"> The service specific error code. </param>
+        /// <param name="innerException"> The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified. </param>
+        /// <param name="response"> The HTTP Response. </param>
+        public ArmException(int status, string message, string? errorCode, Exception? innerException, Response? response)
             : base(status, message, errorCode, innerException)
         {
-            Code = ErrorCode;
-            Target = (string)GetResponseProperty(content, "target");
-            Data.Clear();
-            foreach (KeyValuePair<string,string> item in (ArrayList)GetResponseProperty(content, "additionalInfo"))
+            var content = ReadContentAsync(response, true).ConfigureAwait(false).GetAwaiter().GetResult();
+            if (GetResponseProperty(content, "code", out object code))
             {
-                Data.Add(item.Key, item.Value);
+                Code = (string)code;
             }
-            Details = (ArrayList)GetResponseProperty(content, "details");
-            AdditionalInfo = this.Data;
+            if (GetResponseProperty(content, "code", out object target))
+            {
+                Target = (string)target;
+            }
+            if (GetResponseProperty(content, "code", out object additionalInfo))
+            {
+                Data.Clear();
+                foreach (KeyValuePair<string, string> item in (ArrayList)additionalInfo)
+                {
+                    Data.Add(item.Key, item.Value);
+                }
+            }
+            if (GetResponseProperty(content, "code", out object details))
+            {
+                Details = (ArrayList)details;
+            }
+            AdditionalInfo = Data;
         }
 
-        /// <summary>
-        /// TODO.
-        /// </summary>
-        /// <param name="info"></param>
-        /// <param name="context"> TODO. </param>
+        /// <inheritdoc />
         protected ArmException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
         }
 
         /// <summary>
-        /// TODO.
+        /// Get the content string from Response.
         /// </summary>
-        /// <param name="propertyName"> TODO. </param>
-        /// <param name="content"> TODO. </param>
-        private static object GetResponseProperty(string content, string propertyName)
+        /// <param name="response"> The source HTTP Response. </param>
+        /// <param name="async"> Use this method async or not. </param>
+        private static async ValueTask<string?> ReadContentAsync(Response response, bool async)
+        {
+            string? content = null;
+
+            if (response.ContentStream != null &&
+                ContentTypeUtilities.TryGetTextEncoding(response.Headers.ContentType, out var encoding))
+            {
+                using (var streamReader = new StreamReader(response.ContentStream, encoding))
+                {
+                    content = async ? await streamReader.ReadToEndAsync().ConfigureAwait(false) : streamReader.ReadToEnd();
+                }
+            }
+
+            return content;
+        }
+
+        /// <summary>
+        /// Get specified property from provided JSON string.
+        /// </summary>
+        /// <param name="propertyName"> The name of property. </param>
+        /// <param name="content"> The source JSON file. </param>
+        /// <param name="properties"> The return result. </param>
+        private static bool GetResponseProperty(string content, string propertyName, out object properties)
         {
             JsonDocument jsonObejct = JsonDocument.Parse(content);
-            JsonElement error;
-            if (jsonObejct.RootElement.TryGetProperty("error", out error))
+            if (jsonObejct.RootElement.TryGetProperty("error", out JsonElement error))
             {
-                return TryGetProperties(error, propertyName);
+                if (TryGetProperties(error, propertyName, out properties))
+                {
+                    return true;
+                }
+                return false;
             }
             else
             {
-                return TryGetProperties(jsonObejct.RootElement, propertyName);
+                if (TryGetProperties(jsonObejct.RootElement, propertyName, out properties))
+                {
+                    return true;
+                }
+                return false;
             }
         }
 
         /// <summary>
-        /// TODO.
+        /// Get specified property value from provided JSON Element.
         /// </summary>
-        /// <param name="rootElements"> TODO. </param>
-        /// <param name="propertyName"> TODO. </param>
+        /// <param name="rootElements"> The source JSON element. </param>
+        /// <param name="propertyName"> The name of property. </param>
+        /// <param name="properties"> The return result. </param>
 #pragma warning disable AZC0014 // Avoid using banned types in public API
-        protected static object TryGetProperties(JsonElement rootElements, string propertyName)
+        protected static bool TryGetProperties(JsonElement rootElements, string propertyName, out object properties)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
         {
             JsonElement targetProperty;
@@ -143,9 +143,10 @@ namespace Azure.ResourceManager.Core
                 switch (targetProperty.ValueKind)
                 {
                     case JsonValueKind.String:
-                        return targetProperty.GetString();
+                        properties = targetProperty.GetString();
+                        return true;
                     case JsonValueKind.Array:
-                        ArrayList result = new ArrayList();
+                        ArrayList result = new ();
                         foreach (JsonElement item in targetProperty.EnumerateArray())
                         {
                             if (item.ValueKind == JsonValueKind.String)
@@ -159,14 +160,19 @@ namespace Azure.ResourceManager.Core
                                 }     
                             }
                         }
-                        return result;
+                        properties = result;
+                        return true;
                     default:
-                        return targetProperty;
+                        properties = targetProperty;
+                        return true;
                 }
             }
             else
             {
-                throw new InvalidOperationException("No such Property: " + propertyName + " exsit in current Json");
+                properties = null;
+                return false;
+                // TODO: Do we need to throw exception here?
+                // throw new InvalidOperationException("No such Property: " + propertyName + " exsit in current Json");
             }
         }
     }
