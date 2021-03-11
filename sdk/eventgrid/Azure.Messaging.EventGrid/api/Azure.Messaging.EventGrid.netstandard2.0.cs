@@ -77,7 +77,7 @@ namespace Azure.Messaging.EventGrid
         public const string AcsChatThreadPropertiesUpdatedPerUser = "Microsoft.Communication.ChatThreadPropertiesUpdatedPerUser";
         public const string AcsChatThreadWithUserDeleted = "Microsoft.Communication.ChatThreadWithUserDeleted";
         public const string AcsSmsDeliveryReportReceived = "Microsoft.Communication.SMSDeliveryReportReceived";
-        public const string ACSSMSReceived = "Microsoft.Communication.SMSReceived";
+        public const string AcsSmsSReceived = "Microsoft.Communication.SMSReceived";
         public const string AppConfigurationKeyValueDeleted = "Microsoft.AppConfiguration.KeyValueDeleted";
         public const string AppConfigurationKeyValueModified = "Microsoft.AppConfiguration.KeyValueModified";
         public const string ContainerRegistryChartDeleted = "Microsoft.ContainerRegistry.ChartDeleted";
@@ -87,10 +87,10 @@ namespace Azure.Messaging.EventGrid
         public const string EventGridSubscriptionDeleted = "Microsoft.EventGrid.SubscriptionDeletedEvent";
         public const string EventGridSubscriptionValidation = "Microsoft.EventGrid.SubscriptionValidationEvent";
         public const string EventHubCaptureFileCreated = "Microsoft.EventHub.CaptureFileCreated";
-        public const string IoTHubDeviceConnected = "Microsoft.Devices.DeviceConnected";
-        public const string IoTHubDeviceCreated = "Microsoft.Devices.DeviceCreated";
-        public const string IoTHubDeviceDeleted = "Microsoft.Devices.DeviceDeleted";
-        public const string IoTHubDeviceDisconnected = "Microsoft.Devices.DeviceDisconnected";
+        public const string IotHubDeviceConnected = "Microsoft.Devices.DeviceConnected";
+        public const string IotHubDeviceCreated = "Microsoft.Devices.DeviceCreated";
+        public const string IotHubDeviceDeleted = "Microsoft.Devices.DeviceDeleted";
+        public const string IotHubDeviceDisconnected = "Microsoft.Devices.DeviceDisconnected";
         public const string IotHubDeviceTelemetry = "Microsoft.Devices.DeviceTelemetry";
         public const string KeyVaultAccessPolicyChanged = "Microsoft.KeyVault.VaultAccessPolicyChanged";
         public const string KeyVaultCertificateExpired = "Microsoft.KeyVault.CertificateExpired";

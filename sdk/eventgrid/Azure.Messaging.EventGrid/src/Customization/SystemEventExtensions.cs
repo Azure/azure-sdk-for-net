@@ -49,7 +49,7 @@ namespace Azure.Messaging.EventGrid
             { SystemEventNames.AcsChatThreadDeleted, AcsChatThreadDeletedEventData.DeserializeAcsChatThreadDeletedEventData },
             { SystemEventNames.AcsChatThreadWithUserDeleted, AcsChatThreadWithUserDeletedEventData.DeserializeAcsChatThreadWithUserDeletedEventData },
             { SystemEventNames.AcsSmsDeliveryReportReceived, AcsSmsDeliveryReportReceivedEventData.DeserializeAcsSmsDeliveryReportReceivedEventData },
-            { SystemEventNames.ACSSMSReceived, AcsSmsReceivedEventData.DeserializeAcsSmsReceivedEventData },
+            { SystemEventNames.AcsSmsSReceived, AcsSmsReceivedEventData.DeserializeAcsSmsReceivedEventData },
 
             // ContainerRegistry events
             { SystemEventNames.ContainerRegistryImagePushed, ContainerRegistryImagePushedEventData.DeserializeContainerRegistryImagePushedEventData },
@@ -58,10 +58,10 @@ namespace Azure.Messaging.EventGrid
             { SystemEventNames.ContainerRegistryChartPushed, ContainerRegistryChartPushedEventData.DeserializeContainerRegistryChartPushedEventData },
 
             // IoTHub Device events
-            { SystemEventNames.IoTHubDeviceCreated, IotHubDeviceCreatedEventData.DeserializeIotHubDeviceCreatedEventData },
-            { SystemEventNames.IoTHubDeviceDeleted, IotHubDeviceDeletedEventData.DeserializeIotHubDeviceDeletedEventData },
-            { SystemEventNames.IoTHubDeviceConnected, IotHubDeviceConnectedEventData.DeserializeIotHubDeviceConnectedEventData },
-            { SystemEventNames.IoTHubDeviceDisconnected, IotHubDeviceDisconnectedEventData.DeserializeIotHubDeviceDisconnectedEventData },
+            { SystemEventNames.IotHubDeviceCreated, IotHubDeviceCreatedEventData.DeserializeIotHubDeviceCreatedEventData },
+            { SystemEventNames.IotHubDeviceDeleted, IotHubDeviceDeletedEventData.DeserializeIotHubDeviceDeletedEventData },
+            { SystemEventNames.IotHubDeviceConnected, IotHubDeviceConnectedEventData.DeserializeIotHubDeviceConnectedEventData },
+            { SystemEventNames.IotHubDeviceDisconnected, IotHubDeviceDisconnectedEventData.DeserializeIotHubDeviceDisconnectedEventData },
             { SystemEventNames.IotHubDeviceTelemetry, IotHubDeviceTelemetryEventData.DeserializeIotHubDeviceTelemetryEventData },
 
             // EventGrid events
