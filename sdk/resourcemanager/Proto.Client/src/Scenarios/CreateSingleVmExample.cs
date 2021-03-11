@@ -15,6 +15,7 @@ namespace Proto.Client
         {
             var client = new AzureResourceManagerClient();
             var subscription = client.GetSubscriptionOperations(Context.SubscriptionId);
+
             // Create Resource Group
             Console.WriteLine($"--------Start create group {Context.RgName}--------");
             var resourceGroup = subscription.GetResourceGroupContainer().Construct(Context.Loc).CreateOrUpdate(Context.RgName).Value;
