@@ -5,14 +5,11 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    [JsonConverter(typeof(AcsChatEventBasePropertiesConverter))]
     public partial class AcsChatEventBaseProperties
     {
         internal static AcsChatEventBaseProperties DeserializeAcsChatEventBaseProperties(JsonElement element)
@@ -44,19 +41,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new AcsChatEventBaseProperties(recipientCommunicationIdentifier.Value, transactionId.Value, threadId.Value);
-        }
-
-        internal partial class AcsChatEventBasePropertiesConverter : JsonConverter<AcsChatEventBaseProperties>
-        {
-            public override void Write(Utf8JsonWriter writer, AcsChatEventBaseProperties model, JsonSerializerOptions options)
-            {
-                throw new NotImplementedException();
-            }
-            public override AcsChatEventBaseProperties Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeAcsChatEventBaseProperties(document.RootElement);
-            }
         }
     }
 }
