@@ -70,7 +70,7 @@ Once you initialized a `ChatClient` class, you can do the following chat operati
 ### Create a thread
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_CreateThread_KeyConcepts
 CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync(topic: "Hello world!", participants: new ChatParticipant[] { });
-ChatThread chatThread = createChatThreadResult.ChatThread;
+ChatThreadProperties chatThread = createChatThreadResult.ChatThreadProperties;
 ```
 ### Get a thread
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_GetChatThread_KeyConcepts
@@ -78,7 +78,7 @@ ChatThread chatThread = chatClient.GetChatThread(chatThread.Id);
 ```
 ### Get all threads for the user
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_GetChatThreadsInfo_KeyConcepts
-Pageable<ChatThreadInfo> threads = chatClient.GetChatThreadsInfo();
+Pageable<ChatThreadItem> threads = chatClient.GetChatThreadsItem();
 ```
 ### Delete a thread
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_DeleteThread_KeyConcepts
@@ -184,7 +184,7 @@ var chatParticipant = new ChatParticipant(identifier: kimberly)
     DisplayName = "Kim"
 };
 CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync(topic: "Hello world!", participants: new[] { chatParticipant });
-string threadId = createChatThreadResult.ChatThread.Id;
+string threadId = createChatThreadResult.ChatThreadProperties.Id;
 ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient(threadId);
 ```
 ### Get a thread
@@ -193,7 +193,7 @@ Use `GetChatThread` to retrieve a chat thread from the service.
 `threadId` is the unique id of the thread.
 
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_GetThread
-ChatThread chatThread = await chatClient.GetChatThreadAsync(threadId);
+ChatThreadProperties chatThread = await chatClient.GetChatThreadPropertiesAsync(threadId);
 ```
 
 ### Get threads (for a participant)
@@ -201,8 +201,8 @@ ChatThread chatThread = await chatClient.GetChatThreadAsync(threadId);
 Use `GetChatThreadsInfo` to get the list of chat threads for the participant that instantiated the chatClient.
 
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_GetThreads
-AsyncPageable<ChatThreadInfo> chatThreadsInfo = chatClient.GetChatThreadsInfoAsync();
-await foreach (ChatThreadInfo chatThreadInfo in chatThreadsInfo)
+AsyncPageable<ChatThreadItem> chatThreadsInfo = chatClient.GetChatThreadsItemAsync();
+await foreach (ChatThreadItem chatThreadInfo in chatThreadsInfo)
 {
     Console.WriteLine($"{ chatThreadInfo.Id}");
 }

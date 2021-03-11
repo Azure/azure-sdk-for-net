@@ -5,8 +5,8 @@ using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
-    [CodeGenModel("ChatThreadsInfoCollection")]
-    internal partial class ChatThreadsInfoCollection
+    [CodeGenModel("ChatThreadProperties")]
+    internal partial class ChatThreadPropertiesInternal
     {
     }
 }

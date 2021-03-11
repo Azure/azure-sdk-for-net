@@ -30,7 +30,7 @@ namespace Azure.Communication.Chat.Tests.samples
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_CreateThread_KeyConcepts
             CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync(topic: "Hello world!", participants: new ChatParticipant[] { });
-            ChatThread chatThread = createChatThreadResult.ChatThread;
+            ChatThreadProperties chatThread = createChatThreadResult.ChatThreadProperties;
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_CreateThread_KeyConcepts
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_GetChatThreadClient_KeyConcepts
@@ -46,7 +46,7 @@ namespace Azure.Communication.Chat.Tests.samples
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_GetChatThread_KeyConcepts
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_GetChatThreadsInfo_KeyConcepts
-            Pageable<ChatThreadInfo> threads = chatClient.GetChatThreadsInfo();
+            Pageable<ChatThreadItem> threads = chatClient.GetChatThreadsItem();
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_GetChatThreadsInfo_KeyConcepts
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_DeleteThread_KeyConcepts
@@ -67,7 +67,7 @@ namespace Azure.Communication.Chat.Tests.samples
                 new CommunicationTokenCredential(userToken));
 
             CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync(topic: "Hello world!", participants: new ChatParticipant[] { });
-            ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient(createChatThreadResult.ChatThread.Id);
+            ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient(createChatThreadResult.ChatThreadProperties.Id);
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_SendMessage_KeyConcepts
             string messageId = chatThreadClient.SendMessage("Let's meet at 11am");
@@ -116,7 +116,7 @@ namespace Azure.Communication.Chat.Tests.samples
                 new CommunicationTokenCredential(userToken));
 
             CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync(topic: "Hello world!", participants: new ChatParticipant[] { });
-            ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient(createChatThreadResult.ChatThread.Id);
+            ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient(createChatThreadResult.ChatThreadProperties.Id);
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_AddParticipants_KeyConcepts
             chatThreadClient.AddParticipants(participants: new[] { new ChatParticipant(participantIdentifier) });

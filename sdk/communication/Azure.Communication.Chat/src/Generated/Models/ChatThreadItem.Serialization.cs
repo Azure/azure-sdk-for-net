@@ -7,20 +7,18 @@
 
 using System;
 using System.Text.Json;
-using Azure.Communication;
 using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
-    internal partial class ChatThreadInternal
+    public partial class ChatThreadItem
     {
-        internal static ChatThreadInternal DeserializeChatThreadInternal(JsonElement element)
+        internal static ChatThreadItem DeserializeChatThreadItem(JsonElement element)
         {
             string id = default;
             string topic = default;
-            DateTimeOffset createdOn = default;
-            CommunicationIdentifierModel createdByCommunicationIdentifier = default;
             Optional<DateTimeOffset> deletedOn = default;
+            Optional<DateTimeOffset> lastMessageReceivedOn = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -33,16 +31,6 @@ namespace Azure.Communication.Chat
                     topic = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("createdOn"))
-                {
-                    createdOn = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (property.NameEquals("createdByCommunicationIdentifier"))
-                {
-                    createdByCommunicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("deletedOn"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -53,8 +41,18 @@ namespace Azure.Communication.Chat
                     deletedOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (property.NameEquals("lastMessageReceivedOn"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    lastMessageReceivedOn = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
             }
-            return new ChatThreadInternal(id, topic, createdOn, createdByCommunicationIdentifier, Optional.ToNullable(deletedOn));
+            return new ChatThreadItem(id, topic, Optional.ToNullable(deletedOn), Optional.ToNullable(lastMessageReceivedOn));
         }
     }
 }

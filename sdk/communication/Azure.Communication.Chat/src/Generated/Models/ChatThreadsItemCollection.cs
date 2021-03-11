@@ -12,12 +12,12 @@ using System.Linq;
 namespace Azure.Communication.Chat
 {
     /// <summary> Collection of chat threads. </summary>
-    internal partial class ChatThreadsInfoCollection
+    internal partial class ChatThreadsItemCollection
     {
-        /// <summary> Initializes a new instance of ChatThreadsInfoCollection. </summary>
+        /// <summary> Initializes a new instance of ChatThreadsItemCollection. </summary>
         /// <param name="value"> Collection of chat threads. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ChatThreadsInfoCollection(IEnumerable<ChatThreadInfo> value)
+        internal ChatThreadsItemCollection(IEnumerable<ChatThreadItem> value)
         {
             if (value == null)
             {
@@ -27,17 +27,17 @@ namespace Azure.Communication.Chat
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ChatThreadsInfoCollection. </summary>
+        /// <summary> Initializes a new instance of ChatThreadsItemCollection. </summary>
         /// <param name="value"> Collection of chat threads. </param>
         /// <param name="nextLink"> If there are more chat threads that can be retrieved, the next link will be populated. </param>
-        internal ChatThreadsInfoCollection(IReadOnlyList<ChatThreadInfo> value, string nextLink)
+        internal ChatThreadsItemCollection(IReadOnlyList<ChatThreadItem> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Collection of chat threads. </summary>
-        public IReadOnlyList<ChatThreadInfo> Value { get; }
+        public IReadOnlyList<ChatThreadItem> Value { get; }
         /// <summary> If there are more chat threads that can be retrieved, the next link will be populated. </summary>
         public string NextLink { get; }
     }
