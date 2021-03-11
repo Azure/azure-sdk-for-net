@@ -1,5 +1,6 @@
 ﻿using Compute.Tests;
 using Microsoft.Azure.Management.Compute.Models;
+using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Storage.Models;
@@ -52,7 +53,6 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
 
                     string rpName = ComputeManagementTestUtilities.GenerateName("rpClientTest");
                     string rpcName = ComputeManagementTestUtilities.GenerateName("rpcClientTest");
-                    JRaw optionalProperties = new JRaw("{ 'property' : [ { 'name' : 'dummyProperty' } ] }");
                     string vmId = createdVM.Id;
                     string vmSize = createdVM.HardwareProfile.VmSize;
 
@@ -80,15 +80,12 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
                     RestorePointCollection rpc = rpcs.First();
                     VerifyRpc(rpc, rgName, rpcName, location, vmId, rpName);
 
-                    // format JRaw so that we can validate the JRaw returned in the restore point
-                    string expectedJRaw = RemovePunctuation(optionalProperties.ToString());
-
                     // create RP in the RPC
-                    RestorePoint createdRP = CreateRestorePoint(rgName, rpcName, rpName, optionalProperties, osDisk, vmSize, diskToExclude: dataDiskId);
-                    VerifyRestorePointDetails(createdRP, rpName, osDisk, 1, expectedJRaw,
+                    RestorePoint createdRP = CreateRestorePoint(rgName, rpcName, rpName, osDisk, vmSize, diskToExclude: dataDiskId);
+                    VerifyRestorePointDetails(createdRP, rpName, osDisk, 1,
                         excludeDiskId: dataDiskId, vmId: vmId, vmSize: vmSize);
                     RestorePoint getRP = GetRP(rgName, rpcName, rpName);
-                    VerifyRestorePointDetails(createdRP, rpName, osDisk, 1, expectedJRaw,
+                    VerifyRestorePointDetails(createdRP, rpName, osDisk, 1,
                         excludeDiskId: dataDiskId, vmId: vmId, vmSize: vmSize);
 
                     // get RPC without dollar expand
@@ -103,7 +100,7 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
 
                     // verify the restore point returned from GET RPC with $expand
                     RestorePoint rpInRpc = returnedRpc.RestorePoints[0];
-                    VerifyRestorePointDetails(rpInRpc, rpName, osDisk, 1, expectedJRaw,
+                    VerifyRestorePointDetails(rpInRpc, rpName, osDisk, 1,
                         excludeDiskId: dataDiskId, vmId: vmId, vmSize: vmSize);
 
                     // delete the restore point
@@ -211,30 +208,13 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
         // Verify returned restore point contains the id of the excluded disk and did not create diskRestorePoint
         // of the excluded data disk.
         private RestorePoint CreateRestorePoint(string rgName, string rpcName, 
-            string rpName, JRaw optionalProperties, OSDisk osDisk, string vmSize, string diskToExclude = null)
+            string rpName, OSDisk osDisk, string vmSize, string diskToExclude = null)
         {
             string osDiskId = osDisk.ManagedDisk.Id;
             string osDiskName = osDisk.Name;
             ApiEntityReference diskToExcludeEntityRef = new ApiEntityReference() { Id = diskToExclude };
-            var inputRP = new RestorePoint(name: rpName, optionalProperties: optionalProperties);
-
-            if (diskToExclude != null)
-            {
-                inputRP.ExcludeDisks = new List<ApiEntityReference> { diskToExcludeEntityRef };
-            }
-
-            return m_CrpClient.RestorePoints.CreateOrUpdate(rgName, rpcName, rpName, inputRP);
-        }
-
-        // Remove white space, single quotes, and double quotes from a string.
-        // Use this helper for sanitizing JRaw to an output that is friendlier
-        // for string comparisons
-        public static string RemovePunctuation(string str)
-        {
-            string removedWhiteSpace = Regex.Replace(str, @"\s+", String.Empty);
-            string removedDoubleQuotes = Regex.Replace(removedWhiteSpace, "\"", String.Empty);
-            string removedSingleQuotes = Regex.Replace(removedDoubleQuotes, "'", String.Empty);
-            return removedSingleQuotes;
+            List<ApiEntityReference> disksToExclude = new List<ApiEntityReference> { diskToExcludeEntityRef };
+            return m_CrpClient.RestorePoints.Create(rgName, rpcName, rpName, disksToExclude);
         }
 
         // Verify the created restore point contains properties such as:
@@ -243,10 +223,8 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
         // 3. provisioning state
         // 4. id(s) of the exclude disk(s)
         void VerifyRestorePointDetails(RestorePoint rp, string rpName, OSDisk osDisk,
-            int excludeDisksCount, string expectedJRaw, string excludeDiskId, string vmId, string vmSize)
+            int excludeDisksCount, string excludeDiskId, string vmId, string vmSize)
         {
-            string returnedJRaw = RemovePunctuation(rp.OptionalProperties.ToString());
-            Assert.Equal(expectedJRaw, returnedJRaw);
             Assert.NotNull(rp.Id);
             Assert.NotNull(rp.ProvisioningDetails.CreationTime);
             Assert.NotNull(rp.ProvisioningDetails.StatusCode);
