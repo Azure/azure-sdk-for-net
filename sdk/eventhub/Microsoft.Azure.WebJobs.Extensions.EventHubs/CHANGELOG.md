@@ -1,7 +1,10 @@
 # Release History
 
-## 5.0.0-beta.3 (Unreleased)
+## 5.0.0-beta.3 (2021-03-11)
 
+### Changes
+
+- Default balancing strategy changed to greedy.
 
 ## 5.0.0-beta.2 (2021-03-09)
 
