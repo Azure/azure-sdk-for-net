@@ -61,9 +61,6 @@ namespace Azure.Communication.Identity.Models
     {
         public static Azure.Communication.Identity.CommunicationUserIdentifierAndToken CommunicationUserIdentifierAndToken(Azure.Communication.CommunicationUserIdentifier user, Azure.Core.AccessToken accessToken) { throw null; }
     }
-}
-namespace Azure.Communication.Identity.Models
-{
     public partial class CommunicationTurnCredentialsResponse
     {
         internal CommunicationTurnCredentialsResponse() { }
