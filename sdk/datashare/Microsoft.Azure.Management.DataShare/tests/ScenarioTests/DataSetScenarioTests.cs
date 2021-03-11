@@ -13,7 +13,7 @@ namespace DataShare.Tests.ScenarioTests
     public class DataSetScenarioTests : ScenarioTestBase<SynchronizationSettingScenarioTests>
     {
         public static string dataSetId =""; 
-        public static string filepath = @"apple";
+        public static string filepath = @"apple.txt";
 
         internal static async Task<DataSet> CreateAsync(
             DataShareManagementClient client,
