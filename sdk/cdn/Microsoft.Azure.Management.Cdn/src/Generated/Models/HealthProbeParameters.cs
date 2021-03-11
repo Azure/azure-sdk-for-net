@@ -90,16 +90,13 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (ProbeIntervalInSeconds != null)
+            if (ProbeIntervalInSeconds > 255)
             {
-                if (ProbeIntervalInSeconds > 255)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMaximum, "ProbeIntervalInSeconds", 255);
-                }
-                if (ProbeIntervalInSeconds < 1)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "ProbeIntervalInSeconds", 1);
-                }
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "ProbeIntervalInSeconds", 255);
+            }
+            if (ProbeIntervalInSeconds < 1)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "ProbeIntervalInSeconds", 1);
             }
         }
     }

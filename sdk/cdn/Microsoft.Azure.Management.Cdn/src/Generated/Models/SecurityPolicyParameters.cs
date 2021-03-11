@@ -10,13 +10,11 @@
 
 namespace Microsoft.Azure.Management.Cdn.Models
 {
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// The json object containing security policy parameters
     /// </summary>
-    [Newtonsoft.Json.JsonObject("SecurityPolicyParameters")]
     public partial class SecurityPolicyParameters
     {
         /// <summary>

@@ -116,12 +116,9 @@ namespace Microsoft.Azure.Management.Cdn.Models
         public override void Validate()
         {
             base.Validate();
-            if (OriginResponseTimeoutSeconds != null)
+            if (OriginResponseTimeoutSeconds < 16)
             {
-                if (OriginResponseTimeoutSeconds < 16)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "OriginResponseTimeoutSeconds", 16);
-                }
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "OriginResponseTimeoutSeconds", 16);
             }
         }
     }
