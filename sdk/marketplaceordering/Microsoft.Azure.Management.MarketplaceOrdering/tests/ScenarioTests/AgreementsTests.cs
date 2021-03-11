@@ -28,6 +28,7 @@ namespace MarketplaceOrdering.Tests.ScenarioTests
                 Assert.NotNull(marketplaceOrderingTerms);
                 Assert.NotNull(marketplaceOrderingTerms.LicenseTextLink);
                 Assert.NotNull(marketplaceOrderingTerms.PrivacyPolicyLink);
+                Assert.NotNull(marketplaceOrderingTerms.MarketplaceTermsLink);
                 Assert.NotNull(marketplaceOrderingTerms.Signature);
             }
         }
@@ -44,6 +45,7 @@ namespace MarketplaceOrdering.Tests.ScenarioTests
                 Assert.NotNull(marketplaceOrderingTerms);
                 Assert.NotNull(marketplaceOrderingTerms.LicenseTextLink);
                 Assert.NotNull(marketplaceOrderingTerms.PrivacyPolicyLink);
+                Assert.NotNull(marketplaceOrderingTerms.MarketplaceTermsLink);
                 Assert.NotNull(marketplaceOrderingTerms.Signature);
 
                 //accept legal terms
@@ -54,6 +56,7 @@ namespace MarketplaceOrdering.Tests.ScenarioTests
                 Assert.NotNull(newMarketplaceOrderingTerms);
                 Assert.NotNull(newMarketplaceOrderingTerms.LicenseTextLink);
                 Assert.NotNull(newMarketplaceOrderingTerms.PrivacyPolicyLink);
+                Assert.NotNull(marketplaceOrderingTerms.MarketplaceTermsLink);
                 Assert.NotNull(newMarketplaceOrderingTerms.Signature);
 
                 //check that new legal terms are accepted
