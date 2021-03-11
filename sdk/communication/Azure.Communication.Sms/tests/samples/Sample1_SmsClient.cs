@@ -21,7 +21,7 @@ namespace Azure.Communication.Sms.Tests.samples
 
         public SmsClient CreateSmsClient()
         {
-            var connectionString = TestEnvironment.ConnectionString;
+            var connectionString = TestEnvironment.LiveTestConnectionString;
             SmsClient client = new SmsClient(connectionString, InstrumentClientOptions(new SmsClientOptions()));
 
             #region Snippet:Azure_Communication_Sms_Tests_Samples_CreateSmsClient
@@ -33,7 +33,7 @@ namespace Azure.Communication.Sms.Tests.samples
 
         public SmsClient CreateSmsClientWithToken()
         {
-            string endpoint = TestEnvironment.Endpoint.ToString();
+            string endpoint = ConnectionString.Parse(TestEnvironment.LiveTestConnectionString, allowEmptyValues: true).GetRequired("endpoint");
 
             #region Snippet:Azure_Communication_Sms_Tests_Samples_CreateSmsClientWithToken
             //@@string endpoint = "<endpoint_url>";

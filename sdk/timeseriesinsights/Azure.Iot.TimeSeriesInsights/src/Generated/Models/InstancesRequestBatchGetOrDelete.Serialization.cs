@@ -12,35 +12,5 @@ namespace Azure.Iot.TimeSeriesInsights
 {
     public partial class InstancesRequestBatchGetOrDelete : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(TimeSeriesIds))
-            {
-                writer.WritePropertyName("timeSeriesIds");
-                writer.WriteStartArray();
-                foreach (var item in TimeSeriesIds)
-                {
-                    writer.WriteStartArray();
-                    foreach (var item0 in item)
-                    {
-                        writer.WriteObjectValue(item0);
-                    }
-                    writer.WriteEndArray();
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(Names))
-            {
-                writer.WritePropertyName("names");
-                writer.WriteStartArray();
-                foreach (var item in Names)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
-        }
     }
 }

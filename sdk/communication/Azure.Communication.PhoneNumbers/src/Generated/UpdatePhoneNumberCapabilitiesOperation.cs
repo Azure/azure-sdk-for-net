@@ -17,12 +17,12 @@ using Azure.Core.Pipeline;
 namespace Azure.Communication.PhoneNumbers
 {
     /// <summary> Updates the capabilities of a phone number. </summary>
-    public partial class UpdatePhoneNumberCapabilitiesOperation : Operation<AcquiredPhoneNumber>, IOperationSource<AcquiredPhoneNumber>
+    public partial class UpdatePhoneNumberCapabilitiesOperation : Operation<PurchasedPhoneNumber>, IOperationSource<PurchasedPhoneNumber>
     {
-        private readonly ArmOperationHelpers<AcquiredPhoneNumber> _operation;
+        private readonly ArmOperationHelpers<PurchasedPhoneNumber> _operation;
 
         /// <inheritdoc />
-        public override AcquiredPhoneNumber Value => _operation.Value;
+        public override PurchasedPhoneNumber Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -40,21 +40,21 @@ namespace Azure.Communication.PhoneNumbers
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<AcquiredPhoneNumber>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<PurchasedPhoneNumber>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<AcquiredPhoneNumber>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<PurchasedPhoneNumber>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        AcquiredPhoneNumber IOperationSource<AcquiredPhoneNumber>.CreateResult(Response response, CancellationToken cancellationToken)
+        PurchasedPhoneNumber IOperationSource<PurchasedPhoneNumber>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return AcquiredPhoneNumber.DeserializeAcquiredPhoneNumber(document.RootElement);
+            return PurchasedPhoneNumber.DeserializePurchasedPhoneNumber(document.RootElement);
         }
 
-        async ValueTask<AcquiredPhoneNumber> IOperationSource<AcquiredPhoneNumber>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<PurchasedPhoneNumber> IOperationSource<PurchasedPhoneNumber>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return AcquiredPhoneNumber.DeserializeAcquiredPhoneNumber(document.RootElement);
+            return PurchasedPhoneNumber.DeserializePurchasedPhoneNumber(document.RootElement);
         }
     }
 }

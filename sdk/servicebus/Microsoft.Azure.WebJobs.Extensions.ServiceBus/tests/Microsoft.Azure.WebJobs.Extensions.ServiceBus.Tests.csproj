@@ -15,6 +15,7 @@
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" />
     <PackageReference Include="Microsoft.Azure.Management.ServiceBus" />
     <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" />
+    <PackageReference Include="Microsoft.Azure.WebJobs.Extensions" />
   </ItemGroup>
 
   <ItemGroup>

@@ -16,8 +16,9 @@ namespace Azure.Iot.ModelsRepository.Tests
         {
             string remoteUriStr = "https://dtmi.com";
             Uri remoteUri = new Uri(remoteUriStr);
+            Uri defaultRepositoryUri = new Uri(ModelsRepositoryConstants.DefaultModelsRepository);
 
-            new ModelsRepositoryClient().RepositoryUri.Should().Be(ModelsRepositoryClient.DefaultModelsRepository);
+            new ModelsRepositoryClient().RepositoryUri.Should().Be(defaultRepositoryUri);
             new ModelsRepositoryClient(remoteUri).RepositoryUri.Should().Be(remoteUri);
 
             string localUriStr = TestLocalModelRepository;
