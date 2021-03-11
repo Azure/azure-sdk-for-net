@@ -1,8 +1,8 @@
 # Guide for migrating to Azure.Messaging.EventGrid from Microsoft.Azure.EventGrid
 
-This guide is intended to assist in the migration to Azure.Messaging.EventGrid from Microsoft.Azure.EventGrid. It will focus on side-by-side comparisons for similar operations between the two packages.
+This guide is intended to assist in the migration to `Azure.Messaging.EventGrid` from `Microsoft.Azure.EventGrid`. It will focus on side-by-side comparisons for similar operations between the two packages.
 
-We assume that you are familiar with Microsoft.Azure.EventGrid. If not, please refer to the README for [Azure.Messaging.EventGrid](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventgrid/Azure.Messaging.EventGrid/README.md) rather than this guide.
+We assume that you are familiar with `Microsoft.Azure.EventGrid`. If not, please refer to the [README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventgrid/Azure.Messaging.EventGrid/README.md) for `Azure.Messaging.EventGrid` rather than this guide.
 
 ## Table of contents
 - [Migration benefits](#migration-benefits)
@@ -24,7 +24,7 @@ To improve the development experience across Azure services, a set of uniform [d
 
 ### Cross Service SDK improvements
 
-The modern Azure.Messaging.EventGrid client library also provides the ability to share in some of the cross-service improvements made to the Azure development experience, such as
+The modern `Azure.Messaging.EventGrid` client library also provides the ability to share in some of the cross-service improvements made to the Azure development experience, such as:
 
 - Using the new Azure.Identity library to share a single authentication approach between clients
 - A unified logging and diagnostics pipeline offering a common view of the activities across each of the client libraries
@@ -35,20 +35,20 @@ The new Azure.Messaging.EventGrid library includes several new features:
 - Publishing and deserializing [CloudEvents](https://cloudevents.io/) using the Azure.Core `CloudEvent` type
 - Methods that allow publishing a single event in addition to lists of events
 - Ability to use a custom serializer for the Data of an event
-- Ability to publish custom schema events
-- Generate a SAS token using the `EventGridSasBuilder`
+- Ability to publish events with a custom schema
+- Generate a shared access signature token using the `EventGridSasBuilder`
 
 ## Important changes
 
 ### Package names and namespaces
 
-Package names and the namespace root for the modern Azure client libraries for .NET have changed. Each will follow the pattern Azure.[Area].[Service] where the legacy clients followed the pattern Microsoft.Azure.[Service]. This provides a quick and accessible means to help understand, at a glance, whether you are using the modern or legacy clients.
+Package names and the namespace root for the modern Azure client libraries for .NET have changed. Each will follow the pattern `Azure.[Area].[Service]` where the legacy clients followed the pattern `Microsoft.Azure.[Service]`. This provides a quick and accessible means to help understand, at a glance, whether you are using the modern or legacy clients.
 
 In the case of Event Grid, the modern client libraries have packages and namespaces that begin with Azure.Messaging.EventGrid and were released beginning with version 4. The legacy client libraries have packages and namespaces that begin with Microsoft.Azure.EventGrid and a version of 3.x.x or below.
 
 ### Client naming and constructors
 
-In Microsoft.Azure.EventGrid, the `EventGridClient` was instantiated by passing the `TopicCredentials` into the constructor:
+In `Microsoft.Azure.EventGrid`, the `EventGridClient` was instantiated by passing the `TopicCredentials` into the constructor:
 ```C#
 string topicEndpoint = "https://<topic-name>.<region>-1.eventgrid.azure.net/api/events";
 string topicKey = "<topic-key>";
@@ -57,7 +57,7 @@ TopicCredentials topicCredentials = new TopicCredentials(topicKey);
 EventGridClient client = new EventGridClient(topicCredentials);
 ```
 
-In the `Azure.Messaging.EventGrid` library, the client used to interact with the service was renamed as the `EventGridPublisherClient` to highlight the fact that the client is only used to publish events and does not directly consume events from the service. The constructor takes the topic endpoint in addition to a credential parameter since a single client will only ever be able to publish to a single topic.
+In the `Azure.Messaging.EventGrid` library, the client used to interact with the service was renamed as the `EventGridPublisherClient` to highlight the fact that the client is only used to publish events and does not consume events from the service. The constructor takes the topic endpoint in addition to a credential parameter since a single client will only ever be able to publish to a single topic.
 ```C# Snippet:CreateClientWithOptions
 EventGridPublisherClient client = new EventGridPublisherClient(
     new Uri(topicEndpoint),
