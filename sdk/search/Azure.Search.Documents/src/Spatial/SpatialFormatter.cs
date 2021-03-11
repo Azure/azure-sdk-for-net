@@ -5,9 +5,7 @@ using System;
 using System.Globalization;
 using System.Text;
 using Azure.Core;
-#if EXPERIMENTAL_SPATIAL
 using Azure.Core.GeoJson;
-#endif
 
 namespace Azure.Search.Documents
 {
@@ -44,36 +42,41 @@ namespace Azure.Search.Documents
         // below to avoid extraneous allocations for adapters and to consolidate them to a single
         // source file for easier maintenance.
 
-#if EXPERIMENTAL_SPATIAL
         /// <summary>
         /// Encodes a polygon for use in OData filters.
         /// </summary>
-        /// <param name="line">The <see cref="GeoLine"/> to encode.</param>
+        /// <param name="line">The <see cref="GeoLineString"/> to encode.</param>
         /// <returns>The OData filter-encoded POLYGON string.</returns>
         /// <exception cref="ArgumentException">The <paramref name="line"/> has fewer than 4 points, or the first and last points do not match.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="line"/> or <see cref="GeoLine.Positions"/> is null.</exception>
-        public static string EncodePolygon(GeoLine line)
+        /// <exception cref="ArgumentNullException"><paramref name="line"/> or <see cref="GeoLineString.Coordinates"/> is null.</exception>
+        public static string EncodePolygon(GeoLineString line)
         {
             Argument.AssertNotNull(line, nameof(line));
-            Argument.AssertNotNull(line.Positions, $"{nameof(line)}.{nameof(line.Positions)}");
 
-            if (line.Positions.Count < 4)
+            if (line.Coordinates.Count < 4)
             {
                 throw new ArgumentException(
-                    $"A {nameof(GeoLine)} must have at least four {nameof(GeoLine.Positions)} to form a searchable polygon.",
-                    $"{nameof(line)}.{nameof(line.Positions)}");
+                    $"A {nameof(GeoLineString)} must have at least four {nameof(GeoLineString.Coordinates)} to form a searchable polygon.",
+                    $"{nameof(line)}");
             }
-            else if (line.Positions[0] != line.Positions[line.Positions.Count - 1])
+            else if (line.Coordinates[0] != line.Coordinates[line.Coordinates.Count - 1])
             {
                 throw new ArgumentException(
-                    $"A {nameof(GeoLine)} must have matching first and last {nameof(GeoLine.Positions)} to form a searchable polygon.",
-                    $"{nameof(line)}.{nameof(line.Positions)}");
+                    $"A {nameof(GeoLineString)} must have matching first and last {nameof(GeoLineString.Coordinates)} to form a searchable polygon.",
+                    $"{nameof(line)}");
             }
 
-            StringBuilder odata = new StringBuilder("geography'POLYGON((");
+            return EncodePolygon(new GeoLinearRing(line.Coordinates));
+        }
+
+        public static string EncodePolygon(GeoLinearRing linearRing)
+        {
+            Argument.AssertNotNull(linearRing, nameof(linearRing));
+
+            StringBuilder odata = new ("geography'POLYGON((");
 
             bool first = true;
-            foreach (GeoPosition position in line.Positions)
+            foreach (GeoPosition position in linearRing.Coordinates)
             {
                 if (!first)
                 {
@@ -96,7 +99,7 @@ namespace Azure.Search.Documents
 
         /// <summary>
         /// Encodes a polygon for use in OData filters.
-        /// <seealso cref="EncodePolygon(GeoLine)"/>
+        /// <seealso cref="EncodePolygon(GeoLinearRing)"/>
         /// </summary>
         /// <param name="polygon">The <see cref="GeoPolygon"/> to encode.</param>
         /// <returns>The OData filter-encoded POLYGON string.</returns>
@@ -110,12 +113,11 @@ namespace Azure.Search.Documents
             {
                 throw new ArgumentException(
                     $"A {nameof(GeoPolygon)} must have exactly one {nameof(GeoPolygon.Rings)} to form a searchable polygon.",
-                    $"{nameof(polygon)}.{nameof(polygon.Rings)}");
+                    $"{nameof(polygon)}");
             }
 
             return EncodePolygon(polygon.Rings[0]);
         }
-#endif
 
         /// <summary>
         /// Encodes a polygon for use in OData filters.
@@ -125,46 +127,46 @@ namespace Azure.Search.Documents
         /// <exception cref="ArgumentException">The <paramref name="line"/> has fewer than 4 points, or the first and last points do not match.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="line"/> or <see cref="GeographyLineStringProxy.Points"/> is null.</exception>
         public static string EncodePolygon(GeographyLineStringProxy line)
+    {
+        Argument.AssertNotNull(line, nameof(line));
+        Argument.AssertNotNull(line.Points, $"{nameof(line)}.{nameof(line.Points)}");
+
+        if (line.Points.Count < 4)
         {
-            Argument.AssertNotNull(line, nameof(line));
-            Argument.AssertNotNull(line.Points, $"{nameof(line)}.{nameof(line.Points)}");
-
-            if (line.Points.Count < 4)
-            {
-                throw new ArgumentException(
-                    $"A GeographyLineString must have at least four Points to form a searchable polygon.",
-                    $"{nameof(line)}.{nameof(line.Points)}");
-            }
-            else if (line.Points[0] != line.Points[line.Points.Count - 1])
-            {
-                throw new ArgumentException(
-                    $"A GeographyLineString must have matching first and last Points to form a searchable polygon.",
-                    $"{nameof(line)}.{nameof(line.Points)}");
-            }
-
-            StringBuilder odata = new StringBuilder("geography'POLYGON((");
-
-            bool first = true;
-            foreach (GeographyPointProxy point in line.Points)
-            {
-                if (!first)
-                {
-                    odata.Append(',');
-                }
-                else
-                {
-                    first = false;
-                }
-
-                odata.Append(JsonSerialization.Double(point.Longitude, CultureInfo.InvariantCulture))
-                    .Append(' ')
-                    .Append(JsonSerialization.Double(point.Latitude, CultureInfo.InvariantCulture));
-            }
-
-            return odata
-                .Append("))'")
-                .ToString();
+            throw new ArgumentException(
+                $"A GeographyLineString must have at least four Points to form a searchable polygon.",
+                $"{nameof(line)}");
         }
+        else if (line.Points[0] != line.Points[line.Points.Count - 1])
+        {
+            throw new ArgumentException(
+                $"A GeographyLineString must have matching first and last Points to form a searchable polygon.",
+                $"{nameof(line)}");
+        }
+
+        StringBuilder odata = new StringBuilder("geography'POLYGON((");
+
+        bool first = true;
+        foreach (GeographyPointProxy point in line.Points)
+        {
+            if (!first)
+            {
+                odata.Append(',');
+            }
+            else
+            {
+                first = false;
+            }
+
+            odata.Append(JsonSerialization.Double(point.Longitude, CultureInfo.InvariantCulture))
+                .Append(' ')
+                .Append(JsonSerialization.Double(point.Latitude, CultureInfo.InvariantCulture));
+        }
+
+        return odata
+            .Append("))'")
+            .ToString();
+    }
 
         /// <summary>
         /// Encodes a polygon for use in OData filters.
@@ -182,7 +184,7 @@ namespace Azure.Search.Documents
             {
                 throw new ArgumentException(
                     $"A GeographyPolygon must have exactly one Rings to form a searchable polygon.",
-                    $"{nameof(polygon)}.{nameof(polygon.Rings)}");
+                    $"{nameof(polygon)}");
             }
 
             return EncodePolygon(polygon.Rings[0]);
