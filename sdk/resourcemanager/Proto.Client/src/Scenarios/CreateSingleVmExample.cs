@@ -1,4 +1,3 @@
-using Azure.ResourceManager.Core;
 using Proto.Compute;
 using Proto.Network;
 using System;
