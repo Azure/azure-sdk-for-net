@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Core
     /// TODO.
     /// </summary>
     [Serializable]
-    public class ManagementException : RequestFailedException, System.Runtime.Serialization.ISerializable
+    public class ArmException : RequestFailedException
     {
         /// <summary>
         /// Gets and set the Code of the response.
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Core
         /// TODO.
         /// </summary>
         /// <param name="message"> TODO. </param>
-        public ManagementException(string message) : this(0, message)
+        public ArmException(string message) : this(0, message)
         {
         }
 
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="message"> TODO. </param>
         /// <param name="innerException"></param>
-        public ManagementException(string message, Exception? innerException) : this(0, message, innerException)
+        public ArmException(string message, Exception? innerException) : this(0, message, innerException)
         {
         }
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="message"> TODO. </param>
         /// <param name="status"></param>
-        public ManagementException(int status, string message)
+        public ArmException(int status, string message)
             : this(status, message, null)
         {
         }
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="status"></param>
         /// <param name="message"> TODO. </param>
         /// <param name="innerException"></param>
-        public ManagementException(int status, string message, Exception? innerException)
+        public ArmException(int status, string message, Exception? innerException)
             : this(status, message, null, innerException, null)
         {
         }
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="message"></param>
         /// <param name="innerException"></param>
         /// <param name="content"></param>
-        public ManagementException(int status, string message, string? errorCode, Exception? innerException, string? content)
+        public ArmException(int status, string message, string? errorCode, Exception? innerException, string? content)
             : base(status, message, errorCode, innerException)
         {
             Code = ErrorCode;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="info"></param>
         /// <param name="context"> TODO. </param>
-        protected ManagementException(SerializationInfo info, StreamingContext context)
+        protected ArmException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
         }
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="propertyName"> TODO. </param>
         /// <param name="content"> TODO. </param>
-        public static object GetResponseProperty(string content, string propertyName)
+        private static object GetResponseProperty(string content, string propertyName)
         {
             JsonDocument jsonObejct = JsonDocument.Parse(content);
             JsonElement error;

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Core.Tests
         [TestCase]
         public void TypeCheck()
         {
-            ManagementException managementException = new ManagementException("Invalid Content-Type (application/octet-stream).  These are supported: application/json");
+            ArmException managementException = new ArmException("Invalid Content-Type (application/octet-stream).  These are supported: application/json");
             //Assert.AreEqual("INVALID_CONTENT_TYPE", managementException.Code);
             //Assert.AreEqual("Sample Target", managementException.Target);
             //Assert.AreEqual(2, managementException.Details.Count);
@@ -27,18 +27,18 @@ namespace Azure.ResourceManager.Core.Tests
         }
 
 #pragma warning disable CS8632 // The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.
-        public async Task<ManagementException> CreateManagementExceptionAsync(Response response, string? message = null, string? errorCode = null, IDictionary<string, string>? additionalInfo = null, Exception? innerException = null)
+        public async Task<ArmException> CreateManagementExceptionAsync(Response response, string? message = null, string? errorCode = null, IDictionary<string, string>? additionalInfo = null, Exception? innerException = null)
         {
             var content = await ReadContentAsync(response, true).ConfigureAwait(false);
             if (message == null)
             {
-                message = (string)ManagementException.GetResponseProperty(content, "message");
+                message = (string)ArmException.GetResponseProperty(content, "message");
             }
             if (errorCode == null)
             {
-                errorCode= (string)ManagementException.GetResponseProperty(content, "code");
+                errorCode= (string)ArmException.GetResponseProperty(content, "code");
             }
-            ManagementException managementException = new ManagementException(response.Status, message, errorCode, innerException, content);
+            ArmException managementException = new ArmException(response.Status, message, errorCode, innerException, content);
             return managementException;
         }
 
