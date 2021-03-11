@@ -13,7 +13,7 @@ namespace Proto.Client
             createVm.Execute();
 
             var rgOp = new AzureResourceManagerClient().GetResourceGroupOperations(Context.SubscriptionId, Context.RgName);
-            foreach(var genericOp in rgOp.GetVirtualMachineContainer().ListByName(Context.VmName))
+            foreach(var genericOp in rgOp.GetVirtualMachineContainer().ListAsGenericResource(Context.VmName))
             {
                 Console.WriteLine($"Deleting {genericOp.Id}");
                 genericOp.Delete();

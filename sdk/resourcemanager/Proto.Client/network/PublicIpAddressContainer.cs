@@ -116,28 +116,28 @@ namespace Proto.Network
         /// <summary>
         /// Filters the list of public IP addresses for this resource group represented as generic resources.
         /// </summary>
-        /// <param name="filter"> The substring to filter by. </param>
+        /// <param name="nameFilter"> The substring to filter by. </param>
         /// <param name="top"> The number of items to truncate by. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
         /// <returns> A collection of <see cref="GenericResource"/> that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResource> ListByName(string filter, int? top = null, CancellationToken cancellationToken = default)
+        public Pageable<GenericResource> ListAsGenericResource(string nameFilter, int? top = null, CancellationToken cancellationToken = default)
         {
             ResourceFilterCollection filters = new ResourceFilterCollection(PublicIPAddressData.ResourceType);
-            filters.SubstringFilter = filter;
+            filters.SubstringFilter = nameFilter;
             return ResourceListOperations.ListAtContext(Parent as ResourceGroupOperations, filters, top, cancellationToken);
         }
 
         /// <summary>
         /// Filters the list of public IP addresses for this resource group represented as generic resources.
         /// </summary>
-        /// <param name="filter"> The substring to filter by. </param>
+        /// <param name="nameFilter"> The substring to filter by. </param>
         /// <param name="top"> The number of items to truncate by. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
         /// <returns> An async collection of <see cref="GenericResource"/> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResource> ListByNameAsync(string filter, int? top = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<GenericResource> ListAsGenericResourceAsync(string nameFilter, int? top = null, CancellationToken cancellationToken = default)
         {
             ResourceFilterCollection filters = new ResourceFilterCollection(PublicIPAddressData.ResourceType);
-            filters.SubstringFilter = filter;
+            filters.SubstringFilter = nameFilter;
             return ResourceListOperations.ListAtContextAsync(Parent as ResourceGroupOperations, filters, top, cancellationToken);
         }
 
@@ -145,13 +145,13 @@ namespace Proto.Network
         /// Filters the list of public IP addresses for this resource group represented as generic resources.
         /// Makes an additional network call to retrieve the full data model for each network security group.
         /// </summary>
-        /// <param name="filter"> The substring to filter by. </param>
+        /// <param name="nameFilter"> The substring to filter by. </param>
         /// <param name="top"> The number of items to truncate by. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
         /// <returns> A collection of <see cref="PublicIpAddress"/> that may take multiple service requests to iterate over. </returns>
-        public Pageable<PublicIpAddress> ListByNameExpanded(string filter, int? top = null, CancellationToken cancellationToken = default)
+        public Pageable<PublicIpAddress> List(string nameFilter, int? top = null, CancellationToken cancellationToken = default)
         {
-            var results = ListByName(filter, top, cancellationToken);
+            var results = ListAsGenericResource(nameFilter, top, cancellationToken);
             return new PhWrappingPageable<GenericResource, PublicIpAddress>(results, s => new PublicIpAddressOperations(s).Get().Value);
         }
 
@@ -159,13 +159,13 @@ namespace Proto.Network
         /// Filters the list of public IP addresses for this resource group represented as generic resources.
         /// Makes an additional network call to retrieve the full data model for each network security group.
         /// </summary>
-        /// <param name="filter"> The substring to filter by. </param>
+        /// <param name="nameFilter"> The substring to filter by. </param>
         /// <param name="top"> The number of items to truncate by. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
         /// <returns> An async collection of <see cref="PublicIpAddress"/> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<PublicIpAddress> ListByNameExpandedAsync(string filter, int? top = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<PublicIpAddress> ListAsync(string nameFilter, int? top = null, CancellationToken cancellationToken = default)
         {
-            var results = ListByNameAsync(filter, top, cancellationToken);
+            var results = ListAsGenericResourceAsync(nameFilter, top, cancellationToken);
             return new PhWrappingAsyncPageable<GenericResource, PublicIpAddress>(results, s => new PublicIpAddressOperations(s).Get().Value);
         }
 

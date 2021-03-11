@@ -13,10 +13,30 @@ namespace Azure.ResourceManager.Core.Tests
         const string ResourceGroupResourceId = "/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575/resourceGroups/myRg";
         const string LocationResourceId = "/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575/locations/MyLocation";
         const string SubscriptionResourceId = "/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575";
+        const string TenantResourceId = "/providers/Microsoft.Billing/billingAccounts/3984c6f4-2d2a-4b04-93ce-43cf4824b698%3Ae2f1492a-a492-468d-909f-bf7fe6662c01_2019-05-31";
 
         [SetUp]
         public void Setup()
         {
+        }
+
+        [TestCase(TenantResourceId)]
+        public void CanParseTenant(string id)
+        {
+            ResourceIdentifier asIdentifier = id;
+            Assert.AreEqual(asIdentifier.Type.Namespace, "Microsoft.Billing"); 
+            Assert.AreEqual(asIdentifier.Type.Type, "billingAccounts");
+            Assert.AreEqual(asIdentifier.Name, "3984c6f4-2d2a-4b04-93ce-43cf4824b698%3Ae2f1492a-a492-468d-909f-bf7fe6662c01_2019-05-31");
+        }
+
+        [TestCase("/providers/MicrosoftSomething/billingAccounts/")]
+        [TestCase("/MicrosoftSomething/billingAccounts/")]
+        [TestCase("providers/subscription/MicrosoftSomething/billingAccounts/")]
+        [TestCase("/subscription/providersSomething")]
+        [TestCase("/providers")]
+        public void InvalidTenantID(string id)
+        {
+            Assert.Throws<ArgumentOutOfRangeException>(() => { ResourceIdentifier subject = id; });
         }
 
         [TestCase("")]

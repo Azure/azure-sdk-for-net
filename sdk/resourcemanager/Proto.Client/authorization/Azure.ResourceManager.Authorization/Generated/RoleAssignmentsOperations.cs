@@ -485,9 +485,9 @@ namespace Azure.ResourceManager.Authorization
         }
 
         /// <summary> Gets all role assignments for the subscription. </summary>
-        /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
+        /// <param name="nameFilter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<RoleAssignment> ListAsync(string filter = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<RoleAssignment> ListAsync(string nameFilter = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<RoleAssignment>> FirstPageFunc(int? pageSizeHint)
             {
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.Authorization
                 scope0.Start();
                 try
                 {
-                    var response = await RestClient.ListAsync(filter, cancellationToken).ConfigureAwait(false);
+                    var response = await RestClient.ListAsync(nameFilter, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.Authorization
                 scope0.Start();
                 try
                 {
-                    var response = await RestClient.ListNextPageAsync(nextLink, filter, cancellationToken).ConfigureAwait(false);
+                    var response = await RestClient.ListNextPageAsync(nextLink, nameFilter, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -523,9 +523,9 @@ namespace Azure.ResourceManager.Authorization
         }
 
         /// <summary> Gets all role assignments for the subscription. </summary>
-        /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
+        /// <param name="nameFilter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<RoleAssignment> List(string filter = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<RoleAssignment> List(string nameFilter = null, CancellationToken cancellationToken = default)
         {
             Page<RoleAssignment> FirstPageFunc(int? pageSizeHint)
             {
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.Authorization
                 scope0.Start();
                 try
                 {
-                    var response = RestClient.List(filter, cancellationToken);
+                    var response = RestClient.List(nameFilter, cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.Authorization
                 scope0.Start();
                 try
                 {
-                    var response = RestClient.ListNextPage(nextLink, filter, cancellationToken);
+                    var response = RestClient.ListNextPage(nextLink, nameFilter, cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

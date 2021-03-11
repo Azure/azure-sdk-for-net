@@ -49,7 +49,13 @@ namespace Azure.ResourceManager.Core
             if (!ReferenceEquals(other, null))
                 Copy(other);
             DefaultLocation = defaultLocation;
+            ApiVersionOverrides = new Dictionary<string, string>();
         }
+
+        /// <summary>
+        /// Gets the Api version overrides.
+        /// </summary>
+        public Dictionary<string, string> ApiVersionOverrides { get; private set; }
 
         /// <summary>
         /// Gets the default location to use if can't be inherited from parent.

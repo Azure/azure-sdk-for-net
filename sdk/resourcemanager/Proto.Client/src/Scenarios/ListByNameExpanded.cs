@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Proto.Client
 {
-    class ListByNameExpanded : Scenario
+    class List : Scenario
     {
         public override void Execute()
         {
@@ -14,57 +14,57 @@ namespace Proto.Client
             createMultipleVms.Execute();
 
             var rg = new AzureResourceManagerClient().GetResourceGroupOperations(Context.SubscriptionId, Context.RgName).Get().Value;
-            foreach (var availabilitySet in rg.GetAvailabilitySetContainer().ListByName(Environment.UserName))
+            foreach (var availabilitySet in rg.GetAvailabilitySetContainer().ListAsGenericResource(Environment.UserName))
             {
                 Console.WriteLine($"--------AvailabilitySet operation id--------: {availabilitySet.Id}");
             }
 
-            foreach (var availabilitySet in rg.GetAvailabilitySetContainer().ListByNameExpanded(Environment.UserName))
+            foreach (var availabilitySet in rg.GetAvailabilitySetContainer().List(Environment.UserName))
             {
                 Console.WriteLine($"--------AvailabilitySet id--------: {availabilitySet.Data.Id}");
             }
 
-            foreach (var vm in rg.GetVirtualMachineContainer().ListByName(Environment.UserName))
+            foreach (var vm in rg.GetVirtualMachineContainer().ListAsGenericResource(Environment.UserName))
             {
                 Console.WriteLine($"--------VM operation id--------: {vm.Id}");
             }
 
-            foreach (var vm in rg.GetVirtualMachineContainer().ListByNameExpanded(Environment.UserName))
+            foreach (var vm in rg.GetVirtualMachineContainer().List(Environment.UserName))
             {
                 Console.WriteLine($"--------VM id--------: {vm.Data.Id}");
             }
 
-            foreach (var networkInterface in rg.GetNetworkInterfaceContainer().ListByName(Environment.UserName))
+            foreach (var networkInterface in rg.GetNetworkInterfaceContainer().ListAsGenericResource(Environment.UserName))
             {
                 Console.WriteLine($"--------NetworkInterface operation id--------: {networkInterface.Id}");
             }
 
-            foreach (var networkInterface in rg.GetNetworkInterfaceContainer().ListByNameExpanded(Environment.UserName))
+            foreach (var networkInterface in rg.GetNetworkInterfaceContainer().List(Environment.UserName))
             {
                 Console.WriteLine($"--------NetworkInterface id--------: {networkInterface.Data.Id}");
             }
 
-            foreach (var networkSecurityGroup in rg.GetNetworkSecurityGroupContainer().ListByName(Environment.UserName))
+            foreach (var networkSecurityGroup in rg.GetNetworkSecurityGroupContainer().ListAsGenericResource(Environment.UserName))
             {
                 Console.WriteLine($"--------NetworkSecurityGroup operation id--------: {networkSecurityGroup.Id}");
             }
 
-            foreach (var networkSecurityGroup in rg.GetNetworkSecurityGroupContainer().ListByNameExpanded(Environment.UserName))
+            foreach (var networkSecurityGroup in rg.GetNetworkSecurityGroupContainer().List(Environment.UserName))
             {
                 Console.WriteLine($"--------NetworkSecurityGroup id--------: {networkSecurityGroup.Data.Id}");
             }
 
-            foreach (var publicIpAddress in rg.GetNetworkSecurityGroupContainer().ListByNameExpanded(Environment.UserName))
+            foreach (var publicIpAddress in rg.GetNetworkSecurityGroupContainer().List(Environment.UserName))
             {
                 Console.WriteLine($"--------PublicIpAddress id--------: {publicIpAddress.Data.Id}");
             }
 
-            foreach (var VNet in rg.GetVirtualNetworkContainer().ListByName(Environment.UserName))
+            foreach (var VNet in rg.GetVirtualNetworkContainer().ListAsGenericResource(Environment.UserName))
             {
                 Console.WriteLine($"--------VNet operation id--------: {VNet.Id}");
             }
 
-            foreach (var VNet in rg.GetVirtualNetworkContainer().ListByNameExpanded(Environment.UserName))
+            foreach (var VNet in rg.GetVirtualNetworkContainer().List(Environment.UserName))
             {
                 Console.WriteLine($"--------VNet id--------: {VNet.Data.Id}");
             }
@@ -74,57 +74,57 @@ namespace Proto.Client
 
         private async Task ExecuteAsync(ResourceGroup rg)
         {
-            await foreach (var availabilitySet in rg.GetAvailabilitySetContainer().ListByNameAsync(Environment.UserName))
+            await foreach (var availabilitySet in rg.GetAvailabilitySetContainer().ListAsGenericResourceAsync(Environment.UserName))
             {
                 Console.WriteLine($"--------AvailabilitySet operation id--------: {availabilitySet.Id}");
             }
 
-            await foreach (var availabilitySet in rg.GetAvailabilitySetContainer().ListByNameExpandedAsync(Environment.UserName))
+            await foreach (var availabilitySet in rg.GetAvailabilitySetContainer().ListAsync(Environment.UserName))
             {
                 Console.WriteLine($"--------AvailabilitySet id--------: {availabilitySet.Data.Id}");
             }
 
-            await foreach (var vm in rg.GetVirtualMachineContainer().ListByNameAsync(Environment.UserName))
+            await foreach (var vm in rg.GetVirtualMachineContainer().ListAsGenericResourceAsync(Environment.UserName))
             {
                 Console.WriteLine($"--------VM operation id--------: {vm.Id}");
             }
 
-            await foreach (var vm in rg.GetVirtualMachineContainer().ListByNameExpandedAsync(Environment.UserName))
+            await foreach (var vm in rg.GetVirtualMachineContainer().ListAsync(Environment.UserName))
             {
                 Console.WriteLine($"--------VM id--------: {vm.Data.Id}");
             }
 
-            await foreach (var networkInterface in rg.GetNetworkInterfaceContainer().ListByNameAsync(Environment.UserName))
+            await foreach (var networkInterface in rg.GetNetworkInterfaceContainer().ListAsGenericResourceAsync(Environment.UserName))
             {
                 Console.WriteLine($"--------NetworkInterface operation id--------: {networkInterface.Id}");
             }
 
-            await foreach (var networkInterface in rg.GetNetworkInterfaceContainer().ListByNameExpandedAsync(Environment.UserName))
+            await foreach (var networkInterface in rg.GetNetworkInterfaceContainer().ListAsync(Environment.UserName))
             {
                 Console.WriteLine($"--------NetworkInterface id--------: {networkInterface.Data.Id}");
             }
 
-            await foreach (var networkSecurityGroup in rg.GetNetworkSecurityGroupContainer().ListByNameAsync(Environment.UserName))
+            await foreach (var networkSecurityGroup in rg.GetNetworkSecurityGroupContainer().ListAsGenericResourceAsync(Environment.UserName))
             {
                 Console.WriteLine($"--------NetworkSecurityGroup operation id--------: {networkSecurityGroup.Id}");
             }
 
-            await foreach (var networkSecurityGroup in rg.GetNetworkSecurityGroupContainer().ListByNameExpandedAsync(Environment.UserName))
+            await foreach (var networkSecurityGroup in rg.GetNetworkSecurityGroupContainer().ListAsync(Environment.UserName))
             {
                 Console.WriteLine($"--------NetworkSecurityGroup id--------: {networkSecurityGroup.Data.Id}");
             }
 
-            await foreach (var publicIpAddress in rg.GetNetworkSecurityGroupContainer().ListByNameExpandedAsync(Environment.UserName))
+            await foreach (var publicIpAddress in rg.GetNetworkSecurityGroupContainer().ListAsync(Environment.UserName))
             {
                 Console.WriteLine($"--------PublicIpAddress id--------: {publicIpAddress.Data.Id}");
             }
 
-            await foreach (var VNet in rg.GetVirtualNetworkContainer().ListByNameAsync(Environment.UserName))
+            await foreach (var VNet in rg.GetVirtualNetworkContainer().ListAsGenericResourceAsync(Environment.UserName))
             {
                 Console.WriteLine($"--------VNet operation id--------: {VNet.Id}");
             }
 
-            await foreach (var VNet in rg.GetVirtualNetworkContainer().ListByNameExpandedAsync(Environment.UserName))
+            await foreach (var VNet in rg.GetVirtualNetworkContainer().ListAsync(Environment.UserName))
             {
                 Console.WriteLine($"--------VNet id--------: {VNet.Data.Id}");
             }

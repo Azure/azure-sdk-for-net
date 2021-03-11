@@ -20,7 +20,7 @@ namespace Proto.Client
         ShutdownVmsByLINQ,
         ShutdownVmsByNameAcrossResourceGroups,
         //ShutdownVmsByNameAcrossSubscriptions,
-        ListByNameExpanded,
+        List,
         ClientOptionsOverride,
         GetSubscription,
         NullDataValues,
@@ -38,6 +38,7 @@ namespace Proto.Client
         GetByContainers,
         GetByContainersAsync,
         CheckResourceGroupOpsAsync,
+        TenantResource,
         CheckResourceGroupContainerAsync
     }
 

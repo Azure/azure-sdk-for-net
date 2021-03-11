@@ -23,6 +23,12 @@ namespace Azure.ResourceManager.Core
         private readonly TokenCredential _credentials;
 
         private readonly Uri _baseUri;
+        private TenantOperations _tenant;
+
+        /// <summary>
+        /// Get the tenant operations <see cref="TenantOperations"/> class.
+        /// </summary>
+        public TenantOperations Tenant => _tenant ??= new TenantOperations(ClientOptions, _credentials, _baseUri);
 
         private readonly AzureResourceManagerClientOptions _clientOptions;
 
@@ -104,17 +110,10 @@ namespace Azure.ResourceManager.Core
             _baseUri = baseUri;
             _clientOptions = options ?? new AzureResourceManagerClientOptions();
 
-            DefaultSubscription = string.IsNullOrWhiteSpace(defaultSubscriptionId) 
+            DefaultSubscription = string.IsNullOrWhiteSpace(defaultSubscriptionId)
                 ? GetDefaultSubscription()
                 : GetSubscriptionOperations(defaultSubscriptionId).Get().Value;
-
-            ApiVersionOverrides = new Dictionary<string, string>();
         }
-
-        /// <summary>
-        /// Gets the Api version overrides.
-        /// </summary>
-        public virtual Dictionary<string, string> ApiVersionOverrides { get; private set; }
 
         /// <summary>
         /// Gets the default Azure subscription.
