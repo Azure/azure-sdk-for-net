@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.ResourceManager.Core;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Proto.Network
@@ -34,7 +35,7 @@ namespace Proto.Network
         }
 
         /// <inheritdoc />
-        protected override Task<NetworkSecurityGroup> GetResourceAsync()
+        protected override Task<NetworkSecurityGroup> GetResourceAsync(CancellationToken cancellationToken = default)
         {
             return Task.FromResult(this);
         }

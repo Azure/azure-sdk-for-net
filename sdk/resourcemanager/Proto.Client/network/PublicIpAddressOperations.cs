@@ -60,55 +60,36 @@ namespace Proto.Network
             Credential,
             ClientOptions.Convert<NetworkManagementClientOptions>()).PublicIPAddresses;
 
-        /// <summary>
-        /// The operation to delete a public IP address.
-        /// </summary>
-        /// <returns> A response with the <see cref="ArmResponse{Response}"/> operation for this resource. </returns>
-        public ArmResponse<Response> Delete()
+        /// <inheritdoc />
+        public ArmResponse<Response> Delete(CancellationToken cancellationToken = default)
         {
-            return new ArmResponse(Operations.StartDelete(Id.ResourceGroup, Id.Name).WaitForCompletionAsync().ConfigureAwait(false).GetAwaiter().GetResult());
+            return new ArmResponse(Operations.StartDelete(Id.ResourceGroup, Id.Name, cancellationToken)
+                .WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult());
         }
 
-        /// <summary>
-        /// The operation to delete a public IP address.
-        /// </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="ArmResponse{Response}"/> operation for this resource. </returns>
+        /// <inheritdoc />
         public async Task<ArmResponse<Response>> DeleteAsync(CancellationToken cancellationToken = default)
         {
-            return new ArmResponse((await Operations.StartDeleteAsync(Id.ResourceGroup, Id.Name, cancellationToken)).WaitForCompletionAsync().ConfigureAwait(false).GetAwaiter().GetResult());
+            return new ArmResponse((await Operations.StartDeleteAsync(Id.ResourceGroup, Id.Name, cancellationToken))
+                .WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult());
         }
 
-        /// <summary>
-        /// The operation to delete a public IP address.
-        /// </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <remarks>
-        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
-        /// </remarks>
-        /// <returns> An <see cref="ArmOperation{Response}"/> that allows polling for completion of the operation. </returns>
+        /// <inheritdoc />
         public ArmOperation<Response> StartDelete(CancellationToken cancellationToken = default)
         {
             return new ArmVoidOperation(Operations.StartDelete(Id.ResourceGroup, Id.Name, cancellationToken));
         }
 
-        /// <summary>
-        /// The operation to delete a public IP address.
-        /// </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <remarks>
-        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
-        /// </remarks>
-        /// <returns> A <see cref="Task"/> that on completion returns an <see cref="ArmOperation{Response}"/> that allows polling for completion of the operation. </returns>
+        /// <inheritdoc />
         public async Task<ArmOperation<Response>> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             return new ArmVoidOperation(await Operations.StartDeleteAsync(Id.ResourceGroup, Id.Name, cancellationToken));
         }
 
         /// <inheritdoc />
-        public override ArmResponse<PublicIpAddress> Get()
+        public override ArmResponse<PublicIpAddress> Get(CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<PublicIpAddress, PublicIPAddress>(Operations.Get(Id.ResourceGroup, Id.Name),
+            return new PhArmResponse<PublicIpAddress, PublicIPAddress>(Operations.Get(Id.ResourceGroup, Id.Name, cancellationToken: cancellationToken),
                 n => new PublicIpAddress(this, new PublicIPAddressData(n)));
         }
 
@@ -119,34 +100,21 @@ namespace Proto.Network
                 n => new PublicIpAddress(this, new PublicIPAddressData(n)));
         }
 
-        /// <summary>
-        /// Add a tag to a public IP address.
-        /// If the tag already exists it will be modified.
-        /// </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="value"> The value for the tag. </param>
-        /// <returns> An <see cref="ArmResponse{PublicIpAddress}"/> that allows polling for completion of the operation. </returns>
-        public ArmResponse<PublicIpAddress> AddTag(string key, string value)
+        /// <inheritdoc />
+        public ArmResponse<PublicIpAddress> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             var resource = GetResource();
             var patchable = new TagsObject();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags[key] = value;
-            return new PhArmResponse<PublicIpAddress, PublicIPAddress>(Operations.UpdateTags(Id.ResourceGroup, Id.Name, patchable),
+            return new PhArmResponse<PublicIpAddress, PublicIPAddress>(Operations.UpdateTags(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
                 n => new PublicIpAddress(this, new PublicIPAddressData(n)));
         }
 
-        /// <summary>
-        /// Add a tag to a public IP address.
-        /// If the tag already exists it will be modified.
-        /// </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="value"> The value for the tag. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A <see cref="Task"/> that on completion returns an <see cref="ArmResponse{PublicIpAddress}"/> that allows polling for completion of the operation. </returns>
+        /// <inheritdoc />
         public async Task<ArmResponse<PublicIpAddress>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            var resource = GetResource();
+            var resource = await GetResourceAsync(cancellationToken);
             var patchable = new TagsObject();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags[key] = value;
@@ -154,34 +122,21 @@ namespace Proto.Network
                 n => new PublicIpAddress(this, new PublicIPAddressData(n)));
         }
 
-        /// <summary>
-        /// Add a tag to a public IP address.
-        /// If the tag already exists it will be modified.
-        /// </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="value"> The value for the tag. </param>
-        /// <returns> An <see cref="ArmOperation{PublicIpAddress}"/> that allows polling for completion of the operation. </returns>
-        public ArmOperation<PublicIpAddress> StartAddTag(string key, string value)
+        /// <inheritdoc />
+        public ArmOperation<PublicIpAddress> StartAddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             var resource = GetResource();
             var patchable = new TagsObject();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags[key] = value;
-            return new PhArmOperation<PublicIpAddress, PublicIPAddress>(Operations.UpdateTags(Id.ResourceGroup, Id.Name, patchable),
+            return new PhArmOperation<PublicIpAddress, PublicIPAddress>(Operations.UpdateTags(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
                 n => new PublicIpAddress(this, new PublicIPAddressData(n)));
         }
 
-        /// <summary>
-        /// Add a tag to a public IP address.
-        /// If the tag already exists it will be modified.
-        /// </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="value"> The value for the tag. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A <see cref="Task"/> that on completion returns an <see cref="ArmOperation{PublicIpAddress}"/> that allows polling for completion of the operation. </returns>
+        /// <inheritdoc />
         public async Task<ArmOperation<PublicIpAddress>> StartAddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            var resource = GetResource();
+            var resource = await GetResourceAsync(cancellationToken);
             var patchable = new TagsObject();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags[key] = value;
@@ -190,11 +145,11 @@ namespace Proto.Network
         }
 
         /// <inheritdoc/>
-        public ArmResponse<PublicIpAddress> SetTags(IDictionary<string, string> tags)
+        public ArmResponse<PublicIpAddress> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             var patchable = new TagsObject();
             patchable.Tags.ReplaceWith(tags);
-            return new PhArmResponse<PublicIpAddress, PublicIPAddress>(Operations.UpdateTags(Id.ResourceGroup, Id.Name, patchable),
+            return new PhArmResponse<PublicIpAddress, PublicIPAddress>(Operations.UpdateTags(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
                 n => new PublicIpAddress(this, new PublicIPAddressData(n)));
         }
 
@@ -208,11 +163,11 @@ namespace Proto.Network
         }
 
         /// <inheritdoc/>
-        public ArmOperation<PublicIpAddress> StartSetTags(IDictionary<string, string> tags)
+        public ArmOperation<PublicIpAddress> StartSetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             var patchable = new TagsObject();
             patchable.Tags.ReplaceWith(tags);
-            return new PhArmOperation<PublicIpAddress, PublicIPAddress>(Operations.UpdateTags(Id.ResourceGroup, Id.Name, patchable),
+            return new PhArmOperation<PublicIpAddress, PublicIPAddress>(Operations.UpdateTags(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
                 n => new PublicIpAddress(this, new PublicIPAddressData(n)));
         }
 
@@ -226,20 +181,20 @@ namespace Proto.Network
         }
 
         /// <inheritdoc/>
-        public ArmResponse<PublicIpAddress> RemoveTag(string key)
+        public ArmResponse<PublicIpAddress> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             var resource = GetResource();
             var patchable = new TagsObject();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags.Remove(key);
-            return new PhArmResponse<PublicIpAddress, PublicIPAddress>(Operations.UpdateTags(Id.ResourceGroup, Id.Name, patchable),
+            return new PhArmResponse<PublicIpAddress, PublicIPAddress>(Operations.UpdateTags(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
                 n => new PublicIpAddress(this, new PublicIPAddressData(n)));
         }
 
         /// <inheritdoc/>
         public async Task<ArmResponse<PublicIpAddress>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            var resource = GetResource();
+            var resource = await GetResourceAsync(cancellationToken);
             var patchable = new TagsObject();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags.Remove(key);
@@ -248,34 +203,35 @@ namespace Proto.Network
         }
 
         /// <inheritdoc/>
-        public ArmOperation<PublicIpAddress> StartRemoveTag(string key)
+        public ArmOperation<PublicIpAddress> StartRemoveTag(string key, CancellationToken cancellationToken = default)
         {
             var resource = GetResource();
             var patchable = new TagsObject();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags.Remove(key);
-            return new PhArmOperation<PublicIpAddress, PublicIPAddress>(Operations.UpdateTags(Id.ResourceGroup, Id.Name, patchable),
+            return new PhArmOperation<PublicIpAddress, PublicIPAddress>(Operations.UpdateTags(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
                 n => new PublicIpAddress(this, new PublicIPAddressData(n)));
         }
 
         /// <inheritdoc/>
         public async Task<ArmOperation<PublicIpAddress>> StartRemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            var resource = GetResource();
+            var resource = await GetResourceAsync(cancellationToken);
             var patchable = new TagsObject();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags.Remove(key);
             return new PhArmOperation<PublicIpAddress, PublicIPAddress>(await Operations.UpdateTagsAsync(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
                 n => new PublicIpAddress(this, new PublicIPAddressData(n)));
         }
-        
+
         /// <summary>
         /// Lists all available geo-locations.
         /// </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of location that may take multiple service requests to iterate over. </returns>
-        public IEnumerable<LocationData> ListAvailableLocations()
+        public IEnumerable<LocationData> ListAvailableLocations(CancellationToken cancellationToken = default)
         {
-            return ListAvailableLocations(ResourceType);
+            return ListAvailableLocations(ResourceType, cancellationToken);
         }
 
         /// <summary>

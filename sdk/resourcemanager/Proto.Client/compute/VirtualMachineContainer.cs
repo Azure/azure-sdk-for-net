@@ -40,12 +40,13 @@ namespace Proto.Compute
         /// </summary>
         /// <param name="name"> The name of the virtual machine. </param>
         /// <param name="resourceDetails"> Parameters supplied to the Create Virtual Machine operation. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
         /// <returns> A response with the <see cref="ArmResponse{VirtualMachine}"/> operation for this resource. </returns>
-        public override ArmResponse<VirtualMachine> CreateOrUpdate(string name, VirtualMachineData resourceDetails)
+        public override ArmResponse<VirtualMachine> CreateOrUpdate(string name, VirtualMachineData resourceDetails, CancellationToken cancellationToken = default)
         {
-            var operation = Operations.StartCreateOrUpdate(Id.ResourceGroup, name, resourceDetails.Model);
+            var operation = Operations.StartCreateOrUpdate(Id.ResourceGroup, name, resourceDetails.Model, cancellationToken);
             return new PhArmResponse<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(
-                operation.WaitForCompletionAsync().ConfigureAwait(false).GetAwaiter().GetResult(),
+                operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult(),
                 v => new VirtualMachine(Parent, new VirtualMachineData(v)));
         }
 
@@ -222,9 +223,9 @@ namespace Proto.Compute
         }
 
         /// <inheritdoc />
-        public override ArmResponse<VirtualMachine> Get(string virtualMachineName)
+        public override ArmResponse<VirtualMachine> Get(string virtualMachineName, CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(Operations.Get(Id.ResourceGroup, virtualMachineName), 
+            return new PhArmResponse<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(Operations.Get(Id.ResourceGroup, virtualMachineName, cancellationToken), 
                 v => new VirtualMachine(Parent, new VirtualMachineData(v)));
         }
 

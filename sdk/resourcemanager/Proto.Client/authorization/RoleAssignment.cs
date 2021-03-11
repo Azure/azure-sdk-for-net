@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using Azure.ResourceManager.Core;
 
 namespace Proto.Authorization
@@ -31,7 +32,7 @@ namespace Proto.Authorization
         }
 
         /// <inheritdoc />
-        protected override Task<RoleAssignment> GetResourceAsync()
+        protected override Task<RoleAssignment> GetResourceAsync(CancellationToken cancellationToken = default)
         {
             return Task.FromResult(this);
         }

@@ -38,11 +38,11 @@ namespace Proto.Network
             ClientOptions.Convert<NetworkManagementClientOptions>()).PublicIPAddresses;
 
         /// <inheritdoc />
-        public override ArmResponse<PublicIpAddress> CreateOrUpdate(string name, PublicIPAddressData resourceDetails)
+        public override ArmResponse<PublicIpAddress> CreateOrUpdate(string name, PublicIPAddressData resourceDetails, CancellationToken cancellationToken = default)
         {
-            var operation = Operations.StartCreateOrUpdate(Id.ResourceGroup, name, resourceDetails);
+            var operation = Operations.StartCreateOrUpdate(Id.ResourceGroup, name, resourceDetails, cancellationToken);
             return new PhArmResponse<PublicIpAddress, PublicIPAddress>(
-                operation.WaitForCompletionAsync().ConfigureAwait(false).GetAwaiter().GetResult(),
+                operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult(),
                 n => new PublicIpAddress(Parent, new PublicIPAddressData(n)));
         }
 
@@ -174,15 +174,15 @@ namespace Proto.Network
             return s => new PublicIpAddress(Parent, new PublicIPAddressData(s));
         }
                 /// <inheritdoc />
-        public override ArmResponse<PublicIpAddress> Get(string publicIpAddressesName)
+        public override ArmResponse<PublicIpAddress> Get(string publicIpAddressesName, CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<PublicIpAddress, PublicIPAddress>(Operations.Get(Id.ResourceGroup, publicIpAddressesName), Convertor());
+            return new PhArmResponse<PublicIpAddress, PublicIPAddress>(Operations.Get(Id.ResourceGroup, publicIpAddressesName, cancellationToken: cancellationToken), Convertor());
         }
 
         /// <inheritdoc/>
         public override async Task<ArmResponse<PublicIpAddress>> GetAsync(string publicIpAddressesName, CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<PublicIpAddress, PublicIPAddress>(await Operations.GetAsync(Id.ResourceGroup, publicIpAddressesName), Convertor());
+            return new PhArmResponse<PublicIpAddress, PublicIPAddress>(await Operations.GetAsync(Id.ResourceGroup, publicIpAddressesName, cancellationToken: cancellationToken), Convertor());
         }     
     }
 }
