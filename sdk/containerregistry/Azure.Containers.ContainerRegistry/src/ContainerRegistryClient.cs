@@ -31,6 +31,9 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="options"></param>
         public ContainerRegistryClient(Uri endpoint, ContainerRegistryClientOptions options)
         {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(options, nameof(options));
+
             // The HttpPipelineBuilder.Build method, builds up a pipeline with client options, and any number of additional policies.
             _pipeline = HttpPipelineBuilder.Build(options, new BasicAuthenticationPolicy());
 
@@ -45,17 +48,6 @@ namespace Azure.Containers.ContainerRegistry
         protected ContainerRegistryClient()
         {
         }
-
-        ///// <summary> Initializes a new instance of RepositoryClient. </summary>
-        ///// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
-        ///// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        ///// <param name="url"> Registry login URL. </param>
-        //internal ContainerRegistryClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url)
-        //{
-        //    _restClient = new RepositoryRestClient(clientDiagnostics, pipeline, url);
-        //    _clientDiagnostics = clientDiagnostics;
-        //    _pipeline = pipeline;
-        //}
 
         /// <summary> List repositories. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
