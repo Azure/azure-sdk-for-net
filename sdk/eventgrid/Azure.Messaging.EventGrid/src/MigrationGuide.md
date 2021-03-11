@@ -13,6 +13,7 @@ We assume that you are familiar with `Microsoft.Azure.EventGrid`. If not, please
   - [Client naming and constructors](#client-naming-and-constructors)
   - [Publishing events to a topic](#publishing-events-to-a-topic)
   - [Deserializing events and data](#deserializing-events-and-data)
+- [Additional samples](#additional-samples)
 
 ## Migration benefits
 
@@ -72,27 +73,27 @@ string topicEndpoint = "https://<topic-name>.<region>-1.eventgrid.azure.net/api/
 string topicHostname = new Uri(topicEndpoint).Host;
 
 List<EventGridEvent> eventsList = new List<EventGridEvent>();
-    for (int i = 0; i < 1; i++)
+for (int i = 0; i < 1; i++)
+{
+    eventsList.Add(new EventGridEvent()
     {
-        eventsList.Add(new EventGridEvent()
+        Id = Guid.NewGuid().ToString(),
+        EventType = "Contoso.Items.ItemReceivedEvent",
+        Data = new ContosoItemReceivedEventData()
         {
-            Id = Guid.NewGuid().ToString(),
-            EventType = "Contoso.Items.ItemReceivedEvent",
-            Data = new ContosoItemReceivedEventData()
-            {
-                ItemUri = "ContosoSuperItemUri"
-            },
+            ItemUri = "ContosoSuperItemUri"
+        },
 
-            EventTime = DateTime.Now,
-            Subject = "Door1",
-            DataVersion = "2.0"
-        });
-    }
+        EventTime = DateTime.Now,
+        Subject = "Door1",
+        DataVersion = "2.0"
+    });
+}
 
 await client.PublishEventsAsync(topicHostname, eventsList);
 ```
 
-In `Azure.Messaging.EventGrid`, when publishing events it is no longer necessary to include the topic host name, as this is instead passed as part of the `Uri` that is provided to the `EventGridPublisherClient` constructor. The `EventGridEvent` type now has a constructor that includes parameters for all required fields of the event grid schema:
+In `Azure.Messaging.EventGrid`, when publishing events it is no longer necessary to include the topic host name. Instead, this is passed as part of the `Uri` that is provided to the `EventGridPublisherClient` constructor. The `EventGridEvent` type now has a constructor that includes parameters for all required fields of the event grid schema:
 ```C# Snippet:SendEGEventsToTopic
 // Add EventGridEvents to a list to publish to the topic
 List<EventGridEvent> eventsList = new List<EventGridEvent>
@@ -148,9 +149,8 @@ foreach (EventGridEvent receivedEvent in events)
 
 In the `Azure.Messaging.EventGrid` library, there is no longer a separate type to deserialize events. Instead, you can use static factory methods on `EventGridEvent` to parse into an array of `EventGridEvents`.
 ```C# Snippet:EGEventParseJson
-var bytes = await httpContent.ReadAsByteArrayAsync();
 // Parse the JSON payload into a list of events
-EventGridEvent[] egEvents = EventGridEvent.ParseMany(new BinaryData(bytes));
+EventGridEvent[] egEvents = EventGridEvent.ParseMany(BinaryData.FromStream(httpContent));
 ```
 
 You can then iterate through your events and deserialize the data.
@@ -193,3 +193,8 @@ foreach (EventGridEvent egEvent in egEvents)
     }
 }
 ```
+
+## Additional samples
+
+More examples can be found at:
+- [Event Grid samples](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventgrid/Azure.Messaging.EventGrid/samples)

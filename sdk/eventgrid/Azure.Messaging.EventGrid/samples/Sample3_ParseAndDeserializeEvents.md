@@ -13,9 +13,8 @@ Once events are delivered to the event handler, parse the JSON payload into list
 
 Using `EventGridEvent`:
 ```C# Snippet:EGEventParseJson
-var bytes = await httpContent.ReadAsByteArrayAsync();
 // Parse the JSON payload into a list of events
-EventGridEvent[] egEvents = EventGridEvent.ParseMany(new BinaryData(bytes));
+EventGridEvent[] egEvents = EventGridEvent.ParseMany(BinaryData.FromStream(httpContent));
 ```
 
 Using `CloudEvent`:

@@ -21,13 +21,12 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
 
         // This sample demonstrates how to parse EventGridEvents from JSON and access event data using TryGetSystemEventData
         [Test]
-        public async Task NonGenericReceiveAndDeserializeEventGridEvents()
+        public void NonGenericReceiveAndDeserializeEventGridEvents()
         {
-            var httpContent = new StreamContent(new BinaryData(jsonPayloadSampleOne).ToStream());
+            var httpContent = new BinaryData(jsonPayloadSampleOne).ToStream();
             #region Snippet:EGEventParseJson
-            var bytes = await httpContent.ReadAsByteArrayAsync();
             // Parse the JSON payload into a list of events
-            EventGridEvent[] egEvents = EventGridEvent.ParseMany(new BinaryData(bytes));
+            EventGridEvent[] egEvents = EventGridEvent.ParseMany(BinaryData.FromStream(httpContent));
             #endregion
 
             // Iterate over each event to access event properties and data
