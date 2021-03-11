@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> List of resource providers. </summary>
-    public partial class ProviderListResult
+    internal partial class ProviderListResult
     {
         /// <summary> Initializes a new instance of ProviderListResult. </summary>
         internal ProviderListResult()

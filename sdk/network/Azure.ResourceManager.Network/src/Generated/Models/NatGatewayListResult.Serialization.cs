@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class NatGatewayListResult
+    internal partial class NatGatewayListResult
     {
         internal static NatGatewayListResult DeserializeNatGatewayListResult(JsonElement element)
         {

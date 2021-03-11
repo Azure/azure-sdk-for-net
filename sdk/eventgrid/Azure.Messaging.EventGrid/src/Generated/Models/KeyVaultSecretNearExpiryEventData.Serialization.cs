@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(KeyVaultSecretNearExpiryEventDataConverter))]
     public partial class KeyVaultSecretNearExpiryEventData
     {
         internal static KeyVaultSecretNearExpiryEventData DeserializeKeyVaultSecretNearExpiryEventData(JsonElement element)
@@ -70,6 +73,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new KeyVaultSecretNearExpiryEventData(id.Value, vaultName.Value, objectType.Value, objectName.Value, version.Value, Optional.ToNullable(nbf), Optional.ToNullable(exp));
+        }
+
+        internal partial class KeyVaultSecretNearExpiryEventDataConverter : JsonConverter<KeyVaultSecretNearExpiryEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, KeyVaultSecretNearExpiryEventData model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override KeyVaultSecretNearExpiryEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeKeyVaultSecretNearExpiryEventData(document.RootElement);
+            }
         }
     }
 }

@@ -14,26 +14,6 @@ namespace Azure.Analytics.Synapse.Spark
     [CodeGenSuppress("CreateSparkBatchJobAsync", typeof(SparkBatchJobOptions), typeof(bool?), typeof(CancellationToken))]
     public partial class SparkBatchClient
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SparkBatchClient"/>.
-        /// </summary>
-        public SparkBatchClient(Uri endpoint, string sparkPoolName, TokenCredential credential)
-            : this(endpoint, sparkPoolName, credential, SparkClientOptions.Default)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SparkBatchClient"/>.
-        /// </summary>
-        public SparkBatchClient(Uri endpoint, string sparkPoolName, TokenCredential credential, SparkClientOptions options)
-            : this(new ClientDiagnostics(options),
-                  SynapseClientPipeline.Build(options, credential),
-                  endpoint.ToString(),
-                  sparkPoolName,
-                  options.VersionString)
-        {
-        }
-
         public virtual async Task<SparkBatchOperation> StartCreateSparkBatchJobAsync(SparkBatchJobOptions sparkBatchJobOptions, bool? detailed = null, CancellationToken cancellationToken = default)
             => await StartCreateSparkBatchJobInternal (true, sparkBatchJobOptions, detailed, cancellationToken).ConfigureAwait(false);
 

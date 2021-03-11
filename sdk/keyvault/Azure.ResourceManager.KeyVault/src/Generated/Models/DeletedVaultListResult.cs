@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> List of vaults. </summary>
-    public partial class DeletedVaultListResult
+    internal partial class DeletedVaultListResult
     {
         /// <summary> Initializes a new instance of DeletedVaultListResult. </summary>
         internal DeletedVaultListResult()

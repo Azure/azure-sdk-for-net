@@ -8,9 +8,35 @@ $BlobStorageUrl = "https://azuresdkdocs.blob.core.windows.net/%24web?restype=con
 
 function Get-dotnet-PackageInfoFromRepo ($pkgPath, $serviceDirectory, $pkgName)
 {
-  $projectPath = Join-Path $pkgPath "src" "$pkgName.csproj"
-  if (Test-Path $projectPath)
+  $projDirPath = (Join-Path $pkgPath "src")
+
+  if (!(Test-Path $projDirPath))
   {
+    return $null
+  }
+
+  if ($pkgName)
+  {
+    $projectPath = Join-Path $projDirPath "$pkgName.csproj"
+  }
+  else
+  {
+    $projectPaths = (Resolve-Path (Join-Path $projDirPath "*.csproj")).path
+    if ($projectPaths.Count -gt 1)
+    {
+      LogWarning "There is more than on csproj file in the projectpath/src directory. First project picked."
+      $projectPath = $projectPaths[0]
+    }
+    else {
+      $projectPath = $projectPaths
+    }
+  }
+
+
+
+  if ($projectPath -and (Test-Path $projectPath))
+  {
+    $pkgName = Split-Path -Path $projectPath -LeafBase 
     $projectData = New-Object -TypeName XML
     $projectData.load($projectPath)
     $pkgVersion = Select-XML -Xml $projectData -XPath '/Project/PropertyGroup/Version'
@@ -25,10 +51,8 @@ function Get-dotnet-PackageInfoFromRepo ($pkgPath, $serviceDirectory, $pkgName)
     $pkgProp.ArtifactName = $pkgName
     return $pkgProp
   }
-  else
-  {
-    return $null
-  }
+
+  return $null
 }
 
 # Returns the nuget publish status of a package id and version.

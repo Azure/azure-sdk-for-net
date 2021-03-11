@@ -73,13 +73,13 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var evt = GetSystemProperties(new byte[] { });
 
             var input = EventHubTriggerInput.New(evt);
-            input.PartitionContext = GetPartitionContext();
+            input.ProcessorPartition = GetPartitionContext();
 
             var strategy = new EventHubTriggerBindingStrategy();
             var bindingData = strategy.GetBindingData(input);
 
             Assert.AreEqual(7, bindingData.Count);
-            Assert.AreSame(input.PartitionContext, bindingData["PartitionContext"]);
+            Assert.AreSame(input.ProcessorPartition.PartitionContext, bindingData["PartitionContext"]);
             Assert.AreEqual(evt.PartitionKey, bindingData["PartitionKey"]);
             Assert.AreEqual(evt.Offset, bindingData["Offset"]);
             Assert.AreEqual(evt.SequenceNumber, bindingData["SequenceNumber"]);
@@ -118,13 +118,13 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var input = new EventHubTriggerInput
             {
                 Events = events,
-                PartitionContext = GetPartitionContext(),
+                ProcessorPartition = GetPartitionContext(),
             };
             var strategy = new EventHubTriggerBindingStrategy();
             var bindingData = strategy.GetBindingData(input);
 
             Assert.AreEqual(7, bindingData.Count);
-            Assert.AreSame(input.PartitionContext, bindingData["PartitionContext"]);
+            Assert.AreSame(input.ProcessorPartition.PartitionContext, bindingData["PartitionContext"]);
 
             // verify an array was created for each binding data type
             Assert.AreEqual(events.Length, ((string[])bindingData["PartitionKeyArray"]).Length);
@@ -145,8 +145,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             string data = "123";
 
             var strategy = new EventHubTriggerBindingStrategy();
-            EventHubTriggerInput triggerInput = strategy.ConvertFromString(data);
 
+            EventHubTriggerInput triggerInput = strategy.ConvertFromString(data);
             var contract = strategy.GetBindingData(triggerInput);
 
             EventData single = strategy.BindSingle(triggerInput, null);
@@ -155,17 +155,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.AreEqual(data, body);
             Assert.Null(contract["PartitionContext"]);
             Assert.Null(contract["partitioncontext"]); // case insensitive
-        }
-
-        [TestCase("e", "n1", "n1/e/")]
-        [TestCase("e--1", "host_.path.foo", "host_.path.foo/e--1/")]
-        [TestCase("Ab", "Cd", "cd/ab/")]
-        [TestCase("A=", "Cd", "cd/a:3D/")]
-        [TestCase("A:", "Cd", "cd/a:3A/")]
-        public void EventHubBlobPrefix(string eventHubName, string serviceBusNamespace, string expected)
-        {
-            string actual = EventHubOptions.GetBlobPrefix(eventHubName, serviceBusNamespace);
-            Assert.AreEqual(expected, actual);
         }
 
         [TestCase(1)]
@@ -307,8 +296,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 "Endpoint=sb://test.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=abc123=",
                 eventHubPath,
                 new EventProcessorOptions(),
-                Int32.MaxValue,
-                false, null);
+                Int32.MaxValue, null);
             return new EventProcessorHostPartition(partitionId)
             {
                 ProcessorHost = processor

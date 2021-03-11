@@ -13,7 +13,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary> Initializes a new instance of HttpRequestDataFeedPatch. </summary>
         public HttpRequestDataFeedPatch()
         {
-            DataSourceType = DataFeedDetailPatchDataSourceType.HttpRequest;
+            DataSourceType = DataFeedSourceType.HttpRequest;
         }
 
         public HttpRequestParameter DataSourceParameter { get; set; }

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.AI.TextAnalytics
+namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The KeyPhrasesTaskParameters. </summary>
     internal partial class KeyPhrasesTaskParameters
@@ -14,5 +14,7 @@ namespace Azure.AI.TextAnalytics
         public KeyPhrasesTaskParameters()
         {
         }
+
+        public string ModelVersion { get; set; }
     }
 }

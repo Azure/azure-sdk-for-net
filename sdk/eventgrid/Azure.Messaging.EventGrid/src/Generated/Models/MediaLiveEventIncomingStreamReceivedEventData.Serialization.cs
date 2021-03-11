@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(MediaLiveEventIncomingStreamReceivedEventDataConverter))]
     public partial class MediaLiveEventIncomingStreamReceivedEventData
     {
         internal static MediaLiveEventIncomingStreamReceivedEventData DeserializeMediaLiveEventIncomingStreamReceivedEventData(JsonElement element)
@@ -77,6 +80,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new MediaLiveEventIncomingStreamReceivedEventData(ingestUrl.Value, trackType.Value, trackName.Value, Optional.ToNullable(bitrate), encoderIp.Value, encoderPort.Value, timestamp.Value, duration.Value, timescale.Value);
+        }
+
+        internal partial class MediaLiveEventIncomingStreamReceivedEventDataConverter : JsonConverter<MediaLiveEventIncomingStreamReceivedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, MediaLiveEventIncomingStreamReceivedEventData model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override MediaLiveEventIncomingStreamReceivedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeMediaLiveEventIncomingStreamReceivedEventData(document.RootElement);
+            }
         }
     }
 }

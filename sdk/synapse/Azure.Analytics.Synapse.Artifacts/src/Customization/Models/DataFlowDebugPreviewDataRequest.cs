@@ -9,5 +9,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public DataFlowDebugPreviewDataRequest()
         {
         }
+
+        /// <summary> The ID of data flow debug session. </summary>
+        public string SessionId { get; set; }
+        /// <summary> The data flow which contains the debug session. </summary>
+        public string DataFlowName { get; set; }
+        /// <summary> The output stream name. </summary>
+        public string StreamName { get; set; }
+        /// <summary> The row limit for preview request. </summary>
+        public int? RowLimits { get; set; }
     }
 }

@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Graph.Rbac.Models
 {
     /// <summary> Server response for GetMemberGroups API call. </summary>
-    public partial class GroupGetMemberGroupsResult
+    internal partial class GroupGetMemberGroupsResult
     {
         /// <summary> Initializes a new instance of GroupGetMemberGroupsResult. </summary>
         internal GroupGetMemberGroupsResult()

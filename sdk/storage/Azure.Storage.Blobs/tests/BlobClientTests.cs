@@ -200,6 +200,25 @@ namespace Azure.Storage.Blobs.Test
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
         }
 
+        [RecordedTest]
+        public async Task UploadAsync_BinaryData()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            var name = GetNewBlobName();
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(name));
+            var data = GetRandomBuffer(Constants.KB);
+
+            await blob.UploadAsync(BinaryData.FromBytes(data));
+
+            System.Collections.Generic.IList<BlobItem> blobs = await test.Container.GetBlobsAsync().ToListAsync();
+            Assert.AreEqual(1, blobs.Count);
+            Assert.AreEqual(name, blobs.First().Name);
+
+            Response<BlobDownloadResult> download = await blob.DownloadContentAsync();
+            TestHelper.AssertSequenceEqual(data, download.Value.Content.ToArray());
+        }
+
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task UploadAsync_Stream_Tags()
@@ -220,6 +239,30 @@ namespace Azure.Storage.Blobs.Test
             {
                 await blob.UploadAsync(stream, options);
             }
+
+            Response<GetBlobTagResult> response = await blob.GetTagsAsync();
+
+            // Assert
+            AssertDictionaryEquality(tags, response.Value.Tags);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task UploadAsync_BinaryData_Tags()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            var name = GetNewBlobName();
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(name));
+            var data = GetRandomBuffer(Constants.KB);
+            IDictionary<string, string> tags = BuildTags();
+            BlobUploadOptions options = new BlobUploadOptions
+            {
+                Tags = tags
+            };
+
+            // Act
+            await blob.UploadAsync(BinaryData.FromBytes(data), options);
 
             Response<GetBlobTagResult> response = await blob.GetTagsAsync();
 
@@ -305,6 +348,28 @@ namespace Azure.Storage.Blobs.Test
                 using var actual = new MemoryStream();
                 await download.Value.Content.CopyToAsync(actual);
                 TestHelper.AssertSequenceEqual(data, actual.ToArray());
+            }
+        }
+
+        [RecordedTest]
+        public async Task UploadAsync_BinaryData_Overloads()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            var name = GetNewBlobName();
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(name));
+            var data = GetRandomBuffer(Constants.KB);
+
+            await Verify(binaryData => blob.UploadAsync(binaryData));
+            await Verify(binaryData => blob.UploadAsync(binaryData, true, CancellationToken.None));
+            await Verify(binaryData => blob.UploadAsync(binaryData, new BlobUploadOptions()));
+
+            async Task Verify(Func<BinaryData, Task<Response<BlobContentInfo>>> upload)
+            {
+                await upload(BinaryData.FromBytes(data));
+
+                Response<BlobDownloadResult> download = await blob.DownloadContentAsync();
+                TestHelper.AssertSequenceEqual(data, download.Value.Content.ToArray());
             }
         }
 
@@ -908,6 +973,21 @@ namespace Azure.Storage.Blobs.Test
                 async () => await blob.UploadAsync(stream2));
         }
 
+        [RecordedTest]
+        public async Task UploadAsync_DoesNotOverwriteDefault_BinaryData()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Upload one blob
+            var name = GetNewBlobName();
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(name));
+            await blob.UploadAsync(BinaryData.FromBytes(GetRandomBuffer(Constants.KB)));
+
+            // Overwriting fails
+            Assert.ThrowsAsync<RequestFailedException>(
+                async () => await blob.UploadAsync(BinaryData.FromBytes(GetRandomBuffer(Constants.KB))));
+        }
+
         [Test]
         public async Task UploadAsync_DoesNotOverwrite_Stream()
         {
@@ -925,6 +1005,21 @@ namespace Azure.Storage.Blobs.Test
                 async () => await blob.UploadAsync(stream2, overwrite: false));
         }
 
+        [RecordedTest]
+        public async Task UploadAsync_DoesNotOverwrite_BinaryData()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Upload one blob
+            var name = GetNewBlobName();
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(name));
+            await blob.UploadAsync(BinaryData.FromBytes(GetRandomBuffer(Constants.KB)));
+
+            // Overwriting fails
+            Assert.ThrowsAsync<RequestFailedException>(
+                async () => await blob.UploadAsync(BinaryData.FromBytes(GetRandomBuffer(Constants.KB)), overwrite: false));
+        }
+
         [Test]
         public async Task UploadAsync_OverwritesDeliberately_Stream()
         {
@@ -939,6 +1034,20 @@ namespace Azure.Storage.Blobs.Test
             // Overwriting works if allowed
             using var stream2 = new MemoryStream(GetRandomBuffer(Constants.KB));
             await blob.UploadAsync(stream2, overwrite: true);
+        }
+
+        [RecordedTest]
+        public async Task UploadAsync_OverwritesDeliberately_BinaryData()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Upload one blob
+            var name = GetNewBlobName();
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(name));
+            await blob.UploadAsync(BinaryData.FromBytes(GetRandomBuffer(Constants.KB)));
+
+            // Overwriting works if allowed
+            await blob.UploadAsync(BinaryData.FromBytes(GetRandomBuffer(Constants.KB)), overwrite: true);
         }
 
         [Test]

@@ -148,7 +148,7 @@ namespace Azure.Core
             /// <summary>
             /// Returns <code>"WWW-Authenticate"</code>.
             /// </summary>
-            public static string WWWAuthenticate => "WWW-Authenticate";
+            public static string WwwAuthenticate => "WWW-Authenticate";
         }
 
 #pragma warning disable CA1034 // Nested types should not be visible

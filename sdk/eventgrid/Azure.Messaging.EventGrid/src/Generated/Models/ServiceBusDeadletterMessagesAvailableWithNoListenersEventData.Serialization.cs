@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(ServiceBusDeadletterMessagesAvailableWithNoListenersEventDataConverter))]
     public partial class ServiceBusDeadletterMessagesAvailableWithNoListenersEventData
     {
         internal static ServiceBusDeadletterMessagesAvailableWithNoListenersEventData DeserializeServiceBusDeadletterMessagesAvailableWithNoListenersEventData(JsonElement element)
@@ -54,6 +57,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new ServiceBusDeadletterMessagesAvailableWithNoListenersEventData(namespaceName.Value, requestUri.Value, entityType.Value, queueName.Value, topicName.Value, subscriptionName.Value);
+        }
+
+        internal partial class ServiceBusDeadletterMessagesAvailableWithNoListenersEventDataConverter : JsonConverter<ServiceBusDeadletterMessagesAvailableWithNoListenersEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, ServiceBusDeadletterMessagesAvailableWithNoListenersEventData model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override ServiceBusDeadletterMessagesAvailableWithNoListenersEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeServiceBusDeadletterMessagesAvailableWithNoListenersEventData(document.RootElement);
+            }
         }
     }
 }

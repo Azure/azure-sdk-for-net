@@ -19,20 +19,21 @@ namespace Microsoft.Azure.Management.MixedReality
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("MixedReality", "CheckNameAvailabilityLocal", "2021-01-01"),
-                new Tuple<string, string, string>("MixedReality", "Operations", "2021-01-01"),
-                new Tuple<string, string, string>("MixedReality", "RemoteRenderingAccounts", "2021-01-01"),
-                new Tuple<string, string, string>("MixedReality", "SpatialAnchorsAccounts", "2021-01-01"),
+                new Tuple<string, string, string>("MixedReality", "CheckNameAvailabilityLocal", "2021-03-01-preview"),
+                new Tuple<string, string, string>("MixedReality", "ObjectAnchorsAccounts", "2021-03-01-preview"),
+                new Tuple<string, string, string>("MixedReality", "Operations", "2021-03-01-preview"),
+                new Tuple<string, string, string>("MixedReality", "RemoteRenderingAccounts", "2021-03-01-preview"),
+                new Tuple<string, string, string>("MixedReality", "SpatialAnchorsAccounts", "2021-03-01-preview"),
               }.AsEnumerable();
           }
       }
       // BEGIN: Code Generation Metadata Section
       public static readonly String AutoRestVersion = "v2";
       public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/mixedreality/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=C:\\repos\\azure-sdk-for-net\\sdk";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/mixedreality/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=F:\\msd\\sources\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "32b7b579549d417d5a799b4d0527f5ad9dd73fc3";
+      public static readonly String GithubCommidId = "82d97c305cdaab59b6b15b2848e9ccba4c2a6b66";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

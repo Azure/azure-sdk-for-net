@@ -1,10 +1,17 @@
 namespace Azure.Analytics.Synapse.AccessControl
 {
+    public partial class AccessControlClientOptions : Azure.Core.ClientOptions
+    {
+        public AccessControlClientOptions(Azure.Analytics.Synapse.AccessControl.AccessControlClientOptions.ServiceVersion version = Azure.Analytics.Synapse.AccessControl.AccessControlClientOptions.ServiceVersion.V2020_08_01_preview) { }
+        public enum ServiceVersion
+        {
+            V2020_08_01_preview = 1,
+        }
+    }
     public partial class RoleAssignmentsClient
     {
         protected RoleAssignmentsClient() { }
-        public RoleAssignmentsClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
-        public RoleAssignmentsClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Synapse.AccessControl.RoleAssignmentsClientOptions options) { }
+        public RoleAssignmentsClient(string endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Synapse.AccessControl.AccessControlClientOptions options = null) { }
         public virtual Azure.Response<Azure.Analytics.Synapse.AccessControl.Models.CheckPrincipalAccessResponse> CheckPrincipalAccess(Azure.Analytics.Synapse.AccessControl.Models.SubjectInfo subject, System.Collections.Generic.IEnumerable<Azure.Analytics.Synapse.AccessControl.Models.RequiredAction> actions, string scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Synapse.AccessControl.Models.CheckPrincipalAccessResponse>> CheckPrincipalAccessAsync(Azure.Analytics.Synapse.AccessControl.Models.SubjectInfo subject, System.Collections.Generic.IEnumerable<Azure.Analytics.Synapse.AccessControl.Models.RequiredAction> actions, string scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Analytics.Synapse.AccessControl.Models.RoleAssignmentDetails> CreateRoleAssignment(string roleAssignmentId, System.Guid roleId, System.Guid principalId, string scope, string principalType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -16,33 +23,16 @@ namespace Azure.Analytics.Synapse.AccessControl
         public virtual Azure.Response<Azure.Analytics.Synapse.AccessControl.Models.RoleAssignmentDetailsList> ListRoleAssignments(string roleId = null, string principalId = null, string scope = null, string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Synapse.AccessControl.Models.RoleAssignmentDetailsList>> ListRoleAssignmentsAsync(string roleId = null, string principalId = null, string scope = null, string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class RoleAssignmentsClientOptions : Azure.Core.ClientOptions
-    {
-        public RoleAssignmentsClientOptions(Azure.Analytics.Synapse.AccessControl.RoleAssignmentsClientOptions.ServiceVersion serviceVersion = Azure.Analytics.Synapse.AccessControl.RoleAssignmentsClientOptions.ServiceVersion.V2020_08_01_preview) { }
-        public enum ServiceVersion
-        {
-            V2020_08_01_preview = 1,
-        }
-    }
     public partial class RoleDefinitionsClient
     {
         protected RoleDefinitionsClient() { }
-        public RoleDefinitionsClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
-        public RoleDefinitionsClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Synapse.AccessControl.RoleDefinitionsClientOptions options) { }
+        public RoleDefinitionsClient(string endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Synapse.AccessControl.AccessControlClientOptions options = null) { }
         public virtual Azure.Response<Azure.Analytics.Synapse.AccessControl.Models.SynapseRoleDefinition> GetRoleDefinitionById(string roleDefinitionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Synapse.AccessControl.Models.SynapseRoleDefinition>> GetRoleDefinitionByIdAsync(string roleDefinitionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Analytics.Synapse.AccessControl.Models.SynapseRoleDefinition>> ListRoleDefinitions(bool? isBuiltIn = default(bool?), string scope = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Analytics.Synapse.AccessControl.Models.SynapseRoleDefinition>>> ListRoleDefinitionsAsync(bool? isBuiltIn = default(bool?), string scope = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<string>> ListScopes(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<string>>> ListScopesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class RoleDefinitionsClientOptions : Azure.Core.ClientOptions
-    {
-        public RoleDefinitionsClientOptions(Azure.Analytics.Synapse.AccessControl.RoleDefinitionsClientOptions.ServiceVersion serviceVersion = Azure.Analytics.Synapse.AccessControl.RoleDefinitionsClientOptions.ServiceVersion.V2020_08_01_preview) { }
-        public enum ServiceVersion
-        {
-            V2020_08_01_preview = 1,
-        }
     }
 }
 namespace Azure.Analytics.Synapse.AccessControl.Models

@@ -59,7 +59,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         private LinkedServiceClient CreateClient()
         {
             return InstrumentClient(new LinkedServiceClient(
-                new Uri(TestEnvironment.EndpointUrl),
+                TestEnvironment.EndpointUrl,
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new ArtifactsClientOptions())
             ));

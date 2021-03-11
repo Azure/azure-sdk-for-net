@@ -22,7 +22,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\samples\README.md" Link="samples\README.md" />
-    <None Include="..\samples\Sample2_PhoneNumberAdministrationClient.md" Link="samples\Sample2_PhoneNumberAdministrationClient.md" />
-    <None Include="..\samples\Sample2_PhoneNumberAdministrationClientAsync.md" Link="samples\Sample2_PhoneNumberAdministrationClientAsync.md" />
+    <None Include="..\samples\Sample_PhoneNumbersClient.md" Link="samples\Sample_PhoneNumbersClient.md" />
+    <None Include="..\samples\Sample_PhoneNumbersClientAsync.md" Link="samples\Sample_PhoneNumbersClientAsync.md" />
+
   </ItemGroup>
 </Project>

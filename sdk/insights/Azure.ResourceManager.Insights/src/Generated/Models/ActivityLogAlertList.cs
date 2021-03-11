@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Insights.Models
 {
     /// <summary> A list of activity log alerts. </summary>
-    public partial class ActivityLogAlertList
+    internal partial class ActivityLogAlertList
     {
         /// <summary> Initializes a new instance of ActivityLogAlertList. </summary>
         internal ActivityLogAlertList()

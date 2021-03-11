@@ -40,16 +40,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             return options;
         }
 
-        protected override QueueServiceClient CreateClientFromConnectionString(string connectionString, QueueClientOptions options)
-        {
-            return new QueueServiceClient(connectionString, options);
-        }
-
-        protected override QueueServiceClient CreateClientFromTokenCredential(Uri endpointUri, TokenCredential tokenCredential, QueueClientOptions options)
-        {
-            return new QueueServiceClient(endpointUri, tokenCredential, options);
-        }
-
         private async Task HandleMessageDecodingFailed(QueueMessageDecodingFailedEventArgs args)
         {
             // SharedBlobQueueProcessor moves to poison queue only if message is parsable and has corresponding registration.

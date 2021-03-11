@@ -2,6 +2,8 @@
 
 ## 1.0.0-preview.7 (Unreleased)
 
+### Added
+- Many models classes now have public getters.
 
 ## 1.0.0-preview.6 (2021-02-10)
 

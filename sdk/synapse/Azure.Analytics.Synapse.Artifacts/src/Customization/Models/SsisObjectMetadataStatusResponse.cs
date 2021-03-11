@@ -10,5 +10,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public SsisObjectMetadataStatusResponse()
         {
         }
+
+        /// <summary> The status of the operation. </summary>
+        public string Status { get; set; }
+        /// <summary> The operation name. </summary>
+        public string Name { get; set; }
+        /// <summary> The operation properties. </summary>
+        public string Properties { get; set; }
+        /// <summary> The operation error message. </summary>
+        public string Error { get; set; }
     }
 }

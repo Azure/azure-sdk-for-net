@@ -1,15 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/entities/recognition/pii?showStats=false\u0026domain=phi\u0026stringIndexType=Utf16CodeUnit",
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.4/entities/recognition/pii?showStats=false\u0026stringIndexType=Utf16CodeUnit",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json, text/json",
         "Content-Length": "331",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-87c0e738547e514298380241adf65c73-2cf1f806222f1e4b-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210208.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-748e71ec84416c4eac3661d781f470a5-5f12b63ac853084c-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210301.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "e382b2e96bf3675f4d7d7960b8b32916",
         "x-ms-return-client-request-id": "true"
       },
@@ -34,14 +34,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "6b8b7e8e-5c44-42c1-beaf-20005d3d75e0",
+        "apim-request-id": "ab5d8100-15c0-4213-9acb-828cc6b0dbcf",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2",
-        "Date": "Mon, 08 Feb 2021 16:53:37 GMT",
+        "Date": "Mon, 01 Mar 2021 17:02:15 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "147"
+        "x-envoy-upstream-service-time": "47"
       },
       "ResponseBody": {
         "documents": [
@@ -51,14 +51,14 @@
             "entities": [
               {
                 "text": "859-98-0987",
-                "category": "U.S. Social Security Number (SSN)",
+                "category": "USSocialSecurityNumber",
                 "offset": 21,
                 "length": 11,
                 "confidenceScore": 0.65
               },
               {
                 "text": "800-102-1100",
-                "category": "Phone Number",
+                "category": "PhoneNumber",
                 "offset": 55,
                 "length": 12,
                 "confidenceScore": 0.8
@@ -72,21 +72,21 @@
             "entities": [
               {
                 "text": "111000025",
-                "category": "Phone Number",
+                "category": "PhoneNumber",
                 "offset": 18,
                 "length": 9,
                 "confidenceScore": 0.8
               },
               {
                 "text": "111000025",
-                "category": "ABA Routing Number",
+                "category": "ABARoutingNumber",
                 "offset": 18,
                 "length": 9,
                 "confidenceScore": 0.75
               },
               {
                 "text": "111000025",
-                "category": "New Zealand Social Welfare Number",
+                "category": "NZSocialWelfareNumber",
                 "offset": 18,
                 "length": 9,
                 "confidenceScore": 0.65
@@ -108,13 +108,13 @@
             }
           }
         ],
-        "modelVersion": "2020-07-01"
+        "modelVersion": "2021-01-15"
       }
     }
   ],
   "Variables": {
     "RandomSeed": "239145501",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://ta-s-westeurope.cognitiveservices.azure.com"
+    "TEXT_ANALYTICS_ENDPOINT": "https://mariari-westus2-s.cognitiveservices.azure.com/"
   }
 }

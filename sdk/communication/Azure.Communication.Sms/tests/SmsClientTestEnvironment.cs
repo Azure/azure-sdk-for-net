@@ -7,8 +7,16 @@ namespace Azure.Communication.Sms.Tests
 {
     public class SmsClientTestEnvironment : CommunicationTestEnvironment
     {
-        internal const string PhoneNumberEnvironmentVariableName = "AZURE_PHONE_NUMBER";
+        internal const string ToPhoneNumberEnvironmentVariableName = "AZURE_PHONE_NUMBER";
 
-        public string PhoneNumber => GetRecordedVariable(PhoneNumberEnvironmentVariableName);
+        internal const string FromPhoneNumberEnvironmentVariableName = "AZURE_PHONE_NUMBER";
+
+        internal const string LiveTestConnectionStringEnvironmentVariableName = "AZURE_COMMUNICATION_LIVETEST_CONNECTION_STRING";
+
+        public string ToPhoneNumber => GetRecordedVariable(ToPhoneNumberEnvironmentVariableName);
+
+        public string FromPhoneNumber => GetRecordedVariable(FromPhoneNumberEnvironmentVariableName);
+
+        public string LiveTestConnectionString => GetRecordedVariable(LiveTestConnectionStringEnvironmentVariableName);
     }
 }
