@@ -2,7 +2,7 @@
 
 This guide is intended to assist in the migration to Azure.Messaging.EventGrid from Microsoft.Azure.EventGrid. It will focus on side-by-side comparisons for similar operations between the two packages.
 
-We assume that you are familiar with Microsoft.Azure.EventGrid. If not, please refer to the README for [Azure.Messaging.EventGrid](README.md) rather than this guide.
+We assume that you are familiar with Microsoft.Azure.EventGrid. If not, please refer to the README for [Azure.Messaging.EventGrid](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventgrid/Azure.Messaging.EventGrid/README.md) rather than this guide.
 
 ## Table of contents
 - [Migration benefits](#migration-benefits)
