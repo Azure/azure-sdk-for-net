@@ -28,6 +28,7 @@ foreach ($packageProp in $allPackageProps) {
     $changeLogEntries = Get-ChangeLogEntries -ChangeLogLocation $changeLogLocation
     $packageName = $packageProp.Name
     $serviceDirectory = $packageProp.ServiceDirectory
+    $packageDirectoryname = Split-Path -Path $packageProp.DirectoryPath -Leaf
 
     foreach ($changeLogEntry in $changeLogEntries.Values) {
         if ([System.String]::IsNullOrEmpty($changeLogEntry.ReleaseStatus))
@@ -48,7 +49,7 @@ foreach ($packageProp in $allPackageProps) {
 
         $releaseHighlights[$key] = @{}
         $releaseHighlights[$key]["PackageProperties"] = $packageProp
-        $releaseHighlights[$key]["ChangelogUrl"] = "https://github.com/Azure/azure-sdk-for-${LanguageShort}/blob/${releaseTag}/sdk/${serviceDirectory}/${packageName}/CHANGELOG.md#${githubAnchor}"
+        $releaseHighlights[$key]["ChangelogUrl"] = "https://github.com/Azure/azure-sdk-for-${LanguageShort}/blob/${releaseTag}/sdk/${serviceDirectory}/${packageDirectoryname}/CHANGELOG.md#${githubAnchor}"
         $releaseHighlights[$key]["Content"] = @()
 
         $changeLogEntry.ReleaseContent | %{
