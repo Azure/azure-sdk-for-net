@@ -67,15 +67,17 @@ namespace Azure.Core.TestFramework
             _actualPlaybackServiceVersion = RecordingServiceVersion != null ? Convert.ToInt32(RecordingServiceVersion) : latestVersion;
 
             var liveVersions = LiveServiceVersions ?? _serviceVersions;
-            var latestLive = liveVersions.Max(Convert.ToInt32);
 
-            if (OnlyTestLatestServiceVersionLazy.Value)
+            if (liveVersions.Any())
             {
-                _actualLiveServiceVersions = new[] {latestLive};
-            }
-            else
-            {
-                _actualLiveServiceVersions = liveVersions.Select(Convert.ToInt32).ToArray();
+                if (OnlyTestLatestServiceVersionLazy.Value)
+                {
+                    _actualLiveServiceVersions = new[] { liveVersions.Max(Convert.ToInt32) };
+                }
+                else
+                {
+                    _actualLiveServiceVersions = liveVersions.Select(Convert.ToInt32).ToArray();
+                }
             }
 
             var suitePermutations = GeneratePermutations();
@@ -188,7 +190,8 @@ namespace Azure.Core.TestFramework
                 test.Properties.Add("SkipRecordings", $"Test is ignored when not running live because the service version {serviceVersion} is not {_actualPlaybackServiceVersion}.");
             }
 
-            if (!_actualLiveServiceVersions.Contains(serviceVersionNumber))
+            if (_actualLiveServiceVersions != null &&
+                !_actualLiveServiceVersions.Contains(serviceVersionNumber))
             {
                 test.Properties.Set("SkipLive",
                     $"Test ignored when running live service version {serviceVersion} is not one of {string.Join(", " , _actualLiveServiceVersions)}.");
@@ -209,7 +212,7 @@ namespace Azure.Core.TestFramework
                     test.Properties.Set("_SKIPREASON", $"Test ignored because it's minimum service version is set to {serviceVersionAttribute.Min}");
                 }
 
-                if (serviceVersionAttribute.Max != null &&
+                if (serviceVersionAttribute.Max != null &
                     Convert.ToInt32(serviceVersionAttribute.Max) < serviceVersionNumber)
                 {
                     test.RunState = RunState.Ignored;
