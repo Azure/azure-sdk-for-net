@@ -56,10 +56,10 @@ namespace Proto.Billing
 
 
         /// <inheritdoc/>
-        public override ArmResponse<BillingAccount> Get()
+        public override ArmResponse<BillingAccount> Get(CancellationToken cancellationToken = default)
         {
             return new PhArmResponse<BillingAccount, Azure.ResourceManager.Billing.Models.BillingAccount>(
-                Operations.Get(Id.Name),
+                Operations.Get(Id.Name, cancellationToken: cancellationToken),
                 Converter());
         }
 

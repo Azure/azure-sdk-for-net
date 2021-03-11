@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.ResourceManager.Core;
 
@@ -34,7 +35,7 @@ namespace Proto.Billing
         }
 
         /// <inheritdoc />
-        protected override Task<BillingAccount> GetResourceAsync()
+        protected override Task<BillingAccount> GetResourceAsync(CancellationToken cancellation = default)
         {
             return Task.FromResult(this);
         }

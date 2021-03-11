@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Get the tenant operations <see cref="TenantOperations"/> class.
         /// </summary>
-        public TenantOperations Tenant => _tenant ??= new TenantOperations(ClientOptions, _credentials, _baseUri);
+        public TenantOperations Tenant => _tenant ??= new TenantOperations(_clientOptions, _credentials, _baseUri);
 
         private readonly AzureResourceManagerClientOptions _clientOptions;
 
