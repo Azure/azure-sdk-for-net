@@ -5,14 +5,11 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    [JsonConverter(typeof(AcsChatThreadParticipantPropertiesConverter))]
     public partial class AcsChatThreadParticipantProperties
     {
         internal static AcsChatThreadParticipantProperties DeserializeAcsChatThreadParticipantProperties(JsonElement element)
@@ -38,19 +35,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new AcsChatThreadParticipantProperties(displayName.Value, participantCommunicationIdentifier.Value);
-        }
-
-        internal partial class AcsChatThreadParticipantPropertiesConverter : JsonConverter<AcsChatThreadParticipantProperties>
-        {
-            public override void Write(Utf8JsonWriter writer, AcsChatThreadParticipantProperties model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model);
-            }
-            public override AcsChatThreadParticipantProperties Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeAcsChatThreadParticipantProperties(document.RootElement);
-            }
         }
     }
 }

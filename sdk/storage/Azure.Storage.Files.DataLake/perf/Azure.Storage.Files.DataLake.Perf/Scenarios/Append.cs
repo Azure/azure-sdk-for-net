@@ -101,7 +101,7 @@ namespace Azure.Storage.Files.DataLake.Perf.Scenarios
 
             using var randomStream = RandomStream.Create(1024);
 
-            await FileClient.CreateAsync();
+            await FileClient.CreateIfNotExistsAsync();
             await FileClient.UploadAsync(randomStream, true);
         }
 

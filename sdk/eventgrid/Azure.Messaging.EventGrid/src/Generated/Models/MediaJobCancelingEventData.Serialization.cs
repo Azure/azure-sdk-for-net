@@ -66,7 +66,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         {
             public override void Write(Utf8JsonWriter writer, MediaJobCancelingEventData model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                throw new NotImplementedException();
             }
             public override MediaJobCancelingEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

@@ -5,14 +5,11 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    [JsonConverter(typeof(DeviceConnectionStateEventInfoConverter))]
     public partial class DeviceConnectionStateEventInfo
     {
         internal static DeviceConnectionStateEventInfo DeserializeDeviceConnectionStateEventInfo(JsonElement element)
@@ -27,19 +24,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new DeviceConnectionStateEventInfo(sequenceNumber.Value);
-        }
-
-        internal partial class DeviceConnectionStateEventInfoConverter : JsonConverter<DeviceConnectionStateEventInfo>
-        {
-            public override void Write(Utf8JsonWriter writer, DeviceConnectionStateEventInfo model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model);
-            }
-            public override DeviceConnectionStateEventInfo Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeDeviceConnectionStateEventInfo(document.RootElement);
-            }
         }
     }
 }

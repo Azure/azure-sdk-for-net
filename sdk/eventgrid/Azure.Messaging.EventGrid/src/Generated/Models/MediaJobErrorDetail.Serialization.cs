@@ -5,14 +5,11 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    [JsonConverter(typeof(MediaJobErrorDetailConverter))]
     public partial class MediaJobErrorDetail
     {
         internal static MediaJobErrorDetail DeserializeMediaJobErrorDetail(JsonElement element)
@@ -33,19 +30,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new MediaJobErrorDetail(code.Value, message.Value);
-        }
-
-        internal partial class MediaJobErrorDetailConverter : JsonConverter<MediaJobErrorDetail>
-        {
-            public override void Write(Utf8JsonWriter writer, MediaJobErrorDetail model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model);
-            }
-            public override MediaJobErrorDetail Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeMediaJobErrorDetail(document.RootElement);
-            }
         }
     }
 }

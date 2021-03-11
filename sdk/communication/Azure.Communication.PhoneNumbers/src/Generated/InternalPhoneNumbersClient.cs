@@ -150,7 +150,7 @@ namespace Azure.Communication.PhoneNumbers.Models
         /// <summary> Gets the details of the given acquired phone number. </summary>
         /// <param name="phoneNumber"> The acquired phone number whose details are to be fetched in E.164 format, e.g. +11234567890. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AcquiredPhoneNumber>> GetByNumberAsync(string phoneNumber, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PurchasedPhoneNumber>> GetByNumberAsync(string phoneNumber, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.GetByNumber");
             scope.Start();
@@ -168,7 +168,7 @@ namespace Azure.Communication.PhoneNumbers.Models
         /// <summary> Gets the details of the given acquired phone number. </summary>
         /// <param name="phoneNumber"> The acquired phone number whose details are to be fetched in E.164 format, e.g. +11234567890. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AcquiredPhoneNumber> GetByNumber(string phoneNumber, CancellationToken cancellationToken = default)
+        public virtual Response<PurchasedPhoneNumber> GetByNumber(string phoneNumber, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.GetByNumber");
             scope.Start();
@@ -187,9 +187,9 @@ namespace Azure.Communication.PhoneNumbers.Models
         /// <param name="skip"> An optional parameter for how many entries to skip, for pagination purposes. The default value is 0. </param>
         /// <param name="top"> An optional parameter for how many entries to return, for pagination purposes. The default value is 100. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<AcquiredPhoneNumber> ListPhoneNumbersAsync(int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PurchasedPhoneNumber> ListPhoneNumbersAsync(int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<AcquiredPhoneNumber>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<PurchasedPhoneNumber>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.ListPhoneNumbers");
                 scope.Start();
@@ -204,7 +204,7 @@ namespace Azure.Communication.PhoneNumbers.Models
                     throw;
                 }
             }
-            async Task<Page<AcquiredPhoneNumber>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<PurchasedPhoneNumber>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.ListPhoneNumbers");
                 scope.Start();
@@ -226,9 +226,9 @@ namespace Azure.Communication.PhoneNumbers.Models
         /// <param name="skip"> An optional parameter for how many entries to skip, for pagination purposes. The default value is 0. </param>
         /// <param name="top"> An optional parameter for how many entries to return, for pagination purposes. The default value is 100. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<AcquiredPhoneNumber> ListPhoneNumbers(int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<PurchasedPhoneNumber> ListPhoneNumbers(int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<AcquiredPhoneNumber> FirstPageFunc(int? pageSizeHint)
+            Page<PurchasedPhoneNumber> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.ListPhoneNumbers");
                 scope.Start();
@@ -243,7 +243,7 @@ namespace Azure.Communication.PhoneNumbers.Models
                     throw;
                 }
             }
-            Page<AcquiredPhoneNumber> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<PurchasedPhoneNumber> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.ListPhoneNumbers");
                 scope.Start();

@@ -5,14 +5,11 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    [JsonConverter(typeof(DeviceTwinInfoX509ThumbprintConverter))]
     public partial class DeviceTwinInfoX509Thumbprint
     {
         internal static DeviceTwinInfoX509Thumbprint DeserializeDeviceTwinInfoX509Thumbprint(JsonElement element)
@@ -33,19 +30,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new DeviceTwinInfoX509Thumbprint(primaryThumbprint.Value, secondaryThumbprint.Value);
-        }
-
-        internal partial class DeviceTwinInfoX509ThumbprintConverter : JsonConverter<DeviceTwinInfoX509Thumbprint>
-        {
-            public override void Write(Utf8JsonWriter writer, DeviceTwinInfoX509Thumbprint model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model);
-            }
-            public override DeviceTwinInfoX509Thumbprint Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeDeviceTwinInfoX509Thumbprint(document.RootElement);
-            }
         }
     }
 }

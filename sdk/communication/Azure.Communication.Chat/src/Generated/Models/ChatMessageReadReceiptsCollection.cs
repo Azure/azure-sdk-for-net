@@ -17,7 +17,7 @@ namespace Azure.Communication.Chat
         /// <summary> Initializes a new instance of ChatMessageReadReceiptsCollection. </summary>
         /// <param name="value"> Collection of chat message read receipts. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ChatMessageReadReceiptsCollection(IEnumerable<ChatMessageReadReceipt> value)
+        internal ChatMessageReadReceiptsCollection(IEnumerable<ChatMessageReadReceiptInternal> value)
         {
             if (value == null)
             {
@@ -30,14 +30,14 @@ namespace Azure.Communication.Chat
         /// <summary> Initializes a new instance of ChatMessageReadReceiptsCollection. </summary>
         /// <param name="value"> Collection of chat message read receipts. </param>
         /// <param name="nextLink"> If there are more chat message read receipts that can be retrieved, the next link will be populated. </param>
-        internal ChatMessageReadReceiptsCollection(IReadOnlyList<ChatMessageReadReceipt> value, string nextLink)
+        internal ChatMessageReadReceiptsCollection(IReadOnlyList<ChatMessageReadReceiptInternal> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Collection of chat message read receipts. </summary>
-        public IReadOnlyList<ChatMessageReadReceipt> Value { get; }
+        public IReadOnlyList<ChatMessageReadReceiptInternal> Value { get; }
         /// <summary> If there are more chat message read receipts that can be retrieved, the next link will be populated. </summary>
         public string NextLink { get; }
     }

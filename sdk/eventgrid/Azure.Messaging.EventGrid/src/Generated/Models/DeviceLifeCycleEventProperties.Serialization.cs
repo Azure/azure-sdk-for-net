@@ -5,14 +5,11 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    [JsonConverter(typeof(DeviceLifeCycleEventPropertiesConverter))]
     public partial class DeviceLifeCycleEventProperties
     {
         internal static DeviceLifeCycleEventProperties DeserializeDeviceLifeCycleEventProperties(JsonElement element)
@@ -44,19 +41,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new DeviceLifeCycleEventProperties(deviceId.Value, hubName.Value, twin.Value);
-        }
-
-        internal partial class DeviceLifeCycleEventPropertiesConverter : JsonConverter<DeviceLifeCycleEventProperties>
-        {
-            public override void Write(Utf8JsonWriter writer, DeviceLifeCycleEventProperties model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model);
-            }
-            public override DeviceLifeCycleEventProperties Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeDeviceLifeCycleEventProperties(document.RootElement);
-            }
         }
     }
 }

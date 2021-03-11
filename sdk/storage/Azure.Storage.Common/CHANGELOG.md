@@ -1,7 +1,10 @@
 # Release History
 
-## 12.8.0-beta.2 (Unreleased)
+## 12.8.0-beta.3 (Unreleased)
 
+
+## 12.8.0-beta.2 (2021-03-09)
+- This release contains bug fixes to improve quality.
 
 ## 12.8.0-beta.1 (2021-02-09)
 - Aligned storage URL parsing with other platforms

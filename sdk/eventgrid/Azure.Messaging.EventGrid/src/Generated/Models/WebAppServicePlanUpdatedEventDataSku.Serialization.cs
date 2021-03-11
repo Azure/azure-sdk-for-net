@@ -5,14 +5,11 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    [JsonConverter(typeof(WebAppServicePlanUpdatedEventDataSkuConverter))]
     public partial class WebAppServicePlanUpdatedEventDataSku
     {
         internal static WebAppServicePlanUpdatedEventDataSku DeserializeWebAppServicePlanUpdatedEventDataSku(JsonElement element)
@@ -51,19 +48,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new WebAppServicePlanUpdatedEventDataSku(name.Value, tier.Value, size.Value, family.Value, capacity.Value);
-        }
-
-        internal partial class WebAppServicePlanUpdatedEventDataSkuConverter : JsonConverter<WebAppServicePlanUpdatedEventDataSku>
-        {
-            public override void Write(Utf8JsonWriter writer, WebAppServicePlanUpdatedEventDataSku model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model);
-            }
-            public override WebAppServicePlanUpdatedEventDataSku Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeWebAppServicePlanUpdatedEventDataSku(document.RootElement);
-            }
         }
     }
 }

@@ -74,7 +74,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         {
             public override void Write(Utf8JsonWriter writer, WebBackupOperationStartedEventData model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                throw new NotImplementedException();
             }
             public override WebBackupOperationStartedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

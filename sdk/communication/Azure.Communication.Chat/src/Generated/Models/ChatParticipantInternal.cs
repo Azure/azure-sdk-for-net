@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Communication;
 
 namespace Azure.Communication.Chat
 {
@@ -13,31 +14,31 @@ namespace Azure.Communication.Chat
     internal partial class ChatParticipantInternal
     {
         /// <summary> Initializes a new instance of ChatParticipantInternal. </summary>
-        /// <param name="id"> The id of the chat participant. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public ChatParticipantInternal(string id)
+        /// <param name="communicationIdentifier"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model must be interpreted as a union: Apart from rawId, at most one further property may be set. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="communicationIdentifier"/> is null. </exception>
+        public ChatParticipantInternal(CommunicationIdentifierModel communicationIdentifier)
         {
-            if (id == null)
+            if (communicationIdentifier == null)
             {
-                throw new ArgumentNullException(nameof(id));
+                throw new ArgumentNullException(nameof(communicationIdentifier));
             }
 
-            Id = id;
+            CommunicationIdentifier = communicationIdentifier;
         }
 
         /// <summary> Initializes a new instance of ChatParticipantInternal. </summary>
-        /// <param name="id"> The id of the chat participant. </param>
+        /// <param name="communicationIdentifier"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model must be interpreted as a union: Apart from rawId, at most one further property may be set. </param>
         /// <param name="displayName"> Display name for the chat participant. </param>
         /// <param name="shareHistoryTime"> Time from which the chat history is shared with the participant. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
-        internal ChatParticipantInternal(string id, string displayName, DateTimeOffset? shareHistoryTime)
+        internal ChatParticipantInternal(CommunicationIdentifierModel communicationIdentifier, string displayName, DateTimeOffset? shareHistoryTime)
         {
-            Id = id;
+            CommunicationIdentifier = communicationIdentifier;
             DisplayName = displayName;
             ShareHistoryTime = shareHistoryTime;
         }
 
-        /// <summary> The id of the chat participant. </summary>
-        public string Id { get; set; }
+        /// <summary> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model must be interpreted as a union: Apart from rawId, at most one further property may be set. </summary>
+        public CommunicationIdentifierModel CommunicationIdentifier { get; set; }
         /// <summary> Display name for the chat participant. </summary>
         public string DisplayName { get; set; }
         /// <summary> Time from which the chat history is shared with the participant. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>

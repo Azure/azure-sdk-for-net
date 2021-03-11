@@ -357,8 +357,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> Query alerts under anomaly alerting configuration. </summary>
         /// <param name="configurationId"> anomaly alerting configuration unique id. </param>
         /// <param name="body"> query alerting result request. </param>
-        /// <param name="skip"> The Integer to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="skip"> for paging, skipped number. </param>
+        /// <param name="top"> for paging, item number in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public async Task<Response<AlertResultList>> GetAlertsByAnomalyAlertingConfigurationAsync(Guid configurationId, AlertingResultQuery body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
@@ -387,8 +387,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> Query alerts under anomaly alerting configuration. </summary>
         /// <param name="configurationId"> anomaly alerting configuration unique id. </param>
         /// <param name="body"> query alerting result request. </param>
-        /// <param name="skip"> The Integer to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="skip"> for paging, skipped number. </param>
+        /// <param name="top"> for paging, item number in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public Response<AlertResultList> GetAlertsByAnomalyAlertingConfiguration(Guid configurationId, AlertingResultQuery body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
@@ -443,8 +443,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> Query anomalies under a specific alert. </summary>
         /// <param name="configurationId"> anomaly alerting configuration unique id. </param>
         /// <param name="alertId"> alert id. </param>
-        /// <param name="skip"> The Integer to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="skip"> for paging, skipped number. </param>
+        /// <param name="top"> for paging, item number in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
         public async Task<Response<AnomalyResultList>> GetAnomaliesFromAlertByAnomalyAlertingConfigurationAsync(Guid configurationId, string alertId, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
@@ -473,8 +473,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> Query anomalies under a specific alert. </summary>
         /// <param name="configurationId"> anomaly alerting configuration unique id. </param>
         /// <param name="alertId"> alert id. </param>
-        /// <param name="skip"> The Integer to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="skip"> for paging, skipped number. </param>
+        /// <param name="top"> for paging, item number in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
         public Response<AnomalyResultList> GetAnomaliesFromAlertByAnomalyAlertingConfiguration(Guid configurationId, string alertId, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
@@ -529,8 +529,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> Query incidents under a specific alert. </summary>
         /// <param name="configurationId"> anomaly alerting configuration unique id. </param>
         /// <param name="alertId"> alert id. </param>
-        /// <param name="skip"> The Integer to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="skip"> for paging, skipped number. </param>
+        /// <param name="top"> for paging, item number in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
         public async Task<Response<IncidentResultList>> GetIncidentsFromAlertByAnomalyAlertingConfigurationAsync(Guid configurationId, string alertId, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
@@ -559,8 +559,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> Query incidents under a specific alert. </summary>
         /// <param name="configurationId"> anomaly alerting configuration unique id. </param>
         /// <param name="alertId"> alert id. </param>
-        /// <param name="skip"> The Integer to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="skip"> for paging, skipped number. </param>
+        /// <param name="top"> for paging, item number in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
         public Response<IncidentResultList> GetIncidentsFromAlertByAnomalyAlertingConfiguration(Guid configurationId, string alertId, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
@@ -984,8 +984,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> Query anomalies under anomaly detection configuration. </summary>
         /// <param name="configurationId"> anomaly detection configuration unique id. </param>
         /// <param name="body"> query detection anomaly result request. </param>
-        /// <param name="skip"> The Integer to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="skip"> for paging, skipped number. </param>
+        /// <param name="top"> for paging, item number in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public async Task<Response<AnomalyResultList>> GetAnomaliesByAnomalyDetectionConfigurationAsync(Guid configurationId, DetectionAnomalyResultQuery body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
@@ -1014,8 +1014,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> Query anomalies under anomaly detection configuration. </summary>
         /// <param name="configurationId"> anomaly detection configuration unique id. </param>
         /// <param name="body"> query detection anomaly result request. </param>
-        /// <param name="skip"> The Integer to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="skip"> for paging, skipped number. </param>
+        /// <param name="top"> for paging, item number in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public Response<AnomalyResultList> GetAnomaliesByAnomalyDetectionConfiguration(Guid configurationId, DetectionAnomalyResultQuery body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
@@ -1072,8 +1072,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> Query dimension values of anomalies. </summary>
         /// <param name="configurationId"> anomaly detection configuration unique id. </param>
         /// <param name="body"> query dimension values request. </param>
-        /// <param name="skip"> The Integer to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="skip"> for paging, skipped number. </param>
+        /// <param name="top"> for paging, item number in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public async Task<Response<AnomalyDimensionList>> GetDimensionOfAnomaliesByAnomalyDetectionConfigurationAsync(Guid configurationId, AnomalyDimensionQuery body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
@@ -1102,8 +1102,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> Query dimension values of anomalies. </summary>
         /// <param name="configurationId"> anomaly detection configuration unique id. </param>
         /// <param name="body"> query dimension values request. </param>
-        /// <param name="skip"> The Integer to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="skip"> for paging, skipped number. </param>
+        /// <param name="top"> for paging, item number in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public Response<AnomalyDimensionList> GetDimensionOfAnomaliesByAnomalyDetectionConfiguration(Guid configurationId, AnomalyDimensionQuery body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
@@ -1156,7 +1156,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> Query incidents under anomaly detection configuration. </summary>
         /// <param name="configurationId"> anomaly detection configuration unique id. </param>
         /// <param name="body"> query detection incident result request. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="top"> for paging, item number in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public async Task<Response<IncidentResultList>> GetIncidentsByAnomalyDetectionConfigurationAsync(Guid configurationId, DetectionIncidentResultQuery body, int? top = null, CancellationToken cancellationToken = default)
@@ -1185,7 +1185,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> Query incidents under anomaly detection configuration. </summary>
         /// <param name="configurationId"> anomaly detection configuration unique id. </param>
         /// <param name="body"> query detection incident result request. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="top"> for paging, item number in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public Response<IncidentResultList> GetIncidentsByAnomalyDetectionConfiguration(Guid configurationId, DetectionIncidentResultQuery body, int? top = null, CancellationToken cancellationToken = default)
@@ -1237,8 +1237,8 @@ namespace Azure.AI.MetricsAdvisor
 
         /// <summary> Query incidents under anomaly detection configuration. </summary>
         /// <param name="configurationId"> anomaly detection configuration unique id. </param>
-        /// <param name="top"> The Integer to use. </param>
-        /// <param name="token"> The String to use. </param>
+        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="token"> the token for getting the next page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<IncidentResultList>> GetIncidentsByAnomalyDetectionConfigurationNextPagesAsync(Guid configurationId, int? top = null, string token = null, CancellationToken cancellationToken = default)
         {
@@ -1260,8 +1260,8 @@ namespace Azure.AI.MetricsAdvisor
 
         /// <summary> Query incidents under anomaly detection configuration. </summary>
         /// <param name="configurationId"> anomaly detection configuration unique id. </param>
-        /// <param name="top"> The Integer to use. </param>
-        /// <param name="token"> The String to use. </param>
+        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="token"> the token for getting the next page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<IncidentResultList> GetIncidentsByAnomalyDetectionConfigurationNextPages(Guid configurationId, int? top = null, string token = null, CancellationToken cancellationToken = default)
         {
@@ -1355,7 +1355,7 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
-        internal HttpMessage CreateListDataFeedsRequest(string dataFeedName, DataFeedSourceType? dataSourceType, DataFeedGranularityType? granularityName, EntityStatus? status, string creator, int? skip, int? top)
+        internal HttpMessage CreateListDataFeedsRequest(string dataFeedName, DataFeedSourceType? dataSourceType, DataFeedGranularityType? granularityName, DataFeedStatus? status, string creator, int? skip, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1403,10 +1403,10 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="granularityName"> filter data feed by its granularity. </param>
         /// <param name="status"> filter data feed by its status. </param>
         /// <param name="creator"> filter data feed by its creator. </param>
-        /// <param name="skip"> The Integer to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="skip"> for paging, skipped number. </param>
+        /// <param name="top"> for paging, item number in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<DataFeedList>> ListDataFeedsAsync(string dataFeedName = null, DataFeedSourceType? dataSourceType = null, DataFeedGranularityType? granularityName = null, EntityStatus? status = null, string creator = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DataFeedList>> ListDataFeedsAsync(string dataFeedName = null, DataFeedSourceType? dataSourceType = null, DataFeedGranularityType? granularityName = null, DataFeedStatus? status = null, string creator = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListDataFeedsRequest(dataFeedName, dataSourceType, granularityName, status, creator, skip, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1430,10 +1430,10 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="granularityName"> filter data feed by its granularity. </param>
         /// <param name="status"> filter data feed by its status. </param>
         /// <param name="creator"> filter data feed by its creator. </param>
-        /// <param name="skip"> The Integer to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="skip"> for paging, skipped number. </param>
+        /// <param name="top"> for paging, item number in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<DataFeedList> ListDataFeeds(string dataFeedName = null, DataFeedSourceType? dataSourceType = null, DataFeedGranularityType? granularityName = null, EntityStatus? status = null, string creator = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public Response<DataFeedList> ListDataFeeds(string dataFeedName = null, DataFeedSourceType? dataSourceType = null, DataFeedGranularityType? granularityName = null, DataFeedStatus? status = null, string creator = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListDataFeedsRequest(dataFeedName, dataSourceType, granularityName, status, creator, skip, top);
             _pipeline.Send(message, cancellationToken);
@@ -1700,7 +1700,7 @@ namespace Azure.AI.MetricsAdvisor
         }
 
         /// <summary> Get a metric feedback by its id. </summary>
-        /// <param name="feedbackId"> The Uuid to use. </param>
+        /// <param name="feedbackId"> the unique feedback ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<MetricFeedback>> GetMetricFeedbackAsync(Guid feedbackId, CancellationToken cancellationToken = default)
         {
@@ -1721,7 +1721,7 @@ namespace Azure.AI.MetricsAdvisor
         }
 
         /// <summary> Get a metric feedback by its id. </summary>
-        /// <param name="feedbackId"> The Uuid to use. </param>
+        /// <param name="feedbackId"> the unique feedback ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<MetricFeedback> GetMetricFeedback(Guid feedbackId, CancellationToken cancellationToken = default)
         {
@@ -1769,8 +1769,8 @@ namespace Azure.AI.MetricsAdvisor
 
         /// <summary> List feedback on the given metric. </summary>
         /// <param name="body"> metric feedback filter. </param>
-        /// <param name="skip"> The Integer to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="skip"> for paging, skipped number. </param>
+        /// <param name="top"> for paging, item number in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public async Task<Response<MetricFeedbackList>> ListMetricFeedbacksAsync(MetricFeedbackFilter body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
@@ -1798,8 +1798,8 @@ namespace Azure.AI.MetricsAdvisor
 
         /// <summary> List feedback on the given metric. </summary>
         /// <param name="body"> metric feedback filter. </param>
-        /// <param name="skip"> The Integer to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="skip"> for paging, skipped number. </param>
+        /// <param name="top"> for paging, item number in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public Response<MetricFeedbackList> ListMetricFeedbacks(MetricFeedbackFilter body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
@@ -1917,8 +1917,8 @@ namespace Azure.AI.MetricsAdvisor
 
         /// <summary> List all hooks. </summary>
         /// <param name="hookName"> filter hook by its name. </param>
-        /// <param name="skip"> The Integer to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="skip"> for paging, skipped number. </param>
+        /// <param name="top"> for paging, item number in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<HookList>> ListHooksAsync(string hookName = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
@@ -1940,8 +1940,8 @@ namespace Azure.AI.MetricsAdvisor
 
         /// <summary> List all hooks. </summary>
         /// <param name="hookName"> filter hook by its name. </param>
-        /// <param name="skip"> The Integer to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="skip"> for paging, skipped number. </param>
+        /// <param name="top"> for paging, item number in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<HookList> ListHooks(string hookName = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
@@ -2225,8 +2225,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> Get data ingestion status by data feed. </summary>
         /// <param name="dataFeedId"> The data feed unique id. </param>
         /// <param name="body"> The query time range. </param>
-        /// <param name="skip"> The Integer to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="skip"> for paging, skipped number. </param>
+        /// <param name="top"> for paging, item number in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public async Task<Response<IngestionStatusList>> GetDataFeedIngestionStatusAsync(Guid dataFeedId, IngestionStatusQueryOptions body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
@@ -2255,8 +2255,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> Get data ingestion status by data feed. </summary>
         /// <param name="dataFeedId"> The data feed unique id. </param>
         /// <param name="body"> The query time range. </param>
-        /// <param name="skip"> The Integer to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="skip"> for paging, skipped number. </param>
+        /// <param name="top"> for paging, item number in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public Response<IngestionStatusList> GetDataFeedIngestionStatus(Guid dataFeedId, IngestionStatusQueryOptions body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
@@ -2513,8 +2513,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> List series (dimension combinations) from metric. </summary>
         /// <param name="metricId"> metric unique id. </param>
         /// <param name="body"> filter to query series. </param>
-        /// <param name="skip"> The Integer to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="skip"> for paging, skipped number. </param>
+        /// <param name="top"> for paging, item number in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public async Task<Response<MetricSeriesList>> GetMetricSeriesAsync(Guid metricId, MetricSeriesQueryOptions body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
@@ -2543,8 +2543,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> List series (dimension combinations) from metric. </summary>
         /// <param name="metricId"> metric unique id. </param>
         /// <param name="body"> filter to query series. </param>
-        /// <param name="skip"> The Integer to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="skip"> for paging, skipped number. </param>
+        /// <param name="top"> for paging, item number in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public Response<MetricSeriesList> GetMetricSeries(Guid metricId, MetricSeriesQueryOptions body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
@@ -2601,8 +2601,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> List dimension from certain metric. </summary>
         /// <param name="metricId"> metric unique id. </param>
         /// <param name="body"> query dimension option. </param>
-        /// <param name="skip"> The Integer to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="skip"> for paging, skipped number. </param>
+        /// <param name="top"> for paging, item number in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public async Task<Response<MetricDimensionList>> GetMetricDimensionAsync(Guid metricId, MetricDimensionQueryOptions body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
@@ -2631,8 +2631,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> List dimension from certain metric. </summary>
         /// <param name="metricId"> metric unique id. </param>
         /// <param name="body"> query dimension option. </param>
-        /// <param name="skip"> The Integer to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="skip"> for paging, skipped number. </param>
+        /// <param name="top"> for paging, item number in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public Response<MetricDimensionList> GetMetricDimension(Guid metricId, MetricDimensionQueryOptions body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
@@ -2747,8 +2747,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> Query anomaly detection status. </summary>
         /// <param name="metricId"> metric unique id. </param>
         /// <param name="body"> query options. </param>
-        /// <param name="skip"> The Integer to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="skip"> for paging, skipped number. </param>
+        /// <param name="top"> for paging, item number in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public async Task<Response<EnrichmentStatusList>> GetEnrichmentStatusByMetricAsync(Guid metricId, EnrichmentStatusQueryOption body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
@@ -2777,8 +2777,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> Query anomaly detection status. </summary>
         /// <param name="metricId"> metric unique id. </param>
         /// <param name="body"> query options. </param>
-        /// <param name="skip"> The Integer to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="skip"> for paging, skipped number. </param>
+        /// <param name="top"> for paging, item number in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public Response<EnrichmentStatusList> GetEnrichmentStatusByMetric(Guid metricId, EnrichmentStatusQueryOption body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
@@ -3486,8 +3486,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="configurationId"> anomaly alerting configuration unique id. </param>
         /// <param name="body"> query alerting result request. </param>
-        /// <param name="skip"> The Integer to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="skip"> for paging, skipped number. </param>
+        /// <param name="top"> for paging, item number in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
         public async Task<Response<AlertResultList>> GetAlertsByAnomalyAlertingConfigurationNextPageAsync(string nextLink, Guid configurationId, AlertingResultQuery body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
@@ -3521,8 +3521,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="configurationId"> anomaly alerting configuration unique id. </param>
         /// <param name="body"> query alerting result request. </param>
-        /// <param name="skip"> The Integer to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="skip"> for paging, skipped number. </param>
+        /// <param name="top"> for paging, item number in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
         public Response<AlertResultList> GetAlertsByAnomalyAlertingConfigurationNextPage(string nextLink, Guid configurationId, AlertingResultQuery body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
@@ -3570,8 +3570,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="configurationId"> anomaly alerting configuration unique id. </param>
         /// <param name="alertId"> alert id. </param>
-        /// <param name="skip"> The Integer to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="skip"> for paging, skipped number. </param>
+        /// <param name="top"> for paging, item number in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="alertId"/> is null. </exception>
         public async Task<Response<AnomalyResultList>> GetAnomaliesFromAlertByAnomalyAlertingConfigurationNextPageAsync(string nextLink, Guid configurationId, string alertId, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
@@ -3605,8 +3605,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="configurationId"> anomaly alerting configuration unique id. </param>
         /// <param name="alertId"> alert id. </param>
-        /// <param name="skip"> The Integer to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="skip"> for paging, skipped number. </param>
+        /// <param name="top"> for paging, item number in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="alertId"/> is null. </exception>
         public Response<AnomalyResultList> GetAnomaliesFromAlertByAnomalyAlertingConfigurationNextPage(string nextLink, Guid configurationId, string alertId, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
@@ -3654,8 +3654,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="configurationId"> anomaly alerting configuration unique id. </param>
         /// <param name="alertId"> alert id. </param>
-        /// <param name="skip"> The Integer to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="skip"> for paging, skipped number. </param>
+        /// <param name="top"> for paging, item number in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="alertId"/> is null. </exception>
         public async Task<Response<IncidentResultList>> GetIncidentsFromAlertByAnomalyAlertingConfigurationNextPageAsync(string nextLink, Guid configurationId, string alertId, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
@@ -3689,8 +3689,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="configurationId"> anomaly alerting configuration unique id. </param>
         /// <param name="alertId"> alert id. </param>
-        /// <param name="skip"> The Integer to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="skip"> for paging, skipped number. </param>
+        /// <param name="top"> for paging, item number in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="alertId"/> is null. </exception>
         public Response<IncidentResultList> GetIncidentsFromAlertByAnomalyAlertingConfigurationNextPage(string nextLink, Guid configurationId, string alertId, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
@@ -3738,8 +3738,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="configurationId"> anomaly detection configuration unique id. </param>
         /// <param name="body"> query detection anomaly result request. </param>
-        /// <param name="skip"> The Integer to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="skip"> for paging, skipped number. </param>
+        /// <param name="top"> for paging, item number in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
         public async Task<Response<AnomalyResultList>> GetAnomaliesByAnomalyDetectionConfigurationNextPageAsync(string nextLink, Guid configurationId, DetectionAnomalyResultQuery body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
@@ -3773,8 +3773,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="configurationId"> anomaly detection configuration unique id. </param>
         /// <param name="body"> query detection anomaly result request. </param>
-        /// <param name="skip"> The Integer to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="skip"> for paging, skipped number. </param>
+        /// <param name="top"> for paging, item number in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
         public Response<AnomalyResultList> GetAnomaliesByAnomalyDetectionConfigurationNextPage(string nextLink, Guid configurationId, DetectionAnomalyResultQuery body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
@@ -3822,8 +3822,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="configurationId"> anomaly detection configuration unique id. </param>
         /// <param name="body"> query dimension values request. </param>
-        /// <param name="skip"> The Integer to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="skip"> for paging, skipped number. </param>
+        /// <param name="top"> for paging, item number in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
         public async Task<Response<AnomalyDimensionList>> GetDimensionOfAnomaliesByAnomalyDetectionConfigurationNextPageAsync(string nextLink, Guid configurationId, AnomalyDimensionQuery body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
@@ -3857,8 +3857,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="configurationId"> anomaly detection configuration unique id. </param>
         /// <param name="body"> query dimension values request. </param>
-        /// <param name="skip"> The Integer to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="skip"> for paging, skipped number. </param>
+        /// <param name="top"> for paging, item number in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
         public Response<AnomalyDimensionList> GetDimensionOfAnomaliesByAnomalyDetectionConfigurationNextPage(string nextLink, Guid configurationId, AnomalyDimensionQuery body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
@@ -3906,7 +3906,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="configurationId"> anomaly detection configuration unique id. </param>
         /// <param name="body"> query detection incident result request. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="top"> for paging, item number in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
         public async Task<Response<IncidentResultList>> GetIncidentsByAnomalyDetectionConfigurationNextPageAsync(string nextLink, Guid configurationId, DetectionIncidentResultQuery body, int? top = null, CancellationToken cancellationToken = default)
@@ -3940,7 +3940,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="configurationId"> anomaly detection configuration unique id. </param>
         /// <param name="body"> query detection incident result request. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="top"> for paging, item number in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
         public Response<IncidentResultList> GetIncidentsByAnomalyDetectionConfigurationNextPage(string nextLink, Guid configurationId, DetectionIncidentResultQuery body, int? top = null, CancellationToken cancellationToken = default)
@@ -3987,8 +3987,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> Query incidents under anomaly detection configuration. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="configurationId"> anomaly detection configuration unique id. </param>
-        /// <param name="top"> The Integer to use. </param>
-        /// <param name="token"> The String to use. </param>
+        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="token"> the token for getting the next page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<IncidentResultList>> GetIncidentsByAnomalyDetectionConfigurationNextPagesNextPageAsync(string nextLink, Guid configurationId, int? top = null, string token = null, CancellationToken cancellationToken = default)
@@ -4017,8 +4017,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> Query incidents under anomaly detection configuration. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="configurationId"> anomaly detection configuration unique id. </param>
-        /// <param name="top"> The Integer to use. </param>
-        /// <param name="token"> The String to use. </param>
+        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="token"> the token for getting the next page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<IncidentResultList> GetIncidentsByAnomalyDetectionConfigurationNextPagesNextPage(string nextLink, Guid configurationId, int? top = null, string token = null, CancellationToken cancellationToken = default)
@@ -4044,7 +4044,7 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
-        internal HttpMessage CreateListDataFeedsNextPageRequest(string nextLink, string dataFeedName, DataFeedSourceType? dataSourceType, DataFeedGranularityType? granularityName, EntityStatus? status, string creator, int? skip, int? top)
+        internal HttpMessage CreateListDataFeedsNextPageRequest(string nextLink, string dataFeedName, DataFeedSourceType? dataSourceType, DataFeedGranularityType? granularityName, DataFeedStatus? status, string creator, int? skip, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -4065,11 +4065,11 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="granularityName"> filter data feed by its granularity. </param>
         /// <param name="status"> filter data feed by its status. </param>
         /// <param name="creator"> filter data feed by its creator. </param>
-        /// <param name="skip"> The Integer to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="skip"> for paging, skipped number. </param>
+        /// <param name="top"> for paging, item number in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<DataFeedList>> ListDataFeedsNextPageAsync(string nextLink, string dataFeedName = null, DataFeedSourceType? dataSourceType = null, DataFeedGranularityType? granularityName = null, EntityStatus? status = null, string creator = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DataFeedList>> ListDataFeedsNextPageAsync(string nextLink, string dataFeedName = null, DataFeedSourceType? dataSourceType = null, DataFeedGranularityType? granularityName = null, DataFeedStatus? status = null, string creator = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -4099,11 +4099,11 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="granularityName"> filter data feed by its granularity. </param>
         /// <param name="status"> filter data feed by its status. </param>
         /// <param name="creator"> filter data feed by its creator. </param>
-        /// <param name="skip"> The Integer to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="skip"> for paging, skipped number. </param>
+        /// <param name="top"> for paging, item number in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<DataFeedList> ListDataFeedsNextPage(string nextLink, string dataFeedName = null, DataFeedSourceType? dataSourceType = null, DataFeedGranularityType? granularityName = null, EntityStatus? status = null, string creator = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public Response<DataFeedList> ListDataFeedsNextPage(string nextLink, string dataFeedName = null, DataFeedSourceType? dataSourceType = null, DataFeedGranularityType? granularityName = null, DataFeedStatus? status = null, string creator = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -4143,8 +4143,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> List feedback on the given metric. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="body"> metric feedback filter. </param>
-        /// <param name="skip"> The Integer to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="skip"> for paging, skipped number. </param>
+        /// <param name="top"> for paging, item number in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
         public async Task<Response<MetricFeedbackList>> ListMetricFeedbacksNextPageAsync(string nextLink, MetricFeedbackFilter body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
@@ -4177,8 +4177,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> List feedback on the given metric. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="body"> metric feedback filter. </param>
-        /// <param name="skip"> The Integer to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="skip"> for paging, skipped number. </param>
+        /// <param name="top"> for paging, item number in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
         public Response<MetricFeedbackList> ListMetricFeedbacksNextPage(string nextLink, MetricFeedbackFilter body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
@@ -4225,8 +4225,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> List all hooks. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="hookName"> filter hook by its name. </param>
-        /// <param name="skip"> The Integer to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="skip"> for paging, skipped number. </param>
+        /// <param name="top"> for paging, item number in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<HookList>> ListHooksNextPageAsync(string nextLink, string hookName = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
@@ -4255,8 +4255,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> List all hooks. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="hookName"> filter hook by its name. </param>
-        /// <param name="skip"> The Integer to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="skip"> for paging, skipped number. </param>
+        /// <param name="top"> for paging, item number in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<HookList> ListHooksNextPage(string nextLink, string hookName = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
@@ -4300,8 +4300,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="dataFeedId"> The data feed unique id. </param>
         /// <param name="body"> The query time range. </param>
-        /// <param name="skip"> The Integer to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="skip"> for paging, skipped number. </param>
+        /// <param name="top"> for paging, item number in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
         public async Task<Response<IngestionStatusList>> GetDataFeedIngestionStatusNextPageAsync(string nextLink, Guid dataFeedId, IngestionStatusQueryOptions body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
@@ -4335,8 +4335,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="dataFeedId"> The data feed unique id. </param>
         /// <param name="body"> The query time range. </param>
-        /// <param name="skip"> The Integer to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="skip"> for paging, skipped number. </param>
+        /// <param name="top"> for paging, item number in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
         public Response<IngestionStatusList> GetDataFeedIngestionStatusNextPage(string nextLink, Guid dataFeedId, IngestionStatusQueryOptions body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
@@ -4384,8 +4384,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="metricId"> metric unique id. </param>
         /// <param name="body"> filter to query series. </param>
-        /// <param name="skip"> The Integer to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="skip"> for paging, skipped number. </param>
+        /// <param name="top"> for paging, item number in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
         public async Task<Response<MetricSeriesList>> GetMetricSeriesNextPageAsync(string nextLink, Guid metricId, MetricSeriesQueryOptions body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
@@ -4419,8 +4419,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="metricId"> metric unique id. </param>
         /// <param name="body"> filter to query series. </param>
-        /// <param name="skip"> The Integer to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="skip"> for paging, skipped number. </param>
+        /// <param name="top"> for paging, item number in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
         public Response<MetricSeriesList> GetMetricSeriesNextPage(string nextLink, Guid metricId, MetricSeriesQueryOptions body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
@@ -4468,8 +4468,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="metricId"> metric unique id. </param>
         /// <param name="body"> query dimension option. </param>
-        /// <param name="skip"> The Integer to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="skip"> for paging, skipped number. </param>
+        /// <param name="top"> for paging, item number in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
         public async Task<Response<MetricDimensionList>> GetMetricDimensionNextPageAsync(string nextLink, Guid metricId, MetricDimensionQueryOptions body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
@@ -4503,8 +4503,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="metricId"> metric unique id. </param>
         /// <param name="body"> query dimension option. </param>
-        /// <param name="skip"> The Integer to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="skip"> for paging, skipped number. </param>
+        /// <param name="top"> for paging, item number in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
         public Response<MetricDimensionList> GetMetricDimensionNextPage(string nextLink, Guid metricId, MetricDimensionQueryOptions body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
@@ -4552,8 +4552,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="metricId"> metric unique id. </param>
         /// <param name="body"> query options. </param>
-        /// <param name="skip"> The Integer to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="skip"> for paging, skipped number. </param>
+        /// <param name="top"> for paging, item number in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
         public async Task<Response<EnrichmentStatusList>> GetEnrichmentStatusByMetricNextPageAsync(string nextLink, Guid metricId, EnrichmentStatusQueryOption body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
@@ -4587,8 +4587,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="metricId"> metric unique id. </param>
         /// <param name="body"> query options. </param>
-        /// <param name="skip"> The Integer to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="skip"> for paging, skipped number. </param>
+        /// <param name="top"> for paging, item number in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
         public Response<EnrichmentStatusList> GetEnrichmentStatusByMetricNextPage(string nextLink, Guid metricId, EnrichmentStatusQueryOption body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)

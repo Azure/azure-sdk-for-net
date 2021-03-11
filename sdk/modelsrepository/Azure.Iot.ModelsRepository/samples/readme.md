@@ -18,7 +18,8 @@ The samples project demonstrates the following:
 
 ```C# Snippet:ModelsRepositorySamplesCreateServiceClientWithGlobalEndpoint
 // When no URI is provided for instantiation, the Azure IoT Models Repository global endpoint
-// https://devicemodels.azure.com/ is used and the dependency model resolution option is set to TryFromExpanded.
+// https://devicemodels.azure.com/ is used and the model dependency resolution
+// configuration is set to TryFromExpanded.
 var client = new ModelsRepositoryClient(new ModelsRepositoryClientOptions());
 Console.WriteLine($"Initialized client pointing to global endpoint: {client.RepositoryUri}");
 ```
@@ -27,7 +28,7 @@ Console.WriteLine($"Initialized client pointing to global endpoint: {client.Repo
 // The client will also work with a local filesystem URI. This example shows initalization
 // with a local URI and disabling model dependency resolution.
 client = new ModelsRepositoryClient(new Uri(ClientSamplesLocalModelsRepository),
-    new ModelsRepositoryClientOptions(resolutionOption: DependencyResolutionOption.Disabled));
+    new ModelsRepositoryClientOptions(dependencyResolution: ModelDependencyResolution.Disabled));
 Console.WriteLine($"Initialized client pointing to local path: {client.RepositoryUri}");
 ```
 
@@ -53,7 +54,7 @@ After publishing, your model(s) will be available for consumption from the globa
 var client = new ModelsRepositoryClient();
 
 // The output of GetModelsAsync() will include at least the definition for the target dtmi.
-// If the dependency model resolution option is not disabled, then models in which the
+// If the model dependency resolution configuration is not disabled, then models in which the
 // target dtmi depends on will also be included in the returned IDictionary<string, string>.
 var dtmi = "dtmi:com:example:TemperatureController;1";
 IDictionary<string, string> models = await client.GetModelsAsync(dtmi).ConfigureAwait(false);
@@ -72,7 +73,7 @@ To support this workflow and similar use cases, the client supports initializati
 var client = new ModelsRepositoryClient(new Uri(ClientSamplesLocalModelsRepository));
 
 // The output of GetModelsAsync() will include at least the definition for the target dtmi.
-// If the dependency model resolution option is not disabled, then models in which the
+// If the model dependency resolution configuration is not disabled, then models in which the
 // target dtmi depends on will also be included in the returned IDictionary<string, string>.
 var dtmi = "dtmi:com:example:TemperatureController;1";
 IDictionary<string, string> models = await client.GetModelsAsync(dtmi).ConfigureAwait(false);
@@ -91,7 +92,7 @@ var client = new ModelsRepositoryClient();
 
 // When given an IEnumerable of dtmis, the output of GetModelsAsync() will include at 
 // least the definitions of each dtmi enumerated in the IEnumerable.
-// If the dependency model resolution option is not disabled, then models in which each
+// If the model dependency resolution configuration is not disabled, then models in which each
 // enumerated dtmi depends on will also be included in the returned IDictionary<string, string>.
 var dtmis = new[] { "dtmi:com:example:TemperatureController;1", "dtmi:com:example:azuresphere:sampledevice;1" };
 IDictionary<string, string> models = await client.GetModelsAsync(dtmis).ConfigureAwait(false);
@@ -121,7 +122,7 @@ Alternatively, the following snippet shows parsing a model, then fetching depend
 This is achieved by configuring the `ModelParser` to use the sample [ParserDtmiResolver][modelsrepository_sample_extension] client extension.
 
 ```C# Snippet:ModelsRepositorySamplesParserIntegrationParseAndGetModelsAsync
-var client = new ModelsRepositoryClient(new ModelsRepositoryClientOptions(resolutionOption: DependencyResolutionOption.Disabled));
+var client = new ModelsRepositoryClient(new ModelsRepositoryClientOptions(dependencyResolution: ModelDependencyResolution.Disabled));
 var dtmi = "dtmi:com:example:TemperatureController;1";
 IDictionary<string, string> models = await client.GetModelsAsync(dtmi).ConfigureAwait(false);
 var parser = new ModelParser
@@ -131,6 +132,41 @@ var parser = new ModelParser
 };
 IReadOnlyDictionary<Dtmi, DTEntityInfo> parseResult = await parser.ParseAsync(models.Values.Take(1).ToArray());
 Console.WriteLine($"{dtmi} resolved in {models.Count} interfaces with {parseResult.Count} entities.");
+```
+
+## DtmiConventions utility functions
+
+The IoT Models Repository applies a set of conventions for organizing digital twin models. This package exposes a class
+called `DtmiConventions` which exposes utility functions supporting these conventions. These same functions are used throughout the client.
+
+```C# Snippet:ModelsRepositorySamplesDtmiConventionsIsValidDtmi
+// This snippet shows how to validate a given DTMI string is well-formed.
+
+// Returns true
+DtmiConventions.IsValidDtmi("dtmi:com:example:Thermostat;1");
+
+// Returns false
+DtmiConventions.IsValidDtmi("dtmi:com:example:Thermostat");
+```
+
+```C# Snippet:ModelsRepositorySamplesDtmiConventionsGetModelUri
+// This snippet shows obtaining a fully qualified path to a model file.
+
+// Local repository example
+Uri localRepositoryUri = new Uri("file:///path/to/repository/");
+string fullyQualifiedModelPath = 
+    DtmiConventions.GetModelUri("dtmi:com:example:Thermostat;1", localRepositoryUri).AbsolutePath;
+
+// Prints '/path/to/repository/dtmi/com/example/thermostat-1.json'
+Console.WriteLine(fullyQualifiedModelPath);
+
+// Remote repository example
+Uri remoteRepositoryUri = new Uri("https://contoso.com/models/");
+fullyQualifiedModelPath =
+    DtmiConventions.GetModelUri("dtmi:com:example:Thermostat;1", remoteRepositoryUri).AbsoluteUri;
+
+// Prints 'https://contoso.com/models/dtmi/com/example/thermostat-1.json'
+Console.WriteLine(fullyQualifiedModelPath);
 ```
 
 <!-- LINKS -->

@@ -9,7 +9,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Core.Serialization;
 using Azure.Messaging.EventGrid.Models;
 
 namespace Azure.Messaging.EventGrid
@@ -19,15 +18,9 @@ namespace Azure.Messaging.EventGrid
     /// </summary>
     public class EventGridPublisherClient
     {
-        private readonly EventGridRestClient _serviceRestClient;
         private readonly ClientDiagnostics _clientDiagnostics;
-        private string _hostName => _endpoint.Authority;
-        private readonly Uri _endpoint;
-        private readonly AzureKeyCredential _key;
+        private readonly RequestUriBuilder _uriBuilder;
         private readonly HttpPipeline _pipeline;
-        private readonly string _apiVersion;
-
-        private static readonly JsonObjectSerializer s_jsonSerializer = new JsonObjectSerializer();
 
         /// <summary>Initalizes a new instance of the <see cref="EventGridPublisherClient"/> class for mocking.</summary>
         protected EventGridPublisherClient()
@@ -48,13 +41,13 @@ namespace Azure.Messaging.EventGrid
         /// <param name="options">The set of options to use for configuring the client.</param>
         public EventGridPublisherClient(Uri endpoint, AzureKeyCredential credential, EventGridPublisherClientOptions options)
         {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new EventGridPublisherClientOptions();
-            _apiVersion = options.Version.GetVersionString();
-            _endpoint = endpoint;
-            _key = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, new EventGridKeyCredentialPolicy(credential, Constants.SasKeyName));
-            _serviceRestClient = new EventGridRestClient(new ClientDiagnostics(options), _pipeline, options.Version.GetVersionString());
+            _uriBuilder = new RequestUriBuilder();
+            _uriBuilder.Reset(endpoint);
+            _uriBuilder.AppendQuery("api-version", options.Version.GetVersionString(), true);
+            _pipeline = HttpPipelineBuilder.Build(options, new EventGridKeyCredentialPolicy(credential));
             _clientDiagnostics = new ClientDiagnostics(options);
         }
 
@@ -67,11 +60,13 @@ namespace Azure.Messaging.EventGrid
         /// <param name="options">The set of options to use for configuring the client.</param>
         public EventGridPublisherClient(Uri endpoint, AzureSasCredential credential, EventGridPublisherClientOptions options = default)
         {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new EventGridPublisherClientOptions();
-            _endpoint = endpoint;
-            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new EventGridSharedAccessSignatureCredentialPolicy(credential));
-            _serviceRestClient = new EventGridRestClient(new ClientDiagnostics(options), pipeline, options.Version.GetVersionString());
+            _uriBuilder = new RequestUriBuilder();
+            _uriBuilder.Reset(endpoint);
+            _uriBuilder.AppendQuery("api-version", options.Version.GetVersionString(), true);
+            _pipeline = HttpPipelineBuilder.Build(options, new EventGridSharedAccessSignatureCredentialPolicy(credential));
             _clientDiagnostics = new ClientDiagnostics(options);
         }
 
@@ -123,20 +118,6 @@ namespace Azure.Messaging.EventGrid
             }
         }
 
-        private Request CreateEventRequest(HttpMessage message, string contentType)
-        {
-            Request request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.AppendRaw(_hostName, false);
-            uri.AppendPath("/api/events", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Content-Type", contentType);
-            return request;
-        }
-
         /// <summary> Publishes a set of EventGridEvents to an Event Grid topic. </summary>
         /// <param name="eventGridEvent"> The event to be published to Event Grid. </param>
         /// <param name="cancellationToken"> An optional cancellation token instance to signal the request to cancel the operation.</param>
@@ -177,13 +158,13 @@ namespace Azure.Messaging.EventGrid
                 // List of events cannot be null
                 Argument.AssertNotNull(events, nameof(events));
 
-                List<EventGridEventInternal> eventsWithSerializedPayloads = new List<EventGridEventInternal>();
+                using HttpMessage message = _pipeline.CreateMessage();
+                Request request = CreateEventRequest(message, "application/json");
+                var content = new Utf8JsonRequestContent();
+                content.JsonWriter.WriteStartArray();
                 foreach (EventGridEvent egEvent in events)
                 {
-                    // Individual events cannot be null
-                    Argument.AssertNotNull(egEvent, nameof(egEvent));
                     JsonDocument data = JsonDocument.Parse(egEvent.Data.ToStream());
-
                     EventGridEventInternal newEGEvent = new EventGridEventInternal(
                         egEvent.Id,
                         egEvent.Subject,
@@ -194,24 +175,27 @@ namespace Azure.Messaging.EventGrid
                     {
                         Topic = egEvent.Topic
                     };
-
-                    eventsWithSerializedPayloads.Add(newEGEvent);
+                    content.JsonWriter.WriteObjectValue(newEGEvent);
                 }
+
+                content.JsonWriter.WriteEndArray();
+                request.Content = content;
+
                 if (async)
                 {
-                    // Publish asynchronously if called via an async path
-                    return await _serviceRestClient.PublishEventsAsync(
-                        _hostName,
-                        eventsWithSerializedPayloads,
-                        cancellationToken).ConfigureAwait(false);
+                    await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    return _serviceRestClient.PublishEvents(
-                        _hostName,
-                        eventsWithSerializedPayloads,
-                        cancellationToken);
+                    _pipeline.Send(message, cancellationToken);
                 }
+                return message.Response.Status switch
+                {
+                    200 => message.Response,
+                    _ => async ?
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false) :
+                        throw _clientDiagnostics.CreateRequestFailedException(message.Response)
+                };
             }
             catch (Exception e)
             {
@@ -313,44 +297,6 @@ namespace Azure.Messaging.EventGrid
         public virtual Response SendEvents(IEnumerable<BinaryData> customEvents, CancellationToken cancellationToken = default)
             => PublishCustomEventsInternal(customEvents, false /*async*/, cancellationToken).EnsureCompleted();
 
-        private async Task<Response> PublishCustomEventsInternal(IEnumerable<object> events, bool async, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(EventGridPublisherClient)}.{nameof(SendEvents)}");
-            scope.Start();
-
-            try
-            {
-                List<CustomModelSerializer> serializedEvents = new List<CustomModelSerializer>();
-                foreach (object customEvent in events)
-                {
-                    serializedEvents.Add(
-                        new CustomModelSerializer(
-                            customEvent,
-                            s_jsonSerializer,
-                            cancellationToken));
-                }
-                if (async)
-                {
-                    return await _serviceRestClient.PublishCustomEventEventsAsync(
-                    _hostName,
-                    serializedEvents,
-                    cancellationToken).ConfigureAwait(false);
-                }
-                else
-                {
-                    return _serviceRestClient.PublishCustomEventEvents(
-                    _hostName,
-                    serializedEvents,
-                    cancellationToken);
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         private async Task<Response> PublishCustomEventsInternal(IEnumerable<BinaryData> events, bool async, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(EventGridPublisherClient)}.{nameof(SendEvents)}");
@@ -393,6 +339,15 @@ namespace Azure.Messaging.EventGrid
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        private Request CreateEventRequest(HttpMessage message, string contentType)
+        {
+            Request request = message.Request;
+            request.Method = RequestMethod.Post;
+            request.Uri = _uriBuilder;
+            request.Headers.Add("Content-Type", contentType);
+            return request;
         }
     }
 }

@@ -52,10 +52,10 @@ namespace Azure.Storage.Files.Shares.Perf.Scenarios
             // See https://docs.microsoft.com/en-us/rest/api/storageservices/naming-and-referencing-shares--directories--files--and-metadata for
             // restrictions on file share naming.
             _shareClient = new ShareClient(PerfTestEnvironment.Instance.FileSharesConnectionString, Guid.NewGuid().ToString());
-            await _shareClient.CreateAsync();
+            await _shareClient.CreateIfNotExistsAsync();
 
             ShareDirectoryClient DirectoryClient = _shareClient.GetDirectoryClient(Path.GetRandomFileName());
-            await DirectoryClient.CreateAsync();
+            await DirectoryClient.CreateIfNotExistsAsync();
 
             _fileClient = DirectoryClient.GetFileClient(Path.GetRandomFileName());
             await _fileClient.CreateAsync(_stream.Length, cancellationToken: CancellationToken.None);
@@ -63,7 +63,7 @@ namespace Azure.Storage.Files.Shares.Perf.Scenarios
 
         public override async Task CleanupAsync()
         {
-            await _shareClient.DeleteAsync();
+            await _shareClient.DeleteIfExistsAsync();
             await base.CleanupAsync();
         }
 

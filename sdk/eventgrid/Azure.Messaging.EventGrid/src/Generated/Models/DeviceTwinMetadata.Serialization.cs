@@ -5,14 +5,11 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    [JsonConverter(typeof(DeviceTwinMetadataConverter))]
     public partial class DeviceTwinMetadata
     {
         internal static DeviceTwinMetadata DeserializeDeviceTwinMetadata(JsonElement element)
@@ -27,19 +24,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new DeviceTwinMetadata(lastUpdated.Value);
-        }
-
-        internal partial class DeviceTwinMetadataConverter : JsonConverter<DeviceTwinMetadata>
-        {
-            public override void Write(Utf8JsonWriter writer, DeviceTwinMetadata model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model);
-            }
-            public override DeviceTwinMetadata Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeDeviceTwinMetadata(document.RootElement);
-            }
         }
     }
 }

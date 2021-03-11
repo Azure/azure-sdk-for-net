@@ -5,14 +5,11 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    [JsonConverter(typeof(PhoneNumberIdentifierModelConverter))]
     public partial class PhoneNumberIdentifierModel
     {
         internal static PhoneNumberIdentifierModel DeserializePhoneNumberIdentifierModel(JsonElement element)
@@ -27,19 +24,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new PhoneNumberIdentifierModel(value);
-        }
-
-        internal partial class PhoneNumberIdentifierModelConverter : JsonConverter<PhoneNumberIdentifierModel>
-        {
-            public override void Write(Utf8JsonWriter writer, PhoneNumberIdentifierModel model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model);
-            }
-            public override PhoneNumberIdentifierModel Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializePhoneNumberIdentifierModel(document.RootElement);
-            }
         }
     }
 }

@@ -7,12 +7,10 @@
 
 using System;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    [JsonConverter(typeof(AcsSmsDeliveryAttemptPropertiesConverter))]
     public partial class AcsSmsDeliveryAttemptProperties
     {
         internal static AcsSmsDeliveryAttemptProperties DeserializeAcsSmsDeliveryAttemptProperties(JsonElement element)
@@ -54,19 +52,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new AcsSmsDeliveryAttemptProperties(Optional.ToNullable(timestamp), Optional.ToNullable(segmentsSucceeded), Optional.ToNullable(segmentsFailed));
-        }
-
-        internal partial class AcsSmsDeliveryAttemptPropertiesConverter : JsonConverter<AcsSmsDeliveryAttemptProperties>
-        {
-            public override void Write(Utf8JsonWriter writer, AcsSmsDeliveryAttemptProperties model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model);
-            }
-            public override AcsSmsDeliveryAttemptProperties Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeAcsSmsDeliveryAttemptProperties(document.RootElement);
-            }
         }
     }
 }

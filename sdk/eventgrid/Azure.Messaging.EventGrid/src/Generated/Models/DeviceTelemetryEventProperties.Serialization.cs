@@ -5,15 +5,12 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    [JsonConverter(typeof(DeviceTelemetryEventPropertiesConverter))]
     public partial class DeviceTelemetryEventProperties
     {
         internal static DeviceTelemetryEventProperties DeserializeDeviceTelemetryEventProperties(JsonElement element)
@@ -65,19 +62,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new DeviceTelemetryEventProperties(body.Value, Optional.ToDictionary(properties), Optional.ToDictionary(systemProperties));
-        }
-
-        internal partial class DeviceTelemetryEventPropertiesConverter : JsonConverter<DeviceTelemetryEventProperties>
-        {
-            public override void Write(Utf8JsonWriter writer, DeviceTelemetryEventProperties model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model);
-            }
-            public override DeviceTelemetryEventProperties Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeDeviceTelemetryEventProperties(document.RootElement);
-            }
         }
     }
 }

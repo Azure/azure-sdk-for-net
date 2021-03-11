@@ -1,6 +1,9 @@
 # Release History
 
-## 4.2.0-beta.5 (Unreleased)
+## 4.2.0-beta.6 (Unreleased)
+
+
+## 4.2.0-beta.5 (2021-03-09)
 
 ### Added
 
@@ -105,7 +108,7 @@
 
 - Challenge-based authentication requests are only sent over HTTPS.
 
-## 4.0.0 (2019-11)
+## 4.0.0 (2019-11-01)
 
 ### Breaking changes
 
