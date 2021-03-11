@@ -3,6 +3,7 @@ using Proto.Compute;
 using Azure.ResourceManager.Core;
 using System;
 using System.Threading.Tasks;
+using Azure.Identity;
 
 namespace Proto.Client
 {
@@ -10,7 +11,7 @@ namespace Proto.Client
     {
         public async void ShutdownAsync()
         {
-            var client = new AzureResourceManagerClient();
+            var client = new AzureResourceManagerClient(new DefaultAzureCredential());
 
             await foreach (var subscription in client.GetSubscriptionContainer().ListAsync())
             {
@@ -40,7 +41,7 @@ namespace Proto.Client
             #endregion
 
 
-            var client = new AzureResourceManagerClient();
+            var client = new AzureResourceManagerClient(new DefaultAzureCredential());
             foreach (var sub in client.GetSubscriptionContainer().List())
             {
                 await foreach (var armResource in sub.ListVirtualMachinesByNameAsync("-e"))

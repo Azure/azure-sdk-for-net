@@ -1,6 +1,7 @@
 ﻿using Azure.ResourceManager.Core;
 using Proto.Compute;
 using System;
+using Azure.Identity;
 
 namespace Proto.Client
 {
@@ -11,7 +12,7 @@ namespace Proto.Client
             var createVm = new CreateSingleVmExample(Context);
             createVm.Execute();
 
-            var rgOp = new AzureResourceManagerClient().GetResourceGroupOperations(Context.SubscriptionId, Context.RgName);
+            var rgOp = new AzureResourceManagerClient(new DefaultAzureCredential()).GetResourceGroupOperations(Context.SubscriptionId, Context.RgName);
             foreach (var genericOp in rgOp.GetVirtualMachineContainer().ListAsGenericResource(Context.VmName))
             {
                 Console.WriteLine($"Adding tag to {genericOp.Id}");

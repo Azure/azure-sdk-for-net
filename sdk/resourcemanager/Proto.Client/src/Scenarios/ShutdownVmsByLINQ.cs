@@ -2,6 +2,7 @@
 using Azure.ResourceManager.Core;
 using System;
 using System.Linq;
+using Azure.Identity;
 
 namespace Proto.Client
 {
@@ -12,7 +13,7 @@ namespace Proto.Client
             var createMultipleVms = new CreateMultipleVms(Context);
             createMultipleVms.Execute();
 
-            var client = new AzureResourceManagerClient();
+            var client = new AzureResourceManagerClient(new DefaultAzureCredential());
             foreach (var sub in client.GetSubscriptionContainer().List())
             {
                 var vmList = sub.ListVirtualMachines();
@@ -25,7 +26,7 @@ namespace Proto.Client
                 }
             }
 
-            var resourceGroup = new AzureResourceManagerClient().GetResourceGroupOperations(Context.SubscriptionId, Context.RgName);
+            var resourceGroup = new AzureResourceManagerClient(new DefaultAzureCredential()).GetResourceGroupOperations(Context.SubscriptionId, Context.RgName);
 
             resourceGroup.GetVirtualMachineContainer().List().Select(vm =>
             {

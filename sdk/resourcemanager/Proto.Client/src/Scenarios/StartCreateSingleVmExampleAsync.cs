@@ -2,6 +2,7 @@ using Azure.ResourceManager.Core;
 using Proto.Compute;
 using Proto.Network;
 using System;
+using Azure.Identity;
 
 namespace Proto.Client
 {
@@ -17,7 +18,7 @@ namespace Proto.Client
         }
         private async System.Threading.Tasks.Task ExecuteAsync()
         {
-            var client = new AzureResourceManagerClient();
+            var client = new AzureResourceManagerClient(new DefaultAzureCredential());
             var subscription = client.GetSubscriptionOperations(Context.SubscriptionId);
 
             // Create Resource Group

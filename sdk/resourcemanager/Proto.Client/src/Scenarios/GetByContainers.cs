@@ -3,6 +3,7 @@ using Proto.Compute;
 using Proto.Network;
 using System;
 using System.Diagnostics;
+using Azure.Identity;
 
 namespace Proto.Client
 {
@@ -13,7 +14,7 @@ namespace Proto.Client
             var createMultipleVms = new CreateMultipleVms(Context);
             createMultipleVms.Execute();
 
-            var sub = new AzureResourceManagerClient().GetSubscriptionOperations(Context.SubscriptionId);
+            var sub = new AzureResourceManagerClient(new DefaultAzureCredential()).GetSubscriptionOperations(Context.SubscriptionId);
             var rg = sub.GetResourceGroupOperations(Context.RgName);
             var virtualMachineContainer = rg.GetVirtualMachineContainer();
             foreach (var response in virtualMachineContainer.List())

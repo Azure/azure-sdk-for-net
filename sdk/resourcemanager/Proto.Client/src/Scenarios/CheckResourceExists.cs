@@ -1,6 +1,7 @@
 ﻿using Azure.ResourceManager.Core;
 using Proto.Compute;
 using System;
+using Azure.Identity;
 
 namespace Proto.Client
 {
@@ -8,7 +9,7 @@ namespace Proto.Client
     {
         public override void Execute()
         {
-            var client = new AzureResourceManagerClient();
+            var client = new AzureResourceManagerClient(new DefaultAzureCredential());
             var subOp = client.DefaultSubscription;
             var rgContainer = subOp.GetResourceGroupContainer();
 

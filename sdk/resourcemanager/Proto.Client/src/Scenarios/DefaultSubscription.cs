@@ -17,7 +17,7 @@ namespace Proto.Client
 
             Console.WriteLine("Found correct subscription");
 
-            client = new AzureResourceManagerClient();
+            client = new AzureResourceManagerClient(new DefaultAzureCredential());
 
             sub = client.DefaultSubscription;
 

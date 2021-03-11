@@ -1,6 +1,7 @@
 ﻿using Proto.Compute;
 using Azure.ResourceManager.Core;
 using System;
+using Azure.Identity;
 
 namespace Proto.Client
 {
@@ -11,7 +12,7 @@ namespace Proto.Client
             var createMultipleVms = new CreateMultipleVms(Context);
             createMultipleVms.Execute();
 
-            var sub = new AzureResourceManagerClient().GetSubscriptionOperations(Context.SubscriptionId);
+            var sub = new AzureResourceManagerClient(new DefaultAzureCredential()).GetSubscriptionOperations(Context.SubscriptionId);
 
             foreach(var armResource in sub.ListVirtualMachinesByName("-e"))
             {

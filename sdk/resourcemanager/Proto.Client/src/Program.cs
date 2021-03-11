@@ -1,5 +1,6 @@
 ﻿using Azure.ResourceManager.Core;
 using System;
+using Azure.Identity;
 
 namespace Proto.Client
 {
@@ -18,7 +19,7 @@ namespace Proto.Client
                 foreach (var rgId in Scenario.CleanUp)
                 {
                     ResourceIdentifier id = new ResourceIdentifier(rgId);
-                    var rg = new AzureResourceManagerClient().GetSubscriptionOperations(id.Subscription).GetResourceGroupOperations(id.ResourceGroup);
+                    var rg = new AzureResourceManagerClient(new DefaultAzureCredential()).GetSubscriptionOperations(id.Subscription).GetResourceGroupOperations(id.ResourceGroup);
                     Console.WriteLine($"--------Deleting {rg.Id.Name}--------");
                     try
                     {
