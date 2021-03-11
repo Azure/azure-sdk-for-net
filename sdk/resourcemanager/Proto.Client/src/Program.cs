@@ -10,7 +10,7 @@ namespace Proto.Client
             Scenario scenario = null;
             try
             {
-                scenario = ScenarioFactory.GetScenario(Scenarios.GetByContainersAsync);
+                scenario = ScenarioFactory.GetScenario(Scenarios.TenantResource);
                 scenario.Execute();
             }
             finally

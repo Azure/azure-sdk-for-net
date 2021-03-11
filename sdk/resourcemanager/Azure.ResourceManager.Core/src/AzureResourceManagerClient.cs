@@ -23,6 +23,12 @@ namespace Azure.ResourceManager.Core
         private readonly TokenCredential _credentials;
 
         private readonly Uri _baseUri;
+        private TenantOperations _tenant;
+
+        /// <summary>
+        /// Get the tenant operations <see cref="TenantOperations"/> class.
+        /// </summary>
+        public TenantOperations Tenant => _tenant ??= new TenantOperations(ClientOptions, _credentials, _baseUri);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AzureResourceManagerClient"/> class for mocking.

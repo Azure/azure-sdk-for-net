@@ -14,6 +14,11 @@
     <ProjectReference Include="..\authorization\Proto.Authorization.csproj" />
     <ProjectReference Include="..\compute\Proto.Compute.csproj" />
     <ProjectReference Include="..\network\Proto.Network.csproj" />
+    <ProjectReference Include="..\billing\Proto.Billing.csproj" />
   </ItemGroup>
+  <PropertyGroup>
+    <!-- TODO: As part of release process, this PropertyGroup can be removed once RP is approved for namespace -->
+    <NoWarn>$(NoWarn);AZC0001;CA1303</NoWarn>
+  </PropertyGroup>
 
 </Project>
