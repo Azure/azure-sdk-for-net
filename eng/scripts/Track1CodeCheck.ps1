@@ -173,9 +173,6 @@ try {
                         break
                     }
                 }
-            } else {
-                LogError "MetaData $metaData content not correct, you may need to re-run sdk\<RP_Name>\generate.ps1"
-                break
             }
 
             if (($cmds.length -eq 0) -or ($commit.length -eq 0) -or ($csharpVersion.length -eq 0) -or ($cmds.length -ne $commit.length) -or ($commit.length -ne $csharpVersion.length) -or (($commit -eq $commit[0]).Count -ne $commit.Count)) {
