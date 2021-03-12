@@ -21,6 +21,16 @@ The title of the pull request.
 The body message for the pull request. 
 .PARAMETER PRLabels
 The labels added to the PRs. Multple labels seperated by comma, e.g "bug, service"
+.PARAMETER UserReviewers
+TODO
+.PARAMETER TeamReviewers
+TODO
+.PARAMETER Assignees
+TODO
+.PARAMETER CloseAfterOpenForTesting
+TODO
+.PARAMETER Draft
+Opens the PR as a draft
 #>
 [CmdletBinding(SupportsShouldProcess = $true)]
 param(
@@ -56,7 +66,9 @@ param(
 
   [string]$Assignees,
 
-  [boolean]$CloseAfterOpenForTesting=$false
+  [boolean]$CloseAfterOpenForTesting=$false,
+
+  [boolean]$Draft=$false
 )
 
 . (Join-Path $PSScriptRoot common.ps1)
@@ -79,9 +91,16 @@ if ($resp.Count -gt 0) {
 }
 else {
   try {
-    $resp = New-GitHubPullRequest -RepoOwner $RepoOwner -RepoName $RepoName -Title $PRTitle `
-    -Head "${PROwner}:${PRBranch}" -Base $BaseBranch -Body $PRBody -Maintainer_Can_Modify $true `
-    -AuthToken $AuthToken
+    $resp = New-GitHubPullRequest `
+      -RepoOwner $RepoOwner `
+      -RepoName $RepoName `
+      -Title $PRTitle `
+      -Head "${PROwner}:${PRBranch}" `
+      -Base $BaseBranch `
+      -Body $PRBody `
+      -Maintainer_Can_Modify $true `
+      -Draft:$Draft `
+      -AuthToken $AuthToken
 
     $resp | Write-Verbose
     LogDebug "Pull request created https://github.com/$RepoOwner/$RepoName/pull/$($resp.number)"
