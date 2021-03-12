@@ -58,13 +58,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="hyperVGeneration">The hypervisor generation of the
         /// Virtual Machine. Applicable to OS disks only. Possible values
         /// include: 'V1', 'V2'</param>
-        /// <param name="features">A list of gallery image features.</param>
         /// <param name="endOfLifeDate">The end of life date of the gallery
         /// image definition. This property can be used for decommissioning
         /// purposes. This property is updatable.</param>
         /// <param name="provisioningState">The current state of the gallery
         /// image definition.</param>
-        public GalleryImageUpdate(OperatingSystemTypes osType, OperatingSystemStateTypes osState, GalleryImageIdentifier identifier, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string description = default(string), string eula = default(string), string privacyStatementUri = default(string), string releaseNoteUri = default(string), string hyperVGeneration = default(string), IList<GalleryImageFeature> features = default(IList<GalleryImageFeature>), System.DateTime? endOfLifeDate = default(System.DateTime?), RecommendedMachineConfiguration recommended = default(RecommendedMachineConfiguration), Disallowed disallowed = default(Disallowed), ImagePurchasePlan purchasePlan = default(ImagePurchasePlan), string provisioningState = default(string))
+        /// <param name="features">A list of gallery image features.</param>
+        public GalleryImageUpdate(OperatingSystemTypes osType, OperatingSystemStateTypes osState, GalleryImageIdentifier identifier, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string description = default(string), string eula = default(string), string privacyStatementUri = default(string), string releaseNoteUri = default(string), string hyperVGeneration = default(string), System.DateTime? endOfLifeDate = default(System.DateTime?), RecommendedMachineConfiguration recommended = default(RecommendedMachineConfiguration), Disallowed disallowed = default(Disallowed), ImagePurchasePlan purchasePlan = default(ImagePurchasePlan), string provisioningState = default(string), IList<GalleryImageFeature> features = default(IList<GalleryImageFeature>))
             : base(id, name, type, tags)
         {
             Description = description;
@@ -74,13 +74,13 @@ namespace Microsoft.Azure.Management.Compute.Models
             OsType = osType;
             OsState = osState;
             HyperVGeneration = hyperVGeneration;
-            Features = features;
             EndOfLifeDate = endOfLifeDate;
             Identifier = identifier;
             Recommended = recommended;
             Disallowed = disallowed;
             PurchasePlan = purchasePlan;
             ProvisioningState = provisioningState;
+            Features = features;
             CustomInit();
         }
 
@@ -142,12 +142,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         public string HyperVGeneration { get; set; }
 
         /// <summary>
-        /// Gets or sets a list of gallery image features.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.features")]
-        public IList<GalleryImageFeature> Features { get; set; }
-
-        /// <summary>
         /// Gets or sets the end of life date of the gallery image definition.
         /// This property can be used for decommissioning purposes. This
         /// property is updatable.
@@ -185,6 +179,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </remarks>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets or sets a list of gallery image features.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.features")]
+        public IList<GalleryImageFeature> Features { get; set; }
 
         /// <summary>
         /// Validate the object.
