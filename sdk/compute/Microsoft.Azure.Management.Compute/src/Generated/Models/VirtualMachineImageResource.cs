@@ -42,12 +42,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// virtual machine. For more information about using tags, see [Using
         /// tags to organize your Azure
         /// resources](https://docs.microsoft.com/azure/azure-resource-manager/resource-group-using-tags.md).</param>
-        public VirtualMachineImageResource(string name, string location, string id = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        /// <param name="extendedLocation">The extended location of the Virtual
+        /// Machine.</param>
+        public VirtualMachineImageResource(string name, string location, string id = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ExtendedLocation extendedLocation = default(ExtendedLocation))
             : base(id)
         {
             Name = name;
             Location = location;
             Tags = tags;
+            ExtendedLocation = extendedLocation;
             CustomInit();
         }
 
@@ -76,6 +79,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
+
+        /// <summary>
+        /// Gets or sets the extended location of the Virtual Machine.
+        /// </summary>
+        [JsonProperty(PropertyName = "extendedLocation")]
+        public ExtendedLocation ExtendedLocation { get; set; }
 
         /// <summary>
         /// Validate the object.
