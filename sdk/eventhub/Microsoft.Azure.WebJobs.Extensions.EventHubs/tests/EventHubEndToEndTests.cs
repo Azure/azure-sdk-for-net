@@ -154,16 +154,18 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 && x.FormattedMessage.Contains("Offset:")).Count(), 1);
 
             Assert.True(logMessages.Where(x => !string.IsNullOrEmpty(x.FormattedMessage)
-                && x.FormattedMessage.Contains("OpenAsync")).Count() > 0);
+                && x.FormattedMessage.Contains("OpenAsync")).Any());
 
             Assert.True(logMessages.Where(x => !string.IsNullOrEmpty(x.FormattedMessage)
                 && x.FormattedMessage.Contains("CheckpointAsync")
                 && x.FormattedMessage.Contains("lease")
                 && x.FormattedMessage.Contains("offset")
-                && x.FormattedMessage.Contains("sequenceNumber")).Count() > 0);
+                && x.FormattedMessage.Contains("sequenceNumber")).Any());
 
             Assert.True(logMessages.Where(x => !string.IsNullOrEmpty(x.FormattedMessage)
-                && x.FormattedMessage.Contains("Sending events to EventHub")).Count() > 0);
+                && x.FormattedMessage.Contains("Sending events to EventHub")).Any());
+
+            AssertAzureSdkLogs(logMessages);
         }
 
         [Test]
@@ -252,19 +254,21 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             Assert.True(logMessages.Where(x => !string.IsNullOrEmpty(x.FormattedMessage)
                 && x.FormattedMessage.Contains("Trigger Details:")
-                && x.FormattedMessage.Contains("Offset:")).Count() > 0);
+                && x.FormattedMessage.Contains("Offset:")).Any());
 
             Assert.True(logMessages.Where(x => !string.IsNullOrEmpty(x.FormattedMessage)
-                && x.FormattedMessage.Contains("OpenAsync")).Count() > 0);
+                && x.FormattedMessage.Contains("OpenAsync")).Any());
 
             Assert.True(logMessages.Where(x => !string.IsNullOrEmpty(x.FormattedMessage)
                 && x.FormattedMessage.Contains("CheckpointAsync")
                 && x.FormattedMessage.Contains("lease")
                 && x.FormattedMessage.Contains("offset")
-                && x.FormattedMessage.Contains("sequenceNumber")).Count() > 0);
+                && x.FormattedMessage.Contains("sequenceNumber")).Any());
 
             Assert.True(logMessages.Where(x => !string.IsNullOrEmpty(x.FormattedMessage)
-                && x.FormattedMessage.Contains("Sending events to EventHub")).Count() > 0);
+                && x.FormattedMessage.Contains("Sending events to EventHub")).Any());
+
+            AssertAzureSdkLogs(logMessages);
         }
 
         [Test]
@@ -385,6 +389,11 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 bool result = _eventWait.WaitOne(Timeout);
                 Assert.True(result);
             }
+        }
+
+        private static void AssertAzureSdkLogs(IEnumerable<LogMessage> logMessages)
+        {
+            Assert.True(logMessages.Any(x => x.Category.StartsWith("Azure.")));
         }
 
         public class EventHubTestSingleDispatchJobs
