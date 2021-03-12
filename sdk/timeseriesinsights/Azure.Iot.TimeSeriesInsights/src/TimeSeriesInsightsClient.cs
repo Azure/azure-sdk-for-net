@@ -1193,7 +1193,7 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <exception cref="ArgumentException">
         /// The exception is thrown when <paramref name="timeSeriesTypeNames"/> is empty.
         /// </exception>
-        public virtual async Task<Response<TimeSeriesTypeOperationResult[]>> GetTimeSeriesTypesAsyncbyNames(
+        public virtual async Task<Response<TimeSeriesTypeOperationResult[]>> GetTimeSeriesTypesbyNamesAsync(
             IEnumerable<string> timeSeriesTypeNames,
             CancellationToken cancellationToken = default)
         {
@@ -1236,7 +1236,7 @@ namespace Azure.Iot.TimeSeriesInsights
         /// List of type or error objects corresponding by position to the array in the request.
         /// Type object is set when operation is successful and error object is set when operation is unsuccessful.
         /// </returns>
-        /// <seealso cref="GetTimeSeriesTypesAsyncbyNames(IEnumerable{string}, CancellationToken)">
+        /// <seealso cref="GetTimeSeriesTypesbyNamesAsync(IEnumerable{string}, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
         /// <exception cref="ArgumentNullException">
