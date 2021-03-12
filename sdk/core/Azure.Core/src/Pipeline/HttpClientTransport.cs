@@ -127,15 +127,18 @@ namespace Azure.Core.Pipeline
 
         private static HttpClient CreateDefaultClient()
         {
-            var httpClientHandler = new HttpClientHandler();
+#if NETCOREAPP || NET
+            SocketsHttpHandler httpClientHandler = new SocketsHttpHandler();
+
+#else
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+#endif
             if (HttpEnvironmentProxy.TryCreate(out IWebProxy webProxy))
             {
                 httpClientHandler.Proxy = webProxy;
             }
 
-#if NETFRAMEWORK
             ServicePointHelpers.SetLimits(httpClientHandler);
-#endif
 
             return new HttpClient(httpClientHandler)
             {

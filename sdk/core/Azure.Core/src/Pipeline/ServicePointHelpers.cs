@@ -1,8 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Globalization;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
 
 namespace Azure.Core.Pipeline
 {
@@ -11,6 +14,12 @@ namespace Azure.Core.Pipeline
         private const int RuntimeDefaultConnectionLimit = 2;
         private const int IncreasedConnectionLimit = 50;
 
+        private const int DefaultConnectionLeaseTimeout = Timeout.Infinite;
+        private const int IncreasedConnectionLeaseTimeout = 300 * 1000;
+
+        private static TimeSpan DefaultConnectionLeaseTimeoutTimeSpan = Timeout.InfiniteTimeSpan;
+        private static TimeSpan IncreasedConnectionLeaseTimeoutTimeSpan = TimeSpan.FromMilliseconds(IncreasedConnectionLeaseTimeout);
+
         public static void SetLimits(ServicePoint requestServicePoint)
         {
             // Only change when the default runtime limit is used
@@ -18,15 +27,36 @@ namespace Azure.Core.Pipeline
             {
                 requestServicePoint.ConnectionLimit = IncreasedConnectionLimit;
             }
+
+            if (requestServicePoint.ConnectionLeaseTimeout == DefaultConnectionLeaseTimeout)
+            {
+                requestServicePoint.ConnectionLeaseTimeout = IncreasedConnectionLeaseTimeout;
+            }
         }
 
-        public static void SetLimits(HttpClientHandler requestServicePoint)
+        public static void SetLimits(HttpClientHandler httpClientHandler)
         {
+#if NETFRAMEWORK
             // Only change when the default runtime limit is used
-            if (requestServicePoint.MaxConnectionsPerServer == RuntimeDefaultConnectionLimit)
+            if (httpClientHandler.MaxConnectionsPerServer == RuntimeDefaultConnectionLimit)
             {
-                requestServicePoint.MaxConnectionsPerServer = IncreasedConnectionLimit;
+                httpClientHandler.MaxConnectionsPerServer = IncreasedConnectionLimit;
+            }
+#endif
+        }
+
+#if !NETFRAMEWORK
+        public static void SetLimits(SocketsHttpHandler socketsHttpHandler)
+        {
+            if (socketsHttpHandler.MaxConnectionsPerServer == RuntimeDefaultConnectionLimit)
+            {
+                socketsHttpHandler.MaxConnectionsPerServer = IncreasedConnectionLimit;
+            }
+            if (socketsHttpHandler.PooledConnectionLifetime == DefaultConnectionLeaseTimeoutTimeSpan)
+            {
+                socketsHttpHandler.PooledConnectionLifetime = IncreasedConnectionLeaseTimeoutTimeSpan;
             }
         }
     }
+#endif
 }
