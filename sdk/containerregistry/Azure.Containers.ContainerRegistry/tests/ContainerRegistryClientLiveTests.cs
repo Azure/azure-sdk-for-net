@@ -28,15 +28,12 @@ namespace Azure.Containers.ContainerRegistry.Tests
         [RecordedTest]
         public async Task CanGetRepositories()
         {
-            await Task.Run(() => { }).ConfigureAwait(false);
-            throw new Exception($"Endpoint value is {TestEnvironment.Endpoint}");
+            var client = CreateClient();
 
-            //var client = CreateClient();
+            AsyncPageable<string> repositories = client.GetRepositoriesAsync();
+            bool getsHelloWorld = await repositories.ContainsAsync("library/hello-world");
 
-            //AsyncPageable<string> repositories = client.GetRepositoriesAsync();
-            //bool getsHelloWorld = await repositories.ContainsAsync("library/hello-world");
-
-            //Assert.IsTrue(getsHelloWorld);
+            Assert.IsTrue(getsHelloWorld);
         }
     }
 }
