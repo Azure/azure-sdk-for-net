@@ -24,13 +24,11 @@ namespace Proto.Client
                 throw new Exception($"The resource group {Context.RgName} should have existed.");
 
             Console.WriteLine($"Using try get value to retrieve {Context.RgName}");
-            ArmResponse<ResourceGroup> rgOutput;
-            if(!rgContainer.TryGetValue(Context.RgName, out rgOutput))
+            ResourceGroup rgOutput = rgContainer.TryGet(Context.RgName);
+            if(rgOutput == null)
                 throw new Exception($"The resource group {Context.RgName} should have existed.");
 
-            var rg = rgOutput.Value;
-
-            var asetContainer = rg.GetAvailabilitySetContainer();
+            var asetContainer = rgOutput.GetAvailabilitySetContainer();
             var asetName = Context.VmName + "_aSet";
 
             Console.WriteLine($"Making sure {asetName} doesn't exist yet.");
@@ -45,8 +43,8 @@ namespace Proto.Client
                 throw new Exception($"The availability set {asetName} should have existed.");
 
             Console.WriteLine("Using try get value to retrieve the rg");
-            ArmResponse<AvailabilitySet> asetOutput;
-            if (!asetContainer.TryGetValue(asetName, out asetOutput))
+            AvailabilitySet asetOutput = asetContainer.TryGet(asetName);
+            if (asetOutput == null)
                 throw new Exception($"The availability set {asetName} should have existed.");
                 
             
