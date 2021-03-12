@@ -34,7 +34,7 @@ Executes a batch get, create, update, delete operation on multiple time series t
 /// <param name="cancellationToken">The cancellation token.</param>
 /// <returns>List of types or error objects corresponding by position to the array in the request. Type object is set when operation is successful and error object is set when operation is unsuccessful.
 public virtual async Task<Response<TimeSeriesTypeOperationResult[]>> GetTimeSeriesTypesAsync(
-    IEnumerable<TimeSeriesId> timeSeriesTypeIds, 
+    IEnumerable<string> timeSeriesTypeIds, 
     CancellationToken cancellationToken = default)
 ```
 
@@ -81,7 +81,7 @@ public virtual async Task<Response<TimeSeriesTypeOperationResult[]>> CreateOrRep
 /// null will be set when the operation is successful.
 /// </returns>
 public virtual async Task<Response<TimeSeriesTypeOperationResult[]>> DeleteTimeSeriesTypesAsync(
-    IEnumerable<TimeSeriesId> timeSeriesTypeIds,
+    IEnumerable<string> timeSeriesTypeIds,
     CancellationToken cancellationToken = default)
 ```
 
