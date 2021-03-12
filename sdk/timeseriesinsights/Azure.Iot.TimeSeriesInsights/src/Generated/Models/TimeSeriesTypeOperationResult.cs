@@ -8,17 +8,17 @@
 namespace Azure.Iot.TimeSeriesInsights
 {
     /// <summary> Result of a batch operation on a particular time series type. Type object is set when operation is successful and error object is set when operation is unsuccessful. </summary>
-    public partial class TimeSeriesTypeOrError
+    public partial class TimeSeriesTypeOperationResult
     {
-        /// <summary> Initializes a new instance of TimeSeriesTypeOrError. </summary>
-        internal TimeSeriesTypeOrError()
+        /// <summary> Initializes a new instance of TimeSeriesTypeOperationResult. </summary>
+        internal TimeSeriesTypeOperationResult()
         {
         }
 
-        /// <summary> Initializes a new instance of TimeSeriesTypeOrError. </summary>
+        /// <summary> Initializes a new instance of TimeSeriesTypeOperationResult. </summary>
         /// <param name="timeSeriesType"> Time series type object - set when the operation is successful. </param>
         /// <param name="error"> Error object - set when the operation is unsuccessful. </param>
-        internal TimeSeriesTypeOrError(TimeSeriesType timeSeriesType, InstancesOperationError error)
+        internal TimeSeriesTypeOperationResult(TimeSeriesType timeSeriesType, InstancesOperationError error)
         {
             TimeSeriesType = timeSeriesType;
             Error = error;

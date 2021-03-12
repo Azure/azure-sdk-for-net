@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Iot.TimeSeriesInsights
 {
-    public partial class TimeSeriesTypeOrError
+    public partial class TimeSeriesTypeOperationResult
     {
-        internal static TimeSeriesTypeOrError DeserializeTimeSeriesTypeOrError(JsonElement element)
+        internal static TimeSeriesTypeOperationResult DeserializeTimeSeriesTypeOperationResult(JsonElement element)
         {
             Optional<TimeSeriesType> timeSeriesType = default;
             Optional<InstancesOperationError> error = default;
@@ -39,7 +39,7 @@ namespace Azure.Iot.TimeSeriesInsights
                     continue;
                 }
             }
-            return new TimeSeriesTypeOrError(timeSeriesType.Value, error.Value);
+            return new TimeSeriesTypeOperationResult(timeSeriesType.Value, error.Value);
         }
     }
 }
