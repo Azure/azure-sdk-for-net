@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace Azure.Containers.ContainerRegistry.Tests
 {
-    public class ContainerRegistryClientLiveTests: RecordedTestBase<ContainerRegistryTestEnvironment>
+    public class ContainerRegistryClientLiveTests : RecordedTestBase<ContainerRegistryTestEnvironment>
     {
         public ContainerRegistryClientLiveTests(bool isAsync) : base(isAsync)
         {
@@ -31,9 +31,19 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var client = CreateClient();
 
             AsyncPageable<string> repositories = client.GetRepositoriesAsync();
-            bool getsHelloWorld = await repositories.ContainsAsync("library/hello-world");
 
-            Assert.IsTrue(getsHelloWorld);
+            bool gotHelloWorld = false;
+
+            await foreach (string repository in repositories)
+            {
+                if (repository.Contains("library/hello-world"))
+                {
+                    gotHelloWorld = true;
+                    break;
+                }
+            }
+
+            Assert.IsTrue(gotHelloWorld);
         }
     }
 }
