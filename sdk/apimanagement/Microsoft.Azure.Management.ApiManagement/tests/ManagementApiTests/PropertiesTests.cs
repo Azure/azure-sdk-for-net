@@ -81,7 +81,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     var listResponse = testBase.client.NamedValue.ListByService(testBase.rgName, testBase.serviceName, null);
                     Assert.NotNull(listResponse);
 
-                    Assert.Equal(2, listResponse.Count());
+                    Assert.Equal(3, listResponse.Count());
 
                     // delete a property
                     testBase.client.NamedValue.Delete(

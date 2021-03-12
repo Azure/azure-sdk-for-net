@@ -14,26 +14,26 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     using System.Linq;
 
     /// <summary>
-    /// Defines headers for ListSecrets operation.
+    /// Defines headers for RefreshSecret operation.
     /// </summary>
-    public partial class TenantAccessGitListSecretsHeaders
+    public partial class CertificateRefreshSecretHeaders
     {
         /// <summary>
-        /// Initializes a new instance of the TenantAccessGitListSecretsHeaders
+        /// Initializes a new instance of the CertificateRefreshSecretHeaders
         /// class.
         /// </summary>
-        public TenantAccessGitListSecretsHeaders()
+        public CertificateRefreshSecretHeaders()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the TenantAccessGitListSecretsHeaders
+        /// Initializes a new instance of the CertificateRefreshSecretHeaders
         /// class.
         /// </summary>
         /// <param name="eTag">Current entity state version. Should be treated
         /// as opaque and used to make conditional HTTP requests.</param>
-        public TenantAccessGitListSecretsHeaders(string eTag = default(string))
+        public CertificateRefreshSecretHeaders(string eTag = default(string))
         {
             ETag = eTag;
             CustomInit();

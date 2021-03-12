@@ -24,31 +24,6 @@ namespace Microsoft.Azure.Management.ApiManagement
     public partial interface ITenantAccessGitOperations
     {
         /// <summary>
-        /// Gets the Git access configuration for the tenant. Without secrets.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='serviceName'>
-        /// The name of the API Management service.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<AccessInformationContract,TenantAccessGitGetHeaders>> GetWithHttpMessagesAsync(string resourceGroupName, string serviceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Regenerate primary access key for GIT.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -57,6 +32,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='serviceName'>
         /// The name of the API Management service.
         /// </param>
+        /// <param name='accessName'>
+        /// The identifier of the Access configuration. Possible values
+        /// include: 'access', 'getAccess'
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -69,7 +48,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> RegeneratePrimaryKeyWithHttpMessagesAsync(string resourceGroupName, string serviceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> RegeneratePrimaryKeyWithHttpMessagesAsync(string resourceGroupName, string serviceName, string accessName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Regenerate secondary access key for GIT.
         /// </summary>
@@ -79,6 +58,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='serviceName'>
         /// The name of the API Management service.
         /// </param>
+        /// <param name='accessName'>
+        /// The identifier of the Access configuration. Possible values
+        /// include: 'access', 'getAccess'
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -91,31 +74,6 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> RegenerateSecondaryKeyWithHttpMessagesAsync(string resourceGroupName, string serviceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets the Git access configuration for the tenant.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='serviceName'>
-        /// The name of the API Management service.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<AccessInformationContract,TenantAccessGitListSecretsHeaders>> ListSecretsWithHttpMessagesAsync(string resourceGroupName, string serviceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> RegenerateSecondaryKeyWithHttpMessagesAsync(string resourceGroupName, string serviceName, string accessName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

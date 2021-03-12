@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.ApiManagement
     public static partial class TenantAccessGitOperationsExtensions
     {
             /// <summary>
-            /// Gets the Git access configuration for the tenant. Without secrets.
+            /// Regenerate primary access key for GIT.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -33,32 +33,13 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            public static AccessInformationContract Get(this ITenantAccessGitOperations operations, string resourceGroupName, string serviceName)
+            /// <param name='accessName'>
+            /// The identifier of the Access configuration. Possible values include:
+            /// 'access', 'getAccess'
+            /// </param>
+            public static void RegeneratePrimaryKey(this ITenantAccessGitOperations operations, string resourceGroupName, string serviceName, string accessName)
             {
-                return operations.GetAsync(resourceGroupName, serviceName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the Git access configuration for the tenant. Without secrets.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='serviceName'>
-            /// The name of the API Management service.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<AccessInformationContract> GetAsync(this ITenantAccessGitOperations operations, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, serviceName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                operations.RegeneratePrimaryKeyAsync(resourceGroupName, serviceName, accessName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -73,29 +54,16 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            public static void RegeneratePrimaryKey(this ITenantAccessGitOperations operations, string resourceGroupName, string serviceName)
-            {
-                operations.RegeneratePrimaryKeyAsync(resourceGroupName, serviceName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Regenerate primary access key for GIT.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='serviceName'>
-            /// The name of the API Management service.
+            /// <param name='accessName'>
+            /// The identifier of the Access configuration. Possible values include:
+            /// 'access', 'getAccess'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task RegeneratePrimaryKeyAsync(this ITenantAccessGitOperations operations, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task RegeneratePrimaryKeyAsync(this ITenantAccessGitOperations operations, string resourceGroupName, string serviceName, string accessName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.RegeneratePrimaryKeyWithHttpMessagesAsync(resourceGroupName, serviceName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.RegeneratePrimaryKeyWithHttpMessagesAsync(resourceGroupName, serviceName, accessName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -110,9 +78,13 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            public static void RegenerateSecondaryKey(this ITenantAccessGitOperations operations, string resourceGroupName, string serviceName)
+            /// <param name='accessName'>
+            /// The identifier of the Access configuration. Possible values include:
+            /// 'access', 'getAccess'
+            /// </param>
+            public static void RegenerateSecondaryKey(this ITenantAccessGitOperations operations, string resourceGroupName, string serviceName, string accessName)
             {
-                operations.RegenerateSecondaryKeyAsync(resourceGroupName, serviceName).GetAwaiter().GetResult();
+                operations.RegenerateSecondaryKeyAsync(resourceGroupName, serviceName, accessName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -127,52 +99,16 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task RegenerateSecondaryKeyAsync(this ITenantAccessGitOperations operations, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.RegenerateSecondaryKeyWithHttpMessagesAsync(resourceGroupName, serviceName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Gets the Git access configuration for the tenant.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='serviceName'>
-            /// The name of the API Management service.
-            /// </param>
-            public static AccessInformationContract ListSecrets(this ITenantAccessGitOperations operations, string resourceGroupName, string serviceName)
-            {
-                return operations.ListSecretsAsync(resourceGroupName, serviceName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the Git access configuration for the tenant.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='serviceName'>
-            /// The name of the API Management service.
+            /// <param name='accessName'>
+            /// The identifier of the Access configuration. Possible values include:
+            /// 'access', 'getAccess'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AccessInformationContract> ListSecretsAsync(this ITenantAccessGitOperations operations, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task RegenerateSecondaryKeyAsync(this ITenantAccessGitOperations operations, string resourceGroupName, string serviceName, string accessName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListSecretsWithHttpMessagesAsync(resourceGroupName, serviceName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.RegenerateSecondaryKeyWithHttpMessagesAsync(resourceGroupName, serviceName, accessName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
     }

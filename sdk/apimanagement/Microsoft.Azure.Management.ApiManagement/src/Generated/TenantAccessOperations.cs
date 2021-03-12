@@ -12,6 +12,7 @@ namespace Microsoft.Azure.Management.ApiManagement
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
+    using Microsoft.Rest.Azure.OData;
     using Models;
     using Newtonsoft.Json;
     using System.Collections;
@@ -51,13 +52,16 @@ namespace Microsoft.Azure.Management.ApiManagement
         public ApiManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Tenant access metadata
+        /// Returns list of access infos - for Git and Management endpoints.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
+        /// </param>
+        /// <param name='odataQuery'>
+        /// OData parameters to apply to the operation.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -68,6 +72,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
@@ -77,7 +84,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationHeaderResponse<TenantAccessGetEntityTagHeaders>> GetEntityTagWithHttpMessagesAsync(string resourceGroupName, string serviceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<AccessInformationContract>>> ListByServiceWithHttpMessagesAsync(string resourceGroupName, string serviceName, ODataQuery<AccessInformationContract> odataQuery = default(ODataQuery<AccessInformationContract>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -102,12 +109,234 @@ namespace Microsoft.Azure.Management.ApiManagement
                     throw new ValidationException(ValidationRules.Pattern, "serviceName", "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$");
                 }
             }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-12-01";
-            string accessName = "access";
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("odataQuery", odataQuery);
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("serviceName", serviceName);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByService", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant").ToString();
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{serviceName}", System.Uri.EscapeDataString(serviceName));
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (odataQuery != null)
+            {
+                var _odataFilter = odataQuery.ToString();
+                if (!string.IsNullOrEmpty(_odataFilter))
+                {
+                    _queryParameters.Add(_odataFilter);
+                }
+            }
+            if (Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<IPage<AccessInformationContract>>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<AccessInformationContract>>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Tenant access metadata
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='serviceName'>
+        /// The name of the API Management service.
+        /// </param>
+        /// <param name='accessName'>
+        /// The identifier of the Access configuration. Possible values include:
+        /// 'access', 'getAccess'
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationHeaderResponse<TenantAccessGetEntityTagHeaders>> GetEntityTagWithHttpMessagesAsync(string resourceGroupName, string serviceName, string accessName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (serviceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "serviceName");
+            }
+            if (serviceName != null)
+            {
+                if (serviceName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "serviceName", 50);
+                }
+                if (serviceName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "serviceName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(serviceName, "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "serviceName", "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$");
+                }
+            }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (accessName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "accessName");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -117,7 +346,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serviceName", serviceName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("accessName", accessName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetEntityTag", tracingParameters);
@@ -130,9 +358,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{accessName}", System.Uri.EscapeDataString(accessName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -258,6 +486,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='serviceName'>
         /// The name of the API Management service.
         /// </param>
+        /// <param name='accessName'>
+        /// The identifier of the Access configuration. Possible values include:
+        /// 'access', 'getAccess'
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -279,7 +511,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<AccessInformationContract,TenantAccessGetHeaders>> GetWithHttpMessagesAsync(string resourceGroupName, string serviceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<AccessInformationContract,TenantAccessGetHeaders>> GetWithHttpMessagesAsync(string resourceGroupName, string serviceName, string accessName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -304,12 +536,18 @@ namespace Microsoft.Azure.Management.ApiManagement
                     throw new ValidationException(ValidationRules.Pattern, "serviceName", "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$");
                 }
             }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-12-01";
-            string accessName = "access";
+            if (accessName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "accessName");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -319,7 +557,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serviceName", serviceName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("accessName", accessName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
@@ -332,9 +569,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{accessName}", System.Uri.EscapeDataString(accessName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -481,6 +718,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='parameters'>
         /// Parameters supplied to retrieve the Tenant Access Information.
         /// </param>
+        /// <param name='accessName'>
+        /// The identifier of the Access configuration. Possible values include:
+        /// 'access', 'getAccess'
+        /// </param>
         /// <param name='ifMatch'>
         /// ETag of the Entity. ETag should match the current entity state from the
         /// header response of the GET request or it should be * for unconditional
@@ -495,6 +736,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
@@ -504,7 +748,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> UpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, AccessInformationUpdateParameters parameters, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<AccessInformationContract,TenantAccessCreateHeaders>> CreateWithHttpMessagesAsync(string resourceGroupName, string serviceName, AccessInformationCreateParameters parameters, string accessName, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -533,16 +777,22 @@ namespace Microsoft.Azure.Management.ApiManagement
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
+            if (accessName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "accessName");
+            }
             if (ifMatch == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ifMatch");
+            }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string accessName = "access";
-            string apiVersion = "2019-12-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -555,7 +805,267 @@ namespace Microsoft.Azure.Management.ApiManagement
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("accessName", accessName);
                 tracingParameters.Add("ifMatch", ifMatch);
-                tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "Create", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant/{accessName}").ToString();
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{serviceName}", System.Uri.EscapeDataString(serviceName));
+            _url = _url.Replace("{accessName}", System.Uri.EscapeDataString(accessName));
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("PUT");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (ifMatch != null)
+            {
+                if (_httpRequest.Headers.Contains("If-Match"))
+                {
+                    _httpRequest.Headers.Remove("If-Match");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("If-Match", ifMatch);
+            }
+            if (Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            if(parameters != null)
+            {
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(parameters, Client.SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<AccessInformationContract,TenantAccessCreateHeaders>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<AccessInformationContract>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            try
+            {
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<TenantAccessCreateHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+            }
+            catch (JsonException ex)
+            {
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Update tenant access information details.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='serviceName'>
+        /// The name of the API Management service.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to retrieve the Tenant Access Information.
+        /// </param>
+        /// <param name='accessName'>
+        /// The identifier of the Access configuration. Possible values include:
+        /// 'access', 'getAccess'
+        /// </param>
+        /// <param name='ifMatch'>
+        /// ETag of the Entity. ETag should match the current entity state from the
+        /// header response of the GET request or it should be * for unconditional
+        /// update.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<AccessInformationContract,TenantAccessUpdateHeaders>> UpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, AccessInformationUpdateParameters parameters, string accessName, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (serviceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "serviceName");
+            }
+            if (serviceName != null)
+            {
+                if (serviceName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "serviceName", 50);
+                }
+                if (serviceName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "serviceName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(serviceName, "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "serviceName", "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$");
+                }
+            }
+            if (parameters == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
+            }
+            if (accessName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "accessName");
+            }
+            if (ifMatch == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ifMatch");
+            }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("serviceName", serviceName);
+                tracingParameters.Add("parameters", parameters);
+                tracingParameters.Add("accessName", accessName);
+                tracingParameters.Add("ifMatch", ifMatch);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Update", tracingParameters);
             }
@@ -567,9 +1077,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             _url = _url.Replace("{accessName}", System.Uri.EscapeDataString(accessName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -643,7 +1153,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 204)
+            if ((int)_statusCode != 200)
             {
                 var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -673,12 +1183,43 @@ namespace Microsoft.Azure.Management.ApiManagement
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse();
+            var _result = new AzureOperationResponse<AccessInformationContract,TenantAccessUpdateHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<AccessInformationContract>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            try
+            {
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<TenantAccessUpdateHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+            }
+            catch (JsonException ex)
+            {
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
             }
             if (_shouldTrace)
             {
@@ -695,6 +1236,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
+        /// </param>
+        /// <param name='accessName'>
+        /// The identifier of the Access configuration. Possible values include:
+        /// 'access', 'getAccess'
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -714,7 +1259,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> RegeneratePrimaryKeyWithHttpMessagesAsync(string resourceGroupName, string serviceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> RegeneratePrimaryKeyWithHttpMessagesAsync(string resourceGroupName, string serviceName, string accessName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -739,12 +1284,18 @@ namespace Microsoft.Azure.Management.ApiManagement
                     throw new ValidationException(ValidationRules.Pattern, "serviceName", "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$");
                 }
             }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-12-01";
-            string accessName = "access";
+            if (accessName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "accessName");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -754,7 +1305,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serviceName", serviceName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("accessName", accessName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "RegeneratePrimaryKey", tracingParameters);
@@ -767,9 +1317,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{accessName}", System.Uri.EscapeDataString(accessName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -882,6 +1432,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='serviceName'>
         /// The name of the API Management service.
         /// </param>
+        /// <param name='accessName'>
+        /// The identifier of the Access configuration. Possible values include:
+        /// 'access', 'getAccess'
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -900,7 +1454,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> RegenerateSecondaryKeyWithHttpMessagesAsync(string resourceGroupName, string serviceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> RegenerateSecondaryKeyWithHttpMessagesAsync(string resourceGroupName, string serviceName, string accessName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -925,12 +1479,18 @@ namespace Microsoft.Azure.Management.ApiManagement
                     throw new ValidationException(ValidationRules.Pattern, "serviceName", "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$");
                 }
             }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-12-01";
-            string accessName = "access";
+            if (accessName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "accessName");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -940,7 +1500,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serviceName", serviceName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("accessName", accessName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "RegenerateSecondaryKey", tracingParameters);
@@ -953,9 +1512,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{accessName}", System.Uri.EscapeDataString(accessName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1068,6 +1627,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='serviceName'>
         /// The name of the API Management service.
         /// </param>
+        /// <param name='accessName'>
+        /// The identifier of the Access configuration. Possible values include:
+        /// 'access', 'getAccess'
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -1089,7 +1652,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<AccessInformationContract,TenantAccessListSecretsHeaders>> ListSecretsWithHttpMessagesAsync(string resourceGroupName, string serviceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<AccessInformationSecretsContract,TenantAccessListSecretsHeaders>> ListSecretsWithHttpMessagesAsync(string resourceGroupName, string serviceName, string accessName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1114,12 +1677,18 @@ namespace Microsoft.Azure.Management.ApiManagement
                     throw new ValidationException(ValidationRules.Pattern, "serviceName", "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$");
                 }
             }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-12-01";
-            string accessName = "access";
+            if (accessName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "accessName");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1129,7 +1698,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serviceName", serviceName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("accessName", accessName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListSecrets", tracingParameters);
@@ -1142,9 +1710,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{accessName}", System.Uri.EscapeDataString(accessName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1234,7 +1802,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<AccessInformationContract,TenantAccessListSecretsHeaders>();
+            var _result = new AzureOperationResponse<AccessInformationSecretsContract,TenantAccessListSecretsHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1247,7 +1815,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<AccessInformationContract>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<AccessInformationSecretsContract>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1271,6 +1839,174 @@ namespace Microsoft.Azure.Management.ApiManagement
                     _httpResponse.Dispose();
                 }
                 throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Returns list of access infos - for Git and Management endpoints.
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<IPage<AccessInformationContract>>> ListByServiceNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (nextPageLink == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("nextPageLink", nextPageLink);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByServiceNext", tracingParameters);
+            }
+            // Construct URL
+            string _url = "{nextLink}";
+            _url = _url.Replace("{nextLink}", nextPageLink);
+            List<string> _queryParameters = new List<string>();
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<IPage<AccessInformationContract>>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<AccessInformationContract>>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
             }
             if (_shouldTrace)
             {

@@ -12,6 +12,7 @@ namespace Microsoft.Azure.Management.ApiManagement
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
+    using Microsoft.Rest.Azure.OData;
     using Models;
     using System.Threading;
     using System.Threading.Tasks;
@@ -22,7 +23,7 @@ namespace Microsoft.Azure.Management.ApiManagement
     public static partial class TenantAccessOperationsExtensions
     {
             /// <summary>
-            /// Tenant access metadata
+            /// Returns list of access infos - for Git and Management endpoints.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -33,9 +34,38 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            public static TenantAccessGetEntityTagHeaders GetEntityTag(this ITenantAccessOperations operations, string resourceGroupName, string serviceName)
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
+            public static IPage<AccessInformationContract> ListByService(this ITenantAccessOperations operations, string resourceGroupName, string serviceName, ODataQuery<AccessInformationContract> odataQuery = default(ODataQuery<AccessInformationContract>))
             {
-                return operations.GetEntityTagAsync(resourceGroupName, serviceName).GetAwaiter().GetResult();
+                return operations.ListByServiceAsync(resourceGroupName, serviceName, odataQuery).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns list of access infos - for Git and Management endpoints.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<AccessInformationContract>> ListByServiceAsync(this ITenantAccessOperations operations, string resourceGroupName, string serviceName, ODataQuery<AccessInformationContract> odataQuery = default(ODataQuery<AccessInformationContract>), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByServiceWithHttpMessagesAsync(resourceGroupName, serviceName, odataQuery, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -50,12 +80,37 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
+            /// <param name='accessName'>
+            /// The identifier of the Access configuration. Possible values include:
+            /// 'access', 'getAccess'
+            /// </param>
+            public static TenantAccessGetEntityTagHeaders GetEntityTag(this ITenantAccessOperations operations, string resourceGroupName, string serviceName, string accessName)
+            {
+                return operations.GetEntityTagAsync(resourceGroupName, serviceName, accessName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Tenant access metadata
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='accessName'>
+            /// The identifier of the Access configuration. Possible values include:
+            /// 'access', 'getAccess'
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<TenantAccessGetEntityTagHeaders> GetEntityTagAsync(this ITenantAccessOperations operations, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<TenantAccessGetEntityTagHeaders> GetEntityTagAsync(this ITenantAccessOperations operations, string resourceGroupName, string serviceName, string accessName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetEntityTagWithHttpMessagesAsync(resourceGroupName, serviceName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetEntityTagWithHttpMessagesAsync(resourceGroupName, serviceName, accessName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Headers;
                 }
@@ -73,9 +128,13 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            public static AccessInformationContract Get(this ITenantAccessOperations operations, string resourceGroupName, string serviceName)
+            /// <param name='accessName'>
+            /// The identifier of the Access configuration. Possible values include:
+            /// 'access', 'getAccess'
+            /// </param>
+            public static AccessInformationContract Get(this ITenantAccessOperations operations, string resourceGroupName, string serviceName, string accessName)
             {
-                return operations.GetAsync(resourceGroupName, serviceName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, serviceName, accessName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -90,12 +149,16 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
+            /// <param name='accessName'>
+            /// The identifier of the Access configuration. Possible values include:
+            /// 'access', 'getAccess'
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AccessInformationContract> GetAsync(this ITenantAccessOperations operations, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AccessInformationContract> GetAsync(this ITenantAccessOperations operations, string resourceGroupName, string serviceName, string accessName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, serviceName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, serviceName, accessName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -116,14 +179,18 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='parameters'>
             /// Parameters supplied to retrieve the Tenant Access Information.
             /// </param>
+            /// <param name='accessName'>
+            /// The identifier of the Access configuration. Possible values include:
+            /// 'access', 'getAccess'
+            /// </param>
             /// <param name='ifMatch'>
             /// ETag of the Entity. ETag should match the current entity state from the
             /// header response of the GET request or it should be * for unconditional
             /// update.
             /// </param>
-            public static void Update(this ITenantAccessOperations operations, string resourceGroupName, string serviceName, AccessInformationUpdateParameters parameters, string ifMatch)
+            public static AccessInformationContract Create(this ITenantAccessOperations operations, string resourceGroupName, string serviceName, AccessInformationCreateParameters parameters, string accessName, string ifMatch)
             {
-                operations.UpdateAsync(resourceGroupName, serviceName, parameters, ifMatch).GetAwaiter().GetResult();
+                return operations.CreateAsync(resourceGroupName, serviceName, parameters, accessName, ifMatch).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -141,6 +208,10 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='parameters'>
             /// Parameters supplied to retrieve the Tenant Access Information.
             /// </param>
+            /// <param name='accessName'>
+            /// The identifier of the Access configuration. Possible values include:
+            /// 'access', 'getAccess'
+            /// </param>
             /// <param name='ifMatch'>
             /// ETag of the Entity. ETag should match the current entity state from the
             /// header response of the GET request or it should be * for unconditional
@@ -149,9 +220,76 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateAsync(this ITenantAccessOperations operations, string resourceGroupName, string serviceName, AccessInformationUpdateParameters parameters, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AccessInformationContract> CreateAsync(this ITenantAccessOperations operations, string resourceGroupName, string serviceName, AccessInformationCreateParameters parameters, string accessName, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateWithHttpMessagesAsync(resourceGroupName, serviceName, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, serviceName, parameters, accessName, ifMatch, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Update tenant access information details.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to retrieve the Tenant Access Information.
+            /// </param>
+            /// <param name='accessName'>
+            /// The identifier of the Access configuration. Possible values include:
+            /// 'access', 'getAccess'
+            /// </param>
+            /// <param name='ifMatch'>
+            /// ETag of the Entity. ETag should match the current entity state from the
+            /// header response of the GET request or it should be * for unconditional
+            /// update.
+            /// </param>
+            public static AccessInformationContract Update(this ITenantAccessOperations operations, string resourceGroupName, string serviceName, AccessInformationUpdateParameters parameters, string accessName, string ifMatch)
+            {
+                return operations.UpdateAsync(resourceGroupName, serviceName, parameters, accessName, ifMatch).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Update tenant access information details.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to retrieve the Tenant Access Information.
+            /// </param>
+            /// <param name='accessName'>
+            /// The identifier of the Access configuration. Possible values include:
+            /// 'access', 'getAccess'
+            /// </param>
+            /// <param name='ifMatch'>
+            /// ETag of the Entity. ETag should match the current entity state from the
+            /// header response of the GET request or it should be * for unconditional
+            /// update.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<AccessInformationContract> UpdateAsync(this ITenantAccessOperations operations, string resourceGroupName, string serviceName, AccessInformationUpdateParameters parameters, string accessName, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, serviceName, parameters, accessName, ifMatch, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -166,9 +304,13 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            public static void RegeneratePrimaryKey(this ITenantAccessOperations operations, string resourceGroupName, string serviceName)
+            /// <param name='accessName'>
+            /// The identifier of the Access configuration. Possible values include:
+            /// 'access', 'getAccess'
+            /// </param>
+            public static void RegeneratePrimaryKey(this ITenantAccessOperations operations, string resourceGroupName, string serviceName, string accessName)
             {
-                operations.RegeneratePrimaryKeyAsync(resourceGroupName, serviceName).GetAwaiter().GetResult();
+                operations.RegeneratePrimaryKeyAsync(resourceGroupName, serviceName, accessName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -183,12 +325,16 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
+            /// <param name='accessName'>
+            /// The identifier of the Access configuration. Possible values include:
+            /// 'access', 'getAccess'
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task RegeneratePrimaryKeyAsync(this ITenantAccessOperations operations, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task RegeneratePrimaryKeyAsync(this ITenantAccessOperations operations, string resourceGroupName, string serviceName, string accessName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.RegeneratePrimaryKeyWithHttpMessagesAsync(resourceGroupName, serviceName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.RegeneratePrimaryKeyWithHttpMessagesAsync(resourceGroupName, serviceName, accessName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -203,9 +349,13 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            public static void RegenerateSecondaryKey(this ITenantAccessOperations operations, string resourceGroupName, string serviceName)
+            /// <param name='accessName'>
+            /// The identifier of the Access configuration. Possible values include:
+            /// 'access', 'getAccess'
+            /// </param>
+            public static void RegenerateSecondaryKey(this ITenantAccessOperations operations, string resourceGroupName, string serviceName, string accessName)
             {
-                operations.RegenerateSecondaryKeyAsync(resourceGroupName, serviceName).GetAwaiter().GetResult();
+                operations.RegenerateSecondaryKeyAsync(resourceGroupName, serviceName, accessName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -220,12 +370,16 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
+            /// <param name='accessName'>
+            /// The identifier of the Access configuration. Possible values include:
+            /// 'access', 'getAccess'
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task RegenerateSecondaryKeyAsync(this ITenantAccessOperations operations, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task RegenerateSecondaryKeyAsync(this ITenantAccessOperations operations, string resourceGroupName, string serviceName, string accessName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.RegenerateSecondaryKeyWithHttpMessagesAsync(resourceGroupName, serviceName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.RegenerateSecondaryKeyWithHttpMessagesAsync(resourceGroupName, serviceName, accessName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -240,9 +394,13 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            public static AccessInformationContract ListSecrets(this ITenantAccessOperations operations, string resourceGroupName, string serviceName)
+            /// <param name='accessName'>
+            /// The identifier of the Access configuration. Possible values include:
+            /// 'access', 'getAccess'
+            /// </param>
+            public static AccessInformationSecretsContract ListSecrets(this ITenantAccessOperations operations, string resourceGroupName, string serviceName, string accessName)
             {
-                return operations.ListSecretsAsync(resourceGroupName, serviceName).GetAwaiter().GetResult();
+                return operations.ListSecretsAsync(resourceGroupName, serviceName, accessName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -257,12 +415,50 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
+            /// <param name='accessName'>
+            /// The identifier of the Access configuration. Possible values include:
+            /// 'access', 'getAccess'
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AccessInformationContract> ListSecretsAsync(this ITenantAccessOperations operations, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AccessInformationSecretsContract> ListSecretsAsync(this ITenantAccessOperations operations, string resourceGroupName, string serviceName, string accessName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListSecretsWithHttpMessagesAsync(resourceGroupName, serviceName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListSecretsWithHttpMessagesAsync(resourceGroupName, serviceName, accessName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Returns list of access infos - for Git and Management endpoints.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<AccessInformationContract> ListByServiceNext(this ITenantAccessOperations operations, string nextPageLink)
+            {
+                return operations.ListByServiceNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns list of access infos - for Git and Management endpoints.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<AccessInformationContract>> ListByServiceNextAsync(this ITenantAccessOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByServiceNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

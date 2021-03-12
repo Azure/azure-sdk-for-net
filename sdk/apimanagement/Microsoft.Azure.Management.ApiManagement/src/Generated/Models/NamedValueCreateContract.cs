@@ -37,10 +37,6 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="displayName">Unique name of NamedValue. It may contain
         /// only letters, digits, period, dash, and underscore
         /// characters.</param>
-        /// <param name="value">Value of the NamedValue. Can contain policy
-        /// expressions. It may not be empty or consist only of whitespace.
-        /// This property will not be filled on 'GET' operations! Use
-        /// '/listSecrets' POST request to get the value.</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type for API Management
@@ -49,13 +45,20 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// filter the NamedValue list.</param>
         /// <param name="secret">Determines whether the value is a secret and
         /// should be encrypted or not. Default value is false.</param>
-        public NamedValueCreateContract(string displayName, string value, string id = default(string), string name = default(string), string type = default(string), IList<string> tags = default(IList<string>), bool? secret = default(bool?))
+        /// <param name="value">Value of the NamedValue. Can contain policy
+        /// expressions. It may not be empty or consist only of whitespace.
+        /// This property will not be filled on 'GET' operations! Use
+        /// '/listSecrets' POST request to get the value.</param>
+        /// <param name="keyVault">KeyVault location details of the
+        /// namedValue.</param>
+        public NamedValueCreateContract(string displayName, string id = default(string), string name = default(string), string type = default(string), IList<string> tags = default(IList<string>), bool? secret = default(bool?), string value = default(string), KeyVaultContractCreateProperties keyVault = default(KeyVaultContractCreateProperties))
             : base(id, name, type)
         {
             Tags = tags;
             Secret = secret;
             DisplayName = displayName;
             Value = value;
+            KeyVault = keyVault;
             CustomInit();
         }
 
@@ -95,6 +98,12 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public string Value { get; set; }
 
         /// <summary>
+        /// Gets or sets keyVault location details of the namedValue.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.keyVault")]
+        public KeyVaultContractCreateProperties KeyVault { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -106,9 +115,34 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "DisplayName");
             }
-            if (Value == null)
+            if (Tags != null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Value");
+                if (Tags.Count > 32)
+                {
+                    throw new ValidationException(ValidationRules.MaxItems, "Tags", 32);
+                }
+            }
+            if (DisplayName != null)
+            {
+                if (DisplayName.Length > 256)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "DisplayName", 256);
+                }
+                if (DisplayName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "DisplayName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(DisplayName, "^[A-Za-z0-9-._]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "DisplayName", "^[A-Za-z0-9-._]+$");
+                }
+            }
+            if (Value != null)
+            {
+                if (Value.Length > 4096)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "Value", 4096);
+                }
             }
         }
     }
