@@ -8,7 +8,7 @@
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Repository attributes. </summary>
-    public partial class RepositoryAttributes
+    internal partial class RepositoryAttributes
     {
         /// <summary> Initializes a new instance of RepositoryAttributes. </summary>
         internal RepositoryAttributes()

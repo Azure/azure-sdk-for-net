@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Returns the requested V1 manifest file. </summary>
-    public partial class V1Manifest : Manifest
+    internal partial class V1Manifest : Manifest
     {
         /// <summary> Initializes a new instance of V1Manifest. </summary>
         public V1Manifest()
