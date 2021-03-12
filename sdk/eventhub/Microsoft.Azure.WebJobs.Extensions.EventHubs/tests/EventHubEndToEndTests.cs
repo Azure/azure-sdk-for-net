@@ -391,7 +391,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
         }
 
-
         private static void AssertAzureSdkLogs(IEnumerable<LogMessage> logMessages)
         {
             Assert.True(logMessages.Any(x => x.Category.StartsWith("Azure.")));
