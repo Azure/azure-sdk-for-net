@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(MediaLiveEventIncomingVideoStreamsOutOfSyncEventDataConverter))]
     public partial class MediaLiveEventIncomingVideoStreamsOutOfSyncEventData
     {
         internal static MediaLiveEventIncomingVideoStreamsOutOfSyncEventData DeserializeMediaLiveEventIncomingVideoStreamsOutOfSyncEventData(JsonElement element)
@@ -48,6 +51,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new MediaLiveEventIncomingVideoStreamsOutOfSyncEventData(firstTimestamp.Value, firstDuration.Value, secondTimestamp.Value, secondDuration.Value, timescale.Value);
+        }
+
+        internal partial class MediaLiveEventIncomingVideoStreamsOutOfSyncEventDataConverter : JsonConverter<MediaLiveEventIncomingVideoStreamsOutOfSyncEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, MediaLiveEventIncomingVideoStreamsOutOfSyncEventData model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override MediaLiveEventIncomingVideoStreamsOutOfSyncEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeMediaLiveEventIncomingVideoStreamsOutOfSyncEventData(document.RootElement);
+            }
         }
     }
 }

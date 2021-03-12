@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.Iot.TimeSeriesInsights.Models
+namespace Azure.Iot.TimeSeriesInsights
 {
     /// <summary> Request to get or delete time series types by IDs or type names. Exactly one of &quot;typeIds&quot; or &quot;names&quot; must be set. </summary>
     public partial class TypesRequestBatchGetOrDelete

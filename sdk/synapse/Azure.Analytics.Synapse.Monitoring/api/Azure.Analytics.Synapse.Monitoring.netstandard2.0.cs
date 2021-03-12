@@ -3,8 +3,7 @@ namespace Azure.Analytics.Synapse.Monitoring
     public partial class MonitoringClient
     {
         protected MonitoringClient() { }
-        public MonitoringClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
-        public MonitoringClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Synapse.Monitoring.MonitoringClientOptions options) { }
+        public MonitoringClient(string endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Synapse.Monitoring.MonitoringClientOptions options = null) { }
         public virtual Azure.Response<Azure.Analytics.Synapse.Monitoring.Models.SparkJobListViewResponse> GetSparkJobList(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Synapse.Monitoring.Models.SparkJobListViewResponse>> GetSparkJobListAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Analytics.Synapse.Monitoring.Models.SqlQueryStringDataModel> GetSqlJobQueryString(string filter = null, string orderby = null, string skip = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -12,7 +11,7 @@ namespace Azure.Analytics.Synapse.Monitoring
     }
     public partial class MonitoringClientOptions : Azure.Core.ClientOptions
     {
-        public MonitoringClientOptions(Azure.Analytics.Synapse.Monitoring.MonitoringClientOptions.ServiceVersion serviceVersion = Azure.Analytics.Synapse.Monitoring.MonitoringClientOptions.ServiceVersion.V2019_11_01_preview) { }
+        public MonitoringClientOptions(Azure.Analytics.Synapse.Monitoring.MonitoringClientOptions.ServiceVersion version = Azure.Analytics.Synapse.Monitoring.MonitoringClientOptions.ServiceVersion.V2019_11_01_preview) { }
         public enum ServiceVersion
         {
             V2019_11_01_preview = 1,

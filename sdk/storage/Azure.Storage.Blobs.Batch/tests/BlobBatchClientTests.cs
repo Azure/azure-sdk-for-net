@@ -1005,7 +1005,7 @@ namespace Azure.Storage.Blobs.Test
                 for (int i = 0; i < count; i++)
                 {
                     blobs[i] = _test.InstrumentClient(container.GetBlobClient("blob" + (++_blobId)));
-                    await blobs[i].UploadAsync(new MemoryStream(_test.GetRandomBuffer(Constants.KB)));
+                    await blobs[i].UploadAsync(BinaryData.FromBytes(_test.GetRandomBuffer(Constants.KB)));
                 }
                 return blobs;
             }

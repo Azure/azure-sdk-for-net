@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The list dedicated host operation response. </summary>
-    public partial class DedicatedHostListResult
+    internal partial class DedicatedHostListResult
     {
         /// <summary> Initializes a new instance of DedicatedHostListResult. </summary>
         /// <param name="value"> The list of dedicated hosts. </param>

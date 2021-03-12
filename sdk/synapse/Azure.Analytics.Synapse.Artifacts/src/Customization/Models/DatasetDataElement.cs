@@ -10,5 +10,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public DatasetDataElement()
         {
         }
+
+        /// <summary> Name of the column. Type: string (or Expression with resultType string). </summary>
+        public object Name { get; set; }
+        /// <summary> Type of the column. Type: string (or Expression with resultType string). </summary>
+        public object Type { get; set; }
     }
 }

@@ -74,7 +74,9 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// directory to be given SeSecurityPrivilege privilege (Needed for SMB
         /// Continuously available shares for SQL). A list of unique usernames
         /// without domain specifier</param>
-        public ActiveDirectory(string activeDirectoryId = default(string), string username = default(string), string password = default(string), string domain = default(string), string dns = default(string), string status = default(string), string statusDetails = default(string), string smbServerName = default(string), string organizationalUnit = default(string), string site = default(string), IList<string> backupOperators = default(IList<string>), string kdcIP = default(string), string adName = default(string), string serverRootCACertificate = default(string), bool? aesEncryption = default(bool?), bool? ldapSigning = default(bool?), IList<string> securityOperators = default(IList<string>))
+        /// <param name="ldapOverTLS">Specifies whether or not the LDAP traffic
+        /// needs to be secured via TLS.</param>
+        public ActiveDirectory(string activeDirectoryId = default(string), string username = default(string), string password = default(string), string domain = default(string), string dns = default(string), string status = default(string), string statusDetails = default(string), string smbServerName = default(string), string organizationalUnit = default(string), string site = default(string), IList<string> backupOperators = default(IList<string>), string kdcIP = default(string), string adName = default(string), string serverRootCACertificate = default(string), bool? aesEncryption = default(bool?), bool? ldapSigning = default(bool?), IList<string> securityOperators = default(IList<string>), bool? ldapOverTLS = default(bool?))
         {
             ActiveDirectoryId = activeDirectoryId;
             Username = username;
@@ -93,6 +95,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
             AesEncryption = aesEncryption;
             LdapSigning = ldapSigning;
             SecurityOperators = securityOperators;
+            LdapOverTLS = ldapOverTLS;
             CustomInit();
         }
 
@@ -222,6 +225,13 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// </summary>
         [JsonProperty(PropertyName = "securityOperators")]
         public IList<string> SecurityOperators { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies whether or not the LDAP traffic needs to be
+        /// secured via TLS.
+        /// </summary>
+        [JsonProperty(PropertyName = "ldapOverTLS")]
+        public bool? LdapOverTLS { get; set; }
 
         /// <summary>
         /// Validate the object.

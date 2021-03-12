@@ -14,5 +14,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
+
+        /// <summary> Managed service identity of the workspace. </summary>
+        public WorkspaceIdentity Identity { get; set; }
     }
 }

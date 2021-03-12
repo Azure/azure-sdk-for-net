@@ -1,0 +1,125 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://live-testing.communication.azure.com/phoneNumbers?api-version=2021-03-07",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Date": "Fri, 26 Feb 2021 06:10:39 GMT",
+        "traceparent": "00-18194122267f524c8ba9260c3b4047c7-d7941dacbe93a548-00",
+        "User-Agent": [
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210225.1",
+          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
+        ],
+        "x-ms-client-request-id": "57914b5847fc57ab7d329f21e9d2526a",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 26 Feb 2021 06:10:38 GMT",
+        "MS-CV": "J1TR30GyqUyogC6/yMVlFg.0",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Processing-Time": "9ms"
+      },
+      "ResponseBody": {
+        "phoneNumbers": [
+          {
+            "id": "Sanitized",
+            "phoneNumber": "Sanitized",
+            "countryCode": "US",
+            "phoneNumberType": "TollFree",
+            "capabilities": {
+              "calling": "none",
+              "sms": "outbound"
+            },
+            "assignmentType": "Application",
+            "purchaseDate": "0001-01-01T00:00:00\u002B00:00",
+            "cost": {
+              "amount": 0.0,
+              "currencyCode": "USD",
+              "billingFrequency": "Monthly"
+            }
+          },
+          {
+            "id": "Sanitized",
+            "phoneNumber": "Sanitized",
+            "countryCode": "US",
+            "phoneNumberType": "TollFree",
+            "capabilities": {
+              "calling": "none",
+              "sms": "outbound"
+            },
+            "assignmentType": "Application",
+            "purchaseDate": "0001-01-01T00:00:00\u002B00:00",
+            "cost": {
+              "amount": 0.0,
+              "currencyCode": "USD",
+              "billingFrequency": "Monthly"
+            }
+          },
+          {
+            "id": "Sanitized",
+            "phoneNumber": "Sanitized",
+            "countryCode": "US",
+            "phoneNumberType": "TollFree",
+            "capabilities": {
+              "calling": "none",
+              "sms": "outbound"
+            },
+            "assignmentType": "Application",
+            "purchaseDate": "0001-01-01T00:00:00\u002B00:00",
+            "cost": {
+              "amount": 0.0,
+              "currencyCode": "USD",
+              "billingFrequency": "Monthly"
+            }
+          },
+          {
+            "id": "Sanitized",
+            "phoneNumber": "Sanitized",
+            "countryCode": "US",
+            "phoneNumberType": "TollFree",
+            "capabilities": {
+              "calling": "none",
+              "sms": "outbound"
+            },
+            "assignmentType": "Application",
+            "purchaseDate": "0001-01-01T00:00:00\u002B00:00",
+            "cost": {
+              "amount": 0.0,
+              "currencyCode": "USD",
+              "billingFrequency": "Monthly"
+            }
+          },
+          {
+            "id": "Sanitized",
+            "phoneNumber": "Sanitized",
+            "countryCode": "US",
+            "phoneNumberType": "TollFree",
+            "capabilities": {
+              "calling": "none",
+              "sms": "outbound"
+            },
+            "assignmentType": "Application",
+            "purchaseDate": "0001-01-01T00:00:00\u002B00:00",
+            "cost": {
+              "amount": 0.0,
+              "currencyCode": "USD",
+              "billingFrequency": "Monthly"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "COMMUNICATION_CONNECTION_STRING": "endpoint=https://live-testing.communication.azure.com/;accesskey=Kg==",
+    "RandomSeed": "136581784"
+  }
+}

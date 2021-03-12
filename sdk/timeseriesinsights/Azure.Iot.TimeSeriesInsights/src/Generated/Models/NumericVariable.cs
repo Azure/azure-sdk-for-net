@@ -6,9 +6,8 @@
 #nullable disable
 
 using System;
-using Azure.Iot.TimeSeriesInsights;
 
-namespace Azure.Iot.TimeSeriesInsights.Models
+namespace Azure.Iot.TimeSeriesInsights
 {
     /// <summary> Numeric variable represents a single continuous numeric signal that can be reconstructed using interpolation. </summary>
     public partial class NumericVariable : TimeSeriesVariable

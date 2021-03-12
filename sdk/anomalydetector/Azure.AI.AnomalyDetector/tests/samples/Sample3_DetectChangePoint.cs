@@ -27,7 +27,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
             var credential = new AzureKeyCredential(apiKey);
 
             //create client
-            AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, credential);
+            AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri.AbsoluteUri, credential);
 
             #region Snippet:ReadSeriesDataForChangePoint
 

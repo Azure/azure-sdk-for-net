@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.4
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{D75E940A-8200-4437-8563-8AE41D8B750B}") = "Microsoft.Azure.Management.ServiceFabricManagedClusters.Test", "tests\Microsoft.Azure.Management.ServiceFabricManagedClusters.Test.csproj", "{54B315C9-9271-4116-B927-16800995A138}"
+EndProject
+Project("{D75E940A-8200-4437-8563-8AE41D8B750B}") = "Microsoft.Azure.Management.ServiceFabricManagedClusters", "src\Microsoft.Azure.Management.ServiceFabricManagedClusters.csproj", "{1851D2F7-07AD-4769-9DE5-36C823E63EBC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{54B315C9-9271-4116-B927-16800995A138}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54B315C9-9271-4116-B927-16800995A138}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54B315C9-9271-4116-B927-16800995A138}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54B315C9-9271-4116-B927-16800995A138}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1851D2F7-07AD-4769-9DE5-36C823E63EBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1851D2F7-07AD-4769-9DE5-36C823E63EBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1851D2F7-07AD-4769-9DE5-36C823E63EBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1851D2F7-07AD-4769-9DE5-36C823E63EBC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {10FE1DA6-9101-43F1-8698-D8C262A68F7D}
+	EndGlobalSection
+EndGlobal

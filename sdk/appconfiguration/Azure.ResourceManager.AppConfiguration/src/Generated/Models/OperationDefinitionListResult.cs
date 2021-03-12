@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
     /// <summary> The result of a request to list configuration store operations. </summary>
-    public partial class OperationDefinitionListResult
+    internal partial class OperationDefinitionListResult
     {
         /// <summary> Initializes a new instance of OperationDefinitionListResult. </summary>
         internal OperationDefinitionListResult()

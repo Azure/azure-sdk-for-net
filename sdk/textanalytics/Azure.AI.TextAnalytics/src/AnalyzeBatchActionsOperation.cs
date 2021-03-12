@@ -106,11 +106,6 @@ namespace Azure.AI.TextAnalytics
         public override bool HasCompleted => _hasCompleted;
 
         /// <summary>
-        /// If the operation has an exception, this property saves its information.
-        /// </summary>
-        private RequestFailedException _requestFailedException;
-
-        /// <summary>
         /// The last HTTP response received from the server. <c>null</c> until the first response is received.
         /// </summary>
         private Response _response;
@@ -125,11 +120,6 @@ namespace Azure.AI.TextAnalytics
         /// This is used in every GET request.
         /// </summary>
         private bool? _showStats { get; }
-
-        /// <summary>
-        /// Provides the api version to use when doing pagination.
-        /// </summary>
-        private readonly string _apiVersion;
 
         /// <summary>
         /// Returns true if the long-running operation completed successfully and has produced final result (accessible by Value property).
@@ -155,15 +145,13 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <param name="serviceClient">The client for communicating with the Form Recognizer Azure Cognitive Service through its REST API.</param>
         /// <param name="diagnostics">The client diagnostics for exception creation in case of failure.</param>
-        /// <param name="apiversion">The specific api version to use.</param>
         /// <param name="operationLocation">The address of the long-running operation. It can be obtained from the response headers upon starting the operation.</param>
         /// <param name="idToIndexMap"></param>
         /// <param name="showStats"></param>
-        internal AnalyzeBatchActionsOperation(TextAnalyticsRestClient serviceClient, ClientDiagnostics diagnostics, string apiversion, string operationLocation, IDictionary<string, int> idToIndexMap, bool? showStats = default)
+        internal AnalyzeBatchActionsOperation(TextAnalyticsRestClient serviceClient, ClientDiagnostics diagnostics, string operationLocation, IDictionary<string, int> idToIndexMap, bool? showStats = default)
         {
             _serviceClient = serviceClient;
             _diagnostics = diagnostics;
-            _apiVersion = apiversion;
             _idToIndexMap = idToIndexMap;
             _showStats = showStats;
 
@@ -262,19 +250,17 @@ namespace Azure.AI.TextAnalytics
                     _actionSucceeded = update.Value.Tasks.Completed;
                     _totalActions = update.Value.Tasks.Total;
 
-                    if (update.Value.Status == TextAnalyticsOperationStatus.Succeeded || update.Value.Status == TextAnalyticsOperationStatus.PartiallySucceeded)
+                    // TODO - Remove PartiallySucceeded once service deploys this to WestUS2
+                    if (update.Value.Status == TextAnalyticsOperationStatus.Succeeded ||
+                        update.Value.Status == TextAnalyticsOperationStatus.PartiallySucceeded ||
+                        update.Value.Status == TextAnalyticsOperationStatus.PartiallyCompleted ||
+                        update.Value.Status == TextAnalyticsOperationStatus.Failed)
                     {
                         // we need to first assign a value and then mark the operation as completed to avoid race conditions
                         var nextLink = update.Value.NextLink;
                         var value = Transforms.ConvertToAnalyzeOperationResult(update.Value, _idToIndexMap);
                         _firstPage = Page.FromValues(new List<AnalyzeBatchActionsResult>() { value }, nextLink, _response);
                         _hasCompleted = true;
-                    }
-                    else if (update.Value.Status == TextAnalyticsOperationStatus.Failed)
-                    {
-                        _requestFailedException = await ClientCommon.CreateExceptionForFailedOperationAsync(async, _diagnostics, _response, update.Value.Errors).ConfigureAwait(false);
-                        _hasCompleted = true;
-                        throw _requestFailedException;
                     }
                 }
                 catch (Exception e)
@@ -302,7 +288,7 @@ namespace Azure.AI.TextAnalytics
                 //diagnostics scope?
                 try
                 {
-                    Response<AnalyzeJobState> jobState = await _serviceClient.AnalyzeStatusNextPageAsync(_apiVersion, nextLink, _showStats).ConfigureAwait(false);
+                    Response<AnalyzeJobState> jobState = await _serviceClient.AnalyzeStatusNextPageAsync(nextLink, _showStats).ConfigureAwait(false);
 
                     AnalyzeBatchActionsResult result = Transforms.ConvertToAnalyzeOperationResult(jobState.Value, _idToIndexMap);
                     return Page.FromValues(new List<AnalyzeBatchActionsResult>() { result }, jobState.Value.NextLink, jobState.GetRawResponse());
@@ -331,7 +317,7 @@ namespace Azure.AI.TextAnalytics
                 //diagnostics scope?
                 try
                 {
-                    Response<AnalyzeJobState> jobState = _serviceClient.AnalyzeStatusNextPage(_apiVersion, nextLink, _showStats);
+                    Response<AnalyzeJobState> jobState = _serviceClient.AnalyzeStatusNextPage(nextLink, _showStats);
 
                     AnalyzeBatchActionsResult result = Transforms.ConvertToAnalyzeOperationResult(jobState.Value, _idToIndexMap);
                     return Page.FromValues(new List<AnalyzeBatchActionsResult>() { result }, jobState.Value.NextLink, jobState.GetRawResponse());
@@ -349,8 +335,6 @@ namespace Azure.AI.TextAnalytics
         {
             if (!HasCompleted)
                 throw new InvalidOperationException("The operation has not completed yet.");
-            if (!HasValue)
-                throw _requestFailedException;
         }
     }
 }

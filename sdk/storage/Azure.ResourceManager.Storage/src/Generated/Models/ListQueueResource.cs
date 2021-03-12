@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> Response schema. Contains list of queues returned. </summary>
-    public partial class ListQueueResource
+    internal partial class ListQueueResource
     {
         /// <summary> Initializes a new instance of ListQueueResource. </summary>
         internal ListQueueResource()

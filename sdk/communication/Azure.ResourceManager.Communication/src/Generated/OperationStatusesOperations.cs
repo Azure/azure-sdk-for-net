@@ -20,10 +20,12 @@ namespace Azure.ResourceManager.Communication
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         internal OperationStatusesRestOperations RestClient { get; }
+
         /// <summary> Initializes a new instance of OperationStatusesOperations for mocking. </summary>
         protected OperationStatusesOperations()
         {
         }
+
         /// <summary> Initializes a new instance of OperationStatusesOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>

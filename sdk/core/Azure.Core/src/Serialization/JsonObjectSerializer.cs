@@ -67,6 +67,20 @@ namespace Azure.Core.Serialization
             return JsonSerializer.DeserializeAsync(stream, returnType, _options, cancellationToken);
         }
 
+        /// <inheritdoc />
+        public override BinaryData Serialize(object? value, Type? inputType = default, CancellationToken cancellationToken = default) =>
+            SerializeToBinaryDataInternal(value, inputType);
+
+        /// <inheritdoc />
+        public override ValueTask<BinaryData> SerializeAsync(object? value, Type? inputType = default, CancellationToken cancellationToken = default) =>
+             new ValueTask<BinaryData>(SerializeToBinaryDataInternal(value, inputType));
+
+        private BinaryData SerializeToBinaryDataInternal(object? value, Type? inputType)
+        {
+            byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(value, inputType ?? value?.GetType() ?? typeof(object), _options);
+            return new BinaryData(bytes);
+        }
+
         /// <inheritdoc/>
         string? IMemberNameConverter.ConvertMemberName(MemberInfo member)
         {

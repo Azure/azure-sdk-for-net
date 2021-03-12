@@ -76,6 +76,15 @@ namespace Azure.Storage.Files.DataLake
                 Properties = blobDownloadInfo.Details.ToFileDownloadDetails()
             };
 
+        internal static FileDownloadInfo ToFileDownloadInfo(this BlobDownloadStreamingResult blobDownloadStreamingResult) =>
+            new FileDownloadInfo()
+            {
+                ContentLength = blobDownloadStreamingResult.Details.ContentLength,
+                Content = blobDownloadStreamingResult.Content,
+                ContentHash = blobDownloadStreamingResult.Details.ContentHash,
+                Properties = blobDownloadStreamingResult.Details.ToFileDownloadDetails()
+            };
+
         internal static PathProperties ToPathProperties(this BlobProperties blobProperties) =>
             new PathProperties()
             {

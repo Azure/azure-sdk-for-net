@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class DedicatedHostListResult
+    internal partial class DedicatedHostListResult
     {
         internal static DedicatedHostListResult DeserializeDedicatedHostListResult(JsonElement element)
         {

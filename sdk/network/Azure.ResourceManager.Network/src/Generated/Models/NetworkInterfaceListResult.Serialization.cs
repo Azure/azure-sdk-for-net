@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class NetworkInterfaceListResult
+    internal partial class NetworkInterfaceListResult
     {
         internal static NetworkInterfaceListResult DeserializeNetworkInterfaceListResult(JsonElement element)
         {

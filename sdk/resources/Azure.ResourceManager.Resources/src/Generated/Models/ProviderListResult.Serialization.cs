@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ProviderListResult
+    internal partial class ProviderListResult
     {
         internal static ProviderListResult DeserializeProviderListResult(JsonElement element)
         {

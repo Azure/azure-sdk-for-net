@@ -1005,18 +1005,6 @@ namespace Azure.ResourceManager.Resources.Models
         public object MainTemplate { get { throw null; } set { } }
         public string PackageFileUri { get { throw null; } set { } }
     }
-    public partial class ApplicationDefinitionListResult
-    {
-        internal ApplicationDefinitionListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ApplicationDefinition> Value { get { throw null; } }
-    }
-    public partial class ApplicationListResult
-    {
-        internal ApplicationListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.Application> Value { get { throw null; } }
-    }
     public enum ApplicationLockLevel
     {
         CanNotDelete = 0,
@@ -1180,12 +1168,6 @@ namespace Azure.ResourceManager.Resources.Models
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
         public string Type { get { throw null; } }
     }
-    public partial class DeploymentListResult
-    {
-        internal DeploymentListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.DeploymentExtended> Value { get { throw null; } }
-    }
     public enum DeploymentMode
     {
         Incremental = 0,
@@ -1211,12 +1193,6 @@ namespace Azure.ResourceManager.Resources.Models
         public object StatusMessage { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.TargetResource TargetResource { get { throw null; } }
         public System.DateTimeOffset? Timestamp { get { throw null; } }
-    }
-    public partial class DeploymentOperationsListResult
-    {
-        internal DeploymentOperationsListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.DeploymentOperation> Value { get { throw null; } }
     }
     public partial class DeploymentProperties
     {
@@ -1257,12 +1233,6 @@ namespace Azure.ResourceManager.Resources.Models
         public string Location { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.SystemData SystemData { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-    }
-    public partial class DeploymentScriptListResult
-    {
-        internal DeploymentScriptListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.DeploymentScript> Value { get { throw null; } }
     }
     public partial class DeploymentScriptUpdateParameter : Azure.ResourceManager.Resources.Models.AzureResourceBase
     {
@@ -1336,12 +1306,6 @@ namespace Azure.ResourceManager.Resources.Models
         public ExportTemplateRequest() { }
         public string Options { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Resources { get { throw null; } }
-    }
-    public partial class FeatureOperationsListResult
-    {
-        internal FeatureOperationsListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.FeatureResult> Value { get { throw null; } }
     }
     public partial class FeatureProperties
     {
@@ -1423,11 +1387,6 @@ namespace Azure.ResourceManager.Resources.Models
         public string RegionalDisplayName { get { throw null; } }
         public string SubscriptionId { get { throw null; } }
     }
-    public partial class LocationListResult
-    {
-        internal LocationListResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.Location> Value { get { throw null; } }
-    }
     public partial class LocationMetadata
     {
         internal LocationMetadata() { }
@@ -1485,12 +1444,6 @@ namespace Azure.ResourceManager.Resources.Models
         public static implicit operator Azure.ResourceManager.Resources.Models.ManagedServiceIdentityType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Resources.Models.ManagedServiceIdentityType left, Azure.ResourceManager.Resources.Models.ManagedServiceIdentityType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class ManagementLockListResult
-    {
-        internal ManagementLockListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ManagementLockObject> Value { get { throw null; } }
     }
     public partial class ManagementLockObject
     {
@@ -1564,24 +1517,6 @@ namespace Azure.ResourceManager.Resources.Models
         public string Operation { get { throw null; } }
         public string Provider { get { throw null; } }
         public string Resource { get { throw null; } }
-    }
-    public partial class OperationListResult
-    {
-        internal OperationListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.Operation> Value { get { throw null; } }
-    }
-    public partial class OperationListResultAutoGenerated
-    {
-        internal OperationListResultAutoGenerated() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.OperationAutoGenerated> Value { get { throw null; } }
-    }
-    public partial class OperationListResultAutoGenerated2
-    {
-        internal OperationListResultAutoGenerated2() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.OperationAutoGenerated2> Value { get { throw null; } }
     }
     public partial class PairedRegion
     {
@@ -1699,12 +1634,6 @@ namespace Azure.ResourceManager.Resources.Models
         public Azure.ResourceManager.Resources.Models.PolicySku Sku { get { throw null; } set { } }
         public string Type { get { throw null; } }
     }
-    public partial class PolicyAssignmentListResult
-    {
-        internal PolicyAssignmentListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.PolicyAssignment> Value { get { throw null; } }
-    }
     public partial class PolicyDefinition
     {
         public PolicyDefinition() { }
@@ -1728,12 +1657,6 @@ namespace Azure.ResourceManager.Resources.Models
         public string DisplayName { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
     }
-    public partial class PolicyDefinitionListResult
-    {
-        internal PolicyDefinitionListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.PolicyDefinition> Value { get { throw null; } }
-    }
     public partial class PolicyDefinitionReference
     {
         public PolicyDefinitionReference(string policyDefinitionId) { }
@@ -1755,12 +1678,6 @@ namespace Azure.ResourceManager.Resources.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.PolicyDefinitionReference> PolicyDefinitions { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.PolicyType? PolicyType { get { throw null; } set { } }
         public string Type { get { throw null; } }
-    }
-    public partial class PolicySetDefinitionListResult
-    {
-        internal PolicySetDefinitionListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.PolicySetDefinition> Value { get { throw null; } }
     }
     public partial class PolicySku
     {
@@ -1803,12 +1720,6 @@ namespace Azure.ResourceManager.Resources.Models
         public string RegistrationPolicy { get { throw null; } }
         public string RegistrationState { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ProviderResourceType> ResourceTypes { get { throw null; } }
-    }
-    public partial class ProviderListResult
-    {
-        internal ProviderListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.Provider> Value { get { throw null; } }
     }
     public partial class ProviderResourceType
     {
@@ -1922,12 +1833,6 @@ namespace Azure.ResourceManager.Resources.Models
         public Azure.ResourceManager.Resources.Models.ErrorResponse Error { get { throw null; } }
         public object Template { get { throw null; } }
     }
-    public partial class ResourceGroupListResult
-    {
-        internal ResourceGroupListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ResourceGroup> Value { get { throw null; } }
-    }
     public partial class ResourceGroupPatchable
     {
         public ResourceGroupPatchable() { }
@@ -1962,18 +1867,6 @@ namespace Azure.ResourceManager.Resources.Models
         public string Notes { get { throw null; } set { } }
         public string SourceId { get { throw null; } }
         public string TargetId { get { throw null; } set { } }
-    }
-    public partial class ResourceLinkResult
-    {
-        internal ResourceLinkResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ResourceLink> Value { get { throw null; } }
-    }
-    public partial class ResourceListResult
-    {
-        internal ResourceListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.GenericResourceExpanded> Value { get { throw null; } }
     }
     public partial class ResourceReference
     {
@@ -2098,12 +1991,6 @@ namespace Azure.ResourceManager.Resources.Models
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
         public string TenantId { get { throw null; } }
     }
-    public partial class SubscriptionListResult
-    {
-        internal SubscriptionListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.Subscription> Value { get { throw null; } }
-    }
     public partial class SubscriptionPolicies
     {
         internal SubscriptionPolicies() { }
@@ -2147,12 +2034,6 @@ namespace Azure.ResourceManager.Resources.Models
     {
         public Tags() { }
         public System.Collections.Generic.IDictionary<string, string> TagsValue { get { throw null; } }
-    }
-    public partial class TagsListResult
-    {
-        internal TagsListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.TagDetails> Value { get { throw null; } }
     }
     public partial class TagsPatchResource
     {
@@ -2229,12 +2110,6 @@ namespace Azure.ResourceManager.Resources.Models
         public string Id { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.TenantCategory? TenantCategory { get { throw null; } }
         public string TenantId { get { throw null; } }
-    }
-    public partial class TenantListResult
-    {
-        internal TenantListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.TenantIdDescription> Value { get { throw null; } }
     }
     public partial class UserAssignedIdentity
     {

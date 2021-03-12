@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Iot.TimeSeriesInsights.Models
+namespace Azure.Iot.TimeSeriesInsights
 {
     /// <summary> Property of an event that is either stored or computed. Properties are identified by both name and type. Different events can have properties with same name, but different type. </summary>
     public partial class EventProperty

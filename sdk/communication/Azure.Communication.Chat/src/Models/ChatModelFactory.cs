@@ -44,12 +44,12 @@ namespace Azure.Communication.Chat
         /// <summary>
         /// Initializes a new instance of the <see cref="ChatMessageReadReceipt"/> class.
         /// </summary>
-        /// <param name="senderId"> Id of the of message sender. </param>
+        /// <param name="sender">CommunicationIdentifier of the of message sender. </param>
         /// <param name="chatMessageId"> Id for the chat message that has been read. </param>
         /// <param name="readOn"> Read receipt timestamp. </param>
         /// <returns>A new <see cref="ChatMessageReadReceipt"/> instance for mocking.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ChatMessageReadReceipt ChatMessageReadReceipt(string senderId, string chatMessageId, DateTimeOffset readOn)
-            => new ChatMessageReadReceipt(senderId, chatMessageId, readOn);
+        public static ChatMessageReadReceipt ChatMessageReadReceipt(CommunicationIdentifier sender, string chatMessageId, DateTimeOffset readOn)
+            => new ChatMessageReadReceipt(sender, chatMessageId, readOn);
     }
 }

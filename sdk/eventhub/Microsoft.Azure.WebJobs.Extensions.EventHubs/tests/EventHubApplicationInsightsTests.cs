@@ -330,12 +330,12 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
         public class EventHubTestSingleDispatchJobs
         {
-            public static void SendEvent_TestHub(string input, [EventHub(TestHubName)] out EventData evt)
+            public static void SendEvent_TestHub(string input, [EventHub(TestHubName, Connection = TestHubName)] out EventData evt)
             {
                 evt = new EventData(Encoding.UTF8.GetBytes(input));
             }
 
-            public static void ProcessSingleEvent([EventHubTrigger(TestHubName)] string evt)
+            public static void ProcessSingleEvent([EventHubTrigger(TestHubName, Connection = TestHubName)] string evt)
             {
                 _eventWait.Set();
             }
@@ -348,7 +348,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             private const int EventCount = 5;
             private static readonly object MessageLock = new object();
-            public static void SendEvents_TestHub(string input, [EventHub(TestHubName)] out EventData[] events)
+            public static void SendEvents_TestHub(string input, [EventHub(TestHubName, Connection = TestHubName)] out EventData[] events)
             {
                 LinksCount.Clear();
                 MessagesCount = 0;
@@ -360,7 +360,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 }
             }
 
-            public static void ProcessMultipleEvents([EventHubTrigger(TestHubName)] string[] events)
+            public static void ProcessMultipleEvents([EventHubTrigger(TestHubName, Connection = TestHubName)] string[] events)
             {
                 Activity.Current.AddTag("receivedMessages", events.Length.ToString());
                 lock (MessageLock)

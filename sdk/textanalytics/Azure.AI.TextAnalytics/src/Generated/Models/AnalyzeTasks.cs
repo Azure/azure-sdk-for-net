@@ -27,6 +27,7 @@ namespace Azure.AI.TextAnalytics
             EntityRecognitionTasks = new ChangeTrackingList<EntityRecognitionTasksItem>();
             EntityRecognitionPiiTasks = new ChangeTrackingList<EntityRecognitionPiiTasksItem>();
             KeyPhraseExtractionTasks = new ChangeTrackingList<KeyPhraseExtractionTasksItem>();
+            EntityLinkingTasks = new ChangeTrackingList<EntityLinkingTasksItem>();
         }
 
         /// <summary> Initializes a new instance of AnalyzeTasks. </summary>
@@ -38,7 +39,8 @@ namespace Azure.AI.TextAnalytics
         /// <param name="entityRecognitionTasks"> . </param>
         /// <param name="entityRecognitionPiiTasks"> . </param>
         /// <param name="keyPhraseExtractionTasks"> . </param>
-        internal AnalyzeTasks(TasksStateTasksDetailsInternal details, int completed, int failed, int inProgress, int total, IReadOnlyList<EntityRecognitionTasksItem> entityRecognitionTasks, IReadOnlyList<EntityRecognitionPiiTasksItem> entityRecognitionPiiTasks, IReadOnlyList<KeyPhraseExtractionTasksItem> keyPhraseExtractionTasks)
+        /// <param name="entityLinkingTasks"> . </param>
+        internal AnalyzeTasks(TasksStateTasksDetailsInternal details, int completed, int failed, int inProgress, int total, IReadOnlyList<EntityRecognitionTasksItem> entityRecognitionTasks, IReadOnlyList<EntityRecognitionPiiTasksItem> entityRecognitionPiiTasks, IReadOnlyList<KeyPhraseExtractionTasksItem> keyPhraseExtractionTasks, IReadOnlyList<EntityLinkingTasksItem> entityLinkingTasks)
         {
             Details = details;
             Completed = completed;
@@ -48,6 +50,8 @@ namespace Azure.AI.TextAnalytics
             EntityRecognitionTasks = entityRecognitionTasks;
             EntityRecognitionPiiTasks = entityRecognitionPiiTasks;
             KeyPhraseExtractionTasks = keyPhraseExtractionTasks;
+            EntityLinkingTasks = entityLinkingTasks;
         }
+        public IReadOnlyList<EntityLinkingTasksItem> EntityLinkingTasks { get; }
     }
 }

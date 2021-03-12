@@ -8,7 +8,9 @@ using Azure.Identity;
 using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Primitives;
+using Azure.Messaging.EventHubs.Processor;
 using Azure.Messaging.EventHubs.Producer;
+using Azure.Storage.Blobs;
 using Microsoft.Azure.WebJobs.EventHubs.Processor;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
@@ -22,23 +24,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
     {
         private const string ConnectionString = "Endpoint=sb://test89123-ns-x.servicebus.windows.net/;SharedAccessKeyName=ReceiveRule;SharedAccessKey=secretkey";
         private const string ConnectionStringWithEventHub = "Endpoint=sb://test89123-ns-x.servicebus.windows.net/;SharedAccessKeyName=ReceiveRule;SharedAccessKey=secretkey;EntityPath=path2";
-
-        // Validate that if connection string has EntityPath, that takes precedence over the parameter.
-        [TestCase("k1", ConnectionString)]
-        [TestCase("path2", ConnectionStringWithEventHub)]
-        public void EntityPathInConnectionString(string expectedPathName, string connectionString)
-        {
-            EventHubOptions options = new EventHubOptions();
-
-            // Test sender
-            options.AddSender(expectedPathName, connectionString);
-
-            var configuration = CreateConfiguration();
-            var factory = new EventHubClientFactory(configuration, Mock.Of<AzureComponentFactory>(), Options.Create(options), new DefaultNameResolver(configuration));
-
-            var client = factory.GetEventHubProducerClient(expectedPathName, null);
-            Assert.AreEqual(expectedPathName, client.EventHubName);
-        }
 
         // Validate that if connection string has EntityPath, that takes precedence over the parameter.
         [TestCase("k1", ConnectionString)]
@@ -120,35 +105,20 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         {
             EventHubOptions options = new EventHubOptions();
 
-            // Test sender
-            options.AddReceiver("k1", ConnectionString);
-
             var configuration = CreateConfiguration(new KeyValuePair<string, string>("AzureWebJobsStorage", "UseDevelopmentStorage=true"));
 
-            var factory = new EventHubClientFactory(configuration, Mock.Of<AzureComponentFactory>(), Options.Create(options), new DefaultNameResolver(configuration));
+            var factoryMock = new Mock<AzureComponentFactory>();
+            factoryMock.Setup(m => m.CreateClient(
+                        typeof(BlobServiceClient),
+                        It.Is<ConfigurationSection>(c => c.Path == "AzureWebJobsStorage"),
+                        null, null))
+                .Returns(new BlobServiceClient(configuration["AzureWebJobsStorage"]));
 
-            var client = factory.GetCheckpointStoreClient("k1");
+            var factory = new EventHubClientFactory(configuration, factoryMock.Object, Options.Create(options), new DefaultNameResolver(configuration));
+
+            var client = factory.GetCheckpointStoreClient();
             Assert.AreEqual("azure-webjobs-eventhub", client.Name);
             Assert.AreEqual("devstoreaccount1", client.AccountName);
-        }
-
-        [Test]
-        public void UsesRegisteredConnectionToStorageAccount()
-        {
-            EventHubOptions options = new EventHubOptions();
-
-            // Test sender
-            options.AddReceiver("k1",
-                ConnectionString,
-                "BlobEndpoint=http://blobs/;AccountName=test;AccountKey=abc2564=");
-
-            var configuration = CreateConfiguration();
-
-            var factory = new EventHubClientFactory(configuration, Mock.Of<AzureComponentFactory>(), Options.Create(options), new DefaultNameResolver(configuration));
-
-            var client = factory.GetCheckpointStoreClient("k1");
-            Assert.AreEqual("azure-webjobs-eventhub", client.Name);
-            Assert.AreEqual("http://blobs/azure-webjobs-eventhub", client.Uri.ToString());
         }
 
         [TestCase("k1", ConnectionString)]
@@ -162,18 +132,16 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 {
                     CustomEndpointAddress = testEndpoint
                 },
-                RetryOptions = new EventHubsRetryOptions
+                ClientRetryOptions = new EventHubsRetryOptions
                 {
                     MaximumRetries = 10
                 }
             };
 
-            options.AddSender(expectedPathName, connectionString);
-
-            var configuration = CreateConfiguration();
+            var configuration = CreateConfiguration(new KeyValuePair<string, string>("connection", connectionString));
             var factory = new EventHubClientFactory(configuration, Mock.Of<AzureComponentFactory>(), Options.Create(options), new DefaultNameResolver(configuration));
 
-            var producer = factory.GetEventHubProducerClient(expectedPathName, null);
+            var producer = factory.GetEventHubProducerClient(expectedPathName, "connection");
             EventHubConnection connection = (EventHubConnection)typeof(EventHubProducerClient).GetProperty("Connection", BindingFlags.NonPublic | BindingFlags.Instance)
                 .GetValue(producer);
             EventHubConnectionOptions connectionOptions = (EventHubConnectionOptions)typeof(EventHubConnection).GetProperty("Options", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(connection);
@@ -197,18 +165,16 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 {
                     CustomEndpointAddress = testEndpoint
                 },
-                RetryOptions = new EventHubsRetryOptions
+                ClientRetryOptions = new EventHubsRetryOptions
                 {
                     MaximumRetries = 10
                 }
             };
 
-            options.AddReceiver(expectedPathName, connectionString);
-
-            var configuration = CreateConfiguration();
+            var configuration = CreateConfiguration(new KeyValuePair<string, string>("connection", connectionString));
             var factory = new EventHubClientFactory(configuration, Mock.Of<AzureComponentFactory>(), Options.Create(options), new DefaultNameResolver(configuration));
 
-            var consumer = factory.GetEventHubConsumerClient(expectedPathName, null, "consumer");
+            var consumer = factory.GetEventHubConsumerClient(expectedPathName, "connection", "consumer");
             var consumerClient = (EventHubConsumerClient)typeof(EventHubConsumerClientImpl)
                 .GetField("_client", BindingFlags.NonPublic | BindingFlags.Instance)
                 .GetValue(consumer);
@@ -244,18 +210,16 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 {
                     CustomEndpointAddress = testEndpoint
                 },
-                RetryOptions = new EventHubsRetryOptions
+                ClientRetryOptions = new EventHubsRetryOptions
                 {
                     MaximumRetries = 10
                 }
             };
 
-            options.AddReceiver(expectedPathName, connectionString);
-
-            var configuration = CreateConfiguration();
+            var configuration = CreateConfiguration(new KeyValuePair<string, string>("connection", connectionString));
             var factory = new EventHubClientFactory(configuration, Mock.Of<AzureComponentFactory>(), Options.Create(options), new DefaultNameResolver(configuration));
 
-            var processor = factory.GetEventProcessorHost(expectedPathName, null, "consumer");
+            var processor = factory.GetEventProcessorHost(expectedPathName, "connection", "consumer");
             EventProcessorOptions processorOptions = (EventProcessorOptions)typeof(EventProcessor<EventProcessorHostPartition>)
                 .GetProperty("Options", BindingFlags.NonPublic | BindingFlags.Instance)
                 .GetValue(processor);
@@ -263,6 +227,22 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             Assert.AreEqual(10, processorOptions.RetryOptions.MaximumRetries);
             Assert.AreEqual(expectedPathName, processor.EventHubName);
+        }
+
+        [Test]
+        public void DefaultStrategyIsGreedy()
+        {
+            EventHubOptions options = new EventHubOptions();
+
+            var configuration = CreateConfiguration(new KeyValuePair<string, string>("connection", ConnectionString));
+            var factory = new EventHubClientFactory(configuration, Mock.Of<AzureComponentFactory>(), Options.Create(options), new DefaultNameResolver(configuration));
+
+            var processor = factory.GetEventProcessorHost("connection", "connection", "consumer");
+            EventProcessorOptions processorOptions = (EventProcessorOptions)typeof(EventProcessor<EventProcessorHostPartition>)
+                .GetProperty("Options", BindingFlags.NonPublic | BindingFlags.Instance)
+                .GetValue(processor);
+
+            Assert.AreEqual(LoadBalancingStrategy.Greedy, processorOptions.LoadBalancingStrategy);
         }
 
         private IConfiguration CreateConfiguration(params KeyValuePair<string, string>[] data)

@@ -15,5 +15,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
+
+        /// <summary> Name of the schema column. Type: string (or Expression with resultType string). </summary>
+        public object Name { get; set; }
+        /// <summary> Type of the schema column. Type: string (or Expression with resultType string). </summary>
+        public object Type { get; set; }
     }
 }

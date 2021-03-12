@@ -248,22 +248,9 @@ namespace Azure.AI.TextAnalytics
 
         #region Healthcare
 
-        internal static List<HealthcareEntity> ConvertToHealthcareEntityCollection(IEnumerable<HealthcareEntityInternal> healthcareEntities, IEnumerable<HealthcareRelationInternal> healthcareRelations)
+        internal static List<HealthcareEntity> ConvertToHealthcareEntityCollection(IEnumerable<HealthcareEntityInternal> healthcareEntities)
         {
-            var entities = healthcareEntities.Select((entity) => new HealthcareEntity(entity)).ToList();
-            foreach (HealthcareRelationInternal relation in healthcareRelations) {
-                string relationType = relation.RelationType;
-                int sourceIndex = ParseHealthcareEntityIndex(relation.Source);
-                int targetIndex = ParseHealthcareEntityIndex(relation.Target);
-                HealthcareEntity sourceEntity = entities[sourceIndex];
-                HealthcareEntity targetEntity = entities[targetIndex];
-                sourceEntity.RelatedEntities.Add(targetEntity, relationType);
-                if (relation.Bidirectional)
-                {
-                    targetEntity.RelatedEntities.Add(sourceEntity, relationType);
-                }
-            }
-            return entities;
+            return healthcareEntities.Select((entity) => new HealthcareEntity(entity)).ToList();
         }
 
         internal static AnalyzeHealthcareEntitiesResultCollection ConvertToAnalyzeHealthcareEntitiesResultCollection(HealthcareResult results, IDictionary<string, int> idToIndexMap)
@@ -282,13 +269,39 @@ namespace Azure.AI.TextAnalytics
                 healthcareEntititesResults.Add(new AnalyzeHealthcareEntitiesResult(
                     documentHealthcareEntities.Id,
                     documentHealthcareEntities.Statistics ?? default,
-                    ConvertToHealthcareEntityCollection(documentHealthcareEntities.Entities, documentHealthcareEntities.Relations),
+                    ConvertToHealthcareEntityCollection(documentHealthcareEntities.Entities),
+                    ConvertToHealthcareEntityRelationsCollection(documentHealthcareEntities.Entities, documentHealthcareEntities.Relations),
                     ConvertToWarnings(documentHealthcareEntities.Warnings)));
             }
 
             healthcareEntititesResults = healthcareEntititesResults.OrderBy(result => idToIndexMap[result.Id]).ToList();
 
             return new AnalyzeHealthcareEntitiesResultCollection(healthcareEntititesResults, results.Statistics, results.ModelVersion);
+        }
+
+        private static IList<HealthcareEntityRelation> ConvertToHealthcareEntityRelationsCollection(IReadOnlyList<HealthcareEntityInternal> healthcareEntities, IReadOnlyList<HealthcareRelationInternal> healthcareRelations)
+        {
+            List<HealthcareEntityRelation> result = new List<HealthcareEntityRelation>();
+            foreach (HealthcareRelationInternal relation in healthcareRelations)
+            {
+                result.Add(new HealthcareEntityRelation(relation.RelationType, ConvertToHealthcareEntityRelationRoleCollection(relation.Entities, healthcareEntities)));
+            }
+            return result;
+        }
+
+        private static IReadOnlyCollection<HealthcareEntityRelationRole> ConvertToHealthcareEntityRelationRoleCollection(IReadOnlyList<HealthcareRelationEntity> entities, IReadOnlyList<HealthcareEntityInternal> healthcareEntities)
+        {
+            List<HealthcareEntityRelationRole> result = new List<HealthcareEntityRelationRole>();
+
+            foreach (HealthcareRelationEntity entity in entities)
+            {
+                int refIndex = ParseHealthcareEntityIndex(entity.Ref);
+                HealthcareEntityInternal refEntity = healthcareEntities[refIndex];
+
+                result.Add(new HealthcareEntityRelationRole(refEntity, entity.Role));
+            }
+
+            return result;
         }
 
         private static int ParseHealthcareEntityIndex(string reference)
@@ -314,7 +327,19 @@ namespace Azure.AI.TextAnalytics
             {
                 Parameters = new PiiTaskParameters()
                 {
-                    Domain = option.DomainFilter.GetString(),
+                    Domain = option.DomainFilter.HasValue ? option.DomainFilter.Value.GetString() : (PiiTaskParametersDomain?)null,
+                    ModelVersion = !string.IsNullOrEmpty(option.ModelVersion) ? option.ModelVersion : "latest",
+                    StringIndexType = option.StringIndexType
+                }
+            };
+        }
+
+        internal static EntityLinkingTask ConvertToLinkedEntitiesTask(RecognizeLinkedEntitiesOptions option)
+        {
+            return new EntityLinkingTask()
+            {
+                Parameters = new EntityLinkingTaskParameters()
+                {
                     ModelVersion = !string.IsNullOrEmpty(option.ModelVersion) ? option.ModelVersion : "latest",
                     StringIndexType = option.StringIndexType
                 }
@@ -342,6 +367,18 @@ namespace Azure.AI.TextAnalytics
                     ModelVersion = !string.IsNullOrEmpty(option.ModelVersion) ? option.ModelVersion : "latest",
                 }
             };
+        }
+
+        internal static IList<EntityLinkingTask> ConvertFromEntityLinkingOptionsToTasks(IReadOnlyCollection<RecognizeLinkedEntitiesOptions> recognizeLinkedEntityOptions)
+        {
+            List<EntityLinkingTask> list = new List<EntityLinkingTask>();
+
+            foreach (RecognizeLinkedEntitiesOptions option in recognizeLinkedEntityOptions)
+            {
+                list.Add(ConvertToLinkedEntitiesTask(option));
+            }
+
+            return list;
         }
 
         internal static IList<EntitiesTask> ConvertFromEntityOptionsToTasks(IReadOnlyCollection<RecognizeEntitiesOptions> recognizeEntitiesOptions)
@@ -424,7 +461,7 @@ namespace Azure.AI.TextAnalytics
             {
                 throw new InvalidOperationException("Expected an error with a target field referencing an action but did not get one");
             }
-            Regex _targetRegex = new Regex("#/tasks/(keyPhraseExtractionTasks|entityRecognitionPiiTasks|entityRecognitionTasks)/(\\d+)", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
+            Regex _targetRegex = new Regex("#/tasks/(keyPhraseExtractionTasks|entityRecognitionPiiTasks|entityRecognitionTasks|entityLinkingTasks)/(\\d+)", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
 
             // action could be failed and the target reference is "#/tasks/keyPhraseExtractionTasks/0";
             Match targetMatch = _targetRegex.Match(targetReference);
@@ -443,6 +480,7 @@ namespace Azure.AI.TextAnalytics
             IDictionary<int, TextAnalyticsErrorInternal> keyPhraseErrors = new Dictionary<int, TextAnalyticsErrorInternal>();
             IDictionary<int, TextAnalyticsErrorInternal> entitiesRecognitionErrors = new Dictionary<int, TextAnalyticsErrorInternal>();
             IDictionary<int, TextAnalyticsErrorInternal> entitiesPiiRecognitionErrors = new Dictionary<int, TextAnalyticsErrorInternal>();
+            IDictionary<int, TextAnalyticsErrorInternal> entitiesLinkingRecognitionErrors = new Dictionary<int, TextAnalyticsErrorInternal>();
 
             if (jobState.Errors.Any())
             {
@@ -464,6 +502,10 @@ namespace Azure.AI.TextAnalytics
                     {
                         keyPhraseErrors.Add(taskIndex, error);
                     }
+                    else if ("entityLinkingTasks".Equals(taskName))
+                    {
+                        entitiesLinkingRecognitionErrors.Add(taskIndex, error);
+                    }
                     else
                     {
                         throw new InvalidOperationException($"Invalid task name in target reference - {taskName}");
@@ -474,8 +516,31 @@ namespace Azure.AI.TextAnalytics
             var extractKeyPhrasesActionResult = ConvertToExtractKeyPhrasesActionResults(jobState, map, keyPhraseErrors);
             var recognizeEntitiesActionResults = ConvertToRecognizeEntitiesActionsResults(jobState, map, entitiesRecognitionErrors);
             var recognizePiiEntitiesActionResults = ConvertToRecognizePiiEntitiesActionsResults(jobState, map, entitiesPiiRecognitionErrors);
+            var recognizeLinkedEntitiesActionsResults = ConvertToRecognizeLinkedEntitiesActionsResults(jobState, map, entitiesLinkingRecognitionErrors);
 
-            return new AnalyzeBatchActionsResult(extractKeyPhrasesActionResult, recognizeEntitiesActionResults, recognizePiiEntitiesActionResults, jobState.Statistics);
+            return new AnalyzeBatchActionsResult(extractKeyPhrasesActionResult, recognizeEntitiesActionResults, recognizePiiEntitiesActionResults, recognizeLinkedEntitiesActionsResults, jobState.Statistics);
+        }
+
+        private static IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> ConvertToRecognizeLinkedEntitiesActionsResults(AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap, IDictionary<int, TextAnalyticsErrorInternal> tasksErrors)
+        {
+            var collection = new List<RecognizeLinkedEntitiesActionResult>();
+            int index = 0;
+            foreach (EntityLinkingTasksItem task in jobState.Tasks.EntityLinkingTasks)
+            {
+                tasksErrors.TryGetValue(index, out TextAnalyticsErrorInternal taskError);
+
+                if (taskError != null)
+                {
+                    collection.Add(new RecognizeLinkedEntitiesActionResult(null, task.LastUpdateDateTime, taskError));
+                }
+                else
+                {
+                    collection.Add(new RecognizeLinkedEntitiesActionResult(ConvertToRecognizeLinkedEntitiesResultCollection(task.ResultsInternal, idToIndexMap), task.LastUpdateDateTime, null));
+                }
+                index++;
+            }
+
+            return collection;
         }
 
         internal static IReadOnlyCollection<ExtractKeyPhrasesActionResult> ConvertToExtractKeyPhrasesActionResults(AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap, IDictionary<int, TextAnalyticsErrorInternal> tasksErrors)

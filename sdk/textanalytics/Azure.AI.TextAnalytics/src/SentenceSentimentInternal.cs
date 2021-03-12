@@ -19,9 +19,9 @@ namespace Azure.AI.TextAnalytics.Models
         public int Offset { get; }
         /// <summary> The length of the sentence. </summary>
         public int Length { get; }
-        /// <summary> The array of aspect object for the sentence. </summary>
-        public IReadOnlyList<SentenceAspect> Aspects { get; }
-        /// <summary> The array of opinion object for the sentence. </summary>
-        public IReadOnlyList<SentenceOpinion> Opinions { get; }
+        /// <summary> The array of target object for the sentence. </summary>
+        public IReadOnlyList<SentenceTarget> Targets { get; }
+        /// <summary> The array of assessment object for the sentence. </summary>
+        public IReadOnlyList<SentenceAssessment> Assessments { get; }
     }
 }

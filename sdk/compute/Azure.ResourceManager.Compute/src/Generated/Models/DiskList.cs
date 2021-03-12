@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The List Disks operation response. </summary>
-    public partial class DiskList
+    internal partial class DiskList
     {
         /// <summary> Initializes a new instance of DiskList. </summary>
         /// <param name="value"> A list of disks. </param>

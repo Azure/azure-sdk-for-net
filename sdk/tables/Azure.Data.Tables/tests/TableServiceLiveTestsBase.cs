@@ -61,6 +61,8 @@ namespace Azure.Data.Tables.Tests
             {"GetPropertiesReturnsProperties", "GetProperties is currently not supported by Cosmos endpoints."},
             {"GetTableServiceStatsReturnsStats", "GetStatistics is currently not supported by Cosmos endpoints."},
             {"ValidateSasCredentialsWithRowKeyAndPartitionKeyRanges", "Shared access signature with PartitionKey or RowKey are not supported"},
+            {"ValidateAccountSasCredentialsWithPermissions", "SAS for account operations not supported"},
+            {"ValidateAccountSasCredentialsWithResourceTypes", "SAS for account operations not supported"},
             {"BatchInsertAndMergeAndDelete", "https://github.com/Azure/azure-sdk-for-net/issues/13555"}
         };
 

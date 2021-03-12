@@ -34,9 +34,12 @@ namespace Azure.Data.Tables
         /// A <see cref="Uri"/> referencing the table service account.
         /// This is likely to be similar to "https://{account_name}.table.core.windows.net/" or "https://{account_name}.table.cosmos.azure.com/".
         /// </param>
-        public TableServiceClient(Uri endpoint)
-                : this(endpoint, options: null)
-        { }
+        /// <param name="credential">The shared access signature credential used to sign requests.</param>
+        public TableServiceClient(Uri endpoint, AzureSasCredential credential)
+                : this(endpoint, credential, options: null)
+        {
+            Argument.AssertNotNull(credential, nameof(credential));
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TableServiceClient"/> using the specified connection string.
@@ -62,16 +65,18 @@ namespace Azure.Data.Tables
         /// A <see cref="Uri"/> referencing the table service account.
         /// This is likely to be similar to "https://{account_name}.table.core.windows.net/" or "https://{account_name}.table.cosmos.azure.com/".
         /// </param>
+        /// <param name="credential">The shared access signature credential used to sign requests.</param>
         /// <param name="options">
         /// Optional client options that define the transport pipeline policies for authentication, retries, etc., that are applied to every request.
         /// </param>
-        public TableServiceClient(Uri endpoint, TableClientOptions options = null)
-            : this(endpoint, default(TableSharedKeyPipelinePolicy), options)
+        public TableServiceClient(Uri endpoint, AzureSasCredential credential, TableClientOptions options = null)
+            : this(endpoint, default, credential, options)
         {
             if (endpoint.Scheme != "https")
             {
                 throw new ArgumentException("Cannot use TokenCredential without HTTPS.", nameof(endpoint));
             }
+            Argument.AssertNotNull(credential, nameof(credential));
         }
 
         /// <summary>
@@ -83,7 +88,7 @@ namespace Azure.Data.Tables
         /// </param>
         /// <param name="credential">The shared key credential used to sign requests.</param>
         public TableServiceClient(Uri endpoint, TableSharedKeyCredential credential)
-            : this(endpoint, new TableSharedKeyPipelinePolicy(credential), null)
+            : this(endpoint, new TableSharedKeyPipelinePolicy(credential), default, null)
         {
             Argument.AssertNotNull(credential, nameof(credential));
         }
@@ -100,7 +105,7 @@ namespace Azure.Data.Tables
         /// Optional client options that define the transport pipeline policies for authentication, retries, etc., that are applied to every request.
         /// </param>
         public TableServiceClient(Uri endpoint, TableSharedKeyCredential credential, TableClientOptions options = null)
-            : this(endpoint, new TableSharedKeyPipelinePolicy(credential), options)
+            : this(endpoint, new TableSharedKeyPipelinePolicy(credential), default, options)
         {
             Argument.AssertNotNull(credential, nameof(credential));
         }
@@ -145,14 +150,18 @@ namespace Azure.Data.Tables
             _isPremiumEndpoint = IsPremiumEndpoint(connString.TableStorageUri.PrimaryUri);
         }
 
-        internal TableServiceClient(Uri endpoint, TableSharedKeyPipelinePolicy policy, TableClientOptions options)
+        internal TableServiceClient(Uri endpoint, TableSharedKeyPipelinePolicy policy, AzureSasCredential sasCredential, TableClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             options ??= new TableClientOptions();
             var endpointString = endpoint.AbsoluteUri;
             string secondaryEndpoint = TableConnectionString.GetSecondaryUriFromPrimary(endpoint)?.AbsoluteUri;
-            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, policy);
+            HttpPipeline pipeline = sasCredential switch
+            {
+                null => HttpPipelineBuilder.Build(options, policy),
+                _ => HttpPipelineBuilder.Build(options, policy, new AzureSasCredentialSynchronousPolicy(sasCredential))
+            };
 
             _version = options.VersionString;
             _diagnostics = new ClientDiagnostics(options);

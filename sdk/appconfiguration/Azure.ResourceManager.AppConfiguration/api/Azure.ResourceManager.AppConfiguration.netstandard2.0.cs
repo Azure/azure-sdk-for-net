@@ -160,12 +160,6 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         public bool? ReadOnly { get { throw null; } }
         public string Value { get { throw null; } }
     }
-    public partial class ApiKeyListResult
-    {
-        internal ApiKeyListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppConfiguration.Models.ApiKey> Value { get { throw null; } }
-    }
     public partial class CheckNameAvailabilityParameters
     {
         public CheckNameAvailabilityParameters(string name, Azure.ResourceManager.AppConfiguration.Models.ConfigurationResourceType type) { }
@@ -200,12 +194,6 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         public Azure.ResourceManager.AppConfiguration.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.AppConfiguration.Models.PublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
         public Azure.ResourceManager.AppConfiguration.Models.Sku Sku { get { throw null; } set { } }
-    }
-    public partial class ConfigurationStoreListResult
-    {
-        internal ConfigurationStoreListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppConfiguration.Models.ConfigurationStore> Value { get { throw null; } }
     }
     public partial class ConfigurationStoreUpdateParameters
     {
@@ -306,12 +294,6 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         public string Provider { get { throw null; } }
         public string Resource { get { throw null; } }
     }
-    public partial class OperationDefinitionListResult
-    {
-        internal OperationDefinitionListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppConfiguration.Models.OperationDefinition> Value { get { throw null; } }
-    }
     public partial class PrivateEndpoint
     {
         public PrivateEndpoint() { }
@@ -326,12 +308,6 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         public Azure.ResourceManager.AppConfiguration.Models.PrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
         public Azure.ResourceManager.AppConfiguration.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public string Type { get { throw null; } }
-    }
-    public partial class PrivateEndpointConnectionListResult
-    {
-        internal PrivateEndpointConnectionListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppConfiguration.Models.PrivateEndpointConnection> Value { get { throw null; } }
     }
     public partial class PrivateEndpointConnectionReference
     {
@@ -352,12 +328,6 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredZoneNames { get { throw null; } }
         public string Type { get { throw null; } }
-    }
-    public partial class PrivateLinkResourceListResult
-    {
-        internal PrivateLinkResourceListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppConfiguration.Models.PrivateLinkResource> Value { get { throw null; } }
     }
     public partial class PrivateLinkServiceConnectionState
     {

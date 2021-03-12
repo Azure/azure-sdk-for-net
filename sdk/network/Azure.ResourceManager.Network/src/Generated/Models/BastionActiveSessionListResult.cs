@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for GetActiveSessions. </summary>
-    public partial class BastionActiveSessionListResult
+    internal partial class BastionActiveSessionListResult
     {
         /// <summary> Initializes a new instance of BastionActiveSessionListResult. </summary>
         internal BastionActiveSessionListResult()

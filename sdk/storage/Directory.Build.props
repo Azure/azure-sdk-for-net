@@ -78,6 +78,7 @@
   <!--Add shared storage properties-->
   <PropertyGroup>
     <AzureStorageSharedSources>$(MSBuildThisFileDirectory)\Azure.Storage.Common\src\Shared\</AzureStorageSharedSources>
+    <AzureStorageSharedTestSources>$(MSBuildThisFileDirectory)\Azure.Storage.Common\tests\Shared\</AzureStorageSharedTestSources>
     <AzureStorageWebjobsExtensionSharedSources>$(MSBuildThisFileDirectory)\Microsoft.Azure.WebJobs.Extensions.Storage.Common\src\Shared\</AzureStorageWebjobsExtensionSharedSources>
     <AzureStorageWebjobsExtensionSharedTestSources>$(MSBuildThisFileDirectory)\Microsoft.Azure.WebJobs.Extensions.Storage.Common\tests\Shared\</AzureStorageWebjobsExtensionSharedTestSources>
     <MicrosoftAzureWebJobsExtensionsClientsSources>$(MSBuildThisFileDirectory)..\extensions\Microsoft.Azure.WebJobs.Extensions.Clients\src\Shared\</MicrosoftAzureWebJobsExtensionsClientsSources>

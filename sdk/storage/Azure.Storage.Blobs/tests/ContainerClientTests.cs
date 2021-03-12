@@ -2419,6 +2419,17 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(BlobType.Block, properties.Value.BlobType);
         }
 
+        [RecordedTest]
+        public async Task UploadBlobAsync_BinaryData()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            var name = GetNewBlobName();
+            await test.Container.UploadBlobAsync(name, BinaryData.FromBytes(GetRandomBuffer(100)));
+            Response<BlobProperties> properties = await InstrumentClient(test.Container.GetBlobClient(name)).GetPropertiesAsync();
+            Assert.AreEqual(BlobType.Block, properties.Value.BlobType);
+        }
+
         [Test]
         public async Task DeleteBlobAsync()
         {

@@ -10,10 +10,5 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The exposure control response. </summary>
     public partial class ExposureControlResponse
     {
-
-        /// <summary> The feature name. </summary>
-        public string FeatureName { get; }
-        /// <summary> The feature value. </summary>
-        public string Value { get; }
     }
 }

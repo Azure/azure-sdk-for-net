@@ -547,7 +547,7 @@ namespace Azure.Core
         /// <remarks>
         /// If the <see cref="Kind"/> property is not <see cref="JsonValueKind.Array"/> this method throws <see cref="InvalidOperationException"/>.
         /// </remarks>
-        public JsonData AddEmptyObjet()
+        public JsonData AddEmptyObject()
         {
             JsonData value = EmptyObject();
             EnsureArray().Add(value);

@@ -21,10 +21,12 @@ namespace Azure.ResourceManager.Network
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         internal AvailableResourceGroupDelegationsRestOperations RestClient { get; }
+
         /// <summary> Initializes a new instance of AvailableResourceGroupDelegationsOperations for mocking. </summary>
         protected AvailableResourceGroupDelegationsOperations()
         {
         }
+
         /// <summary> Initializes a new instance of AvailableResourceGroupDelegationsOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>

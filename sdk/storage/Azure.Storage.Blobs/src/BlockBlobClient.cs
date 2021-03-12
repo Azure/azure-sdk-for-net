@@ -472,8 +472,13 @@ namespace Azure.Storage.Blobs.Specialized
         #region Upload
         /// <summary>
         /// The <see cref="Upload(Stream, BlobUploadOptions, CancellationToken)"/>
-        /// operation creates a new block  blob,  or updates the content of an existing block blob.
-        /// Updating an existing block blob overwrites any existing metadata on the blob.
+        /// operation overwrites the contents of the blob, creating a new block
+        /// blob if none exists.  Overwriting an existing block blob replaces
+        /// any existing metadata on the blob.
+        ///
+        /// Set <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations">
+        /// access conditions</see> through <see cref="BlobUploadOptions.Conditions"/>
+        /// to avoid overwriting existing data.
         ///
         /// Partial updates are not supported with <see cref="Upload(Stream, BlobUploadOptions, CancellationToken)"/>;
         /// the content of the existing blob is overwritten with the content
@@ -522,8 +527,13 @@ namespace Azure.Storage.Blobs.Specialized
 
         /// <summary>
         /// The <see cref="UploadAsync(Stream, BlobUploadOptions, CancellationToken)"/>
-        /// operation creates a new block  blob,  or updates the content of an existing block blob.
-        /// Updating an existing block blob overwrites any existing metadata on the blob.
+        /// operation overwrites the contents of the blob, creating a new block
+        /// blob if none exists.  Overwriting an existing block blob replaces
+        /// any existing metadata on the blob.
+        ///
+        /// Set <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations">
+        /// access conditions</see> through <see cref="BlobUploadOptions.Conditions"/>
+        /// to avoid overwriting existing data.
         ///
         /// Partial updates are not supported with <see cref="UploadAsync(Stream, BlobUploadOptions, CancellationToken)"/>;
         /// the content of the existing blob is overwritten with the content
@@ -573,8 +583,13 @@ namespace Azure.Storage.Blobs.Specialized
 
         /// <summary>
         /// The <see cref="Upload(Stream, BlobHttpHeaders, Metadata, BlobRequestConditions, AccessTier?, IProgress{long}, CancellationToken)"/>
-        /// operation creates a new block  blob, or updates the content of an existing block blob.  Updating an
-        /// existing block blob overwrites any existing metadata on the blob.
+        /// operation overwrites the contents of the blob, creating a new block
+        /// blob if none exists.  Overwriting an existing block blob replaces
+        /// any existing metadata on the blob.
+        ///
+        /// Set <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations">
+        /// access conditions</see> through <see cref="BlobRequestConditions"/>
+        /// to avoid overwriting existing data.
         ///
         /// Partial updates are not supported with <see cref="Upload(Stream, BlobHttpHeaders, Metadata, BlobRequestConditions, AccessTier?, IProgress{long}, CancellationToken)"/>;
         /// the content of the existing blob is overwritten with the content
@@ -643,8 +658,13 @@ namespace Azure.Storage.Blobs.Specialized
 
         /// <summary>
         /// The <see cref="UploadAsync(Stream, BlobHttpHeaders, Metadata, BlobRequestConditions, AccessTier?, IProgress{long}, CancellationToken)"/>
-        /// operation creates a new block  blob, or updates the content of an existing block blob.  Updating an
-        /// existing block blob overwrites any existing metadata on the blob.
+        /// operation overwrites the contents of the blob, creating a new block
+        /// blob if none exists.  Overwriting an existing block blob replaces
+        /// any existing metadata on the blob.
+        ///
+        /// Set <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations">
+        /// access conditions</see> through <see cref="BlobRequestConditions"/>
+        /// to avoid overwriting existing data.
         ///
         /// Partial updates are not supported with <see cref="UploadAsync(Stream, BlobHttpHeaders, Metadata, BlobRequestConditions, AccessTier?, IProgress{long}, CancellationToken)"/>;
         /// the content of the existing blob is overwritten with the content
@@ -712,9 +732,14 @@ namespace Azure.Storage.Blobs.Specialized
                 cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="UploadInternal"/> operation creates a new block blob,
-        /// or updates the content of an existing block blob.  Updating an
-        /// existing block blob overwrites any existing metadata on the blob.
+        /// The <see cref="UploadInternal"/>
+        /// operation overwrites the contents of the blob, creating a new block
+        /// blob if none exists.  Overwriting an existing block blob replaces
+        /// any existing metadata on the blob.
+        ///
+        /// Set <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations">
+        /// access conditions</see> through <see cref="BlobRequestConditions"/>
+        /// to avoid overwriting existing data.
         ///
         /// Partial updates are not supported with <see cref="UploadInternal"/>;
         /// the content of the existing blob is overwritten with the content
@@ -2341,7 +2366,8 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlockBlobClient)}.{nameof(OpenWrite)}");
+            string operationName = $"{nameof(BlockBlobClient)}.{nameof(OpenWrite)}";
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
 
             try
             {
@@ -2363,7 +2389,7 @@ namespace Azure.Storage.Blobs.Specialized
                     conditions: options?.OpenConditions,
                     accessTier: default,
                     progressHandler: default,
-                    operationName: default,
+                    operationName: operationName,
                     async: async,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
@@ -2732,11 +2758,11 @@ namespace Azure.Storage.Blobs.Specialized
                 SingleUpload = async (stream, args, progressHandler, operationName, async, cancellationToken)
                     => await client.UploadInternal(
                         stream,
-                        args.HttpHeaders,
-                        args.Metadata,
-                        args.Tags,
-                        args.Conditions,
-                        args.AccessTier,
+                        args?.HttpHeaders,
+                        args?.Metadata,
+                        args?.Tags,
+                        args?.Conditions,
+                        args?.AccessTier,
                         progressHandler,
                         operationName,
                         async,
@@ -2746,18 +2772,18 @@ namespace Azure.Storage.Blobs.Specialized
                         StorageExtensions.GenerateBlockId(offset),
                         stream,
                         transactionalContentHash: default,
-                        args.Conditions,
+                        args?.Conditions,
                         progressHandler,
                         async,
                         cancellationToken).ConfigureAwait(false),
                 CommitPartitionedUpload = async (partitions, args, async, cancellationToken)
                     => await client.CommitBlockListInternal(
                         partitions.Select(partition => StorageExtensions.GenerateBlockId(partition.Offset)),
-                        args.HttpHeaders,
-                        args.Metadata,
-                        args.Tags,
-                        args.Conditions,
-                        args.AccessTier,
+                        args?.HttpHeaders,
+                        args?.Metadata,
+                        args?.Tags,
+                        args?.Conditions,
+                        args?.AccessTier,
                         async,
                         cancellationToken).ConfigureAwait(false),
                 Scope = operationName => client.ClientConfiguration.ClientDiagnostics.CreateScope(operationName

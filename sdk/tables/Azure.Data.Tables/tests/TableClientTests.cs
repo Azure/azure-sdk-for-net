@@ -33,7 +33,7 @@ namespace Azure.Tables.Tests
         [SetUp]
         public void TestSetup()
         {
-            var service_Instrumented = InstrumentClient(new TableServiceClient(new Uri("https://example.com"), new TableClientOptions()));
+            var service_Instrumented = InstrumentClient(new TableServiceClient(new Uri("https://example.com"), new AzureSasCredential("sig"), new TableClientOptions()));
             client = service_Instrumented.GetTableClient(TableName);
         }
 
@@ -51,9 +51,9 @@ namespace Azure.Tables.Tests
 
             Assert.That(() => new TableClient(_url, TableName, credential: null), Throws.InstanceOf<ArgumentNullException>(), "The constructor should validate the TablesSharedKeyCredential.");
 
-            Assert.That(() => new TableClient(_urlHttp, TableName), Throws.InstanceOf<ArgumentException>(), "The constructor should validate the Uri is https when using a SAS token.");
+            Assert.That(() => new TableClient(_urlHttp, TableName, new AzureSasCredential("sig")), Throws.InstanceOf<ArgumentException>(), "The constructor should validate the Uri is https when using a SAS token.");
 
-            Assert.That(() => new TableClient(_url, TableName), Throws.Nothing, "The constructor should accept a null credential");
+            Assert.That(() => new TableClient(_urlHttp, TableName, null), Throws.InstanceOf<ArgumentException>(), "The constructor should not accept a null credential");
 
             Assert.That(() => new TableClient(_url, TableName, new TableSharedKeyCredential(AccountName, string.Empty)), Throws.Nothing, "The constructor should accept valid arguments.");
 

@@ -68,7 +68,7 @@ namespace Azure.Core
         public void Add(float value) { }
         public void Add(string? value) { }
         public Azure.Core.JsonData AddEmptyArray() { throw null; }
-        public Azure.Core.JsonData AddEmptyObjet() { throw null; }
+        public Azure.Core.JsonData AddEmptyObject() { throw null; }
         public Azure.Core.JsonData Add<T>(T[] serializable) { throw null; }
         public Azure.Core.JsonData Add<T>(T[] serializable, System.Text.Json.JsonSerializerOptions options) { throw null; }
         public static Azure.Core.JsonData EmptyArray() { throw null; }

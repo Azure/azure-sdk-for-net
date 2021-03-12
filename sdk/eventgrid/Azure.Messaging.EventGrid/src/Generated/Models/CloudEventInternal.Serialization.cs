@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -61,88 +59,6 @@ namespace Azure.Messaging.EventGrid.Models
                 writer.WriteObjectValue(item.Value);
             }
             writer.WriteEndObject();
-        }
-
-        internal static CloudEventInternal DeserializeCloudEventInternal(JsonElement element)
-        {
-            string id = default;
-            string source = default;
-            Optional<JsonElement> data = default;
-            Optional<byte[]> dataBase64 = default;
-            string type = default;
-            Optional<DateTimeOffset> time = default;
-            string specversion = default;
-            Optional<string> dataschema = default;
-            Optional<string> datacontenttype = default;
-            Optional<string> subject = default;
-            IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("source"))
-                {
-                    source = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("data"))
-                {
-                    data = property.Value.Clone();
-                    continue;
-                }
-                if (property.NameEquals("data_base64"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    dataBase64 = property.Value.GetBytesFromBase64("D");
-                    continue;
-                }
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("time"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    time = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (property.NameEquals("specversion"))
-                {
-                    specversion = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("dataschema"))
-                {
-                    dataschema = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("datacontenttype"))
-                {
-                    datacontenttype = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("subject"))
-                {
-                    subject = property.Value.GetString();
-                    continue;
-                }
-                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
-            }
-            additionalProperties = additionalPropertiesDictionary;
-            return new CloudEventInternal(id, source, data, dataBase64.Value, type, Optional.ToNullable(time), specversion, dataschema.Value, datacontenttype.Value, subject.Value, additionalProperties);
         }
     }
 }

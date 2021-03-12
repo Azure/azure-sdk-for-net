@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class PercentileMetricListResult
+    internal partial class PercentileMetricListResult
     {
         internal static PercentileMetricListResult DeserializePercentileMetricListResult(JsonElement element)
         {

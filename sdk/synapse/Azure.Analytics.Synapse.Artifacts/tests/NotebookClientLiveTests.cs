@@ -65,7 +65,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         private NotebookClient CreateClient()
         {
             return InstrumentClient(new NotebookClient(
-                new Uri(TestEnvironment.EndpointUrl),
+                TestEnvironment.EndpointUrl,
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new ArtifactsClientOptions())
             ));

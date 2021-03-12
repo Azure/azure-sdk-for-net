@@ -10,16 +10,5 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Request body structure for data flow expression preview. </summary>
     public partial class EvaluateDataFlowExpressionRequest
     {
-
-        /// <summary> The ID of data flow debug session. </summary>
-        public string SessionId { get; }
-        /// <summary> The data flow which contains the debug session. </summary>
-        public string DataFlowName { get; }
-        /// <summary> The output stream name. </summary>
-        public string StreamName { get; }
-        /// <summary> The row limit for preview request. </summary>
-        public int? RowLimits { get; }
-        /// <summary> The expression for preview. </summary>
-        public string Expression { get; }
     }
 }

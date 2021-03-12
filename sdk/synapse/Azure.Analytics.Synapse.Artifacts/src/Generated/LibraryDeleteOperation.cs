@@ -15,7 +15,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Analytics.Synapse.Artifacts
 {
     /// <summary> Delete Library. </summary>
-    internal partial class LibraryDeleteOperation : Operation<Response>, IOperationSource<Response>
+    public partial class LibraryDeleteOperation : Operation<Response>, IOperationSource<Response>
     {
         private readonly ArmOperationHelpers<Response> _operation;
         internal LibraryDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class MetricDefinitionListResult
+    internal partial class MetricDefinitionListResult
     {
         internal static MetricDefinitionListResult DeserializeMetricDefinitionListResult(JsonElement element)
         {

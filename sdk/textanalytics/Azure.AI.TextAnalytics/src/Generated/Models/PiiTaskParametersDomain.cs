@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.TextAnalytics
+namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The PiiTaskParametersDomain. </summary>
     internal readonly partial struct PiiTaskParametersDomain : IEquatable<PiiTaskParametersDomain>

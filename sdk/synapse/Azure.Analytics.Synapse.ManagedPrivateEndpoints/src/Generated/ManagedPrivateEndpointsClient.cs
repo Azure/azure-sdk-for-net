@@ -21,10 +21,34 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         internal ManagedPrivateEndpointsRestClient RestClient { get; }
+
         /// <summary> Initializes a new instance of ManagedPrivateEndpointsClient for mocking. </summary>
         protected ManagedPrivateEndpointsClient()
         {
         }
+
+        /// <summary> Initializes a new instance of ManagedPrivateEndpointsClient. </summary>
+        /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        public ManagedPrivateEndpointsClient(string endpoint, TokenCredential credential, ManagedPrivateEndpointsClientOptions options = null)
+        {
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
+
+            options ??= new ManagedPrivateEndpointsClientOptions();
+            _clientDiagnostics = new ClientDiagnostics(options);
+            string[] scopes = { "https://dev.azuresynapse.net/.default" };
+            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
+            RestClient = new ManagedPrivateEndpointsRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version);
+        }
+
         /// <summary> Initializes a new instance of ManagedPrivateEndpointsClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>

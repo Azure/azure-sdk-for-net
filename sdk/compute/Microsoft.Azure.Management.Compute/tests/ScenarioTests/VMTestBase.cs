@@ -235,6 +235,7 @@ namespace Compute.Tests
             string ppgName = null,
             string diskEncryptionSetId = null,
             bool? encryptionAtHostEnabled = null,
+            string securityType = null,
             string dedicatedHostGroupReferenceId = null,
             string dedicatedHostGroupName = null,
             string dedicatedHostName = null)
@@ -295,6 +296,30 @@ namespace Compute.Tests
                     {
                         EncryptionAtHost = encryptionAtHostEnabled.Value
                     };
+                }
+                
+                if (securityType != null && securityType.Equals("TrustedLaunch"))
+                {
+                    if(inputVM.SecurityProfile != null)
+                    {
+                        inputVM.SecurityProfile.UefiSettings = new UefiSettings
+                        {
+                            VTpmEnabled = true,
+                            SecureBootEnabled = true
+                        };
+                    }
+                    else
+                    {
+                        inputVM.SecurityProfile = new SecurityProfile
+                        {
+                            UefiSettings = new UefiSettings
+                            {
+                                VTpmEnabled = true,
+                                SecureBootEnabled = true
+                            }
+                        };
+                    }
+
                 }
 
                 if (zones != null)

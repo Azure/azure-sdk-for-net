@@ -11,7 +11,7 @@ using System.Net;
 using Azure.Core;
 using System.Collections.Generic;
 
-namespace Azure.Identity
+namespace Azure.Core
 {
     /// <summary>
     /// An HttpMessageHandler which delegates SendAsync to a specified HttpPipeline.

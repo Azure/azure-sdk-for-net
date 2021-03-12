@@ -1,6 +1,6 @@
 # Azure Communication SMS client library for .NET
 > Server Version: 
-Chat client: 2020-07-20-preview1
+Sms client: 2021-03-07
 
 This package contains a C# SDK for Azure Communication Services for SMS and Telephony.
 
@@ -11,7 +11,7 @@ This package contains a C# SDK for Azure Communication Services for SMS and Tele
 Install the Azure Communication SMS client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-dotnet add package Azure.Communication.Sms --version 1.0.0-beta.3
+dotnet add package Azure.Communication.Sms --version 1.0.0-beta.4
 ``` 
 
 ### Prerequisites
@@ -25,6 +25,7 @@ To create a new Communication Service, you can use the [Azure Portal][communicat
 ### Using statements
 ```C# Snippet:Azure_Communication_Sms_Tests_UsingStatements
 using System;
+using System.Collections.Generic;
 using Azure.Communication.Sms;
 ```
 
@@ -32,7 +33,7 @@ using Azure.Communication.Sms;
 SMS clients can be authenticated using the connection string acquired from an Azure Communication Resource in the [Azure Portal][azure_portal].
 
 ```C# Snippet:Azure_Communication_Sms_Tests_Samples_CreateSmsClient
-string connectionString = "YOUR_CONNECTION_STRING"; // Find your Communication Services resource in the Azure portal
+var connectionString = "<connection_string>"; // Find your Communication Services resource in the Azure portal
 SmsClient client = new SmsClient(connectionString);
 ```
 
@@ -45,42 +46,64 @@ TokenCredential tokenCredential = new DefaultAzureCredential();
 SmsClient client = new SmsClient(new Uri(endpoint), tokenCredential);
 ```
 
-### Thread safety
-We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
-
-### Additional concepts
-<!-- CLIENT COMMON BAR -->
-[Client options](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions) |
-[Accessing the response](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#accessing-http-response-details-using-responset) |
-[Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
-[Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
-[Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md) |
-[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#mocking) |
-[Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
-<!-- CLIENT COMMON BAR -->
-
 ## Examples
-### Send a SMS Message
+### Send a 1:1 SMS Message
 To send a SMS message, call the `Send` or `SendAsync` function from the `SmsClient`.
 ```C# Snippet:Azure_Communication_Sms_Tests_SendAsync
-SendSmsResponse result = await client.SendAsync(
-   from: new PhoneNumber("+18001230000"), // Phone number acquired on your Azure Communication resource
-   to: new PhoneNumber("+18005670000"),
-   message: "Hi");
-Console.WriteLine($"Sms id: {result.MessageId}");
+SmsSendResult sendResult = await smsClient.SendAsync(
+    from: "<from-phone-number>", // Your E.164 formatted from phone number used to send SMS
+    to: "<to-phone-number>", // E.164 formatted recipient phone number
+    message: "Hi");
+Console.WriteLine($"Sms id: {sendResult.MessageId}");
 ```
-
+### Send a 1:N SMS Message
+To send a SMS message to a list of recipients, call the `Send` or `SendAsync` function from the `SmsClient` with a list of recipient's phone numbers.
+You may also add pass in an options object to specify whether the delivery report should be enabled and set custom tags.
+```C# Snippet:Azure_Communication_SmsClient_Send_GroupSmsWithOptions
+Response<IEnumerable<SmsSendResult>> response = await smsClient.SendAsync(
+    from: "<from-phone-number>", // Your E.164 formatted from phone number used to send SMS
+    to: new string[] { "<to-phone-number-1>", "<to-phone-number-2>" }, // E.164 formatted recipient phone numbers
+    message: "Weekly Promotion!",
+    options: new SmsSendOptions(enableDeliveryReport: true) // OPTIONAL
+    {
+        Tag = "marketing", // custom tags
+    });
+IEnumerable<SmsSendResult> results = response.Value;
+foreach (SmsSendResult result in results)
+{
+    Console.WriteLine($"Sms id: {result.MessageId}");
+    Console.WriteLine($"Send Result Successful: {result.Successful}");
+}
+```
 ## Troubleshooting
-All SMS operations will throw a RequestFailedException on failure.
+SMS operations will throw an exception if the request to the server fails.
+Exceptions will not be thrown if the error is caused by an individual message, only if something fails with the overall request.
+Please use the `Successful` flag to validate each individual result to verify if the message was sent.
 
 ```C# Snippet:Azure_Communication_Sms_Tests_Troubleshooting
 try
 {
-    SendSmsResponse result = await client.SendAsync(
-       from: new PhoneNumber("+18001230000"), // Phone number acquired on your Azure Communication resource
-       to: new PhoneNumber("+18005670000"),
-       message: "Hi");
-    Console.WriteLine($"Sms id: {result.MessageId}");
+    Response<IEnumerable<SmsSendResult>> response = await smsClient.SendAsync(
+        from: "<from-phone-number>" // Your E.164 formatted phone number used to send SMS
+        to: new string [] {"<to-phone-number-1>", "<to-phone-number-2>"}, // E.164 formatted recipient phone number
+        message: "Weekly Promotion!",
+        options: new SmsSendOptions(enableDeliveryReport: true) // OPTIONAL
+    {
+        Tag = "marketing", // custom tags
+    });
+    IEnumerable<SmsSendResult> results = response.Value;
+    foreach (SmsSendResult result in results)
+    {
+        if (result.Successful)
+        {
+            Console.WriteLine($"Successfully sent this message: {result.MessageId} to {result.To}.");
+        }
+        else
+        {
+            Console.WriteLine($"Something went wrong when trying to send this message {result.MessageId} to {result.To}.");
+            Console.WriteLine($"Status code {result.HttpStatusCode} and error message {result.ErrorMessage}.");
+        }
+    }
 }
 catch (RequestFailedException ex)
 {
@@ -112,4 +135,3 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For m
 [nextsteps]:https://docs.microsoft.com/azure/communication-services/quickstarts/telephony-sms/send?pivots=programming-language-csharp
 [nuget]: https://www.nuget.org/
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/communication/Azure.Communication.Sms/src
-

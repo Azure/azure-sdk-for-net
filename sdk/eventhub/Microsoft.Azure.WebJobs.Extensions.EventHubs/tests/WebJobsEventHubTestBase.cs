@@ -47,14 +47,16 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
         protected void ConfigureTestEventHub(IHostBuilder builder)
         {
-            builder.ConfigureServices(services =>
-            {
-                services.Configure<EventHubOptions>(options =>
+            builder
+                .ConfigureAppConfiguration(builder =>
                 {
-                    options.AddSender(_eventHubScope.EventHubName, EventHubsTestEnvironment.Instance.EventHubsConnectionString);
-                    options.AddReceiver(_eventHubScope.EventHubName, EventHubsTestEnvironment.Instance.EventHubsConnectionString);
+                    builder.AddInMemoryCollection(new Dictionary<string, string>()
+                    {
+                        {"webjobstesthub", _eventHubScope.EventHubName},
+                        {"AzureWebJobsStorage", StorageTestEnvironment.Instance.StorageConnectionString},
+                        {_eventHubScope.EventHubName, EventHubsTestEnvironment.Instance.EventHubsConnectionString}
+                    });
                 });
-            });
         }
 
         protected (JobHost, IHost) BuildHost<T>(Action<IHostBuilder> configurationDelegate = null, Action<IHost> preStartCallback = null)
@@ -68,7 +70,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     builder.AddInMemoryCollection(new Dictionary<string, string>()
                     {
                         {"webjobstesthub", _eventHubScope.EventHubName},
-                        {"AzureWebJobsStorage", StorageTestEnvironment.Instance.StorageConnectionString}
                     });
                 })
                 .ConfigureDefaultTestHost<T>(b =>

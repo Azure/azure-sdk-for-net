@@ -70,9 +70,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="scaleInPolicy">Specifies the scale-in policy that
         /// decides which virtual machines are chosen for removal when a
         /// Virtual Machine Scale Set is scaled-in.</param>
-        /// <param name="orchestrationMode">Specifies the orchestration mode
-        /// for the virtual machine scale set. Possible values include:
-        /// 'Uniform', 'Flexible'</param>
         /// <param name="identity">The identity of the virtual machine scale
         /// set, if configured.</param>
         /// <param name="zones">The virtual machine scale set zones. NOTE:
@@ -162,9 +159,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="scaleInPolicy">Specifies the scale-in policy that
         /// decides which virtual machines are chosen for removal when a
         /// Virtual Machine Scale Set is scaled-in.</param>
-        /// <param name="orchestrationMode">Specifies the orchestration mode
-        /// for the virtual machine scale set. Possible values include:
-        /// 'Uniform', 'Flexible'</param>
         /// <param name="identity">The identity of the virtual machine scale
         /// set, if configured.</param>
         /// <param name="zones">The virtual machine scale set zones. NOTE:
@@ -251,9 +245,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="scaleInPolicy">Specifies the scale-in policy that
         /// decides which virtual machines are chosen for removal when a
         /// Virtual Machine Scale Set is scaled-in.</param>
-        /// <param name="orchestrationMode">Specifies the orchestration mode
-        /// for the virtual machine scale set. Possible values include:
-        /// 'Uniform', 'Flexible'</param>
         /// <param name="identity">The identity of the virtual machine scale
         /// set, if configured.</param>
         public VirtualMachineScaleSet(string location, string id, string name, string type, IDictionary<string, string> tags, Sku sku, Plan plan, UpgradePolicy upgradePolicy, AutomaticRepairsPolicy automaticRepairsPolicy, VirtualMachineScaleSetVMProfile virtualMachineProfile, string provisioningState, bool? overprovision, bool? doNotRunExtensionsOnOverprovisionedVMs, string uniqueId, bool? singlePlacementGroup, bool? zoneBalance, int? platformFaultDomainCount, SubResource proximityPlacementGroup, SubResource hostGroup, AdditionalCapabilities additionalCapabilities, ScaleInPolicy scaleInPolicy, VirtualMachineScaleSetIdentity identity)

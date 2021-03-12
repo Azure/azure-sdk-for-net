@@ -191,9 +191,10 @@ namespace Azure.Data.Tables
                 settings.TryGetSegmentValue(TableConstants.ConnectionStrings.SharedAccessSignatureSetting, out sasToken);
 
             var matchesAutomaticEndpointsSpec = settings.TryGetSegmentValue(TableConstants.ConnectionStrings.AccountNameSetting, out var accountName) &&
-                settings.TryGetSegmentValue(TableConstants.ConnectionStrings.AccountKeySetting, out var accountKey) &&
-                    (settings.TryGetSegmentValue(TableConstants.ConnectionStrings.TableEndpointSetting, out var primary) ||
-                    settings.TryGetSegmentValue(TableConstants.ConnectionStrings.EndpointSuffixSetting, out var endpointSuffix));
+                settings.TryGetSegmentValue(TableConstants.ConnectionStrings.AccountKeySetting, out var accountKey);
+
+            settings.TryGetSegmentValue(TableConstants.ConnectionStrings.TableEndpointSetting, out var primary);
+            var endpointSuffix = settings.GetSegmentValueOrDefault(TableConstants.ConnectionStrings.EndpointSuffixSetting, TableConstants.ConnectionStrings.DefaultEndpointSuffix);
 
             if (matchesAutomaticEndpointsSpec || matchesExplicitEndpointsSpec)
             {

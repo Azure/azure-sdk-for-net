@@ -10,5 +10,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public DataFlowDebugResultResponse()
         {
         }
+
+        /// <summary> The run status of data preview, statistics or expression preview. </summary>
+        public string Status { get; set; }
+        /// <summary> The result data of data preview, statistics or expression preview. </summary>
+        public string Data { get; set; }
     }
 }

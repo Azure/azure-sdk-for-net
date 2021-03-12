@@ -39,7 +39,7 @@ Once you have the value for the API key, create an `AzureKeyCredential`.  With t
 string endpoint = "<endpoint>";
 string apiKey = "<apiKey>";
 var credential = new AzureKeyCredential(apiKey);
-var client = new AnomalyDetectorClient(new Uri(endpoint), credential);
+var client = new AnomalyDetectorClient(endpoint, credential);
 ```
 
 #### Create AnomalyDetectorClient with Azure Active Directory Credential
@@ -58,7 +58,7 @@ Set the values of the client ID, tenant ID, and client secret of the AAD applica
 
 ```
 string endpoint = "<endpoint>";
-var client = new AnomalyDetectorClient(new Uri(endpoint), new DefaultAzureCredential());
+var client = new AnomalyDetectorClient(endpoint, new DefaultAzureCredential());
 ```
 
 ## Key concepts
@@ -105,7 +105,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [anomalydetector_refdocs]: https://azure.github.io/azure-sdk-for-net/anomalydetector.html
 [anomalydetector_nuget_package]: https://www.nuget.org/packages/Azure.AI.AnomalyDetector
 
-[anomaly_detector_client_class]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/anomalydetector/Azure.AI.AnomalyDetector/src/AnomalyDetectorClient.cs
+[anomaly_detector_client_class]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/anomalydetector/Azure.AI.AnomalyDetector/src/Generated/AnomalyDetectorClient.cs
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity
 [register_aad_app]: https://docs.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
 [aad_grant_access]: https://docs.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal

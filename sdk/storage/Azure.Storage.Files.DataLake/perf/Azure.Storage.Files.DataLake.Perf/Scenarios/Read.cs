@@ -70,13 +70,13 @@ namespace Azure.Storage.Files.DataLake.Perf.Scenarios
         public async override Task GlobalSetupAsync()
         {
             await base.GlobalSetupAsync();
-            await FileSystemClient.CreateAsync();
+            await FileSystemClient.CreateIfNotExistsAsync();
 
             // Create the test file that will be used for reading.
 
             using var randomStream = RandomStream.Create(Options.Size);
 
-            await FileClient.CreateAsync();
+            await FileClient.CreateIfNotExistsAsync();
             await FileClient.UploadAsync(randomStream, true);
         }
 
@@ -89,7 +89,7 @@ namespace Azure.Storage.Files.DataLake.Perf.Scenarios
         public async override Task GlobalCleanupAsync()
         {
             await base.GlobalCleanupAsync();
-            await FileSystemClient.DeleteAsync();
+            await FileSystemClient.DeleteIfExistsAsync();
         }
 
         /// <summary>

@@ -17,9 +17,10 @@
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Blobs.Batch\src\Azure.Storage.Blobs.Batch.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\tests\Shared\**\*.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <None Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\tests\Shared\*.xml">
+    <Compile Include="$(AzureStorageSharedTestSources)\**\*.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <None Include="$(AzureStorageSharedTestSources)\*.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="$(AzureStorageSharedTestSources)\azurite_cert.pem" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>

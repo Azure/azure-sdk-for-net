@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    public partial class LibraryListResponse
+    internal partial class LibraryListResponse
     {
         internal static LibraryListResponse DeserializeLibraryListResponse(JsonElement element)
         {

@@ -1,6 +1,18 @@
 # Release History
 
-## 1.4.0-beta.4 (Unreleased)
+## 1.4.0-beta.5 (Unreleased)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make Azure Identity better with their contributions to this release:
+
+- Marco Mansi _([GitHub](https://github.com/olandese))_
+
+### New Features
+
+- Added `AzurePowerShellCredential` to `DefaultAzureCredential` (A community contribution, courtesy of _[olandese](https://github.com/olandese))_
+
+## 1.4.0-beta.4 (2021-03-09)
 
 ### Fixes and Improvements
 
@@ -32,7 +44,7 @@
 ### New Features
 
 - Redesigned Application Authentication APIs
-  - Adds `TokenCache` and `PersistentTokenCache` classes to give more user control over how the tokens are cached and how the cache is persisted.
+  - Adds `TokenCache` and `TokenCache` classes to give more user control over how the tokens are cached and how the cache is persisted.
   - Adds `TokenCache` property to options for credentials supporting token cache configuration.
 
 ## 1.3.0 (2020-11-12)

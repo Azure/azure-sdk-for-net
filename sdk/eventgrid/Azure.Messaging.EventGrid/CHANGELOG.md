@@ -1,7 +1,14 @@
 # Release History
 
-## 4.0.0-beta.6 (Unreleased)
+## 4.0.0 (2021-03-09)
 
+### New Features
+- Added single send overloads to allow sending a single event for each event type.
+
+### Breaking Changes
+- Moved `CloudEvent` into `Azure.Core` package.
+- Changed custom events to be represented as `BinaryData` rather than `object`.
+- Removed `Serializer` option from `EventGridPublisherOptions` as serialization can be customized through `BinaryData`.
 
 ## 4.0.0-beta.5 (2021-02-09)
 

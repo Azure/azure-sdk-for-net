@@ -11,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Analytics.Synapse.AccessControl.Models;
+using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Synapse.AccessControl
@@ -21,10 +22,34 @@ namespace Azure.Analytics.Synapse.AccessControl
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         internal RoleDefinitionsRestClient RestClient { get; }
+
         /// <summary> Initializes a new instance of RoleDefinitionsClient for mocking. </summary>
         protected RoleDefinitionsClient()
         {
         }
+
+        /// <summary> Initializes a new instance of RoleDefinitionsClient. </summary>
+        /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        public RoleDefinitionsClient(string endpoint, TokenCredential credential, AccessControlClientOptions options = null)
+        {
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
+
+            options ??= new AccessControlClientOptions();
+            _clientDiagnostics = new ClientDiagnostics(options);
+            string[] scopes = { "https://dev.azuresynapse.net/.default" };
+            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
+            RestClient = new RoleDefinitionsRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version);
+        }
+
         /// <summary> Initializes a new instance of RoleDefinitionsClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>

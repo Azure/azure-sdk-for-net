@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    public partial class TriggerListResponse
+    internal partial class TriggerListResponse
     {
         internal static TriggerListResponse DeserializeTriggerListResponse(JsonElement element)
         {

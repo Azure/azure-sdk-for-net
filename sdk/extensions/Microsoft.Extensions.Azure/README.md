@@ -110,12 +110,14 @@ This project welcomes contributions and suggestions. Most contributions require 
 
 When you submit a pull request, a CLA-bot will automatically determine whether you need to provide a CLA and decorate the PR appropriately (e.g., label, comment). Simply follow the instructions provided by the bot. You will only need to do this once across all repos using our CLA.
 
-This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the Code of Conduct FAQ or contact opencode@microsoft.com with any additional questions or comments.
+This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the [Code of Conduct FAQ][code_of_conduct_faq] or contact opencode@microsoft.com with any additional questions or comments.
 
 
 <!-- LINKS -->
-[source_root]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/extensions/Microsoft.Extensions.Azure/
+[source_root]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/extensions/Microsoft.Extensions.Azure/src
 [nuget]: https://www.nuget.org/
 [package]: https://www.nuget.org/packages/Microsoft.Extensions.Azure/
 [configuration]: https://docs.microsoft.com/aspnet/core/fundamentals/configuration/?view=aspnetcore-3.0
 [dependency_injection]: https://docs.microsoft.com/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-3.0
+[code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
+[code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/

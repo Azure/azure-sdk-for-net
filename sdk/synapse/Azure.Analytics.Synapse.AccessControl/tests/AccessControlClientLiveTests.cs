@@ -60,18 +60,18 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
         private RoleAssignmentsClient CreateAssignmentClient()
         {
             return InstrumentClient(new RoleAssignmentsClient(
-                new Uri(TestEnvironment.EndpointUrl),
+                TestEnvironment.EndpointUrl,
                 TestEnvironment.Credential,
-                InstrumentClientOptions(new RoleAssignmentsClientOptions())
+                InstrumentClientOptions(new AccessControlClientOptions())
             ));
         }
 
         private RoleDefinitionsClient CreateDefinitionsClient()
         {
             return InstrumentClient(new RoleDefinitionsClient(
-                new Uri(TestEnvironment.EndpointUrl),
+                TestEnvironment.EndpointUrl,
                 TestEnvironment.Credential,
-                InstrumentClientOptions(new RoleDefinitionsClientOptions())
+                InstrumentClientOptions(new AccessControlClientOptions())
             ));
         }
 

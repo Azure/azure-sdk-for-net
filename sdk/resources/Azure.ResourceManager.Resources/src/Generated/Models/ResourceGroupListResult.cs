@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> List of resource groups. </summary>
-    public partial class ResourceGroupListResult
+    internal partial class ResourceGroupListResult
     {
         /// <summary> Initializes a new instance of ResourceGroupListResult. </summary>
         internal ResourceGroupListResult()
