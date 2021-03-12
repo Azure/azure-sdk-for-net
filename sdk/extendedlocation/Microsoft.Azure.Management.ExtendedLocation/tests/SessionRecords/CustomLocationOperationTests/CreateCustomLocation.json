@@ -1,0 +1,518 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/resourceGroups/e2e-testing-rg/providers/Microsoft.ExtendedLocation/customLocations/cl-test?api-version=2020-07-15-privatepreview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTUwMTVlMWMtODY3Zi00NTMzLTg1NDEtODVjZDQ3MGQwY2ZiL3Jlc291cmNlR3JvdXBzL2UyZS10ZXN0aW5nLXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXh0ZW5kZWRMb2NhdGlvbi9jdXN0b21Mb2NhdGlvbnMvY2wtdGVzdD9hcGktdmVyc2lvbj0yMDIwLTA3LTE1LXByaXZhdGVwcmV2aWV3",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"clusterExtensionIds\": [\r\n      \"/subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/resourceGroups/e2e-testing-rg/providers/Microsoft.Kubernetes/connectedClusters/cldfe2econnectedcluster/providers/Microsoft.KubernetesConfiguration/extensions/cli-test-operator\"\r\n    ],\r\n    \"displayName\": \"cl-test\",\r\n    \"hostResourceId\": \"subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/resourceGroups/e2e-testing-rg/providers/Microsoft.Kubernetes/connectedClusters/cldfe2econnectedcluster\",\r\n    \"hostType\": \"Kubernetes\",\r\n    \"namespace\": \"cli-operator-namespace\"\r\n  },\r\n  \"location\": \"eastus\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "e2073805-4a1d-425d-bbe2-9d66ae5e114c"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29812.02",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.ExtendedLocation.CustomLocationsClient/1.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "613"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1194"
+        ],
+        "Azure-Asyncoperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/providers/microsoft.extendedlocation/locations/eastus/operationsstatus/d373329c-d506-492b-921c-f55b2b6f568e?api-version=2020-07-15-privatepreview"
+        ],
+        "X-Ms-Request-Id": [
+          "d373329c-d506-492b-921c-f55b2b6f568e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "nginx"
+        ],
+        "x-ms-correlation-request-id": [
+          "dee366a6-6f2b-4e99-96c9-0c4cbf08de9f"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20210312T010559Z:dee366a6-6f2b-4e99-96c9-0c4cbf08de9f"
+        ],
+        "Date": [
+          "Fri, 12 Mar 2021 01:05:58 GMT"
+        ],
+        "Content-Length": [
+          "1096"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/resourcegroups/e2e-testing-rg/providers/microsoft.extendedlocation/customlocations/cl-test\",\r\n  \"name\": \"cl-test\",\r\n  \"location\": \"eastus\",\r\n  \"type\": \"Microsoft.ExtendedLocation/customLocations\",\r\n  \"systemData\": {\r\n    \"createdBy\": \"09512d3b-9edb-4a62-b6c2-2436254a8fa3\",\r\n    \"createdByType\": \"Application\",\r\n    \"createdAt\": \"2021-03-12T01:05:56.8579361Z\",\r\n    \"lastModifiedBy\": \"09512d3b-9edb-4a62-b6c2-2436254a8fa3\",\r\n    \"lastModifiedByType\": \"Application\",\r\n    \"lastModifiedAt\": \"2021-03-12T01:05:56.8579361Z\"\r\n  },\r\n  \"properties\": {\r\n    \"hostType\": \"Kubernetes\",\r\n    \"hostResourceId\": \"subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/resourceGroups/e2e-testing-rg/providers/Microsoft.Kubernetes/connectedClusters/cldfe2econnectedcluster\",\r\n    \"namespace\": \"cli-operator-namespace\",\r\n    \"displayName\": \"cl-test\",\r\n    \"provisioningState\": \"Creating\",\r\n    \"clusterExtensionIds\": [\r\n      \"/subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/resourceGroups/e2e-testing-rg/providers/Microsoft.Kubernetes/connectedClusters/cldfe2econnectedcluster/providers/Microsoft.KubernetesConfiguration/extensions/cli-test-operator\"\r\n    ],\r\n    \"authentication\": {}\r\n  }\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/providers/microsoft.extendedlocation/locations/eastus/operationsstatus/d373329c-d506-492b-921c-f55b2b6f568e?api-version=2020-07-15-privatepreview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTUwMTVlMWMtODY3Zi00NTMzLTg1NDEtODVjZDQ3MGQwY2ZiL3Byb3ZpZGVycy9taWNyb3NvZnQuZXh0ZW5kZWRsb2NhdGlvbi9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvbnNzdGF0dXMvZDM3MzMyOWMtZDUwNi00OTJiLTkyMWMtZjU1YjJiNmY1NjhlP2FwaS12ZXJzaW9uPTIwMjAtMDctMTUtcHJpdmF0ZXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29812.02",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.ExtendedLocation.CustomLocationsClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14986"
+        ],
+        "X-Ms-Request-Id": [
+          "d373329c-d506-492b-921c-f55b2b6f568e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "nginx"
+        ],
+        "x-ms-correlation-request-id": [
+          "5290ec4a-2184-44bb-b591-154f7c00b016"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20210312T010629Z:5290ec4a-2184-44bb-b591-154f7c00b016"
+        ],
+        "Date": [
+          "Fri, 12 Mar 2021 01:06:29 GMT"
+        ],
+        "Content-Length": [
+          "323"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/providers/Microsoft.ExtendedLocation/locations/eastus/operationsstatus/d373329c-d506-492b-921c-f55b2b6f568e\",\r\n  \"name\": \"d373329c-d506-492b-921c-f55b2b6f568e\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2021-03-12T01:05:58.873534712Z\",\r\n  \"endTime\": \"2021-03-12T01:06:06.528246701Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/resourceGroups/e2e-testing-rg/providers/Microsoft.ExtendedLocation/customLocations/cl-test?api-version=2020-07-15-privatepreview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTUwMTVlMWMtODY3Zi00NTMzLTg1NDEtODVjZDQ3MGQwY2ZiL3Jlc291cmNlR3JvdXBzL2UyZS10ZXN0aW5nLXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXh0ZW5kZWRMb2NhdGlvbi9jdXN0b21Mb2NhdGlvbnMvY2wtdGVzdD9hcGktdmVyc2lvbj0yMDIwLTA3LTE1LXByaXZhdGVwcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29812.02",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.ExtendedLocation.CustomLocationsClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14985"
+        ],
+        "X-Ms-Request-Id": [
+          "383107f7-5dfa-4364-bc70-24c10c0794a7"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "nginx"
+        ],
+        "x-ms-correlation-request-id": [
+          "19158b48-ae92-498b-8d68-e431097f098e"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20210312T010630Z:19158b48-ae92-498b-8d68-e431097f098e"
+        ],
+        "Date": [
+          "Fri, 12 Mar 2021 01:06:29 GMT"
+        ],
+        "Content-Length": [
+          "1097"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/resourcegroups/e2e-testing-rg/providers/microsoft.extendedlocation/customlocations/cl-test\",\r\n  \"name\": \"cl-test\",\r\n  \"location\": \"eastus\",\r\n  \"type\": \"Microsoft.ExtendedLocation/customLocations\",\r\n  \"systemData\": {\r\n    \"createdBy\": \"09512d3b-9edb-4a62-b6c2-2436254a8fa3\",\r\n    \"createdByType\": \"Application\",\r\n    \"createdAt\": \"2021-03-12T01:05:56.8579361Z\",\r\n    \"lastModifiedBy\": \"09512d3b-9edb-4a62-b6c2-2436254a8fa3\",\r\n    \"lastModifiedByType\": \"Application\",\r\n    \"lastModifiedAt\": \"2021-03-12T01:05:56.8579361Z\"\r\n  },\r\n  \"properties\": {\r\n    \"hostType\": \"Kubernetes\",\r\n    \"hostResourceId\": \"subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/resourceGroups/e2e-testing-rg/providers/Microsoft.Kubernetes/connectedClusters/cldfe2econnectedcluster\",\r\n    \"namespace\": \"cli-operator-namespace\",\r\n    \"displayName\": \"cl-test\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"clusterExtensionIds\": [\r\n      \"/subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/resourceGroups/e2e-testing-rg/providers/Microsoft.Kubernetes/connectedClusters/cldfe2econnectedcluster/providers/Microsoft.KubernetesConfiguration/extensions/cli-test-operator\"\r\n    ],\r\n    \"authentication\": {}\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/resourceGroups/e2e-testing-rg/providers/Microsoft.ExtendedLocation/customLocations/cl-test?api-version=2020-07-15-privatepreview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTUwMTVlMWMtODY3Zi00NTMzLTg1NDEtODVjZDQ3MGQwY2ZiL3Jlc291cmNlR3JvdXBzL2UyZS10ZXN0aW5nLXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXh0ZW5kZWRMb2NhdGlvbi9jdXN0b21Mb2NhdGlvbnMvY2wtdGVzdD9hcGktdmVyc2lvbj0yMDIwLTA3LTE1LXByaXZhdGVwcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "256dbff0-ee2e-4928-a4bb-c57d3663d4c0"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29812.02",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.ExtendedLocation.CustomLocationsClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14984"
+        ],
+        "X-Ms-Request-Id": [
+          "a23877d7-4241-452d-a532-33aeb2fc579d"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "nginx"
+        ],
+        "x-ms-correlation-request-id": [
+          "1b4ab9fa-011b-4563-a816-2370356e4da9"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20210312T010630Z:1b4ab9fa-011b-4563-a816-2370356e4da9"
+        ],
+        "Date": [
+          "Fri, 12 Mar 2021 01:06:29 GMT"
+        ],
+        "Content-Length": [
+          "1097"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/resourcegroups/e2e-testing-rg/providers/microsoft.extendedlocation/customlocations/cl-test\",\r\n  \"name\": \"cl-test\",\r\n  \"location\": \"eastus\",\r\n  \"type\": \"Microsoft.ExtendedLocation/customLocations\",\r\n  \"systemData\": {\r\n    \"createdBy\": \"09512d3b-9edb-4a62-b6c2-2436254a8fa3\",\r\n    \"createdByType\": \"Application\",\r\n    \"createdAt\": \"2021-03-12T01:05:56.8579361Z\",\r\n    \"lastModifiedBy\": \"09512d3b-9edb-4a62-b6c2-2436254a8fa3\",\r\n    \"lastModifiedByType\": \"Application\",\r\n    \"lastModifiedAt\": \"2021-03-12T01:05:56.8579361Z\"\r\n  },\r\n  \"properties\": {\r\n    \"hostType\": \"Kubernetes\",\r\n    \"hostResourceId\": \"subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/resourceGroups/e2e-testing-rg/providers/Microsoft.Kubernetes/connectedClusters/cldfe2econnectedcluster\",\r\n    \"namespace\": \"cli-operator-namespace\",\r\n    \"displayName\": \"cl-test\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"clusterExtensionIds\": [\r\n      \"/subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/resourceGroups/e2e-testing-rg/providers/Microsoft.Kubernetes/connectedClusters/cldfe2econnectedcluster/providers/Microsoft.KubernetesConfiguration/extensions/cli-test-operator\"\r\n    ],\r\n    \"authentication\": {}\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/resourceGroups/e2e-testing-rg/providers/Microsoft.ExtendedLocation/customLocations/cl-test?api-version=2020-07-15-privatepreview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTUwMTVlMWMtODY3Zi00NTMzLTg1NDEtODVjZDQ3MGQwY2ZiL3Jlc291cmNlR3JvdXBzL2UyZS10ZXN0aW5nLXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXh0ZW5kZWRMb2NhdGlvbi9jdXN0b21Mb2NhdGlvbnMvY2wtdGVzdD9hcGktdmVyc2lvbj0yMDIwLTA3LTE1LXByaXZhdGVwcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "80fffdb2-c4ea-4314-872d-daf7779a88ed"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29812.02",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.ExtendedLocation.CustomLocationsClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14983"
+        ],
+        "X-Ms-Request-Id": [
+          "dd705305-8bf8-475c-9266-cf059b564dd9"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "nginx"
+        ],
+        "x-ms-correlation-request-id": [
+          "8324b486-1c55-471b-a351-6ce14ff714fd"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20210312T010636Z:8324b486-1c55-471b-a351-6ce14ff714fd"
+        ],
+        "Date": [
+          "Fri, 12 Mar 2021 01:06:36 GMT"
+        ],
+        "Content-Length": [
+          "1334"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/resourcegroups/e2e-testing-rg/providers/microsoft.extendedlocation/customlocations/cl-test\",\r\n  \"name\": \"cl-test\",\r\n  \"location\": \"eastus\",\r\n  \"type\": \"Microsoft.ExtendedLocation/customLocations\",\r\n  \"systemData\": {\r\n    \"createdBy\": \"09512d3b-9edb-4a62-b6c2-2436254a8fa3\",\r\n    \"createdByType\": \"Application\",\r\n    \"createdAt\": \"2021-03-12T01:05:56.8579361Z\",\r\n    \"lastModifiedBy\": \"09512d3b-9edb-4a62-b6c2-2436254a8fa3\",\r\n    \"lastModifiedByType\": \"Application\",\r\n    \"lastModifiedAt\": \"2021-03-12T01:06:31.2179212Z\"\r\n  },\r\n  \"properties\": {\r\n    \"hostType\": \"Kubernetes\",\r\n    \"hostResourceId\": \"subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/resourceGroups/e2e-testing-rg/providers/Microsoft.Kubernetes/connectedClusters/cldfe2econnectedcluster\",\r\n    \"namespace\": \"cli-operator-namespace\",\r\n    \"displayName\": \"cl-test\",\r\n    \"provisioningState\": \"Patching\",\r\n    \"clusterExtensionIds\": [\r\n      \"/subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/resourceGroups/e2e-testing-rg/providers/Microsoft.Kubernetes/connectedClusters/cldfe2econnectedcluster/providers/Microsoft.KubernetesConfiguration/extensions/cli-test-operator\",\r\n      \"/subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/resourceGroups/e2e-testing-rg/providers/Microsoft.Kubernetes/connectedClusters/cldfe2econnectedcluster/providers/Microsoft.KubernetesConfiguration/extensions/cli-test-operator-ansible\"\r\n    ],\r\n    \"authentication\": {}\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/resourceGroups/e2e-testing-rg/providers/Microsoft.ExtendedLocation/customLocations/cl-test?api-version=2020-07-15-privatepreview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTUwMTVlMWMtODY3Zi00NTMzLTg1NDEtODVjZDQ3MGQwY2ZiL3Jlc291cmNlR3JvdXBzL2UyZS10ZXN0aW5nLXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXh0ZW5kZWRMb2NhdGlvbi9jdXN0b21Mb2NhdGlvbnMvY2wtdGVzdD9hcGktdmVyc2lvbj0yMDIwLTA3LTE1LXByaXZhdGVwcmV2aWV3",
+      "RequestMethod": "PATCH",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"clusterExtensionIds\": [\r\n      \"/subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/resourceGroups/e2e-testing-rg/providers/Microsoft.Kubernetes/connectedClusters/cldfe2econnectedcluster/providers/Microsoft.KubernetesConfiguration/extensions/cli-test-operator\",\r\n      \"/subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/resourceGroups/e2e-testing-rg/providers/Microsoft.Kubernetes/connectedClusters/cldfe2econnectedcluster/providers/Microsoft.KubernetesConfiguration/extensions/cli-test-operator-ansible\"\r\n    ],\r\n    \"displayName\": \"cl-test\",\r\n    \"hostResourceId\": \"subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/resourceGroups/e2e-testing-rg/providers/Microsoft.Kubernetes/connectedClusters/cldfe2econnectedcluster\",\r\n    \"hostType\": \"Kubernetes\",\r\n    \"namespace\": \"cli-operator-namespace\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "cf4cc4ea-dcc1-4d14-8700-bdfcc4948a96"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29812.02",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.ExtendedLocation.CustomLocationsClient/1.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "834"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1193"
+        ],
+        "Azure-Asyncoperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/providers/microsoft.extendedlocation/locations/eastus/operationsstatus/15b31458-aec8-41f6-aea5-3be1f94f3b6f?api-version=2020-07-15-privatepreview"
+        ],
+        "X-Ms-Request-Id": [
+          "15b31458-aec8-41f6-aea5-3be1f94f3b6f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "nginx"
+        ],
+        "x-ms-correlation-request-id": [
+          "492fd534-7246-4896-bcea-ae2c401e319b"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20210312T010636Z:492fd534-7246-4896-bcea-ae2c401e319b"
+        ],
+        "Date": [
+          "Fri, 12 Mar 2021 01:06:35 GMT"
+        ],
+        "Content-Length": [
+          "1334"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/resourcegroups/e2e-testing-rg/providers/microsoft.extendedlocation/customlocations/cl-test\",\r\n  \"name\": \"cl-test\",\r\n  \"location\": \"eastus\",\r\n  \"type\": \"Microsoft.ExtendedLocation/customLocations\",\r\n  \"systemData\": {\r\n    \"createdBy\": \"09512d3b-9edb-4a62-b6c2-2436254a8fa3\",\r\n    \"createdByType\": \"Application\",\r\n    \"createdAt\": \"2021-03-12T01:05:56.8579361Z\",\r\n    \"lastModifiedBy\": \"09512d3b-9edb-4a62-b6c2-2436254a8fa3\",\r\n    \"lastModifiedByType\": \"Application\",\r\n    \"lastModifiedAt\": \"2021-03-12T01:06:31.2179212Z\"\r\n  },\r\n  \"properties\": {\r\n    \"hostType\": \"Kubernetes\",\r\n    \"hostResourceId\": \"subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/resourceGroups/e2e-testing-rg/providers/Microsoft.Kubernetes/connectedClusters/cldfe2econnectedcluster\",\r\n    \"namespace\": \"cli-operator-namespace\",\r\n    \"displayName\": \"cl-test\",\r\n    \"provisioningState\": \"Patching\",\r\n    \"clusterExtensionIds\": [\r\n      \"/subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/resourceGroups/e2e-testing-rg/providers/Microsoft.Kubernetes/connectedClusters/cldfe2econnectedcluster/providers/Microsoft.KubernetesConfiguration/extensions/cli-test-operator\",\r\n      \"/subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/resourceGroups/e2e-testing-rg/providers/Microsoft.Kubernetes/connectedClusters/cldfe2econnectedcluster/providers/Microsoft.KubernetesConfiguration/extensions/cli-test-operator-ansible\"\r\n    ],\r\n    \"authentication\": {}\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/providers/Microsoft.ExtendedLocation/customLocations?api-version=2020-07-15-privatepreview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTUwMTVlMWMtODY3Zi00NTMzLTg1NDEtODVjZDQ3MGQwY2ZiL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXh0ZW5kZWRMb2NhdGlvbi9jdXN0b21Mb2NhdGlvbnM/YXBpLXZlcnNpb249MjAyMC0wNy0xNS1wcml2YXRlcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "5e8d9919-9818-42a7-a1f7-84e8bce7efdc"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29812.02",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.ExtendedLocation.CustomLocationsClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14982"
+        ],
+        "X-Ms-Request-Id": [
+          "fc902241-62d5-49fc-9523-0a6e73c0d72d"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "nginx"
+        ],
+        "x-ms-correlation-request-id": [
+          "dd5dbb60-5e8c-4223-96a5-bd976906fc40"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20210312T010636Z:dd5dbb60-5e8c-4223-96a5-bd976906fc40"
+        ],
+        "Date": [
+          "Fri, 12 Mar 2021 01:06:36 GMT"
+        ],
+        "Content-Length": [
+          "1269"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/resourcegroups/myansible/providers/microsoft.extendedlocation/customlocations/ansibletwo\",\r\n      \"name\": \"ansibletwo\",\r\n      \"location\": \"East US\",\r\n      \"type\": \"Microsoft.ExtendedLocation/customLocations\",\r\n      \"systemData\": {},\r\n      \"properties\": {\r\n        \"hostType\": \"Kubernetes\",\r\n        \"hostResourceId\": \"/subscriptions/f8df94f2-2f5a-4f4a-bcaf-1bb992fb564b/resourceGroups/cctest/providers/Microsoft.Kubernetes/connectedClusters/testcluster2\",\r\n        \"namespace\": \"mydemo\",\r\n        \"provisioningState\": \"Failed\",\r\n        \"clusterExtensionIds\": [\r\n          \"/subscriptions/f8df94f2-2f5a-4f4a-bcaf-1bb992fb564b/resourceGroups/cctest/providers/Microsoft.Kubernetes/connectedClusters/testcluster2/providers/Microsoft.KubernetesConfiguration/extensions/ansible\"\r\n        ],\r\n        \"authentication\": {}\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"https://api-dogfood.resources.windows-int.net/subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/providers/microsoft.extendedlocation/customlocations?%24skipToken=%2BRID%3A~nTpkAJdK27jWAgAAAAAAAA%3D%3D%23RT%3A1%23TRC%3A1%23ISV%3A2%23IEO%3A65551%23QCF%3A3%23FPC%3AAgEAegB8ANaC9oDMgFmBDIAVgICADIBCAZjNx8YjgBEAACJngAKAAcAASC%2BAAsBnPx4cKoBqgALAAEKABBaAdYBhAAwAEQAAA1uAMQAGAEIAAM8DAFEAEAGDAGAAAGAYABIAAGAGABEAAGAhADAAEgAMAAAEQQG44RiBHoBSAALAEwB6AgCNhA%3D%3D&api-version=2020-07-15-privatepreview\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/resourceGroups/e2e-testing-rg/providers/Microsoft.ExtendedLocation/customLocations?api-version=2020-07-15-privatepreview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTUwMTVlMWMtODY3Zi00NTMzLTg1NDEtODVjZDQ3MGQwY2ZiL3Jlc291cmNlR3JvdXBzL2UyZS10ZXN0aW5nLXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXh0ZW5kZWRMb2NhdGlvbi9jdXN0b21Mb2NhdGlvbnM/YXBpLXZlcnNpb249MjAyMC0wNy0xNS1wcml2YXRlcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "15e22a3c-ab4b-4e20-9fbc-1dd5593e9684"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29812.02",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.ExtendedLocation.CustomLocationsClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14981"
+        ],
+        "X-Ms-Request-Id": [
+          "81ba695b-faa8-4ff4-bf27-e301e780cc55"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "nginx"
+        ],
+        "x-ms-correlation-request-id": [
+          "4db06ed3-f0b3-4f41-8649-51b49b77b29d"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20210312T010637Z:4db06ed3-f0b3-4f41-8649-51b49b77b29d"
+        ],
+        "Date": [
+          "Fri, 12 Mar 2021 01:06:36 GMT"
+        ],
+        "Content-Length": [
+          "1373"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/resourcegroups/e2e-testing-rg/providers/microsoft.extendedlocation/customlocations/e2e-tromps\",\r\n      \"name\": \"e2e-tromps\",\r\n      \"location\": \"eastus2\",\r\n      \"tags\": {\r\n        \"TestKey\": \"TestValue\"\r\n      },\r\n      \"type\": \"Microsoft.ExtendedLocation/customLocations\",\r\n      \"systemData\": {},\r\n      \"properties\": {\r\n        \"hostType\": \"Kubernetes\",\r\n        \"hostResourceId\": \"/subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/resourceGroups/e2e-testing-rg/providers/Microsoft.Kubernetes/connectedClusters/cldfe2econnectedcluster\",\r\n        \"namespace\": \"e2e-tromps-namespace\",\r\n        \"displayName\": \"e2e-tromps-displayname\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"clusterExtensionIds\": [\r\n          \"/subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/resourceGroups/e2e-testing-rg/providers/Microsoft.Kubernetes/connectedClusters/cldfe2econnectedcluster/providers/Microsoft.KubernetesConfiguration/extensions/tromps-operator\"\r\n        ],\r\n        \"authentication\": {}\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"https://api-dogfood.resources.windows-int.net/subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/resourcegroups/e2e-testing-rg/providers/microsoft.extendedlocation/customlocations?%24skipToken=%2BRID%3A~nTpkAJdK27gjCAAAAAAAAA%3D%3D%23RT%3A1%23TRC%3A1%23ISV%3A2%23IEO%3A65551%23QCF%3A3%23FPC%3AAgEAAABWACIImM3HxiOAh4ACgA6AL4ACwGc%2FHhwqgGqAAsAAQoAEFoDhAAwAEQAAA1uAMQAGAEMBYAAAYBgAEgAAYAYAEQAAYCEAMAASAAwAAARBAbjhGIFxgASA&api-version=2020-07-15-privatepreview\"\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "a5015e1c-867f-4533-8541-85cd470d0cfb"
+  }
+}

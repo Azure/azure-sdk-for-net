@@ -1,0 +1,77 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/resourceGroups/e2e-testing-rg/providers/Microsoft.ExtendedLocation/customLocations/cl-test?api-version=2020-07-15-privatepreview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTUwMTVlMWMtODY3Zi00NTMzLTg1NDEtODVjZDQ3MGQwY2ZiL3Jlc291cmNlR3JvdXBzL2UyZS10ZXN0aW5nLXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXh0ZW5kZWRMb2NhdGlvbi9jdXN0b21Mb2NhdGlvbnMvY2wtdGVzdD9hcGktdmVyc2lvbj0yMDIwLTA3LTE1LXByaXZhdGVwcmV2aWV3",
+      "RequestMethod": "PATCH",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"clusterExtensionIds\": [\r\n      \"/subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/resourceGroups/e2e-testing-rg/providers/Microsoft.Kubernetes/connectedClusters/cldfe2econnectedcluster/providers/Microsoft.KubernetesConfiguration/extensions/cli-test-operator\",\r\n      \"/subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/resourceGroups/e2e-testing-rg/providers/Microsoft.Kubernetes/connectedClusters/cldfe2econnectedcluster/providers/Microsoft.KubernetesConfiguration/extensions/cli-test-operator-ansible\"\r\n    ],\r\n    \"displayName\": \"cl-test\",\r\n    \"hostResourceId\": \"subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/resourceGroups/e2e-testing-rg/providers/Microsoft.Kubernetes/connectedClusters/cldfe2econnectedcluster\",\r\n    \"hostType\": \"Kubernetes\",\r\n    \"namespace\": \"cli-operator-namespace\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "38ef156d-f5e7-4df9-a7d3-18507ff36c35"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29812.02",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.ExtendedLocation.CustomLocationsClient/1.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "834"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1196"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Ms-Request-Id": [
+          "a8b686a8-37e9-4ac2-91de-c71020d3e5f3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "nginx"
+        ],
+        "x-ms-correlation-request-id": [
+          "a89bcab2-d8de-4e1f-9399-ecb87f68c6f0"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20210311T221645Z:a89bcab2-d8de-4e1f-9399-ecb87f68c6f0"
+        ],
+        "Date": [
+          "Thu, 11 Mar 2021 22:16:45 GMT"
+        ],
+        "Content-Length": [
+          "87"
+        ],
+        "Content-Type": [
+          "text/plain; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"NotFound\",\r\n    \"message\": \"Custom Location Not Found\"\r\n  }\r\n}",
+      "StatusCode": 404
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "a5015e1c-867f-4533-8541-85cd470d0cfb"
+  }
+}

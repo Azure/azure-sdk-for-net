@@ -1,0 +1,251 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/resourceGroups/e2e-testing-rg/providers/Microsoft.ExtendedLocation/customLocations/cl-test?api-version=2020-07-15-privatepreview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTUwMTVlMWMtODY3Zi00NTMzLTg1NDEtODVjZDQ3MGQwY2ZiL3Jlc291cmNlR3JvdXBzL2UyZS10ZXN0aW5nLXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXh0ZW5kZWRMb2NhdGlvbi9jdXN0b21Mb2NhdGlvbnMvY2wtdGVzdD9hcGktdmVyc2lvbj0yMDIwLTA3LTE1LXByaXZhdGVwcmV2aWV3",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "5462621f-c2cf-4c92-ad7c-32176e249156"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29812.02",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.ExtendedLocation.CustomLocationsClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/providers/microsoft.extendedlocation/locations/eastus/operationresults/135bae12-72c4-4994-abf3-ec4484a28864?api-version=2020-07-15-privatepreview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14999"
+        ],
+        "Azure-Asyncoperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/providers/microsoft.extendedlocation/locations/eastus/operationsstatus/135bae12-72c4-4994-abf3-ec4484a28864?api-version=2020-07-15-privatepreview"
+        ],
+        "X-Ms-Request-Id": [
+          "135bae12-72c4-4994-abf3-ec4484a28864"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "nginx"
+        ],
+        "x-ms-correlation-request-id": [
+          "a73d3455-f0c4-4b48-be40-3b43cab2da80"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20210312T010640Z:a73d3455-f0c4-4b48-be40-3b43cab2da80"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 12 Mar 2021 01:06:40 GMT"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/providers/microsoft.extendedlocation/locations/eastus/operationsstatus/135bae12-72c4-4994-abf3-ec4484a28864?api-version=2020-07-15-privatepreview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTUwMTVlMWMtODY3Zi00NTMzLTg1NDEtODVjZDQ3MGQwY2ZiL3Byb3ZpZGVycy9taWNyb3NvZnQuZXh0ZW5kZWRsb2NhdGlvbi9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvbnNzdGF0dXMvMTM1YmFlMTItNzJjNC00OTk0LWFiZjMtZWM0NDg0YTI4ODY0P2FwaS12ZXJzaW9uPTIwMjAtMDctMTUtcHJpdmF0ZXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29812.02",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.ExtendedLocation.CustomLocationsClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14982"
+        ],
+        "X-Ms-Request-Id": [
+          "135bae12-72c4-4994-abf3-ec4484a28864"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "nginx"
+        ],
+        "x-ms-correlation-request-id": [
+          "c857d5ac-95fc-4d5c-a682-30d8d239e792"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20210312T010711Z:c857d5ac-95fc-4d5c-a682-30d8d239e792"
+        ],
+        "Date": [
+          "Fri, 12 Mar 2021 01:07:11 GMT"
+        ],
+        "Content-Length": [
+          "323"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/providers/Microsoft.ExtendedLocation/locations/eastus/operationsstatus/135bae12-72c4-4994-abf3-ec4484a28864\",\r\n  \"name\": \"135bae12-72c4-4994-abf3-ec4484a28864\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2021-03-12T01:06:40.513770038Z\",\r\n  \"endTime\": \"2021-03-12T01:06:52.083076469Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/providers/microsoft.extendedlocation/locations/eastus/operationresults/135bae12-72c4-4994-abf3-ec4484a28864?api-version=2020-07-15-privatepreview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTUwMTVlMWMtODY3Zi00NTMzLTg1NDEtODVjZDQ3MGQwY2ZiL3Byb3ZpZGVycy9taWNyb3NvZnQuZXh0ZW5kZWRsb2NhdGlvbi9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvbnJlc3VsdHMvMTM1YmFlMTItNzJjNC00OTk0LWFiZjMtZWM0NDg0YTI4ODY0P2FwaS12ZXJzaW9uPTIwMjAtMDctMTUtcHJpdmF0ZXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29812.02",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.ExtendedLocation.CustomLocationsClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14981"
+        ],
+        "Azure-Asyncoperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/providers/microsoft.extendedlocation/locations/eastus/operationsstatus/135bae12-72c4-4994-abf3-ec4484a28864?api-version=2020-07-15-privatepreview"
+        ],
+        "X-Ms-Request-Id": [
+          "135bae12-72c4-4994-abf3-ec4484a28864"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "nginx"
+        ],
+        "x-ms-correlation-request-id": [
+          "8d268a97-afc0-4140-9fb0-09848e22ed42"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20210312T010712Z:8d268a97-afc0-4140-9fb0-09848e22ed42"
+        ],
+        "Date": [
+          "Fri, 12 Mar 2021 01:07:11 GMT"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 204
+    },
+    {
+      "RequestUri": "/subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/resourceGroups/e2e-testing-rg/providers/Microsoft.ExtendedLocation/customLocations/cl-test?api-version=2020-07-15-privatepreview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTUwMTVlMWMtODY3Zi00NTMzLTg1NDEtODVjZDQ3MGQwY2ZiL3Jlc291cmNlR3JvdXBzL2UyZS10ZXN0aW5nLXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXh0ZW5kZWRMb2NhdGlvbi9jdXN0b21Mb2NhdGlvbnMvY2wtdGVzdD9hcGktdmVyc2lvbj0yMDIwLTA3LTE1LXByaXZhdGVwcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "ded3a4a4-b4f1-4985-8c07-7bf3ada26d40"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29812.02",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.ExtendedLocation.CustomLocationsClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-failure-cause": [
+          "gateway"
+        ],
+        "x-ms-request-id": [
+          "2279fb44-847e-4b6b-9c2b-e606c649a990"
+        ],
+        "x-ms-correlation-request-id": [
+          "2279fb44-847e-4b6b-9c2b-e606c649a990"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20210312T010712Z:2279fb44-847e-4b6b-9c2b-e606c649a990"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 12 Mar 2021 01:07:11 GMT"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "236"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The Resource 'Microsoft.ExtendedLocation/customLocations/cl-test' under resource group 'e2e-testing-rg' was not found. For more details please go to https://aka.ms/ARMResourceNotFoundFix\"\r\n  }\r\n}",
+      "StatusCode": 404
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "a5015e1c-867f-4533-8541-85cd470d0cfb"
+  }
+}
