@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Core.Tests
         private AzureResourceManagerClient _client;
         private ResourceGroupContainer _container;
         private ResourceGroup _resourceGroup;
-        private readonly string _rgName = $"{Environment.UserName}-rg-{Environment.TickCount}";
+        private string _rgName;
 
         public ContainerTryGetTest(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.Core.Tests
         [SetUp]
         public void SetUp()
         {
+            _rgName = Recording.GenerateAssetName("CoreRg");
             _client = GetArmClient();
             _container = _client.DefaultSubscription.GetResourceGroupContainer();
             _resourceGroup = _container.Construct(LocationData.WestUS2).CreateOrUpdate(_rgName);
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.Core.Tests
             ResourceGroup result = _container.TryGet(_rgName);
             Assert.NotNull(result);
             Assert.IsTrue(result.Data.Name == _rgName);
-            result = _container.TryGet("FakeName"+ new Random().Next(1,100));
+            result = _container.TryGet("FakeName");
             Assert.IsNull(result);
         }
 
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.Core.Tests
             ResourceGroup result = await _container.TryGetAsync(_rgName);
             Assert.NotNull(result);
             Assert.IsTrue(result.Data.Name == _rgName);
-            result = await _container.TryGetAsync("FakeName" + new Random().Next(1, 100));
+            result = await _container.TryGetAsync("FakeName");
             Assert.IsNull(result);
         }
 
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.Core.Tests
         public void DoesExistTest()
         {
             Assert.IsTrue(_container.DoesExist(_rgName));
-            Assert.IsFalse(_container.DoesExist("FakeName" + new Random().Next(1, 100)));
+            Assert.IsFalse(_container.DoesExist("FakeName"));
         }
     }
 }
