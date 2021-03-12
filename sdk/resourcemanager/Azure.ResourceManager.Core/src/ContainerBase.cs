@@ -47,21 +47,18 @@ namespace Azure.ResourceManager.Core
         /// Returns the resource from Azure if it exists.
         /// </summary>
         /// <param name="resourceName"> The name of the resource you want to get. </param>
-        /// <param name="resource"> The resource if it existed, null otherwise. </param>
         /// <returns> Whether or not the resource existed. </returns>
-        public virtual bool TryGet(string resourceName, out TOperations resource)
+        public virtual TOperations TryGet(string resourceName)
         {
             var op = GetOperation(resourceName);
 
             try
             {
-                resource = op.Get().Value;
-                return true;
+                return op.Get().Value;
             }
-            catch
+            catch (RequestFailedException e) when (e.Status == 404)
             {
-                resource = null;
-                return false;
+                return null;
             }
         }
 
@@ -93,8 +90,7 @@ namespace Azure.ResourceManager.Core
         /// <returns> Whether or not the resource existed. </returns>
         public virtual bool DoesExist(string resourceName)
         {
-            TOperations output;
-            return TryGet(resourceName, out output);
+            return TryGet(resourceName) == null ? false : true;
         }
 
         /// <summary>
