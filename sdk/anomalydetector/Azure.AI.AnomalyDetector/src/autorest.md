@@ -11,3 +11,12 @@ credential-types: TokenCredential;AzureKeyCredential
 credential-header-name: Ocp-Apim-Subscription-Key
 credential-scopes: https://cognitiveservices.azure.com/.default
 ```
+
+### Make Endpoint type as Uri
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.parameters.Endpoint
+  transform: $.format = "url"
+```

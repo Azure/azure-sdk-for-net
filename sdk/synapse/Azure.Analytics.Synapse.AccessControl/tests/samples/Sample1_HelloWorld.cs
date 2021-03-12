@@ -27,8 +27,8 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
             string endpoint = "<my-endpoint-url>";
             /*@@*/endpoint = TestEnvironment.EndpointUrl;
 
-            RoleAssignmentsClient roleAssignmentsClient = new RoleAssignmentsClient(endpoint, new DefaultAzureCredential());
-            RoleDefinitionsClient definitionsClient = new RoleDefinitionsClient(endpoint, new DefaultAzureCredential());
+            RoleAssignmentsClient roleAssignmentsClient = new RoleAssignmentsClient(new Uri(endpoint), new DefaultAzureCredential());
+            RoleDefinitionsClient definitionsClient = new RoleDefinitionsClient(new Uri(endpoint), new DefaultAzureCredential());
             #endregion
 
             #region Snippet:PrepCreateRoleAssignment
