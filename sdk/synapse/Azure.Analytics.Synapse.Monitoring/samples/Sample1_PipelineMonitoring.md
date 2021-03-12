@@ -8,7 +8,7 @@ To monitor Spark jobs on Azure Synapse, you need to instantiate a `MonitoringCli
 
 ```C# Snippet:CreateMonitoringClient
 string endpoint = TestEnvironment.EndpointUrl;
-MonitoringClient client = new MonitoringClient(endpoint, new DefaultAzureCredential());
+MonitoringClient client = new MonitoringClient(new Uri(endpoint), new DefaultAzureCredential());
 ```
 
 ## Create monitoring client

@@ -14,3 +14,12 @@ public-clients: true
 credential-types: TokenCredential
 credential-scopes: https://dev.azuresynapse.net/.default
 ```
+
+### Make Endpoint type as Uri
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.parameters.Endpoint
+  transform: $.format = "url"
+```
