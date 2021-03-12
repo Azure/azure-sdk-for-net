@@ -21,21 +21,23 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary>
         /// <paramref name="endpoint"/>
         /// </summary>
-        public ContainerRegistryClient(Uri endpoint) : this(endpoint, new ContainerRegistryClientOptions())
+        public ContainerRegistryClient(Uri endpoint, string username, string password) : this(endpoint, username, password,  new ContainerRegistryClientOptions())
         {
         }
 
         /// <summary>
         /// </summary>
         /// <param name="endpoint"></param>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
         /// <param name="options"></param>
-        public ContainerRegistryClient(Uri endpoint, ContainerRegistryClientOptions options)
+        public ContainerRegistryClient(Uri endpoint, string username, string password, ContainerRegistryClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(options, nameof(options));
 
             // The HttpPipelineBuilder.Build method, builds up a pipeline with client options, and any number of additional policies.
-            _pipeline = HttpPipelineBuilder.Build(options, new BasicAuthenticationPolicy());
+            _pipeline = HttpPipelineBuilder.Build(options, new BasicAuthenticationPolicy(username, password));
 
             _clientDiagnostics = new ClientDiagnostics(options);
 
@@ -67,7 +69,7 @@ namespace Azure.Containers.ContainerRegistry
                        .ConfigureAwait(false);
 
                     string lastRepository = null;
-                    if (!String.IsNullOrEmpty(response.Headers.Link))
+                    if (!string.IsNullOrEmpty(response.Headers.Link))
                     {
                         Uri nextLink = new Uri(response.Headers.Link);
                         NameValueCollection queryParams = HttpUtility.ParseQueryString(nextLink.Query);
@@ -99,11 +101,16 @@ namespace Azure.Containers.ContainerRegistry
                             continuationToken,
                             pageSizeHint,
                             cancellationToken);
-                    Uri nextLink = new Uri(response.Headers.Link);
-                    NameValueCollection queryParams = HttpUtility.ParseQueryString(nextLink.Query);
-                    string lastSeenRepository = queryParams["last"];
 
-                    return Page<string>.FromValues(response.Value.Names, lastSeenRepository, response.GetRawResponse());
+                    string lastRepository = null;
+                    if (!string.IsNullOrEmpty(response.Headers.Link))
+                    {
+                        Uri nextLink = new Uri(response.Headers.Link);
+                        NameValueCollection queryParams = HttpUtility.ParseQueryString(nextLink.Query);
+                        lastRepository = queryParams["last"];
+                    }
+
+                    return Page<string>.FromValues(response.Value.Names, lastRepository, response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {

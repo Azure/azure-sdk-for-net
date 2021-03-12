@@ -15,9 +15,11 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
         public void GetRepositories()
         {
             var endpoint = TestEnvironment.Endpoint;
+            var userName = TestEnvironment.UserName;
+            var password = TestEnvironment.Password;
 
             #region Snippet:GetSecret
-            var client = new ContainerRegistryClient(new Uri(endpoint));
+            var client = new ContainerRegistryClient(new Uri(endpoint), userName, password);
 
             AsyncPageable<string> repositories = client.GetRepositoriesAsync();
 

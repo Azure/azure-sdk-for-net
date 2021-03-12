@@ -16,6 +16,15 @@ namespace Azure.Containers.ContainerRegistry
     /// </summary>
     internal class BasicAuthenticationPolicy : HttpPipelinePolicy
     {
+        private string _userName;
+        private string _password;
+
+        public BasicAuthenticationPolicy(string userName, string password)
+        {
+            _userName = userName;
+            _password = password;
+        }
+
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             ProcessAsync(message, pipeline, false).EnsureCompleted();
@@ -30,7 +39,7 @@ namespace Azure.Containers.ContainerRegistry
         private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
 #pragma warning restore CA1822 // Mark members as static
         {
-            var valueBytes = Encoding.UTF8.GetBytes("<username>:<password>");
+            var valueBytes = Encoding.UTF8.GetBytes($"{_userName}:{_password}");
             message.Request.Headers.SetValue(HttpHeader.Names.Authorization, $"Basic {Convert.ToBase64String(valueBytes)}");
 
             if (async)

@@ -30,6 +30,8 @@
         }
     },
     "variables": {
+        "baseName": "[parameters('baseName')]",
+        "apiVersion": "2019-05-01",
         "endpointValue": "[format('https://{0}.azurecr.io', parameters('baseName'))]"
     },
     "resources": [
@@ -39,7 +41,8 @@
             "name": "[parameters('baseName')]",
             "location": "[parameters('location')]",
             "properties": {        
-                "endpoint": "[variables('endpointValue')]"
+                "endpoint": "[variables('endpointValue')]",
+                "adminUserEnabled": true
             },
             "sku": {
                 "name": "Basic",
@@ -48,10 +51,21 @@
         }
     ],
     "outputs": {
-            "CONTAINERREGISTRY_ENDPOINT": {
-              "type": "string",
-              "value": "[variables('endpointValue')]"
-            },
+        "CONTAINERREGISTRY_REGISTRY_NAME": {
+            "type": "string",
+            "value": "[variables('baseName')]"
+        },
+        "CONTAINERREGISTRY_ENDPOINT": {
+            "type": "string",
+            "value": "[variables('endpointValue')]"
+        },
+        "CONTAINERREGISTRY_USERNAME": {
+            "type": "string",
+            "value": "[listCredentials(resourceId('Microsoft.ContainerRegistry/registries', variables('baseName')), variables('apiVersion')).username]"
+        },
+        "CONTAINERREGISTRY_PASSWORD": {
+            "type": "string",
+            "value": "[listCredentials(resourceId('Microsoft.ContainerRegistry/registries', variables('baseName')), variables('apiVersion')).passwords[0].value]"
         }
     }
 }

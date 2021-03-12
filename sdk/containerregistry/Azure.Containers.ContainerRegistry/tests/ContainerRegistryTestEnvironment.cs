@@ -7,6 +7,8 @@ namespace Azure.Containers.ContainerRegistry.Tests
 {
     public class ContainerRegistryTestEnvironment : TestEnvironment
     {
-        public string Endpoint => GetRecordedVariable("CONTAINERREGISTRY_ENDPOINT");
+        public string Endpoint => GetOptionalVariable("CONTAINERREGISTRY_ENDPOINT") ?? "SANITIZED";
+        public string UserName => GetOptionalVariable("CONTAINERREGISTRY_USERNAME") ?? "SANITIZED";
+        public string Password => GetOptionalVariable("CONTAINERREGISTRY_PASSWORD") ?? "SANITIZED";
     }
 }
