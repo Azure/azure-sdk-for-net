@@ -28,6 +28,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
         [RecordedTest]
         public async Task CanGetRepositories()
         {
+            await Task.Run(() => { }).ConfigureAwait(false);
             throw new Exception($"Endpoint value is {TestEnvironment.Endpoint}");
 
             //var client = CreateClient();
