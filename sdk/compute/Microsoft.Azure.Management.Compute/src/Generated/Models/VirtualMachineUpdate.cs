@@ -135,22 +135,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// minutes and 120 minutes (inclusive) and should be specified in ISO
         /// 8601 format. The default value is 90 minutes (PT1H30M).
         /// &lt;br&gt;&lt;br&gt; Minimum api-version: 2020-06-01</param>
-        /// <param name="platformFaultDomain">Specifies the scale set logical
-        /// fault domain into which the Virtual Machine will be created. By
-        /// default, the Virtual Machine will by automatically assigned to a
-        /// fault domain that best maintains balance across available fault
-        /// domains.&lt;br&gt;&lt;li&gt;This is applicable only if the
-        /// 'virtualMachineScaleSet' property of this Virtual Machine is
-        /// set.&lt;li&gt;The Virtual Machine Scale Set that is referenced,
-        /// must have 'platformFaultDomainCount' &amp;gt; 1.&lt;li&gt;This
-        /// property cannot be updated once the Virtual Machine is
-        /// created.&lt;li&gt;Fault domain assignment can be viewed in the
-        /// Virtual Machine Instance View.&lt;br&gt;&lt;br&gt;Minimum
-        /// api‐version: 2020‐12‐01</param>
         /// <param name="identity">The identity of the virtual machine, if
         /// configured.</param>
         /// <param name="zones">The virtual machine zones.</param>
-        public VirtualMachineUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), Plan plan = default(Plan), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), OSProfile osProfile = default(OSProfile), NetworkProfile networkProfile = default(NetworkProfile), SecurityProfile securityProfile = default(SecurityProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), SubResource availabilitySet = default(SubResource), SubResource virtualMachineScaleSet = default(SubResource), SubResource proximityPlacementGroup = default(SubResource), string priority = default(string), string evictionPolicy = default(string), BillingProfile billingProfile = default(BillingProfile), SubResource host = default(SubResource), SubResource hostGroup = default(SubResource), string provisioningState = default(string), VirtualMachineInstanceView instanceView = default(VirtualMachineInstanceView), string licenseType = default(string), string vmId = default(string), string extensionsTimeBudget = default(string), int? platformFaultDomain = default(int?), VirtualMachineIdentity identity = default(VirtualMachineIdentity), IList<string> zones = default(IList<string>))
+        public VirtualMachineUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), Plan plan = default(Plan), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), OSProfile osProfile = default(OSProfile), NetworkProfile networkProfile = default(NetworkProfile), SecurityProfile securityProfile = default(SecurityProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), SubResource availabilitySet = default(SubResource), SubResource virtualMachineScaleSet = default(SubResource), SubResource proximityPlacementGroup = default(SubResource), string priority = default(string), string evictionPolicy = default(string), BillingProfile billingProfile = default(BillingProfile), SubResource host = default(SubResource), SubResource hostGroup = default(SubResource), string provisioningState = default(string), VirtualMachineInstanceView instanceView = default(VirtualMachineInstanceView), string licenseType = default(string), string vmId = default(string), string extensionsTimeBudget = default(string), VirtualMachineIdentity identity = default(VirtualMachineIdentity), IList<string> zones = default(IList<string>))
             : base(tags)
         {
             Plan = plan;
@@ -174,7 +162,6 @@ namespace Microsoft.Azure.Management.Compute.Models
             LicenseType = licenseType;
             VmId = vmId;
             ExtensionsTimeBudget = extensionsTimeBudget;
-            PlatformFaultDomain = platformFaultDomain;
             Identity = identity;
             Zones = zones;
             CustomInit();
@@ -393,24 +380,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.extensionsTimeBudget")]
         public string ExtensionsTimeBudget { get; set; }
-
-        /// <summary>
-        /// Gets or sets specifies the scale set logical fault domain into
-        /// which the Virtual Machine will be created. By default, the Virtual
-        /// Machine will by automatically assigned to a fault domain that best
-        /// maintains balance across available fault
-        /// domains.&amp;lt;br&amp;gt;&amp;lt;li&amp;gt;This is applicable only
-        /// if the 'virtualMachineScaleSet' property of this Virtual Machine is
-        /// set.&amp;lt;li&amp;gt;The Virtual Machine Scale Set that is
-        /// referenced, must have 'platformFaultDomainCount' &amp;amp;gt;
-        /// 1.&amp;lt;li&amp;gt;This property cannot be updated once the
-        /// Virtual Machine is created.&amp;lt;li&amp;gt;Fault domain
-        /// assignment can be viewed in the Virtual Machine Instance
-        /// View.&amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api‐version:
-        /// 2020‐12‐01
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.platformFaultDomain")]
-        public int? PlatformFaultDomain { get; set; }
 
         /// <summary>
         /// Gets or sets the identity of the virtual machine, if configured.

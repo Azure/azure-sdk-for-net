@@ -49,16 +49,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="hyperVGeneration">Gets the HyperVGenerationType of the
         /// VirtualMachine created from the image. Possible values include:
         /// 'V1', 'V2'</param>
-        /// <param name="extendedLocation">The extended location of the
-        /// Image.</param>
-        public Image(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SubResource sourceVirtualMachine = default(SubResource), ImageStorageProfile storageProfile = default(ImageStorageProfile), string provisioningState = default(string), string hyperVGeneration = default(string), ExtendedLocation extendedLocation = default(ExtendedLocation))
+        public Image(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SubResource sourceVirtualMachine = default(SubResource), ImageStorageProfile storageProfile = default(ImageStorageProfile), string provisioningState = default(string), string hyperVGeneration = default(string))
             : base(location, id, name, type, tags)
         {
             SourceVirtualMachine = sourceVirtualMachine;
             StorageProfile = storageProfile;
             ProvisioningState = provisioningState;
             HyperVGeneration = hyperVGeneration;
-            ExtendedLocation = extendedLocation;
             CustomInit();
         }
 
@@ -93,12 +90,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.hyperVGeneration")]
         public string HyperVGeneration { get; set; }
-
-        /// <summary>
-        /// Gets or sets the extended location of the Image.
-        /// </summary>
-        [JsonProperty(PropertyName = "extendedLocation")]
-        public ExtendedLocation ExtendedLocation { get; set; }
 
         /// <summary>
         /// Validate the object.

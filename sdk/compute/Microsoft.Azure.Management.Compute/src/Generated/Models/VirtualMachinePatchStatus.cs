@@ -11,8 +11,6 @@
 namespace Microsoft.Azure.Management.Compute.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -36,13 +34,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="lastPatchInstallationSummary">The installation summary
         /// of the latest installation operation for the virtual
         /// machine.</param>
-        /// <param name="configurationStatuses">The enablement status of the
-        /// specified patchMode</param>
-        public VirtualMachinePatchStatus(AvailablePatchSummary availablePatchSummary = default(AvailablePatchSummary), LastPatchInstallationSummary lastPatchInstallationSummary = default(LastPatchInstallationSummary), IList<InstanceViewStatus> configurationStatuses = default(IList<InstanceViewStatus>))
+        public VirtualMachinePatchStatus(AvailablePatchSummary availablePatchSummary = default(AvailablePatchSummary), LastPatchInstallationSummary lastPatchInstallationSummary = default(LastPatchInstallationSummary))
         {
             AvailablePatchSummary = availablePatchSummary;
             LastPatchInstallationSummary = lastPatchInstallationSummary;
-            ConfigurationStatuses = configurationStatuses;
             CustomInit();
         }
 
@@ -64,12 +59,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "lastPatchInstallationSummary")]
         public LastPatchInstallationSummary LastPatchInstallationSummary { get; set; }
-
-        /// <summary>
-        /// Gets the enablement status of the specified patchMode
-        /// </summary>
-        [JsonProperty(PropertyName = "configurationStatuses")]
-        public IList<InstanceViewStatus> ConfigurationStatuses { get; private set; }
 
     }
 }
