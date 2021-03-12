@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "5462621f-c2cf-4c92-ad7c-32176e249156"
+          "2403f025-36bf-4586-9bfa-a903d30f67c3"
         ],
         "Accept-Language": [
           "en-US"
@@ -27,16 +27,16 @@
           "no-cache"
         ],
         "Location": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/providers/microsoft.extendedlocation/locations/eastus/operationresults/135bae12-72c4-4994-abf3-ec4484a28864?api-version=2020-07-15-privatepreview"
+          "https://api-dogfood.resources.windows-int.net/subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/providers/microsoft.extendedlocation/locations/eastus/operationresults/7e6bf809-ed86-4cd8-971c-64a1fbace747?api-version=2020-07-15-privatepreview"
         ],
         "x-ms-ratelimit-remaining-subscription-deletes": [
           "14999"
         ],
         "Azure-Asyncoperation": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/providers/microsoft.extendedlocation/locations/eastus/operationsstatus/135bae12-72c4-4994-abf3-ec4484a28864?api-version=2020-07-15-privatepreview"
+          "https://api-dogfood.resources.windows-int.net/subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/providers/microsoft.extendedlocation/locations/eastus/operationsstatus/7e6bf809-ed86-4cd8-971c-64a1fbace747?api-version=2020-07-15-privatepreview"
         ],
         "X-Ms-Request-Id": [
-          "135bae12-72c4-4994-abf3-ec4484a28864"
+          "7e6bf809-ed86-4cd8-971c-64a1fbace747"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -45,16 +45,16 @@
           "nginx"
         ],
         "x-ms-correlation-request-id": [
-          "a73d3455-f0c4-4b48-be40-3b43cab2da80"
+          "cff2897b-8fbf-46dc-bfc1-370800a58c87"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20210312T010640Z:a73d3455-f0c4-4b48-be40-3b43cab2da80"
+          "CENTRALUS:20210312T030821Z:cff2897b-8fbf-46dc-bfc1-370800a58c87"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 12 Mar 2021 01:06:40 GMT"
+          "Fri, 12 Mar 2021 03:08:21 GMT"
         ],
         "Content-Type": [
           "application/json"
@@ -70,8 +70,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/providers/microsoft.extendedlocation/locations/eastus/operationsstatus/135bae12-72c4-4994-abf3-ec4484a28864?api-version=2020-07-15-privatepreview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTUwMTVlMWMtODY3Zi00NTMzLTg1NDEtODVjZDQ3MGQwY2ZiL3Byb3ZpZGVycy9taWNyb3NvZnQuZXh0ZW5kZWRsb2NhdGlvbi9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvbnNzdGF0dXMvMTM1YmFlMTItNzJjNC00OTk0LWFiZjMtZWM0NDg0YTI4ODY0P2FwaS12ZXJzaW9uPTIwMjAtMDctMTUtcHJpdmF0ZXByZXZpZXc=",
+      "RequestUri": "/subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/providers/microsoft.extendedlocation/locations/eastus/operationsstatus/7e6bf809-ed86-4cd8-971c-64a1fbace747?api-version=2020-07-15-privatepreview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTUwMTVlMWMtODY3Zi00NTMzLTg1NDEtODVjZDQ3MGQwY2ZiL3Byb3ZpZGVycy9taWNyb3NvZnQuZXh0ZW5kZWRsb2NhdGlvbi9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvbnNzdGF0dXMvN2U2YmY4MDktZWQ4Ni00Y2Q4LTk3MWMtNjRhMWZiYWNlNzQ3P2FwaS12ZXJzaW9uPTIwMjAtMDctMTUtcHJpdmF0ZXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -90,10 +90,10 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14982"
+          "14997"
         ],
         "X-Ms-Request-Id": [
-          "135bae12-72c4-4994-abf3-ec4484a28864"
+          "7e6bf809-ed86-4cd8-971c-64a1fbace747"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -105,13 +105,13 @@
           "nginx"
         ],
         "x-ms-correlation-request-id": [
-          "c857d5ac-95fc-4d5c-a682-30d8d239e792"
+          "c16a93da-ae06-48c5-832c-eb12c8f3fdfd"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20210312T010711Z:c857d5ac-95fc-4d5c-a682-30d8d239e792"
+          "CENTRALUS:20210312T030851Z:c16a93da-ae06-48c5-832c-eb12c8f3fdfd"
         ],
         "Date": [
-          "Fri, 12 Mar 2021 01:07:11 GMT"
+          "Fri, 12 Mar 2021 03:08:50 GMT"
         ],
         "Content-Length": [
           "323"
@@ -123,12 +123,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/providers/Microsoft.ExtendedLocation/locations/eastus/operationsstatus/135bae12-72c4-4994-abf3-ec4484a28864\",\r\n  \"name\": \"135bae12-72c4-4994-abf3-ec4484a28864\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2021-03-12T01:06:40.513770038Z\",\r\n  \"endTime\": \"2021-03-12T01:06:52.083076469Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/providers/Microsoft.ExtendedLocation/locations/eastus/operationsstatus/7e6bf809-ed86-4cd8-971c-64a1fbace747\",\r\n  \"name\": \"7e6bf809-ed86-4cd8-971c-64a1fbace747\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2021-03-12T03:08:21.111381306Z\",\r\n  \"endTime\": \"2021-03-12T03:08:33.395987837Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/providers/microsoft.extendedlocation/locations/eastus/operationresults/135bae12-72c4-4994-abf3-ec4484a28864?api-version=2020-07-15-privatepreview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTUwMTVlMWMtODY3Zi00NTMzLTg1NDEtODVjZDQ3MGQwY2ZiL3Byb3ZpZGVycy9taWNyb3NvZnQuZXh0ZW5kZWRsb2NhdGlvbi9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvbnJlc3VsdHMvMTM1YmFlMTItNzJjNC00OTk0LWFiZjMtZWM0NDg0YTI4ODY0P2FwaS12ZXJzaW9uPTIwMjAtMDctMTUtcHJpdmF0ZXByZXZpZXc=",
+      "RequestUri": "/subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/providers/microsoft.extendedlocation/locations/eastus/operationresults/7e6bf809-ed86-4cd8-971c-64a1fbace747?api-version=2020-07-15-privatepreview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTUwMTVlMWMtODY3Zi00NTMzLTg1NDEtODVjZDQ3MGQwY2ZiL3Byb3ZpZGVycy9taWNyb3NvZnQuZXh0ZW5kZWRsb2NhdGlvbi9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvbnJlc3VsdHMvN2U2YmY4MDktZWQ4Ni00Y2Q4LTk3MWMtNjRhMWZiYWNlNzQ3P2FwaS12ZXJzaW9uPTIwMjAtMDctMTUtcHJpdmF0ZXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -147,13 +147,13 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14981"
+          "14996"
         ],
         "Azure-Asyncoperation": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/providers/microsoft.extendedlocation/locations/eastus/operationsstatus/135bae12-72c4-4994-abf3-ec4484a28864?api-version=2020-07-15-privatepreview"
+          "https://api-dogfood.resources.windows-int.net/subscriptions/a5015e1c-867f-4533-8541-85cd470d0cfb/providers/microsoft.extendedlocation/locations/eastus/operationsstatus/7e6bf809-ed86-4cd8-971c-64a1fbace747?api-version=2020-07-15-privatepreview"
         ],
         "X-Ms-Request-Id": [
-          "135bae12-72c4-4994-abf3-ec4484a28864"
+          "7e6bf809-ed86-4cd8-971c-64a1fbace747"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -165,13 +165,13 @@
           "nginx"
         ],
         "x-ms-correlation-request-id": [
-          "8d268a97-afc0-4140-9fb0-09848e22ed42"
+          "dbcd6742-3cb4-4b31-a897-6f426ad87b2c"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20210312T010712Z:8d268a97-afc0-4140-9fb0-09848e22ed42"
+          "CENTRALUS:20210312T030851Z:dbcd6742-3cb4-4b31-a897-6f426ad87b2c"
         ],
         "Date": [
-          "Fri, 12 Mar 2021 01:07:11 GMT"
+          "Fri, 12 Mar 2021 03:08:51 GMT"
         ],
         "Content-Type": [
           "application/json"
@@ -190,7 +190,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "ded3a4a4-b4f1-4985-8c07-7bf3ada26d40"
+          "0b0651f9-71d3-49fe-911f-1681e59eda99"
         ],
         "Accept-Language": [
           "en-US"
@@ -213,13 +213,13 @@
           "gateway"
         ],
         "x-ms-request-id": [
-          "2279fb44-847e-4b6b-9c2b-e606c649a990"
+          "c20c523a-45ff-4c9f-bca0-fd52e571484d"
         ],
         "x-ms-correlation-request-id": [
-          "2279fb44-847e-4b6b-9c2b-e606c649a990"
+          "c20c523a-45ff-4c9f-bca0-fd52e571484d"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20210312T010712Z:2279fb44-847e-4b6b-9c2b-e606c649a990"
+          "CENTRALUS:20210312T030851Z:c20c523a-45ff-4c9f-bca0-fd52e571484d"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -228,7 +228,7 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 12 Mar 2021 01:07:11 GMT"
+          "Fri, 12 Mar 2021 03:08:51 GMT"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"

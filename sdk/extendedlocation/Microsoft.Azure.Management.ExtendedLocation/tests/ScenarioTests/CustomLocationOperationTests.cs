@@ -16,26 +16,26 @@ namespace ExtendedLocation.Tests.ScenarioTests
         {
             using (var context = MockContext.Start(this.GetType()))
             {
-                using (var testFixture = new CustomLocationsOperationsTestBase(context))
+                using (var customLocationTestBase = new CustomLocationsOperationsTestBase(context))
                 {
                     // CREATE CL
-                    Microsoft.Azure.Management.ExtendedLocation.Models.CustomLocation customLocation = testFixture.CreateCustomLocations();
+                    Microsoft.Azure.Management.ExtendedLocation.Models.CustomLocation customLocation = customLocationTestBase.CreateCustomLocations();
                     Assert.True(customLocation.DisplayName == CustomLocationTestData.ResourceName);
                     Assert.True(customLocation.ProvisioningState == "Succeeded");
 
                     // GET ON CREATED CL
                     Console.WriteLine("\n");
-                    customLocation = testFixture.GetCustomLocation();
+                    customLocation = customLocationTestBase.GetCustomLocation();
                     Assert.True(customLocation.DisplayName == CustomLocationTestData.ResourceName);
 
                     // PATCH CL
                     Console.WriteLine("\n");
-                    customLocation = testFixture.PatchCustomLocation();
+                    customLocation = customLocationTestBase.PatchCustomLocation();
                     Assert.True(customLocation.ProvisioningState == "Patching");
 
                     // GET ON UPDATED CL
                     Console.WriteLine("\n");
-                    customLocation = testFixture.GetCustomLocation();
+                    customLocation = customLocationTestBase.GetCustomLocation();
                     List<string> clusterextids = new List<string>(new string[] { CustomLocationTestData.CassandraTest , CustomLocationTestData.AnsibleTest });
                     Assert.True(customLocation.DisplayName == CustomLocationTestData.ResourceName);
                     if (customLocation.ClusterExtensionIds[0] == CustomLocationTestData.CassandraTest)
@@ -49,12 +49,12 @@ namespace ExtendedLocation.Tests.ScenarioTests
 
                     // LIST BY SUBSCRIPTION
                     Console.WriteLine("\n");
-                    var firstPage = testFixture.ListCustomLocationsBySubscription();
+                    var firstPage = customLocationTestBase.ListCustomLocationsBySubscription();
                     Assert.NotNull(firstPage);
 
                     // LIST BY RESOURCE GROUP
                     Console.WriteLine("\n");
-                    firstPage = testFixture.ListCustomLocationsByResourceGroup();
+                    firstPage = customLocationTestBase.ListCustomLocationsByResourceGroup();
                     Assert.NotNull(firstPage);
                 }
             }
@@ -65,17 +65,17 @@ namespace ExtendedLocation.Tests.ScenarioTests
         {
             using (var context = MockContext.Start(this.GetType()))
             {
-                using (var testFixture = new CustomLocationsOperationsTestBase(context))
+                using (var customLocationTestBase = new CustomLocationsOperationsTestBase(context))
                 {
                     // DELETE CREATED CL
-                    testFixture.DeleteCustomLocation();
+                    customLocationTestBase.DeleteCustomLocation();
                     Console.WriteLine("\n");
 
                     // TRY TO GET DELETED EXCEPTION - EXPECT ERROR NOT FOUND
                     try
                     {
                         Console.WriteLine("\n");
-                        Microsoft.Azure.Management.ExtendedLocation.Models.CustomLocation customlocation = testFixture.GetCustomLocation();
+                        Microsoft.Azure.Management.ExtendedLocation.Models.CustomLocation customlocation = customLocationTestBase.GetCustomLocation();
                     }
                     catch (Microsoft.Rest.RestException e)
                     {
