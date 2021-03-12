@@ -3,16 +3,15 @@
 
 using System;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using NUnit.Framework;
-using System.Linq;
+using System.Threading.Tasks;
 
 namespace Azure.Containers.ContainerRegistry.Tests.Samples
 {
     public class ContainerRegistryClientSamples: SamplesBase<ContainerRegistryTestEnvironment>
     {
         [Test]
-        public void GetRepositories()
+        public async Task GetRepositories()
         {
             var endpoint = TestEnvironment.Endpoint;
             var userName = TestEnvironment.UserName;
@@ -23,7 +22,10 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
 
             AsyncPageable<string> repositories = client.GetRepositoriesAsync();
 
-            Console.WriteLine(/* first repo name */);
+            await foreach (string repository in repositories)
+            {
+                Console.WriteLine(repository);
+            }
             #endregion
         }
     }
