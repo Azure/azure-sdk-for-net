@@ -23,6 +23,7 @@ namespace Azure.Core
     /// A mutable representation of a JSON value.
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
+    [DebuggerTypeProxy(typeof(JsonDataDebuggerProxy))]
     public class JsonData : IDynamicMetaObjectProvider, IEquatable<JsonData>
     {
         private readonly JsonValueKind _kind;
@@ -1140,10 +1141,7 @@ namespace Azure.Core
             return EnsureObject();
         }
 
-        private string DebuggerDisplay
-        {
-            get => $"{{Kind: {_kind}, JSON: {ToJsonString()}}}";
-        }
+        private string DebuggerDisplay => ToJsonString();
 
         private struct Number
         {
@@ -1246,6 +1244,61 @@ namespace Azure.Core
                 BindingRestrictions restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
                 DynamicMetaObject setProperty = new DynamicMetaObject(setPropertyCall, restrictions);
                 return setProperty;
+            }
+        }
+
+        internal class JsonDataDebuggerProxy
+        {
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+            private readonly JsonData _jsonData;
+
+            public JsonDataDebuggerProxy(JsonData jsonData)
+            {
+                _jsonData = jsonData;
+            }
+
+            [DebuggerDisplay("{Value.DebuggerDisplay,nq}", Name = "{Name,nq}")]
+            internal class PropertyMember
+            {
+                [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+                public string? Name { get; set; }
+                [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
+                public JsonData? Value { get; set; }
+            }
+
+            [DebuggerDisplay("{Value,nq}")]
+            internal class SingleMember
+            {
+                public object? Value { get; set; }
+            }
+
+            [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
+            public object Members {
+                get
+                {
+                    if (_jsonData.Kind != JsonValueKind.Array &&
+                        _jsonData.Kind != JsonValueKind.Object)
+                        return new SingleMember() { Value = _jsonData.ToJsonString() };
+
+                    return BuildMembers().ToArray();
+                }}
+
+            private IEnumerable<object> BuildMembers()
+            {
+                if (_jsonData.Kind == JsonValueKind.Object)
+                {
+                    foreach (var property in _jsonData.Properties)
+                    {
+                        yield return new PropertyMember() {Name = property, Value = _jsonData.Get(property)};
+                    }
+                }
+                else if (_jsonData.Kind == JsonValueKind.Array)
+                {
+                    foreach (var property in _jsonData.Items)
+                    {
+                        yield return  property;
+                    }
+                }
             }
         }
     }
