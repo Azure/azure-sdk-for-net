@@ -77,7 +77,7 @@ namespace Azure.Messaging.EventGrid
         public const string AcsChatThreadPropertiesUpdatedPerUser = "Microsoft.Communication.ChatThreadPropertiesUpdatedPerUser";
         public const string AcsChatThreadWithUserDeleted = "Microsoft.Communication.ChatThreadWithUserDeleted";
         public const string AcsSmsDeliveryReportReceived = "Microsoft.Communication.SMSDeliveryReportReceived";
-        public const string AcsSmsSReceived = "Microsoft.Communication.SMSReceived";
+        public const string AcsSmsReceived = "Microsoft.Communication.SMSReceived";
         public const string AppConfigurationKeyValueDeleted = "Microsoft.AppConfiguration.KeyValueDeleted";
         public const string AppConfigurationKeyValueModified = "Microsoft.AppConfiguration.KeyValueModified";
         public const string ContainerRegistryChartDeleted = "Microsoft.ContainerRegistry.ChartDeleted";
@@ -134,8 +134,8 @@ namespace Azure.Messaging.EventGrid
         public const string MediaLiveEventIncomingVideoStreamsOutOfSync = "Microsoft.Media.LiveEventIncomingVideoStreamsOutOfSync";
         public const string MediaLiveEventIngestHeartbeat = "Microsoft.Media.LiveEventIngestHeartbeat";
         public const string MediaLiveEventTrackDiscontinuityDetected = "Microsoft.Media.LiveEventTrackDiscontinuityDetected";
-        public const string RedisExportRDBCompleted = "Microsoft.Cache.ExportRDBCompleted";
-        public const string RedisImportRDBCompleted = "Microsoft.Cache.ImportRDBCompleted";
+        public const string RedisExportRdbCompleted = "Microsoft.Cache.ExportRDBCompleted";
+        public const string RedisImportRdbCompleted = "Microsoft.Cache.ImportRDBCompleted";
         public const string RedisPatchingCompleted = "Microsoft.Cache.PatchingCompleted";
         public const string RedisScalingCompleted = "Microsoft.Cache.ScalingCompleted";
         public const string ResourceActionCancel = "Microsoft.Resources.ResourceActionCancel";
@@ -1082,16 +1082,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         internal PhoneNumberIdentifierModel() { }
         public string Value { get { throw null; } }
     }
-    public partial class RedisExportRDBCompletedEventData
+    public partial class RedisExportRdbCompletedEventData
     {
-        internal RedisExportRDBCompletedEventData() { }
+        internal RedisExportRdbCompletedEventData() { }
         public string Name { get { throw null; } }
         public string Status { get { throw null; } }
         public System.DateTimeOffset? Timestamp { get { throw null; } }
     }
-    public partial class RedisImportRDBCompletedEventData
+    public partial class RedisImportRdbCompletedEventData
     {
-        internal RedisImportRDBCompletedEventData() { }
+        internal RedisImportRdbCompletedEventData() { }
         public string Name { get { throw null; } }
         public string Status { get { throw null; } }
         public System.DateTimeOffset? Timestamp { get { throw null; } }

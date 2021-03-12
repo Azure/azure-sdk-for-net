@@ -49,7 +49,7 @@ namespace Azure.Messaging.EventGrid
             { SystemEventNames.AcsChatThreadDeleted, AcsChatThreadDeletedEventData.DeserializeAcsChatThreadDeletedEventData },
             { SystemEventNames.AcsChatThreadWithUserDeleted, AcsChatThreadWithUserDeletedEventData.DeserializeAcsChatThreadWithUserDeletedEventData },
             { SystemEventNames.AcsSmsDeliveryReportReceived, AcsSmsDeliveryReportReceivedEventData.DeserializeAcsSmsDeliveryReportReceivedEventData },
-            { SystemEventNames.AcsSmsSReceived, AcsSmsReceivedEventData.DeserializeAcsSmsReceivedEventData },
+            { SystemEventNames.AcsSmsReceived, AcsSmsReceivedEventData.DeserializeAcsSmsReceivedEventData },
 
             // ContainerRegistry events
             { SystemEventNames.ContainerRegistryImagePushed, ContainerRegistryImagePushedEventData.DeserializeContainerRegistryImagePushedEventData },
@@ -133,8 +133,8 @@ namespace Azure.Messaging.EventGrid
             { SystemEventNames.ResourceActionCancel, ResourceActionCancelEventData.DeserializeResourceActionCancelEventData },
 
             // Redis
-            { SystemEventNames.RedisExportRDBCompleted, RedisExportRDBCompletedEventData.DeserializeRedisExportRDBCompletedEventData },
-            { SystemEventNames.RedisImportRDBCompleted, RedisImportRDBCompletedEventData.DeserializeRedisImportRDBCompletedEventData },
+            { SystemEventNames.RedisExportRdbCompleted, RedisExportRdbCompletedEventData.DeserializeRedisExportRdbCompletedEventData },
+            { SystemEventNames.RedisImportRdbCompleted, RedisImportRdbCompletedEventData.DeserializeRedisImportRdbCompletedEventData },
             { SystemEventNames.RedisPatchingCompleted, RedisPatchingCompletedEventData.DeserializeRedisPatchingCompletedEventData },
             { SystemEventNames.RedisScalingCompleted, RedisScalingCompletedEventData.DeserializeRedisScalingCompletedEventData },
 

@@ -134,7 +134,7 @@ namespace Azure.Messaging.EventGrid
         /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
         /// <see cref="AcsSmsReceivedEventData"/> system event.
         /// </summary>
-        public const string AcsSmsSReceived = "Microsoft.Communication.SMSReceived";
+        public const string AcsSmsReceived = "Microsoft.Communication.SMSReceived";
         #endregion
 
         #region ContainerRegistry events
@@ -688,15 +688,15 @@ namespace Azure.Messaging.EventGrid
         #region Redis
         /// <summary>
         /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
-        /// <see cref="RedisExportRDBCompletedEventData"/> system event.
+        /// <see cref="RedisExportRdbCompletedEventData"/> system event.
         /// </summary>
-        public const string RedisExportRDBCompleted = "Microsoft.Cache.ExportRDBCompleted";
+        public const string RedisExportRdbCompleted = "Microsoft.Cache.ExportRDBCompleted";
 
         /// <summary>
         /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
-        /// <see cref="RedisImportRDBCompletedEventData"/> system event.
+        /// <see cref="RedisImportRdbCompletedEventData"/> system event.
         /// </summary>
-        public const string RedisImportRDBCompleted = "Microsoft.Cache.ImportRDBCompleted";
+        public const string RedisImportRdbCompleted = "Microsoft.Cache.ImportRDBCompleted";
 
         /// <summary>
         /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the

@@ -9,19 +9,19 @@ using System;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.Cache.ExportRDBCompleted event. </summary>
-    public partial class RedisExportRDBCompletedEventData
+    /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.Cache.ImportRDBCompleted event. </summary>
+    public partial class RedisImportRdbCompletedEventData
     {
-        /// <summary> Initializes a new instance of RedisExportRDBCompletedEventData. </summary>
-        internal RedisExportRDBCompletedEventData()
+        /// <summary> Initializes a new instance of RedisImportRdbCompletedEventData. </summary>
+        internal RedisImportRdbCompletedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of RedisExportRDBCompletedEventData. </summary>
+        /// <summary> Initializes a new instance of RedisImportRdbCompletedEventData. </summary>
         /// <param name="timestamp"> The time at which the event occurred. </param>
         /// <param name="name"> The name of this event. </param>
         /// <param name="status"> The status of this event. Failed or  succeeded. </param>
-        internal RedisExportRDBCompletedEventData(DateTimeOffset? timestamp, string name, string status)
+        internal RedisImportRdbCompletedEventData(DateTimeOffset? timestamp, string name, string status)
         {
             Timestamp = timestamp;
             Name = name;
