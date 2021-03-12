@@ -391,10 +391,10 @@ namespace Azure.Communication.Chat
             {
                 return await _chatThreadRestClient.AddChatParticipantsAsync(Id, new[] { participant.ToChatParticipantInternal() }, cancellationToken).ConfigureAwait(false);
             }
-            catch (Exception ex)
+            catch (RequestFailedException requestFailedException)
             {
-                scope.Failed(ex);
-                throw;
+                scope.Failed(requestFailedException);
+                throw requestFailedException;
             }
         }
 
@@ -410,10 +410,10 @@ namespace Azure.Communication.Chat
             {
                 return _chatThreadRestClient.AddChatParticipants(Id, new[] { participant.ToChatParticipantInternal() }, cancellationToken);
             }
-            catch (Exception ex)
+            catch (RequestFailedException requestFailedException)
             {
-                scope.Failed(ex);
-                throw;
+                scope.Failed(requestFailedException);
+                throw requestFailedException;
             }
         }
 
