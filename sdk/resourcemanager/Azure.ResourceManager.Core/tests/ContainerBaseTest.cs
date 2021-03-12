@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Core.Tests
         [OneTimeSetUp]
         public void GlobalSetUp()
         {
-            _container = new AzureResourceManagerClient().DefaultSubscription.GetResourceGroupContainer();
+            _container = new AzureResourceManagerClient(new DefaultAzureCredential()).DefaultSubscription.GetResourceGroupContainer();
             _resourceGroup = _container.Construct(LocationData.WestUS2).CreateOrUpdate(_rgName);
         }
 
