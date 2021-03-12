@@ -35,9 +35,7 @@ namespace Azure.Containers.ContainerRegistry
             return ProcessAsync(message, pipeline, true);
         }
 
-#pragma warning disable CA1822 // Mark members as static
         private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
-#pragma warning restore CA1822 // Mark members as static
         {
             var valueBytes = Encoding.UTF8.GetBytes($"{_userName}:{_password}");
             message.Request.Headers.SetValue(HttpHeader.Names.Authorization, $"Basic {Convert.ToBase64String(valueBytes)}");

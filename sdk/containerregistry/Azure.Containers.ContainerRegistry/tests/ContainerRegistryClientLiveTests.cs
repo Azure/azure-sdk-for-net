@@ -28,6 +28,8 @@ namespace Azure.Containers.ContainerRegistry.Tests
         [RecordedTest]
         public async Task CanGetRepositories()
         {
+            throw new Exception($"Endpoint value is {TestEnvironment.Endpoint}");
+
             var client = CreateClient();
 
             AsyncPageable<string> repositories = client.GetRepositoriesAsync();

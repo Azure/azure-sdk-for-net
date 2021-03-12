@@ -30,14 +30,13 @@
         }
     },
     "variables": {
-        "baseName": "[parameters('baseName')]",
         "apiVersion": "2019-05-01",
         "endpointValue": "[format('https://{0}.azurecr.io', parameters('baseName'))]"
     },
     "resources": [
         {
             "type": "Microsoft.ContainerRegistry/registries",
-            "apiVersion": "2019-05-01",
+            "apiVersion": "[variables('apiVersion')]",
             "name": "[parameters('baseName')]",
             "location": "[parameters('location')]",
             "properties": {        
@@ -53,7 +52,7 @@
     "outputs": {
         "CONTAINERREGISTRY_REGISTRY_NAME": {
             "type": "string",
-            "value": "[variables('baseName')]"
+            "value": "[parameters('baseName')]"
         },
         "CONTAINERREGISTRY_ENDPOINT": {
             "type": "string",
@@ -61,11 +60,11 @@
         },
         "CONTAINERREGISTRY_USERNAME": {
             "type": "string",
-            "value": "[listCredentials(resourceId('Microsoft.ContainerRegistry/registries', variables('baseName')), variables('apiVersion')).username]"
+            "value": "[listCredentials(parameters('baseName'), variables('apiVersion')).username]"
         },
         "CONTAINERREGISTRY_PASSWORD": {
             "type": "string",
-            "value": "[listCredentials(resourceId('Microsoft.ContainerRegistry/registries', variables('baseName')), variables('apiVersion')).passwords[0].value]"
+            "value": "[listCredentials(parameters('baseName'), variables('apiVersion')).passwords[0].value]"
         }
     }
 }
