@@ -99,6 +99,15 @@ namespace ExtendedLocation.Tests.ScenarioTests
         }
 
         /// <summary>
+        /// List CustomLocations Resources under resource group passing nextLink to move Page
+        /// </summary>
+        /// <returns></returns>
+        public IPage<CustomLocation> ListCustomLocationsByResourceGroupNext(string nextLink)
+        {
+            return CustomLocationsClient.CustomLocations.ListByResourceGroupNext(nextLink);
+        }
+
+        /// <summary>
         /// List CustomLocations Resources under subscription
         /// </summary>
         /// <returns></returns>
@@ -106,6 +115,15 @@ namespace ExtendedLocation.Tests.ScenarioTests
         {
             Console.WriteLine("Listing CustomLocations by Subscription...");
             return CustomLocationsClient.CustomLocations.ListBySubscription();
+        }
+
+        /// <summary>
+        /// List CustomLocations Resources under subscription passing nextLink to move Page
+        /// </summary>
+        /// <returns></returns>
+        public IPage<CustomLocation> ListCustomLocationsBySubscriptionNext(string nextLink)
+        {
+            return CustomLocationsClient.CustomLocations.ListBySubscriptionNext(nextLink);
         }
 
         #region Common Methods

@@ -8,11 +8,33 @@ namespace ExtendedLocation.Tests.ScenarioTests
     using System.Collections.Generic;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Xunit;
+    using Microsoft.Rest.Azure;
     using Microsoft.Azure.Management.ExtendedLocation.Models;
+    
     public class CustomLocationOperationTests
     {
+        public bool PageListResult(Microsoft.Azure.Management.ExtendedLocation.Models.Page<CustomLocation> start, Func<string, IPage<CustomLocation>> getNext)
+        {
+            var page = start;
+            bool foundCL = false;
+            for (;;)
+            {
+                foreach (var currCL in page)
+                {
+                    // check for created CL in List  
+                    if (currCL.Name == CustomLocationTestData.ResourceName) {Console.WriteLine("CL: "+currCL.Name);foundCL = true; break;}
+                }   
+                if (string.IsNullOrEmpty(page.NextPageLink))
+                {
+                    break;
+                }
+                page = (Microsoft.Azure.Management.ExtendedLocation.Models.Page<CustomLocation>)getNext(page.NextPageLink);
+            }
+            return foundCL;   
+        }
+
         [Fact]
-        public void CreateCustomLocation()
+        public void TestOperationsCustomLocation()
         {
             using (var context = MockContext.Start(this.GetType()))
             {
@@ -49,38 +71,26 @@ namespace ExtendedLocation.Tests.ScenarioTests
 
                     // LIST BY SUBSCRIPTION
                     Console.WriteLine("\n");
-                    var firstPage = customLocationTestBase.ListCustomLocationsBySubscription();
-                    Assert.NotNull(firstPage);
+                    Microsoft.Azure.Management.ExtendedLocation.Models.Page<CustomLocation> page = (Microsoft.Azure.Management.ExtendedLocation.Models.Page<CustomLocation>)customLocationTestBase.ListCustomLocationsBySubscription();
+                    bool foundCL;
+                    foundCL = PageListResult(page, customLocationTestBase.ListCustomLocationsBySubscriptionNext);
+                    Assert.True(foundCL);
 
                     // LIST BY RESOURCE GROUP
                     Console.WriteLine("\n");
-                    firstPage = customLocationTestBase.ListCustomLocationsByResourceGroup();
-                    Assert.NotNull(firstPage);
-                }
-            }
-        }
+                    page = (Microsoft.Azure.Management.ExtendedLocation.Models.Page<CustomLocation>)customLocationTestBase.ListCustomLocationsByResourceGroup();
+                    foundCL = PageListResult(page, customLocationTestBase.ListCustomLocationsByResourceGroupNext);
+                    Assert.True(foundCL);
 
-        [Fact]
-        public void DeleteCustomLocation()
-        {
-            using (var context = MockContext.Start(this.GetType()))
-            {
-                using (var customLocationTestBase = new CustomLocationsOperationsTestBase(context))
-                {
                     // DELETE CREATED CL
+                    Console.WriteLine("\n");
                     customLocationTestBase.DeleteCustomLocation();
                     Console.WriteLine("\n");
 
-                    // TRY TO GET DELETED EXCEPTION - EXPECT ERROR NOT FOUND
-                    try
-                    {
-                        Console.WriteLine("\n");
-                        Microsoft.Azure.Management.ExtendedLocation.Models.CustomLocation customlocation = customLocationTestBase.GetCustomLocation();
-                    }
-                    catch (Microsoft.Rest.RestException e)
-                    {
-                        Console.WriteLine("Expected Exception " + e.ToString());
-                    }
+                    // LIST OPERATION SHOULD NOT FIND CL
+                    page = (Microsoft.Azure.Management.ExtendedLocation.Models.Page<CustomLocation>)customLocationTestBase.ListCustomLocationsByResourceGroup();
+                    foundCL = PageListResult(page, customLocationTestBase.ListCustomLocationsByResourceGroupNext);
+                    Assert.False(foundCL);
                 }
             }
         }
