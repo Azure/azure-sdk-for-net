@@ -164,6 +164,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             Assert.True(logMessages.Where(x => !string.IsNullOrEmpty(x.FormattedMessage)
                 && x.FormattedMessage.Contains("Sending events to EventHub")).Count() > 0);
+
+            AssertAzureSdkLogs(logMessages);
         }
 
         [Test]
@@ -265,6 +267,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             Assert.True(logMessages.Where(x => !string.IsNullOrEmpty(x.FormattedMessage)
                 && x.FormattedMessage.Contains("Sending events to EventHub")).Count() > 0);
+
+            AssertAzureSdkLogs(logMessages);
         }
 
         [Test]
@@ -385,6 +389,12 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 bool result = _eventWait.WaitOne(Timeout);
                 Assert.True(result);
             }
+        }
+
+
+        private static void AssertAzureSdkLogs(IEnumerable<LogMessage> logMessages)
+        {
+            Assert.True(logMessages.Any(x => x.Category.StartsWith("Azure.")));
         }
 
         public class EventHubTestSingleDispatchJobs
