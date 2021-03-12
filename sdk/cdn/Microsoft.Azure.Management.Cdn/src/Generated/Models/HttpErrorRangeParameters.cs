@@ -66,21 +66,27 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Begin > 999)
+            if (Begin != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "Begin", 999);
+                if (Begin > 999)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "Begin", 999);
+                }
+                if (Begin < 100)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "Begin", 100);
+                }
             }
-            if (Begin < 100)
+            if (End != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "Begin", 100);
-            }
-            if (End > 999)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "End", 999);
-            }
-            if (End < 100)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "End", 100);
+                if (End > 999)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "End", 999);
+                }
+                if (End < 100)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "End", 100);
+                }
             }
         }
     }
