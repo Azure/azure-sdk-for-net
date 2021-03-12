@@ -2,34 +2,34 @@
 // Licensed under the MIT License.
 using System;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Core.Resources;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Core.Tests
 {
-    public class ContainerBaseTest
+    public class ContainerTryGetTest : ResourceManagerTestBase
     {
+        private AzureResourceManagerClient _client;
         private ResourceGroupContainer _container;
         private ResourceGroup _resourceGroup;
         private readonly string _rgName = $"{Environment.UserName}-rg-{Environment.TickCount}";
 
-        [OneTimeSetUp]
-        public void GlobalSetUp()
+        public ContainerTryGetTest(bool isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
-            _container = new AzureResourceManagerClient(new DefaultAzureCredential()).DefaultSubscription.GetResourceGroupContainer();
+        }
+
+        [SetUp]
+        public void SetUp()
+        {
+            _client = GetArmClient();
+            _container = _client.DefaultSubscription.GetResourceGroupContainer();
             _resourceGroup = _container.Construct(LocationData.WestUS2).CreateOrUpdate(_rgName);
         }
 
-        [OneTimeTearDown]
-        public void GlobalTearDown()
-        {
-            _resourceGroup.StartDelete();
-        }
-
         [TestCase]
+        [RecordedTest]
         public void TryGetTest() 
         {
             ResourceGroup result = _container.TryGet(_rgName);
@@ -40,6 +40,7 @@ namespace Azure.ResourceManager.Core.Tests
         }
 
         [TestCase]
+        [RecordedTest]
         public async Task TryGetAsyncTest()
         {
             ResourceGroup result = await _container.TryGetAsync(_rgName);
