@@ -42,7 +42,7 @@ public virtual async Task<Response<TimeSeriesTypeOperationResult[]>> GetTimeSeri
 /// <summary>
 /// Gets time series insight types by Time Series Types Names asynchronously.
 /// </summary>
-/// <param name="timeSeriesTypeNames">List of names of the Time Series Types Names to return.</param>
+/// <param name="timeSeriesTypeNames">List of names of the Time Series Types to return.</param>
 /// <param name="cancellationToken">The cancellation token.</param>
 /// <returns>List of types or error objects corresponding by position to the array in the request. Type object is set when operation is successful and error object is set when operation is unsuccessful.
 public virtual async Task<Response<TimeSeriesTypeOperationResult[]>> GetTimeSeriesTypesAsync(
@@ -89,7 +89,7 @@ public virtual async Task<Response<TimeSeriesTypeOperationResult[]>> DeleteTimeS
 /// <summary>
 /// Deletes Time Series instances types by Time Series Types Names asynchronously.
 /// </summary>
-/// <param name="timeSeriesTypeNames">List of names of the Time Series Types Names to return.</param>
+/// <param name="timeSeriesTypeNames">List of names of the Time Series Types to return.</param>
 /// <param name="cancellationToken">The cancellation token.</param>
 /// <returns>
 /// List of error objects corresponding by position to the <paramref name="timeSeriesNames"/> array in the request.

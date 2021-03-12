@@ -13,7 +13,7 @@ namespace Azure.Iot.TimeSeriesInsights
     public partial class TimeSeriesTypeOperationResult
     {
         // This class declaration changes the class name; do not remove.
-        // The class name change is to make it clearer to the user that this type represents
-        // an instances operation result.
+        // The class name change is to make it clearer to the user that it represents
+        // a type operation result.
     }
 }

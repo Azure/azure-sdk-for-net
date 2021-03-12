@@ -1178,10 +1178,10 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <summary>
         /// Gets Time Series types by Time Series Types Names asynchronously.
         /// </summary>
-        /// <param name="timeSeriesTypeNames">List of names of the Time Series Types Names to return.</param>
+        /// <param name="timeSeriesTypeNames">List of names of the Time Series Types to return.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
-        /// List of instance or error objects corresponding by position to the array in the request.
+        /// List of type or error objects corresponding by position to the array in the request.
         /// Type object is set when operation is successful and error object is set when operation is unsuccessful.
         /// </returns>
         /// <remarks>
@@ -1230,10 +1230,10 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <summary>
         /// Gets Time Series types by Time Series Types Names synchronously.
         /// </summary>
-        /// <param name="timeSeriesTypeNames">List of names of the Time Series Types Names to return.</param>
+        /// <param name="timeSeriesTypeNames">List of names of the Time Series Types to return.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
-        /// List of instance or error objects corresponding by position to the array in the request.
+        /// List of type or error objects corresponding by position to the array in the request.
         /// Type object is set when operation is successful and error object is set when operation is unsuccessful.
         /// </returns>
         /// <seealso cref="GetTimeSeriesTypesAsyncbyNames(IEnumerable{string}, CancellationToken)">
@@ -1284,7 +1284,7 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <param name="timeSeriesTypeIds">List of Time Series Type Ids of the Time Series Types to return.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
-        /// List of instance or error objects corresponding by position to the array in the request.
+        /// List of type or error objects corresponding by position to the array in the request.
         /// Type object is set when operation is successful and error object is set when operation is unsuccessful.
         /// </returns>
         /// <remarks>
@@ -1336,7 +1336,7 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <param name="timeSeriesTypeIds">List of Time Series Type Ids of the Time Series Types to return..</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
-        /// List of instance or error objects corresponding by position to the array in the request.
+        /// List of type or error objects corresponding by position to the array in the request.
         /// Type object is set when operation is successful and error object is set when operation is unsuccessful.
         /// </returns>
         /// <seealso cref="GetTimeSeriesTypesbyIdAsync(IEnumerable{string}, CancellationToken)">
