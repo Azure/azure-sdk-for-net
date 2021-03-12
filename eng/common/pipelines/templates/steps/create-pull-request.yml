@@ -20,6 +20,7 @@ parameters:
   PRLabels: ''
   SkipCheckingForChanges: false
   CloseAfterOpenForTesting: false
+  DraftPr: false
 
 steps:
 
@@ -87,3 +88,4 @@ steps:
       -TeamReviewers "${{ parameters.GHTeamReviewersVariable }}"
       -Assignees "${{ parameters.GHAssignessVariable }}"
       -CloseAfterOpenForTesting $${{ coalesce(parameters.CloseAfterOpenForTesting, 'false') }}
+      -Draft $${{ coalesce(parameters.DraftPr, 'false') }}
