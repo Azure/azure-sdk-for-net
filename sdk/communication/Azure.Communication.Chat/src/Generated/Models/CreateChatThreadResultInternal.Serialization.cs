@@ -16,7 +16,7 @@ namespace Azure.Communication.Chat
         internal static CreateChatThreadResultInternal DeserializeCreateChatThreadResultInternal(JsonElement element)
         {
             Optional<ChatThreadPropertiesInternal> chatThread = default;
-            Optional<IReadOnlyList<CommunicationError>> invalidParticipants = default;
+            Optional<IReadOnlyList<ChatError>> invalidParticipants = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("chatThread"))
@@ -36,10 +36,10 @@ namespace Azure.Communication.Chat
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<CommunicationError> array = new List<CommunicationError>();
+                    List<ChatError> array = new List<ChatError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CommunicationError.DeserializeCommunicationError(item));
+                        array.Add(ChatError.DeserializeChatError(item));
                     }
                     invalidParticipants = array;
                     continue;

@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
-    internal partial class SendChatMessageResult
+    internal partial class SendChatMessageResultInternal
     {
-        internal static SendChatMessageResult DeserializeSendChatMessageResult(JsonElement element)
+        internal static SendChatMessageResultInternal DeserializeSendChatMessageResultInternal(JsonElement element)
         {
             string id = default;
             foreach (var property in element.EnumerateObject())
@@ -23,7 +23,7 @@ namespace Azure.Communication.Chat
                     continue;
                 }
             }
-            return new SendChatMessageResult(id);
+            return new SendChatMessageResultInternal(id);
         }
     }
 }

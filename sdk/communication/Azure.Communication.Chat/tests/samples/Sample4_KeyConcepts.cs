@@ -46,7 +46,7 @@ namespace Azure.Communication.Chat.Tests.samples
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_GetChatThread_KeyConcepts
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_GetChatThreadsInfo_KeyConcepts
-            Pageable<ChatThreadItem> threads = chatClient.GetChatThreadsItem();
+            Pageable<ChatThreadItem> threads = chatClient.GetChatThreads();
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_GetChatThreadsInfo_KeyConcepts
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_DeleteThread_KeyConcepts
@@ -70,7 +70,7 @@ namespace Azure.Communication.Chat.Tests.samples
             ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient(createChatThreadResult.ChatThreadProperties.Id);
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_SendMessage_KeyConcepts
-            string messageId = chatThreadClient.SendMessage("Let's meet at 11am");
+            string messageId = chatThreadClient.SendMessage("Let's meet at 11am").Value.Id;
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_SendMessage_KeyConcepts
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_GetMessage_KeyConcepts

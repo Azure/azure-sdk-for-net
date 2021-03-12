@@ -40,14 +40,14 @@ namespace Azure.Communication.Chat.Tests.samples
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_CreateThread
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_GetThread
-            ChatThreadProperties chatThread = await chatClient.GetChatThreadPropertiesAsync(threadId);
+            ChatThreadProperties chatThread = await chatThreadClient.GetPropertiesAsync();
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_GetThread
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_GetThreads
-            AsyncPageable<ChatThreadItem> chatThreadsInfo = chatClient.GetChatThreadsItemAsync();
-            await foreach (ChatThreadItem chatThreadInfo in chatThreadsInfo)
+            AsyncPageable<ChatThreadItem> chatThreadsInfo = chatClient.GetChatThreadsAsync();
+            await foreach (ChatThreadItem chatThreadItem in chatThreadsInfo)
             {
-                Console.WriteLine($"{ chatThreadInfo.Id}");
+                Console.WriteLine($"{ chatThreadItem.Id}");
             }
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_GetThreads
 

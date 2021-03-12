@@ -78,7 +78,7 @@ ChatThread chatThread = chatClient.GetChatThread(chatThread.Id);
 ```
 ### Get all threads for the user
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_GetChatThreadsInfo_KeyConcepts
-Pageable<ChatThreadItem> threads = chatClient.GetChatThreadsItem();
+Pageable<ChatThreadItem> threads = chatClient.GetChatThreads();
 ```
 ### Delete a thread
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_DeleteThread_KeyConcepts
@@ -94,7 +94,7 @@ chatThreadClient.UpdateTopic(topic: "Launch meeting");
 
 ### Send a message
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_SendMessage_KeyConcepts
-string messageId = chatThreadClient.SendMessage("Let's meet at 11am");
+string messageId = chatThreadClient.SendMessage("Let's meet at 11am").Value.Id;
 ```
 ### Update a message
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_UpdateMessage_KeyConcepts
@@ -193,7 +193,7 @@ Use `GetChatThread` to retrieve a chat thread from the service.
 `threadId` is the unique id of the thread.
 
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_GetThread
-ChatThreadProperties chatThread = await chatClient.GetChatThreadPropertiesAsync(threadId);
+ChatThreadProperties chatThread = await chatThreadClient.GetPropertiesAsync();
 ```
 
 ### Get threads (for a participant)
@@ -201,10 +201,10 @@ ChatThreadProperties chatThread = await chatClient.GetChatThreadPropertiesAsync(
 Use `GetChatThreadsInfo` to get the list of chat threads for the participant that instantiated the chatClient.
 
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_GetThreads
-AsyncPageable<ChatThreadItem> chatThreadsInfo = chatClient.GetChatThreadsItemAsync();
-await foreach (ChatThreadItem chatThreadInfo in chatThreadsInfo)
+AsyncPageable<ChatThreadItem> chatThreadsInfo = chatClient.GetChatThreadsAsync();
+await foreach (ChatThreadItem chatThreadItem in chatThreadsInfo)
 {
-    Console.WriteLine($"{ chatThreadInfo.Id}");
+    Console.WriteLine($"{ chatThreadItem.Id}");
 }
 ```
 
@@ -237,7 +237,8 @@ Use `SendMessage` to send a message to a thread.
 - Use `senderDisplayName` to specify the display name of the sender. If not specified, empty string will be set.
 
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_SendMessage
-var messageId = await chatThreadClient.SendMessageAsync(content:"hello world");
+SendChatMessageResult sendChatMessageResult = await chatThreadClient.SendMessageAsync(content:"hello world");
+var messageId = sendChatMessageResult.Id;
 ```
 
 ### Get a message

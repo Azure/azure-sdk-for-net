@@ -14,7 +14,7 @@ namespace Azure.Communication.Chat
         /// <summary>
         /// The latest version of the Chat service.
         /// </summary>
-        public const ServiceVersion LatestVersion = ServiceVersion.V2021_03_01_Preview5;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V2021_03_01_Preview5;
 
         internal string ApiVersion { get; }
 

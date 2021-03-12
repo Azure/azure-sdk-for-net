@@ -19,6 +19,6 @@ namespace Azure.Communication.Chat
         /// <summary> Chat thread. </summary>
         public ChatThreadProperties ChatThreadProperties { get; }
         /// <summary> Errors encountered during the creation of the chat thread. </summary>
-        public IReadOnlyList<CommunicationError> InvalidParticipants { get; }
+        public IReadOnlyList<ChatError> InvalidParticipants { get; }
     }
 }
