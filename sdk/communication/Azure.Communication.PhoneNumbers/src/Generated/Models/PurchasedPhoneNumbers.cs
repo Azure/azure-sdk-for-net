@@ -11,13 +11,13 @@ using System.Linq;
 
 namespace Azure.Communication.PhoneNumbers.Models
 {
-    /// <summary> The list of acquired phone numbers. </summary>
-    internal partial class AcquiredPhoneNumbers
+    /// <summary> The list of purchased phone numbers. </summary>
+    internal partial class PurchasedPhoneNumbers
     {
-        /// <summary> Initializes a new instance of AcquiredPhoneNumbers. </summary>
+        /// <summary> Initializes a new instance of PurchasedPhoneNumbers. </summary>
         /// <param name="phoneNumbers"> Represents a list of phone numbers. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumbers"/> is null. </exception>
-        internal AcquiredPhoneNumbers(IEnumerable<PurchasedPhoneNumber> phoneNumbers)
+        internal PurchasedPhoneNumbers(IEnumerable<PurchasedPhoneNumber> phoneNumbers)
         {
             if (phoneNumbers == null)
             {
@@ -27,10 +27,10 @@ namespace Azure.Communication.PhoneNumbers.Models
             PhoneNumbers = phoneNumbers.ToList();
         }
 
-        /// <summary> Initializes a new instance of AcquiredPhoneNumbers. </summary>
+        /// <summary> Initializes a new instance of PurchasedPhoneNumbers. </summary>
         /// <param name="phoneNumbers"> Represents a list of phone numbers. </param>
         /// <param name="nextLink"> Represents the URL link to the next page of phone number results. </param>
-        internal AcquiredPhoneNumbers(IReadOnlyList<PurchasedPhoneNumber> phoneNumbers, string nextLink)
+        internal PurchasedPhoneNumbers(IReadOnlyList<PurchasedPhoneNumber> phoneNumbers, string nextLink)
         {
             PhoneNumbers = phoneNumbers;
             NextLink = nextLink;

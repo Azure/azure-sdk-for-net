@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers.Models
 {
-    internal partial class AcquiredPhoneNumbers
+    internal partial class PurchasedPhoneNumbers
     {
-        internal static AcquiredPhoneNumbers DeserializeAcquiredPhoneNumbers(JsonElement element)
+        internal static PurchasedPhoneNumbers DeserializePurchasedPhoneNumbers(JsonElement element)
         {
             IReadOnlyList<PurchasedPhoneNumber> phoneNumbers = default;
             Optional<string> nextLink = default;
@@ -35,7 +35,7 @@ namespace Azure.Communication.PhoneNumbers.Models
                     continue;
                 }
             }
-            return new AcquiredPhoneNumbers(phoneNumbers, nextLink.Value);
+            return new PurchasedPhoneNumbers(phoneNumbers, nextLink.Value);
         }
     }
 }
