@@ -22,7 +22,7 @@ namespace Azure.Core
     /// <summary>
     /// A mutable representation of a JSON value.
     /// </summary>
-    [DebuggerDisplay("{ToJsonString(),nq}")]
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     [DebuggerTypeProxy(typeof(JsonDataDebuggerProxy))]
     public class JsonData : IDynamicMetaObjectProvider, IEquatable<JsonData>
     {
@@ -1141,10 +1141,7 @@ namespace Azure.Core
             return EnsureObject();
         }
 
-        private string DebuggerDisplay
-        {
-            get => $"{{{ToJsonString()} ({Kind})}}";
-        }
+        private string DebuggerDisplay => ToJsonString();
 
         private struct Number
         {
@@ -1260,7 +1257,7 @@ namespace Azure.Core
                 _jsonData = jsonData;
             }
 
-            [DebuggerDisplay("{Value.ToJsonString(),nq}", Name = "{Name,nq}")]
+            [DebuggerDisplay("{Value.DebuggerDisplay,nq}", Name = "{Name,nq}")]
             internal class PropertyMember
             {
                 [DebuggerBrowsable(DebuggerBrowsableState.Never)]
