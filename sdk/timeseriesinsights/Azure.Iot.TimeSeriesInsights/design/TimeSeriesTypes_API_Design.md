@@ -33,7 +33,7 @@ Executes a batch get, create, update, delete operation on multiple time series t
 /// <param name="timeSeriesTypeIds">List of Time Series Type Ids of the Time Series Types to return.</param>
 /// <param name="cancellationToken">The cancellation token.</param>
 /// <returns>List of types or error objects corresponding by position to the array in the request. Type object is set when operation is successful and error object is set when operation is unsuccessful.
-public virtual async Task<Response<TimeSeriesTypeOperationResult[]>> GetTimeSeriesTypesAsync(
+public virtual async Task<Response<TimeSeriesTypeOperationResult[]>> GetTimeSeriesTypesbyId(
     IEnumerable<string> timeSeriesTypeIds, 
     CancellationToken cancellationToken = default)
 ```
@@ -45,7 +45,7 @@ public virtual async Task<Response<TimeSeriesTypeOperationResult[]>> GetTimeSeri
 /// <param name="timeSeriesTypeNames">List of names of the Time Series Types to return.</param>
 /// <param name="cancellationToken">The cancellation token.</param>
 /// <returns>List of types or error objects corresponding by position to the array in the request. Type object is set when operation is successful and error object is set when operation is unsuccessful.
-public virtual async Task<Response<TimeSeriesTypeOperationResult[]>> GetTimeSeriesTypesAsync(
+public virtual async Task<Response<TimeSeriesTypeOperationResult[]>> GetTimeSeriesTypesAsyncbyNames(
     IEnumerable<string> timeSeriesTypeNames, 
     CancellationToken cancellationToken = default)
 ```
@@ -80,7 +80,7 @@ public virtual async Task<Response<TimeSeriesTypeOperationResult[]>> CreateOrRep
 /// An error object will be set when operation is unsuccessful.
 /// null will be set when the operation is successful.
 /// </returns>
-public virtual async Task<Response<TimeSeriesTypeOperationResult[]>> DeleteTimeSeriesTypesAsync(
+public virtual async Task<Response<TimeSeriesTypeOperationResult[]>> DeleteTimeSeriesTypesAsyncbyId(
     IEnumerable<string> timeSeriesTypeIds,
     CancellationToken cancellationToken = default)
 ```
@@ -96,7 +96,7 @@ public virtual async Task<Response<TimeSeriesTypeOperationResult[]>> DeleteTimeS
 /// An error object will be set when operation is unsuccessful.
 /// null will be set when the operation is successful.
 /// </returns>
-public virtual async Task<Response<TimeSeriesTypeOperationResult[]>> DeleteTimeSeriesTypesAsync(
+public virtual async Task<Response<TimeSeriesTypeOperationResult[]>> DeleteTimeSeriesTypesAsyncbyNames(
     IEnumerable<string> timeSeriesTypeNames,
     CancellationToken cancellationToken = default)
 ```
