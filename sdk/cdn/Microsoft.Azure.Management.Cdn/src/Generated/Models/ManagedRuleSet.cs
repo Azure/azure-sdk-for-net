@@ -95,16 +95,13 @@ namespace Microsoft.Azure.Management.Cdn.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "RuleSetVersion");
             }
-            if (AnomalyScore != null)
+            if (AnomalyScore > 20)
             {
-                if (AnomalyScore > 20)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMaximum, "AnomalyScore", 20);
-                }
-                if (AnomalyScore < 0)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "AnomalyScore", 0);
-                }
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "AnomalyScore", 20);
+            }
+            if (AnomalyScore < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "AnomalyScore", 0);
             }
             if (RuleGroupOverrides != null)
             {

@@ -86,12 +86,9 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (OriginResponseTimeoutSeconds != null)
+            if (OriginResponseTimeoutSeconds < 16)
             {
-                if (OriginResponseTimeoutSeconds < 16)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "OriginResponseTimeoutSeconds", 16);
-                }
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "OriginResponseTimeoutSeconds", 16);
             }
         }
     }

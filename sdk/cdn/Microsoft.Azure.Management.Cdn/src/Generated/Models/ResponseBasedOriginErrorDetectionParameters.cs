@@ -89,16 +89,13 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (ResponseBasedFailoverThresholdPercentage != null)
+            if (ResponseBasedFailoverThresholdPercentage > 100)
             {
-                if (ResponseBasedFailoverThresholdPercentage > 100)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMaximum, "ResponseBasedFailoverThresholdPercentage", 100);
-                }
-                if (ResponseBasedFailoverThresholdPercentage < 0)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "ResponseBasedFailoverThresholdPercentage", 0);
-                }
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "ResponseBasedFailoverThresholdPercentage", 100);
+            }
+            if (ResponseBasedFailoverThresholdPercentage < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "ResponseBasedFailoverThresholdPercentage", 0);
             }
             if (HttpErrorRanges != null)
             {

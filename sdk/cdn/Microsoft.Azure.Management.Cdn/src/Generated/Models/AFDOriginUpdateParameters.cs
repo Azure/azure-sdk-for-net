@@ -158,49 +158,37 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (HttpPort != null)
+            if (HttpPort > 65535)
             {
-                if (HttpPort > 65535)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMaximum, "HttpPort", 65535);
-                }
-                if (HttpPort < 1)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "HttpPort", 1);
-                }
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "HttpPort", 65535);
             }
-            if (HttpsPort != null)
+            if (HttpPort < 1)
             {
-                if (HttpsPort > 65535)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMaximum, "HttpsPort", 65535);
-                }
-                if (HttpsPort < 1)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "HttpsPort", 1);
-                }
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "HttpPort", 1);
             }
-            if (Priority != null)
+            if (HttpsPort > 65535)
             {
-                if (Priority > 5)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMaximum, "Priority", 5);
-                }
-                if (Priority < 1)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "Priority", 1);
-                }
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "HttpsPort", 65535);
             }
-            if (Weight != null)
+            if (HttpsPort < 1)
             {
-                if (Weight > 1000)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMaximum, "Weight", 1000);
-                }
-                if (Weight < 1)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "Weight", 1);
-                }
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "HttpsPort", 1);
+            }
+            if (Priority > 5)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "Priority", 5);
+            }
+            if (Priority < 1)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "Priority", 1);
+            }
+            if (Weight > 1000)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "Weight", 1000);
+            }
+            if (Weight < 1)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "Weight", 1);
             }
         }
     }
