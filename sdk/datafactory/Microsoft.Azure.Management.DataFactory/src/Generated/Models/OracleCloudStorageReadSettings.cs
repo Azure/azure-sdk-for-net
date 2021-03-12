@@ -16,20 +16,22 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// Amazon S3 read settings.
+    /// Oracle Cloud Storage read settings.
     /// </summary>
-    public partial class AmazonS3ReadSettings : StoreReadSettings
+    public partial class OracleCloudStorageReadSettings : StoreReadSettings
     {
         /// <summary>
-        /// Initializes a new instance of the AmazonS3ReadSettings class.
+        /// Initializes a new instance of the OracleCloudStorageReadSettings
+        /// class.
         /// </summary>
-        public AmazonS3ReadSettings()
+        public OracleCloudStorageReadSettings()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AmazonS3ReadSettings class.
+        /// Initializes a new instance of the OracleCloudStorageReadSettings
+        /// class.
         /// </summary>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
@@ -39,12 +41,15 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="recursive">If true, files under the folder path will
         /// be read recursively. Default is true. Type: boolean (or Expression
         /// with resultType boolean).</param>
-        /// <param name="wildcardFolderPath">AmazonS3 wildcardFolderPath. Type:
-        /// string (or Expression with resultType string).</param>
-        /// <param name="wildcardFileName">AmazonS3 wildcardFileName. Type:
-        /// string (or Expression with resultType string).</param>
-        /// <param name="prefix">The prefix filter for the S3 object name.
-        /// Type: string (or Expression with resultType string).</param>
+        /// <param name="wildcardFolderPath">Oracle Cloud Storage
+        /// wildcardFolderPath. Type: string (or Expression with resultType
+        /// string).</param>
+        /// <param name="wildcardFileName">Oracle Cloud Storage
+        /// wildcardFileName. Type: string (or Expression with resultType
+        /// string).</param>
+        /// <param name="prefix">The prefix filter for the Oracle Cloud Storage
+        /// object name. Type: string (or Expression with resultType
+        /// string).</param>
         /// <param name="fileListPath">Point to a text file that lists each
         /// file (relative path to the path configured in the dataset) that you
         /// want to copy. Type: string (or Expression with resultType
@@ -64,7 +69,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="modifiedDatetimeEnd">The end of file's modified
         /// datetime. Type: string (or Expression with resultType
         /// string).</param>
-        public AmazonS3ReadSettings(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object recursive = default(object), object wildcardFolderPath = default(object), object wildcardFileName = default(object), object prefix = default(object), object fileListPath = default(object), bool? enablePartitionDiscovery = default(bool?), object partitionRootPath = default(object), object deleteFilesAfterCompletion = default(object), object modifiedDatetimeStart = default(object), object modifiedDatetimeEnd = default(object))
+        public OracleCloudStorageReadSettings(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object recursive = default(object), object wildcardFolderPath = default(object), object wildcardFileName = default(object), object prefix = default(object), object fileListPath = default(object), bool? enablePartitionDiscovery = default(bool?), object partitionRootPath = default(object), object deleteFilesAfterCompletion = default(object), object modifiedDatetimeStart = default(object), object modifiedDatetimeEnd = default(object))
             : base(additionalProperties, maxConcurrentConnections)
         {
             Recursive = recursive;
@@ -94,22 +99,22 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public object Recursive { get; set; }
 
         /// <summary>
-        /// Gets or sets amazonS3 wildcardFolderPath. Type: string (or
-        /// Expression with resultType string).
+        /// Gets or sets oracle Cloud Storage wildcardFolderPath. Type: string
+        /// (or Expression with resultType string).
         /// </summary>
         [JsonProperty(PropertyName = "wildcardFolderPath")]
         public object WildcardFolderPath { get; set; }
 
         /// <summary>
-        /// Gets or sets amazonS3 wildcardFileName. Type: string (or Expression
-        /// with resultType string).
+        /// Gets or sets oracle Cloud Storage wildcardFileName. Type: string
+        /// (or Expression with resultType string).
         /// </summary>
         [JsonProperty(PropertyName = "wildcardFileName")]
         public object WildcardFileName { get; set; }
 
         /// <summary>
-        /// Gets or sets the prefix filter for the S3 object name. Type: string
-        /// (or Expression with resultType string).
+        /// Gets or sets the prefix filter for the Oracle Cloud Storage object
+        /// name. Type: string (or Expression with resultType string).
         /// </summary>
         [JsonProperty(PropertyName = "prefix")]
         public object Prefix { get; set; }
