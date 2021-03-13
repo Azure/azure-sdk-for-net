@@ -12,10 +12,10 @@ using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    [JsonConverter(typeof(RedisImportRDBCompletedEventDataConverter))]
-    public partial class RedisImportRDBCompletedEventData
+    [JsonConverter(typeof(RedisImportRdbCompletedEventDataConverter))]
+    public partial class RedisImportRdbCompletedEventData
     {
-        internal static RedisImportRDBCompletedEventData DeserializeRedisImportRDBCompletedEventData(JsonElement element)
+        internal static RedisImportRdbCompletedEventData DeserializeRedisImportRdbCompletedEventData(JsonElement element)
         {
             Optional<DateTimeOffset> timestamp = default;
             Optional<string> name = default;
@@ -43,19 +43,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new RedisImportRDBCompletedEventData(Optional.ToNullable(timestamp), name.Value, status.Value);
+            return new RedisImportRdbCompletedEventData(Optional.ToNullable(timestamp), name.Value, status.Value);
         }
 
-        internal partial class RedisImportRDBCompletedEventDataConverter : JsonConverter<RedisImportRDBCompletedEventData>
+        internal partial class RedisImportRdbCompletedEventDataConverter : JsonConverter<RedisImportRdbCompletedEventData>
         {
-            public override void Write(Utf8JsonWriter writer, RedisImportRDBCompletedEventData model, JsonSerializerOptions options)
+            public override void Write(Utf8JsonWriter writer, RedisImportRdbCompletedEventData model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
-            public override RedisImportRDBCompletedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            public override RedisImportRdbCompletedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeRedisImportRDBCompletedEventData(document.RootElement);
+                return DeserializeRedisImportRdbCompletedEventData(document.RootElement);
             }
         }
     }
