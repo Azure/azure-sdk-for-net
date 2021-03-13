@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.ApiManagement
     public partial interface IPortalRevisionOperations
     {
         /// <summary>
-        /// Lists a collection of developer portal revision entities.
+        /// Lists developer portal's revisions.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </exception>
         Task<AzureOperationResponse<IPage<PortalRevisionContract>>> ListByServiceWithHttpMessagesAsync(string resourceGroupName, string serviceName, string filter = default(string), int? top = default(int?), int? skip = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets developer portal revision specified by its identifier.
+        /// Gets the developer portal revision specified by its identifier.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </exception>
         Task<AzureOperationHeaderResponse<PortalRevisionGetEntityTagHeaders>> GetEntityTagWithHttpMessagesAsync(string resourceGroupName, string serviceName, string portalRevisionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets developer portal revision specified by its identifier.
+        /// Gets the developer portal's revision specified by its identifier.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -121,7 +121,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </exception>
         Task<AzureOperationResponse<PortalRevisionContract,PortalRevisionGetHeaders>> GetWithHttpMessagesAsync(string resourceGroupName, string serviceName, string portalRevisionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates a new developer portal revision.
+        /// Creates a new developer portal's revision by running the portal's
+        /// publishing. The `isCurrent` property indicates if the revision is
+        /// publicly accessible.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -189,7 +191,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </exception>
         Task<AzureOperationResponse<PortalRevisionContract,PortalRevisionUpdateHeaders>> UpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string portalRevisionId, PortalRevisionContract parameters, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates a new developer portal revision.
+        /// Creates a new developer portal's revision by running the portal's
+        /// publishing. The `isCurrent` property indicates if the revision is
+        /// publicly accessible.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -257,7 +261,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </exception>
         Task<AzureOperationResponse<PortalRevisionContract,PortalRevisionUpdateHeaders>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string portalRevisionId, PortalRevisionContract parameters, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists a collection of developer portal revision entities.
+        /// Lists developer portal's revisions.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

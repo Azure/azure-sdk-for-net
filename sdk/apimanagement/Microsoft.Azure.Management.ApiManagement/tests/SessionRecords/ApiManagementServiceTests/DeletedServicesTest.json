@@ -1,0 +1,434 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/providers/Microsoft.ApiManagement?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Byb3ZpZGVycy9NaWNyb3NvZnQuQXBpTWFuYWdlbWVudD9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "5ce8529a-7a1d-4dc2-8303-b344666b88f6"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29916.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11998"
+        ],
+        "x-ms-request-id": [
+          "a1371fb7-9a45-42d0-85b0-d4c27c9b4479"
+        ],
+        "x-ms-correlation-request-id": [
+          "a1371fb7-9a45-42d0-85b0-d4c27c9b4479"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTCENTRALUS:20210507T224826Z:a1371fb7-9a45-42d0-85b0-d4c27c9b4479"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 07 May 2021 22:48:26 GMT"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "5694"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/providers/Microsoft.ApiManagement\",\r\n  \"namespace\": \"Microsoft.ApiManagement\",\r\n  \"authorization\": {\r\n    \"applicationId\": \"8602e328-9b72-4f2d-a4ae-1387d013a2b3\",\r\n    \"roleDefinitionId\": \"e263b525-2e60-4418-b655-420bae0b172e\"\r\n  },\r\n  \"resourceTypes\": [\r\n    {\r\n      \"resourceType\": \"service\",\r\n      \"locations\": [\r\n        \"Central India\",\r\n        \"UAE North\",\r\n        \"Australia Central\",\r\n        \"Germany West Central\",\r\n        \"West Central US\",\r\n        \"Norway East\",\r\n        \"Switzerland North\",\r\n        \"Korea South\",\r\n        \"West India\",\r\n        \"Korea Central\",\r\n        \"South Africa North\",\r\n        \"UK West\",\r\n        \"Brazil South\",\r\n        \"East Asia\",\r\n        \"South India\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Australia Southeast\",\r\n        \"Japan East\",\r\n        \"North Central US\",\r\n        \"Southeast Asia\",\r\n        \"West US 2\",\r\n        \"Central US\",\r\n        \"UK South\",\r\n        \"Australia East\",\r\n        \"Japan West\",\r\n        \"West US\",\r\n        \"France Central\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"East US\",\r\n        \"North Europe\",\r\n        \"West Europe\",\r\n        \"East US 2 EUAP\",\r\n        \"Central US EUAP\",\r\n        \"South Africa West\",\r\n        \"UAE Central\",\r\n        \"Germany North\",\r\n        \"Norway West\",\r\n        \"Switzerland West\",\r\n        \"Brazil Southeast\",\r\n        \"West US 3\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2021-01-01-preview\",\r\n        \"2020-12-01\",\r\n        \"2020-06-01-preview\",\r\n        \"2019-12-01-preview\",\r\n        \"2019-12-01\",\r\n        \"2019-01-01\",\r\n        \"2018-06-01-preview\",\r\n        \"2018-01-01\",\r\n        \"2017-03-01\",\r\n        \"2016-10-10\",\r\n        \"2016-07-07\",\r\n        \"2015-09-15\",\r\n        \"2014-02-14\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SystemAssignedResourceIdentity\"\r\n    },\r\n    {\r\n      \"resourceType\": \"deletedServices\",\r\n      \"locations\": [\r\n        \"Central India\",\r\n        \"UAE North\",\r\n        \"Australia Central\",\r\n        \"Germany West Central\",\r\n        \"West Central US\",\r\n        \"Norway East\",\r\n        \"Switzerland North\",\r\n        \"Korea South\",\r\n        \"West India\",\r\n        \"Korea Central\",\r\n        \"South Africa North\",\r\n        \"UK West\",\r\n        \"Brazil South\",\r\n        \"East Asia\",\r\n        \"South India\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Australia Southeast\",\r\n        \"Japan East\",\r\n        \"North Central US\",\r\n        \"Southeast Asia\",\r\n        \"West US 2\",\r\n        \"Central US\",\r\n        \"UK South\",\r\n        \"Australia East\",\r\n        \"Japan West\",\r\n        \"West US\",\r\n        \"France Central\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"East US\",\r\n        \"North Europe\",\r\n        \"West Europe\",\r\n        \"East US 2 EUAP\",\r\n        \"Central US EUAP\",\r\n        \"South Africa West\",\r\n        \"UAE Central\",\r\n        \"Germany North\",\r\n        \"Norway West\",\r\n        \"Switzerland West\",\r\n        \"Brazil Southeast\",\r\n        \"West US 3\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2021-01-01-preview\",\r\n        \"2020-12-01\",\r\n        \"2020-06-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2021-01-01-preview\",\r\n        \"2020-12-01\",\r\n        \"2020-06-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/deletedServices\",\r\n      \"locations\": [\r\n        \"Central India\",\r\n        \"UAE North\",\r\n        \"Australia Central\",\r\n        \"Germany West Central\",\r\n        \"West Central US\",\r\n        \"Norway East\",\r\n        \"Switzerland North\",\r\n        \"Korea South\",\r\n        \"West India\",\r\n        \"Korea Central\",\r\n        \"South Africa North\",\r\n        \"UK West\",\r\n        \"Brazil South\",\r\n        \"East Asia\",\r\n        \"South India\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Australia Southeast\",\r\n        \"Japan East\",\r\n        \"North Central US\",\r\n        \"Southeast Asia\",\r\n        \"West US 2\",\r\n        \"Central US\",\r\n        \"UK South\",\r\n        \"Australia East\",\r\n        \"Japan West\",\r\n        \"West US\",\r\n        \"France Central\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"East US\",\r\n        \"North Europe\",\r\n        \"West Europe\",\r\n        \"East US 2 EUAP\",\r\n        \"Central US EUAP\",\r\n        \"South Africa West\",\r\n        \"UAE Central\",\r\n        \"Germany North\",\r\n        \"Norway West\",\r\n        \"Switzerland West\",\r\n        \"Brazil Southeast\",\r\n        \"West US 3\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2021-01-01-preview\",\r\n        \"2020-12-01\",\r\n        \"2020-06-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"validateServiceName\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-09-15\",\r\n        \"2014-02-14\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"checkServiceNameAvailability\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-09-15\",\r\n        \"2014-02-14\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"checkNameAvailability\",\r\n      \"locations\": [\r\n        \"Central India\",\r\n        \"UAE North\",\r\n        \"Australia Central\",\r\n        \"Germany West Central\",\r\n        \"West Central US\",\r\n        \"Norway East\",\r\n        \"Switzerland North\",\r\n        \"Korea South\",\r\n        \"West India\",\r\n        \"Korea Central\",\r\n        \"South Africa North\",\r\n        \"UK West\",\r\n        \"Brazil South\",\r\n        \"East Asia\",\r\n        \"South India\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Australia Southeast\",\r\n        \"Japan East\",\r\n        \"North Central US\",\r\n        \"Southeast Asia\",\r\n        \"West US 2\",\r\n        \"Central US\",\r\n        \"UK South\",\r\n        \"Australia East\",\r\n        \"Japan West\",\r\n        \"West US\",\r\n        \"France Central\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"East US\",\r\n        \"North Europe\",\r\n        \"West Europe\",\r\n        \"East US 2 EUAP\",\r\n        \"Central US EUAP\",\r\n        \"South Africa West\",\r\n        \"UAE Central\",\r\n        \"Germany North\",\r\n        \"Norway West\",\r\n        \"Switzerland West\",\r\n        \"Brazil Southeast\",\r\n        \"West US 3\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2021-01-01-preview\",\r\n        \"2020-12-01\",\r\n        \"2020-06-01-preview\",\r\n        \"2019-12-01-preview\",\r\n        \"2019-12-01\",\r\n        \"2019-01-01\",\r\n        \"2018-06-01-preview\",\r\n        \"2018-01-01\",\r\n        \"2017-03-01\",\r\n        \"2016-10-10\",\r\n        \"2016-07-07\",\r\n        \"2015-09-15\",\r\n        \"2014-02-14\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"reportFeedback\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2021-01-01-preview\",\r\n        \"2020-12-01\",\r\n        \"2020-06-01-preview\",\r\n        \"2019-12-01-preview\",\r\n        \"2019-12-01\",\r\n        \"2019-01-01\",\r\n        \"2018-06-01-preview\",\r\n        \"2018-01-01\",\r\n        \"2017-03-01\",\r\n        \"2016-10-10\",\r\n        \"2016-07-07\",\r\n        \"2015-09-15\",\r\n        \"2014-02-14\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"checkFeedbackRequired\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2021-01-01-preview\",\r\n        \"2020-12-01\",\r\n        \"2020-06-01-preview\",\r\n        \"2019-12-01-preview\",\r\n        \"2019-12-01\",\r\n        \"2019-01-01\",\r\n        \"2018-06-01-preview\",\r\n        \"2018-01-01\",\r\n        \"2017-03-01\",\r\n        \"2016-10-10\",\r\n        \"2016-07-07\",\r\n        \"2015-09-15\",\r\n        \"2014-02-14\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"operations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2021-01-01-preview\",\r\n        \"2020-12-01\",\r\n        \"2020-06-01-preview\",\r\n        \"2019-12-01-preview\",\r\n        \"2019-12-01\",\r\n        \"2019-01-01\",\r\n        \"2018-06-01-preview\",\r\n        \"2018-01-01\",\r\n        \"2017-03-01\",\r\n        \"2016-10-10\",\r\n        \"2016-07-07\",\r\n        \"2015-09-15\",\r\n        \"2014-02-14\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"getDomainOwnershipIdentifier\",\r\n      \"locations\": [\r\n        \"Central India\",\r\n        \"UAE North\",\r\n        \"Australia Central\",\r\n        \"Germany West Central\",\r\n        \"West Central US\",\r\n        \"Norway East\",\r\n        \"Switzerland North\",\r\n        \"Korea South\",\r\n        \"West India\",\r\n        \"Korea Central\",\r\n        \"South Africa North\",\r\n        \"UK West\",\r\n        \"Brazil South\",\r\n        \"East Asia\",\r\n        \"South India\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Australia Southeast\",\r\n        \"Japan East\",\r\n        \"North Central US\",\r\n        \"Southeast Asia\",\r\n        \"West US 2\",\r\n        \"Central US\",\r\n        \"UK South\",\r\n        \"Australia East\",\r\n        \"Japan West\",\r\n        \"West US\",\r\n        \"France Central\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"East US\",\r\n        \"North Europe\",\r\n        \"West Europe\",\r\n        \"East US 2 EUAP\",\r\n        \"Central US EUAP\",\r\n        \"South Africa West\",\r\n        \"UAE Central\",\r\n        \"Germany North\",\r\n        \"Norway West\",\r\n        \"Switzerland West\",\r\n        \"Brazil Southeast\",\r\n        \"West US 3\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2021-01-01-preview\",\r\n        \"2020-12-01\"\r\n      ]\r\n    }\r\n  ],\r\n  \"registrationState\": \"Registered\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourcegroups/sdktestrg238?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlZ3JvdXBzL3Nka3Rlc3RyZzIzOD9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"West Central US\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "3b5e9d8c-f8cd-4725-b3f1-526dbbbd6c6f"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29916.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "37"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "d4836ce4-0b8c-43c1-af5b-cda320cad839"
+        ],
+        "x-ms-correlation-request-id": [
+          "d4836ce4-0b8c-43c1-af5b-cda320cad839"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTCENTRALUS:20210507T224827Z:d4836ce4-0b8c-43c1-af5b-cda320cad839"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 07 May 2021 22:48:27 GMT"
+        ],
+        "Content-Length": [
+          "184"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/sdktestrg238\",\r\n  \"name\": \"sdktestrg238\",\r\n  \"location\": \"westcentralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/providers/Microsoft.ApiManagement/deletedservices?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Byb3ZpZGVycy9NaWNyb3NvZnQuQXBpTWFuYWdlbWVudC9kZWxldGVkc2VydmljZXM/YXBpLXZlcnNpb249MjAyMC0xMi0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "55b24216-86ca-493b-a670-a2023b6ccf7f"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29916.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/7.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-original-request-ids": [
+          "053f200c-cb93-4a43-8b14-b4c5ecd366fa",
+          "b14c7cd3-4041-4950-a193-e604ef23ba37",
+          "24609303-739b-468b-b72e-effeffb93838",
+          "8cca1cfa-a6b5-49ea-bd72-a9199bf5c6da",
+          "ebab6720-c5f4-424b-8653-2eea2f3ee561",
+          "63950b1f-30f9-44c5-830c-7120b6d93103",
+          "af6754cf-f6d7-41c3-9148-89fc30a5dba1",
+          "c9a108d4-cdfd-4de0-bc19-82088728550f",
+          "21383b56-f784-4846-bbe0-e9806f895f8c",
+          "7aaf7e2d-9742-4249-866c-686eb9063469",
+          "a6d51c2b-8a6b-4d72-a22f-7952012f70d0",
+          "9f9b18bd-f1d3-4acb-9034-aac07c8164ea",
+          "aeb4d6e6-21f7-427c-9d94-23af3bb69f1a",
+          "a6fec798-6ff6-45a5-9bd6-f3bb1c3879c6",
+          "593d3a08-41aa-462e-a701-fccb48ae022e",
+          "c662b985-0c5b-411c-8801-8025be7969c6",
+          "c8b7b355-e1f0-4e16-bc11-eea92690149d",
+          "93297a23-d147-42f5-9077-14b622ee3422",
+          "1df1f280-7ba5-4964-add6-4a8b4a3560cd",
+          "fccf51ec-d2d8-4c7a-aff9-a05e19dcc4fd",
+          "80ee57ab-32e5-4004-84e3-313c7ec595ec",
+          "8a742e8e-7d8c-47e2-af67-403b8d027de1",
+          "d1dbe581-e077-4419-b9a7-2b98dc52c9f5",
+          "754e90e0-7306-4b1d-8145-7821e73eca3a",
+          "853f9db0-43a7-4ecb-831a-f8f702e592be",
+          "7ceb703f-d7a8-4f5d-ac5e-538a163187cc",
+          "4a3c8aef-c92f-4e8b-86ab-edcd7c5b791b",
+          "99c455c7-b237-438e-9650-45a736fda808",
+          "50203080-9643-487b-8381-044946454cb7",
+          "d854cc00-9f40-48ce-8c67-abb95e6820f9",
+          "82820b77-06f3-4c16-acad-327de9df1d84",
+          "58e26050-d385-4b29-a47e-b16369c27f12",
+          "ddd5bfc6-9cc4-47a0-898b-c2084d316e98",
+          "5a91e239-f8a0-4b86-b0d3-2378884b4b3e",
+          "9526ca6a-0fc1-412f-a3a3-e9e00a76e626",
+          "8fc709c6-ff17-424c-b2d4-223af030fd3e",
+          "40e6b891-47f6-4854-baa6-2c419e1e454d",
+          "f7eaf6e2-b49b-460c-8c10-401a03607441",
+          "35c7d2a6-ed7b-481d-b394-6f904ff7b587",
+          "06d5d77f-1670-4567-93f9-bf5747e2338e",
+          "ec22f619-3c41-41a1-a2db-1869b86cc17a"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-request-id": [
+          "774bb41c-837e-4c2c-8486-c57deba30fbb"
+        ],
+        "x-ms-correlation-request-id": [
+          "774bb41c-837e-4c2c-8486-c57deba30fbb"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20210507T224856Z:774bb41c-837e-4c2c-8486-c57deba30fbb"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 07 May 2021 22:48:56 GMT"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "2607"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/providers/Microsoft.ApiManagement/locations/centraluseuap/deletedservices/sdktestapim3304\",\r\n      \"name\": \"sdktestapim3304\",\r\n      \"type\": \"Microsoft.ApiManagement/deletedservices\",\r\n      \"location\": \"Central US EUAP\",\r\n      \"properties\": {\r\n        \"serviceId\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/sdktestrg8549/providers/Microsoft.ApiManagement/service/sdktestapim3304\",\r\n        \"scheduledPurgeDate\": \"2021-05-09T04:55:58.9546314Z\",\r\n        \"deletionDate\": \"2021-05-07T17:39:25.7671615Z\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/providers/Microsoft.ApiManagement/locations/centraluseuap/deletedservices/sdktestapim7898\",\r\n      \"name\": \"sdktestapim7898\",\r\n      \"type\": \"Microsoft.ApiManagement/deletedservices\",\r\n      \"location\": \"Central US EUAP\",\r\n      \"properties\": {\r\n        \"serviceId\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/sdktestrg6649/providers/Microsoft.ApiManagement/service/sdktestapim7898\",\r\n        \"scheduledPurgeDate\": \"2021-05-08T18:22:08.6598472Z\",\r\n        \"deletionDate\": \"2021-05-07T17:39:25.7669217Z\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/providers/Microsoft.ApiManagement/locations/centraluseuap/deletedservices/sdktestapim537\",\r\n      \"name\": \"sdktestapim537\",\r\n      \"type\": \"Microsoft.ApiManagement/deletedservices\",\r\n      \"location\": \"Central US EUAP\",\r\n      \"properties\": {\r\n        \"serviceId\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/sdktestrg9384/providers/Microsoft.ApiManagement/service/sdktestapim537\",\r\n        \"scheduledPurgeDate\": \"2021-05-08T05:08:51.1211066Z\",\r\n        \"deletionDate\": \"2021-05-07T17:39:25.8739528Z\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/providers/Microsoft.ApiManagement/locations/centraluseuap/deletedservices/sdktestapim7132\",\r\n      \"name\": \"sdktestapim7132\",\r\n      \"type\": \"Microsoft.ApiManagement/deletedservices\",\r\n      \"location\": \"Central US EUAP\",\r\n      \"properties\": {\r\n        \"serviceId\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/sdktestrg2857/providers/Microsoft.ApiManagement/service/sdktestapim7132\",\r\n        \"scheduledPurgeDate\": \"2021-05-08T23:58:08.653838Z\",\r\n        \"deletionDate\": \"2021-05-07T17:39:26.1828458Z\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/providers/Microsoft.ApiManagement/locations/centraluseuap/deletedservices/sdktestapim4773\",\r\n      \"name\": \"sdktestapim4773\",\r\n      \"type\": \"Microsoft.ApiManagement/deletedservices\",\r\n      \"location\": \"Central US EUAP\",\r\n      \"properties\": {\r\n        \"serviceId\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/sdktestrg6747/providers/Microsoft.ApiManagement/service/sdktestapim4773\",\r\n        \"scheduledPurgeDate\": \"2021-05-09T16:47:18.3905445Z\",\r\n        \"deletionDate\": \"2021-05-07T16:48:24.2522593Z\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/providers/Microsoft.ApiManagement/locations/Central%20US%20EUAP/deletedservices/sdktestapim3304?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Byb3ZpZGVycy9NaWNyb3NvZnQuQXBpTWFuYWdlbWVudC9sb2NhdGlvbnMvQ2VudHJhbCUyMFVTJTIwRVVBUC9kZWxldGVkc2VydmljZXMvc2RrdGVzdGFwaW0zMzA0P2FwaS12ZXJzaW9uPTIwMjAtMTItMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "4977033e-b8c8-431c-8bcd-1b38c4f063db"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29916.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/7.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "ac67ecd7-49ca-402b-bc08-b7e417b65259"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11998"
+        ],
+        "x-ms-correlation-request-id": [
+          "d37c1a0c-ec0e-475d-bb84-817e366817f7"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20210507T224913Z:d37c1a0c-ec0e-475d-bb84-817e366817f7"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 07 May 2021 22:49:13 GMT"
+        ],
+        "Content-Length": [
+          "519"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/providers/Microsoft.ApiManagement/locations/centraluseuap/deletedservices/sdktestapim3304\",\r\n  \"name\": \"sdktestapim3304\",\r\n  \"type\": \"Microsoft.ApiManagement/deletedservices\",\r\n  \"location\": \"Central US EUAP\",\r\n  \"properties\": {\r\n    \"serviceId\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/sdktestrg8549/providers/Microsoft.ApiManagement/service/sdktestapim3304\",\r\n    \"scheduledPurgeDate\": \"2021-05-09T04:55:58.9546314Z\",\r\n    \"deletionDate\": \"2021-05-07T17:39:25.7671615Z\"\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/providers/Microsoft.ApiManagement/locations/Central%20US%20EUAP/deletedservices/sdktestapim3304?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Byb3ZpZGVycy9NaWNyb3NvZnQuQXBpTWFuYWdlbWVudC9sb2NhdGlvbnMvQ2VudHJhbCUyMFVTJTIwRVVBUC9kZWxldGVkc2VydmljZXMvc2RrdGVzdGFwaW0zMzA0P2FwaS12ZXJzaW9uPTIwMjAtMTItMDE=",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "6751e44c-0204-49c0-b382-2602bd6eb764"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29916.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/7.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/providers/Microsoft.ApiManagement/locations/Central%20US%20EUAP/deletedservices/sdktestapim3304/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTMzMDRfVGVybV84Y2JiMjc1Ng==?api-version=2020-12-01"
+        ],
+        "Retry-After": [
+          "60"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "3c0bee61-a1c8-4b5f-b009-6d128e785e5b"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14999"
+        ],
+        "x-ms-correlation-request-id": [
+          "40672b97-06da-455f-99a8-22d146ab7f58"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20210507T224916Z:40672b97-06da-455f-99a8-22d146ab7f58"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 07 May 2021 22:49:16 GMT"
+        ],
+        "Content-Length": [
+          "519"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/providers/Microsoft.ApiManagement/locations/centraluseuap/deletedservices/sdktestapim3304\",\r\n  \"name\": \"sdktestapim3304\",\r\n  \"type\": \"Microsoft.ApiManagement/deletedservices\",\r\n  \"location\": \"Central US EUAP\",\r\n  \"properties\": {\r\n    \"serviceId\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/sdktestrg8549/providers/Microsoft.ApiManagement/service/sdktestapim3304\",\r\n    \"scheduledPurgeDate\": \"2021-05-09T04:55:58.9546314Z\",\r\n    \"deletionDate\": \"2021-05-07T17:39:25.7671615Z\"\r\n  }\r\n}",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/providers/Microsoft.ApiManagement/locations/Central%20US%20EUAP/deletedservices/sdktestapim3304/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTMzMDRfVGVybV84Y2JiMjc1Ng==?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Byb3ZpZGVycy9NaWNyb3NvZnQuQXBpTWFuYWdlbWVudC9sb2NhdGlvbnMvQ2VudHJhbCUyMFVTJTIwRVVBUC9kZWxldGVkc2VydmljZXMvc2RrdGVzdGFwaW0zMzA0L29wZXJhdGlvbnJlc3VsdHMvWTJWdWRISmhiSFZ6WlhWaGNEcHpaR3QwWlhOMFlYQnBiVE16TURSZlZHVnliVjg0WTJKaU1qYzFOZz09P2FwaS12ZXJzaW9uPTIwMjAtMTItMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29916.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/7.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11997"
+        ],
+        "x-ms-request-id": [
+          "15808891-06fd-43a2-9b83-5a62c82a988e"
+        ],
+        "x-ms-correlation-request-id": [
+          "15808891-06fd-43a2-9b83-5a62c82a988e"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20210507T225016Z:15808891-06fd-43a2-9b83-5a62c82a988e"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 07 May 2021 22:50:16 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 404
+    }
+  ],
+  "Names": {
+    "Initialize": [
+      "sdktestapim9752",
+      "sdktestrg238"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "bab08e11-7b12-4354-9fd1-4b5d64d40b68",
+    "TestCertificate": "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",
+    "TestCertificatePassword": "Password",
+    "SubId": "bab08e11-7b12-4354-9fd1-4b5d64d40b68",
+    "ServiceName": "sdktestapim9752",
+    "Location": "West Central US",
+    "ResourceGroup": "sdktestrg238"
+  }
+}

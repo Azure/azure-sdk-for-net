@@ -22,7 +22,8 @@ namespace Microsoft.Azure.Management.ApiManagement
     public static partial class ContentTypeOperationsExtensions
     {
             /// <summary>
-            /// Returns list of content types
+            /// Lists the developer portal's content types. Content types describe content
+            /// items' properties, validation rules, and constraints.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -39,7 +40,8 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Returns list of content types
+            /// Lists the developer portal's content types. Content types describe content
+            /// items' properties, validation rules, and constraints.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -62,7 +64,8 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Gets API Management content type details.
+            /// Gets the details of the developer portal's content type. Content types
+            /// describe content items' properties, validation rules, and constraints.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -82,7 +85,8 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Gets API Management content type details.
+            /// Gets the details of the developer portal's content type. Content types
+            /// describe content items' properties, validation rules, and constraints.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -108,7 +112,10 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Creates or updates an Content Type.
+            /// Creates or updates the developer portal's content type. Content types
+            /// describe content items' properties, validation rules, and constraints.
+            /// Custom content types' identifiers need to start with the `c-` prefix.
+            /// Built-in content types can't be modified.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -132,7 +139,10 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Creates or updates an Content Type.
+            /// Creates or updates the developer portal's content type. Content types
+            /// describe content items' properties, validation rules, and constraints.
+            /// Custom content types' identifiers need to start with the `c-` prefix.
+            /// Built-in content types can't be modified.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -162,7 +172,10 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Removes specified content type.
+            /// Removes the specified developer portal's content type. Content types
+            /// describe content items' properties, validation rules, and constraints.
+            /// Built-in content types (with identifiers starting with the `c-` prefix)
+            /// can't be removed.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -187,7 +200,10 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Removes specified content type.
+            /// Removes the specified developer portal's content type. Content types
+            /// describe content items' properties, validation rules, and constraints.
+            /// Built-in content types (with identifiers starting with the `c-` prefix)
+            /// can't be removed.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -215,7 +231,8 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Returns list of content types
+            /// Lists the developer portal's content types. Content types describe content
+            /// items' properties, validation rules, and constraints.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -229,7 +246,8 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Returns list of content types
+            /// Lists the developer portal's content types. Content types describe content
+            /// items' properties, validation rules, and constraints.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

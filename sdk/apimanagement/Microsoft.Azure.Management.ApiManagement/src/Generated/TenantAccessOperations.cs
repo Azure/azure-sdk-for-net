@@ -280,7 +280,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </param>
         /// <param name='accessName'>
         /// The identifier of the Access configuration. Possible values include:
-        /// 'access', 'getAccess'
+        /// 'access', 'gitAccess'
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -488,7 +488,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </param>
         /// <param name='accessName'>
         /// The identifier of the Access configuration. Possible values include:
-        /// 'access', 'getAccess'
+        /// 'access', 'gitAccess'
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -720,7 +720,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </param>
         /// <param name='accessName'>
         /// The identifier of the Access configuration. Possible values include:
-        /// 'access', 'getAccess'
+        /// 'access', 'gitAccess'
         /// </param>
         /// <param name='ifMatch'>
         /// ETag of the Entity. ETag should match the current entity state from the
@@ -981,7 +981,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </param>
         /// <param name='accessName'>
         /// The identifier of the Access configuration. Possible values include:
-        /// 'access', 'getAccess'
+        /// 'access', 'gitAccess'
         /// </param>
         /// <param name='ifMatch'>
         /// ETag of the Entity. ETag should match the current entity state from the
@@ -1239,7 +1239,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </param>
         /// <param name='accessName'>
         /// The identifier of the Access configuration. Possible values include:
-        /// 'access', 'getAccess'
+        /// 'access', 'gitAccess'
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1434,7 +1434,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </param>
         /// <param name='accessName'>
         /// The identifier of the Access configuration. Possible values include:
-        /// 'access', 'getAccess'
+        /// 'access', 'gitAccess'
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1629,7 +1629,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </param>
         /// <param name='accessName'>
         /// The identifier of the Access configuration. Possible values include:
-        /// 'access', 'getAccess'
+        /// 'access', 'gitAccess'
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

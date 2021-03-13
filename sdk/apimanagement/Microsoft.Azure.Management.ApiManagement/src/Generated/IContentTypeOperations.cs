@@ -24,7 +24,8 @@ namespace Microsoft.Azure.Management.ApiManagement
     public partial interface IContentTypeOperations
     {
         /// <summary>
-        /// Returns list of content types
+        /// Lists the developer portal's content types. Content types describe
+        /// content items' properties, validation rules, and constraints.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -49,7 +50,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </exception>
         Task<AzureOperationResponse<IPage<ContentTypeContract>>> ListByServiceWithHttpMessagesAsync(string resourceGroupName, string serviceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets API Management content type details.
+        /// Gets the details of the developer portal's content type. Content
+        /// types describe content items' properties, validation rules, and
+        /// constraints.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -77,7 +80,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </exception>
         Task<AzureOperationResponse<ContentTypeContract,ContentTypeGetHeaders>> GetWithHttpMessagesAsync(string resourceGroupName, string serviceName, string contentTypeId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates or updates an Content Type.
+        /// Creates or updates the developer portal's content type. Content
+        /// types describe content items' properties, validation rules, and
+        /// constraints. Custom content types' identifiers need to start with
+        /// the `c-` prefix. Built-in content types can't be modified.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -109,7 +115,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </exception>
         Task<AzureOperationResponse<ContentTypeContract,ContentTypeCreateOrUpdateHeaders>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string contentTypeId, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Removes specified content type.
+        /// Removes the specified developer portal's content type. Content
+        /// types describe content items' properties, validation rules, and
+        /// constraints. Built-in content types (with identifiers starting with
+        /// the `c-` prefix) can't be removed.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -139,7 +148,8 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string serviceName, string contentTypeId, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Returns list of content types
+        /// Lists the developer portal's content types. Content types describe
+        /// content items' properties, validation rules, and constraints.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

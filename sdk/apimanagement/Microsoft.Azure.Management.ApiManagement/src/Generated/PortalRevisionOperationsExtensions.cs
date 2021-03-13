@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.ApiManagement
     public static partial class PortalRevisionOperationsExtensions
     {
             /// <summary>
-            /// Lists a collection of developer portal revision entities.
+            /// Lists developer portal's revisions.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Lists a collection of developer portal revision entities.
+            /// Lists developer portal's revisions.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -96,7 +96,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Gets developer portal revision specified by its identifier.
+            /// Gets the developer portal revision specified by its identifier.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -117,7 +117,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Gets developer portal revision specified by its identifier.
+            /// Gets the developer portal revision specified by its identifier.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -144,7 +144,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Gets developer portal revision specified by its identifier.
+            /// Gets the developer portal's revision specified by its identifier.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -165,7 +165,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Gets developer portal revision specified by its identifier.
+            /// Gets the developer portal's revision specified by its identifier.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -192,7 +192,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Creates a new developer portal revision.
+            /// Creates a new developer portal's revision by running the portal's
+            /// publishing. The `isCurrent` property indicates if the revision is publicly
+            /// accessible.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -215,7 +217,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Creates a new developer portal revision.
+            /// Creates a new developer portal's revision by running the portal's
+            /// publishing. The `isCurrent` property indicates if the revision is publicly
+            /// accessible.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -306,7 +310,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Creates a new developer portal revision.
+            /// Creates a new developer portal's revision by running the portal's
+            /// publishing. The `isCurrent` property indicates if the revision is publicly
+            /// accessible.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -329,7 +335,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Creates a new developer portal revision.
+            /// Creates a new developer portal's revision by running the portal's
+            /// publishing. The `isCurrent` property indicates if the revision is publicly
+            /// accessible.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -420,7 +428,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Lists a collection of developer portal revision entities.
+            /// Lists developer portal's revisions.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -434,7 +442,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Lists a collection of developer portal revision entities.
+            /// Lists developer portal's revisions.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// </param>
             /// <param name='accessName'>
             /// The identifier of the Access configuration. Possible values include:
-            /// 'access', 'getAccess'
+            /// 'access', 'gitAccess'
             /// </param>
             public static void RegeneratePrimaryKey(this ITenantAccessGitOperations operations, string resourceGroupName, string serviceName, string accessName)
             {
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// </param>
             /// <param name='accessName'>
             /// The identifier of the Access configuration. Possible values include:
-            /// 'access', 'getAccess'
+            /// 'access', 'gitAccess'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// </param>
             /// <param name='accessName'>
             /// The identifier of the Access configuration. Possible values include:
-            /// 'access', 'getAccess'
+            /// 'access', 'gitAccess'
             /// </param>
             public static void RegenerateSecondaryKey(this ITenantAccessGitOperations operations, string resourceGroupName, string serviceName, string accessName)
             {
@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// </param>
             /// <param name='accessName'>
             /// The identifier of the Access configuration. Possible values include:
-            /// 'access', 'getAccess'
+            /// 'access', 'gitAccess'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

@@ -37,6 +37,10 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="displayName">Unique name of NamedValue. It may contain
         /// only letters, digits, period, dash, and underscore
         /// characters.</param>
+        /// <param name="value">Value of the NamedValue. Can contain policy
+        /// expressions. It may not be empty or consist only of whitespace.
+        /// This property will not be filled on 'GET' operations! Use
+        /// '/listSecrets' POST request to get the value.</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type for API Management
@@ -45,13 +49,9 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// filter the NamedValue list.</param>
         /// <param name="secret">Determines whether the value is a secret and
         /// should be encrypted or not. Default value is false.</param>
-        /// <param name="value">Value of the NamedValue. Can contain policy
-        /// expressions. It may not be empty or consist only of whitespace.
-        /// This property will not be filled on 'GET' operations! Use
-        /// '/listSecrets' POST request to get the value.</param>
         /// <param name="keyVault">KeyVault location details of the
         /// namedValue.</param>
-        public NamedValueCreateContract(string displayName, string id = default(string), string name = default(string), string type = default(string), IList<string> tags = default(IList<string>), bool? secret = default(bool?), string value = default(string), KeyVaultContractCreateProperties keyVault = default(KeyVaultContractCreateProperties))
+        public NamedValueCreateContract(string displayName, string value = default(string), string id = default(string), string name = default(string), string type = default(string), IList<string> tags = default(IList<string>), bool? secret = default(bool?), KeyVaultContractCreateProperties keyVault = default(KeyVaultContractCreateProperties))
             : base(id, name, type)
         {
             Tags = tags;

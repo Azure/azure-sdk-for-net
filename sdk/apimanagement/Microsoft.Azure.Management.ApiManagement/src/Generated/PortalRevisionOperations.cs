@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         public ApiManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Lists a collection of developer portal revision entities.
+        /// Lists developer portal's revisions.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -297,7 +297,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         }
 
         /// <summary>
-        /// Gets developer portal revision specified by its identifier.
+        /// Gets the developer portal revision specified by its identifier.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -516,7 +516,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         }
 
         /// <summary>
-        /// Gets developer portal revision specified by its identifier.
+        /// Gets the developer portal's revision specified by its identifier.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -756,7 +756,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         }
 
         /// <summary>
-        /// Creates a new developer portal revision.
+        /// Creates a new developer portal's revision by running the portal's
+        /// publishing. The `isCurrent` property indicates if the revision is publicly
+        /// accessible.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -817,7 +819,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         }
 
         /// <summary>
-        /// Creates a new developer portal revision.
+        /// Creates a new developer portal's revision by running the portal's
+        /// publishing. The `isCurrent` property indicates if the revision is publicly
+        /// accessible.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -1345,7 +1349,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         }
 
         /// <summary>
-        /// Lists a collection of developer portal revision entities.
+        /// Lists developer portal's revisions.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

@@ -51,7 +51,8 @@ namespace Microsoft.Azure.Management.ApiManagement
         public ApiManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Returns list of content items
+        /// Lists developer portal's content items specified by the provided content
+        /// type.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -277,7 +278,8 @@ namespace Microsoft.Azure.Management.ApiManagement
         }
 
         /// <summary>
-        /// Returns content item metadata
+        /// Returns the entity state (ETag) version of the developer portal's content
+        /// item specified by its identifier.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -515,7 +517,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         }
 
         /// <summary>
-        /// Returns content item details
+        /// Returns the developer portal's content item specified by its identifier.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -774,7 +776,8 @@ namespace Microsoft.Azure.Management.ApiManagement
         }
 
         /// <summary>
-        /// Creates new content item
+        /// Creates a new developer portal's content item specified by the provided
+        /// content type.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -1064,7 +1067,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         }
 
         /// <summary>
-        /// Removes specified content item.
+        /// Removes the specified developer portal's content item.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -1307,7 +1310,8 @@ namespace Microsoft.Azure.Management.ApiManagement
         }
 
         /// <summary>
-        /// Returns list of content items
+        /// Lists developer portal's content items specified by the provided content
+        /// type.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

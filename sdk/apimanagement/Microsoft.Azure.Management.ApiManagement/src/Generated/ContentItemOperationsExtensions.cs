@@ -22,7 +22,8 @@ namespace Microsoft.Azure.Management.ApiManagement
     public static partial class ContentItemOperationsExtensions
     {
             /// <summary>
-            /// Returns list of content items
+            /// Lists developer portal's content items specified by the provided content
+            /// type.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -42,7 +43,8 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Returns list of content items
+            /// Lists developer portal's content items specified by the provided content
+            /// type.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -68,7 +70,8 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Returns content item metadata
+            /// Returns the entity state (ETag) version of the developer portal's content
+            /// item specified by its identifier.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -91,7 +94,8 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Returns content item metadata
+            /// Returns the entity state (ETag) version of the developer portal's content
+            /// item specified by its identifier.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -120,7 +124,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Returns content item details
+            /// Returns the developer portal's content item specified by its identifier.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -143,7 +147,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Returns content item details
+            /// Returns the developer portal's content item specified by its identifier.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -172,7 +176,8 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Creates new content item
+            /// Creates a new developer portal's content item specified by the provided
+            /// content type.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -199,7 +204,8 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Creates new content item
+            /// Creates a new developer portal's content item specified by the provided
+            /// content type.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -232,7 +238,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Removes specified content item.
+            /// Removes the specified developer portal's content item.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -260,7 +266,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Removes specified content item.
+            /// Removes the specified developer portal's content item.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -291,7 +297,8 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Returns list of content items
+            /// Lists developer portal's content items specified by the provided content
+            /// type.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -305,7 +312,8 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Returns list of content items
+            /// Lists developer portal's content items specified by the provided content
+            /// type.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

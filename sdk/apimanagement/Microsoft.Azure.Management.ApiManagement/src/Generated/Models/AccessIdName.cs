@@ -17,6 +17,6 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     public static class AccessIdName
     {
         public const string Access = "access";
-        public const string GetAccess = "getAccess";
+        public const string GitAccess = "gitAccess";
     }
 }

@@ -24,7 +24,8 @@ namespace Microsoft.Azure.Management.ApiManagement
     public partial interface IContentItemOperations
     {
         /// <summary>
-        /// Returns list of content items
+        /// Lists developer portal's content items specified by the provided
+        /// content type.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -52,7 +53,8 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </exception>
         Task<AzureOperationResponse<IPage<ContentItemContract>>> ListByServiceWithHttpMessagesAsync(string resourceGroupName, string serviceName, string contentTypeId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Returns content item metadata
+        /// Returns the entity state (ETag) version of the developer portal's
+        /// content item specified by its identifier.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -80,7 +82,8 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </exception>
         Task<AzureOperationHeaderResponse<ContentItemGetEntityTagHeaders>> GetEntityTagWithHttpMessagesAsync(string resourceGroupName, string serviceName, string contentTypeId, string contentItemId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Returns content item details
+        /// Returns the developer portal's content item specified by its
+        /// identifier.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -111,7 +114,8 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </exception>
         Task<AzureOperationResponse<ContentItemContract,ContentItemGetHeaders>> GetWithHttpMessagesAsync(string resourceGroupName, string serviceName, string contentTypeId, string contentItemId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates new content item
+        /// Creates a new developer portal's content item specified by the
+        /// provided content type.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -146,7 +150,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </exception>
         Task<AzureOperationResponse<ContentItemContract,ContentItemCreateOrUpdateHeaders>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string contentTypeId, string contentItemId, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Removes specified content item.
+        /// Removes the specified developer portal's content item.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -179,7 +183,8 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string serviceName, string contentTypeId, string contentItemId, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Returns list of content items
+        /// Lists developer portal's content items specified by the provided
+        /// content type.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
