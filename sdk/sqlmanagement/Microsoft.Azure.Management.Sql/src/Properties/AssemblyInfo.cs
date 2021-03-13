@@ -22,4 +22,4 @@ using System.Resources;
 [assembly: AssemblyTitle("Microsoft Azure SQL Management Library")]
 [assembly: AssemblyDescription("Provides management functionality for Microsoft Azure SQL.")]
 [assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.49.0.0")]
+[assembly: AssemblyFileVersion("1.50.0.0")]
