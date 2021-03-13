@@ -12,6 +12,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -24,6 +25,7 @@ namespace Azure.Core
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     [DebuggerTypeProxy(typeof(JsonDataDebuggerProxy))]
+    [JsonConverter(typeof(JsonConverter))]
     public class JsonData : IDynamicMetaObjectProvider, IEquatable<JsonData>
     {
         private readonly JsonValueKind _kind;
@@ -1299,6 +1301,24 @@ namespace Azure.Core
                         yield return  property;
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// The default searlization behavior for <see cref="JsonData"/> is not the behavior we want, we want to use
+        /// the underlying JSON value that <see cref="JsonData"/> wraps, instead of using the default beahvior for
+        /// POCOs.
+        /// </summary>
+        private class JsonConverter : JsonConverter<JsonData>
+        {
+            public override JsonData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                return new JsonData(JsonDocument.ParseValue(ref reader));
+            }
+
+            public override void Write(Utf8JsonWriter writer, JsonData value, JsonSerializerOptions options)
+            {
+                value.WriteTo(writer);
             }
         }
     }
