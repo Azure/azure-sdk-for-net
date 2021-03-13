@@ -30,7 +30,7 @@ namespace Azure.Communication.Pipeline
                 _ => base.SanitizeVariable(variableName, environmentVariableValue)
             };
 
-        private static string SanitizeConnectionString(string connectionString)
+        protected static string SanitizeConnectionString(string connectionString)
         {
             const string accessKey = "accesskey";
             const string someBase64String = "Kg==";

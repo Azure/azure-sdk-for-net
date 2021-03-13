@@ -101,7 +101,7 @@ namespace Azure.Iot.TimeSeriesInsights
     public partial class HierarchiesBatchResponse
     {
         internal HierarchiesBatchResponse() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.Iot.TimeSeriesInsights.TsiErrorBody> Delete { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Iot.TimeSeriesInsights.InstancesOperationError> Delete { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Iot.TimeSeriesInsights.TimeSeriesHierarchyOrError> Get { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Iot.TimeSeriesInsights.TimeSeriesHierarchyOrError> Put { get { throw null; } }
     }
@@ -137,12 +137,6 @@ namespace Azure.Iot.TimeSeriesInsights
         public System.Collections.Generic.IReadOnlyList<object> TimeSeriesId { get { throw null; } }
         public string TypeId { get { throw null; } }
     }
-    public partial class InstanceOrError
-    {
-        internal InstanceOrError() { }
-        public Azure.Iot.TimeSeriesInsights.TsiErrorBody Error { get { throw null; } }
-        public Azure.Iot.TimeSeriesInsights.TimeSeriesInstance Instance { get { throw null; } }
-    }
     public partial class InstancesBatchRequest
     {
         public InstancesBatchRequest() { }
@@ -154,22 +148,53 @@ namespace Azure.Iot.TimeSeriesInsights
     public partial class InstancesBatchResponse
     {
         internal InstancesBatchResponse() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.Iot.TimeSeriesInsights.TsiErrorBody> Delete { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Iot.TimeSeriesInsights.InstanceOrError> Get { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Iot.TimeSeriesInsights.InstanceOrError> Put { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Iot.TimeSeriesInsights.InstanceOrError> Update { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Iot.TimeSeriesInsights.InstancesOperationError> Delete { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Iot.TimeSeriesInsights.InstancesOperationResult> Get { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Iot.TimeSeriesInsights.InstancesOperationResult> Put { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Iot.TimeSeriesInsights.InstancesOperationResult> Update { get { throw null; } }
+    }
+    public partial class InstancesOperationError : System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IReadOnlyCollection<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IReadOnlyDictionary<string, object>, System.Collections.IEnumerable
+    {
+        internal InstancesOperationError() { }
+        public string Code { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Iot.TimeSeriesInsights.InstancesOperationErrorDetails> Details { get { throw null; } }
+        public Azure.Iot.TimeSeriesInsights.InstancesOperationError InnerError { get { throw null; } }
+        public object this[string key] { get { throw null; } }
+        public System.Collections.Generic.IEnumerable<string> Keys { get { throw null; } }
+        public string Message { get { throw null; } }
+        int System.Collections.Generic.IReadOnlyCollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.Count { get { throw null; } }
+        public string Target { get { throw null; } }
+        public System.Collections.Generic.IEnumerable<object> Values { get { throw null; } }
+        public bool ContainsKey(string key) { throw null; }
+        public System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, object>> GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+        public bool TryGetValue(string key, out object value) { throw null; }
+    }
+    public partial class InstancesOperationErrorDetails : System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IReadOnlyCollection<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IReadOnlyDictionary<string, object>, System.Collections.IEnumerable
+    {
+        internal InstancesOperationErrorDetails() { }
+        public string Code { get { throw null; } }
+        public object this[string key] { get { throw null; } }
+        public System.Collections.Generic.IEnumerable<string> Keys { get { throw null; } }
+        public string Message { get { throw null; } }
+        int System.Collections.Generic.IReadOnlyCollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.Count { get { throw null; } }
+        public System.Collections.Generic.IEnumerable<object> Values { get { throw null; } }
+        public bool ContainsKey(string key) { throw null; }
+        public System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, object>> GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+        public bool TryGetValue(string key, out object value) { throw null; }
+    }
+    public partial class InstancesOperationResult
+    {
+        internal InstancesOperationResult() { }
+        public Azure.Iot.TimeSeriesInsights.InstancesOperationError Error { get { throw null; } }
+        public Azure.Iot.TimeSeriesInsights.TimeSeriesInstance Instance { get { throw null; } }
     }
     public partial class InstancesRequestBatchGetOrDelete
     {
         public InstancesRequestBatchGetOrDelete() { }
         public System.Collections.Generic.IList<string> Names { get { throw null; } }
-        public System.Collections.Generic.IList<System.Collections.Generic.IList<object>> TimeSeriesIds { get { throw null; } }
-    }
-    public partial class InstancesSearchStringSuggestion
-    {
-        internal InstancesSearchStringSuggestion() { }
-        public string HighlightedSearchString { get { throw null; } }
-        public string SearchString { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Iot.TimeSeriesInsights.TimeSeriesId> TimeSeriesIds { get { throw null; } }
     }
     public partial class InstancesSortParameter
     {
@@ -185,7 +210,7 @@ namespace Azure.Iot.TimeSeriesInsights
     public partial class InstancesSuggestResponse
     {
         internal InstancesSuggestResponse() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.Iot.TimeSeriesInsights.InstancesSearchStringSuggestion> Suggestions { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Iot.TimeSeriesInsights.SearchSuggestion> Suggestions { get { throw null; } }
     }
     public partial class InterpolationOperation
     {
@@ -294,6 +319,12 @@ namespace Azure.Iot.TimeSeriesInsights
         public Azure.Iot.TimeSeriesInsights.SearchHierarchyNodesResponse HierarchyNodes { get { throw null; } }
         public Azure.Iot.TimeSeriesInsights.SearchInstancesResponse Instances { get { throw null; } }
     }
+    public partial class SearchSuggestion
+    {
+        internal SearchSuggestion() { }
+        public string HighlightedSearchString { get { throw null; } }
+        public string SearchString { get { throw null; } }
+    }
     public partial class TimeSeriesAggregateCategory
     {
         public TimeSeriesAggregateCategory(string label, System.Collections.Generic.IEnumerable<object> values) { }
@@ -320,8 +351,16 @@ namespace Azure.Iot.TimeSeriesInsights
     public partial class TimeSeriesHierarchyOrError
     {
         internal TimeSeriesHierarchyOrError() { }
-        public Azure.Iot.TimeSeriesInsights.TsiErrorBody Error { get { throw null; } }
+        public Azure.Iot.TimeSeriesInsights.InstancesOperationError Error { get { throw null; } }
         public Azure.Iot.TimeSeriesInsights.TimeSeriesHierarchy Hierarchy { get { throw null; } }
+    }
+    public partial class TimeSeriesId
+    {
+        public TimeSeriesId(string key1) { }
+        public TimeSeriesId(string key1, string key2) { }
+        public TimeSeriesId(string key1, string key2, string key3) { }
+        public string[] ToArray() { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class TimeSeriesIdProperty
     {
@@ -334,8 +373,30 @@ namespace Azure.Iot.TimeSeriesInsights
         protected TimeSeriesInsightsClient() { }
         public TimeSeriesInsightsClient(string environmentFqdn, Azure.Core.TokenCredential credential) { }
         public TimeSeriesInsightsClient(string environmentFqdn, Azure.Core.TokenCredential credential, Azure.Iot.TimeSeriesInsights.TimeSeriesInsightsClientOptions options) { }
+        public virtual Azure.Response<Azure.Iot.TimeSeriesInsights.InstancesOperationError[]> CreateOrReplaceTimeSeriesInstances(System.Collections.Generic.IEnumerable<Azure.Iot.TimeSeriesInsights.TimeSeriesInstance> timeSeriesInstances, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Iot.TimeSeriesInsights.InstancesOperationError[]>> CreateOrReplaceTimeSeriesInstancesAsync(System.Collections.Generic.IEnumerable<Azure.Iot.TimeSeriesInsights.TimeSeriesInstance> timeSeriesInstances, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Iot.TimeSeriesInsights.InstancesOperationError[]> DeleteInstances(System.Collections.Generic.IEnumerable<Azure.Iot.TimeSeriesInsights.TimeSeriesId> timeSeriesIds, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Iot.TimeSeriesInsights.InstancesOperationError[]> DeleteInstances(System.Collections.Generic.IEnumerable<string> timeSeriesNames, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Iot.TimeSeriesInsights.InstancesOperationError[]>> DeleteInstancesAsync(System.Collections.Generic.IEnumerable<Azure.Iot.TimeSeriesInsights.TimeSeriesId> timeSeriesIds, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Iot.TimeSeriesInsights.InstancesOperationError[]>> DeleteInstancesAsync(System.Collections.Generic.IEnumerable<string> timeSeriesNames, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Iot.TimeSeriesInsights.InstancesOperationResult[]> GetInstances(System.Collections.Generic.IEnumerable<Azure.Iot.TimeSeriesInsights.TimeSeriesId> timeSeriesIds, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Iot.TimeSeriesInsights.InstancesOperationResult[]> GetInstances(System.Collections.Generic.IEnumerable<string> timeSeriesNames, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Iot.TimeSeriesInsights.TimeSeriesInstance> GetInstances(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Iot.TimeSeriesInsights.InstancesOperationResult[]>> GetInstancesAsync(System.Collections.Generic.IEnumerable<Azure.Iot.TimeSeriesInsights.TimeSeriesId> timeSeriesIds, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Iot.TimeSeriesInsights.InstancesOperationResult[]>> GetInstancesAsync(System.Collections.Generic.IEnumerable<string> timeSeriesNames, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Iot.TimeSeriesInsights.TimeSeriesInstance> GetInstancesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Iot.TimeSeriesInsights.TimeSeriesModelSettings> GetModelSettings(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Iot.TimeSeriesInsights.TimeSeriesModelSettings>> GetModelSettingsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Iot.TimeSeriesInsights.SearchSuggestion[]> GetSearchSuggestions(string searchString, int? maxNumberOfSuggestions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Iot.TimeSeriesInsights.SearchSuggestion[]>> GetSearchSuggestionsAsync(string searchString, int? maxNumberOfSuggestions = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Iot.TimeSeriesInsights.TimeSeriesType> GetTimeSeriesTypes(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Iot.TimeSeriesInsights.TimeSeriesType> GetTimeSeriesTypesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Iot.TimeSeriesInsights.TimeSeriesTypeOperationResult[]> GetTimeSeriesTypesbyId(System.Collections.Generic.IEnumerable<string> timeSeriesTypeIds, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Iot.TimeSeriesInsights.TimeSeriesTypeOperationResult[]>> GetTimeSeriesTypesbyIdAsync(System.Collections.Generic.IEnumerable<string> timeSeriesTypeIds, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Iot.TimeSeriesInsights.TimeSeriesTypeOperationResult[]> GetTimeSeriesTypesbyNames(System.Collections.Generic.IEnumerable<string> timeSeriesTypeNames, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Iot.TimeSeriesInsights.TimeSeriesTypeOperationResult[]>> GetTimeSeriesTypesbyNamesAsync(System.Collections.Generic.IEnumerable<string> timeSeriesTypeNames, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Iot.TimeSeriesInsights.InstancesOperationResult[]> ReplaceTimeSeriesInstances(System.Collections.Generic.IEnumerable<Azure.Iot.TimeSeriesInsights.TimeSeriesInstance> timeSeriesInstances, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Iot.TimeSeriesInsights.InstancesOperationResult[]>> ReplaceTimeSeriesInstancesAsync(System.Collections.Generic.IEnumerable<Azure.Iot.TimeSeriesInsights.TimeSeriesInstance> timeSeriesInstances, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Iot.TimeSeriesInsights.TimeSeriesModelSettings> UpdateModelSettingsDefaultTypeId(string defaultTypeId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Iot.TimeSeriesInsights.TimeSeriesModelSettings>> UpdateModelSettingsDefaultTypeIdAsync(string defaultTypeId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Iot.TimeSeriesInsights.TimeSeriesModelSettings> UpdateModelSettingsName(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -352,12 +413,12 @@ namespace Azure.Iot.TimeSeriesInsights
     }
     public partial class TimeSeriesInstance
     {
-        public TimeSeriesInstance(System.Collections.Generic.IEnumerable<object> timeSeriesId, string typeId) { }
+        public TimeSeriesInstance(Azure.Iot.TimeSeriesInsights.TimeSeriesId timeSeriesId, string typeId) { }
         public string Description { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> HierarchyIds { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, object> InstanceFields { get { throw null; } }
         public string Name { get { throw null; } set { } }
-        public System.Collections.Generic.IList<object> TimeSeriesId { get { throw null; } }
+        public Azure.Iot.TimeSeriesInsights.TimeSeriesId TimeSeriesId { get { throw null; } }
         public string TypeId { get { throw null; } set { } }
     }
     public partial class TimeSeriesModelSettings
@@ -375,47 +436,16 @@ namespace Azure.Iot.TimeSeriesInsights
         public string Name { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.Iot.TimeSeriesInsights.TimeSeriesVariable> Variables { get { throw null; } }
     }
-    public partial class TimeSeriesTypeOrError
+    public partial class TimeSeriesTypeOperationResult
     {
-        internal TimeSeriesTypeOrError() { }
-        public Azure.Iot.TimeSeriesInsights.TsiErrorBody Error { get { throw null; } }
+        internal TimeSeriesTypeOperationResult() { }
+        public Azure.Iot.TimeSeriesInsights.InstancesOperationError Error { get { throw null; } }
         public Azure.Iot.TimeSeriesInsights.TimeSeriesType TimeSeriesType { get { throw null; } }
     }
     public partial class TimeSeriesVariable
     {
         public TimeSeriesVariable() { }
         public Azure.Iot.TimeSeriesInsights.TimeSeriesExpression Filter { get { throw null; } set { } }
-    }
-    public partial class TsiErrorBody : System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IReadOnlyCollection<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IReadOnlyDictionary<string, object>, System.Collections.IEnumerable
-    {
-        internal TsiErrorBody() { }
-        public string Code { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Iot.TimeSeriesInsights.TsiErrorDetails> Details { get { throw null; } }
-        public Azure.Iot.TimeSeriesInsights.TsiErrorBody InnerError { get { throw null; } }
-        public object this[string key] { get { throw null; } }
-        public System.Collections.Generic.IEnumerable<string> Keys { get { throw null; } }
-        public string Message { get { throw null; } }
-        int System.Collections.Generic.IReadOnlyCollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.Count { get { throw null; } }
-        public string Target { get { throw null; } }
-        public System.Collections.Generic.IEnumerable<object> Values { get { throw null; } }
-        public bool ContainsKey(string key) { throw null; }
-        public System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, object>> GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-        public bool TryGetValue(string key, out object value) { throw null; }
-    }
-    public partial class TsiErrorDetails : System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IReadOnlyCollection<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IReadOnlyDictionary<string, object>, System.Collections.IEnumerable
-    {
-        internal TsiErrorDetails() { }
-        public string Code { get { throw null; } }
-        public object this[string key] { get { throw null; } }
-        public System.Collections.Generic.IEnumerable<string> Keys { get { throw null; } }
-        public string Message { get { throw null; } }
-        int System.Collections.Generic.IReadOnlyCollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.Count { get { throw null; } }
-        public System.Collections.Generic.IEnumerable<object> Values { get { throw null; } }
-        public bool ContainsKey(string key) { throw null; }
-        public System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, object>> GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-        public bool TryGetValue(string key, out object value) { throw null; }
     }
     public partial class TypesBatchRequest
     {
@@ -427,9 +457,9 @@ namespace Azure.Iot.TimeSeriesInsights
     public partial class TypesBatchResponse
     {
         internal TypesBatchResponse() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.Iot.TimeSeriesInsights.TsiErrorBody> Delete { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Iot.TimeSeriesInsights.TimeSeriesTypeOrError> Get { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Iot.TimeSeriesInsights.TimeSeriesTypeOrError> Put { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Iot.TimeSeriesInsights.InstancesOperationError> Delete { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Iot.TimeSeriesInsights.TimeSeriesTypeOperationResult> Get { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Iot.TimeSeriesInsights.TimeSeriesTypeOperationResult> Put { get { throw null; } }
     }
     public partial class TypesRequestBatchGetOrDelete
     {

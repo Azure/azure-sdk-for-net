@@ -8,6 +8,9 @@ parameters:
   - name: ArtifactName
     type: string
     default: ""
+  - name: TimeoutInMinutes
+    type: number
+    default: 60
 
 jobs:
   - ${{ if eq(parameters.Daily, false) }}:
@@ -109,6 +112,8 @@ jobs:
       azureCloudArmParameters: "@{ storageEndpointSuffix = 'core.windows.net'; azureCloud = 'AzureCloud'; }"
       azureUSGovernmentArmParameters: "@{ storageEndpointSuffix = 'core.usgovcloudapi.net'; azureCloud = 'AzureUSGovernment'; }"
       azureChinaCloudArmParameters: "@{ storageEndpointSuffix = 'core.chinacloudapi.cn'; azureCloud = 'AzureChinaCloud'; }"
+
+    timeoutInMinutes: ${{ parameters.TimeoutInMinutes }}
 
     pool:
       name: $(Pool)

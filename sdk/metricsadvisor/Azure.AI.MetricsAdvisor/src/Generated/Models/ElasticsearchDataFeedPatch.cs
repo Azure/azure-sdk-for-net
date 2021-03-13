@@ -13,7 +13,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary> Initializes a new instance of ElasticsearchDataFeedPatch. </summary>
         public ElasticsearchDataFeedPatch()
         {
-            DataSourceType = DataFeedDetailPatchDataSourceType.Elasticsearch;
+            DataSourceType = DataFeedSourceType.Elasticsearch;
         }
 
         public ElasticsearchParameter DataSourceParameter { get; set; }

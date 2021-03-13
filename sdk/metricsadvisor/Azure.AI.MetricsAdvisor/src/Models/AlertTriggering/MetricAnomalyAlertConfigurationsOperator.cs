@@ -9,7 +9,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// The operator to be applied between <see cref="MetricAnomalyAlertConfiguration"/>s in the same
     /// <see cref="AnomalyAlertConfiguration"/> instance.
     /// </summary>
-    [CodeGenModel("AnomalyAlertingConfigurationCrossMetricsOperator")]
+    [CodeGenModel("AnomalyAlertingConfigurationLogicType")]
     public readonly partial struct MetricAnomalyAlertConfigurationsOperator
     {
         /// <summary>

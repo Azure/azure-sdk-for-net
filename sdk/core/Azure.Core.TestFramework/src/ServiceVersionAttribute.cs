@@ -6,7 +6,7 @@ using NUnit.Framework;
 
 namespace Azure.Core.TestFramework
 {
-    [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = false)]
+    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
     public class ServiceVersionAttribute : NUnitAttribute
     {
         public object Min { get; set; }

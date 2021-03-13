@@ -51,7 +51,12 @@ List<EventGridEvent> eventsList = new List<EventGridEvent>
         "ExampleEventSubject",
         "Example.EventType",
         "1.0",
-        "This is the event data")
+        "This is the data for the first event"),
+   new EventGridEvent(
+        "ExampleEventSubject",
+        "Example.EventType",
+        "1.0",
+        "This is the data for the second event")
 };
 
 // Send the events
