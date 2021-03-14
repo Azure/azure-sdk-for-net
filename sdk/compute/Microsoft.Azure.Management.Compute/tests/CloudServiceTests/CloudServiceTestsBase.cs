@@ -42,7 +42,7 @@ namespace Compute.Tests
         public CloudServiceTestsBase()
         {
             originalLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
-            Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2euap");
+            Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2");
         }
 
         public void Dispose()
