@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.AI.DocumentTranslation.Models
 {
     /// <summary> The FileFormat. </summary>
-    internal partial class FileFormat
+    public partial class FileFormat
     {
         /// <summary> Initializes a new instance of FileFormat. </summary>
         internal FileFormat()

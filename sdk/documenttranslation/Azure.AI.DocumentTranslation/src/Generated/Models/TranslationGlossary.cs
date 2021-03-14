@@ -13,7 +13,7 @@ namespace Azure.AI.DocumentTranslation.Models
     public partial class TranslationGlossary
     {
         /// <summary> Initializes a new instance of TranslationGlossary. </summary>
-        /// <param name="glossaryUrl">
+        /// <param name="glossaryUri">
         /// Location of the glossary.
         /// 
         /// We will use the file extension to extract the formatting if the format parameter is not supplied.
@@ -22,15 +22,15 @@ namespace Azure.AI.DocumentTranslation.Models
         /// 
         /// If the translation language pair is not present in the glossary, it will not be applied.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryUrl"/> is null. </exception>
-        public TranslationGlossary(Uri glossaryUrl)
+        /// <exception cref="ArgumentNullException"> <paramref name="glossaryUri"/> is null. </exception>
+        public TranslationGlossary(Uri glossaryUri)
         {
-            if (glossaryUrl == null)
+            if (glossaryUri == null)
             {
-                throw new ArgumentNullException(nameof(glossaryUrl));
+                throw new ArgumentNullException(nameof(glossaryUri));
             }
 
-            GlossaryUrl = glossaryUrl;
+            GlossaryUri = glossaryUri;
         }
         /// <summary> Version. </summary>
         public string Version { get; set; }

@@ -13,24 +13,24 @@ namespace Azure.AI.DocumentTranslation.Models
     public partial class TranslationStatusDetail
     {
         /// <summary> Initializes a new instance of TranslationStatusDetail. </summary>
-        /// <param name="id"> Id of the operation. </param>
+        /// <param name="translationId"> Id of the operation. </param>
         /// <param name="createdOn"> Operation created date time. </param>
         /// <param name="lastModified"> Date time in which the operation&apos;s status has been updated. </param>
         /// <param name="status"> List of possible statuses for job or document. </param>
         /// <param name="summary"> . </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="summary"/> is null. </exception>
-        internal TranslationStatusDetail(string id, DateTimeOffset createdOn, DateTimeOffset lastModified, TranslationStatus status, StatusSummary summary)
+        /// <exception cref="ArgumentNullException"> <paramref name="translationId"/> or <paramref name="summary"/> is null. </exception>
+        internal TranslationStatusDetail(string translationId, DateTimeOffset createdOn, DateTimeOffset lastModified, TranslationStatus status, StatusSummary summary)
         {
-            if (id == null)
+            if (translationId == null)
             {
-                throw new ArgumentNullException(nameof(id));
+                throw new ArgumentNullException(nameof(translationId));
             }
             if (summary == null)
             {
                 throw new ArgumentNullException(nameof(summary));
             }
 
-            Id = id;
+            TranslationId = translationId;
             CreatedOn = createdOn;
             LastModified = lastModified;
             Status = status;
@@ -38,15 +38,15 @@ namespace Azure.AI.DocumentTranslation.Models
         }
 
         /// <summary> Initializes a new instance of TranslationStatusDetail. </summary>
-        /// <param name="id"> Id of the operation. </param>
+        /// <param name="translationId"> Id of the operation. </param>
         /// <param name="createdOn"> Operation created date time. </param>
         /// <param name="lastModified"> Date time in which the operation&apos;s status has been updated. </param>
         /// <param name="status"> List of possible statuses for job or document. </param>
         /// <param name="error"> This contains an outer error with error code, message, details, target and an inner error with more descriptive details. </param>
         /// <param name="summary"> . </param>
-        internal TranslationStatusDetail(string id, DateTimeOffset createdOn, DateTimeOffset lastModified, TranslationStatus status, DocumentTranslationError error, StatusSummary summary)
+        internal TranslationStatusDetail(string translationId, DateTimeOffset createdOn, DateTimeOffset lastModified, TranslationStatus status, DocumentTranslationError error, StatusSummary summary)
         {
-            Id = id;
+            TranslationId = translationId;
             CreatedOn = createdOn;
             LastModified = lastModified;
             Status = status;

@@ -16,7 +16,7 @@ namespace Azure.AI.DocumentTranslation.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("glossaryUrl");
-            writer.WriteStringValue(GlossaryUrl.AbsoluteUri);
+            writer.WriteStringValue(GlossaryUri.AbsoluteUri);
             if (Optional.IsDefined(FormatVersion))
             {
                 writer.WritePropertyName("format");

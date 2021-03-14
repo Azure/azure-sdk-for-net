@@ -11,15 +11,14 @@ namespace Azure.AI.DocumentTranslation.Models
     {
         /// <summary> Document Id. </summary>
         [CodeGenMember("Id")]
-        public string Id { get; }
-
+        public string DocumentId { get; }
         /// <summary> Location of the document or folder. </summary>
         [CodeGenMember("Path")]
-        public Uri Url { get; }
+        public Uri LocationUri { get; }
 
         /// <summary> Progress of the translation if available. </summary>
         [CodeGenMember("Progress")]
-        public float TranslationProgress { get; }
+        public float TranslationProgressPercentage { get; }
 
         /// <summary> To language. </summary>
         [CodeGenMember("To")]

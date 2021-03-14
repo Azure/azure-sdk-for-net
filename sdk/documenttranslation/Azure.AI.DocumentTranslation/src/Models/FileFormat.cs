@@ -5,8 +5,8 @@ using Azure.Core;
 
 namespace Azure.AI.DocumentTranslation.Models
 {
-    [CodeGenModel("ErrorCodeV2")]
-    public readonly partial struct DocumentTranslationErrorCode
+    [CodeGenModel("FileFormat")]
+    public partial class FileFormat
     {
     }
 }

@@ -11,34 +11,37 @@ namespace Azure.AI.DocumentTranslation.Models
     public partial class TranslationTarget
     {
         [CodeGenMember("StorageSource")]
-        internal string StorageSource { get; set;}
+        internal string StorageSource { get; set; }
 
         /// <summary> Location of the folder / container with your documents. </summary>
         [CodeGenMember("TargetUrl")]
-        public Uri TargetUrl { get; }
+        public Uri TargetUri { get; }
+
+        /// <summary> Target Language. </summary>
+        public string LanguageCode { get; }
 
         /// <summary> Initializes a new instance of TargetInput. </summary>
-        /// <param name="targetUrl"> Location of the folder / container with your documents. </param>
-        /// <param name="language"> Target Language. </param>
-        /// <param name="glossaries"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetUrl"/> or <paramref name="language"/> is null. </exception>
-        public TranslationTarget(Uri targetUrl, string language, IList<TranslationGlossary> glossaries)
+        /// <param name="targetUri"> Location of the folder / container with your documents. </param>
+        /// <param name="languageCode"> Target Language. </param>
+        /// <param name="glossaries"> List of <see cref="TranslationGlossary"/>. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetUri"/> or <paramref name="languageCode"/> is null. </exception>
+        public TranslationTarget(Uri targetUri, string languageCode, IList<TranslationGlossary> glossaries)
         {
-            if (targetUrl == null)
+            if (targetUri == null)
             {
-                throw new ArgumentNullException(nameof(targetUrl));
+                throw new ArgumentNullException(nameof(targetUri));
             }
-            if (language == null)
+            if (languageCode == null)
             {
-                throw new ArgumentNullException(nameof(language));
+                throw new ArgumentNullException(nameof(languageCode));
             }
             if (glossaries == null)
             {
                 throw new ArgumentNullException(nameof(glossaries));
             }
 
-            TargetUrl = targetUrl;
-            Language = language;
+            TargetUri = targetUri;
+            LanguageCode = languageCode;
             Glossaries = glossaries;
         }
     }

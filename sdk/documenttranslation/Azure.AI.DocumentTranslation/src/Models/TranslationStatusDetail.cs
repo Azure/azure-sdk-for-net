@@ -11,7 +11,7 @@ namespace Azure.AI.DocumentTranslation.Models
     {
         /// <summary> Id of the operation. </summary>
         [CodeGenMember("Id")]
-        public string Id { get; }
+        public string TranslationId { get; }
 
         /// <summary> Operation created date time. </summary>
         [CodeGenMember("CreatedDateTimeUtc")]

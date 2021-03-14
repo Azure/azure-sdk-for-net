@@ -26,7 +26,7 @@ namespace Azure.AI.DocumentTranslation.Models
         }
 
         /// <summary> Initializes a new instance of DocumentTranslationError. </summary>
-        /// <param name="code"> Enums containing high level error codes. </param>
+        /// <param name="errorCode"> Enums containing high level error codes. </param>
         /// <param name="message"> Gets high level error message. </param>
         /// <param name="target">
         /// Gets the source of the error.
@@ -38,16 +38,13 @@ namespace Azure.AI.DocumentTranslation.Models
         /// 
         /// This contains required properties ErrorCode, message and optional properties target, details(key value pair), inner error(this can be nested).
         /// </param>
-        internal DocumentTranslationError(DocumentTranslationErrorCode? code, string message, string target, DocumentTranslationInnerError innerError)
+        internal DocumentTranslationError(DocumentTranslationErrorCode? errorCode, string message, string target, DocumentTranslationInnerError innerError)
         {
-            Code = code;
+            ErrorCode = errorCode;
             Message = message;
             Target = target;
             InnerError = innerError;
         }
-
-        /// <summary> Enums containing high level error codes. </summary>
-        public DocumentTranslationErrorCode? Code { get; }
         /// <summary> Gets high level error message. </summary>
         public string Message { get; }
         /// <summary>

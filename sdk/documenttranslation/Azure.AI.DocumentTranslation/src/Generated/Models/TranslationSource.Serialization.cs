@@ -16,16 +16,16 @@ namespace Azure.AI.DocumentTranslation.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("sourceUrl");
-            writer.WriteStringValue(SourceUrl.AbsoluteUri);
+            writer.WriteStringValue(SourceUri.AbsoluteUri);
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter");
                 writer.WriteObjectValue(Filter);
             }
-            if (Optional.IsDefined(Language))
+            if (Optional.IsDefined(LanguageCode))
             {
                 writer.WritePropertyName("language");
-                writer.WriteStringValue(Language);
+                writer.WriteStringValue(LanguageCode);
             }
             if (Optional.IsDefined(StorageSource))
             {

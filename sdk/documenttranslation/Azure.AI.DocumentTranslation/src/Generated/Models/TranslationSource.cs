@@ -13,22 +13,16 @@ namespace Azure.AI.DocumentTranslation.Models
     public partial class TranslationSource
     {
         /// <summary> Initializes a new instance of TranslationSource. </summary>
-        /// <param name="sourceUrl"> Location of the folder / container or single file with your documents. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceUrl"/> is null. </exception>
-        public TranslationSource(Uri sourceUrl)
+        /// <param name="sourceUri"> Location of the folder / container or single file with your documents. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceUri"/> is null. </exception>
+        public TranslationSource(Uri sourceUri)
         {
-            if (sourceUrl == null)
+            if (sourceUri == null)
             {
-                throw new ArgumentNullException(nameof(sourceUrl));
+                throw new ArgumentNullException(nameof(sourceUri));
             }
 
-            SourceUrl = sourceUrl;
+            SourceUri = sourceUri;
         }
-        /// <summary>
-        /// Language code
-        /// 
-        /// If none is specified, we will perform auto detect on the document.
-        /// </summary>
-        public string Language { get; set; }
     }
 }

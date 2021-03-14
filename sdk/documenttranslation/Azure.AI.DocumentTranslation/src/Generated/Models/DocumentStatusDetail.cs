@@ -13,58 +13,58 @@ namespace Azure.AI.DocumentTranslation.Models
     public partial class DocumentStatusDetail
     {
         /// <summary> Initializes a new instance of DocumentStatusDetail. </summary>
-        /// <param name="url"> Location of the document or folder. </param>
+        /// <param name="locationUri"> Location of the document or folder. </param>
         /// <param name="createdOn"> Operation created date time. </param>
         /// <param name="lastModified"> Date time in which the operation&apos;s status has been updated. </param>
         /// <param name="status"> List of possible statuses for job or document. </param>
         /// <param name="translateTo"> To language. </param>
-        /// <param name="translationProgress"> Progress of the translation if available. </param>
-        /// <param name="id"> Document Id. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/>, <paramref name="translateTo"/>, or <paramref name="id"/> is null. </exception>
-        internal DocumentStatusDetail(Uri url, DateTimeOffset createdOn, DateTimeOffset lastModified, TranslationStatus status, string translateTo, float translationProgress, string id)
+        /// <param name="translationProgressPercentage"> Progress of the translation if available. </param>
+        /// <param name="documentId"> Document Id. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="locationUri"/>, <paramref name="translateTo"/>, or <paramref name="documentId"/> is null. </exception>
+        internal DocumentStatusDetail(Uri locationUri, DateTimeOffset createdOn, DateTimeOffset lastModified, TranslationStatus status, string translateTo, float translationProgressPercentage, string documentId)
         {
-            if (url == null)
+            if (locationUri == null)
             {
-                throw new ArgumentNullException(nameof(url));
+                throw new ArgumentNullException(nameof(locationUri));
             }
             if (translateTo == null)
             {
                 throw new ArgumentNullException(nameof(translateTo));
             }
-            if (id == null)
+            if (documentId == null)
             {
-                throw new ArgumentNullException(nameof(id));
+                throw new ArgumentNullException(nameof(documentId));
             }
 
-            Url = url;
+            LocationUri = locationUri;
             CreatedOn = createdOn;
             LastModified = lastModified;
             Status = status;
             TranslateTo = translateTo;
-            TranslationProgress = translationProgress;
-            Id = id;
+            TranslationProgressPercentage = translationProgressPercentage;
+            DocumentId = documentId;
         }
 
         /// <summary> Initializes a new instance of DocumentStatusDetail. </summary>
-        /// <param name="url"> Location of the document or folder. </param>
+        /// <param name="locationUri"> Location of the document or folder. </param>
         /// <param name="createdOn"> Operation created date time. </param>
         /// <param name="lastModified"> Date time in which the operation&apos;s status has been updated. </param>
         /// <param name="status"> List of possible statuses for job or document. </param>
         /// <param name="translateTo"> To language. </param>
         /// <param name="error"> This contains an outer error with error code, message, details, target and an inner error with more descriptive details. </param>
-        /// <param name="translationProgress"> Progress of the translation if available. </param>
-        /// <param name="id"> Document Id. </param>
+        /// <param name="translationProgressPercentage"> Progress of the translation if available. </param>
+        /// <param name="documentId"> Document Id. </param>
         /// <param name="characterCharged"> Character charged by the API. </param>
-        internal DocumentStatusDetail(Uri url, DateTimeOffset createdOn, DateTimeOffset lastModified, TranslationStatus status, string translateTo, DocumentTranslationError error, float translationProgress, string id, long? characterCharged)
+        internal DocumentStatusDetail(Uri locationUri, DateTimeOffset createdOn, DateTimeOffset lastModified, TranslationStatus status, string translateTo, DocumentTranslationError error, float translationProgressPercentage, string documentId, long? characterCharged)
         {
-            Url = url;
+            LocationUri = locationUri;
             CreatedOn = createdOn;
             LastModified = lastModified;
             Status = status;
             TranslateTo = translateTo;
             Error = error;
-            TranslationProgress = translationProgress;
-            Id = id;
+            TranslationProgressPercentage = translationProgressPercentage;
+            DocumentId = documentId;
             CharacterCharged = characterCharged;
         }
         /// <summary> List of possible statuses for job or document. </summary>
