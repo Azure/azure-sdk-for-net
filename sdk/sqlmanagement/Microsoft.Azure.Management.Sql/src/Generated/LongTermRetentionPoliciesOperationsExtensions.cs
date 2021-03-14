@@ -17,9 +17,9 @@ namespace Microsoft.Azure.Management.Sql
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for BackupLongTermRetentionPoliciesOperations.
+    /// Extension methods for LongTermRetentionPoliciesOperations.
     /// </summary>
-    public static partial class BackupLongTermRetentionPoliciesOperationsExtensions
+    public static partial class LongTermRetentionPoliciesOperationsExtensions
     {
             /// <summary>
             /// Gets a database's long term retention policy.
@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='databaseName'>
             /// The name of the database.
             /// </param>
-            public static BackupLongTermRetentionPolicy Get(this IBackupLongTermRetentionPoliciesOperations operations, string resourceGroupName, string serverName, string databaseName)
+            public static LongTermRetentionPolicy Get(this ILongTermRetentionPoliciesOperations operations, string resourceGroupName, string serverName, string databaseName)
             {
                 return operations.GetAsync(resourceGroupName, serverName, databaseName).GetAwaiter().GetResult();
             }
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BackupLongTermRetentionPolicy> GetAsync(this IBackupLongTermRetentionPoliciesOperations operations, string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<LongTermRetentionPolicy> GetAsync(this ILongTermRetentionPoliciesOperations operations, string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='parameters'>
             /// The long term retention policy info.
             /// </param>
-            public static BackupLongTermRetentionPolicy CreateOrUpdate(this IBackupLongTermRetentionPoliciesOperations operations, string resourceGroupName, string serverName, string databaseName, BackupLongTermRetentionPolicy parameters)
+            public static LongTermRetentionPolicy CreateOrUpdate(this ILongTermRetentionPoliciesOperations operations, string resourceGroupName, string serverName, string databaseName, LongTermRetentionPolicy parameters)
             {
                 return operations.CreateOrUpdateAsync(resourceGroupName, serverName, databaseName, parameters).GetAwaiter().GetResult();
             }
@@ -115,7 +115,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BackupLongTermRetentionPolicy> CreateOrUpdateAsync(this IBackupLongTermRetentionPoliciesOperations operations, string resourceGroupName, string serverName, string databaseName, BackupLongTermRetentionPolicy parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<LongTermRetentionPolicy> CreateOrUpdateAsync(this ILongTermRetentionPoliciesOperations operations, string resourceGroupName, string serverName, string databaseName, LongTermRetentionPolicy parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -139,7 +139,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='databaseName'>
             /// The name of the database.
             /// </param>
-            public static BackupLongTermRetentionPolicy ListByDatabase(this IBackupLongTermRetentionPoliciesOperations operations, string resourceGroupName, string serverName, string databaseName)
+            public static IPage<LongTermRetentionPolicy> ListByDatabase(this ILongTermRetentionPoliciesOperations operations, string resourceGroupName, string serverName, string databaseName)
             {
                 return operations.ListByDatabaseAsync(resourceGroupName, serverName, databaseName).GetAwaiter().GetResult();
             }
@@ -163,7 +163,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BackupLongTermRetentionPolicy> ListByDatabaseAsync(this IBackupLongTermRetentionPoliciesOperations operations, string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<LongTermRetentionPolicy>> ListByDatabaseAsync(this ILongTermRetentionPoliciesOperations operations, string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByDatabaseWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -190,7 +190,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='parameters'>
             /// The long term retention policy info.
             /// </param>
-            public static BackupLongTermRetentionPolicy BeginCreateOrUpdate(this IBackupLongTermRetentionPoliciesOperations operations, string resourceGroupName, string serverName, string databaseName, BackupLongTermRetentionPolicy parameters)
+            public static LongTermRetentionPolicy BeginCreateOrUpdate(this ILongTermRetentionPoliciesOperations operations, string resourceGroupName, string serverName, string databaseName, LongTermRetentionPolicy parameters)
             {
                 return operations.BeginCreateOrUpdateAsync(resourceGroupName, serverName, databaseName, parameters).GetAwaiter().GetResult();
             }
@@ -217,9 +217,43 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BackupLongTermRetentionPolicy> BeginCreateOrUpdateAsync(this IBackupLongTermRetentionPoliciesOperations operations, string resourceGroupName, string serverName, string databaseName, BackupLongTermRetentionPolicy parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<LongTermRetentionPolicy> BeginCreateOrUpdateAsync(this ILongTermRetentionPoliciesOperations operations, string resourceGroupName, string serverName, string databaseName, LongTermRetentionPolicy parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets a database's long term retention policy.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<LongTermRetentionPolicy> ListByDatabaseNext(this ILongTermRetentionPoliciesOperations operations, string nextPageLink)
+            {
+                return operations.ListByDatabaseNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a database's long term retention policy.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<LongTermRetentionPolicy>> ListByDatabaseNextAsync(this ILongTermRetentionPoliciesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByDatabaseNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

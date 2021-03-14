@@ -12,12 +12,12 @@ namespace Microsoft.Azure.Management.Sql.Models
 {
 
     /// <summary>
-    /// Defines values for DatabaseState1.
+    /// Defines values for TargetBackupStorageRedundancy.
     /// </summary>
-    public static class DatabaseState1
+    public static class TargetBackupStorageRedundancy
     {
-        public const string All = "All";
-        public const string Live = "Live";
-        public const string Deleted = "Deleted";
+        public const string Geo = "Geo";
+        public const string Local = "Local";
+        public const string Zone = "Zone";
     }
 }

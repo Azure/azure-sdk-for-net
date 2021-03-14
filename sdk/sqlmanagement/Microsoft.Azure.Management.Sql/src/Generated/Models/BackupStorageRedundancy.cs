@@ -12,12 +12,12 @@ namespace Microsoft.Azure.Management.Sql.Models
 {
 
     /// <summary>
-    /// Defines values for LongTermRetentionDatabaseState.
+    /// Defines values for BackupStorageRedundancy.
     /// </summary>
-    public static class LongTermRetentionDatabaseState
+    public static class BackupStorageRedundancy
     {
-        public const string All = "All";
-        public const string Live = "Live";
-        public const string Deleted = "Deleted";
+        public const string Geo = "Geo";
+        public const string Local = "Local";
+        public const string Zone = "Zone";
     }
 }

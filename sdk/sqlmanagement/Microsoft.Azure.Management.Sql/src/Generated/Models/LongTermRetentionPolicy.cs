@@ -19,20 +19,18 @@ namespace Microsoft.Azure.Management.Sql.Models
     /// A long term retention policy.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class BackupLongTermRetentionPolicy : ProxyResource
+    public partial class LongTermRetentionPolicy : ProxyResource
     {
         /// <summary>
-        /// Initializes a new instance of the BackupLongTermRetentionPolicy
-        /// class.
+        /// Initializes a new instance of the LongTermRetentionPolicy class.
         /// </summary>
-        public BackupLongTermRetentionPolicy()
+        public LongTermRetentionPolicy()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the BackupLongTermRetentionPolicy
-        /// class.
+        /// Initializes a new instance of the LongTermRetentionPolicy class.
         /// </summary>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
@@ -45,7 +43,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// LTR backup in an ISO 8601 format.</param>
         /// <param name="weekOfYear">The week of year to take the yearly backup
         /// in an ISO 8601 format.</param>
-        public BackupLongTermRetentionPolicy(string id = default(string), string name = default(string), string type = default(string), string weeklyRetention = default(string), string monthlyRetention = default(string), string yearlyRetention = default(string), int? weekOfYear = default(int?))
+        public LongTermRetentionPolicy(string id = default(string), string name = default(string), string type = default(string), string weeklyRetention = default(string), string monthlyRetention = default(string), string yearlyRetention = default(string), int? weekOfYear = default(int?))
             : base(id, name, type)
         {
             WeeklyRetention = weeklyRetention;

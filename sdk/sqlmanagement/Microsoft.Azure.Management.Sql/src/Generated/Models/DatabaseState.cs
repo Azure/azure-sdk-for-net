@@ -12,9 +12,9 @@ namespace Microsoft.Azure.Management.Sql.Models
 {
 
     /// <summary>
-    /// Defines values for DatabaseState3.
+    /// Defines values for DatabaseState.
     /// </summary>
-    public static class DatabaseState3
+    public static class DatabaseState
     {
         public const string All = "All";
         public const string Live = "Live";
