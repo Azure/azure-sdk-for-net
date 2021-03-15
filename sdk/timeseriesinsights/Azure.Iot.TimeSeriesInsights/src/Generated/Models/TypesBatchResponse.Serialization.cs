@@ -15,8 +15,8 @@ namespace Azure.Iot.TimeSeriesInsights
     {
         internal static TypesBatchResponse DeserializeTypesBatchResponse(JsonElement element)
         {
-            Optional<IReadOnlyList<TimeSeriesTypeOrError>> @get = default;
-            Optional<IReadOnlyList<TimeSeriesTypeOrError>> put = default;
+            Optional<IReadOnlyList<TimeSeriesTypeOperationResult>> @get = default;
+            Optional<IReadOnlyList<TimeSeriesTypeOperationResult>> put = default;
             Optional<IReadOnlyList<InstancesOperationError>> delete = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.Iot.TimeSeriesInsights
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<TimeSeriesTypeOrError> array = new List<TimeSeriesTypeOrError>();
+                    List<TimeSeriesTypeOperationResult> array = new List<TimeSeriesTypeOperationResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TimeSeriesTypeOrError.DeserializeTimeSeriesTypeOrError(item));
+                        array.Add(TimeSeriesTypeOperationResult.DeserializeTimeSeriesTypeOperationResult(item));
                     }
                     @get = array;
                     continue;
@@ -42,10 +42,10 @@ namespace Azure.Iot.TimeSeriesInsights
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<TimeSeriesTypeOrError> array = new List<TimeSeriesTypeOrError>();
+                    List<TimeSeriesTypeOperationResult> array = new List<TimeSeriesTypeOperationResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TimeSeriesTypeOrError.DeserializeTimeSeriesTypeOrError(item));
+                        array.Add(TimeSeriesTypeOperationResult.DeserializeTimeSeriesTypeOperationResult(item));
                     }
                     put = array;
                     continue;

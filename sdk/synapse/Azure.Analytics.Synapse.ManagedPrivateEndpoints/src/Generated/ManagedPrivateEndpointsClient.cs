@@ -31,7 +31,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
         /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public ManagedPrivateEndpointsClient(string endpoint, TokenCredential credential, ManagedPrivateEndpointsClientOptions options = null)
+        public ManagedPrivateEndpointsClient(Uri endpoint, TokenCredential credential, ManagedPrivateEndpointsClientOptions options = null)
         {
             if (endpoint == null)
             {
@@ -54,7 +54,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        internal ManagedPrivateEndpointsClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2019-06-01-preview")
+        internal ManagedPrivateEndpointsClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2019-06-01-preview")
         {
             RestClient = new ManagedPrivateEndpointsRestClient(clientDiagnostics, pipeline, endpoint, apiVersion);
             _clientDiagnostics = clientDiagnostics;

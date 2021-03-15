@@ -28,25 +28,25 @@ Executes a batch get, create, update, delete operation on multiple time series t
 
 ```csharp
 /// <summary>
-/// Gets time series insight types by Time Series Id asynchronously.
+/// Gets time series insight types by Time Series Type Ids asynchronously.
 /// </summary>
-/// <param name="timeSeriesIds">List of Ids of the Time Series instances.</param>
+/// <param name="timeSeriesTypeIds">List of Time Series Type Ids of the Time Series Types to return.</param>
 /// <param name="cancellationToken">The cancellation token.</param>
 /// <returns>List of types or error objects corresponding by position to the array in the request. Type object is set when operation is successful and error object is set when operation is unsuccessful.
-public virtual async Task<Response<TimeSeriesTypeOperationResult[]>> GetTimeSeriesTypesAsync(
-    IEnumerable<TimeSeriesId> timeSeriesIds, 
+public virtual async Task<Response<TimeSeriesTypeOperationResult[]>> GetTimeSeriesTypesbyIdAsync(
+    IEnumerable<string> timeSeriesTypeIds, 
     CancellationToken cancellationToken = default)
 ```
 
 ```csharp
 /// <summary>
-/// Gets time series insight types by Time Series Names asynchronously.
+/// Gets time series insight types by Time Series Types Names asynchronously.
 /// </summary>
-/// <param name="timeSeriesNames">List of names of the Time Series instances.</param>
+/// <param name="timeSeriesTypeNames">List of names of the Time Series Types to return.</param>
 /// <param name="cancellationToken">The cancellation token.</param>
 /// <returns>List of types or error objects corresponding by position to the array in the request. Type object is set when operation is successful and error object is set when operation is unsuccessful.
-public virtual async Task<Response<TimeSeriesTypeOperationResult[]>> GetTimeSeriesTypesAsync(
-    IEnumerable<string> timeSeriesNames, 
+public virtual async Task<Response<TimeSeriesTypeOperationResult[]>> GetTimeSeriesTypesbyNamesAsync(
+    IEnumerable<string> timeSeriesTypeNames, 
     CancellationToken cancellationToken = default)
 ```
 
@@ -71,32 +71,32 @@ public virtual async Task<Response<TimeSeriesTypeOperationResult[]>> CreateOrRep
 
 ```csharp
 /// <summary>
-/// Deletes Time Series instances types asynchronously.
+/// Deletes Time Series instances types by Time Series Type Ids asynchronously.
 /// </summary>
-/// <param name="timeSeriesIds">List of Ids of the Time Series instances.</param>
+/// <param name="timeSeriesTypeIds">List of Time Series Type Ids of the Time Series Types to return.</param>
 /// <param name="cancellationToken">The cancellation token.</param>
 /// <returns>
 /// List of error objects corresponding by position to the <paramref name="timeSeriesIds"/> array in the request.
 /// An error object will be set when operation is unsuccessful.
 /// null will be set when the operation is successful.
 /// </returns>
-public virtual async Task<Response<TimeSeriesTypeOperationResult[]>> DeleteTimeSeriesTypesAsync(
-    IEnumerable<TimeSeriesId> timeSeriesIds,
+public virtual async Task<Response<TimeSeriesTypeOperationResult[]>> DeleteTimeSeriesTypesbyIdAsync(
+    IEnumerable<string> timeSeriesTypeIds,
     CancellationToken cancellationToken = default)
 ```
 
 ```csharp
 /// <summary>
-/// Deletes Time Series instances types asynchronously.
+/// Deletes Time Series instances types by Time Series Types Names asynchronously.
 /// </summary>
-/// <param name="timeSeriesNames">List of names of the Time Series instances.</param>
+/// <param name="timeSeriesTypeNames">List of names of the Time Series Types to return.</param>
 /// <param name="cancellationToken">The cancellation token.</param>
 /// <returns>
 /// List of error objects corresponding by position to the <paramref name="timeSeriesNames"/> array in the request.
 /// An error object will be set when operation is unsuccessful.
 /// null will be set when the operation is successful.
 /// </returns>
-public virtual async Task<Response<TimeSeriesTypeOperationResult[]>> DeleteTimeSeriesTypesAsync(
-    IEnumerable<string> timeSeriesNames,
+public virtual async Task<Response<TimeSeriesTypeOperationResult[]>> DeleteTimeSeriesTypesbyNamesAsync(
+    IEnumerable<string> timeSeriesTypeNames,
     CancellationToken cancellationToken = default)
 ```

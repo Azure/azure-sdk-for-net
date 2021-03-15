@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Manifest attributes. </summary>
-    public partial class AcrManifests
+    internal partial class AcrManifests
     {
         /// <summary> Initializes a new instance of AcrManifests. </summary>
         internal AcrManifests()

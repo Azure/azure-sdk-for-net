@@ -7,12 +7,10 @@
 
 using System;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    [JsonConverter(typeof(AcsChatMessageEventBasePropertiesConverter))]
     public partial class AcsChatMessageEventBaseProperties
     {
         internal static AcsChatMessageEventBaseProperties DeserializeAcsChatMessageEventBaseProperties(JsonElement element)
@@ -95,19 +93,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new AcsChatMessageEventBaseProperties(recipientCommunicationIdentifier.Value, transactionId.Value, threadId.Value, messageId.Value, senderCommunicationIdentifier.Value, senderDisplayName.Value, Optional.ToNullable(composeTime), type.Value, Optional.ToNullable(version));
-        }
-
-        internal partial class AcsChatMessageEventBasePropertiesConverter : JsonConverter<AcsChatMessageEventBaseProperties>
-        {
-            public override void Write(Utf8JsonWriter writer, AcsChatMessageEventBaseProperties model, JsonSerializerOptions options)
-            {
-                throw new NotImplementedException();
-            }
-            public override AcsChatMessageEventBaseProperties Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeAcsChatMessageEventBaseProperties(document.RootElement);
-            }
         }
     }
 }

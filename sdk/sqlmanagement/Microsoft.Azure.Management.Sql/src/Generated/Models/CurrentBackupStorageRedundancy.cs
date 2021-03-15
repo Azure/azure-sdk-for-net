@@ -12,12 +12,12 @@ namespace Microsoft.Azure.Management.Sql.Models
 {
 
     /// <summary>
-    /// Defines values for DatabaseState4.
+    /// Defines values for CurrentBackupStorageRedundancy.
     /// </summary>
-    public static class DatabaseState4
+    public static class CurrentBackupStorageRedundancy
     {
-        public const string All = "All";
-        public const string Live = "Live";
-        public const string Deleted = "Deleted";
+        public const string Geo = "Geo";
+        public const string Local = "Local";
+        public const string Zone = "Zone";
     }
 }
