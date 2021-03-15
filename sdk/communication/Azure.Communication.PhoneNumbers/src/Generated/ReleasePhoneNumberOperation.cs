@@ -14,7 +14,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Communication.PhoneNumbers
 {
-    /// <summary> Releases an acquired phone number. </summary>
+    /// <summary> Releases a purchased phone number. </summary>
     public partial class ReleasePhoneNumberOperation : Operation<Response>, IOperationSource<Response>
     {
         private readonly ArmOperationHelpers<Response> _operation;

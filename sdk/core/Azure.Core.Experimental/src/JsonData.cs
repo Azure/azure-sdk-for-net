@@ -12,6 +12,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -23,6 +24,8 @@ namespace Azure.Core
     /// A mutable representation of a JSON value.
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
+    [DebuggerTypeProxy(typeof(JsonDataDebuggerProxy))]
+    [JsonConverter(typeof(JsonConverter))]
     public class JsonData : IDynamicMetaObjectProvider, IEquatable<JsonData>
     {
         private readonly JsonValueKind _kind;
@@ -1140,10 +1143,7 @@ namespace Azure.Core
             return EnsureObject();
         }
 
-        private string DebuggerDisplay
-        {
-            get => $"{{Kind: {_kind}, JSON: {ToJsonString()}}}";
-        }
+        private string DebuggerDisplay => ToJsonString();
 
         private struct Number
         {
@@ -1246,6 +1246,79 @@ namespace Azure.Core
                 BindingRestrictions restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
                 DynamicMetaObject setProperty = new DynamicMetaObject(setPropertyCall, restrictions);
                 return setProperty;
+            }
+        }
+
+        internal class JsonDataDebuggerProxy
+        {
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+            private readonly JsonData _jsonData;
+
+            public JsonDataDebuggerProxy(JsonData jsonData)
+            {
+                _jsonData = jsonData;
+            }
+
+            [DebuggerDisplay("{Value.DebuggerDisplay,nq}", Name = "{Name,nq}")]
+            internal class PropertyMember
+            {
+                [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+                public string? Name { get; set; }
+                [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
+                public JsonData? Value { get; set; }
+            }
+
+            [DebuggerDisplay("{Value,nq}")]
+            internal class SingleMember
+            {
+                public object? Value { get; set; }
+            }
+
+            [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
+            public object Members {
+                get
+                {
+                    if (_jsonData.Kind != JsonValueKind.Array &&
+                        _jsonData.Kind != JsonValueKind.Object)
+                        return new SingleMember() { Value = _jsonData.ToJsonString() };
+
+                    return BuildMembers().ToArray();
+                }}
+
+            private IEnumerable<object> BuildMembers()
+            {
+                if (_jsonData.Kind == JsonValueKind.Object)
+                {
+                    foreach (var property in _jsonData.Properties)
+                    {
+                        yield return new PropertyMember() {Name = property, Value = _jsonData.Get(property)};
+                    }
+                }
+                else if (_jsonData.Kind == JsonValueKind.Array)
+                {
+                    foreach (var property in _jsonData.Items)
+                    {
+                        yield return  property;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// The default searlization behavior for <see cref="JsonData"/> is not the behavior we want, we want to use
+        /// the underlying JSON value that <see cref="JsonData"/> wraps, instead of using the default beahvior for
+        /// POCOs.
+        /// </summary>
+        private class JsonConverter : JsonConverter<JsonData>
+        {
+            public override JsonData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                return new JsonData(JsonDocument.ParseValue(ref reader));
+            }
+
+            public override void Write(Utf8JsonWriter writer, JsonData value, JsonSerializerOptions options)
+            {
+                value.WriteTo(writer);
             }
         }
     }

@@ -30,7 +30,7 @@ namespace Azure.Communication.Chat.Tests.samples
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_CreateChatClient
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_CreateThread
-            var chatParticipant = new ChatParticipant(communicationIdentifier: kimberly)
+            var chatParticipant = new ChatParticipant(identifier: kimberly)
             {
                 DisplayName = "Kim"
             };

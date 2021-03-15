@@ -25,7 +25,6 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Recognize PII Entities actions configurations.
-        /// Note: `CategoriesFilters` will not have an effect on the action. See https://github.com/Azure/azure-sdk-for-net/issues/19237
         /// </summary>
         public IReadOnlyCollection<RecognizePiiEntitiesOptions> RecognizePiiEntitiesOptions { get; set; }
 

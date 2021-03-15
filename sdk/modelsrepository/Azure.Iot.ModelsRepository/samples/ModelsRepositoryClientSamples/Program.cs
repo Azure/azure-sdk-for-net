@@ -32,6 +32,10 @@ namespace Azure.Iot.ModelsRepository.Samples
             // Parser integration samples
             await ParserIntegrationSamples.GetModelsAndParseAsync();
             await ParserIntegrationSamples.ParseAndGetModelsWithExtensionAsync();
+
+            // DtmiConventions utility samples
+            DtmiConventionsSamples.IsValidDtmi();
+            DtmiConventionsSamples.GetModelUri();
         }
     }
 }

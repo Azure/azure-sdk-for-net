@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Communication;
 
 namespace Azure.Communication.Chat
 {
@@ -16,9 +17,9 @@ namespace Azure.Communication.Chat
         /// <param name="id"> Chat thread id. </param>
         /// <param name="topic"> Chat thread topic. </param>
         /// <param name="createdOn"> The timestamp when the chat thread was created. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
-        /// <param name="createdBy"> Id of the chat thread owner. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="topic"/>, or <paramref name="createdBy"/> is null. </exception>
-        internal ChatThreadInternal(string id, string topic, DateTimeOffset createdOn, string createdBy)
+        /// <param name="createdByCommunicationIdentifier"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model must be interpreted as a union: Apart from rawId, at most one further property may be set. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="topic"/>, or <paramref name="createdByCommunicationIdentifier"/> is null. </exception>
+        internal ChatThreadInternal(string id, string topic, DateTimeOffset createdOn, CommunicationIdentifierModel createdByCommunicationIdentifier)
         {
             if (id == null)
             {
@@ -28,29 +29,29 @@ namespace Azure.Communication.Chat
             {
                 throw new ArgumentNullException(nameof(topic));
             }
-            if (createdBy == null)
+            if (createdByCommunicationIdentifier == null)
             {
-                throw new ArgumentNullException(nameof(createdBy));
+                throw new ArgumentNullException(nameof(createdByCommunicationIdentifier));
             }
 
             Id = id;
             Topic = topic;
             CreatedOn = createdOn;
-            CreatedBy = createdBy;
+            CreatedByCommunicationIdentifier = createdByCommunicationIdentifier;
         }
 
         /// <summary> Initializes a new instance of ChatThreadInternal. </summary>
         /// <param name="id"> Chat thread id. </param>
         /// <param name="topic"> Chat thread topic. </param>
         /// <param name="createdOn"> The timestamp when the chat thread was created. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
-        /// <param name="createdBy"> Id of the chat thread owner. </param>
+        /// <param name="createdByCommunicationIdentifier"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model must be interpreted as a union: Apart from rawId, at most one further property may be set. </param>
         /// <param name="deletedOn"> The timestamp when the chat thread was deleted. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
-        internal ChatThreadInternal(string id, string topic, DateTimeOffset createdOn, string createdBy, DateTimeOffset? deletedOn)
+        internal ChatThreadInternal(string id, string topic, DateTimeOffset createdOn, CommunicationIdentifierModel createdByCommunicationIdentifier, DateTimeOffset? deletedOn)
         {
             Id = id;
             Topic = topic;
             CreatedOn = createdOn;
-            CreatedBy = createdBy;
+            CreatedByCommunicationIdentifier = createdByCommunicationIdentifier;
             DeletedOn = deletedOn;
         }
 
@@ -60,8 +61,8 @@ namespace Azure.Communication.Chat
         public string Topic { get; }
         /// <summary> The timestamp when the chat thread was created. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
         public DateTimeOffset CreatedOn { get; }
-        /// <summary> Id of the chat thread owner. </summary>
-        public string CreatedBy { get; }
+        /// <summary> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model must be interpreted as a union: Apart from rawId, at most one further property may be set. </summary>
+        public CommunicationIdentifierModel CreatedByCommunicationIdentifier { get; }
         /// <summary> The timestamp when the chat thread was deleted. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
         public DateTimeOffset? DeletedOn { get; }
     }

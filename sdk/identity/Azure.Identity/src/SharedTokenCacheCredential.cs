@@ -144,32 +144,37 @@ namespace Azure.Identity
 
             List<IAccount> accounts = await Client.GetAccountsAsync(async, cancellationToken).ConfigureAwait(false);
 
+            if (accounts.Count == 0)
+            {
+                throw new CredentialUnavailableException(NoAccountsInCacheMessage);
+            }
+
             // filter the accounts to those matching the specified user and tenant
             List<IAccount> filteredAccounts = accounts.Where(a =>
                 // if _username is specified it must match the account
-                ((string.IsNullOrEmpty(_username) || string.Compare(a.Username, _username, StringComparison.OrdinalIgnoreCase) == 0))
+                (string.IsNullOrEmpty(_username) || string.Compare(a.Username, _username, StringComparison.OrdinalIgnoreCase) == 0)
                 &&
                 // if _skipTenantValidation is false and _tenantId is specified it must match the account
-                (_skipTenantValidation || (string.IsNullOrEmpty(_tenantId) || string.Compare(a.HomeAccountId?.TenantId, _tenantId, StringComparison.OrdinalIgnoreCase) == 0))
+                (_skipTenantValidation || string.IsNullOrEmpty(_tenantId) || string.Compare(a.HomeAccountId?.TenantId, _tenantId, StringComparison.OrdinalIgnoreCase) == 0)
             ).ToList();
+
+            if (_skipTenantValidation && filteredAccounts.Count > 1)
+            {
+                filteredAccounts = filteredAccounts.Where(a => string.IsNullOrEmpty(_tenantId) || string.Compare(a.HomeAccountId?.TenantId, _tenantId, StringComparison.OrdinalIgnoreCase) == 0).ToList();
+            }
 
             if (filteredAccounts.Count != 1)
             {
-                throw new CredentialUnavailableException(GetCredentialUnavailableMessage(accounts, filteredAccounts));
+                throw new CredentialUnavailableException(GetCredentialUnavailableMessage(filteredAccounts));
             }
 
-            account = filteredAccounts.First();
+            account = filteredAccounts[0];
             asyncLock.SetValue(account);
             return account;
         }
 
-        private string GetCredentialUnavailableMessage(List<IAccount> accounts, List<IAccount> filteredAccounts)
+        private string GetCredentialUnavailableMessage(List<IAccount> filteredAccounts)
         {
-            if (accounts.Count == 0)
-            {
-                return NoAccountsInCacheMessage;
-            }
-
             if (string.IsNullOrEmpty(_username) && string.IsNullOrEmpty(_tenantId))
             {
                 return string.Format(CultureInfo.InvariantCulture, MultipleAccountsInCacheMessage);

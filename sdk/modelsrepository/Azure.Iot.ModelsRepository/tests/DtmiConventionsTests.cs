@@ -20,32 +20,32 @@ namespace Azure.Iot.ModelsRepository.Tests
             DtmiConventions.DtmiToPath(dtmi).Should().Be(expectedPath);
         }
 
-        [TestCase("dtmi:com:example:Thermostat;1", "dtmi/com/example/thermostat-1.json", "https://localhost/repository")]
-        [TestCase("dtmi:com:example:Thermostat;1", "dtmi/com/example/thermostat-1.json", @"C:\fakeRegistry")]
-        [TestCase("dtmi:com:example:Thermostat;1", "dtmi/com/example/thermostat-1.json", "/me/fakeRegistry")]
-        [TestCase("dtmi:com:example:Thermostat:1", null, "https://localhost/repository")]
-        [TestCase("dtmi:com:example:Thermostat:1", null, "/me/fakeRegistry")]
-        public void DtmiToQualifiedPath(string dtmi, string expectedPath, string repository)
+        [TestCase("dtmi:com:example:Thermostat;1", "https://localhost/repository/", "https://localhost/repository/dtmi/com/example/thermostat-1.json")]
+        [TestCase("dtmi:com:example:Thermostat;1", "https://localhost/REPOSITORY", "https://localhost/REPOSITORY/dtmi/com/example/thermostat-1.json")]
+        [TestCase("dtmi:com:example:Thermostat;1", "file:///path/to/repository/", "file:///path/to/repository/dtmi/com/example/thermostat-1.json")]
+        [TestCase("dtmi:com:example:Thermostat;1", "file://path/to/RepoSitory", "file://path/to/RepoSitory/dtmi/com/example/thermostat-1.json")]
+        [TestCase("dtmi:com:example:Thermostat;1", "C:\\path\\to\\repository\\", "file:///C:/path/to/repository/dtmi/com/example/thermostat-1.json")]
+        [TestCase("dtmi:com:example:Thermostat:1", "https://localhost/repository/", null)]
+        [TestCase("dtmi:com:example:Thermostat:1", "file://path/to/repository/", null)]
+        [TestCase("dtmi:com:example:Thermostat;1", "\\\\server\\repository", "file://server/repository/dtmi/com/example/thermostat-1.json")]
+        public void GetModelUri(string dtmi, string repository, string expectedUri)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            Uri repositoryUri = new Uri(repository);
+            if (string.IsNullOrEmpty(expectedUri))
             {
-                repository = repository.Replace("\\", "/");
-            }
-
-            if (string.IsNullOrEmpty(expectedPath))
-            {
-                Action act = () => DtmiConventions.DtmiToQualifiedPath(dtmi, repository);
+                Action act = () => DtmiConventions.GetModelUri(dtmi, repositoryUri);
                 act.Should().Throw<ArgumentException>().WithMessage(string.Format(StandardStrings.InvalidDtmiFormat, dtmi));
                 return;
             }
 
-            string modelPath = DtmiConventions.DtmiToQualifiedPath(dtmi, repository);
-            modelPath.Should().Be($"{repository}/{expectedPath}");
+            Uri modelUri = DtmiConventions.GetModelUri(dtmi, repositoryUri);
+            modelUri.AbsoluteUri.Should().Be(expectedUri);
 
-            string expandedModelPath = DtmiConventions.DtmiToQualifiedPath(dtmi, repository, true);
-            expandedModelPath
-                .Should()
-                .Be($"{repository}/{expectedPath.Replace(ModelsRepositoryConstants.JsonFileExtension, ModelsRepositoryConstants.ExpandedJsonFileExtension)}");
+            string expectedExpandedUri = expectedUri.Replace(
+                ModelsRepositoryConstants.JsonFileExtension, ModelsRepositoryConstants.ExpandedJsonFileExtension);
+
+            Uri expandedModelUri = DtmiConventions.GetModelUri(dtmi, repositoryUri, true);
+            expandedModelUri.Should().Be(expectedExpandedUri);
         }
 
         [TestCase("dtmi:com:example:Thermostat;1", true)]
@@ -57,7 +57,7 @@ namespace Azure.Iot.ModelsRepository.Tests
         [TestCase(null, false)]
         public void ClientIsValidDtmi(string dtmi, bool expected)
         {
-            DtmiConventions.IsDtmi(dtmi).Should().Be(expected);
+            DtmiConventions.IsValidDtmi(dtmi).Should().Be(expected);
         }
     }
 }

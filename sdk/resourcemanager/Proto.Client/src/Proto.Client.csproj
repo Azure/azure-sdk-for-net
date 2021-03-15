@@ -21,4 +21,8 @@
     <NoWarn>$(NoWarn);AZC0001;CA1303</NoWarn>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Azure.Identity" Version="1.2.3"/>
+  </ItemGroup>
+
 </Project>

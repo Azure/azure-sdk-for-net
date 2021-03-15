@@ -2,6 +2,7 @@
 using Azure.ResourceManager.Core;
 using System;
 using System.Linq;
+using Azure.Identity;
 
 namespace Proto.Client
 {
@@ -12,7 +13,7 @@ namespace Proto.Client
             var createMultipleVms = new CreateMultipleVms(Context);
             createMultipleVms.Execute();
 
-            var rg = new AzureResourceManagerClient().GetResourceGroupOperations(Context.SubscriptionId, Context.RgName).Get().Value;
+            var rg = new AzureResourceManagerClient(new DefaultAzureCredential()).GetResourceGroupOperations(Context.SubscriptionId, Context.RgName).Get().Value;
 
             //set tags on random vms
             Random rand = new Random(Environment.TickCount);

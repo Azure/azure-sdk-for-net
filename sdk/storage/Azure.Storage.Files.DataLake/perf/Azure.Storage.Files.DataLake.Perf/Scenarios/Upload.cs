@@ -62,7 +62,7 @@ namespace Azure.Storage.Files.DataLake.Perf.Scenarios
         public async override Task GlobalSetupAsync()
         {
             await base.GlobalSetupAsync();
-            await FileSystemClient.CreateAsync();
+            await FileSystemClient.CreateIfNotExistsAsync();
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace Azure.Storage.Files.DataLake.Perf.Scenarios
         public async override Task GlobalCleanupAsync()
         {
             await base.GlobalCleanupAsync();
-            await FileSystemClient.DeleteAsync();
+            await FileSystemClient.DeleteIfExistsAsync();
         }
 
         /// <summary>
@@ -112,7 +112,7 @@ namespace Azure.Storage.Files.DataLake.Perf.Scenarios
             var fileClient = FileSystemClient.GetFileClient(Path.GetRandomFileName());
             Payload.Position = 0;
 
-            fileClient.Create(cancellationToken: cancellationToken);
+            fileClient.CreateIfNotExists(cancellationToken: cancellationToken);
             fileClient.Upload(Payload, true, cancellationToken);
         }
 
@@ -127,7 +127,7 @@ namespace Azure.Storage.Files.DataLake.Perf.Scenarios
             var fileClient = FileSystemClient.GetFileClient(Path.GetRandomFileName());
             Payload.Position = 0;
 
-            await fileClient.CreateAsync(cancellationToken: cancellationToken);
+            await fileClient.CreateIfNotExistsAsync(cancellationToken: cancellationToken);
             await fileClient.UploadAsync(Payload, true, cancellationToken);
         }
     }

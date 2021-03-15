@@ -40,11 +40,7 @@ param environmentTimeSeriesIdProperties array {
     maxLength: 3
     default: [
         {
-            'name': 'timeseriesinsights.id'
-            'type': 'string'
-        }
-        {
-            'name': 'id'
+            'name': 'iothub-connection-device-id'
             'type': 'string'
         }
     ]
