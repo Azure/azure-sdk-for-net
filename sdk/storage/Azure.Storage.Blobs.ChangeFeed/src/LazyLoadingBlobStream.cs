@@ -171,6 +171,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 throw new ArgumentNullException($"{nameof(buffer)}", $"{nameof(buffer)} cannot be null.");
             }
 
+#pragma warning disable CA2208 // Instantiate argument exceptions correctly
             if (offset < 0)
             {
                 throw new ArgumentOutOfRangeException($"{nameof(offset)} cannot be less than 0.");
@@ -190,6 +191,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
             {
                 throw new ArgumentOutOfRangeException($"{nameof(offset)} + {nameof(count)} cannot exceed {nameof(buffer)} length.");
             }
+#pragma warning restore CA2208 // Instantiate argument exceptions correctly
         }
 
         private static long GetBlobLength(Response<BlobDownloadStreamingResult> response)
@@ -211,7 +213,8 @@ namespace Azure.Storage.Blobs.ChangeFeed
         public override long Length => throw new NotSupportedException();
 
         /// <inheritdoc/>
-        public override long Position {
+        public override long Position
+        {
             get => _stream.Position;
             set => throw new NotSupportedException();
         }

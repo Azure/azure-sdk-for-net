@@ -206,7 +206,7 @@ namespace Azure.Storage.Blobs.Test
             return result;
         }
 
-        [Test]
+       [RecordedTest]
         [LiveOnly]
         public void CanSwapKey()
         {
@@ -324,7 +324,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [Test] // multiple unalligned blocks
+       [RecordedTest] // multiple unalligned blocks
         [LiveOnly] // cannot seed content encryption key
         public async Task KeyResolverKicksIn()
         {
@@ -413,7 +413,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [Test]
+       [RecordedTest]
         [LiveOnly] // cannot seed content encryption key
         public async Task Track2DownloadTrack1Blob()
         {
@@ -461,7 +461,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [Test]
+       [RecordedTest]
         [LiveOnly] // cannot seed content encryption key
         public async Task Track1DownloadTrack2Blob()
         {
@@ -510,7 +510,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [Test]
+       [RecordedTest]
         [LiveOnly] // need access to keyvault service && cannot seed content encryption key
         public async Task RoundtripWithKeyvaultProvider()
         {
@@ -624,7 +624,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [Test]
+       [RecordedTest]
         [LiveOnly] // cannot seed content encryption key
         [Ignore("stress test")]
         public async Task StressAsync()
@@ -671,7 +671,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [Test]
+       [RecordedTest]
         [LiveOnly]
         public async Task EncryptedReuploadSuccess()
         {
@@ -723,7 +723,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [Test]
+       [RecordedTest]
         public void CanGenerateSas_WithClientSideEncryptionOptions_True()
         {
             // Arrange
@@ -754,7 +754,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsTrue(blobEncrypted.CanGenerateSasUri);
         }
 
-        [Test]
+       [RecordedTest]
         public void CanGenerateSas_WithClientSideEncryptionOptions_False()
         {
             // Arrange

@@ -186,6 +186,7 @@ namespace Azure.Storage.Shared
                 throw new ArgumentNullException($"{nameof(buffer)}", $"{nameof(buffer)} cannot be null.");
             }
 
+#pragma warning disable CA2208 // Instantiate argument exceptions correctly
             if (offset < 0)
             {
                 throw new ArgumentOutOfRangeException($"{nameof(offset)} cannot be less than 0.");
@@ -205,6 +206,7 @@ namespace Azure.Storage.Shared
             {
                 throw new ArgumentOutOfRangeException($"{nameof(offset)} + {nameof(count)} cannot exceed {nameof(buffer)} length.");
             }
+#pragma warning restore CA2208 // Instantiate argument exceptions correctly
         }
 
         protected override void Dispose(bool disposing)

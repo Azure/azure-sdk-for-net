@@ -169,13 +169,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
             }
         }
 
-        [Test]
+       [RecordedTest]
         public async Task PoisonMessage_CreatedInPrimaryStorageAccount()
         {
             await PoisonMessage_CreatedInCorrectStorageAccount(TestEnvironment.PrimaryStorageAccountConnectionString, true);
         }
 
-        [Test]
+       [RecordedTest]
         public async Task PoisonMessage_CreatedInSecondaryStorageAccount()
         {
             await PoisonMessage_CreatedInCorrectStorageAccount(TestEnvironment.SecondaryStorageAccountConnectionString, false);
@@ -214,7 +214,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
             }
         }
 
-        [Test]
+       [RecordedTest]
         public async Task BlobGetsProcessedOnlyOnce_SingleHost()
         {
             var blob = _testContainer.GetBlockBlobClient(TestBlobName);
@@ -259,7 +259,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
             Assert.AreEqual(1, prog._timesProcessed);
         } // host
 
-        [Test]
+       [RecordedTest]
         public async Task BlobChainTest()
         {
             // write the initial trigger blob to start the chain
@@ -279,7 +279,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
             }
         }
 
-        [Test]
+       [RecordedTest]
         public async Task GarbageMessageDoesNotCrashHost()
         {
             // write the initial trigger blob to start the chain
@@ -316,7 +316,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
             }
         }
 
-        [Test]
+       [RecordedTest]
         public async Task BlobGetsProcessedOnlyOnce_MultipleHosts()
         {
             await _testContainer

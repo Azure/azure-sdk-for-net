@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.ChangeFeed.Tests
@@ -16,7 +16,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         {
         }
 
-        [Test]
+       [RecordedTest]
         [Ignore("For debugging larger Change Feeds locally")]
         public void Test()
         {
