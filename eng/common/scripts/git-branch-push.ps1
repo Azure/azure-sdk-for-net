@@ -60,10 +60,10 @@ if ($LASTEXITCODE -ne 0)
     exit $LASTEXITCODE
 }
 
-# Check if the branch has existed in remote.
-$existed_in_remote = git ls-remote --heads $RemoteName $PRBranchName
-Write-Host "git ls-remote --heads $RemoteName $PRBranchName"
-if (!$existed_in_remote) {
+# Check if the branch is default branch in remote.
+$defaultBranch = (git remote show $RemoteName | Out-String) -replace "(?ms).*HEAD branch: (\w+).*", '$1'
+Write-Host "The default branch is $defaultBranch."
+if ($defaultBranch -ne $PRBranchName) {
     Write-Host "git checkout -b $PRBranchName"
     git checkout -b $PRBranchName
 }
