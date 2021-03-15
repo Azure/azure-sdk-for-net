@@ -16,12 +16,12 @@ steps:
     condition: and(succeeded(), ${{ parameters.CustomCondition }})
     displayName: 'Publish ${{ parameters.ArtifactName }} Artifacts'
     inputs:
-      artifactName: ${{ parameters.ArtifactName }}
-      pathtoPublish: ${{ parameters.ArtifactPath }}
+      artifactName: '${{ parameters.ArtifactName }}'
+      path: '${{ parameters.ArtifactPath }}'
 
   - task: PublishPipelineArtifact@1
     condition: failed()
     displayName: 'Publish failed ${{ parameters.ArtifactName }} Artifacts'
     inputs:
       artifactName: '${{ parameters.ArtifactName }}-FailedAttempt$(System.JobAttempt)'
-      pathtoPublish: ${{ parameters.ArtifactPath }}
+      path: '${{ parameters.ArtifactPath }}'
