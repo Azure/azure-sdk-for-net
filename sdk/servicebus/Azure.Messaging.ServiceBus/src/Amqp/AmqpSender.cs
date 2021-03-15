@@ -207,13 +207,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
             ServiceBusMessageBatch messageBatch,
             CancellationToken cancellationToken)
         {
-            AmqpMessage messageFactory() => AmqpMessageConverter.BatchSBMessagesAsAmqpMessage(messageBatch.AsEnumerable<ServiceBusMessage>());
-            await _retryPolicy.RunOperation(async (sender, timeout, token) =>
+            await _retryPolicy.RunOperation(async (sender, batch, timeout, token) =>
                 await sender.SendBatchInternalAsync(
-                    messageFactory,
+                    batch.AsEnumerable<ServiceBusMessage>(),
                     timeout,
                     token).ConfigureAwait(false),
             this,
+            messageBatch,
             _connectionScope,
             cancellationToken).ConfigureAwait(false);
         }
@@ -222,12 +222,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///    Sends a set of messages to the associated Queue/Topic using a batched approach.
         /// </summary>
         ///
-        /// <param name="messageFactory"></param>
+        /// <param name="messages"></param>
         /// <param name="timeout"></param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         internal virtual async Task SendBatchInternalAsync(
-            Func<AmqpMessage> messageFactory,
+            IEnumerable<ServiceBusMessage> messages,
             TimeSpan timeout,
             CancellationToken cancellationToken)
         {
@@ -236,7 +236,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             try
             {
-                using (AmqpMessage batchMessage = messageFactory())
+                using (AmqpMessage batchMessage = AmqpMessageConverter.BatchSBMessagesAsAmqpMessage(messages))
                 {
                     string messageHash = batchMessage.GetHashCode().ToString(CultureInfo.InvariantCulture);
 
@@ -303,12 +303,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
             IReadOnlyList<ServiceBusMessage> messages,
             CancellationToken cancellationToken)
         {
-            AmqpMessage messageFactory() => AmqpMessageConverter.BatchSBMessagesAsAmqpMessage(messages);
-            await _retryPolicy.RunOperation(async (timeout, token) =>
-             await SendBatchInternalAsync(
-                    messageFactory,
+            await _retryPolicy.RunOperation(async (sender, msgs, timeout, token) =>
+             await sender.SendBatchInternalAsync(
+                    msgs,
                     timeout,
                     token).ConfigureAwait(false),
+            this,
+            messages,
             _connectionScope,
             cancellationToken).ConfigureAwait(false);
         }
