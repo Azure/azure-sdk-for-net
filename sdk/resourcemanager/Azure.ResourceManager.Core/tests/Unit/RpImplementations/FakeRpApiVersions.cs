@@ -7,6 +7,7 @@
             FakeResourceVersion = FakeResourceApiVersions.Default;
         }
 
-        public FakeResourceApiVersions FakeResourceVersion { get; set; }
+        public FakeResourceApiVersions 
+        FakeResourceVersion { get; set; }
     }
 }

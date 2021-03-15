@@ -41,7 +41,6 @@ namespace Azure.ResourceManager.Core
                         if (typeof(ApiVersionsBase).IsAssignableFrom(prop.PropertyType))
                         {
                             var propVal = (ApiVersionsBase)prop.GetValue(apiObject);
-                            Console.WriteLine(prop.GetType());
                             var key = propVal.ResourceType;
                             _loadedResourceToApiVersions.Add(key.ToString(), (prop, apiObject));
                         }
@@ -119,7 +118,9 @@ namespace Azure.ResourceManager.Core
             (PropertyInfo, object) tuple;
             if (_loadedResourceToApiVersions.TryGetValue(resourceId, out tuple))
             {
-                tuple.Item1.SetValue(tuple.Item1, apiVersion);
+                Type type = tuple.Item1.PropertyType;
+                ConstructorInfo ctor = type.GetConstructor(BindingFlags.NonPublic | BindingFlags.Instance, null, new Type[] { typeof(string) }, null);
+                tuple.Item1.SetValue(tuple.Item2, ctor.Invoke(new object[] { apiVersion }));
             }
             else
             {
