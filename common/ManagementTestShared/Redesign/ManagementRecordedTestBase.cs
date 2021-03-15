@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.TestFramework
                     {
                         _cleanupClient.GetResourceGroupOperations(TestEnvironment.SubscriptionId, resourceGroup).StartDelete();
                     }
-                    catch(RequestFailedException e) when (e.Status == 404)
+                    catch (RequestFailedException e) when (e.Status == 404)
                     {
                         //we assume the test case cleaned up it up if it no longer exists.
                     }
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.TestFramework
             var methods = GetType().GetMethods().Where(m => types.Contains(m.DeclaringType));
             foreach (var method in methods)
             {
-                foreach(var attr in method.GetCustomAttributes(false))
+                foreach (var attr in method.GetCustomAttributes(false))
                 {
                     if (attr is OneTimeSetUpAttribute)
                         return true;
