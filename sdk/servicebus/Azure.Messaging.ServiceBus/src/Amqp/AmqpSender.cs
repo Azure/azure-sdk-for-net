@@ -161,7 +161,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             CreateMessageBatchOptions options,
             CancellationToken cancellationToken)
         {
-            Task<TransportMessageBatch> createBatchTask = _retryPolicy.RunOperation(async (sender, ops, timeout, _) => await sender.CreateMessageBatchInternalAsync(
+            Task<TransportMessageBatch> createBatchTask = _retryPolicy.RunOperation(static async (sender, ops, timeout, _) => await sender.CreateMessageBatchInternalAsync(
                     ops,
                     timeout).ConfigureAwait(false),
                 this,
@@ -207,7 +207,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             ServiceBusMessageBatch messageBatch,
             CancellationToken cancellationToken)
         {
-            await _retryPolicy.RunOperation(async (sender, msgs, timeout, token) =>
+            await _retryPolicy.RunOperation(static async (sender, msgs, timeout, token) =>
                 await sender.SendBatchInternalAsync(
                     msgs,
                     timeout,
@@ -303,7 +303,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             IReadOnlyList<ServiceBusMessage> messages,
             CancellationToken cancellationToken)
         {
-            await _retryPolicy.RunOperation(async (sender, msgs, timeout, token) =>
+            await _retryPolicy.RunOperation(static async (sender, msgs, timeout, token) =>
              await sender.SendBatchInternalAsync(
                     msgs,
                     timeout,
@@ -375,7 +375,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             IReadOnlyList<ServiceBusMessage> messages,
             CancellationToken cancellationToken = default)
         {
-            return await _retryPolicy.RunOperation(async (sender, msgs, timeout, token) => await sender
+            return await _retryPolicy.RunOperation(static async (sender, msgs, timeout, token) => await sender
                     .ScheduleMessageInternalAsync(
                         msgs,
                         timeout,
@@ -488,7 +488,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             long[] sequenceNumbers,
             CancellationToken cancellationToken = default)
         {
-            Task cancelMessageTask = _retryPolicy.RunOperation(async (sender, sqn, timeout, token) =>
+            Task cancelMessageTask = _retryPolicy.RunOperation(static async (sender, sqn, timeout, token) =>
                 {
                     await sender.CancelScheduledMessageInternalAsync(
                         sqn,
