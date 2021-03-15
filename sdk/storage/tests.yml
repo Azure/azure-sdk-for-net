@@ -7,7 +7,13 @@ extends:
     BuildInParallel: true
     TimeoutInMinutes: 180
     Location: canadacentral
-    Clouds: Preview
+    CloudConfig:
+      Public:
+        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+      PrivatePreview:
+        SubscriptionConfiguration: $(sub-config-storage-test-resources)
+    Clouds: Public
+    SupportedClouds: Public,PrivatePreview
     TestSetupSteps:
     - template: /sdk/storage/tests-install-azurite.yml
     EnvVars:
