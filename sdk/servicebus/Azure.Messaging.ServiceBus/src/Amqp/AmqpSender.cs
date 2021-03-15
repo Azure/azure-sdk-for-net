@@ -207,13 +207,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
             ServiceBusMessageBatch messageBatch,
             CancellationToken cancellationToken)
         {
-            await _retryPolicy.RunOperation(async (sender, batch, timeout, token) =>
+            await _retryPolicy.RunOperation(async (sender, msgs, timeout, token) =>
                 await sender.SendBatchInternalAsync(
-                    batch.AsEnumerable<ServiceBusMessage>(),
+                    msgs,
                     timeout,
                     token).ConfigureAwait(false),
             this,
-            messageBatch,
+            messageBatch.AsEnumerable<ServiceBusMessage>(),
             _connectionScope,
             cancellationToken).ConfigureAwait(false);
         }
