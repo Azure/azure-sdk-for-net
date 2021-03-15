@@ -19,7 +19,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="conditionality"> Describes any conditionality on the entity. </param>
         /// <param name="certainty"> Describes the entities certainty and polarity. </param>
         /// <param name="association"> Describes if the entity is the subject of the text or if it describes someone else. </param>
-        internal HealthcareEntityAssertion(Conditionality? conditionality, Certainty? certainty, Association? association)
+        internal HealthcareEntityAssertion(EntityConditionality? conditionality, EntityCertainty? certainty, EntityAssociation? association)
         {
             Conditionality = conditionality;
             Certainty = certainty;
@@ -27,10 +27,10 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary> Describes any conditionality on the entity. </summary>
-        public Conditionality? Conditionality { get; }
+        public EntityConditionality? Conditionality { get; }
         /// <summary> Describes the entities certainty and polarity. </summary>
-        public Certainty? Certainty { get; }
+        public EntityCertainty? Certainty { get; }
         /// <summary> Describes if the entity is the subject of the text or if it describes someone else. </summary>
-        public Association? Association { get; }
+        public EntityAssociation? Association { get; }
     }
 }

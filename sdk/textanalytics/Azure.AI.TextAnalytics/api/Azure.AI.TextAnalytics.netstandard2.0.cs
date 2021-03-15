@@ -104,11 +104,6 @@ namespace Azure.AI.TextAnalytics
         public Azure.AI.TextAnalytics.TextSentiment Sentiment { get { throw null; } }
         public string Text { get { throw null; } }
     }
-    public enum Association
-    {
-        Subject = 0,
-        Other = 1,
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CategorizedEntity
     {
@@ -125,19 +120,6 @@ namespace Azure.AI.TextAnalytics
     {
         internal CategorizedEntityCollection() : base (default(System.Collections.Generic.IList<Azure.AI.TextAnalytics.CategorizedEntity>)) { }
         public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.TextAnalyticsWarning> Warnings { get { throw null; } }
-    }
-    public enum Certainty
-    {
-        Positive = 0,
-        PositivePossible = 1,
-        NeutralPossible = 2,
-        NegativePossible = 3,
-        Negative = 4,
-    }
-    public enum Conditionality
-    {
-        Hypothetical = 0,
-        Conditional = 1,
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DetectedLanguage
@@ -174,6 +156,11 @@ namespace Azure.AI.TextAnalytics
         public Azure.AI.TextAnalytics.TextSentiment Sentiment { get { throw null; } }
         public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.TextAnalyticsWarning> Warnings { get { throw null; } }
     }
+    public enum EntityAssociation
+    {
+        Subject = 0,
+        Other = 1,
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EntityCategory : System.IEquatable<Azure.AI.TextAnalytics.EntityCategory>
     {
@@ -203,6 +190,19 @@ namespace Azure.AI.TextAnalytics
         public static implicit operator Azure.AI.TextAnalytics.EntityCategory (string category) { throw null; }
         public static bool operator !=(Azure.AI.TextAnalytics.EntityCategory left, Azure.AI.TextAnalytics.EntityCategory right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public enum EntityCertainty
+    {
+        Positive = 0,
+        PositivePossible = 1,
+        NeutralPossible = 2,
+        NegativePossible = 3,
+        Negative = 4,
+    }
+    public enum EntityConditionality
+    {
+        Hypothetical = 0,
+        Conditional = 1,
     }
     public partial class EntityDataSource
     {
@@ -246,9 +246,9 @@ namespace Azure.AI.TextAnalytics
     public partial class HealthcareEntityAssertion
     {
         internal HealthcareEntityAssertion() { }
-        public Azure.AI.TextAnalytics.Association? Association { get { throw null; } }
-        public Azure.AI.TextAnalytics.Certainty? Certainty { get { throw null; } }
-        public Azure.AI.TextAnalytics.Conditionality? Conditionality { get { throw null; } }
+        public Azure.AI.TextAnalytics.EntityAssociation? Association { get { throw null; } }
+        public Azure.AI.TextAnalytics.EntityCertainty? Certainty { get { throw null; } }
+        public Azure.AI.TextAnalytics.EntityConditionality? Conditionality { get { throw null; } }
     }
     public partial class HealthcareEntityRelation
     {

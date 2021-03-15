@@ -57,7 +57,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 }
             };
 
-            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            TextAnalyticsActions actions = new TextAnalyticsActions()
             {
                 ExtractKeyPhrasesOptions = new List<ExtractKeyPhrasesOptions>() { new ExtractKeyPhrasesOptions() },
                 RecognizeEntitiesOptions = new List<RecognizeEntitiesOptions>() { new RecognizeEntitiesOptions() },
@@ -66,9 +66,20 @@ namespace Azure.AI.TextAnalytics.Samples
                 DisplayName = "AnalyzeOperationSample"
             };
 
-            AnalyzeBatchActionsOperation operation = await client.StartAnalyzeBatchActionsAsync(batchDocuments, batchActions);
+            AnalyzeBatchActionsOperation operation = await client.StartAnalyzeBatchActionsAsync(batchDocuments, actions);
 
             await operation.WaitForCompletionAsync();
+
+            Console.WriteLine($"Status: {operation.Status}");
+            Console.WriteLine($"Created On: {operation.CreatedOn}");
+            Console.WriteLine($"Expires On: {operation.ExpiresOn}");
+            Console.WriteLine($"Last modified: {operation.LastModified}");
+            if (!string.IsNullOrEmpty(operation.DisplayName))
+                Console.WriteLine($"Display name: {operation.DisplayName}");
+            Console.WriteLine($"Total actions: {operation.TotalActions}");
+            Console.WriteLine($"  Succeeded actions: {operation.ActionsSucceeded}");
+            Console.WriteLine($"  Failed actions: {operation.ActionsFailed}");
+            Console.WriteLine($"  In progress actions: {operation.ActionsInProgress}");
 
             await foreach (AnalyzeBatchActionsResult documentsInPage in operation.Value)
             {
@@ -78,21 +89,22 @@ namespace Azure.AI.TextAnalytics.Samples
 
                 RecognizePiiEntitiesResultCollection piiResult = documentsInPage.RecognizePiiEntitiesActionsResults.FirstOrDefault().Result;
 
-                RecognizeLinkedEntitiesResultCollection elResult = documentsInPage.RecognizeLinkedEntitiesActionsResults.FirstOrDefault().Result;
+                RecognizeLinkedEntitiesResultCollection linkedEntitiesResult = documentsInPage.RecognizeLinkedEntitiesActionsResults.FirstOrDefault().Result;
 
                 Console.WriteLine("Recognized Entities");
 
                 foreach (RecognizeEntitiesResult result in entitiesResult)
                 {
-                    Console.WriteLine($"    Recognized the following {result.Entities.Count} entities:");
+                    Console.WriteLine($"  Recognized the following {result.Entities.Count} entities:");
 
                     foreach (CategorizedEntity entity in result.Entities)
                     {
-                        Console.WriteLine($"    Entity: {entity.Text}");
-                        Console.WriteLine($"    Category: {entity.Category}");
-                        Console.WriteLine($"    Offset: {entity.Offset}");
-                        Console.WriteLine($"    ConfidenceScore: {entity.ConfidenceScore}");
-                        Console.WriteLine($"    SubCategory: {entity.SubCategory}");
+                        Console.WriteLine($"  Entity: {entity.Text}");
+                        Console.WriteLine($"  Category: {entity.Category}");
+                        Console.WriteLine($"  Offset: {entity.Offset}");
+                        Console.WriteLine($"  Length: {entity.Length}");
+                        Console.WriteLine($"  ConfidenceScore: {entity.ConfidenceScore}");
+                        Console.WriteLine($"  SubCategory: {entity.SubCategory}");
                     }
                     Console.WriteLine("");
                 }
@@ -101,15 +113,16 @@ namespace Azure.AI.TextAnalytics.Samples
 
                 foreach (RecognizePiiEntitiesResult result in piiResult)
                 {
-                    Console.WriteLine($"    Recognized the following {result.Entities.Count} PII entities:");
+                    Console.WriteLine($"  Recognized the following {result.Entities.Count} PII entities:");
 
                     foreach (PiiEntity entity in result.Entities)
                     {
-                        Console.WriteLine($"    Entity: {entity.Text}");
-                        Console.WriteLine($"    Category: {entity.Category}");
-                        Console.WriteLine($"    Offset: {entity.Offset}");
-                        Console.WriteLine($"    ConfidenceScore: {entity.ConfidenceScore}");
-                        Console.WriteLine($"    SubCategory: {entity.SubCategory}");
+                        Console.WriteLine($"  Entity: {entity.Text}");
+                        Console.WriteLine($"  Category: {entity.Category}");
+                        Console.WriteLine($"  Offset: {entity.Offset}");
+                        Console.WriteLine($"  Length: {entity.Length}");
+                        Console.WriteLine($"  ConfidenceScore: {entity.ConfidenceScore}");
+                        Console.WriteLine($"  SubCategory: {entity.SubCategory}");
                     }
                     Console.WriteLine("");
                 }
@@ -118,36 +131,36 @@ namespace Azure.AI.TextAnalytics.Samples
 
                 foreach (ExtractKeyPhrasesResult result in keyPhrasesResult)
                 {
-                    Console.WriteLine($"    Recognized the following {result.KeyPhrases.Count} Keyphrases:");
+                    Console.WriteLine($"  Recognized the following {result.KeyPhrases.Count} Keyphrases:");
 
                     foreach (string keyphrase in result.KeyPhrases)
                     {
-                        Console.WriteLine($"    {keyphrase}");
+                        Console.WriteLine($"  {keyphrase}");
                     }
                     Console.WriteLine("");
                 }
 
                 Console.WriteLine("Recognized Linked Entities");
 
-                foreach (RecognizeLinkedEntitiesResult result in elResult)
+                foreach (RecognizeLinkedEntitiesResult result in linkedEntitiesResult)
                 {
-                    Console.WriteLine($"    Recognized the following {result.Entities.Count} linked entities:");
+                    Console.WriteLine($"  Recognized the following {result.Entities.Count} linked entities:");
 
                     foreach (LinkedEntity entity in result.Entities)
                     {
-                        Console.WriteLine($"    Entity: {entity.Name}");
-                        Console.WriteLine($"    DataSource: {entity.DataSource}");
-                        Console.WriteLine($"    DataSource EntityId: {entity.DataSourceEntityId}");
-                        Console.WriteLine($"    Language: {entity.Language}");
-                        Console.WriteLine($"    DataSource Url: {entity.Url}");
+                        Console.WriteLine($"  Entity: {entity.Name}");
+                        Console.WriteLine($"  DataSource: {entity.DataSource}");
+                        Console.WriteLine($"  DataSource EntityId: {entity.DataSourceEntityId}");
+                        Console.WriteLine($"  Language: {entity.Language}");
+                        Console.WriteLine($"  DataSource Url: {entity.Url}");
 
-                        Console.WriteLine($"    Total Matches: {entity.Matches.Count()}");
+                        Console.WriteLine($"  Total Matches: {entity.Matches.Count()}");
                         foreach (LinkedEntityMatch match in entity.Matches)
                         {
-                            Console.WriteLine($"        Match Text: {match.Text}");
-                            Console.WriteLine($"        ConfidenceScore: {match.ConfidenceScore}");
-                            Console.WriteLine($"        Offset: {match.Offset}");
-                            Console.WriteLine($"        Length: {match.Length}");
+                            Console.WriteLine($"    Match Text: {match.Text}");
+                            Console.WriteLine($"    ConfidenceScore: {match.ConfidenceScore}");
+                            Console.WriteLine($"    Offset: {match.Offset}");
+                            Console.WriteLine($"    Length: {match.Length}");
                         }
                         Console.WriteLine("");
                     }

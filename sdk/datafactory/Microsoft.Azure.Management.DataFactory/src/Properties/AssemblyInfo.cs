@@ -6,8 +6,8 @@ using System.Resources;
 
 [assembly: AssemblyTitle("Microsoft Azure Data Factory Management Library")]
 [assembly: AssemblyDescription("Provides management functionality for Microsoft Azure Data Factory Resources.")]
-[assembly: AssemblyVersion("4.14.0.0")]
-[assembly: AssemblyFileVersion("4.14.0.0")]
+[assembly: AssemblyVersion("4.15.0.0")]
+[assembly: AssemblyFileVersion("4.15.0.0")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Microsoft Azure .NET SDK")]

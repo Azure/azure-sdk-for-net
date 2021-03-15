@@ -56,16 +56,16 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             using FileStream stream = File.OpenRead(
                 $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}{Path.DirectorySeparatorChar}Resources{Path.DirectorySeparatorChar}{"ChangeFeedManifest.json"}");
-            BlobDownloadInfo blobDownloadInfo = BlobsModelFactory.BlobDownloadInfo(content: stream);
-            Response<BlobDownloadInfo> downloadResponse = Response.FromValue(blobDownloadInfo, new MockResponse(200));
+            BlobDownloadStreamingResult blobDownloadInfo = BlobsModelFactory.BlobDownloadStreamingResult(content: stream);
+            Response<BlobDownloadStreamingResult> downloadResponse = Response.FromValue(blobDownloadInfo, new MockResponse(200));
 
             if (IsAsync)
             {
-                blobClient.Setup(r => r.DownloadAsync(default)).ReturnsAsync(downloadResponse);
+                blobClient.Setup(r => r.DownloadStreamingAsync(default, default, default, default)).ReturnsAsync(downloadResponse);
             }
             else
             {
-                blobClient.Setup(r => r.Download(default)).Returns(downloadResponse);
+                blobClient.Setup(r => r.DownloadStreaming(default, default, default, default)).Returns(downloadResponse);
             }
 
             if (IsAsync)
@@ -191,11 +191,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             if (IsAsync)
             {
-                blobClient.Verify(r => r.DownloadAsync(default));
+                blobClient.Verify(r => r.DownloadStreamingAsync(default, default, default, default));
             }
             else
             {
-                blobClient.Verify(r => r.Download(default));
+                blobClient.Verify(r => r.DownloadStreaming(default, default, default, default));
             }
 
             if (IsAsync)
@@ -293,16 +293,16 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             using FileStream stream = File.OpenRead(
                 $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}{Path.DirectorySeparatorChar}Resources{Path.DirectorySeparatorChar}{"ChangeFeedManifest.json"}");
-            BlobDownloadInfo blobDownloadInfo = BlobsModelFactory.BlobDownloadInfo(content: stream);
-            Response<BlobDownloadInfo> downloadResponse = Response.FromValue(blobDownloadInfo, new MockResponse(200));
+            BlobDownloadStreamingResult blobDownloadInfo = BlobsModelFactory.BlobDownloadStreamingResult(content: stream);
+            Response<BlobDownloadStreamingResult> downloadResponse = Response.FromValue(blobDownloadInfo, new MockResponse(200));
 
             if (IsAsync)
             {
-                blobClient.Setup(r => r.DownloadAsync(default)).ReturnsAsync(downloadResponse);
+                blobClient.Setup(r => r.DownloadStreamingAsync(default, default, default, default)).ReturnsAsync(downloadResponse);
             }
             else
             {
-                blobClient.Setup(r => r.Download(default)).Returns(downloadResponse);
+                blobClient.Setup(r => r.DownloadStreaming(default, default, default, default)).Returns(downloadResponse);
             }
 
             if (IsAsync)
@@ -508,11 +508,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             if (IsAsync)
             {
-                blobClient.Verify(r => r.DownloadAsync(default));
+                blobClient.Verify(r => r.DownloadStreamingAsync(default, default, default, default));
             }
             else
             {
-                blobClient.Verify(r => r.Download(default));
+                blobClient.Verify(r => r.DownloadStreaming(default, default, default, default));
             }
 
             if (IsAsync)
@@ -631,16 +631,16 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             using FileStream stream = File.OpenRead(
                 $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}{Path.DirectorySeparatorChar}Resources{Path.DirectorySeparatorChar}{"ChangeFeedManifest.json"}");
-            BlobDownloadInfo blobDownloadInfo = BlobsModelFactory.BlobDownloadInfo(content: stream);
-            Response<BlobDownloadInfo> downloadResponse = Response.FromValue(blobDownloadInfo, new MockResponse(200));
+            BlobDownloadStreamingResult blobDownloadInfo = BlobsModelFactory.BlobDownloadStreamingResult(content: stream);
+            Response<BlobDownloadStreamingResult> downloadResponse = Response.FromValue(blobDownloadInfo, new MockResponse(200));
 
             if (IsAsync)
             {
-                blobClient.Setup(r => r.DownloadAsync(default)).ReturnsAsync(downloadResponse);
+                blobClient.Setup(r => r.DownloadStreamingAsync(default, default, default, default)).ReturnsAsync(downloadResponse);
             }
             else
             {
-                blobClient.Setup(r => r.Download(default)).Returns(downloadResponse);
+                blobClient.Setup(r => r.DownloadStreaming(default, default, default, default)).Returns(downloadResponse);
             }
 
             if (IsAsync)
@@ -696,11 +696,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             if (IsAsync)
             {
-                blobClient.Verify(r => r.DownloadAsync(default));
+                blobClient.Verify(r => r.DownloadStreamingAsync(default, default, default, default));
             }
             else
             {
-                blobClient.Verify(r => r.Download(default));
+                blobClient.Verify(r => r.DownloadStreaming(default, default, default, default));
             }
 
             if (IsAsync)
@@ -760,16 +760,16 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             using FileStream stream = File.OpenRead(
                 $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}{Path.DirectorySeparatorChar}Resources{Path.DirectorySeparatorChar}{"ChangeFeedManifest.json"}");
-            BlobDownloadInfo blobDownloadInfo = BlobsModelFactory.BlobDownloadInfo(content: stream);
-            Response<BlobDownloadInfo> downloadResponse = Response.FromValue(blobDownloadInfo, new MockResponse(200));
+            BlobDownloadStreamingResult blobDownloadInfo = BlobsModelFactory.BlobDownloadStreamingResult(content: stream);
+            Response<BlobDownloadStreamingResult> downloadResponse = Response.FromValue(blobDownloadInfo, new MockResponse(200));
 
             if (IsAsync)
             {
-                blobClient.Setup(r => r.DownloadAsync(default)).ReturnsAsync(downloadResponse);
+                blobClient.Setup(r => r.DownloadStreamingAsync(default, default, default, default)).ReturnsAsync(downloadResponse);
             }
             else
             {
-                blobClient.Setup(r => r.Download(default)).Returns(downloadResponse);
+                blobClient.Setup(r => r.DownloadStreaming(default, default, default, default)).Returns(downloadResponse);
             }
 
             if (IsAsync)
@@ -904,11 +904,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             if (IsAsync)
             {
-                blobClient.Verify(r => r.DownloadAsync(default));
+                blobClient.Verify(r => r.DownloadStreamingAsync(default, default, default, default));
             }
             else
             {
-                blobClient.Verify(r => r.Download(default));
+                blobClient.Verify(r => r.DownloadStreaming(default, default, default, default));
             }
 
             if (IsAsync)

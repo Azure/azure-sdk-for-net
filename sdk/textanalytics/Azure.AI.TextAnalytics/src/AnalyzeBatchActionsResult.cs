@@ -56,7 +56,8 @@ namespace Azure.AI.TextAnalytics
         public IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> RecognizeLinkedEntitiesActionsResults { get; }
 
         /// <summary>
-        /// <summary> if showStats=true was specified in the request this field will contain information about the document payload. </summary>
+        /// Gets statistics about the operation executed and how it was processed
+        /// by the service.
         /// </summary>
         public TextDocumentBatchStatistics Statistics { get; }
     }

@@ -29,6 +29,19 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
                 new AzureKeyCredential(topicAccessKey));
             #endregion
 
+            #region Snippet:SendSingleEGEventToTopic
+            // Add EventGridEvents to a list to publish to the topic
+            EventGridEvent egEvent =
+                new EventGridEvent(
+                    "ExampleEventSubject",
+                    "Example.EventType",
+                    "1.0",
+                    "This is the event data");
+
+            // Send the event
+            await client.SendEventAsync(egEvent);
+            #endregion
+
             #region Snippet:SendEGEventsToTopic
             // Add EventGridEvents to a list to publish to the topic
             List<EventGridEvent> eventsList = new List<EventGridEvent>
@@ -37,7 +50,12 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
                     "ExampleEventSubject",
                     "Example.EventType",
                     "1.0",
-                    "This is the event data")
+                    "This is the data for the first event"),
+               new EventGridEvent(
+                    "ExampleEventSubject",
+                    "Example.EventType",
+                    "1.0",
+                    "This is the data for the second event")
             };
 
             // Send the events

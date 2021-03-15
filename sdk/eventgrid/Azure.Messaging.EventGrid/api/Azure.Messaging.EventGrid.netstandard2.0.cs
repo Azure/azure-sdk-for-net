@@ -11,8 +11,8 @@ namespace Azure.Messaging.EventGrid
         public string Id { get { throw null; } set { } }
         public string Subject { get { throw null; } set { } }
         public string Topic { get { throw null; } set { } }
-        public static Azure.Messaging.EventGrid.EventGridEvent Parse(System.BinaryData jsonEvent) { throw null; }
-        public static Azure.Messaging.EventGrid.EventGridEvent[] ParseEvents(string requestContent) { throw null; }
+        public static Azure.Messaging.EventGrid.EventGridEvent Parse(System.BinaryData json) { throw null; }
+        public static Azure.Messaging.EventGrid.EventGridEvent[] ParseMany(System.BinaryData json) { throw null; }
         public bool TryGetSystemEventData(out object eventData) { throw null; }
     }
     public static partial class EventGridExtensions
@@ -29,12 +29,18 @@ namespace Azure.Messaging.EventGrid
         public virtual Azure.Response SendEncodedCloudEvents(System.ReadOnlyMemory<byte> cloudEvents, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response> SendEncodedCloudEventsAsync(System.ReadOnlyMemory<byte> cloudEvents, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response SendEvents(System.Collections.Generic.IEnumerable<Azure.Messaging.CloudEvent> events, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response SendEvents(System.Collections.Generic.IEnumerable<Azure.Messaging.EventGrid.EventGridEvent> events, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response SendEvents(System.Collections.Generic.IEnumerable<System.BinaryData> events, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> SendEventsAsync(System.Collections.Generic.IEnumerable<Azure.Messaging.CloudEvent> events, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> SendEventsAsync(System.Collections.Generic.IEnumerable<Azure.Messaging.EventGrid.EventGridEvent> events, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> SendEventsAsync(System.Collections.Generic.IEnumerable<System.BinaryData> events, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response SendEvent(Azure.Messaging.CloudEvent cloudEvent, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response SendEvent(Azure.Messaging.EventGrid.EventGridEvent eventGridEvent, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response SendEvent(System.BinaryData customEvent, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> SendEventAsync(Azure.Messaging.CloudEvent cloudEvent, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> SendEventAsync(Azure.Messaging.EventGrid.EventGridEvent eventGridEvent, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> SendEventAsync(System.BinaryData customEvent, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response SendEvents(System.Collections.Generic.IEnumerable<Azure.Messaging.CloudEvent> cloudEvents, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response SendEvents(System.Collections.Generic.IEnumerable<Azure.Messaging.EventGrid.EventGridEvent> eventGridEvents, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response SendEvents(System.Collections.Generic.IEnumerable<System.BinaryData> customEvents, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> SendEventsAsync(System.Collections.Generic.IEnumerable<Azure.Messaging.CloudEvent> cloudEvents, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> SendEventsAsync(System.Collections.Generic.IEnumerable<Azure.Messaging.EventGrid.EventGridEvent> eventGridEvents, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> SendEventsAsync(System.Collections.Generic.IEnumerable<System.BinaryData> customEvents, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class EventGridPublisherClientOptions : Azure.Core.ClientOptions
     {
@@ -55,13 +61,19 @@ namespace Azure.Messaging.EventGrid
     public static partial class SystemEventNames
     {
         public const string AcsChatMessageDeleted = "Microsoft.Communication.ChatMessageDeleted";
+        public const string AcsChatMessageDeletedInThread = "Microsoft.Communication.ChatMessageDeletedInThread";
         public const string AcsChatMessageEdited = "Microsoft.Communication.ChatMessageEdited";
+        public const string AcsChatMessageEditedInThread = "Microsoft.Communication.ChatMessageEditedInThread";
         public const string AcsChatMessageReceived = "Microsoft.Communication.ChatMessageReceived";
+        public const string AcsChatMessageReceivedInThread = "Microsoft.Communication.ChatMessageReceivedInThread";
         public const string AcsChatParticipantAddedToThread = "Microsoft.Communication.ChatParticipantAddedToThread";
         public const string AcsChatParticipantAddedToThreadWithUser = "Microsoft.Communication.ChatParticipantAddedToThreadWithUser";
         public const string AcsChatParticipantRemovedFromThread = "Microsoft.Communication.ChatParticipantRemovedFromThread";
         public const string AcsChatParticipantRemovedFromThreadWithUser = "Microsoft.Communication.ChatParticipantRemovedFromThreadWithUser";
+        public const string AcsChatThreadCreated = "Microsoft.Communication.ChatThreadCreated";
         public const string AcsChatThreadCreatedWithUser = "Microsoft.Communication.ChatThreadCreatedWithUser";
+        public const string AcsChatThreadDeleted = "Microsoft.Communication.ChatThreadDeleted";
+        public const string AcsChatThreadPropertiesUpdated = "Microsoft.Communication.ChatThreadPropertiesUpdated";
         public const string AcsChatThreadPropertiesUpdatedPerUser = "Microsoft.Communication.ChatThreadPropertiesUpdatedPerUser";
         public const string AcsChatThreadWithUserDeleted = "Microsoft.Communication.ChatThreadWithUserDeleted";
         public const string AcsSmsDeliveryReportReceived = "Microsoft.Communication.SMSDeliveryReportReceived";
@@ -122,6 +134,10 @@ namespace Azure.Messaging.EventGrid
         public const string MediaLiveEventIncomingVideoStreamsOutOfSync = "Microsoft.Media.LiveEventIncomingVideoStreamsOutOfSync";
         public const string MediaLiveEventIngestHeartbeat = "Microsoft.Media.LiveEventIngestHeartbeat";
         public const string MediaLiveEventTrackDiscontinuityDetected = "Microsoft.Media.LiveEventTrackDiscontinuityDetected";
+        public const string RedisExportRDBCompleted = "Microsoft.Cache.ExportRDBCompleted";
+        public const string RedisImportRDBCompleted = "Microsoft.Cache.ImportRDBCompleted";
+        public const string RedisPatchingCompleted = "Microsoft.Cache.PatchingCompleted";
+        public const string RedisScalingCompleted = "Microsoft.Cache.ScalingCompleted";
         public const string ResourceActionCancel = "Microsoft.Resources.ResourceActionCancel";
         public const string ResourceActionFailure = "Microsoft.Resources.ResourceActionFailure";
         public const string ResourceActionSuccess = "Microsoft.Resources.ResourceActionSuccess";
@@ -131,8 +147,12 @@ namespace Azure.Messaging.EventGrid
         public const string ResourceWriteCancel = "Microsoft.Resources.ResourceWriteCancel";
         public const string ResourceWriteFailure = "Microsoft.Resources.ResourceWriteFailure";
         public const string ResourceWriteSuccess = "Microsoft.Resources.ResourceWriteSuccess";
+        public const string ServiceBusActiveMessagesAvailablePeriodicNotifications = "Microsoft.ServiceBus.ActiveMessagesAvailablePeriodicNotifications";
         public const string ServiceBusActiveMessagesAvailableWithNoListeners = "Microsoft.ServiceBus.ActiveMessagesAvailableWithNoListeners";
+        public const string ServiceBusDeadletterMessagesAvailablePeriodicNotifications = "Microsoft.ServiceBus.DeadletterMessagesAvailablePeriodicNotifications";
         public const string ServiceBusDeadletterMessagesAvailableWithNoListener = "Microsoft.ServiceBus.DeadletterMessagesAvailableWithNoListener";
+        public const string SignalRServiceClientConnectionConnected = "Microsoft.SignalRService.ClientConnectionConnected";
+        public const string SignalRServiceClientConnectionDisconnected = "Microsoft.SignalRService.ClientConnectionDisconnected";
         public const string StorageBlobCreated = "Microsoft.Storage.BlobCreated";
         public const string StorageBlobDeleted = "Microsoft.Storage.BlobDeleted";
         public const string StorageBlobRenamed = "Microsoft.Storage.BlobRenamed";
@@ -1090,9 +1110,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string Status { get { throw null; } }
         public System.DateTimeOffset? Timestamp { get { throw null; } }
     }
-    public partial class ResourceActionCancelData
+    public partial class ResourceActionCancelEventData
     {
-        internal ResourceActionCancelData() { }
+        internal ResourceActionCancelEventData() { }
         public string Authorization { get { throw null; } }
         public string Claims { get { throw null; } }
         public string CorrelationId { get { throw null; } }
@@ -1105,9 +1125,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string SubscriptionId { get { throw null; } }
         public string TenantId { get { throw null; } }
     }
-    public partial class ResourceActionFailureData
+    public partial class ResourceActionFailureEventData
     {
-        internal ResourceActionFailureData() { }
+        internal ResourceActionFailureEventData() { }
         public string Authorization { get { throw null; } }
         public string Claims { get { throw null; } }
         public string CorrelationId { get { throw null; } }
@@ -1120,9 +1140,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string SubscriptionId { get { throw null; } }
         public string TenantId { get { throw null; } }
     }
-    public partial class ResourceActionSuccessData
+    public partial class ResourceActionSuccessEventData
     {
-        internal ResourceActionSuccessData() { }
+        internal ResourceActionSuccessEventData() { }
         public string Authorization { get { throw null; } }
         public string Claims { get { throw null; } }
         public string CorrelationId { get { throw null; } }
@@ -1135,9 +1155,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string SubscriptionId { get { throw null; } }
         public string TenantId { get { throw null; } }
     }
-    public partial class ResourceDeleteCancelData
+    public partial class ResourceDeleteCancelEventData
     {
-        internal ResourceDeleteCancelData() { }
+        internal ResourceDeleteCancelEventData() { }
         public string Authorization { get { throw null; } }
         public string Claims { get { throw null; } }
         public string CorrelationId { get { throw null; } }
@@ -1150,9 +1170,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string SubscriptionId { get { throw null; } }
         public string TenantId { get { throw null; } }
     }
-    public partial class ResourceDeleteFailureData
+    public partial class ResourceDeleteFailureEventData
     {
-        internal ResourceDeleteFailureData() { }
+        internal ResourceDeleteFailureEventData() { }
         public string Authorization { get { throw null; } }
         public string Claims { get { throw null; } }
         public string CorrelationId { get { throw null; } }
@@ -1165,9 +1185,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string SubscriptionId { get { throw null; } }
         public string TenantId { get { throw null; } }
     }
-    public partial class ResourceDeleteSuccessData
+    public partial class ResourceDeleteSuccessEventData
     {
-        internal ResourceDeleteSuccessData() { }
+        internal ResourceDeleteSuccessEventData() { }
         public string Authorization { get { throw null; } }
         public string Claims { get { throw null; } }
         public string CorrelationId { get { throw null; } }
@@ -1180,9 +1200,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string SubscriptionId { get { throw null; } }
         public string TenantId { get { throw null; } }
     }
-    public partial class ResourceWriteCancelData
+    public partial class ResourceWriteCancelEventData
     {
-        internal ResourceWriteCancelData() { }
+        internal ResourceWriteCancelEventData() { }
         public string Authorization { get { throw null; } }
         public string Claims { get { throw null; } }
         public string CorrelationId { get { throw null; } }
@@ -1195,9 +1215,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string SubscriptionId { get { throw null; } }
         public string TenantId { get { throw null; } }
     }
-    public partial class ResourceWriteFailureData
+    public partial class ResourceWriteFailureEventData
     {
-        internal ResourceWriteFailureData() { }
+        internal ResourceWriteFailureEventData() { }
         public string Authorization { get { throw null; } }
         public string Claims { get { throw null; } }
         public string CorrelationId { get { throw null; } }
@@ -1210,9 +1230,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string SubscriptionId { get { throw null; } }
         public string TenantId { get { throw null; } }
     }
-    public partial class ResourceWriteSuccessData
+    public partial class ResourceWriteSuccessEventData
     {
-        internal ResourceWriteSuccessData() { }
+        internal ResourceWriteSuccessEventData() { }
         public string Authorization { get { throw null; } }
         public string Claims { get { throw null; } }
         public string CorrelationId { get { throw null; } }

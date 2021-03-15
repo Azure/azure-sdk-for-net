@@ -15,21 +15,16 @@ namespace Azure.Communication.PhoneNumbers.Models
     {
         internal static AcquiredPhoneNumbers DeserializeAcquiredPhoneNumbers(JsonElement element)
         {
-            Optional<IReadOnlyList<AcquiredPhoneNumber>> phoneNumbers = default;
+            IReadOnlyList<PurchasedPhoneNumber> phoneNumbers = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("phoneNumbers"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<AcquiredPhoneNumber> array = new List<AcquiredPhoneNumber>();
+                    List<PurchasedPhoneNumber> array = new List<PurchasedPhoneNumber>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AcquiredPhoneNumber.DeserializeAcquiredPhoneNumber(item));
+                        array.Add(PurchasedPhoneNumber.DeserializePurchasedPhoneNumber(item));
                     }
                     phoneNumbers = array;
                     continue;
@@ -40,7 +35,7 @@ namespace Azure.Communication.PhoneNumbers.Models
                     continue;
                 }
             }
-            return new AcquiredPhoneNumbers(Optional.ToList(phoneNumbers), nextLink.Value);
+            return new AcquiredPhoneNumbers(phoneNumbers, nextLink.Value);
         }
     }
 }

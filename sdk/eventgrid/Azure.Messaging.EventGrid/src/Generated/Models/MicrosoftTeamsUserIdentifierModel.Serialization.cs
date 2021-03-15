@@ -5,14 +5,11 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    [JsonConverter(typeof(MicrosoftTeamsUserIdentifierModelConverter))]
     public partial class MicrosoftTeamsUserIdentifierModel
     {
         internal static MicrosoftTeamsUserIdentifierModel DeserializeMicrosoftTeamsUserIdentifierModel(JsonElement element)
@@ -49,19 +46,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new MicrosoftTeamsUserIdentifierModel(userId, Optional.ToNullable(isAnonymous), Optional.ToNullable(cloud));
-        }
-
-        internal partial class MicrosoftTeamsUserIdentifierModelConverter : JsonConverter<MicrosoftTeamsUserIdentifierModel>
-        {
-            public override void Write(Utf8JsonWriter writer, MicrosoftTeamsUserIdentifierModel model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model);
-            }
-            public override MicrosoftTeamsUserIdentifierModel Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeMicrosoftTeamsUserIdentifierModel(document.RootElement);
-            }
         }
     }
 }

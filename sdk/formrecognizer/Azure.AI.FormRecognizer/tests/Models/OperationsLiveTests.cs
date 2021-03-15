@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
 using Azure.AI.FormRecognizer.Training;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.FormRecognizer.Tests
@@ -28,7 +29,7 @@ namespace Azure.AI.FormRecognizer.Tests
         {
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizeContentOperationCanPollFromNewObject()
         {
             var client = CreateFormRecognizerClient(out var nonInstrumentedClient);
@@ -43,7 +44,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual(1, sameOperation.Value.Count);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizeReceiptsOperationCanPollFromNewObject()
         {
             var client = CreateFormRecognizerClient(out var nonInstrumentedClient);
@@ -58,7 +59,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual(1, sameOperation.Value.Count);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizeInvoicesOperationCanPollFromNewObject()
         {
             var client = CreateFormRecognizerClient(out var nonInstrumentedClient);
@@ -73,7 +74,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual(1, sameOperation.Value.Count);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizeCustomFormsOperationCanPollFromNewObject()
         {
             var client = CreateFormRecognizerClient(out var nonInstrumentedClient);
@@ -94,7 +95,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual(1, sameOperation.Value.Count);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TrainingOperationCanPollFromNewObject()
         {
             var client = CreateFormTrainingClient(out var nonInstrumentedClient);
@@ -109,7 +110,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual(CustomFormModelStatus.Ready, sameOperation.Value.Status);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateComposedModelOperationCanPollFromNewObject()
         {
             var client = CreateFormTrainingClient(out var nonInstrumentedClient);
@@ -126,7 +127,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual(CustomFormModelStatus.Ready, sameOperation.Value.Status);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CopyModelOperationCanPollFromNewObject()
         {
             var client = CreateFormTrainingClient(out var nonInstrumentedClient);

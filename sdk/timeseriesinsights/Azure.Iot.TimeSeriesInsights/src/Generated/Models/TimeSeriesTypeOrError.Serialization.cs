@@ -15,7 +15,7 @@ namespace Azure.Iot.TimeSeriesInsights
         internal static TimeSeriesTypeOrError DeserializeTimeSeriesTypeOrError(JsonElement element)
         {
             Optional<TimeSeriesType> timeSeriesType = default;
-            Optional<TsiErrorBody> error = default;
+            Optional<InstancesOperationError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timeSeriesType"))
@@ -35,7 +35,7 @@ namespace Azure.Iot.TimeSeriesInsights
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = TsiErrorBody.DeserializeTsiErrorBody(property.Value);
+                    error = InstancesOperationError.DeserializeInstancesOperationError(property.Value);
                     continue;
                 }
             }

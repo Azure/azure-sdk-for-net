@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Net.Http;
 using System.Text.Json;
+using System.Threading.Tasks;
 using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
 using Azure.Messaging.EventGrid.SystemEvents;
@@ -17,20 +19,21 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
 
         private readonly string jsonPayloadSampleTwo = "[{ \"id\": \"2d1781af-3a4c\", \"source\": \"/examples/test/payload\", \"data\": { \"name\": \"example\",\"age\": 20 },\"type\": \"MyApp.Models.CustomEventType\",\"time\": \"2018-01-25T22:12:19.4556811Z\",\"specversion\": \"1.0\"}]";
 
-        // This sample demonstrates how to parse EventGridEvents from JSON and access event data using AsSystemEventData()
+        // This sample demonstrates how to parse EventGridEvents from JSON and access event data using TryGetSystemEventData
         [Test]
         public void NonGenericReceiveAndDeserializeEventGridEvents()
         {
+            var httpContent = new BinaryData(jsonPayloadSampleOne).ToStream();
             #region Snippet:EGEventParseJson
-            // Parse the JSON payload into a list of events using EventGridEvent.Parse
-            EventGridEvent[] egEvents = EventGridEvent.ParseEvents(jsonPayloadSampleOne);
+            // Parse the JSON payload into a list of events
+            EventGridEvent[] egEvents = EventGridEvent.ParseMany(BinaryData.FromStream(httpContent));
             #endregion
 
             // Iterate over each event to access event properties and data
             #region Snippet:DeserializePayloadUsingAsSystemEventData
             foreach (EventGridEvent egEvent in egEvents)
             {
-                // If the event is a system event, TryGetSystemEventData() will return the deserialized system event
+                // If the event is a system event, TryGetSystemEventData will return the deserialized system event
                 if (egEvent.TryGetSystemEventData(out object systemEvent))
                 {
                     switch (systemEvent)
@@ -68,9 +71,9 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
             #endregion
         }
 
-        // This sample demonstrates how to parse CloudEvents from JSON and access event data using GetData<T>()
+        // This sample demonstrates how to parse CloudEvents from JSON and access event data using ToObjectFromJson
         [Test]
-        public void GenericReceiveAndDeserializeEventGridEvents()
+        public async Task GenericReceiveAndDeserializeEventGridEvents()
         {
             // Example of a custom ObjectSerializer used to deserialize the event payload
             JsonObjectSerializer myCustomSerializer = new JsonObjectSerializer(
@@ -79,9 +82,11 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
                 PropertyNameCaseInsensitive = true
             });
 
+            var httpContent = new StreamContent(new BinaryData(jsonPayloadSampleTwo).ToStream());
             #region Snippet:CloudEventParseJson
-            // Parse the JSON payload into a list of events using CloudEvent.Parse
-            CloudEvent[] cloudEvents = CloudEvent.ParseEvents(jsonPayloadSampleTwo);
+            var bytes = await httpContent.ReadAsByteArrayAsync();
+            // Parse the JSON payload into a list of events
+            CloudEvent[] cloudEvents = CloudEvent.ParseMany(new BinaryData(bytes));
             #endregion
 
             // Iterate over each event to access event properties and data

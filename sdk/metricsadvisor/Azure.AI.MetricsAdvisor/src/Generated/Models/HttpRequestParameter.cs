@@ -14,7 +14,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="url"> HTTP URL. </param>
         /// <param name="httpHeader"> HTTP header. </param>
         /// <param name="httpMethod"> HTTP method. </param>
-        /// <param name="payload"> HTTP reuqest body. </param>
+        /// <param name="payload"> HTTP request body. </param>
         public HttpRequestParameter(string url, string httpHeader, string httpMethod, string payload)
         {
             Url = url;
@@ -29,7 +29,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public string HttpHeader { get; set; }
         /// <summary> HTTP method. </summary>
         public string HttpMethod { get; set; }
-        /// <summary> HTTP reuqest body. </summary>
+        /// <summary> HTTP request body. </summary>
         public string Payload { get; set; }
     }
 }

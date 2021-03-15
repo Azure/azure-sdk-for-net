@@ -22,7 +22,7 @@ namespace Azure.Core
         /// <returns>The value of the parameter name specified in <paramref name="challengeParameter"/> if it is found in the specified <paramref name="challengeScheme"/>.</returns>
         public static string? GetChallengeParameterFromResponse(Response response, string challengeScheme, string challengeParameter)
         {
-            if (response.Status != (int)HttpStatusCode.Unauthorized || !response.Headers.TryGetValue(HttpHeader.Names.WWWAuthenticate, out string? headerValue))
+            if (response.Status != (int)HttpStatusCode.Unauthorized || !response.Headers.TryGetValue(HttpHeader.Names.WwwAuthenticate, out string? headerValue))
             {
                 return null;
             }

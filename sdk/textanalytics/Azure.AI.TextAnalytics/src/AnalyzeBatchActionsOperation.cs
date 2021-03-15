@@ -122,11 +122,6 @@ namespace Azure.AI.TextAnalytics
         private bool? _showStats { get; }
 
         /// <summary>
-        /// Provides the api version to use when doing pagination.
-        /// </summary>
-        private readonly string _apiVersion;
-
-        /// <summary>
         /// Returns true if the long-running operation completed successfully and has produced final result (accessible by Value property).
         /// </summary>
         public override bool HasValue => _firstPage != null;
@@ -150,15 +145,13 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <param name="serviceClient">The client for communicating with the Form Recognizer Azure Cognitive Service through its REST API.</param>
         /// <param name="diagnostics">The client diagnostics for exception creation in case of failure.</param>
-        /// <param name="apiversion">The specific api version to use.</param>
         /// <param name="operationLocation">The address of the long-running operation. It can be obtained from the response headers upon starting the operation.</param>
         /// <param name="idToIndexMap"></param>
         /// <param name="showStats"></param>
-        internal AnalyzeBatchActionsOperation(TextAnalyticsRestClient serviceClient, ClientDiagnostics diagnostics, string apiversion, string operationLocation, IDictionary<string, int> idToIndexMap, bool? showStats = default)
+        internal AnalyzeBatchActionsOperation(TextAnalyticsRestClient serviceClient, ClientDiagnostics diagnostics, string operationLocation, IDictionary<string, int> idToIndexMap, bool? showStats = default)
         {
             _serviceClient = serviceClient;
             _diagnostics = diagnostics;
-            _apiVersion = apiversion;
             _idToIndexMap = idToIndexMap;
             _showStats = showStats;
 
@@ -295,7 +288,7 @@ namespace Azure.AI.TextAnalytics
                 //diagnostics scope?
                 try
                 {
-                    Response<AnalyzeJobState> jobState = await _serviceClient.AnalyzeStatusNextPageAsync(_apiVersion, nextLink, _showStats).ConfigureAwait(false);
+                    Response<AnalyzeJobState> jobState = await _serviceClient.AnalyzeStatusNextPageAsync(nextLink, _showStats).ConfigureAwait(false);
 
                     AnalyzeBatchActionsResult result = Transforms.ConvertToAnalyzeOperationResult(jobState.Value, _idToIndexMap);
                     return Page.FromValues(new List<AnalyzeBatchActionsResult>() { result }, jobState.Value.NextLink, jobState.GetRawResponse());
@@ -324,7 +317,7 @@ namespace Azure.AI.TextAnalytics
                 //diagnostics scope?
                 try
                 {
-                    Response<AnalyzeJobState> jobState = _serviceClient.AnalyzeStatusNextPage(_apiVersion, nextLink, _showStats);
+                    Response<AnalyzeJobState> jobState = _serviceClient.AnalyzeStatusNextPage(nextLink, _showStats);
 
                     AnalyzeBatchActionsResult result = Transforms.ConvertToAnalyzeOperationResult(jobState.Value, _idToIndexMap);
                     return Page.FromValues(new List<AnalyzeBatchActionsResult>() { result }, jobState.Value.NextLink, jobState.GetRawResponse());

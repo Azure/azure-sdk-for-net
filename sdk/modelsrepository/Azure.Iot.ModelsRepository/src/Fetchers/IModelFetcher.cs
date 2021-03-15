@@ -13,8 +13,8 @@ namespace Azure.Iot.ModelsRepository.Fetchers
     /// </summary>
     internal interface IModelFetcher
     {
-        Task<FetchResult> FetchAsync(string dtmi, Uri repositoryUri, DependencyResolutionOption resolutionOption, CancellationToken cancellationToken = default);
+        Task<FetchResult> FetchAsync(string dtmi, Uri repositoryUri, ModelDependencyResolution dependencyResolution, CancellationToken cancellationToken = default);
 
-        FetchResult Fetch(string dtmi, Uri repositoryUri, DependencyResolutionOption resolutionOption, CancellationToken cancellationToken = default);
+        FetchResult Fetch(string dtmi, Uri repositoryUri, ModelDependencyResolution dependencyResolution, CancellationToken cancellationToken = default);
     }
 }

@@ -269,7 +269,7 @@ namespace Azure.Core
             public static string Range { get { throw null; } }
             public static string Referer { get { throw null; } }
             public static string UserAgent { get { throw null; } }
-            public static string WWWAuthenticate { get { throw null; } }
+            public static string WwwAuthenticate { get { throw null; } }
             public static string XMsDate { get { throw null; } }
             public static string XMsRange { get { throw null; } }
             public static string XMsRequestId { get { throw null; } }
@@ -581,14 +581,14 @@ namespace Azure.Messaging
         public System.BinaryData? Data { get { throw null; } set { } }
         public string? DataContentType { get { throw null; } set { } }
         public string? DataSchema { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, object?> ExtensionAttributes { get { throw null; } }
-        public string? Id { get { throw null; } set { } }
-        public string? Source { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, object> ExtensionAttributes { get { throw null; } }
+        public string Id { get { throw null; } set { } }
+        public string Source { get { throw null; } set { } }
         public string? Subject { get { throw null; } set { } }
         public System.DateTimeOffset? Time { get { throw null; } set { } }
-        public string? Type { get { throw null; } set { } }
-        public static Azure.Messaging.CloudEvent? Parse(System.BinaryData jsonEvent, bool skipValidation = false) { throw null; }
-        public static Azure.Messaging.CloudEvent[] ParseEvents(string jsonContent, bool skipValidation = false) { throw null; }
+        public string Type { get { throw null; } set { } }
+        public static Azure.Messaging.CloudEvent? Parse(System.BinaryData json, bool skipValidation = false) { throw null; }
+        public static Azure.Messaging.CloudEvent[] ParseMany(System.BinaryData json, bool skipValidation = false) { throw null; }
     }
     public enum CloudEventDataFormat
     {

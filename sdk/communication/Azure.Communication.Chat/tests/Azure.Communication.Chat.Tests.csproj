@@ -18,5 +18,6 @@
   <!-- Shared source from Azure.Core -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="..\..\Shared\src\CommunicationIdentifierSerializerTest.cs" Link="Shared\Communication\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
 </Project>

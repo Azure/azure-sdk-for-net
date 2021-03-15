@@ -146,12 +146,16 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         ///   Sends a message to the associated entity of Service Bus.
         /// </summary>
-        /// <param name="message"></param>
-        ///
+        /// <param name="message">The message to send.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
-        ///
+        /// <exception cref="ServiceBusException">
+        ///   The message exceeds the maximum size allowed, as determined by the Service Bus service.
+        ///   The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.MessageSizeExceeded"/> in this case.
+        ///   For more information on service limits, see
+        ///   <see href="https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-quotas#messaging-quotas"/>.
+        /// </exception>
         public virtual async Task SendMessageAsync(
             ServiceBusMessage message,
             CancellationToken cancellationToken = default)
@@ -173,7 +177,12 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
-        ///
+        /// <exception cref="ServiceBusException">
+        ///   The set of messages exceeds the maximum size allowed in a single batch, as determined by the Service Bus service.
+        ///   The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.MessageSizeExceeded"/> in this case.
+        ///   For more information on service limits, see
+        ///   <see href="https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-quotas#messaging-quotas"/>.
+        /// </exception>
         public virtual async Task SendMessagesAsync(
             IEnumerable<ServiceBusMessage> messages,
             CancellationToken cancellationToken = default)

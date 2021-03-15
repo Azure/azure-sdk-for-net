@@ -302,7 +302,7 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
                 ExtractKeyPhrasesOptions = new List<ExtractKeyPhrasesOptions>() { new ExtractKeyPhrasesOptions() },
-                DisplayName = "AnalyzeOperationWithSkipParameter",
+                DisplayName = "AnalyzeOperationWithPagination",
             };
 
             AnalyzeBatchActionsOperation operation = await client.StartAnalyzeBatchActionsAsync(documents, batchActions);

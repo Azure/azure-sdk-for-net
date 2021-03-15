@@ -1,6 +1,9 @@
 # Release History
 
-## 5.1.0-beta.5 (Unreleased)
+## 5.1.0-beta.6 (Unreleased)
+
+
+## 5.1.0-beta.5 (2021-03-09)
 ### New features
 - Added ability to filter the categories returned in a Personally Identifiable Information recognition with the optional parameter `CategoriesFilter` in `RecognizePiiEntitiesOptions`.
 - Added the ability to recognize linked entities under `StartAnalyzeBatchActions`.
@@ -9,7 +12,7 @@
 - `AnalyzeHealthcareEntitiesResult`, now exposes the property `EntityRelations`of type `HealthcareEntityRelation`.
 - Introduced `HealthcareEntityRelation` class which will determine all the different relations between the entities as `Roles`.
 - Added `HealthcareEntityRelationRole`, which exposes `Name` and `Entity` of type `string` and `HealthcareEntity` respectively.
-- `HealthcareEntityAssertion` is added to `HealthcareEntity` which further exposes `Association`, `Certainity` and `Conditionality`.
+- `HealthcareEntityAssertion` is added to `HealthcareEntity` which further exposes `EntityAssociation`, `EntityCertainity` and `EntityConditionality`.
 - Added new types under `HealthcareRelationType` class.
 
 ### Breaking changes

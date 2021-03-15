@@ -37,6 +37,17 @@ namespace Azure.Identity.Tests
             return (token, expiresOn, json);
         }
 
+        public static (string token, DateTimeOffset expiresOn, string json) CreateTokenForAzurePowerShell(TimeSpan expiresOffset)
+        {
+            const string expiresOnStringFormat = "yyyy-MM-ddTHH:mm:sszzz";
+
+            var expiresOnString = DateTimeOffset.Now.Add(expiresOffset).ToString(expiresOnStringFormat);
+            var expiresOn = DateTimeOffset.ParseExact(expiresOnString, expiresOnStringFormat, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal | DateTimeStyles.AssumeLocal);
+            var token = Guid.NewGuid().ToString();
+            var json = $"{{ \"Token\": \"{token}\", \"ExpiresOn\": \"{expiresOnString}\" }}";
+            return (token, expiresOn, json);
+        }
+
         public static (string token, DateTimeOffset expiresOn, string json) CreateTokenForVisualStudio() => CreateTokenForVisualStudio(TimeSpan.FromSeconds(30));
 
         public static (string token, DateTimeOffset expiresOn, string json) CreateTokenForVisualStudio(TimeSpan expiresOffset)
