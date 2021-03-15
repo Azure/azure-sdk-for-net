@@ -72,7 +72,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seanmcccanary3.blob.core.windows.net/?sv=2020-08-04\u0026ss=b\u0026srt=sco\u0026st=2021-02-17T18%3A05%3A27Z\u0026se=2021-02-17T20%3A05%3A27Z\u0026sp=f\u0026sig=Sanitized\u0026comp=blobs\u0026where=\u0022myTagKey\u0022%3D%27myTagValue%27",
+      "RequestUri": "https://seanmcccanary3.blob.core.windows.net/?sv=2020-06-12\u0026ss=b\u0026srt=sco\u0026st=2021-02-17T18%3A05%3A27Z\u0026se=2021-02-17T20%3A05%3A27Z\u0026sp=f\u0026sig=Sanitized\u0026comp=blobs\u0026where=\u0022myTagKey\u0022%3D%27myTagValue%27",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/xml",

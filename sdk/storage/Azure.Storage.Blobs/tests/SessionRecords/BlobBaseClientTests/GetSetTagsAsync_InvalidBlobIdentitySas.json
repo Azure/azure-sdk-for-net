@@ -106,7 +106,7 @@
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CUserDelegationKey\u003E\u003CSignedOid\u003Ec4f48289-bb84-4086-b250-6f94a8f64cee\u003C/SignedOid\u003E\u003CSignedTid\u003E72f988bf-86f1-41af-91ab-2d7cd011db47\u003C/SignedTid\u003E\u003CSignedStart\u003E2021-02-17T18:47:13Z\u003C/SignedStart\u003E\u003CSignedExpiry\u003E2021-02-17T19:47:13Z\u003C/SignedExpiry\u003E\u003CSignedService\u003Eb\u003C/SignedService\u003E\u003CSignedVersion\u003E2020-06-12\u003C/SignedVersion\u003E\u003CValue\u003EB0huXwtgm23qYDzwJZLRERLK0m2R8lNBI6w25pmLhq0=\u003C/Value\u003E\u003C/UserDelegationKey\u003E"
     },
     {
-      "RequestUri": "https://seanoauthcanary.blob.core.windows.net/test-container-83977476-d2f6-8fad-5658-42cc068d3818/test-blob-613cc167-0e4f-8ef6-cfb2-07b7f67f5b08?skoid=c4f48289-bb84-4086-b250-6f94a8f64cee\u0026sktid=72f988bf-86f1-41af-91ab-2d7cd011db47\u0026skt=2021-02-17T18%3A47%3A13Z\u0026ske=2021-02-17T19%3A47%3A13Z\u0026sks=b\u0026skv=2020-06-12\u0026sv=2020-08-04\u0026st=2021-02-17T17%3A47%3A13Z\u0026se=2021-02-17T19%3A47%3A13Z\u0026sr=b\u0026sp=r\u0026sig=Sanitized\u0026comp=tags",
+      "RequestUri": "https://seanoauthcanary.blob.core.windows.net/test-container-83977476-d2f6-8fad-5658-42cc068d3818/test-blob-613cc167-0e4f-8ef6-cfb2-07b7f67f5b08?skoid=c4f48289-bb84-4086-b250-6f94a8f64cee\u0026sktid=72f988bf-86f1-41af-91ab-2d7cd011db47\u0026skt=2021-02-17T18%3A47%3A13Z\u0026ske=2021-02-17T19%3A47%3A13Z\u0026sks=b\u0026skv=2020-06-12\u0026sv=2020-06-12\u0026st=2021-02-17T17%3A47%3A13Z\u0026se=2021-02-17T19%3A47%3A13Z\u0026sr=b\u0026sp=r\u0026sig=Sanitized\u0026comp=tags",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",

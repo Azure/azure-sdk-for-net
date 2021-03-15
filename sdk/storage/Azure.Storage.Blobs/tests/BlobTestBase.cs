@@ -308,7 +308,7 @@ namespace Azure.Storage.Test.Shared
                 StartsOn = Recording.UtcNow.AddHours(-1),
                 ExpiresOn = Recording.UtcNow.AddHours(+1),
                 IPRange = new SasIPRange(IPAddress.None, IPAddress.None),
-                Version = ToSasVersion(_serviceVersion)
+                Version = Constants.DefaultSasVersion
             };
             builder.SetPermissions(permissions);
             return builder.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
