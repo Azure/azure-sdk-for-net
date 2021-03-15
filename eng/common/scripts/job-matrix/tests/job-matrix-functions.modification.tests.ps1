@@ -103,12 +103,32 @@ Describe "Platform Matrix Import" -Tag "import" {
         $matrix[0].name | Should -Be test1_foo1_bar1
         $matrix[0].parameters.testField | Should -Be "test1"
         $matrix[0].parameters.Foo | Should -Be "foo1"
-        $matrix[2].name | Should -Be test1_importedBaz
+        $matrix[2].name | Should -Be test1_importedBazName
         $matrix[2].parameters.testField | Should -Be "test1"
         $matrix[2].parameters.Baz | Should -Be "importedBaz"
         $matrix[4].name | Should -Be test2_foo2_bar2
         $matrix[4].parameters.testField | Should -Be "test2"
         $matrix[4].parameters.Foo | Should -Be "foo2"
+    }
+
+    It "Should source imported display name lookups" {
+        $matrixJson = @'
+{
+    "displayNames": {
+        "test1": "test1DisplayName",
+        "importedBaz": "importedBazNameOverride"
+    },
+    "matrix": {
+        "$IMPORT": "./test-import-matrix.json",
+        "testField": [ "test1", "test2" ]
+    }
+}
+'@
+        $importConfig = GetMatrixConfigFromJson $matrixJson
+        $matrix = GenerateMatrix $importConfig "sparse" -nonSparseParameters "testField"
+
+        $matrix[0].name | Should -Be test1DisplayName_foo1_bar1
+        $matrix[2].name | Should -Be test1DisplayName_importedBazNameOverride
     }
 
     It "Should generate a sparse matrix with an imported sparse matrix" {
@@ -134,7 +154,7 @@ Describe "Platform Matrix Import" -Tag "import" {
   },
   {
     "parameters": { "testField1": "test11", "testField2": "test21", "Baz": "importedBaz" },
-    "name": "test11_test21_importedBaz"
+    "name": "test11_test21_importedBazName"
   },
   {
     "parameters": { "testField1": "test12", "testField2": "test22", "Foo": "foo1", "Bar": "bar1" },
@@ -146,7 +166,7 @@ Describe "Platform Matrix Import" -Tag "import" {
   },
   {
     "parameters": { "testField1": "test12", "testField2": "test22", "Baz": "importedBaz" },
-    "name": "test12_test22_importedBaz"
+    "name": "test12_test22_importedBazName"
   }
 ]
 '@
@@ -195,7 +215,7 @@ Describe "Platform Matrix Import" -Tag "import" {
   },
   {
     "parameters": { "testField": "test2", "Baz": "importedBaz" },
-    "name": "test2_importedBaz"
+    "name": "test2_importedBazName"
   },
   {
     "parameters": { "testField": "test3", "Foo": "foo1", "Bar": "bar1" },

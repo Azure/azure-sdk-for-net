@@ -91,7 +91,7 @@ function GenerateMatrix(
     [Array]$replace = @(),
     [Array]$nonSparseParameters = @()
 ) {
-    $matrixParameters, $importedMatrix, $importedDisplayNamesLookup = ProcessImport $config.matrixParameters $selectFromMatrixType
+    $matrixParameters, $importedMatrix, $combinedDisplayNameLookup = ProcessImport $config.matrixParameters $selectFromMatrixType $config.displayNamesLookup
     if ($selectFromMatrixType -eq "sparse") {
         $matrix = GenerateSparseMatrix $matrixParameters $config.displayNamesLookup $nonSparseParameters
     } elseif ($selectFromMatrixType -eq "all") {
@@ -103,7 +103,7 @@ function GenerateMatrix(
     # Combine with imported after matrix generation, since a sparse selection should result in a full combination of the
     # top level and imported sparse matrices (as opposed to a sparse selection of both matrices).
     if ($importedMatrix) {
-        $matrix = CombineMatrices $matrix $importedMatrix $importedDisplayNamesLookup
+        $matrix = CombineMatrices $matrix $importedMatrix $combinedDisplayNameLookup
     }
     if ($config.exclude) {
         $matrix = ProcessExcludes $matrix $config.exclude
@@ -334,7 +334,7 @@ function ProcessReplace
     return $replaceMatrix
 }
 
-function ProcessImport([MatrixParameter[]]$matrix, [String]$selection)
+function ProcessImport([MatrixParameter[]]$matrix, [String]$selection, [Hashtable]$displayNamesLookup)
 {
     $importPath = ""
     $matrix = $matrix | ForEach-Object {
@@ -350,6 +350,11 @@ function ProcessImport([MatrixParameter[]]$matrix, [String]$selection)
 
     $importedMatrixConfig = GetMatrixConfigFromJson (Get-Content $importPath)
     $importedMatrix = GenerateMatrix $importedMatrixConfig $selection
+
+    $combinedDisplayNameLookup = $importedMatrixConfig.displayNamesLookup
+    foreach ($lookup in $displayNamesLookup.GetEnumerator()) {
+        $combinedDisplayNameLookup[$lookup.Name] = $lookup.Value
+    }
 
     return $matrix, $importedMatrix, $importedMatrixConfig.displayNamesLookup
 }
