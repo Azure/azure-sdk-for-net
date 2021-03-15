@@ -161,7 +161,7 @@ namespace Azure.AI.DocumentTranslation
         /// </summary>
         /// <param name="sourceBlobContainerSas">The SAS URL for the source container containing documents to be translated. </param>
         /// <param name="targetBlobContainerSas">The SAS URL for the target container to which the translated documents will be written. </param>
-        /// <param name="targetLanguageCode">Language code to translate documents to. For supported documents see
+        /// <param name="targetLanguageCode">Language code to translate documents to. For supported languages see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/language-support#translate"/>.</param>
         /// <param name="glossary">Custom translation glossary to be used in the translation operation. For supported file types see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/overview#supported-glossary-formats"/>.</param>
@@ -215,7 +215,7 @@ namespace Azure.AI.DocumentTranslation
         /// </summary>
         /// <param name="sourceBlobContainerSas">The SAS URL for the source container containing documents to be translated. </param>
         /// <param name="targetBlobContainerSas">The SAS URL for the target container to which the translated documents will be written. </param>
-        /// <param name="targetLanguageCode">Language code to translate documents to. For supported documents see
+        /// <param name="targetLanguageCode">Language code to translate documents to. For supported languages see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/language-support#translate"/>.</param>
         /// <param name="glossary">Custom translation glossary to be used in the translation operation. For supported file types see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/overview#supported-glossary-formats"/>.</param>
