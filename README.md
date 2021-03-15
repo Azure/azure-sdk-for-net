@@ -64,7 +64,7 @@ Security issues and bugs should be reported privately, via email, to the Microso
 
 ### Feature Requests
 
-What feature should we work on next? Check out this [list](https://github.com/Azure/azure-sdk-for-net/issues?q=is%3Aopen+label%3Afeature-request+sort%3Areactions-%2B1-desc) and let us know us your pick by giving the issue a thumbs up. (Note the list is sorted by number of thumbs up in descending order.)
+What features are important to you?  You can let us know by looking at our open [feature requests](https://github.com/Azure/azure-sdk-for-net/issues?q=is%3Aopen+label%3Afeature-request+sort%3Areactions-%2B1-desc) and sharing your thoughts by giving the issue a thumbs up or thumbs down.  (Note the list is sorted by number of thumbs up in descending order.)
 
 
 ### Design Discussions
