@@ -198,7 +198,7 @@ ChatThreadProperties chatThread = await chatThreadClient.GetPropertiesAsync();
 
 ### Get threads (for a participant)
 
-Use `GetChatThreadsInfo` to get the list of chat threads for the participant that instantiated the chatClient.
+Use `GetChatThreads` to get the list of chat threads for the participant that instantiated the chatClient.
 
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_GetThreads
 AsyncPageable<ChatThreadItem> chatThreadItems = chatClient.GetChatThreadsAsync();
