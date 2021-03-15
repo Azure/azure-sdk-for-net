@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Iot.TimeSeriesInsights
 {
-    public partial class InstancesOperationErrorDetails
+    public partial class TimeSeriesOperationErrorDetails
     {
-        internal static InstancesOperationErrorDetails DeserializeInstancesOperationErrorDetails(JsonElement element)
+        internal static TimeSeriesOperationErrorDetails DeserializeTimeSeriesOperationErrorDetails(JsonElement element)
         {
             Optional<string> code = default;
             Optional<string> message = default;
@@ -34,7 +34,7 @@ namespace Azure.Iot.TimeSeriesInsights
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new InstancesOperationErrorDetails(code.Value, message.Value, additionalProperties);
+            return new TimeSeriesOperationErrorDetails(code.Value, message.Value, additionalProperties);
         }
     }
 }
