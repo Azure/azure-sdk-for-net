@@ -2,6 +2,9 @@
 
 ## 1.11.0-beta.1 (Unreleased)
 
+### Key Bug Fixes
+
+- Keep-Alive connections are recycled every 300 seconds to observe DNS changes. 
 
 ## 1.10.0 (2021-03-09)
 
