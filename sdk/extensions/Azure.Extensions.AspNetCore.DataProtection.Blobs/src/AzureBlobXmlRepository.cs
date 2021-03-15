@@ -82,7 +82,8 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs
 
             var xmlReaderSettings = new XmlReaderSettings()
             {
-                DtdProcessing = DtdProcessing.Prohibit, IgnoreProcessingInstructions = true
+                DtdProcessing = DtdProcessing.Prohibit,
+                IgnoreProcessingInstructions = true,
             };
 
             using (var xmlReader = XmlReader.Create(memoryStream, xmlReaderSettings))
