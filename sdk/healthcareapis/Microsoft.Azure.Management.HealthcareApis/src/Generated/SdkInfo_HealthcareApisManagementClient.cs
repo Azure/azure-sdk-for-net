@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.HealthcareApis
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/healthcareapis/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=D:\\projects\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "09d35de8dd3318687eee441d7ddc54a33bf1a9fa";
+      public static readonly String GithubCommidId = "f29bb7e98235d048a063e336d8232e149b73cd81";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
