@@ -16,27 +16,25 @@ namespace Azure.AI.DocumentTranslation.Models
     {
         /// <summary> Initializes a new instance of TranslationTarget. </summary>
         /// <param name="targetUri"> Location of the folder / container with your documents. </param>
-        /// <param name="language"> Target Language. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetUri"/> or <paramref name="language"/> is null. </exception>
-        public TranslationTarget(Uri targetUri, string language)
+        /// <param name="languageCode"> Target Language. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetUri"/> or <paramref name="languageCode"/> is null. </exception>
+        public TranslationTarget(Uri targetUri, string languageCode)
         {
             if (targetUri == null)
             {
                 throw new ArgumentNullException(nameof(targetUri));
             }
-            if (language == null)
+            if (languageCode == null)
             {
-                throw new ArgumentNullException(nameof(language));
+                throw new ArgumentNullException(nameof(languageCode));
             }
 
             TargetUri = targetUri;
-            Language = language;
+            LanguageCode = languageCode;
             Glossaries = new ChangeTrackingList<TranslationGlossary>();
         }
         /// <summary> Category / custom system for translation request. </summary>
         public string Category { get; set; }
-        /// <summary> Target Language. </summary>
-        public string Language { get; }
         /// <summary> List of Glossary. </summary>
         public IList<TranslationGlossary> Glossaries { get; }
     }

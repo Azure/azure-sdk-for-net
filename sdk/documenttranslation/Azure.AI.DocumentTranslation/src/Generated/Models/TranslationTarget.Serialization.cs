@@ -23,7 +23,7 @@ namespace Azure.AI.DocumentTranslation.Models
                 writer.WriteStringValue(Category);
             }
             writer.WritePropertyName("language");
-            writer.WriteStringValue(Language);
+            writer.WriteStringValue(LanguageCode);
             if (Optional.IsCollectionDefined(Glossaries))
             {
                 writer.WritePropertyName("glossaries");

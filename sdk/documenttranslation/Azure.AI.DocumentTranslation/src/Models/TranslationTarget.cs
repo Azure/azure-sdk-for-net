@@ -18,6 +18,7 @@ namespace Azure.AI.DocumentTranslation.Models
         public Uri TargetUri { get; }
 
         /// <summary> Target Language. </summary>
+        [CodeGenMember("Language")]
         public string LanguageCode { get; }
 
         /// <summary> Initializes a new instance of TargetInput. </summary>
