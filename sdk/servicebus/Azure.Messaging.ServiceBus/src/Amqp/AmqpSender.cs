@@ -488,15 +488,17 @@ namespace Azure.Messaging.ServiceBus.Amqp
             long[] sequenceNumbers,
             CancellationToken cancellationToken = default)
         {
-            Task cancelMessageTask = _retryPolicy.RunOperation(async (timeout, token) =>
-            {
-                await CancelScheduledMessageInternalAsync(
-                    sequenceNumbers,
-                    timeout,
-                    token).ConfigureAwait(false);
-            },
-            _connectionScope,
-            cancellationToken);
+            Task cancelMessageTask = _retryPolicy.RunOperation(async (sender, sqn, timeout, token) =>
+                {
+                    await sender.CancelScheduledMessageInternalAsync(
+                        sqn,
+                        timeout,
+                        token).ConfigureAwait(false);
+                },
+                this,
+                sequenceNumbers,
+                _connectionScope,
+                cancellationToken);
             await cancelMessageTask.ConfigureAwait(false);
         }
 
