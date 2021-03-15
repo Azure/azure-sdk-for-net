@@ -145,6 +145,9 @@
 # ServiceLabel: %Cognitive - Translator %Service Attention
 #/<NotInRepo>/            @swmachan
 
+# PRLabel: %Cognitive - Translator
+/sdk/documenttranslation/                     @maririos
+
 # ServiceLabel: %Cognitive - Speech %Service Attention
 #/<NotInRepo>/            @robch @oscholz
 
