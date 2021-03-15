@@ -6,7 +6,7 @@
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.10.0</ApiCompatVersion>
     <!-- TODO: remove when we have a released pacakge with the netcoreapp2.1 target -->
-    <ApiCompatVersion Condition="$(TargetFramework) != 'netcoreapp2.1'"></ApiCompatVersion>
+    <ApiCompatVersion Condition="$(TargetFramework) == 'netcoreapp2.1'"></ApiCompatVersion>
     <PackageTags>Microsoft Azure Client Pipeline</PackageTags>
     <Nullable>enable</Nullable>
     <DefineConstants>$(DefineConstants);AZURE_NULLABLE</DefineConstants>
