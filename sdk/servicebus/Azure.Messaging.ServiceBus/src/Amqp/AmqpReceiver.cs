@@ -242,19 +242,16 @@ namespace Azure.Messaging.ServiceBus.Amqp
             TimeSpan? maxWaitTime,
             CancellationToken cancellationToken)
         {
-            IReadOnlyList<ServiceBusReceivedMessage> messages = null;
-            await _retryPolicy.RunOperation(async (timeout) =>
-            {
-                messages = await ReceiveMessagesAsyncInternal(
-                    maxMessages,
-                    maxWaitTime,
+            return await _retryPolicy.RunOperation(async (receiver, maxmsgs, maxwait, timeout, token) => await receiver.ReceiveMessagesAsyncInternal(
+                    maxmsgs,
+                    maxwait,
                     timeout,
-                    cancellationToken).ConfigureAwait(false);
-            },
-            _connectionScope,
-            cancellationToken).ConfigureAwait(false);
-
-            return messages;
+                    token).ConfigureAwait(false),
+                this,
+                maxMessages,
+                maxWaitTime,
+                _connectionScope,
+                cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -350,10 +347,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
             string lockToken,
             CancellationToken cancellationToken = default) =>
             await _retryPolicy.RunOperation(
-                async (timeout) =>
-                await CompleteInternalAsync(
-                    lockToken,
+                async (receiver, lckToken, timeout, _) =>
+                await receiver.CompleteInternalAsync(
+                    lckToken,
                     timeout).ConfigureAwait(false),
+                this,
+                lockToken,
                 _connectionScope,
                 cancellationToken).ConfigureAwait(false);
 
@@ -491,10 +490,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
             IDictionary<string, object> propertiesToModify = null,
             CancellationToken cancellationToken = default) =>
             await _retryPolicy.RunOperation(
-                async (timeout) => await DeferInternalAsync(
-                    lockToken,
+                async (receiver, lckToken, properties, timeout, _) => await receiver.DeferInternalAsync(
+                    lckToken,
                     timeout,
-                    propertiesToModify).ConfigureAwait(false),
+                    properties).ConfigureAwait(false),
+                this,
+                lockToken,
+                propertiesToModify,
                 _connectionScope,
                 cancellationToken).ConfigureAwait(false);
 
@@ -543,10 +545,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
             IDictionary<string, object> propertiesToModify = null,
             CancellationToken cancellationToken = default) =>
             await _retryPolicy.RunOperation(
-                async (timeout) => await AbandonInternalAsync(
-                    lockToken,
+                async (receiver, lckToken, properties, timeout, _) => await receiver.AbandonInternalAsync(
+                    lckToken,
                     timeout,
-                    propertiesToModify).ConfigureAwait(false),
+                    properties).ConfigureAwait(false),
+                this,
+                lockToken,
+                propertiesToModify,
                 _connectionScope,
                 cancellationToken).ConfigureAwait(false);
 
@@ -602,12 +607,17 @@ namespace Azure.Messaging.ServiceBus.Amqp
             IDictionary<string, object> propertiesToModify = default,
             CancellationToken cancellationToken = default) =>
             await _retryPolicy.RunOperation(
-                async (timeout) => await DeadLetterInternalAsync(
-                    lockToken,
+                async (receiver, lckToken, properties, reason, description, timeout, _) => await receiver.DeadLetterInternalAsync(
+                    lckToken,
                     timeout,
-                    propertiesToModify,
-                    deadLetterReason,
-                    deadLetterErrorDescription).ConfigureAwait(false),
+                    properties,
+                    reason,
+                    description).ConfigureAwait(false),
+                this,
+                lockToken,
+                propertiesToModify,
+                deadLetterReason,
+                deadLetterErrorDescription,
                 _connectionScope,
                 cancellationToken).ConfigureAwait(false);
 
@@ -828,20 +838,18 @@ namespace Azure.Messaging.ServiceBus.Amqp
             CancellationToken cancellationToken = default)
         {
             long seqNumber = sequenceNumber ?? LastPeekedSequenceNumber + 1;
-            IReadOnlyList<ServiceBusReceivedMessage> messages = null;
-
-            await _retryPolicy.RunOperation(
-                async (timeout) =>
-                messages = await PeekMessagesInternalAsync(
-                    seqNumber,
-                    messageCount,
-                    timeout,
-                    cancellationToken)
-                .ConfigureAwait(false),
+            return await _retryPolicy.RunOperation(
+                async (receiver, number, count, timeout, token) => await receiver.PeekMessagesInternalAsync(
+                        number,
+                        count,
+                        timeout,
+                        token)
+                    .ConfigureAwait(false),
+                this,
+                seqNumber,
+                messageCount,
                 _connectionScope,
                 cancellationToken).ConfigureAwait(false);
-
-            return messages;
         }
 
         /// <summary>
@@ -933,17 +941,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
             string lockToken,
             CancellationToken cancellationToken)
         {
-            DateTimeOffset lockedUntil = DateTimeOffset.MinValue;
-            await _retryPolicy.RunOperation(
-                async (timeout) =>
-                {
-                    lockedUntil = await RenewMessageLockInternalAsync(
-                        lockToken,
-                        timeout).ConfigureAwait(false);
-                },
+            return await _retryPolicy.RunOperation(
+                async (receiver, lckToken, timeout, _) => await receiver.RenewMessageLockInternalAsync(
+                    lckToken,
+                    timeout).ConfigureAwait(false),
+                this,
+                lockToken,
                 _connectionScope,
                 cancellationToken).ConfigureAwait(false);
-            return lockedUntil;
         }
 
         /// <summary>
@@ -1005,13 +1010,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         public override async Task RenewSessionLockAsync(CancellationToken cancellationToken = default)
         {
-            DateTimeOffset lockedUntil;
-            await _retryPolicy.RunOperation(
-                async (timeout) =>
-                {
-                    lockedUntil = await RenewSessionLockInternal(
-                        timeout).ConfigureAwait(false);
-                },
+            var lockedUntil = await _retryPolicy.RunOperation(
+                async (receiver, timeout, _) => await receiver.RenewSessionLockInternal(
+                    timeout).ConfigureAwait(false),
+                this,
                 _connectionScope,
                 cancellationToken).ConfigureAwait(false);
             SessionLockedUntil = lockedUntil;
@@ -1055,15 +1057,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <returns>The session state as <see cref="BinaryData"/>.</returns>
         public override async Task<BinaryData> GetStateAsync(CancellationToken cancellationToken = default)
         {
-            BinaryData sessionState = default;
-            await _retryPolicy.RunOperation(
-                async (timeout) =>
-                {
-                    sessionState = await GetStateInternal(timeout).ConfigureAwait(false);
-                },
+            return await _retryPolicy.RunOperation(
+                async (receiver, timeout, _) => await receiver.GetStateInternal(timeout).ConfigureAwait(false),
+                this,
                 _connectionScope,
                 cancellationToken).ConfigureAwait(false);
-            return sessionState;
         }
 
         internal async Task<BinaryData> GetStateInternal(TimeSpan timeout)
@@ -1110,12 +1108,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
             CancellationToken cancellationToken)
         {
             await _retryPolicy.RunOperation(
-                async (timeout) =>
+                async (receiver, state, timeout, _) =>
                 {
-                    await SetStateInternal(
-                        sessionState,
+                    await receiver.SetStateInternal(
+                        state,
                         timeout).ConfigureAwait(false);
                 },
+                this,
+                sessionState,
                 _connectionScope,
                 cancellationToken).ConfigureAwait(false);
         }
@@ -1162,14 +1162,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
             long[] sequenceNumbers,
             CancellationToken cancellationToken = default)
         {
-            IReadOnlyList<ServiceBusReceivedMessage> messages = null;
-            await _retryPolicy.RunOperation(
-                async (timeout) => messages = await ReceiveDeferredMessagesAsyncInternal(
-                    sequenceNumbers,
+            return await _retryPolicy.RunOperation(
+                async (receiver, sqn, timeout, _) => await receiver.ReceiveDeferredMessagesAsyncInternal(
+                    sqn,
                     timeout).ConfigureAwait(false),
+                this,
+                sequenceNumbers,
                 _connectionScope,
                 cancellationToken).ConfigureAwait(false);
-            return messages;
         }
 
         internal virtual async Task<IReadOnlyList<ServiceBusReceivedMessage>> ReceiveDeferredMessagesAsyncInternal(
@@ -1308,12 +1308,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         public override async Task OpenLinkAsync(CancellationToken cancellationToken)
         {
-            ReceivingAmqpLink link = null;
-            await _retryPolicy.RunOperation(
-               async (timeout) =>
-               link = await _receiveLink.GetOrCreateAsync(timeout).ConfigureAwait(false),
-               _connectionScope,
-               cancellationToken).ConfigureAwait(false);
+            _ = await _retryPolicy.RunOperation(
+                async (link, timeout, _) =>
+                    await link.GetOrCreateAsync(timeout).ConfigureAwait(false),
+                _receiveLink,
+                _connectionScope,
+                cancellationToken).ConfigureAwait(false);
         }
 
         private bool HasLinkCommunicationError(ReceivingAmqpLink link) =>

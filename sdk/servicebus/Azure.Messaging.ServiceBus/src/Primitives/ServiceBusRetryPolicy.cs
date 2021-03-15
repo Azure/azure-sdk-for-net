@@ -102,15 +102,108 @@ namespace Azure.Messaging.ServiceBus
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="operation"></param>
-        /// <param name="scope"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        internal async Task RunOperation(
-            Func<TimeSpan, Task> operation,
+        internal Task RunOperation(
+            Func<TimeSpan, CancellationToken, Task> operation,
+            TransportConnectionScope scope,
+            CancellationToken cancellationToken) => RunOperation((op, timeout, token) => op(timeout, token), operation, scope, cancellationToken);
+
+        internal Task RunOperation<T1>(
+            Func<T1, TimeSpan, CancellationToken, Task> operation,
+            T1 t1,
+            TransportConnectionScope scope,
+            CancellationToken cancellationToken) => RunOperation((t11, op, timeout, token) => op(t11, timeout, token), t1, operation, scope, cancellationToken);
+
+        internal Task RunOperation<T1, T2>(
+            Func<T1, T2, TimeSpan, CancellationToken, Task> operation,
+            T1 t1,
+            T2 t2,
+            TransportConnectionScope scope,
+            CancellationToken cancellationToken) => RunOperation((t11, t22, op, timeout, token) => op(t11, t22, timeout, token), t1, t2, operation, scope, cancellationToken);
+
+        internal Task RunOperation<T1, T2, T3>(
+            Func<T1, T2, T3, TimeSpan, CancellationToken, Task> operation,
+            T1 t1,
+            T2 t2,
+            T3 t3,
+            TransportConnectionScope scope,
+            CancellationToken cancellationToken) => RunOperation((t11, t22, t33, op, timeout, token) => op(t11, t22, t33, timeout, token), t1, t2, t3, operation, scope, cancellationToken);
+
+        internal Task RunOperation<T1, T2, T3, T4>(
+            Func<T1, T2, T3, T4, TimeSpan, CancellationToken, Task> operation,
+            T1 t1,
+            T2 t2,
+            T3 t3,
+            T4 t4,
+            TransportConnectionScope scope,
+            CancellationToken cancellationToken) => RunOperation((t11, t22, t33, t44, op, timeout, token) => op(t11, t22, t33, t44, timeout, token), t1, t2, t3, t4, operation, scope, cancellationToken);
+
+        internal Task RunOperation<T1, T2, T3, T4, T5>(
+            Func<T1, T2, T3, T4, T5, TimeSpan, CancellationToken, Task> operation,
+            T1 t1,
+            T2 t2,
+            T3 t3,
+            T4 t4,
+            T5 t5,
+            TransportConnectionScope scope,
+            CancellationToken cancellationToken) => RunOperation<T1, T2, T3, T4, T5, Func<T1, T2, T3, T4, T5, TimeSpan, CancellationToken, Task>, VoidResult>(async (t11, t22, t33, t44, t55, op, timeout, token) =>
+        {
+            await op(t11, t22, t33, t44, t55, timeout, token).ConfigureAwait(false);
+            return default;
+        }, t1, t2, t3, t4, t5, operation, scope, cancellationToken);
+
+        internal Task<TResult> RunOperation<T1, TResult>(
+            Func<T1, TimeSpan, CancellationToken, Task<TResult>> operation,
+            T1 t1,
+            TransportConnectionScope scope,
+            CancellationToken cancellationToken) => RunOperation((t11, op, timeout, token) => op(t11, timeout, token),
+            t1, operation, scope, cancellationToken);
+
+        internal Task<TResult> RunOperation<T1, T2, TResult>(
+            Func<T1, T2, TimeSpan, CancellationToken, Task<TResult>> operation,
+            T1 t1,
+            T2 t2,
+            TransportConnectionScope scope,
+            CancellationToken cancellationToken) => RunOperation((t11, t22, op, timeout, token) => op(t11, t22, timeout, token),
+            t1, t2, operation, scope, cancellationToken);
+
+        internal Task<TResult> RunOperation<T1, T2, T3, TResult>(
+            Func<T1, T2, T3, TimeSpan, CancellationToken, Task<TResult>> operation,
+            T1 t1,
+            T2 t2,
+            T3 t3,
+            TransportConnectionScope scope,
+            CancellationToken cancellationToken) => RunOperation((t11, t22, t33, op, timeout, token) => op(t11, t22, t33, timeout, token),
+        t1, t2, t3, operation, scope, cancellationToken);
+
+        internal Task<TResult> RunOperation<T1, T2, T3, T4, TResult>(
+            Func<T1, T2, T3, T4, TimeSpan, CancellationToken, Task<TResult>> operation,
+            T1 t1,
+            T2 t2,
+            T3 t3,
+            T4 t4,
+            TransportConnectionScope scope,
+            CancellationToken cancellationToken)  => RunOperation((t11, t22, t33, t44, op, timeout, token) => op(t11, t22, t33, t44, timeout, token),
+            t1, t2, t3, t4, operation, scope, cancellationToken);
+
+        internal Task<TResult> RunOperation<T1, T2, T3, T4, T5, TResult>(
+            Func<T1, T2, T3, T4, T5, TimeSpan, CancellationToken, Task<TResult>> operation,
+            T1 t1,
+            T2 t2,
+            T3 t3,
+            T4 t4,
+            T5 t5,
+            TransportConnectionScope scope,
+            CancellationToken cancellationToken)  => RunOperation((t11, t22, t33, t44, t55, op, timeout, token) => op(t11, t22, t33, t44, t55, timeout, token),
+            t1, t2, t3, t4, t5, operation, scope, cancellationToken);
+
+        internal async Task<TResult> RunOperation<T1, T2, T3, T4, T5, T6, TResult>(
+            Func<T1, T2, T3, T4, T5, T6, TimeSpan, CancellationToken, Task<TResult>> operation,
+            T1 t1,
+            T2 t2,
+            T3 t3,
+            T4 t4,
+            T5 t5,
+            T6 t6,
             TransportConnectionScope scope,
             CancellationToken cancellationToken)
         {
@@ -135,8 +228,7 @@ namespace Azure.Messaging.ServiceBus
 
                 try
                 {
-                    await operation(tryTimeout).ConfigureAwait(false);
-                    return;
+                    return await operation(t1, t2, t3, t4, t5, t6, tryTimeout, cancellationToken).ConfigureAwait(false);
                 }
 
                 catch (Exception ex)

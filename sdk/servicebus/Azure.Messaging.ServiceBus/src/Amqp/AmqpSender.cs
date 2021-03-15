@@ -161,17 +161,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
             CreateMessageBatchOptions options,
             CancellationToken cancellationToken)
         {
-            TransportMessageBatch messageBatch = null;
-            Task createBatchTask = _retryPolicy.RunOperation(async (timeout) =>
-            {
-                messageBatch = await CreateMessageBatchInternalAsync(
-                    options,
-                    timeout).ConfigureAwait(false);
-            },
-            _connectionScope,
-            cancellationToken);
-            await createBatchTask.ConfigureAwait(false);
-            return messageBatch;
+            Task<TransportMessageBatch> createBatchTask = _retryPolicy.RunOperation(async (sender, ops, timeout, _) => await sender.CreateMessageBatchInternalAsync(
+                    ops,
+                    timeout).ConfigureAwait(false),
+                this,
+                options,
+                _connectionScope,
+                cancellationToken);
+            return await createBatchTask.ConfigureAwait(false);
         }
 
         internal async ValueTask<TransportMessageBatch> CreateMessageBatchInternalAsync(
@@ -211,11 +208,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
             CancellationToken cancellationToken)
         {
             AmqpMessage messageFactory() => AmqpMessageConverter.BatchSBMessagesAsAmqpMessage(messageBatch.AsEnumerable<ServiceBusMessage>());
-            await _retryPolicy.RunOperation(async (timeout) =>
-                await SendBatchInternalAsync(
+            await _retryPolicy.RunOperation(async (sender, timeout, token) =>
+                await sender.SendBatchInternalAsync(
                     messageFactory,
                     timeout,
-                    cancellationToken).ConfigureAwait(false),
+                    token).ConfigureAwait(false),
+            this,
             _connectionScope,
             cancellationToken).ConfigureAwait(false);
         }
@@ -306,11 +304,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
             CancellationToken cancellationToken)
         {
             AmqpMessage messageFactory() => AmqpMessageConverter.BatchSBMessagesAsAmqpMessage(messages);
-            await _retryPolicy.RunOperation(async (timeout) =>
+            await _retryPolicy.RunOperation(async (timeout, token) =>
              await SendBatchInternalAsync(
                     messageFactory,
                     timeout,
-                    cancellationToken).ConfigureAwait(false),
+                    token).ConfigureAwait(false),
             _connectionScope,
             cancellationToken).ConfigureAwait(false);
         }
@@ -376,17 +374,15 @@ namespace Azure.Messaging.ServiceBus.Amqp
             IReadOnlyList<ServiceBusMessage> messages,
             CancellationToken cancellationToken = default)
         {
-            long[] seqNumbers = null;
-            await _retryPolicy.RunOperation(async (timeout) =>
-            {
-                seqNumbers = await ScheduleMessageInternalAsync(
-                    messages,
-                    timeout,
-                    cancellationToken).ConfigureAwait(false);
-            },
-            _connectionScope,
-            cancellationToken).ConfigureAwait(false);
-            return seqNumbers ?? Array.Empty<long>();
+            return await _retryPolicy.RunOperation(async (sender, msgs, timeout, token) => await sender
+                    .ScheduleMessageInternalAsync(
+                        msgs,
+                        timeout,
+                        token).ConfigureAwait(false),
+                this,
+                messages,
+                _connectionScope,
+                cancellationToken).ConfigureAwait(false) ?? Array.Empty<long>();
         }
 
         /// <summary>
@@ -491,12 +487,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
             long[] sequenceNumbers,
             CancellationToken cancellationToken = default)
         {
-            Task cancelMessageTask = _retryPolicy.RunOperation(async (timeout) =>
+            Task cancelMessageTask = _retryPolicy.RunOperation(async (timeout, token) =>
             {
                 await CancelScheduledMessageInternalAsync(
                     sequenceNumbers,
                     timeout,
-                    cancellationToken).ConfigureAwait(false);
+                    token).ConfigureAwait(false);
             },
             _connectionScope,
             cancellationToken);
