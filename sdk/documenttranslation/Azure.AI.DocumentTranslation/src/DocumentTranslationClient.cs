@@ -164,7 +164,7 @@ namespace Azure.AI.DocumentTranslation
         /// <param name="targetLanguageCode">Language code to translate documents to. For supported languages see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/language-support#translate"/>.</param>
         /// <param name="glossary">Custom translation glossary to be used in the translation operation. For supported file types see
-        /// <see cref="GetGlossaryFormats(CancellationToken)"/>.</param>
+        /// <see cref="GetGlossaryFormatsAsync(CancellationToken)"/>.</param>
         /// <param name="options">Set translation options including source language and custom translation category.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual DocumentTranslationOperation StartTranslation(Uri sourceBlobContainerSas, Uri targetBlobContainerSas, string targetLanguageCode, TranslationGlossary glossary = default, TranslationOperationOptions options = default, CancellationToken cancellationToken = default)
@@ -180,7 +180,10 @@ namespace Azure.AI.DocumentTranslation
                 Category = options?.Category
             };
 
-            target.Glossaries.Add(glossary);
+            if (glossary != null)
+            {
+                target.Glossaries.Add(glossary);
+            }
 
             var targets = new List<TranslationTarget>
             {
@@ -220,7 +223,7 @@ namespace Azure.AI.DocumentTranslation
         /// <param name="targetLanguageCode">Language code to translate documents to. For supported languages see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/language-support#translate"/>.</param>
         /// <param name="glossary">Custom translation glossary to be used in the translation operation. For supported file types see
-        /// <see cref="GetGlossaryFormats(CancellationToken)"/>.</param>
+        /// <see cref="GetGlossaryFormatsAsync(CancellationToken)"/>.</param>
         /// <param name="options">Set translation options including source language and custom translation category.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual async Task<DocumentTranslationOperation> StartTranslationAsync(Uri sourceBlobContainerSas, Uri targetBlobContainerSas, string targetLanguageCode, TranslationGlossary glossary = default, TranslationOperationOptions options = default, CancellationToken cancellationToken = default)
@@ -236,7 +239,10 @@ namespace Azure.AI.DocumentTranslation
                 Category = options?.Category
             };
 
-            target.Glossaries.Add(glossary);
+            if (glossary != null)
+            {
+                target.Glossaries.Add(glossary);
+            }
 
             var targets = new List<TranslationTarget>
             {
