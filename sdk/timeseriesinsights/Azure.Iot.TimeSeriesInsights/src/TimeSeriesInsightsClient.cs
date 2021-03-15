@@ -1118,7 +1118,7 @@ namespace Azure.Iot.TimeSeriesInsights
         }
 
         /// <summary>
-        /// Gets Time Series Insight types in pages synchronously.
+        /// Gets Time Series Insights types in pages synchronously.
         /// </summary>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The pageable list <see cref="Pageable{TimeSeriesType}"/> of Time Series types with the http response.</returns>
@@ -1333,7 +1333,7 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <summary>
         /// Gets Time Series Insights types by type Ids synchronously.
         /// </summary>
-        /// <param name="timeSeriesTypeIds">List of Time Series type Ids of the Time Series types to return..</param>
+        /// <param name="timeSeriesTypeIds">List of Time Series type Ids of the Time Series types to return.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
         /// List of type or error objects corresponding by position to the array in the request.
