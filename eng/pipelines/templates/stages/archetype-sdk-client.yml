@@ -42,6 +42,7 @@ parameters:
     - Name: NET_live_test_base
       Path: eng/pipelines/templates/stages/platform-matrix.json
       Selection: sparse
+      NonSparseParameters: AdditionalTestArguments
       GenerateVMJobs: true
 - name: AdditionalMatrixConfigs
   type: object
