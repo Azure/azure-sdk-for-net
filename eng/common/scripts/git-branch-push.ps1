@@ -60,8 +60,13 @@ if ($LASTEXITCODE -ne 0)
     exit $LASTEXITCODE
 }
 
-Write-Host "git checkout -b $PRBranchName"
-git checkout -b $PRBranchName
+# Check if the branch has existed in remote.
+$existed_in_remote = git ls-remote --heads $RemoteName $PRBranchName
+if (!$existed_in_remote) {
+    Write-Host "git checkout -b $PRBranchName"
+    git checkout -b $PRBranchName
+}
+
 if ($LASTEXITCODE -ne 0)
 {
     Write-Error "Unable to create branch LASTEXITCODE=$($LASTEXITCODE), see command output above."

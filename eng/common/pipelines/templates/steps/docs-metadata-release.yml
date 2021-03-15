@@ -20,6 +20,7 @@ parameters:
   OnboardingBranch: ''
   CloseAfterOpenForTesting: false
   SkipPackageJson: false
+  RemoteName: 'origin'
 
 steps:
 - pwsh: |
@@ -82,7 +83,17 @@ steps:
   env:
     GH_TOKEN: $(azuresdk-github-pat)
 
+- template: /eng/common/pipelines/templates/steps/git-push-changes.yml
+  parameters:
+    PRBranchName: 'master'
+    CommitMsg: "Update docs metadata and targeting for release of ${{ parameters.ArtifactName }}"
+    RepoName: ${{ parameters.TargetDocRepoName }}
+    RepoOwner: ${{ parameters.TargetDocRepoOwner }}
+    WorkingDirectory: ${{ parameters.WorkingDirectory }}/repo
+    ScriptDirectory: ${{ parameters.WorkingDirectory }}/${{ parameters.ScriptDirectory }}
+    RemoteName: ${{ parameters.RemoteName }}
 - template: /eng/common/pipelines/templates/steps/create-pull-request.yml
+  condition: and(Failed(), eq('${{ parameters.OnboardingBranch }}',''))
   parameters:
     RepoName: ${{ parameters.TargetDocRepoName }}
     RepoOwner: ${{ parameters.TargetDocRepoOwner }}
@@ -102,7 +113,6 @@ steps:
       Push-Location ${{ parameters.WorkingDirectory }}/repo
 
       git reset --hard HEAD
-      git remote rm azure-sdk-fork
       git checkout ${{ parameters.OnboardingBranch}}
     displayName: Reset Docs Repo, Checkout Onboarding Branch
     ignoreLASTEXITCODE: false
@@ -123,17 +133,27 @@ steps:
       pwsh: true
     env:
       GH_TOKEN: $(azuresdk-github-pat)
-
+  - template: /eng/common/pipelines/templates/steps/git-push-changes.yml
+    parameters:
+      PRBranchName: 'master'
+      CommitMsg: "Update docs metadata and targeting for release of ${{ parameters.ArtifactName }}"
+      RepoName: ${{ parameters.TargetDocRepoName }}
+      RepoOwner: ${{ parameters.TargetDocRepoOwner }}
+      WorkingDirectory: ${{ parameters.WorkingDirectory }}/repo
+      ScriptDirectory: ${{ parameters.WorkingDirectory }}/${{ parameters.ScriptDirectory }}
+      RemoteName: ${{ parameters.RemoteName }}
   - template: /eng/common/pipelines/templates/steps/create-pull-request.yml
+    condition: Failed()
     parameters:
       RepoName: ${{ parameters.TargetDocRepoName }}
       RepoOwner: ${{ parameters.TargetDocRepoOwner }}
-      PRBranchName: ${{ parameters.PRBranchName }}-ci
-      CommitMsg: "CI Update for release of ${{ parameters.ArtifactName }}"
-      PRTitle: "Docs.MS CI Updates for ${{ parameters.ArtifactName }}"
-      BaseBranchName: ${{ parameters.OnboardingBranch }}
+      PRBranchName: ${{ parameters.PRBranchName }}
+      CommitMsg: "Update docs metadata and targeting for release of ${{ parameters.ArtifactName }}"
+      PRTitle: "Docs.MS Release Updates for ${{ parameters.ArtifactName }}"
+      BaseBranchName: ${{ parameters.SourceBranchName }}
       WorkingDirectory: ${{ parameters.WorkingDirectory }}/repo
       ScriptDirectory: ${{ parameters.WorkingDirectory }}/${{ parameters.ScriptDirectory }}
       GHReviewersVariable: ${{ parameters.GHReviewersVariable }}
-      GHTeamReviewersVariable: ${{ parameters.GHTeamReviewersVariable }}
+      GHTeamReviewersVariable: ${{ parameters.GHTeamReviewersVariable }} 
+      PRLabels: ${{ parameters.PRLabels }}
       CloseAfterOpenForTesting: ${{ parameters.CloseAfterOpenForTesting }}
