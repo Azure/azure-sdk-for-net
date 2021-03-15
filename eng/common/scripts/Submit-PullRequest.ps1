@@ -32,7 +32,7 @@ with no preceeding `@` symbol (e.g. "user1,usertwo,user3")
 .PARAMETER CloseAfterOpenForTesting
 Close the PR after opening to save on CI resources and prevent alerts to code
 owners, assignees, requested reviewers, or others.
-.PARAMETER Draft
+.PARAMETER OpenAsDraft
 Opens the PR as a draft
 #>
 [CmdletBinding(SupportsShouldProcess = $true)]
@@ -71,7 +71,7 @@ param(
 
   [boolean]$CloseAfterOpenForTesting=$false,
 
-  [boolean]$Draft=$false
+  [boolean]$OpenAsDraft=$false
 )
 
 . (Join-Path $PSScriptRoot common.ps1)
@@ -102,7 +102,7 @@ else {
       -Base $BaseBranch `
       -Body $PRBody `
       -Maintainer_Can_Modify $true `
-      -Draft:$Draft `
+      -Draft:$OpenAsDraft `
       -AuthToken $AuthToken
 
     $resp | Write-Verbose
