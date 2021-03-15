@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.AI.DocumentTranslation.Models
+namespace Azure.AI.DocumentTranslation
 {
     /// <summary> This contains an outer error with error code, message, details, target and an inner error with more descriptive details. </summary>
     public partial class DocumentTranslationError

@@ -3,7 +3,7 @@
 
 using Azure.Core;
 
-namespace Azure.AI.DocumentTranslation.Models
+namespace Azure.AI.DocumentTranslation
 {
     [CodeGenModel("ErrorV2")]
     public partial class DocumentTranslationError

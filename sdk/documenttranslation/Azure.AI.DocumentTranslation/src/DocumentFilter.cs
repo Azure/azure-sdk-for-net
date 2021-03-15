@@ -3,10 +3,10 @@
 
 using Azure.Core;
 
-namespace Azure.AI.DocumentTranslation.Models
+namespace Azure.AI.DocumentTranslation
 {
-    [CodeGenModel("StorageSource")]
-    public partial struct StorageSource
+    [CodeGenModel("DocumentFilter")]
+    public partial class DocumentFilter
     {
     }
 }

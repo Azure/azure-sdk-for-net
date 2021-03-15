@@ -2,9 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.AI.DocumentTranslation.Models;
 using Azure.Core;
 
-namespace Azure.AI.DocumentTranslation.Models
+namespace Azure.AI.DocumentTranslation
 {
     [CodeGenModel("BatchStatusDetail")]
     public partial class TranslationStatusDetail

@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.AI.DocumentTranslation.Models
+namespace Azure.AI.DocumentTranslation
 {
     /// <summary> Glossary / translation memory for the request. </summary>
     public partial class TranslationGlossary
