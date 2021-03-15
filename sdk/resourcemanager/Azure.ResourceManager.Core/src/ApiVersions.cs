@@ -19,21 +19,22 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Initializes a new instance of the <see cref="ApiVersions"/> class.
         /// </summary>
-        public ApiVersions()
+        internal ApiVersions(AzureResourceManagerClientOptions clientOptions)
         {
-            BuildApiTable();
+            BuildApiTable(clientOptions);
         }
 
-        private Dictionary<string, string> _resourceToApiVersions = new Dictionary<string, string>();
+        private Dictionary<string, (PropertyInfo, object)> _loadedResourceToApiVersions = new Dictionary<string, (PropertyInfo, object)>();
+        private Dictionary<string, string> _nonLoadedResourceToApiVersion = new Dictionary<string, string>();
 
-        private void BuildApiTable()
+        private void BuildApiTable(AzureResourceManagerClientOptions clientOptions)
         {
             var methods = GetExtensionMethods();
             foreach (var method in methods)
             {
                 if (method.Name.EndsWith("RestApiVersions"))
                 {
-                    var apiObject = method.Invoke(null, new object[] { this });
+                    var apiObject = method.Invoke(null, new object[] { clientOptions });
                     var properties = apiObject.GetType().GetProperties();
                     foreach (var prop in properties)
                     {
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.Core
                             var propVal = (ApiVersionsBase)prop.GetValue(apiObject);
                             Console.WriteLine(prop.GetType());
                             var key = propVal.ResourceType;
-                            _resourceToApiVersions.Add(key.ToString(), propVal);
+                            _loadedResourceToApiVersions.Add(key.ToString(), (prop, apiObject));
                         }
                     }
                 }
@@ -57,7 +58,7 @@ namespace Azure.ResourceManager.Core
                         where type.IsSealed && !type.IsGenericType && !type.IsNested
                         from method in type.GetMethods(BindingFlags.Static | BindingFlags.Public)
                         where method.IsDefined(typeof(ExtensionAttribute), false)
-                        where method.GetParameters()[0].ParameterType == typeof(ApiVersions)
+                        where method.GetParameters()[0].ParameterType == typeof(AzureResourceManagerClientOptions)
                         select method;
             return results;
         }
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.Core
             {
                 if (type.ResourceType.Equals(id.Type.Type))
                 {
-                    _resourceToApiVersions.Add(id.Type.ToString(), type.ApiVersions[0]);
+                    _nonLoadedResourceToApiVersion.Add(id.Type.ToString(), type.ApiVersions[0]);
                     return type.ApiVersions[0];
                 }
             }
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.Core
             {
                 if (type.ResourceType.Equals(id.Type.Type))
                 {
-                    _resourceToApiVersions.Add(id.Type.ToString(), type.ApiVersions[0]);
+                    _nonLoadedResourceToApiVersion.Add(id.Type.ToString(), type.ApiVersions[0]);
                     return type.ApiVersions[0];
                 }
             }
@@ -96,9 +97,18 @@ namespace Azure.ResourceManager.Core
         /// <returns> API version string. </returns>
         public string GetApiVersion(string resourceId)
         {
+            (PropertyInfo, object) tuple;
+            if (_loadedResourceToApiVersions.TryGetValue(resourceId, out tuple))
+            {
+                return tuple.Item1.GetValue(tuple.Item2).ToString();
+            }
+
             string val;
-            _resourceToApiVersions.TryGetValue(resourceId, out val);
-            return val;
+            if (_nonLoadedResourceToApiVersion.TryGetValue(resourceId, out val))
+            {
+                return val;
+            }
+            return null;
         }
 
         /// <summary>
@@ -106,7 +116,15 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         public void SetApiVersion(string resourceId, string apiVersion)
         {
-            _resourceToApiVersions.Add(resourceId, apiVersion);
+            (PropertyInfo, object) tuple;
+            if (_loadedResourceToApiVersions.TryGetValue(resourceId, out tuple))
+            {
+                tuple.Item1.SetValue(tuple.Item1, apiVersion);
+            }
+            else
+            {
+                _nonLoadedResourceToApiVersion[resourceId] = apiVersion;
+            }
         }
     }
 }

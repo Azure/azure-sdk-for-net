@@ -33,5 +33,16 @@ namespace Azure.ResourceManager.Core.Tests
             var options = new AzureResourceManagerClientOptions();
             Assert.Throws<ArgumentNullException>(() => { options.AddPolicy(null, HttpPipelinePosition.PerCall); });
         }
+
+        #pragma warning disable CS0012
+        [TestCase]
+        public void VersionCHanges()
+        {
+            AzureResourceManagerClientOptions options = new AzureResourceManagerClientOptions();
+            options.FakeRpApiVersions().FakeResourceVersion = FakeResourceApiVersions.V2019_12_01;
+            var result = options.ApiVersions.GetApiVersion(options.FakeRpApiVersions().FakeResourceVersion.ResourceType.ToString());
+            Assert.True(result.Equals(FakeResourceApiVersions.V2019_12_01));
+        }
+
     }
 }
