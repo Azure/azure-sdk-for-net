@@ -165,7 +165,7 @@ namespace Azure.Core.Pipeline
                 bool getTokenFromCredential;
                 TaskCompletionSource<HeaderValueInfo> headerValueTcs;
                 TaskCompletionSource<HeaderValueInfo>? backgroundUpdateTcs;
-                bool hasRetriedDueToCancellation = false;
+                int maxCancellationRetries = 3;
 
                 while (true)
                 {
@@ -239,16 +239,16 @@ namespace Azure.Core.Pipeline
                     }
                     catch (TaskCanceledException)
                     {
-                        // We were waiting on a previous headerValueTcs operation which was canceled.
+                        maxCancellationRetries--;
 
-                        // If we have already retired once, throw.
-                        if (hasRetriedDueToCancellation)
+                        // If the current request has been cancelled or the message has no CancellationToken and we have tried this 3 times, throw.
+                        if (message.CancellationToken.IsCancellationRequested || (message.CancellationToken == default && maxCancellationRetries <= 0))
                         {
                             throw;
                         }
 
+                        // We were waiting on a previous headerValueTcs operation which was canceled.
                         //Retry the call to GetTaskCompletionSources.
-                        hasRetriedDueToCancellation = true;
                         continue;
                     }
                 }
