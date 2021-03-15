@@ -62,6 +62,7 @@ if ($LASTEXITCODE -ne 0)
 
 # Check if the branch has existed in remote.
 $existed_in_remote = git ls-remote --heads $RemoteName $PRBranchName
+Write-Host "git ls-remote --heads $RemoteName $PRBranchName"
 if (!$existed_in_remote) {
     Write-Host "git checkout -b $PRBranchName"
     git checkout -b $PRBranchName
