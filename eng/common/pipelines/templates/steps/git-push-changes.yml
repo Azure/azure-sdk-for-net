@@ -54,3 +54,15 @@ steps:
       -PushArgs "${{ parameters.PushArgs }}"
       -SkipCommit $${{ parameters.SkipCheckingForChanges }}
       -RemoteName ${{ parameters.RemoteName }}
+- pwsh: |
+    echo "##vso[task.setvariable variable=GitPushStatus]$true"
+    echo "GitPushStatus = $GitPushStatus"
+  displayName: Set the status of git push scripts to true
+  condition: succeeded()
+  workingDirectory: ${{ parameters.WorkingDirectory }}
+- pwsh: |
+    echo "##vso[task.setvariable variable=GitPushStatus]$false"
+    echo "GitPushStatus = $GitPushStatus"
+  displayName: Set the status of git push scripts to false
+  condition: succeeded()
+  workingDirectory: ${{ parameters.WorkingDirectory }}

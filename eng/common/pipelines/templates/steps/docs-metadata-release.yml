@@ -92,21 +92,22 @@ steps:
     WorkingDirectory: ${{ parameters.WorkingDirectory }}/repo
     ScriptDirectory: ${{ parameters.WorkingDirectory }}/${{ parameters.ScriptDirectory }}
     RemoteName: ${{ parameters.RemoteName }}
-- template: /eng/common/pipelines/templates/steps/create-pull-request.yml
-  condition: and(Failed(), eq('${{ parameters.OnboardingBranch }}',''))
-  parameters:
-    RepoName: ${{ parameters.TargetDocRepoName }}
-    RepoOwner: ${{ parameters.TargetDocRepoOwner }}
-    PRBranchName: ${{ parameters.PRBranchName }}
-    CommitMsg: "Update docs metadata and targeting for release of ${{ parameters.ArtifactName }}"
-    PRTitle: "Docs.MS Release Updates for ${{ parameters.ArtifactName }}"
-    BaseBranchName: ${{ parameters.SourceBranchName }}
-    WorkingDirectory: ${{ parameters.WorkingDirectory }}/repo
-    ScriptDirectory: ${{ parameters.WorkingDirectory }}/${{ parameters.ScriptDirectory }}
-    GHReviewersVariable: ${{ parameters.GHReviewersVariable }}
-    GHTeamReviewersVariable: ${{ parameters.GHTeamReviewersVariable }} 
-    PRLabels: ${{ parameters.PRLabels }}
-    CloseAfterOpenForTesting: ${{ parameters.CloseAfterOpenForTesting }}
+- ${{if eq(variables['GitPushStatus'], false)}}:
+  - template: /eng/common/pipelines/templates/steps/create-pull-request.yml
+    condition: and(Failed(), eq('${{ parameters.OnboardingBranch }}',''))
+    parameters:
+      RepoName: ${{ parameters.TargetDocRepoName }}
+      RepoOwner: ${{ parameters.TargetDocRepoOwner }}
+      PRBranchName: ${{ parameters.PRBranchName }}
+      CommitMsg: "Update docs metadata and targeting for release of ${{ parameters.ArtifactName }}"
+      PRTitle: "Docs.MS Release Updates for ${{ parameters.ArtifactName }}"
+      BaseBranchName: ${{ parameters.SourceBranchName }}
+      WorkingDirectory: ${{ parameters.WorkingDirectory }}/repo
+      ScriptDirectory: ${{ parameters.WorkingDirectory }}/${{ parameters.ScriptDirectory }}
+      GHReviewersVariable: ${{ parameters.GHReviewersVariable }}
+      GHTeamReviewersVariable: ${{ parameters.GHTeamReviewersVariable }} 
+      PRLabels: ${{ parameters.PRLabels }}
+      CloseAfterOpenForTesting: ${{ parameters.CloseAfterOpenForTesting }}
 
 - ${{if ne( parameters['OnboardingBranch'], '')}}:
   - pwsh: |
@@ -142,18 +143,19 @@ steps:
       WorkingDirectory: ${{ parameters.WorkingDirectory }}/repo
       ScriptDirectory: ${{ parameters.WorkingDirectory }}/${{ parameters.ScriptDirectory }}
       RemoteName: ${{ parameters.RemoteName }}
-  - template: /eng/common/pipelines/templates/steps/create-pull-request.yml
-    condition: Failed()
-    parameters:
-      RepoName: ${{ parameters.TargetDocRepoName }}
-      RepoOwner: ${{ parameters.TargetDocRepoOwner }}
-      PRBranchName: ${{ parameters.PRBranchName }}
-      CommitMsg: "Update docs metadata and targeting for release of ${{ parameters.ArtifactName }}"
-      PRTitle: "Docs.MS Release Updates for ${{ parameters.ArtifactName }}"
-      BaseBranchName: ${{ parameters.SourceBranchName }}
-      WorkingDirectory: ${{ parameters.WorkingDirectory }}/repo
-      ScriptDirectory: ${{ parameters.WorkingDirectory }}/${{ parameters.ScriptDirectory }}
-      GHReviewersVariable: ${{ parameters.GHReviewersVariable }}
-      GHTeamReviewersVariable: ${{ parameters.GHTeamReviewersVariable }} 
-      PRLabels: ${{ parameters.PRLabels }}
-      CloseAfterOpenForTesting: ${{ parameters.CloseAfterOpenForTesting }}
+  - ${{if eq(variables['GitPushStatus'], false)}}:
+    - template: /eng/common/pipelines/templates/steps/create-pull-request.yml
+      condition: Failed()
+      parameters:
+        RepoName: ${{ parameters.TargetDocRepoName }}
+        RepoOwner: ${{ parameters.TargetDocRepoOwner }}
+        PRBranchName: ${{ parameters.PRBranchName }}
+        CommitMsg: "Update docs metadata and targeting for release of ${{ parameters.ArtifactName }}"
+        PRTitle: "Docs.MS Release Updates for ${{ parameters.ArtifactName }}"
+        BaseBranchName: ${{ parameters.SourceBranchName }}
+        WorkingDirectory: ${{ parameters.WorkingDirectory }}/repo
+        ScriptDirectory: ${{ parameters.WorkingDirectory }}/${{ parameters.ScriptDirectory }}
+        GHReviewersVariable: ${{ parameters.GHReviewersVariable }}
+        GHTeamReviewersVariable: ${{ parameters.GHTeamReviewersVariable }} 
+        PRLabels: ${{ parameters.PRLabels }}
+        CloseAfterOpenForTesting: ${{ parameters.CloseAfterOpenForTesting }}
