@@ -101,9 +101,9 @@ namespace Azure.AI.DocumentTranslation
         }
 
         /// <summary>
-        /// Starts a translation operation
+        /// Starts a translation operation.
         /// For document length limits, maximum batch size, and supported document formats, see
-        /// TODO: Add link to documentation
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/overview"/>.
         /// </summary>
         /// <param name="configurations">Sets the configurations for the translation operation
         /// including source and target storage for documents to be translated. </param>
@@ -130,7 +130,7 @@ namespace Azure.AI.DocumentTranslation
         /// <summary>
         /// Starts a translation operation
         /// For document length limits, maximum batch size, and supported document formats, see
-        /// TODO: Add link to documentation
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/overview"/>.
         /// </summary>
         /// <param name="configurations">Sets the configurations for the translation operation
         /// including source and target storage for documents to be translated. </param>
@@ -157,15 +157,15 @@ namespace Azure.AI.DocumentTranslation
         /// <summary>
         /// Starts a translation operation for documents in an Azure Blob Container.
         /// For document length limits, maximum batch size, and supported document formats, see
-        /// TODO: Add link to documentation
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/overview"/>.
         /// </summary>
         /// <param name="sourceBlobContainerSas">The SAS URL for the source container containing documents to be translated. </param>
         /// <param name="targetBlobContainerSas">The SAS URL for the target container to which the translated documents will be written. </param>
         /// <param name="targetLanguageCode">Language code to translate documents to. For supported documents see
-        /// TODO: Add link to documentation </param>
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/language-support#translate"/>.</param>
         /// <param name="glossary">Custom translation glossary to be used in the translation operation. For supported file types see
-        /// TODO: Add link to documentation</param>
-        /// <param name="options">Set translation options including source language and custom translation category</param>
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/overview#supported-glossary-formats"/>.</param>
+        /// <param name="options">Set translation options including source language and custom translation category.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual DocumentTranslationOperation StartTranslation(Uri sourceBlobContainerSas, Uri targetBlobContainerSas, string targetLanguageCode, TranslationGlossary glossary = default, TranslationOperationOptions options = default, CancellationToken cancellationToken = default)
         {
@@ -211,15 +211,15 @@ namespace Azure.AI.DocumentTranslation
         /// <summary>
         /// Starts a translation operation for documents in an Azure Blob Container.
         /// For document length limits, maximum batch size, and supported document formats, see
-        /// TODO: Add link to documentation
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/overview"/>.
         /// </summary>
         /// <param name="sourceBlobContainerSas">The SAS URL for the source container containing documents to be translated. </param>
         /// <param name="targetBlobContainerSas">The SAS URL for the target container to which the translated documents will be written. </param>
         /// <param name="targetLanguageCode">Language code to translate documents to. For supported documents see
-        /// TODO: Add link to documentation </param>
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/language-support#translate"/>.</param>
         /// <param name="glossary">Custom translation glossary to be used in the translation operation. For supported file types see
-        /// TODO: Add link to documentation</param>
-        /// <param name="options">Set translation options including source language and custom translation category</param>
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/overview#supported-glossary-formats"/>.</param>
+        /// <param name="options">Set translation options including source language and custom translation category.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual async Task<DocumentTranslationOperation> StartTranslationAsync(Uri sourceBlobContainerSas, Uri targetBlobContainerSas, string targetLanguageCode, TranslationGlossary glossary = default, TranslationOperationOptions options = default, CancellationToken cancellationToken = default)
         {
@@ -355,9 +355,9 @@ namespace Azure.AI.DocumentTranslation
         /// Get a list of supported Glossary File Formats.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Response<IReadOnlyList<FileFormat>> GetSupportedGlossaryFormats(CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<FileFormat>> GetGlossaryFormats(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetSupportedGlossaryFormats)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetGlossaryFormats)}");
             scope.Start();
 
             try
@@ -376,9 +376,9 @@ namespace Azure.AI.DocumentTranslation
         /// Get a list of supported Glossary File Formats.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual async Task<Response<IReadOnlyList<FileFormat>>> GetSupportedGlossaryFormatsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyList<FileFormat>>> GetGlossaryFormatsAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetSupportedGlossaryFormatsAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetGlossaryFormatsAsync)}");
             scope.Start();
 
             try
@@ -397,9 +397,9 @@ namespace Azure.AI.DocumentTranslation
         /// Get a list of supported Document Formats.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Response<IReadOnlyList<FileFormat>> GetSupportedDocumentFormats(CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<FileFormat>> GetDocumentFormats(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetSupportedDocumentFormats)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetDocumentFormats)}");
             scope.Start();
 
             try
@@ -418,9 +418,9 @@ namespace Azure.AI.DocumentTranslation
         /// Get a list of supported Document Formats.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual async Task<Response<IReadOnlyList<FileFormat>>> GetSupportedDocumentFormatsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyList<FileFormat>>> GetDocumentFormatsAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetSupportedDocumentFormatsAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetDocumentFormatsAsync)}");
             scope.Start();
 
             try
